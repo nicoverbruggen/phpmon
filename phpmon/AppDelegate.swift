@@ -21,6 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     )
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        print(Shell.execute(command: "which php"))
+        print(Shell.execute(command: "echo $HOME"))
+        print(Shell.execute(command: "which valet"))
+        
         self.availablePhpVersions = Services.detectPhpVersions()
         self.setStatusBarImage(version: "???")
         self.updatePhpVersionInStatusBar()
