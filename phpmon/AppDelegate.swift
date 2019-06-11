@@ -24,7 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.availablePhpVersions = Services.detectPhpVersions()
         self.setStatusBarImage(version: "???")
         self.updatePhpVersionInStatusBar()
-        print(self.availablePhpVersions)
         // Schedule a request to fetch the PHP version every 15 seconds
         Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(updatePhpVersionInStatusBar), userInfo: nil, repeats: true)
     }
@@ -34,7 +33,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let image = ImageGenerator.generateImageForStatusBar(width: 32.0, text: version)
             image.isTemplate = true
             button.image = image
-            button.action = #selector(updatePhpVersionInStatusBar)
         }
     }
     
@@ -44,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @objc func updatePhpVersionInStatusBar() {
         self.version = PhpVersionExtractor()
-        self.setStatusBarImage(version: self.version!.short)
+        self.setStatusBarImage(version: self.busy ? "🏗" : self.version!.short)
         self.updateMenu()
     }
     
@@ -80,10 +78,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func switchToPhpVersion(sender: AnyObject) {
         let index = sender.tag!
         let version = self.availablePhpVersions[index]
-        print("User wishes to switch to: \(version)")
         self.busy = true
-        Services.switchToPhpVersion(version: version, availableVersions: self.availablePhpVersions)
-        self.busy = false
+        self.updatePhpVersionInStatusBar()
+        self.updateMenu()
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            // Switch the PHP version
+            Services.switchToPhpVersion(version: version, availableVersions: self.availablePhpVersions)
+            // Mark as no longer busy
+            self.busy = false
+            // Perform UI updates on main thread
+            DispatchQueue.main.async {
+                self.updatePhpVersionInStatusBar()
+                self.updateMenu()
+            }
+        }
     }
 }
 
