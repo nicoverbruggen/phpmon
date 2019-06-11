@@ -10,15 +10,8 @@ import Cocoa
 
 class ImageGenerator {
     
-    public static func generateImageForStatusBar(
-        text: String
-    ) -> NSImage {
-        // Create an image with fixed dimensions
-        let width: CGFloat = 30.0
-        let height: CGFloat = 20.0
+    public static func generateImageForStatusBar(width: CGFloat = 30.0, height: CGFloat = 20.0, text: String) -> NSImage {
         let image = NSImage(size: NSMakeSize(width, height))
-        
-        // Use the system font
         let font = NSFont.systemFont(ofSize: 14)
         
         let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)

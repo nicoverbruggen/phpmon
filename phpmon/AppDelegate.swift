@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var version: PhpVersionExtractor? = nil
 
     let statusItem = NSStatusBar.system.statusItem(
-        withLength: 40
+        withLength: 32
     )
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -27,9 +27,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func setStatusBarImage(version: String) {
         if let button = statusItem.button {
-            let image = ImageGenerator.generateImageForStatusBar(text: version)
+            let image = ImageGenerator.generateImageForStatusBar(width: 32.0, text: version)
             image.isTemplate = true
             button.image = image
+            button.action = #selector(updatePhpVersionInStatusBar)
         }
     }
     
@@ -50,6 +51,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             string = "You are running PHP \(version!.long)"
         }
         menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem.separator())
+        /*
+        // TODO: Add menu items based on available PHP versions
+        menu.addItem(NSMenuItem(title: "Switch to PHP 5.6", action: #selector(switchPhpVersion(version:)), keyEquivalent: "1"))
+        menu.addItem(NSMenuItem.separator())
+        */
+        menu.addItem(NSMenuItem(title: Services.mysqlIsRunning() ? "You are running MySQL" : "MySQL is not active", action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: Services.nginxIsRunning() ? "You are running nginx" : "nginx is not active", action: nil, keyEquivalent: ""))
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         statusItem.menu = menu
