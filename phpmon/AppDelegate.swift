@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     var timer: Timer?
+    var version: PhpVersionExtractor? = nil
 
     let statusItem = NSStatusBar.system.statusItem(
         withLength: 40
@@ -37,8 +38,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func updatePhpVersionInStatusBar() {
-        let version = Shell.extractPhpVersion()
-        self.setStatusBarImage(version: version)
+        self.version = PhpVersionExtractor()
+        self.setStatusBarImage(version: self.version!.short)
+        self.updateMenu()
+    }
+    
+    func updateMenu() {
+        let menu = NSMenu()
+        var string = "We are not sure what version of PHP you are running."
+        if (version != nil) {
+            string = "You are running PHP \(version!.long)"
+        }
+        menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        statusItem.menu = menu
     }
 }
 

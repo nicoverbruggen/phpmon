@@ -13,6 +13,7 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* PhpVersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpVersionExtractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* PhpVersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersionExtractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B4622B009A400E7CF16 /* Shell.swift */,
 				C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */,
+				C41C1B4A22B019FF00E7CF16 /* PhpVersionExtractor.swift */,
 			);
 			path = phpmon;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 				C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */,
 				C41C1B3922B0097F00E7CF16 /* ViewController.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* PhpVersionExtractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
