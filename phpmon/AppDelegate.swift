@@ -24,20 +24,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Start with the ducky
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         // Perform environment boot checks
-        DispatchQueue.global(qos: .userInitiated).async {
+         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             Environment.performBootChecks()
+            self.availablePhpVersions = Services.detectPhpVersions()
+            print("The following PHP versions were detected:")
+            print(self.availablePhpVersions)
+            self.updatePhpVersionInStatusBar()
+            // Schedule a request to fetch the PHP version every 15 seconds
+            Timer.scheduledTimer(
+                timeInterval: 15,
+                target: self,
+                selector: #selector(self.updatePhpVersionInStatusBar),
+                userInfo: nil,
+                repeats: true
+            )
         }
-        // Check if the correct stuff is installed
-        self.availablePhpVersions = Services.detectPhpVersions()
-        self.updatePhpVersionInStatusBar()
-        // Schedule a request to fetch the PHP version every 15 seconds
-        Timer.scheduledTimer(
-            timeInterval: 15,
-            target: self,
-            selector: #selector(updatePhpVersionInStatusBar),
-            userInfo: nil,
-            repeats: true
-        )
     }
     
     func setStatusBarImage(version: String) {
@@ -58,11 +59,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func updatePhpVersionInStatusBar() {
         self.version = PHPVersion()
         if (self.busy) {
-            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            DispatchQueue.main.async {
+                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            }
         } else {
-            self.setStatusBarImage(version: self.version!.short)
+            DispatchQueue.main.async {
+                self.setStatusBarImage(version: self.version!.short)
+            }
         }
-        
         self.updateMenu()
     }
     
@@ -89,10 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
-            menu.addItem(NSMenuItem(title: Services.mysqlIsRunning() ? "You are running MySQL" : "MySQL is not active", action: nil, keyEquivalent: ""))
-            menu.addItem(NSMenuItem(title: Services.nginxIsRunning() ? "You are running nginx" : "nginx is not active", action: nil, keyEquivalent: ""))
-            menu.addItem(NSMenuItem.separator())
-            // menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
                 self.statusItem.menu = menu
@@ -100,13 +101,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    @objc public func openAbout() {
+        NSApplication.shared.orderFrontStandardAboutPanel()
+    }
+    
     @objc public func switchToPhpVersion(sender: AnyObject) {
+        self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         let index = sender.tag!
         let version = self.availablePhpVersions[index]
         self.busy = true
-        self.updatePhpVersionInStatusBar()
-        self.updateMenu()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            // Update the PHP version in the status bar
+            self.updatePhpVersionInStatusBar()
+            // Update the menu
+            self.updateMenu()
             // Switch the PHP version
             Services.switchToPhpVersion(version: version, availableVersions: self.availablePhpVersions)
             // Mark as no longer busy
