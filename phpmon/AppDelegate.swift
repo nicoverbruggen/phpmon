@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var busy: Bool = false
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Start with the ducky
+        // Start with the icon
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         // Perform environment boot checks
          DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
