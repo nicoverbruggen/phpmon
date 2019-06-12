@@ -102,6 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc public func openAbout() {
+        NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
     
