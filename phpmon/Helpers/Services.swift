@@ -27,7 +27,7 @@ class Services {
     
     public static func detectPhpVersions() -> [String] {
         let files = Shell.execute(command: "ls /usr/local/opt | grep php@")
-        var versions = files!.components(separatedBy: "\n")
+        var versions = files.components(separatedBy: "\n")
         // Remove all empty strings
         versions.removeAll { (string) -> Bool in
             return (string == "")
