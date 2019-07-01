@@ -80,11 +80,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
             menu.addItem(NSMenuItem.separator())
             if (self.availablePhpVersions.count > 0 && !self.busy) {
-                for index in (0..<self.availablePhpVersions.count) {
+                var shortcutKey = 1
+                for index in (0..<self.availablePhpVersions.count).reversed() {
                     let version = self.availablePhpVersions[index]
                     let action = #selector(self.switchToPhpVersion(sender:))
-                    let menuItem = NSMenuItem(title: "Switch to PHP \(version)", action: (version == self.version?.short) ? nil : action, keyEquivalent: "\(index + 1)")
+                    let menuItem = NSMenuItem(title: "Switch to PHP \(version)", action: (version == self.version?.short) ? nil : action, keyEquivalent: "\(shortcutKey)")
                     menuItem.tag = index
+                    shortcutKey = shortcutKey + 1
                     menu.addItem(menuItem)
                 }
                 menu.addItem(NSMenuItem.separator())
