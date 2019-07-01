@@ -11,18 +11,12 @@ import Foundation
 class Services {
     public static func mysqlIsRunning() -> Bool {
         let running = Shell.execute(command: "launchctl list | grep homebrew.mxcl.mysql")
-        if (running != "") {
-            return true
-        }
-        return false
+        return (running != "")
     }
     
     public static func nginxIsRunning() -> Bool {
         let running = Shell.execute(command: "launchctl list | grep homebrew.mxcl.nginx")
-        if (running != "") {
-            return true
-        }
-        return false
+        return (running != "")
     }
     
     public static func detectPhpVersions() -> [String] {
