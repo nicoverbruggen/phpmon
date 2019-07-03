@@ -6,7 +6,7 @@ phpmon is a macOS utility that runs on your Mac and displays the active PHP vers
 
 ### Version detection
 
-This utility runs `php -v` in the background periodically and extracts the version number.
+This utility runs `php -r 'print phpversion();'` in the background periodically and extracts the version number.
 
 ### Switching PHP versions
 
