@@ -13,10 +13,10 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */; };
-		C41C1B4B22B019FF00E7CF16 /* PHPVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PHPVersion.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Services.swift */; };
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
-		C4D8016622B1584700C6DA1B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Environment.swift */; };
+		C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* BootChecks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +29,10 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
-		C41C1B4A22B019FF00E7CF16 /* PHPVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPVersion.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersion.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		C4D8016522B1584700C6DA1B /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		C4D8016522B1584700C6DA1B /* BootChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootChecks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +65,15 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
+				C41E181722CB61EB0072CF09 /* Classes */,
+				C41E181622CB61890072CF09 /* Startup */,
+				C41E181522CB614C0072CF09 /* Terminal */,
+				C41C1B4E22B024F100E7CF16 /* Helpers */,
+				C41E181822CB62200072CF09 /* View Controllers */,
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
-				C41C1B3822B0097F00E7CF16 /* ViewController.swift */,
-				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
-				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
-				C41C1B4E22B024F100E7CF16 /* Helpers */,
+				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
 			);
 			path = phpmon;
 			sourceTree = "<group>";
@@ -79,14 +81,44 @@
 		C41C1B4E22B024F100E7CF16 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C41C1B4622B009A400E7CF16 /* Shell.swift */,
 				C41C1B4822B00A9800E7CF16 /* ImageGenerator.swift */,
-				C41C1B4A22B019FF00E7CF16 /* PHPVersion.swift */,
-				C41C1B4C22B0215A00E7CF16 /* Services.swift */,
 				C476FF9722B0DD830098105B /* Alert.swift */,
-				C4D8016522B1584700C6DA1B /* Environment.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C41E181522CB614C0072CF09 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				C41C1B4622B009A400E7CF16 /* Shell.swift */,
+				C41C1B4C22B0215A00E7CF16 /* Services.swift */,
+			);
+			path = Terminal;
+			sourceTree = "<group>";
+		};
+		C41E181622CB61890072CF09 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				C4D8016522B1584700C6DA1B /* BootChecks.swift */,
+			);
+			path = Startup;
+			sourceTree = "<group>";
+		};
+		C41E181722CB61EB0072CF09 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C41E181822CB62200072CF09 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
+				C41C1B3822B0097F00E7CF16 /* ViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,13 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4D8016622B1584700C6DA1B /* Environment.swift in Sources */,
+				C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Services.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */,
 				C41C1B3922B0097F00E7CF16 /* ViewController.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
-				C41C1B4B22B019FF00E7CF16 /* PHPVersion.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

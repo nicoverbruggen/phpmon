@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 class Services {
     public static func mysqlIsRunning() -> Bool {
@@ -42,5 +43,14 @@ class Services {
             _ = Shell.execute(command: "brew link php@7.3")
             _ = Shell.execute(command: "valet use php@\(version)")
         }
+    }
+    
+    public static func restartPhp(version: String) {
+        _ = Shell.execute(command: "brew services restart php@\(version)")
+    }
+    
+    public static func openPhpConfigFolder(version: String) {
+        let files = [NSURL(fileURLWithPath: "/usr/local/etc/php/\(version)/php.ini")];
+        NSWorkspace.shared.activateFileViewerSelecting(files as [URL]);
     }
 }

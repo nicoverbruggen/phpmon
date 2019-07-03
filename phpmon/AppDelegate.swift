@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     )
     
     var timer: Timer?
-    var version: PHPVersion? = nil
+    var version: PhpVersion? = nil
     var availablePhpVersions : [String] = []
     var busy: Bool = false
 
@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         // Perform environment boot checks
          DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Environment.performBootChecks()
+            BootChecks.perform()
             self.availablePhpVersions = Services.detectPhpVersions()
             print("The following PHP versions were detected:")
             print(self.availablePhpVersions)
@@ -57,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func updatePhpVersionInStatusBar() {
-        self.version = PHPVersion()
+        self.version = PhpVersion()
         if (self.busy) {
             DispatchQueue.main.async {
                 self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
@@ -78,6 +78,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 string = "You are running PHP \(self.version!.long)"
             }
             menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+            if (self.version != nil) {
+                // Actions
+                menu.addItem(NSMenuItem.separator())
+                menu.addItem(NSMenuItem(title: "Open php.ini in Finder", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
+                // menu.addItem(NSMenuItem(title: "Restart PHP \(self.version!.short) service", action: #selector(self.restartPhp), keyEquivalent: ""))
+            }
             menu.addItem(NSMenuItem.separator())
             if (self.availablePhpVersions.count > 0 && !self.busy) {
                 var shortcutKey = 1
@@ -106,6 +112,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc public func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
+    }
+    
+    @objc public func openActiveConfigFolder()
+    {
+        Services.openPhpConfigFolder(version: self.version!.short)
+    }
+    
+    @objc public func restartPhp()
+    {
+        Services.restartPhp(version: self.version!.short)
     }
     
     @objc public func switchToPhpVersion(sender: AnyObject) {

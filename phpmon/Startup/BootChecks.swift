@@ -8,22 +8,9 @@
 
 import Foundation
 
-class Environment {
+class BootChecks {
     
-    public static func presentAlertOnMainThreadIf(_ condition: Bool, messageText: String, informativeText: String)
-    {
-        if (condition) {
-            DispatchQueue.main.async {
-                Alert.present(
-                    messageText: messageText,
-                    informativeText: informativeText
-                )
-            }
-            // TODO: Quit the app in any of these scenarios?
-        }
-    }
-    
-    public static func performBootChecks()
+    public static func perform()
     {
         self.presentAlertOnMainThreadIf(
             !Shell.execute(command: "which php").contains("/usr/local/bin/php"),
@@ -43,6 +30,32 @@ class Environment {
             informativeText: "You must install Valet via brew. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet`. The app will not work correctly until you resolve this issue."
         )
         
-        // TODO: Add check for /private/etc/sudoers.d/brew || /private/etc/sudoers.d/valet
+        self.presentAlertOnMainThreadIf(
+            !Shell.execute(command: "cat /private/etc/sudoers.d/brew").contains("/usr/local/bin/brew"),
+            messageText: "Brew has not been added to sudoers.d",
+            informativeText: "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue."
+        )
+        
+        self.presentAlertOnMainThreadIf(
+            !Shell.execute(command: "cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet"),
+            messageText: "Valet has not been added to sudoers.d",
+            informativeText: "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue."
+        )
+    }
+    
+    private static func presentAlertOnMainThreadIf(
+        _ condition: Bool,
+        messageText: String,
+        informativeText: String
+    )
+    {
+        if (condition) {
+            DispatchQueue.main.async {
+                Alert.present(
+                    messageText: messageText,
+                    informativeText: informativeText
+                )
+            }
+        }
     }
 }

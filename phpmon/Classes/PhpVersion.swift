@@ -8,21 +8,23 @@
 
 import Foundation
 
-class PHPVersion {
+class PhpVersion {
     
     var short : String = "???"
     var long : String = "???"
     
     init() {
-        // Get the info about the PHP installation
-        let output = Shell.execute(command: "php -v")
-        // Get everything before "(cli)" (PHP X.X.X (cli) ...)
-        var version = output.components(separatedBy: " (cli)")[0]
-        // Strip away the text before the version number
-        version = version.components(separatedBy: "PHP ")[1]
+        let version = Shell
+            // Get the version directly from PHP
+            .execute(command: "php -r 'print phpversion();'")
+            // also remove any colors
+            .replacingOccurrences(of: "\u{1b}(B\u{1b}[m", with: "")
+        
+        // That's the long version
         self.long = version
+        
         // Next up, let's strip away the minor version number
-        let segments = version.components(separatedBy: ".")
+        let segments = long.components(separatedBy: ".")
         // Get the first two elements
         self.short = segments[0...1].joined(separator: ".")
     }

@@ -9,6 +9,7 @@
 import Cocoa
 
 class Shell {
+    
     public static func execute(command: String) -> String
     {
         let task = Process()
@@ -20,7 +21,11 @@ class Shell {
         task.launch()
         
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
+        
+        let output: String = NSString(
+            data: data,
+            encoding: String.Encoding.utf8.rawValue
+        )! as String
         
         return output
     }
