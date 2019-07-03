@@ -11,14 +11,15 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let statusItem = NSStatusBar.system.statusItem(
-        withLength: 32
-    )
+    // MARK: - Variables
     
+    let statusItem = NSStatusBar.system.statusItem(withLength: 32)
     var timer: Timer?
     var version: PhpVersion? = nil
     var availablePhpVersions : [String] = []
     var busy: Bool = false
+    
+    // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Start with the icon
@@ -41,6 +42,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    func applicationWillTerminate(_ aNotification: Notification) {
+        // Insert code here to tear down your application
+    }
+    
+    // MARK: - UI related
+    
     func setStatusBarImage(version: String) {
         self.setStatusBar(image: ImageGenerator.generateImageForStatusBar(width: 32.0, text: version))
     }
@@ -50,24 +57,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             image.isTemplate = true
             button.image = image
         }
-    }
-    
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-    
-    @objc func updatePhpVersionInStatusBar() {
-        self.version = PhpVersion()
-        if (self.busy) {
-            DispatchQueue.main.async {
-                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.setStatusBarImage(version: self.version!.short)
-            }
-        }
-        self.updateMenu()
     }
     
     func updateMenu() {
@@ -109,18 +98,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    // MARK: - Callable via Obj-C (#selector)
+    
+    @objc func updatePhpVersionInStatusBar() {
+        self.version = PhpVersion()
+        if (self.busy) {
+            DispatchQueue.main.async {
+                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.setStatusBarImage(version: self.version!.short)
+            }
+        }
+        self.updateMenu()
+    }
+    
     @objc public func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
     
-    @objc public func openActiveConfigFolder()
-    {
+    @objc public func openActiveConfigFolder() {
         Services.openPhpConfigFolder(version: self.version!.short)
     }
     
-    @objc public func restartPhp()
-    {
+    @objc public func restartPhp() {
         Services.restartPhp(version: self.version!.short)
     }
     

@@ -10,8 +10,7 @@ import Cocoa
 
 class Shell {
     
-    public static func execute(command: String) -> String
-    {
+    public static func execute(command: String) -> String {
         let task = Process()
         task.launchPath = "/bin/bash"
         task.arguments = ["--login", "-c", command]
