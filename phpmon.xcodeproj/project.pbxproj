@@ -17,6 +17,7 @@
 		C41C1B4D22B0215A00E7CF16 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Services.swift */; };
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* BootChecks.swift */; };
+		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		C41C1B4C22B0215A00E7CF16 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* BootChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootChecks.swift; sourceTree = "<group>"; };
+		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
+				C4EE188322D3386B00E126E5 /* Constants.swift */,
 				C41E181722CB61EB0072CF09 /* Classes */,
 				C41E181622CB61890072CF09 /* Startup */,
 				C41E181522CB614C0072CF09 /* Terminal */,
@@ -199,6 +202,7 @@
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
+				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -73,6 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 // Actions
                 menu.addItem(NSMenuItem.separator())
                 menu.addItem(NSMenuItem(title: "Open php.ini in Finder", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
+                // OPTIONAL
                 // menu.addItem(NSMenuItem(title: "Restart PHP \(self.version!.short) service", action: #selector(self.restartPhp), keyEquivalent: ""))
             }
             menu.addItem(NSMenuItem.separator())
@@ -92,7 +93,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
-            menu.addItem(NSMenuItem(title: "View terminal output...", action: #selector(self.openOutput), keyEquivalent: ""))
+            // TODO: Enable when implementation is complete
+            // menu.addItem(NSMenuItem(title: "View terminal output", action: #selector(self.openOutput), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {

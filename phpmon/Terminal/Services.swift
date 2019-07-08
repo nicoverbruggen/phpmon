@@ -41,7 +41,11 @@ class Services {
         }
         if (availableVersions.contains("7.3")) {
             _ = Shell.execute(command: "brew link php@7.3")
-            _ = Shell.execute(command: "valet use php@\(version)")
+            if (version == Constants.LatestPhpVersion) {
+                _ = Shell.execute(command: "valet use php")
+            } else {
+                _ = Shell.execute(command: "valet use php@\(version)")
+            }
         }
     }
     
