@@ -8,6 +8,10 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
-
+class LogViewController: NSViewController {
+    
+    @IBAction func pressed(_ sender: Any) {
+        self.view.window?.windowController?.close()
+    }
+    
 }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
-		C41C1B3922B0097F00E7CF16 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3822B0097F00E7CF16 /* ViewController.swift */; };
+		C41C1B3922B0097F00E7CF16 /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3822B0097F00E7CF16 /* LogViewController.swift */; };
 		C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
@@ -22,7 +22,7 @@
 /* Begin PBXFileReference section */
 		C41C1B3322B0097F00E7CF16 /* phpmon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = phpmon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C41C1B3822B0097F00E7CF16 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C41C1B3822B0097F00E7CF16 /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C41C1B3D22B0098000E7CF16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C41C1B3F22B0098000E7CF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
-				C41C1B3822B0097F00E7CF16 /* ViewController.swift */,
+				C41C1B3822B0097F00E7CF16 /* LogViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -195,7 +195,7 @@
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Services.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */,
-				C41C1B3922B0097F00E7CF16 /* ViewController.swift in Sources */,
+				C41C1B3922B0097F00E7CF16 /* LogViewController.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,

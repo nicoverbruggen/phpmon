@@ -18,6 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var version: PhpVersion? = nil
     var availablePhpVersions : [String] = []
     var busy: Bool = false
+    var log: String = ""
+    var windowController: NSWindowController? = nil
     
     // MARK: - Lifecycle
 
@@ -90,6 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
+            menu.addItem(NSMenuItem(title: "View terminal output...", action: #selector(self.openOutput), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
@@ -99,6 +102,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     // MARK: - Callable via Obj-C (#selector)
+    
+    @objc func openOutput() {
+        if (self.windowController == nil) {
+            let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "logWindow") as! LogViewController
+            let window = NSWindow(contentViewController: vc)
+            window.title = "Terminal Output"
+            self.windowController = NSWindowController(window: window)
+        }
+        self.windowController!.showWindow(self)
+        // TODO: Send window to front (if possible)
+    }
     
     @objc func updatePhpVersionInStatusBar() {
         self.version = PhpVersion()
