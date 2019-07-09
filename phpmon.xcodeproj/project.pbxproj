@@ -19,6 +19,7 @@
 		C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* BootChecks.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
+		C4F8C0A622D4FA41002EFE61 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C4F8C0A522D4FA41002EFE61 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C4D8016522B1584700C6DA1B /* BootChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootChecks.swift; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 		C41C1B2A22B0097F00E7CF16 = {
 			isa = PBXGroup;
 			children = (
+				C4F8C0A522D4FA41002EFE61 /* README.md */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 			);
@@ -193,6 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F8C0A622D4FA41002EFE61 /* README.md in Resources */,
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 			);
