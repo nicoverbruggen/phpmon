@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: - Variables
     
+    let sharedShell : Shell
     let statusItem = NSStatusBar.system.statusItem(withLength: 32)
     var timer: Timer?
     var version: PhpVersion? = nil
@@ -20,6 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var busy: Bool = false
     var log: String = ""
     var windowController: NSWindowController? = nil
+    
+    override init() {
+        self.sharedShell = Shell.shared
+        super.init()
+    }
     
     // MARK: - Lifecycle
 
@@ -30,17 +36,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
          DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             BootChecks.perform()
             self.availablePhpVersions = Services.detectPhpVersions()
-            print("The following PHP versions were detected:")
-            print(self.availablePhpVersions)
             self.updatePhpVersionInStatusBar()
-            // Schedule a request to fetch the PHP version every 15 seconds
-            Timer.scheduledTimer(
-                timeInterval: 15,
-                target: self,
-                selector: #selector(self.updatePhpVersionInStatusBar),
-                userInfo: nil,
-                repeats: true
-            )
+            // Schedule a request to fetch the PHP version every 60 seconds
+            DispatchQueue.main.async {
+                self.timer = Timer.scheduledTimer(
+                    timeInterval: 60,
+                    target: self,
+                    selector: #selector(self.updatePhpVersionInStatusBar),
+                    userInfo: nil,
+                    repeats: true
+                )
+            }
         }
     }
     
@@ -94,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 menu.addItem(NSMenuItem.separator())
             }
             // TODO: Enable when implementation is complete
-            // menu.addItem(NSMenuItem(title: "View terminal output", action: #selector(self.openOutput), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "View terminal output", action: #selector(self.openOutput), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
@@ -108,16 +114,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func openOutput() {
         if (self.windowController == nil) {
             let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "logWindow") as! LogViewController
+            Shell.shared.delegate = vc
             let window = NSWindow(contentViewController: vc)
             window.title = "Terminal Output"
             self.windowController = NSWindowController(window: window)
         }
         self.windowController!.showWindow(self)
+        NSApp.activate(ignoringOtherApps: true)
+        
         // TODO: Send window to front (if possible)
     }
     
     @objc func updatePhpVersionInStatusBar() {
         self.version = PhpVersion()
+        if (Shell.shared.history.count > 0) {
+            _ = Shell.shared.history.popLast()
+        }
         if (self.busy) {
             DispatchQueue.main.async {
                 self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)

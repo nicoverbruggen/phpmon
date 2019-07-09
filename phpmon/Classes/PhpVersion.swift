@@ -14,11 +14,9 @@ class PhpVersion {
     var long : String = "???"
     
     init() {
-        let version = Shell
+        let version = Shell.shared
             // Get the version directly from PHP
-            .execute(command: "php -r 'print phpversion();'")
-            // also remove any colors
-            .replacingOccurrences(of: "\u{1b}(B\u{1b}[m", with: "")
+            .pipe("php -r 'print phpversion();'")
         
         // That's the long version
         self.long = version

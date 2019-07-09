@@ -18,6 +18,7 @@
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* BootChecks.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
+		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* BootChecks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootChecks.swift; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				C41E181522CB614C0072CF09 /* Terminal */,
 				C41C1B4E22B024F100E7CF16 /* Helpers */,
 				C41E181822CB62200072CF09 /* View Controllers */,
+				C4F8C0A222D4F100002EFE61 /* Extensions */,
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
@@ -122,6 +125,14 @@
 				C41C1B3822B0097F00E7CF16 /* LogViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C4F8C0A222D4F100002EFE61 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D8016622B1584700C6DA1B /* BootChecks.swift in Sources */,
+				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Services.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* ImageGenerator.swift in Sources */,
