@@ -60,6 +60,9 @@ class Shell {
         
         let historyItem = ShellHistoryItem(command: command, output: output)
         history.append(historyItem)
+        // Keep the last 100 items
+        history = history.suffix(100)
+        print(history.count)
         delegate?.didCompleteCommand(historyItem: historyItem)
         
         return output

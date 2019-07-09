@@ -52,4 +52,8 @@ class LogViewController: NSViewController, ShellDelegate {
     @IBAction func pressed(_ sender: Any) {
         self.view.window?.windowController?.close()
     }
+    
+    deinit {
+        print("VC deallocated")
+    }
 }

@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     
     // MARK: - Variables
     
@@ -78,9 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if (self.version != nil) {
                 // Actions
                 menu.addItem(NSMenuItem.separator())
-                menu.addItem(NSMenuItem(title: "Open php.ini in Finder", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
-                // OPTIONAL
-                // menu.addItem(NSMenuItem(title: "Restart PHP \(self.version!.short) service", action: #selector(self.restartPhp), keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
             }
             menu.addItem(NSMenuItem.separator())
             if (self.availablePhpVersions.count > 0 && !self.busy) {
@@ -99,8 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
-            // TODO: Enable when implementation is complete
-            menu.addItem(NSMenuItem(title: "View terminal output", action: #selector(self.openOutput), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "View Shell Output", action: #selector(self.openOutput), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
@@ -117,19 +114,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             Shell.shared.delegate = vc
             let window = NSWindow(contentViewController: vc)
             window.title = "Terminal Output"
+            window.delegate = self
             self.windowController = NSWindowController(window: window)
         }
         self.windowController!.showWindow(self)
         NSApp.activate(ignoringOtherApps: true)
-        
-        // TODO: Send window to front (if possible)
     }
     
     @objc func updatePhpVersionInStatusBar() {
         self.version = PhpVersion()
-        if (Shell.shared.history.count > 0) {
-            _ = Shell.shared.history.popLast()
-        }
         if (self.busy) {
             DispatchQueue.main.async {
                 self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
@@ -175,6 +168,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.updateMenu()
             }
         }
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        self.windowController = nil
+        Shell.shared.delegate = nil
     }
 }
 
