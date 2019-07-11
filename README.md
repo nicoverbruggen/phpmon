@@ -29,4 +29,4 @@ The utility runs the following commands:
 - Tell Valet to switch to a specific PHP version
 - Link the desired version of PHP
 
-If you want to know more about how this works, you can find the file Services.swift under the Helpers directory to learn more about how switching PHP versions works. In the end, this just executes some shell commands.
+If you want to know more about how this works, I recommend you check out the source code. This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.

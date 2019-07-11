@@ -45,11 +45,6 @@ class MainMenu: NSObject, NSWindowDelegate {
                 string = "You are running PHP \(App.shared.currentVersion!.long)"
             }
             menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
-            if (App.shared.currentVersion != nil) {
-                // Actions
-                menu.addItem(NSMenuItem.separator())
-                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
-            }
             menu.addItem(NSMenuItem.separator())
             if (App.shared.availablePhpVersions.count > 0 && !App.shared.busy) {
                 var shortcutKey = 1
@@ -67,12 +62,16 @@ class MainMenu: NSObject, NSWindowDelegate {
                 menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
-            menu.addItem(NSMenuItem(title: "View Shell Output", action: #selector(self.openOutput), keyEquivalent: ""))
+            if (App.shared.currentVersion != nil) {
+                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
+            }
+            menu.addItem(NSMenuItem(title: "View shell output", action: #selector(self.openOutput), keyEquivalent: ""))
+            menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
-            menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             menu.items.forEach({ (item) in
                 item.target = self
             })
+            menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
                 self.statusItem.menu = menu
             }
