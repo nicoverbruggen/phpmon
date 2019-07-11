@@ -8,9 +8,9 @@
 
 import Foundation
 
-class BootChecks {
+class Startup {
     
-    public static func perform()
+    public static func checkEnvironment()
     {
         self.presentAlertOnMainThreadIf(
             !Shell.shared.pipe("which php").contains("/usr/local/bin/php"),

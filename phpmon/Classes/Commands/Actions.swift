@@ -9,16 +9,7 @@
 import Foundation
 import AppKit
 
-class Services {
-    public static func mysqlIsRunning() -> Bool {
-        let running = Shell.shared.pipe("launchctl list | grep homebrew.mxcl.mysql")
-        return (running != "")
-    }
-    
-    public static func nginxIsRunning() -> Bool {
-        let running = Shell.shared.pipe("launchctl list | grep homebrew.mxcl.nginx")
-        return (running != "")
-    }
+class Actions {
     
     public static func detectPhpVersions() -> [String] {
         let files = Shell.shared.pipe("ls /usr/local/opt | grep php@")
@@ -47,10 +38,6 @@ class Services {
                 Shell.shared.run("valet use php@\(version)")
             }
         }
-    }
-    
-    public static func restartPhp(version: String) {
-        Shell.shared.run("brew services restart php@\(version)")
     }
     
     public static func openPhpConfigFolder(version: String) {

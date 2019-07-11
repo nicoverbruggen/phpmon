@@ -22,5 +22,5 @@ class Constants {
      This is usually the latest PHP version.
      */
     static let LatestPhpVersion = "7.3"
-
+    
 }

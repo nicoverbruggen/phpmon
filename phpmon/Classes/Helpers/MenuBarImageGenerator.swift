@@ -8,9 +8,12 @@
 
 import Cocoa
 
-class ImageGenerator {
+class MenuBarImageGenerator {
     
-    public static func generateImageForStatusBar(width: CGFloat = 30.0, height: CGFloat = 20.0, text: String) -> NSImage {
+    /**
+     Takes a string and converts it to an image that can be displayed in the menu bar.
+     */
+    public static func textToImage(width: CGFloat = 30.0, height: CGFloat = 20.0, text: String) -> NSImage {
         let image = NSImage(size: NSMakeSize(width, height))
         let font = NSFont.systemFont(ofSize: 14)
         

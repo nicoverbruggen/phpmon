@@ -62,7 +62,6 @@ class Shell {
         history.append(historyItem)
         // Keep the last 100 items
         history = history.suffix(100)
-        print(history.count)
         delegate?.didCompleteCommand(historyItem: historyItem)
         
         return output
