@@ -107,16 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // MARK: - Callable via Obj-C (#selector)
     
     @objc func openOutput() {
-        if (App.shared.windowController == nil) {
-            let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "logWindow") as! LogViewController
-            Shell.shared.delegate = vc
-            let window = NSWindow(contentViewController: vc)
-            window.title = "Terminal Output"
-            window.delegate = self
-            App.shared.windowController = NSWindowController(window: window)
-        }
-        App.shared.windowController!.showWindow(self)
-        NSApp.activate(ignoringOtherApps: true)
+        LogViewController.show(delegate: self)
     }
     
     @objc func updatePhpVersionInStatusBar() {
