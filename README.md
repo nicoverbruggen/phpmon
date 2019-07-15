@@ -1,16 +1,28 @@
 # phpmon
 
-<img src="./docs/phpmon.png" width="306px" alt="phpmon screenshot"/>
+phpmon is a macOS utility that runs on your Mac and displays the active PHP version in your status bar. 
 
-This version of phpmon was developed on and is for **macOS Mojave** with a working Homebrew installation and Laravel Valet 2.2.
+<img src="./docs/screenshot.png" width="278px" alt="phpmon screenshot"/>
 
-phpmon is a macOS utility that runs on your Mac and displays the active PHP version in your status bar. Handy if you're running multiple versions of PHP with Homebrew and wish to see which version is currently linked & active with Laravel Valet.
+For me, it comes in handy when running multiple versions of PHP with Homebrew and you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, and switch between versions.
+
+This version of phpmon was developed for:
+
+* macOS Mojave (10.14)
+* PHP 7.x with Homebrew 2.x (with support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated))
+* Laravel Valet 2.2
+
+## Why I built this
+
+I wanted to be able to see at a glance which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
+
+Initially, I had an Alfred workflow for this. But this does the job as well, while also showing me at all times which version of PHP is linked (which is the main benefit over e.g. an Alfred workflow).
 
 ## How it works
 
 ### Version detection
 
-This utility runs `php -r 'print phpversion();'` in the background periodically and extracts the version number.
+This utility runs `php -r 'print phpversion();'` in the background periodically (every 60 seconds) and extracts the version number.
 
 ### Switching PHP versions
 
@@ -29,4 +41,8 @@ The utility runs the following commands:
 - Tell Valet to switch to a specific PHP version
 - Link the desired version of PHP
 
-If you want to know more about how this works, I recommend you check out the source code. This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+### Want to know more?
+
+If you want to know more about how this works, I recommend you check out the source code. 
+
+This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.

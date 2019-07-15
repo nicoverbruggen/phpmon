@@ -14,7 +14,7 @@ class PhpVersion {
     var long : String = "???"
     
     init() {
-        let version = Shell.shared
+        let version = Shell.user
             // Get the version directly from PHP
             .pipe("php -r 'print phpversion();'")
         

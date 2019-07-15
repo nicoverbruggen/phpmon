@@ -13,7 +13,7 @@ class LogViewController: NSViewController, ShellDelegate {
     public static func show(delegate: NSWindowDelegate? = nil) {
         if (App.shared.windowController == nil) {
             let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "logWindow") as! LogViewController
-            Shell.shared.delegate = vc
+            Shell.user.delegate = vc
             let window = NSWindow(contentViewController: vc)
             window.title = "Terminal Output"
             window.delegate = delegate
@@ -53,7 +53,7 @@ class LogViewController: NSViewController, ShellDelegate {
     
     override func viewDidLoad() {
         self.textView.isEditable = false
-        for entry in Shell.shared.history {
+        for entry in Shell.user.history {
             self.appendHistoryItem(entry)
         }
     }

@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Initializer
     
     override init() {
-        self.sharedShell = Shell.shared
+        self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
         super.init()

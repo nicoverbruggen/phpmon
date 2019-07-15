@@ -149,6 +149,6 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         App.shared.windowController = nil
-        Shell.shared.delegate = nil
+        Shell.user.delegate = nil
     }
 }

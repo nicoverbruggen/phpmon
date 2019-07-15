@@ -26,7 +26,8 @@ class ShellHistoryItem {
 
 class Shell {
     
-    static let shared = Shell()
+    // Singleton to access a user shell (with --login)
+    static let user = Shell()
     
     var history : [ShellHistoryItem] = []
     
