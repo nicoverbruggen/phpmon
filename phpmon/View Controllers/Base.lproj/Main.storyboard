@@ -11,18 +11,18 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="phpmon" id="1Xt-HY-uBw">
+                            <menuItem title="PHP Monitor" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="phpmon" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="PHP Monitor" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About phpmon" id="5kV-Vb-QxS">
+                                        <menuItem title="About PHP Monitor" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Quit phpmon" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit PHP Monitor" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -34,7 +34,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="phpmon Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="PHP Monitor Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
@@ -76,7 +76,7 @@
                                 <rect key="frame" x="20" y="46" width="622" height="409"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="s5L-AU-0fw">
                                     <rect key="frame" x="1" y="1" width="620" height="407"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="tN6-Y9-1pA">
                                             <rect key="frame" x="0.0" y="0.0" width="620" height="407"/>
@@ -84,7 +84,7 @@
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <size key="minSize" width="620" height="407"/>
-                                            <size key="maxSize" width="620" height="10000000"/>
+                                            <size key="maxSize" width="622" height="10000000"/>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>

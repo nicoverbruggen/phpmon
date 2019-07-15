@@ -1,6 +1,6 @@
 //
 //  StateManager.swift
-//  phpmon
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 11/07/2019.
 //  Copyright © 2019 Nico Verbruggen. All rights reserved.

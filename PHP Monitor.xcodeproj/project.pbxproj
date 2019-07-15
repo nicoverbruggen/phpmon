@@ -21,11 +21,10 @@
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
-		C4F8C0A622D4FA41002EFE61 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C4F8C0A522D4FA41002EFE61 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C41C1B3322B0097F00E7CF16 /* phpmon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = phpmon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41C1B3822B0097F00E7CF16 /* LogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +67,7 @@
 		C41C1B3422B0097F00E7CF16 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C41C1B3322B0097F00E7CF16 /* phpmon.app */,
+				C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,9 +146,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C41C1B3222B0097F00E7CF16 /* phpmon */ = {
+		C41C1B3222B0097F00E7CF16 /* PHP Monitor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "phpmon" */;
+			buildConfigurationList = C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */;
 			buildPhases = (
 				C41C1B2F22B0097F00E7CF16 /* Sources */,
 				C41C1B3022B0097F00E7CF16 /* Frameworks */,
@@ -159,9 +158,9 @@
 			);
 			dependencies = (
 			);
-			name = phpmon;
+			name = "PHP Monitor";
 			productName = phpmon;
-			productReference = C41C1B3322B0097F00E7CF16 /* phpmon.app */;
+			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -179,7 +178,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "phpmon" */;
+			buildConfigurationList = C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -192,7 +191,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C41C1B3222B0097F00E7CF16 /* phpmon */,
+				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
 			);
 		};
 /* End PBXProject section */
@@ -202,7 +201,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4F8C0A622D4FA41002EFE61 /* README.md in Resources */,
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 			);
@@ -400,7 +398,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "phpmon" */ = {
+		C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C41C1B4122B0098000E7CF16 /* Debug */,
@@ -409,7 +407,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "phpmon" */ = {
+		C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C41C1B4422B0098000E7CF16 /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  MainMenu.swift
-//  phpmon
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 11/07/2019.
 //  Copyright © 2019 Nico Verbruggen. All rights reserved.
@@ -67,11 +67,11 @@ class MainMenu: NSObject, NSWindowDelegate {
             }
             menu.addItem(NSMenuItem(title: "View shell output", action: #selector(self.openOutput), keyEquivalent: ""))
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "About phpmon", action: #selector(self.openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "About PHP Monitor", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.items.forEach({ (item) in
                 item.target = self
             })
-            menu.addItem(NSMenuItem(title: "Quit phpmon", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+            menu.addItem(NSMenuItem(title: "Quit PHP Monitor", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
             DispatchQueue.main.async {
                 self.statusItem.menu = menu
             }
