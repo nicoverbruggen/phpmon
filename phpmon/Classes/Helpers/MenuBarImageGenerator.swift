@@ -39,7 +39,7 @@ class MenuBarImageGenerator {
         let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         
         // Position the text inside the image rect
-        let textRect = CGRect(x: padding, y: 0, width: image.size.width, height: image.size.height)
+        let textRect = CGRect(x: padding, y: 0.5, width: image.size.width, height: image.size.height)
         
         let targetImage: NSImage = NSImage(size: image.size)
         let rep: NSBitmapImageRep = NSBitmapImageRep(
