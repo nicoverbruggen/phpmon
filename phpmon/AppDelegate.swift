@@ -12,6 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: - Variables
+    
     let sharedShell : Shell
     let state : App
     let menu : MainMenu
@@ -32,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        self.state.windowController = nil
     }
 }
 

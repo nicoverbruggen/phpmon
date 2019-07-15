@@ -15,7 +15,7 @@ class LogViewController: NSViewController, ShellDelegate {
             let vc = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "logWindow") as! LogViewController
             Shell.user.delegate = vc
             let window = NSWindow(contentViewController: vc)
-            window.title = "Terminal Output"
+            window.title = "Shell output (/bin/bash --login)"
             window.delegate = delegate
             App.shared.windowController = NSWindowController(window: window)
         }
