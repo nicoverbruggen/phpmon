@@ -12,7 +12,7 @@ class MainMenu: NSObject, NSWindowDelegate {
 
     static let shared = MainMenu()
     
-    let statusItem = NSStatusBar.system.statusItem(withLength: 32)
+    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
     // MARK: - UI related
     
@@ -81,7 +81,6 @@ class MainMenu: NSObject, NSWindowDelegate {
     func setStatusBarImage(version: String) {
         self.setStatusBar(
             image: MenuBarImageGenerator.textToImage(
-                width: 32.0,
                 text: version
             )
         )

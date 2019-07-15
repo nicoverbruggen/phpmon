@@ -12,13 +12,11 @@ class MenuBarImageGenerator {
     
     /**
      Takes a string and converts it to an image that can be displayed in the menu bar.
+     The width of the NSImage depends on the length of the text.
      */
-    public static func textToImage(width: CGFloat = 30.0, height: CGFloat = 20.0, text: String) -> NSImage {
-        let image = NSImage(size: NSMakeSize(width, height))
-        let font = NSFont.systemFont(ofSize: 14)
+    public static func textToImage(text: String) -> NSImage {
         
-        let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        let textRect = CGRect(x: 5, y: -1, width: image.size.width, height: image.size.height)
+        let font = NSFont.systemFont(ofSize: 14, weight: .medium)
         
         let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         let textFontAttributes = [
@@ -27,8 +25,23 @@ class MenuBarImageGenerator {
             NSAttributedString.Key.paragraphStyle: textStyle
         ]
         
-        let targetImage: NSImage = NSImage(size: image.size)
+        let padding : CGFloat = 2.0;
         
+        // Create an attributed string so we'll know how wide the item will need to be
+        let attributedString = NSAttributedString(string: text, attributes: textFontAttributes)
+        let textSize = attributedString.size()
+        
+        // Add padding to the width of the menu bar item
+        let size = NSSize(width: textSize.width + (2 * padding), height: textSize.height)
+        let image = NSImage(size: size)
+        
+        // Set the image rect with the appropriate dimensions
+        let imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        
+        // Position the text inside the image rect
+        let textRect = CGRect(x: padding, y: 0, width: image.size.width, height: image.size.height)
+        
+        let targetImage: NSImage = NSImage(size: image.size)
         let rep: NSBitmapImageRep = NSBitmapImageRep(
             bitmapDataPlanes: nil,
             pixelsWide: Int(image.size.width),
