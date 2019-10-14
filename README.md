@@ -11,7 +11,7 @@ For me, it comes in handy when running multiple versions of PHP with Homebrew an
 Minimal system requirements are:
 
 * macOS 10.14 or higher
-* PHP 7.3 installed via Homebrew, other versions optional
+* PHP 7.3 installed via Homebrew
 * Laravel Valet 2.3 or higher installed
 
 ## Recommended setup
@@ -19,8 +19,10 @@ Minimal system requirements are:
 This means that this configuration is recommended and supported:
 
 * macOS 10.15 Catalina
-* PHP 7.3.x installed with Homebrew 2; other versions of PHP are optional (with support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated))
-* Laravel Valet 2.5.x
+* PHP 7.3.x installed with Homebrew 2
+    - other versions of PHP are optional
+    - includes support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated)
+* Laravel Valet 2.5.x installed
 
 ## Why I built this
 
