@@ -33,7 +33,7 @@ class Actions {
         if (availableVersions.contains("7.3")) {
             Shell.user.run("brew link php@7.3")
             if (version == Constants.LatestPhpVersion) {
-                Shell.user.run( "valet use php")
+                Shell.user.run("valet use php")
             } else {
                 Shell.user.run("valet use php@\(version)")
             }

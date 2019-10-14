@@ -6,11 +6,21 @@ PHP Monitor (or phpmon) is a macOS utility that runs on your Mac and displays th
 
 For me, it comes in handy when running multiple versions of PHP with Homebrew and you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, and switch between versions.
 
-This version of PHP Monitor was developed for:
+## System requirements
 
-* macOS Mojave (10.14)
-* PHP 7.x with Homebrew 2.x (with support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated))
-* Laravel Valet 2.2
+Minimal system requirements are:
+
+* macOS 10.14 or higher
+* PHP 7.3 installed via Homebrew, other versions optional
+* Laravel Valet 2.3 or higher installed
+
+## Recommended setup
+
+This means that this configuration is recommended and supported:
+
+* macOS 10.15 Catalina
+* PHP 7.3.x installed with Homebrew 2; other versions of PHP are optional (with support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated))
+* Laravel Valet 2.5.x
 
 ## Why I built this
 
