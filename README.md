@@ -8,18 +8,16 @@ For me, it comes in handy when running multiple versions of PHP with Homebrew an
 
 ## System requirements
 
-Minimal system requirements are:
+**Minimal system requirements**
 
 * macOS 10.14 or higher
 * PHP 7.3 installed via Homebrew
 * Laravel Valet 2.3 or higher installed
 
-## Recommended setup
-
-This means that this configuration is recommended and supported:
+**Recommended system**
 
 * macOS 10.15 Catalina
-* PHP 7.3.x installed with Homebrew 2
+* PHP 7.3 installed with Homebrew 2.x
     - other versions of PHP are optional
     - includes support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated)
 * Laravel Valet 2.5.x installed
@@ -58,3 +56,27 @@ The utility runs the following commands:
 If you want to know more about how this works, I recommend you check out the source code. 
 
 This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+
+## Troubleshooting
+
+### Reasons for alerts at startup
+
+PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
+
+- The PHP binary is not located in `/usr/local/bin/php`
+- PHP 7.3 is missing in `/usr/local/opt`
+- Laravel Valet is missing in `/usr/local/bin/valet`
+- Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
+- Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
+
+Follow instructions as specified in the alert in order to resolve any issues.
+
+### Still seeing another PHP version (from before switching versions)?
+
+If you're still seeing an old version of PHP in your scripts — e.g. when running `phpinfo()` — I recommend you shut down the PHP service by running: 
+
+    sudo brew services stop php
+
+Please note that PHP Monitor will not be able to stop this service (it doesn't run as an administrator), so you'll need to handle this yourself.
+
+You should only have to do this **once**, and then PHP Monitor should work as usual. 
