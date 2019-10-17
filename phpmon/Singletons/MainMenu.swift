@@ -63,9 +63,29 @@ class MainMenu: NSObject, NSWindowDelegate {
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.currentVersion != nil) {
-                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: "c"))
+                let xdebugFound = App.shared.currentVersion!.xdebugFound
+                if (xdebugFound) {
+                    let xdebugOn = App.shared.currentVersion!.xdebugEnabled
+                    let xdebugToggleMenuItem = NSMenuItem(
+                        title: "Xdebug",
+                        action: #selector(self.toggleXdebug), keyEquivalent: "x"
+                    )
+                    if (xdebugOn) {
+                        xdebugToggleMenuItem.state = .on
+                    }
+                    menu.addItem(xdebugToggleMenuItem)
+                } else {
+                    let disabledItem = NSMenuItem(
+                        title: "xdebug.so missing",
+                        action: nil, keyEquivalent: "x"
+                    )
+                    disabledItem.isEnabled = false
+                    menu.addItem(disabledItem)
+                }
             }
-            menu.addItem(NSMenuItem(title: "View shell output", action: #selector(self.openOutput), keyEquivalent: ""))
+            menu.addItem(NSMenuItem.separator())
+            menu.addItem(NSMenuItem(title: "View shell output...", action: #selector(self.openOutput), keyEquivalent: "o"))
             menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "About PHP Monitor", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.items.forEach({ (item) in
@@ -140,6 +160,19 @@ class MainMenu: NSObject, NSWindowDelegate {
             // Mark as no longer busy
             App.shared.busy = false
             // Perform UI updates on main thread
+            DispatchQueue.main.async {
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+        }
+    }
+    
+    @objc public func toggleXdebug() {
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            DispatchQueue.main.async {
+                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            }
+            Actions.toggleXdebug()
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
