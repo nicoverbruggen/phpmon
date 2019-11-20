@@ -17,9 +17,7 @@ class PhpVersion {
     var xdebugEnabled : Bool = false
     
     init() {
-        let version = Shell.user
-            // Get the version directly from PHP
-            .pipe("php -r 'print phpversion();'")
+        let version = Command.execute(path: "/usr/local/bin/php", arguments: ["-r", "print phpversion();"])
         
         // That's the long version
         self.long = version
