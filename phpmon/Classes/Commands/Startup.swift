@@ -19,9 +19,9 @@ class Startup {
         )
         
         self.presentAlertOnMainThreadIf(
-            !Shell.user.pipe("ls /usr/local/opt | grep php@7.3").contains("php@7.3"),
-            messageText: "PHP 7.3 is not correctly installed",
-            informativeText: "PHP 7.3 alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue."
+            !Shell.user.pipe("ls /usr/local/opt | grep php@7.4").contains("php@7.4"),
+            messageText: "PHP 7.4 is not correctly installed",
+            informativeText: "PHP 7.4 alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue."
         )
         
         self.presentAlertOnMainThreadIf(

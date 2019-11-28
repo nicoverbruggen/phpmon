@@ -30,8 +30,8 @@ class Actions {
         availableVersions.forEach { (version) in
             Shell.user.run("brew unlink php@\(version)")
         }
-        if (availableVersions.contains("7.3")) {
-            Shell.user.run("brew link php@7.3")
+        if (availableVersions.contains("7.4")) {
+            Shell.user.run("brew link php@7.4")
             if (version == Constants.LatestPhpVersion) {
                 Shell.user.run("valet use php")
             } else {

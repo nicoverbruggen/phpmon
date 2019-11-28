@@ -11,13 +11,13 @@ For me, it comes in handy when running multiple versions of PHP with Homebrew an
 **Minimal system requirements**
 
 * macOS 10.14 or higher
-* PHP 7.3 installed via Homebrew
+* PHP 7.4 installed via Homebrew
 * Laravel Valet 2.3 or higher installed
 
 **Recommended system**
 
 * macOS 10.15 Catalina
-* PHP 7.3 installed with Homebrew 2.x
+* PHP 7.4 installed with Homebrew 2.2
     - other versions of PHP are optional
     - includes support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated)
 * Laravel Valet 2.5.x installed
@@ -40,14 +40,14 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 This means:
 
-- You have at least the latest version of PHP installed (`php@7.3`)
+- You have at least the latest version of PHP installed (`php@7.4`)
 - You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
 - You ran `valet trust`, which means Valet commands can be run without using sudo
 
 The utility runs the following commands:
 
 - Unlink all detected PHP versions
-- Switch to PHP 7.3 (this is done in order to ensure that Valet works, even when attempting to use PHP 5.6)
+- Switch to PHP 7.4 (this is done in order to ensure that Valet works, even when attempting to use PHP 5.6)
 - Tell Valet to switch to a specific PHP version
 - Link the desired version of PHP
 
@@ -64,7 +64,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
 - The PHP binary is not located in `/usr/local/bin/php`
-- PHP 7.3 is missing in `/usr/local/opt`
+- PHP 7.4 is missing in `/usr/local/opt`
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
