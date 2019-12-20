@@ -13,17 +13,25 @@ class PhpVersion {
     var short : String = "???"
     var long : String = "???"
     
+    var xdebugFound: Bool = false
+    var xdebugEnabled : Bool = false
+    
     init() {
-        let version = Shell.user
-            // Get the version directly from PHP
-            .pipe("php -r 'print phpversion();'")
+        let version = Command.execute(path: "/usr/local/bin/php", arguments: ["-r", "print phpversion();"])
         
         // That's the long version
         self.long = version
         
         // Next up, let's strip away the minor version number
         let segments = long.components(separatedBy: ".")
+        
         // Get the first two elements
         self.short = segments[0...1].joined(separator: ".")
+        
+        // Load xdebug support
+        self.xdebugFound = Actions.XdebugFound(self.short)
+        if (self.xdebugFound) {
+            self.xdebugEnabled = Actions.XdebugEnabled(self.short)
+        }
     }
 }

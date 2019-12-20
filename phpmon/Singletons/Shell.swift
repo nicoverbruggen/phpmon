@@ -60,11 +60,15 @@ class Shell {
         ) as String
         
         let historyItem = ShellHistoryItem(command: command, output: output)
-        history.append(historyItem)
-        // Keep the last 100 items
-        history = history.suffix(100)
-        delegate?.didCompleteCommand(historyItem: historyItem)
         
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            self.history.append(historyItem)
+            // Keep the last 100 items
+            self.history = self.history.suffix(100)
+        }
+        
+        delegate?.didCompleteCommand(historyItem: historyItem)
+
         return output
     }
 }
