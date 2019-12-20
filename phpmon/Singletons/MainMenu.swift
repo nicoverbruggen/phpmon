@@ -85,8 +85,6 @@ class MainMenu: NSObject, NSWindowDelegate {
                 }
             }
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "View shell output...", action: #selector(self.openOutput), keyEquivalent: "o"))
-            menu.addItem(NSMenuItem.separator())
             menu.addItem(NSMenuItem(title: "About PHP Monitor", action: #selector(self.openAbout), keyEquivalent: ""))
             menu.items.forEach({ (item) in
                 item.target = self
@@ -114,10 +112,6 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     // MARK: - Callable via Obj-C (#selector)
-    
-    @objc func openOutput() {
-        LogViewController.show(delegate: self)
-    }
     
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentVersion = PhpVersion()
