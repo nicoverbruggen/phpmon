@@ -26,6 +26,15 @@ class Actions {
         return versionsOnly
     }
     
+    public static func restartPhpFpm() {
+        let version = App.shared.currentVersion!.short
+        if (version == Constants.LatestPhpVersion) {
+            Shell.user.run("sudo brew services restart php")
+        } else {
+            Shell.user.run("sudo brew services restart php@\(version)")
+        }
+    }
+    
     public static func switchToPhpVersion(version: String, availableVersions: [String]) {
         availableVersions.forEach { (version) in
             // Unlink the current version

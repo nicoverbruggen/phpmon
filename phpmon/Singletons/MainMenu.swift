@@ -57,9 +57,11 @@ class MainMenu: NSObject, NSWindowDelegate {
                     menu.addItem(menuItem)
                 }
                 menu.addItem(NSMenuItem.separator())
+                menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartService), keyEquivalent: "r"))
+                menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.busy) {
-                menu.addItem(NSMenuItem(title: "Switching PHP versions...", action: nil, keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "PHP Monitor is busy...", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.currentVersion != nil) {
@@ -127,6 +129,26 @@ class MainMenu: NSObject, NSWindowDelegate {
         self.update()
     }
     
+    @objc func setBusyImage() {
+        DispatchQueue.main.async {
+            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        }
+    }
+    
+    @objc public func restartService() {
+        App.shared.busy = true
+        self.setBusyImage()
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            self.update()
+            Actions.restartPhpFpm()
+            App.shared.busy = false
+            DispatchQueue.main.async {
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+        }
+    }
+    
     @objc public func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
@@ -137,7 +159,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc public func switchToPhpVersion(sender: AnyObject) {
-        self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        self.setBusyImage()
         let index = sender.tag!
         let version = App.shared.availablePhpVersions[index]
         App.shared.busy = true
