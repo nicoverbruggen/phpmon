@@ -35,6 +35,11 @@ class Actions {
         }
     }
     
+    public static func restartNginx()
+    {
+        Shell.user.run("sudo brew services restart nginx")
+    }
+    
     public static func switchToPhpVersion(version: String, availableVersions: [String]) {
         availableVersions.forEach { (version) in
             // Unlink the current version
@@ -62,6 +67,11 @@ class Actions {
     
     public static func openPhpConfigFolder(version: String) {
         let files = [NSURL(fileURLWithPath: "/usr/local/etc/php/\(version)/php.ini")];
+        NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
+    }
+    
+    public static func openValetConfigFolder() {
+        let files = [NSURL(fileURLWithPath: NSString(string: "~/.config/valet").expandingTildeInPath)];
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
     

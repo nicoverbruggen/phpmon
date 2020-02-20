@@ -57,7 +57,9 @@ class MainMenu: NSObject, NSWindowDelegate {
                     menu.addItem(menuItem)
                 }
                 menu.addItem(NSMenuItem.separator())
-                menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartService), keyEquivalent: "r"))
+                menu.addItem(NSMenuItem(title: "Active Services", action: nil, keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartPhpFpm), keyEquivalent: "f"))
+                menu.addItem(NSMenuItem(title: "Restart nginx service", action: #selector(self.restartNginx), keyEquivalent: "n"))
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.busy) {
@@ -65,7 +67,11 @@ class MainMenu: NSObject, NSWindowDelegate {
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.currentVersion != nil) {
+                menu.addItem(NSMenuItem(title: "Configuration", action: nil, keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "Valet configuration (.config/valet)", action: #selector(self.openValetConfigFolder), keyEquivalent: "v"))
                 menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: "c"))
+                menu.addItem(NSMenuItem.separator())
+                menu.addItem(NSMenuItem(title: "Enabled Extensions", action: nil, keyEquivalent: ""))
                 let xdebugFound = App.shared.currentVersion!.xdebugFound
                 if (xdebugFound) {
                     let xdebugOn = App.shared.currentVersion!.xdebugEnabled
@@ -135,18 +141,31 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    @objc public func restartService() {
+    private func waitAndExecute(_ execute: @escaping () -> Void)
+    {
         App.shared.busy = true
         self.setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             self.update()
-            Actions.restartPhpFpm()
+            execute()
             App.shared.busy = false
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
             }
         }
+    }
+    
+    @objc public func restartPhpFpm() {
+        self.waitAndExecute({
+            Actions.restartPhpFpm()
+        })
+    }
+    
+    @objc public func restartNginx() {
+        self.waitAndExecute({
+            Actions.restartNginx()
+        })
     }
     
     @objc public func openAbout() {
@@ -156,6 +175,10 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc public func openActiveConfigFolder() {
         Actions.openPhpConfigFolder(version: App.shared.currentVersion!.short)
+    }
+    
+    @objc public func openValetConfigFolder() {
+        Actions.openValetConfigFolder()
     }
     
     @objc public func switchToPhpVersion(sender: AnyObject) {
