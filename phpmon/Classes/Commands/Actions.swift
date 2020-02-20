@@ -28,14 +28,25 @@ class Actions {
     
     public static func switchToPhpVersion(version: String, availableVersions: [String]) {
         availableVersions.forEach { (version) in
+            // Unlink the current version
             Shell.user.run("brew unlink php@\(version)")
-        }
-        if (availableVersions.contains("7.4")) {
-            Shell.user.run("brew link php@7.4")
+            // Stop the services
             if (version == Constants.LatestPhpVersion) {
-                Shell.user.run("valet use php")
+                Shell.user.run("sudo brew services stop php")
             } else {
-                Shell.user.run("valet use php@\(version)")
+                Shell.user.run("sudo brew services stop php@\(version)")
+            }
+        }
+        if (availableVersions.contains(Constants.LatestPhpVersion)) {
+            // Use the latest version as a default
+            Shell.user.run("brew link php@\(Constants.LatestPhpVersion) --overwrite --force")
+            if (version == Constants.LatestPhpVersion) {
+                // If said version was also requested, all we need to do is start the service
+                Shell.user.run("sudo brew services start php")
+            } else {
+                // Otherwise, link the correct php version + start the correct service
+                Shell.user.run("brew link php@\(version) --overwrite --force")
+                Shell.user.run("sudo brew services start php@\(version)")
             }
         }
     }
