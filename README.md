@@ -65,6 +65,7 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
+- Multiple PHP services are active (see more info below)
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
@@ -107,6 +108,7 @@ The easiest way to make sure that PHP Monitor works again is to run the followin
     sudo brew services stop php@7.1
     sudo brew services stop php@7.0
     sudo brew services stop php@5.6
+    sudo brew services stop nginx
 
 Then, in PHP Monitor, select "Restart php-fpm service", which should start the service. Alternatively, you can run `sudo brew services start php@{x}` where `{x}` is your preferred version of PHP (for the latest version of PHP, you can omit `@{x}`).
 

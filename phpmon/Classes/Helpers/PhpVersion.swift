@@ -16,8 +16,17 @@ class PhpVersion {
     var xdebugFound: Bool = false
     var xdebugEnabled : Bool = false
     
+    var error : Bool = false
+    
     init() {
         let version = Command.execute(path: "/usr/local/bin/php", arguments: ["-r", "print phpversion();"])
+        
+        if (version == "" || version.contains("Warning")) {
+            self.short = "💩 BROKEN"
+            self.long = "";
+            self.error = true
+            return;
+        }
         
         // That's the long version
         self.long = version
@@ -33,5 +42,7 @@ class PhpVersion {
         if (self.xdebugFound) {
             self.xdebugEnabled = Actions.XdebugEnabled(self.short)
         }
+        
+        self.error = false;
     }
 }

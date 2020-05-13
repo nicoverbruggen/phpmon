@@ -42,9 +42,18 @@ class MainMenu: NSObject, NSWindowDelegate {
             let menu = NSMenu()
             var string = "We are not sure what version of PHP you are running."
             if (App.shared.currentVersion != nil) {
-                string = "You are running PHP \(App.shared.currentVersion!.long)"
+                if (!App.shared.currentVersion!.error) {
+                    string = "You are running PHP \(App.shared.currentVersion!.long)"
+                    menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+                } else {
+                    // in case of an error show the error message
+                    menu.addItem(NSMenuItem(title: "Oof! It appears your PHP installation is broken...", action: nil, keyEquivalent: ""))
+                    menu.addItem(NSMenuItem(title: "Try running `php -v` in your terminal.", action: nil, keyEquivalent: ""))
+                    menu.addItem(NSMenuItem(title: "You could also try switching to another version.", action: nil, keyEquivalent: ""))
+                    menu.addItem(NSMenuItem(title: "Running `brew reinstall php` (or for the equivalent version) might help.", action: nil, keyEquivalent: ""))
+                }
             }
-            menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+            
             menu.addItem(NSMenuItem.separator())
             if (App.shared.availablePhpVersions.count > 0 && !App.shared.busy) {
                 var shortcutKey = 1
@@ -60,6 +69,7 @@ class MainMenu: NSObject, NSWindowDelegate {
                 menu.addItem(NSMenuItem(title: "Active Services", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartPhpFpm), keyEquivalent: "f"))
                 menu.addItem(NSMenuItem(title: "Restart nginx service", action: #selector(self.restartNginx), keyEquivalent: "n"))
+                menu.addItem(NSMenuItem(title: "Force load latest PHP version", action: #selector(self.fixMyPhp), keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.busy) {
@@ -213,6 +223,24 @@ class MainMenu: NSObject, NSWindowDelegate {
             }
             Actions.toggleXdebug()
             DispatchQueue.main.async {
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+        }
+    }
+    
+    @objc public func fixMyPhp() {
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            DispatchQueue.main.async {
+                Alert.present(messageText: "PHP Monitor will force reload the latest version of PHP", informativeText: "This can take a while. You'll get another alert when the force reload has completed.")
+                App.shared.busy = true
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+            Actions.fixMyPhp()
+            DispatchQueue.main.async {
+                Alert.present(messageText: "PHP has been force reloaded", informativeText: "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP.")
+                App.shared.busy = false
                 self.updatePhpVersionInStatusBar()
                 self.update()
             }

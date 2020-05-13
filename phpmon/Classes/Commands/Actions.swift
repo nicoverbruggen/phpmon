@@ -103,4 +103,25 @@ class Actions {
         }
         Shell.user.run(command)
     }
+    
+    // unlink all the crap and link the latest version
+    // this also restarts all services
+    public static func fixMyPhp() {
+        let versions = self.detectPhpVersions()
+        versions.forEach { (version) in
+            Shell.user.run("brew unlink php@\(version)")
+            if (version == Constants.LatestPhpVersion) {
+                Shell.user.run("brew services stop php")
+                Shell.user.run("sudo brew services stop php")
+            } else {
+                Shell.user.run("brew services stop php@\(version)")
+                Shell.user.run("sudo brew services stop php@\(version)")
+            }
+        }
+        Shell.user.run("brew services stop php")
+        Shell.user.run("brew services stop nginx")
+        Shell.user.run("brew link php")
+        Shell.user.run("sudo brew services restart php")
+        Shell.user.run("sudo brew services restart nginx")
+    }
 }
