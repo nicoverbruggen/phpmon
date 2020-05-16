@@ -24,27 +24,4 @@ class Command {
         return output;
     }
     
-    public static func experiment() {
-        /*
-        print("Running '/usr/local/bin/php -v' directly...")
-        print("========================================")
-        var start = DispatchTime.now()
-        print(Command.execute(path: "/usr/local/bin/php", arguments: ["-v"]))
-        var end = DispatchTime.now()
-        var nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-        var timeInterval = Double(nanoTime) / 1_000_000_000
-        print("Time to run command directly: \(timeInterval) seconds")
-        
-        print("")
-        print("Running 'bash -> php -v'...")
-        print("========================================")
-        start = DispatchTime.now()
-        print(Shell.user.pipe("php -v"))
-        end = DispatchTime.now()
-        nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-        timeInterval = Double(nanoTime) / 1_000_000_000
-        print("Time to run command via bash: \(timeInterval) seconds")
-        */
-    }
-    
 }

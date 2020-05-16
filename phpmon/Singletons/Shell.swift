@@ -40,9 +40,9 @@ class Shell {
     }
     
     /// Runs a shell command and returns the output.
-    public func pipe(_ command: String) -> String {
+    public func pipe(_ command: String, shell: String = "/bin/sh") -> String {
         let task = Process()
-        task.launchPath = "/bin/bash"
+        task.launchPath = shell
         task.arguments = ["--login", "-c", command]
         
         let pipe = Pipe()
@@ -51,13 +51,7 @@ class Shell {
         
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         
-        let output: String = NSString(
-            data: data,
-            encoding: String.Encoding.utf8.rawValue
-        )!.replacingOccurrences(
-            of: "\u{1B}(B\u{1B}[m",
-            with: ""
-        ) as String
+        let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
         
         let historyItem = ShellHistoryItem(command: command, output: output)
         
