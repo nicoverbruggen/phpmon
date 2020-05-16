@@ -10,6 +10,7 @@ import Cocoa
 
 class Command {
 
+    /// Immediately executes a command.
     public static func execute(path: String, arguments: [String]) -> String {
         let task = Process()
         task.launchPath = path
