@@ -21,7 +21,7 @@ class Startup {
         self.presentAlertOnMainThreadIf(
             !Shell.user.pipe("ls /usr/local/opt | grep php@7.4").contains("php@7.4"),
             messageText: "PHP 7.4 is not correctly installed",
-            informativeText: "PHP 7.4 alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue."
+            informativeText: "PHP 7.4 alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php@7.4` in order for PHP Monitor to detect this installation."
         )
         
         self.presentAlertOnMainThreadIf(

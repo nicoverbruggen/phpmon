@@ -1,20 +1,22 @@
 # PHP Monitor
 
-PHP Monitor (or phpmon) is a macOS utility that runs on your Mac and displays the active PHP version in your status bar. It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
+PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
+
+It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
 
 <img src="./docs/screenshot.png" width="278px" alt="phpmon screenshot"/>
 
-For me, it comes in handy when running multiple versions of PHP with Homebrew and you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, and switch between versions.
+For me, it comes in handy when running multiple versions of PHP with Homebrew. If you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, PHP Monitor is your new best friend. 
+
+It's also super convenient to and switch between versions.
 
 ## System requirements
 
 * macOS 10.15 Catalina
 * PHP 7.4 installed with Homebrew 2.x
-    - other versions of PHP are optional
-    - includes support for PHP 5.6 and PHP 7.0 [as well](https://github.com/eXolnet/homebrew-deprecated)
-* Laravel Valet 2.8
+* Laravel Valet 2.x
 
-If you're looking to run PHP Monitor in combination with an older version of macOS or Laravel Valet, please check out the older releases of the software.
+_Please note that future versions of PHP will not work automatically, minor changes are required to add support for newer versions of PHP._
 
 ## Why I built this
 
@@ -26,7 +28,7 @@ Initially, I had an Alfred workflow for this. But this does the job as well, whi
 
 ### Version detection
 
-This utility runs `php -r 'print phpversion();'` in the background periodically (every 60 seconds) and extracts the version number.
+This utility runs `php -r 'print phpversion()'` in the background periodically (every 60 seconds).
 
 ### Switching PHP versions
 
@@ -54,7 +56,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## Troubleshooting
 
----
+**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor. This can resolve a variety of issues.**
 
 ### Reasons for alerts at startup
 
@@ -69,11 +71,25 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
----
+### Additional troubleshooting
 
-### Laravel Valet is using a different version of PHP than what is active in PHP Monitor and in my terminal!
+#### Q: I want PHP Monitor to start up when I boot my Mac!
 
-If you're still seeing another version of PHP in your scripts — e.g. when running `phpinfo()` — I recommend you shut down all PHP services that are currently active. You can find out what services are active by running:
+You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+
+Super convenient!
+
+#### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
+
+Try installing again using `brew install php@7.4`. 
+
+This should resolve the issue.
+
+#### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
+
+_Beginning with version 2.0 you'll get alerts about this at startup._
+
+If you're still seeing another version of PHP in your scripts running on your local webserver (nginx) — e.g. when running `phpinfo()` — I recommend you shut down all PHP services that are currently active. You can find out what services are active by running:
 
     sudo brew services list | grep php
 
@@ -110,7 +126,9 @@ The easiest way to make sure that PHP Monitor works again is to run the followin
     sudo brew services stop php@5.6
     sudo brew services stop nginx
 
-Then, in PHP Monitor, select "Restart php-fpm service", which should start the service. Alternatively, you can run `sudo brew services start php@{x}` where `{x}` is your preferred version of PHP (for the latest version of PHP, you can omit `@{x}`).
+Then, in PHP Monitor, select "Restart php-fpm service", which should start the service. 
+
+Alternatively, you can run `sudo brew services start php@7.4` where `7.4` is your preferred version of PHP (for the latest version of PHP, you may omit `@7.4` like in the example above).
 
 ---
 

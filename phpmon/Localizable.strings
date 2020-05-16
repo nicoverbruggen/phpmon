@@ -1,0 +1,17 @@
+/* 
+  Strings.strings
+  PHP Monitor
+
+  Created by Nico Verbruggen on 16/05/2020.
+  Copyright © 2020 Nico Verbruggen. All rights reserved.
+*/
+
+// ALERTS
+
+// Force Reload Started
+"alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";
+"alert.force_reload.info" = "This can take a while. You'll get another alert when the force reload has completed.";
+
+// Force Reload Done
+"alert.force_reload_done.title" = "PHP has been force reloaded";
+"alert.force_reload_done.info" = "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP.";
