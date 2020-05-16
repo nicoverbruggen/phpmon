@@ -10,13 +10,18 @@ import Foundation
 
 extension String {
     func countInstances(of stringToFind: String) -> Int {
-        assert(!stringToFind.isEmpty)
+        if (stringToFind.isEmpty) {
+            return 0
+        }
+        
         var count = 0
         var searchRange: Range<String.Index>?
+        
         while let foundRange = range(of: stringToFind, options: [], range: searchRange) {
             count += 1
             searchRange = Range(uncheckedBounds: (lower: foundRange.upperBound, upper: endIndex))
         }
+        
         return count
     }
 }
