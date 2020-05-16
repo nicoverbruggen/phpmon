@@ -16,6 +16,7 @@
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
+		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4811D2422D70A4700B5F6B3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
@@ -37,6 +38,7 @@
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
+				C473319E2470923A009A0597 /* Localizable.strings */,
 			);
 			path = phpmon;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			files = (
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
+				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

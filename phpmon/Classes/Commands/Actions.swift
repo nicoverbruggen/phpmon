@@ -65,6 +65,11 @@ class Actions {
         }
     }
     
+    public static func openGenericPhpConfigFolder() {
+        let files = [NSURL(fileURLWithPath: "/usr/local/etc/php")];
+        NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
+    }
+    
     public static func openPhpConfigFolder(version: String) {
         let files = [NSURL(fileURLWithPath: "/usr/local/etc/php/\(version)/php.ini")];
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
@@ -75,7 +80,7 @@ class Actions {
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
     
-    public static func XdebugFound(_ version: String) -> Bool {
+    public static func didFindXdebug(_ version: String) -> Bool {
         let command = """
         grep -q 'zend_extension="xdebug.so"' /usr/local/etc/php/\(version)/php.ini; [ $? -eq 0 ] && echo "YES" || echo "NO"
         """
@@ -83,7 +88,7 @@ class Actions {
         return (output == "YES")
     }
     
-    public static func XdebugEnabled(_ version: String) -> Bool {
+    public static func didEnableXdebug(_ version: String) -> Bool {
         let command = """
         grep -q '; zend_extension="xdebug.so"' /usr/local/etc/php/\(version)/php.ini; [ $? -eq 0 ] && echo "YES" || echo "NO"
         """
@@ -96,7 +101,7 @@ class Actions {
         var command = """
         sed -i '' 's/; zend_extension="xdebug.so"/zend_extension="xdebug.so"/g' /usr/local/etc/php/\(version!)/php.ini
         """
-        if (self.XdebugEnabled(version!)) {
+        if (self.didEnableXdebug(version!)) {
             command = """
             sed -i '' 's/zend_extension="xdebug.so"/; zend_extension="xdebug.so"/g' /usr/local/etc/php/\(version!)/php.ini
             """

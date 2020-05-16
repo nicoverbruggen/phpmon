@@ -69,7 +69,7 @@ class MainMenu: NSObject, NSWindowDelegate {
                 menu.addItem(NSMenuItem(title: "Active Services", action: nil, keyEquivalent: ""))
                 menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartPhpFpm), keyEquivalent: "f"))
                 menu.addItem(NSMenuItem(title: "Restart nginx service", action: #selector(self.restartNginx), keyEquivalent: "n"))
-                menu.addItem(NSMenuItem(title: "Force load latest PHP version", action: #selector(self.fixMyPhp), keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: "Force load latest PHP version", action: #selector(self.forceRestartLatestPhp), keyEquivalent: ""))
                 menu.addItem(NSMenuItem.separator())
             }
             if (App.shared.busy) {
@@ -129,6 +129,24 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    // MARK: - Invokable Logic
+    
+    private func waitAndExecute(_ execute: @escaping () -> Void, _ completion: @escaping () -> Void = {})
+    {
+        App.shared.busy = true
+        self.setBusyImage()
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            self.update()
+            execute()
+            App.shared.busy = false
+            DispatchQueue.main.async {
+                self.updatePhpVersionInStatusBar()
+                self.update()
+                completion()
+            }
+        }
+    }
+    
     // MARK: - Callable via Obj-C (#selector)
     
     @objc func updatePhpVersionInStatusBar() {
@@ -151,21 +169,6 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    private func waitAndExecute(_ execute: @escaping () -> Void)
-    {
-        App.shared.busy = true
-        self.setBusyImage()
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            self.update()
-            execute()
-            App.shared.busy = false
-            DispatchQueue.main.async {
-                self.updatePhpVersionInStatusBar()
-                self.update()
-            }
-        }
-    }
-    
     @objc public func restartPhpFpm() {
         self.waitAndExecute({
             Actions.restartPhpFpm()
@@ -178,13 +181,34 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
-    @objc public func openAbout() {
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        NSApplication.shared.orderFrontStandardAboutPanel()
+    @objc public func toggleXdebug() {
+        self.waitAndExecute({
+            Actions.toggleXdebug()
+        })
+    }
+    
+    @objc public func forceRestartLatestPhp() {
+        Alert.present(
+            messageText: "alert.force_reload.title".localized,
+            informativeText: "alert.force_reload.info".localized
+        )
+        self.waitAndExecute({ Actions.fixMyPhp() }, {
+            Alert.present(
+                messageText: "alert.force_reload_done.title".localized,
+                informativeText: "alert.force_reload_done.info".localized
+            )
+        })
     }
     
     @objc public func openActiveConfigFolder() {
-        Actions.openPhpConfigFolder(version: App.shared.currentVersion!.short)
+        if (App.shared.currentVersion!.error) {
+            // php version was not identified
+            Actions.openGenericPhpConfigFolder()
+        } else {
+            // php version was identified
+            Actions.openPhpConfigFolder(version: App.shared.currentVersion!.short)
+        }
+        
     }
     
     @objc public func openValetConfigFolder() {
@@ -216,35 +240,9 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    @objc public func toggleXdebug() {
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            DispatchQueue.main.async {
-                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
-            }
-            Actions.toggleXdebug()
-            DispatchQueue.main.async {
-                self.updatePhpVersionInStatusBar()
-                self.update()
-            }
-        }
-    }
-    
-    @objc public func fixMyPhp() {
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            DispatchQueue.main.async {
-                Alert.present(messageText: "PHP Monitor will force reload the latest version of PHP", informativeText: "This can take a while. You'll get another alert when the force reload has completed.")
-                App.shared.busy = true
-                self.updatePhpVersionInStatusBar()
-                self.update()
-            }
-            Actions.fixMyPhp()
-            DispatchQueue.main.async {
-                Alert.present(messageText: "PHP has been force reloaded", informativeText: "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP.")
-                App.shared.busy = false
-                self.updatePhpVersionInStatusBar()
-                self.update()
-            }
-        }
+    @objc public func openAbout() {
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        NSApplication.shared.orderFrontStandardAboutPanel()
     }
     
     func windowWillClose(_ notification: Notification) {

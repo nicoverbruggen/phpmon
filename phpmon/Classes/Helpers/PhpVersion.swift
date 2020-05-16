@@ -38,9 +38,9 @@ class PhpVersion {
         self.short = segments[0...1].joined(separator: ".")
         
         // Load xdebug support
-        self.xdebugFound = Actions.XdebugFound(self.short)
+        self.xdebugFound = Actions.didFindXdebug(self.short)
         if (self.xdebugFound) {
-            self.xdebugEnabled = Actions.XdebugEnabled(self.short)
+            self.xdebugEnabled = Actions.didEnableXdebug(self.short)
         }
         
         self.error = false;
