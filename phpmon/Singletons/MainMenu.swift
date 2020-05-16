@@ -39,75 +39,31 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     public func update() {
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            let menu = NSMenu()
-            var string = "We are not sure what version of PHP you are running."
-            if (App.shared.currentVersion != nil) {
-                if (!App.shared.currentVersion!.error) {
-                    string = "You are running PHP \(App.shared.currentVersion!.long)"
-                    menu.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
-                } else {
-                    // in case of an error show the error message
-                    menu.addItem(NSMenuItem(title: "Oof! It appears your PHP installation is broken...", action: nil, keyEquivalent: ""))
-                    menu.addItem(NSMenuItem(title: "Try running `php -v` in your terminal.", action: nil, keyEquivalent: ""))
-                    menu.addItem(NSMenuItem(title: "You could also try switching to another version.", action: nil, keyEquivalent: ""))
-                    menu.addItem(NSMenuItem(title: "Running `brew reinstall php` (or for the equivalent version) might help.", action: nil, keyEquivalent: ""))
-                }
-            }
+            // Create a new menu
+            let menu = StatusMenu()
             
+            // Add the PHP versions (or error messages)
+            menu.addPhpVersionMenuItems()
             menu.addItem(NSMenuItem.separator())
-            if (App.shared.availablePhpVersions.count > 0 && !App.shared.busy) {
-                var shortcutKey = 1
-                for index in (0..<App.shared.availablePhpVersions.count).reversed() {
-                    let version = App.shared.availablePhpVersions[index]
-                    let action = #selector(self.switchToPhpVersion(sender:))
-                    let menuItem = NSMenuItem(title: "Switch to PHP \(version)", action: (version == App.shared.currentVersion?.short) ? nil : action, keyEquivalent: "\(shortcutKey)")
-                    menuItem.tag = index
-                    shortcutKey = shortcutKey + 1
-                    menu.addItem(menuItem)
-                }
-                menu.addItem(NSMenuItem.separator())
-                menu.addItem(NSMenuItem(title: "Active Services", action: nil, keyEquivalent: ""))
-                menu.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(self.restartPhpFpm), keyEquivalent: "f"))
-                menu.addItem(NSMenuItem(title: "Restart nginx service", action: #selector(self.restartNginx), keyEquivalent: "n"))
-                menu.addItem(NSMenuItem(title: "Force load latest PHP version", action: #selector(self.forceRestartLatestPhp), keyEquivalent: ""))
-                menu.addItem(NSMenuItem.separator())
-            }
-            if (App.shared.busy) {
-                menu.addItem(NSMenuItem(title: "PHP Monitor is busy...", action: nil, keyEquivalent: ""))
-                menu.addItem(NSMenuItem.separator())
-            }
-            if (App.shared.currentVersion != nil) {
-                menu.addItem(NSMenuItem(title: "Configuration", action: nil, keyEquivalent: ""))
-                menu.addItem(NSMenuItem(title: "Valet configuration (.config/valet)", action: #selector(self.openValetConfigFolder), keyEquivalent: "v"))
-                menu.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(self.openActiveConfigFolder), keyEquivalent: "c"))
-                menu.addItem(NSMenuItem.separator())
-                menu.addItem(NSMenuItem(title: "Enabled Extensions", action: nil, keyEquivalent: ""))
-                let xdebugFound = App.shared.currentVersion!.xdebugFound
-                if (xdebugFound) {
-                    let xdebugOn = App.shared.currentVersion!.xdebugEnabled
-                    let xdebugToggleMenuItem = NSMenuItem(
-                        title: "Xdebug",
-                        action: #selector(self.toggleXdebug), keyEquivalent: "x"
-                    )
-                    if (xdebugOn) {
-                        xdebugToggleMenuItem.state = .on
-                    }
-                    menu.addItem(xdebugToggleMenuItem)
-                } else {
-                    let disabledItem = NSMenuItem(
-                        title: "xdebug.so missing",
-                        action: nil, keyEquivalent: "x"
-                    )
-                    disabledItem.isEnabled = false
-                    menu.addItem(disabledItem)
-                }
-            }
+            
+            // Add the possible actions
+            menu.addPhpActionMenuItems()
             menu.addItem(NSMenuItem.separator())
+            
+            // Add information about services & actions
+            menu.addPhpConfigurationMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add about & quit menu items
             menu.addItem(NSMenuItem(title: "About PHP Monitor", action: #selector(self.openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "Quit PHP Monitor", action: #selector(self.terminateApp), keyEquivalent: "q"))
+            
+            // Make sure every item can be interacted with
             menu.items.forEach({ (item) in
                 item.target = self
             })
-            menu.addItem(NSMenuItem(title: "Quit PHP Monitor", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+            
+            // Update the menu item on the main thread
             DispatchQueue.main.async {
                 self.statusItem.menu = menu
             }
@@ -115,11 +71,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     func setStatusBarImage(version: String) {
-        self.setStatusBar(
-            image: MenuBarImageGenerator.textToImage(
-                text: version
-            )
-        )
+        self.setStatusBar(image: MenuBarImageGenerator.textToImage(text: version))
     }
     
     func setStatusBar(image: NSImage) {
@@ -129,7 +81,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    // MARK: - Invokable Logic
+    // MARK: - Nicer callbacks
     
     private func waitAndExecute(_ execute: @escaping () -> Void, _ completion: @escaping () -> Void = {})
     {
@@ -147,7 +99,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    // MARK: - Callable via Obj-C (#selector)
+    // MARK: - Actions & Menu Manipulation
     
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentVersion = PhpVersion()
@@ -244,6 +196,12 @@ class MainMenu: NSObject, NSWindowDelegate {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
+    
+    @objc public func terminateApp() {
+        NSApplication.shared.terminate(nil)
+    }
+    
+    // MARK: - Cleanup when window closes
     
     func windowWillClose(_ notification: Notification) {
         App.shared.windowController = nil
