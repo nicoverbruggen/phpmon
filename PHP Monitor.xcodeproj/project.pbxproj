@@ -386,7 +386,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 22;
-				DEVELOPMENT_TEAM = 8M54J5J787;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = phpmon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -408,7 +408,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 22;
-				DEVELOPMENT_TEAM = 8M54J5J787;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = phpmon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -99,7 +99,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    // MARK: - Actions & Menu Manipulation
+    // MARK: - Actions
     
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentVersion = PhpVersion()
