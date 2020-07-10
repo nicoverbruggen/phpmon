@@ -73,6 +73,47 @@ Follow instructions as specified in the alert in order to resolve any issues.
 
 ### Additional troubleshooting
 
+#### Q: This app is doing network requests?
+
+It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
+
+PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
+
+#### Q: How can I set this up on a fresh Mac?
+
+If you want to set up your computer for the very first time, here's how I do it:
+
+Install [Homebrew](https://brew.sh) first.
+
+Install PHP, composer, add to path:
+
+    brew install php
+    brew install composer
+    nano .zshrc
+
+Make sure the following line is not in the comments:
+
+    export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+and add the following to your .zshrc:
+
+    export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
+
+Make sure PHP is linked correctly:
+
+    which php
+
+should return: `/usr/local/bin/php`
+
+    composer global require laravel/valet
+    valet install
+
+This should install `dnsmasq` and set up Valet. Great, almost there!
+
+    valet trust
+
+Finally, run PHP Monitor (you may need to option + right-click and select Open to avoid issues with macOS Gatekeeper). Yay!
+
 #### Q: I want PHP Monitor to start up when I boot my Mac!
 
 You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
