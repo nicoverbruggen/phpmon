@@ -10,7 +10,7 @@ For me, it comes in handy when running multiple versions of PHP with Homebrew. I
 
 It's also super convenient to and switch between versions.
 
-## System requirements
+## 🖥 System requirements
 
 * macOS 10.15 Catalina
 * PHP 7.4 installed with Homebrew 2.x
@@ -18,13 +18,13 @@ It's also super convenient to and switch between versions.
 
 _Please note that future versions of PHP will not work automatically, minor changes are required to add support for newer versions of PHP._
 
-## Why I built this
+## 👨‍💻 Why I built this
 
 I wanted to be able to see at a glance which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
 
 Initially, I had an Alfred workflow for this. But this does the job as well, while also showing me at all times which version of PHP is linked (which is the main benefit over e.g. an Alfred workflow).
 
-## How it works
+## 🚜 How it works
 
 ### Version detection
 
@@ -54,11 +54,9 @@ If you want to know more about how this works, I recommend you check out the sou
 
 This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
 
-## Troubleshooting
+## 🤬 Troubleshooting
 
 **If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor. This can resolve a variety of issues.**
-
-### Reasons for alerts at startup
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
@@ -71,106 +69,10 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-### Additional troubleshooting
+## 📝 Additional information
 
-#### Q: This app is doing network requests?
+Please consult the [additional information](docs/ADDITIONAL.md) file that contains more information.
 
-It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
-
-PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
-
-#### Q: How can I set this up on a fresh Mac?
-
-If you want to set up your computer for the very first time, here's how I do it:
-
-Install [Homebrew](https://brew.sh) first.
-
-Install PHP, composer, add to path:
-
-    brew install php
-    brew install composer
-    nano .zshrc
-
-Make sure the following line is not in the comments:
-
-    export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-and add the following to your .zshrc:
-
-    export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
-
-Make sure PHP is linked correctly:
-
-    which php
-
-should return: `/usr/local/bin/php`
-
-    composer global require laravel/valet
-    valet install
-
-This should install `dnsmasq` and set up Valet. Great, almost there!
-
-    valet trust
-
-Finally, run PHP Monitor (you may need to option + right-click and select Open to avoid issues with macOS Gatekeeper). Yay!
-
-#### Q: I want PHP Monitor to start up when I boot my Mac!
-
-You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
-
-Super convenient!
-
-#### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
-
-Try installing again using `brew install php@7.4`. 
-
-This should resolve the issue.
-
-#### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
-
-_Beginning with version 2.0 you'll get alerts about this at startup._
-
-If you're still seeing another version of PHP in your scripts running on your local webserver (nginx) — e.g. when running `phpinfo()` — I recommend you shut down all PHP services that are currently active. You can find out what services are active by running:
-
-    sudo brew services list | grep php
-
-This will present to you a list of services, like so (depending on the installed versions of PHP):
-
-```
-php           started root /Library/LaunchDaemons/homebrew.mxcl.php.plist
-php@5.6       stopped
-php@7.0       stopped
-php@7.1       stopped
-php@7.2       stopped
-php@7.3       stopped
-```
-
-You'll want to make sure that **only one service is running** and that it is running **as `root`**. You can terminate a service by running:
-
-    sudo brew services stop {service_name}
-
-So in order to disable PHP 7.3, you'd need to run:
-
-    sudo brew services stop php@7.3
-
-If you notice that PHP FPM is running as your own user account, you can turn off the service by running:
-
-    brew services stop php@7.3
-
-The easiest way to make sure that PHP Monitor works again is to run the following commands:
-
-    sudo brew services stop php
-    sudo brew services stop php@7.3
-    sudo brew services stop php@7.2
-    sudo brew services stop php@7.1
-    sudo brew services stop php@7.0
-    sudo brew services stop php@5.6
-    sudo brew services stop nginx
-
-Then, in PHP Monitor, select "Restart php-fpm service", which should start the service. 
-
-Alternatively, you can run `sudo brew services start php@7.4` where `7.4` is your preferred version of PHP (for the latest version of PHP, you may omit `@7.4` like in the example above).
-
----
+## ⭐️ Is this helpful?
 
 If this software has been useful to you, star the repository so I know that the software is being used. I did not include any tracking or analytics software, so if you encounter issues, let me know via an issue.
