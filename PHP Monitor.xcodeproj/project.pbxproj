@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
+		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
 		C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
+		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +65,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C405A4CD24B9B9070062FAFA /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */,
+				C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */,
+			);
+			path = IAP;
+			sourceTree = "<group>";
+		};
 		C41C1B2A22B0097F00E7CF16 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +104,7 @@
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
 				C473319E2470923A009A0597 /* Localizable.strings */,
+				C405A4CD24B9B9070062FAFA /* IAP */,
 			);
 			path = phpmon;
 			sourceTree = "<group>";
@@ -220,7 +234,9 @@
 			files = (
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
+				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
+				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +401,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -393,7 +409,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -409,7 +425,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -417,7 +433,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

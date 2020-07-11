@@ -1,0 +1,2 @@
+// Top-level, general application description:
+"ApplicationDescription" = "PHP Monitor is a tool that shows the active PHP version in your menu bar and gives you easy access to certain PHP service actions and config files.";
