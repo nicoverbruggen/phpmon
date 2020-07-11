@@ -27,7 +27,7 @@ class Startup {
         self.presentAlertOnMainThreadIf(
             !Shell.user.pipe("which valet").contains("/usr/local/bin/valet"),
             messageText: "Laravel Valet is not correctly installed",
-            informativeText: "You must install Valet via brew. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet`. The app will not work correctly until you resolve this issue."
+            informativeText: "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet`. The app will not work correctly until you resolve this issue."
         )
         
         self.presentAlertOnMainThreadIf(
