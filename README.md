@@ -18,6 +18,15 @@ It's also super convenient to and switch between versions.
 
 _Please note that future versions of PHP will not work automatically, minor changes are required to add support for newer versions of PHP._
 
+## 🚀 How to install
+
+You can install via Homebrew, or may download the latest [release](https://github.com/nicoverbruggen/phpmon/releases).
+
+To install via Homebrew, run:
+
+    brew tap nicoverbruggen/homebrew-cask
+    brew cask install phpmon
+
 ## 👨‍💻 Why I built this
 
 I wanted to be able to see at a glance which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
