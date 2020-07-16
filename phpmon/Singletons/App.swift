@@ -32,9 +32,4 @@ class App {
      */
     var timer: Timer?
     
-    /**
-     The window controller that will show the log.
-     */
-    var windowController: NSWindowController? = nil
-    
 }

@@ -12,17 +12,18 @@ class StatusMenu : NSMenu {
     
     public func addPhpVersionMenuItems()
     {
-        var string = "We are not sure what version of PHP you are running."
+        var string = "mi_unsure".localized
         if (App.shared.currentVersion != nil) {
             if (!App.shared.currentVersion!.error) {
-                string = "You are running PHP \(App.shared.currentVersion!.long)"
+                // in case the php version loaded without issue
+                string = "\("mi_php_version".localized) \(App.shared.currentVersion!.long)"
                 self.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
             } else {
                 // in case of an error show the error message
-                self.addItem(NSMenuItem(title: "Oof! It appears your PHP installation is broken...", action: nil, keyEquivalent: ""))
-                self.addItem(NSMenuItem(title: "Try running `php -v` in your terminal.", action: nil, keyEquivalent: ""))
-                self.addItem(NSMenuItem(title: "You could also try switching to another version.", action: nil, keyEquivalent: ""))
-                self.addItem(NSMenuItem(title: "Running `brew reinstall php` (or for the equivalent version) might help.", action: nil, keyEquivalent: ""))
+                ["mi_php_broken_1", "mi_php_broken_2",
+                 "mi_php_broken_3", "mi_php_broken_4"].forEach { (message) in
+                    self.addItem(NSMenuItem(title: message.localized, action: nil, keyEquivalent: ""))
+                }
             }
         }
     }
@@ -34,30 +35,30 @@ class StatusMenu : NSMenu {
             for index in (0..<App.shared.availablePhpVersions.count).reversed() {
                 let version = App.shared.availablePhpVersions[index]
                 let action = #selector(MainMenu.switchToPhpVersion(sender:))
-                let menuItem = NSMenuItem(title: "Switch to PHP \(version)", action: (version == App.shared.currentVersion?.short) ? nil : action, keyEquivalent: "\(shortcutKey)")
+                let menuItem = NSMenuItem(title: "\("mi_php_switch".localized) \(version)", action: (version == App.shared.currentVersion?.short) ? nil : action, keyEquivalent: "\(shortcutKey)")
                 menuItem.tag = index
                 shortcutKey = shortcutKey + 1
                 self.addItem(menuItem)
             }
             self.addItem(NSMenuItem.separator())
-            self.addItem(NSMenuItem(title: "Active Services", action: nil, keyEquivalent: ""))
-            self.addItem(NSMenuItem(title: "Restart php-fpm service", action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "f"))
-            self.addItem(NSMenuItem(title: "Restart nginx service", action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
-            self.addItem(NSMenuItem(title: "Force load latest PHP version", action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: ""))
+            self.addItem(NSMenuItem(title: "mi_active_services".localized, action: nil, keyEquivalent: ""))
+            self.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "f"))
+            self.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+            self.addItem(NSMenuItem(title: "mi_force_load_latest".localized, action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: ""))
         }
         if (App.shared.busy) {
-            self.addItem(NSMenuItem(title: "PHP Monitor is busy...", action: nil, keyEquivalent: ""))
+            self.addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
         }
     }
     
     public func addPhpConfigurationMenuItems()
     {
         if (App.shared.currentVersion != nil) {
-            self.addItem(NSMenuItem(title: "Configuration", action: nil, keyEquivalent: ""))
-            self.addItem(NSMenuItem(title: "Valet configuration (.config/valet)", action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
-            self.addItem(NSMenuItem(title: "PHP configuration file (php.ini)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
+            self.addItem(NSMenuItem(title: "mi_configuration".localized, action: nil, keyEquivalent: ""))
+            self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
+            self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
             self.addItem(NSMenuItem.separator())
-            self.addItem(NSMenuItem(title: "Enabled Extensions", action: nil, keyEquivalent: ""))
+            self.addItem(NSMenuItem(title: "mi_enabled_extensions".localized, action: nil, keyEquivalent: ""))
             self.addXdebugMenuItem()
         }
     }
@@ -68,7 +69,7 @@ class StatusMenu : NSMenu {
         if (xdebugFound) {
             let xdebugOn = App.shared.currentVersion!.xdebugEnabled
             let xdebugToggleMenuItem = NSMenuItem(
-                title: "Xdebug",
+                title: "mi_xdebug".localized,
                 action: #selector(MainMenu.toggleXdebug), keyEquivalent: "x"
             )
             if (xdebugOn) {
@@ -77,7 +78,7 @@ class StatusMenu : NSMenu {
             self.addItem(xdebugToggleMenuItem)
         } else {
             let disabledItem = NSMenuItem(
-                title: "xdebug.so missing",
+                title: "mi_xdebug_missing".localized,
                 action: nil, keyEquivalent: "x"
             )
             disabledItem.isEnabled = false

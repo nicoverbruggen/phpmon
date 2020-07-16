@@ -9,8 +9,13 @@
 import Cocoa
 
 class Command {
-
-    /// Immediately executes a command.
+    
+    /**
+     Immediately executes a command.
+     
+     - Parameter path: The path of the command or program to invoke.
+     - Parameter arguments: A list of arguments that are passed on.
+     */
     public static func execute(path: String, arguments: [String]) -> String {
         let task = Process()
         task.launchPath = path
