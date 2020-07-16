@@ -12,12 +12,16 @@ class Alert {
     public static func present(
         messageText: String,
         informativeText: String,
-        buttonTitle: String = "OK"
-    ) {
+        buttonTitle: String = "OK",
+        secondButtonTitle: String = ""
+    ) -> Bool {
         let alert = NSAlert.init()
         alert.messageText = messageText
         alert.informativeText = informativeText
         alert.addButton(withTitle: buttonTitle)
-        alert.runModal()
+        if (!secondButtonTitle.isEmpty) {
+            alert.addButton(withTitle: secondButtonTitle)
+        }
+        return alert.runModal() == .alertFirstButtonReturn
     }
 }
