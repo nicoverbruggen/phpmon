@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import UserNotifications
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -27,13 +28,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     // MARK: - Lifecycle
-
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NSUserNotificationCenter.default.delegate = self
         self.menu.startup()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         self.state.windowController = nil
+    }
+}
+
+extension AppDelegate: NSUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: NSUserNotificationCenter,
+                                shouldPresent notification: NSUserNotification) -> Bool {
+        return true
     }
 }
 

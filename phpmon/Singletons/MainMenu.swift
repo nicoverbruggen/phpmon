@@ -211,6 +211,10 @@ class MainMenu: NSObject, NSWindowDelegate {
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
+                LocalNotification.send(
+                    title: "PHP \(version) is now active",
+                    subtitle: "PHP Monitor has finished switching to PHP \(version)."
+                )
             }
         }
     }
