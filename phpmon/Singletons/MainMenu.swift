@@ -48,7 +48,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         DispatchQueue.main.async {
             let close = Alert.present(
                 messageText: "PHP Monitor cannot start",
-                informativeText: "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor to retry the startup checks.",
+                informativeText: "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.",
                 buttonTitle: "Close",
                 secondButtonTitle: "Retry"
             )
