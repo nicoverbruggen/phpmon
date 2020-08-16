@@ -6,11 +6,11 @@ PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac
 
 It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
 
-<img src="./docs/screenshot.png" width="278px" alt="phpmon screenshot"/>
+<img src="./docs/screenshot.png" width="362px" alt="phpmon screenshot"/>
 
 For me, it comes in handy when running multiple versions of PHP with Homebrew. If you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, PHP Monitor is your new best friend. 
 
-It's also super convenient to and switch between versions.
+It's also super convenient to switch between different versions of PHP, or to find your currently active .ini file!
 
 ## 🖥 System requirements
 
@@ -22,12 +22,12 @@ _Please note that future versions of PHP will not work automatically, minor chan
 
 ## 🚀 How to install
 
-You can install via Homebrew, or may download the latest [release](https://github.com/nicoverbruggen/phpmon/releases).
+You can install via Homebrew, or may download the latest [release][1].
 
 To install via Homebrew, run:
 
-    brew tap nicoverbruggen/homebrew-cask
-    brew cask install phpmon
+	brew tap nicoverbruggen/homebrew-cask
+	brew cask install phpmon
 
 ## 👨‍💻 Why I built this
 
@@ -54,7 +54,7 @@ This means:
 The utility runs the following commands:
 
 - Unlink all detected PHP versions
-- Switch to PHP 7.4 (this is done in order to ensure that Valet works, even when attempting to use PHP 5.6)
+- Switch to PHP 7.4 (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
 - Stop all php-fpm service instances
 - Link the desired version of PHP
 - Start the correct php-fpm service for the desired PHP version
@@ -82,8 +82,11 @@ Follow instructions as specified in the alert in order to resolve any issues.
 
 ## 📝 Additional information
 
-Please consult the [additional information](docs/ADDITIONAL.md) file that contains more information.
+Please consult the [additional information][2] file that contains more information.
 
 ## ⭐️ Is this helpful?
 
-If this software has been useful to you, star the repository so I know that the software is being used. I did not include any tracking or analytics software, so if you encounter issues, let me know via an issue.
+If this software has been useful to you, star the repository, so I know that the software is being used. I did not include any tracking or analytics software, so if you encounter issues, let me know via an issue.
+
+[1]:	https://github.com/nicoverbruggen/phpmon/releases
+[2]:	docs/ADDITIONAL.md

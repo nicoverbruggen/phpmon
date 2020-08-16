@@ -12,10 +12,18 @@ class MainMenu: NSObject, NSWindowDelegate {
 
     static let shared = MainMenu()
     
-    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    /**
+     The status bar item with variable length.
+     */
+    let statusItem = NSStatusBar.system.statusItem(
+        withLength: NSStatusItem.variableLength
+    )
     
     // MARK: - UI related
     
+    /**
+     Kick off the startup of the rendering of the main menu.
+     */
     public func startup() {
         // Start with the icon
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
@@ -29,6 +37,9 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    /**
+     When the environment is all clear and the app can run, let's go.
+     */
     private func onEnvironmentPass() {
         App.shared.availablePhpVersions = Actions.detectPhpVersions()
         self.updatePhpVersionInStatusBar()
@@ -44,13 +55,16 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    /**
+     When the environment is not OK, present an alert to inform the user.
+     */
     private func onEnvironmentFail() {
         DispatchQueue.main.async {
             let close = Alert.present(
-                messageText: "PHP Monitor cannot start",
-                informativeText: "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.",
-                buttonTitle: "Close",
-                secondButtonTitle: "Retry"
+                messageText: "alert.cannot_start.title".localized,
+                informativeText: "alert.cannot_start.info".localized,
+                buttonTitle: "alert.cannot_start.close".localized,
+                secondButtonTitle: "alert.cannot_start.retry".localized
             )
             if (!close) {
                 self.startup()
@@ -60,6 +74,9 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    /**
+     Update the menu's contents, based on what's going on.
+     */
     public func update() {
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Create a new menu
@@ -78,8 +95,8 @@ class MainMenu: NSObject, NSWindowDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add about & quit menu items
-            menu.addItem(NSMenuItem(title: "About PHP Monitor", action: #selector(self.openAbout), keyEquivalent: ""))
-            menu.addItem(NSMenuItem(title: "Quit PHP Monitor", action: #selector(self.terminateApp), keyEquivalent: "q"))
+            menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(self.openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(self.terminateApp), keyEquivalent: "q"))
             
             // Make sure every item can be interacted with
             menu.items.forEach({ (item) in
@@ -93,10 +110,19 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    /**
+     Sets the status bar image based on a version string.
+     */
     func setStatusBarImage(version: String) {
-        self.setStatusBar(image: MenuBarImageGenerator.textToImage(text: version))
+        self.setStatusBar(
+            image: MenuBarImageGenerator.textToImage(text: version)
+        )
     }
     
+    /**
+     Sets the status bar image, based on the provided NSImage.
+     The image will be used as a template image.
+     */
     func setStatusBar(image: NSImage) {
         if let button = statusItem.button {
             image.isTemplate = true
@@ -106,6 +132,14 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     // MARK: - Nicer callbacks
     
+    /**
+     Executes a specific callback and fires the completion callback,
+     while updating the UI as required. As long as the completion callback
+     does not fire, the app is presumed to be busy and the UI reflects this.
+     
+     - Parameter execute: Escaping callback of the work that needs to happen.
+     - Parameter completion: Callback that is fired when the work is done.
+     */
     private func waitAndExecute(_ execute: @escaping () -> Void, _ completion: @escaping () -> Void = {})
     {
         App.shared.busy = true
@@ -122,7 +156,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    // MARK: - Actions
+    // MARK: - User Interface
     
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentVersion = PhpVersion()
@@ -144,6 +178,8 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
+    // MARK: - Actions
+    
     @objc public func restartPhpFpm() {
         self.waitAndExecute({
             Actions.restartPhpFpm()
@@ -163,10 +199,12 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc public func forceRestartLatestPhp() {
+        // Tell the user the switch is about to occur
         _ = Alert.present(
             messageText: "alert.force_reload.title".localized,
             informativeText: "alert.force_reload.info".localized
         )
+        // Start switching
         self.waitAndExecute({ Actions.fixMyPhp() }, {
             _ = Alert.present(
                 messageText: "alert.force_reload_done.title".localized,
@@ -192,6 +230,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc public func switchToPhpVersion(sender: AnyObject) {
         self.setBusyImage()
+        // TODO: A wise man once said: using tags is not good. Fix this.
         let index = sender.tag!
         let version = App.shared.availablePhpVersions[index]
         App.shared.busy = true
@@ -211,6 +250,11 @@ class MainMenu: NSObject, NSWindowDelegate {
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
+                // Send a notification that the switch has been completed
+                LocalNotification.send(
+                    title: String(format: "notification.version_changed_title".localized, version),
+                    subtitle: String(format: "notification.version_changed_desc".localized, version)
+                )
             }
         }
     }
@@ -222,12 +266,5 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc public func terminateApp() {
         NSApplication.shared.terminate(nil)
-    }
-    
-    // MARK: - Cleanup when window closes
-    
-    func windowWillClose(_ notification: Notification) {
-        App.shared.windowController = nil
-        Shell.user.delegate = nil
     }
 }

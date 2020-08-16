@@ -1,6 +1,6 @@
 # Release Procedure
 
-1. Merge into `master`
+1. Merge into `main`
 2. Create tag
 3. Add changes to changelog
 4. Archive
