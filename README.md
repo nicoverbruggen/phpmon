@@ -29,6 +29,8 @@ To install via Homebrew, run:
 	brew tap nicoverbruggen/homebrew-cask
 	brew cask install phpmon
 
+_The app is signed and notarized, meaning all you have to do is approve its first launch._
+
 ## 👨‍💻 Why I built this
 
 I wanted to be able to see at a glance which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
@@ -84,9 +86,16 @@ Follow instructions as specified in the alert in order to resolve any issues.
 
 Please consult the [additional information][2] file that contains more information.
 
-## ⭐️ Is this helpful?
+## ⭐️ Star me!
 
-If this software has been useful to you, star the repository, so I know that the software is being used. I did not include any tracking or analytics software, so if you encounter issues, let me know via an issue.
+If this software has been useful to you, I ask that you **please star the repository**, so I know that the software is being used.
+
+I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
+
+## 💵 Support me?
+
+I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3]. 
 
 [1]:	https://github.com/nicoverbruggen/phpmon/releases
 [2]:	docs/ADDITIONAL.md
+[3]:	https://paypal.me/nicoverbruggen
