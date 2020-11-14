@@ -14,7 +14,7 @@ class Constants {
      * The PHP versions supported by this application.
      */
     static let SupportedPhpVersions = [
-        "5.6", "7.0", "7.1", "7.2", "7.3", "7.4"
+        "5.6", "7.0", "7.1", "7.2", "7.3", "7.4", "8.0"
     ]
     
     /**
