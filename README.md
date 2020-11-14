@@ -14,6 +14,8 @@ It's also super convenient to switch between different versions of PHP, or to fi
 
 ## 🖥 System requirements
 
+PHP Monitor is a universal application that runs on Apple Silicon *and* Intel-based Macs.
+
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
 * PHP 7.4 installed with Homebrew 2.x
 * Laravel Valet 2.x
