@@ -1,6 +1,14 @@
 ### Q&A
 
-#### Q: This app is doing network requests?
+#### Q: Does this support Apple Silicon?
+
+Yes. This is a universal app.
+
+#### Q: Is PHP 8.x supported?
+
+Yes.
+
+#### Q: This app is doing network requests? Why?
 
 It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
 
