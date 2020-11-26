@@ -32,4 +32,12 @@ class App {
      */
     var timer: Timer?
     
+    /**
+     The version that the `php` formula via Brew is aliased to on the current system.
+     
+     If you're up to date, `php` will be aliased to the latest version,
+     but that might not be the case.
+     */
+    var brewPhpAlias: String? = nil
+    
 }

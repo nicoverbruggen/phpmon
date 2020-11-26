@@ -71,6 +71,9 @@ class Startup {
             breaking: false
         )
         
+        let brewPhpAlias = Shell.user.pipe("brew info php --json");
+        print(brewPhpAlias)
+        
         if (!self.failed) {
             success()
         }
