@@ -14,13 +14,13 @@ It's also super convenient to switch between different versions of PHP, or to fi
 
 ## 🖥 System requirements
 
-PHP Monitor is a universal application that runs on Apple Silicon *and* Intel-based Macs.
+PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
-* PHP 7.4 installed with Homebrew 2.x
+* The brew formula `php` has to be installed (which version it is, is detected)
 * Laravel Valet 2.x
 
-_Please note that future versions of PHP will not work automatically, minor changes are required to add support for newer versions of PHP._
+_Please note that future versions of PHP will not work automatically, minor changes are usually required to add support for newer versions of PHP._
 
 ## 🚀 How to install
 
@@ -51,14 +51,14 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 This means:
 
-- You have at least the latest version of PHP installed (`php@7.4`)
+- You have at least the latest version of PHP installed (`php`)
 - You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
 - You ran `valet trust`, which means Valet commands can be run without using sudo
 
 The utility runs the following commands:
 
 - Unlink all detected PHP versions
-- Switch to PHP 7.4 (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
+- Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
 - Stop all php-fpm service instances
 - Link the desired version of PHP
 - Start the correct php-fpm service for the desired PHP version
@@ -76,7 +76,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
 - The PHP binary is not located in `/usr/local/bin/php`
-- PHP 7.4 is missing in `/usr/local/opt`
+- PHP is missing in `/usr/local/opt`
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`

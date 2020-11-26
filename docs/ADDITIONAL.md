@@ -49,7 +49,7 @@ Super convenient!
 
 #### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
 
-Try installing again using `brew install php@7.4`. 
+Try installing again using `brew install php`. 
 
 This should resolve the issue.
 
