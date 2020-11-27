@@ -14,15 +14,26 @@ class Actions {
     public static func detectPhpVersions() -> [String] {
         let files = Shell.user.pipe("ls /usr/local/opt | grep php@")
         var versions = files.components(separatedBy: "\n")
+        
         // Remove all empty strings
         versions.removeAll { (string) -> Bool in
             return (string == "")
         }
+        
         // Get a list of versions only
         var versionsOnly : [String] = []
         versions.forEach { (string) in
             versionsOnly.append(string.components(separatedBy: "php@")[1])
         }
+        
+        // Make sure the aliased version is detected
+        // The user may have `php` installed, but not e.g. `php@8.0`
+        // We should also detect that as a version that is installed
+        let phpAlias = App.shared.brewPhpVersion
+        if (!versionsOnly.contains(phpAlias)) {
+            versionsOnly.append(phpAlias);
+        }
+        
         return versionsOnly
     }
     
