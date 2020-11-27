@@ -32,9 +32,9 @@ class Startup {
         )
         
         self.performEnvironmentCheck(
-            !Shell.user.pipe("ls /usr/local/opt | grep php@7.4").contains("php@7.4"),
-            messageText: "PHP 7.4 is not correctly installed",
-            informativeText: "PHP 7.4 alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php@7.4` in order for PHP Monitor to detect this installation.",
+            !Shell.user.pipe("ls /usr/local/opt | grep php").contains("php"),
+            messageText: "PHP is not correctly installed",
+            informativeText: "PHP alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.",
             breaking: true
         )
         
@@ -72,8 +72,28 @@ class Startup {
         )
         
         if (!self.failed) {
+            self.determineBrewAliasVersion()
             success()
         }
+    }
+    
+    /**
+     * In order to avoid having to hard-code which version of PHP is aliased to what specific subversion,
+     * PHP Monitor now determines the alias by checking the user's system.
+     */
+    private func determineBrewAliasVersion()
+    {
+        print("PHP Monitor has determined the application has successfully passed all checks.")
+        print("Determining which version of PHP is aliased to `php` via Homebrew...")
+        
+        let brewPhpAlias = Shell.user.pipe("brew info php --json");
+        
+        App.shared.brewPhpPackage = try! JSONDecoder().decode(
+            [HomebrewPackage].self,
+            from: brewPhpAlias.data(using: .utf8)!
+        ).first!
+        
+        print("When on your system, the `php` formula means version \(App.shared.brewPhpVersion)!")
     }
     
     /**

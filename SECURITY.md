@@ -6,7 +6,8 @@ The following versions of PHP Monitor are supported:
 
 | Version | Universal | Supported          | Runs on macOS |
 | ------- | ------------- | ------------------ | ----- |
-| 2.4     | ✅ | ✅        | Catalina (10.15), Big Sur (11.0) |
+| 2.5     | ✅ | ✅        | Catalina (10.15), Big Sur (11.0) |
+| 2.4     | ✅ | ❌        | Catalina (10.15), Big Sur (11.0) |
 | < 2.4     | ❌ | ❌        | Catalina (10.15) |
 
 ## Reporting a Vulnerability

@@ -6,7 +6,7 @@ PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac
 
 It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
 
-<img src="./docs/screenshot.png" width="362px" alt="phpmon screenshot"/>
+<img src="./docs/screenshot.png" width="370px" alt="phpmon screenshot"/>
 
 For me, it comes in handy when running multiple versions of PHP with Homebrew. If you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, PHP Monitor is your new best friend. 
 
@@ -14,13 +14,13 @@ It's also super convenient to switch between different versions of PHP, or to fi
 
 ## 🖥 System requirements
 
-PHP Monitor is a universal application that runs on Apple Silicon *and* Intel-based Macs.
+PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
-* PHP 7.4 installed with Homebrew 2.x
+* The brew formula `php` has to be installed (which version it is, is detected)
 * Laravel Valet 2.x
 
-_Please note that future versions of PHP will not work automatically, minor changes are required to add support for newer versions of PHP._
+_Please note that future versions of PHP will not work automatically, minor changes are usually required to add support for newer versions of PHP. You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
 
 ## 🚀 How to install
 
@@ -51,14 +51,14 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 This means:
 
-- You have at least the latest version of PHP installed (`php@7.4`)
+- You have at least the latest version of PHP installed (`php`)
 - You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
 - You ran `valet trust`, which means Valet commands can be run without using sudo
 
 The utility runs the following commands:
 
 - Unlink all detected PHP versions
-- Switch to PHP 7.4 (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
+- Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
 - Stop all php-fpm service instances
 - Link the desired version of PHP
 - Start the correct php-fpm service for the desired PHP version
@@ -71,12 +71,12 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## 🤬 Troubleshooting
 
-**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor. This can resolve a variety of issues.**
+**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. Don't forget to run `valet install` after upgrading.**
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
 - The PHP binary is not located in `/usr/local/bin/php`
-- PHP 7.4 is missing in `/usr/local/opt`
+- PHP is missing in `/usr/local/opt`
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
@@ -84,9 +84,9 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-## 📝 Additional information
+## 📝 Additional information & FAQ
 
-Please consult the [additional information][2] file that contains more information.
+Please consult the [additional information][2] file that contains more information. It has answers to additional questions and more information to troubleshoot your problem.
 
 ## ⭐️ Star me!
 

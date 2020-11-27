@@ -23,8 +23,9 @@
 "mi_force_load_latest" = "Force load latest PHP version";
 
 "mi_configuration" = "Configuration";
-"mi_valet_config" = "Valet configuration (.config/valet)";
-"mi_php_config" = "PHP Configuration file (php.ini)";
+"mi_valet_config" = "Locate Valet folder (.config/valet)";
+"mi_php_config" = "Locate PHP configuration file (php.ini)";
+"mi_phpinfo" = "Show current configuration (phpinfo)";
 "mi_enabled_extensions" = "Enabled Extensions";
 
 "mi_xdebug" = "Xdebug";

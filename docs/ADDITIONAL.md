@@ -1,6 +1,14 @@
 ### Q&A
 
-#### Q: This app is doing network requests?
+#### Q: Does this support Apple Silicon?
+
+Yes. This is a universal app.
+
+#### Q: Is PHP 8.x supported?
+
+Yes.
+
+#### Q: This app is doing network requests? Why?
 
 It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
 
@@ -49,9 +57,13 @@ Super convenient!
 
 #### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
 
-Try installing again using `brew install php@7.4`. 
+Try installing again using `brew install php`. 
 
 This should resolve the issue.
+
+#### Q: PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+
+You may need to run `valet install`. (Preferably after updating `valet` by running `composer global update`).
 
 #### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
 

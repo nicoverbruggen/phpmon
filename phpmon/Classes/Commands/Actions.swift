@@ -14,21 +14,32 @@ class Actions {
     public static func detectPhpVersions() -> [String] {
         let files = Shell.user.pipe("ls /usr/local/opt | grep php@")
         var versions = files.components(separatedBy: "\n")
+        
         // Remove all empty strings
         versions.removeAll { (string) -> Bool in
             return (string == "")
         }
+        
         // Get a list of versions only
         var versionsOnly : [String] = []
         versions.forEach { (string) in
             versionsOnly.append(string.components(separatedBy: "php@")[1])
         }
+        
+        // Make sure the aliased version is detected
+        // The user may have `php` installed, but not e.g. `php@8.0`
+        // We should also detect that as a version that is installed
+        let phpAlias = App.shared.brewPhpVersion
+        if (!versionsOnly.contains(phpAlias)) {
+            versionsOnly.append(phpAlias);
+        }
+        
         return versionsOnly
     }
     
     public static func restartPhpFpm() {
         let version = App.shared.currentVersion!.short
-        if (version == Constants.LatestPhpVersion) {
+        if (version == App.shared.brewPhpVersion) {
             Shell.user.run("sudo brew services restart php")
         } else {
             Shell.user.run("sudo brew services restart php@\(version)")
@@ -45,16 +56,16 @@ class Actions {
             // Unlink the current version
             Shell.user.run("brew unlink php@\(version)")
             // Stop the services
-            if (version == Constants.LatestPhpVersion) {
+            if (version == App.shared.brewPhpVersion) {
                 Shell.user.run("sudo brew services stop php")
             } else {
                 Shell.user.run("sudo brew services stop php@\(version)")
             }
         }
-        if (availableVersions.contains(Constants.LatestPhpVersion)) {
+        if (availableVersions.contains(App.shared.brewPhpVersion)) {
             // Use the latest version as a default
-            Shell.user.run("brew link php@\(Constants.LatestPhpVersion) --overwrite --force")
-            if (version == Constants.LatestPhpVersion) {
+            Shell.user.run("brew link php@\(App.shared.brewPhpVersion) --overwrite --force")
+            if (version == App.shared.brewPhpVersion) {
                 // If said version was also requested, all we need to do is start the service
                 Shell.user.run("sudo brew services start php")
             } else {
@@ -115,7 +126,7 @@ class Actions {
         let versions = self.detectPhpVersions()
         versions.forEach { (version) in
             Shell.user.run("brew unlink php@\(version)")
-            if (version == Constants.LatestPhpVersion) {
+            if (version == App.shared.brewPhpVersion) {
                 Shell.user.run("brew services stop php")
                 Shell.user.run("sudo brew services stop php")
             } else {
