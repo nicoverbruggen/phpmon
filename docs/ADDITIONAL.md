@@ -61,6 +61,10 @@ Try installing again using `brew install php`.
 
 This should resolve the issue.
 
+#### Q: PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+
+You may need to run `valet install`. (Preferably after updating `valet` by running `composer global update`).
+
 #### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
 
 _Beginning with version 2.0 you'll get alerts about this at startup._
