@@ -6,7 +6,7 @@ PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac
 
 It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
 
-<img src="./docs/screenshot.png" width="362px" alt="phpmon screenshot"/>
+<img src="./docs/screenshot.png" width="370px" alt="phpmon screenshot"/>
 
 For me, it comes in handy when running multiple versions of PHP with Homebrew. If you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, PHP Monitor is your new best friend. 
 
