@@ -58,6 +58,7 @@ class StatusMenu : NSMenu {
             self.addItem(NSMenuItem(title: "mi_configuration".localized, action: nil, keyEquivalent: ""))
             self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
             self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
+            self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
             self.addItem(NSMenuItem.separator())
             self.addItem(NSMenuItem(title: "mi_enabled_extensions".localized, action: nil, keyEquivalent: ""))
             self.addXdebugMenuItem()
