@@ -71,7 +71,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## 🤬 Troubleshooting
 
-**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor. This can resolve a variety of issues.**
+**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. Don't forget to run `valet install` after upgrading.**
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
@@ -84,9 +84,9 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-## 📝 Additional information
+## 📝 Additional information & FAQ
 
-Please consult the [additional information][2] file that contains more information.
+Please consult the [additional information][2] file that contains more information. It has answers to additional questions and more information to troubleshoot your problem.
 
 ## ⭐️ Star me!
 
