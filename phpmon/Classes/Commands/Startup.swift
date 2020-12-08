@@ -26,49 +26,45 @@ class Startup {
         
         self.performEnvironmentCheck(
             !Shell.user.pipe("which php").contains("/usr/local/bin/php"),
-            messageText: "PHP is not correctly installed",
-            informativeText: "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php`. The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)",
-            breaking: true
+            messageText:        "startup.errors.php_binary.title".localized,
+            informativeText:    "startup.errors.php_binary_desc".localized,
+            breaking:           true
         )
         
         self.performEnvironmentCheck(
             !Shell.user.pipe("ls /usr/local/opt | grep php").contains("php"),
-            messageText: "PHP is not correctly installed",
-            informativeText: "PHP alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.",
-            breaking: true
+            messageText:        "startup.errors.php_opt.title".localized,
+            informativeText:    "startup.errors.php_opt.desc".localized,
+            breaking:           true
         )
         
         self.performEnvironmentCheck(
             !Shell.user.pipe("which valet").contains("/usr/local/bin/valet"),
-            messageText: "Laravel Valet is not correctly installed",
-            informativeText: "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet`. The app will not work correctly until you resolve this issue.",
-            breaking: true
+            messageText:        "startup.errors.valet_executable.title".localized,
+            informativeText:    "startup.errors.valet_executable.desc".localized,
+            breaking:           true
         )
         
         self.performEnvironmentCheck(
             !Shell.user.pipe("cat /private/etc/sudoers.d/brew").contains("/usr/local/bin/brew"),
-            messageText: "Brew has not been added to sudoers.d",
-            informativeText: "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.",
-            breaking: true
+            messageText:        "startup.errors.sudoers_brew.title".localized,
+            informativeText:    "startup.errors.sudoers_brew.desc".localized,
+            breaking:           true
         )
         
         self.performEnvironmentCheck(
             !Shell.user.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet"),
-            messageText: "Valet has not been added to sudoers.d",
-            informativeText: "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.",
-            breaking: true
+            messageText:        "startup.errors.sudoers_valet.title".localized,
+            informativeText:    "startup.errors.sudoers_valet.desc".localized,
+            breaking:           true
         )
         
         let services = Shell.user.pipe("brew services list | grep php")
         self.performEnvironmentCheck(
             (services.countInstances(of: "started") > 1),
-            messageText: "Multiple PHP services are active",
-            informativeText: "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes." +
-            "\n\nThe easiest solution is to choose the option 'Force load latest PHP version' in the menu bar." +
-            "\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies)." +
-            "\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue." +
-            "\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.",
-            breaking: false
+            messageText:        "startup.errors.services.title".localized,
+            informativeText:    "startup.errors.services.desc".localized,
+            breaking:           false
         )
         
         if (!self.failed) {
@@ -99,7 +95,7 @@ class Startup {
     /**
      * Perform an environment check. Will cause the application to terminate, if `breaking` is set to true.
      *
-     * - Parameter condition: Condition to check for
+     * - Parameter condition: Fail condition to check for; if this returns `true`, the alert will be shown
      * - Parameter messageText: Short description of what is wrong
      * - Parameter informativeText: Expanded description of the environment check that failed
      * - Parameter breaking: If the application should terminate afterwards
