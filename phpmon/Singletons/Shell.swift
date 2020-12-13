@@ -34,20 +34,16 @@ class Shell {
      */
     public func pipe(_ command: String, shell: String = "/bin/sh") -> String {
         let task = Process()
+        let pipe = Pipe()
+        
         task.launchPath = shell
         task.arguments = ["--login", "-c", command]
-        
-        let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        
-        let output: String = NSString(
-            data: data,
-            encoding: String.Encoding.utf8.rawValue
-        )! as String
 
-        return output
+        return String(
+            data: pipe.fileHandleForReading.readDataToEndOfFile(),
+            encoding: .utf8
+        )!
     }
 }
