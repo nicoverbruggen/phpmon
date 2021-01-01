@@ -186,9 +186,23 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
+    @objc public func restartAllServices() {
+        self.waitAndExecute({
+            Actions.restartDnsMasq()
+            Actions.restartPhpFpm()
+            Actions.restartNginx()
+        })
+    }
+    
     @objc public func restartNginx() {
         self.waitAndExecute({
             Actions.restartNginx()
+        })
+    }
+    
+    @objc public func restartDnsMasq() {
+        self.waitAndExecute({
+            Actions.restartDnsMasq()
         })
     }
     

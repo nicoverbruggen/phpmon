@@ -51,6 +51,11 @@ class Actions {
         Shell.user.run("sudo \(Paths.brew()) services restart nginx")
     }
     
+    public static func restartDnsMasq()
+    {
+        Shell.user.run("sudo \(Paths.brew()) services restart dnsmasq")
+    }
+    
     /**
      Switching to a new PHP version involves:
      - unlinking the current version
