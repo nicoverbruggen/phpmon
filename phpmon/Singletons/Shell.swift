@@ -47,9 +47,12 @@ class Shell {
         )!
     }
     
-    public static func fileExists(_ filePath: String) -> Bool {
+    /**
+     Checks if a file exists at the provided path.
+     */
+    public static func fileExists(_ path: String) -> Bool {
         return Shell.user.pipe(
-            "if [ -f \(filePath) ]; then echo \"Y\"; fi"
-        ).contains("Y")
+            "if [ -f \(path) ]; then echo \"PHP_Y_FE\"; fi"
+        ).contains("PHP_Y_FE")
     }
 }
