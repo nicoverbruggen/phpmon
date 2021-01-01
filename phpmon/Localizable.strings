@@ -50,7 +50,7 @@
 
 // Force Reload Done
 "alert.force_reload_done.title" = "PHP has been force reloaded";
-"alert.force_reload_done.info" = "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP.";
+"alert.force_reload_done.info" = "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP. If visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).";
 
 // PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor cannot start";
