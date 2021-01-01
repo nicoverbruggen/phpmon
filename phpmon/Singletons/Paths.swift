@@ -9,8 +9,8 @@
 import Foundation
 
 enum HomebrewDir: String {
-    case opt = "/opt/homebrew/bin"
-    case usr = "/usr/local/bin"
+    case opt = "/opt/homebrew"
+    case usr = "/usr/local"
 }
 
 class Paths {
@@ -19,8 +19,8 @@ class Paths {
     var baseDir : HomebrewDir
     
     init() {
-        let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/brew")
-        let usrBrewFound = Shell.fileExists("\(HomebrewDir.usr.rawValue)/brew")
+        let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
+        let usrBrewFound = Shell.fileExists("\(HomebrewDir.usr.rawValue)/bin/brew")
         
         if (optBrewFound) {
             // This is usually the case with Homebrew installed on Apple Silicon
@@ -38,6 +38,8 @@ class Paths {
         print("Homebrew directory: \(self.baseDir)")
     }
     
+    // - MARK: Binaries
+    
     public static func brew() -> String {
         return "\(self.binPath())/brew"
     }
@@ -46,26 +48,18 @@ class Paths {
         return "\(self.binPath())/php"
     }
     
+    // - MARK: Paths
+    
     public static func binPath() -> String {
-        return self.shared.baseDir.rawValue
+        return "\(self.shared.baseDir.rawValue)/bin"
     }
     
     public static func optPath() -> String {
-        switch self.shared.baseDir {
-        case .opt:
-            return "/opt/homebrew/opt"
-        case .usr:
-            return "/usr/local/opt"
-        }
+        return "\(self.shared.baseDir.rawValue)/opt"
     }
     
     public static func etcPath() -> String {
-        switch self.shared.baseDir {
-        case .opt:
-            return "/opt/homebrew/etc"
-        case .usr:
-            return "/usr/local/etc"
-        }
+        return "\(self.shared.baseDir.rawValue)/etc"
     }
 }
 

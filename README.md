@@ -75,8 +75,8 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
-- The PHP binary is not located in `/usr/local/bin/php`
-- PHP is missing in `/usr/local/opt`
+- The PHP binary is not located in `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
+- PHP is missing in `/usr/local/opt` (or `/opt/homebrew/opt`)
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
