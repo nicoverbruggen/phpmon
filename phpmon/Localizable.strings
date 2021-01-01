@@ -59,11 +59,11 @@
 
 /// 1. PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary_desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php`. The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary_desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
 
-/// 2. PHP not found in /usr/local/opt
+/// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
-"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
+"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` (or `/opt/homebrew/opt`). The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
 /// 3. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";

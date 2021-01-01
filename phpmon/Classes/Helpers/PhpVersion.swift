@@ -19,7 +19,10 @@ class PhpVersion {
     var error : Bool = false
     
     init() {
-        let version = Command.execute(path: "/usr/local/bin/php", arguments: ["-r", "print phpversion();"])
+        let version = Command.execute(
+            path: Paths.php(),
+            arguments: ["-r", "print phpversion();"]
+        )
         
         if (version == "" || version.contains("Warning")) {
             self.short = "💩 BROKEN"

@@ -46,4 +46,10 @@ class Shell {
             encoding: .utf8
         )!
     }
+    
+    public static func fileExists(_ filePath: String) -> Bool {
+        return Shell.user.pipe(
+            "if [ -f \(filePath) ]; then echo \"Y\"; fi"
+        ).contains("Y")
+    }
 }
