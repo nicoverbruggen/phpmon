@@ -127,6 +127,8 @@ class Actions {
      If this does not solve the issue, the user may need to install additional extensions and/or run `composer global update`.
      */
     public static func fixMyPhp() {
+        Shell.user.run("sudo \(Paths.brew()) services stop dnsmasq")
+        Shell.user.run("sudo \(Paths.brew()) services start dnsmasq")
         let versions = self.detectPhpVersions()
         versions.forEach { (version) in
             Shell.user.run("\(Paths.brew()) unlink php@\(version)")
@@ -141,6 +143,7 @@ class Actions {
         Shell.user.run("\(Paths.brew()) services stop php")
         Shell.user.run("\(Paths.brew()) services stop nginx")
         Shell.user.run("\(Paths.brew()) link php")
+        Shell.user.run("sudo \(Paths.brew()) services restart dnsmasq")
         Shell.user.run("sudo \(Paths.brew()) services restart php")
         Shell.user.run("sudo \(Paths.brew()) services restart nginx")
     }
