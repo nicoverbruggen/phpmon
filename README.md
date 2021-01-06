@@ -30,7 +30,11 @@ You can install via Homebrew, or may download the latest [release][1].
 To install via Homebrew, run:
 
 	brew tap nicoverbruggen/homebrew-cask
-	brew cask install phpmon
+	brew install --cask phpmon
+
+To upgrade your existing installation, run:
+
+	brew upgrade phpmon
 
 _The app is signed and notarized, meaning all you have to do is approve its first launch._
 
