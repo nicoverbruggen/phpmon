@@ -186,9 +186,23 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
+    @objc public func restartAllServices() {
+        self.waitAndExecute({
+            Actions.restartDnsMasq()
+            Actions.restartPhpFpm()
+            Actions.restartNginx()
+        })
+    }
+    
     @objc public func restartNginx() {
         self.waitAndExecute({
             Actions.restartNginx()
+        })
+    }
+    
+    @objc public func restartDnsMasq() {
+        self.waitAndExecute({
+            Actions.restartDnsMasq()
         })
     }
     
@@ -199,9 +213,12 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc public func openPhpInfo() {
-        try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
-        Shell.user.run("/usr/local/bin/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
-        NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
+        self.waitAndExecute({
+            try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
+            Shell.user.run("\(Paths.binPath())/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+        }, {
+            NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
+        })
     }
     
     @objc public func forceRestartLatestPhp() {
@@ -234,11 +251,9 @@ class MainMenu: NSObject, NSWindowDelegate {
         Actions.openValetConfigFolder()
     }
     
-    @objc public func switchToPhpVersion(sender: AnyObject) {
+    @objc public func switchToPhpVersion(sender: PhpMenuItem) {
+        print("Switching to: PHP \(sender.version)")
         self.setBusyImage()
-        // TODO: A wise man once said: using tags is not good. Fix this.
-        let index = sender.tag!
-        let version = App.shared.availablePhpVersions[index]
         App.shared.busy = true
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
@@ -247,7 +262,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             self.update()
             // Switch the PHP version
             Actions.switchToPhpVersion(
-                version: version,
+                version: sender.version,
                 availableVersions: App.shared.availablePhpVersions
             )
             // Mark as no longer busy
@@ -258,8 +273,8 @@ class MainMenu: NSObject, NSWindowDelegate {
                 self.update()
                 // Send a notification that the switch has been completed
                 LocalNotification.send(
-                    title: String(format: "notification.version_changed_title".localized, version),
-                    subtitle: String(format: "notification.version_changed_desc".localized, version)
+                    title: String(format: "notification.version_changed_title".localized, sender.version),
+                    subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
                 )
             }
         }

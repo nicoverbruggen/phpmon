@@ -33,6 +33,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
      */
     let menu : MainMenu
     
+    /**
+     The paths singleton that determines where Homebrew is installed,
+     and where to look for binaries.
+     */
+    let paths : Paths
+    
     // MARK: - Initializer
     
     /**
@@ -42,6 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
+        self.paths = Paths.shared
         super.init()
     }
     

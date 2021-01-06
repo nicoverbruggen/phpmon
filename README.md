@@ -4,21 +4,22 @@
 
 PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
 
-It also gives you quick access to various useful functionality (like switching PHP versions, restarting services, accessing configuration files, and more).
+<img src="./docs/screenshot.png" width="370px" alt="phpmon screenshot (menu bar app)"/>
 
-<img src="./docs/screenshot.png" width="370px" alt="phpmon screenshot"/>
+It's also super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
-For me, it comes in handy when running multiple versions of PHP with Homebrew. If you wish to be able to see at a glance which version is currently linked & active with Laravel Valet, PHP Monitor is your new best friend. 
+<img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
-It's also super convenient to switch between different versions of PHP, or to find your currently active .ini file!
+It also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
 ## 🖥 System requirements
 
 PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
-* The brew formula `php` has to be installed (which version it is, is detected)
-* Laravel Valet 2.x
+* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew` (the default)
+* The brew formula `php` has to be installed (which version is detected)
+* Laravel Valet 2.13 or higher
 
 _Please note that future versions of PHP will not work automatically, minor changes are usually required to add support for newer versions of PHP. You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
 
@@ -71,12 +72,12 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## 🤬 Troubleshooting
 
-**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. Don't forget to run `valet install` after upgrading.**
+**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.**
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
-- The PHP binary is not located in `/usr/local/bin/php`
-- PHP is missing in `/usr/local/opt`
+- The PHP binary is not located in `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
+- PHP is missing in `/usr/local/opt` (or `/opt/homebrew/opt`)
 - Laravel Valet is missing in `/usr/local/bin/valet`
 - Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
 - Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
@@ -84,9 +85,29 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-## 📝 Additional information & FAQ
+## 🏎 Quick Troubleshooting
 
-Please consult the [additional information][2] file that contains more information. It has answers to additional questions and more information to troubleshoot your problem.
+### PHP Monitor tells me `php` is not installed
+
+Try installing again using `brew install php`. 
+
+This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
+
+	brew install php
+	brew link php --force
+	
+### Valet sites won't load (502 Bad Gateway)
+
+If you're visiting your `.test` domain, and you're getting a 502 (Bad Gateway) after switching to a different PHP version, you're dealing with a common issue.
+
+This problem is usually resolved by upgrading Valet and running `valet install` again.
+
+	composer global update
+	valet install
+
+## 📝 Additional Info
+
+Please consult the [additional file][2] that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
 
 ## ⭐️ Star me!
 
@@ -96,7 +117,7 @@ I did not include any tracking or analytics software, so if you encounter issues
 
 ## 💵 Support me?
 
-I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3]. 
+I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3].
 
 [1]:	https://github.com/nicoverbruggen/phpmon/releases
 [2]:	docs/ADDITIONAL.md

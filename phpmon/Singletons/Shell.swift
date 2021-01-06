@@ -34,20 +34,25 @@ class Shell {
      */
     public func pipe(_ command: String, shell: String = "/bin/sh") -> String {
         let task = Process()
+        let pipe = Pipe()
+        
         task.launchPath = shell
         task.arguments = ["--login", "-c", command]
-        
-        let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        
-        let output: String = NSString(
-            data: data,
-            encoding: String.Encoding.utf8.rawValue
-        )! as String
 
-        return output
+        return String(
+            data: pipe.fileHandleForReading.readDataToEndOfFile(),
+            encoding: .utf8
+        )!
+    }
+    
+    /**
+     Checks if a file exists at the provided path.
+     */
+    public static func fileExists(_ path: String) -> Bool {
+        return Shell.user.pipe(
+            "if [ -f \(path) ]; then echo \"PHP_Y_FE\"; fi"
+        ).contains("PHP_Y_FE")
     }
 }

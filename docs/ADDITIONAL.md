@@ -1,22 +1,6 @@
-### Q&A
+### Quick Setup
 
-#### Q: Does this support Apple Silicon?
-
-Yes. This is a universal app.
-
-#### Q: Is PHP 8.x supported?
-
-Yes.
-
-#### Q: This app is doing network requests? Why?
-
-It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
-
-PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
-
-#### Q: How can I set this up on a fresh Mac?
-
-If you want to set up your computer for the very first time, here's how I do it:
+If you want to set up your computer for the very first time with PHP Monitor, here's how I do it:
 
 Install [Homebrew](https://brew.sh) first.
 
@@ -28,7 +12,13 @@ Install PHP, composer, add to path:
 
 Make sure the following line is not in the comments:
 
+    # on an Intel Mac
     export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+If you're on an Apple Silicon-based Mac, you'll need to add: 
+
+    # on an M1 Mac
+    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
 and add the following to your .zshrc:
 
@@ -38,7 +28,7 @@ Make sure PHP is linked correctly:
 
     which php
 
-should return: `/usr/local/bin/php`
+should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
 
     composer global require laravel/valet
     valet install
@@ -49,21 +39,44 @@ This should install `dnsmasq` and set up Valet. Great, almost there!
 
 Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work.
 
+### FAQ
+
+#### Q: Does this support Apple Silicon?
+
+Yes. This is a universal app.
+
+The following installation paths are supported:
+
+* `/usr/local/homebrew` (default on Intel Macs)
+* `/opt/homebrew` (default on Apple Silicon Macs)
+
+#### Q: Is PHP 8.0 supported?
+
+Yes.
+
+#### Q: This app is doing network requests? Why?
+
+It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
+
+PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
+
 #### Q: I want PHP Monitor to start up when I boot my Mac!
 
 You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
 
 Super convenient!
 
-#### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
+### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
 
 Try installing again using `brew install php`. 
 
-This should resolve the issue.
+This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
 
-#### Q: PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+### Q: PHP Monitor says the correct version is loaded, but my Valet sites don't work!
 
-You may need to run `valet install`. (Preferably after updating `valet` by running `composer global update`).
+Your sites aren't showing up, or you are seeing a 502? It's a common issue.
+
+You may need to run `valet install`, preferably after updating `valet` by running `composer global update`.
 
 #### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
 
