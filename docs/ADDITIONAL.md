@@ -66,6 +66,18 @@ You can do this by dragging *PHP Monitor.app* into the **Login Items** section i
 
 Super convenient!
 
+### Q: PHP Monitor says that the latest version of PHP is not installed, but it is!
+
+Try installing again using `brew install php`. 
+
+This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
+
+### Q: PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+
+Your sites aren't showing up, or you are seeing a 502? It's a common issue.
+
+You may need to run `valet install`, preferably after updating `valet` by running `composer global update`.
+
 #### Q: PHP Monitor reports another version compared to phpinfo on my local website, what is going on?
 
 _Beginning with version 2.0 you'll get alerts about this at startup._

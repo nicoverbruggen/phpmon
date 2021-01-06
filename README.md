@@ -72,7 +72,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## 🤬 Troubleshooting
 
-**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. Don't forget to run `valet install` after upgrading.**
+**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.**
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
 
@@ -85,25 +85,29 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-## 🤔 Quick Troubleshooting
+## 🏎 Quick Troubleshooting
 
-### PHP Monitor says that the latest version of PHP is not installed, but it is!
+### PHP Monitor tells me `php` is not installed
 
 Try installing again using `brew install php`. 
 
 This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
 
-### PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+	brew install php
+	brew link php --force
+	
+### Valet sites won't load (502 Bad Gateway)
 
-Your sites aren't showing up, or you are seeing a 502? It's a common issue.
+If you're visiting your `.test` domain, and you're getting a 502 (Bad Gateway) after switching to a different PHP version, you're dealing with a common issue.
 
-You may need to run `valet install`, preferably after updating `valet` by running `composer global update`.
+This problem is usually resolved by upgrading Valet and running `valet install` again.
 
-## 📝 Quick Setup & FAQ
+	composer global update
+	valet install
 
-Please consult the [additional information][2] file that contains more information. 
+## 📝 Additional Info
 
-It has answers to additional questions and more information to troubleshoot your problem.
+Please consult the [additional file][2] that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
 
 ## ⭐️ Star me!
 
