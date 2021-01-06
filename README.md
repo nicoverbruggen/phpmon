@@ -17,8 +17,9 @@ It also gives you quick access to various useful functionality (like accessing c
 PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
-* The brew formula `php` has to be installed (which version it is, is detected)
-* Laravel Valet 2.x
+* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew` (the default)
+* The brew formula `php` has to be installed (which version is detected)
+* Laravel Valet 2.13 or higher
 
 _Please note that future versions of PHP will not work automatically, minor changes are usually required to add support for newer versions of PHP. You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
 
@@ -84,9 +85,25 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 Follow instructions as specified in the alert in order to resolve any issues.
 
-## 📝 Additional information & FAQ
+## 🤔 Quick Troubleshooting
 
-Please consult the [additional information][2] file that contains more information. It has answers to additional questions and more information to troubleshoot your problem.
+### PHP Monitor says that the latest version of PHP is not installed, but it is!
+
+Try installing again using `brew install php`. 
+
+This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
+
+### PHP Monitor says the correct version is loaded, but my Valet sites don't work!
+
+Your sites aren't showing up, or you are seeing a 502? It's a common issue.
+
+You may need to run `valet install`, preferably after updating `valet` by running `composer global update`.
+
+## 📝 Quick Setup & FAQ
+
+Please consult the [additional information][2] file that contains more information. 
+
+It has answers to additional questions and more information to troubleshoot your problem.
 
 ## ⭐️ Star me!
 
@@ -96,7 +113,7 @@ I did not include any tracking or analytics software, so if you encounter issues
 
 ## 💵 Support me?
 
-I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3]. 
+I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3].
 
 [1]:	https://github.com/nicoverbruggen/phpmon/releases
 [2]:	docs/ADDITIONAL.md
