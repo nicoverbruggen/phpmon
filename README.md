@@ -44,6 +44,19 @@ I wanted to be able to see at a glance which version of PHP was linked, and hand
 
 Initially, I had an Alfred workflow for this. But this does the job as well, while also showing me at all times which version of PHP is linked (which is the main benefit over e.g. an Alfred workflow).
 
+## 🔧 Build instructions
+
+<img src="./docs/build.png" width="320px" alt="build button in Xcode"/>
+
+If you'd like to build PHP Monitor yourself, you need:
+
+* Xcode (usually the latest version)
+* The contents of this repository
+
+Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you should be able to immediately build the app for your system by pressing Cmd-R. This will create a debug build. (If Xcode complains about code signing, you can turn it off.)
+
+If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
+
 ## 🚜 How it works
 
 ### Version detection
