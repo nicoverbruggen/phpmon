@@ -15,7 +15,7 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
-		C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
@@ -44,7 +44,7 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
-		C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersion.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstall.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -124,6 +124,7 @@
 		C41E181722CB61EB0072CF09 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C4B13B1D25C4915000548C3A /* Core */,
 				C47331A0247093AC009A0597 /* Menu */,
 				C4811D2722D70D8E00B5F6B3 /* Commands */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
@@ -173,12 +174,19 @@
 			isa = PBXGroup;
 			children = (
 				C476FF9722B0DD830098105B /* Alert.swift */,
-				C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
-				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C4B13B1D25C4915000548C3A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
+				C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		C4F8C0A222D4F100002EFE61 /* Extensions */ = {
@@ -273,7 +281,7 @@
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
-				C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */,
 				C486EFFC2586931100A02B2C /* PhpMenuItem.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,

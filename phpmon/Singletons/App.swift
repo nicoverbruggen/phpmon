@@ -12,15 +12,23 @@ class App {
     
     static let shared = App()
     
+    static var phpInstall: PhpInstall? {
+        return App.shared.currentInstall
+    }
+    
+    static var busy: Bool {
+        return App.shared.busy
+    }
+    
     /**
      Whether the application is busy switching versions.
      */
     var busy: Bool = false
     
     /**
-     The currently active version of PHP.
+     The currently active installation of PHP.
      */
-    var currentVersion: PhpVersion? = nil
+    var currentInstall: PhpInstall? = nil
     
     /**
      All available versions of PHP.

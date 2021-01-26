@@ -105,23 +105,17 @@ class Startup {
         messageText: String,
         informativeText: String,
         breaking: Bool
-    )
-    {
-        if (condition) {
-            // Only breaking issues will cause the notification
+    ) {
+        if (!condition) { return }
+        
+        self.failed = breaking
+
+        DispatchQueue.main.async {
+            // Present the information to the user
+            Alert.notify(message: messageText, info: informativeText)
+            // Only breaking issues will throw the extra retry modal
             if (breaking) {
-                self.failed = true
-            }
-            DispatchQueue.main.async {
-                // Present the information to the user
-                _ = Alert.present(
-                    messageText: messageText,
-                    informativeText: informativeText
-                )
-                // Only breaking issues will throw the extra retry modal
-                if (breaking) {
-                     self.failureCallback()
-                }
+                 self.failureCallback()
             }
         }
     }

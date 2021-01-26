@@ -24,4 +24,8 @@ class Alert {
         }
         return alert.runModal() == .alertFirstButtonReturn
     }
+    
+    public static func notify(message: String, info: String) {
+        _ = self.present(messageText: message, informativeText: info, buttonTitle: "OK", secondButtonTitle: "")
+    }
 }
