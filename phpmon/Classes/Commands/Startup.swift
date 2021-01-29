@@ -24,14 +24,14 @@ class Startup {
         self.failureCallback = failure
         
         self.performEnvironmentCheck(
-            !Shell.fileExists("\(Paths.binPath())/php"),
+            !Shell.fileExists("\(Paths.binPath)/php"),
             messageText:        "startup.errors.php_binary.title".localized,
             informativeText:    "startup.errors.php_binary_desc".localized,
             breaking:           true
         )
         
         self.performEnvironmentCheck(
-            !Shell.pipe("ls \(Paths.optPath()) | grep php").contains("php"),
+            !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php"),
             messageText:        "startup.errors.php_opt.title".localized,
             informativeText:    "startup.errors.php_opt.desc".localized,
             breaking:           true
@@ -45,7 +45,7 @@ class Startup {
         )
         
         self.performEnvironmentCheck(
-            !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath())/brew"),
+            !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
             messageText:        "startup.errors.sudoers_brew.title".localized,
             informativeText:    "startup.errors.sudoers_brew.desc".localized,
             breaking:           true
@@ -58,7 +58,7 @@ class Startup {
             breaking:           true
         )
         
-        let services = Shell.pipe("\(Paths.brew()) services list | grep php")
+        let services = Shell.pipe("\(Paths.brew) services list | grep php")
         self.performEnvironmentCheck(
             (services.countInstances(of: "started") > 1),
             messageText:        "startup.errors.services.title".localized,
@@ -81,7 +81,7 @@ class Startup {
         print("PHP Monitor has determined the application has successfully passed all checks.")
         print("Determining which version of PHP is aliased to `php` via Homebrew...")
         
-        let brewPhpAlias = Shell.pipe("\(Paths.brew()) info php --json");
+        let brewPhpAlias = Shell.pipe("\(Paths.brew) info php --json");
         
         App.shared.brewPhpPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,

@@ -14,7 +14,7 @@ class Actions {
     
     public static func detectPhpVersions() -> [String]
     {
-        let files = Shell.pipe("ls \(Paths.optPath()) | grep php@")
+        let files = Shell.pipe("ls \(Paths.optPath) | grep php@")
         var versions = files.components(separatedBy: "\n")
         
         // Remove all empty strings
@@ -83,13 +83,13 @@ class Actions {
     
     public static func openGenericPhpConfigFolder()
     {
-        let files = [NSURL(fileURLWithPath: "\(Paths.etcPath())/php")];
+        let files = [NSURL(fileURLWithPath: "\(Paths.etcPath)/php")];
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
     
     public static func openPhpConfigFolder(version: String)
     {
-        let files = [NSURL(fileURLWithPath: "\(Paths.etcPath())/php/\(version)/php.ini")];
+        let files = [NSURL(fileURLWithPath: "\(Paths.etcPath)/php/\(version)/php.ini")];
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
     
@@ -104,7 +104,7 @@ class Actions {
     public static func didFindXdebug(_ version: String) -> Bool
     {
         return grepContains(
-            file: "\(Paths.etcPath())/php/\(version)/php.ini",
+            file: "\(Paths.etcPath)/php/\(version)/php.ini",
             query: "zend_extension=\"xdebug.so\""
         )
     }
@@ -112,7 +112,7 @@ class Actions {
     public static func didEnableXdebug(_ version: String) -> Bool
     {
         return !grepContains(
-            file: "\(Paths.etcPath())/php/\(version)/php.ini",
+            file: "\(Paths.etcPath)/php/\(version)/php.ini",
             query: "; zend_extension=\"xdebug.so\""
         )
     }
@@ -123,12 +123,12 @@ class Actions {
         
         self.didEnableXdebug(version)
             ? sed(
-                file: "\(Paths.etcPath())/php/\(version)/php.ini",
+                file: "\(Paths.etcPath)/php/\(version)/php.ini",
                 original: "zend_extension=\"xdebug.so\"",
                 replacement: "; zend_extension=\"xdebug.so\""
             )
             : sed(
-                file: "\(Paths.etcPath())/php/\(version)/php.ini",
+                file: "\(Paths.etcPath)/php/\(version)/php.ini",
                 original: "; zend_extension=\"xdebug.so\"",
                 replacement: "zend_extension=\"xdebug.so\""
             )
@@ -167,7 +167,7 @@ class Actions {
      */
     private static func brew(_ command: String, sudo: Bool = false)
     {
-        Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew()) \(command)")
+        Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
     }
     
     /**
