@@ -2,8 +2,7 @@
 //  Date.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 09/07/2019.
-//  Copyright © 2019 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa

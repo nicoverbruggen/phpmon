@@ -2,8 +2,7 @@
 //  HomebrewPackage.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 26/11/2020.
-//  Copyright © 2020 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation

@@ -2,14 +2,16 @@
 //  MainMenuBuilder.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 16/05/2020.
-//  Copyright © 2020 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
+class PhpMenuItem: NSMenuItem {
+    var version: String = ""
+}
+
 class StatusMenu : NSMenu {
-    
     public func addPhpVersionMenuItems()
     {
         if (App.shared.currentInstall == nil) {
@@ -99,5 +101,4 @@ class StatusMenu : NSMenu {
         
         self.addItem(menuItem)
     }
-    
 }
