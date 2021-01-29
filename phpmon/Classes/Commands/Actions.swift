@@ -70,13 +70,13 @@ class Actions {
     {
         availableVersions.forEach { (available) in
             let formula = (available == App.shared.brewPhpVersion) ? "php" : "php@\(available)"
-            Shell.user.run("\(Paths.brew()) unlink \(formula)")
-            Shell.user.run("sudo \(Paths.brew()) services stop \(formula)")
+            brew("unlink \(formula)")
+            brew("services stop \(formula)", sudo: true)
         }
         
         let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
-        Shell.user.run("\(Paths.brew()) link \(formula) --overwrite --force")
-        Shell.user.run("sudo \(Paths.brew()) services start \(formula)")
+        brew("link \(formula) --overwrite --force")
+        brew("services start \(formula)", sudo: true)
     }
     
     // MARK: - Finding Config Files
@@ -103,34 +103,35 @@ class Actions {
     
     public static func didFindXdebug(_ version: String) -> Bool
     {
-        let command = """
-        grep -q 'zend_extension="xdebug.so"' \(Paths.etcPath())/php/\(version)/php.ini; [ $? -eq 0 ] && echo "YES" || echo "NO"
-        """
-        let output = Shell.user.pipe(command).trimmingCharacters(in: .whitespacesAndNewlines)
-        return (output == "YES")
+        return grepContains(
+            file: "\(Paths.etcPath())/php/\(version)/php.ini",
+            query: "zend_extension=\"xdebug.so\""
+        )
     }
     
     public static func didEnableXdebug(_ version: String) -> Bool
     {
-        let command = """
-        grep -q '; zend_extension="xdebug.so"' \(Paths.etcPath())/php/\(version)/php.ini; [ $? -eq 0 ] && echo "YES" || echo "NO"
-        """
-        let output = Shell.user.pipe(command).trimmingCharacters(in: .whitespacesAndNewlines)
-        return (output == "NO")
+        return !grepContains(
+            file: "\(Paths.etcPath())/php/\(version)/php.ini",
+            query: "; zend_extension=\"xdebug.so\""
+        )
     }
     
     public static func toggleXdebug()
     {
         let version = App.phpInstall!.version.short
-        var command = """
-        sed -i '' 's/; zend_extension="xdebug.so"/zend_extension="xdebug.so"/g' \(Paths.etcPath())/php/\(version)/php.ini
-        """
-        if (self.didEnableXdebug(version)) {
-            command = """
-            sed -i '' 's/zend_extension="xdebug.so"/; zend_extension="xdebug.so"/g' \(Paths.etcPath())/php/\(version)/php.ini
-            """
-        }
-        Shell.user.run(command)
+        
+        self.didEnableXdebug(version)
+            ? sed(
+                file: "\(Paths.etcPath())/php/\(version)/php.ini",
+                original: "zend_extension=\"xdebug.so\"",
+                replacement: "; zend_extension=\"xdebug.so\""
+            )
+            : sed(
+                file: "\(Paths.etcPath())/php/\(version)/php.ini",
+                original: "; zend_extension=\"xdebug.so\"",
+                replacement: "zend_extension=\"xdebug.so\""
+            )
     }
     
     // MARK: - Quick Fix
@@ -159,8 +160,35 @@ class Actions {
         brew("services stop nginx", sudo: true)
     }
     
+    // MARK: Common Shell Commands
+    
+    /**
+     Runs a `brew` command. Can run as superuser.
+     */
     private static func brew(_ command: String, sudo: Bool = false)
     {
         Shell.user.run("\(sudo ? "sudo " : "")" + "\(Paths.brew()) \(command)")
+    }
+    
+    /**
+     Runs `sed` in order to replace all occurrences of a string in a specific file with another.
+     */
+    private static func sed(file: String, original: String, replacement: String)
+    {
+        Shell.user.run("""
+            sed -i '' 's/\(original)/\(replacement)/g' \(file)
+        """)
+    }
+    
+    /**
+     Uses `grep` to determine whether a particular query string can be found in a particular file.
+     */
+    private static func grepContains(file: String, query: String) -> Bool
+    {
+        return Shell.user.pipe("""
+            grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
+            """)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .contains("YES")
     }
 }
