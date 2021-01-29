@@ -14,7 +14,7 @@ class Actions {
     
     public static func detectPhpVersions() -> [String]
     {
-        let files = Shell.user.pipe("ls \(Paths.optPath()) | grep php@")
+        let files = Shell.pipe("ls \(Paths.optPath()) | grep php@")
         var versions = files.components(separatedBy: "\n")
         
         // Remove all empty strings
@@ -167,7 +167,7 @@ class Actions {
      */
     private static func brew(_ command: String, sudo: Bool = false)
     {
-        Shell.user.run("\(sudo ? "sudo " : "")" + "\(Paths.brew()) \(command)")
+        Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew()) \(command)")
     }
     
     /**
@@ -175,7 +175,7 @@ class Actions {
      */
     private static func sed(file: String, original: String, replacement: String)
     {
-        Shell.user.run("""
+        Shell.run("""
             sed -i '' 's/\(original)/\(replacement)/g' \(file)
         """)
     }
@@ -185,7 +185,7 @@ class Actions {
      */
     private static func grepContains(file: String, query: String) -> Bool
     {
-        return Shell.user.pipe("""
+        return Shell.pipe("""
             grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
             """)
             .trimmingCharacters(in: .whitespacesAndNewlines)

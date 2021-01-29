@@ -9,6 +9,18 @@ import Cocoa
 
 class Shell {
     
+    // MARK: - Invoke static functions
+    
+    public static func run(_ command: String) {
+        Shell.user.run(command)
+    }
+    
+    public static func pipe(_ command: String, shell: String = "/bin/sh") -> String {
+        Shell.user.pipe(command, shell: shell)
+    }
+    
+    // MARK: - Singleton
+    
     /**
      Singleton to access a user shell (with --login)
      */
@@ -50,7 +62,7 @@ class Shell {
      Checks if a file exists at the provided path.
      */
     public static func fileExists(_ path: String) -> Bool {
-        return Shell.user.pipe(
+        return Shell.pipe(
             "if [ -f \(path) ]; then echo \"PHP_Y_FE\"; fi"
         ).contains("PHP_Y_FE")
     }

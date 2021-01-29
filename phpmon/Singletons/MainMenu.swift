@@ -213,7 +213,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     @objc public func openPhpInfo() {
         self.waitAndExecute({
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
-            Shell.user.run("\(Paths.binPath())/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+            Shell.run("\(Paths.binPath())/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
         }, {
             NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
         })
