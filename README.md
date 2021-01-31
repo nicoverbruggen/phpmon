@@ -81,6 +81,22 @@ The utility runs the following commands:
 - Link the desired version of PHP
 - Start the correct php-fpm service for the desired PHP version
 
+### PHP extension detection
+
+The app searches in the relevant `php.ini` file for a specific pattern. For regular extensions:
+
+* `extension="*.so"`
+* `; extension="*.so"`
+
+For Zend extensions:
+
+* `zend_extension="*.so"`
+* `; zend_extension="*.so"`
+
+The `*` is a wildcard and the name of the extension. 
+
+Based on this information, the extension is shown as enabled or disabled (if commented out). When you toggle the extension, the php.ini file is updated (using `sed`).
+
 ### Want to know more?
 
 If you want to know more about how this works, I recommend you check out the source code. 
