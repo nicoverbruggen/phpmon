@@ -9,8 +9,8 @@ import Foundation
 
 class PhpInstall {
 
-    var version: Version = Version()
-    var xdebug: Xdebug = Xdebug()
+    var version: Version!
+    var extensions: [PhpExtension]!
     
     // MARK: - Computed
     
@@ -22,6 +22,8 @@ class PhpInstall {
 
     init() {
         let version = Command.execute(path: Paths.php, arguments: ["-r", "print phpversion();"])
+        
+        self.version = Version()
         
         if (version == "" || version.contains("Warning")) {
             self.version.short = "💩 BROKEN"
@@ -39,13 +41,9 @@ class PhpInstall {
         // Get the first two elements
         self.version.short = segments[0...1].joined(separator: ".")
         
-        // Determine the Xdebug status
-        self.xdebug = Xdebug(
-            found: Actions.didFindXdebug(self.version.short),
-            enabled: Actions.didEnableXdebug(self.version.short)
-        )
-        
-        self.version.error = false
+        // Load extension information
+        let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(self.version.short)/php.ini")
+        self.extensions = PhpExtension.load(from: path)
     }
     
     // MARK: - Structs
@@ -54,10 +52,5 @@ class PhpInstall {
         var short = "???"
         var long = "???"
         var error = false
-    }
-    
-    struct Xdebug {
-        var found: Bool = false
-        var enabled: Bool = false
     }
 }

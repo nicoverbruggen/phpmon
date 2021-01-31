@@ -113,9 +113,7 @@ class Startup {
             // Present the information to the user
             Alert.notify(message: messageText, info: informativeText)
             // Only breaking issues will throw the extra retry modal
-            if (breaking) {
-                 self.failureCallback()
-            }
+            breaking ? self.failureCallback() : ()
         }
     }
 }

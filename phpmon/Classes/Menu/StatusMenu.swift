@@ -7,10 +7,6 @@
 
 import Cocoa
 
-class PhpMenuItem: NSMenuItem {
-    var version: String = ""
-}
-
 class StatusMenu : NSMenu {
     public func addPhpVersionMenuItems()
     {
@@ -79,26 +75,34 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
         
         self.addItem(NSMenuItem.separator())
-        self.addItem(NSMenuItem(title: "mi_enabled_extensions".localized, action: nil, keyEquivalent: ""))
-        self.addXdebugMenuItem()
-    }
-    
-    private func addXdebugMenuItem()
-    {
-        let xdebugFound = App.phpInstall!.xdebug.found
-        let xdebugOn = App.phpInstall!.xdebug.enabled
+        self.addItem(NSMenuItem(title: "mi_detected_extensions".localized, action: nil, keyEquivalent: ""))
         
-        let menuItem = NSMenuItem(
-            title: xdebugFound ? "mi_xdebug".localized : "mi_xdebug_missing".localized,
-            action: #selector(MainMenu.toggleXdebug), keyEquivalent: "x"
-        )
-        
-        if (!xdebugFound) {
-            menuItem.isEnabled = false
-        } else {
-            menuItem.state = xdebugOn ? .on : .off
+        for phpExtension in App.phpInstall!.extensions {
+            self.addExtensionItem(phpExtension)
         }
         
+        if (App.phpInstall!.extensions.count == 0) {
+            self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
+        }
+    }
+    
+    private func addExtensionItem(_ phpExtension: PhpExtension) {
+        let menuItem = ExtensionMenuItem(
+            title: "\(phpExtension.name.capitalized) (php.ini)",
+            action: #selector(MainMenu.toggleExtension), keyEquivalent: ""
+        )
+        menuItem.state = phpExtension.enabled ? .on : .off
+        menuItem.phpExtension = phpExtension
         self.addItem(menuItem)
     }
+}
+
+// MARK: - In order to store extra data in each item, NSMenuItem is subclassed
+
+class PhpMenuItem: NSMenuItem {
+    var version: String = ""
+}
+
+class ExtensionMenuItem: NSMenuItem {
+    var phpExtension: PhpExtension? = nil
 }

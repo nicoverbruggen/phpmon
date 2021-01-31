@@ -165,7 +165,7 @@ class Actions {
     /**
      Runs a `brew` command. Can run as superuser.
      */
-    private static func brew(_ command: String, sudo: Bool = false)
+    public static func brew(_ command: String, sudo: Bool = false)
     {
         Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
     }
@@ -173,17 +173,15 @@ class Actions {
     /**
      Runs `sed` in order to replace all occurrences of a string in a specific file with another.
      */
-    private static func sed(file: String, original: String, replacement: String)
+    public static func sed(file: String, original: String, replacement: String)
     {
-        Shell.run("""
-            sed -i '' 's/\(original)/\(replacement)/g' \(file)
-        """)
+        Shell.run("sed -i '' 's/\(original)/\(replacement)/g' \(file)")
     }
     
     /**
      Uses `grep` to determine whether a particular query string can be found in a particular file.
      */
-    private static func grepContains(file: String, query: String) -> Bool
+    public static func grepContains(file: String, query: String) -> Bool
     {
         return Shell.pipe("""
             grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"

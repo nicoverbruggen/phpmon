@@ -210,6 +210,14 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
+    @objc public func toggleExtension(sender: ExtensionMenuItem) {
+        self.waitAndExecute({
+            // Toggle that extension
+            print("Toggling extension '\(sender.phpExtension!.name)'")
+            sender.phpExtension?.toggle()
+        })
+    }
+    
     @objc public func openPhpInfo() {
         self.waitAndExecute({
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)

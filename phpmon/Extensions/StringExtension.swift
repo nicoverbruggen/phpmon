@@ -27,4 +27,10 @@ extension String {
         
         return count
     }
+
+    subscript (r: Range<String.Index>) -> String {
+        let start = r.lowerBound
+        let end = r.upperBound
+        return String(self[start ..< end])
+    }
 }
