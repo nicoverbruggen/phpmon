@@ -9,21 +9,19 @@ import Cocoa
 
 class StatusMenu : NSMenu {
     public func addPhpVersionMenuItems() {
-        if (App.shared.currentInstall == nil) {
+        if App.shared.currentInstall == nil {
             return
         }
         
-        if (!App.phpInstall!.version.error) {
-            // in case the php version loaded without issue
-            let string = "\("mi_php_version".localized) \(App.phpInstall!.version.long)"
-            self.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
-        } else {
-            // in case of an error show the error message
-            ["mi_php_broken_1", "mi_php_broken_2",
-             "mi_php_broken_3", "mi_php_broken_4"].forEach { (message) in
+        if App.phpInstall!.version.error {
+            for message in ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"] {
                 self.addItem(NSMenuItem(title: message.localized, action: nil, keyEquivalent: ""))
             }
+            return
         }
+        
+        let string = "\("mi_php_version".localized) \(App.phpInstall!.version.long)"
+        self.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
     }
     
     public func addPhpActionMenuItems() {
@@ -31,17 +29,13 @@ class StatusMenu : NSMenu {
             self.addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
         }
+        
         if App.shared.availablePhpVersions.count == 0 {
             return
         }
         
-        // Switch to PHP X.X
         self.addSwitchToPhpMenuItems()
-        
-        // Separator
         self.addItem(NSMenuItem.separator())
-        
-        // Services
         self.addServicesMenuItems()
     }
     
@@ -72,7 +66,6 @@ class StatusMenu : NSMenu {
         for item in servicesMenu.items {
             item.target = MainMenu.shared
         }
-        
         self.setSubmenu(servicesMenu, for: services)
         
         self.addItem(NSMenuItem(title: "mi_force_load_latest".localized, action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
@@ -86,14 +79,12 @@ class StatusMenu : NSMenu {
         }
         
         // Configuration
- 
         self.addItem(NSMenuItem(title: "mi_configuration".localized, action: nil, keyEquivalent: ""))
         self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
         
-        // Memory Limits
-        
+        // Limits
         self.addItem(NSMenuItem.separator())
         self.addItem(NSMenuItem(title: "mi_limits".localized, action: nil, keyEquivalent: ""))
         self.addItem(NSMenuItem(title: "\("mi_memory_limit".localized): \(App.phpInstall!.configuration.memory_limit)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
@@ -101,7 +92,6 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "\("mi_upload_max_filesize".localized): \(App.phpInstall!.configuration.upload_max_filesize)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
         
         // Extensions
-        
         self.addItem(NSMenuItem.separator())
         self.addItem(NSMenuItem(title: "mi_detected_extensions".localized, action: nil, keyEquivalent: ""))
         
