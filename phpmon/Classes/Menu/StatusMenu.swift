@@ -8,8 +8,7 @@
 import Cocoa
 
 class StatusMenu : NSMenu {
-    public func addPhpVersionMenuItems()
-    {
+    public func addPhpVersionMenuItems() {
         if (App.shared.currentInstall == nil) {
             return
         }
@@ -27,8 +26,7 @@ class StatusMenu : NSMenu {
         }
     }
     
-    public func addPhpActionMenuItems()
-    {
+    public func addPhpActionMenuItems() {
         if App.busy {
             self.addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
@@ -37,6 +35,17 @@ class StatusMenu : NSMenu {
             return
         }
         
+        // Switch to PHP X.X
+        self.addSwitchToPhpMenuItems()
+        
+        // Separator
+        self.addItem(NSMenuItem.separator())
+        
+        // Services
+        self.addServicesMenuItems()
+    }
+    
+    private func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<App.shared.availablePhpVersions.count).reversed() {
             let version = App.shared.availablePhpVersions[index]
@@ -50,39 +59,58 @@ class StatusMenu : NSMenu {
             shortcutKey = shortcutKey + 1
             self.addItem(menuItem)
         }
-        
-        self.addItem(NSMenuItem.separator())
-        self.addItem(NSMenuItem(title: "mi_active_services".localized, action: nil, keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
-        self.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
-        self.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
-        self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
-        
-        self.addItem(NSMenuItem.separator())
-        self.addItem(NSMenuItem(title: "mi_diagnostics".localized, action: nil, keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "mi_force_load_latest".localized, action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
     }
     
-    public func addPhpConfigurationMenuItems()
-    {
+    private func addServicesMenuItems() {
+        self.addItem(NSMenuItem(title: "mi_active_services".localized, action: nil, keyEquivalent: ""))
+        
+        let services = NSMenuItem(title: "mi_restart_specific".localized, action: nil, keyEquivalent: "")
+        let servicesMenu = NSMenu()
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+        for item in servicesMenu.items {
+            item.target = MainMenu.shared
+        }
+        
+        self.setSubmenu(servicesMenu, for: services)
+        
+        self.addItem(NSMenuItem(title: "mi_force_load_latest".localized, action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
+        self.addItem(services)
+        self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
+    }
+    
+    public func addPhpConfigurationMenuItems() {
         if App.shared.currentInstall == nil {
             return
         }
+        
+        // Configuration
  
         self.addItem(NSMenuItem(title: "mi_configuration".localized, action: nil, keyEquivalent: ""))
         self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
         
+        // Memory Limits
+        
+        self.addItem(NSMenuItem.separator())
+        self.addItem(NSMenuItem(title: "mi_limits".localized, action: nil, keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "memory_limit: \(App.phpInstall!.configuration.memory_limit)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "post_max_size: \(App.phpInstall!.configuration.post_max_size)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "upload_max_filesize: \(App.phpInstall!.configuration.upload_max_filesize)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        
+        // Extensions
+        
         self.addItem(NSMenuItem.separator())
         self.addItem(NSMenuItem(title: "mi_detected_extensions".localized, action: nil, keyEquivalent: ""))
         
-        for phpExtension in App.phpInstall!.extensions {
-            self.addExtensionItem(phpExtension)
-        }
-        
         if (App.phpInstall!.extensions.count == 0) {
             self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
+        }
+        
+        for phpExtension in App.phpInstall!.extensions {
+            self.addExtensionItem(phpExtension)
         }
     }
     

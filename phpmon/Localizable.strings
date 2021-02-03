@@ -22,10 +22,12 @@
 "mi_restart_php_fpm" = "Restart service: php";
 "mi_restart_nginx" = "Restart service: nginx";
 "mi_restart_dnsmasq" = "Restart service: dnsmasq";
+"mi_restart_specific" = "Restart specific service";
 "mi_restart_all_services" = "Restart all services";
 "mi_force_load_latest" = "Force load latest PHP version";
 
 "mi_configuration" = "Configuration";
+"mi_limits" = "Memory & Upload Limits";
 "mi_valet_config" = "Locate Valet folder (.config/valet)";
 "mi_php_config" = "Locate PHP configuration file (php.ini)";
 "mi_phpinfo" = "Show current configuration (phpinfo)";

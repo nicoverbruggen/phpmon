@@ -2,7 +2,7 @@
 
 1. Merge into `main`
 2. Create tag
-3. Add changes to changelog
+3. Add changes to changelog + update security document
 4. Archive
 5. Notarize and prepare for own distribution
 6. After notarization, export .app
