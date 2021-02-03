@@ -99,41 +99,6 @@ class Actions {
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
     
-    // MARK: - Xdebug Actions
-    
-    public static func didFindXdebug(_ version: String) -> Bool
-    {
-        return grepContains(
-            file: "\(Paths.etcPath)/php/\(version)/php.ini",
-            query: "zend_extension=\"xdebug.so\""
-        )
-    }
-    
-    public static func didEnableXdebug(_ version: String) -> Bool
-    {
-        return !grepContains(
-            file: "\(Paths.etcPath)/php/\(version)/php.ini",
-            query: "; zend_extension=\"xdebug.so\""
-        )
-    }
-    
-    public static func toggleXdebug()
-    {
-        let version = App.phpInstall!.version.short
-        
-        self.didEnableXdebug(version)
-            ? sed(
-                file: "\(Paths.etcPath)/php/\(version)/php.ini",
-                original: "zend_extension=\"xdebug.so\"",
-                replacement: "; zend_extension=\"xdebug.so\""
-            )
-            : sed(
-                file: "\(Paths.etcPath)/php/\(version)/php.ini",
-                original: "; zend_extension=\"xdebug.so\"",
-                replacement: "zend_extension=\"xdebug.so\""
-            )
-    }
-    
     // MARK: - Quick Fix
     
     /**

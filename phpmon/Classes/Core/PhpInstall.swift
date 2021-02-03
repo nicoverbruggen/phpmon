@@ -42,8 +42,6 @@ class PhpInstall {
             upload_max_filesize: type(of: self).getIniValue(key: "upload_max_filesize"),
             post_max_size: type(of: self).getIniValue(key: "post_max_size")
         )
-        
-        print(self.configuration)
     }
     
     private static func getVersion() -> Version {

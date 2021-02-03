@@ -96,9 +96,9 @@ class StatusMenu : NSMenu {
         
         self.addItem(NSMenuItem.separator())
         self.addItem(NSMenuItem(title: "mi_limits".localized, action: nil, keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "memory_limit: \(App.phpInstall!.configuration.memory_limit)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "post_max_size: \(App.phpInstall!.configuration.post_max_size)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "upload_max_filesize: \(App.phpInstall!.configuration.upload_max_filesize)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "\("mi_memory_limit".localized): \(App.phpInstall!.configuration.memory_limit)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "\("mi_post_max_size".localized): \(App.phpInstall!.configuration.post_max_size)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "\("mi_upload_max_filesize".localized): \(App.phpInstall!.configuration.upload_max_filesize)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
         
         // Extensions
         

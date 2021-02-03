@@ -204,12 +204,6 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
-    @objc public func toggleXdebug() {
-        self.waitAndExecute({
-            Actions.toggleXdebug()
-        })
-    }
-    
     @objc public func toggleExtension(sender: ExtensionMenuItem) {
         self.waitAndExecute({
             // Toggle that extension
