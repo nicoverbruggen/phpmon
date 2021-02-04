@@ -19,9 +19,9 @@ class StatusMenu : NSMenu {
             }
             return
         }
-        
-        let string = "\("mi_php_version".localized) \(App.phpInstall!.version.long)"
-        self.addItem(NSMenuItem(title: string, action: nil, keyEquivalent: ""))
+    
+        let phpVersionText = "\("mi_php_version".localized) \(App.phpInstall!.version.long)"
+        self.addItem(HeaderView.asMenuItem(text: phpVersionText))
     }
     
     public func addPhpActionMenuItems() {
@@ -56,7 +56,7 @@ class StatusMenu : NSMenu {
     }
     
     private func addServicesMenuItems() {
-        self.addItem(NSMenuItem(title: "mi_active_services".localized, action: nil, keyEquivalent: ""))
+        self.addItem(HeaderView.asMenuItem(text: "mi_active_services".localized))
         
         let services = NSMenuItem(title: "mi_restart_specific".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
@@ -79,21 +79,18 @@ class StatusMenu : NSMenu {
         }
         
         // Configuration
-        self.addItem(NSMenuItem(title: "mi_configuration".localized, action: nil, keyEquivalent: ""))
+        self.addItem(HeaderView.asMenuItem(text: "mi_configuration".localized))
         self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
         
-        // Limits
+        // Stats
         self.addItem(NSMenuItem.separator())
-        self.addItem(NSMenuItem(title: "mi_limits".localized, action: nil, keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "\("mi_memory_limit".localized): \(App.phpInstall!.configuration.memory_limit)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "\("mi_post_max_size".localized): \(App.phpInstall!.configuration.post_max_size)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
-        self.addItem(NSMenuItem(title: "\("mi_upload_max_filesize".localized): \(App.phpInstall!.configuration.upload_max_filesize)", action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: ""))
+        self.addItem(StatsView.asMenuItem())
         
         // Extensions
         self.addItem(NSMenuItem.separator())
-        self.addItem(NSMenuItem(title: "mi_detected_extensions".localized, action: nil, keyEquivalent: ""))
+        self.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
         
         if (App.phpInstall!.extensions.count == 0) {
             self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
