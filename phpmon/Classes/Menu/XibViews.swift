@@ -20,12 +20,12 @@ class StatsView: NSView, XibLoadable {
     
     static func asMenuItem(memory: String, post: String, upload: String) -> NSMenuItem {
         let view = Self.createFromXib()
-        view?.titleMemLimit.stringValue = "mi_memory_limit".localized.uppercased()
-        view?.titleMaxPost.stringValue = "mi_post_max_size".localized.uppercased()
-        view?.titleMaxUpload.stringValue = "mi_upload_max_filesize".localized.uppercased()
-        view?.labelMemLimit.stringValue = memory
-        view?.labelMaxPost.stringValue = post
-        view?.labelMaxUpload.stringValue = upload
+        view!.titleMemLimit.stringValue = "mi_memory_limit".localized.uppercased()
+        view!.titleMaxPost.stringValue = "mi_post_max_size".localized.uppercased()
+        view!.titleMaxUpload.stringValue = "mi_upload_max_filesize".localized.uppercased()
+        view!.labelMemLimit.stringValue = memory
+        view!.labelMaxPost.stringValue = post
+        view!.labelMaxUpload.stringValue = upload
         let item = NSMenuItem()
         item.view = view
         item.target = self
@@ -37,7 +37,7 @@ class HeaderView: NSView, XibLoadable {
     
     static func asMenuItem(text: String) -> NSMenuItem {
         let view = Self.createFromXib()
-        view?.textField.stringValue = text.uppercased()
+        view!.textField.stringValue = text.uppercased()
         let item = NSMenuItem()
         item.view = view
         item.target = self
