@@ -9,53 +9,25 @@
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="c22-O7-iKe" customClass="HeaderView" customModule="PHP_Monitor" customModuleProvider="target">
+        <customView id="c22-O7-iKe" customClass="HeaderView" customModule="PHP_Monitor" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="350" height="24"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TnH-dX-qaQ">
-                    <rect key="frame" x="20" y="0.0" width="310" height="23"/>
-                    <subviews>
-                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nWj-33-m8Q">
-                            <rect key="frame" x="0.0" y="4" width="310" height="15"/>
-                            <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oef-6n-9QI">
-                                    <rect key="frame" x="-2" y="0.0" width="113" height="15"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="ACTIVE SERVICES" id="lGh-MT-TgI">
-                                        <font key="font" metaFont="systemBold" size="12"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                            </subviews>
-                            <visibilityPriorities>
-                                <integer value="1000"/>
-                            </visibilityPriorities>
-                            <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
-                            </customSpacing>
-                        </stackView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="nWj-33-m8Q" firstAttribute="top" secondItem="TnH-dX-qaQ" secondAttribute="top" constant="4" id="CAY-Pw-B8n"/>
-                        <constraint firstAttribute="bottom" secondItem="nWj-33-m8Q" secondAttribute="bottom" constant="4" id="f6j-eI-wiH"/>
-                    </constraints>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ddg-VQ-cOT">
+                    <rect key="frame" x="12" y="5" width="113" height="15"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="ACTIVE SERVICES" id="NHz-MZ-8FK">
+                        <font key="font" metaFont="systemBold" size="12"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="TnH-dX-qaQ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="1mo-iG-Z0D"/>
-                <constraint firstItem="TnH-dX-qaQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="VPY-f4-pju"/>
-                <constraint firstAttribute="bottom" secondItem="TnH-dX-qaQ" secondAttribute="bottom" id="eve-qD-gUH"/>
-                <constraint firstAttribute="trailing" secondItem="TnH-dX-qaQ" secondAttribute="trailing" constant="20" symbolic="YES" id="ueP-nT-q4P"/>
+                <constraint firstItem="ddg-VQ-cOT" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="n4Z-WN-RIh"/>
+                <constraint firstItem="ddg-VQ-cOT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="14" id="yuW-pb-GQJ"/>
             </constraints>
             <connections>
-                <outlet property="textField" destination="Oef-6n-9QI" id="PKP-l8-zjL"/>
+                <outlet property="textField" destination="ddg-VQ-cOT" id="aaQ-Xb-o2X"/>
             </connections>
             <point key="canvasLocation" x="-75" y="38"/>
         </customView>

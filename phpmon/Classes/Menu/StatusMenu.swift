@@ -84,9 +84,19 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
         
+        if (App.shared.busy) {
+            return
+        }
+        
+        let stats = App.phpInstall!.configuration
+        
         // Stats
         self.addItem(NSMenuItem.separator())
-        self.addItem(StatsView.asMenuItem())
+        self.addItem(StatsView.asMenuItem(
+            memory: stats.memory_limit,
+            post: stats.post_max_size,
+            upload: stats.upload_max_filesize)
+        )
         
         // Extensions
         self.addItem(NSMenuItem.separator())

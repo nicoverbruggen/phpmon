@@ -28,8 +28,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Emt-m3-Dt6">
-                                    <rect key="frame" x="30" y="0.0" width="27" height="20"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="2G" id="H6T-wY-PIG">
+                                    <rect key="frame" x="15" y="0.0" width="58" height="20"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="1024M" id="H6T-wY-PIG">
                                         <font key="font" metaFont="systemMedium" size="17"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -57,8 +57,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vyu-AO-8SH">
-                                    <rect key="frame" x="15" y="0.0" width="48" height="20"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="128M" id="uH4-Zy-43x">
+                                    <rect key="frame" x="10" y="0.0" width="58" height="20"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="1024M" id="uH4-Zy-43x">
                                         <font key="font" metaFont="systemMedium" size="17"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -86,8 +86,8 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eHT-tr-Kwx">
-                                    <rect key="frame" x="18" y="0.0" width="41" height="20"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="64M" id="1iA-Ri-zYY">
+                                    <rect key="frame" x="10" y="0.0" width="58" height="20"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="1024M" id="1iA-Ri-zYY">
                                         <font key="font" metaFont="systemMedium" size="17"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -130,6 +130,14 @@
                 <constraint firstItem="TnH-dX-qaQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="S8i-CD-j3h"/>
                 <constraint firstAttribute="bottom" secondItem="TnH-dX-qaQ" secondAttribute="bottom" constant="6" id="eve-qD-gUH"/>
             </constraints>
+            <connections>
+                <outlet property="labelMaxPost" destination="Vyu-AO-8SH" id="5Cm-QO-hJQ"/>
+                <outlet property="labelMaxUpload" destination="eHT-tr-Kwx" id="5pK-FD-c4h"/>
+                <outlet property="labelMemLimit" destination="Emt-m3-Dt6" id="6nD-Su-XZ6"/>
+                <outlet property="titleMaxPost" destination="7um-XA-djV" id="5MN-Xb-XwL"/>
+                <outlet property="titleMaxUpload" destination="Oef-6n-9QI" id="Q61-JI-RJq"/>
+                <outlet property="titleMemLimit" destination="At1-ch-qv2" id="SQT-B9-sWS"/>
+            </connections>
             <point key="canvasLocation" x="-84.5" y="44"/>
         </customView>
     </objects>

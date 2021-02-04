@@ -28,9 +28,9 @@
 
 "mi_configuration" = "Configuration";
 "mi_limits" = "Limits Configuration";
-"mi_memory_limit" = "Script Memory Limit";
-"mi_post_max_size" = "Max POST Size";
-"mi_upload_max_filesize" = "Max Upload File Size";
+"mi_memory_limit" = "Memory Limit";
+"mi_post_max_size" = "Max POST";
+"mi_upload_max_filesize" = "Max Upload";
 
 "mi_valet_config" = "Locate Valet folder (.config/valet)";
 "mi_php_config" = "Locate PHP configuration file (php.ini)";
