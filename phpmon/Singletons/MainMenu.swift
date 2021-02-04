@@ -76,35 +76,33 @@ class MainMenu: NSObject, NSWindowDelegate {
      Update the menu's contents, based on what's going on.
      */
     public func update() {
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            // Update the menu item on the main thread
-            DispatchQueue.main.async {
-                // Create a new menu
-                let menu = StatusMenu()
-                
-                // Add the PHP versions (or error messages)
-                menu.addPhpVersionMenuItems()
-                menu.addItem(NSMenuItem.separator())
-                
-                // Add the possible actions
-                menu.addPhpActionMenuItems()
-                menu.addItem(NSMenuItem.separator())
-                
-                // Add information about services & actions
-                menu.addPhpConfigurationMenuItems()
-                menu.addItem(NSMenuItem.separator())
-                
-                // Add about & quit menu items
-                menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(self.openAbout), keyEquivalent: ""))
-                menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(self.terminateApp), keyEquivalent: "q"))
-                
-                // Make sure every item can be interacted with
-                menu.items.forEach({ (item) in
-                    item.target = self
-                })
-                
-                self.statusItem.menu = menu
-            }
+        // Update the menu item on the main thread
+        DispatchQueue.main.async {
+            // Create a new menu
+            let menu = StatusMenu()
+            
+            // Add the PHP versions (or error messages)
+            menu.addPhpVersionMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add the possible actions
+            menu.addPhpActionMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add information about services & actions
+            menu.addPhpConfigurationMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add about & quit menu items
+            menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(self.openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(self.terminateApp), keyEquivalent: "q"))
+            
+            // Make sure every item can be interacted with
+            menu.items.forEach({ (item) in
+                item.target = self
+            })
+            
+            self.statusItem.menu = menu
         }
     }
     
