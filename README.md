@@ -4,7 +4,9 @@
 
 PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
 
-<img src="./docs/screenshot.png" width="370px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.png" width="631px" alt="phpmon screenshot (menu bar app)"/>
+
+_Screenshot: A menu showing all of the functionality of PHP Monitor._
 
 It's also super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
@@ -59,9 +61,11 @@ If you'd like to create a production build, choose "Any Mac" as the target and s
 
 ## 🚜 How it works
 
-### Version detection
+### Loading info about PHP in the background
 
-This utility runs `php -r 'print phpversion()'` in the background periodically (every 60 seconds).
+This utility runs `php -r 'print phpversion()'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
+
+In order to save power, this only happens once every 60 seconds.
 
 ### Switching PHP versions
 
