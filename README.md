@@ -4,7 +4,7 @@
 
 PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
 
-<img src="./docs/screenshot.png" width="631px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.png" width="389px" alt="phpmon screenshot (menu bar app)"/>
 
 _Screenshot: A menu showing all of the functionality of PHP Monitor._
 
