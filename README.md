@@ -6,7 +6,7 @@ PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac
 
 <img src="./docs/screenshot.png" width="389px" alt="phpmon screenshot (menu bar app)"/>
 
-_Screenshot: A menu showing all of the functionality of PHP Monitor._
+<small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
 
 It's also super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
@@ -40,11 +40,15 @@ To upgrade your existing installation, run:
 
 _The app is signed and notarized, meaning all you have to do is approve its first launch._
 
-## 👨‍💻 Why I built this
+## ⭐️ Star me!
 
-I wanted to be able to see at a glance which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
+If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](twitter.com/nicoverbruggen) if the app came in handy. 😃
 
-Initially, I had an Alfred workflow for this. But this does the job as well, while also showing me at all times which version of PHP is linked (which is the main benefit over e.g. an Alfred workflow).
+## 👨‍💻 Why build this?
+
+I wanted to be able to **see at a glance** which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
+
+Initially, I had an Alfred workflow for this — but it has now been replaced with this utility, which also does a good job at displaying additional information at a glance, like the current PHP version, memory limits, and more.
 
 ## 🔧 Build instructions
 
@@ -85,7 +89,61 @@ The utility runs the following commands:
 - Link the desired version of PHP
 - Start the correct php-fpm service for the desired PHP version
 
-### PHP extension detection
+### Want to know more?
+
+If you want to know more about how this works, I recommend you check out the source code. 
+
+This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+
+## 🤬 The app won't start?!
+
+PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios. 
+
+**Follow instructions as specified in the alert in order to resolve any issues.**
+
+## 🏎 Quick Troubleshooting
+
+If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.
+
+If you're still having issues, here's a few common issues and solutions:
+
+<details>
+<summary><strong>PHP Monitor tells me `php` is not installed</strong></summary>
+
+Try installing again using `brew install php`. 
+
+This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
+
+	brew install php
+	brew link php --force
+	
+</details>
+
+<details>
+<summary><strong>Valet sites won't load (502 Bad Gateway)</strong></summary>
+
+If you're visiting your `.test` domain, and you're getting a 502 (Bad Gateway) after switching to a different PHP version, you're dealing with a common issue.
+
+This problem is usually resolved by upgrading Valet and running `valet install` again.
+
+	composer global update
+	valet install
+
+</details>
+	
+<details>
+<summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark</strong></summary>
+
+The value you provided in your INI file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
+
+You must a provide a value like so: `1024K`, `256M`, `1G`. Alternatively, `-1` is also allowed, or just an integer (which will result in N amount of bytes being the limit).
+
+**Example**: Trying to use `1GB` as the memory limit, for example, will result in this exclamation mark. The correct way to set a 1GB limit is by using `1G` as the value. (Note: The displayed value will append `B` for clarity, so if you set `1G`, the value reported by PHP Monitor will be 1 GB.)
+
+</details>
+
+<details>
+<summary><strong>One of my commented out extensions is not being detected</strong></summary>
 
 The app searches in the relevant `php.ini` file for a specific pattern. For regular extensions:
 
@@ -97,58 +155,12 @@ For Zend extensions:
 * `zend_extension="*.so"`
 * `; zend_extension="*.so"`
 
-The `*` is a wildcard and the name of the extension. 
-
-Based on this information, the extension is shown as enabled or disabled (if commented out). When you toggle the extension, the php.ini file is updated (using `sed`).
-
-### Want to know more?
-
-If you want to know more about how this works, I recommend you check out the source code. 
-
-This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
-
-## 🤬 Troubleshooting
-
-**If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.**
-
-PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in the following scenarios:
-
-- The PHP binary is not located in `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
-- PHP is missing in `/usr/local/opt` (or `/opt/homebrew/opt`)
-- Laravel Valet is missing in `/usr/local/bin/valet`
-- Brew has not been added to sudoers in `/private/etc/sudoers.d/brew`
-- Valet has not been added to sudoers in `/private/etc/sudoers.d/valet`
-- Multiple PHP services are active (see more info below)
-
-Follow instructions as specified in the alert in order to resolve any issues.
-
-## 🏎 Quick Troubleshooting
-
-### PHP Monitor tells me `php` is not installed
-
-Try installing again using `brew install php`. 
-
-This should resolve the issue! If that does not fix the issue, run `brew link php --force`. (Afterwards, you may need to restart your terminal to make sure the new linked version is detected.)
-
-	brew install php
-	brew link php --force
-	
-### Valet sites won't load (502 Bad Gateway)
-
-If you're visiting your `.test` domain, and you're getting a 502 (Bad Gateway) after switching to a different PHP version, you're dealing with a common issue.
-
-This problem is usually resolved by upgrading Valet and running `valet install` again.
-
-	composer global update
-	valet install
+The `*` is a wildcard and the name of the extension. If you've commented out the extension, make sure you've commented it out with a semicolon (;) and a single space after the semicolon for PHP Monitor to detect it.
+</details>
 
 ## 📝 Additional Info
 
 Please consult the [additional file][2] that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
-
-## ⭐️ Star me!
-
-If this software has been useful to you, I ask that you **please star the repository**, so I know that the software is being used.
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
 
