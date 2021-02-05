@@ -47,7 +47,7 @@ class PhpExtension {
      When registering an extension, we do that based on the line found inside the .ini file.
      */
     init(_ line: String, file: String) {
-        let regex = try! NSRegularExpression(pattern: PhpExtension.extensionRegex, options: [])
+        let regex = try! NSRegularExpression(pattern: Self.extensionRegex, options: [])
         let match = regex.matches(in: line, options: [], range: NSMakeRange(0, line.count)).first
         let range = Range(match!.range(withName: "name"), in: line)!
         
@@ -84,7 +84,7 @@ class PhpExtension {
         
         return file!.components(separatedBy: "\n")
             .filter({ (line) -> Bool in
-                return line.range(of: PhpExtension.extensionRegex, options: .regularExpression) != nil
+                return line.range(of: Self.extensionRegex, options: .regularExpression) != nil
             })
             .map { (line) -> PhpExtension in
                 return PhpExtension(line, file: path.path)

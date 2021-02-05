@@ -23,7 +23,7 @@ class PhpInstall {
 
     init() {
         // Show information about the current version
-        self.version = type(of: self).getVersion()
+        self.version = Self.getVersion()
         
         // If an error occurred, exit early
         if (self.version.error) {
@@ -38,9 +38,9 @@ class PhpInstall {
         
         // Get configuration values
         self.configuration = Configuration(
-            memory_limit: type(of: self).getByteCount(key: "memory_limit"),
-            upload_max_filesize: type(of: self).getByteCount(key: "upload_max_filesize"),
-            post_max_size: type(of: self).getByteCount(key: "post_max_size")
+            memory_limit: Self.getByteCount(key: "memory_limit"),
+            upload_max_filesize: Self.getByteCount(key: "upload_max_filesize"),
+            post_max_size: Self.getByteCount(key: "post_max_size")
         )
     }
     
