@@ -27,7 +27,7 @@ _Please note that future versions of PHP will not work automatically, minor chan
 
 ## 🚀 How to install
 
-You can install via Homebrew, or may download the latest [release][1].
+You can install via Homebrew, or may download the latest [release](https://github.com/nicoverbruggen/phpmon/releases).
 
 To install via Homebrew, run:
 
@@ -42,58 +42,13 @@ _The app is signed and notarized, meaning all you have to do is approve its firs
 
 ## ⭐️ Star me!
 
-If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](twitter.com/nicoverbruggen) if the app came in handy. 😃
+If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. 😃
 
 ## 👨‍💻 Why build this?
 
 I wanted to be able to **see at a glance** which version of PHP was linked, and handle dealing with Laravel Valet in a simple app without having to deal with the terminal every time. 
 
 Initially, I had an Alfred workflow for this — but it has now been replaced with this utility, which also does a good job at displaying additional information at a glance, like the current PHP version, memory limits, and more.
-
-## 🔧 Build instructions
-
-<img src="./docs/build.png" width="320px" alt="build button in Xcode"/>
-
-If you'd like to build PHP Monitor yourself, you need:
-
-* Xcode (usually the latest version)
-* The contents of this repository
-
-Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you should be able to immediately build the app for your system by pressing Cmd-R. This will create a debug build. (If Xcode complains about code signing, you can turn it off.)
-
-If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
-
-## 🚜 How it works
-
-### Loading info about PHP in the background
-
-This utility runs `php -r 'print phpversion()'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
-
-In order to save power, this only happens once every 60 seconds.
-
-### Switching PHP versions
-
-This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
-
-This means:
-
-- You have at least the latest version of PHP installed (`php`)
-- You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
-- You ran `valet trust`, which means Valet commands can be run without using sudo
-
-The utility runs the following commands:
-
-- Unlink all detected PHP versions
-- Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
-- Stop all php-fpm service instances
-- Link the desired version of PHP
-- Start the correct php-fpm service for the desired PHP version
-
-### Want to know more?
-
-If you want to know more about how this works, I recommend you check out the source code. 
-
-This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
 
 ## 🤬 The app won't start?!
 
@@ -158,16 +113,57 @@ For Zend extensions:
 The `*` is a wildcard and the name of the extension. If you've commented out the extension, make sure you've commented it out with a semicolon (;) and a single space after the semicolon for PHP Monitor to detect it.
 </details>
 
-## 📝 Additional Info
+## 📝 Additional information
 
-Please consult the [additional file][2] that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
+Please consult the [extra file](docs/ADDITIONAL.md) that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
 
 ## 💵 Support me?
 
-I develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal][3].
+I usually develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal](https://paypal.me/nicoverbruggen).
 
-[1]:	https://github.com/nicoverbruggen/phpmon/releases
-[2]:	docs/ADDITIONAL.md
-[3]:	https://paypal.me/nicoverbruggen
+## 🚜 How it works
+
+### Loading info about PHP in the background
+
+This utility runs `php -r 'print phpversion()'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
+
+In order to save power, this only happens once every 60 seconds.
+
+### Switching PHP versions
+
+This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
+
+This means:
+
+- You have at least the latest version of PHP installed (`php`)
+- You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
+- You ran `valet trust`, which means Valet commands can be run without using sudo
+
+The utility runs the following commands:
+
+- Unlink all detected PHP versions
+- Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
+- Stop all php-fpm service instances
+- Link the desired version of PHP
+- Start the correct php-fpm service for the desired PHP version
+
+### Want to know more?
+
+If you want to know more about how this works, I recommend you check out the source code. 
+
+This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+
+## 🔧 Build instructions
+
+<img src="./docs/build.png" width="320px" alt="build button in Xcode"/>
+
+If you'd like to build PHP Monitor yourself, you need:
+
+* Xcode (usually the latest version)
+* The contents of this repository
+
+Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you should be able to immediately build the app for your system by pressing Cmd-R. This will create a debug build. (If Xcode complains about code signing, you can turn it off.)
+
+If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
