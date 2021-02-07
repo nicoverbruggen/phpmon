@@ -19,11 +19,11 @@ It also gives you quick access to various useful functionality (like accessing c
 PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
 * macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
-* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew` (the default)
+* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * The brew formula `php` has to be installed (which version is detected)
 * Laravel Valet 2.13 or higher
 
-_Please note that future versions of PHP will not work automatically, minor changes are usually required to add support for newer versions of PHP. You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
+_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
 
 ## 🚀 How to install
 
@@ -56,14 +56,65 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 **Follow instructions as specified in the alert in order to resolve any issues.**
 
-## 🏎 Quick Troubleshooting
+## 🙋‍♂️ FAQ & Troubleshooting
 
-If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.
+> If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.
 
 If you're still having issues, here's a few common issues and solutions:
 
 <details>
-<summary><strong>PHP Monitor tells me `php` is not installed</strong></summary>
+<summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
+
+You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+
+Super convenient!
+</details>
+
+<details>
+<summary><strong>I want to set up PHP Monitor from scratch! I don't have Homebrew installed either, where do I begin?</strong></summary>
+
+If you want to set up your computer for the very first time with PHP Monitor, here's how I do it:
+
+Install [Homebrew](https://brew.sh) first.
+
+Install PHP, composer, add to path:
+
+    brew install php
+    brew install composer
+    nano .zshrc
+
+Make sure the following line is not in the comments:
+
+    # on an Intel Mac
+    export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+If you're on an Apple Silicon-based Mac, you'll need to add: 
+
+    # on an M1 Mac
+    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
+
+and add the following to your .zshrc:
+
+    export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
+
+Make sure PHP is linked correctly:
+
+    which php
+
+should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
+
+    composer global require laravel/valet
+    valet install
+
+This should install `dnsmasq` and set up Valet. Great, almost there!
+
+    valet trust
+
+Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work.
+</details>
+
+<details>
+<summary><strong>PHP Monitor tells me `php` is not installed...</strong></summary>
 
 Try installing again using `brew install php`. 
 
@@ -75,7 +126,7 @@ This should resolve the issue! If that does not fix the issue, run `brew link ph
 </details>
 
 <details>
-<summary><strong>Valet sites won't load (502 Bad Gateway)</strong></summary>
+<summary><strong>Valet sites won't load. I'm getting a 502 Bad Gateway error!</strong></summary>
 
 If you're visiting your `.test` domain, and you're getting a 502 (Bad Gateway) after switching to a different PHP version, you're dealing with a common issue.
 
@@ -87,7 +138,7 @@ This problem is usually resolved by upgrading Valet and running `valet install` 
 </details>
 	
 <details>
-<summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark</strong></summary>
+<summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark!</strong></summary>
 
 The value you provided in your INI file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
 
@@ -98,7 +149,7 @@ You must a provide a value like so: `1024K`, `256M`, `1G`. Alternatively, `-1` i
 </details>
 
 <details>
-<summary><strong>One of my commented out extensions is not being detected</strong></summary>
+<summary><strong>One of my commented out extensions is not being detected...</strong></summary>
 
 The app searches in the relevant `php.ini` file for a specific pattern. For regular extensions:
 
@@ -113,9 +164,32 @@ For Zend extensions:
 The `*` is a wildcard and the name of the extension. If you've commented out the extension, make sure you've commented it out with a semicolon (;) and a single space after the semicolon for PHP Monitor to detect it.
 </details>
 
-## 📝 Additional information
+<details>
+<summary><strong>I've got two Homebrew installations on my Apple Silicon Mac, can I choose which installation to use with PHP Monitor?</strong></summary>
 
-Please consult the [extra file](docs/ADDITIONAL.md) that contains more information. It may have answers to additional questions and more information to troubleshoot your problem.
+Not at this time, no. PHP Monitor will prefer the `/opt/homebrew` installation over the classic installation directory.
+
+</details>
+
+<details>
+<summary><strong>Why is the app doing network requests?</strong></summary>
+
+It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
+
+PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
+
+</details>
+
+<details>
+<summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade`!</strong></summary>
+
+This is a security feature of Brew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
+
+You will need to manually clean up those folders yourself using `rm -rf` or by manually removing those folders via Finder.
+
+</details>
+
+## 📝 Another issue?
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
 
@@ -145,9 +219,9 @@ The utility runs the following commands:
 
 - Unlink all detected PHP versions
 - Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
-- Stop all php-fpm service instances
+- Stop all relevant services (`php`, `nginx`)
 - Link the desired version of PHP
-- Start the correct php-fpm service for the desired PHP version
+- Start the correct `php` service for the desired PHP version
 
 ### Want to know more?
 
