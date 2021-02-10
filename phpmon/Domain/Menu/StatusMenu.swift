@@ -8,7 +8,7 @@
 import Cocoa
 
 class StatusMenu : NSMenu {
-    public func addPhpVersionMenuItems() {
+    func addPhpVersionMenuItems() {
         if App.shared.currentInstall == nil {
             return
         }
@@ -24,7 +24,7 @@ class StatusMenu : NSMenu {
         self.addItem(HeaderView.asMenuItem(text: phpVersionText))
     }
     
-    public func addPhpActionMenuItems() {
+    func addPhpActionMenuItems() {
         if App.busy {
             self.addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
@@ -73,7 +73,7 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
     }
     
-    public func addPhpConfigurationMenuItems() {
+    func addPhpConfigurationMenuItems() {
         if App.shared.currentInstall == nil {
             return
         }

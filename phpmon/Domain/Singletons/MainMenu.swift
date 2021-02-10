@@ -23,7 +23,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     /**
      Kick off the startup of the rendering of the main menu.
      */
-    public func startup() {
+    func startup() {
         // Start with the icon
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         // Perform environment boot checks
@@ -75,7 +75,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     /**
      Update the menu's contents, based on what's going on.
      */
-    public func update() {
+    func update() {
         // Update the menu item on the main thread
         DispatchQueue.main.async {
             // Create a new menu
@@ -176,13 +176,13 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     // MARK: - Actions
     
-    @objc public func restartPhpFpm() {
+    @objc func restartPhpFpm() {
         self.waitAndExecute({
             Actions.restartPhpFpm()
         })
     }
     
-    @objc public func restartAllServices() {
+    @objc func restartAllServices() {
         self.waitAndExecute({
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
@@ -190,19 +190,19 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
-    @objc public func restartNginx() {
+    @objc func restartNginx() {
         self.waitAndExecute({
             Actions.restartNginx()
         })
     }
     
-    @objc public func restartDnsMasq() {
+    @objc func restartDnsMasq() {
         self.waitAndExecute({
             Actions.restartDnsMasq()
         })
     }
     
-    @objc public func toggleExtension(sender: ExtensionMenuItem) {
+    @objc func toggleExtension(sender: ExtensionMenuItem) {
         self.waitAndExecute({
             // Toggle that extension
             print("Toggling extension '\(sender.phpExtension!.name)'")
@@ -210,7 +210,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
-    @objc public func openPhpInfo() {
+    @objc func openPhpInfo() {
         self.waitAndExecute({
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
             Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
@@ -219,7 +219,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         })
     }
     
-    @objc public func forceRestartLatestPhp() {
+    @objc func forceRestartLatestPhp() {
         // Tell the user the switch is about to occur
         Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
         // Start switching
@@ -232,7 +232,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         )
     }
     
-    @objc public func openActiveConfigFolder() {
+    @objc func openActiveConfigFolder() {
         if (App.phpInstall!.version.error) {
             // php version was not identified
             Actions.openGenericPhpConfigFolder()
@@ -243,11 +243,11 @@ class MainMenu: NSObject, NSWindowDelegate {
         Actions.openPhpConfigFolder(version: App.phpInstall!.version.short)
     }
     
-    @objc public func openValetConfigFolder() {
+    @objc func openValetConfigFolder() {
         Actions.openValetConfigFolder()
     }
     
-    @objc public func switchToPhpVersion(sender: PhpMenuItem) {
+    @objc func switchToPhpVersion(sender: PhpMenuItem) {
         print("Switching to: PHP \(sender.version)")
         
         self.setBusyImage()
@@ -282,12 +282,12 @@ class MainMenu: NSObject, NSWindowDelegate {
         }
     }
     
-    @objc public func openAbout() {
+    @objc func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
     
-    @objc public func terminateApp() {
+    @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
     }
 }

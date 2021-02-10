@@ -19,7 +19,7 @@ class Startup {
      - Parameter success: Callback that is fired if the application can proceed with launch
      - Parameter failure: Callback that is fired if the application must retry launch
      */
-    public func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
+    func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
     {
         self.failureCallback = failure
         

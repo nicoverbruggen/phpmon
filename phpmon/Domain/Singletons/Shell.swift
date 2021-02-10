@@ -32,7 +32,7 @@ class Shell {
      
      - Parameter command: The command to run
      */
-    public func run(_ command: String) {
+    func run(_ command: String) {
         // Equivalent of piping to /dev/null; don't do anything with the string
         _ = self.pipe(command)
     }
@@ -43,7 +43,7 @@ class Shell {
      - Parameter command: The command to run
      - Parameter shell: Path to the shell to invoke
      */
-    public func pipe(_ command: String, shell: String = "/bin/sh") -> String {
+    func pipe(_ command: String, shell: String = "/bin/sh") -> String {
         let task = Process()
         let pipe = Pipe()
         

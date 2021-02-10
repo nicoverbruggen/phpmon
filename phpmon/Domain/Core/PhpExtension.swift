@@ -60,7 +60,7 @@ class PhpExtension {
     /**
      This simply toggles the extension in the .ini file. You may need to restart the other services in order for this change to apply.
      */
-    public func toggle() {
+    func toggle() {
         Actions.sed(
             file: self.file,
             original: self.line,

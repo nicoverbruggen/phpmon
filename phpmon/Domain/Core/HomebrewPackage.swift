@@ -12,7 +12,7 @@ struct HomebrewPackage : Decodable {
     let full_name: String
     let aliases: [String]
     
-    public func getVersion() -> String {
+    public var version: String {
         return aliases.first!.replacingOccurrences(of: "php@", with: "")
     }
 }
