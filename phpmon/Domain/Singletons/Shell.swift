@@ -2,13 +2,24 @@
 //  Shell.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 11/06/2019.
-//  Copyright © 2019 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
 class Shell {
+    
+    // MARK: - Invoke static functions
+    
+    public static func run(_ command: String) {
+        Shell.user.run(command)
+    }
+    
+    public static func pipe(_ command: String, shell: String = "/bin/sh") -> String {
+        Shell.user.pipe(command, shell: shell)
+    }
+    
+    // MARK: - Singleton
     
     /**
      Singleton to access a user shell (with --login)
@@ -21,7 +32,7 @@ class Shell {
      
      - Parameter command: The command to run
      */
-    public func run(_ command: String) {
+    func run(_ command: String) {
         // Equivalent of piping to /dev/null; don't do anything with the string
         _ = self.pipe(command)
     }
@@ -32,7 +43,7 @@ class Shell {
      - Parameter command: The command to run
      - Parameter shell: Path to the shell to invoke
      */
-    public func pipe(_ command: String, shell: String = "/bin/sh") -> String {
+    func pipe(_ command: String, shell: String = "/bin/sh") -> String {
         let task = Process()
         let pipe = Pipe()
         
@@ -51,7 +62,7 @@ class Shell {
      Checks if a file exists at the provided path.
      */
     public static func fileExists(_ path: String) -> Bool {
-        return Shell.user.pipe(
+        return Shell.pipe(
             "if [ -f \(path) ]; then echo \"PHP_Y_FE\"; fi"
         ).contains("PHP_Y_FE")
     }

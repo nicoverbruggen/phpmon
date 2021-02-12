@@ -2,15 +2,21 @@
 //  StateManager.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 11/07/2019.
-//  Copyright © 2019 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
-
 import Cocoa
 
 class App {
     
     static let shared = App()
+    
+    static var phpInstall: PhpInstall? {
+        return App.shared.currentInstall
+    }
+    
+    static var busy: Bool {
+        return App.shared.busy
+    }
     
     /**
      Whether the application is busy switching versions.
@@ -18,9 +24,9 @@ class App {
     var busy: Bool = false
     
     /**
-     The currently active version of PHP.
+     The currently active installation of PHP.
      */
-    var currentVersion: PhpVersion? = nil
+    var currentInstall: PhpInstall? = nil
     
     /**
      All available versions of PHP.
@@ -37,7 +43,7 @@ class App {
      */
     var brewPhpPackage: HomebrewPackage? = nil {
         didSet {
-            self.brewPhpVersion = self.brewPhpPackage!.getVersion()
+            self.brewPhpVersion = self.brewPhpPackage!.version
         }
     }
     

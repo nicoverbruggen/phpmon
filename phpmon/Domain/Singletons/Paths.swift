@@ -2,7 +2,6 @@
 //  Paths.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 01/01/2021.
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
@@ -40,25 +39,25 @@ class Paths {
     
     // - MARK: Binaries
     
-    public static func brew() -> String {
-        return "\(self.binPath())/brew"
+    public static var brew: String {
+        return "\(self.binPath)/brew"
     }
     
-    public static func php() -> String {
-        return "\(self.binPath())/php"
+    public static var php: String {
+        return "\(self.binPath)/php"
     }
     
     // - MARK: Paths
     
-    public static func binPath() -> String {
+    public static var binPath: String {
         return "\(self.shared.baseDir.rawValue)/bin"
     }
     
-    public static func optPath() -> String {
+    public static var optPath: String {
         return "\(self.shared.baseDir.rawValue)/opt"
     }
     
-    public static func etcPath() -> String {
+    public static var etcPath: String {
         return "\(self.shared.baseDir.rawValue)/etc"
     }
 }

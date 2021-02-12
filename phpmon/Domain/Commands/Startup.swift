@@ -2,8 +2,7 @@
 //  Environment.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 12/06/2019.
-//  Copyright © 2019 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -20,46 +19,46 @@ class Startup {
      - Parameter success: Callback that is fired if the application can proceed with launch
      - Parameter failure: Callback that is fired if the application must retry launch
      */
-    public func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
+    func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
     {
         self.failureCallback = failure
         
         self.performEnvironmentCheck(
-            !Shell.fileExists("\(Paths.binPath())/php"),
+            !Shell.fileExists("\(Paths.binPath)/php"),
             messageText:        "startup.errors.php_binary.title".localized,
             informativeText:    "startup.errors.php_binary_desc".localized,
             breaking:           true
         )
         
         self.performEnvironmentCheck(
-            !Shell.user.pipe("ls \(Paths.optPath()) | grep php").contains("php"),
+            !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php"),
             messageText:        "startup.errors.php_opt.title".localized,
             informativeText:    "startup.errors.php_opt.desc".localized,
             breaking:           true
         )
         
         self.performEnvironmentCheck(
-            !Shell.user.pipe("which valet").contains("/usr/local/bin/valet"),
+            !Shell.pipe("which valet").contains("/usr/local/bin/valet"),
             messageText:        "startup.errors.valet_executable.title".localized,
             informativeText:    "startup.errors.valet_executable.desc".localized,
             breaking:           true
         )
         
         self.performEnvironmentCheck(
-            !Shell.user.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath())/brew"),
+            !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
             messageText:        "startup.errors.sudoers_brew.title".localized,
             informativeText:    "startup.errors.sudoers_brew.desc".localized,
             breaking:           true
         )
         
         self.performEnvironmentCheck(
-            !Shell.user.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet"),
+            !Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet"),
             messageText:        "startup.errors.sudoers_valet.title".localized,
             informativeText:    "startup.errors.sudoers_valet.desc".localized,
             breaking:           true
         )
         
-        let services = Shell.user.pipe("\(Paths.brew()) services list | grep php")
+        let services = Shell.pipe("\(Paths.brew) services list | grep php")
         self.performEnvironmentCheck(
             (services.countInstances(of: "started") > 1),
             messageText:        "startup.errors.services.title".localized,
@@ -82,7 +81,7 @@ class Startup {
         print("PHP Monitor has determined the application has successfully passed all checks.")
         print("Determining which version of PHP is aliased to `php` via Homebrew...")
         
-        let brewPhpAlias = Shell.user.pipe("\(Paths.brew()) info php --json");
+        let brewPhpAlias = Shell.pipe("\(Paths.brew) info php --json");
         
         App.shared.brewPhpPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
@@ -105,24 +104,16 @@ class Startup {
         messageText: String,
         informativeText: String,
         breaking: Bool
-    )
-    {
-        if (condition) {
-            // Only breaking issues will cause the notification
-            if (breaking) {
-                self.failed = true
-            }
-            DispatchQueue.main.async {
-                // Present the information to the user
-                _ = Alert.present(
-                    messageText: messageText,
-                    informativeText: informativeText
-                )
-                // Only breaking issues will throw the extra retry modal
-                if (breaking) {
-                     self.failureCallback()
-                }
-            }
+    ) {
+        if (!condition) { return }
+        
+        self.failed = breaking
+
+        DispatchQueue.main.async {
+            // Present the information to the user
+            Alert.notify(message: messageText, info: informativeText)
+            // Only breaking issues will throw the extra retry modal
+            breaking ? self.failureCallback() : ()
         }
     }
 }

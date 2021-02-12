@@ -15,7 +15,7 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
-		C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
@@ -25,8 +25,13 @@
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4811D2422D70A4700B5F6B3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
-		C486EFFC2586931100A02B2C /* PhpMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C486EFFB2586931100A02B2C /* PhpMenuItem.swift */; };
+		C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48D0C8F25CC7FD000CC7490 /* StatsView.xib */; };
+		C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9225CC804200CC7490 /* XibLoadable.swift */; };
+		C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9525CC80B100CC7490 /* HeaderView.swift */; };
+		C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48D0C9925CC888B00CC7490 /* HeaderView.xib */; };
+		C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0CA225CC992000CC7490 /* StatsView.swift */; };
 		C49EAB46259FC305007F6C3B /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EAB45259FC305007F6C3B /* Paths.swift */; };
+		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
@@ -44,7 +49,7 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
-		C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersion.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstall.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -54,8 +59,13 @@
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		C486EFFB2586931100A02B2C /* PhpMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpMenuItem.swift; sourceTree = "<group>"; };
+		C48D0C8F25CC7FD000CC7490 /* StatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
+		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
+		C48D0C9525CC80B100CC7490 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		C48D0C9925CC888B00CC7490 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		C48D0CA225CC992000CC7490 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C49EAB45259FC305007F6C3B /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
+		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
@@ -108,10 +118,7 @@
 			children = (
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
 				C4EE188322D3386B00E126E5 /* Constants.swift */,
-				C4811D2622D70CEF00B5F6B3 /* Singletons */,
-				C41E181722CB61EB0072CF09 /* Classes */,
-				C41E181822CB62200072CF09 /* View Controllers */,
-				C4F8C0A222D4F100002EFE61 /* Extensions */,
+				C41E181722CB61EB0072CF09 /* Domain */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
@@ -121,29 +128,27 @@
 			path = phpmon;
 			sourceTree = "<group>";
 		};
-		C41E181722CB61EB0072CF09 /* Classes */ = {
+		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C4811D2622D70CEF00B5F6B3 /* Singletons */,
+				C4B13B1D25C4915000548C3A /* Core */,
 				C47331A0247093AC009A0597 /* Menu */,
 				C4811D2722D70D8E00B5F6B3 /* Commands */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
+				C4F8C0A222D4F100002EFE61 /* Extensions */,
 			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		C41E181822CB62200072CF09 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
-			);
-			path = "View Controllers";
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		C47331A0247093AC009A0597 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
-				C486EFFB2586931100A02B2C /* PhpMenuItem.swift */,
+				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
+				C48D0C9925CC888B00CC7490 /* HeaderView.xib */,
+				C48D0CA225CC992000CC7490 /* StatsView.swift */,
+				C48D0C8F25CC7FD000CC7490 /* StatsView.xib */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -173,12 +178,21 @@
 			isa = PBXGroup;
 			children = (
 				C476FF9722B0DD830098105B /* Alert.swift */,
-				C41C1B4A22B019FF00E7CF16 /* PhpVersion.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
-				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C4B13B1D25C4915000548C3A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
+				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
+				C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */,
+				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		C4F8C0A222D4F100002EFE61 /* Extensions */ = {
@@ -186,6 +200,7 @@
 			children = (
 				C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */,
 				C46FA23E246C358E00944F05 /* StringExtension.swift */,
+				C48D0C9225CC804200CC7490 /* XibLoadable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -250,9 +265,11 @@
 			files = (
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
+				C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
+				C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,21 +280,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
+				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
+				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
-				C41C1B4B22B019FF00E7CF16 /* PhpVersion.swift in Sources */,
-				C486EFFC2586931100A02B2C /* PhpMenuItem.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
+				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
@@ -423,7 +443,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -431,7 +451,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -447,7 +467,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -455,7 +475,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

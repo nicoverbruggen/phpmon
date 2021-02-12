@@ -2,10 +2,8 @@
 //  StringExtension.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 13/05/2020.
-//  Copyright © 2020 Nico Verbruggen. All rights reserved.
+//  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
-
 import Foundation
 
 extension String {
@@ -28,5 +26,11 @@ extension String {
         }
         
         return count
+    }
+
+    subscript (r: Range<String.Index>) -> String {
+        let start = r.lowerBound
+        let end = r.upperBound
+        return String(self[start ..< end])
     }
 }
