@@ -10,7 +10,7 @@ class App {
     
     static let shared = App()
     
-    static var phpInstall: PhpInstall? {
+    static var phpInstall: PhpInstallation? {
         return App.shared.currentInstall
     }
     
@@ -26,7 +26,7 @@ class App {
     /**
      The currently active installation of PHP.
      */
-    var currentInstall: PhpInstall? = nil
+    var currentInstall: PhpInstallation? = nil
     
     /**
      All available versions of PHP.

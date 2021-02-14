@@ -61,5 +61,3 @@ class Paths {
         return "\(self.shared.baseDir.rawValue)/etc"
     }
 }
-
-

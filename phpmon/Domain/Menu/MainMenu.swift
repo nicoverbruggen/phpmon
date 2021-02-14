@@ -155,7 +155,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     // MARK: - User Interface
     
     @objc func updatePhpVersionInStatusBar() {
-        App.shared.currentInstall = PhpInstall()
+        App.shared.currentInstall = PhpInstallation()
         
         DispatchQueue.main.async {
             if (App.shared.busy) {
