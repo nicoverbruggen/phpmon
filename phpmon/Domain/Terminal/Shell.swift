@@ -15,11 +15,25 @@ class Shell {
         Shell.user.run(command)
     }
     
-    public static func pipe(_ command: String, shell: String = "/bin/sh") -> String {
-        Shell.user.pipe(command, shell: shell)
+    public static func pipe(_ command: String) -> String {
+        Shell.user.pipe(command)
     }
     
     // MARK: - Singleton
+    
+    var shell = "/bin/sh"
+    
+    init() {
+        // Determine if we're using macOS Catalina or newer (that support /bin/zsh as default shell)
+        let supportsZsh = ProcessInfo.processInfo.isOperatingSystemAtLeast(
+            .init(majorVersion: 10,minorVersion: 15,patchVersion: 0))
+    
+        // If macOS Mojave is being used, we'll default to /bin/bash
+        if (!supportsZsh) {
+            print("You're not running macOS Catalina or newer, so defaulting to /bin/bash!")
+            self.shell = "/bin/bash"
+        }
+    }
     
     /**
      Singleton to access a user shell (with --login)
@@ -43,11 +57,11 @@ class Shell {
      - Parameter command: The command to run
      - Parameter shell: Path to the shell to invoke
      */
-    func pipe(_ command: String, shell: String = "/bin/sh") -> String {
+    func pipe(_ command: String) -> String {
         let task = Process()
         let pipe = Pipe()
         
-        task.launchPath = shell
+        task.launchPath = self.shell
         task.arguments = ["--login", "-c", command]
         task.standardOutput = pipe
         task.launch()
