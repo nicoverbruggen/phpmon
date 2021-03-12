@@ -70,11 +70,11 @@
 
 /// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
-"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` (or `/opt/homebrew/opt`). The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
+"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` or `/opt/homebrew/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
 /// 3. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
-"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet`. The app will not work correctly until you resolve this issue.";
+"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue.";
 
 /// 4. Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
