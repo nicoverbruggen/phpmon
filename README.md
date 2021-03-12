@@ -1,5 +1,7 @@
 # PHP Monitor
 
+> ⭐️ If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. Thank you! 😃
+
 <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
 
 PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
@@ -39,10 +41,6 @@ To upgrade your existing installation, run:
 	brew upgrade phpmon
 
 _The app is signed and notarized, meaning all you have to do is approve its first launch._
-
-## ⭐️ Star me!
-
-If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. 😃
 
 ## 👨‍💻 Why build this?
 
