@@ -38,7 +38,9 @@ class Startup {
         )
         
         self.performEnvironmentCheck(
-            !Shell.pipe("which valet").contains("/usr/local/bin/valet"),
+            // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
+            !(Shell.pipe("which valet").contains("/usr/local/bin/valet")
+            || Shell.pipe("which valet").contains("/opt/homebrew/bin/valet")),
             messageText:        "startup.errors.valet_executable.title".localized,
             informativeText:    "startup.errors.valet_executable.desc".localized,
             breaking:           true
@@ -52,7 +54,9 @@ class Startup {
         )
         
         self.performEnvironmentCheck(
-            !Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet"),
+            // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
+            !(Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet")
+            || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")),
             messageText:        "startup.errors.sudoers_valet.title".localized,
             informativeText:    "startup.errors.sudoers_valet.desc".localized,
             breaking:           true
