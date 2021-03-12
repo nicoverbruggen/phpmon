@@ -18,7 +18,7 @@ It also gives you quick access to various useful functionality (like accessing c
 
 PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
-* macOS 10.15 Catalina or higher (works on macOS 11 Big Sur)
+* macOS 10.14 Mojave or higher (works on macOS 11 Big Sur)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * The brew formula `php` has to be installed (which version is detected)
 * Laravel Valet 2.13 or higher

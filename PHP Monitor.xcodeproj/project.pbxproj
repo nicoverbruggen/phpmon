@@ -15,9 +15,12 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
-		C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
+		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
+		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
+		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
@@ -34,8 +37,42 @@
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
+		C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
+		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
+		C4F7809F25D8037C000DBC97 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
+		C4F780A225D804AA000DBC97 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EAB45259FC305007F6C3B /* Paths.swift */; };
+		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
+		C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */; };
+		C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
+		C4F780B425D80B51000DBC97 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
+		C4F780B725D80B5D000DBC97 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
+		C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
+		C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
+		C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
+		C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9525CC80B100CC7490 /* HeaderView.swift */; };
+		C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
+		C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
+		C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9225CC804200CC7490 /* XibLoadable.swift */; };
+		C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
+		C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
+		C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
+		C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
+		C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0CA225CC992000CC7490 /* StatsView.swift */; };
+		C4F780CC25D80B75000DBC97 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */; };
+		C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
+		C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C4F7807E25D7F84B000DBC97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
+			remoteInfo = "PHP Monitor";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
@@ -49,9 +86,12 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
-		C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstall.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
+		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -70,12 +110,25 @@
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C4F7807425D7F7E5000DBC97 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
+		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4F7809B25D80344000DBC97 /* CommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTest.swift; sourceTree = "<group>"; };
+		C4F780A725D80AE8000DBC97 /* php.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = php.ini; sourceTree = "<group>"; };
+		C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionParserTest.swift; sourceTree = "<group>"; };
 		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C41C1B3022B0097F00E7CF16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4F7807625D7F84B000DBC97 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -99,8 +152,10 @@
 			children = (
 				C4F8C0A522D4FA41002EFE61 /* README.md */,
 				C4E713562570150F00007428 /* SECURITY.md */,
+				C4F7807425D7F7E5000DBC97 /* RELEASE.md */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
+				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */,
+				C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,10 +187,9 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				C4811D2622D70CEF00B5F6B3 /* Singletons */,
+				C4F7808A25D7F918000DBC97 /* Terminal */,
 				C4B13B1D25C4915000548C3A /* Core */,
 				C47331A0247093AC009A0597 /* Menu */,
-				C4811D2722D70D8E00B5F6B3 /* Commands */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
 				C4F8C0A222D4F100002EFE61 /* Extensions */,
 			);
@@ -144,6 +199,7 @@
 		C47331A0247093AC009A0597 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
 				C48D0C9925CC888B00CC7490 /* HeaderView.xib */,
@@ -151,27 +207,6 @@
 				C48D0C8F25CC7FD000CC7490 /* StatsView.xib */,
 			);
 			path = Menu;
-			sourceTree = "<group>";
-		};
-		C4811D2622D70CEF00B5F6B3 /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-				C49EAB45259FC305007F6C3B /* Paths.swift */,
-				C41C1B4622B009A400E7CF16 /* Shell.swift */,
-				C42295DC2358D02000E263B2 /* Command.swift */,
-				C4811D2322D70A4700B5F6B3 /* App.swift */,
-				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
-			);
-			path = Singletons;
-			sourceTree = "<group>";
-		};
-		C4811D2722D70D8E00B5F6B3 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
-				C4D8016522B1584700C6DA1B /* Startup.swift */,
-			);
-			path = Commands;
 			sourceTree = "<group>";
 		};
 		C4811D2822D70D9C00B5F6B3 /* Helpers */ = {
@@ -188,11 +223,38 @@
 			isa = PBXGroup;
 			children = (
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
-				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
-				C41C1B4A22B019FF00E7CF16 /* PhpInstall.swift */,
+				C4811D2322D70A4700B5F6B3 /* App.swift */,
+				C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
+				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
+			isa = PBXGroup;
+			children = (
+				C43A8A1F25D9D1D700591B77 /* brew.json */,
+				C4F780A725D80AE8000DBC97 /* php.ini */,
+				C4F7807D25D7F84B000DBC97 /* Info.plist */,
+				C4F7809B25D80344000DBC97 /* CommandTest.swift */,
+				C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */,
+				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
+				C43A8A1925D9CD1000591B77 /* Utility.swift */,
+			);
+			path = "phpmon-tests";
+			sourceTree = "<group>";
+		};
+		C4F7808A25D7F918000DBC97 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				C49EAB45259FC305007F6C3B /* Paths.swift */,
+				C42295DC2358D02000E263B2 /* Command.swift */,
+				C41C1B4622B009A400E7CF16 /* Shell.swift */,
+				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
+			);
+			path = Terminal;
 			sourceTree = "<group>";
 		};
 		C4F8C0A222D4F100002EFE61 /* Extensions */ = {
@@ -225,18 +287,40 @@
 			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C4F7807825D7F84B000DBC97 /* phpmon-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4F7808025D7F84B000DBC97 /* Build configuration list for PBXNativeTarget "phpmon-tests" */;
+			buildPhases = (
+				C4F7807525D7F84B000DBC97 /* Sources */,
+				C4F7807625D7F84B000DBC97 /* Frameworks */,
+				C4F7807725D7F84B000DBC97 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */,
+			);
+			name = "phpmon-tests";
+			productName = "phpmon-tests";
+			productReference = C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C41C1B2B22B0097F00E7CF16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
 					C41C1B3222B0097F00E7CF16 = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					C4F7807825D7F84B000DBC97 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = C41C1B3222B0097F00E7CF16;
 					};
 				};
 			};
@@ -254,6 +338,7 @@
 			projectRoot = "";
 			targets = (
 				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
+				C4F7807825D7F84B000DBC97 /* phpmon-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -270,6 +355,15 @@
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 				C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4F7807725D7F84B000DBC97 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
+				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +387,7 @@
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
-				C41C1B4B22B019FF00E7CF16 /* PhpInstall.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
@@ -304,7 +398,47 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C4F7807525D7F84B000DBC97 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
+				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
+				C4F780CC25D80B75000DBC97 /* PhpInstallation.swift in Sources */,
+				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
+				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
+				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
+				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
+				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
+				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,
+				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
+				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
+				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
+				C4F780A225D804AA000DBC97 /* Paths.swift in Sources */,
+				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
+				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
+				C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */,
+				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
+				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
+				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
+				C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */,
+				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
+				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
+				C4F7809F25D8037C000DBC97 /* Command.swift in Sources */,
+				C4F780B425D80B51000DBC97 /* Actions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
+			targetProxy = C4F7807E25D7F84B000DBC97 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C41C1B3C22B0098000E7CF16 /* Main.storyboard */ = {
@@ -443,7 +577,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -451,7 +585,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -467,7 +601,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -475,11 +609,53 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C4F7808125D7F84B000DBC97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				INFOPLIST_FILE = "phpmon-tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PHP Monitor.app/Contents/MacOS/PHP Monitor";
+			};
+			name = Debug;
+		};
+		C4F7808225D7F84B000DBC97 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				INFOPLIST_FILE = "phpmon-tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PHP Monitor.app/Contents/MacOS/PHP Monitor";
 			};
 			name = Release;
 		};
@@ -500,6 +676,15 @@
 			buildConfigurations = (
 				C41C1B4422B0098000E7CF16 /* Debug */,
 				C41C1B4522B0098000E7CF16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4F7808025D7F84B000DBC97 /* Build configuration list for PBXNativeTarget "phpmon-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4F7808125D7F84B000DBC97 /* Debug */,
+				C4F7808225D7F84B000DBC97 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

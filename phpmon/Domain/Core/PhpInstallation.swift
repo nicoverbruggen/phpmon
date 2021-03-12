@@ -1,5 +1,5 @@
 //
-//  PhpInstall.swift
+//  PhpInstallation.swift
 //  PHP Monitor
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PhpInstall {
+class PhpInstallation {
 
     var version: Version
     var configuration: Configuration
