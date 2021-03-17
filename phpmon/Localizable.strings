@@ -74,7 +74,7 @@
 
 /// 3. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
-"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue.";
+"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
 
 /// 4. Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";

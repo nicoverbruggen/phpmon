@@ -39,8 +39,7 @@ class Startup {
         
         self.performEnvironmentCheck(
             // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
-            !(Shell.pipe("which valet").contains("/usr/local/bin/valet")
-            || Shell.pipe("which valet").contains("/opt/homebrew/bin/valet")),
+            !(Shell.fileExists("/usr/local/bin/valet") || Shell.fileExists("/opt/homebrew/bin/valet")),
             messageText:        "startup.errors.valet_executable.title".localized,
             informativeText:    "startup.errors.valet_executable.desc".localized,
             breaking:           true
