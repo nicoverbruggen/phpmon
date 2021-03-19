@@ -16,28 +16,29 @@ class PhpInstallation {
     // MARK: - Computed
     
     var formula: String {
-        return (self.version.short == App.shared.brewPhpVersion) ? "php" : "php@\(self.version.short)"
+        return (version.short == App.shared.brewPhpVersion) ? "php" : "php@\(version.short)"
     }
     
     // MARK: - Initializer
 
     init() {
         // Show information about the current version
-        self.version = Self.getVersion()
+        version = Self.getVersion()
         
         // If an error occurred, exit early
-        if (self.version.error) {
-            self.configuration = Configuration()
-            self.extensions = []
+        if (version.error) {
+            configuration = Configuration()
+            extensions = []
             return
         }
         
         // Load extension information
-        let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(self.version.short)/php.ini")
-        self.extensions = PhpExtension.load(from: path)
+        let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
+        
+        extensions = PhpExtension.load(from: path)
         
         // Get configuration values
-        self.configuration = Configuration(
+        configuration = Configuration(
             memory_limit: Self.getByteCount(key: "memory_limit"),
             upload_max_filesize: Self.getByteCount(key: "upload_max_filesize"),
             post_max_size: Self.getByteCount(key: "post_max_size")

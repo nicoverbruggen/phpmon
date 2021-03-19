@@ -62,11 +62,11 @@ class PhpExtension {
      */
     func toggle() {
         Actions.sed(
-            file: self.file,
-            original: self.line,
-            replacement: self.enabled ? "; \(self.line)" : self.line.replacingOccurrences(of: "; ", with: "")
+            file: file,
+            original: line,
+            replacement: enabled ? "; \(line)" : line.replacingOccurrences(of: "; ", with: "")
         )
-        self.enabled = !self.enabled
+        enabled = !enabled
     }
     
     // MARK: - Static Methods

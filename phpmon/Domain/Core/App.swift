@@ -43,7 +43,7 @@ class App {
      */
     var brewPhpPackage: HomebrewPackage? = nil {
         didSet {
-            self.brewPhpVersion = self.brewPhpPackage!.version
+            brewPhpVersion = brewPhpPackage!.version
         }
     }
     

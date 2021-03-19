@@ -161,7 +161,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         App.shared.currentInstall = PhpInstallation()
         
         DispatchQueue.main.async { [self] in
-            if (App.shared.busy) {
+            if (App.busy) {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 setStatusBarImage(version: App.phpInstall!.version.short)

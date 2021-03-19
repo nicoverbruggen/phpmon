@@ -75,6 +75,7 @@ class Actions {
         }
         
         let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+        
         brew("link \(formula) --overwrite --force")
         brew("services start \(formula)", sudo: true)
     }
@@ -110,7 +111,7 @@ class Actions {
     {
         brew("services restart dnsmasq", sudo: true)
         
-        self.detectPhpVersions().forEach { (version) in
+        detectPhpVersions().forEach { (version) in
             let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
             brew("unlink php@\(version)")
             brew("services stop \(formula)")

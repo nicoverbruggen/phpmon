@@ -29,7 +29,7 @@ class Shell {
             .init(majorVersion: 10, minorVersion: 15, patchVersion: 0))
     
         // If macOS Mojave is being used, we'll default to /bin/bash
-        self.shell = at_least_10_15 ? "/bin/sh" : "/bin/bash"
+        shell = at_least_10_15 ? "/bin/sh" : "/bin/bash"
         print(at_least_10_15 ? "Detected recent macOS (> 10.15): defaulting to /bin/sh"
             : "Detected older macOS (< 10.15): so defaulting to /bin/bash")
     }
@@ -47,7 +47,7 @@ class Shell {
      */
     func run(_ command: String) {
         // Equivalent of piping to /dev/null; don't do anything with the string
-        _ = self.pipe(command)
+        _ = pipe(command)
     }
     
     /**

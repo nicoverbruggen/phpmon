@@ -21,23 +21,23 @@ class Startup {
      */
     func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
     {
-        self.failureCallback = failure
+        failureCallback = failure
         
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             !Shell.fileExists("\(Paths.binPath)/php"),
             messageText:        "startup.errors.php_binary.title".localized,
             informativeText:    "startup.errors.php_binary_desc".localized,
             breaking:           true
         )
         
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php"),
             messageText:        "startup.errors.php_opt.title".localized,
             informativeText:    "startup.errors.php_opt.desc".localized,
             breaking:           true
         )
         
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
             !(Shell.fileExists("/usr/local/bin/valet") || Shell.fileExists("/opt/homebrew/bin/valet")),
             messageText:        "startup.errors.valet_executable.title".localized,
@@ -45,14 +45,14 @@ class Startup {
             breaking:           true
         )
         
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
             messageText:        "startup.errors.sudoers_brew.title".localized,
             informativeText:    "startup.errors.sudoers_brew.desc".localized,
             breaking:           true
         )
         
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
             !(Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet")
             || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")),
@@ -62,15 +62,15 @@ class Startup {
         )
         
         let services = Shell.pipe("\(Paths.brew) services list | grep php")
-        self.performEnvironmentCheck(
+        performEnvironmentCheck(
             (services.countInstances(of: "started") > 1),
             messageText:        "startup.errors.services.title".localized,
             informativeText:    "startup.errors.services.desc".localized,
             breaking:           false
         )
         
-        if (!self.failed) {
-            self.determineBrewAliasVersion()
+        if (!failed) {
+            determineBrewAliasVersion()
             success()
         }
     }
@@ -110,13 +110,13 @@ class Startup {
     ) {
         if (!condition) { return }
         
-        self.failed = breaking
+        failed = breaking
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             // Present the information to the user
             Alert.notify(message: messageText, info: informativeText)
             // Only breaking issues will throw the extra retry modal
-            breaking ? self.failureCallback() : ()
+            breaking ? failureCallback() : ()
         }
     }
 }

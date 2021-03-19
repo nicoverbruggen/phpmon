@@ -15,18 +15,18 @@ class StatusMenu : NSMenu {
         
         if App.phpInstall!.version.error {
             for message in ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"] {
-                self.addItem(NSMenuItem(title: message.localized, action: nil, keyEquivalent: ""))
+                addItem(NSMenuItem(title: message.localized, action: nil, keyEquivalent: ""))
             }
             return
         }
     
         let phpVersionText = "\("mi_php_version".localized) \(App.phpInstall!.version.long)"
-        self.addItem(HeaderView.asMenuItem(text: phpVersionText))
+        addItem(HeaderView.asMenuItem(text: phpVersionText))
     }
     
     func addPhpActionMenuItems() {
         if App.busy {
-            self.addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
+            addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
         }
         

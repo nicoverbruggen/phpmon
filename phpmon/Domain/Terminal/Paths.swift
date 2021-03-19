@@ -23,41 +23,41 @@ class Paths {
         
         if (optBrewFound) {
             // This is usually the case with Homebrew installed on Apple Silicon
-            self.baseDir = .opt
+            baseDir = .opt
         } else if (usrBrewFound) {
             // This is usually the case with Homebrew installed on Intel (or Rosetta 2)
-            self.baseDir = .usr
+            baseDir = .usr
         } else {
             // Falling back to default "legacy" Homebrew location (for Intel)
             print("Seems like we couldn't determine the Homebrew directory.")
             print("This usually means we're in trouble... (no Homebrew?)")
-            self.baseDir = .usr
+            baseDir = .usr
         }
         
-        print("Homebrew directory: \(self.baseDir)")
+        print("Homebrew directory: \(baseDir)")
     }
     
     // - MARK: Binaries
     
     public static var brew: String {
-        return "\(self.binPath)/brew"
+        return "\(binPath)/brew"
     }
     
     public static var php: String {
-        return "\(self.binPath)/php"
+        return "\(binPath)/php"
     }
     
     // - MARK: Paths
     
     public static var binPath: String {
-        return "\(self.shared.baseDir.rawValue)/bin"
+        return "\(shared.baseDir.rawValue)/bin"
     }
     
     public static var optPath: String {
-        return "\(self.shared.baseDir.rawValue)/opt"
+        return "\(shared.baseDir.rawValue)/opt"
     }
     
     public static var etcPath: String {
-        return "\(self.shared.baseDir.rawValue)/etc"
+        return "\(shared.baseDir.rawValue)/etc"
     }
 }
