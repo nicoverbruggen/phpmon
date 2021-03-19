@@ -25,12 +25,12 @@ class MainMenu: NSObject, NSWindowDelegate {
      */
     func startup() {
         // Start with the icon
-        self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         
         // Perform environment boot checks
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Startup().checkEnvironment(success: { self.onEnvironmentPass() },
-                                       failure: { self.onEnvironmentFail() }
+            Startup().checkEnvironment(success: { onEnvironmentPass() },
+                                       failure: { onEnvironmentFail() }
             )
         }
     }
@@ -40,14 +40,14 @@ class MainMenu: NSObject, NSWindowDelegate {
      */
     private func onEnvironmentPass() {
         App.shared.availablePhpVersions = Actions.detectPhpVersions()
-        self.updatePhpVersionInStatusBar()
+        updatePhpVersionInStatusBar()
         
         // Schedule a request to fetch the PHP version every 60 seconds
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             App.shared.timer = Timer.scheduledTimer(
                 timeInterval: 60,
                 target: self,
-                selector: #selector(self.updatePhpVersionInStatusBar),
+                selector: #selector(updatePhpVersionInStatusBar),
                 userInfo: nil,
                 repeats: true
             )
@@ -58,7 +58,7 @@ class MainMenu: NSObject, NSWindowDelegate {
      When the environment is not OK, present an alert to inform the user.
      */
     private func onEnvironmentFail() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             let close = Alert.present(
                 messageText: "alert.cannot_start.title".localized,
                 informativeText: "alert.cannot_start.info".localized,
@@ -70,7 +70,7 @@ class MainMenu: NSObject, NSWindowDelegate {
                 exit(1)
             }
             
-            self.startup()
+            startup()
         }
     }
     
@@ -79,7 +79,7 @@ class MainMenu: NSObject, NSWindowDelegate {
      */
     func update() {
         // Update the menu item on the main thread
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             // Create a new menu
             let menu = StatusMenu()
             
@@ -96,15 +96,15 @@ class MainMenu: NSObject, NSWindowDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add about & quit menu items
-            menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(self.openAbout), keyEquivalent: ""))
-            menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(self.terminateApp), keyEquivalent: "q"))
+            menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(terminateApp), keyEquivalent: "q"))
             
             // Make sure every item can be interacted with
             menu.items.forEach({ (item) in
                 item.target = self
             })
             
-            self.statusItem.menu = menu
+            statusItem.menu = menu
         }
     }
     
@@ -112,7 +112,7 @@ class MainMenu: NSObject, NSWindowDelegate {
      Sets the status bar image based on a version string.
      */
     func setStatusBarImage(version: String) {
-        self.setStatusBar(
+        setStatusBar(
             image: MenuBarImageGenerator.textToImage(text: version)
         )
     }
@@ -141,15 +141,15 @@ class MainMenu: NSObject, NSWindowDelegate {
     private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
         App.shared.busy = true
-        self.setBusyImage()
+        setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            self.update()
+            update()
             execute()
             App.shared.busy = false
             
-            DispatchQueue.main.async {
-                self.updatePhpVersionInStatusBar()
-                self.update()
+            DispatchQueue.main.async { [self] in
+                updatePhpVersionInStatusBar()
+                update()
                 completion()
             }
         }
@@ -160,33 +160,33 @@ class MainMenu: NSObject, NSWindowDelegate {
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentInstall = PhpInstallation()
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             if (App.shared.busy) {
-                self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+                setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
-                self.setStatusBarImage(version: App.phpInstall!.version.short)
+                setStatusBarImage(version: App.phpInstall!.version.short)
             }
         }
         
-        self.update()
+        update()
     }
     
     @objc func setBusyImage() {
-        DispatchQueue.main.async {
-            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        DispatchQueue.main.async { [self] in
+            setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
     }
     
     // MARK: - Actions
     
     @objc func restartPhpFpm() {
-        self.waitAndExecute({
+        waitAndExecute({
             Actions.restartPhpFpm()
         })
     }
     
     @objc func restartAllServices() {
-        self.waitAndExecute {
+        waitAndExecute {
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
             Actions.restartNginx()
@@ -194,25 +194,25 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc func restartNginx() {
-        self.waitAndExecute {
+        waitAndExecute {
             Actions.restartNginx()
         }
     }
     
     @objc func restartDnsMasq() {
-        self.waitAndExecute {
+        waitAndExecute {
             Actions.restartDnsMasq()
         }
     }
     
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        self.waitAndExecute {
+        waitAndExecute {
             sender.phpExtension?.toggle()
         }
     }
     
     @objc func openPhpInfo() {
-        self.waitAndExecute {
+        waitAndExecute {
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
             Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
         } completion: {
@@ -225,7 +225,7 @@ class MainMenu: NSObject, NSWindowDelegate {
         Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
         
         // Start switching
-        self.waitAndExecute {
+        waitAndExecute {
             Actions.fixMyPhp()
         } completion: {
             Alert.notify(message: "alert.force_reload_done.title".localized, info: "alert.force_reload_done.info".localized)
@@ -248,17 +248,17 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
-        print("Switching to: PHP \(sender.version)")
+        // print("Switching to: PHP \(sender.version)")
         
-        self.setBusyImage()
+        setBusyImage()
         App.shared.busy = true
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
-            self.updatePhpVersionInStatusBar()
+           updatePhpVersionInStatusBar()
             
             // Update the menu
-            self.update()
+            update()
             
             // Switch the PHP version
             Actions.switchToPhpVersion(
@@ -270,9 +270,9 @@ class MainMenu: NSObject, NSWindowDelegate {
             App.shared.busy = false
             
             // Perform UI updates on main thread
-            DispatchQueue.main.async {
-                self.updatePhpVersionInStatusBar()
-                self.update()
+            DispatchQueue.main.async { [self] in
+                updatePhpVersionInStatusBar()
+                update()
                 
                 // Send a notification that the switch has been completed
                 LocalNotification.send(
