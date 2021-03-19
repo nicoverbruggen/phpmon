@@ -26,6 +26,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     func startup() {
         // Start with the icon
         self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        
         // Perform environment boot checks
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             Startup().checkEnvironment(success: { self.onEnvironmentPass() },
@@ -40,6 +41,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     private func onEnvironmentPass() {
         App.shared.availablePhpVersions = Actions.detectPhpVersions()
         self.updatePhpVersionInStatusBar()
+        
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async {
             App.shared.timer = Timer.scheduledTimer(
@@ -144,6 +146,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             self.update()
             execute()
             App.shared.busy = false
+            
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
@@ -204,8 +207,6 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc func toggleExtension(sender: ExtensionMenuItem) {
         self.waitAndExecute {
-            // Toggle that extension
-            print("Toggling extension '\(sender.phpExtension!.name)'")
             sender.phpExtension?.toggle()
         }
     }
@@ -222,6 +223,7 @@ class MainMenu: NSObject, NSWindowDelegate {
     @objc func forceRestartLatestPhp() {
         // Tell the user the switch is about to occur
         Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
+        
         // Start switching
         self.waitAndExecute {
             Actions.fixMyPhp()
@@ -271,6 +273,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             DispatchQueue.main.async {
                 self.updatePhpVersionInStatusBar()
                 self.update()
+                
                 // Send a notification that the switch has been completed
                 LocalNotification.send(
                     title: String(format: "notification.version_changed_title".localized, sender.version),
