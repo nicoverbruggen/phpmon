@@ -136,7 +136,7 @@ class MainMenu: NSObject, NSWindowDelegate {
      - Parameter execute: Callback of the work that needs to happen.
      - Parameter completion: Callback that is fired when the work is done.
      */
-    private func waitAndExecute(_ execute: @escaping () -> Void, _ completion: @escaping () -> Void = {})
+    private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
         App.shared.busy = true
         self.setBusyImage()
@@ -183,53 +183,51 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc func restartAllServices() {
-        self.waitAndExecute({
+        self.waitAndExecute {
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
             Actions.restartNginx()
-        })
+        }
     }
     
     @objc func restartNginx() {
-        self.waitAndExecute({
+        self.waitAndExecute {
             Actions.restartNginx()
-        })
+        }
     }
     
     @objc func restartDnsMasq() {
-        self.waitAndExecute({
+        self.waitAndExecute {
             Actions.restartDnsMasq()
-        })
+        }
     }
     
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        self.waitAndExecute({
+        self.waitAndExecute {
             // Toggle that extension
             print("Toggling extension '\(sender.phpExtension!.name)'")
             sender.phpExtension?.toggle()
-        })
+        }
     }
     
     @objc func openPhpInfo() {
-        self.waitAndExecute({
+        self.waitAndExecute {
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
             Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
-        }, {
+        } completion: {
             NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
-        })
+        }
     }
     
     @objc func forceRestartLatestPhp() {
         // Tell the user the switch is about to occur
         Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
         // Start switching
-        self.waitAndExecute(
-            { Actions.fixMyPhp() },
-            { Alert.notify(
-                message: "alert.force_reload_done.title".localized,
-                info: "alert.force_reload_done.info".localized
-            ) }
-        )
+        self.waitAndExecute {
+            Actions.fixMyPhp()
+        } completion: {
+            Alert.notify(message: "alert.force_reload_done.title".localized, info: "alert.force_reload_done.info".localized)
+        }
     }
     
     @objc func openActiveConfigFolder() {
