@@ -171,6 +171,19 @@ class MainMenu: NSObject, NSWindowDelegate {
         update()
     }
     
+    @objc func reloadPhpMonitorMenu() {
+        waitAndExecute({
+            // This automatically reloads the menu
+            print("Reloading information about the PHP installation...")
+        }, completion: {
+            // Add a slight delay to make sure it loads the new menu
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                // Open the menu again
+                MainMenu.shared.statusItem.button?.performClick(nil)
+            }
+        })
+    }
+    
     @objc func setBusyImage() {
         DispatchQueue.main.async { [self] in
             setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)

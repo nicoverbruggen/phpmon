@@ -110,7 +110,7 @@ class StatusMenu : NSMenu {
             self.addExtensionItem(phpExtension)
         }
         
-        self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.updatePhpVersionInStatusBar), keyEquivalent: "r"))
+        self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
     }
     
     private func addExtensionItem(_ phpExtension: PhpExtension) {
@@ -120,6 +120,7 @@ class StatusMenu : NSMenu {
         )
         menuItem.state = phpExtension.enabled ? .on : .off
         menuItem.phpExtension = phpExtension
+        
         self.addItem(menuItem)
     }
 }
