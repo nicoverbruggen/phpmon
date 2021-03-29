@@ -109,6 +109,8 @@ class StatusMenu : NSMenu {
         for phpExtension in App.phpInstall!.extensions {
             self.addExtensionItem(phpExtension)
         }
+        
+        self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.updatePhpVersionInStatusBar), keyEquivalent: "r"))
     }
     
     private func addExtensionItem(_ phpExtension: PhpExtension) {
