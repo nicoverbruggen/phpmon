@@ -89,8 +89,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GSr-K5-3yw">
-                                <rect key="frame" x="380" y="13" width="69" height="32"/>
-                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ocw-Rx-gyh">
+                                <rect key="frame" x="373" y="13" width="76" height="32"/>
+                                <buttonCell key="cell" type="push" title="CLOSE" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ocw-Rx-gyh">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -99,8 +99,8 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-MN-oXt">
-                                <rect key="frame" x="18" y="102" width="108" height="18"/>
-                                <buttonCell key="cell" type="check" title="Dynamic Icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
+                                <rect key="frame" x="18" y="102" width="424" height="18"/>
+                                <buttonCell key="cell" type="check" title="DYN_ICON" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -109,8 +109,8 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-aa-AzL">
-                                <rect key="frame" x="18" y="67" width="426" height="28"/>
-                                <textFieldCell key="cell" title="If you uncheck this box, the truck icon will always be visible  instead of the version number. No more distractions!" id="MHA-Xt-xgF">
+                                <rect key="frame" x="18" y="81" width="426" height="14"/>
+                                <textFieldCell key="cell" title="DYN_ICON_DESC" id="MHA-Xt-xgF">
                                     <font key="font" metaFont="system" size="11"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -125,6 +125,8 @@
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="top" secondItem="MEf-MN-oXt" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf8-fx-H50"/>
                             <constraint firstAttribute="bottom" secondItem="GSr-K5-3yw" secondAttribute="bottom" constant="20" symbolic="YES" id="dAS-yW-vua"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="dzR-S7-M6U"/>
+                            <constraint firstItem="GSr-K5-3yw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="mTE-WD-54L"/>
+                            <constraint firstAttribute="trailing" secondItem="MEf-MN-oXt" secondAttribute="trailing" constant="20" symbolic="YES" id="pJg-zj-cBs"/>
                         </constraints>
                     </view>
                     <connections>
