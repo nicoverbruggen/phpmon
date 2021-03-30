@@ -39,8 +39,16 @@
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
+"mi_preferences" = "Preferences...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
+
+// PREFERENCES
+
+"prefs.title" = "Preferences";
+"prefs.close" = "Close";
+"prefs.dynamic_icon_title" = "Show a dynamic icon in the menu bar";
+"prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the currently linked PHP version.";
 
 // NOTIFICATIONS
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -53,6 +54,88 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-343" y="-16"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="PQa-AT-b2a">
+            <objects>
+                <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="h4c-3b-nko">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="372" y="403" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2304" height="1271"/>
+                        <view key="contentView" id="2yL-50-11x">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="hLJ-Fd-wRr" id="6HE-8Y-aCO"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="AW2-rV-rbS" kind="relationship" relationship="window.shadowedContentViewController" id="3dX-9V-eA0"/>
+                    </connections>
+                </windowController>
+                <customObject id="OF0-qs-3Oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-374" y="327"/>
+        </scene>
+        <!--Preferences-->
+        <scene sceneID="iyi-IS-7Ps">
+            <objects>
+                <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Pf1-A5-3Xz">
+                        <rect key="frame" x="0.0" y="0.0" width="462" height="139"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GSr-K5-3yw">
+                                <rect key="frame" x="380" y="13" width="69" height="32"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ocw-Rx-gyh">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressed:" target="AW2-rV-rbS" id="8dA-y4-voq"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-MN-oXt">
+                                <rect key="frame" x="18" y="102" width="108" height="18"/>
+                                <buttonCell key="cell" type="check" title="Dynamic Icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggledDynamicIcon:" target="AW2-rV-rbS" id="cuJ-mt-agf"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-aa-AzL">
+                                <rect key="frame" x="18" y="67" width="426" height="28"/>
+                                <textFieldCell key="cell" title="If you uncheck this box, the truck icon will always be visible  instead of the version number. No more distractions!" id="MHA-Xt-xgF">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="JrH-aa-AzL" secondAttribute="trailing" constant="20" symbolic="YES" id="8iM-Xf-ShU"/>
+                            <constraint firstAttribute="trailing" secondItem="GSr-K5-3yw" secondAttribute="trailing" constant="20" symbolic="YES" id="AT9-5F-6g1"/>
+                            <constraint firstItem="MEf-MN-oXt" firstAttribute="top" secondItem="Pf1-A5-3Xz" secondAttribute="top" constant="20" symbolic="YES" id="FJC-Lx-L8a"/>
+                            <constraint firstItem="MEf-MN-oXt" firstAttribute="leading" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="Imd-YJ-Ae7"/>
+                            <constraint firstItem="JrH-aa-AzL" firstAttribute="top" secondItem="MEf-MN-oXt" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf8-fx-H50"/>
+                            <constraint firstAttribute="bottom" secondItem="GSr-K5-3yw" secondAttribute="bottom" constant="20" symbolic="YES" id="dAS-yW-vua"/>
+                            <constraint firstItem="JrH-aa-AzL" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="dzR-S7-M6U"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonClose" destination="GSr-K5-3yw" id="d4I-Cf-gXD"/>
+                        <outlet property="buttonDynamicIcon" destination="MEf-MN-oXt" id="qEN-Vg-EZS"/>
+                        <outlet property="labelDynamicIcon" destination="JrH-aa-AzL" id="CFc-fF-oPq"/>
+                    </connections>
+                </viewController>
+                <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="216" y="319"/>
         </scene>
     </scenes>
 </document>

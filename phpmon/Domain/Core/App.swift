@@ -18,6 +18,14 @@ class App {
         return App.shared.busy
     }
     
+    /** The list of preferences that are currently active. */
+    var preferences: [PreferenceName: Bool]!
+    
+    /**
+     The window controller of the currently active window.
+     */
+    var windowController: NSWindowController? = nil
+    
     /**
      Whether the application is busy switching versions.
      */

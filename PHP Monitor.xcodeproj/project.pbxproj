@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
+		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
@@ -76,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
+		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
@@ -140,6 +144,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5420395726135DB800FB00FA /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				5420395826135DC100FB00FA /* PrefsVC.swift */,
+				5420395E2613607600FB00FA /* Preferences.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		C405A4CD24B9B9070062FAFA /* IAP */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +203,7 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				5420395726135DB800FB00FA /* Preferences */,
 				C4F7808A25D7F918000DBC97 /* Terminal */,
 				C4B13B1D25C4915000548C3A /* Core */,
 				C47331A0247093AC009A0597 /* Menu */,
@@ -381,12 +395,14 @@
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
+				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
+				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
@@ -581,7 +597,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -589,7 +605,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "3.3-prerelease";
+				MARKETING_VERSION = "3.3-prerelease2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -605,7 +621,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -613,7 +629,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "3.3-prerelease";
+				MARKETING_VERSION = "3.3-prerelease2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

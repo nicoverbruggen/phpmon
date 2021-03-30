@@ -96,6 +96,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add about & quit menu items
+            menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(terminateApp), keyEquivalent: "q"))
             
@@ -159,16 +160,24 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc func updatePhpVersionInStatusBar() {
         App.shared.currentInstall = PhpInstallation()
-        
+        refreshIcon()
+        update()
+    }
+    
+    func refreshIcon() {
         DispatchQueue.main.async { [self] in
             if (App.busy) {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
-                setStatusBarImage(version: App.phpInstall!.version.short)
+                if Preferences.preferences[.shouldDisplayDynamicIcon] == false {
+                    // Static icon has been requested
+                    setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
+                } else {
+                    // The dynamic icon has been requested
+                    setStatusBarImage(version: App.phpInstall!.version.short)
+                }
             }
         }
-        
-        update()
     }
     
     @objc func reloadPhpMonitorMenu() {
@@ -299,6 +308,10 @@ class MainMenu: NSObject, NSWindowDelegate {
     @objc func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
+    }
+    
+    @objc func openPrefs() {
+        PrefsVC.show()
     }
     
     @objc func terminateApp() {
