@@ -15,15 +15,17 @@ enum PreferenceName: String {
 class Preferences {
     
     static func handleFirstTimeLaunch() {
-        let launchedBefore = UserDefaults.standard.bool(forKey: "alreadyLaunched")
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launched_before")
         
         if launchedBefore {
             return
         }
         
         UserDefaults.standard.setValue(true, forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue)
-        UserDefaults.standard.setValue(true, forKey: "alreadyLaunched")
+        UserDefaults.standard.setValue(true, forKey: "launched_before")
         UserDefaults.standard.synchronize()
+        
+        print("Saving first-time preferences!")
     }
     
     static func retrieve() -> [PreferenceName: Bool] {
