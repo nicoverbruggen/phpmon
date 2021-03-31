@@ -27,7 +27,7 @@ class Actions {
         versions.forEach { (string) in
             let version = string.components(separatedBy: "php@")[1]
             // Only append the version if it doesn't already exist (avoid dupes)
-            if !versionsOnly.contains(version) {
+            if !versionsOnly.contains(version) && Constants.SupportedPhpVersions.contains(version) {
                 versionsOnly.append(version)
             }
         }
