@@ -25,7 +25,11 @@ class Actions {
         // Get a list of versions only
         var versionsOnly : [String] = []
         versions.forEach { (string) in
-            versionsOnly.append(string.components(separatedBy: "php@")[1])
+            let version = string.components(separatedBy: "php@")[1]
+            // Only append the version if it doesn't already exist (avoid dupes)
+            if !versionsOnly.contains(version) {
+                versionsOnly.append(version)
+            }
         }
         
         // Make sure the aliased version is detected
@@ -33,6 +37,7 @@ class Actions {
         // We should also detect that as a version that is installed
         let phpAlias = App.shared.brewPhpVersion
         
+        // Avoid inserting a duplicate
         if (!versionsOnly.contains(phpAlias)) {
             versionsOnly.append(phpAlias);
         }
