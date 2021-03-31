@@ -110,6 +110,8 @@ class StatusMenu : NSMenu {
             self.addExtensionItem(phpExtension)
         }
         
+        self.addItem(NSMenuItem.separator())
+        
         self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
     }
     

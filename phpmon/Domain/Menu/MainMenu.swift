@@ -181,16 +181,16 @@ class MainMenu: NSObject, NSWindowDelegate {
     }
     
     @objc func reloadPhpMonitorMenu() {
-        waitAndExecute({
+        waitAndExecute {
             // This automatically reloads the menu
             print("Reloading information about the PHP installation...")
-        }, completion: {
+        } completion: {
             // Add a slight delay to make sure it loads the new menu
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 // Open the menu again
                 MainMenu.shared.statusItem.button?.performClick(nil)
             }
-        })
+        }
     }
     
     @objc func setBusyImage() {
@@ -202,9 +202,9 @@ class MainMenu: NSObject, NSWindowDelegate {
     // MARK: - Actions
     
     @objc func restartPhpFpm() {
-        waitAndExecute({
+        waitAndExecute {
             Actions.restartPhpFpm()
-        })
+        }
     }
     
     @objc func restartAllServices() {
@@ -235,9 +235,13 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc func openPhpInfo() {
         waitAndExecute {
+            // Write a file called `phpmon_phpinfo.php` to /tmp
             try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
+            
+            // Tell php-cgi to run the PHP and output as an .html file
             Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
         } completion: {
+            // When this has been completed, open the URL to the file in the browser
             NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
         }
     }
