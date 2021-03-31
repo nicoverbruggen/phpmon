@@ -38,8 +38,11 @@ class Startup {
         )
         
         performEnvironmentCheck(
-            // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
-            !(Shell.fileExists("/usr/local/bin/valet") || Shell.fileExists("/opt/homebrew/bin/valet")),
+            // Check for Valet; it can be symlinked or in .composer/vendor/bin
+            !(Shell.fileExists("/usr/local/bin/valet")
+                || Shell.fileExists("/opt/homebrew/bin/valet")
+                || Shell.fileExists("~/.composer/vendor/bin/valet")
+            ),
             messageText:        "startup.errors.valet_executable.title".localized,
             informativeText:    "startup.errors.valet_executable.desc".localized,
             breaking:           true
@@ -53,9 +56,11 @@ class Startup {
         )
         
         performEnvironmentCheck(
-            // Older versions of Valet might be located in `/usr/local/bin` regardless of Homebrew prefix
+            // Check for Valet; it can be symlinked or in .composer/vendor/bin
             !(Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet")
-            || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")),
+                || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")
+                || Shell.pipe("cat /private/etc/sudoers.d/valet").contains(".composer/vendor/bin/valet")
+            ),
             messageText:        "startup.errors.sudoers_valet.title".localized,
             informativeText:    "startup.errors.sudoers_valet.desc".localized,
             breaking:           true
