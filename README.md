@@ -1,6 +1,7 @@
 # PHP Monitor
 
-> If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. **Thank you!** ⭐️
+> If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used.
+> You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
 
 <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
 
@@ -188,7 +189,7 @@ You will need to manually clean up those folders yourself using `rm -rf` or by m
 
 </details>
 
-## 📝 Another issue?
+## 📝 Having another issue?
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
 
