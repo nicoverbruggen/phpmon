@@ -24,10 +24,18 @@ class Actions {
         
         // Get a list of versions only
         var versionsOnly : [String] = []
-        versions.forEach { (string) in
+        versions.filter { (version) -> Bool in
+            // Omit everything that doesn't start with php@
+            // (e.g. something-php@8.0 won't be detected)
+            return version.starts(with: "php@")
+        }.forEach { (string) in
             let version = string.components(separatedBy: "php@")[1]
-            // Only append the version if it doesn't already exist (avoid dupes)
-            if !versionsOnly.contains(version) && Constants.SupportedPhpVersions.contains(version) {
+            // Only append the version if it doesn't already exist (avoid dupes),
+            // is supported and where the binary exists (avoids broken installs)
+            if !versionsOnly.contains(version)
+                && Constants.SupportedPhpVersions.contains(version)
+                && Shell.fileExists("\(Paths.optPath)/php@\(version)/bin/php")
+            {
                 versionsOnly.append(version)
             }
         }
@@ -41,6 +49,8 @@ class Actions {
         if (!versionsOnly.contains(phpAlias)) {
             versionsOnly.append(phpAlias);
         }
+        
+        print("The PHP versions that were detected are: \(versionsOnly)")
         
         return versionsOnly
     }
