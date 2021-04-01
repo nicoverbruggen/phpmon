@@ -1,20 +1,20 @@
 # PHP Monitor
 
-> ⭐️ If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me  [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. Thank you! 😃
+> If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used. You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy. **Thank you!** ⭐️
 
 <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
 
-PHP Monitor (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar.
+**PHP Monitor** (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so you need to have it set up before you can use this.
 
 <img src="./docs/screenshot33.png" width="376px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
 
-It's also super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
+It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
 <img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
-It also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
+PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
 ## 🖥 System requirements
 
@@ -160,6 +160,7 @@ For Zend extensions:
 * `; zend_extension="*.so"`
 
 The `*` is a wildcard and the name of the extension. If you've commented out the extension, make sure you've commented it out with a semicolon (;) and a single space after the semicolon for PHP Monitor to detect it.
+
 </details>
 
 <details>
@@ -193,7 +194,11 @@ I did not include any tracking or analytics software, so if you encounter issues
 
 ## 💵 Support me?
 
-I usually develop this application in my spare time, after work. If you find the application useful and you have a bit of money to spare, feel free to send me [a tip via PayPal](https://paypal.me/nicoverbruggen).
+PHP Monitor is available entirely **free of charge**, but if you can afford it a donation helps keep the project alive and the app maintained.
+
+You can find a [sponsor](https://nicoverbruggen.be/sponsor) link at the top of this repo or you could click the link here to be taken to my sponsorship page.
+
+Donations really help with the Apple Developer Program cost, and keep me motivated to keep working on PHP Monitor outside of work hours (I do have a day job!).
 
 ## 🚜 How it works
 
