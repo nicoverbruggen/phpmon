@@ -15,30 +15,7 @@ class Actions {
     public static func detectPhpVersions() -> [String]
     {
         let files = Shell.pipe("ls \(Paths.optPath) | grep php@")
-        var versions = files.components(separatedBy: "\n")
-        
-        // Remove all empty strings
-        versions.removeAll { (string) -> Bool in
-            return (string == "")
-        }
-        
-        // Get a list of versions only
-        var versionsOnly : [String] = []
-        versions.filter { (version) -> Bool in
-            // Omit everything that doesn't start with php@
-            // (e.g. something-php@8.0 won't be detected)
-            return version.starts(with: "php@")
-        }.forEach { (string) in
-            let version = string.components(separatedBy: "php@")[1]
-            // Only append the version if it doesn't already exist (avoid dupes),
-            // is supported and where the binary exists (avoids broken installs)
-            if !versionsOnly.contains(version)
-                && Constants.SupportedPhpVersions.contains(version)
-                && Shell.fileExists("\(Paths.optPath)/php@\(version)/bin/php")
-            {
-                versionsOnly.append(version)
-            }
-        }
+        var versionsOnly = Self.extractPhpVersions(from: files.components(separatedBy: "\n"))
         
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
@@ -53,6 +30,35 @@ class Actions {
         print("The PHP versions that were detected are: \(versionsOnly)")
         
         return versionsOnly
+    }
+    
+    /**
+     Extracts valid PHP versions from an array of strings.
+     This array of strings is usually retrieved from `grep`.
+     */
+    public static func extractPhpVersions(
+        from versions: [String],
+        checkBinaries: Bool = true
+    ) -> [String] {
+        var output : [String] = []
+        
+        versions.filter { (version) -> Bool in
+            // Omit everything that doesn't start with php@
+            // (e.g. something-php@8.0 won't be detected)
+            return version.starts(with: "php@")
+        }.forEach { (string) in
+            let version = string.components(separatedBy: "php@")[1]
+            // Only append the version if it doesn't already exist (avoid dupes),
+            // is supported and where the binary exists (avoids broken installs)
+            if !output.contains(version)
+                && Constants.SupportedPhpVersions.contains(version)
+                && (checkBinaries ? Shell.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
+            {
+                output.append(version)
+            }
+        }
+        
+        return output
     }
     
     // MARK: - Services
