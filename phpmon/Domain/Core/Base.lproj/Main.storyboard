@@ -84,7 +84,7 @@
         <scene sceneID="iyi-IS-7Ps">
             <objects>
                 <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="Pf1-A5-3Xz">
+                    <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
                         <rect key="frame" x="0.0" y="0.0" width="462" height="185"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -151,7 +151,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="JrH-aa-AzL" secondAttribute="trailing" constant="20" symbolic="YES" id="8iM-Xf-ShU"/>
                             <constraint firstAttribute="trailing" secondItem="GSr-K5-3yw" secondAttribute="trailing" constant="20" symbolic="YES" id="AT9-5F-6g1"/>
-                            <constraint firstItem="YsQ-AZ-Aei" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="trailing" constant="12" symbolic="YES" id="Bk6-4V-GLk"/>
+                            <constraint firstItem="YsQ-AZ-Aei" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="trailing" constant="8" symbolic="YES" id="Bk6-4V-GLk"/>
                             <constraint firstItem="YsQ-AZ-Aei" firstAttribute="top" secondItem="V7b-jv-oCB" secondAttribute="top" id="CzF-dC-Jm8"/>
                             <constraint firstItem="V7b-jv-oCB" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="El4-TW-O0d"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="top" secondItem="Pf1-A5-3Xz" secondAttribute="top" constant="20" symbolic="YES" id="FJC-Lx-L8a"/>
@@ -177,7 +177,7 @@
                 </viewController>
                 <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="216" y="341.5"/>
+            <point key="canvasLocation" x="208" y="336"/>
         </scene>
     </scenes>
 </document>

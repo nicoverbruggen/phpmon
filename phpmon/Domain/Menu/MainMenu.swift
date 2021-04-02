@@ -7,9 +7,11 @@
 
 import Cocoa
 
-class MainMenu: NSObject, NSWindowDelegate {
+class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
 
     static let shared = MainMenu()
+    
+    weak var menuDelegate: NSMenuDelegate? = nil
     
     /**
      The status bar item with variable length.
@@ -106,6 +108,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             })
             
             statusItem.menu = menu
+            statusItem.menu?.delegate = self
         }
     }
     
@@ -320,5 +323,17 @@ class MainMenu: NSObject, NSWindowDelegate {
     
     @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
+    }
+    
+    // MARK: - Menu Delegate
+    
+    func menuWillOpen(_ menu: NSMenu) {
+        // Make sure the shortcut key does not trigger this when the menu is open
+        App.shared.shortcutHotkey?.isPaused = true
+    }
+    
+    func menuDidClose(_ menu: NSMenu) {
+        // When the menu is closed, allow the shortcut to work again
+        App.shared.shortcutHotkey?.isPaused = false
     }
 }
