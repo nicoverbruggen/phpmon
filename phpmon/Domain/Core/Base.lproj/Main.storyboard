@@ -58,7 +58,7 @@
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
             <objects>
-                <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" customClass="PrefsWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="h4c-3b-nko">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -85,7 +85,7 @@
             <objects>
                 <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Pf1-A5-3Xz">
-                        <rect key="frame" x="0.0" y="0.0" width="462" height="139"/>
+                        <rect key="frame" x="0.0" y="0.0" width="462" height="185"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GSr-K5-3yw">
@@ -99,7 +99,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-MN-oXt">
-                                <rect key="frame" x="18" y="102" width="424" height="18"/>
+                                <rect key="frame" x="18" y="148" width="424" height="18"/>
                                 <buttonCell key="cell" type="check" title="DYN_ICON" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -109,9 +109,40 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-aa-AzL">
-                                <rect key="frame" x="18" y="81" width="426" height="14"/>
+                                <rect key="frame" x="18" y="127" width="426" height="14"/>
                                 <textFieldCell key="cell" title="DYN_ICON_DESC" id="MHA-Xt-xgF">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V7b-jv-oCB">
+                                <rect key="frame" x="13" y="72" width="164" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="9jD-Bf-T2M"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="SET_SHORTCUT" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="R63-tN-KVQ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="register:" target="AW2-rV-rbS" id="4Mj-eM-4eW"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YsQ-AZ-Aei">
+                                <rect key="frame" x="175" y="72" width="154" height="32"/>
+                                <buttonCell key="cell" type="push" title="CLEAR_SHORTCUT" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nvE-5d-VOS">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="unregister:" target="AW2-rV-rbS" id="2RI-4w-6Td"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1TO-9H-z2d">
+                                <rect key="frame" x="18" y="57" width="101" height="14"/>
+                                <textFieldCell key="cell" title="SHORTCUT_DESC" id="nYP-yi-DBf">
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -120,24 +151,33 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="JrH-aa-AzL" secondAttribute="trailing" constant="20" symbolic="YES" id="8iM-Xf-ShU"/>
                             <constraint firstAttribute="trailing" secondItem="GSr-K5-3yw" secondAttribute="trailing" constant="20" symbolic="YES" id="AT9-5F-6g1"/>
+                            <constraint firstItem="YsQ-AZ-Aei" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="trailing" constant="12" symbolic="YES" id="Bk6-4V-GLk"/>
+                            <constraint firstItem="YsQ-AZ-Aei" firstAttribute="top" secondItem="V7b-jv-oCB" secondAttribute="top" id="CzF-dC-Jm8"/>
+                            <constraint firstItem="V7b-jv-oCB" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="El4-TW-O0d"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="top" secondItem="Pf1-A5-3Xz" secondAttribute="top" constant="20" symbolic="YES" id="FJC-Lx-L8a"/>
+                            <constraint firstItem="V7b-jv-oCB" firstAttribute="top" secondItem="JrH-aa-AzL" secondAttribute="bottom" constant="28" id="I62-Jw-hfy"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="leading" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="Imd-YJ-Ae7"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="top" secondItem="MEf-MN-oXt" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf8-fx-H50"/>
+                            <constraint firstItem="1TO-9H-z2d" firstAttribute="firstBaseline" secondItem="V7b-jv-oCB" secondAttribute="baseline" constant="25" id="bJG-ed-pch"/>
                             <constraint firstAttribute="bottom" secondItem="GSr-K5-3yw" secondAttribute="bottom" constant="20" symbolic="YES" id="dAS-yW-vua"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="dzR-S7-M6U"/>
+                            <constraint firstItem="1TO-9H-z2d" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="leading" id="lzx-14-MwL"/>
                             <constraint firstItem="GSr-K5-3yw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="mTE-WD-54L"/>
                             <constraint firstAttribute="trailing" secondItem="MEf-MN-oXt" secondAttribute="trailing" constant="20" symbolic="YES" id="pJg-zj-cBs"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonClearShortcut" destination="YsQ-AZ-Aei" id="1xo-hk-HgM"/>
                         <outlet property="buttonClose" destination="GSr-K5-3yw" id="d4I-Cf-gXD"/>
                         <outlet property="buttonDynamicIcon" destination="MEf-MN-oXt" id="qEN-Vg-EZS"/>
+                        <outlet property="buttonSetShortcut" destination="V7b-jv-oCB" id="2aS-S4-cKR"/>
                         <outlet property="labelDynamicIcon" destination="JrH-aa-AzL" id="CFc-fF-oPq"/>
+                        <outlet property="labelShortcut" destination="1TO-9H-z2d" id="paF-hK-78x"/>
                     </connections>
                 </viewController>
                 <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="216" y="319"/>
+            <point key="canvasLocation" x="216" y="341.5"/>
         </scene>
     </scenes>
 </document>

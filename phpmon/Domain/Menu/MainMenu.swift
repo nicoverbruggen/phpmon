@@ -169,7 +169,7 @@ class MainMenu: NSObject, NSWindowDelegate {
             if (App.busy) {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
-                if Preferences.preferences[.shouldDisplayDynamicIcon] == false {
+                if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
                     setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
                 } else {

@@ -10,6 +10,7 @@ import Foundation
 
 enum PreferenceName: String {
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
+    case globalHotkey = "global_hotkey"
 }
 
 class Preferences {
@@ -28,22 +29,27 @@ class Preferences {
         print("Saving first-time preferences!")
     }
     
-    static func retrieve() -> [PreferenceName: Bool] {
+    static func retrieve() -> [PreferenceName: Any] {
         Preferences.handleFirstTimeLaunch()
         
         return [
             .shouldDisplayDynamicIcon: UserDefaults.standard.bool(
-                forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue
-            )
+                forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
+            .globalHotkey: UserDefaults.standard.string(
+                forKey: PreferenceName.globalHotkey.rawValue) as Any
         ]
     }
     
-    static var preferences: [PreferenceName: Bool] {
+    static var preferences: [PreferenceName: Any?] {
         return Preferences.retrieve()
     }
     
-    static func update(_ preference: PreferenceName, value: Bool) {
-        UserDefaults.standard.setValue(value, forKey: preference.rawValue)
+    static func update(_ preference: PreferenceName, value: Any?) {
+        if (value == nil) {
+            UserDefaults.standard.removeObject(forKey: preference.rawValue)
+        } else {
+            UserDefaults.standard.setValue(value, forKey: preference.rawValue)
+        }
         UserDefaults.standard.synchronize()
     }
     

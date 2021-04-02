@@ -4,11 +4,17 @@
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
+
 import Cocoa
+import HotKey
 
 class App {
     
     static let shared = App()
+    
+    init() {
+        loadGlobalHotkey()
+    }
     
     static var phpInstall: PhpInstallation? {
         return App.shared.currentInstall
@@ -65,5 +71,43 @@ class App {
      from Homebrew itself upon starting the application.
      */
     var brewPhpVersion: String = "8.0"
+    
+    /**
+     The shortcut the user has requested.
+     */
+    var shortcutHotkey: HotKey? = nil {
+        didSet {
+            self.setupGlobalHotkeyListener()
+        }
+    }
+    
+    // MARK: - Methods
+    
+    private func loadGlobalHotkey() {
+        let hotkey = Preferences.preferences[.globalHotkey] as! String?
+        if hotkey == nil {
+            return
+        }
+        
+        let keybindPref = GlobalKeybindPreference.fromJson(hotkey!)
+        
+        if (keybindPref != nil) {
+            self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
+                carbonKeyCode: keybindPref!.keyCode,
+                carbonModifiers: keybindPref!.carbonFlags
+            ))
+        } else {
+            self.shortcutHotkey = nil
+        }
+    }
+    
+    private func setupGlobalHotkeyListener() {
+        guard let hotKey = self.shortcutHotkey else {
+            return
+        }
+        hotKey.keyDownHandler = {
+            MainMenu.shared.statusItem.button?.performClick(nil)
+        }
+    }
     
 }
