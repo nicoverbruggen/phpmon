@@ -59,7 +59,25 @@ PHP Monitor performs some integrity checks to ensure a good experience when usin
 
 > If you are having issues, the first thing you should be doing is installing the latest version of PHP Monitor _and_ Laravel Valet. This can resolve a variety of issues. To upgrade Valet, run `composer global update`. Don't forget to run `valet install` after upgrading.
 
-If you're still having issues, here's a few common issues and solutions:
+If you're still having issues, here's a few common questions & answers, as well as issues and solutions:
+
+<details>
+<summary><strong>Which versions of PHP are supported?</strong></summary>
+
+<ul>
+<li>PHP 5.6</li>
+<li>PHP 7.0</li>
+<li>PHP 7.1</li>
+<li>PHP 7.2</li>
+<li>PHP 7.3</li>
+<li>PHP 7.4</li>
+<li>PHP 8.0</li>
+<li>PHP 8.1</li>
+</ul>
+
+For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Constants.swift#L16) file to see which versions are supported.
+
+</details>
 
 <details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
@@ -135,6 +153,35 @@ This problem is usually resolved by upgrading Valet and running `valet install` 
 	valet install
 
 </details>
+
+<details>
+<summary><strong>PHP Monitor tells me my installation is broken, but I don't see why!</strong></summary>
+
+PHP Monitor tells you that a PHP installation is broken, if the configuration is causing warnings or errors when determining the version number.
+
+Since PHP Monitor changes the linked version via Homebrew, both Valet *and* your terminal (CLI) should use the new PHP version.
+
+However, this might not be the case on your system. You _might_ have a specific version of PHP linked if that is not the case. In that case, you may need to change your `.bashrc` or `.zshrc` file where the PATH is set (depending on the terminal you use).
+
+You can find out which version of PHP is being used by running `which php`.
+
+You can find out what exactly is causing the issue by running a command. On Intel, you can run (replace `7.4` with the version that is broken):
+
+```
+/usr/local/opt/php@7.4/bin/php -r "print phpversion();"
+```
+
+On Apple Silicon, you can run (replace `7.4` with the version that is broken):
+
+```
+/opt/homebrew/opt/php@7.4/bin/php -r "print phpversion();"
+```
+
+You should see an error or a warning here in the output. 
+
+Usually this is a duplicate extension declaration causing issues, or an extension that couldn't be loaded. You'll have to solve that issue yourself (usually by removing the offending extension or reinstalling).
+
+</details>
 	
 <details>
 <summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark!</strong></summary>
@@ -150,7 +197,7 @@ You must a provide a value like so: `1024K`, `256M`, `1G`. Alternatively, `-1` i
 <details>
 <summary><strong>One of my commented out extensions is not being detected...</strong></summary>
 
-The app searches in the relevant `php.ini` file for a specific pattern. For regular extensions:
+The app searches in the relevant `.ini` files for a specific pattern. For regular extensions:
 
 * `extension="*.so"`
 * `; extension="*.so"`
@@ -161,6 +208,8 @@ For Zend extensions:
 * `; zend_extension="*.so"`
 
 The `*` is a wildcard and the name of the extension. If you've commented out the extension, make sure you've commented it out with a semicolon (;) and a single space after the semicolon for PHP Monitor to detect it.
+
+Since v3.4 all of the loaded .ini files are sourced to determine which extensions are enabled.
 
 </details>
 
@@ -185,7 +234,7 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 
 This is a security feature of Brew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
 
-You will need to manually clean up those folders yourself using `rm -rf` or by manually removing those folders via Finder.
+You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
 
 </details>
 
@@ -201,11 +250,24 @@ You can find a [sponsor](https://nicoverbruggen.be/sponsor) link at the top of t
 
 Donations really help with the Apple Developer Program cost, and keep me motivated to keep working on PHP Monitor outside of work hours (I do have a day job!).
 
+## 😎 Acknowledgements
+
+While I did make this application during my own free time, I have been lucky enough to do various experiments during work hours at [DIVE](https://dive.be). I'd also like to shout out the following folks:
+
+* My colleagues at [DIVE](https://dive.be)
+* The [Homebrew](https://brew.sh/) team who maintain
+* The [developers & maintainers of Valet](https://github.com/laravel/valet/graphs/contributors)
+* Everyone in the Laravel community who shared the app (thanks!)
+* Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot)
+* Everyone who left feedback via issues
+
+Thank you very much for your contributions, kind words and support.
+
 ## 🚜 How it works
 
 ### Loading info about PHP in the background
 
-This utility runs `php -r 'print phpversion()'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
+This utility runs `php-config --version'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
 
 In order to save power, this only happens once every 60 seconds.
 

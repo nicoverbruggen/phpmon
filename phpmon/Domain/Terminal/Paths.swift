@@ -47,6 +47,10 @@ class Paths {
         return "\(binPath)/php"
     }
     
+    public static var phpConfig: String {
+        return "\(binPath)/php-config"
+    }
+    
     // - MARK: Paths
     
     public static var binPath: String {

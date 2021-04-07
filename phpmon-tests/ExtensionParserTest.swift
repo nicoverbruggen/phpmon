@@ -23,24 +23,35 @@ class ExtensionParserTest: XCTestCase {
     func testExtensionNameIsCorrect() throws {
         let extensions = PhpExtension.load(from: Self.phpIniFileUrl)
         
-        XCTAssertEqual(extensions.first!.name, "xdebug")
-        XCTAssertEqual(extensions.last!.name, "imagick")
+        let extensionNames = extensions.map { (ext) -> String in
+            return ext.name
+        }
+        
+        XCTAssertTrue(extensionNames.contains("xdebug"))
+        XCTAssertTrue(extensionNames.contains("imagick"))
+        XCTAssertTrue(extensionNames.contains("opcache"))
+        XCTAssertTrue(extensionNames.contains("yaml"))
+        XCTAssertFalse(extensionNames.contains("fake"))
     }
     
     func testExtensionStatusIsCorrect() throws {
         let extensions = PhpExtension.load(from: Self.phpIniFileUrl)
         
-        XCTAssertEqual(extensions.first!.enabled, true)
-        XCTAssertEqual(extensions.last!.enabled, false)
+        // xdebug should be enabled
+        XCTAssertEqual(extensions[0].enabled, true)
+        
+        // imagick should be disabled
+        XCTAssertEqual(extensions[1].enabled, false)
     }
     
     func testToggleWorksAsExpected() throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.load(from: destination)
-        XCTAssertEqual(extensions.count, 2)
+        XCTAssertEqual(extensions.count, 4)
         
-        // Try to disable it!
+        // Try to disable xdebug (should be detected first)!
         let xdebug = extensions.first!
+        XCTAssertTrue(xdebug.name == "xdebug")
         XCTAssertEqual(xdebug.enabled, true)
         xdebug.toggle()
         XCTAssertEqual(xdebug.enabled, false)

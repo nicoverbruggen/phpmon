@@ -98,7 +98,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add about & quit menu items
-            menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ","))
             menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(terminateApp), keyEquivalent: "q"))
             

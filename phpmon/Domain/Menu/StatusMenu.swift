@@ -106,8 +106,10 @@ class StatusMenu : NSMenu {
             self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
         }
         
+        var shortcutKey = 1
         for phpExtension in App.phpInstall!.extensions {
-            self.addExtensionItem(phpExtension)
+            self.addExtensionItem(phpExtension, shortcutKey)
+            shortcutKey += 1
         }
         
         self.addItem(NSMenuItem.separator())
@@ -115,11 +117,19 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
     }
     
-    private func addExtensionItem(_ phpExtension: PhpExtension) {
+    private func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
+        let keyEquivalent = shortcutKey < 9 ? "\(shortcutKey)" : ""
+        
         let menuItem = ExtensionMenuItem(
-            title: "\(phpExtension.name.capitalized) (php.ini)",
-            action: #selector(MainMenu.toggleExtension), keyEquivalent: ""
+            title: "\(phpExtension.name) (\(phpExtension.fileNameOnly))",
+            action: #selector(MainMenu.toggleExtension),
+            keyEquivalent: keyEquivalent
         )
+        
+        if menuItem.keyEquivalent != "" {
+            menuItem.keyEquivalentModifierMask = [.option]
+        }
+        
         menuItem.state = phpExtension.enabled ? .on : .off
         menuItem.phpExtension = phpExtension
         

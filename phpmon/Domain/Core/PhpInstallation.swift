@@ -34,7 +34,6 @@ class PhpInstallation {
         
         // Load extension information
         let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
-        
         extensions = PhpExtension.load(from: path)
         
         // Get configuration values
@@ -43,6 +42,20 @@ class PhpInstallation {
             upload_max_filesize: Self.getByteCount(key: "upload_max_filesize"),
             post_max_size: Self.getByteCount(key: "post_max_size")
         )
+        
+        // Determine which folder(s) to scan for additional files
+        let iniFolder = Command.execute(path: Paths.phpConfig, arguments: ["--ini-dir"], trimNewlines: true)
+        
+        // Check the contents of the ini dir
+        let enumerator = FileManager.default.enumerator(atPath: URL(fileURLWithPath: iniFolder).path)
+        let filePaths = enumerator?.allObjects as! [String]
+        
+        filePaths.filter { $0.contains(".ini") }.forEach { (iniFileName) in
+            let extensions = PhpExtension.load(from: URL(fileURLWithPath: "\(iniFolder)/\(iniFileName)"))
+            if extensions.count > 0 {
+                self.extensions.append(contentsOf: extensions)
+            }
+        }
     }
     
     /**
@@ -51,7 +64,7 @@ class PhpInstallation {
      */
     private static func getVersion() -> Version {
         var versionStruct = Version()
-        let version = Command.execute(path: Paths.php, arguments: ["-r", "print phpversion();"])
+        let version = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
         
         if (version == "" || version.contains("Warning") || version.contains("Error")) {
             versionStruct.short = "💩 BROKEN"

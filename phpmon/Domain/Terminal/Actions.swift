@@ -162,7 +162,11 @@ class Actions {
      */
     public static func sed(file: String, original: String, replacement: String)
     {
-        Shell.run("sed -i '' 's/\(original)/\(replacement)/g' \(file)")
+        // Escape slashes (or `sed` won't work)
+        let e_original = original.replacingOccurrences(of: "/", with: "\\/")
+        let e_replacment = replacement.replacingOccurrences(of: "/", with: "\\/")
+        
+        Shell.run("sed -i '' 's/\(e_original)/\(e_replacment)/g' \(file)")
     }
     
     /**
