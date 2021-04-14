@@ -78,6 +78,13 @@ class Actions {
         brew("services restart dnsmasq", sudo: true)
     }
     
+    public static func stopAllServices()
+    {
+        brew("services stop \(App.phpInstall!.formula)", sudo: true)
+        brew("services stop nginx", sudo: true)
+        brew("services stop dnsmasq", sudo: true)
+    }
+    
     /**
      Switching to a new PHP version involves:
      - unlinking the current version
@@ -87,18 +94,42 @@ class Actions {
      Please note that depending on which version is installed,
      the version that is switched to may or may not be identical to `php` (without @version).
      */
-    public static func switchToPhpVersion(version: String, availableVersions: [String])
-    {
+    public static func switchToPhpVersion(
+        version: String,
+        availableVersions: [String],
+        completed: @escaping () -> Void
+    ) {
+        print("Switching to \(version)")
+        let group = DispatchGroup()
+        group.enter()
+        
+        var versionsDisabled: [String: Bool] = [:]
         availableVersions.forEach { (available) in
-            let formula = (available == App.shared.brewPhpVersion) ? "php" : "php@\(available)"
-            brew("unlink \(formula)")
-            brew("services stop \(formula)", sudo: true)
+            versionsDisabled[available] = false
         }
         
-        let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+        availableVersions.forEach { (available) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                let formula = (available == App.shared.brewPhpVersion)
+                    ? "php" : "php@\(available)"
+                
+                brew("unlink \(formula)")
+                brew("services stop \(formula)", sudo: true)
+                
+                versionsDisabled[available] = true
+                if !versionsDisabled.values.contains(false) {
+                    group.leave()
+                }
+            }
+        }
         
-        brew("link \(formula) --overwrite --force")
-        brew("services start \(formula)", sudo: true)
+        group.notify(queue: .global(qos: .userInitiated)) {
+            let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+            brew("link \(formula) --overwrite --force")
+            brew("services start \(formula)", sudo: true)
+            
+            completed()
+        }
     }
     
     // MARK: - Finding Config Files

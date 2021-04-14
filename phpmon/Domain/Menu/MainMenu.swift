@@ -218,6 +218,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func stopAllServices() {
+        waitAndExecute {
+            Actions.stopAllServices()
+        }
+    }
+    
     @objc func restartNginx() {
         waitAndExecute {
             Actions.restartNginx()
@@ -289,26 +295,29 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             // Update the menu
             update()
             
+            let completion = {
+                // Mark as no longer busy
+                App.shared.busy = false
+                
+                // Perform UI updates on main thread
+                DispatchQueue.main.async { [self] in
+                    updatePhpVersionInStatusBar()
+                    update()
+                    
+                    // Send a notification that the switch has been completed
+                    LocalNotification.send(
+                        title: String(format: "notification.version_changed_title".localized, sender.version),
+                        subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
+                    )
+                }
+            }
+            
             // Switch the PHP version
             Actions.switchToPhpVersion(
                 version: sender.version,
-                availableVersions: App.shared.availablePhpVersions
+                availableVersions: App.shared.availablePhpVersions,
+                completed: completion
             )
-            
-            // Mark as no longer busy
-            App.shared.busy = false
-            
-            // Perform UI updates on main thread
-            DispatchQueue.main.async { [self] in
-                updatePhpVersionInStatusBar()
-                update()
-                
-                // Send a notification that the switch has been completed
-                LocalNotification.send(
-                    title: String(format: "notification.version_changed_title".localized, sender.version),
-                    subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
-                )
-            }
         }
     }
     
