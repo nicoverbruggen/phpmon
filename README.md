@@ -238,6 +238,13 @@ You will need to manually clean up those folders yourself using `rm -rf` (or by 
 
 </details>
 
+<details>
+<summary><strong>The app has crashed!</strong></summary>
+
+Please get in touch and open an issue. PHP Monitor shouldn't crash :)
+
+</details>
+
 ## 📝 Having another issue?
 
 I did not include any tracking or analytics software, so if you encounter issues, let me know [via an issue](https://github.com/nicoverbruggen/phpmon/issues/new).
@@ -283,11 +290,8 @@ This means:
 
 The utility runs the following commands:
 
-- Unlink all detected PHP versions
-- Switch to whatever version of PHP `php` is at (this is done to ensure that Valet works, even when attempting to use PHP 5.6)
-- Stop all relevant services (`php`, `nginx`)
-- Link the desired version of PHP
-- Start the correct `php` service for the desired PHP version
+- Unlink all detected PHP versions & stop the respective `php@X.X` services
+- Link the desired version of PHP, and start the associated service
 
 ### Want to know more?
 
