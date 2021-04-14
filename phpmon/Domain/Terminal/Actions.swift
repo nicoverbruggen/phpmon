@@ -99,16 +99,13 @@ class Actions {
         availableVersions: [String],
         completed: @escaping () -> Void
     ) {
-        print("Switching to \(version)")
+        print("Switching to \(version), unlinking all versions...")
+
         let group = DispatchGroup()
-        group.enter()
-        
-        var versionsDisabled: [String: Bool] = [:]
-        availableVersions.forEach { (available) in
-            versionsDisabled[available] = false
-        }
         
         availableVersions.forEach { (available) in
+            group.enter()
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 let formula = (available == App.shared.brewPhpVersion)
                     ? "php" : "php@\(available)"
@@ -116,18 +113,19 @@ class Actions {
                 brew("unlink \(formula)")
                 brew("services stop \(formula)", sudo: true)
                 
-                versionsDisabled[available] = true
-                if !versionsDisabled.values.contains(false) {
-                    group.leave()
-                }
+                group.leave()
             }
         }
         
         group.notify(queue: .global(qos: .userInitiated)) {
+            print("All versions have been unlinked!")
+            print("Linking the new version!")
+            
             let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
             brew("link \(formula) --overwrite --force")
             brew("services start \(formula)", sudo: true)
             
+            print("The new version has been linked!")
             completed()
         }
     }
