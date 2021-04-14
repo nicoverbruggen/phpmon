@@ -21,6 +21,8 @@
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C4232EE52612526500158FC6 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = C4232EE42612526500158FC6 /* Credits.html */; };
+		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
+		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
 		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
@@ -101,6 +103,7 @@
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
@@ -291,6 +294,7 @@
 				C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */,
 				C46FA23E246C358E00944F05 /* StringExtension.swift */,
 				C48D0C9225CC804200CC7490 /* XibLoadable.swift */,
+				C42759662627662800093CAE /* NSMenuExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -425,6 +429,7 @@
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
+				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
@@ -451,6 +456,7 @@
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,
+				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,

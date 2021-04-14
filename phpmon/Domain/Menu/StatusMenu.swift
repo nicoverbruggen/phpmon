@@ -58,11 +58,15 @@ class StatusMenu : NSMenu {
     private func addServicesMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_active_services".localized))
         
-        let services = NSMenuItem(title: "mi_restart_specific".localized, action: nil, keyEquivalent: "")
+        let services = NSMenuItem(title: "mi_manage_services".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+        servicesMenu.addItem(
+            NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
+            withKeyModifier: [.command, .shift]
+        )
         for item in servicesMenu.items {
             item.target = MainMenu.shared
         }

@@ -22,7 +22,7 @@
 "mi_restart_php_fpm" = "Restart service: php";
 "mi_restart_nginx" = "Restart service: nginx";
 "mi_restart_dnsmasq" = "Restart service: dnsmasq";
-"mi_restart_specific" = "Restart specific service";
+"mi_manage_services" = "Manage services";
 "mi_restart_all_services" = "Restart all services";
 "mi_stop_all_services" = "Stop all services";
 "mi_force_load_latest" = "Force load latest PHP version";
@@ -59,6 +59,12 @@
 
 "notification.version_changed_title" = "PHP %@ now active";
 "notification.version_changed_desc" = "PHP Monitor has finished the switch to PHP %@.";
+
+"notification.services_stopped" = "Valet services stopped";
+"notification.services_stopped_desc" = "All services have been successfully stopped.";
+
+"notification.services_restarted" = "Valet services restarted";
+"notification.services_restarted_desc" = "All services have been successfully restarted.";
 
 // ALERTS
 

@@ -215,12 +215,26 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
             Actions.restartNginx()
+        } completion: {
+            DispatchQueue.main.async {
+                LocalNotification.send(
+                    title: "notification.services_restarted".localized,
+                    subtitle: "notification.services_restarted_desc".localized
+                )
+            }
         }
     }
     
     @objc func stopAllServices() {
         waitAndExecute {
             Actions.stopAllServices()
+        } completion: {
+            DispatchQueue.main.async {
+                LocalNotification.send(
+                    title: "notification.services_stopped".localized,
+                    subtitle: "notification.services_stopped_desc".localized
+                )
+            }
         }
     }
     
@@ -283,14 +297,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
-        // print("Switching to: PHP \(sender.version)")
-        
         setBusyImage()
         App.shared.busy = true
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
-           updatePhpVersionInStatusBar()
+            updatePhpVersionInStatusBar()
             
             // Update the menu
             update()
