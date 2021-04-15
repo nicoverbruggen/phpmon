@@ -46,14 +46,19 @@
 
 // PREFERENCES
 
-"prefs.title" = "PHP Monitor: Preferences";
+"prefs.title" = "PHP Monitor";
 "prefs.close" = "Close";
-"prefs.dynamic_icon_title" = "Show a dynamic icon in the menu bar";
-"prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the currently linked PHP version.";
+
+"prefs.global_shortcut" = "Global shortcut:";
+"prefs.dynamic_icon" = "Dynamic icon:";
+
+"prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
+"prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the\ncurrently linked PHP version.";
+
 "prefs.shortcut_set" = "Set global shortcut";
-"prefs.shortcut_listening" = "<press for shortcut>";
+"prefs.shortcut_listening" = "<listening for keypress>";
 "prefs.shortcut_clear" = "Clear";
-"prefs.shortcut_desc" = "If a shortcut combination is set up, you can toggle PHP Monitor\nwherever you are by pressing the key combination you chose.";
+"prefs.shortcut_desc" = "If a shortcut combination is set up, you can toggle PHP Monitor\nwherever you are by pressing the key combination you chose.\n(Cancel choosing a shortcut by pressing the spacebar.)";
 
 // NOTIFICATIONS
 

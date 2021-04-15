@@ -12,6 +12,9 @@ import Carbon
 
 class PrefsVC: NSViewController {
     
+    @IBOutlet weak var leftLabelDynamicIcon: NSTextField!
+    @IBOutlet weak var leftLabelGlobalShortcut: NSTextField!
+    
     @IBOutlet weak var buttonDynamicIcon: NSButton!
     @IBOutlet weak var labelDynamicIcon: NSTextField!
     @IBOutlet weak var buttonClose: NSButton!
@@ -19,26 +22,6 @@ class PrefsVC: NSViewController {
     @IBOutlet weak var buttonSetShortcut: NSButton!
     @IBOutlet weak var buttonClearShortcut: NSButton!
     @IBOutlet weak var labelShortcut: NSTextField!
-    
-    // MARK: - Variables
-    
-    var listening = false {
-        didSet {
-            if listening {
-                DispatchQueue.main.async { [weak self] in
-                    self?.buttonSetShortcut.highlight(true)
-                    self?.buttonSetShortcut.title = "prefs.shortcut_listening".localized
-                }
-            } else {
-                DispatchQueue.main.async { [weak self] in
-                    self?.buttonSetShortcut.highlight(false)
-                    if (App.shared.shortcutHotkey == nil) {
-                        self?.buttonSetShortcut.title = "prefs.shortcut_set".localized
-                    }
-                }
-            }
-        }
-    }
     
     // MARK: - Display
     
@@ -62,32 +45,73 @@ class PrefsVC: NSViewController {
     // MARK: - Lifecycle
     
     override func viewWillAppear() {
-        // Load localization
-        buttonDynamicIcon.title = "prefs.dynamic_icon_title".localized
+        loadLocalization()
+        loadDynamicIconFromPreferences()
+        loadGlobalKeybindFromPreferences()
+    }
+    
+    override func viewWillDisappear() {
+        if self.listeningForGlobalHotkey {
+            listeningForGlobalHotkey = false
+        }
+    }
+    
+    private func loadLocalization() {
+        // Dynamic icon
+        leftLabelDynamicIcon.stringValue = "prefs.dynamic_icon".localized
         labelDynamicIcon.stringValue = "prefs.dynamic_icon_desc".localized
-        buttonClose.title = "prefs.close".localized
+        buttonDynamicIcon.title = "prefs.dynamic_icon_title".localized
+        
+        // Global Shortcut
+        leftLabelGlobalShortcut.stringValue = "prefs.global_shortcut".localized
         labelShortcut.stringValue = "prefs.shortcut_desc".localized
         buttonSetShortcut.title = "prefs.shortcut_set".localized
         buttonClearShortcut.title = "prefs.shortcut_clear".localized
         
-        let prefs = Preferences.preferences
+        // Close button
+        buttonClose.title = "prefs.close".localized
+    }
+    
+    // MARK: - Dynamic Icon Preference
+    
+    func loadDynamicIconFromPreferences() {
+        let shouldDisplay = Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == true
+        self.buttonDynamicIcon.state = shouldDisplay ? .on : .off
+    }
+    
+    // MARK: - Shortcut Preference
+    // Adapted from: https://dev.to/mitchartemis/creating-a-global-configurable-shortcut-for-macos-apps-in-swift-25e9
+    
+    var listeningForGlobalHotkey = false {
+        didSet {
+            if listeningForGlobalHotkey {
+                DispatchQueue.main.async { [weak self] in
+                    self?.buttonSetShortcut.highlight(true)
+                    self?.buttonSetShortcut.title = "prefs.shortcut_listening".localized
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.buttonSetShortcut.highlight(false)
+                    self?.loadGlobalKeybindFromPreferences()
+                }
+            }
+        }
+    }
+    
+    func loadGlobalKeybindFromPreferences() {
+        let globalKeybind = GlobalKeybindPreference.fromJson(Preferences.preferences[.globalHotkey] as! String?)
         
-        // Load dynamic icon
-        self.buttonDynamicIcon.state = (prefs[.shouldDisplayDynamicIcon] as! Bool == true) ? .on : .off
-        
-        // Load global keybind initial state
-        let globalKeybind = GlobalKeybindPreference.fromJson(prefs[.globalHotkey] as! String?)
         if (globalKeybind != nil) {
             updateKeybindButton(globalKeybind!)
+        } else {
+            buttonSetShortcut.title = "prefs.shortcut_set".localized
         }
+        
         buttonClearShortcut.isEnabled = globalKeybind != nil
     }
     
-    // MARK: - Shortcut
-    // Adapted from: https://dev.to/mitchartemis/creating-a-global-configurable-shortcut-for-macos-apps-in-swift-25e9
-    
     func updateGlobalShortcut(_ event : NSEvent) {
-        self.listening = false
+        self.listeningForGlobalHotkey = false
         
         if let characters = event.charactersIgnoringModifiers {
             let newGlobalKeybind = GlobalKeybindPreference.init(
@@ -118,12 +142,12 @@ class PrefsVC: NSViewController {
     
     @IBAction func register(_ sender: Any) {
         unregister(nil)
-        listening = true
+        listeningForGlobalHotkey = true
         view.window?.makeFirstResponder(nil)
     }
     
     @IBAction func unregister(_ sender: Any?) {
-        listening = false
+        listeningForGlobalHotkey = false
         App.shared.shortcutHotkey = nil
         buttonSetShortcut.title = ""
         
@@ -157,71 +181,5 @@ class PrefsVC: NSViewController {
     
     deinit {
         print("VC deallocated")
-    }
-}
-
-struct GlobalKeybindPreference: Codable, CustomStringConvertible {
-    
-    // MARK: - Internal variables
-    
-    let function : Bool
-    let control : Bool
-    let command : Bool
-    let shift : Bool
-    let option : Bool
-    let capsLock : Bool
-    let carbonFlags : UInt32
-    let characters : String?
-    let keyCode : UInt32
-    
-    // MARK: - How the keybind is display in Preferences
-    
-    var description: String {
-        var stringBuilder = ""
-        if self.function {
-            stringBuilder += "Fn"
-        }
-        if self.control {
-            stringBuilder += "⌃"
-        }
-        if self.option {
-            stringBuilder += "⌥"
-        }
-        if self.command {
-            stringBuilder += "⌘"
-        }
-        if self.shift {
-            stringBuilder += "⇧"
-        }
-        if self.capsLock {
-            stringBuilder += "⇪"
-        }
-        if let characters = self.characters {
-            stringBuilder += characters.uppercased()
-        }
-        return "\(stringBuilder)"
-    }
-    
-    // MARK: - Persisting data to UserDefaults (as JSON)
-    
-    public func toJson() -> String {
-        let jsonData = try! JSONEncoder().encode(self)
-        return String(data: jsonData, encoding: .utf8)!
-    }
-    
-    public static func fromJson(_ string: String?) -> GlobalKeybindPreference? {
-        if string == nil {
-            return nil
-        }
-        
-        if let jsonData = string!.data(using: .utf8) {
-            let decoder = JSONDecoder()
-            do {
-                return try decoder.decode(GlobalKeybindPreference.self, from: jsonData)
-            } catch {
-                return nil
-            }
-        }
-        return nil
     }
 }

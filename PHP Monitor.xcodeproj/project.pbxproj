@@ -19,6 +19,7 @@
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
 		C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
+		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C4232EE52612526500158FC6 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = C4232EE42612526500158FC6 /* Credits.html */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
@@ -101,6 +102,7 @@
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
 		C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
+		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				C4998F092617633900B2526E /* PrefsWC.swift */,
 				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
+				C41CD0272628D8E20065BBED /* Keybinds */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -211,6 +214,14 @@
 				C405A4CD24B9B9070062FAFA /* IAP */,
 			);
 			path = phpmon;
+			sourceTree = "<group>";
+		};
+		C41CD0272628D8E20065BBED /* Keybinds */ = {
+			isa = PBXGroup;
+			children = (
+				C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */,
+			);
+			path = Keybinds;
 			sourceTree = "<group>";
 		};
 		C41E181722CB61EB0072CF09 /* Domain */ = {
@@ -421,6 +432,7 @@
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
+				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
