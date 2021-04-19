@@ -9,9 +9,9 @@ import Foundation
 
 class PhpInstallation {
 
-    var version: Version
-    var configuration: Configuration
-    var extensions: [PhpExtension]
+    var version: Version!
+    var configuration: Configuration!
+    var extensions: [PhpExtension]!
     
     // MARK: - Computed
     
@@ -23,7 +23,7 @@ class PhpInstallation {
 
     init() {
         // Show information about the current version
-        version = Self.getVersion()
+        self.getVersion()
         
         // If an error occurred, exit early
         if (version.error) {
@@ -38,9 +38,9 @@ class PhpInstallation {
         
         // Get configuration values
         configuration = Configuration(
-            memory_limit: Self.getByteCount(key: "memory_limit"),
-            upload_max_filesize: Self.getByteCount(key: "upload_max_filesize"),
-            post_max_size: Self.getByteCount(key: "post_max_size")
+            memory_limit: self.getByteCount(key: "memory_limit"),
+            upload_max_filesize: self.getByteCount(key: "upload_max_filesize"),
+            post_max_size: self.getByteCount(key: "post_max_size")
         )
         
         // Return a list of .ini files parsed after php.ini
@@ -62,27 +62,26 @@ class PhpInstallation {
      When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
-    private static func getVersion() -> Version {
-        var versionStruct = Version()
+    private func getVersion() -> Void {
+        self.version = Version()
+        
         let version = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
         
         if (version == "" || version.contains("Warning") || version.contains("Error")) {
-            versionStruct.short = "💩 BROKEN"
-            versionStruct.long = "";
-            versionStruct.error = true
-            return versionStruct;
+            self.version.short = "💩 BROKEN"
+            self.version.long = ""
+            self.version.error = true
+            return
         }
         
         // That's the long version
-        versionStruct.long = version
+        self.version.long = version
         
         // Next up, let's strip away the minor version number
-        let segments = versionStruct.long.components(separatedBy: ".")
+        let segments = self.version.long.components(separatedBy: ".")
         
         // Get the first two elements
-        versionStruct.short = segments[0...1].joined(separator: ".")
-        
-        return versionStruct
+        self.version.short = segments[0...1].joined(separator: ".")
     }
     
     /**
@@ -98,7 +97,7 @@ class PhpInstallation {
      
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
-    private static func getByteCount(key: String) -> String {
+    private func getByteCount(key: String) -> String {
         let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"])
         
         // Check if the value is unlimited
@@ -110,6 +109,28 @@ class PhpInstallation {
         let regex = try! NSRegularExpression(pattern: #"^([0-9]*)(K|M|G|)$"#, options: [])
         let match = regex.matches(in: value, options: [], range: NSMakeRange(0, value.count)).first
         return (match == nil) ? "⚠️" : "\(value)B"
+    }
+    
+    public func notifyAboutBrokenPhpFpm() {
+        if !self.checkPhpFpmStatus() {
+            DispatchQueue.main.async {
+                Alert.notify(
+                    message: "alert.php_fpm_broken.title".localized,
+                    info: "alert.php_fpm_broken.info".localized
+                )
+            }
+        }
+    }
+    
+    private func checkPhpFpmStatus() -> Bool {
+        if self.version.short == "5.6" {
+            // The main PHP config file should contain `valet.sock` and then we're probably fine?
+            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
+            return Shell.pipe("cat \(fileName)").contains("valet.sock")
+        }
+        
+        // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
+        return Shell.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
     }
     
     // MARK: - Structs

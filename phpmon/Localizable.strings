@@ -82,6 +82,10 @@
 "alert.force_reload_done.title" = "PHP has been force reloaded";
 "alert.force_reload_done.info" = "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP. If visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).";
 
+// PHP FPM Broken
+"alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
+"alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config: it's not pointing to the Valet socket. This will result in 502 Bad Gateway if you visit websites linked via Valet.\n\nYou can usually fix this by running\n`valet install`, which updates your\n PHP-FPM configuration.";
+
 // PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor cannot start";
 "alert.cannot_start.info" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";

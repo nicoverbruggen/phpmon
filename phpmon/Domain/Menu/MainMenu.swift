@@ -44,6 +44,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         App.shared.availablePhpVersions = Actions.detectPhpVersions()
         updatePhpVersionInStatusBar()
         
+        let installation = App.phpInstall!
+        installation.notifyAboutBrokenPhpFpm()
+        
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in
             App.shared.timer = Timer.scheduledTimer(
@@ -325,6 +328,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                         title: String(format: "notification.version_changed_title".localized, sender.version),
                         subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
                     )
+                    
+                    App.phpInstall?.notifyAboutBrokenPhpFpm()
                 }
             }
             

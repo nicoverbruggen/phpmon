@@ -98,9 +98,9 @@ class StatusMenu : NSMenu {
         // Stats
         self.addItem(NSMenuItem.separator())
         self.addItem(StatsView.asMenuItem(
-            memory: stats.memory_limit,
-            post: stats.post_max_size,
-            upload: stats.upload_max_filesize)
+            memory: stats!.memory_limit,
+            post: stats!.post_max_size,
+            upload: stats!.upload_max_filesize)
         )
         
         // Extensions

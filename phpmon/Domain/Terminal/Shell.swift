@@ -16,7 +16,7 @@ class Shell {
     }
     
     public static func pipe(_ command: String) -> String {
-        Shell.user.pipe(command)
+        return Shell.user.pipe(command)
     }
     
     // MARK: - Singleton
