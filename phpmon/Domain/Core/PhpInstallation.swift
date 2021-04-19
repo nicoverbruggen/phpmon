@@ -43,15 +43,15 @@ class PhpInstallation {
             post_max_size: Self.getByteCount(key: "post_max_size")
         )
         
-        // Determine which folder(s) to scan for additional files
-        let iniFolder = Command.execute(path: Paths.phpConfig, arguments: ["--ini-dir"], trimNewlines: true)
+        // Return a list of .ini files parsed after php.ini
+        let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"])
+            .replacingOccurrences(of: "\n", with: "")
+            .split(separator: ",")
+            .map { String($0) }
         
-        // Check the contents of the ini dir
-        let enumerator = FileManager.default.enumerator(atPath: URL(fileURLWithPath: iniFolder).path)
-        let filePaths = enumerator?.allObjects as! [String]
-        
-        filePaths.filter { $0.contains(".ini") }.forEach { (iniFileName) in
-            let extensions = PhpExtension.load(from: URL(fileURLWithPath: "\(iniFolder)/\(iniFileName)"))
+        // See if any extensions are present in said .ini files
+        paths.forEach { (iniFilePath) in
+            let extensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
             if extensions.count > 0 {
                 self.extensions.append(contentsOf: extensions)
             }
