@@ -292,6 +292,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         Actions.openPhpConfigFolder(version: App.phpInstall!.version.short)
     }
     
+    @objc func openGlobalComposerFolder() {
+        Actions.openGlobalComposerFolder()
+    }
+    
     @objc func openValetConfigFolder() {
         Actions.openValetConfigFolder()
     }
