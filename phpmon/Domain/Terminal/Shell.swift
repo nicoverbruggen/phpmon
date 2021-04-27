@@ -73,10 +73,9 @@ class Shell {
     
     /**
      Checks if a file exists at the provided path.
+     Uses `/bin/echo` instead of the `builtin` (which does not support `-n`).
      */
     public static func fileExists(_ path: String) -> Bool {
-        return Shell.pipe(
-            "if [ -f \(path) ]; then echo \"PHP_Y_FE\"; fi"
-        ).contains("PHP_Y_FE")
+        return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
     }
 }
