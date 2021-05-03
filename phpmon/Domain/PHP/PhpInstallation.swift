@@ -7,6 +7,14 @@
 
 import Foundation
 
+/**
+ An installed version of PHP, that was detected by scanning the `/opt/php@version/bin` directory.
+ 
+ When initialized, that version's .ini files are also scanned (for active or inactive extensions).
+ Integrity checks can be performed to determine whether PHP-FPM is configured correctly.
+ 
+ - Note: Each installation has a separate version number. Using `version.short` is advisable if you want to interact with Homebrew.
+ */
 class PhpInstallation {
 
     var version: Version!
@@ -111,6 +119,14 @@ class PhpInstallation {
         return (match == nil) ? "⚠️" : "\(value)B"
     }
     
+    /**
+     It is always possible that the system configuration for PHP-FPM has not been set up for Valet.
+     This can occur when a user manually installs a new PHP version, but does not run `valet install`.
+     In that case, we should alert the user!
+     
+     - Important: The underlying check is `checkPhpFpmStatus`, which can be run multiple times.
+     This method actively presents a modal if said checks fails, so don't call this method too many times.
+     */
     public func notifyAboutBrokenPhpFpm() {
         if !self.checkPhpFpmStatus() {
             DispatchQueue.main.async {
@@ -122,6 +138,13 @@ class PhpInstallation {
         }
     }
     
+    /**
+     Determine if PHP-FPM is configured correctly.
+     
+     For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
+     versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
+     that means that Valet won't work properly.
+     */
     private func checkPhpFpmStatus() -> Bool {
         if self.version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?

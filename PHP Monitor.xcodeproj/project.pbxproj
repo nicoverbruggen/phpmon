@@ -170,6 +170,15 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		54B20EDF263AA22C00D3250E /* PHP */ = {
+			isa = PBXGroup;
+			children = (
+				C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */,
+				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
+			);
+			path = PHP;
+			sourceTree = "<group>";
+		};
 		C405A4CD24B9B9070062FAFA /* IAP */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,10 +237,11 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				5420395726135DB800FB00FA /* Preferences */,
-				C4F7808A25D7F918000DBC97 /* Terminal */,
 				C4B13B1D25C4915000548C3A /* Core */,
+				54B20EDF263AA22C00D3250E /* PHP */,
+				C4F7808A25D7F918000DBC97 /* Terminal */,
 				C47331A0247093AC009A0597 /* Menu */,
+				5420395726135DB800FB00FA /* Preferences */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
 				C4F8C0A222D4F100002EFE61 /* Extensions */,
 			);
@@ -257,6 +267,7 @@
 				C476FF9722B0DD830098105B /* Alert.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
+				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -266,9 +277,8 @@
 			children = (
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
-				C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */,
-				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
-				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
+				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -294,8 +304,6 @@
 				C49EAB45259FC305007F6C3B /* Paths.swift */,
 				C42295DC2358D02000E263B2 /* Command.swift */,
 				C41C1B4622B009A400E7CF16 /* Shell.swift */,
-				C4D8016522B1584700C6DA1B /* Startup.swift */,
-				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";

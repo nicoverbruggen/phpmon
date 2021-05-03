@@ -274,7 +274,7 @@ Thank you very much for your contributions, kind words and support.
 
 ### Loading info about PHP in the background
 
-This utility runs `php-config --version'` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
+This utility runs `php-config --version` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
 
 In order to save power, this only happens once every 60 seconds.
 

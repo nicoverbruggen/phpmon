@@ -16,10 +16,12 @@ class App {
         loadGlobalHotkey()
     }
     
+    /** Information about the currently linked PHP installation. */
     static var phpInstall: PhpInstallation? {
         return App.shared.currentInstall
     }
     
+    /** Whether the app is busy doing something. Used to determine what UI to display. */
     static var busy: Bool {
         return App.shared.busy
     }
@@ -83,6 +85,9 @@ class App {
     
     // MARK: - Methods
     
+    /**
+     On startup, the preferences should be loaded from the .plist, and we'll enable the shortcut if it is set.
+     */
     private func loadGlobalHotkey() {
         let hotkey = Preferences.preferences[.globalHotkey] as! String?
         if hotkey == nil {
@@ -101,6 +106,9 @@ class App {
         }
     }
     
+    /**
+     Sets up the action that needs to occur when the shortcut key is pressed (open the menu).
+     */
     private func setupGlobalHotkeyListener() {
         guard let hotKey = self.shortcutHotkey else {
             return
