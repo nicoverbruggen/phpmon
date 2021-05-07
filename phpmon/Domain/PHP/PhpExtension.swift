@@ -61,6 +61,7 @@ class PhpExtension {
         let fullPath = String(line[range])
             .replacingOccurrences(of: "\"", with: "") // replace excess "
             .replacingOccurrences(of: ".so", with: "") // replace excess .so
+        
         self.name = String(fullPath.split(separator: "/").last!) // take last segment
         
         self.enabled = !line.contains(";")
@@ -71,12 +72,15 @@ class PhpExtension {
      This simply toggles the extension in the .ini file. You may need to restart the other services in order for this change to apply.
      */
     func toggle() {
-        Actions.sed(
-            file: file,
-            original: line,
-            replacement: enabled ? "; \(line)" : line.replacingOccurrences(of: "; ", with: "")
-        )
-        enabled = !enabled
+        let newLine = enabled
+            // DISABLED: Commented out line
+            ? "; \(line)"
+            // ENABLED: Line where the comment delimiter (;) is removed
+            : line.replacingOccurrences(of: "; ", with: "")
+        
+        Actions.sed(file: file, original: line, replacement: newLine)
+        
+        enabled.toggle()
     }
     
     // MARK: - Static Methods
@@ -93,11 +97,11 @@ class PhpExtension {
         }
         
         return file!.components(separatedBy: "\n")
-            .filter({ (line) -> Bool in
-                return line.range(of: Self.extensionRegex, options: .regularExpression) != nil
-            })
-            .map { (line) -> PhpExtension in
-                return PhpExtension(line, file: path.path)
+            .filter {
+                return $0.range(of: Self.extensionRegex, options: .regularExpression) != nil
+            }
+            .map {
+                return PhpExtension($0, file: path.path)
             }
     }
 }

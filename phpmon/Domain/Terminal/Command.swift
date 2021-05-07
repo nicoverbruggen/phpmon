@@ -34,7 +34,7 @@ class Command {
                 .joined(separator: "\n")
         }
         
-        return output;
+        return output
     }
     
 }
