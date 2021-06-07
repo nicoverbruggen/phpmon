@@ -46,7 +46,7 @@ class PhpExtension {
      
      - Note: Extensions that are disabled in a different way will not be detected. This is intentional.
      */
-    static let extensionRegex = #"^((\s?)extension|(\s?)zend_extension|;(\s?)extension|;(\s?)zend_extension)(\s?)(=)(\s?)(?<name>["]?(?:\/?.\/?)+(?:\.so)"?)$"#
+    static let extensionRegex = #"^(extension|zend_extension|;(\s?)extension|;(\s?)zend_extension)(\s?)(=)(\s?)(?<name>["]?(?:\/?.\/?)+(?:\.so)"?)$"#
     
     /**
      When registering an extension, we do that based on the line found inside the .ini file.
