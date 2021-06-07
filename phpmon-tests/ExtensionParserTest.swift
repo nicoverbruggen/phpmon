@@ -27,11 +27,16 @@ class ExtensionParserTest: XCTestCase {
             return ext.name
         }
         
+        // These 6 should be found
         XCTAssertTrue(extensionNames.contains("xdebug"))
         XCTAssertTrue(extensionNames.contains("imagick"))
+        XCTAssertTrue(extensionNames.contains("sodium-next"))
         XCTAssertTrue(extensionNames.contains("opcache"))
         XCTAssertTrue(extensionNames.contains("yaml"))
+        XCTAssertTrue(extensionNames.contains("custom"))
+        
         XCTAssertFalse(extensionNames.contains("fake"))
+        XCTAssertFalse(extensionNames.contains("nice"))
     }
     
     func testExtensionStatusIsCorrect() throws {
@@ -47,7 +52,7 @@ class ExtensionParserTest: XCTestCase {
     func testToggleWorksAsExpected() throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.load(from: destination)
-        XCTAssertEqual(extensions.count, 4)
+        XCTAssertEqual(extensions.count, 6)
         
         // Try to disable xdebug (should be detected first)!
         let xdebug = extensions.first!
