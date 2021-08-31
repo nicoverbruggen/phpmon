@@ -21,7 +21,7 @@ class Shell {
     
     // MARK: - Singleton
     
-    var shell = "/bin/sh"
+    var shell: String
     
     init() {
         // Determine if we're using macOS Catalina or newer (that support /bin/zsh as default shell)
@@ -29,9 +29,14 @@ class Shell {
             .init(majorVersion: 10, minorVersion: 15, patchVersion: 0))
     
         // If macOS Mojave is being used, we'll default to /bin/bash
-        shell = at_least_10_15 ? "/bin/sh" : "/bin/bash"
-        print(at_least_10_15 ? "Detected recent macOS (> 10.15): defaulting to /bin/sh"
-            : "Detected older macOS (< 10.15): so defaulting to /bin/bash")
+        shell = at_least_10_15
+            ? "/bin/sh"
+            : "/bin/bash"
+        
+        print(at_least_10_15
+            ? "Detected recent macOS (> 10.15): defaulting to /bin/sh"
+            : "Detected older macOS (< 10.15): defaulting to /bin/bash"
+        )
     }
     
     /**
@@ -78,4 +83,5 @@ class Shell {
     public static func fileExists(_ path: String) -> Bool {
         return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
     }
+    
 }

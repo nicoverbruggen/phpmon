@@ -14,6 +14,7 @@ struct Keys {
 }
 
 class PrefsWC: NSWindowController {
+    
     override func windowDidLoad() {
         super.windowDidLoad()
     }

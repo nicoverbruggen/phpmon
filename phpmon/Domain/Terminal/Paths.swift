@@ -64,4 +64,5 @@ class Paths {
     public static var etcPath: String {
         return "\(shared.baseDir.rawValue)/etc"
     }
+    
 }

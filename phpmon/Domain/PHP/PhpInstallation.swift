@@ -169,4 +169,5 @@ class PhpInstallation {
         var upload_max_filesize = "???"
         var post_max_size = "???"
     }
+    
 }

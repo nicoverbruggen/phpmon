@@ -77,4 +77,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     ) -> Bool {
         return true
     }
+    
 }

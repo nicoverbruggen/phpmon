@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 
 class StatsView: NSView, XibLoadable {
+    
     @IBOutlet weak var titleMemLimit: NSTextField!
     @IBOutlet weak var titleMaxPost: NSTextField!
     @IBOutlet weak var titleMaxUpload: NSTextField!
@@ -31,4 +32,5 @@ class StatsView: NSView, XibLoadable {
         item.target = self
         return item
     }
+    
 }

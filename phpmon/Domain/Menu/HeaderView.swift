@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 
 class HeaderView: NSView, XibLoadable {
+    
     @IBOutlet weak var textField: NSTextField!
     
     static func asMenuItem(text: String) -> NSMenuItem {
@@ -20,4 +21,5 @@ class HeaderView: NSView, XibLoadable {
         item.target = self
         return item
     }
+    
 }

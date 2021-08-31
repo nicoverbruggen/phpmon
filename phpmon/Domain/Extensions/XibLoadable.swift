@@ -7,17 +7,19 @@
 //
 
 import Foundation
-
 import Cocoa
 
 // Adapted from: https://stackoverflow.com/a/46268778
 
 protocol XibLoadable {
+    
     static var xibName: String? { get }
     static func createFromXib(in bundle: Bundle) -> Self?
+    
 }
 
 extension XibLoadable where Self: NSView {
+    
     static var xibName: String? {
         return String(describing: Self.self)
     }
@@ -30,4 +32,5 @@ extension XibLoadable where Self: NSView {
         let views = Array<Any>(results).filter { $0 is Self }
         return views.last as? Self
     }
+    
 }
