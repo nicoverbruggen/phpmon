@@ -89,31 +89,34 @@ class App {
      On startup, the preferences should be loaded from the .plist, and we'll enable the shortcut if it is set.
      */
     private func loadGlobalHotkey() {
-        let hotkey = Preferences.preferences[.globalHotkey] as! String?
-        if hotkey == nil {
+        // Make sure we can retrieve the hotkey from preferences; if we cannot, no hotkey is set
+        guard let hotkey = Preferences.preferences[.globalHotkey] as? String else {
+            print("No global hotkey loaded")
             return
         }
         
-        let keybindPref = GlobalKeybindPreference.fromJson(hotkey!)
-        
-        if (keybindPref != nil) {
-            self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
-                carbonKeyCode: keybindPref!.keyCode,
-                carbonModifiers: keybindPref!.carbonFlags
-            ))
-        } else {
+        // Make sure we can parse the JSON into the desired format; if we cannot, no hotkey is set
+        guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
+            print("No global hotkey loaded, could not be parsed!")
             self.shortcutHotkey = nil
+            return
         }
+        
+        self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
+            carbonKeyCode: keybindPref.keyCode,
+            carbonModifiers: keybindPref.carbonFlags
+        ))
     }
     
     /**
      Sets up the action that needs to occur when the shortcut key is pressed (open the menu).
      */
     private func setupGlobalHotkeyListener() {
-        guard let hotKey = self.shortcutHotkey else {
+        guard let hotkey = self.shortcutHotkey else {
             return
         }
-        hotKey.keyDownHandler = {
+        
+        hotkey.keyDownHandler = {
             MainMenu.shared.statusItem.button?.performClick(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
