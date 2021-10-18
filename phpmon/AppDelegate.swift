@@ -18,25 +18,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
      (invoked by PHP Monitor) shell commands. It is used to
      invoke all commands in this application.
      */
-    let sharedShell : Shell
+    let sharedShell: Shell
     
     /**
      The App singleton contains information about the state of
      the application and global variables.
      */
-    let state : App
+    let state: App
     
     /**
      The MainMenu singleton is responsible for rendering the
      menu bar item and its menu, as well as its actions.
      */
-    let menu : MainMenu
+    let menu: MainMenu
     
     /**
      The paths singleton that determines where Homebrew is installed,
      and where to look for binaries.
      */
-    let paths : Paths
+    let paths: Paths
     
     // MARK: - Initializer
     
