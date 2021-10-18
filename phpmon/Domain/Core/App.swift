@@ -69,10 +69,10 @@ class App {
      If you're up to date, `php` will be aliased to the latest version,
      but that might not be the case.
      
-     We'll technically default to version 8.0, but the information should always be loaded
-     from Homebrew itself upon starting the application.
+     We'll technically default to the version in Constants.swift, but the information
+     should always be loaded from Homebrew itself upon startup.
      */
-    var brewPhpVersion: String = "8.0"
+    var brewPhpVersion: String = Constants.LatestStablePhpVersion
     
     /**
      The shortcut the user has requested.
