@@ -302,7 +302,7 @@ This app isn't very complicated after all. In the end, this just (conveniently) 
 
 ## 🔧 Build instructions
 
-<img src="./docs/build.png" width="320px" alt="build button in Xcode"/>
+<img src="./docs/build.png" width="404px" alt="build button in Xcode"/>
 
 If you'd like to build PHP Monitor yourself, you need:
 
