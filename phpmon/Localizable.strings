@@ -64,7 +64,7 @@
 // NOTIFICATIONS
 
 "notification.version_changed_title" = "PHP %@ now active";
-"notification.version_changed_desc" = "PHP Monitor has finished the switch to PHP %@.";
+"notification.version_changed_desc" = "PHP Monitor has switched to PHP %@.";
 
 "notification.services_stopped" = "Valet services stopped";
 "notification.services_stopped_desc" = "All services have been successfully stopped.";
