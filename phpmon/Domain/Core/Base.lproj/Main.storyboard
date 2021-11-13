@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -85,7 +85,7 @@
             <objects>
                 <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
-                        <rect key="frame" x="0.0" y="0.0" width="574" height="189"/>
+                        <rect key="frame" x="0.0" y="0.0" width="574" height="249"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GSr-K5-3yw">
@@ -102,7 +102,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-MN-oXt">
-                                <rect key="frame" x="148" y="152" width="406" height="18"/>
+                                <rect key="frame" x="148" y="212" width="406" height="18"/>
                                 <buttonCell key="cell" type="check" title="DYN_ICON" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -112,7 +112,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-aa-AzL">
-                                <rect key="frame" x="148" y="131" width="408" height="14"/>
+                                <rect key="frame" x="148" y="191" width="408" height="14"/>
                                 <textFieldCell key="cell" title="DYN_ICON_DESC" id="MHA-Xt-xgF">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -150,7 +150,7 @@ Gw
                                 <rect key="frame" x="325" y="75" width="138" height="32"/>
                                 <buttonCell key="cell" type="push" title="CLEAR_SHORTCUT" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nvE-5d-VOS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="unregister:" target="AW2-rV-rbS" id="2RI-4w-6Td"/>
@@ -165,7 +165,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31d-gd-auR">
-                                <rect key="frame" x="18" y="153" width="124" height="16"/>
+                                <rect key="frame" x="18" y="213" width="124" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="8dt-Pg-wFI"/>
                                 </constraints>
@@ -183,24 +183,46 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vSc-oQ-NC5">
+                                <rect key="frame" x="148" y="158" width="121" height="18"/>
+                                <buttonCell key="cell" type="check" title="FULL_PHP_VER" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eCd-ja-EwE">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggledFullPhpVersion:" target="AW2-rV-rbS" id="RCY-Ah-sLM"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t24-LR-wKz">
+                                <rect key="frame" x="148" y="137" width="123" height="14"/>
+                                <textFieldCell key="cell" title="FULL_PHP_VER_DESC" id="8gG-qs-mHR">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="t24-LR-wKz" firstAttribute="leading" secondItem="vSc-oQ-NC5" secondAttribute="leading" id="3tK-kp-q5R"/>
+                            <constraint firstItem="t24-LR-wKz" firstAttribute="top" secondItem="vSc-oQ-NC5" secondAttribute="bottom" constant="8" symbolic="YES" id="4Ft-lN-vwA"/>
                             <constraint firstAttribute="trailing" secondItem="JrH-aa-AzL" secondAttribute="trailing" constant="20" symbolic="YES" id="8iM-Xf-ShU"/>
                             <constraint firstAttribute="trailing" secondItem="GSr-K5-3yw" secondAttribute="trailing" constant="20" symbolic="YES" id="AT9-5F-6g1"/>
                             <constraint firstItem="YsQ-AZ-Aei" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="trailing" constant="12" symbolic="YES" id="Bk6-4V-GLk"/>
                             <constraint firstItem="31d-gd-auR" firstAttribute="top" secondItem="Pf1-A5-3Xz" secondAttribute="top" constant="20" symbolic="YES" id="C3K-NX-BBl"/>
                             <constraint firstItem="YsQ-AZ-Aei" firstAttribute="top" secondItem="V7b-jv-oCB" secondAttribute="top" id="DY5-za-saX"/>
+                            <constraint firstItem="vSc-oQ-NC5" firstAttribute="leading" secondItem="JrH-aa-AzL" secondAttribute="leading" id="FVa-vu-VGJ"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="leading" secondItem="31d-gd-auR" secondAttribute="trailing" constant="10" id="G5S-JV-re3"/>
                             <constraint firstItem="V7b-jv-oCB" firstAttribute="firstBaseline" secondItem="5ZK-BG-o1t" secondAttribute="firstBaseline" id="H5D-2D-DLH"/>
                             <constraint firstItem="1TO-9H-z2d" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="leading" id="Imk-o0-2fS"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="K2H-Af-2qK"/>
-                            <constraint firstItem="5ZK-BG-o1t" firstAttribute="top" secondItem="JrH-aa-AzL" secondAttribute="bottom" constant="30" id="NMk-yt-fha"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="top" secondItem="MEf-MN-oXt" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf8-fx-H50"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="firstBaseline" secondItem="31d-gd-auR" secondAttribute="firstBaseline" id="W36-bE-iAT"/>
                             <constraint firstItem="1TO-9H-z2d" firstAttribute="firstBaseline" secondItem="V7b-jv-oCB" secondAttribute="baseline" constant="25" id="bJG-ed-pch"/>
                             <constraint firstItem="V7b-jv-oCB" firstAttribute="leading" secondItem="JrH-aa-AzL" secondAttribute="leading" id="bUY-uH-N7A"/>
                             <constraint firstItem="5ZK-BG-o1t" firstAttribute="trailing" secondItem="31d-gd-auR" secondAttribute="trailing" id="c4g-jO-JUm"/>
                             <constraint firstAttribute="bottom" secondItem="GSr-K5-3yw" secondAttribute="bottom" constant="20" symbolic="YES" id="dAS-yW-vua"/>
+                            <constraint firstItem="vSc-oQ-NC5" firstAttribute="top" secondItem="JrH-aa-AzL" secondAttribute="bottom" constant="16" id="hQf-4s-iHn"/>
+                            <constraint firstItem="5ZK-BG-o1t" firstAttribute="top" secondItem="t24-LR-wKz" secondAttribute="bottom" constant="36" id="hZR-8k-Hq1"/>
                             <constraint firstItem="GSr-K5-3yw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="mTE-WD-54L"/>
                             <constraint firstItem="31d-gd-auR" firstAttribute="leading" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="o0J-yT-TDX"/>
                             <constraint firstAttribute="trailing" secondItem="MEf-MN-oXt" secondAttribute="trailing" constant="20" symbolic="YES" id="pJg-zj-cBs"/>
@@ -210,8 +232,10 @@ Gw
                     <connections>
                         <outlet property="buttonClearShortcut" destination="YsQ-AZ-Aei" id="1xo-hk-HgM"/>
                         <outlet property="buttonClose" destination="GSr-K5-3yw" id="d4I-Cf-gXD"/>
+                        <outlet property="buttonDisplayFullPhpVersion" destination="vSc-oQ-NC5" id="ZLa-Vf-4Dq"/>
                         <outlet property="buttonDynamicIcon" destination="MEf-MN-oXt" id="qEN-Vg-EZS"/>
                         <outlet property="buttonSetShortcut" destination="V7b-jv-oCB" id="2aS-S4-cKR"/>
+                        <outlet property="labelDisplayFullPhpVersion" destination="t24-LR-wKz" id="wYj-Z0-a3h"/>
                         <outlet property="labelDynamicIcon" destination="JrH-aa-AzL" id="CFc-fF-oPq"/>
                         <outlet property="labelShortcut" destination="1TO-9H-z2d" id="paF-hK-78x"/>
                         <outlet property="leftLabelDynamicIcon" destination="31d-gd-auR" id="ANZ-Zs-4d7"/>

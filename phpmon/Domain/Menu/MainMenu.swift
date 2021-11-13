@@ -180,7 +180,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
                 } else {
                     // The dynamic icon has been requested
-                    setStatusBarImage(version: App.phpInstall!.version.short)
+                    let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+                    setStatusBarImage(version: long ? App.phpInstall!.version.long  : App.phpInstall!.version.short)
                 }
             }
         }

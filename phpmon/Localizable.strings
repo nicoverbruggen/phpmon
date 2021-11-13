@@ -56,6 +56,9 @@
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the\ncurrently linked PHP version.";
 
+"prefs.display_full_php_version" = "Display full PHP version in menu bar";
+"prefs.display_full_php_version_desc" = "Display the full version instead of the major version only.\n(This may be undesirable on smaller displays,\nso this is disabled by default.)";
+ 
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
 "prefs.shortcut_clear" = "Clear";

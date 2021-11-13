@@ -12,16 +12,25 @@ import Carbon
 
 class PrefsVC: NSViewController {
     
+    // Labels on the left
     @IBOutlet weak var leftLabelDynamicIcon: NSTextField!
     @IBOutlet weak var leftLabelGlobalShortcut: NSTextField!
     
+    // Dynamic icon
     @IBOutlet weak var buttonDynamicIcon: NSButton!
     @IBOutlet weak var labelDynamicIcon: NSTextField!
-    @IBOutlet weak var buttonClose: NSButton!
     
+    // Full PHP version
+    @IBOutlet weak var buttonDisplayFullPhpVersion: NSButton!
+    @IBOutlet weak var labelDisplayFullPhpVersion: NSTextField!
+    
+    // Shortcut
     @IBOutlet weak var buttonSetShortcut: NSButton!
     @IBOutlet weak var buttonClearShortcut: NSButton!
     @IBOutlet weak var labelShortcut: NSTextField!
+    
+    // Close button (bottom right)
+    @IBOutlet weak var buttonClose: NSButton!
     
     // MARK: - Display
     
@@ -47,6 +56,7 @@ class PrefsVC: NSViewController {
     override func viewWillAppear() {
         loadLocalization()
         loadDynamicIconFromPreferences()
+        loadFullPhpVersionFromPreferences()
         loadGlobalKeybindFromPreferences()
     }
     
@@ -62,6 +72,10 @@ class PrefsVC: NSViewController {
         labelDynamicIcon.stringValue = "prefs.dynamic_icon_desc".localized
         buttonDynamicIcon.title = "prefs.dynamic_icon_title".localized
         
+        // Full PHP version
+        buttonDisplayFullPhpVersion.title = "prefs.display_full_php_version".localized
+        labelDisplayFullPhpVersion.stringValue = "prefs.display_full_php_version_desc".localized
+        
         // Global Shortcut
         leftLabelGlobalShortcut.stringValue = "prefs.global_shortcut".localized
         labelShortcut.stringValue = "prefs.shortcut_desc".localized
@@ -72,11 +86,28 @@ class PrefsVC: NSViewController {
         buttonClose.title = "prefs.close".localized
     }
     
-    // MARK: - Dynamic Icon Preference
+    // MARK: - Loading Preferences
     
     func loadDynamicIconFromPreferences() {
         let shouldDisplay = Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == true
         self.buttonDynamicIcon.state = shouldDisplay ? .on : .off
+    }
+    
+    func loadFullPhpVersionFromPreferences() {
+        let shouldDisplay = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool == true
+        self.buttonDisplayFullPhpVersion.state = shouldDisplay ? .on : .off
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func toggledDynamicIcon(_ sender: Any) {
+        Preferences.update(.shouldDisplayDynamicIcon, value: buttonDynamicIcon.state == .on)
+        MainMenu.shared.refreshIcon()
+    }
+    
+    @IBAction func toggledFullPhpVersion(_ sender: Any) {
+        Preferences.update(.fullPhpVersionDynamicIcon, value: buttonDisplayFullPhpVersion.state == .on)
+        MainMenu.shared.refreshIcon()
     }
     
     // MARK: - Shortcut Preference
@@ -164,13 +195,6 @@ class PrefsVC: NSViewController {
     
     func updateKeybindButton(_ globalKeybindPreference: GlobalKeybindPreference) {
         buttonSetShortcut.title = globalKeybindPreference.description
-    }
-    
-    // MARK: - Actions
-    
-    @IBAction func toggledDynamicIcon(_ sender: Any) {
-        Preferences.update(.shouldDisplayDynamicIcon, value: buttonDynamicIcon.state == .on)
-        MainMenu.shared.refreshIcon()
     }
     
     @IBAction func pressed(_ sender: Any) {
