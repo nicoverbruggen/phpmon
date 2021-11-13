@@ -84,8 +84,8 @@
         <scene sceneID="iyi-IS-7Ps">
             <objects>
                 <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
-                        <rect key="frame" x="0.0" y="0.0" width="574" height="249"/>
+                    <view key="view" wantsLayer="YES" misplaced="YES" id="Pf1-A5-3Xz">
+                        <rect key="frame" x="0.0" y="0.0" width="574" height="311"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GSr-K5-3yw">
@@ -102,7 +102,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MEf-MN-oXt">
-                                <rect key="frame" x="148" y="212" width="406" height="18"/>
+                                <rect key="frame" x="148" y="274" width="406" height="18"/>
                                 <buttonCell key="cell" type="check" title="DYN_ICON" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5s-qp-Iaj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -112,7 +112,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrH-aa-AzL">
-                                <rect key="frame" x="148" y="191" width="408" height="14"/>
+                                <rect key="frame" x="148" y="253" width="408" height="14"/>
                                 <textFieldCell key="cell" title="DYN_ICON_DESC" id="MHA-Xt-xgF">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -165,7 +165,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31d-gd-auR">
-                                <rect key="frame" x="18" y="213" width="124" height="16"/>
+                                <rect key="frame" x="18" y="275" width="124" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="8dt-Pg-wFI"/>
                                 </constraints>
@@ -184,7 +184,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vSc-oQ-NC5">
-                                <rect key="frame" x="148" y="158" width="121" height="18"/>
+                                <rect key="frame" x="148" y="220" width="121" height="18"/>
                                 <buttonCell key="cell" type="check" title="FULL_PHP_VER" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eCd-ja-EwE">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -194,8 +194,37 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t24-LR-wKz">
-                                <rect key="frame" x="148" y="137" width="123" height="14"/>
+                                <rect key="frame" x="148" y="199" width="123" height="14"/>
                                 <textFieldCell key="cell" title="FULL_PHP_VER_DESC" id="8gG-qs-mHR">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogC-wz-ZfO">
+                                <rect key="frame" x="18" y="153" width="124" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="i9O-6m-Gr9"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="PREF_SERVICES:" id="bm4-rf-kCF">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="47u-9B-eDu">
+                                <rect key="frame" x="148" y="152" width="126" height="18"/>
+                                <buttonCell key="cell" type="check" title="AUTO_RESTART" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="n1d-l4-inL">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggledAutoRestartServices:" target="AW2-rV-rbS" id="THn-nu-IiJ"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ObP-GE-ejZ">
+                                <rect key="frame" x="148" y="131" width="126" height="14"/>
+                                <textFieldCell key="cell" title="AUTO_RESTART_DESC" id="F9P-iQ-gBk">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -203,9 +232,11 @@ Gw
                             </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="ogC-wz-ZfO" firstAttribute="trailing" secondItem="31d-gd-auR" secondAttribute="trailing" id="2Lr-Ht-qKI"/>
                             <constraint firstItem="t24-LR-wKz" firstAttribute="leading" secondItem="vSc-oQ-NC5" secondAttribute="leading" id="3tK-kp-q5R"/>
                             <constraint firstItem="t24-LR-wKz" firstAttribute="top" secondItem="vSc-oQ-NC5" secondAttribute="bottom" constant="8" symbolic="YES" id="4Ft-lN-vwA"/>
                             <constraint firstAttribute="trailing" secondItem="JrH-aa-AzL" secondAttribute="trailing" constant="20" symbolic="YES" id="8iM-Xf-ShU"/>
+                            <constraint firstItem="ObP-GE-ejZ" firstAttribute="leading" secondItem="47u-9B-eDu" secondAttribute="leading" id="ASF-WR-A3X"/>
                             <constraint firstAttribute="trailing" secondItem="GSr-K5-3yw" secondAttribute="trailing" constant="20" symbolic="YES" id="AT9-5F-6g1"/>
                             <constraint firstItem="YsQ-AZ-Aei" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="trailing" constant="12" symbolic="YES" id="Bk6-4V-GLk"/>
                             <constraint firstItem="31d-gd-auR" firstAttribute="top" secondItem="Pf1-A5-3Xz" secondAttribute="top" constant="20" symbolic="YES" id="C3K-NX-BBl"/>
@@ -214,7 +245,10 @@ Gw
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="leading" secondItem="31d-gd-auR" secondAttribute="trailing" constant="10" id="G5S-JV-re3"/>
                             <constraint firstItem="V7b-jv-oCB" firstAttribute="firstBaseline" secondItem="5ZK-BG-o1t" secondAttribute="firstBaseline" id="H5D-2D-DLH"/>
                             <constraint firstItem="1TO-9H-z2d" firstAttribute="leading" secondItem="V7b-jv-oCB" secondAttribute="leading" id="Imk-o0-2fS"/>
+                            <constraint firstItem="ObP-GE-ejZ" firstAttribute="top" secondItem="47u-9B-eDu" secondAttribute="bottom" constant="8" symbolic="YES" id="JqR-Jd-SoR"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="K2H-Af-2qK"/>
+                            <constraint firstItem="5ZK-BG-o1t" firstAttribute="top" secondItem="ObP-GE-ejZ" secondAttribute="bottom" constant="30" id="LO4-8j-ihp"/>
+                            <constraint firstItem="47u-9B-eDu" firstAttribute="top" secondItem="ogC-wz-ZfO" secondAttribute="top" id="T9j-v2-fSW"/>
                             <constraint firstItem="JrH-aa-AzL" firstAttribute="top" secondItem="MEf-MN-oXt" secondAttribute="bottom" constant="8" symbolic="YES" id="Vf8-fx-H50"/>
                             <constraint firstItem="MEf-MN-oXt" firstAttribute="firstBaseline" secondItem="31d-gd-auR" secondAttribute="firstBaseline" id="W36-bE-iAT"/>
                             <constraint firstItem="1TO-9H-z2d" firstAttribute="firstBaseline" secondItem="V7b-jv-oCB" secondAttribute="baseline" constant="25" id="bJG-ed-pch"/>
@@ -222,29 +256,33 @@ Gw
                             <constraint firstItem="5ZK-BG-o1t" firstAttribute="trailing" secondItem="31d-gd-auR" secondAttribute="trailing" id="c4g-jO-JUm"/>
                             <constraint firstAttribute="bottom" secondItem="GSr-K5-3yw" secondAttribute="bottom" constant="20" symbolic="YES" id="dAS-yW-vua"/>
                             <constraint firstItem="vSc-oQ-NC5" firstAttribute="top" secondItem="JrH-aa-AzL" secondAttribute="bottom" constant="16" id="hQf-4s-iHn"/>
-                            <constraint firstItem="5ZK-BG-o1t" firstAttribute="top" secondItem="t24-LR-wKz" secondAttribute="bottom" constant="36" id="hZR-8k-Hq1"/>
                             <constraint firstItem="GSr-K5-3yw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="mTE-WD-54L"/>
+                            <constraint firstItem="47u-9B-eDu" firstAttribute="leading" secondItem="MEf-MN-oXt" secondAttribute="leading" id="n8B-C8-dXs"/>
                             <constraint firstItem="31d-gd-auR" firstAttribute="leading" secondItem="Pf1-A5-3Xz" secondAttribute="leading" constant="20" symbolic="YES" id="o0J-yT-TDX"/>
+                            <constraint firstItem="ogC-wz-ZfO" firstAttribute="top" secondItem="t24-LR-wKz" secondAttribute="bottom" constant="30" id="oXh-LE-sRS"/>
                             <constraint firstAttribute="trailing" secondItem="MEf-MN-oXt" secondAttribute="trailing" constant="20" symbolic="YES" id="pJg-zj-cBs"/>
                             <constraint firstItem="GSr-K5-3yw" firstAttribute="top" secondItem="1TO-9H-z2d" secondAttribute="bottom" constant="20" id="pMZ-Gx-Jmm"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonAutoRestartServices" destination="47u-9B-eDu" id="kyg-BX-PQK"/>
                         <outlet property="buttonClearShortcut" destination="YsQ-AZ-Aei" id="1xo-hk-HgM"/>
                         <outlet property="buttonClose" destination="GSr-K5-3yw" id="d4I-Cf-gXD"/>
                         <outlet property="buttonDisplayFullPhpVersion" destination="vSc-oQ-NC5" id="ZLa-Vf-4Dq"/>
                         <outlet property="buttonDynamicIcon" destination="MEf-MN-oXt" id="qEN-Vg-EZS"/>
                         <outlet property="buttonSetShortcut" destination="V7b-jv-oCB" id="2aS-S4-cKR"/>
+                        <outlet property="labelAutoRestartServices" destination="ObP-GE-ejZ" id="uwY-D7-Uve"/>
                         <outlet property="labelDisplayFullPhpVersion" destination="t24-LR-wKz" id="wYj-Z0-a3h"/>
                         <outlet property="labelDynamicIcon" destination="JrH-aa-AzL" id="CFc-fF-oPq"/>
                         <outlet property="labelShortcut" destination="1TO-9H-z2d" id="paF-hK-78x"/>
                         <outlet property="leftLabelDynamicIcon" destination="31d-gd-auR" id="ANZ-Zs-4d7"/>
                         <outlet property="leftLabelGlobalShortcut" destination="5ZK-BG-o1t" id="73E-9i-cg8"/>
+                        <outlet property="leftLabelServices" destination="ogC-wz-ZfO" id="BYx-Gv-N1p"/>
                     </connections>
                 </viewController>
                 <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="264" y="399.5"/>
+            <point key="canvasLocation" x="264" y="457"/>
         </scene>
     </scenes>
 </document>

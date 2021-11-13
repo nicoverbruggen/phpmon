@@ -257,6 +257,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     @objc func toggleExtension(sender: ExtensionMenuItem) {
         waitAndExecute {
             sender.phpExtension?.toggle()
+            
+            if Preferences.preferences[.autoServiceRestartAfterExtensionToggle] as! Bool == true {
+                Actions.restartPhpFpm()
+            }
         }
     }
     

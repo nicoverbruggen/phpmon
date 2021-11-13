@@ -52,6 +52,10 @@
 
 "prefs.global_shortcut" = "Global shortcut:";
 "prefs.dynamic_icon" = "Dynamic icon:";
+"prefs.services" = "Services:";
+
+"prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
+"prefs_auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when\nyou check or uncheck an extension. Slightly slower when enabled, \nbut this applies the extension change immediately for all sites \nyou're serving, no need to restart PHP-FPM manually.";
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the\ncurrently linked PHP version.";
@@ -68,6 +72,9 @@
 
 "notification.version_changed_title" = "PHP %@ now active";
 "notification.version_changed_desc" = "PHP Monitor has switched to PHP %@.";
+
+"notification.php_fpm_restarted" = "PHP-FPM automatically restarted";
+"notification.php_fpm_restarted_desc" = "You toggled an extension, so PHP-FPM was automatically restarted.";
 
 "notification.services_stopped" = "Valet services stopped";
 "notification.services_stopped_desc" = "All services have been successfully stopped.";

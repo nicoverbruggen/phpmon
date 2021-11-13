@@ -9,57 +9,71 @@
 import Foundation
 
 enum PreferenceName: String {
+    case wasLaunchedBefore = "launched_before"
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+    case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case globalHotkey = "global_hotkey"
 }
 
 class Preferences {
     
+    // MARK: - Singleton
+    
+    static var shared = Preferences()
+    
+    var cachedPreferences: [PreferenceName: Any?]
+    
+    public init() {
+        Preferences.handleFirstTimeLaunch()
+        self.cachedPreferences = Self.cache()
+    }
+    
+    // MARK: - First Time Run
+    
+    /**
+     Note: macOS seems to cache plist values in memory as well as in files.
+     You can find the persisted configuration file in: ~/Library/Preferences/com.nicoverbruggen.phpmon.plist
+     
+     To clear the cache, and get a first-run experience you may need to run:
+     ```
+     defaults delete com.nicoverbruggen.phpmon
+     killall cfprefsd
+     ```
+     */
     static func handleFirstTimeLaunch() {
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launched_before")
+        UserDefaults.standard.register(defaults: [
+            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
+            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+            PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true
+        ])
         
-        if launchedBefore {
+        if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
             return
         }
-        
-        // Set sensible defaults
-        UserDefaults.standard.setValue(true, forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue)
-        UserDefaults.standard.setValue(false, forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue)
-        UserDefaults.standard.setValue(true, forKey: "launched_before")
-        UserDefaults.standard.synchronize()
-        
         print("Saving first-time preferences!")
+        UserDefaults.standard.setValue(true, forKey: PreferenceName.wasLaunchedBefore.rawValue)
+        UserDefaults.standard.synchronize()
     }
     
-    static func handleMissingPreferences() {
-        var migrated = false
-        
-        // Any defaults that need to be adopted in case they are missing?
-        // If any new preferences are added in updates, they should get a default value here!
-        if UserDefaults.standard.value(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) == nil {
-            UserDefaults.standard.setValue(false, forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue)
-            migrated = true
-        }
-        
-        if migrated {
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    static func retrieve() -> [PreferenceName: Any] {
-        Preferences.handleFirstTimeLaunch()
-        Preferences.handleMissingPreferences()
-        
-        return [
-            .shouldDisplayDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
-            .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
-            .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,
-        ]
-    }
+    // MARK: - API
     
     static var preferences: [PreferenceName: Any?] {
-        return Preferences.retrieve()
+        return Self.shared.cachedPreferences
+    }
+    
+    // MARK: - Internal Functionality
+    
+    static func cache() -> [PreferenceName: Any] {
+        return [
+            // Part 1: Always Booleans
+            .shouldDisplayDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
+            .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
+            .autoServiceRestartAfterExtensionToggle: UserDefaults.standard.bool(forKey: PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue) as Any,
+            
+            // Part 2: Always Strings
+            .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,
+        ]
     }
     
     static func update(_ preference: PreferenceName, value: Any?) {
@@ -69,6 +83,9 @@ class Preferences {
             UserDefaults.standard.setValue(value, forKey: preference.rawValue)
         }
         UserDefaults.standard.synchronize()
+        
+        // Update the preferences cache in memory!
+        Preferences.shared.cachedPreferences = Preferences.cache()
     }
     
 }

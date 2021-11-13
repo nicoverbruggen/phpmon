@@ -14,6 +14,7 @@ class PrefsVC: NSViewController {
     
     // Labels on the left
     @IBOutlet weak var leftLabelDynamicIcon: NSTextField!
+    @IBOutlet weak var leftLabelServices: NSTextField!
     @IBOutlet weak var leftLabelGlobalShortcut: NSTextField!
     
     // Dynamic icon
@@ -23,6 +24,10 @@ class PrefsVC: NSViewController {
     // Full PHP version
     @IBOutlet weak var buttonDisplayFullPhpVersion: NSButton!
     @IBOutlet weak var labelDisplayFullPhpVersion: NSTextField!
+    
+    // Auto-restart services
+    @IBOutlet weak var buttonAutoRestartServices: NSButton!
+    @IBOutlet weak var labelAutoRestartServices: NSTextField!
     
     // Shortcut
     @IBOutlet weak var buttonSetShortcut: NSButton!
@@ -76,6 +81,11 @@ class PrefsVC: NSViewController {
         buttonDisplayFullPhpVersion.title = "prefs.display_full_php_version".localized
         labelDisplayFullPhpVersion.stringValue = "prefs.display_full_php_version_desc".localized
         
+        // Services
+        leftLabelServices.stringValue = "prefs.services".localized
+        buttonAutoRestartServices.title = "prefs.auto_restart_services_title".localized
+        labelAutoRestartServices.stringValue = "prefs_auto_restart_services_desc".localized
+        
         // Global Shortcut
         leftLabelGlobalShortcut.stringValue = "prefs.global_shortcut".localized
         labelShortcut.stringValue = "prefs.shortcut_desc".localized
@@ -98,6 +108,11 @@ class PrefsVC: NSViewController {
         self.buttonDisplayFullPhpVersion.state = shouldDisplay ? .on : .off
     }
     
+    func loadAutoRestartServicesFromPreferences() {
+        let shouldDisplay = Preferences.preferences[.autoServiceRestartAfterExtensionToggle] as! Bool == true
+        self.buttonAutoRestartServices.state = shouldDisplay ? .on : .off
+    }
+    
     // MARK: - Actions
     
     @IBAction func toggledDynamicIcon(_ sender: Any) {
@@ -108,6 +123,10 @@ class PrefsVC: NSViewController {
     @IBAction func toggledFullPhpVersion(_ sender: Any) {
         Preferences.update(.fullPhpVersionDynamicIcon, value: buttonDisplayFullPhpVersion.state == .on)
         MainMenu.shared.refreshIcon()
+    }
+    
+    @IBAction func toggledAutoRestartServices(_ sender: Any) {
+        Preferences.update(.autoServiceRestartAfterExtensionToggle, value: buttonAutoRestartServices.state == .on)
     }
     
     // MARK: - Shortcut Preference
