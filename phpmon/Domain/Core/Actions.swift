@@ -29,6 +29,9 @@ class Actions {
         
         print("The PHP versions that were detected are: \(versionsOnly)")
         
+        App.shared.availablePhpVersions = versionsOnly
+        Actions.extractPhpLongVersions()
+        
         return versionsOnly
     }
     
@@ -36,7 +39,7 @@ class Actions {
      This method extracts the PHP full version number after finding the php installation folders.
      To be refactored at some later point, I'd like to cache the `PhpInstallation` objects instead of just the version number at some point.
      */
-    public static func extractPhpLongVersions() -> [String: String]
+    public static func extractPhpLongVersions()
     {
         var mappedVersions: [String: String] = [:]
         App.shared.availablePhpVersions.forEach { version in
@@ -50,7 +53,8 @@ class Actions {
             }
             mappedVersions[version] = longVersion
         }
-        return mappedVersions
+        
+        App.shared.cachedPhpVersionNumbers = mappedVersions
     }
  
     /**

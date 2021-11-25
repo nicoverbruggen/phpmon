@@ -41,8 +41,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
-        App.shared.availablePhpVersions = Actions.detectPhpVersions()
-        App.shared.cachedPhpVersionNumbers = Actions.extractPhpLongVersions()
+        _ = Actions.detectPhpVersions()
         updatePhpVersionInStatusBar()
         
         let installation = App.phpInstall!
