@@ -50,6 +50,11 @@ class App {
     var availablePhpVersions : [String] = []
     
     /**
+     Cached information about the PHP installations; contains only the full version number at this point.
+     */
+    var cachedPhpVersionNumbers : [String: String] = [:]
+    
+    /**
      The timer that will periodically fetch the PHP version that is currently active.
      */
     var timer: Timer?

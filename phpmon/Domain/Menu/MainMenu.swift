@@ -42,6 +42,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     private func onEnvironmentPass() {
         App.shared.availablePhpVersions = Actions.detectPhpVersions()
+        App.shared.cachedPhpVersionNumbers = Actions.extractPhpLongVersions()
         updatePhpVersionInStatusBar()
         
         let installation = App.phpInstall!

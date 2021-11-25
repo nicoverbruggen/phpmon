@@ -30,7 +30,7 @@ _You may need to update your Valet installation to keep everything working if a 
 
 ## 🚀 How to install
 
-You can install via Homebrew, or may download the latest [release](https://github.com/nicoverbruggen/phpmon/releases).
+You can install via Homebrew (recommended), or may download the latest release on GitHub.
 
 To install via Homebrew, run:
 

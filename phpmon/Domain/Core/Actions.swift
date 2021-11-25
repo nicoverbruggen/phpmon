@@ -33,6 +33,27 @@ class Actions {
     }
     
     /**
+     This method extracts the PHP full version number after finding the php installation folders.
+     To be refactored at some later point, I'd like to cache the `PhpInstallation` objects instead of just the version number at some point.
+     */
+    public static func extractPhpLongVersions() -> [String: String]
+    {
+        var mappedVersions: [String: String] = [:]
+        App.shared.availablePhpVersions.forEach { version in
+            let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
+            var longVersion = version
+            if Shell.fileExists(phpConfigExecutablePath) {
+                longVersion = Command.execute(
+                    path: phpConfigExecutablePath,
+                    arguments: ["--version"]
+                )
+            }
+            mappedVersions[version] = longVersion
+        }
+        return mappedVersions
+    }
+ 
+    /**
      Extracts valid PHP versions from an array of strings.
      This array of strings is usually retrieved from `grep`.
      */

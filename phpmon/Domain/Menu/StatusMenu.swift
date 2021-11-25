@@ -42,15 +42,24 @@ class StatusMenu : NSMenu {
     private func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<App.shared.availablePhpVersions.count).reversed() {
-            let version = App.shared.availablePhpVersions[index]
+            
+            // Get the short and long version
+            let shortVersion = App.shared.availablePhpVersions[index]
+            let longVersion = App.shared.cachedPhpVersionNumbers[shortVersion]!
+            
+            let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+            let versionString = long ? longVersion : shortVersion
+            
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+            let brew = (shortVersion == App.shared.brewPhpVersion) ? "php" : "php@\(shortVersion)"
             let menuItem = PhpMenuItem(
-                title: "\("mi_php_switch".localized) \(version) (\(brew))",
-                action: (version == App.phpInstall?.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
+                title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
+                action: (shortVersion == App.phpInstall?.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
             )
-            menuItem.version = version
+            
+            menuItem.version = shortVersion
             shortcutKey = shortcutKey + 1
+            
             self.addItem(menuItem)
         }
     }

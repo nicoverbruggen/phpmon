@@ -123,6 +123,7 @@ class PrefsVC: NSViewController {
     @IBAction func toggledFullPhpVersion(_ sender: Any) {
         Preferences.update(.fullPhpVersionDynamicIcon, value: buttonDisplayFullPhpVersion.state == .on)
         MainMenu.shared.refreshIcon()
+        MainMenu.shared.update()
     }
     
     @IBAction func toggledAutoRestartServices(_ sender: Any) {
