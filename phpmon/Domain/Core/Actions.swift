@@ -41,20 +41,12 @@ class Actions {
      */
     public static func extractPhpLongVersions()
     {
-        var mappedVersions: [String: String] = [:]
+        var mappedVersions: [String: PhpInstallation] = [:]
         App.shared.availablePhpVersions.forEach { version in
-            let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
-            var longVersion = version
-            if Shell.fileExists(phpConfigExecutablePath) {
-                longVersion = Command.execute(
-                    path: phpConfigExecutablePath,
-                    arguments: ["--version"]
-                )
-            }
-            mappedVersions[version] = longVersion
+            mappedVersions[version] = PhpInstallation(version)
         }
         
-        App.shared.cachedPhpVersionNumbers = mappedVersions
+        App.shared.cachedPhpInstallations = mappedVersions
     }
  
     /**

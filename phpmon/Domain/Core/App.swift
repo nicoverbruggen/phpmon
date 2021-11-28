@@ -17,7 +17,7 @@ class App {
     }
     
     /** Information about the currently linked PHP installation. */
-    static var phpInstall: PhpInstallation? {
+    static var phpInstall: ActivePhpInstallation? {
         return App.shared.currentInstall
     }
     
@@ -42,7 +42,7 @@ class App {
     /**
      The currently active installation of PHP.
      */
-    var currentInstall: PhpInstallation? = nil
+    var currentInstall: ActivePhpInstallation? = nil
     
     /**
      All available versions of PHP.
@@ -52,7 +52,7 @@ class App {
     /**
      Cached information about the PHP installations; contains only the full version number at this point.
      */
-    var cachedPhpVersionNumbers : [String: String] = [:]
+    var cachedPhpInstallations : [String: PhpInstallation] = [:]
     
     /**
      The timer that will periodically fetch the PHP version that is currently active.
@@ -62,7 +62,7 @@ class App {
     /**
      Information we were able to discern from the Homebrew info command (as JSON).
      */
-    var brewPhpPackage: HomebrewPackage? = nil {
+    var brewPhpPackage: HomebrewPackage! = nil {
         didSet {
             brewPhpVersion = brewPhpPackage!.version
         }

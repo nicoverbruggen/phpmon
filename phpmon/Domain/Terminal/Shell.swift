@@ -63,17 +63,23 @@ class Shell {
      */
     func pipe(_ command: String) -> String {
         let task = Process()
-        let pipe = Pipe()
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
         
         task.launchPath = self.shell
         task.arguments = ["--login", "-c", command]
-        task.standardOutput = pipe
+        task.standardOutput = outputPipe
+        task.standardError = errorPipe
         task.launch()
+        
+        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        
+        if (output == "" && error.lengthOfBytes(using: .utf8) > 0) {
+            return error
+        }
 
-        return String(
-            data: pipe.fileHandleForReading.readDataToEndOfFile(),
-            encoding: .utf8
-        )!
+        return output
     }
     
     /**

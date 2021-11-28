@@ -102,6 +102,10 @@
 "alert.cannot_start.close" = "Close";
 "alert.cannot_start.retry" = "Retry";
 
+// PHP alias issue
+"alert.php_alias_conflict.title" = "Homebrew `php` formula alias conflict detected";
+"alert.php_alias_conflict.info" = "PHP Monitor has detected conflicting `php` aliases in your Homebrew setup, both of which have been detected as installed.\n\nThis will likely result in failed linking when switching PHP versions, and will break PHP Monitor functionality.\n\nFor more information, please visit: https://github.com/nicoverbruggen/phpmon/issues/54";
+
 // STARTUP
 
 /// 1. PHP binary not found

@@ -18,7 +18,7 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
-		C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */; };
+		C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
@@ -49,6 +49,10 @@
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
+		C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
+		C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
+		C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
+		C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
 		C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4622B009A400E7CF16 /* Shell.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F7809F25D8037C000DBC97 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
@@ -70,7 +74,7 @@
 		C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0CA225CC992000CC7490 /* StatsView.swift */; };
-		C4F780CC25D80B75000DBC97 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */; };
+		C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
 		C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
@@ -101,7 +105,7 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4622B009A400E7CF16 /* Shell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
-		C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
+		C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePhpInstallation.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewDiagnostics.swift; sourceTree = "<group>"; };
+		C4F2E4392752F7D00020E974 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C4F7807425D7F7E5000DBC97 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,7 +179,8 @@
 		54B20EDF263AA22C00D3250E /* PHP */ = {
 			isa = PBXGroup;
 			children = (
-				C41C1B4A22B019FF00E7CF16 /* PhpInstallation.swift */,
+				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
+				C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
 			);
 			path = PHP;
@@ -279,6 +286,7 @@
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
+				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -439,8 +447,10 @@
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
+				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
+				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
@@ -451,7 +461,7 @@
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
-				C41C1B4B22B019FF00E7CF16 /* PhpInstallation.swift in Sources */,
+				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
@@ -469,13 +479,14 @@
 				54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
-				C4F780CC25D80B75000DBC97 /* PhpInstallation.swift in Sources */,
+				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
@@ -485,6 +496,7 @@
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F780A225D804AA000DBC97 /* Paths.swift in Sources */,
+				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
 				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
 				C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */,

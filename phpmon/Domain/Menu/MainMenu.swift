@@ -42,6 +42,17 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     private func onEnvironmentPass() {
         _ = Actions.detectPhpVersions()
+        
+        if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
+            DispatchQueue.main.async {
+                Alert.notify(
+                    message: "alert.php_alias_conflict.title".localized,
+                    info: "alert.php_alias_conflict.info".localized,
+                    style: .critical
+                )
+            }
+        }
+        
         updatePhpVersionInStatusBar()
         
         let installation = App.phpInstall!
@@ -165,7 +176,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - User Interface
     
     @objc func updatePhpVersionInStatusBar() {
-        App.shared.currentInstall = PhpInstallation()
+        App.shared.currentInstall = ActivePhpInstallation()
         refreshIcon()
         update()
     }

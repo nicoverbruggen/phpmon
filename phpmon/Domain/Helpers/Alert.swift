@@ -13,9 +13,11 @@ class Alert {
         messageText: String,
         informativeText: String,
         buttonTitle: String = "OK",
-        secondButtonTitle: String = ""
+        secondButtonTitle: String = "",
+        style: NSAlert.Style = .informational
     ) -> Bool {
         let alert = NSAlert.init()
+        alert.alertStyle = style
         alert.messageText = messageText
         alert.informativeText = informativeText
         alert.addButton(withTitle: buttonTitle)
@@ -25,8 +27,8 @@ class Alert {
         return alert.runModal() == .alertFirstButtonReturn
     }
     
-    public static func notify(message: String, info: String) {
-        _ = self.present(messageText: message, informativeText: info, buttonTitle: "OK", secondButtonTitle: "")
+    public static func notify(message: String, info: String, style: NSAlert.Style = .informational) {
+        _ = self.present(messageText: message, informativeText: info, buttonTitle: "OK", secondButtonTitle: "", style: style)
     }
     
 }

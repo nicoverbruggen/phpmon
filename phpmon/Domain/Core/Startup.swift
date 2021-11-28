@@ -119,7 +119,11 @@ class Startup {
 
         DispatchQueue.main.async { [self] in
             // Present the information to the user
-            Alert.notify(message: messageText, info: informativeText)
+            Alert.notify(
+                message: messageText,
+                info: informativeText,
+                style: breaking ? .critical : .warning
+            )
             // Only breaking issues will throw the extra retry modal
             breaking ? failureCallback() : ()
         }
