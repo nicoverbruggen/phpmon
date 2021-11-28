@@ -12,7 +12,6 @@ class HomebrewDiagnostics {
     
     enum Errors: String {
         case aliasConflict = "alias_conflict"
-        case installationMismatch = "installation_mismatch"
     }
     
     static let shared = HomebrewDiagnostics()
@@ -63,7 +62,8 @@ class HomebrewDiagnostics {
                 return bothInstalled
             }
             
-            print("All seems to be OK. No conflicts.")
+            print("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
+            
             return false
         }
     }

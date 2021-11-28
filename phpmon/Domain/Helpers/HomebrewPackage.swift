@@ -13,7 +13,7 @@ struct HomebrewPackage: Decodable {
     let full_name: String
     let aliases: [String]
     let installed: [HomebrewInstalled]
-    let linked_keg: String
+    let linked_keg: String?
     
     public var version: String {
         return aliases.first!.replacingOccurrences(of: "php@", with: "")

@@ -179,8 +179,8 @@
 		54B20EDF263AA22C00D3250E /* PHP */ = {
 			isa = PBXGroup;
 			children = (
-				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
 				C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */,
+				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
 			);
 			path = PHP;
@@ -274,6 +274,7 @@
 				C476FF9722B0DD830098105B /* Alert.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
+				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
 			path = Helpers;
@@ -286,7 +287,6 @@
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
-				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -659,7 +659,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -683,7 +683,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
