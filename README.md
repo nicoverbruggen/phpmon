@@ -233,11 +233,11 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 <details>
 <summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
 
-**Update**: If you are on PHP Monitor 4.1 (or higher), this problem should no longer be an issue for newly installed or upgraded versions of PHP, since this was fixed in that release. For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
+<strike>This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).</strike>
 
-This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
+**Update**: If you are on PHP Monitor 4.1 (or higher), this problem should no longer be an issue for newly installed or upgraded versions of PHP, since this was fixed in that release. 
 
-You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
+For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
 
 </details>
 
