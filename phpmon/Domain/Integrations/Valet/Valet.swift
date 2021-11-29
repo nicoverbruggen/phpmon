@@ -11,14 +11,24 @@ import Foundation
 class Valet {
     
     var version: String
+    var config: ValetConfiguration
     var detectedSites: [String]
     
     init() {
-        // Let's see if we can't discern what the Valet version is
-        // but in order to do so, we'll need to be able to run Valet
-        // which has, historically, been kind of a pain in the butt
         self.version = Actions.valet("--version")
             .replacingOccurrences(of: "Laravel Valet ", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let file = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".config/valet/config.json")
+        
+        self.config = try! JSONDecoder().decode(
+            ValetConfiguration.self,
+            from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
+        )
+        
+        print("PHP Monitor should scan the following paths:")
+        print(self.config.paths)
         
         self.detectedSites = []
     }
