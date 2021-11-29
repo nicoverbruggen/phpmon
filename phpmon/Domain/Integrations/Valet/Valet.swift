@@ -11,7 +11,7 @@ import Foundation
 class Valet {
     
     var version: String
-    var config: ValetConfiguration
+    var config: Valet.Configuration
     var detectedSites: [String]
     
     init() {
@@ -23,7 +23,7 @@ class Valet {
             .appendingPathComponent(".config/valet/config.json")
         
         self.config = try! JSONDecoder().decode(
-            ValetConfiguration.self,
+            Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
         
@@ -31,6 +31,14 @@ class Valet {
         print(self.config.paths)
         
         self.detectedSites = []
+    }
+    
+    // MARK: - Structs
+    
+    struct Configuration: Decodable {
+        let tld: String
+        let paths: [String]
+        let loopback: String
     }
     
 }

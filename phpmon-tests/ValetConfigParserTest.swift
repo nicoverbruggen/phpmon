@@ -23,7 +23,7 @@ class ValetConfigParserTest: XCTestCase {
             encoding: .utf8
         )
         let config = try! JSONDecoder().decode(
-            ValetConfiguration.self,
+            Valet.Configuration.self,
             from: json!.data(using: .utf8)!
         )
         
