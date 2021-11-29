@@ -11,12 +11,18 @@ class Shell {
     
     // MARK: - Invoke static functions
     
-    public static func run(_ command: String) {
+    public static func run(
+        _ command: String,
+        requiresPath: Bool = false
+    ) {
         Shell.user.run(command)
     }
     
-    public static func pipe(_ command: String) -> String {
-        return Shell.user.pipe(command)
+    public static func pipe(
+        _ command: String,
+        requiresPath: Bool = false
+    ) -> String {
+        return Shell.user.pipe(command, requiresPath: requiresPath)
     }
     
     // MARK: - Singleton
@@ -49,25 +55,36 @@ class Shell {
      Uses the default shell.
      
      - Parameter command: The command to run
+     - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      */
-    func run(_ command: String) {
+    func run(
+        _ command: String,
+        requiresPath: Bool = false
+    ) {
         // Equivalent of piping to /dev/null; don't do anything with the string
-        _ = pipe(command)
+        _ = Shell.pipe(command)
     }
     
     /**
      Runs a shell command and returns the output.
      
      - Parameter command: The command to run
-     - Parameter shell: Path to the shell to invoke
+     - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      */
-    func pipe(_ command: String) -> String {
+    func pipe(
+        _ command: String,
+        requiresPath: Bool = false
+    ) -> String {
         let task = Process()
         let outputPipe = Pipe()
         let errorPipe = Pipe()
         
+        let tailoredCommand = requiresPath
+            ? "export PATH=\(Paths.binPath):$PATH && \(command)"
+            : command
+        
         task.launchPath = self.shell
-        task.arguments = ["--login", "-c", command]
+        task.arguments = ["--login", "-c", tailoredCommand]
         task.standardOutput = outputPipe
         task.standardError = errorPipe
         task.launch()

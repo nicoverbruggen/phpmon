@@ -103,6 +103,19 @@ class Actions {
     }
     
     /**
+     Kindly asks Valet to switch to a specific PHP version.
+     */
+    public static func switchToPhpVersionUsingValet(
+        version: String,
+        availableVersions: [String],
+        completed: @escaping () -> Void
+    ) {
+        print("Switching to \(version) using Valet")
+        print(valet("use php@\(version)"))
+        completed()
+    }
+    
+    /**
      Switching to a new PHP version involves:
      - unlinking the current version
      - stopping the active services
@@ -202,6 +215,14 @@ class Actions {
     }
     
     // MARK: Common Shell Commands
+    
+    /**
+     Runs a `valet` command.
+     */
+    public static func valet(_ command: String) -> String
+    {
+        return Shell.pipe("sudo \(Paths.valet) \(command)", requiresPath: true)
+    }
     
     /**
      Runs a `brew` command. Can run as superuser.

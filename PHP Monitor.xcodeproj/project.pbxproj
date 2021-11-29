@@ -47,6 +47,14 @@
 		C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
 		C49EAB46259FC305007F6C3B /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EAB45259FC305007F6C3B /* Paths.swift */; };
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
+		C4AF9F6E275445F600D44ED0 /* ValetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F6D275445F600D44ED0 /* ValetConfiguration.swift */; };
+		C4AF9F6F275445F600D44ED0 /* ValetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F6D275445F600D44ED0 /* ValetConfiguration.swift */; };
+		C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
+		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
+		C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */; };
+		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
+		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
+		C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetTest.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
@@ -129,6 +137,11 @@
 		C4998F092617633900B2526E /* PrefsWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWC.swift; sourceTree = "<group>"; };
 		C49EAB45259FC305007F6C3B /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
+		C4AF9F6D275445F600D44ED0 /* ValetConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfiguration.swift; sourceTree = "<group>"; };
+		C4AF9F70275445FF00D44ED0 /* valet-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "valet-config.json"; sourceTree = "<group>"; };
+		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
+		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
+		C4AF9F7C275454A900D44ED0 /* ValetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetTest.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
@@ -244,6 +257,7 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 				C4F7808A25D7F918000DBC97 /* Terminal */,
@@ -274,10 +288,35 @@
 				C476FF9722B0DD830098105B /* Alert.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C4AF9F6A275445C900D44ED0 /* Valet */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F792754499000D44ED0 /* Valet.swift */,
+				C4AF9F6D275445F600D44ED0 /* ValetConfiguration.swift */,
+			);
+			path = Valet;
+			sourceTree = "<group>";
+		};
+		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F6C275445D900D44ED0 /* Homebrew */,
+				C4AF9F6A275445C900D44ED0 /* Valet */,
+			);
+			path = Integrations;
+			sourceTree = "<group>";
+		};
+		C4AF9F6C275445D900D44ED0 /* Homebrew */ = {
+			isa = PBXGroup;
+			children = (
 				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
-			path = Helpers;
+			path = Homebrew;
 			sourceTree = "<group>";
 		};
 		C4B13B1D25C4915000548C3A /* Core */ = {
@@ -294,6 +333,7 @@
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
+				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 				C43A8A1F25D9D1D700591B77 /* brew.json */,
 				C4F780A725D80AE8000DBC97 /* php.ini */,
 				C4F7807D25D7F84B000DBC97 /* Info.plist */,
@@ -302,6 +342,8 @@
 				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
 				C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */,
 				C43A8A1925D9CD1000591B77 /* Utility.swift */,
+				C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */,
+				C4AF9F7C275454A900D44ED0 /* ValetTest.swift */,
 			);
 			path = "phpmon-tests";
 			sourceTree = "<group>";
@@ -416,6 +458,7 @@
 			files = (
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
+				C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */,
 				C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
@@ -431,6 +474,7 @@
 			files = (
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
+				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,11 +489,13 @@
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C4998F0A2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
+				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
+				C4AF9F6E275445F600D44ED0 /* ValetConfiguration.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
@@ -485,6 +531,8 @@
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
+				C4AF9F6F275445F600D44ED0 /* ValetConfiguration.swift in Sources */,
+				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
@@ -492,6 +540,7 @@
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
+				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
@@ -500,6 +549,7 @@
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
 				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
 				C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */,
+				C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,

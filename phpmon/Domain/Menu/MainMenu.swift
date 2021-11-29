@@ -55,8 +55,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         updatePhpVersionInStatusBar()
         
+        // Attempt to find out if PHP-FPM is broken
         let installation = App.phpInstall!
         installation.notifyAboutBrokenPhpFpm()
+        
+        // Attempt to find out more info about Valet
+        let valet = Valet()
+        print("PHP Monitor has extracted the version number of Valet: \(valet.version)")
         
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in
@@ -349,8 +354,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 }
             }
             
-            // Switch the PHP version
-            Actions.switchToPhpVersion(
+            // TODO: Allow for switcher to vary?
+            Actions.switchToPhpVersionUsingValet(
                 version: sender.version,
                 availableVersions: App.shared.availablePhpVersions,
                 completed: completion
