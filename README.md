@@ -1,6 +1,6 @@
 # PHP Monitor
 
-> If this software has been useful to you, all I ask is that you **please star the repository**, so I know that the software is being used.
+> If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving a one-time donation to support the project.
 > You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
 
 <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
@@ -231,9 +231,11 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 </details>
 
 <details>
-<summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade`!</strong></summary>
+<summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
 
-This is a security feature of Brew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
+**Update**: If you are on PHP Monitor 4.1 (or higher), this problem should no longer be an issue for newly installed or upgraded versions of PHP, since this was fixed in that release. For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
+
+This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
 
 You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
 
@@ -242,7 +244,7 @@ You will need to manually clean up those folders yourself using `rm -rf` (or by 
 <details>
 <summary><strong>The app has crashed!</strong></summary>
 
-Please get in touch and open an issue. PHP Monitor shouldn't crash :)
+Please get in touch and open an issue. PHP Monitor shouldn't crash... (unless you are actually removing PHP *while* the app is running, that’s considered normal behaviour!)
 
 </details>
 
@@ -283,16 +285,7 @@ In order to save power, this only happens once every 60 seconds.
 
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
-This means:
-
-- You have at least the latest version of PHP installed (`php`)
-- You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
-- You ran `valet trust`, which means Valet commands can be run without using sudo
-
-The utility runs the following commands:
-
-- Unlink all detected PHP versions & stop the respective `php@X.X` services
-- Link the desired version of PHP, and start the associated service
+Starting with PHP Monitor 4.1, the app now leverages Valet’s included `valet use php@major.minor` command.
 
 ### Want to know more?
 
