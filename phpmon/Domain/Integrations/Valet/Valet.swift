@@ -27,8 +27,10 @@ class Valet {
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
         
+        /*
         print("PHP Monitor should scan the following paths:")
         print(self.config.paths)
+        */
         
         self.detectedSites = []
     }
