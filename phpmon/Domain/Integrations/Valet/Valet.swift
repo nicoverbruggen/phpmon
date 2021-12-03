@@ -103,6 +103,11 @@ class Valet {
         let tld: String
         let paths: [String]
         let loopback: String
+        let defaultSite: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case tld, paths, loopback, defaultSite = "default"
+        }
     }
     
 }
