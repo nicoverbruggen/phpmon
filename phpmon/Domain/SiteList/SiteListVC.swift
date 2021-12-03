@@ -12,6 +12,10 @@ import Carbon
 
 class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
+    // MARK: - Outlets
+    
+    @IBOutlet weak var tableView: NSTableView!
+    
     // MARK: - Display
     
     public static func show(delegate: NSWindowDelegate? = nil) {
@@ -33,6 +37,13 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Lifecycle
     
+    override func viewDidLoad() {
+        let menu = NSMenu()
+        // menu.addItem(withTitle: "Secure", action: #selector(self.action), keyEquivalent: "L")
+        menu.addItem(withTitle: "Open in Browser...", action: #selector(self.openInBrowser), keyEquivalent: "O")
+        tableView.menu = menu
+    }
+    
     override func viewWillAppear() {
 
     }
@@ -44,23 +55,45 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Table View
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return Valet.shared.linkedSites.count
+        return Valet.shared.sites.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let userCell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "siteItem"), owner: self) as? SiteListCell else { return nil }
         
-        let item = Valet.shared.linkedSites[row]
+        let item = Valet.shared.sites[row]
         
+        /// Make sure to show the TLD
         userCell.labelSiteName.stringValue = "\(item.name).\(Valet.shared.config.tld)"
-        userCell.labelPathName.stringValue = item.absolutePath
         
-        userCell.labelSiteType.isHidden = true
-        userCell.labelPhpVersion.isHidden = true
+        /// Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
+        userCell.labelPathName.stringValue = item.absolutePath
+            .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
+        
+        /// If the `aliasPath` is nil, we're dealing with a parked site. Otherwise, it's a link that was explicitly created.
+        userCell.labelSiteType.stringValue = item.aliasPath == nil
+            ? "Parked Site"
+            : "Linked Site"
+        
+        /// Show the green or red lock based on whether the site was secured
+        userCell.imageViewLock.image = NSImage(named: item.secured ? "GreenLock" : "RedLock")
+        
+        /// TODO: Load the correct PHP version (not determined as of yet)
+        userCell.labelPhpVersion.stringValue = "PHP 8.0"
         
         return userCell
     }
-
+    
+    @objc public func openInBrowser() {
+        if self.tableView.selectedRow == -1 {
+            return
+        }
+        
+        let site = Valet.shared.sites[self.tableView.selectedRow]
+        let prefix = site.secured ? "https://" : "http://"
+        let url = "\(prefix)\(site.name).\(Valet.shared.config.tld)"
+        NSWorkspace.shared.open(URL(string: url)!)
+    }
 
     // MARK: - Deinitialization
     

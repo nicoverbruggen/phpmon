@@ -15,8 +15,7 @@ class Valet {
     var version: String
     var config: Valet.Configuration
     
-    var parkedSites: [Site] = []
-    var linkedSites: [Site] = []
+    var sites: [Site] = []
     
     init() {
         self.version = Actions.valet("--version")
@@ -34,22 +33,21 @@ class Valet {
         print("PHP Monitor should scan the following paths:")
         print(self.config.paths)
         
-        resolvePaths()
+        resolvePaths(tld: self.config.tld)
     }
     
-    private func resolvePaths() {
-        self.linkedSites = []
-        self.parkedSites = []
+    private func resolvePaths(tld: String) {
+        self.sites = []
         
         for path in self.config.paths {
             let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
             for entry in entries {
-                self.resolvePath(entry, forPath: path)
+                self.resolvePath(entry, forPath: path, tld: tld)
             }
         }
     }
     
-    private func resolvePath(_ entry: String, forPath path: String) {
+    private func resolvePath(_ entry: String, forPath path: String, tld: String) {
         let siteDir = path + "/" + entry
         
         // See if the file is a symlink, if so, resolve it
@@ -59,11 +57,9 @@ class Valet {
         let type = attrs[FileAttributeKey.type] as! FileAttributeType
         
         if type == FileAttributeType.typeSymbolicLink {
-            self.linkedSites.append(Site(aliasPath: siteDir))
+            self.sites.append(Site(aliasPath: siteDir, tld: tld))
         } else if type == FileAttributeType.typeDirectory {
-            self.parkedSites.append(Site(absolutePath: siteDir))
-        } else {
-            print("The item at: `\(siteDir)` was neither a symlink nor a directory. Skipping.")
+            self.sites.append(Site(absolutePath: siteDir, tld: tld))
         }
     }
     
@@ -74,19 +70,20 @@ class Valet {
         
         var absolutePath: String
         var aliasPath: String?
+        var secured: Bool
         
-        init(absolutePath: String) {
+        init(absolutePath: String, tld: String) {
             self.absolutePath = absolutePath
             self.aliasPath = nil
             self.name = URL(string: absolutePath)!.lastPathComponent
-            self.detectSiteProperties()
+            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name).\(tld).key")
         }
         
-        convenience init(aliasPath: String) {
+        convenience init(aliasPath: String, tld: String) {
             // Resolve the symlink
             let absolutePath = try! FileManager.default
                 .destinationOfSymbolicLink(atPath: aliasPath)
-            self.init(absolutePath: absolutePath)
+            self.init(absolutePath: absolutePath, tld: tld)
             
             // TODO: Make sure the destination is a valid directory!
             
@@ -95,10 +92,9 @@ class Valet {
             
             // Update the alias' path
             self.aliasPath = aliasPath
-        }
-        
-        private func detectSiteProperties() {
-            // TODO: Determine additional information, like Composer status and PHP version?
+            
+            // Make sure we check again, this time for the aliased file
+            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name).\(tld).key")
         }
     }
 
