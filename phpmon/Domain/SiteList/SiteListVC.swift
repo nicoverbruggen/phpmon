@@ -10,13 +10,17 @@ import Cocoa
 import HotKey
 import Carbon
 
-class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
     
     // MARK: - Outlets
+    
+    @IBOutlet weak var textFieldSearch: NSTextField!
     
     @IBOutlet weak var tableView: NSTableView!
     
     public var editorAvailability: [String] = []
+    
+    public var sites: [Valet.Site] = []
     
     // MARK: - Display
     
@@ -47,6 +51,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
             self.editorAvailability.append("phpstorm")
         }
+        self.sites = Valet.shared.sites
     }
     
     override func viewWillAppear() {}
@@ -56,13 +61,13 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Table View
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return Valet.shared.sites.count
+        return self.sites.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let userCell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "siteItem"), owner: self) as? SiteListCell else { return nil }
         
-        let item = Valet.shared.sites[row]
+        let item = self.sites[row]
         
         /// Make sure to show the TLD
         userCell.labelSiteName.stringValue = "\(item.name).\(Valet.shared.config.tld)"
@@ -88,12 +93,12 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let menu = NSMenu()
         
-        let site = Valet.shared.sites[self.tableView.selectedRow]
-        
         if self.tableView.selectedRow == -1 {
             tableView.menu = nil
             return
         }
+        
+        let site = self.sites[self.tableView.selectedRow]
         
         menu.addItem(
             withTitle: site.secured
@@ -147,27 +152,45 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: Open with IDE / Editor
     
     @objc public func openWithPhpStorm() {
-        let site = Valet.shared.sites[self.tableView.selectedRow]
+        let site = self.sites[self.tableView.selectedRow]
         Shell.run("open -a /Applications/PhpStorm.app \(site.absolutePath)")
     }
     
     @objc public func openWithVSCode() {
-        let site = Valet.shared.sites[self.tableView.selectedRow]
+        let site = self.sites[self.tableView.selectedRow]
         Shell.run("/usr/local/bin/code \(site.absolutePath)")
     }
     
     // MARK: Open in Browser & Finder
     
     @objc public func openInBrowser() {
-        let site = Valet.shared.sites[self.tableView.selectedRow]
+        let site = self.sites[self.tableView.selectedRow]
         let prefix = site.secured ? "https://" : "http://"
         let url = "\(prefix)\(site.name).\(Valet.shared.config.tld)"
         NSWorkspace.shared.open(URL(string: url)!)
     }
     
     @objc public func openInFinder() {
-        let site = Valet.shared.sites[self.tableView.selectedRow]
+        let site = self.sites[self.tableView.selectedRow]
         Shell.run("open \(site.absolutePath)")
+    }
+    
+    // MARK: - (Search) Text Field Delegate
+    
+    func controlTextDidChange(_ obj: Notification) {
+        let searchString = self.textFieldSearch.stringValue.lowercased()
+        
+        if searchString.isEmpty {
+            self.sites = Valet.shared.sites
+            tableView.reloadData()
+            return
+        }
+        
+        self.sites = Valet.shared.sites.filter({ site in
+            return site.name.lowercased().contains(searchString)
+        })
+        
+        tableView.reloadData()
     }
 
     // MARK: - Deinitialization

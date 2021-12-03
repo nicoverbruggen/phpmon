@@ -25,6 +25,8 @@ class SiteListWC: NSWindowController {
             default:
                 break
             }
+        } else {
+            super.keyDown(with: event)
         }
     }
     

@@ -53,7 +53,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-343" y="-16"/>
+            <point key="canvasLocation" x="-444" y="-1"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
@@ -314,17 +314,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="rIZ-4U-bhj">
-                        <rect key="frame" x="0.0" y="0.0" width="574" height="262"/>
+                        <rect key="frame" x="0.0" y="0.0" width="574" height="199"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="574" height="259"/>
+                                <rect key="frame" x="0.0" y="0.0" width="574" height="154"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="572" height="257"/>
+                                    <rect key="frame" x="1" y="1" width="572" height="152"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="572" height="257"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="572" height="152"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -421,7 +421,7 @@ Gw
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="1" y="254" width="557" height="15"/>
+                                    <rect key="frame" x="1" y="243" width="572" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">
@@ -429,24 +429,50 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3I-BT-dOY">
+                                <rect key="frame" x="37" y="164" width="531" height="23"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" placeholderString="Search for a domain..." usesSingleLineMode="YES" id="Hgd-Oz-Ggp">
+                                    <font key="font" metaFont="system" size="19"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="JZI-Vd-9oq" id="IR9-kH-rEv"/>
+                                </connections>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z1T-9h-9ms">
+                                <rect key="frame" x="10" y="166" width="24" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="dge-tM-IOH"/>
+                                    <constraint firstAttribute="width" constant="24" id="gHC-jb-3kU"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Search" id="0ya-55-GjS"/>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="leading" secondItem="rIZ-4U-bhj" secondAttribute="leading" id="2Tx-yb-xrv"/>
-                            <constraint firstItem="p0j-eB-I2i" firstAttribute="top" secondItem="rIZ-4U-bhj" secondAttribute="top" id="IUP-Wr-dSF"/>
+                            <constraint firstItem="p0j-eB-I2i" firstAttribute="top" secondItem="p3I-BT-dOY" secondAttribute="bottom" constant="10" id="77g-3w-AMb"/>
                             <constraint firstAttribute="bottom" secondItem="p0j-eB-I2i" secondAttribute="bottom" id="QEw-5m-u1s"/>
+                            <constraint firstAttribute="trailing" secondItem="p3I-BT-dOY" secondAttribute="trailing" constant="8" id="mje-P5-UjW"/>
+                            <constraint firstItem="p3I-BT-dOY" firstAttribute="leading" secondItem="Z1T-9h-9ms" secondAttribute="trailing" constant="5" id="nPc-UE-WhI"/>
+                            <constraint firstItem="Z1T-9h-9ms" firstAttribute="leading" secondItem="rIZ-4U-bhj" secondAttribute="leading" constant="10" id="oRZ-EK-xb6"/>
+                            <constraint firstItem="p3I-BT-dOY" firstAttribute="top" secondItem="rIZ-4U-bhj" secondAttribute="top" constant="10" id="qw7-3Q-kUm"/>
+                            <constraint firstItem="Z1T-9h-9ms" firstAttribute="centerY" secondItem="p3I-BT-dOY" secondAttribute="centerY" id="shq-ZM-Iyw"/>
                             <constraint firstAttribute="trailing" secondItem="p0j-eB-I2i" secondAttribute="trailing" id="zWH-TD-RZv"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="cp3-34-pQj" id="sdw-Ac-27X"/>
+                        <outlet property="textFieldSearch" destination="p3I-BT-dOY" id="EXF-u8-Rm6"/>
                     </connections>
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="700.5"/>
+            <point key="canvasLocation" x="250" y="699.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="GreenLock" width="448" height="512"/>
+        <image name="Search" width="512" height="512"/>
     </resources>
 </document>
