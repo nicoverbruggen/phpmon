@@ -51,6 +51,15 @@
 
 "site_list.title" = "Linked & Parked Domains";
 
+// SITE LIST ACTIONS
+
+"site_list.secure" = "Secure";
+"site_list.unsecure" = "Unsecure";
+"site_list.open_in_finder" = "Open in Finder";
+"site_list.open_in_browser" = "Open in Browser";
+"site_list.open_with_vs_code" = "Open with Visual Studio Code";
+"site_list.open_with_pstorm" = "Open with PhpStorm";
+
 // PREFERENCES
 
 "prefs.title" = "PHP Monitor";

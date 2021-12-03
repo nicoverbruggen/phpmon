@@ -16,6 +16,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
     
+    public var editorAvailability: [String] = []
+    
     // MARK: - Display
     
     public static func show(delegate: NSWindowDelegate? = nil) {
@@ -37,7 +39,15 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {}
+    override func viewDidLoad() {
+        if (Shell.fileExists("/usr/local/bin/code")) {
+            self.editorAvailability.append("vscode")
+        }
+        
+        if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
+            self.editorAvailability.append("phpstorm")
+        }
+    }
     
     override func viewWillAppear() {}
     
@@ -86,31 +96,78 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
         
         menu.addItem(
-            withTitle: site.secured ? "Unsecure" : "Secure",
+            withTitle: site.secured
+                ? "site_list.unsecure".localized
+                : "site_list.secure".localized,
             action: #selector(self.secure),
             keyEquivalent: "L"
         )
+        
+        if (self.editorAvailability.count > 0) {
+            menu.addItem(NSMenuItem.separator())
+            
+            if self.editorAvailability.contains("vscode") {
+                menu.addItem(
+                    withTitle: "site_list.open_with_vs_code".localized,
+                    action: #selector(self.openWithVSCode),
+                    keyEquivalent: ""
+                )
+            }
+            
+            if editorAvailability.contains("phpstorm") {
+                menu.addItem(
+                    withTitle: "site_list.open_with_pstorm".localized,
+                    action: #selector(self.openWithPhpStorm),
+                    keyEquivalent: ""
+                )
+            }
+            
+            menu.addItem(NSMenuItem.separator())
+        }
+        
         menu.addItem(
-            withTitle: "Open in Browser...",
+            withTitle: "site_list.open_in_finder".localized,
+            action: #selector(self.openInFinder),
+            keyEquivalent: "F"
+        )
+        menu.addItem(
+            withTitle: "site_list.open_in_browser".localized,
             action: #selector(self.openInBrowser),
             keyEquivalent: "O"
         )
         tableView.menu = menu
     }
     
+    // MARK: Secure / unsecure
+    
     @objc public func secure() {
         
     }
     
+    // MARK: Open with IDE / Editor
+    
+    @objc public func openWithPhpStorm() {
+        let site = Valet.shared.sites[self.tableView.selectedRow]
+        Shell.run("open -a /Applications/PhpStorm.app \(site.absolutePath)")
+    }
+    
+    @objc public func openWithVSCode() {
+        let site = Valet.shared.sites[self.tableView.selectedRow]
+        Shell.run("/usr/local/bin/code \(site.absolutePath)")
+    }
+    
+    // MARK: Open in Browser & Finder
+    
     @objc public func openInBrowser() {
-        if self.tableView.selectedRow == -1 {
-            return
-        }
-        
         let site = Valet.shared.sites[self.tableView.selectedRow]
         let prefix = site.secured ? "https://" : "http://"
         let url = "\(prefix)\(site.name).\(Valet.shared.config.tld)"
         NSWorkspace.shared.open(URL(string: url)!)
+    }
+    
+    @objc public func openInFinder() {
+        let site = Valet.shared.sites[self.tableView.selectedRow]
+        Shell.run("open \(site.absolutePath)")
     }
 
     // MARK: - Deinitialization
