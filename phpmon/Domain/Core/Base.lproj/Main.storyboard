@@ -545,23 +545,23 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="rIZ-4U-bhj">
-                        <rect key="frame" x="0.0" y="0.0" width="574" height="199"/>
+                        <rect key="frame" x="0.0" y="0.0" width="529" height="415"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="574" height="149"/>
+                                <rect key="frame" x="0.0" y="0.0" width="529" height="372"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="572" height="147"/>
+                                    <rect key="frame" x="1" y="1" width="527" height="370"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="572" height="147"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="527" height="370"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="560" minWidth="40" maxWidth="1000" id="oeH-B2-0rA">
+                                                <tableColumn width="515" minWidth="40" maxWidth="1000" id="oeH-B2-0rA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -574,7 +574,7 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="siteItem" wantsLayer="YES" id="5GY-nN-BWd" customClass="SiteListCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="0.0" width="555" height="69"/>
+                                                            <rect key="frame" x="8" y="0.0" width="510" height="69"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
@@ -602,7 +602,7 @@ Gw
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="GreenLock" id="aJ0-ia-YrZ"/>
                                                                 </imageView>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uyv-Cs-wjO">
-                                                                    <rect key="frame" x="485" y="28" width="62" height="14"/>
+                                                                    <rect key="frame" x="440" y="28" width="62" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Linked Site" id="DIn-VE-rO6">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -610,7 +610,7 @@ Gw
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YUU-Hg-chL">
-                                                                    <rect key="frame" x="407" y="25" width="65" height="20"/>
+                                                                    <rect key="frame" x="362" y="25" width="65" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="20" id="rSA-sX-afj"/>
                                                                     </constraints>
@@ -651,6 +651,10 @@ Gw
                                         </tableView>
                                     </subviews>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="R3Z-g3-tYQ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="iRQ-sz-oyv"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
                                     <rect key="frame" x="1" y="243" width="572" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -661,7 +665,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3I-BT-dOY">
-                                <rect key="frame" x="37" y="159" width="531" height="23"/>
+                                <rect key="frame" x="37" y="382" width="486" height="23"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" placeholderString="Search for a domain..." usesSingleLineMode="YES" id="Hgd-Oz-Ggp">
                                     <font key="font" metaFont="system" size="19"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -672,7 +676,7 @@ Gw
                                 </connections>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z1T-9h-9ms">
-                                <rect key="frame" x="10" y="161" width="24" height="20"/>
+                                <rect key="frame" x="10" y="384" width="24" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="dge-tM-IOH"/>
                                     <constraint firstAttribute="width" constant="24" id="gHC-jb-3kU"/>
@@ -699,7 +703,7 @@ Gw
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250" y="699.5"/>
+            <point key="canvasLocation" x="257" y="775"/>
         </scene>
     </scenes>
     <resources>
