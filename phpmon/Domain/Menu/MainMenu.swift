@@ -116,6 +116,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addPhpConfigurationMenuItems()
             menu.addItem(NSMenuItem.separator())
             
+            menu.addItem(NSMenuItem(title: "mi_sitelist".localized, action: #selector(openSiteList), keyEquivalent: "l"))
+            
             // Add about & quit menu items
             menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ","))
             menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
@@ -370,6 +372,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func openPrefs() {
         PrefsVC.show()
+    }
+    
+    @objc func openSiteList() {
+        SiteListVC.show()
     }
     
     @objc func terminateApp() {

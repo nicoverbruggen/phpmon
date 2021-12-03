@@ -30,9 +30,14 @@ class App {
     var preferences: [PreferenceName: Bool]!
     
     /**
-     The window controller of the currently active window.
+     The window controller of the currently active preferences window.
      */
-    var windowController: NSWindowController? = nil
+    var preferencesWindowController: PrefsWC? = nil
+    
+    /**
+     The window controller of the currently active site list window.
+     */
+    var siteListWindowController: SiteListWC? = nil
     
     /**
      Whether the application is busy switching versions.

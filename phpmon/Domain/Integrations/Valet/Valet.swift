@@ -10,8 +10,11 @@ import Foundation
 
 class Valet {
     
+    static let shared = Valet()
+    
     var version: String
     var config: Valet.Configuration
+    
     var parkedSites: [Site] = []
     var linkedSites: [Site] = []
     

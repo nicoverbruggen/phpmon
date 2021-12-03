@@ -38,6 +38,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
      */
     let paths: Paths
     
+    /**
+     The Valet singleton that determines all information about Valet and its current configuration.
+     */
+    let valet: Valet
+    
     // MARK: - Initializer
     
     /**
@@ -48,6 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared
+        self.valet = Valet.shared
         super.init()
     }
     

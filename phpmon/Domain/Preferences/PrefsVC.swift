@@ -40,7 +40,7 @@ class PrefsVC: NSViewController {
     // MARK: - Display
     
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if (App.shared.windowController == nil) {
+        if (App.shared.preferencesWindowController == nil) {
             let vc = NSStoryboard(name: "Main", bundle: nil)
                 .instantiateController(withIdentifier: "preferences") as! PrefsVC
             let window = NSWindow(contentViewController: vc)
@@ -49,10 +49,10 @@ class PrefsVC: NSViewController {
             window.delegate = delegate
             window.styleMask = [.titled, .closable]
             
-            App.shared.windowController = PrefsWC(window: window)
+            App.shared.preferencesWindowController = PrefsWC(window: window)
         }
         
-        App.shared.windowController!.showWindow(self)
+        App.shared.preferencesWindowController!.showWindow(self)
         NSApp.activate(ignoringOtherApps: true)
     }
     
