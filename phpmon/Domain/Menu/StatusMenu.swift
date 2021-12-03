@@ -86,6 +86,13 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
     }
     
+    func addValetMenuItems() {
+        self.addItem(HeaderView.asMenuItem(text: "mi_valet".localized))
+        self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
+        self.addItem(NSMenuItem(title: "mi_sitelist".localized, action: #selector(MainMenu.openSiteList), keyEquivalent: "l"))
+        self.addItem(NSMenuItem.separator())
+    }
+    
     func addPhpConfigurationMenuItems() {
         if App.shared.currentInstall == nil {
             return
@@ -93,7 +100,6 @@ class StatusMenu : NSMenu {
         
         // Configuration
         self.addItem(HeaderView.asMenuItem(text: "mi_configuration".localized))
-        self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))

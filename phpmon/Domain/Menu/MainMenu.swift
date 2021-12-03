@@ -113,9 +113,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add Valet interactions
-            menu.addItem(HeaderView.asMenuItem(text: "mi_valet".localized))
-            menu.addItem(NSMenuItem(title: "mi_sitelist".localized, action: #selector(openSiteList), keyEquivalent: "l"))
-            menu.addItem(NSMenuItem.separator())
+
+            menu.addValetMenuItems()
             
             // Add information about services & actions
             menu.addPhpConfigurationMenuItems()
