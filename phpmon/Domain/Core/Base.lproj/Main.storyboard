@@ -31,6 +31,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="File" id="XRy-v5-KNb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="File" id="zA7-mh-f1x">
+                                    <items>
+                                        <menuItem title="Close" keyEquivalent="w" id="2FI-pQ-tuO">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="ZHq-so-Sba"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Edit" id="r2Z-pR-umI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="8Pm-83-BlM">
@@ -537,13 +549,13 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="574" height="152"/>
+                                <rect key="frame" x="0.0" y="0.0" width="574" height="151"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="572" height="150"/>
+                                    <rect key="frame" x="1" y="1" width="572" height="149"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="572" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="572" height="149"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -649,7 +661,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3I-BT-dOY">
-                                <rect key="frame" x="37" y="162" width="531" height="23"/>
+                                <rect key="frame" x="37" y="161" width="531" height="23"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" focusRingType="none" placeholderString="Search for a domain..." usesSingleLineMode="YES" id="Hgd-Oz-Ggp">
                                     <font key="font" metaFont="system" size="19"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -660,7 +672,7 @@ Gw
                                 </connections>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z1T-9h-9ms">
-                                <rect key="frame" x="10" y="164" width="24" height="20"/>
+                                <rect key="frame" x="10" y="163" width="24" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="dge-tM-IOH"/>
                                     <constraint firstAttribute="width" constant="24" id="gHC-jb-3kU"/>

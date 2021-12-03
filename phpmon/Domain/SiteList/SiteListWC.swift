@@ -14,20 +14,4 @@ class SiteListWC: NSWindowController {
         super.windowDidLoad()
     }
     
-    /**
-     Allow users to close the window using Cmd-W, a shortcut I definitely use a lot.
-     */
-    override func keyDown(with event: NSEvent) {
-        if event.modifierFlags.contains(.command) {
-            switch event.charactersIgnoringModifiers! {
-            case "w":
-                self.window?.close()
-            default:
-                break
-            }
-        } else {
-            super.keyDown(with: event)
-        }
-    }
-    
 }
