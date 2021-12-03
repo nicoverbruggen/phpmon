@@ -37,20 +37,11 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {
-        let menu = NSMenu()
-        // menu.addItem(withTitle: "Secure", action: #selector(self.action), keyEquivalent: "L")
-        menu.addItem(withTitle: "Open in Browser...", action: #selector(self.openInBrowser), keyEquivalent: "O")
-        tableView.menu = menu
-    }
+    override func viewDidLoad() {}
     
-    override func viewWillAppear() {
-
-    }
+    override func viewWillAppear() {}
     
-    override func viewWillDisappear() {
-
-    }
+    override func viewWillDisappear() {}
     
     // MARK: - Table View
     
@@ -82,6 +73,33 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         userCell.labelPhpVersion.stringValue = "PHP 8.0"
         
         return userCell
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let menu = NSMenu()
+        
+        let site = Valet.shared.sites[self.tableView.selectedRow]
+        
+        if self.tableView.selectedRow == -1 {
+            tableView.menu = nil
+            return
+        }
+        
+        menu.addItem(
+            withTitle: site.secured ? "Unsecure" : "Secure",
+            action: #selector(self.secure),
+            keyEquivalent: "L"
+        )
+        menu.addItem(
+            withTitle: "Open in Browser...",
+            action: #selector(self.openInBrowser),
+            keyEquivalent: "O"
+        )
+        tableView.menu = menu
+    }
+    
+    @objc public func secure() {
+        
     }
     
     @objc public func openInBrowser() {
