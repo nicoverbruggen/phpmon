@@ -41,7 +41,8 @@
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
-"mi_sitelist" = "Linked & Parked Domains...";
+"mi_valet" = "Laravel Valet";
+"mi_sitelist" = "View linked & parked domains...";
 
 "mi_preferences" = "Preferences...";
 "mi_quit" = "Quit PHP Monitor";
