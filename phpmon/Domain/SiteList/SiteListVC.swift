@@ -104,7 +104,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
             withTitle: site.secured
                 ? "site_list.unsecure".localized
                 : "site_list.secure".localized,
-            action: #selector(self.secure),
+            action: nil,
             keyEquivalent: "L"
         )
         
@@ -145,8 +145,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
     
     // MARK: Secure / unsecure
     
-    @objc public func secure() {
-        
+    @objc public func toggleSecure() {
+        // TODO
     }
     
     // MARK: Open with IDE / Editor
