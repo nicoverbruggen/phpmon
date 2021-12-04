@@ -51,11 +51,12 @@
 // SITE LIST
 
 "site_list.title" = "Domains";
+"site_list.subtitle" = "Linked & Parked";
 
 // SITE LIST ACTIONS
 
-"site_list.secure" = "Secure (Coming soon!)";
-"site_list.unsecure" = "Unsecure (Coming soon!)";
+"site_list.secure" = "Secure";
+"site_list.unsecure" = "Unsecure";
 "site_list.open_in_finder" = "Open in Finder";
 "site_list.open_in_browser" = "Open in Browser";
 "site_list.open_with_vs_code" = "Open with Visual Studio Code";

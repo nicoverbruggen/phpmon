@@ -36,6 +36,10 @@ class Valet {
         resolvePaths(tld: self.config.tld)
     }
     
+    public func reloadSites() {
+        resolvePaths(tld: self.config.tld)
+    }
+    
     private func resolvePaths(tld: String) {
         self.sites = []
         

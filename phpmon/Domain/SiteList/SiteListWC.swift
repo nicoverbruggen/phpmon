@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class SiteListWC: NSWindowController, NSSearchFieldDelegate {
+class SiteListWC: NSWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     @IBOutlet weak var searchToolbarItem: NSSearchToolbarItem!
     
@@ -18,14 +18,20 @@ class SiteListWC: NSWindowController, NSSearchFieldDelegate {
         self.searchToolbarItem.searchField.becomeFirstResponder()
     }
     
+    var contentVC: SiteListVC {
+        return self.contentViewController as! SiteListVC
+    }
+    
     func controlTextDidChange(_ notification: Notification) {
         guard let searchField = notification.object as? NSSearchField else {
             print("Unexpected control in update notification")
             return
         }
         
-        let window = self.contentViewController as! SiteListVC
-        window.searchedFor(text: searchField.stringValue)
+        contentVC.searchedFor(text: searchField.stringValue)
     }
     
+    @IBAction func pressedReload(_ sender: Any) {
+        contentVC.reloadSites()
+    }
 }

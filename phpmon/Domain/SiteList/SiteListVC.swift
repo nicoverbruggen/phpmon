@@ -20,6 +20,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     public var sites: [Valet.Site] = []
     
+    var lastSearchedFor = ""
+    
     // MARK: - Display
     
     public static func show(delegate: NSWindowDelegate? = nil) {
@@ -28,8 +30,10 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             let windowController = (storyboard.instantiateController(withIdentifier: "siteListWindow")) as! SiteListWC
             
             windowController.window!.title = "site_list.title".localized
+            windowController.window!.subtitle = "site_list.subtitle".localized
             windowController.window!.delegate = delegate
             windowController.window!.styleMask = [.titled, .closable, .resizable]
+            windowController.window!.minSize = NSSize(width: 550, height: 200)
             windowController.window!.maxSize = NSSize(width: 800, height: 10000)
             
             App.shared.siteListWindowController = windowController
@@ -49,12 +53,26 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
             self.editorAvailability.append("phpstorm")
         }
+        
         self.sites = Valet.shared.sites
     }
     
     override func viewWillAppear() {}
     
     override func viewWillDisappear() {}
+    
+    // MARK: - Site Data Loading
+    
+    func reloadSites() {
+        // Reload site information
+        Valet.shared.reloadSites()
+        
+        // Update the site list
+        self.sites = Valet.shared.sites
+        
+        // Re-apply any existing search
+        self.searchedFor(text: lastSearchedFor)
+    }
     
     // MARK: - Table View
     
@@ -207,6 +225,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - (Search) Text Field Delegate
     
     func searchedFor(text: String) {
+        self.lastSearchedFor = text
+        
         let searchString = text.lowercased()
         
         if searchString.isEmpty {
