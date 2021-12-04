@@ -8,10 +8,24 @@
 
 import Cocoa
 
-class SiteListWC: NSWindowController {
+class SiteListWC: NSWindowController, NSSearchFieldDelegate {
+    
+    @IBOutlet weak var searchToolbarItem: NSSearchToolbarItem!
     
     override func windowDidLoad() {
         super.windowDidLoad()
+        self.searchToolbarItem.searchField.delegate = self
+        self.searchToolbarItem.searchField.becomeFirstResponder()
+    }
+    
+    func controlTextDidChange(_ notification: Notification) {
+        guard let searchField = notification.object as? NSSearchField else {
+            print("Unexpected control in update notification")
+            return
+        }
+        
+        let window = self.contentViewController as! SiteListVC
+        window.searchedFor(text: searchField.stringValue)
     }
     
 }

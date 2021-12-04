@@ -15,9 +15,10 @@ class SiteListCell: NSTableCellView
     @IBOutlet weak var labelPathName: NSTextField!
     
     @IBOutlet weak var imageViewLock: NSImageView!
+    @IBOutlet weak var imageViewType: NSImageView!
     
+    @IBOutlet weak var labelDriver: NSTextField!
     @IBOutlet weak var labelPhpVersion: NSTextField!
-    @IBOutlet weak var labelSiteType: NSTextField!
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)

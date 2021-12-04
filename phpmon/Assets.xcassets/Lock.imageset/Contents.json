@@ -5,7 +5,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "GreenLock.svg",
+      "filename" : "lock.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -17,5 +17,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

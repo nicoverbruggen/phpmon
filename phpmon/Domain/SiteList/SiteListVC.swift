@@ -10,11 +10,9 @@ import Cocoa
 import HotKey
 import Carbon
 
-class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
+class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Outlets
-    
-    @IBOutlet weak var textFieldSearch: NSTextField!
     
     @IBOutlet weak var tableView: NSTableView!
     
@@ -26,15 +24,15 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
     
     public static func show(delegate: NSWindowDelegate? = nil) {
         if (App.shared.siteListWindowController == nil) {
-            let vc = NSStoryboard(name: "Main", bundle: nil)
-                .instantiateController(withIdentifier: "siteList") as! SiteListVC
-            let window = NSWindow(contentViewController: vc)
+            let storyboard = NSStoryboard(name: "Main" , bundle : nil)
+            let windowController = (storyboard.instantiateController(withIdentifier: "siteListWindow")) as! SiteListWC
             
-            window.title = "site_list.title".localized
-            window.delegate = delegate
-            window.styleMask = [.titled, .closable, .resizable]
+            windowController.window!.title = "site_list.title".localized
+            windowController.window!.delegate = delegate
+            windowController.window!.styleMask = [.titled, .closable, .resizable]
+            windowController.window!.maxSize = NSSize(width: 800, height: 10000)
             
-            App.shared.siteListWindowController = SiteListWC(window: window)
+            App.shared.siteListWindowController = windowController
         }
         
         App.shared.siteListWindowController!.showWindow(self)
@@ -70,19 +68,26 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
         let item = self.sites[row]
         
         /// Make sure to show the TLD
-        userCell.labelSiteName.stringValue = "\(item.name).\(Valet.shared.config.tld)"
+        userCell.labelSiteName.stringValue = "\(item.name!).\(Valet.shared.config.tld)"
         
         /// Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         userCell.labelPathName.stringValue = item.absolutePath
             .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
         
         /// If the `aliasPath` is nil, we're dealing with a parked site. Otherwise, it's a link that was explicitly created.
-        userCell.labelSiteType.stringValue = item.aliasPath == nil
-            ? "Parked Site"
-            : "Linked Site"
+        userCell.imageViewType.image = NSImage(
+            named: item.aliasPath == nil
+            ? "IconParked"
+            : "IconLinked"
+        )
+        userCell.imageViewType.contentTintColor = NSColor.tertiaryLabelColor
         
         /// Show the green or red lock based on whether the site was secured
-        userCell.imageViewLock.image = NSImage(named: item.secured ? "GreenLock" : "RedLock")
+        userCell.imageViewLock.contentTintColor = item.secured ? NSColor.systemGreen
+            : NSColor.red
+        
+        /// Show the current driver
+        userCell.labelDriver.stringValue = item.driver
         
         /// TODO: Load the correct PHP version (not determined as of yet)
         userCell.labelPhpVersion.stringValue = "PHP 8.0"
@@ -104,7 +109,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
             withTitle: site.secured
                 ? "site_list.unsecure".localized
                 : "site_list.secure".localized,
-            action: nil,
+            action: #selector(toggleSecure),
             keyEquivalent: "L"
         )
         
@@ -146,19 +151,43 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
     // MARK: Secure / unsecure
     
     @objc public func toggleSecure() {
-        // TODO
+        let rowToReload = self.tableView.selectedRow
+        let site = self.sites[self.tableView.selectedRow]
+        let previous = site.secured
+        let action = site.secured ? "unsecure" : "secure"
+        
+        let command = "cd \(site.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
+        let _ = Shell.pipe(command, requiresPath: true)
+        
+        site.determineSecured(Valet.shared.config.tld)
+        
+        if site.secured == previous {
+            Alert.notify(
+                message: "SSL status not changed",
+                info: "Something went wrong. Try running the command in your terminal manually: `\(command)`")
+        } else {
+            let newState = site.secured ? "secured" : "unsecured"
+            LocalNotification.send(
+                title: "SSL status changed",
+                subtitle: "The domain '\(site.name!).\(Valet.shared.config.tld)' is now \(newState)."
+            )
+        }
+        
+        tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
+        tableView.deselectRow(rowToReload)
+        tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
     }
     
     // MARK: Open with IDE / Editor
     
     @objc public func openWithPhpStorm() {
         let site = self.sites[self.tableView.selectedRow]
-        Shell.run("open -a /Applications/PhpStorm.app \(site.absolutePath)")
+        Shell.run("open -a /Applications/PhpStorm.app \(site.absolutePath!)")
     }
     
     @objc public func openWithVSCode() {
         let site = self.sites[self.tableView.selectedRow]
-        Shell.run("/usr/local/bin/code \(site.absolutePath)")
+        Shell.run("/usr/local/bin/code \(site.absolutePath!)")
     }
     
     // MARK: Open in Browser & Finder
@@ -166,19 +195,19 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource, 
     @objc public func openInBrowser() {
         let site = self.sites[self.tableView.selectedRow]
         let prefix = site.secured ? "https://" : "http://"
-        let url = "\(prefix)\(site.name).\(Valet.shared.config.tld)"
+        let url = "\(prefix)\(site.name!).\(Valet.shared.config.tld)"
         NSWorkspace.shared.open(URL(string: url)!)
     }
     
     @objc public func openInFinder() {
         let site = self.sites[self.tableView.selectedRow]
-        Shell.run("open \(site.absolutePath)")
+        Shell.run("open \(site.absolutePath!)")
     }
     
     // MARK: - (Search) Text Field Delegate
     
-    func controlTextDidChange(_ obj: Notification) {
-        let searchString = self.textFieldSearch.stringValue.lowercased()
+    func searchedFor(text: String) {
+        let searchString = text.lowercased()
         
         if searchString.isEmpty {
             self.sites = Valet.shared.sites

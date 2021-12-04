@@ -66,35 +66,48 @@ class Valet {
     // MARK: - Structs
     
     class Site {
-        var name: String
+        var name: String!
         
-        var absolutePath: String
+        var absolutePath: String!
         var aliasPath: String?
-        var secured: Bool
         
-        init(absolutePath: String, tld: String) {
+        var secured: Bool!
+        var driver: String = "???"
+        
+        init() {}
+        
+        convenience init(absolutePath: String, tld: String) {
+            self.init()
             self.absolutePath = absolutePath
-            self.aliasPath = nil
             self.name = URL(string: absolutePath)!.lastPathComponent
-            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name).\(tld).key")
+            self.aliasPath = nil
+            determineSecured(tld)
+            determineDriver()
         }
         
         convenience init(aliasPath: String, tld: String) {
-            // Resolve the symlink
-            let absolutePath = try! FileManager.default
-                .destinationOfSymbolicLink(atPath: aliasPath)
-            self.init(absolutePath: absolutePath, tld: tld)
-            
-            // TODO: Make sure the destination is a valid directory!
-            
-            // The name should be identical to the alias' name
+            self.init()
+            self.absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
             self.name = URL(string: aliasPath)!.lastPathComponent
-            
-            // Update the alias' path
             self.aliasPath = aliasPath
-            
-            // Make sure we check again, this time for the aliased file
-            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name).\(tld).key")
+            determineSecured(tld)
+            determineDriver()
+        }
+        
+        public func determineSecured(_ tld: String) {
+            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
+        }
+        
+        public func determineDriver() {
+            let driver = Shell.pipe("cd \(absolutePath!) && valet which", requiresPath: true)
+            if driver.contains("This site is served by") {
+                self.driver = driver
+                    // TODO: Use a regular expression to retrieve the driver instead?
+                    .replacingOccurrences(of: "This site is served by [", with: "")
+                    .replacingOccurrences(of: "ValetDriver].\n", with: "")
+            } else {
+                self.driver = "???"
+            }
         }
     }
 
