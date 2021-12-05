@@ -15,6 +15,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var progressIndicator: NSProgressIndicator!
     
     // MARK: - Variables
     
@@ -64,21 +65,32 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
         
         self.sites = Valet.shared.sites
+        self.progressIndicator.stopAnimation(nil)
     }
-    
-
     
     // MARK: - Site Data Loading
     
     func reloadSites() {
-        // Reload site information
-        Valet.shared.reloadSites()
+        // Start spinner and reset view (no items)
+        self.progressIndicator.startAnimation(nil)
+        self.sites = []
+        self.tableView.reloadData()
         
-        // Update the site list
-        self.sites = Valet.shared.sites
-        
-        // Re-apply any existing search
-        self.searchedFor(text: lastSearchedFor)
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            // Reload site information
+            Valet.shared.reloadSites()
+            
+            DispatchQueue.main.async { [self] in
+                // Update the site list
+                self.sites = Valet.shared.sites
+                
+                // Stop spinner
+                self.progressIndicator.stopAnimation(nil)
+                
+                // Re-apply any existing search
+                self.searchedFor(text: lastSearchedFor)
+            }
+        }
     }
     
     // MARK: - Table View

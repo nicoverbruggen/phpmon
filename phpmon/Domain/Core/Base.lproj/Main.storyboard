@@ -45,6 +45,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Sites" id="9gy-d3-Pos">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Sites" id="YTZ-bb-TOG">
+                                    <items>
+                                        <menuItem title="Reload Site List" keyEquivalent="r" id="Ema-AU-Nbr">
+                                            <connections>
+                                                <action selector="reloadSiteListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Edit" id="r2Z-pR-umI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="8Pm-83-BlM">
@@ -286,7 +298,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="-444" y="-1"/>
+            <point key="canvasLocation" x="-484" y="32"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
@@ -574,17 +586,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="rIZ-4U-bhj">
-                        <rect key="frame" x="0.0" y="0.0" width="550" height="347"/>
+                        <rect key="frame" x="0.0" y="0.0" width="550" height="327"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="550" height="337"/>
+                                <rect key="frame" x="0.0" y="0.0" width="550" height="325"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="548" height="335"/>
+                                    <rect key="frame" x="1" y="1" width="548" height="323"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="548" height="335"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="323"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -720,21 +732,27 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
+                                <rect key="frame" x="267" y="155" width="16" height="16"/>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="leading" secondItem="rIZ-4U-bhj" secondAttribute="leading" id="2Tx-yb-xrv"/>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="top" secondItem="rIZ-4U-bhj" secondAttribute="top" id="Pst-5A-dI0"/>
                             <constraint firstAttribute="bottom" secondItem="p0j-eB-I2i" secondAttribute="bottom" id="QEw-5m-u1s"/>
+                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" id="XqX-Tf-8ck"/>
+                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerX" secondItem="rIZ-4U-bhj" secondAttribute="centerX" id="eD8-TV-7dF"/>
                             <constraint firstAttribute="trailing" secondItem="p0j-eB-I2i" secondAttribute="trailing" id="zWH-TD-RZv"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressIndicator" destination="ZiS-Gq-TLQ" id="Ylb-Vk-uub"/>
                         <outlet property="tableView" destination="cp3-34-pQj" id="sdw-Ac-27X"/>
                     </connections>
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="244" y="759.5"/>
+            <point key="canvasLocation" x="288" y="766"/>
         </scene>
     </scenes>
     <resources>

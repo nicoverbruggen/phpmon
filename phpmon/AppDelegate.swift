@@ -73,4 +73,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         self.menu.startup()
     }
     
+    // MARK: - Menu Interactions
+    
+    @IBAction func reloadSiteListPressed(_ sender: Any) {
+        let vc = App.shared.siteListWindowController?.window?.contentViewController as? SiteListVC
+        if vc != nil {
+            vc!.reloadSites()
+        }
+    }
+    
 }
