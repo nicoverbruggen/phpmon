@@ -8,15 +8,27 @@
 
 import Cocoa
 
-class SiteListWC: NSWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
+class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
+    
+    // MARK: - Window Identifier
+    
+    override var windowName: String {
+        return "SiteList"
+    }
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var searchToolbarItem: NSSearchToolbarItem!
+    
+    // MARK: - Window Lifecycle
     
     override func windowDidLoad() {
         super.windowDidLoad()
         self.searchToolbarItem.searchField.delegate = self
         self.searchToolbarItem.searchField.becomeFirstResponder()
     }
+    
+    // MARK: - Search functionality
     
     var contentVC: SiteListVC {
         return self.contentViewController as! SiteListVC
@@ -30,6 +42,8 @@ class SiteListWC: NSWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
         
         contentVC.searchedFor(text: searchField.stringValue)
     }
+    
+    // MARK: - Reload functionality
     
     @IBAction func pressedReload(_ sender: Any) {
         contentVC.reloadSites()

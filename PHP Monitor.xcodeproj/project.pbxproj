@@ -59,6 +59,8 @@
 		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetTest.swift */; };
+		C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
+		C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
@@ -148,6 +150,7 @@
 		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
 		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
 		C4AF9F7C275454A900D44ED0 /* ValetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetTest.swift; sourceTree = "<group>"; };
+		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
@@ -305,6 +308,7 @@
 				C476FF9722B0DD830098105B /* Alert.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
+				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -512,6 +516,7 @@
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
+				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
@@ -551,6 +556,7 @@
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,

@@ -282,9 +282,9 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="-444" y="-1"/>
         </scene>
@@ -578,19 +578,19 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="550" height="344"/>
+                                <rect key="frame" x="0.0" y="0.0" width="550" height="337"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="548" height="342"/>
+                                    <rect key="frame" x="1" y="1" width="548" height="335"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="548" height="342"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="335"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="536" minWidth="40" maxWidth="1000" id="oeH-B2-0rA">
+                                                <tableColumn width="536" minWidth="40" maxWidth="10000" id="oeH-B2-0rA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -656,7 +656,7 @@ Gw
                                                                     <rect key="frame" x="301" y="27" width="51" height="14"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="PHP 8.0" id="d9R-tV-Dlk">
-                                                                        <font key="font" metaFont="system" size="11"/>
+                                                                        <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
@@ -712,7 +712,7 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="550" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="1" y="356" width="527" height="15"/>
+                                    <rect key="frame" x="1" y="328" width="548" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">

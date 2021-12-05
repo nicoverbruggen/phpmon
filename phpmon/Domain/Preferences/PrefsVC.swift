@@ -12,6 +12,8 @@ import Carbon
 
 class PrefsVC: NSViewController {
     
+    // MARK: - Window Identifier
+    
     // Labels on the left
     @IBOutlet weak var leftLabelDynamicIcon: NSTextField!
     @IBOutlet weak var leftLabelServices: NSTextField!
@@ -39,17 +41,24 @@ class PrefsVC: NSViewController {
     
     // MARK: - Display
     
+    public static func create(delegate: NSWindowDelegate?) {
+        let storyboard = NSStoryboard(name: "Main" , bundle : nil)
+        
+        let windowController = storyboard.instantiateController(
+            withIdentifier: "preferencesWindow"
+        ) as! PrefsWC
+        
+        windowController.window!.title = "prefs.title".localized
+        windowController.window!.delegate = delegate
+        windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
+        windowController.window!.delegate = windowController
+        
+        App.shared.preferencesWindowController = windowController
+    }
+    
     public static func show(delegate: NSWindowDelegate? = nil) {
         if (App.shared.preferencesWindowController == nil) {
-            let vc = NSStoryboard(name: "Main", bundle: nil)
-                .instantiateController(withIdentifier: "preferences") as! PrefsVC
-            let window = NSWindow(contentViewController: vc)
-            
-            window.title = "prefs.title".localized
-            window.delegate = delegate
-            window.styleMask = [.titled, .closable]
-            
-            App.shared.preferencesWindowController = PrefsWC(window: window)
+            Self.create(delegate: delegate)
         }
         
         App.shared.preferencesWindowController!.showWindow(self)

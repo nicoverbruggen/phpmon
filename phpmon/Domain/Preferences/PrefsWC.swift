@@ -13,11 +13,21 @@ struct Keys {
     static let Space = 49
 }
 
-class PrefsWC: NSWindowController {
+class PrefsWC: PMWindowController {
+    
+    // MARK: - Window Identifier
+    
+    override var windowName: String {
+        return "Preferences"
+    }
+    
+    // MARK: - Window Lifecycle
     
     override func windowDidLoad() {
         super.windowDidLoad()
     }
+    
+    // MARK: - Key Interaction
     
     override func keyDown(with event: NSEvent) {
         super.keyDown(with: event)

@@ -16,27 +16,36 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
     
-    public var editorAvailability: [String] = []
+    // MARK: - Variables
     
-    public var sites: [Valet.Site] = []
-    
+    var sites: [Valet.Site] = []
+    var editorAvailability: [String] = []
     var lastSearchedFor = ""
     
     // MARK: - Display
     
+    public static func create(delegate: NSWindowDelegate?) {
+        let storyboard = NSStoryboard(name: "Main" , bundle : nil)
+        
+        let windowController = storyboard.instantiateController(
+            withIdentifier: "siteListWindow"
+        ) as! SiteListWC
+        
+        windowController.window!.title = "site_list.title".localized
+        windowController.window!.subtitle = "site_list.subtitle".localized
+        windowController.window!.delegate = delegate
+        windowController.window!.styleMask = [
+            .titled, .closable, .resizable, .miniaturizable
+        ]
+        windowController.window!.minSize = NSSize(width: 550, height: 200)
+        windowController.window!.delegate = windowController
+        
+        App.shared.siteListWindowController = windowController
+    }
+    
     public static func show(delegate: NSWindowDelegate? = nil) {
         if (App.shared.siteListWindowController == nil) {
-            let storyboard = NSStoryboard(name: "Main" , bundle : nil)
-            let windowController = (storyboard.instantiateController(withIdentifier: "siteListWindow")) as! SiteListWC
-            
-            windowController.window!.title = "site_list.title".localized
-            windowController.window!.subtitle = "site_list.subtitle".localized
-            windowController.window!.delegate = delegate
-            windowController.window!.styleMask = [.titled, .closable, .resizable]
-            windowController.window!.minSize = NSSize(width: 550, height: 200)
-            windowController.window!.maxSize = NSSize(width: 800, height: 10000)
-            
-            App.shared.siteListWindowController = windowController
+            Self.create(delegate: delegate)
         }
         
         App.shared.siteListWindowController!.showWindow(self)
@@ -57,9 +66,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         self.sites = Valet.shared.sites
     }
     
-    override func viewWillAppear() {}
-    
-    override func viewWillDisappear() {}
+
     
     // MARK: - Site Data Loading
     

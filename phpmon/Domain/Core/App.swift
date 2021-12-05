@@ -141,4 +141,41 @@ class App {
         }
     }
     
+    // MARK: - Application State
+    
+    /**
+     Keep track of open windows.
+     When this list is updated, the app activation policy is re-evaluated.
+     The app activation policy dictates how the app runs (as a normal app or as a toolbar app).
+     */
+    var openWindows: [String] = []
+    
+    /**
+     Registers a window as currently open.
+     */
+    public func register(window name: String) {
+        if !openWindows.contains(name) {
+            openWindows.append(name)
+        }
+        updateActivationPolicy()
+    }
+    
+    /**
+     Removes a window, assuming it was closed.
+     */
+    public func remove(window name: String) {
+        openWindows.removeAll { window in
+            window == name
+        }
+        updateActivationPolicy()
+    }
+    
+    /**
+     If there are any open windows, the app will be a regular app.
+     If there are no windows open, the app will be an accessory (toolbar) app.
+     */
+    public func updateActivationPolicy() {
+        NSApp.setActivationPolicy(openWindows.count > 0 ? .regular : .accessory)
+    }
+    
 }
