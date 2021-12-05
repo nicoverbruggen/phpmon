@@ -191,9 +191,14 @@ class Actions {
     // MARK: - Quick Fix
     
     /**
-     Detects all currently available PHP versions, and unlinks each and every one of them.
-     After this, the brew services are also stopped, the latest PHP version is linked, and php + nginx are restarted.
-     If this does not solve the issue, the user may need to install additional extensions and/or run `composer global update`.
+     Detects all currently available PHP versions,
+     and unlinks each and every one of them.
+     
+     After this, the brew services are also stopped,
+     the latest PHP version is linked, and php + nginx are restarted.
+     
+     If this does not solve the issue, the user may need to install additional
+     extensions and/or run `composer global update`.
      */
     public static func fixMyPhp()
     {
@@ -241,7 +246,8 @@ class Actions {
         let e_original = original.replacingOccurrences(of: "/", with: "\\/")
         let e_replacement = replacement.replacingOccurrences(of: "/", with: "\\/")
         
-        // Check if gsed exists; it is able to follow symlinks, which we want to do to toggle the extension
+        // Check if gsed exists; it is able to follow symlinks,
+        // which we want to do to toggle the extension
         if Shell.fileExists("\(Paths.binPath)/gsed") {
             Shell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
         } else {

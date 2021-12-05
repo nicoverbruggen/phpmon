@@ -13,7 +13,8 @@ import Foundation
  When initialized, that version's .ini files are also scanned (for active or inactive extensions).
  Integrity checks can be performed to determine whether PHP-FPM is configured correctly.
  
- - Note: Each installation has a separate version number. Using `version.short` is advisable if you want to interact with Homebrew.
+ - Note: Each installation has a separate version number.
+ Using `version.short` is advisable if you want to interact with Homebrew.
  */
 class ActivePhpInstallation {
 
@@ -100,8 +101,10 @@ class ActivePhpInstallation {
      * 10000: an integer = amount of bytes
      * 1K, 1M, 1G = shorthand for kilobytes, megabytes and gigabytes
      
-     If none of these notations are used, the _fallback_ value is used. We'll show an emoji to indicate something has gone wrong here.
-     To clarify, B gets appended to valid values. As a result, "5M" (valid) becomes "5MB", and "5MB" (invalid) becomes ⚠️.
+     If none of these notations are used, the _fallback_ value is used.
+     We'll show an emoji to indicate something has gone wrong here.
+     To clarify, B gets appended to valid values.
+     As a result, "5M" (valid) becomes "5MB", and "5MB" (invalid) becomes ⚠️.
      
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */

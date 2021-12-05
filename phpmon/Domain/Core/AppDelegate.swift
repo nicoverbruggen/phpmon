@@ -39,7 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let paths: Paths
     
     /**
-     The Valet singleton that determines all information about Valet and its current configuration.
+     The Valet singleton that determines all information
+     about Valet and its current configuration.
      */
     let valet: Valet
     
@@ -74,17 +75,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.menu.startup()
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    /**
+     Ensure that the application displays notifications even when the app is active.
+     */
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler:
+            @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
         completionHandler([.banner])
-    }
-    
-    // MARK: - Menu Interactions
-    
-    @IBAction func reloadSiteListPressed(_ sender: Any) {
-        let vc = App.shared.siteListWindowController?.window?.contentViewController as? SiteListVC
-        if vc != nil {
-            vc!.reloadSites()
-        }
     }
     
 }

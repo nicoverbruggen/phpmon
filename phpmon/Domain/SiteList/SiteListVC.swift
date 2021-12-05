@@ -128,9 +128,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         /// Show the current driver
         userCell.labelDriver.stringValue = item.driver
         
-        /// TODO: Load the correct PHP version (not determined as of yet)
-        userCell.labelPhpVersion.stringValue = "PHP 8.0"
-        
         return userCell
     }
     

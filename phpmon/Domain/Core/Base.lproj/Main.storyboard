@@ -590,13 +590,13 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="550" height="317"/>
+                                <rect key="frame" x="0.0" y="0.0" width="550" height="313"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="548" height="315"/>
+                                    <rect key="frame" x="1" y="1" width="548" height="311"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="548" height="315"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="311"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -664,15 +664,6 @@ Gw
                                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="syz-LF-l6P">
                                                                     <rect key="frame" x="0.0" y="-2" width="531" height="5"/>
                                                                 </box>
-                                                                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUU-Hg-chL">
-                                                                    <rect key="frame" x="301" y="27" width="51" height="14"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="PHP 8.0" id="d9R-tV-Dlk">
-                                                                        <font key="font" metaFont="smallSystem"/>
-                                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0NQ-ZD-CqD">
                                                                     <rect key="frame" x="420" y="26" width="18" height="18"/>
                                                                     <constraints>
@@ -705,7 +696,6 @@ Gw
                                                                 <outlet property="imageViewType" destination="0NQ-ZD-CqD" id="Cph-FN-LaY"/>
                                                                 <outlet property="labelDriver" destination="TbX-e2-3QL" id="qJh-Ak-Dge"/>
                                                                 <outlet property="labelPathName" destination="CXK-Q9-CpO" id="iVZ-cL-azB"/>
-                                                                <outlet property="labelPhpVersion" destination="YUU-Hg-chL" id="5Yh-vQ-ksL"/>
                                                                 <outlet property="labelSiteName" destination="XJL-Uw-frD" id="f0t-vd-W68"/>
                                                             </connections>
                                                         </tableCellView>
@@ -724,7 +714,7 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="550" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="1" y="328" width="548" height="15"/>
+                                    <rect key="frame" x="1" y="301" width="548" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">
@@ -733,7 +723,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
-                                <rect key="frame" x="260" y="154" width="30" height="30"/>
+                                <rect key="frame" x="260" y="152" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="XK3-AR-Oc0"/>
                                     <constraint firstAttribute="height" constant="30" id="lfW-dB-Eu3"/>

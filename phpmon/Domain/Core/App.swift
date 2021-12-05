@@ -10,10 +10,16 @@ import HotKey
 
 class App {
     
+    // MARK: Static Vars
+    
+    /** The static app instance. Accessible at any time. */
     static let shared = App()
     
-    init() {
-        loadGlobalHotkey()
+    /** Retrieve the version number from the main info dictionary, Info.plist. */
+    static var version: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        return "\(version) (\(build))"
     }
     
     /** Information about the currently linked PHP installation. */
@@ -26,60 +32,44 @@ class App {
         return App.shared.busy
     }
     
+    // MARK: - Initializer
+
+    /** When the app boots up, this code will run even before the start-up checks. */
+    init() {
+        loadGlobalHotkey()
+    }
+    
+    // MARK: Variables
+    
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
     
-    /**
-     The window controller of the currently active preferences window.
-     */
+    /** The window controller of the currently active preferences window. */
     var preferencesWindowController: PrefsWC? = nil
     
-    /**
-     The window controller of the currently active site list window.
-     */
+    /** The window controller of the currently active site list window. */
     var siteListWindowController: SiteListWC? = nil
     
-    /**
-     Whether the application is busy switching versions.
-     */
+    /** Whether the application is busy switching versions. */
     var busy: Bool = false
     
-    /**
-     The currently active installation of PHP.
-     */
+    /** The currently active installation of PHP. */
     var currentInstall: ActivePhpInstallation? = nil
     
-    /**
-     All available versions of PHP.
-     */
+    /** All available versions of PHP. */
     var availablePhpVersions : [String] = []
     
-    /**
-     Cached information about the PHP installations; contains only the full version number at this point.
-     */
+    /** Cached information about the PHP installations. */
     var cachedPhpInstallations : [String: PhpInstallation] = [:]
     
-    /**
-     The timer that will periodically fetch the PHP version that is currently active.
-     */
+    /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
     
-    /**
-     Information we were able to discern from the Homebrew info command (as JSON).
-     */
+    /** Information we were able to discern from the Homebrew info command (as JSON). */
     var brewPhpPackage: HomebrewPackage! = nil {
         didSet {
             brewPhpVersion = brewPhpPackage!.version
         }
-    }
-    
-    /**
-     Retrieve the version number from the main info dictionary, Info.plist.
-     */
-    static var version: String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-        return "\(version) (\(build))"
     }
     
     /**
@@ -93,6 +83,8 @@ class App {
      */
     var brewPhpVersion: String = Constants.LatestStablePhpVersion
     
+    // MARK: - Global Hotkey
+    
     /**
      The shortcut the user has requested.
      */
@@ -102,80 +94,16 @@ class App {
         }
     }
     
-    // MARK: - Methods
+    // MARK: - Activation Policy
     
     /**
-     On startup, the preferences should be loaded from the .plist, and we'll enable the shortcut if it is set.
-     */
-    private func loadGlobalHotkey() {
-        // Make sure we can retrieve the hotkey from preferences; if we cannot, no hotkey is set
-        guard let hotkey = Preferences.preferences[.globalHotkey] as? String else {
-            print("No global hotkey loaded")
-            return
-        }
-        
-        // Make sure we can parse the JSON into the desired format; if we cannot, no hotkey is set
-        guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
-            print("No global hotkey loaded, could not be parsed!")
-            self.shortcutHotkey = nil
-            return
-        }
-        
-        self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
-            carbonKeyCode: keybindPref.keyCode,
-            carbonModifiers: keybindPref.carbonFlags
-        ))
-    }
-    
-    /**
-     Sets up the action that needs to occur when the shortcut key is pressed (open the menu).
-     */
-    private func setupGlobalHotkeyListener() {
-        guard let hotkey = self.shortcutHotkey else {
-            return
-        }
-        
-        hotkey.keyDownHandler = {
-            MainMenu.shared.statusItem.button?.performClick(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        }
-    }
-    
-    // MARK: - Application State
-    
-    /**
-     Keep track of open windows.
+     Variable that keeps track of which windows are currently open.
+     (Please note that window controllers remain open in memory once opened.)
+     
      When this list is updated, the app activation policy is re-evaluated.
-     The app activation policy dictates how the app runs (as a normal app or as a toolbar app).
+     The app activation policy dictates how the app runs
+     (as a normal app or as a toolbar app).
      */
     var openWindows: [String] = []
-    
-    /**
-     Registers a window as currently open.
-     */
-    public func register(window name: String) {
-        if !openWindows.contains(name) {
-            openWindows.append(name)
-        }
-        updateActivationPolicy()
-    }
-    
-    /**
-     Removes a window, assuming it was closed.
-     */
-    public func remove(window name: String) {
-        openWindows.removeAll { window in
-            window == name
-        }
-        updateActivationPolicy()
-    }
-    
-    /**
-     If there are any open windows, the app will be a regular app.
-     If there are no windows open, the app will be an accessory (toolbar) app.
-     */
-    public func updateActivationPolicy() {
-        NSApp.setActivationPolicy(openWindows.count > 0 ? .regular : .accessory)
-    }
     
 }

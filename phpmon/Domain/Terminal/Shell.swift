@@ -62,7 +62,7 @@ class Shell {
         requiresPath: Bool = false
     ) {
         // Equivalent of piping to /dev/null; don't do anything with the string
-        _ = Shell.pipe(command)
+        _ = Shell.pipe(command, requiresPath: requiresPath)
     }
     
     /**
