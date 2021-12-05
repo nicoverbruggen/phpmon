@@ -9,7 +9,7 @@ import Cocoa
 import UserNotifications
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     
     // MARK: - Variables
     
@@ -70,7 +70,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         LocalNotification.askForPermission()
+        UNUserNotificationCenter.current().delegate = self
         self.menu.startup()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner])
     }
     
     // MARK: - Menu Interactions

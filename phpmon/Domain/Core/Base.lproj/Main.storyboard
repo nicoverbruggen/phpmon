@@ -586,17 +586,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="rIZ-4U-bhj">
-                        <rect key="frame" x="0.0" y="0.0" width="550" height="327"/>
+                        <rect key="frame" x="0.0" y="0.0" width="550" height="320"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="550" height="325"/>
+                                <rect key="frame" x="0.0" y="0.0" width="550" height="317"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="548" height="323"/>
+                                    <rect key="frame" x="1" y="1" width="548" height="315"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="548" height="323"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="315"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -732,15 +732,19 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
-                                <rect key="frame" x="267" y="155" width="16" height="16"/>
+                            <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
+                                <rect key="frame" x="260" y="154" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="XK3-AR-Oc0"/>
+                                    <constraint firstAttribute="height" constant="30" id="lfW-dB-Eu3"/>
+                                </constraints>
                             </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="leading" secondItem="rIZ-4U-bhj" secondAttribute="leading" id="2Tx-yb-xrv"/>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="top" secondItem="rIZ-4U-bhj" secondAttribute="top" id="Pst-5A-dI0"/>
                             <constraint firstAttribute="bottom" secondItem="p0j-eB-I2i" secondAttribute="bottom" id="QEw-5m-u1s"/>
-                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" id="XqX-Tf-8ck"/>
+                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" constant="-10" id="XqX-Tf-8ck"/>
                             <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerX" secondItem="rIZ-4U-bhj" secondAttribute="centerX" id="eD8-TV-7dF"/>
                             <constraint firstAttribute="trailing" secondItem="p0j-eB-I2i" secondAttribute="trailing" id="zWH-TD-RZv"/>
                         </constraints>
@@ -752,7 +756,7 @@ Gw
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="288" y="766"/>
+            <point key="canvasLocation" x="288" y="765.5"/>
         </scene>
     </scenes>
     <resources>

@@ -73,8 +73,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     func reloadSites() {
         // Start spinner and reset view (no items)
         self.progressIndicator.startAnimation(nil)
-        self.sites = []
-        self.tableView.reloadData()
+        self.tableView.alphaValue = 0.3
+        self.tableView.isEnabled = false
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Reload site information
@@ -86,6 +86,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
                 
                 // Stop spinner
                 self.progressIndicator.stopAnimation(nil)
+                self.tableView.alphaValue = 1.0
+                self.tableView.isEnabled = true
                 
                 // Re-apply any existing search
                 self.searchedFor(text: lastSearchedFor)
@@ -193,26 +195,38 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         let previous = site.secured
         let action = site.secured ? "unsecure" : "secure"
         
-        let command = "cd \(site.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
-        let _ = Shell.pipe(command, requiresPath: true)
+        self.progressIndicator.startAnimation(nil)
+        self.tableView.alphaValue = 0.3
+        self.tableView.isEnabled = false
         
-        site.determineSecured(Valet.shared.config.tld)
-        
-        if site.secured == previous {
-            Alert.notify(
-                message: "SSL status not changed",
-                info: "Something went wrong. Try running the command in your terminal manually: `\(command)`")
-        } else {
-            let newState = site.secured ? "secured" : "unsecured"
-            LocalNotification.send(
-                title: "SSL status changed",
-                subtitle: "The domain '\(site.name!).\(Valet.shared.config.tld)' is now \(newState)."
-            )
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            let command = "cd \(site.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
+            let _ = Shell.pipe(command, requiresPath: true)
+            
+            site.determineSecured(Valet.shared.config.tld)
+            
+            DispatchQueue.main.async { [self] in
+                if site.secured == previous {
+                    Alert.notify(
+                        message: "SSL status not changed",
+                        info: "Something went wrong. Try running the command in your terminal manually: `\(command)`")
+                } else {
+                    let newState = site.secured ? "secured" : "unsecured"
+                    LocalNotification.send(
+                        title: "SSL status changed",
+                        subtitle: "The domain '\(site.name!).\(Valet.shared.config.tld)' is now \(newState)."
+                    )
+                }
+                
+                progressIndicator.stopAnimation(nil)
+                self.tableView.alphaValue = 1
+                self.tableView.isEnabled = true
+                
+                tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
+                tableView.deselectRow(rowToReload)
+                tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
+            }
         }
-        
-        tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
-        tableView.deselectRow(rowToReload)
-        tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
     }
     
     // MARK: Open with IDE / Editor
