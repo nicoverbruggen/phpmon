@@ -22,11 +22,11 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
     
     override func showWindow(_ sender: Any?) {
         super.showWindow(sender)
-        App.shared.register(window: self.windowName)
+        App.shared.register(window: windowName)
     }
     
     func windowWillClose(_ notification: Notification) {
-        App.shared.remove(window: self.windowName)
+        App.shared.remove(window: windowName)
     }
     
     deinit {

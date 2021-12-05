@@ -26,7 +26,7 @@ class Preferences {
     
     public init() {
         Preferences.handleFirstTimeLaunch()
-        self.cachedPreferences = Self.cache()
+        cachedPreferences = Self.cache()
     }
     
     // MARK: - First Time Run

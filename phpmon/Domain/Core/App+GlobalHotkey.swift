@@ -27,11 +27,11 @@ extension App {
         // Make sure we can parse the JSON into the desired format
         guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
             print("No global hotkey loaded, could not be parsed!")
-            self.shortcutHotkey = nil
+            shortcutHotkey = nil
             return
         }
         
-        self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
+        shortcutHotkey = HotKey(keyCombo: KeyCombo(
             carbonKeyCode: keybindPref.keyCode,
             carbonModifiers: keybindPref.carbonFlags
         ))
@@ -42,7 +42,7 @@ extension App {
      (opens the menu).
      */
     func setupGlobalHotkeyListener() {
-        guard let hotkey = self.shortcutHotkey else {
+        guard let hotkey = shortcutHotkey else {
             return
         }
         

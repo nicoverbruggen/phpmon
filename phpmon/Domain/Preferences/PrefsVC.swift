@@ -75,7 +75,7 @@ class PrefsVC: NSViewController {
     }
     
     override func viewWillDisappear() {
-        if self.listeningForGlobalHotkey {
+        if listeningForGlobalHotkey {
             listeningForGlobalHotkey = false
         }
     }

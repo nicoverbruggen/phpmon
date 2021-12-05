@@ -28,7 +28,13 @@ class Alert {
     }
     
     public static func notify(message: String, info: String, style: NSAlert.Style = .informational) {
-        _ = self.present(messageText: message, informativeText: info, buttonTitle: "OK", secondButtonTitle: "", style: style)
+        _ = present(
+            messageText: message,
+            informativeText: info,
+            buttonTitle: "OK",
+            secondButtonTitle: "",
+            style: style
+        )
     }
     
 }

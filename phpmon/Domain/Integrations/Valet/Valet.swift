@@ -18,35 +18,35 @@ class Valet {
     var sites: [Site] = []
     
     init() {
-        self.version = Actions.valet("--version")
+        version = Actions.valet("--version")
             .replacingOccurrences(of: "Laravel Valet ", with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
         
-        self.config = try! JSONDecoder().decode(
+        config = try! JSONDecoder().decode(
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
         
         print("PHP Monitor should scan the following paths:")
-        print(self.config.paths)
+        print(config.paths)
         
-        resolvePaths(tld: self.config.tld)
+        resolvePaths(tld: config.tld)
     }
     
     public func reloadSites() {
-        resolvePaths(tld: self.config.tld)
+        resolvePaths(tld: config.tld)
     }
     
     private func resolvePaths(tld: String) {
-        self.sites = []
+        sites = []
         
-        for path in self.config.paths {
+        for path in config.paths {
             let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
             for entry in entries {
-                self.resolvePath(entry, forPath: path, tld: tld)
+                resolvePath(entry, forPath: path, tld: tld)
             }
         }
     }
@@ -61,9 +61,9 @@ class Valet {
         let type = attrs[FileAttributeKey.type] as! FileAttributeType
         
         if type == FileAttributeType.typeSymbolicLink {
-            self.sites.append(Site(aliasPath: siteDir, tld: tld))
+            sites.append(Site(aliasPath: siteDir, tld: tld))
         } else if type == FileAttributeType.typeDirectory {
-            self.sites.append(Site(absolutePath: siteDir, tld: tld))
+            sites.append(Site(absolutePath: siteDir, tld: tld))
         }
     }
     
@@ -99,7 +99,7 @@ class Valet {
         }
         
         public func determineSecured(_ tld: String) {
-            self.secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
+            secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
         }
         
         public func determineDriver() {

@@ -32,7 +32,7 @@ class ActivePhpInstallation {
 
     init() {
         // Show information about the current version
-        self.getVersion()
+        getVersion()
         
         // If an error occurred, exit early
         if (version.error) {
@@ -47,9 +47,9 @@ class ActivePhpInstallation {
         
         // Get configuration values
         configuration = Configuration(
-            memory_limit: self.getByteCount(key: "memory_limit"),
-            upload_max_filesize: self.getByteCount(key: "upload_max_filesize"),
-            post_max_size: self.getByteCount(key: "post_max_size")
+            memory_limit: getByteCount(key: "memory_limit"),
+            upload_max_filesize: getByteCount(key: "upload_max_filesize"),
+            post_max_size: getByteCount(key: "post_max_size")
         )
         
         // Return a list of .ini files parsed after php.ini
@@ -60,9 +60,9 @@ class ActivePhpInstallation {
         
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            let extensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
-            if extensions.count > 0 {
-                self.extensions.append(contentsOf: extensions)
+            let exts = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
+            if exts.count > 0 {
+                extensions.append(contentsOf: exts)
             }
         }
     }

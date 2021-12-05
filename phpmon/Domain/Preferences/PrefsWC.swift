@@ -32,7 +32,7 @@ class PrefsWC: PMWindowController {
     override func keyDown(with event: NSEvent) {
         super.keyDown(with: event)
         
-        if let vc = self.contentViewController as? PrefsVC {
+        if let vc = contentViewController as? PrefsVC {
             if vc.listeningForGlobalHotkey {
                 if event.keyCode == Keys.Escape || event.keyCode == Keys.Space {
                     print("A blacklisted key was pressed, canceling listen")

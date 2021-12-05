@@ -90,7 +90,7 @@ class App {
      */
     var shortcutHotkey: HotKey? = nil {
         didSet {
-            self.setupGlobalHotkeyListener()
+            setupGlobalHotkeyListener()
         }
     }
     

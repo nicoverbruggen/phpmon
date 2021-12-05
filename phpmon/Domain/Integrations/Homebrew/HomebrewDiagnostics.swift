@@ -18,8 +18,8 @@ class HomebrewDiagnostics {
     var errors: [HomebrewDiagnostics.Errors] = []
 
     init() {
-        if self.determineAliasConflicts() {
-            self.errors.append(.aliasConflict)
+        if determineAliasConflicts() {
+            errors.append(.aliasConflict)
         }
     }
     

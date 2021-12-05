@@ -23,6 +23,15 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var editorAvailability: [String] = []
     var lastSearchedFor = ""
     
+    // MARK: - Helper Variables
+    
+    var selectedSite: Valet.Site? {
+        if tableView.selectedRow == -1 {
+            return nil
+        }
+        return sites[tableView.selectedRow]
+    }
+    
     // MARK: - Display
     
     public static func create(delegate: NSWindowDelegate?) {
@@ -56,103 +65,196 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-        if (Shell.fileExists("/usr/local/bin/code")) {
-            self.editorAvailability.append("vscode")
+        determineEditorAvailability()
+        sites = Valet.shared.sites
+        setUINotBusy()
+    }
+    
+    // MARK: - Async Operations
+    
+    /**
+     Disables the UI so the user cannot interact with it.
+     Also shows a spinner to indicate that we're busy.
+     */
+    private func setUIBusy() {
+        progressIndicator.startAnimation(nil)
+        tableView.alphaValue = 0.3
+        tableView.isEnabled = false
+    }
+    
+    /**
+     Re-enables the UI so the user can interact with it.
+     */
+    private func setUINotBusy() {
+        progressIndicator.stopAnimation(nil)
+        tableView.alphaValue = 1.0
+        tableView.isEnabled = true
+    }
+    
+    /**
+     Executes a specific callback and fires the completion callback,
+     while updating the UI as required. As long as the completion callback
+     does not fire, the app is presumed to be busy and the UI reflects this.
+     
+     - Parameter execute: Callback of the work that needs to happen.
+     - Parameter completion: Callback that is fired when the work is done.
+     */
+    private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
+    {
+        setUIBusy()
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            execute()
+            
+            DispatchQueue.main.async { [self] in
+                completion()
+                setUINotBusy()
+            }
         }
-        
-        if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
-            self.editorAvailability.append("phpstorm")
-        }
-        
-        self.sites = Valet.shared.sites
-        self.progressIndicator.stopAnimation(nil)
     }
     
     // MARK: - Site Data Loading
     
     func reloadSites() {
-        // Start spinner and reset view (no items)
-        self.progressIndicator.startAnimation(nil)
-        self.tableView.alphaValue = 0.3
-        self.tableView.isEnabled = false
-        
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            // Reload site information
+        waitAndExecute {
             Valet.shared.reloadSites()
-            
-            DispatchQueue.main.async { [self] in
-                // Update the site list
-                self.sites = Valet.shared.sites
-                
-                // Stop spinner
-                self.progressIndicator.stopAnimation(nil)
-                self.tableView.alphaValue = 1.0
-                self.tableView.isEnabled = true
-                
-                // Re-apply any existing search
-                self.searchedFor(text: lastSearchedFor)
-            }
+        } completion: { [self] in
+            sites = Valet.shared.sites
+            searchedFor(text: lastSearchedFor)
         }
     }
     
-    // MARK: - Table View
+    // MARK: - Table View Delegate
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.sites.count
+        return sites.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let userCell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "siteItem"), owner: self) as? SiteListCell else { return nil }
+        guard let userCell = tableView.makeView(
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "siteItem"), owner: self
+        ) as? SiteListCell else { return nil }
         
-        let item = self.sites[row]
-        
-        /// Make sure to show the TLD
-        userCell.labelSiteName.stringValue = "\(item.name!).\(Valet.shared.config.tld)"
-        
-        /// Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
-        userCell.labelPathName.stringValue = item.absolutePath
-            .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
-        
-        /// If the `aliasPath` is nil, we're dealing with a parked site. Otherwise, it's a link that was explicitly created.
-        userCell.imageViewType.image = NSImage(
-            named: item.aliasPath == nil
-            ? "IconParked"
-            : "IconLinked"
-        )
-        userCell.imageViewType.contentTintColor = NSColor.tertiaryLabelColor
-        
-        /// Show the green or red lock based on whether the site was secured
-        userCell.imageViewLock.contentTintColor = item.secured ? NSColor.systemGreen
-            : NSColor.red
-        
-        /// Show the current driver
-        userCell.labelDriver.stringValue = item.driver
+        userCell.populateCell(with: sites[row])
         
         return userCell
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {
+        reloadContextMenu()
+    }
+    
+    // MARK: Secure & Unsecure
+    
+    @objc public func toggleSecure() {
+        let rowToReload = tableView.selectedRow
+        let originalSecureStatus = selectedSite!.secured
+        let action = selectedSite!.secured ? "unsecure" : "secure"
+        let selectedSite = selectedSite!
+        let command = "cd \(selectedSite.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
+        
+        waitAndExecute {
+            Shell.run(command, requiresPath: true)
+        } completion: { [self] in
+            selectedSite.determineSecured(Valet.shared.config.tld)
+            if selectedSite.secured == originalSecureStatus {
+                Alert.notify(
+                    message: "site_list.alerts_status_changed.title".localized,
+                    info: "\("site_list.alerts_status_changed.desc".localized) `\(command)`")
+            } else {
+                let newState = selectedSite.secured ? "secured" : "unsecured"
+                LocalNotification.send(
+                    title: "site_list.alerts_status_changed.title".localized,
+                    subtitle: "site_list.alerts_status_changed.desc"
+                        .localized
+                        .replacingOccurrences(of: "{@1}", with: "\(selectedSite.name!).\(Valet.shared.config.tld)")
+                        .replacingOccurrences(of: "{@2}", with: newState)
+                )
+            }
+            
+            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
+            tableView.deselectRow(rowToReload)
+            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
+        }
+    }
+    
+    // MARK: Open with IDE / Editor
+    
+    /**
+     Find out which editors are available on the user’s system.
+     Currently only PHPStorm and Visual Studio Code are detected.
+     */
+    private func determineEditorAvailability() {
+        if (Shell.fileExists("/usr/local/bin/code")) {
+            editorAvailability.append("vscode")
+        }
+        
+        if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
+            editorAvailability.append("phpstorm")
+        }
+    }
+    
+    @objc public func openWithPhpStorm() {
+        Shell.run("open -a /Applications/PhpStorm.app \(selectedSite!.absolutePath!)")
+    }
+    
+    @objc public func openWithVSCode() {
+        Shell.run("/usr/local/bin/code \(selectedSite!.absolutePath!)")
+    }
+    
+    // MARK: Open in Browser & Finder
+    
+    @objc public func openInBrowser() {
+        let prefix = selectedSite!.secured ? "https://" : "http://"
+        let url = "\(prefix)\(selectedSite!.name!).\(Valet.shared.config.tld)"
+        NSWorkspace.shared.open(URL(string: url)!)
+    }
+    
+    @objc public func openInFinder() {
+        Shell.run("open \(selectedSite!.absolutePath!)")
+    }
+    
+    // MARK: - (Search) Text Field Delegate
+    
+    func searchedFor(text: String) {
+        lastSearchedFor = text
+        
+        let searchString = text.lowercased()
+        
+        if searchString.isEmpty {
+            sites = Valet.shared.sites
+            tableView.reloadData()
+            return
+        }
+        
+        sites = Valet.shared.sites.filter({ site in
+            return site.name.lowercased().contains(searchString)
+        })
+        
+        tableView.reloadData()
+    }
+    
+    // MARK: - Context Menu
+    
+    private func reloadContextMenu() {
         let menu = NSMenu()
         
-        if self.tableView.selectedRow == -1 {
+        guard let site = selectedSite else {
             tableView.menu = nil
             return
         }
         
-        let site = self.sites[self.tableView.selectedRow]
-        
         menu.addItem(
             withTitle: site.secured
-                ? "site_list.unsecure".localized
-                : "site_list.secure".localized,
+            ? "site_list.unsecure".localized
+            : "site_list.secure".localized,
             action: #selector(toggleSecure),
             keyEquivalent: "L"
         )
         
-        if (self.editorAvailability.count > 0) {
+        if (editorAvailability.count > 0) {
             menu.addItem(NSMenuItem.separator())
             
-            if self.editorAvailability.contains("vscode") {
+            if editorAvailability.contains("vscode") {
                 menu.addItem(
                     withTitle: "site_list.open_with_vs_code".localized,
                     action: #selector(self.openWithVSCode),
@@ -181,95 +283,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             action: #selector(self.openInBrowser),
             keyEquivalent: "O"
         )
+        
         tableView.menu = menu
-    }
-    
-    // MARK: Secure / unsecure
-    
-    @objc public func toggleSecure() {
-        let rowToReload = self.tableView.selectedRow
-        let site = self.sites[self.tableView.selectedRow]
-        let previous = site.secured
-        let action = site.secured ? "unsecure" : "secure"
-        
-        self.progressIndicator.startAnimation(nil)
-        self.tableView.alphaValue = 0.3
-        self.tableView.isEnabled = false
-        
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            let command = "cd \(site.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
-            let _ = Shell.pipe(command, requiresPath: true)
-            
-            site.determineSecured(Valet.shared.config.tld)
-            
-            DispatchQueue.main.async { [self] in
-                if site.secured == previous {
-                    Alert.notify(
-                        message: "SSL status not changed",
-                        info: "Something went wrong. Try running the command in your terminal manually: `\(command)`")
-                } else {
-                    let newState = site.secured ? "secured" : "unsecured"
-                    LocalNotification.send(
-                        title: "SSL status changed",
-                        subtitle: "The domain '\(site.name!).\(Valet.shared.config.tld)' is now \(newState)."
-                    )
-                }
-                
-                progressIndicator.stopAnimation(nil)
-                self.tableView.alphaValue = 1
-                self.tableView.isEnabled = true
-                
-                tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
-                tableView.deselectRow(rowToReload)
-                tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
-            }
-        }
-    }
-    
-    // MARK: Open with IDE / Editor
-    
-    @objc public func openWithPhpStorm() {
-        let site = self.sites[self.tableView.selectedRow]
-        Shell.run("open -a /Applications/PhpStorm.app \(site.absolutePath!)")
-    }
-    
-    @objc public func openWithVSCode() {
-        let site = self.sites[self.tableView.selectedRow]
-        Shell.run("/usr/local/bin/code \(site.absolutePath!)")
-    }
-    
-    // MARK: Open in Browser & Finder
-    
-    @objc public func openInBrowser() {
-        let site = self.sites[self.tableView.selectedRow]
-        let prefix = site.secured ? "https://" : "http://"
-        let url = "\(prefix)\(site.name!).\(Valet.shared.config.tld)"
-        NSWorkspace.shared.open(URL(string: url)!)
-    }
-    
-    @objc public func openInFinder() {
-        let site = self.sites[self.tableView.selectedRow]
-        Shell.run("open \(site.absolutePath!)")
-    }
-    
-    // MARK: - (Search) Text Field Delegate
-    
-    func searchedFor(text: String) {
-        self.lastSearchedFor = text
-        
-        let searchString = text.lowercased()
-        
-        if searchString.isEmpty {
-            self.sites = Valet.shared.sites
-            tableView.reloadData()
-            return
-        }
-        
-        self.sites = Valet.shared.sites.filter({ site in
-            return site.name.lowercased().contains(searchString)
-        })
-        
-        tableView.reloadData()
     }
 
     // MARK: - Deinitialization

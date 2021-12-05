@@ -53,6 +53,12 @@
 "site_list.title" = "Domains";
 "site_list.subtitle" = "Linked & Parked";
 
+"site_list.alerts_status_changed.title" = "SSL Status Not Changed";
+"site_list.alerts_status_changed.desc" = "Something went wrong. Try running the command in your terminal manually:";
+
+"site_list.alerts_status_changed.title" = "SSL Status Changed";
+"site_list.alerts_status_changed.desc" = "The domain '{@1}' is now {@2}.";
+
 // SITE LIST ACTIONS
 
 "site_list.secure" = "Secure";
@@ -127,7 +133,7 @@
 
 /// 1. PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary_desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
 
 /// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
