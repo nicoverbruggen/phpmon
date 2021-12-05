@@ -74,6 +74,15 @@ class App {
     }
     
     /**
+     Retrieve the version number from the main info dictionary, Info.plist.
+     */
+    static var version: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        return "\(version) (\(build))"
+    }
+    
+    /**
      The version that the `php` formula via Brew is aliased to on the current system.
      
      If you're up to date, `php` will be aliased to the latest version,

@@ -578,13 +578,13 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="69" horizontalPageScroll="10" verticalLineScroll="69" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
-                                <rect key="frame" x="0.0" y="0.0" width="550" height="345"/>
+                                <rect key="frame" x="0.0" y="0.0" width="550" height="344"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
-                                    <rect key="frame" x="1" y="1" width="548" height="343"/>
+                                    <rect key="frame" x="1" y="1" width="548" height="342"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="69" rowSizeStyle="automatic" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="548" height="343"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="342"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
