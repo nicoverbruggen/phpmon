@@ -359,12 +359,23 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 }
             }
             
-            // TODO: Allow for switcher to vary?
-            Actions.switchToPhpVersionUsingValet(
-                version: sender.version,
-                availableVersions: App.shared.availablePhpVersions,
-                completed: completion
-            )
+            if Preferences.preferences[.useInternalSwitcher] as! Bool == false {
+                // 1. Default switcher using Valet
+                // Will cause less issues, but is slower
+                Actions.switchToPhpVersionUsingValet(
+                    version: sender.version,
+                    availableVersions: App.shared.availablePhpVersions,
+                    completed: completion
+                )
+            } else {
+                // 2. Custom switcher (internal)
+                // Will cause more issues with Homebrew and is faster
+                Actions.switchToPhpVersion(
+                    version: sender.version,
+                    availableVersions: App.shared.availablePhpVersions,
+                    completed: completion
+                )
+            }
         }
     }
     

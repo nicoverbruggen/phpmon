@@ -31,6 +31,10 @@ class PrefsVC: NSViewController {
     @IBOutlet weak var buttonAutoRestartServices: NSButton!
     @IBOutlet weak var labelAutoRestartServices: NSTextField!
     
+    // Use own services
+    @IBOutlet weak var buttonUseInternalSwitcher: NSButton!
+    @IBOutlet weak var labelUseInternalSwitcher: NSTextField!
+    
     // Shortcut
     @IBOutlet weak var buttonSetShortcut: NSButton!
     @IBOutlet weak var buttonClearShortcut: NSButton!
@@ -49,6 +53,7 @@ class PrefsVC: NSViewController {
         ) as! PrefsWC
         
         windowController.window!.title = "prefs.title".localized
+        windowController.window!.subtitle = "prefs.subtitle".localized
         windowController.window!.delegate = delegate
         windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
         windowController.window!.delegate = windowController
@@ -72,6 +77,7 @@ class PrefsVC: NSViewController {
         loadDynamicIconFromPreferences()
         loadFullPhpVersionFromPreferences()
         loadGlobalKeybindFromPreferences()
+        loadUseInternalSwitcherFromPreferences()
     }
     
     override func viewWillDisappear() {
@@ -93,7 +99,11 @@ class PrefsVC: NSViewController {
         // Services
         leftLabelServices.stringValue = "prefs.services".localized
         buttonAutoRestartServices.title = "prefs.auto_restart_services_title".localized
-        labelAutoRestartServices.stringValue = "prefs_auto_restart_services_desc".localized
+        labelAutoRestartServices.stringValue = "prefs.auto_restart_services_desc".localized
+        
+        // Switcher
+        buttonUseInternalSwitcher.title = "prefs.use_internal_switcher".localized
+        labelUseInternalSwitcher.stringValue = "prefs.use_internal_switcher_desc".localized
         
         // Global Shortcut
         leftLabelGlobalShortcut.stringValue = "prefs.global_shortcut".localized
@@ -122,6 +132,11 @@ class PrefsVC: NSViewController {
         self.buttonAutoRestartServices.state = shouldDisplay ? .on : .off
     }
     
+    func loadUseInternalSwitcherFromPreferences() {
+        let shouldDisplay = Preferences.preferences[.useInternalSwitcher] as! Bool == true
+        self.buttonUseInternalSwitcher.state = shouldDisplay ? .on : .off
+    }
+    
     // MARK: - Actions
     
     @IBAction func toggledDynamicIcon(_ sender: Any) {
@@ -137,6 +152,10 @@ class PrefsVC: NSViewController {
     
     @IBAction func toggledAutoRestartServices(_ sender: Any) {
         Preferences.update(.autoServiceRestartAfterExtensionToggle, value: buttonAutoRestartServices.state == .on)
+    }
+    
+    @IBAction func toggledUseInternalSwitcher(_ sender: Any) {
+        Preferences.update(.useInternalSwitcher, value: buttonUseInternalSwitcher.state == .on)
     }
     
     // MARK: - Shortcut Preference
