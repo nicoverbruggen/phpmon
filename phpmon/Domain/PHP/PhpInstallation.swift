@@ -11,7 +11,7 @@ import Foundation
 class PhpInstallation {
     
     var longVersion: String
-    var homebrewInfo: HomebrewPackage
+    var homebrewInfo: HomebrewPackage?
     
     /**
      In order to determine details about a PHP installation, we’ll simply run `php-config --version`
@@ -29,10 +29,17 @@ class PhpInstallation {
         }
         
         let info = Shell.pipe("\(Paths.brew) info php@\(version) --json")
-        self.homebrewInfo = try! JSONDecoder().decode(
-            [HomebrewPackage].self,
-            from: info.data(using: .utf8)!
-        ).first!
+        
+        do {
+            self.homebrewInfo = try JSONDecoder().decode(
+                [HomebrewPackage].self,
+                from: info.data(using: .utf8)!
+            ).first ?? nil
+        } catch {
+            // TODO: Perhaps show a modal to indicate there’s an issue with Homebrew?
+            print("There was an issue parsing Homebrew info for PHP \(version)")
+            self.homebrewInfo = nil
+        }
     }
     
 }
