@@ -44,6 +44,6 @@ class SiteListCell: NSTableCellView
         : NSColor.red
         
         // Show the current driver
-        labelDriver.stringValue = site.driver
+        labelDriver.stringValue = site.driver ?? "???"
     }
 }

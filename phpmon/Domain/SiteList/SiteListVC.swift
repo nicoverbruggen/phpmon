@@ -19,8 +19,13 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Variables
     
+    /// List of sites that will be displayed in this view. Originates from the `Valet` object.
     var sites: [Valet.Site] = []
+    
+    /// Array that contains various editors that might open a particular site directory.
     var editorAvailability: [String] = []
+    
+    /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
     
     // MARK: - Helper Variables

@@ -12,9 +12,13 @@ class Valet {
     
     static let shared = Valet()
     
+    /// The version of Valet that was detected.
     var version: String
+    
+    /// The Valet configuration file.
     var config: Valet.Configuration
     
+    /// A cached list of sites that were detected after analyzing the paths set up for Valet.
     var sites: [Site] = []
     
     init() {
@@ -70,13 +74,20 @@ class Valet {
     // MARK: - Structs
     
     class Site {
+        /// Name of the site. Does not include the TLD.
         var name: String!
         
+        /// The absolute path to the directory that is served.
         var absolutePath: String!
+        
+        /// Location of the alias. If set, this is a linked domain.
         var aliasPath: String?
         
+        /// Whether the site has been secured.
         var secured: Bool!
-        var driver: String = "???"
+        
+        /// What driver is currently in use. If not detected, defaults to nil.
+        var driver: String? = nil
         
         init() {}
         
@@ -110,15 +121,23 @@ class Valet {
                     .replacingOccurrences(of: "This site is served by [", with: "")
                     .replacingOccurrences(of: "ValetDriver].\n", with: "")
             } else {
-                self.driver = "???"
+                self.driver = nil
             }
         }
     }
 
     struct Configuration: Decodable {
+        /// Top level domain suffix. Usually "test" but can be set to something else.
+        /// - Important: Does not include the actual dot. ("test", not ".test"!)
         let tld: String
+        
+        /// The paths that need to be checked.
         let paths: [String]
+        
+        /// The loopback address.
         let loopback: String
+        
+        /// The default site that is served if the domain is not found. Optional.
         let defaultSite: String?
         
         private enum CodingKeys: String, CodingKey {

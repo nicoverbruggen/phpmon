@@ -108,7 +108,7 @@ class StatusMenu : NSMenu {
             return
         }
         
-        let stats = App.phpInstall!.configuration
+        let stats = App.phpInstall!.limits
         
         // Stats
         self.addItem(NSMenuItem.separator())

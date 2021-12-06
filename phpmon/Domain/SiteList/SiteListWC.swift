@@ -36,7 +36,6 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     func controlTextDidChange(_ notification: Notification) {
         guard let searchField = notification.object as? NSSearchField else {
-            print("Unexpected control in update notification")
             return
         }
         

@@ -19,7 +19,7 @@ import Foundation
 class ActivePhpInstallation {
 
     var version: Version!
-    var configuration: Configuration!
+    var limits: Limits!
     var extensions: [PhpExtension]!
     
     // MARK: - Computed
@@ -36,7 +36,7 @@ class ActivePhpInstallation {
         
         // If an error occurred, exit early
         if (version.error) {
-            configuration = Configuration()
+            limits = Limits()
             extensions = []
             return
         }
@@ -46,7 +46,7 @@ class ActivePhpInstallation {
         extensions = PhpExtension.load(from: path)
         
         // Get configuration values
-        configuration = Configuration(
+        limits = Limits(
             memory_limit: getByteCount(key: "memory_limit"),
             upload_max_filesize: getByteCount(key: "upload_max_filesize"),
             post_max_size: getByteCount(key: "post_max_size")
@@ -161,14 +161,24 @@ class ActivePhpInstallation {
     }
     
     // MARK: - Structs
-    
+
+    /**
+     Struct containing information about the version number of the current PHP installation.
+     Also includes information about whether the install is considered "broken" or not.
+     If an error was found in the terminal output, `error` is set to `true` and the installation
+     can be considered broken. (The app will display this as well.)
+     */
     struct Version {
         var short = "???"
         var long = "???"
         var error = false
     }
     
-    struct Configuration {
+    /**
+     Struct containing information about the limits of the current PHP installation.
+     Includes: memory limit, max upload size and max post size.
+     */
+    struct Limits {
         var memory_limit = "???"
         var upload_max_filesize = "???"
         var post_max_size = "???"

@@ -70,21 +70,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        LocalNotification.askForPermission()
-        UNUserNotificationCenter.current().delegate = self
-        self.menu.startup()
-    }
-    
-    /**
-     Ensure that the application displays notifications even when the app is active.
-     */
-    func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler:
-            @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        completionHandler([.banner])
+        // Make sure notifications will work
+        setupNotifications()
+        // Make sure the menu performs its initial checks
+        menu.startup()
     }
     
 }
