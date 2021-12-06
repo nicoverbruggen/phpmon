@@ -11,7 +11,7 @@ import Foundation
 class PhpInstallation {
     
     var longVersion: String
-    var homebrewInfo: HomebrewPackage
+    var homebrewInfo: HomebrewPackage?
     
     init(_ version: String) {
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
@@ -24,10 +24,17 @@ class PhpInstallation {
         }
         
         let info = Shell.pipe("\(Paths.brew) info php@\(version) --json")
-        self.homebrewInfo = try! JSONDecoder().decode(
-            [HomebrewPackage].self,
-            from: info.data(using: .utf8)!
-        ).first!
+        
+        do {
+            let data = try JSONDecoder().decode(
+                [HomebrewPackage].self,
+                from: info.data(using: .utf8)!
+            )
+            self.homebrewInfo = data.first!
+        } catch {
+            print("There was an issue parsing Homebrew info for PHP \(version)")
+            self.homebrewInfo = nil
+        }
     }
     
 }
