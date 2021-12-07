@@ -23,7 +23,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var sites: [Valet.Site] = []
     
     /// Array that contains various editors that might open a particular site directory.
-    var editorAvailability: [String] = []
+    var editors: [Editor] = Editor.detect()
     
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
@@ -70,7 +70,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-        determineEditorAvailability()
         sites = Valet.shared.sites
         setUINotBusy()
     }
@@ -182,30 +181,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
-    // MARK: Open with IDE / Editor
-    
-    /**
-     Find out which editors are available on the user’s system.
-     Currently only PHPStorm and Visual Studio Code are detected.
-     */
-    private func determineEditorAvailability() {
-        if (Shell.fileExists("/usr/local/bin/code")) {
-            editorAvailability.append("vscode")
-        }
-        
-        if (Shell.fileExists("/Applications/PhpStorm.app/Contents/Info.plist")) {
-            editorAvailability.append("phpstorm")
-        }
-    }
-    
-    @objc public func openWithPhpStorm() {
-        Shell.run("open -a /Applications/PhpStorm.app \(selectedSite!.absolutePath!)")
-    }
-    
-    @objc public func openWithVSCode() {
-        Shell.run("/usr/local/bin/code \(selectedSite!.absolutePath!)")
-    }
-    
     // MARK: Open in Browser & Finder
     
     @objc public func openInBrowser() {
@@ -256,23 +231,17 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             keyEquivalent: "L"
         )
         
-        if (editorAvailability.count > 0) {
+        if (editors.count > 0) {
             menu.addItem(NSMenuItem.separator())
             
-            if editorAvailability.contains("vscode") {
-                menu.addItem(
-                    withTitle: "site_list.open_with_vs_code".localized,
-                    action: #selector(self.openWithVSCode),
-                    keyEquivalent: ""
+            for (index, editor) in editors.enumerated() {
+                let editorMenuItem = EditorMenuItem(
+                    title: "Open with \(editor.name)",
+                    action: #selector(self.openWithEditor(sender:)),
+                    keyEquivalent: "\(index + 1)"
                 )
-            }
-            
-            if editorAvailability.contains("phpstorm") {
-                menu.addItem(
-                    withTitle: "site_list.open_with_pstorm".localized,
-                    action: #selector(self.openWithPhpStorm),
-                    keyEquivalent: ""
-                )
+                editorMenuItem.editor = editor
+                menu.addItem(editorMenuItem)
             }
             
             menu.addItem(NSMenuItem.separator())
@@ -290,6 +259,10 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         )
         
         tableView.menu = menu
+    }
+    
+    @objc func openWithEditor(sender: EditorMenuItem) {
+        sender.editor?.openDirectory(file: selectedSite!.absolutePath!)
     }
 
     // MARK: - Deinitialization

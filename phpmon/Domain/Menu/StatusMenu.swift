@@ -166,3 +166,7 @@ class PhpMenuItem: NSMenuItem {
 class ExtensionMenuItem: NSMenuItem {
     var phpExtension: PhpExtension? = nil
 }
+
+class EditorMenuItem: NSMenuItem {
+    var editor: Editor? = nil
+}

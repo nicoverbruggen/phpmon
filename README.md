@@ -231,6 +231,22 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 </details>
 
 <details>
+<summary><strong>How do I get various applications to show up in the domain list's right-click menu?</strong></summary>
+
+When you select and right-click on a domain, you can open these directories with various applications. This can help speed up your workflow. However, for these apps to show up, they must be detected first.
+
+The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime Merge</i>.
+
+For <strong>Visual Studio Code</strong>, you need to have `code` available in your PATH. [More info](https://code.visualstudio.com/docs/editor/command-line) here.
+
+For <strong>Sublime Text (and Sublime Merge)</strong>, the apps need to be in your `/Applications` directory.
+
+For <strong>PhpStorm</strong>, both a standalone installation (in `/Applications`) and an installation via JetBrains Toolbox are can be detected. If you happen to have both installed, they are listed separately.
+
+To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Editor.swift).
+</details>
+
+<details>
 <summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
 
 <strike>This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).</strike>
