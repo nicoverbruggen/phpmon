@@ -59,8 +59,12 @@
 "site_list.alerts_status_changed.title" = "SSL Status Changed";
 "site_list.alerts_status_changed.desc" = "The domain '{@1}' is now {@2}.";
 
+"site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
+"site_link.confirm_link" = "No files will be removed. If needed, the site will need to be relinked via the command line.";
+
 // SITE LIST ACTIONS
 
+"site_list.unlink" = "Unlink";
 "site_list.secure" = "Secure";
 "site_list.unsecure" = "Unsecure";
 "site_list.open_in_finder" = "Open in Finder";

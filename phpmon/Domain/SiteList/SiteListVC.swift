@@ -202,6 +202,30 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         Shell.run("open \(selectedSite!.absolutePath!)")
     }
     
+    @objc public func unlinkSite() {
+        guard let site = selectedSite else {
+            return
+        }
+        
+        if site.aliasPath == nil {
+            return
+        }
+        
+        Alert.confirm(
+            onWindow: view.window!,
+            messageText: "site_list.confirm_unlink".localized
+                .replacingOccurrences(of: "%@", with: site.name),
+            informativeText: "site_link.confirm_link".localized,
+            buttonTitle: "site_list.unlink".localized,
+            secondButtonTitle: "Cancel",
+            style: .critical,
+            onFirstButtonPressed: {
+                Shell.run("valet unlink \(site.name!)", requiresPath: true)
+                self.reloadSites()
+            }
+        )
+    }
+    
     // MARK: - (Search) Text Field Delegate
     
     func searchedFor(text: String) {
@@ -230,6 +254,15 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         guard let site = selectedSite else {
             tableView.menu = nil
             return
+        }
+        
+        if (site.aliasPath != nil) {
+            menu.addItem(
+                withTitle: "site_list.unlink".localized,
+                action: #selector(self.unlinkSite),
+                keyEquivalent: "U"
+            )
+            menu.addItem(NSMenuItem.separator())
         }
         
         menu.addItem(

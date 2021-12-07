@@ -613,7 +613,7 @@ Gw
         <scene sceneID="aZt-6w-TFl">
             <objects>
                 <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="rIZ-4U-bhj">
+                    <view key="view" id="rIZ-4U-bhj">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
