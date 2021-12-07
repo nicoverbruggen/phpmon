@@ -71,8 +71,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
-        sites = Valet.shared.sites
-        setUINotBusy()
+        reloadSites()
     }
     
     // MARK: - Async Operations

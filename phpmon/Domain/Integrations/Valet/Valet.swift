@@ -33,11 +33,6 @@ class Valet {
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
-        
-        print("PHP Monitor should scan the following paths:")
-        print(config.paths)
-        
-        resolvePaths(tld: config.tld)
     }
     
     public func reloadSites() {
