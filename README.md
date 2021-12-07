@@ -7,7 +7,7 @@
 
 **PHP Monitor** (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so you need to have it set up before you can use this.
 
-<img src="./docs/screenshot34.png" width="412px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot41.jpg" width="800px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
 
