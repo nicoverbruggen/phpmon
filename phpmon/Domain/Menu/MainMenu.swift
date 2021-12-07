@@ -141,7 +141,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: MenuBarImageGenerator.textToImage(text: version)
+            image: MenuBarImageGenerator.textToImageWithIcon(text: version)
         )
     }
     
