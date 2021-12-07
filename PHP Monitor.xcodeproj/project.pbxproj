@@ -357,10 +357,10 @@
 		C4B13B1D25C4915000548C3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
 				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
 				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
-				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,

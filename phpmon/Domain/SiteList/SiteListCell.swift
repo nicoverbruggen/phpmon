@@ -40,8 +40,8 @@ class SiteListCell: NSTableCellView
         imageViewType.contentTintColor = NSColor.tertiaryLabelColor
         
         // Show the green or red lock based on whether the site was secured
-        imageViewLock.contentTintColor = site.secured ? NSColor.systemGreen
-        : NSColor.red
+        imageViewLock.image = NSImage(named: site.secured ? "Lock" : "LockUnlocked")
+        imageViewLock.contentTintColor = site.secured ? NSColor.systemGreen : NSColor.systemRed
         
         // Show the current driver
         labelDriver.stringValue = site.driver ?? "???"

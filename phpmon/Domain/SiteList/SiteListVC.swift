@@ -70,6 +70,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
+        tableView.doubleAction = #selector(self.doubleClicked(sender:))
         sites = Valet.shared.sites
         setUINotBusy()
     }
@@ -145,6 +146,14 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         reloadContextMenu()
+    }
+    
+    @objc func doubleClicked(sender: Any) {
+        guard self.selectedSite != nil else {
+            return
+        }
+        
+        self.openInBrowser()
     }
     
     // MARK: Secure & Unsecure

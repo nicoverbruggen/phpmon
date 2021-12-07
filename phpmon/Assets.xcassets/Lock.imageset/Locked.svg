@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Locked" x="0" y="0" width="30" height="30" style="fill:none;"/>
+    <g id="Locked1" serif:id="Locked">
+        <g transform="matrix(0.0468317,0,0,0.0468317,4.50971,3.01112)">
+            <path d="M400,256L152,256L152,152.9C152,113.3 183.7,80.4 223.3,80C263.3,79.6 296,112.1 296,152L296,266.079C296,279.379 376,279.137 376,265.837L376,152C376,68 307.5,-0.3 223.5,0C139.5,0.3 72,69.5 72,153.5L72,256L48,256C21.5,256 0,277.5 0,304L0,464C0,490.5 21.5,512 48,512L400,512C426.5,512 448,490.5 448,464L448,304C448,277.5 426.5,256 400,256Z" style="fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>
