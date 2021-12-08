@@ -81,9 +81,26 @@ class StatusMenu : NSMenu {
         }
         self.setSubmenu(servicesMenu, for: services)
         
-        self.addItem(NSMenuItem(title: "mi_force_load_latest".localized, action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
+        self.addForceLoadLatestVersion()
+        
         self.addItem(services)
         self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
+    }
+    
+    func addForceLoadLatestVersion() {
+        if !App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion) {
+            self.addItem(NSMenuItem(
+                title: "mi_force_load_latest_unavailable".localized
+                    .replacingOccurrences(of: "%@", with: App.shared.brewPhpVersion),
+                action: nil, keyEquivalent: "f"
+            ))
+        } else {
+            self.addItem(NSMenuItem(
+                title: "mi_force_load_latest".localized
+                    .replacingOccurrences(of: "%@", with: App.shared.brewPhpVersion),
+                action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
+        }
+        
     }
     
     func addValetMenuItems() {

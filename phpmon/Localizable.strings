@@ -25,7 +25,8 @@
 "mi_manage_services" = "Manage services";
 "mi_restart_all_services" = "Restart all services";
 "mi_stop_all_services" = "Stop all services";
-"mi_force_load_latest" = "Force load latest PHP version";
+"mi_force_load_latest" = "Force load (latest) PHP %@";
+"mi_force_load_latest_unavailable" = "Force load unavailable (PHP %@ not installed)";
 "mi_php_refresh" = "Refresh information";
 
 "mi_configuration" = "Configuration";

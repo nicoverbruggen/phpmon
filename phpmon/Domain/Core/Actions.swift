@@ -23,7 +23,7 @@ class Actions {
         let phpAlias = App.shared.brewPhpVersion
         
         // Avoid inserting a duplicate
-        if (!versionsOnly.contains(phpAlias)) {
+        if (!versionsOnly.contains(phpAlias) && Shell.fileExists("\(Paths.optPath)/php/bin/php")) {
             versionsOnly.append(phpAlias);
         }
         

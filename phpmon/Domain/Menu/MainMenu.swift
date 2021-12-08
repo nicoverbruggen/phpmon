@@ -114,7 +114,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add Valet interactions
-
             menu.addValetMenuItems()
             
             // Add information about services & actions

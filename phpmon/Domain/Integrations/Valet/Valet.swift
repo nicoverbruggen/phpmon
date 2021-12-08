@@ -24,7 +24,10 @@ class Valet {
     init() {
         version = Actions.valet("--version")
             .replacingOccurrences(of: "Laravel Valet ", with: "")
+            // TODO: Use regular expression to avoid deprecation notices
+            .split(separator: "\n").last?
             .trimmingCharacters(in: .whitespacesAndNewlines)
+            ?? "UNKNOWN"
         
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
