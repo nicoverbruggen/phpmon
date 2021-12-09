@@ -237,11 +237,13 @@ When you select and right-click on a domain, you can open these directories with
 
 The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime Merge</i>.
 
-For <strong>Visual Studio Code</strong>, you need to have `code` available in your PATH. [More info](https://code.visualstudio.com/docs/editor/command-line) here.
+For <strong>Visual Studio Code</strong>, you need to have `code` available in your PATH (`/usr/bin/local/code` is checked). 
+[More info](https://code.visualstudio.com/docs/editor/command-line) here.
+
+For <strong>PhpStorm</strong>, you need to have `pstorm` available in your PATH (`/usr/bin/local/pstorm` is checked). 
+[More info](https://www.jetbrains.com/help/phpstorm/working-with-the-ide-features-from-command-line.html) here.
 
 For <strong>Sublime Text (and Sublime Merge)</strong>, the apps need to be in your `/Applications` directory.
-
-For <strong>PhpStorm</strong>, both a standalone installation (in `/Applications`) and an installation via JetBrains Toolbox are can be detected. If you happen to have both installed, they are listed separately.
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Editor.swift).
 </details>
