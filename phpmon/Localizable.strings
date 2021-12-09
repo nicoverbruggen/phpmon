@@ -73,6 +73,24 @@
 "site_list.open_with_vs_code" = "Open with Visual Studio Code";
 "site_list.open_with_pstorm" = "Open with PhpStorm";
 
+// EDITORS
+"editors.binary_missing.title" = "`%@` missing";
+"editors.alert.try_again" = "Try Again";
+"editors.alert.cancel" = "Cancel";
+
+"editors.pstorm_binary_not_linked.desc" =
+"PHP Monitor makes use of PhpStorm’s launcher to open a specific directory.
+
+The desired launcher does not seem to be found in the usual location. Please set up the launcher by going to 'Tools > Create command-line launcher' in PhpStorm.
+
+After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
+"editors.code_binary_not_linked.desc" =
+"PHP Monitor makes use of Visual Studio Code‘s helper binary, `code`, but it seems not to exist on your system.
+
+You can fix this by selecting 'Install `code` command in PATH' in Visual Studio Code’s command palette.
+
+After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
+
 // PREFERENCES
 
 "prefs.title" = "PHP Monitor";

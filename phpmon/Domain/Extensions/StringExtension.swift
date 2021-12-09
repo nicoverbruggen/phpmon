@@ -12,6 +12,10 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
+    func localized(_ args: CVarArg...) -> String {
+        String(format: self.localized, arguments: args)
+    }
+    
     func countInstances(of stringToFind: String) -> Int {
         if (stringToFind.isEmpty) {
             return 0

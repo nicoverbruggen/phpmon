@@ -23,7 +23,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var sites: [Valet.Site] = []
     
     /// Array that contains various editors that might open a particular site directory.
-    var editors: [Editor] = Editor.detect()
+    var editors: [Editor] = Editor.detectPresetEditors()
     
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
@@ -303,7 +303,25 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     }
     
     @objc func openWithEditor(sender: EditorMenuItem) {
-        sender.editor?.openDirectory(file: selectedSite!.absolutePath!)
+        guard let editor = sender.editor else { return }
+        
+        if editor.hasBinary() {
+            editor.openDirectory(file: selectedSite!.absolutePath!)
+        } else {
+            Alert.confirm(
+                onWindow: self.view.window!,
+                messageText: "editors.binary_missing.title"
+                    .localized(
+                        editor.pathToBinary
+                    ),
+                informativeText: editor.missingBinaryInstruction ?? "",
+                buttonTitle: "editors.alert.try_again".localized,
+                secondButtonTitle: "editors.alert.cancel".localized,
+                onFirstButtonPressed: {
+                    self.openWithEditor(sender: sender)
+                }
+            )
+        }
     }
 
     // MARK: - Deinitialization
