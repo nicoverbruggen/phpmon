@@ -60,8 +60,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         installation.notifyAboutBrokenPhpFpm()
         
         // Attempt to find out more info about Valet
-        let valet = Valet()
-        print("PHP Monitor has extracted the version number of Valet: \(valet.version)")
+        print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
         print("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds

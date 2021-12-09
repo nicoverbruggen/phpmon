@@ -71,7 +71,13 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
-        reloadSites()
+        if !Valet.shared.sites.isEmpty {
+            // Preloaded list
+            sites = Valet.shared.sites
+            searchedFor(text: lastSearchedFor)
+        } else {
+            reloadSites()
+        }
     }
     
     // MARK: - Async Operations
@@ -308,20 +314,23 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         if editor.hasBinary() {
             editor.openDirectory(file: selectedSite!.absolutePath!)
         } else {
-            Alert.confirm(
-                onWindow: self.view.window!,
-                messageText: "editors.binary_missing.title"
-                    .localized(
-                        editor.pathToBinary
-                    ),
-                informativeText: editor.missingBinaryInstruction ?? "",
-                buttonTitle: "editors.alert.try_again".localized,
-                secondButtonTitle: "editors.alert.cancel".localized,
-                onFirstButtonPressed: {
-                    self.openWithEditor(sender: sender)
-                }
-            )
+            presentAlertForMissingEditorBinary(editor, sender)
         }
+    }
+    
+    private func presentAlertForMissingEditorBinary(_ editor: Editor, _ sender: EditorMenuItem) {
+        Alert.confirm(
+            onWindow: self.view.window!,
+            messageText: "editors.binary_missing.title".localized(editor.pathToBinary),
+            informativeText:
+                editor.missingBinaryInstruction
+            ?? "editors.binary_missing.desc".localized(editor.pathToBinary),
+            buttonTitle: "editors.alert.try_again".localized,
+            secondButtonTitle: "editors.alert.cancel".localized,
+            onFirstButtonPressed: {
+                self.openWithEditor(sender: sender)
+            }
+        )
     }
 
     // MARK: - Deinitialization

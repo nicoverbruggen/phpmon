@@ -36,6 +36,12 @@ class Valet {
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
+        
+        if self.sites.count <= 10 {
+            // Preload the sites and their drivers
+            print("Fewer than or 11 sites found, preloading list of sites...")
+            self.reloadSites()
+        }
     }
     
     public func reloadSites() {
