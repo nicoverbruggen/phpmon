@@ -235,7 +235,7 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 
 When you select and right-click on a domain, you can open these directories with various applications. This can help speed up your workflow. However, for these apps to show up, they must be detected first.
 
-The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime Merge</i>.
+The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime Merge, iTerm</i>.
 
 For <strong>Visual Studio Code</strong>, you need to have `code` available in your PATH (`/usr/bin/local/code` is checked). 
 [More info](https://code.visualstudio.com/docs/editor/command-line) here.
@@ -243,7 +243,7 @@ For <strong>Visual Studio Code</strong>, you need to have `code` available in yo
 For <strong>PhpStorm</strong>, you need to have `pstorm` available in your PATH (`/usr/bin/local/pstorm` is checked). 
 [More info](https://www.jetbrains.com/help/phpstorm/working-with-the-ide-features-from-command-line.html) here.
 
-For <strong>Sublime Text (and Sublime Merge)</strong>, the apps need to be in your `/Applications` directory.
+For <strong>Sublime Text, Sublime Merge and iTerm</strong>, the apps need to be in your `/Applications` directory.
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Editor.swift).
 </details>

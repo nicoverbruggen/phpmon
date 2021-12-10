@@ -90,17 +90,14 @@ class StatusMenu : NSMenu {
     func addForceLoadLatestVersion() {
         if !App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion) {
             self.addItem(NSMenuItem(
-                title: "mi_force_load_latest_unavailable".localized
-                    .replacingOccurrences(of: "%@", with: App.shared.brewPhpVersion),
+                title: "mi_force_load_latest_unavailable".localized(App.shared.brewPhpVersion),
                 action: nil, keyEquivalent: "f"
             ))
         } else {
             self.addItem(NSMenuItem(
-                title: "mi_force_load_latest".localized
-                    .replacingOccurrences(of: "%@", with: App.shared.brewPhpVersion),
+                title: "mi_force_load_latest".localized(App.shared.brewPhpVersion),
                 action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
         }
-        
     }
     
     func addValetMenuItems() {
@@ -185,5 +182,5 @@ class ExtensionMenuItem: NSMenuItem {
 }
 
 class EditorMenuItem: NSMenuItem {
-    var editor: Editor? = nil
+    var editor: Application? = nil
 }

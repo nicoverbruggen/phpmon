@@ -22,8 +22,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
     var sites: [Valet.Site] = []
     
-    /// Array that contains various editors that might open a particular site directory.
-    var editors: [Editor] = Editor.detectPresetEditors()
+    /// Array that contains various apps that might open a particular site directory.
+    var editors: [Application] = Application.detectPresetApplications()
     
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
@@ -176,16 +176,18 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             selectedSite.determineSecured(Valet.shared.config.tld)
             if selectedSite.secured == originalSecureStatus {
                 Alert.notify(
-                    message: "site_list.alerts_status_changed.title".localized,
-                    info: "\("site_list.alerts_status_changed.desc".localized) `\(command)`")
+                    message: "site_list.alerts_status_not_changed.title".localized,
+                    info: "site_list.alerts_status_not_changed.desc".localized(command)
+                )
             } else {
                 let newState = selectedSite.secured ? "secured" : "unsecured"
                 LocalNotification.send(
                     title: "site_list.alerts_status_changed.title".localized,
                     subtitle: "site_list.alerts_status_changed.desc"
-                        .localized
-                        .replacingOccurrences(of: "{@1}", with: "\(selectedSite.name!).\(Valet.shared.config.tld)")
-                        .replacingOccurrences(of: "{@2}", with: newState)
+                        .localized(
+                            "\(selectedSite.name!).\(Valet.shared.config.tld)",
+                            newState
+                        )
                 )
             }
             
@@ -207,6 +209,10 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         Shell.run("open \(selectedSite!.absolutePath!)")
     }
     
+    @objc public func openInTerminal() {
+        Shell.run("open -b com.apple.terminal \(selectedSite!.absolutePath!)")
+    }
+    
     @objc public func unlinkSite() {
         guard let site = selectedSite else {
             return
@@ -218,8 +224,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
         Alert.confirm(
             onWindow: view.window!,
-            messageText: "site_list.confirm_unlink".localized
-                .replacingOccurrences(of: "%@", with: site.name),
+            messageText: "site_list.confirm_unlink".localized(site.name),
             informativeText: "site_link.confirm_link".localized,
             buttonTitle: "site_list.unlink".localized,
             secondButtonTitle: "Cancel",
@@ -280,6 +285,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
         if (editors.count > 0) {
             menu.addItem(NSMenuItem.separator())
+            menu.addItem(withTitle: "site_list.detected_apps".localized, action: nil, keyEquivalent: "")
             
             for (index, editor) in editors.enumerated() {
                 let editorMenuItem = EditorMenuItem(
@@ -294,10 +300,16 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             menu.addItem(NSMenuItem.separator())
         }
         
+        menu.addItem(withTitle: "site_list.system_apps".localized, action: nil, keyEquivalent: "")
         menu.addItem(
             withTitle: "site_list.open_in_finder".localized,
             action: #selector(self.openInFinder),
             keyEquivalent: "F"
+        )
+        menu.addItem(
+            withTitle: "site_list.open_in_terminal".localized,
+            action: #selector(self.openInTerminal),
+            keyEquivalent: "T"
         )
         menu.addItem(
             withTitle: "site_list.open_in_browser".localized,
@@ -318,7 +330,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
-    private func presentAlertForMissingEditorBinary(_ editor: Editor, _ sender: EditorMenuItem) {
+    private func presentAlertForMissingEditorBinary(_ editor: Application, _ sender: EditorMenuItem) {
         Alert.confirm(
             onWindow: self.view.window!,
             messageText: "editors.binary_missing.title".localized(editor.pathToBinary),

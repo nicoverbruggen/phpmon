@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
-		54B48B5F275F66AE006D90C5 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Editor.swift */; };
-		54B48B60275F66AE006D90C5 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Editor.swift */; };
+		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
+		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
@@ -120,7 +120,7 @@
 /* Begin PBXFileReference section */
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		54B48B5E275F66AE006D90C5 /* Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
+		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
@@ -323,7 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				C476FF9722B0DD830098105B /* Alert.swift */,
-				54B48B5E275F66AE006D90C5 /* Editor.swift */,
+				54B48B5E275F66AE006D90C5 /* Application.swift */,
 				C4188988275FE8CB001EF227 /* Filesystem.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
@@ -544,7 +544,7 @@
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
-				54B48B5F275F66AE006D90C5 /* Editor.swift in Sources */,
+				54B48B5F275F66AE006D90C5 /* Application.swift in Sources */,
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
@@ -577,7 +577,7 @@
 			files = (
 				54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
-				54B48B60275F66AE006D90C5 /* Editor.swift in Sources */,
+				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,

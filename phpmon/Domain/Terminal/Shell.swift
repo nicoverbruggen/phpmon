@@ -93,5 +93,4 @@ class Shell {
     public static func fileExists(_ path: String) -> Bool {
         return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
     }
-    
 }
