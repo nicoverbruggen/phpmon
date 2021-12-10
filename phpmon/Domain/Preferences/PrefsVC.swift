@@ -57,6 +57,7 @@ class PrefsVC: NSViewController {
         windowController.window!.delegate = delegate
         windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
         windowController.window!.delegate = windowController
+        windowController.positionWindowInTopLeftCorner()
         
         App.shared.preferencesWindowController = windowController
     }

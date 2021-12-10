@@ -56,6 +56,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         ]
         windowController.window!.minSize = NSSize(width: 550, height: 200)
         windowController.window!.delegate = windowController
+        windowController.positionWindowInTopLeftCorner()
         
         App.shared.siteListWindowController = windowController
     }

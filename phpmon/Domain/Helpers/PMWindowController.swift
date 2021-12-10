@@ -25,6 +25,18 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
         App.shared.register(window: windowName)
     }
     
+    public func positionWindowInTopLeftCorner() {
+        guard let frame = NSScreen.main?.frame else { return }
+        guard let window = self.window else { return }
+        
+        window.setFrame(NSRect(
+            x: frame.size.width - window.frame.size.width - 20,
+            y: frame.size.height - window.frame.size.height - 40,
+            width: window.frame.width,
+            height: window.frame.height
+        ), display: true)
+    }
+    
     func windowWillClose(_ notification: Notification) {
         App.shared.remove(window: windowName)
     }

@@ -15,7 +15,7 @@ import Foundation
 class Application {
     
     enum AppType {
-        case editor, browser, gitgui, terminal
+        case editor, browser, git_gui, terminal
     }
     
     /// Name of the app. Used for display purposes and to determine `name.app` exists.
@@ -24,25 +24,25 @@ class Application {
     /// Application type. Depending on the type, a different action might occur.
     let type: AppType
     
-    /// Initializer.
+    /// Initializer. Used to detect a specific app of a specific type.
     init(_ name: String, _ type: AppType) {
         self.name = name
         self.type = type
     }
     
     /**
-     Attempt to open a specific directory in the editor of choice.
-     This will open the editor if it isn't open yet.
+     Attempt to open a specific directory in the app of choice.
+     (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        return Shell.run("/usr/bin/open -a \(self.name) \(file)")
+        return Shell.run("/usr/bin/open -a \"\(name)\" \(file)")
     }
     
     /** Checks if the app is installed. */
     func isInstalled() -> Bool {
         // If this script does not complain, the app exists!
         return Shell.user.execute(
-            "/usr/bin/open -Ra \"\(self.name)\"",
+            "/usr/bin/open -Ra \"\(name)\"",
             requiresPath: false,
             waitUntilExit: true
         ).task.terminationStatus == 0
@@ -56,7 +56,7 @@ class Application {
             Application("PhpStorm", .editor),
             Application("Visual Studio Code", .editor),
             Application("Sublime Text", .editor),
-            Application("Sublime Merge", .gitgui),
+            Application("Sublime Merge", .git_gui),
             Application("iTerm", .terminal)
         ].filter {
             return $0.isInstalled()
