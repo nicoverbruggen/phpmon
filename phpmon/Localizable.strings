@@ -65,9 +65,9 @@
 
 // SITE LIST ACTIONS
 
-"site_list.unlink" = "Unlink";
-"site_list.secure" = "Secure";
-"site_list.unsecure" = "Unsecure";
+"site_list.unlink" = "Unlink Directory";
+"site_list.secure" = "Secure Domain";
+"site_list.unsecure" = "Unsecure Domain";
 "site_list.open_in_finder" = "Open in Finder";
 "site_list.open_in_browser" = "Open in Browser";
 "site_list.open_in_terminal" = "Open in Terminal";

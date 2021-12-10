@@ -27,6 +27,8 @@
 		C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
+		C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
+		C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C4232EE52612526500158FC6 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = C4232EE42612526500158FC6 /* Credits.html */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
@@ -139,6 +141,7 @@
 		C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePhpInstallation.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
+		C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+ContextMenu.swift"; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
@@ -304,6 +307,7 @@
 			children = (
 				C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */,
 				C464ADAE275A7A69003FCD53 /* SiteListVC.swift */,
+				C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */,
 				C464ADB1275A87CA003FCD53 /* SiteListCell.swift */,
 			);
 			path = SiteList;
@@ -543,6 +547,7 @@
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
+				C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
@@ -602,6 +607,7 @@
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
+				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
