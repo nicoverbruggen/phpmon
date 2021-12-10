@@ -75,44 +75,9 @@
 "site_list.system_apps" = "System Applications";
 
 // EDITORS
-"editors.binary_missing.title" = "`%@` missing";
-"editors.binary_missing.desc" = "The associated binary (`%@`) is missing. Because of this, PHP Monitor cannot open the domain’s folder.";
+
 "editors.alert.try_again" = "Try Again";
 "editors.alert.cancel" = "Cancel";
-
-// - PHPSTORM + TOOLBOX
-"editors.phpstorm_binary_not_linked.desc" =
-"PHP Monitor makes use of PhpStorm’s launcher to open a specific directory.
-
-The required launcher does not seem to be found in the usual location. In JetBrains Toolbox go to Settings, and select 'Generate shell scripts'.
-
-As the directory, enter `/usr/local/bin`.
-
-After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
-
-// - PHPSTORM (standalone)
-"editors.pstorm_binary_not_linked.desc" =
-"PHP Monitor makes use of PhpStorm’s launcher to open a specific directory.
-
-The required launcher does not seem to be found in the usual location. Please set up the launcher by going to 'Tools > Create command-line launcher' in PhpStorm.
-
-After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
-"editors.code_binary_not_linked.desc" =
-"PHP Monitor makes use of Visual Studio Code‘s helper binary, `code`, but it seems not to exist on your system.
-
-You can fix this by selecting 'Install `code` command in PATH' in Visual Studio Code’s command palette.
-(Type `>code` to find it.)
-
-After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
-
-// - VS CODE
-"editors.code_binary_not_linked.desc" =
-"PHP Monitor makes use of Visual Studio Code‘s helper binary, `code`, but it seems not to exist on your system.
-
-You can fix this by selecting 'Install `code` command in PATH' in Visual Studio Code’s command palette.
-(Type `>code` to find it.)
-
-After this is done, PHP Monitor should be able to open the domain’s folder in PhpStorm.";
 
 // PREFERENCES
 

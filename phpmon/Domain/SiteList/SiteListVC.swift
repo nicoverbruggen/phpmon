@@ -23,7 +23,9 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var sites: [Valet.Site] = []
     
     /// Array that contains various apps that might open a particular site directory.
-    var editors: [Application] = Application.detectPresetApplications()
+    var applications: [Application] {
+        return App.shared.detectedApplications
+    }
     
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
@@ -283,11 +285,11 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             keyEquivalent: "L"
         )
         
-        if (editors.count > 0) {
+        if (applications.count > 0) {
             menu.addItem(NSMenuItem.separator())
             menu.addItem(withTitle: "site_list.detected_apps".localized, action: nil, keyEquivalent: "")
             
-            for (index, editor) in editors.enumerated() {
+            for (index, editor) in applications.enumerated() {
                 let editorMenuItem = EditorMenuItem(
                     title: "Open with \(editor.name)",
                     action: #selector(self.openWithEditor(sender:)),
@@ -296,10 +298,9 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
                 editorMenuItem.editor = editor
                 menu.addItem(editorMenuItem)
             }
-            
-            menu.addItem(NSMenuItem.separator())
         }
         
+        menu.addItem(NSMenuItem.separator())
         menu.addItem(withTitle: "site_list.system_apps".localized, action: nil, keyEquivalent: "")
         menu.addItem(
             withTitle: "site_list.open_in_finder".localized,
@@ -322,29 +323,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @objc func openWithEditor(sender: EditorMenuItem) {
         guard let editor = sender.editor else { return }
-        
-        if editor.hasBinary() {
-            editor.openDirectory(file: selectedSite!.absolutePath!)
-        } else {
-            presentAlertForMissingEditorBinary(editor, sender)
-        }
+        editor.openDirectory(file: selectedSite!.absolutePath!)
     }
-    
-    private func presentAlertForMissingEditorBinary(_ editor: Application, _ sender: EditorMenuItem) {
-        Alert.confirm(
-            onWindow: self.view.window!,
-            messageText: "editors.binary_missing.title".localized(editor.pathToBinary),
-            informativeText:
-                editor.missingBinaryInstruction
-            ?? "editors.binary_missing.desc".localized(editor.pathToBinary),
-            buttonTitle: "editors.alert.try_again".localized,
-            secondButtonTitle: "editors.alert.cancel".localized,
-            onFirstButtonPressed: {
-                self.openWithEditor(sender: sender)
-            }
-        )
-    }
-
     // MARK: - Deinitialization
     
     deinit {

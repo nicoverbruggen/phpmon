@@ -57,10 +57,13 @@ class App {
     var currentInstall: ActivePhpInstallation? = nil
     
     /** All available versions of PHP. */
-    var availablePhpVersions : [String] = []
+    var availablePhpVersions: [String] = []
     
     /** Cached information about the PHP installations. */
-    var cachedPhpInstallations : [String: PhpInstallation] = [:]
+    var cachedPhpInstallations: [String: PhpInstallation] = [:]
+    
+    /** List of detected (installed) applications that PHP Monitor can work with. */
+    var detectedApplications: [Application] = []
     
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?

@@ -55,9 +55,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         updatePhpVersionInStatusBar()
         
+        print("Determining broken PHP-FPM...")
         // Attempt to find out if PHP-FPM is broken
         let installation = App.phpInstall!
         installation.notifyAboutBrokenPhpFpm()
+        
+        print("Detecting applications...")
+        // Attempt to load list of applications
+        App.shared.detectedApplications = Application.detectPresetApplications()
+        let appNames = App.shared.detectedApplications.map { app in
+            return app.name
+        }
+        print("Detected applications: \(appNames)")
         
         // Attempt to find out more info about Valet
         print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")

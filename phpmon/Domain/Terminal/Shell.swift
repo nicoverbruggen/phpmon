@@ -62,6 +62,26 @@ class Shell {
         _ command: String,
         requiresPath: Bool = false
     ) -> String {
+        let shellOutput = self.execute(command, requiresPath: requiresPath)
+        let hasError = (
+            shellOutput.standardOutput == ""
+            && shellOutput.errorOutput.lengthOfBytes(using: .utf8) > 0
+        )
+        return !hasError ? shellOutput.standardOutput : shellOutput.errorOutput
+    }
+    
+    /**
+     Runs the command and returns a `ShellOutput` object, which contains info about the process.
+     
+     - Parameter command: The command to run
+     - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
+     - Parameter waitUntilExit: Waits for the command to complete before returning the `ShellOutput`
+     */
+    func execute(
+        _ command: String,
+        requiresPath: Bool = false,
+        waitUntilExit: Bool = false
+    ) -> ShellOutput {
         let task = Process()
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -76,14 +96,19 @@ class Shell {
         task.standardError = errorPipe
         task.launch()
         
-        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        
-        if (output == "" && error.lengthOfBytes(using: .utf8) > 0) {
-            return error
+        if waitUntilExit {
+            task.waitUntilExit()
         }
-
-        return output
+    
+        return ShellOutput(
+            standardOutput: String(
+                data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8
+            )!,
+            errorOutput: String(
+                data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8
+            )!,
+            task: task
+        )
     }
     
     /**
@@ -92,5 +117,19 @@ class Shell {
      */
     public static func fileExists(_ path: String) -> Bool {
         return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
+    }
+}
+
+class ShellOutput {
+    let standardOutput: String
+    let errorOutput: String
+    let task: Process
+    
+    init(standardOutput: String,
+         errorOutput: String,
+         task: Process) {
+        self.standardOutput = standardOutput
+        self.errorOutput = errorOutput
+        self.task = task
     }
 }
