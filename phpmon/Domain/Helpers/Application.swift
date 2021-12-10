@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// An application that is capable of opening a particular directory (usually of a PHP project).
 /// In most cases this is going to be a code editor, but it could also be another application
 /// that supports opening those directories, like a visual Git client or a terminal app.
