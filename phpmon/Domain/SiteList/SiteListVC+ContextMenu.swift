@@ -44,7 +44,7 @@ extension SiteListVC {
         menu.addItem(
             withTitle: "site_list.open_in_browser".localized,
             action: #selector(self.openInBrowser),
-            keyEquivalent: "O"
+            keyEquivalent: "B"
         )
     }
     
@@ -53,11 +53,11 @@ extension SiteListVC {
             menu.addItem(NSMenuItem.separator())
             menu.addItem(withTitle: "site_list.detected_apps".localized, action: nil, keyEquivalent: "")
             
-            for (index, editor) in applications.enumerated() {
+            for (_, editor) in applications.enumerated() {
                 let editorMenuItem = EditorMenuItem(
                     title: "Open with \(editor.name)",
                     action: #selector(self.openWithEditor(sender:)),
-                    keyEquivalent: "\(index + 1)"
+                    keyEquivalent: ""
                 )
                 editorMenuItem.editor = editor
                 menu.addItem(editorMenuItem)
@@ -70,7 +70,7 @@ extension SiteListVC {
             menu.addItem(
                 withTitle: "site_list.unlink".localized,
                 action: #selector(self.unlinkSite),
-                keyEquivalent: "U"
+                keyEquivalent: ""
             )
             menu.addItem(NSMenuItem.separator())
         }
@@ -82,7 +82,7 @@ extension SiteListVC {
             ? "site_list.unsecure".localized
             : "site_list.secure".localized,
             action: #selector(toggleSecure),
-            keyEquivalent: "L"
+            keyEquivalent: ""
         )
     }
     
