@@ -32,13 +32,6 @@ class App {
         return App.shared.busy
     }
     
-    // MARK: - Initializer
-
-    /** When the app boots up, this code will run even before the start-up checks. */
-    init() {
-        loadGlobalHotkey()
-    }
-    
     // MARK: Variables
     
     /** The list of preferences that are currently active. */

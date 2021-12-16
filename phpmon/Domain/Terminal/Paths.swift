@@ -33,8 +33,6 @@ class Paths {
             print("This usually means we're in trouble... (no Homebrew?)")
             baseDir = .usr
         }
-        
-        print("Homebrew directory: \(baseDir)")
     }
     
     // - MARK: Binaries

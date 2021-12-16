@@ -68,9 +68,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
         print("Detected applications: \(appNames)")
         
+        // Load the global hotkey
+        App.shared.loadGlobalHotkey()
+        
         // Attempt to find out more info about Valet
         print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
         Valet.shared.validateVersion()
+        Valet.shared.startPreloadingSites()
         print("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds

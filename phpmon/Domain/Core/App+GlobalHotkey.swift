@@ -20,7 +20,7 @@ extension App {
     func loadGlobalHotkey() {
         // Make sure we can retrieve the hotkey from preferences
         guard let hotkey = Preferences.preferences[.globalHotkey] as? String else {
-            print("No global hotkey loaded")
+            print("No global hotkey was saved in preferences. None set.")
             return
         }
         

@@ -17,9 +17,7 @@ extension AppDelegate {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self
         notificationCenter.requestAuthorization(options: [.alert], completionHandler: { granted, error in
-            if granted {
-                print("PHP Monitor has permission to show notifications.")
-            } else {
+            if !granted {
                 print("PHP Monitor does not have permission to show notifications.")
             }
             if let error = error {
