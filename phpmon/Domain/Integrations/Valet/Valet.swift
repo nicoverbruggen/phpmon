@@ -22,11 +22,7 @@ class Valet {
     var sites: [Site] = []
     
     init() {
-        version = Actions.valet("--version")
-            .replacingOccurrences(of: "Laravel Valet ", with: "")
-            // TODO: Use regular expression to avoid deprecation notices
-            .split(separator: "\n").last?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+        version = VersionExtractor.from(Actions.valet("--version"))
             ?? "UNKNOWN"
         
         let file = FileManager.default.homeDirectoryForCurrentUser
@@ -46,6 +42,22 @@ class Valet {
     
     public func reloadSites() {
         resolvePaths(tld: config.tld)
+    }
+    
+    public func validateVersion() -> Void {
+        if version == "UNKNOWN" {
+            return print("The Valet version could not be extracted... that does not bode well.")
+        }
+        
+        if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
+            let version = version
+            print("Valet version \(version) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            DispatchQueue.main.async {
+                Alert.notify(message: "alert.min_valet_version.title".localized, info: "alert.min_valet_version.info".localized(version, Constants.MinimumRecommendedValetVersion))
+            }
+        } else {
+            print("Valet version \(version) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
+        }
     }
     
     private func resolvePaths(tld: String) {

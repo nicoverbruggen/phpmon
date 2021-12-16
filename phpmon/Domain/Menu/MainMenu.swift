@@ -70,6 +70,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         // Attempt to find out more info about Valet
         print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
+        Valet.shared.validateVersion()
         print("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds

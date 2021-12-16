@@ -69,6 +69,9 @@
 		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetTest.swift */; };
+		C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
+		C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
+		C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */; };
 		C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
@@ -171,6 +174,8 @@
 		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
 		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
 		C4AF9F7C275454A900D44ED0 /* ValetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetTest.swift; sourceTree = "<group>"; };
+		C4B5635D276AB09000F12CCB /* VersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionExtractor.swift; sourceTree = "<group>"; };
+		C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionExtractorTest.swift; sourceTree = "<group>"; };
 		C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuOutlets.swift"; sourceTree = "<group>"; };
 		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
 		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
@@ -336,6 +341,7 @@
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
 				54AB03252763858F00A29D5F /* Timer.swift */,
+				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				C43A8A1925D9CD1000591B77 /* Utility.swift */,
 				C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetTest.swift */,
+				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 			);
 			path = "phpmon-tests";
 			sourceTree = "<group>";
@@ -572,6 +579,7 @@
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
+				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
@@ -599,6 +607,7 @@
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
+				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,
@@ -621,6 +630,7 @@
 				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
 				C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */,
+				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
@@ -792,7 +802,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "4.1-rc1";
+				MARKETING_VERSION = "4.1-rc2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -817,7 +827,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "4.1-rc1";
+				MARKETING_VERSION = "4.1-rc2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
