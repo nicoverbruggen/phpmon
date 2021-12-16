@@ -36,35 +36,9 @@ class StatusMenu : NSMenu {
         
         self.addSwitchToPhpMenuItems()
         self.addItem(NSMenuItem.separator())
-        self.addServicesMenuItems()
     }
     
-    private func addSwitchToPhpMenuItems() {
-        var shortcutKey = 1
-        for index in (0..<App.shared.availablePhpVersions.count).reversed() {
-            
-            // Get the short and long version
-            let shortVersion = App.shared.availablePhpVersions[index]
-            let longVersion = App.shared.cachedPhpInstallations[shortVersion]!.longVersion
-            
-            let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-            let versionString = long ? longVersion : shortVersion
-            
-            let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (shortVersion == App.shared.brewPhpVersion) ? "php" : "php@\(shortVersion)"
-            let menuItem = PhpMenuItem(
-                title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
-                action: (shortVersion == App.phpInstall?.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
-            )
-            
-            menuItem.version = shortVersion
-            shortcutKey = shortcutKey + 1
-            
-            self.addItem(menuItem)
-        }
-    }
-    
-    private func addServicesMenuItems() {
+    func addServicesMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_active_services".localized))
         
         let services = NSMenuItem(title: "mi_manage_services".localized, action: nil, keyEquivalent: "")
@@ -74,17 +48,16 @@ class StatusMenu : NSMenu {
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
         servicesMenu.addItem(
             NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
-            withKeyModifier: [.command, .shift]
-        )
+            withKeyModifier: [.command, .shift])
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
         for item in servicesMenu.items {
             item.target = MainMenu.shared
         }
         self.setSubmenu(servicesMenu, for: services)
         
         self.addForceLoadLatestVersion()
-        
         self.addItem(services)
-        self.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
+
     }
     
     func addForceLoadLatestVersion() {
@@ -149,6 +122,31 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         
         self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
+    }
+    
+    private func addSwitchToPhpMenuItems() {
+        var shortcutKey = 1
+        for index in (0..<App.shared.availablePhpVersions.count).reversed() {
+            
+            // Get the short and long version
+            let shortVersion = App.shared.availablePhpVersions[index]
+            let longVersion = App.shared.cachedPhpInstallations[shortVersion]!.longVersion
+            
+            let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+            let versionString = long ? longVersion : shortVersion
+            
+            let action = #selector(MainMenu.switchToPhpVersion(sender:))
+            let brew = (shortVersion == App.shared.brewPhpVersion) ? "php" : "php@\(shortVersion)"
+            let menuItem = PhpMenuItem(
+                title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
+                action: (shortVersion == App.phpInstall?.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
+            )
+            
+            menuItem.version = shortVersion
+            shortcutKey = shortcutKey + 1
+            
+            self.addItem(menuItem)
+        }
     }
     
     private func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {

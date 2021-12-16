@@ -128,6 +128,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             
             // Add Valet interactions
             menu.addValetMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add services
+            menu.addServicesMenuItems()
+            menu.addItem(NSMenuItem.separator())
             
             // Add information about services & actions
             menu.addPhpConfigurationMenuItems()
