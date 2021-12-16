@@ -26,7 +26,7 @@ PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-
 * The brew formula `php` has to be installed (which version is detected)
 * Laravel Valet 2.16.2 or higher (older versions might be compatible but are not supported)
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
+_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`._
 
 ## 🚀 How to install
 
