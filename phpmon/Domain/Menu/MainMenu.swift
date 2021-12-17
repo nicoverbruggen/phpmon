@@ -376,6 +376,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 }
             }
             
+            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
             if Preferences.preferences[.useInternalSwitcher] as! Bool == false {
                 // 1. Default switcher using Valet
                 // Will cause less issues, but is slower
@@ -384,7 +385,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     availableVersions: App.shared.availablePhpVersions,
                     completed: completion
                 )
-            } else {
+            } else { */
                 // 2. Custom switcher (internal)
                 // Will cause more issues with Homebrew and is faster
                 Actions.switchToPhpVersion(
@@ -392,7 +393,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     availableVersions: App.shared.availablePhpVersions,
                     completed: completion
                 )
-            }
+            /* } */
         }
     }
     
