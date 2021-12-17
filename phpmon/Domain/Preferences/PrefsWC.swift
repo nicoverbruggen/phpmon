@@ -33,12 +33,12 @@ class PrefsWC: PMWindowController {
         super.keyDown(with: event)
         
         if let vc = contentViewController as? PrefsVC {
-            if vc.listeningForGlobalHotkey {
+            if vc.listeningForHotkeyView != nil {
                 if event.keyCode == Keys.Escape || event.keyCode == Keys.Space {
                     print("A blacklisted key was pressed, canceling listen")
-                    vc.listeningForGlobalHotkey = false
+                    vc.listeningForHotkeyView = nil
                 } else {
-                    vc.updateGlobalShortcut(event)
+                    vc.listeningForHotkeyView!.updateShortcut(event)
                 }
             }
         }
