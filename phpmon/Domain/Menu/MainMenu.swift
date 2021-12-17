@@ -327,6 +327,30 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func updateComposerDependencies() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let output = Shell.user.execute(
+                "composer global update", requiresPath: true, waitUntilExit: true
+            )
+            DispatchQueue.main.async {
+                if output.task.terminationStatus > 0 {
+                    // Error code means > 0
+                    Alert.notify(
+                        message: "alert.composer_failure.title".localized,
+                        info: "alert.composer_failure.info".localized,
+                        style: .critical
+                    )
+                } else {
+                    // Error code -1 is OK
+                    LocalNotification.send(
+                        title: "alert.composer_success.title".localized,
+                        subtitle: "alert.composer_success.info".localized
+                    )
+                }
+            }
+        }
+    }
+    
     @objc func openActiveConfigFolder() {
         if (App.phpInstall!.version.error) {
             // php version was not identified
