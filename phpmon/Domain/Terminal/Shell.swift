@@ -62,7 +62,7 @@ class Shell {
         _ command: String,
         requiresPath: Bool = false
     ) -> String {
-        let shellOutput = self.execute(command, requiresPath: requiresPath)
+        let shellOutput = self.executeSynchronously(command, requiresPath: requiresPath)
         let hasError = (
             shellOutput.standardOutput == ""
             && shellOutput.errorOutput.lengthOfBytes(using: .utf8) > 0
@@ -77,35 +77,28 @@ class Shell {
      - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      - Parameter waitUntilExit: Waits for the command to complete before returning the `ShellOutput`
      */
-    func execute(
+    func executeSynchronously(
         _ command: String,
-        requiresPath: Bool = false,
-        waitUntilExit: Bool = false
+        requiresPath: Bool = false
     ) -> ShellOutput {
-        let task = Process()
+        
         let outputPipe = Pipe()
         let errorPipe = Pipe()
         
-        let tailoredCommand = requiresPath
-            ? "export PATH=\(Paths.binPath):$PATH && \(command)"
-            : command
-        
-        task.launchPath = self.shell
-        task.arguments = ["--login", "-c", tailoredCommand]
+        let task = self.createTask(for: command, requiresPath: requiresPath)
         task.standardOutput = outputPipe
         task.standardError = errorPipe
         task.launch()
-        
-        if waitUntilExit {
-            task.waitUntilExit()
-        }
+        task.waitUntilExit()
     
         return ShellOutput(
             standardOutput: String(
-                data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8
+                data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
+                encoding: .utf8
             )!,
             errorOutput: String(
-                data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8
+                data: errorPipe.fileHandleForReading.readDataToEndOfFile(),
+                encoding: .utf8
             )!,
             task: task
         )
@@ -117,6 +110,47 @@ class Shell {
      */
     public static func fileExists(_ path: String) -> Bool {
         return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
+    }
+    
+    /**
+     Creates a new process with the correct PATH and shell.
+     */
+    func createTask(for command: String, requiresPath: Bool) -> Process {
+        let tailoredCommand = requiresPath
+        ? "export PATH=\(Paths.binPath):$PATH && \(command)"
+        : command
+        
+        let task = Process()
+        task.launchPath = self.shell
+        task.arguments = ["--login", "-c", tailoredCommand]
+        
+        return task
+    }
+    
+    static func captureOutput(
+        _ task: Process,
+        didReceiveStdOutData: @escaping (String) -> Void,
+        didReceiveStdErrData: @escaping (String) -> Void
+    ) {
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
+        
+        task.standardOutput = outputPipe
+        task.standardError = errorPipe
+        
+        outputPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: outputPipe.fileHandleForReading, queue: nil) { notification in
+            let outputString = String(data: outputPipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) ?? ""
+            didReceiveStdOutData(outputString)
+            outputPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        }
+        
+        errorPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: errorPipe.fileHandleForReading, queue: nil) { notification in
+            let outputString = String(data: errorPipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) ?? ""
+            didReceiveStdErrData(outputString)
+            errorPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        }
     }
 }
 

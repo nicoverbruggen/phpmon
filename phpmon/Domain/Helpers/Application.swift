@@ -40,10 +40,9 @@ class Application {
     /** Checks if the app is installed. */
     func isInstalled() -> Bool {
         // If this script does not complain, the app exists!
-        return Shell.user.execute(
+        return Shell.user.executeSynchronously(
             "/usr/bin/open -Ra \"\(name)\"",
-            requiresPath: false,
-            waitUntilExit: true
+            requiresPath: false
         ).task.terminationStatus == 0
     }
     

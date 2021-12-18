@@ -329,9 +329,25 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func updateComposerDependencies() {
         DispatchQueue.global(qos: .userInitiated).async {
-            let output = Shell.user.execute(
-                "composer global update", requiresPath: true, waitUntilExit: true
+            let output = Shell.user.executeSynchronously(
+                "composer global update", requiresPath: true
             )
+            
+            let task = Shell.user.createTask(for: "composer global update", requiresPath: true)
+            
+            Shell.captureOutput(
+                task,
+                didReceiveStdOutData: { string in
+                    print("\(string)")
+                },
+                didReceiveStdErrData: { string in
+                    print("\(string)")
+                }
+            )
+            
+            task.launch()
+            task.waitUntilExit()
+            
             DispatchQueue.main.async {
                 if output.task.terminationStatus > 0 {
                     // Error code means > 0
