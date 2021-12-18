@@ -338,10 +338,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             Shell.captureOutput(
                 task,
                 didReceiveStdOutData: { string in
-                    print("\(string)")
+                    print("\(string.trimmingCharacters(in: .newlines))")
                 },
                 didReceiveStdErrData: { string in
-                    print("\(string)")
+                    print("\(string.trimmingCharacters(in: .newlines))")
                 }
             )
             
