@@ -138,18 +138,19 @@ class Shell {
         task.standardOutput = outputPipe
         task.standardError = errorPipe
         
-        outputPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: outputPipe.fileHandleForReading, queue: nil) { notification in
-            let outputString = String(data: outputPipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) ?? ""
-            didReceiveStdOutData(outputString)
-            outputPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        }
-        
-        errorPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: errorPipe.fileHandleForReading, queue: nil) { notification in
-            let outputString = String(data: errorPipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) ?? ""
-            didReceiveStdErrData(outputString)
-            errorPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        [(outputPipe, didReceiveStdOutData), (errorPipe, didReceiveStdErrData)].forEach {
+            (pipe: Pipe, callback: @escaping (String) -> Void) in
+            pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name.NSFileHandleDataAvailable,
+                object: pipe.fileHandleForReading,
+                queue: nil
+            ) { notification in
+                if let outputString = String(data: pipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) {
+                    callback(outputString)
+                }
+                pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+            }
         }
     }
 }
