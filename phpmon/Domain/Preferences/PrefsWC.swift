@@ -21,12 +21,6 @@ class PrefsWC: PMWindowController {
         return "Preferences"
     }
     
-    // MARK: - Window Lifecycle
-    
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    }
-    
     // MARK: - Key Interaction
     
     override func keyDown(with event: NSEvent) {

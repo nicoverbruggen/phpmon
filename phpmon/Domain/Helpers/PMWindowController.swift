@@ -25,6 +25,18 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
         App.shared.register(window: windowName)
     }
     
+    func windowWillClose(_ notification: Notification) {
+        App.shared.remove(window: windowName)
+    }
+    
+    deinit {
+        print("Window controller '\(windowName)' was deinitialized")
+    }
+    
+}
+
+extension NSWindowController {
+    
     public func positionWindowInTopLeftCorner() {
         guard let frame = NSScreen.main?.frame else { return }
         guard let window = self.window else { return }
@@ -35,14 +47,6 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
             width: window.frame.width,
             height: window.frame.height
         ), display: true)
-    }
-    
-    func windowWillClose(_ notification: Notification) {
-        App.shared.remove(window: windowName)
-    }
-    
-    deinit {
-        print("Window controller '\(windowName)' was deinitialized")
     }
     
 }

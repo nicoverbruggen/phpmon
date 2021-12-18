@@ -74,6 +74,13 @@ class PrefsVC: NSViewController {
                 preference: .autoServiceRestartAfterExtensionToggle,
                 action: {}
             ),
+            CheckboxPreferenceView.make(
+                sectionText: "prefs.switcher".localized,
+                descriptionText: "prefs.auto_composer_update_desc".localized,
+                checkboxText: "prefs.auto_composer_update_title".localized,
+                preference: .autoComposerGlobalUpdateAfterSwitch,
+                action: {}
+            ),
             /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
             CheckboxPreferenceView.make(
                 sectionText: "",

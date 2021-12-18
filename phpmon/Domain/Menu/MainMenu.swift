@@ -328,6 +328,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func updateComposerDependencies() {
+        self.updateGlobalDependencies(notify: true, completion: { _ in })
+    }
+    
+    func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
+        var window: ProgressWindowController? = ProgressWindowController.display(
+            title: "alert.composer_progress.title".localized,
+            description: "alert.composer_progress.info".localized
+        )
+        window?.setType(info: true)
+        
         DispatchQueue.global(qos: .userInitiated).async {
             let output = Shell.user.executeSynchronously(
                 "composer global update", requiresPath: true
@@ -335,33 +345,49 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             
             let task = Shell.user.createTask(for: "composer global update", requiresPath: true)
             
+            DispatchQueue.main.async {
+                window?.addToConsole("composer global update\n")
+            }
+            
             Shell.captureOutput(
                 task,
                 didReceiveStdOutData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
                     print("\(string.trimmingCharacters(in: .newlines))")
                 },
                 didReceiveStdErrData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
                     print("\(string.trimmingCharacters(in: .newlines))")
                 }
             )
             
             task.launch()
             task.waitUntilExit()
+            Shell.haltCapturingOutput(task)
             
             DispatchQueue.main.async {
-                if output.task.terminationStatus > 0 {
-                    // Error code means > 0
-                    Alert.notify(
-                        message: "alert.composer_failure.title".localized,
-                        info: "alert.composer_failure.info".localized,
-                        style: .critical
-                    )
+                if output.task.terminationStatus <= 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        window?.close()
+                        if (notify) {
+                            LocalNotification.send(
+                                title: "alert.composer_success.title".localized,
+                                subtitle: "alert.composer_success.info".localized
+                            )
+                        }
+                        window = nil
+                        completion(true)
+                    }
                 } else {
-                    // Error code -1 is OK
-                    LocalNotification.send(
-                        title: "alert.composer_success.title".localized,
-                        subtitle: "alert.composer_success.info".localized
-                    )
+                    window?.setType(info: false)
+                    window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
+                    window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
+                    window = nil
+                    completion(false)
                 }
             }
         }
@@ -406,13 +432,22 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     updatePhpVersionInStatusBar()
                     update()
                     
-                    // Send a notification that the switch has been completed
-                    LocalNotification.send(
-                        title: String(format: "notification.version_changed_title".localized, sender.version),
-                        subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
-                    )
+                    let sendLocalNotification = {
+                        LocalNotification.send(
+                            title: String(format: "notification.version_changed_title".localized, sender.version),
+                            subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
+                        )
+                        App.phpInstall?.notifyAboutBrokenPhpFpm()
+                    }
                     
-                    App.phpInstall?.notifyAboutBrokenPhpFpm()
+                    // Run composer updates
+                    if Preferences.preferences[.autoComposerGlobalUpdateAfterSwitch] as! Bool == true {
+                        self.updateGlobalDependencies(notify: false, completion: { success in
+                            sendLocalNotification()
+                        })
+                    } else {
+                        sendLocalNotification()
+                    }
                 }
             }
             

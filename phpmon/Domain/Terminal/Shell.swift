@@ -153,6 +153,15 @@ class Shell {
             }
         }
     }
+    
+    static func haltCapturingOutput(_ task: Process) {
+        if let pipe = task.standardOutput as? Pipe {
+            NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
+        }
+        if let pipe = task.standardError as? Pipe {
+            NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
+        }
+    }
 }
 
 class ShellOutput {

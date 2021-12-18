@@ -90,6 +90,7 @@
 "prefs.global_shortcut" = "Global shortcut:";
 "prefs.dynamic_icon" = "Dynamic icon:";
 "prefs.services" = "Services:";
+"prefs.switcher" = "Switcher:";
 
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
 "prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when\nyou check or uncheck an extension. Slightly slower when enabled, \nbut this applies the extension change immediately for all sites \nyou're serving, no need to restart PHP-FPM manually.";
@@ -108,6 +109,9 @@ switcher or are having issues with `valet use php`, you may
 use PHP Monitor's own switcher which is slightly faster,
 but might cause issues with permissions in your Homebrew
 directories, since PHP Monitor controls the services.";
+
+"prefs.auto_composer_update_title" = "Automatically run `composer global update`";
+"prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run\n`global update` whenever you switch versions. This will update\nall global dependencies every time you switch.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
@@ -131,13 +135,14 @@ directories, since PHP Monitor controls the services.";
 // ALERTS
 
 // Composer Update
+"alert.composer_progress.title" = "Updating global dependencies...";
+"alert.composer_progress.info" = "Your global Composer dependencies are being updated. Please wait a bit!";
+
 "alert.composer_success.title" = "Global dependencies updated";
 "alert.composer_success.info" = "Your global Composer dependencies have been updated.";
 
 "alert.composer_failure.title" = "Updating global dependencies failed";
-"alert.composer_failure.info" = "Something went wrong updating your global Composer dependencies.
-
-To find out what went wrong, try running `composer global update` in a terminal window.";
+"alert.composer_failure.info" = "Something went wrong updating your global Composer dependencies. You can find more information in the terminal output below. You’ll have to manually fix this problem in your own terminal.";
 
 // Force Reload Started
 "alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";
