@@ -39,38 +39,36 @@ class StatusMenu : NSMenu {
     }
     
     func addServicesMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_active_services".localized))
-        
         let services = NSMenuItem(title: "mi_manage_services".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
-            withKeyModifier: [.command, .shift])
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
-        for item in servicesMenu.items {
-            item.target = MainMenu.shared
-        }
-        self.setSubmenu(servicesMenu, for: services)
         
-        self.addForceLoadLatestVersion()
-        self.addItem(services)
-
-    }
-    
-    func addForceLoadLatestVersion() {
         if !App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion) {
-            self.addItem(NSMenuItem(
+            servicesMenu.addItem(NSMenuItem(
                 title: "mi_force_load_latest_unavailable".localized(App.shared.brewPhpVersion),
                 action: nil, keyEquivalent: "f"
             ))
         } else {
-            self.addItem(NSMenuItem(
+            servicesMenu.addItem(NSMenuItem(
                 title: "mi_force_load_latest".localized(App.shared.brewPhpVersion),
                 action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
         }
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+        
+        servicesMenu.addItem(
+            NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
+            withKeyModifier: [.command, .shift])
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
+        
+        for item in servicesMenu.items {
+            item.target = MainMenu.shared
+        }
+        
+        self.setSubmenu(servicesMenu, for: services)
+        self.addItem(services)
     }
     
     func addValetMenuItems() {
@@ -94,7 +92,7 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
-        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: #selector(MainMenu.updateComposerDependencies), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: App.shared.busy ? nil : #selector(MainMenu.updateComposerDependencies), keyEquivalent: ""))
         
         if (App.shared.busy) {
             return
@@ -127,6 +125,11 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         
         self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
+        
+        self.addItem(NSMenuItem.separator())
+        
+        self.addServicesMenuItems()
+        
     }
     
     private func addSwitchToPhpMenuItems() {

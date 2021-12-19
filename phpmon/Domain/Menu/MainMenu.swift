@@ -131,10 +131,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add services
-            menu.addServicesMenuItems()
-            menu.addItem(NSMenuItem.separator())
-            
-            // Add information about services & actions
             menu.addPhpConfigurationMenuItems()
             menu.addItem(NSMenuItem.separator())
             
@@ -332,6 +328,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
+        App.shared.busy = true
+        setBusyImage()
+        self.update()
+        
+        let noLongerBusy = {
+            App.shared.busy = false
+            DispatchQueue.main.async { [self] in
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+        }
+        
         var window: ProgressWindowController? = ProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
             description: "alert.composer_progress.info".localized
@@ -380,6 +388,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                             )
                         }
                         window = nil
+                        noLongerBusy()
                         completion(true)
                     }
                 } else {
@@ -387,6 +396,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
                     window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
                     window = nil
+                    noLongerBusy()
                     completion(false)
                 }
             }

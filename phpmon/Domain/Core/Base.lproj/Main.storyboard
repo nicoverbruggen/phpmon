@@ -334,11 +334,14 @@
             <objects>
                 <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
-                        <rect key="frame" x="0.0" y="0.0" width="574" height="498"/>
+                        <rect key="frame" x="0.0" y="0.0" width="550" height="498"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k57-O3-Yyj">
-                                <rect key="frame" x="0.0" y="15" width="574" height="468"/>
+                                <rect key="frame" x="0.0" y="15" width="550" height="468"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="550" id="eOC-yS-nl6"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <constraints>

@@ -19,17 +19,17 @@
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";
-"mi_restart_php_fpm" = "Restart service: php";
-"mi_restart_nginx" = "Restart service: nginx";
-"mi_restart_dnsmasq" = "Restart service: dnsmasq";
-"mi_manage_services" = "Manage services";
-"mi_restart_all_services" = "Restart all services";
-"mi_stop_all_services" = "Stop all services";
-"mi_force_load_latest" = "Force load (latest) PHP %@";
-"mi_force_load_latest_unavailable" = "Force load unavailable (PHP %@ not installed)";
-"mi_php_refresh" = "Refresh information";
+"mi_restart_php_fpm" = "Restart Service: php";
+"mi_restart_nginx" = "Restart Service: nginx";
+"mi_restart_dnsmasq" = "Restart Service: dnsmasq";
+"mi_manage_services" = "Manage Services";
+"mi_restart_all_services" = "Restart All Services";
+"mi_stop_all_services" = "Stop All Services";
+"mi_force_load_latest" = "Force Load (Latest) PHP %@";
+"mi_force_load_latest_unavailable" = "Force Load Unavailable (PHP %@ Not Installed)";
+"mi_php_refresh" = "Refresh Information";
 
-"mi_configuration" = "Configuration";
+"mi_configuration" = "PHP Configuration";
 "mi_limits" = "Limits Configuration";
 "mi_memory_limit" = "Memory Limit";
 "mi_post_max_size" = "Max POST";
@@ -37,15 +37,15 @@
 
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet folder (.config/valet)";
-"mi_php_config" = "Locate PHP configuration file (php.ini)";
-"mi_global_composer" = "Locate global composer.json file (.composer)";
-"mi_phpinfo" = "Show current configuration (phpinfo)";
-"mi_update_global_composer" = "Update global Composer dependencies";
+"mi_php_config" = "Locate PHP Configuration File (php.ini)";
+"mi_global_composer" = "Locate Global Composer File (.composer)";
+"mi_phpinfo" = "Show Current Configuration (phpinfo)";
+"mi_update_global_composer" = "Update Global Composer Dependencies...";
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
 "mi_valet" = "Laravel Valet";
-"mi_sitelist" = "View linked & parked domains...";
+"mi_sitelist" = "View Linked and Parked Domains...";
 
 "mi_preferences" = "Preferences...";
 "mi_quit" = "Quit PHP Monitor";
@@ -93,30 +93,25 @@
 "prefs.switcher" = "Switcher:";
 
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
-"prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when\nyou check or uncheck an extension. Slightly slower when enabled, \nbut this applies the extension change immediately for all sites \nyou're serving, no need to restart PHP-FPM manually.";
+"prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when you check or uncheck an extension. Slightly slower when enabled, but this applies the extension change immediately for all sites you're serving, no need to restart PHP-FPM manually.";
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
-"prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the\ncurrently linked PHP version.";
+"prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible. If checked, it will display the major version number of the currently linked PHP version.";
 
 "prefs.display_full_php_version" = "Display full PHP version in menu bar";
-"prefs.display_full_php_version_desc" = "Display the full version instead of the major version only.\n(This may be undesirable on smaller displays,\nso this is disabled by default.)";
+"prefs.display_full_php_version_desc" = "Display the full version instead of the major version only. (This may be undesirable on smaller displays, so this is disabled by default.)";
 
 "prefs.use_internal_switcher" = "Use PHP Monitor’s own version switcher";
 "prefs.use_internal_switcher_desc" =
-"By default, PHP Monitor will attempt to use Laravel Valet
-in order to switch PHP versions. If you prefer a different
-switcher or are having issues with `valet use php`, you may
-use PHP Monitor's own switcher which is slightly faster,
-but might cause issues with permissions in your Homebrew
-directories, since PHP Monitor controls the services.";
+"By default, PHP Monitor will attempt to use Laravel Valet in order to switch PHP versions. If you prefer a different switcher or are having issues with `valet use php`, you may use PHP Monitor's own switcher which is slightly faster, but might cause issues with permissions in your Homebrew directories, since PHP Monitor controls the services.";
 
-"prefs.auto_composer_update_title" = "Automatically run `composer global update`";
-"prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run\n`global update` whenever you switch versions. This will update\nall global dependencies every time you switch.";
+"prefs.auto_composer_update_title" = "Automatically update global dependencies";
+"prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run `composer global update` whenever you switch between different PHP versions. You will be able to see what changes are being made, or should this fail.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
 "prefs.shortcut_clear" = "Clear";
-"prefs.shortcut_desc" = "If a shortcut combination is set up, you can toggle PHP Monitor\nwherever you are by pressing the key combination you chose.\n(Cancel choosing a shortcut by pressing the spacebar.)";
+"prefs.shortcut_desc" = "If a shortcut combination is set up, you can toggle PHP Monitor wherever you are by pressing the key combination you chose. (Cancel choosing a shortcut by pressing the spacebar.)";
 
 // NOTIFICATIONS
 
@@ -136,13 +131,16 @@ directories, since PHP Monitor controls the services.";
 
 // Composer Update
 "alert.composer_progress.title" = "Updating global dependencies...";
-"alert.composer_progress.info" = "Your global Composer dependencies are being updated. Please wait a bit!";
+"alert.composer_progress.info" = "You can see the progress in the terminal output below.";
 
-"alert.composer_success.title" = "Global dependencies updated";
-"alert.composer_success.info" = "Your global Composer dependencies have been updated.";
+"alert.composer_failure.title" = "Something went wrong!";
+"alert.composer_failure.info" = "Your global Composer dependencies could not be updated.
+You can find more information in the terminal output below. You’ll have to fix this
+problem manually, using your own Terminal app (this just shows you the output).";
 
-"alert.composer_failure.title" = "Updating global dependencies failed";
-"alert.composer_failure.info" = "Something went wrong updating your global Composer dependencies. You can find more information in the terminal output below. You’ll have to manually fix this problem in your own terminal.";
+
+"alert.composer_success.title" = "Composer’s done updating!";
+"alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Force Reload Started
 "alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";
