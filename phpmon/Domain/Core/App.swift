@@ -45,9 +45,13 @@ class App {
     
     /** Whether the application is busy switching versions. */
     var busy: Bool = false
-    
+
     /** The currently active installation of PHP. */
-    var currentInstall: ActivePhpInstallation? = nil
+    var currentInstall: ActivePhpInstallation? = nil {
+        didSet {
+            handlePhpConfigWatcher()
+        }
+    }
     
     /** All available versions of PHP. */
     var availablePhpVersions: [String] = []
@@ -102,4 +106,10 @@ class App {
      */
     var openWindows: [String] = []
     
+    // MARK: - App Watchers
+    
+    /**
+     The `PhpConfigWatcher` is responsible for watching the `.ini` files and the `.conf.d` folder.
+     */
+    var watcher: PhpConfigWatcher!
 }

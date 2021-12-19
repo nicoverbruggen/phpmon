@@ -221,6 +221,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func reloadPhpMonitorMenuInBackground() {
+        waitAndExecute {
+            // This automatically reloads the menu
+            print("Reloading information about the PHP installation (in the background)...")
+        }
+    }
+    
     @objc func reloadPhpMonitorMenu() {
         waitAndExecute {
             // This automatically reloads the menu
