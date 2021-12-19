@@ -27,7 +27,7 @@ extension App {
         }
     }
     
-    func handlePhpConfigWatcher() {
+    func handlePhpConfigWatcher(forceReload: Bool = false) {
         if self.currentInstall != nil {
             // Determine the path of the config folder
             let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(self.currentInstall!.version.short)")
@@ -38,7 +38,7 @@ extension App {
             }
             
             // Watcher needs to be updated
-            if self.watcher.url != url {
+            if self.watcher.url != url || forceReload {
                 self.watcher.disable()
                 self.watcher = nil
                 print("Watcher has stopped watching files. Starting new one...")

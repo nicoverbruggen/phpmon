@@ -27,9 +27,8 @@ class PhpConfigWatcher {
         self.addWatcher(for: self.url.appendingPathComponent("php.ini"), eventMask: .write)
         
         // Add a watcher for conf.d (in case a new file is added or a file is deleted)
-        // TODO: Make sure that the contents of the conf.d folder is checked each time... this might mean
-        // that watchers are due for deletion / need to be created
-        self.addWatcher(for: self.url.appendingPathComponent("conf.d"), eventMask: .all)
+        // This watcher, when triggered, will restart all watchers
+        self.addWatcher(for: self.url.appendingPathComponent("conf.d"), eventMask: .all, behaviour: .reloadsWatchers)
         
         // Scan the conf.d folder for .ini files, and add a watcher for each file
         let enumerator = FileManager.default.enumerator(atPath: self.url.appendingPathComponent("conf.d").path)
@@ -47,8 +46,8 @@ class PhpConfigWatcher {
         }
     }
     
-    func addWatcher(for url: URL, eventMask: DispatchSource.FileSystemEvent) {
-        let watcher = FSWatcher(for: url, eventMask: eventMask, parent: self)
+    func addWatcher(for url: URL, eventMask: DispatchSource.FileSystemEvent, behaviour: FSWatcherBehaviour = .reloadsMenu) {
+        let watcher = FSWatcher(for: url, eventMask: eventMask, parent: self, behaviour: behaviour)
         self.watchers.append(watcher)
     }
     
@@ -65,6 +64,11 @@ class PhpConfigWatcher {
     
 }
 
+enum FSWatcherBehaviour {
+    case reloadsMenu
+    case reloadsWatchers
+}
+
 class FSWatcher {
     
     private var parent: PhpConfigWatcher!
@@ -75,25 +79,36 @@ class FSWatcher {
     
     let url: URL
     
-    init(for url: URL, eventMask: DispatchSource.FileSystemEvent, parent: PhpConfigWatcher) {
+    init(for url: URL, eventMask: DispatchSource.FileSystemEvent, parent: PhpConfigWatcher, behaviour: FSWatcherBehaviour = .reloadsMenu) {
         self.url = url
         self.parent = parent
-        self.startMonitoring(eventMask)
+        self.startMonitoring(eventMask, behaviour: behaviour)
     }
 
-    func startMonitoring(_ eventMask: DispatchSource.FileSystemEvent) {
+    func startMonitoring(_ eventMask: DispatchSource.FileSystemEvent, behaviour: FSWatcherBehaviour) {
         guard folderMonitorSource == nil && monitoredFolderFileDescriptor == -1 else {
             return
         }
         
         // Open the file or folder referenced by URL for monitoring only.
         monitoredFolderFileDescriptor = open(url.path, O_EVTONLY)
-        
-        folderMonitorSource = DispatchSource.makeFileSystemObjectSource(fileDescriptor: monitoredFolderFileDescriptor, eventMask: eventMask, queue: parent.folderMonitorQueue)
+        folderMonitorSource = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: monitoredFolderFileDescriptor,
+            eventMask: eventMask,
+            queue: parent.folderMonitorQueue
+        )
         
         // Define the block to call when a file change is detected.
         folderMonitorSource?.setEventHandler { [weak self] in
-            self?.parent.didChange?(self!.url)
+            // The default behaviour is to reload the menu
+            switch behaviour {
+            case .reloadsMenu:
+                // Default behaviour: reload the menu items
+                self?.parent.didChange?(self!.url)
+            case .reloadsWatchers:
+                // Alternative behaviour: reload all watchers
+                App.shared.handlePhpConfigWatcher(forceReload: true)
+            }
         }
         
         // Define a cancel handler to ensure the directory is closed when the source is cancelled.
