@@ -338,6 +338,7 @@
 				C464ADAA275A7A25003FCD53 /* SiteList */,
 				5420395726135DB800FB00FA /* Preferences */,
 				C44C198F276E3A380072762D /* Progress */,
+				C4C8E81D276F5686003AC782 /* Watcher */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
 				C4F8C0A222D4F100002EFE61 /* Extensions */,
 			);
@@ -427,13 +428,20 @@
 				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
-				C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */,
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
-				C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		C4C8E81D276F5686003AC782 /* Watcher */ = {
+			isa = PBXGroup;
+			children = (
+				C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */,
+				C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */,
+			);
+			path = Watcher;
 			sourceTree = "<group>";
 		};
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {

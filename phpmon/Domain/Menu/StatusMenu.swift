@@ -39,8 +39,10 @@ class StatusMenu : NSMenu {
     }
     
     func addServicesMenuItems() {
-        let services = NSMenuItem(title: "mi_manage_services".localized, action: nil, keyEquivalent: "")
+        let services = NSMenuItem(title: "mi_toolkit".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_help".localized, action: nil, keyEquivalent: ""))
         
         if !App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion) {
             servicesMenu.addItem(NSMenuItem(
@@ -53,6 +55,8 @@ class StatusMenu : NSMenu {
                 action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
         }
         
+        servicesMenu.addItem(NSMenuItem(title: "mi_services".localized, action: nil, keyEquivalent: ""))
+        
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
@@ -63,9 +67,15 @@ class StatusMenu : NSMenu {
         
         servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
         
+        servicesMenu.addItem(NSMenuItem(title: "mi_manual_actions".localized, action: nil, keyEquivalent: ""))
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
+        
         for item in servicesMenu.items {
             item.target = MainMenu.shared
         }
+        
+
         
         self.setSubmenu(servicesMenu, for: services)
         self.addItem(services)
@@ -121,10 +131,6 @@ class StatusMenu : NSMenu {
             self.addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }
-        
-        self.addItem(NSMenuItem.separator())
-        
-        self.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
         
         self.addItem(NSMenuItem.separator())
         

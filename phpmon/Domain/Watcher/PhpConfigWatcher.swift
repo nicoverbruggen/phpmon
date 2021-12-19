@@ -16,6 +16,8 @@ class PhpConfigWatcher {
     
     var didChange: ((URL) -> Void)?
     
+    var lastUpdate: TimeInterval? = nil
+    
     var watchers: [FSWatcher] = []
     
     init(for url: URL) {

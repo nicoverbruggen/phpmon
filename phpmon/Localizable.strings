@@ -34,6 +34,10 @@
 "mi_memory_limit" = "Memory Limit";
 "mi_post_max_size" = "Max POST";
 "mi_upload_max_filesize" = "Max Upload";
+"mi_manual_actions" = "Manual Actions";
+"mi_services" = "Services";
+"mi_help" = "First Aid";
+"mi_toolkit" = "Toolkit";
 
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet folder (.config/valet)";
