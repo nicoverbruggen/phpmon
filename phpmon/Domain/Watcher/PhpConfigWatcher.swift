@@ -41,9 +41,9 @@ class PhpConfigWatcher {
         }
         
         print("A watcher exists for the following config paths:")
-        for watcher in self.watchers {
-            print(watcher.url)
-        }
+        print(self.watchers.map({ watcher in
+            return watcher.url.relativePath
+        }))
     }
     
     func addWatcher(for url: URL, eventMask: DispatchSource.FileSystemEvent, behaviour: FSWatcherBehaviour = .reloadsMenu) {
