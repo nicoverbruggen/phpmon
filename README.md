@@ -297,7 +297,7 @@ In order to save power, this only happens once every 60 seconds.
 
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
-Starting with PHP Monitor 4.1, the app now leverages Valet’s included `valet use php@major.minor` command.
+The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
 
 ### Want to know more?
 
