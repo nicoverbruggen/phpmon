@@ -28,7 +28,7 @@
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3DE2770F34D005EF286 /* AllowedArguments.swift */; };
-		C415D3E22770F34D005EF286 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3DF2770F34D005EF286 /* main.swift */; };
+		C415D3E62770F540005EF286 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3E52770F540005EF286 /* main.swift */; };
 		C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
 		C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -170,7 +170,7 @@
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3D62770F341005EF286 /* phpmon-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "phpmon-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C415D3DE2770F34D005EF286 /* AllowedArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedArguments.swift; sourceTree = "<group>"; };
-		C415D3DF2770F34D005EF286 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = "../../../Desktop/phpmon-cli/main.swift"; sourceTree = "<group>"; };
+		C415D3E52770F540005EF286 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C4188988275FE8CB001EF227 /* Filesystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filesystem.swift; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 		C415D3D72770F341005EF286 /* phpmon-cli */ = {
 			isa = PBXGroup;
 			children = (
-				C415D3DF2770F34D005EF286 /* main.swift */,
+				C415D3E52770F540005EF286 /* main.swift */,
 				C415D3DE2770F34D005EF286 /* AllowedArguments.swift */,
 			);
 			path = "phpmon-cli";
@@ -675,8 +675,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C415D3E62770F540005EF286 /* main.swift in Sources */,
 				C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */,
-				C415D3E22770F34D005EF286 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
