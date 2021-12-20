@@ -1,20 +1,20 @@
 //
 //  Paths.swift
-//  PHP Monitor
+//  PMCommon
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-enum HomebrewDir: String {
+public enum HomebrewDir: String {
     case opt = "/opt/homebrew"
     case usr = "/usr/local"
 }
 
-class Paths {
+public class Paths {
     
-    static let shared = Paths()
+    public static let shared = Paths()
     var baseDir : HomebrewDir
     
     init() {

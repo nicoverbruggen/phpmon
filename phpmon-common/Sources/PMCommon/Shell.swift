@@ -1,13 +1,13 @@
 //
 //  Shell.swift
-//  PHP Monitor
+//  PMCommon
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
-class Shell {
+public class Shell {
     
     // MARK: - Invoke static functions
     
@@ -30,12 +30,12 @@ class Shell {
     /**
      We now require macOS 11, so no need to detect which terminal to use.
      */
-    var shell: String = "/bin/sh"
+    public var shell: String = "/bin/sh"
     
     /**
      Singleton to access a user shell (with --login)
      */
-    static let user = Shell()
+    public static let user = Shell()
     
     /**
      Runs a shell command without using the output.
@@ -44,7 +44,7 @@ class Shell {
      - Parameter command: The command to run
      - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      */
-    func run(
+    private func run(
         _ command: String,
         requiresPath: Bool = false
     ) {
@@ -58,7 +58,7 @@ class Shell {
      - Parameter command: The command to run
      - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      */
-    func pipe(
+    private func pipe(
         _ command: String,
         requiresPath: Bool = false
     ) -> String {
@@ -77,7 +77,7 @@ class Shell {
      - Parameter requiresPath: By default, the PATH is not resolved but some binaries might require this
      - Parameter waitUntilExit: Waits for the command to complete before returning the `ShellOutput`
      */
-    func executeSynchronously(
+    public func executeSynchronously(
         _ command: String,
         requiresPath: Bool = false
     ) -> ShellOutput {
@@ -115,7 +115,7 @@ class Shell {
     /**
      Creates a new process with the correct PATH and shell.
      */
-    func createTask(for command: String, requiresPath: Bool) -> Process {
+    public func createTask(for command: String, requiresPath: Bool) -> Process {
         let tailoredCommand = requiresPath
         ? "export PATH=\(Paths.binPath):$PATH && \(command)"
         : command
@@ -127,7 +127,7 @@ class Shell {
         return task
     }
     
-    static func captureOutput(
+    public static func captureOutput(
         _ task: Process,
         didReceiveStdOutData: @escaping (String) -> Void,
         didReceiveStdErrData: @escaping (String) -> Void
@@ -154,7 +154,7 @@ class Shell {
         }
     }
     
-    static func haltCapturingOutput(_ task: Process) {
+    public static func haltCapturingOutput(_ task: Process) {
         if let pipe = task.standardOutput as? Pipe {
             NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
         }
@@ -164,10 +164,10 @@ class Shell {
     }
 }
 
-class ShellOutput {
-    let standardOutput: String
-    let errorOutput: String
-    let task: Process
+public class ShellOutput {
+    public let standardOutput: String
+    public let errorOutput: String
+    public let task: Process
     
     init(standardOutput: String,
          errorOutput: String,
