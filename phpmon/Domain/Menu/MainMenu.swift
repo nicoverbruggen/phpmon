@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import PMCommon
 
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
 

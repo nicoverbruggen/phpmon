@@ -8,7 +8,6 @@
 
 import Cocoa
 import AppKit
-import PMCommon
 
 class SiteListCell: NSTableCellView
 {

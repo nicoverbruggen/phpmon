@@ -7,7 +7,6 @@
 
 import Cocoa
 import UserNotifications
-import PMCommon
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {

@@ -9,7 +9,6 @@
 import Cocoa
 import HotKey
 import Carbon
-import PMCommon
 
 class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     

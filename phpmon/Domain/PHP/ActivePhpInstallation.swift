@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PMCommon
 
 /**
  An installed version of PHP, that was detected by scanning the `/opt/php@version/bin` directory.
