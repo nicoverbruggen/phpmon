@@ -97,7 +97,7 @@ class PrefsVC: NSViewController {
         ].forEach({ self.stackView.addArrangedSubview($0) })
     }
     
-    // MARK: - Listening for hotkey dleegate
+    // MARK: - Listening for hotkey delegate
     
     var listeningForHotkeyView: HotkeyPreferenceView? = nil
     
