@@ -27,7 +27,7 @@ class PhpSwitcher {
             from: brewPhpAlias.data(using: .utf8)!
         ).first!
         
-        print("When on your system, the `php` formula means version \(homebrewPackage.version)!")
+        Log.info("When on your system, the `php` formula means version \(homebrewPackage.version)!")
     }
     
     // MARK: - Properties
@@ -100,7 +100,7 @@ class PhpSwitcher {
             versionsOnly.append(phpAlias)
         }
         
-        print("The PHP versions that were detected are: \(versionsOnly)")
+        Log.info("The PHP versions that were detected are: \(versionsOnly)")
         
         availablePhpVersions = versionsOnly
         

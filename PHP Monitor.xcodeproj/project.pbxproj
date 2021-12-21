@@ -35,6 +35,9 @@
 		C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F2B2772201C00DDDCDC /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
+		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
+		C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
+		C40C7F3227722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
@@ -189,6 +192,7 @@
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
+		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3D62770F341005EF286 /* phpmon-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "phpmon-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,6 +358,7 @@
 				C4B5853D2770FE3900DA4FBE /* Command.swift */,
 				C4B5853B2770FE3900DA4FBE /* Paths.swift */,
 				C4B5853C2770FE3900DA4FBE /* Shell.swift */,
+				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -745,6 +750,7 @@
 				C40C7F2327721F8200DDDCDC /* ActivePhpInstallation.swift in Sources */,
 				C4B585462770FE3900DA4FBE /* Command.swift in Sources */,
 				C40C7F2527721F9800DDDCDC /* HomebrewPackage.swift in Sources */,
+				C40C7F3227722E8D00DDDCDC /* Logger.swift in Sources */,
 				C40C7F2B2772201C00DDDCDC /* Actions.swift in Sources */,
 				C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */,
 				C40C7F202772136000DDDCDC /* PhpSwitcher.swift in Sources */,
@@ -786,6 +792,7 @@
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
+				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				54AB03262763858F00A29D5F /* Timer.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
@@ -846,6 +853,7 @@
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
+				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,

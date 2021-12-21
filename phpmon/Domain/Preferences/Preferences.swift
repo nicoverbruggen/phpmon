@@ -55,7 +55,7 @@ class Preferences {
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
             return
         }
-        print("Saving first-time preferences!")
+        Log.info("Saving first-time preferences!")
         UserDefaults.standard.setValue(true, forKey: PreferenceName.wasLaunchedBefore.rawValue)
         UserDefaults.standard.synchronize()
     }

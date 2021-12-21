@@ -77,7 +77,7 @@ class Startup {
         
         if (!failed) {
             initializeSwitcher()
-            print("PHP Monitor has determined the application has successfully passed all checks.")
+            Log.info("PHP Monitor has determined the application has successfully passed all checks.")
             success()
         }
     }

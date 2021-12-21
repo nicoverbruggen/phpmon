@@ -56,7 +56,7 @@ class ProgressWindowController: NSWindowController, NSWindowDelegate {
     }
     
     deinit {
-        // print("Deinitializing Progress Window Controller")
+        Log.perf("Deinitializing ProgressWindowController")
     }
     
 }
@@ -70,7 +70,7 @@ class ProgressViewController: NSViewController {
     @IBOutlet weak var imageViewType: NSImageView!
     
     deinit {
-        // print("Deinitializing Progress View Controller")
+        Log.perf("Deinitializing ProgressViewController")
     }
     
 }

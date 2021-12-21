@@ -110,6 +110,6 @@ class PrefsVC: NSViewController {
     // MARK: - Deinitialization
     
     deinit {
-        print("VC deallocated")
+        Log.perf("PrefsVC deallocated")
     }
 }

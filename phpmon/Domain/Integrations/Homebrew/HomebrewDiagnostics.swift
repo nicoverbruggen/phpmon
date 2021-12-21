@@ -35,11 +35,11 @@ class HomebrewDiagnostics {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
         
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
-            print("The user does not appear to have tapped: shivammathur/php")
+            Log.info("The user does not appear to have tapped: shivammathur/php")
             return false
         } else {
-            print("The user DOES have the following tapped: shivammathur/php")
-            print("Checking for `php` formula conflicts...")
+            Log.info("The user DOES have the following tapped: shivammathur/php")
+            Log.info("Checking for `php` formula conflicts...")
             
             let tapPhp = try! JSONDecoder().decode(
                 [HomebrewPackage].self,
@@ -47,22 +47,22 @@ class HomebrewDiagnostics {
             ).first!
             
             if tapPhp.version != PhpSwitcher.brewPhpVersion {
-                print("The `php` formula alias seems to be the different between the tap and core. This could be a problem!")
-                print("Determining whether both of these versions are installed...")
+                Log.warn("The `php` formula alias seems to be the different between the tap and core. This could be a problem!")
+                Log.info("Determining whether both of these versions are installed...")
                 
                 let bothInstalled = PhpSwitcher.shared.availablePhpVersions.contains(tapPhp.version)
                     && PhpSwitcher.shared.availablePhpVersions.contains(PhpSwitcher.brewPhpVersion)
                 
                 if bothInstalled {
-                    print("Both conflicting aliases seem to be installed, warning the user!")
+                    Log.warn("Both conflicting aliases seem to be installed, warning the user!")
                 } else {
-                    print("Conflicting aliases are not both installed, seems fine!")
+                    Log.info("Conflicting aliases are not both installed, seems fine!")
                 }
                 
                 return bothInstalled
             }
             
-            print("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
+            Log.info("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
             
             return false
         }

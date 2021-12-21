@@ -11,16 +11,16 @@ import Foundation
 extension App {
     
     func startWatcher(_ url: URL) {
-        print("No watcher currently active...")
+        Log.info("No watcher currently active...")
         self.watcher = PhpConfigWatcher(for: url)
         
         self.watcher.didChange = { url in
-            print("Something has changed in: \(url)")
+            Log.info("Something has changed in: \(url)")
             
             // Check if the watcher has last updated the menu less than 0.75s ago
             let distance = self.watcher.lastUpdate?.distance(to: Date().timeIntervalSince1970)
             if distance == nil || distance != nil && distance! > 0.75 {
-                print("Refreshing menu...")
+                Log.info("Refreshing menu...")
                 MainMenu.shared.reloadPhpMonitorMenuInBackground()
                 self.watcher.lastUpdate = Date().timeIntervalSince1970
             }
@@ -39,7 +39,7 @@ extension App {
         if self.watcher.url != url || forceReload {
             self.watcher.disable()
             self.watcher = nil
-            print("Watcher has stopped watching files. Starting new one...")
+            Log.info("Watcher has stopped watching files. Starting new one...")
             startWatcher(url)
         }
     }

@@ -42,8 +42,8 @@ class Actions {
         availableVersions: [String],
         completed: @escaping () -> Void
     ) {
-        print("Switching to \(version) using Valet")
-        print(valet("use php@\(version)"))
+        Log.info("Switching to \(version) using Valet")
+        Log.info(valet("use php@\(version)"))
         completed()
     }
     
@@ -61,7 +61,7 @@ class Actions {
         availableVersions: [String],
         completed: @escaping () -> Void
     ) {
-        print("Switching to \(version), unlinking all versions...")
+        Log.info("Switching to \(version), unlinking all versions...")
 
         let group = DispatchGroup()
         
@@ -80,14 +80,14 @@ class Actions {
         }
         
         group.notify(queue: .global(qos: .userInitiated)) {
-            print("All versions have been unlinked!")
-            print("Linking the new version!")
+            Log.info("All versions have been unlinked!")
+            Log.info("Linking the new version!")
             
             let formula = (version == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version)"
             brew("link \(formula) --overwrite --force")
             brew("services start \(formula)", sudo: true)
             
-            print("The new version has been linked!")
+            Log.info("The new version has been linked!")
             completed()
         }
     }

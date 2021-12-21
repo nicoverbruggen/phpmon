@@ -40,8 +40,8 @@ class PhpConfigWatcher {
             self.addWatcher(for: self.url.appendingPathComponent("conf.d/\(file)"), eventMask: .write)
         }
         
-        print("A watcher exists for the following config paths:")
-        print(self.watchers.map({ watcher in
+        Log.info("A watcher exists for the following config paths:")
+        Log.info(self.watchers.map({ watcher in
             return watcher.url.relativePath
         }))
     }
@@ -52,14 +52,14 @@ class PhpConfigWatcher {
     }
     
     func disable() {
-        print("Turning off existing watchers...")
+        Log.info("Turning off existing watchers...")
         self.watchers.forEach { (watcher) in
             watcher.stopMonitoring()
         }
     }
     
     deinit {
-        print("An existing config watcher has been deinitialized.")
+        Log.perf("A PhpConfigWatcher has been deinitialized.")
     }
     
 }

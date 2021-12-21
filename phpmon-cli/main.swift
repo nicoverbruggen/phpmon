@@ -15,17 +15,25 @@ import Foundation
 // Information about the PHP versions
 // etc.: needs to be stored in a separate object we can instantiate here and in PHP Monitor.
 
-print(CommandLine.arguments)
+var logger = Log.shared
+logger.verbosity = .warning
 
-if CommandLine.arguments.count != 3 {
-    print("You must enter two arguments.")
+if CommandLine.arguments.count < 3 {
+    Log.err("You must enter at least two additional arguments.")
     exit(1)
+}
+
+if CommandLine.arguments.contains("-v") || CommandLine.arguments.contains("--verbose") {
+    logger.verbosity = .info
+}
+if CommandLine.arguments.contains("-p") || CommandLine.arguments.contains("--performance") {
+    logger.verbosity = .performance
 }
 
 let argument = CommandLine.arguments[1]
 
 if !AllowedArguments.has(argument) {
-    print("The supported arguments are: \(AllowedArguments.rawValues)")
+    Log.err("The supported arguments are: \(AllowedArguments.rawValues)")
     exit(1)
 }
 
@@ -37,9 +45,9 @@ PhpSwitcher.detectPhpVersions()
 switch action {
 case .use:
     let version = CommandLine.arguments[2]
-    print("Switching to PHP \(version)...")
+    Log.info("Switching to PHP \(version)...")
     break
 case .none:
-    print("Action not recognized!")
+    Log.err("Action not recognized!")
     exit(1)
 }

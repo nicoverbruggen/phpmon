@@ -25,7 +25,7 @@ class LocalNotification {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
             if error != nil {
-                print(error!)
+                Log.err(error!)
             }
         }
     }

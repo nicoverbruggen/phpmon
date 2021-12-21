@@ -39,7 +39,7 @@ class Valet {
     public func startPreloadingSites() {
         if self.sites.count <= 10 {
             // Preload the sites and their drivers
-            print("Fewer than or 11 sites found, preloading list of sites...")
+            Log.info("Fewer than or 11 sites found, preloading list of sites...")
             self.reloadSites()
         }
     }
@@ -50,17 +50,17 @@ class Valet {
     
     public func validateVersion() -> Void {
         if version == "UNKNOWN" {
-            return print("The Valet version could not be extracted... that does not bode well.")
+            return Log.warn("The Valet version could not be extracted... that does not bode well.")
         }
         
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
-            print("Valet version \(version) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            Log.warn("Valet version \(version) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
             DispatchQueue.main.async {
                 Alert.notify(message: "alert.min_valet_version.title".localized, info: "alert.min_valet_version.info".localized(version, Constants.MinimumRecommendedValetVersion))
             }
         } else {
-            print("Valet version \(version) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            Log.info("Valet version \(version) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
         }
     }
     

@@ -51,16 +51,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     var switcher: PhpSwitcher! = nil
     
+    var logger: Log = Log.shared
+    
     // MARK: - Initializer
     
     /**
      When the application initializes, create all singletons.
      */
     override init() {
-        print("==================================")
-        print("PHP MONITOR by Nico Verbruggen")
-        print("Version \(App.version)")
-        print("==================================")
+        Log.shared.verbosity = .info
+        Log.info("==================================")
+        Log.info("PHP MONITOR by Nico Verbruggen")
+        Log.info("Version \(App.version)")
+        Log.info("==================================")
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared

@@ -55,31 +55,31 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         updatePhpVersionInStatusBar()
         
-        print("Determining broken PHP-FPM...")
+        Log.info("Determining broken PHP-FPM...")
         // Attempt to find out if PHP-FPM is broken
         let installation = PhpSwitcher.phpInstall
         installation.notifyAboutBrokenPhpFpm()
         
         // Set up the config watchers on launch (these are automatically updated via delegate methods if the user switches)
-        print("Setting up watchers...")
+        Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
         
-        print("Detecting applications...")
+        Log.info("Detecting applications...")
         // Attempt to load list of applications
         App.shared.detectedApplications = Application.detectPresetApplications()
         let appNames = App.shared.detectedApplications.map { app in
             return app.name
         }
-        print("Detected applications: \(appNames)")
+        Log.info("Detected applications: \(appNames)")
         
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
         
         // Attempt to find out more info about Valet
-        print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
+        Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
-        print("PHP Monitor is ready to serve!")
+        Log.info("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in
@@ -232,14 +232,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     @objc func reloadPhpMonitorMenuInBackground() {
         waitAndExecute {
             // This automatically reloads the menu
-            print("Reloading information about the PHP installation (in the background)...")
+            Log.info("Reloading information about the PHP installation (in the background)...")
         }
     }
     
     @objc func reloadPhpMonitorMenu() {
         waitAndExecute {
             // This automatically reloads the menu
-            print("Reloading information about the PHP installation...")
+            Log.info("Reloading information about the PHP installation...")
         } completion: {
             // Add a slight delay to make sure it loads the new menu
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -378,13 +378,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     DispatchQueue.main.async {
                         window?.addToConsole(string)
                     }
-                    print("\(string.trimmingCharacters(in: .newlines))")
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
                 },
                 didReceiveStdErrData: { string in
                     DispatchQueue.main.async {
                         window?.addToConsole(string)
                     }
-                    print("\(string.trimmingCharacters(in: .newlines))")
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
                 }
             )
             

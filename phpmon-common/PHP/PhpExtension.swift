@@ -92,7 +92,7 @@ class PhpExtension {
         let file = try? String(contentsOf: path, encoding: .utf8)
         
         if (file == nil) {
-            print("There was an issue reading the file. Assuming no extensions were found.")
+            Log.err("There was an issue reading the file. Assuming no extensions were found.")
             return []
         }
         

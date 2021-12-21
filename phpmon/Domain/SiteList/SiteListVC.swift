@@ -268,6 +268,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Deinitialization
     
     deinit {
-        print("VC deallocated")
+        Log.perf("SiteListVC deallocated")
     }
 }
