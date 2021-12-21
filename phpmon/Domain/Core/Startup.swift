@@ -91,12 +91,12 @@ class Startup {
         
         let brewPhpAlias = Shell.pipe("\(Paths.brew) info php --json");
         
-        App.shared.brewPhpPackage = try! JSONDecoder().decode(
+        PhpSwitcher.shared.homebrewPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
             from: brewPhpAlias.data(using: .utf8)!
         ).first!
         
-        print("When on your system, the `php` formula means version \(App.shared.brewPhpVersion)!")
+        print("When on your system, the `php` formula means version \(PhpSwitcher.shared.brewPhpVersion)!")
     }
     
     /**

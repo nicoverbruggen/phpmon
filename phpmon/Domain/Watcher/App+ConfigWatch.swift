@@ -28,22 +28,19 @@ extension App {
     }
     
     func handlePhpConfigWatcher(forceReload: Bool = false) {
-        if self.currentInstall != nil {
-            // Determine the path of the config folder
-            let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(self.currentInstall!.version.short)")
-            
-            // Watcher needs to be created
-            if self.watcher == nil {
-                startWatcher(url)
-            }
-            
-            // Watcher needs to be updated
-            if self.watcher.url != url || forceReload {
-                self.watcher.disable()
-                self.watcher = nil
-                print("Watcher has stopped watching files. Starting new one...")
-                startWatcher(url)
-            }
+        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpSwitcher.phpInstall.version.short)")
+        
+        // Watcher needs to be created
+        if self.watcher == nil {
+            startWatcher(url)
+        }
+        
+        // Watcher needs to be updated
+        if self.watcher.url != url || forceReload {
+            self.watcher.disable()
+            self.watcher = nil
+            print("Watcher has stopped watching files. Starting new one...")
+            startWatcher(url)
         }
     }
     

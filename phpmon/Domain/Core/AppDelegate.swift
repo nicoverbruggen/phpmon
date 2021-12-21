@@ -21,6 +21,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let sharedShell: Shell
     
     /**
+     The PhpSwitcher singleton that handles PHP version
+     detection, as well as switching.
+     
+     - Note: It is important to initialize the switcher
+     before the `App` singleton, so that the delegate
+     is set correctly.
+     */
+    let switcher: PhpSwitcher
+    
+    /**
      The App singleton contains information about the state of
      the application and global variables.
      */
@@ -55,6 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         print("Version \(App.version)")
         print("==================================")
         self.sharedShell = Shell.user
+        self.switcher = PhpSwitcher.shared
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared

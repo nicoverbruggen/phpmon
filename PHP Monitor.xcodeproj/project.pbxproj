@@ -24,6 +24,9 @@
 		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
+		C40C7F1E2772136000DDDCDC /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */; };
+		C40C7F1F2772136000DDDCDC /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */; };
+		C40C7F202772136000DDDCDC /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
@@ -176,6 +179,7 @@
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
+		C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3D62770F341005EF286 /* phpmon-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "phpmon-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -319,6 +323,16 @@
 				C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */,
 			);
 			path = IAP;
+			sourceTree = "<group>";
+		};
+		C40C7F1C27720E1400DDDCDC /* Test Files */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
+				C43A8A1F25D9D1D700591B77 /* brew.json */,
+				C4F780A725D80AE8000DBC97 /* php.ini */,
+			);
+			path = "Test Files";
 			sourceTree = "<group>";
 		};
 		C415D3D72770F341005EF286 /* phpmon-cli */ = {
@@ -494,6 +508,7 @@
 				C4B5853D2770FE3900DA4FBE /* Command.swift */,
 				C4B5853B2770FE3900DA4FBE /* Paths.swift */,
 				C4B5853C2770FE3900DA4FBE /* Shell.swift */,
+				C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */,
 			);
 			path = "phpmon-common";
 			sourceTree = "<group>";
@@ -527,10 +542,8 @@
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
-				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
-				C43A8A1F25D9D1D700591B77 /* brew.json */,
-				C4F780A725D80AE8000DBC97 /* php.ini */,
 				C4F7807D25D7F84B000DBC97 /* Info.plist */,
+				C40C7F1C27720E1400DDDCDC /* Test Files */,
 				C4F7809B25D80344000DBC97 /* CommandTest.swift */,
 				C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */,
 				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
@@ -702,6 +715,7 @@
 				C4B585432770FE3900DA4FBE /* Shell.swift in Sources */,
 				C4B585462770FE3900DA4FBE /* Command.swift in Sources */,
 				C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */,
+				C40C7F202772136000DDDCDC /* PhpSwitcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -750,6 +764,7 @@
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
+				C40C7F1E2772136000DDDCDC /* PhpSwitcher.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
@@ -820,6 +835,7 @@
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4B585422770FE3900DA4FBE /* Shell.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
+				C40C7F1F2772136000DDDCDC /* PhpSwitcher.swift in Sources */,
 				C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* SiteListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,

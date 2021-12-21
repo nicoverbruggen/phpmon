@@ -20,7 +20,7 @@ class Actions {
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
         // We should also detect that as a version that is installed
-        let phpAlias = App.shared.brewPhpVersion
+        let phpAlias = PhpSwitcher.shared.brewPhpVersion
         
         // Avoid inserting a duplicate
         if (!versionsOnly.contains(phpAlias) && Shell.fileExists("\(Paths.optPath)/php/bin/php")) {
@@ -29,7 +29,7 @@ class Actions {
         
         print("The PHP versions that were detected are: \(versionsOnly)")
         
-        App.shared.availablePhpVersions = versionsOnly
+        PhpSwitcher.shared.availablePhpVersions = versionsOnly
         Actions.extractPhpLongVersions()
         
         return versionsOnly
@@ -42,11 +42,11 @@ class Actions {
     public static func extractPhpLongVersions()
     {
         var mappedVersions: [String: PhpInstallation] = [:]
-        App.shared.availablePhpVersions.forEach { version in
+        PhpSwitcher.shared.availablePhpVersions.forEach { version in
             mappedVersions[version] = PhpInstallation(version)
         }
         
-        App.shared.cachedPhpInstallations = mappedVersions
+        PhpSwitcher.shared.cachedPhpInstallations = mappedVersions
     }
  
     /**
@@ -82,7 +82,7 @@ class Actions {
     
     public static func restartPhpFpm()
     {
-        brew("services restart \(App.phpInstall!.formula)", sudo: true)
+        brew("services restart \(PhpSwitcher.phpInstall.formula)", sudo: true)
     }
     
     public static func restartNginx()
@@ -97,7 +97,7 @@ class Actions {
     
     public static func stopAllServices()
     {
-        brew("services stop \(App.phpInstall!.formula)", sudo: true)
+        brew("services stop \(PhpSwitcher.phpInstall.formula)", sudo: true)
         brew("services stop nginx", sudo: true)
         brew("services stop dnsmasq", sudo: true)
     }
@@ -137,7 +137,7 @@ class Actions {
             group.enter()
             
             DispatchQueue.global(qos: .userInitiated).async {
-                let formula = (available == App.shared.brewPhpVersion)
+                let formula = (available == PhpSwitcher.shared.brewPhpVersion)
                     ? "php" : "php@\(available)"
                 
                 brew("unlink \(formula)")
@@ -151,7 +151,7 @@ class Actions {
             print("All versions have been unlinked!")
             print("Linking the new version!")
             
-            let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+            let formula = (version == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(version)"
             brew("link \(formula) --overwrite --force")
             brew("services start \(formula)", sudo: true)
             
@@ -205,7 +205,7 @@ class Actions {
         brew("services restart dnsmasq", sudo: true)
         
         detectPhpVersions().forEach { (version) in
-            let formula = (version == App.shared.brewPhpVersion) ? "php" : "php@\(version)"
+            let formula = (version == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(version)"
             brew("unlink php@\(version)")
             brew("services stop \(formula)")
             brew("services stop \(formula)", sudo: true)

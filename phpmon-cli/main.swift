@@ -10,6 +10,11 @@ import Foundation
 
 // First, let's read the initial command line argument
 
+// REFACTOR REQUIRED
+// Information about the Homebrew linked alias
+// Information about the PHP versions
+// etc.: needs to be stored in a separate object we can instantiate here and in PHP Monitor.
+
 print(CommandLine.arguments)
 
 if CommandLine.arguments.count != 3 {

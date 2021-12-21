@@ -57,8 +57,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         print("Determining broken PHP-FPM...")
         // Attempt to find out if PHP-FPM is broken
-        let installation = App.phpInstall!
+        let installation = PhpSwitcher.phpInstall
         installation.notifyAboutBrokenPhpFpm()
+        
+        // Set up the config watchers on launch (these are automatically updated via delegate methods if the user switches)
+        print("Setting up watchers...")
+        App.shared.handlePhpConfigWatcher()
         
         print("Detecting applications...")
         // Attempt to load list of applications
@@ -82,7 +86,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             App.shared.timer = Timer.scheduledTimer(
                 timeInterval: 60,
                 target: self,
-                selector: #selector(updatePhpVersionInStatusBar),
+                selector: #selector(refreshActiveInstallation),
                 userInfo: nil,
                 repeats: true
             )
@@ -181,12 +185,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
-        App.shared.busy = true
+        PhpSwitcher.shared.isBusy = true
         setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             update()
             execute()
-            App.shared.busy = false
+            PhpSwitcher.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
                 updatePhpVersionInStatusBar()
@@ -198,8 +202,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     // MARK: - User Interface
     
+    @objc func refreshActiveInstallation() {
+        PhpSwitcher.shared.currentInstall = ActivePhpInstallation()
+        updatePhpVersionInStatusBar()
+    }
+    
     @objc func updatePhpVersionInStatusBar() {
-        App.shared.currentInstall = ActivePhpInstallation()
         refreshIcon()
         update()
     }
@@ -215,7 +223,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-                    setStatusBarImage(version: long ? App.phpInstall!.version.long  : App.phpInstall!.version.short)
+                    setStatusBarImage(version: long ? PhpSwitcher.phpInstall.version.long  : PhpSwitcher.phpInstall.version.short)
                 }
             }
         }
@@ -335,12 +343,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        App.shared.busy = true
+        PhpSwitcher.shared.isBusy = true
         setBusyImage()
         self.update()
         
         let noLongerBusy = {
-            App.shared.busy = false
+            PhpSwitcher.shared.isBusy = false
             DispatchQueue.main.async { [self] in
                 self.updatePhpVersionInStatusBar()
                 self.update()
@@ -411,14 +419,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func openActiveConfigFolder() {
-        if (App.phpInstall!.version.error) {
+        if (PhpSwitcher.phpInstall.version.error) {
             // php version was not identified
             Actions.openGenericPhpConfigFolder()
             return
         }
         
         // php version was identified
-        Actions.openPhpConfigFolder(version: App.phpInstall!.version.short)
+        Actions.openPhpConfigFolder(version: PhpSwitcher.phpInstall.version.short)
     }
     
     @objc func openGlobalComposerFolder() {
@@ -431,7 +439,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
         setBusyImage()
-        App.shared.busy = true
+        PhpSwitcher.shared.isBusy = true
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
@@ -441,8 +449,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             update()
             
             let completion = {
+                PhpSwitcher.shared.delegate?.switcherDidCompleteSwitch()
+                
                 // Mark as no longer busy
-                App.shared.busy = false
+                PhpSwitcher.shared.isBusy = false
                 
                 // Perform UI updates on main thread
                 DispatchQueue.main.async { [self] in
@@ -454,7 +464,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                             title: String(format: "notification.version_changed_title".localized, sender.version),
                             subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
                         )
-                        App.phpInstall?.notifyAboutBrokenPhpFpm()
+                        PhpSwitcher.phpInstall.notifyAboutBrokenPhpFpm()
                     }
                     
                     // Run composer updates
@@ -482,7 +492,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 // Will cause more issues with Homebrew and is faster
                 Actions.switchToPhpVersion(
                     version: sender.version,
-                    availableVersions: App.shared.availablePhpVersions,
+                    availableVersions: PhpSwitcher.shared.availablePhpVersions,
                     completed: completion
                 )
             /* } */

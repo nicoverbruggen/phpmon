@@ -46,12 +46,12 @@ class HomebrewDiagnostics {
                 from: tapAlias.data(using: .utf8)!
             ).first!
             
-            if tapPhp.version != App.shared.brewPhpVersion {
+            if tapPhp.version != PhpSwitcher.shared.brewPhpVersion {
                 print("The `php` formula alias seems to be the different between the tap and core. This could be a problem!")
                 print("Determining whether both of these versions are installed...")
                 
-                let bothInstalled = App.shared.availablePhpVersions.contains(tapPhp.version)
-                    && App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion)
+                let bothInstalled = PhpSwitcher.shared.availablePhpVersions.contains(tapPhp.version)
+                    && PhpSwitcher.shared.availablePhpVersions.contains(PhpSwitcher.shared.brewPhpVersion)
                 
                 if bothInstalled {
                     print("Both conflicting aliases seem to be installed, warning the user!")

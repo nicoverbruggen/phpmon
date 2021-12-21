@@ -1,38 +1,24 @@
 //
 //  Paths.swift
-//  PMCommon
+//  phpmon-common
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-public enum HomebrewDir: String {
-    case opt = "/opt/homebrew"
-    case usr = "/usr/local"
-}
-
+/**
+ The `Paths` class is used to locate various binaries on the system,
+ and provides a full
+ */
 public class Paths {
     
     public static let shared = Paths()
-    var baseDir : HomebrewDir
+    
+    private var baseDir : Paths.HomebrewDir
     
     init() {
-        let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
-        let usrBrewFound = Shell.fileExists("\(HomebrewDir.usr.rawValue)/bin/brew")
-        
-        if (optBrewFound) {
-            // This is usually the case with Homebrew installed on Apple Silicon
-            baseDir = .opt
-        } else if (usrBrewFound) {
-            // This is usually the case with Homebrew installed on Intel (or Rosetta 2)
-            baseDir = .usr
-        } else {
-            // Falling back to default "legacy" Homebrew location (for Intel)
-            print("Seems like we couldn't determine the Homebrew directory.")
-            print("This usually means we're in trouble... (no Homebrew?)")
-            baseDir = .usr
-        }
+        baseDir = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew") ? .opt : .usr
     }
     
     // - MARK: Binaries
@@ -69,6 +55,13 @@ public class Paths {
     
     public static var etcPath: String {
         return "\(shared.baseDir.rawValue)/etc"
+    }
+    
+    // MARK: - Enum
+    
+    public enum HomebrewDir: String {
+        case opt = "/opt/homebrew"
+        case usr = "/usr/local"
     }
     
 }

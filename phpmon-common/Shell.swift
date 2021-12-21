@@ -1,6 +1,6 @@
 //
 //  Shell.swift
-//  PMCommon
+//  phpmon-common
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
@@ -80,7 +80,7 @@ public class Shell {
     public func executeSynchronously(
         _ command: String,
         requiresPath: Bool = false
-    ) -> ShellOutput {
+    ) -> Shell.Output {
         
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -91,7 +91,7 @@ public class Shell {
         task.launch()
         task.waitUntilExit()
     
-        return ShellOutput(
+        return Shell.Output(
             standardOutput: String(
                 data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
                 encoding: .utf8
@@ -162,18 +162,18 @@ public class Shell {
             NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
         }
     }
-}
-
-public class ShellOutput {
-    public let standardOutput: String
-    public let errorOutput: String
-    public let task: Process
     
-    init(standardOutput: String,
-         errorOutput: String,
-         task: Process) {
-        self.standardOutput = standardOutput
-        self.errorOutput = errorOutput
-        self.task = task
+    public class Output {
+        public let standardOutput: String
+        public let errorOutput: String
+        public let task: Process
+        
+        init(standardOutput: String,
+             errorOutput: String,
+             task: Process) {
+            self.standardOutput = standardOutput
+            self.errorOutput = errorOutput
+            self.task = task
+        }
     }
 }

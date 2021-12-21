@@ -1,6 +1,6 @@
 //
 //  Command.swift
-//  PMCommon
+//  phpmon-common
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
