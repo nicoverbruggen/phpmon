@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 
 class Startup {
     
@@ -75,37 +76,30 @@ class Startup {
         )
         
         if (!failed) {
-            determineBrewAliasVersion()
+            initializeSwitcher()
+            print("PHP Monitor has determined the application has successfully passed all checks.")
             success()
         }
     }
     
     /**
-     * In order to avoid having to hard-code which version of PHP is aliased to what specific subversion,
-     * PHP Monitor now determines the alias by checking the user's system.
+     Because the Switcher requires various environment guarantees, the switcher is only
+     initialized when it is done working.
      */
-    private func determineBrewAliasVersion()
-    {
-        print("PHP Monitor has determined the application has successfully passed all checks.")
-        print("Determining which version of PHP is aliased to `php` via Homebrew...")
-        
-        let brewPhpAlias = Shell.pipe("\(Paths.brew) info php --json");
-        
-        PhpSwitcher.shared.homebrewPackage = try! JSONDecoder().decode(
-            [HomebrewPackage].self,
-            from: brewPhpAlias.data(using: .utf8)!
-        ).first!
-        
-        print("When on your system, the `php` formula means version \(PhpSwitcher.shared.brewPhpVersion)!")
+    private func initializeSwitcher() {
+        DispatchQueue.main.async {
+            let appDelegate = NSApplication.shared.delegate as! AppDelegate
+            appDelegate.initializeSwitcher()
+        }
     }
-    
+
     /**
-     * Perform an environment check. Will cause the application to terminate, if `breaking` is set to true.
-     *
-     * - Parameter condition: Fail condition to check for; if this returns `true`, the alert will be shown
-     * - Parameter messageText: Short description of what is wrong
-     * - Parameter informativeText: Expanded description of the environment check that failed
-     * - Parameter breaking: If the application should terminate afterwards
+     Perform an environment check. Will cause the application to terminate, if `breaking` is set to true.
+     
+     - Parameter condition: Fail condition to check for; if this returns `true`, the alert will be shown
+     - Parameter messageText: Short description of what is wrong
+     - Parameter informativeText: Expanded description of the environment check that failed
+     - Parameter breaking: If the application should terminate afterwards
      */
     private func performEnvironmentCheck(
         _ condition: Bool,

@@ -10,74 +10,6 @@ import AppKit
 
 class Actions {
     
-    // MARK: - Detect PHP Versions
-    
-    public static func detectPhpVersions() -> [String]
-    {
-        let files = Shell.pipe("ls \(Paths.optPath) | grep php@")
-        var versionsOnly = Self.extractPhpVersions(from: files.components(separatedBy: "\n"))
-        
-        // Make sure the aliased version is detected
-        // The user may have `php` installed, but not e.g. `php@8.0`
-        // We should also detect that as a version that is installed
-        let phpAlias = PhpSwitcher.shared.brewPhpVersion
-        
-        // Avoid inserting a duplicate
-        if (!versionsOnly.contains(phpAlias) && Shell.fileExists("\(Paths.optPath)/php/bin/php")) {
-            versionsOnly.append(phpAlias);
-        }
-        
-        print("The PHP versions that were detected are: \(versionsOnly)")
-        
-        PhpSwitcher.shared.availablePhpVersions = versionsOnly
-        Actions.extractPhpLongVersions()
-        
-        return versionsOnly
-    }
-    
-    /**
-     This method extracts the PHP full version number after finding the php installation folders.
-     To be refactored at some later point, I'd like to cache the `PhpInstallation` objects instead of just the version number at some point.
-     */
-    public static func extractPhpLongVersions()
-    {
-        var mappedVersions: [String: PhpInstallation] = [:]
-        PhpSwitcher.shared.availablePhpVersions.forEach { version in
-            mappedVersions[version] = PhpInstallation(version)
-        }
-        
-        PhpSwitcher.shared.cachedPhpInstallations = mappedVersions
-    }
- 
-    /**
-     Extracts valid PHP versions from an array of strings.
-     This array of strings is usually retrieved from `grep`.
-     */
-    public static func extractPhpVersions(
-        from versions: [String],
-        checkBinaries: Bool = true
-    ) -> [String] {
-        var output : [String] = []
-        
-        versions.filter { (version) -> Bool in
-            // Omit everything that doesn't start with php@
-            // (e.g. something-php@8.0 won't be detected)
-            return version.starts(with: "php@")
-        }.forEach { (string) in
-            let version = string.components(separatedBy: "php@")[1]
-            // Only append the version if it doesn't already exist (avoid dupes),
-            // is supported and where the binary exists (avoids broken installs)
-            if !output.contains(version)
-                && Constants.SupportedPhpVersions.contains(version)
-                && (checkBinaries ? Shell.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
-            {
-                output.append(version)
-            }
-        }
-        
-        return output
-    }
-    
     // MARK: - Services
     
     public static func restartPhpFpm()
@@ -137,7 +69,7 @@ class Actions {
             group.enter()
             
             DispatchQueue.global(qos: .userInitiated).async {
-                let formula = (available == PhpSwitcher.shared.brewPhpVersion)
+                let formula = (available == PhpSwitcher.brewPhpVersion)
                     ? "php" : "php@\(available)"
                 
                 brew("unlink \(formula)")
@@ -151,7 +83,7 @@ class Actions {
             print("All versions have been unlinked!")
             print("Linking the new version!")
             
-            let formula = (version == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(version)"
+            let formula = (version == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version)"
             brew("link \(formula) --overwrite --force")
             brew("services start \(formula)", sudo: true)
             
@@ -204,8 +136,8 @@ class Actions {
     {
         brew("services restart dnsmasq", sudo: true)
         
-        detectPhpVersions().forEach { (version) in
-            let formula = (version == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(version)"
+        PhpSwitcher.shared.detectPhpVersions().forEach { (version) in
+            let formula = (version == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version)"
             brew("unlink php@\(version)")
             brew("services stop \(formula)")
             brew("services stop \(formula)", sudo: true)

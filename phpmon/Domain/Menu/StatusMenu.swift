@@ -40,14 +40,14 @@ class StatusMenu : NSMenu {
         
         servicesMenu.addItem(NSMenuItem(title: "mi_help".localized, action: nil, keyEquivalent: ""))
         
-        if !PhpSwitcher.shared.availablePhpVersions.contains(PhpSwitcher.shared.brewPhpVersion) {
+        if !PhpSwitcher.shared.availablePhpVersions.contains(PhpSwitcher.brewPhpVersion) {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest_unavailable".localized(PhpSwitcher.shared.brewPhpVersion),
+                title: "mi_force_load_latest_unavailable".localized(PhpSwitcher.brewPhpVersion),
                 action: nil, keyEquivalent: "f"
             ))
         } else {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest".localized(PhpSwitcher.shared.brewPhpVersion),
+                title: "mi_force_load_latest".localized(PhpSwitcher.brewPhpVersion),
                 action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
         }
         
@@ -140,7 +140,7 @@ class StatusMenu : NSMenu {
             let versionString = long ? longVersion : shortVersion
             
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (shortVersion == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(shortVersion)"
+            let brew = (shortVersion == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(shortVersion)"
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
                 action: (shortVersion == PhpSwitcher.phpInstall.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"

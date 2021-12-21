@@ -1,6 +1,6 @@
 //
 //  Shell.swift
-//  phpmon-common
+//  PHP Monitor
 //
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //

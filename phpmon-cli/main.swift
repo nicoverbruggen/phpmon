@@ -31,9 +31,11 @@ if !AllowedArguments.has(argument) {
 
 let action = AllowedArguments.init(rawValue: argument)
 
+let switcher = PhpSwitcher.shared
+PhpSwitcher.detectPhpVersions()
+
 switch action {
 case .use:
-    // Read the PHP value
     let version = CommandLine.arguments[2]
     print("Switching to PHP \(version)...")
     break

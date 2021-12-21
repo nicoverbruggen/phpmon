@@ -41,7 +41,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
-        _ = Actions.detectPhpVersions()
+        PhpSwitcher.detectPhpVersions()
         
         if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
             DispatchQueue.main.async {

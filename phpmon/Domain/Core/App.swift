@@ -15,10 +15,6 @@ class App: PhpSwitcherDelegate {
     /** The static app instance. Accessible at any time. */
     static let shared = App()
     
-    init() {
-        PhpSwitcher.shared.delegate = self
-    }
-    
     /** Retrieve the version number from the main info dictionary, Info.plist. */
     static var version: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String

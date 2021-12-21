@@ -25,7 +25,7 @@ class ActivePhpInstallation {
     // MARK: - Computed
     
     var formula: String {
-        return (version.short == PhpSwitcher.shared.brewPhpVersion) ? "php" : "php@\(version.short)"
+        return (version.short == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version.short)"
     }
     
     // MARK: - Initializer
@@ -123,33 +123,13 @@ class ActivePhpInstallation {
     }
     
     /**
-     It is always possible that the system configuration for PHP-FPM has not been set up for Valet.
-     This can occur when a user manually installs a new PHP version, but does not run `valet install`.
-     In that case, we should alert the user!
-     
-     - Important: The underlying check is `checkPhpFpmStatus`, which can be run multiple times.
-     This method actively presents a modal if said checks fails, so don't call this method too many times.
-     */
-    public func notifyAboutBrokenPhpFpm() {
-        if !self.checkPhpFpmStatus() {
-            DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_fpm_broken.title".localized,
-                    info: "alert.php_fpm_broken.info".localized,
-                    style: .critical
-                )
-            }
-        }
-    }
-    
-    /**
      Determine if PHP-FPM is configured correctly.
      
      For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
      versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
      that means that Valet won't work properly.
      */
-    private func checkPhpFpmStatus() -> Bool {
+    func checkPhpFpmStatus() -> Bool {
         if self.version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"

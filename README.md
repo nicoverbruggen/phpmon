@@ -301,9 +301,7 @@ The switcher will disable all PHP-FPM services not belonging to the version you 
 
 ### Want to know more?
 
-If you want to know more about how this works, I recommend you check out the source code. 
-
-This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+If you want to know more about how this works, I recommend you check out the source code.
 
 ## 🔧 Build instructions
 
