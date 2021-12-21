@@ -8,7 +8,7 @@
 
 import Foundation
 
-let toolver = "1.0"
+let toolver = "0.1 (early access)"
 
 let log = Log.shared
 
@@ -34,7 +34,7 @@ let action = AllowedArguments.init(rawValue: argument)
 switch action {
 case .use, .performSwitch:
     if !Shell.fileExists("\(Paths.binPath)/php") {
-        Log.err("PHP is currently not linked. Attempting to link `php` at least...")
+        Log.err("PHP is currently not linked. Attempting quick fix...")
         _ = Shell.user.executeSynchronously("brew link php", requiresPath: true)
     }
     

@@ -52,11 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "use"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "8.1"
+            argument = "help"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
