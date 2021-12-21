@@ -10,10 +10,12 @@ import Foundation
 
 class Log {
     
+    static var shared = Log()
+    
     enum Verbosity: Int {
         case error = 1,
-             info = 2,
-             warning = 3,
+             warning = 2,
+             info = 3,
              performance = 4
         
         public func isApplicable() -> Bool {
@@ -21,15 +23,7 @@ class Log {
         }
     }
     
-    static var shared = Log()
-    
-    var verbosity: Verbosity = .info
-    
-    static func info(_ item: Any) {
-        if Verbosity.info.isApplicable() {
-            print(item)
-        }
-    }
+    var verbosity: Verbosity = .warning
     
     static func err(_ item: Any) {
         if Verbosity.error.isApplicable() {
@@ -39,6 +33,12 @@ class Log {
     
     static func warn(_ item: Any) {
         if Verbosity.warning.isApplicable() {
+            print(item)
+        }
+    }
+    
+    static func info(_ item: Any) {
+        if Verbosity.info.isApplicable() {
             print(item)
         }
     }

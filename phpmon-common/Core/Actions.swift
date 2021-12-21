@@ -75,6 +75,8 @@ class Actions {
                 brew("unlink \(formula)")
                 brew("services stop \(formula)", sudo: true)
                 
+                Log.perf("Unlinked and stopped services for \(formula)")
+                
                 group.leave()
             }
         }

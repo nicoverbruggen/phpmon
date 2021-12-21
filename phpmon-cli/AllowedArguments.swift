@@ -10,6 +10,8 @@ import Foundation
 
 enum AllowedArguments: String, CaseIterable {
     case use = "use"
+    case performSwitch = "switch"
+    case help = "help"
     
     static func has(_ string: String) -> Bool {
         return Self.allCases.contains { arg in
