@@ -63,7 +63,11 @@ case .use, .performSwitch:
         Log.err("If this version is available, you may be able to install it by using `brew install php@\(version)`.")
         exit(1)
     }
-    
+case .fix:
+    Log.info("Fixing your PHP installation...")
+    Actions.fixMyPhp()
+    Log.info("All operations completed. You can check which version of PHP is linked by using `php -v`.")
+    exit(0)
 case .help:
     print("""
     ===============================================================
@@ -79,6 +83,8 @@ case .help:
     * use {version}:      Switch to a specific version of PHP.
                           (e.g. `phpmon-cli use 8.0`)
     * switch {version}:   Alias for the `use` command.
+    * fix                 Attempts to unlink all PHP versions,
+                          and link the latest version of PHP.
     * help:               Show this help.
     
     SUPPORTED FLAGS

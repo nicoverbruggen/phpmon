@@ -11,6 +11,7 @@ import Foundation
 enum AllowedArguments: String, CaseIterable {
     case use = "use"
     case performSwitch = "switch"
+    case fix = "fix"
     case help = "help"
     
     static func has(_ string: String) -> Bool {
