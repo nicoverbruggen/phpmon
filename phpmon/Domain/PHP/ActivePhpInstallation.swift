@@ -13,12 +13,13 @@ import Foundation
  When initialized, that version's .ini files are also scanned (for active or inactive extensions).
  Integrity checks can be performed to determine whether PHP-FPM is configured correctly.
  
- - Note: Each installation has a separate version number. Using `version.short` is advisable if you want to interact with Homebrew.
+ - Note: Each installation has a separate version number.
+ Using `version.short` is advisable if you want to interact with Homebrew.
  */
 class ActivePhpInstallation {
 
     var version: Version!
-    var configuration: Configuration!
+    var limits: Limits!
     var extensions: [PhpExtension]!
     
     // MARK: - Computed
@@ -31,11 +32,11 @@ class ActivePhpInstallation {
 
     init() {
         // Show information about the current version
-        self.getVersion()
+        getVersion()
         
         // If an error occurred, exit early
         if (version.error) {
-            configuration = Configuration()
+            limits = Limits()
             extensions = []
             return
         }
@@ -45,10 +46,10 @@ class ActivePhpInstallation {
         extensions = PhpExtension.load(from: path)
         
         // Get configuration values
-        configuration = Configuration(
-            memory_limit: self.getByteCount(key: "memory_limit"),
-            upload_max_filesize: self.getByteCount(key: "upload_max_filesize"),
-            post_max_size: self.getByteCount(key: "post_max_size")
+        limits = Limits(
+            memory_limit: getByteCount(key: "memory_limit"),
+            upload_max_filesize: getByteCount(key: "upload_max_filesize"),
+            post_max_size: getByteCount(key: "post_max_size")
         )
         
         // Return a list of .ini files parsed after php.ini
@@ -59,9 +60,9 @@ class ActivePhpInstallation {
         
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            let extensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
-            if extensions.count > 0 {
-                self.extensions.append(contentsOf: extensions)
+            let exts = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
+            if exts.count > 0 {
+                extensions.append(contentsOf: exts)
             }
         }
     }
@@ -100,8 +101,10 @@ class ActivePhpInstallation {
      * 10000: an integer = amount of bytes
      * 1K, 1M, 1G = shorthand for kilobytes, megabytes and gigabytes
      
-     If none of these notations are used, the _fallback_ value is used. We'll show an emoji to indicate something has gone wrong here.
-     To clarify, B gets appended to valid values. As a result, "5M" (valid) becomes "5MB", and "5MB" (invalid) becomes ⚠️.
+     If none of these notations are used, the _fallback_ value is used.
+     We'll show an emoji to indicate something has gone wrong here.
+     To clarify, B gets appended to valid values.
+     As a result, "5M" (valid) becomes "5MB", and "5MB" (invalid) becomes ⚠️.
      
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
@@ -158,14 +161,24 @@ class ActivePhpInstallation {
     }
     
     // MARK: - Structs
-    
+
+    /**
+     Struct containing information about the version number of the current PHP installation.
+     Also includes information about whether the install is considered "broken" or not.
+     If an error was found in the terminal output, `error` is set to `true` and the installation
+     can be considered broken. (The app will display this as well.)
+     */
     struct Version {
         var short = "???"
         var long = "???"
         var error = false
     }
     
-    struct Configuration {
+    /**
+     Struct containing information about the limits of the current PHP installation.
+     Includes: memory limit, max upload size and max post size.
+     */
+    struct Limits {
         var memory_limit = "???"
         var upload_max_filesize = "???"
         var post_max_size = "???"

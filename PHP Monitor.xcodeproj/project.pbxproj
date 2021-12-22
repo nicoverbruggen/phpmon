@@ -9,10 +9,24 @@
 /* Begin PBXBuildFile section */
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		54AB03262763858F00A29D5F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB03252763858F00A29D5F /* Timer.swift */; };
+		54AB03272763858F00A29D5F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB03252763858F00A29D5F /* Timer.swift */; };
+		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
+		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
+		54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
+		54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
+		54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
+		54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
+		54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
+		54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
+		54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
+		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
+		C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
+		C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
 		C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
@@ -21,13 +35,23 @@
 		C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
 		C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4C22B0215A00E7CF16 /* Actions.swift */; };
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
+		C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
+		C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
 		C42295DD2358D02000E263B2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42295DC2358D02000E263B2 /* Command.swift */; };
 		C4232EE52612526500158FC6 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = C4232EE42612526500158FC6 /* Credits.html */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
+		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
+		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
 		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
+		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
+		C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
+		C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
+		C464ADB0275A7A6A003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
+		C464ADB2275A87CA003FCD53 /* SiteListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* SiteListCell.swift */; };
+		C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* SiteListCell.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
@@ -47,6 +71,23 @@
 		C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
 		C49EAB46259FC305007F6C3B /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49EAB45259FC305007F6C3B /* Paths.swift */; };
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
+		C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
+		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
+		C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */; };
+		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
+		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
+		C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetTest.swift */; };
+		C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
+		C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
+		C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */; };
+		C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
+		C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
+		C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
+		C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
+		C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
+		C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
+		C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
+		C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
@@ -94,9 +135,16 @@
 /* Begin PBXFileReference section */
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		54AB03252763858F00A29D5F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
+		54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxPreferenceView.swift; sourceTree = "<group>"; };
+		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
+		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
+		C4188988275FE8CB001EF227 /* Filesystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filesystem.swift; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,12 +156,17 @@
 		C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePhpInstallation.swift; sourceTree = "<group>"; };
 		C41C1B4C22B0215A00E7CF16 /* Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
+		C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+ContextMenu.swift"; sourceTree = "<group>"; };
 		C42295DC2358D02000E263B2 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
+		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
+		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
+		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
+		C464ADB1275A87CA003FCD53 /* SiteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListCell.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -129,6 +182,16 @@
 		C4998F092617633900B2526E /* PrefsWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWC.swift; sourceTree = "<group>"; };
 		C49EAB45259FC305007F6C3B /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
+		C4AF9F70275445FF00D44ED0 /* valet-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "valet-config.json"; sourceTree = "<group>"; };
+		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
+		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
+		C4AF9F7C275454A900D44ED0 /* ValetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetTest.swift; sourceTree = "<group>"; };
+		C4B5635D276AB09000F12CCB /* VersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionExtractor.swift; sourceTree = "<group>"; };
+		C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionExtractorTest.swift; sourceTree = "<group>"; };
+		C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuOutlets.swift"; sourceTree = "<group>"; };
+		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
+		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
+		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
@@ -172,6 +235,7 @@
 				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
 				C41CD0272628D8E20065BBED /* Keybinds */,
+				54FCFD28276C88C0004CE748 /* Views */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -184,6 +248,17 @@
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
 			);
 			path = PHP;
+			sourceTree = "<group>";
+		};
+		54FCFD28276C88C0004CE748 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */,
+				54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */,
+				54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */,
+				54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C405A4CD24B9B9070062FAFA /* IAP */ = {
@@ -220,7 +295,6 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
-				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
 				C4EE188322D3386B00E126E5 /* Constants.swift */,
 				C41E181722CB61EB0072CF09 /* Domain */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
@@ -244,15 +318,28 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 				C4F7808A25D7F918000DBC97 /* Terminal */,
 				C47331A0247093AC009A0597 /* Menu */,
+				C464ADAA275A7A25003FCD53 /* SiteList */,
 				5420395726135DB800FB00FA /* Preferences */,
 				C4811D2822D70D9C00B5F6B3 /* Helpers */,
 				C4F8C0A222D4F100002EFE61 /* Extensions */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		C464ADAA275A7A25003FCD53 /* SiteList */ = {
+			isa = PBXGroup;
+			children = (
+				C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */,
+				C464ADAE275A7A69003FCD53 /* SiteListVC.swift */,
+				C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */,
+				C464ADB1275A87CA003FCD53 /* SiteListCell.swift */,
+			);
+			path = SiteList;
 			sourceTree = "<group>";
 		};
 		C47331A0247093AC009A0597 /* Menu */ = {
@@ -272,19 +359,53 @@
 			isa = PBXGroup;
 			children = (
 				C476FF9722B0DD830098105B /* Alert.swift */,
-				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
+				54B48B5E275F66AE006D90C5 /* Application.swift */,
+				C4188988275FE8CB001EF227 /* Filesystem.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
+				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
+				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
+				54AB03252763858F00A29D5F /* Timer.swift */,
+				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C4AF9F6A275445C900D44ED0 /* Valet */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F792754499000D44ED0 /* Valet.swift */,
+			);
+			path = Valet;
+			sourceTree = "<group>";
+		};
+		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F6C275445D900D44ED0 /* Homebrew */,
+				C4AF9F6A275445C900D44ED0 /* Valet */,
+			);
+			path = Integrations;
+			sourceTree = "<group>";
+		};
+		C4AF9F6C275445D900D44ED0 /* Homebrew */ = {
+			isa = PBXGroup;
+			children = (
 				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 			);
-			path = Helpers;
+			path = Homebrew;
 			sourceTree = "<group>";
 		};
 		C4B13B1D25C4915000548C3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
+				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
+				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
+				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
+				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
+				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C41C1B4C22B0215A00E7CF16 /* Actions.swift */,
 			);
@@ -294,6 +415,7 @@
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
+				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 				C43A8A1F25D9D1D700591B77 /* brew.json */,
 				C4F780A725D80AE8000DBC97 /* php.ini */,
 				C4F7807D25D7F84B000DBC97 /* Info.plist */,
@@ -302,6 +424,9 @@
 				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
 				C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */,
 				C43A8A1925D9CD1000591B77 /* Utility.swift */,
+				C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */,
+				C4AF9F7C275454A900D44ED0 /* ValetTest.swift */,
+				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 			);
 			path = "phpmon-tests";
 			sourceTree = "<group>";
@@ -416,10 +541,13 @@
 			files = (
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
+				C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */,
 				C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
+				54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
+				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 				C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */,
 			);
@@ -429,8 +557,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
+				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
+				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,29 +576,45 @@
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C4998F0A2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
+				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
+				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C41C1B4722B009A400E7CF16 /* Shell.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C41C1B4D22B0215A00E7CF16 /* Actions.swift in Sources */,
+				C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
+				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C42295DD2358D02000E263B2 /* Command.swift in Sources */,
+				54B48B5F275F66AE006D90C5 /* Application.swift in Sources */,
+				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
+				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
+				54AB03262763858F00A29D5F /* Timer.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
+				C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
 				C49EAB46259FC305007F6C3B /* Paths.swift in Sources */,
+				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
+				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
+				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
+				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
+				C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
+				C464ADB2275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +625,9 @@
 			files = (
 				54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
+				54AB03272763858F00A29D5F /* Timer.swift in Sources */,
+				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
+				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
@@ -485,27 +635,43 @@
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
+				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
+				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4F780C725D80B75000DBC97 /* StatusMenu.swift in Sources */,
+				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
+				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
+				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
+				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
+				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
+				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
+				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
+				54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F780A225D804AA000DBC97 /* Paths.swift in Sources */,
 				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
 				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
 				C4F7809625D7FBF8000DBC97 /* Shell.swift in Sources */,
+				C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */,
+				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
+				C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
 				C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */,
+				C464ADB0275A7A6A003FCD53 /* SiteListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
+				C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
 				C4F7809F25D8037C000DBC97 /* Command.swift in Sources */,
 				C4F780B425D80B51000DBC97 /* Actions.swift in Sources */,
@@ -586,7 +752,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -642,7 +808,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -659,7 +825,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 135;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -667,7 +833,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -683,7 +850,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 81;
+				CURRENT_PROJECT_VERSION = 135;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -691,7 +858,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -712,7 +880,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -733,7 +901,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

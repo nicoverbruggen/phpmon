@@ -9,7 +9,7 @@ import Cocoa
 import UserNotifications
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
     
     // MARK: - Variables
     
@@ -38,16 +38,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
      */
     let paths: Paths
     
+    /**
+     The Valet singleton that determines all information
+     about Valet and its current configuration.
+     */
+    let valet: Valet
+    
     // MARK: - Initializer
     
     /**
      When the application initializes, create all singletons.
      */
     override init() {
+        print("==================================")
+        print("PHP MONITOR by Nico Verbruggen")
+        print("Version \(App.version)")
+        print("==================================")
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared
+        self.valet = Valet.shared
         super.init()
     }
     
@@ -55,27 +66,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     /**
      When the application has finished launching, we'll want to set up
-     the user notification center delegate, and kickoff the menu
+     the user notification center permissions, and kickoff the menu
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        NSUserNotificationCenter.default.delegate = self
-        self.menu.startup()
-    }
-    
-    // MARK: - NSUserNotificationCenterDelegate
-    
-    /**
-     When a notification is sent, the delegate of the notification center
-     is asked whether the notification should be presented or not. Since
-     the user can now disable notifications per application since macOS
-     Catalina, any and all notifications should be displayed.
-     */
-    func userNotificationCenter(
-        _ center: NSUserNotificationCenter,
-        shouldPresent notification: NSUserNotification
-    ) -> Bool {
-        return true
+        // Make sure notifications will work
+        setupNotifications()
+        // Make sure the menu performs its initial checks
+        menu.startup()
     }
     
 }

@@ -16,6 +16,16 @@ class Constants {
     static let LatestStablePhpVersion = "8.1"
     
     /**
+     The minimum version of Valet that is recommended.
+     If the installed version is older, a notification will be shown
+     every time the app launches (with a recommendation to upgrade).
+     
+     The minimum requirement is currently synced to PHP 8.1 compatibility.
+     See also: https://github.com/laravel/valet/releases/tag/v2.16.2
+     */
+    static let MinimumRecommendedValetVersion = "2.16.2"
+    
+    /**
      * The PHP versions supported by this application.
      * Versions that do not appear in this array are omitted from the list.
      */

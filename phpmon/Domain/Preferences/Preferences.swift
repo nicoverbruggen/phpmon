@@ -13,6 +13,7 @@ enum PreferenceName: String {
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
+    case useInternalSwitcher = "use_phpmon_switcher"
     case globalHotkey = "global_hotkey"
 }
 
@@ -26,7 +27,7 @@ class Preferences {
     
     public init() {
         Preferences.handleFirstTimeLaunch()
-        self.cachedPreferences = Self.cache()
+        cachedPreferences = Self.cache()
     }
     
     // MARK: - First Time Run
@@ -45,7 +46,8 @@ class Preferences {
         UserDefaults.standard.register(defaults: [
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
-            PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true
+            PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
+            PreferenceName.useInternalSwitcher.rawValue: false
         ])
         
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
@@ -70,6 +72,7 @@ class Preferences {
             .shouldDisplayDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
             .autoServiceRestartAfterExtensionToggle: UserDefaults.standard.bool(forKey: PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue) as Any,
+            .useInternalSwitcher: UserDefaults.standard.bool(forKey: PreferenceName.useInternalSwitcher.rawValue) as Any,
             
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,

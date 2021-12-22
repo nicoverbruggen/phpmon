@@ -55,8 +55,27 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         updatePhpVersionInStatusBar()
         
+        print("Determining broken PHP-FPM...")
+        // Attempt to find out if PHP-FPM is broken
         let installation = App.phpInstall!
         installation.notifyAboutBrokenPhpFpm()
+        
+        print("Detecting applications...")
+        // Attempt to load list of applications
+        App.shared.detectedApplications = Application.detectPresetApplications()
+        let appNames = App.shared.detectedApplications.map { app in
+            return app.name
+        }
+        print("Detected applications: \(appNames)")
+        
+        // Load the global hotkey
+        App.shared.loadGlobalHotkey()
+        
+        // Attempt to find out more info about Valet
+        print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
+        Valet.shared.validateVersion()
+        Valet.shared.startPreloadingSites()
+        print("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in
@@ -107,6 +126,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addPhpActionMenuItems()
             menu.addItem(NSMenuItem.separator())
             
+            // Add Valet interactions
+            menu.addValetMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
+            // Add services
+            menu.addServicesMenuItems()
+            menu.addItem(NSMenuItem.separator())
+            
             // Add information about services & actions
             menu.addPhpConfigurationMenuItems()
             menu.addItem(NSMenuItem.separator())
@@ -131,7 +158,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: MenuBarImageGenerator.textToImage(text: version)
+            image: MenuBarImageGenerator.textToImageWithIcon(text: version)
         )
     }
     
@@ -349,12 +376,24 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 }
             }
             
-            // Switch the PHP version
-            Actions.switchToPhpVersion(
-                version: sender.version,
-                availableVersions: App.shared.availablePhpVersions,
-                completed: completion
-            )
+            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
+            if Preferences.preferences[.useInternalSwitcher] as! Bool == false {
+                // 1. Default switcher using Valet
+                // Will cause less issues, but is slower
+                Actions.switchToPhpVersionUsingValet(
+                    version: sender.version,
+                    availableVersions: App.shared.availablePhpVersions,
+                    completed: completion
+                )
+            } else { */
+                // 2. Custom switcher (internal)
+                // Will cause more issues with Homebrew and is faster
+                Actions.switchToPhpVersion(
+                    version: sender.version,
+                    availableVersions: App.shared.availablePhpVersions,
+                    completed: completion
+                )
+            /* } */
         }
     }
     
@@ -365,6 +404,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func openPrefs() {
         PrefsVC.show()
+    }
+    
+    @objc func openSiteList() {
+        SiteListVC.show()
     }
     
     @objc func terminateApp() {

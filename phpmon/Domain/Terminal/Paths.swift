@@ -33,11 +33,13 @@ class Paths {
             print("This usually means we're in trouble... (no Homebrew?)")
             baseDir = .usr
         }
-        
-        print("Homebrew directory: \(baseDir)")
     }
     
     // - MARK: Binaries
+    
+    public static var valet: String {
+        return "/Users/\(whoami)/.composer/vendor/bin/valet"
+    }
     
     public static var brew: String {
         return "\(binPath)/brew"
@@ -52,6 +54,10 @@ class Paths {
     }
     
     // - MARK: Paths
+    
+    public static var whoami: String {
+        return String(Shell.pipe("whoami").split(separator: "\n")[0])
+    }
     
     public static var binPath: String {
         return "\(shared.baseDir.rawValue)/bin"

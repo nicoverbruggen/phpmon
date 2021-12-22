@@ -23,7 +23,7 @@ class Actions {
         let phpAlias = App.shared.brewPhpVersion
         
         // Avoid inserting a duplicate
-        if (!versionsOnly.contains(phpAlias)) {
+        if (!versionsOnly.contains(phpAlias) && Shell.fileExists("\(Paths.optPath)/php/bin/php")) {
             versionsOnly.append(phpAlias);
         }
         
@@ -103,6 +103,19 @@ class Actions {
     }
     
     /**
+     Kindly asks Valet to switch to a specific PHP version.
+     */
+    public static func switchToPhpVersionUsingValet(
+        version: String,
+        availableVersions: [String],
+        completed: @escaping () -> Void
+    ) {
+        print("Switching to \(version) using Valet")
+        print(valet("use php@\(version)"))
+        completed()
+    }
+    
+    /**
      Switching to a new PHP version involves:
      - unlinking the current version
      - stopping the active services
@@ -178,9 +191,14 @@ class Actions {
     // MARK: - Quick Fix
     
     /**
-     Detects all currently available PHP versions, and unlinks each and every one of them.
-     After this, the brew services are also stopped, the latest PHP version is linked, and php + nginx are restarted.
-     If this does not solve the issue, the user may need to install additional extensions and/or run `composer global update`.
+     Detects all currently available PHP versions,
+     and unlinks each and every one of them.
+     
+     After this, the brew services are also stopped,
+     the latest PHP version is linked, and php + nginx are restarted.
+     
+     If this does not solve the issue, the user may need to install additional
+     extensions and/or run `composer global update`.
      */
     public static func fixMyPhp()
     {
@@ -204,6 +222,14 @@ class Actions {
     // MARK: Common Shell Commands
     
     /**
+     Runs a `valet` command.
+     */
+    public static func valet(_ command: String) -> String
+    {
+        return Shell.pipe("sudo \(Paths.valet) \(command)", requiresPath: true)
+    }
+    
+    /**
      Runs a `brew` command. Can run as superuser.
      */
     public static func brew(_ command: String, sudo: Bool = false)
@@ -220,7 +246,8 @@ class Actions {
         let e_original = original.replacingOccurrences(of: "/", with: "\\/")
         let e_replacement = replacement.replacingOccurrences(of: "/", with: "\\/")
         
-        // Check if gsed exists; it is able to follow symlinks, which we want to do to toggle the extension
+        // Check if gsed exists; it is able to follow symlinks,
+        // which we want to do to toggle the extension
         if Shell.fileExists("\(Paths.binPath)/gsed") {
             Shell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
         } else {

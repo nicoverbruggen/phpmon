@@ -6,14 +6,28 @@
 //
 
 import Foundation
+import UserNotifications
 
 class LocalNotification {
     
     public static func send(title: String, subtitle: String) {
-        let notification = NSUserNotification()
-        notification.title = title
-        notification.subtitle = subtitle
-        NSUserNotificationCenter.default.deliver(notification)
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = subtitle
+        
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(
+            identifier: uuidString,
+            content: content,
+            trigger: nil
+        )
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+                print(error!)
+            }
+        }
     }
     
 }

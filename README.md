@@ -7,7 +7,7 @@
 
 **PHP Monitor** (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so you need to have it set up before you can use this.
 
-<img src="./docs/screenshot34.png" width="412px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot41.jpg" width="800px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
 
@@ -21,12 +21,12 @@ PHP Monitor also gives you quick access to various useful functionality (like ac
 
 PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
 
-* macOS 10.14 Mojave or higher (works on macOS 11 Big Sur and macOS 12 Monterey)
+* macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * The brew formula `php` has to be installed (which version is detected)
-* Laravel Valet 2.13 or higher
+* Laravel Valet 2.16.2 or higher (older versions might be compatible but are not supported)
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released._
+_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`._
 
 ## 🚀 How to install
 
@@ -231,18 +231,30 @@ PHP Monitor itself doesn't do any network requests. Feel free to check the sourc
 </details>
 
 <details>
-<summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade`!</strong></summary>
+<summary><strong>How do I get various applications to show up in the domain list's right-click menu?</strong></summary>
 
-This is a security feature of Brew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. 
+When you select and right-click on a domain, you can open these directories with various applications. This can help speed up your workflow. However, for these apps to show up, they must be detected first.
 
-You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
+The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime Merge, iTerm</i>.
+
+All of these apps should just be detected correctly, no matter their location on your system. If you can open it using `open -a "appname"`, the app should be detected and work. If you have renamed the app, there might be an issue getting it detected.
+
+To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
+</details>
+
+<details>
+<summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
+
+<strike>This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).</strike>
+
+**Update**: If you are using the Valet switcher (currently not available in the latest stable build) you will not encounter this issue. For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
 
 </details>
 
 <details>
 <summary><strong>The app has crashed!</strong></summary>
 
-Please get in touch and open an issue. PHP Monitor shouldn't crash :)
+Please get in touch and open an issue. PHP Monitor shouldn't crash... (unless you are actually removing PHP *while* the app is running, that’s considered normal behaviour!)
 
 </details>
 
@@ -283,16 +295,7 @@ In order to save power, this only happens once every 60 seconds.
 
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
-This means:
-
-- You have at least the latest version of PHP installed (`php`)
-- You have installed Laravel Valet (`which valet` returns `/usr/local/bin/valet`)
-- You ran `valet trust`, which means Valet commands can be run without using sudo
-
-The utility runs the following commands:
-
-- Unlink all detected PHP versions & stop the respective `php@X.X` services
-- Link the desired version of PHP, and start the associated service
+The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
 
 ### Want to know more?
 

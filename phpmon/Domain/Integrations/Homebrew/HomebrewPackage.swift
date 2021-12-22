@@ -16,7 +16,8 @@ struct HomebrewPackage: Decodable {
     let linked_keg: String?
     
     public var version: String {
-        return aliases.first!.replacingOccurrences(of: "php@", with: "")
+        return aliases.first!
+            .replacingOccurrences(of: "php@", with: "")
     }
     
 }

@@ -26,7 +26,7 @@ class Startup {
         performEnvironmentCheck(
             !Shell.fileExists("\(Paths.binPath)/php"),
             messageText:        "startup.errors.php_binary.title".localized,
-            informativeText:    "startup.errors.php_binary_desc".localized,
+            informativeText:    "startup.errors.php_binary.desc".localized,
             breaking:           true
         )
         

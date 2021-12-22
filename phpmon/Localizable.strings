@@ -25,7 +25,8 @@
 "mi_manage_services" = "Manage services";
 "mi_restart_all_services" = "Restart all services";
 "mi_stop_all_services" = "Stop all services";
-"mi_force_load_latest" = "Force load latest PHP version";
+"mi_force_load_latest" = "Force load (latest) PHP %@";
+"mi_force_load_latest_unavailable" = "Force load unavailable (PHP %@ not installed)";
 "mi_php_refresh" = "Refresh information";
 
 "mi_configuration" = "Configuration";
@@ -41,13 +42,47 @@
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
+"mi_valet" = "Laravel Valet";
+"mi_sitelist" = "View linked & parked domains...";
+
 "mi_preferences" = "Preferences...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
+// SITE LIST
+
+"site_list.title" = "Domains";
+"site_list.subtitle" = "Linked & Parked";
+
+"site_list.alerts_status_not_changed.title" = "SSL Status Not Changed";
+"site_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
+
+"site_list.alerts_status_changed.title" = "SSL Status Changed";
+"site_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
+
+"site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
+"site_link.confirm_link" = "No files will be removed. If needed, the site will need to be relinked via the command line.";
+
+// SITE LIST ACTIONS
+
+"site_list.unlink" = "Unlink Directory";
+"site_list.secure" = "Secure Domain";
+"site_list.unsecure" = "Unsecure Domain";
+"site_list.open_in_finder" = "Open in Finder";
+"site_list.open_in_browser" = "Open in Browser";
+"site_list.open_in_terminal" = "Open in Terminal";
+"site_list.detected_apps" = "Detected Applications";
+"site_list.system_apps" = "System Applications";
+
+// EDITORS
+
+"editors.alert.try_again" = "Try Again";
+"editors.alert.cancel" = "Cancel";
+
 // PREFERENCES
 
 "prefs.title" = "PHP Monitor";
+"prefs.subtitle" = "Preferences";
 "prefs.close" = "Close";
 
 "prefs.global_shortcut" = "Global shortcut:";
@@ -55,13 +90,22 @@
 "prefs.services" = "Services:";
 
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
-"prefs_auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when\nyou check or uncheck an extension. Slightly slower when enabled, \nbut this applies the extension change immediately for all sites \nyou're serving, no need to restart PHP-FPM manually.";
+"prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when\nyou check or uncheck an extension. Slightly slower when enabled, \nbut this applies the extension change immediately for all sites \nyou're serving, no need to restart PHP-FPM manually.";
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible.\nIf checked, it will display the major version number of the\ncurrently linked PHP version.";
 
 "prefs.display_full_php_version" = "Display full PHP version in menu bar";
 "prefs.display_full_php_version_desc" = "Display the full version instead of the major version only.\n(This may be undesirable on smaller displays,\nso this is disabled by default.)";
+
+"prefs.use_internal_switcher" = "Use PHP Monitor’s own version switcher";
+"prefs.use_internal_switcher_desc" =
+"By default, PHP Monitor will attempt to use Laravel Valet
+in order to switch PHP versions. If you prefer a different
+switcher or are having issues with `valet use php`, you may
+use PHP Monitor's own switcher which is slightly faster,
+but might cause issues with permissions in your Homebrew
+directories, since PHP Monitor controls the services.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
@@ -106,11 +150,18 @@
 "alert.php_alias_conflict.title" = "Homebrew `php` formula alias conflict detected";
 "alert.php_alias_conflict.info" = "PHP Monitor has detected conflicting `php` aliases in your Homebrew setup, both of which have been detected as installed.\n\nThis will likely result in failed linking when switching PHP versions, and will break PHP Monitor functionality.\n\nFor more information, please visit: https://github.com/nicoverbruggen/phpmon/issues/54";
 
+"alert.min_valet_version.title" = "Your version of Valet is outdated, please upgrade!";
+"alert.min_valet_version.info" = "You are currently running Valet %@.
+
+For optimal support of the latest versions of PHP and proper version switching, it is recommended that you update to version %@.
+
+You can do this by running `composer global update` in your terminal. After that, run `valet install` again. For best results, restart PHP Monitor after that.";
+
 // STARTUP
 
 /// 1. PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary_desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
 
 /// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";

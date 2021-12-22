@@ -1,5 +1,5 @@
 //
-//  BrewPhpInstallation.swift
+//  PhpInstallation.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/11/2021.
@@ -11,8 +11,11 @@ import Foundation
 class PhpInstallation {
     
     var longVersion: String
-    var homebrewInfo: HomebrewPackage?
     
+    /**
+     In order to determine details about a PHP installation, we’ll simply run `php-config --version`
+     in the relevant directory.
+     */
     init(_ version: String) {
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
         self.longVersion = version
@@ -21,19 +24,6 @@ class PhpInstallation {
                 path: phpConfigExecutablePath,
                 arguments: ["--version"]
             )
-        }
-        
-        let info = Shell.pipe("\(Paths.brew) info php@\(version) --json")
-        
-        do {
-            let data = try JSONDecoder().decode(
-                [HomebrewPackage].self,
-                from: info.data(using: .utf8)!
-            )
-            self.homebrewInfo = data.first!
-        } catch {
-            print("There was an issue parsing Homebrew info for PHP \(version)")
-            self.homebrewInfo = nil
         }
     }
     

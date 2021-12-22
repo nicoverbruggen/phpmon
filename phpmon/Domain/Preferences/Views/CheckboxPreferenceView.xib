@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="CheckboxPreferenceView" customModule="PHP_Monitor" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="596" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wbz-5A-DqE">
+                    <rect key="frame" x="168" y="26" width="408" height="18"/>
+                    <buttonCell key="cell" type="check" title="CHECKBOX" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Roe-uj-mHb">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggled:" target="c22-O7-iKe" id="c9y-JM-TdE"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-X1-qca">
+                    <rect key="frame" x="168" y="5" width="410" height="14"/>
+                    <textFieldCell key="cell" title="DESCRIPTION" id="9fH-up-Sob">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B8f-nb-Y0A">
+                    <rect key="frame" x="-2" y="27" width="154" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="euj-t0-xv4"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="SECTION" id="46w-Sv-y21">
+                        <font key="font" metaFont="systemMedium" size="13"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="B8f-nb-Y0A" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="2Zu-h3-qb0"/>
+                <constraint firstAttribute="trailing" secondItem="Wbz-5A-DqE" secondAttribute="trailing" constant="20" symbolic="YES" id="RwX-EM-dum"/>
+                <constraint firstAttribute="trailing" secondItem="Bcg-X1-qca" secondAttribute="trailing" constant="20" symbolic="YES" id="UPo-Il-l81"/>
+                <constraint firstItem="Bcg-X1-qca" firstAttribute="top" secondItem="Wbz-5A-DqE" secondAttribute="bottom" constant="8" symbolic="YES" id="W4U-SA-N2v"/>
+                <constraint firstItem="Wbz-5A-DqE" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="Wff-2b-K6W"/>
+                <constraint firstItem="Wbz-5A-DqE" firstAttribute="leading" secondItem="B8f-nb-Y0A" secondAttribute="trailing" constant="20" id="YCZ-tC-TCi"/>
+                <constraint firstItem="B8f-nb-Y0A" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Ztd-uk-4aw"/>
+                <constraint firstItem="Wbz-5A-DqE" firstAttribute="firstBaseline" secondItem="B8f-nb-Y0A" secondAttribute="firstBaseline" id="cdO-YW-08I"/>
+                <constraint firstItem="Bcg-X1-qca" firstAttribute="top" secondItem="Wbz-5A-DqE" secondAttribute="bottom" constant="8" symbolic="YES" id="cvb-Is-ZlF"/>
+                <constraint firstItem="Bcg-X1-qca" firstAttribute="leading" secondItem="Wbz-5A-DqE" secondAttribute="leading" id="goU-3A-lTq"/>
+                <constraint firstAttribute="bottom" secondItem="Bcg-X1-qca" secondAttribute="bottom" constant="5" id="hNE-mU-jcu"/>
+            </constraints>
+            <connections>
+                <outlet property="buttonCheckbox" destination="Wbz-5A-DqE" id="jZ3-Tf-ncG"/>
+                <outlet property="labelDescription" destination="Bcg-X1-qca" id="T23-ag-AUf"/>
+                <outlet property="labelSection" destination="B8f-nb-Y0A" id="i61-ls-yM0"/>
+            </connections>
+            <point key="canvasLocation" x="149" y="-114.5"/>
+        </customView>
+    </objects>
+</document>

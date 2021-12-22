@@ -10,10 +10,16 @@ import HotKey
 
 class App {
     
+    // MARK: Static Vars
+    
+    /** The static app instance. Accessible at any time. */
     static let shared = App()
     
-    init() {
-        loadGlobalHotkey()
+    /** Retrieve the version number from the main info dictionary, Info.plist. */
+    static var version: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        return "\(version) (\(build))"
     }
     
     /** Information about the currently linked PHP installation. */
@@ -26,42 +32,36 @@ class App {
         return App.shared.busy
     }
     
+    // MARK: Variables
+    
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
     
-    /**
-     The window controller of the currently active window.
-     */
-    var windowController: NSWindowController? = nil
+    /** The window controller of the currently active preferences window. */
+    var preferencesWindowController: PrefsWC? = nil
     
-    /**
-     Whether the application is busy switching versions.
-     */
+    /** The window controller of the currently active site list window. */
+    var siteListWindowController: SiteListWC? = nil
+    
+    /** Whether the application is busy switching versions. */
     var busy: Bool = false
     
-    /**
-     The currently active installation of PHP.
-     */
+    /** The currently active installation of PHP. */
     var currentInstall: ActivePhpInstallation? = nil
     
-    /**
-     All available versions of PHP.
-     */
-    var availablePhpVersions : [String] = []
+    /** All available versions of PHP. */
+    var availablePhpVersions: [String] = []
     
-    /**
-     Cached information about the PHP installations; contains only the full version number at this point.
-     */
-    var cachedPhpInstallations : [String: PhpInstallation] = [:]
+    /** Cached information about the PHP installations. */
+    var cachedPhpInstallations: [String: PhpInstallation] = [:]
     
-    /**
-     The timer that will periodically fetch the PHP version that is currently active.
-     */
+    /** List of detected (installed) applications that PHP Monitor can work with. */
+    var detectedApplications: [Application] = []
+    
+    /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
     
-    /**
-     Information we were able to discern from the Homebrew info command (as JSON).
-     */
+    /** Information we were able to discern from the Homebrew info command (as JSON). */
     var brewPhpPackage: HomebrewPackage! = nil {
         didSet {
             brewPhpVersion = brewPhpPackage!.version
@@ -79,52 +79,27 @@ class App {
      */
     var brewPhpVersion: String = Constants.LatestStablePhpVersion
     
+    // MARK: - Global Hotkey
+    
     /**
      The shortcut the user has requested.
      */
     var shortcutHotkey: HotKey? = nil {
         didSet {
-            self.setupGlobalHotkeyListener()
+            setupGlobalHotkeyListener()
         }
     }
     
-    // MARK: - Methods
-    
-    /**
-     On startup, the preferences should be loaded from the .plist, and we'll enable the shortcut if it is set.
-     */
-    private func loadGlobalHotkey() {
-        // Make sure we can retrieve the hotkey from preferences; if we cannot, no hotkey is set
-        guard let hotkey = Preferences.preferences[.globalHotkey] as? String else {
-            print("No global hotkey loaded")
-            return
-        }
-        
-        // Make sure we can parse the JSON into the desired format; if we cannot, no hotkey is set
-        guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
-            print("No global hotkey loaded, could not be parsed!")
-            self.shortcutHotkey = nil
-            return
-        }
-        
-        self.shortcutHotkey = HotKey(keyCombo: KeyCombo(
-            carbonKeyCode: keybindPref.keyCode,
-            carbonModifiers: keybindPref.carbonFlags
-        ))
-    }
+    // MARK: - Activation Policy
     
     /**
-     Sets up the action that needs to occur when the shortcut key is pressed (open the menu).
+     Variable that keeps track of which windows are currently open.
+     (Please note that window controllers remain open in memory once opened.)
+     
+     When this list is updated, the app activation policy is re-evaluated.
+     The app activation policy dictates how the app runs
+     (as a normal app or as a toolbar app).
      */
-    private func setupGlobalHotkeyListener() {
-        guard let hotkey = self.shortcutHotkey else {
-            return
-        }
-        
-        hotkey.keyDownHandler = {
-            MainMenu.shared.statusItem.button?.performClick(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        }
-    }
+    var openWindows: [String] = []
     
 }
