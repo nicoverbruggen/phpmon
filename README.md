@@ -247,9 +247,7 @@ To see which files are checked to determine availability, see [this file](./phpm
 
 <strike>This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).</strike>
 
-**Update**: If you are on PHP Monitor 4.1 (or higher), this problem should no longer be an issue for newly installed or upgraded versions of PHP, since this was fixed in that release. 
-
-For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
+**Update**: If you are using the Valet switcher (currently not available in the latest stable build) you will not encounter this issue. For more information on this, see [this issue](https://github.com/nicoverbruggen/phpmon/issues/17) and also [this issue about switching to Valet's switcher](https://github.com/nicoverbruggen/phpmon/issues/34).
 
 </details>
 
