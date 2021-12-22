@@ -11,9 +11,10 @@ import Foundation
 let toolver = "0.1 (early access)"
 
 let log = Log.shared
+log.verbosity = .info
 
-if CommandLine.arguments.contains("-v") || CommandLine.arguments.contains("--verbose") {
-    Log.shared.verbosity = .info
+if CommandLine.arguments.contains("-q") || CommandLine.arguments.contains("--quiet") {
+    Log.shared.verbosity = .warning
 }
 if CommandLine.arguments.contains("-p") || CommandLine.arguments.contains("--performance") {
     Log.shared.verbosity = .performance
@@ -89,7 +90,7 @@ case .help:
     
     SUPPORTED FLAGS
     
-    * `-v / --verbose`:   Enables verbose mode.
+    * `-q / --quiet`:     Silences all logs except for warnings and exceptions.
     * `-p / --perf`:      Enables performance mode.
     
     """)
