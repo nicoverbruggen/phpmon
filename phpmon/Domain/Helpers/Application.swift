@@ -34,7 +34,7 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        return Shell.run("/usr/bin/open -a \"\(name)\" \(file)")
+        return Shell.run("/usr/bin/open -a \"\(name)\" \"\(file)\"")
     }
     
     /** Checks if the app is installed. */

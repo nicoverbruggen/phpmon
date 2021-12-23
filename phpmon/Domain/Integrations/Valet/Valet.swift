@@ -167,11 +167,12 @@ class Valet {
         }
         
         public func determineSecured(_ tld: String) {
-            secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
+            let name = self.name!.replacingOccurrences(of: " ", with: "\\ ")
+            secured = Shell.fileExists("~/.config/valet/Certificates/\(name).\(tld).key")
         }
         
         public func determineDriver() {
-            let driver = Shell.pipe("cd \(absolutePath!) && valet which", requiresPath: true)
+            let driver = Shell.pipe("cd \"\(absolutePath!)\" && valet which", requiresPath: true)
             if driver.contains("This site is served by") {
                 self.driver = driver
                     // TODO: Use a regular expression to retrieve the driver instead?

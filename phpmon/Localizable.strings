@@ -74,6 +74,9 @@
 "site_list.detected_apps" = "Detected Applications";
 "site_list.system_apps" = "System Applications";
 
+"site_list.alert.invalid_folder_name" = "Invalid folder name";
+"site_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
+
 // EDITORS
 
 "editors.alert.try_again" = "Try Again";

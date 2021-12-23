@@ -171,7 +171,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         let originalSecureStatus = selectedSite!.secured
         let action = selectedSite!.secured ? "unsecure" : "secure"
         let selectedSite = selectedSite!
-        let command = "cd \(selectedSite.absolutePath!) && sudo \(Paths.valet) \(action) && exit;"
+        let command = "cd '\(selectedSite.absolutePath!)' && sudo \(Paths.valet) \(action) && exit;"
         
         waitAndExecute {
             Shell.run(command, requiresPath: true)
@@ -204,16 +204,20 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     @objc public func openInBrowser() {
         let prefix = selectedSite!.secured ? "https://" : "http://"
-        let url = "\(prefix)\(selectedSite!.name!).\(Valet.shared.config.tld)"
-        NSWorkspace.shared.open(URL(string: url)!)
+        let url = URL(string: "\(prefix)\(selectedSite!.name!).\(Valet.shared.config.tld)")
+        if url != nil {
+            NSWorkspace.shared.open(url!)
+        } else {
+            warnAboutInvalidFolderAction()
+        }
     }
     
     @objc public func openInFinder() {
-        Shell.run("open \(selectedSite!.absolutePath!)")
+        Shell.run("open '\(selectedSite!.absolutePath!)'")
     }
     
     @objc public func openInTerminal() {
-        Shell.run("open -b com.apple.terminal \(selectedSite!.absolutePath!)")
+        Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath!)'")
     }
     
     @objc public func unlinkSite() {
@@ -236,6 +240,13 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
                 Shell.run("valet unlink \(site.name!)", requiresPath: true)
                 self.reloadSites()
             }
+        )
+    }
+    
+    private func warnAboutInvalidFolderAction() {
+        _ = Alert.present(
+            messageText: "site_list.alert.invalid_folder_name".localized,
+            informativeText: "site_list.alert.invalid_folder_name_desc".localized
         )
     }
     
