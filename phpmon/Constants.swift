@@ -50,7 +50,5 @@ class Constants {
         // dev release. In this case, that means that the version below is detected.
         "8.2"
     ]
-    
 
-    
 }

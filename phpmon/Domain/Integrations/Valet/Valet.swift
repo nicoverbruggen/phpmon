@@ -84,6 +84,12 @@ class Valet {
         // We can also determine whether the thing at the path is a directory, too
         let type = attrs[FileAttributeKey.type] as! FileAttributeType
         
+        // We should also check that we can interpret the path correctly
+        if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
+            print("Warning: could not parse the site: \(siteDir), skipping!")
+            return
+        }
+        
         if type == FileAttributeType.typeSymbolicLink {
             sites.append(Site(aliasPath: siteDir, tld: tld))
         } else if type == FileAttributeType.typeDirectory {
@@ -114,7 +120,7 @@ class Valet {
         convenience init(absolutePath: String, tld: String) {
             self.init()
             self.absolutePath = absolutePath
-            self.name = URL(string: absolutePath)!.lastPathComponent
+            self.name = URL(fileURLWithPath: absolutePath).lastPathComponent
             self.aliasPath = nil
             determineSecured(tld)
             determineDriver()
@@ -123,7 +129,7 @@ class Valet {
         convenience init(aliasPath: String, tld: String) {
             self.init()
             self.absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
-            self.name = URL(string: aliasPath)!.lastPathComponent
+            self.name = URL(fileURLWithPath: aliasPath).lastPathComponent
             self.aliasPath = aliasPath
             determineSecured(tld)
             determineDriver()
