@@ -37,10 +37,14 @@ class Valet {
     }
     
     public func startPreloadingSites() {
-        if self.sites.count <= 10 {
+        let maximumPreload = 10
+        let foundSites = self.countPaths()
+        if foundSites <= maximumPreload {
             // Preload the sites and their drivers
-            Log.info("Fewer than or 11 sites found, preloading list of sites...")
+            Log.info("Fewer than or \(maximumPreload) sites found, preloading list of sites...")
             self.reloadSites()
+        } else {
+            Log.info("\(foundSites) sites found, exceeds \(maximumPreload) for preload at launch!")
         }
     }
     
@@ -64,6 +68,25 @@ class Valet {
         }
     }
     
+    /**
+     Returns a count of how many sites are linked and parked.
+     */
+    private func countPaths() -> Int {
+        var count = 0
+        for path in config.paths {
+            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
+            for entry in entries {
+                if resolveSite(entry, forPath: path) {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+    
+    /**
+     Resolves all paths and creates linked or parked site instances that can be referenced later.
+     */
     private func resolvePaths(tld: String) {
         sites = []
         
@@ -75,6 +98,28 @@ class Valet {
         }
     }
     
+    /**
+     Determines whether the site can be resolved as a symbolic link or as a directory.
+     Regular files are ignored. Returns true if the path can be parsed.
+     */
+    private func resolveSite(_ entry: String, forPath path: String) -> Bool {
+        let siteDir = path + "/" + entry
+
+        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
+        
+        let type = attrs[FileAttributeKey.type] as! FileAttributeType
+        
+        if type == FileAttributeType.typeSymbolicLink || type == FileAttributeType.typeDirectory {
+            return true
+        }
+        
+        return false
+    }
+    
+    /**
+     Determines whether the site can be resolved as a symbolic link or as a directory.
+     Regular files are ignored, and the site is added to Valet's list of sites.
+     */
     private func resolvePath(_ entry: String, forPath path: String, tld: String) {
         let siteDir = path + "/" + entry
         
@@ -83,6 +128,12 @@ class Valet {
         
         // We can also determine whether the thing at the path is a directory, too
         let type = attrs[FileAttributeKey.type] as! FileAttributeType
+        
+        // We should also check that we can interpret the path correctly
+        if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
+            print("Warning: could not parse the site: \(siteDir), skipping!")
+            return
+        }
         
         if type == FileAttributeType.typeSymbolicLink {
             sites.append(Site(aliasPath: siteDir, tld: tld))
@@ -114,7 +165,7 @@ class Valet {
         convenience init(absolutePath: String, tld: String) {
             self.init()
             self.absolutePath = absolutePath
-            self.name = URL(string: absolutePath)!.lastPathComponent
+            self.name = URL(fileURLWithPath: absolutePath).lastPathComponent
             self.aliasPath = nil
             determineSecured(tld)
             determineDriver()
@@ -123,7 +174,7 @@ class Valet {
         convenience init(aliasPath: String, tld: String) {
             self.init()
             self.absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
-            self.name = URL(string: aliasPath)!.lastPathComponent
+            self.name = URL(fileURLWithPath: aliasPath).lastPathComponent
             self.aliasPath = aliasPath
             determineSecured(tld)
             determineDriver()
@@ -134,7 +185,7 @@ class Valet {
         }
         
         public func determineDriver() {
-            let driver = Shell.pipe("cd \(absolutePath!) && valet which", requiresPath: true)
+            let driver = Shell.pipe("cd '\(absolutePath!)' && valet which", requiresPath: true)
             if driver.contains("This site is served by") {
                 self.driver = driver
                     // TODO: Use a regular expression to retrieve the driver instead?

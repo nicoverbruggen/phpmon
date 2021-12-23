@@ -109,7 +109,8 @@ public class Shell {
      Uses `/bin/echo` instead of the `builtin` (which does not support `-n`).
      */
     public static func fileExists(_ path: String) -> Bool {
-        return Shell.pipe("if [ -f \(path) ]; then /bin/echo -n \"0\"; fi") == "0"
+        let escapedPath = path.replacingOccurrences(of: " ", with: "\\ ")
+        return Shell.pipe("if [ -f \(escapedPath) ]; then /bin/echo -n \"0\"; fi") == "0"
     }
     
     /**

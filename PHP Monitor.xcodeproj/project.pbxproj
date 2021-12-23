@@ -52,6 +52,8 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
 		C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
+		C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */; };
+		C41CA5EE2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */; };
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
 		C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
 		C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
@@ -208,6 +210,7 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
 		C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePhpInstallation.swift; sourceTree = "<group>"; };
+		C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+Actions.swift"; sourceTree = "<group>"; };
 		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
 		C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+ContextMenu.swift"; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
@@ -314,6 +317,7 @@
 				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
 				C40C7F1D2772136000DDDCDC /* PhpSwitcher.swift */,
 				C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */,
+				C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */,
 				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
 			);
@@ -361,14 +365,6 @@
 				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		C40C7F2C2772204700DDDCDC /* PHP */ = {
-			isa = PBXGroup;
-			children = (
-				C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */,
-			);
-			path = PHP;
 			sourceTree = "<group>";
 		};
 		C415D3D72770F341005EF286 /* phpmon-cli */ = {
@@ -433,7 +429,6 @@
 			children = (
 				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* Core */,
-				C40C7F2C2772204700DDDCDC /* PHP */,
 				C47331A0247093AC009A0597 /* Menu */,
 				C464ADAA275A7A25003FCD53 /* SiteList */,
 				5420395726135DB800FB00FA /* Preferences */,
@@ -461,6 +456,7 @@
 				C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */,
 				C464ADAE275A7A69003FCD53 /* SiteListVC.swift */,
 				C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */,
+				C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */,
 				C464ADB1275A87CA003FCD53 /* SiteListCell.swift */,
 			);
 			path = SiteList;
@@ -793,6 +789,7 @@
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
+				C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				54AB03262763858F00A29D5F /* Timer.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
@@ -824,6 +821,7 @@
 			files = (
 				54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */,
 				C4EE55AE27708B9E001DF387 /* PMStatsView.swift in Sources */,
+				C41CA5EE2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				54AB03272763858F00A29D5F /* Timer.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
