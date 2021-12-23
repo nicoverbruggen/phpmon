@@ -37,10 +37,14 @@ class Valet {
     }
     
     public func startPreloadingSites() {
-        if self.sites.count <= 10 {
+        let maximumPreload = 10
+        let foundSites = self.countPaths()
+        if foundSites <= maximumPreload {
             // Preload the sites and their drivers
-            print("Fewer than or 11 sites found, preloading list of sites...")
+            print("Fewer than or \(maximumPreload) sites found, preloading list of sites...")
             self.reloadSites()
+        } else {
+            print("\(foundSites) sites found, exceeds \(maximumPreload) for preload at launch!")
         }
     }
     
@@ -64,6 +68,19 @@ class Valet {
         }
     }
     
+    private func countPaths() -> Int {
+        var count = 0
+        for path in config.paths {
+            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
+            for entry in entries {
+                if resolveSite(entry, forPath: path) {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+    
     private func resolvePaths(tld: String) {
         sites = []
         
@@ -73,6 +90,20 @@ class Valet {
                 resolvePath(entry, forPath: path, tld: tld)
             }
         }
+    }
+    
+    private func resolveSite(_ entry: String, forPath path: String) -> Bool {
+        let siteDir = path + "/" + entry
+
+        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
+        
+        let type = attrs[FileAttributeKey.type] as! FileAttributeType
+        
+        if type == FileAttributeType.typeSymbolicLink || type == FileAttributeType.typeDirectory {
+            return true
+        }
+        
+        return false
     }
     
     private func resolvePath(_ entry: String, forPath path: String, tld: String) {
