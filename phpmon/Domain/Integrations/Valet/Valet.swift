@@ -68,6 +68,9 @@ class Valet {
         }
     }
     
+    /**
+     Returns a count of how many sites are linked and parked.
+     */
     private func countPaths() -> Int {
         var count = 0
         for path in config.paths {
@@ -81,6 +84,9 @@ class Valet {
         return count
     }
     
+    /**
+     Resolves all paths and creates linked or parked site instances that can be referenced later.
+     */
     private func resolvePaths(tld: String) {
         sites = []
         
@@ -92,6 +98,10 @@ class Valet {
         }
     }
     
+    /**
+     Determines whether the site can be resolved as a symbolic link or as a directory.
+     Regular files are ignored. Returns true if the path can be parsed.
+     */
     private func resolveSite(_ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
@@ -106,6 +116,10 @@ class Valet {
         return false
     }
     
+    /**
+     Determines whether the site can be resolved as a symbolic link or as a directory.
+     Regular files are ignored, and the site is added to Valet's list of sites.
+     */
     private func resolvePath(_ entry: String, forPath path: String, tld: String) {
         let siteDir = path + "/" + entry
         
@@ -167,12 +181,11 @@ class Valet {
         }
         
         public func determineSecured(_ tld: String) {
-            let name = self.name!.replacingOccurrences(of: " ", with: "\\ ")
-            secured = Shell.fileExists("~/.config/valet/Certificates/\(name).\(tld).key")
+            secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
         }
         
         public func determineDriver() {
-            let driver = Shell.pipe("cd \"\(absolutePath!)\" && valet which", requiresPath: true)
+            let driver = Shell.pipe("cd '\(absolutePath!)' && valet which", requiresPath: true)
             if driver.contains("This site is served by") {
                 self.driver = driver
                     // TODO: Use a regular expression to retrieve the driver instead?

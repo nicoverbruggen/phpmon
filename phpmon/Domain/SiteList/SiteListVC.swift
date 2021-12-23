@@ -112,12 +112,11 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
      - Parameter execute: Callback of the work that needs to happen.
      - Parameter completion: Callback that is fired when the work is done.
      */
-    private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
+    internal func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
         setUIBusy()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             execute()
-            
             DispatchQueue.main.async { [self] in
                 completion()
                 setUINotBusy()
@@ -164,92 +163,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         self.openInBrowser()
     }
     
-    // MARK: Secure & Unsecure
-    
-    @objc public func toggleSecure() {
-        let rowToReload = tableView.selectedRow
-        let originalSecureStatus = selectedSite!.secured
-        let action = selectedSite!.secured ? "unsecure" : "secure"
-        let selectedSite = selectedSite!
-        let command = "cd '\(selectedSite.absolutePath!)' && sudo \(Paths.valet) \(action) && exit;"
-        
-        waitAndExecute {
-            Shell.run(command, requiresPath: true)
-        } completion: { [self] in
-            selectedSite.determineSecured(Valet.shared.config.tld)
-            if selectedSite.secured == originalSecureStatus {
-                Alert.notify(
-                    message: "site_list.alerts_status_not_changed.title".localized,
-                    info: "site_list.alerts_status_not_changed.desc".localized(command)
-                )
-            } else {
-                let newState = selectedSite.secured ? "secured" : "unsecured"
-                LocalNotification.send(
-                    title: "site_list.alerts_status_changed.title".localized,
-                    subtitle: "site_list.alerts_status_changed.desc"
-                        .localized(
-                            "\(selectedSite.name!).\(Valet.shared.config.tld)",
-                            newState
-                        )
-                )
-            }
-            
-            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
-            tableView.deselectRow(rowToReload)
-            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
-        }
-    }
-    
-    // MARK: Open in Browser & Finder
-    
-    @objc public func openInBrowser() {
-        let prefix = selectedSite!.secured ? "https://" : "http://"
-        let url = URL(string: "\(prefix)\(selectedSite!.name!).\(Valet.shared.config.tld)")
-        if url != nil {
-            NSWorkspace.shared.open(url!)
-        } else {
-            warnAboutInvalidFolderAction()
-        }
-    }
-    
-    @objc public func openInFinder() {
-        Shell.run("open '\(selectedSite!.absolutePath!)'")
-    }
-    
-    @objc public func openInTerminal() {
-        Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath!)'")
-    }
-    
-    @objc public func unlinkSite() {
-        guard let site = selectedSite else {
-            return
-        }
-        
-        if site.aliasPath == nil {
-            return
-        }
-        
-        Alert.confirm(
-            onWindow: view.window!,
-            messageText: "site_list.confirm_unlink".localized(site.name),
-            informativeText: "site_link.confirm_link".localized,
-            buttonTitle: "site_list.unlink".localized,
-            secondButtonTitle: "Cancel",
-            style: .critical,
-            onFirstButtonPressed: {
-                Shell.run("valet unlink \(site.name!)", requiresPath: true)
-                self.reloadSites()
-            }
-        )
-    }
-    
-    private func warnAboutInvalidFolderAction() {
-        _ = Alert.present(
-            messageText: "site_list.alert.invalid_folder_name".localized,
-            informativeText: "site_list.alert.invalid_folder_name_desc".localized
-        )
-    }
-    
     // MARK: - (Search) Text Field Delegate
     
     func searchedFor(text: String) {
@@ -269,13 +182,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
         tableView.reloadData()
     }
-    
-    // MARK: - Context Menu
-    
-    @objc func openWithEditor(sender: EditorMenuItem) {
-        guard let editor = sender.editor else { return }
-        editor.openDirectory(file: selectedSite!.absolutePath!)
-    }
+
     // MARK: - Deinitialization
     
     deinit {

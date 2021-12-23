@@ -19,6 +19,9 @@ class SiteListCell: NSTableCellView
     
     @IBOutlet weak var labelDriver: NSTextField!
     
+    @IBOutlet weak var buttonWarning: NSButton!
+    @IBOutlet weak var labelWarning: NSTextField!
+    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
     }
@@ -26,6 +29,11 @@ class SiteListCell: NSTableCellView
     func populateCell(with site: Valet.Site) {
         // Make sure to show the TLD
         labelSiteName.stringValue = "\(site.name!).\(Valet.shared.config.tld)"
+        
+        let isProblematic = site.name.contains(" ")
+        buttonWarning.isHidden = !isProblematic
+        labelWarning.isHidden = !isProblematic
+        labelWarning.stringValue = "site_list.warning.spaces".localized
         
         // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         labelPathName.stringValue = site.absolutePath
