@@ -22,7 +22,7 @@ class Valet {
     var sites: [Site] = []
     
     init() {
-        version = VersionExtractor.from(Actions.valet("--version"))
+        version = VersionExtractor.from(valet("--version"))
             ?? "UNKNOWN"
         
         let file = FileManager.default.homeDirectoryForCurrentUser

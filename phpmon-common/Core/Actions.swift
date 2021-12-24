@@ -14,7 +14,7 @@ class Actions {
     
     public static func restartPhpFpm()
     {
-        brew("services restart \(PhpSwitcher.phpInstall.formula)", sudo: true)
+        brew("services restart \(PhpEnv.phpInstall.formula)", sudo: true)
     }
     
     public static func restartNginx()
@@ -29,7 +29,7 @@ class Actions {
     
     public static func stopAllServices()
     {
-        brew("services stop \(PhpSwitcher.phpInstall.formula)", sudo: true)
+        brew("services stop \(PhpEnv.phpInstall.formula)", sudo: true)
         brew("services stop nginx", sudo: true)
         brew("services stop dnsmasq", sudo: true)
     }
@@ -45,53 +45,6 @@ class Actions {
         Log.info("Switching to \(version) using Valet")
         Log.info(valet("use php@\(version)"))
         completed()
-    }
-    
-    /**
-     Switching to a new PHP version involves:
-     - unlinking the current version
-     - stopping the active services
-     - linking the new desired version
-     
-     Please note that depending on which version is installed,
-     the version that is switched to may or may not be identical to `php` (without @version).
-     */
-    public static func switchToPhpVersion(
-        version: String,
-        availableVersions: [String],
-        completed: @escaping () -> Void
-    ) {
-        Log.info("Switching to \(version), unlinking all versions...")
-
-        let group = DispatchGroup()
-        
-        availableVersions.forEach { (available) in
-            group.enter()
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                let formula = (available == PhpSwitcher.brewPhpVersion)
-                    ? "php" : "php@\(available)"
-                
-                brew("unlink \(formula)")
-                brew("services stop \(formula)", sudo: true)
-                
-                Log.perf("Unlinked and stopped services for \(formula)")
-                
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: .global(qos: .userInitiated)) {
-            Log.info("All versions have been unlinked!")
-            Log.info("Linking the new version!")
-            
-            let formula = (version == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version)"
-            brew("link \(formula) --overwrite --force")
-            brew("services start \(formula)", sudo: true)
-            
-            Log.info("The new version has been linked!")
-            completed()
-        }
     }
     
     // MARK: - Finding Config Files
@@ -138,8 +91,8 @@ class Actions {
     {
         brew("services restart dnsmasq", sudo: true)
         
-        PhpSwitcher.shared.detectPhpVersions().forEach { (version) in
-            let formula = (version == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(version)"
+        PhpEnv.shared.detectPhpVersions().forEach { (version) in
+            let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
             brew("unlink php@\(version)")
             brew("services stop \(formula)")
             brew("services stop \(formula)", sudo: true)
@@ -152,53 +105,4 @@ class Actions {
         brew("services stop php", sudo: true)
         brew("services stop nginx", sudo: true)
     }
-    
-    // MARK: Common Shell Commands
-    
-    /**
-     Runs a `valet` command.
-     */
-    public static func valet(_ command: String) -> String
-    {
-        return Shell.pipe("sudo \(Paths.valet) \(command)", requiresPath: true)
-    }
-    
-    /**
-     Runs a `brew` command. Can run as superuser.
-     */
-    public static func brew(_ command: String, sudo: Bool = false)
-    {
-        Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
-    }
-    
-    /**
-     Runs `sed` in order to replace all occurrences of a string in a specific file with another.
-     */
-    public static func sed(file: String, original: String, replacement: String)
-    {
-        // Escape slashes (or `sed` won't work)
-        let e_original = original.replacingOccurrences(of: "/", with: "\\/")
-        let e_replacement = replacement.replacingOccurrences(of: "/", with: "\\/")
-        
-        // Check if gsed exists; it is able to follow symlinks,
-        // which we want to do to toggle the extension
-        if Shell.fileExists("\(Paths.binPath)/gsed") {
-            Shell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
-        } else {
-            Shell.run("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
-        }
-    }
-    
-    /**
-     Uses `grep` to determine whether a particular query string can be found in a particular file.
-     */
-    public static func grepContains(file: String, query: String) -> Bool
-    {
-        return Shell.pipe("""
-            grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
-            """)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .contains("YES")
-    }
-    
 }

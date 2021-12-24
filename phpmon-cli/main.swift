@@ -39,8 +39,8 @@ case .use, .performSwitch:
         _ = Shell.user.executeSynchronously("brew link php", requiresPath: true)
     }
     
-    let switcher = PhpSwitcher.shared
-    PhpSwitcher.detectPhpVersions()
+    let phpenv = PhpEnv.shared
+    PhpEnv.detectPhpVersions()
     
     if CommandLine.arguments.count < 3 {
         Log.err("You must enter at least two additional arguments when using this command.")
@@ -48,11 +48,11 @@ case .use, .performSwitch:
     }
     
     let version = CommandLine.arguments[2].replacingOccurrences(of: "php@", with: "")
-    if switcher.availablePhpVersions.contains(version) {
+    if phpenv.availablePhpVersions.contains(version) {
         Log.info("Switching to PHP \(version)...")
         Actions.switchToPhpVersion(
             version: version,
-            availableVersions: switcher.availablePhpVersions,
+            availableVersions: phpenv.availablePhpVersions,
             completed: {
                 Log.info("The switch has been completed.")
                 exit(0)
@@ -60,7 +60,7 @@ case .use, .performSwitch:
         )
     } else {
         Log.err("A PHP installation with version \(version) is not installed.")
-        Log.err("The installed versions are: \(switcher.availablePhpVersions.joined(separator: ", ")).")
+        Log.err("The installed versions are: \(phpenv.availablePhpVersions.joined(separator: ", ")).")
         Log.err("If this version is available, you may be able to install it by using `brew install php@\(version)`.")
         exit(1)
     }

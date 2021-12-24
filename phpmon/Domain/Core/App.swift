@@ -24,7 +24,7 @@ class App: PhpSwitcherDelegate {
     
     /** Whether the app is busy doing something. Used to determine what UI to display. */
     static var busy: Bool {
-        return PhpSwitcher.shared.isBusy
+        return PhpEnv.shared.isBusy
     }
     
     // MARK: Variables
@@ -81,7 +81,7 @@ class App: PhpSwitcherDelegate {
     }
     
     func switcherDidCompleteSwitch() {
-        PhpSwitcher.shared.currentInstall = ActivePhpInstallation()
+        PhpEnv.shared.currentInstall = ActivePhpInstallation()
         handlePhpConfigWatcher()
     }
 }

@@ -9,14 +9,14 @@ import Cocoa
 
 class StatusMenu : NSMenu {
     func addPhpVersionMenuItems() {
-        if PhpSwitcher.phpInstall.version.error {
+        if PhpEnv.phpInstall.version.error {
             for message in ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"] {
                 addItem(NSMenuItem(title: message.localized, action: nil, keyEquivalent: ""))
             }
             return
         }
     
-        let phpVersionText = "\("mi_php_version".localized) \(PhpSwitcher.phpInstall.version.long)"
+        let phpVersionText = "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)"
         addItem(HeaderView.asMenuItem(text: phpVersionText))
     }
     
@@ -26,7 +26,7 @@ class StatusMenu : NSMenu {
             return
         }
         
-        if PhpSwitcher.shared.availablePhpVersions.count == 0 {
+        if PhpEnv.shared.availablePhpVersions.count == 0 {
             return
         }
         
@@ -40,14 +40,14 @@ class StatusMenu : NSMenu {
         
         servicesMenu.addItem(NSMenuItem(title: "mi_help".localized, action: nil, keyEquivalent: ""))
         
-        if !PhpSwitcher.shared.availablePhpVersions.contains(PhpSwitcher.brewPhpVersion) {
+        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest_unavailable".localized(PhpSwitcher.brewPhpVersion),
+                title: "mi_force_load_latest_unavailable".localized(PhpEnv.brewPhpVersion),
                 action: nil, keyEquivalent: "f"
             ))
         } else {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest".localized(PhpSwitcher.brewPhpVersion),
+                title: "mi_force_load_latest".localized(PhpEnv.brewPhpVersion),
                 action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
         }
         
@@ -92,13 +92,13 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
-        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: PhpSwitcher.shared.isBusy ? nil : #selector(MainMenu.updateComposerDependencies), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateComposerDependencies), keyEquivalent: ""))
         
-        if (PhpSwitcher.shared.isBusy) {
+        if (PhpEnv.shared.isBusy) {
             return
         }
         
-        let stats = PhpSwitcher.phpInstall.limits
+        let stats = PhpEnv.phpInstall.limits
         
         // Stats
         self.addItem(NSMenuItem.separator())
@@ -112,12 +112,12 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         self.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
         
-        if (PhpSwitcher.phpInstall.extensions.count == 0) {
+        if (PhpEnv.phpInstall.extensions.count == 0) {
             self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
         }
         
         var shortcutKey = 1
-        for phpExtension in PhpSwitcher.phpInstall.extensions {
+        for phpExtension in PhpEnv.phpInstall.extensions {
             self.addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }
@@ -130,20 +130,20 @@ class StatusMenu : NSMenu {
     
     private func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
-        for index in (0..<PhpSwitcher.shared.availablePhpVersions.count).reversed() {
+        for index in (0..<PhpEnv.shared.availablePhpVersions.count).reversed() {
             
             // Get the short and long version
-            let shortVersion = PhpSwitcher.shared.availablePhpVersions[index]
-            let longVersion = PhpSwitcher.shared.cachedPhpInstallations[shortVersion]!.longVersion
+            let shortVersion = PhpEnv.shared.availablePhpVersions[index]
+            let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.longVersion
             
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
             let versionString = long ? longVersion : shortVersion
             
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (shortVersion == PhpSwitcher.brewPhpVersion) ? "php" : "php@\(shortVersion)"
+            let brew = (shortVersion == PhpEnv.brewPhpVersion) ? "php" : "php@\(shortVersion)"
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
-                action: (shortVersion == PhpSwitcher.phpInstall.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
+                action: (shortVersion == PhpEnv.phpInstall.version.short) ? nil : action, keyEquivalent: "\(shortcutKey)"
             )
             
             menuItem.version = shortVersion

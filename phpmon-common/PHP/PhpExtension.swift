@@ -78,7 +78,7 @@ class PhpExtension {
             // ENABLED: Line where the comment delimiter (;) is removed
             : line.replacingOccurrences(of: "; ", with: "")
         
-        Actions.sed(file: file, original: line, replacement: newLine)
+        sed(file: file, original: line, replacement: newLine)
         
         enabled.toggle()
     }

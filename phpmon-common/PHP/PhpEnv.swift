@@ -13,7 +13,7 @@ protocol PhpSwitcherDelegate: AnyObject {
     func switcherDidCompleteSwitch()
 }
 
-class PhpSwitcher {
+class PhpEnv {
     
     // MARK: - Initializer
     
@@ -36,7 +36,7 @@ class PhpSwitcher {
     weak var delegate: PhpSwitcherDelegate?
 
     /** The static app instance. Accessible at any time. */
-    static let shared = PhpSwitcher()
+    static let shared = PhpEnv()
     
     /** Whether the switcher is busy performing any actions. */
     var isBusy: Bool = false
@@ -76,6 +76,12 @@ class PhpSwitcher {
     var homebrewPackage: HomebrewPackage! = nil
     
     // MARK: - Methods
+    
+    public static var switcher: PhpSwitcher {
+        // Based on the setting, use a particular switcher
+        // For now, we'll hardcode the internal switcher though
+        return InternalSwitcher()
+    }
     
     public static func detectPhpVersions() -> Void {
         _ = Self.shared.detectPhpVersions()

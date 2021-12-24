@@ -41,7 +41,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
-        PhpSwitcher.detectPhpVersions()
+        PhpEnv.detectPhpVersions()
         
         if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
             DispatchQueue.main.async {
@@ -57,7 +57,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         
         Log.info("Determining broken PHP-FPM...")
         // Attempt to find out if PHP-FPM is broken
-        let installation = PhpSwitcher.phpInstall
+        let installation = PhpEnv.phpInstall
         installation.notifyAboutBrokenPhpFpm()
         
         // Set up the config watchers on launch (these are automatically updated via delegate methods if the user switches)
@@ -185,12 +185,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
-        PhpSwitcher.shared.isBusy = true
+        PhpEnv.shared.isBusy = true
         setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             update()
             execute()
-            PhpSwitcher.shared.isBusy = false
+            PhpEnv.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
                 updatePhpVersionInStatusBar()
@@ -203,7 +203,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - User Interface
     
     @objc func refreshActiveInstallation() {
-        PhpSwitcher.shared.currentInstall = ActivePhpInstallation()
+        PhpEnv.shared.currentInstall = ActivePhpInstallation()
         updatePhpVersionInStatusBar()
     }
     
@@ -223,7 +223,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-                    setStatusBarImage(version: long ? PhpSwitcher.phpInstall.version.long  : PhpSwitcher.phpInstall.version.short)
+                    setStatusBarImage(version: long ? PhpEnv.phpInstall.version.long  : PhpEnv.phpInstall.version.short)
                 }
             }
         }
@@ -343,12 +343,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        PhpSwitcher.shared.isBusy = true
+        PhpEnv.shared.isBusy = true
         setBusyImage()
         self.update()
         
         let noLongerBusy = {
-            PhpSwitcher.shared.isBusy = false
+            PhpEnv.shared.isBusy = false
             DispatchQueue.main.async { [self] in
                 self.updatePhpVersionInStatusBar()
                 self.update()
@@ -419,14 +419,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func openActiveConfigFolder() {
-        if (PhpSwitcher.phpInstall.version.error) {
+        if (PhpEnv.phpInstall.version.error) {
             // php version was not identified
             Actions.openGenericPhpConfigFolder()
             return
         }
         
         // php version was identified
-        Actions.openPhpConfigFolder(version: PhpSwitcher.phpInstall.version.short)
+        Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
     }
     
     @objc func openGlobalComposerFolder() {
@@ -439,7 +439,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
         setBusyImage()
-        PhpSwitcher.shared.isBusy = true
+        PhpEnv.shared.isBusy = true
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
@@ -449,10 +449,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             update()
             
             let completion = {
-                PhpSwitcher.shared.delegate?.switcherDidCompleteSwitch()
+                PhpEnv.shared.delegate?.switcherDidCompleteSwitch()
                 
                 // Mark as no longer busy
-                PhpSwitcher.shared.isBusy = false
+                PhpEnv.shared.isBusy = false
                 
                 // Perform UI updates on main thread
                 DispatchQueue.main.async { [self] in
@@ -464,7 +464,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                             title: String(format: "notification.version_changed_title".localized, sender.version),
                             subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
                         )
-                        PhpSwitcher.phpInstall.notifyAboutBrokenPhpFpm()
+                        PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
                     }
                     
                     // Run composer updates
@@ -478,24 +478,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 }
             }
             
-            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
-            if Preferences.preferences[.useInternalSwitcher] as! Bool == false {
-                // 1. Default switcher using Valet
-                // Will cause less issues, but is slower
-                Actions.switchToPhpVersionUsingValet(
-                    version: sender.version,
-                    availableVersions: App.shared.availablePhpVersions,
-                    completed: completion
-                )
-            } else { */
-                // 2. Custom switcher (internal)
-                // Will cause more issues with Homebrew and is faster
-                Actions.switchToPhpVersion(
-                    version: sender.version,
-                    availableVersions: PhpSwitcher.shared.availablePhpVersions,
-                    completed: completion
-                )
-            /* } */
+            PhpEnv.switcher.performSwitch(
+                to: sender.version,
+                completion: completion
+            )
         }
     }
     

@@ -28,7 +28,7 @@ extension App {
     }
     
     func handlePhpConfigWatcher(forceReload: Bool = false) {
-        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpSwitcher.phpInstall.version.short)")
+        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpEnv.phpInstall.version.short)")
         
         // Watcher needs to be created
         if self.watcher == nil {

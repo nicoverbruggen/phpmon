@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      detection, as well as switching. It is initialized
      when the app is ready and passed all checks.
      */
-    var switcher: PhpSwitcher! = nil
+    var switcher: PhpEnv! = nil
     
     var logger = Log.shared
     
@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func initializeSwitcher() {
-        self.switcher = PhpSwitcher.shared
+        self.switcher = PhpEnv.shared
         self.switcher.delegate = self.state
     }
     
