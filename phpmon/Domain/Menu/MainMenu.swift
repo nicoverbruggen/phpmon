@@ -24,8 +24,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     /**
      Update the menu's contents, based on what's going on.
+     This will rebuild the entire menu, so this can take a few moments.
      */
-    func update() {
+    func rebuild() {
         // Update the menu item on the main thread
         DispatchQueue.main.async { [self] in
             // Create a new menu
@@ -97,13 +98,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         PhpEnv.shared.isBusy = true
         setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            update()
+            rebuild()
             execute()
             PhpEnv.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
                 updatePhpVersionInStatusBar()
-                update()
+                rebuild()
                 completion()
             }
         }
@@ -122,7 +123,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     @objc func updatePhpVersionInStatusBar() {
         refreshIcon()
-        update()
+        rebuild()
     }
     
     func refreshIcon() {
@@ -287,7 +288,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             updatePhpVersionInStatusBar()
             
             // Update the menu
-            update()
+            rebuild()
             
             let completion = {
                 PhpEnv.shared.delegate?.switcherDidCompleteSwitch()
@@ -298,7 +299,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 // Perform UI updates on main thread
                 DispatchQueue.main.async { [self] in
                     updatePhpVersionInStatusBar()
-                    update()
+                    rebuild()
                     
                     let sendLocalNotification = {
                         LocalNotification.send(
@@ -361,13 +362,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     private func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
         PhpEnv.shared.isBusy = true
         setBusyImage()
-        self.update()
+        self.rebuild()
         
         let noLongerBusy = {
             PhpEnv.shared.isBusy = false
             DispatchQueue.main.async { [self] in
                 self.updatePhpVersionInStatusBar()
-                self.update()
+                self.rebuild()
             }
         }
         

@@ -64,7 +64,7 @@ class PrefsVC: NSViewController {
                 preference: .fullPhpVersionDynamicIcon,
                 action: {
                     MainMenu.shared.refreshIcon()
-                    MainMenu.shared.update()
+                    MainMenu.shared.rebuild()
                 }
             ),
             CheckboxPreferenceView.make(
