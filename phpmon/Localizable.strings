@@ -182,7 +182,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 5. Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
-"startup.errors.sudoers_valet.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_valet.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 
 /// 6. Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";

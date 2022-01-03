@@ -111,9 +111,15 @@ If you're on an Apple Silicon-based Mac, you'll need to add:
     # on an M1 Mac
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
-and add the following to your .zshrc:
+and add the following to your .zshrc, but add this BEFORE the homebrew PATH additions:
 
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
+    
+If you're adding composer and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
+
+    export PATH=$HOME/bin:/usr/local/bin:$PATH
+    export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
+    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
 Make sure PHP is linked correctly:
 
