@@ -31,13 +31,26 @@ class Preferences {
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
+        customPreferences = CustomPrefs(scanApps: [])
+        
+        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
+        if Filesystem.fileExists(url.path) {
+            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
+            loadCustomPreferencesFile(url)
+        } else {
+            Log.info("There was no .phpmon.conf.json file to be loaded.")
+        }
+    }
+    
+    private func loadCustomPreferencesFile(_ url: URL) {
         do {
             customPreferences = try JSONDecoder().decode(
                 CustomPrefs.self,
-                from: try! String(contentsOf: URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json"), encoding: .utf8).data(using: .utf8)!
+                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
             )
+            Log.info("The .phpmon.conf.json file was successfully parsed.")
         } catch {
-            customPreferences = CustomPrefs(scanApps: [])
+            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
         }
     }
     
