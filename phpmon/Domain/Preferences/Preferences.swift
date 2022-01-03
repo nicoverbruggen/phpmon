@@ -24,11 +24,21 @@ class Preferences {
     
     static var shared = Preferences()
     
+    var customPreferences: CustomPrefs
+    
     var cachedPreferences: [PreferenceName: Any?]
     
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
+        do {
+            customPreferences = try JSONDecoder().decode(
+                CustomPrefs.self,
+                from: try! String(contentsOf: URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json"), encoding: .utf8).data(using: .utf8)!
+            )
+        } catch {
+            customPreferences = CustomPrefs(scanApps: [])
+        }
     }
     
     // MARK: - First Time Run

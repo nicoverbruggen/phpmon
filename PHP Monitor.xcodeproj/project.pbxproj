@@ -121,6 +121,7 @@
 		C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
+		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
 		C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
 		C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */; };
@@ -262,6 +263,7 @@
 		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
 		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
 		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
+		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
 		C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App+ConfigWatch.swift"; sourceTree = "<group>"; };
 		C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpConfigWatcher.swift; sourceTree = "<group>"; };
 		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				C4998F092617633900B2526E /* PrefsWC.swift */,
 				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
+				C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */,
 				C41CD0272628D8E20065BBED /* Keybinds */,
 				54FCFD28276C88C0004CE748 /* Views */,
 			);
@@ -817,6 +820,7 @@
 				C4EE55AB27708B9E001DF387 /* Preview.swift in Sources */,
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
 				C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */,
+				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
 				54B48B5F275F66AE006D90C5 /* Application.swift in Sources */,
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
