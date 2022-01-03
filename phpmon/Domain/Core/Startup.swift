@@ -57,10 +57,9 @@ class Startup {
         )
         
         performEnvironmentCheck(
-            // Check for Valet; it can be symlinked or in .composer/vendor/bin
+            // Check for Valet; it MUST be symlinked thanks to sudoers
             !(Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet")
                 || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")
-                || Shell.pipe("cat /private/etc/sudoers.d/valet").contains(".composer/vendor/bin/valet")
             ),
             messageText:        "startup.errors.sudoers_valet.title".localized,
             informativeText:    "startup.errors.sudoers_valet.desc".localized,

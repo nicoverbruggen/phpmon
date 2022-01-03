@@ -24,7 +24,7 @@ public class Paths {
     // - MARK: Binaries
     
     public static var valet: String {
-        return "/Users/\(whoami)/.composer/vendor/bin/valet"
+        return "\(binPath)/valet"
     }
     
     public static var brew: String {
