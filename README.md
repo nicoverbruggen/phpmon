@@ -249,11 +249,11 @@ To see which files are checked to determine availability, see [this file](./phpm
 
 You can add your own apps by creating and editing a `~/.phpmon.conf.json` file, with the following entry:
 
-<code>
+<pre>
 {
     "scan_apps": ["Xcode", "Kraken"]
 }
-</code>
+</pre>
 
 You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor will check for the existence of these apps. You do not need to set the full path, just the name of the app should work. Not all apps support opening a folder, though, so your success might vary.
 </details>
