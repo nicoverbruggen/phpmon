@@ -246,6 +246,16 @@ The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime M
 All of these apps should just be detected correctly, no matter their location on your system. If you can open it using `open -a "appname"`, the app should be detected and work. If you have renamed the app, there might be an issue getting it detected.
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
+
+You can add your own apps by creating and editing a `~/.phpmon.conf.json` file, with the following entry:
+
+<code>
+{
+    "scan_apps": ["Xcode", "Kraken"]
+}
+</code>
+
+You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor will check for the existence of these apps. You do not need to set the full path, just the name of the app should work. Not all apps support opening a folder, though, so your success might vary.
 </details>
 
 <details>

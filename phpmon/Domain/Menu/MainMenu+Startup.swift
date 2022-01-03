@@ -51,9 +51,15 @@ extension MainMenu {
         Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
         
+        // Detect applications (preset + custom)
         Log.info("Detecting applications...")
-        // Attempt to load list of applications
         App.shared.detectedApplications = Application.detectPresetApplications()
+        let customApps = Preferences.custom.scanApps.map { appName in
+            return Application(appName, .user_supplied)
+        }.filter { app in
+            return app.isInstalled()
+        }
+        App.shared.detectedApplications.append(contentsOf: customApps)
         let appNames = App.shared.detectedApplications.map { app in
             return app.name
         }

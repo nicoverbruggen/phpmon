@@ -76,6 +76,10 @@ class Preferences {
         return Self.shared.cachedPreferences
     }
     
+    static var custom: CustomPrefs {
+        return Self.shared.customPreferences
+    }
+    
     /**
      Determine whether a particular preference is enabled.
      - Important: Requires the preference to have a corresponding boolean value, or a fatal error will be thrown.

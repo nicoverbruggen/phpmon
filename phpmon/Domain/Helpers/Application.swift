@@ -14,7 +14,7 @@ import Foundation
 class Application {
     
     enum AppType {
-        case editor, browser, git_gui, terminal
+        case editor, browser, git_gui, terminal, user_supplied
     }
     
     /// Name of the app. Used for display purposes and to determine `name.app` exists.
