@@ -66,13 +66,21 @@ class Preferences {
         return Self.shared.cachedPreferences
     }
     
-    static func isTrue(_ preference: PreferenceName) -> Bool {
-        return Preferences.preferences[preference] as! Bool == true
+    /**
+     Determine whether a particular preference is enabled.
+     - Important: Requires the preference to have a corresponding boolean value, or a fatal error will be thrown.
+     */
+    static func isEnabled(_ preference: PreferenceName) -> Bool {
+        if let bool = Preferences.preferences[preference] as? Bool {
+            return bool == true
+        } else {
+            fatalError("\(preference) is not a valid boolean preference!")
+        }
     }
     
     // MARK: - Internal Functionality
     
-    static func cache() -> [PreferenceName: Any] {
+    private static func cache() -> [PreferenceName: Any] {
         return [
             // Part 1: Always Booleans
             .shouldDisplayDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,

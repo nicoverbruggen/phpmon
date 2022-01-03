@@ -21,7 +21,7 @@ class CheckboxPreferenceView: NSView, XibLoadable {
     
     var preference: PreferenceName! {
         didSet {
-            self.buttonCheckbox.state = Preferences.isTrue(self.preference) ? .on : .off
+            self.buttonCheckbox.state = Preferences.isEnabled(self.preference) ? .on : .off
         }
     }
     

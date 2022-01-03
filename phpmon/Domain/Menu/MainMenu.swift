@@ -307,7 +307,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         waitAndExecute {
             sender.phpExtension?.toggle()
             
-            if Preferences.isTrue(.autoServiceRestartAfterExtensionToggle) {
+            if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
                 Actions.restartPhpFpm()
             }
         }
@@ -472,7 +472,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     }
                     
                     // Run composer updates
-                    if Preferences.isTrue(.autoComposerGlobalUpdateAfterSwitch) {
+                    if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
                         self.updateGlobalDependencies(notify: false, completion: { _ in sendLocalNotification() })
                     } else {
                         sendLocalNotification()
