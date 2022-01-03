@@ -32,26 +32,7 @@ class Preferences {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
         customPreferences = CustomPrefs(scanApps: [])
-        
-        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
-        if Filesystem.fileExists(url.path) {
-            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
-            loadCustomPreferencesFile(url)
-        } else {
-            Log.info("There was no .phpmon.conf.json file to be loaded.")
-        }
-    }
-    
-    private func loadCustomPreferencesFile(_ url: URL) {
-        do {
-            customPreferences = try JSONDecoder().decode(
-                CustomPrefs.self,
-                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
-            )
-            Log.info("The .phpmon.conf.json file was successfully parsed.")
-        } catch {
-            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
-        }
+        loadCustomPreferences()
     }
     
     // MARK: - First Time Run
@@ -131,6 +112,30 @@ class Preferences {
         
         // Update the preferences cache in memory!
         Preferences.shared.cachedPreferences = Preferences.cache()
+    }
+    
+    // MARK: - Custom Preferences
+    
+    private func loadCustomPreferences() {
+        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
+        if Filesystem.fileExists(url.path) {
+            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
+            loadCustomPreferencesFile(url)
+        } else {
+            Log.info("There was no .phpmon.conf.json file to be loaded.")
+        }
+    }
+    
+    private func loadCustomPreferencesFile(_ url: URL) {
+        do {
+            customPreferences = try JSONDecoder().decode(
+                CustomPrefs.self,
+                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
+            )
+            Log.info("The .phpmon.conf.json file was successfully parsed.")
+        } catch {
+            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
+        }
     }
     
 }
