@@ -92,7 +92,7 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
-        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateComposerDependencies), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateGlobalComposerDependencies), keyEquivalent: ""))
         
         if (PhpEnv.shared.isBusy) {
             return

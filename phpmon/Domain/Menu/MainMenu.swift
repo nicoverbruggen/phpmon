@@ -23,97 +23,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - UI related
     
     /**
-     Kick off the startup of the rendering of the main menu.
-     */
-    func startup() {
-        // Start with the icon
-        setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
-        
-        // Perform environment boot checks
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Startup().checkEnvironment(success: { onEnvironmentPass() },
-                                       failure: { onEnvironmentFail() }
-            )
-        }
-    }
-    
-    /**
-     When the environment is all clear and the app can run, let's go.
-     */
-    private func onEnvironmentPass() {
-        PhpEnv.detectPhpVersions()
-        
-        if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
-            DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_alias_conflict.title".localized,
-                    info: "alert.php_alias_conflict.info".localized,
-                    style: .critical
-                )
-            }
-        }
-        
-        updatePhpVersionInStatusBar()
-        
-        Log.info("Determining broken PHP-FPM...")
-        // Attempt to find out if PHP-FPM is broken
-        let installation = PhpEnv.phpInstall
-        installation.notifyAboutBrokenPhpFpm()
-        
-        // Set up the config watchers on launch (these are automatically updated via delegate methods if the user switches)
-        Log.info("Setting up watchers...")
-        App.shared.handlePhpConfigWatcher()
-        
-        Log.info("Detecting applications...")
-        // Attempt to load list of applications
-        App.shared.detectedApplications = Application.detectPresetApplications()
-        let appNames = App.shared.detectedApplications.map { app in
-            return app.name
-        }
-        Log.info("Detected applications: \(appNames)")
-        
-        // Load the global hotkey
-        App.shared.loadGlobalHotkey()
-        
-        // Attempt to find out more info about Valet
-        Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
-        Valet.shared.validateVersion()
-        Valet.shared.startPreloadingSites()
-        Log.info("PHP Monitor is ready to serve!")
-        
-        // Schedule a request to fetch the PHP version every 60 seconds
-        DispatchQueue.main.async { [self] in
-            App.shared.timer = Timer.scheduledTimer(
-                timeInterval: 60,
-                target: self,
-                selector: #selector(refreshActiveInstallation),
-                userInfo: nil,
-                repeats: true
-            )
-        }
-    }
-    
-    /**
-     When the environment is not OK, present an alert to inform the user.
-     */
-    private func onEnvironmentFail() {
-        DispatchQueue.main.async { [self] in
-            let close = Alert.present(
-                messageText: "alert.cannot_start.title".localized,
-                informativeText: "alert.cannot_start.info".localized,
-                buttonTitle: "alert.cannot_start.close".localized,
-                secondButtonTitle: "alert.cannot_start.retry".localized
-            )
-            
-            if (close) {
-                exit(1)
-            }
-            
-            startup()
-        }
-    }
-    
-    /**
      Update the menu's contents, based on what's going on.
      */
     func update() {
@@ -203,8 +112,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - User Interface
     
     @objc func refreshActiveInstallation() {
-        PhpEnv.shared.currentInstall = ActivePhpInstallation()
-        updatePhpVersionInStatusBar()
+        if !PhpEnv.shared.isBusy {
+            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            updatePhpVersionInStatusBar()
+        } else {
+            Log.perf("Skipping version refresh due to busy status")
+        }
     }
     
     @objc func updatePhpVersionInStatusBar() {
@@ -342,84 +255,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func updateComposerDependencies() {
+    @objc func updateGlobalComposerDependencies() {
         self.updateGlobalDependencies(notify: true, completion: { _ in })
-    }
-    
-    func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        PhpEnv.shared.isBusy = true
-        setBusyImage()
-        self.update()
-        
-        let noLongerBusy = {
-            PhpEnv.shared.isBusy = false
-            DispatchQueue.main.async { [self] in
-                self.updatePhpVersionInStatusBar()
-                self.update()
-            }
-        }
-        
-        var window: ProgressWindowController? = ProgressWindowController.display(
-            title: "alert.composer_progress.title".localized,
-            description: "alert.composer_progress.info".localized
-        )
-        window?.setType(info: true)
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            let output = Shell.user.executeSynchronously(
-                "composer global update", requiresPath: true
-            )
-            
-            let task = Shell.user.createTask(for: "composer global update", requiresPath: true)
-            
-            DispatchQueue.main.async {
-                window?.addToConsole("composer global update\n")
-            }
-            
-            Shell.captureOutput(
-                task,
-                didReceiveStdOutData: { string in
-                    DispatchQueue.main.async {
-                        window?.addToConsole(string)
-                    }
-                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
-                },
-                didReceiveStdErrData: { string in
-                    DispatchQueue.main.async {
-                        window?.addToConsole(string)
-                    }
-                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
-                }
-            )
-            
-            task.launch()
-            task.waitUntilExit()
-            Shell.haltCapturingOutput(task)
-            
-            DispatchQueue.main.async {
-                if output.task.terminationStatus <= 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        window?.close()
-                        if (notify) {
-                            LocalNotification.send(
-                                title: "alert.composer_success.title".localized,
-                                subtitle: "alert.composer_success.info".localized
-                            )
-                        }
-                        window = nil
-                        noLongerBusy()
-                        completion(true)
-                    }
-                } else {
-                    window?.setType(info: false)
-                    window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
-                    window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
-                    window = nil
-                    noLongerBusy()
-                    completion(false)
-                }
-            }
-        }
     }
     
     @objc func openActiveConfigFolder() {
@@ -514,5 +351,86 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     func menuDidClose(_ menu: NSMenu) {
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false
+    }
+    
+    // MARK: - Private Methods
+    
+    /**
+     
+     */
+    private func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
+        PhpEnv.shared.isBusy = true
+        setBusyImage()
+        self.update()
+        
+        let noLongerBusy = {
+            PhpEnv.shared.isBusy = false
+            DispatchQueue.main.async { [self] in
+                self.updatePhpVersionInStatusBar()
+                self.update()
+            }
+        }
+        
+        var window: ProgressWindowController? = ProgressWindowController.display(
+            title: "alert.composer_progress.title".localized,
+            description: "alert.composer_progress.info".localized
+        )
+        window?.setType(info: true)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let output = Shell.user.executeSynchronously(
+                "composer global update", requiresPath: true
+            )
+            
+            let task = Shell.user.createTask(for: "composer global update", requiresPath: true)
+            
+            DispatchQueue.main.async {
+                window?.addToConsole("composer global update\n")
+            }
+            
+            Shell.captureOutput(
+                task,
+                didReceiveStdOutData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
+                },
+                didReceiveStdErrData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
+                }
+            )
+            
+            task.launch()
+            task.waitUntilExit()
+            Shell.haltCapturingOutput(task)
+            
+            DispatchQueue.main.async {
+                if output.task.terminationStatus <= 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        window?.close()
+                        if (notify) {
+                            LocalNotification.send(
+                                title: "alert.composer_success.title".localized,
+                                subtitle: "alert.composer_success.info".localized
+                            )
+                        }
+                        window = nil
+                        noLongerBusy()
+                        completion(true)
+                    }
+                } else {
+                    window?.setType(info: false)
+                    window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
+                    window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
+                    window = nil
+                    noLongerBusy()
+                    completion(false)
+                }
+            }
+        }
     }
 }
