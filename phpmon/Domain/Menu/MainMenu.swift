@@ -307,34 +307,38 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         waitAndExecute {
             sender.phpExtension?.toggle()
             
-            if Preferences.preferences[.autoServiceRestartAfterExtensionToggle] as! Bool == true {
+            if Preferences.isTrue(.autoServiceRestartAfterExtensionToggle) {
                 Actions.restartPhpFpm()
             }
         }
     }
     
     @objc func openPhpInfo() {
+        var url: URL? = nil
+        
         waitAndExecute {
-            // Write a file called `phpmon_phpinfo.php` to /tmp
-            try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
-            
-            // Tell php-cgi to run the PHP and output as an .html file
-            Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+            url = Actions.createTempPhpInfoFile()
         } completion: {
             // When this has been completed, open the URL to the file in the browser
-            NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
+            NSWorkspace.shared.open(url!)
         }
     }
     
     @objc func forceRestartLatestPhp() {
         // Tell the user the switch is about to occur
-        Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
+        Alert.notify(
+            message: "alert.force_reload.title".localized,
+            info: "alert.force_reload.info".localized
+        )
         
         // Start switching
         waitAndExecute {
             Actions.fixMyPhp()
         } completion: {
-            Alert.notify(message: "alert.force_reload_done.title".localized, info: "alert.force_reload_done.info".localized)
+            Alert.notify(
+                message: "alert.force_reload_done.title".localized,
+                info: "alert.force_reload_done.info".localized
+            )
         }
     }
     
@@ -468,10 +472,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     }
                     
                     // Run composer updates
-                    if Preferences.preferences[.autoComposerGlobalUpdateAfterSwitch] as! Bool == true {
-                        self.updateGlobalDependencies(notify: false, completion: { success in
-                            sendLocalNotification()
-                        })
+                    if Preferences.isTrue(.autoComposerGlobalUpdateAfterSwitch) {
+                        self.updateGlobalDependencies(notify: false, completion: { _ in sendLocalNotification() })
                     } else {
                         sendLocalNotification()
                     }

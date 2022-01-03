@@ -66,6 +66,10 @@ class Preferences {
         return Self.shared.cachedPreferences
     }
     
+    static func isTrue(_ preference: PreferenceName) -> Bool {
+        return Preferences.preferences[preference] as! Bool == true
+    }
+    
     // MARK: - Internal Functionality
     
     static func cache() -> [PreferenceName: Any] {
