@@ -160,6 +160,12 @@ class Valet {
         /// What driver is currently in use. If not detected, defaults to nil.
         var driver: String? = nil
         
+        /// The PHP version as discovered in composer.json
+        var composerPhp: String = "???"
+        
+        /// How the PHP version was determined
+        var composerPhpSource: String = "unknown"
+        
         init() {}
         
         convenience init(absolutePath: String, tld: String) {
@@ -169,6 +175,7 @@ class Valet {
             self.aliasPath = nil
             determineSecured(tld)
             determineDriver()
+            determineComposerPhpVersion()
         }
         
         convenience init(aliasPath: String, tld: String) {
@@ -178,6 +185,7 @@ class Valet {
             self.aliasPath = aliasPath
             determineSecured(tld)
             determineDriver()
+            determineComposerPhpVersion()
         }
         
         public func determineSecured(_ tld: String) {
@@ -193,6 +201,20 @@ class Valet {
                     .replacingOccurrences(of: "ValetDriver].\n", with: "")
             } else {
                 self.driver = nil
+            }
+        }
+        
+        public func determineComposerPhpVersion() {
+            let path = "\(absolutePath!)/composer.json"
+            do {
+                if Filesystem.fileExists(path) {
+                    (self.composerPhp, self.composerPhpSource) = try JSONDecoder().decode(
+                        ComposerJson.self,
+                        from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
+                    ).getPhpVersion()
+                }
+            } catch {
+                Log.err("Something went wrong reading the composer JSON file.")
             }
         }
     }

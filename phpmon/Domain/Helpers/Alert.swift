@@ -59,6 +59,5 @@ class Alert {
             secondButtonTitle: "",
             style: style
         )
-    }
-    
+    }    
 }

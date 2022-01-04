@@ -11,6 +11,8 @@ import AppKit
 
 class SiteListCell: NSTableCellView
 {
+    var site: Valet.Site? = nil
+    
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
     
@@ -22,11 +24,15 @@ class SiteListCell: NSTableCellView
     @IBOutlet weak var buttonWarning: NSButton!
     @IBOutlet weak var labelWarning: NSTextField!
     
+    @IBOutlet weak var buttonPhpVersion: NSButton!
+    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
     }
     
     func populateCell(with site: Valet.Site) {
+        self.site = site
+        
         // Make sure to show the TLD
         labelSiteName.stringValue = "\(site.name!).\(Valet.shared.config.tld)"
         
@@ -54,6 +60,24 @@ class SiteListCell: NSTableCellView
             : NSColor.init(red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0) // red
         
         // Show the current driver
-        labelDriver.stringValue = site.driver ?? "???"
+        labelDriver.stringValue = "\(site.driver ?? "???")"
+        
+        // Show the PHP version
+        buttonPhpVersion.title = " PHP \(site.composerPhp) "
+        buttonPhpVersion.isHidden = (site.composerPhp == "???")
+    }
+    
+    @IBAction func pressedPhpVersion(_ sender: Any) {
+        guard let site = self.site else { return }
+        
+        Alert.confirm(
+            onWindow: App.shared.siteListWindowController!.window!,
+            messageText: "alert.composer_php_requirement.title"
+                .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp),
+            informativeText: "alert.composer_php_requirement.info"
+                .localized(site.composerPhpSource),
+            secondButtonTitle: "",
+            onFirstButtonPressed: {}
+        )
     }
 }

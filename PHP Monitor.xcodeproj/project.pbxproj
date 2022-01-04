@@ -129,6 +129,7 @@
 		C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
+		C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC1277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
@@ -268,6 +269,7 @@
 		C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpConfigWatcher.swift; sourceTree = "<group>"; };
 		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
+		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
 		C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcher.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
@@ -521,6 +523,7 @@
 		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
+				C4D89BC42783C98800A02B68 /* Composer */,
 				C4AF9F6C275445D900D44ED0 /* Homebrew */,
 				C4AF9F6A275445C900D44ED0 /* Valet */,
 			);
@@ -574,6 +577,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C4D89BC42783C98800A02B68 /* Composer */ = {
+			isa = PBXGroup;
+			children = (
+				C4D89BC52783C99400A02B68 /* ComposerJson.swift */,
+			);
+			path = Composer;
 			sourceTree = "<group>";
 		};
 		C4D9ADBD27761084007277F4 /* PHP */ = {
@@ -852,6 +863,7 @@
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
+				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */,

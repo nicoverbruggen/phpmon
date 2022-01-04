@@ -179,8 +179,10 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         sites = Valet.shared.sites.filter({ site in
             return site.name.lowercased().contains(searchString)
         })
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         
-        tableView.reloadData()
     }
 
     // MARK: - Deinitialization
