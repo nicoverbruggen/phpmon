@@ -324,11 +324,9 @@ If an extension or other process writes to a single file a bunch of times in a s
 
 ### Site detection
 
-PHP Monitor uses the Valet configuration file to determine which folders to look into. Each folder is scanned and then PHP Monitor will validate if a composer.json file exists to determine the desired PHP version.
-
-If the directory has been secured by checking if a matching certificate exists under Valet's `Certificates` directory.
-
-PHP Monitor also runs `valet which` to determine which driver is currently in use for each individual site. This command is executed once for each site whenever the site list is refreshed.
+1. **Location of your sites**: PHP Monitor uses the Valet configuration file to determine which folders to look into. Each folder is scanned and then PHP Monitor will validate if a composer.json file exists to determine the desired PHP version.
+1. **Sites secured or not secured**: Whether the directory has been secured is determined by checking if a matching certificate exists under Valet's `Certificates` directory for that site name.
+1. **Site drivers**: PHP Monitor runs `valet which` to determine which driver is currently in use for each individual site. This command is executed once for each site whenever the site list is refreshed.
 
 *Note*: If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
 
