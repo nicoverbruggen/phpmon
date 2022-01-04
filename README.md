@@ -326,7 +326,7 @@ If an extension or other process writes to a single file a bunch of times in a s
 
 PHP Monitor uses the Valet configuration file to determine which folders to look into. Each folder is scanned and then PHP Monitor will validate if a composer.json file exists to determine the desired PHP version.
 
-If the app has been secured by checking if a matching certificate exists under Valet's `Certificates` directory.
+If the directory has been secured by checking if a matching certificate exists under Valet's `Certificates` directory.
 
 PHP Monitor also runs `valet which` to determine which driver is currently in use for each individual site. This command is executed once for each site whenever the site list is refreshed.
 
