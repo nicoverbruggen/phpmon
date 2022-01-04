@@ -296,6 +296,7 @@ While I did make this application during my own free time, I have been lucky eno
 * Everyone in the Laravel community who shared the app (thanks!)
 * Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot)
 * Everyone who left feedback via issues
+* Everyone who donated to keep the project up and running
 
 Thank you very much for your contributions, kind words and support.
 
@@ -312,6 +313,24 @@ In order to save power, this only happens once every 60 seconds.
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
 The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
+
+### Config change detection
+
+PHP Monitor watches your filesystem in the relevant `conf.d` directory for the currently linked PHP version. 
+
+Whenever an .ini file is modified, PHP Monitor will attempt to reload the current information about the active PHP installation. 
+
+If an extension or other process writes to a single file a bunch of times in a short span of time (&lt; 1 sec), PHP Monitor will only reload the active configuration information after a while (with a slight delay).
+
+### Site detection
+
+PHP Monitor uses the Valet configuration file to determine which folders to look into. Each folder is scanned and then PHP Monitor will validate if a composer.json file exists to determine the desired PHP version.
+
+If the app has been secured by checking if a matching certificate exists under Valet's `Certificates` directory.
+
+PHP Monitor also runs `valet which` to determine which driver is currently in use for each individual site. This command is executed once for each site whenever the site list is refreshed.
+
+*Note*: If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
 
 ### Want to know more?
 
