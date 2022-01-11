@@ -147,6 +147,13 @@
 		C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
 		C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
 		C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
+		C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
+		C4F30B04278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
+		C4F30B05278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
+		C4F30B07278E195800755FCE /* brew-services.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F30B06278E195800755FCE /* brew-services.json */; };
+		C4F30B08278E195800755FCE /* brew-services.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F30B06278E195800755FCE /* brew-services.json */; };
+		C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
+		C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
 		C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */; };
@@ -280,6 +287,8 @@
 		C4EE55A827708B9E001DF387 /* PMStatsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMStatsView.swift; sourceTree = "<group>"; };
 		C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewDiagnostics.swift; sourceTree = "<group>"; };
 		C4F2E4392752F7D00020E974 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
+		C4F30B02278E16BA00755FCE /* HomebrewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewService.swift; sourceTree = "<group>"; };
+		C4F30B06278E195800755FCE /* brew-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brew-services.json"; sourceTree = "<group>"; };
 		C4F7807425D7F7E5000DBC97 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -333,9 +342,9 @@
 		54B20EDF263AA22C00D3250E /* PHP */ = {
 			isa = PBXGroup;
 			children = (
-				C40C7F1D2772136000DDDCDC /* PhpEnv.swift */,
 				C4D9ADC2277610E4007277F4 /* Switcher */,
-				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
+				C4F30B01278E169B00755FCE /* Homebrew */,
+				C40C7F1D2772136000DDDCDC /* PhpEnv.swift */,
 				C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */,
 				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
@@ -368,6 +377,7 @@
 			children = (
 				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 				C43A8A1F25D9D1D700591B77 /* brew.json */,
+				C4F30B06278E195800755FCE /* brew-services.json */,
 				C4F780A725D80AE8000DBC97 /* php.ini */,
 			);
 			path = "Test Files";
@@ -614,6 +624,15 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
+		C4F30B01278E169B00755FCE /* Homebrew */ = {
+			isa = PBXGroup;
+			children = (
+				C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */,
+				C4F30B02278E16BA00755FCE /* HomebrewService.swift */,
+			);
+			path = Homebrew;
+			sourceTree = "<group>";
+		};
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +778,7 @@
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
 				54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
+				C4F30B07278E195800755FCE /* brew-services.json in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 				C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */,
@@ -775,6 +795,7 @@
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
+				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,6 +813,7 @@
 				C40C7F2227721F8200DDDCDC /* PhpInstallation.swift in Sources */,
 				C4B585432770FE3900DA4FBE /* Shell.swift in Sources */,
 				C4D9ADC1277610E1007277F4 /* PhpSwitcher.swift in Sources */,
+				C4F30B05278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				C40C7F2327721F8200DDDCDC /* ActivePhpInstallation.swift in Sources */,
 				C4B585462770FE3900DA4FBE /* Command.swift in Sources */,
 				C4D9ADCA277611A0007277F4 /* InternalSwitcher.swift in Sources */,
@@ -836,6 +858,7 @@
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
+				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
@@ -895,6 +918,7 @@
 				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
+				C4F30B04278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
@@ -910,6 +934,7 @@
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
+				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
 				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
@@ -925,6 +950,7 @@
 				C4F780C325D80B75000DBC97 /* HeaderView.swift in Sources */,
 				C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
+				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* Command.swift in Sources */,
@@ -1120,7 +1146,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 220;
+				CURRENT_PROJECT_VERSION = 230;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1145,7 +1171,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 220;
+				CURRENT_PROJECT_VERSION = 230;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;

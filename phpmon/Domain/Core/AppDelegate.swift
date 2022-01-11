@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Make sure notifications will work
         setupNotifications()
         // Make sure the menu performs its initial checks
-        menu.startup()
+        menu.rebuild()
     }
     
 }
