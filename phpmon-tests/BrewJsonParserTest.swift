@@ -60,11 +60,14 @@ class BrewJsonParserTest: XCTestCase {
                 "sudo \(Paths.brew) services info --all --json",
                 requiresPath: true
             ).data(using: .utf8)!
-        )
+        ).filter({ service in
+            return ["php", "nginx", "dnsmasq"].contains(service.name)
+        })
         
         XCTAssertTrue(services.contains(where: {$0.name == "php"} ))
         XCTAssertTrue(services.contains(where: {$0.name == "nginx"} ))
         XCTAssertTrue(services.contains(where: {$0.name == "dnsmasq"} ))
+        XCTAssertEqual(services.count, 3)
     }
     
     /// This test requires that you have a valid Homebrew installation set up,
