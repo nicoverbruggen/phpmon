@@ -51,8 +51,8 @@ class BrewJsonParserTest: XCTestCase {
 
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the Valet services to be installed: php, nginx and dnsmasq.
-    /// Otherwise, this test won't fail. If this test fails, there is an issue with
-    /// your Homebrew installation or the JSON API of the Homebrew output may have changed.
+    /// If this test fails, there is an issue with your Homebrew installation
+    /// or the JSON API of the Homebrew output may have changed.
     func testCanParseServicesJsonFromCliOutput() throws {
         let services = try! JSONDecoder().decode(
             [HomebrewService].self,
@@ -68,9 +68,9 @@ class BrewJsonParserTest: XCTestCase {
     }
     
     /// This test requires that you have a valid Homebrew installation set up,
-    /// and requires the Valet services to be installed: php, nginx and dnsmasq.
-    /// Otherwise, this test won't fail. If this test fails, there is an issue with
-    /// your Homebrew installation or the JSON API of the Homebrew output may have changed.
+    /// and requires the `php` formula to be installed.
+    /// If this test fails, there is an issue with your Homebrew installation
+    /// or the JSON API of the Homebrew output may have changed.
     func testCanLoadExtensionJsonFromCliOutput() throws {
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self,
