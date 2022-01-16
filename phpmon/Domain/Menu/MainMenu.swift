@@ -68,7 +68,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: MenuBarImageGenerator.textToImageWithIcon(text: version)
+            image: Preferences.isEnabled(.shouldDisplayPhpHintInIcon)
+                ? MenuBarImageGenerator.textToImageWithIcon(text: version)
+                : MenuBarImageGenerator.textToImage(text: version)
         )
     }
     

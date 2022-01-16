@@ -59,6 +59,15 @@ class PrefsVC: NSViewController {
             ),
             CheckboxPreferenceView.make(
                 sectionText: "",
+                descriptionText: "prefs.icon_hint_desc".localized,
+                checkboxText: "prefs.icon_hint_title".localized,
+                preference: .shouldDisplayPhpHintInIcon,
+                action: {
+                    MainMenu.shared.refreshIcon()
+                }
+            ),
+            CheckboxPreferenceView.make(
+                sectionText: "prefs.info_density".localized,
                 descriptionText: "prefs.display_full_php_version_desc".localized,
                 checkboxText: "prefs.display_full_php_version".localized,
                 preference: .fullPhpVersionDynamicIcon,

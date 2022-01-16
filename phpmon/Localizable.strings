@@ -97,7 +97,8 @@
 "prefs.close" = "Close";
 
 "prefs.global_shortcut" = "Global shortcut:";
-"prefs.dynamic_icon" = "Dynamic icon:";
+"prefs.dynamic_icon" = "Icon customization:";
+"prefs.info_density" = "Info density:";
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 
@@ -106,6 +107,9 @@
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible. If checked, it will display the major version number of the currently linked PHP version.";
+
+"prefs.icon_hint_title" = "Display PHP hint next to version number";
+"prefs.icon_hint_desc" = "If you uncheck this box, the icon in the menu bar will only show the version number and not the PHP hint. This preference does not do anything if the dynamic icon has been disabled.";
 
 "prefs.display_full_php_version" = "Display full PHP version everywhere";
 "prefs.display_full_php_version_desc" = "Display the full version instead of the major version displayed in the menu bar and the dropdown menu. (This may be undesirable on smaller displays, so this is disabled by default.)";
