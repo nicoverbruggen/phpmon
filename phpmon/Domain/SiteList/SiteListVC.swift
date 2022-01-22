@@ -172,13 +172,17 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
         if searchString.isEmpty {
             sites = Valet.shared.sites
-            tableView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             return
         }
         
         sites = Valet.shared.sites.filter({ site in
             return site.name.lowercased().contains(searchString)
         })
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }

@@ -34,12 +34,18 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
         return self.contentViewController as! SiteListVC
     }
     
+    var searchTimer: Timer?
+    
     func controlTextDidChange(_ notification: Notification) {
         guard let searchField = notification.object as? NSSearchField else {
             return
         }
         
-        contentVC.searchedFor(text: searchField.stringValue)
+        self.searchTimer?.invalidate()
+        
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in
+            self.contentVC.searchedFor(text: searchField.stringValue)
+        })
     }
     
     // MARK: - Reload functionality
