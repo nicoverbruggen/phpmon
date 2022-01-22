@@ -186,7 +186,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
     }
 
     // MARK: - Deinitialization

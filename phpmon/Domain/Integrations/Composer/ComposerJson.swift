@@ -28,6 +28,19 @@ struct ComposerJson: Decodable {
         return ("", "unknown")
     }
     
+    public func getNotableDependencies() -> [String: String] {
+        var notable: [String: String] = [:]
+        let scan = ["php", "laravel/framework"]
+        
+        scan.forEach { dependency in
+            if dependencies?[dependency] != nil {
+                notable[dependency] = dependencies![dependency]
+            }
+        }
+
+        return notable
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case dependencies = "require"
         case devDependencies = "require-dev"

@@ -162,10 +162,13 @@ class Valet {
         /// What driver is currently in use. If not detected, defaults to nil.
         var driver: String? = nil
         
-        /// The PHP version as discovered in composer.json
+        /// A list of notable Composer dependencies.
+        var notableComposerDependencies: [String: String] = [:]
+        
+        /// The PHP version as discovered in composer.json.
         var composerPhp: String = "???"
         
-        /// How the PHP version was determined
+        /// How the PHP version was determined.
         var composerPhpSource: String = "unknown"
         
         init() {}
@@ -210,10 +213,13 @@ class Valet {
             let path = "\(absolutePath!)/composer.json"
             do {
                 if Filesystem.fileExists(path) {
-                    (self.composerPhp, self.composerPhpSource) = try JSONDecoder().decode(
+                    let decoded = try JSONDecoder().decode(
                         ComposerJson.self,
                         from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
-                    ).getPhpVersion()
+                    )
+                    
+                    (self.composerPhp, self.composerPhpSource) = decoded.getPhpVersion()
+                    self.notableComposerDependencies = decoded.getNotableDependencies()
                 }
             } catch {
                 Log.err("Something went wrong reading the composer JSON file.")

@@ -21,9 +21,6 @@ class SiteListCell: NSTableCellView
     
     @IBOutlet weak var labelDriver: NSTextField!
     
-    @IBOutlet weak var buttonWarning: NSButton!
-    @IBOutlet weak var labelWarning: NSTextField!
-    
     @IBOutlet weak var buttonPhpVersion: NSButton!
     
     override func draw(_ dirtyRect: NSRect) {
@@ -35,11 +32,6 @@ class SiteListCell: NSTableCellView
         
         // Make sure to show the TLD
         labelSiteName.stringValue = "\(site.name!).\(Valet.shared.config.tld)"
-        
-        let isProblematic = site.name.contains(" ")
-        buttonWarning.isHidden = !isProblematic
-        labelWarning.isHidden = !isProblematic
-        labelWarning.stringValue = "site_list.warning.spaces".localized
         
         // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         labelPathName.stringValue = site.absolutePath
@@ -61,6 +53,11 @@ class SiteListCell: NSTableCellView
         
         // Show the current driver
         labelDriver.stringValue = "\(site.driver ?? "???")"
+        
+        if site.driver == "Laravel" && site.notableComposerDependencies.keys.contains("laravel/framework") {
+            let constraint = site.notableComposerDependencies["laravel/framework"]!
+            labelDriver.stringValue = "Laravel (\(constraint))"
+        }
         
         // Show the PHP version
         buttonPhpVersion.title = " PHP \(site.composerPhp) "
