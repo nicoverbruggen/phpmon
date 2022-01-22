@@ -67,14 +67,35 @@ class SiteListCell: NSTableCellView
     @IBAction func pressedPhpVersion(_ sender: Any) {
         guard let site = self.site else { return }
         
-        Alert.confirm(
-            onWindow: App.shared.siteListWindowController!.window!,
-            messageText: "alert.composer_php_requirement.title"
-                .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp),
-            informativeText: "alert.composer_php_requirement.info"
-                .localized(site.composerPhpSource),
-            secondButtonTitle: "",
-            onFirstButtonPressed: {}
-        )
+        let alert = NSAlert.init()
+        alert.alertStyle = .informational
+        
+        alert.messageText = "alert.composer_php_requirement.title"
+            .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp)
+        alert.informativeText = "alert.composer_php_requirement.info"
+            .localized(site.composerPhpSource)
+        
+        alert.addButton(withTitle: "Close")
+        
+        var mapIndex: Int = NSApplication.ModalResponse.alertSecondButtonReturn.rawValue
+        var map: [Int: String] = [:]
+        
+        var versions: [String] = []
+        // TODO: Based on the version constraint, insert the desired version to switch to
+        
+        versions.forEach { version in
+            alert.addButton(withTitle: "Switch to PHP \(version)")
+            map[mapIndex] = version
+            mapIndex += 1
+        }
+        
+        alert.beginSheetModal(for: App.shared.siteListWindowController!.window!) { response in
+            if response.rawValue > NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
+                if map.keys.contains(response.rawValue) {
+                    let version = map[response.rawValue]!
+                    print("Pressed button to switch to \(version)")
+                }
+            }
+        }
     }
 }
