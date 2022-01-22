@@ -96,6 +96,8 @@ class Valet {
                 resolvePath(entry, forPath: path, tld: tld)
             }
         }
+        
+        sites = sites.sorted { $0.absolutePath < $1.absolutePath }
     }
     
     /**
