@@ -156,7 +156,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Composer Version
 "alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\": \"%@\".";
-"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the %@ in `composer.json`.\n\nPlease note that the lockfile is not checked and this reflects the current Composer configuration file as it existed at the time of refreshing the site list.";
+"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the %@ in `composer.json` when the list was last refreshed.";
 
 // Force Reload Started
 "alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";

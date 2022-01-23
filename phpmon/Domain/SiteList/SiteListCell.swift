@@ -80,12 +80,13 @@ class SiteListCell: NSTableCellView
         var mapIndex: Int = NSApplication.ModalResponse.alertSecondButtonReturn.rawValue
         var map: [Int: String] = [:]
         
-        var versions: [String] = []
-        // TODO: Based on the version constraint, insert the desired version to switch to
-        
-        versions.forEach { version in
-            alert.addButton(withTitle: "Switch to PHP \(version)")
-            map[mapIndex] = version
+        // Determine which installed versions would be ideal to switch to,
+        // but make sure to exclude the currently linked version
+        PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
+            version.homebrewVersion != PhpEnv.phpInstall.version.short
+        }).forEach { version in
+            alert.addButton(withTitle: "Switch to PHP \(version.homebrewVersion)")
+            map[mapIndex] = version.homebrewVersion
             mapIndex += 1
         }
         
@@ -94,6 +95,7 @@ class SiteListCell: NSTableCellView
                 if map.keys.contains(response.rawValue) {
                     let version = map[response.rawValue]!
                     print("Pressed button to switch to \(version)")
+                    MainMenu.shared.switchToPhpVersion(version)
                 }
             }
         }

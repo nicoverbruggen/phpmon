@@ -149,4 +149,10 @@ class PhpEnv {
         
         return output
     }
+    
+    public func validVersions(for constraint: String) -> [PhpVersionNumber] {
+        return PhpVersionNumberCollection
+            .make(from: self.availablePhpVersions)
+            .matching(constraint: constraint)
+    }
 }

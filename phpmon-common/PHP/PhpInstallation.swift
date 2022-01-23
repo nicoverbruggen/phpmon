@@ -10,20 +10,26 @@ import Foundation
 
 class PhpInstallation {
     
-    var longVersion: String
+    var longVersion: PhpVersionNumber
     
     /**
      In order to determine details about a PHP installation, we’ll simply run `php-config --version`
      in the relevant directory.
      */
     init(_ version: String) {
+        
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
-        self.longVersion = version
+        self.longVersion = PhpVersionNumber.make(from: version)!
+        
         if Shell.fileExists(phpConfigExecutablePath) {
-            self.longVersion = Command.execute(
+            let longVersionString = Command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"]
-            )
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            self.longVersion = PhpVersionNumber.make(
+                from: String(longVersionString.split(separator: "-")[0])
+            )!
         }
     }
     

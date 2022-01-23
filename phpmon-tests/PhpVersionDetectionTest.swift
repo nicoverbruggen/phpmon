@@ -26,5 +26,4 @@ class PhpVersionDetectionTest: XCTestCase {
         
         XCTAssertEqual(outcome, ["8.0", "7.0", "5.6"])
     }
-
 }

@@ -282,6 +282,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
+        self.switchToPhpVersion(sender.version)
+    }
+    
+    @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnv.shared.isBusy = true
         
@@ -305,8 +309,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     
                     let sendLocalNotification = {
                         LocalNotification.send(
-                            title: String(format: "notification.version_changed_title".localized, sender.version),
-                            subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
+                            title: String(format: "notification.version_changed_title".localized, version),
+                            subtitle: String(format: "notification.version_changed_desc".localized, version)
                         )
                         PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
                     }
@@ -321,7 +325,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             }
             
             PhpEnv.switcher.performSwitch(
-                to: sender.version,
+                to: version,
                 completion: completion
             )
         }
