@@ -22,6 +22,7 @@ class SiteListCell: NSTableCellView
     @IBOutlet weak var labelDriver: NSTextField!
     
     @IBOutlet weak var buttonPhpVersion: NSButton!
+    @IBOutlet weak var imageViewPhpVersionOK: NSImageView!
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -62,6 +63,12 @@ class SiteListCell: NSTableCellView
         // Show the PHP version
         buttonPhpVersion.title = " PHP \(site.composerPhp) "
         buttonPhpVersion.isHidden = (site.composerPhp == "???")
+        
+        let matchesConstraint = PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+            .matching(constraint: site.composerPhp)
+            .count > 0
+        
+        imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !matchesConstraint)
     }
     
     @IBAction func pressedPhpVersion(_ sender: Any) {

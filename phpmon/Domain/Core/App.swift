@@ -83,5 +83,11 @@ class App: PhpSwitcherDelegate {
     func switcherDidCompleteSwitch() {
         PhpEnv.shared.currentInstall = ActivePhpInstallation()
         handlePhpConfigWatcher()
+        
+        if let window = siteListWindowController {
+            DispatchQueue.main.async {
+                window.contentVC.reloadSites()
+            }
+        }
     }
 }
