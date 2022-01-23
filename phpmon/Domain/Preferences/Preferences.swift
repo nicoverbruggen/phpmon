@@ -15,7 +15,6 @@ enum PreferenceName: String {
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
-    case useInternalSwitcher = "use_phpmon_switcher"
     case globalHotkey = "global_hotkey"
 }
 
@@ -54,8 +53,7 @@ class Preferences {
             PreferenceName.shouldDisplayPhpHintInIcon.rawValue: true,
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
-            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
-            PreferenceName.useInternalSwitcher.rawValue: false,
+            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false
         ])
         
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
@@ -98,7 +96,6 @@ class Preferences {
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
             .autoServiceRestartAfterExtensionToggle: UserDefaults.standard.bool(forKey: PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue) as Any,
             .autoComposerGlobalUpdateAfterSwitch: UserDefaults.standard.bool(forKey: PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue) as Any,
-            .useInternalSwitcher: UserDefaults.standard.bool(forKey: PreferenceName.useInternalSwitcher.rawValue) as Any,
             
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,

@@ -90,14 +90,6 @@ class PrefsVC: NSViewController {
                 preference: .autoComposerGlobalUpdateAfterSwitch,
                 action: {}
             ),
-            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
-            CheckboxPreferenceView.make(
-                sectionText: "",
-                descriptionText: "prefs.use_internal_switcher_desc".localized,
-                checkboxText: "prefs.use_internal_switcher".localized,
-                preference: .useInternalSwitcher,
-                action: {}
-            ), */
             HotkeyPreferenceView.make(
                 sectionText: "prefs.global_shortcut".localized,
                 descriptionText: "prefs.shortcut_desc".localized,

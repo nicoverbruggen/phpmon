@@ -114,10 +114,6 @@
 "prefs.display_full_php_version" = "Display full PHP version everywhere";
 "prefs.display_full_php_version_desc" = "Display the full version instead of the major version displayed in the menu bar and the dropdown menu. (This may be undesirable on smaller displays, so this is disabled by default.)";
 
-"prefs.use_internal_switcher" = "Use PHP Monitor’s own version switcher";
-"prefs.use_internal_switcher_desc" =
-"By default, PHP Monitor will attempt to use Laravel Valet in order to switch PHP versions. If you prefer a different switcher or are having issues with `valet use php`, you may use PHP Monitor's own switcher which is slightly faster, but might cause issues with permissions in your Homebrew directories, since PHP Monitor controls the services.";
-
 "prefs.auto_composer_update_title" = "Automatically update global dependencies";
 "prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run `composer global update` whenever you switch between different PHP versions. You will be able to see what changes are being made, or should this fail.";
  

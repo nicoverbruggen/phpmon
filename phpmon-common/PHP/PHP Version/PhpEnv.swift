@@ -78,8 +78,6 @@ class PhpEnv {
     // MARK: - Methods
     
     public static var switcher: PhpSwitcher {
-        // Based on the setting, use a particular switcher
-        // For now, we'll hardcode the internal switcher though
         return InternalSwitcher()
     }
     
