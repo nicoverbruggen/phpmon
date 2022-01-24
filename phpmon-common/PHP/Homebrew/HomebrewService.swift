@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HomebrewService: Decodable {
+struct HomebrewService: Decodable, Equatable {
     let name: String
     let service_name: String
     let running: Bool

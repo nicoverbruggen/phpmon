@@ -94,7 +94,9 @@ class SiteListCell: NSTableCellView
         
         // Determine which installed versions would be ideal to switch to,
         // but make sure to exclude the currently linked version
-        PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
+        site.composerPhp.split(separator: "|").flatMap { string in
+            return PhpEnv.shared.validVersions(for: string.trimmingCharacters(in: .whitespacesAndNewlines))
+        }.filter({ version in
             version.homebrewVersion != PhpEnv.phpInstall.version.short
         }).forEach { version in
             alert.addButton(withTitle: "Switch to PHP \(version.homebrewVersion)")
