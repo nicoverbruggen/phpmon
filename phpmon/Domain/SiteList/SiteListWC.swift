@@ -50,7 +50,46 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     // MARK: - Reload functionality
     
-    @IBAction func pressedReload(_ sender: Any) {
+    @IBAction func pressedReload(_ sender: Any?) {
         contentVC.reloadSites()
+    }
+    
+    @IBAction func pressedAddLink(_ sender: Any?) {
+        selectFolder()
+    }
+    
+    // MARK: - Add a new site
+    
+    func selectFolder() {
+        let dialog = NSOpenPanel()
+        dialog.title = "Select a Folder"
+        dialog.showsResizeIndicator = true
+        dialog.showsHiddenFiles = false
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories = true
+        dialog.canChooseFiles = false
+        
+        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
+            let result = dialog.url
+            if (result != nil) {
+                let path: String = result!.path
+                self.showSitePopup(path)
+            }
+        }
+    }
+    
+    func showSitePopup(_ folder: String) {
+        let storyboard = NSStoryboard(name: "Main" , bundle : nil)
+        
+        let windowController = storyboard.instantiateController(
+            withIdentifier: "addSiteWindow"
+        ) as! NSWindowController
+        
+        let viewController = windowController.window!.contentViewController as! AddSiteVC
+        viewController.pathControl.url = URL(fileURLWithPath: folder)
+        viewController.linkName.stringValue = String(folder.split(separator: "/").last!)
+        viewController.updateTextField()
+        
+        self.window?.beginSheet(windowController.window!)
     }
 }

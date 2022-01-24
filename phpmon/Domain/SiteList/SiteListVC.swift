@@ -135,6 +135,28 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
+    func addedNewSite(name: String, secure: Bool) {
+        waitAndExecute {
+            Valet.shared.reloadSites()
+        } completion: { [self] in
+            find(name, secure)
+        }
+    }
+    
+    private func find(_ name: String, _ secure: Bool = false) {
+        sites = Valet.shared.sites
+        searchedFor(text: "")
+        if let site = sites.enumerated().first(where: { $0.element.name == name }) {
+            DispatchQueue.main.async {
+                self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
+                self.tableView.scrollRowToVisible(site.offset)
+                if (secure && !site.element.secured) {
+                    self.toggleSecure()
+                }
+            }
+        }
+    }
+    
     // MARK: - Table View Delegate
     
     func numberOfRows(in tableView: NSTableView) -> Int {

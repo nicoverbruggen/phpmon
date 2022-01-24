@@ -69,6 +69,8 @@
 "site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
 "site_link.confirm_link" = "No files will be removed. If needed, the site will need to be relinked via the command line.";
 
+"site_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
+
 // SITE LIST ACTIONS
 
 "site_list.unlink" = "Unlink Directory";
