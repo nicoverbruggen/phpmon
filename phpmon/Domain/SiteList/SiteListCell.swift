@@ -55,6 +55,7 @@ class SiteListCell: NSTableCellView
         // Show the current driver
         labelDriver.stringValue = "\(site.driver ?? "???")"
         
+        // Determine the Laravel version
         if site.driver == "Laravel" && site.notableComposerDependencies.keys.contains("laravel/framework") {
             let constraint = site.notableComposerDependencies["laravel/framework"]!
             labelDriver.stringValue = "Laravel (\(constraint))"
@@ -64,9 +65,13 @@ class SiteListCell: NSTableCellView
         buttonPhpVersion.title = " PHP \(site.composerPhp) "
         buttonPhpVersion.isHidden = (site.composerPhp == "???")
         
-        let matchesConstraint = PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
-            .matching(constraint: site.composerPhp)
-            .count > 0
+        // Split the composer list (on "|") to evaluate multiple constraints
+        // For example, for Laravel 8 projects the value is "^7.3|^8.0"
+        let matchesConstraint = site.composerPhp.split(separator: "|").map { string in
+            return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
+                .count > 0
+        }.contains(true)
         
         imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !matchesConstraint)
     }
