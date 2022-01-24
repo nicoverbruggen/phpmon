@@ -17,15 +17,15 @@ class ServicesView: NSView, XibLoadable {
     
     @IBOutlet weak var textFieldPhp: NSTextField!
     
-    var services: [String: HomebrewService] = [:]
+    static var services: [String: HomebrewService] = [:]
     
     static func asMenuItem() -> NSMenuItem {
-        let view = Self.createFromXib()
+        let view = Self.createFromXib()!
         let item = NSMenuItem()
         item.view = view
         item.target = self
         NotificationCenter.default.addObserver(
-            view!, selector: #selector(self.updateInformation),
+            view, selector: #selector(self.updateInformation),
             name: Events.ServicesUpdated,
             object: nil
         )
@@ -42,6 +42,10 @@ class ServicesView: NSView, XibLoadable {
     }
     
     func loadData() {
+        // Use stale data
+        self.applyAllInfoFieldsFromCachedValue()
+        
+        // Re-fetch services
         runAsync {
             let servicesList = try! JSONDecoder().decode(
                 [HomebrewService].self,
@@ -53,8 +57,15 @@ class ServicesView: NSView, XibLoadable {
                 return [PhpEnv.phpInstall.formula, "nginx", "dnsmasq"].contains(service.name)
             })
             
-            self.services = Dictionary(uniqueKeysWithValues: servicesList.map{ ($0.name, $0) })
+            ServicesView.services = Dictionary(uniqueKeysWithValues: servicesList.map{ ($0.name, $0) })
         } completion: {
+            // Use fresh data
+            self.applyAllInfoFieldsFromCachedValue()
+        }
+    }
+    
+    func applyAllInfoFieldsFromCachedValue() {
+        DispatchQueue.main.async {
             self.textFieldPhp.stringValue = PhpEnv.phpInstall.formula.uppercased()
             self.applyServiceStyling(PhpEnv.phpInstall.formula, self.imageViewPhp)
             self.applyServiceStyling("nginx", self.imageViewNginx)
@@ -63,7 +74,7 @@ class ServicesView: NSView, XibLoadable {
     }
     
     func applyServiceStyling(_ serviceName: String, _ imageView: NSImageView) {
-        if services[serviceName] != nil && services[serviceName]!.running {
+        if ServicesView.services[serviceName] != nil && ServicesView.services[serviceName]!.running {
             imageView.image = NSImage(named: "ServiceOn")
             imageView.contentTintColor = NSColor.black
         } else {
