@@ -100,13 +100,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         PhpEnv.shared.isBusy = true
         setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            rebuild()
             execute()
             PhpEnv.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
                 updatePhpVersionInStatusBar()
-                rebuild()
+                NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
                 completion()
             }
         }
@@ -156,12 +155,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         waitAndExecute {
             // This automatically reloads the menu
             Log.info("Reloading information about the PHP installation...")
-        } completion: {
-            // Add a slight delay to make sure it loads the new menu
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                // Open the menu again
-                MainMenu.shared.statusItem.button?.performClick(nil)
-            }
         }
     }
     

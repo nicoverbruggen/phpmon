@@ -59,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      When the application initializes, create all singletons.
      */
     override init() {
-        logger.verbosity = .info
+        logger.verbosity = .performance
         Log.info("==================================")
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")

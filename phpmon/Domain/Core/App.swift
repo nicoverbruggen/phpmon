@@ -43,7 +43,6 @@ class App: PhpSwitcherDelegate {
     
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
-    
 
     // MARK: - Global Hotkey
     

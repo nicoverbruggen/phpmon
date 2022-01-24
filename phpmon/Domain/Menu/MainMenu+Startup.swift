@@ -70,8 +70,12 @@ extension MainMenu {
         
         // Attempt to find out more info about Valet
         Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
+        
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
+        
+        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+        
         Log.info("PHP Monitor is ready to serve!")
         
         // Schedule a request to fetch the PHP version every 60 seconds

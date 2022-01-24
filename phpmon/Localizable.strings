@@ -37,7 +37,7 @@
 "mi_manual_actions" = "Manual Actions";
 "mi_services" = "Services";
 "mi_help" = "First Aid";
-"mi_toolkit" = "Toolkit";
+"mi_other" = "First Aid & Services";
 
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet folder (.config/valet)";

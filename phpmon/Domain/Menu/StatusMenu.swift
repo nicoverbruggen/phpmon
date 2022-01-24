@@ -32,10 +32,13 @@ class StatusMenu : NSMenu {
         
         self.addSwitchToPhpMenuItems()
         self.addItem(NSMenuItem.separator())
+        
+        self.addItem(ServicesView.asMenuItem())
+        self.addItem(NSMenuItem.separator())
     }
     
-    func addServicesMenuItems() {
-        let services = NSMenuItem(title: "mi_toolkit".localized, action: nil, keyEquivalent: "")
+    func addOtherMenuItems() {
+        let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
         
         servicesMenu.addItem(NSMenuItem(title: "mi_help".localized, action: nil, keyEquivalent: ""))
@@ -122,10 +125,9 @@ class StatusMenu : NSMenu {
             shortcutKey += 1
         }
         
+        // Other
         self.addItem(NSMenuItem.separator())
-        
-        self.addServicesMenuItems()
-        
+        self.addOtherMenuItems()
     }
     
     private func addSwitchToPhpMenuItems() {
