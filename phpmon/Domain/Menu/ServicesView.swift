@@ -65,6 +65,10 @@ class ServicesView: NSView, XibLoadable {
     }
     
     func applyAllInfoFieldsFromCachedValue() {
+        if ServicesView.services.keys.isEmpty {
+            return
+        }
+        
         DispatchQueue.main.async {
             self.textFieldPhp.stringValue = PhpEnv.phpInstall.formula.uppercased()
             self.applyServiceStyling(PhpEnv.phpInstall.formula, self.imageViewPhp)
