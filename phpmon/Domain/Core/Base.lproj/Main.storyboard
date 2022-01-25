@@ -416,7 +416,7 @@
                 </windowController>
                 <customObject id="VCP-dF-cqM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-374" y="773.5"/>
+            <point key="canvasLocation" x="-374" y="758"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="HTI-x5-rOp">
@@ -583,7 +583,7 @@ Gw
         <!--Site ListVC-->
         <scene sceneID="aZt-6w-TFl">
             <objects>
-                <viewController storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController identifier="siteList" storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="rIZ-4U-bhj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
