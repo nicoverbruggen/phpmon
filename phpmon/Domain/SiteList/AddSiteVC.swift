@@ -28,6 +28,11 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         loadStaticLocalisedStrings()
     }
     
+    private func dismissView(outcome: NSApplication.ModalResponse) {
+        guard let window = self.view.window, let parent = window.sheetParent else { return }
+        parent.endSheet(window, returnCode: outcome)
+    }
+    
     // MARK: - Localisation
     
     func loadStaticLocalisedStrings() {
@@ -42,9 +47,23 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         let path = self.pathControl.url!.path
         let name = self.linkName.stringValue
         
-        // TODO: Check if the path still exists
+        if !FileManager.default.fileExists(atPath: path) {
+            Alert.confirm(
+                onWindow: self.view.window!,
+                messageText: "site_list.alert.folder_missing.title".localized,
+                informativeText: "site_list.alert.folder_missing.desc".localized,
+                buttonTitle: "site_list.alert.folder_missing.cancel".localized,
+                secondButtonTitle: "site_list.alert.folder_missing.return".localized,
+                onFirstButtonPressed: {
+                    self.dismissView(outcome: .cancel)
+                }
+            )
+            return
+        }
+        
         Shell.run("cd '\(path)' && \(Paths.valet) link '\(name)'", requiresPath: true)
-        self.view.window!.close()
+        
+        self.dismissView(outcome: .OK)
         
         // Reset search
         App.shared.siteListWindowController?
@@ -61,7 +80,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     }
     
     @IBAction func pressedCancel(_ sender: Any) {
-        self.view.window!.close()
+        self.dismissView(outcome: .cancel)
     }
     
     @IBAction func pressedSecure(_ sender: Any) {

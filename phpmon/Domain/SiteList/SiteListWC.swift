@@ -62,16 +62,15 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     func selectFolder() {
         let dialog = NSOpenPanel()
-        dialog.title = "Select a Folder"
+        dialog.message = "site_list.add.modal_description".localized
         dialog.showsResizeIndicator = true
         dialog.showsHiddenFiles = false
         dialog.allowsMultipleSelection = false
         dialog.canChooseDirectories = true
         dialog.canChooseFiles = false
-        
-        if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
+        dialog.beginSheetModal(for: self.window!) { response in
             let result = dialog.url
-            if (result != nil) {
+            if (result != nil && response == .OK) {
                 let path: String = result!.path
                 self.showSitePopup(path)
             }
