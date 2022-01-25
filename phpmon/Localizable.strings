@@ -69,6 +69,17 @@
 "site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
 "site_link.confirm_link" = "No files will be removed. If needed, the site will need to be relinked via the command line.";
 
+"site_link.close" = "Close";
+"site_link.switch_to_php" = "Switch to PHP %@";
+
+// ADD SITE TO SITE LIST
+
+"site_list.add.link_folder" = "Link a Folder";
+"site_list.add.domain_name_placeholder" = "Enter a domain name here";
+"site_list.add.secure_after_creation" = "Secure %@.%@ after creation";
+"site_list.add.secure_description" = "Securing a site requires administrative privileges.\nYou will be prompted for your password or Touch ID.";
+"site_list.add.create_link" = "Create Link";
+"site_list.add.cancel" = "Cancel";
 "site_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
 
 // SITE LIST ACTIONS
@@ -153,8 +164,8 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Composer Version
-"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\": \"%@\".";
-"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the %@ in `composer.json` when the list was last refreshed.";
+"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\":\n\"%@\".";
+"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the `%@` field in the `composer.json` file when the site list was last refreshed.";
 
 // Force Reload Started
 "alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";

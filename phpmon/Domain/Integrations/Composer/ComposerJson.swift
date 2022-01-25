@@ -21,7 +21,7 @@ struct ComposerJson: Decodable {
         
         // Check if in dependencies
         if dependencies?["php"] != nil {
-            return (dependencies!["php"]!, "dependency list")
+            return (dependencies!["php"]!, "require")
         }
         
         // Unknown!

@@ -87,19 +87,17 @@ class SiteListCell: NSTableCellView
         alert.informativeText = "alert.composer_php_requirement.info"
             .localized(site.composerPhpSource)
         
-        alert.addButton(withTitle: "Close")
+        alert.addButton(withTitle: "site_link.close".localized)
         
         var mapIndex: Int = NSApplication.ModalResponse.alertSecondButtonReturn.rawValue
         var map: [Int: String] = [:]
         
         // Determine which installed versions would be ideal to switch to,
         // but make sure to exclude the currently linked version
-        site.composerPhp.split(separator: "|").flatMap { string in
-            return PhpEnv.shared.validVersions(for: string.trimmingCharacters(in: .whitespacesAndNewlines))
-        }.filter({ version in
+        PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
             version.homebrewVersion != PhpEnv.phpInstall.version.short
         }).forEach { version in
-            alert.addButton(withTitle: "Switch to PHP \(version.homebrewVersion)")
+            alert.addButton(withTitle: "site_link.switch_to_php".localized(version.homebrewVersion))
             map[mapIndex] = version.homebrewVersion
             mapIndex += 1
         }
