@@ -82,6 +82,9 @@
 "site_list.add.cancel" = "Cancel";
 "site_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
 
+"site_list.add.errors.empty" = "You must enter a name.";
+"site_list.add.errors.already_exists" = "A link with that name already exists.";
+
 // SITE LIST ACTIONS
 
 "site_list.unlink" = "Unlink Directory";

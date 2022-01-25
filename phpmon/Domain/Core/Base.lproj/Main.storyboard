@@ -529,15 +529,25 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
+                                <rect key="frame" x="115" y="23" width="128" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="That link already exists." id="jOt-n6-TQf">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="trailing" secondItem="ZX9-s1-23i" secondAttribute="trailing" id="06B-dj-IBU"/>
                             <constraint firstItem="ZX9-s1-23i" firstAttribute="top" secondItem="6JT-Vt-3q0" secondAttribute="bottom" constant="8" symbolic="YES" id="0QU-nI-sYv"/>
                             <constraint firstAttribute="bottom" secondItem="SwS-o8-pbl" secondAttribute="bottom" constant="20" symbolic="YES" id="24Z-vC-4E8"/>
+                            <constraint firstItem="900-Z2-tID" firstAttribute="centerY" secondItem="PVw-cM-qAB" secondAttribute="centerY" id="578-2f-4x8"/>
                             <constraint firstItem="ZX9-s1-23i" firstAttribute="leading" secondItem="6JT-Vt-3q0" secondAttribute="trailing" constant="-440" id="6eF-GS-Xcn"/>
                             <constraint firstItem="6JT-Vt-3q0" firstAttribute="top" secondItem="P0B-Ht-R8n" secondAttribute="bottom" constant="8" symbolic="YES" id="DGN-4k-X0h"/>
                             <constraint firstItem="P0B-Ht-R8n" firstAttribute="top" secondItem="JJJ-T9-Yuv" secondAttribute="top" constant="20" symbolic="YES" id="F2r-6E-qxh"/>
                             <constraint firstItem="mmQ-7e-dlb" firstAttribute="top" secondItem="KZf-b0-9cm" secondAttribute="bottom" constant="8" symbolic="YES" id="G21-Vd-tgl"/>
+                            <constraint firstItem="900-Z2-tID" firstAttribute="leading" secondItem="PVw-cM-qAB" secondAttribute="trailing" constant="8" symbolic="YES" id="QzV-vP-fbq"/>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="leading" secondItem="ZX9-s1-23i" secondAttribute="leading" id="UPN-Ad-j3X"/>
                             <constraint firstItem="KZf-b0-9cm" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" constant="20" symbolic="YES" id="Vab-wq-9Nc"/>
                             <constraint firstAttribute="bottom" secondItem="PVw-cM-qAB" secondAttribute="bottom" constant="20" symbolic="YES" id="VsP-Q0-zRW"/>
@@ -561,6 +571,9 @@ Gw
                         <outlet property="pathControl" destination="6JT-Vt-3q0" id="f5K-8h-VOd"/>
                         <outlet property="pressedCancel" destination="SwS-o8-pbl" id="cLR-Yn-TSs"/>
                         <outlet property="previewText" destination="VzR-5a-cmT" id="qwd-wX-645"/>
+                        <outlet property="textFieldError" destination="900-Z2-tID" id="qUk-FE-IKW"/>
+                        <outlet property="textFieldSecure" destination="mmQ-7e-dlb" id="LeA-YS-hRM"/>
+                        <outlet property="textFieldTitle" destination="P0B-Ht-R8n" id="Qh8-qv-6iR"/>
                     </connections>
                 </viewController>
                 <customObject id="6XV-bG-0N1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -729,7 +742,7 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="600" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="1" y="293" width="548" height="15"/>
+                                    <rect key="frame" x="1" y="293" width="598" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">

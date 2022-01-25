@@ -15,8 +15,28 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var linkName: NSTextField!
     @IBOutlet weak var previewText: NSTextField!
     @IBOutlet weak var buttonSecure: NSButton!
-    
     @IBOutlet weak var buttonCreateLink: NSButton!
+
+    @IBOutlet weak var textFieldTitle: NSTextField!
+    @IBOutlet weak var textFieldSecure: NSTextField!
+    @IBOutlet weak var textFieldError: NSTextField!
+    
+    // MARK: - View Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadStaticLocalisedStrings()
+    }
+    
+    // MARK: - Localisation
+    
+    func loadStaticLocalisedStrings() {
+        textFieldTitle.stringValue = "site_list.add.link_folder".localized
+        linkName.placeholderString = "site_list.add.domain_name_placeholder".localized
+        textFieldSecure.stringValue = "site_list.add.secure_description".localized
+    }
+    
+    // MARK: - Outlet Interactions
     
     @IBAction func pressedCreateLink(_ sender: Any) {
         let path = self.pathControl.url!.path
@@ -48,19 +68,46 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         updatePreview()
     }
     
+    // MARK: - Text Field Delegate
+    
     func controlTextDidChange(_ obj: Notification) {
         updateTextField()
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func isValidLinkName(_ name: String) -> Bool {
+        if self.linkName.stringValue.isEmpty {
+            self.textFieldError.isHidden = false
+            self.textFieldError.stringValue = "site_list.add.errors.empty".localized
+            return false
+        }
+        
+        if Valet.shared.sites.contains(where: { $0.name == name }) {
+            self.textFieldError.isHidden = false
+            self.textFieldError.stringValue = "site_list.add.errors.already_exists".localized
+            return false
+        }
+        
+        self.textFieldError.isHidden = true
+        return true
     }
     
     func updateTextField() {
         self.linkName.stringValue = self.linkName.stringValue
             .replacingOccurrences(of: " ", with: "-")
         
-        buttonCreateLink.isEnabled = !self.linkName.stringValue.isEmpty
+        buttonCreateLink.isEnabled = isValidLinkName(self.linkName.stringValue)
         self.updatePreview()
     }
     
     func updatePreview() {
+        buttonSecure.title = "site_list.add.secure_after_creation"
+            .localized(
+                self.linkName.stringValue,
+                Valet.shared.config.tld
+            )
+        
         previewText.stringValue = "site_list.add.folder_available"
             .localized(
                 self.buttonSecure.state == .on ? "https" : "http",
