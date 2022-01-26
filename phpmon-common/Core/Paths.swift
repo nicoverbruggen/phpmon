@@ -17,8 +17,11 @@ public class Paths {
     
     private var baseDir : Paths.HomebrewDir
     
+    private var userName : String
+    
     init() {
         baseDir = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew") ? .opt : .usr
+        userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
     }
     
     // - MARK: Binaries
@@ -42,7 +45,7 @@ public class Paths {
     // - MARK: Paths
     
     public static var whoami: String {
-        return String(Shell.pipe("whoami").split(separator: "\n")[0])
+        return shared.userName
     }
     
     public static var binPath: String {

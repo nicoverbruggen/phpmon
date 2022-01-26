@@ -43,7 +43,7 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
         
         self.searchTimer?.invalidate()
         
-        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { _ in
             self.contentVC.searchedFor(text: searchField.stringValue)
         })
     }

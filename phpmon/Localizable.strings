@@ -235,6 +235,10 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 
-/// 6. Multiple services active
+/// 6. Cannot retrieve services
+"startup.errors.services_json_error.title" = "Cannot determine services status";
+"startup.errors.services_json_error.desc" = "PHP Monitor was unable to check if any of the services are up and running. PHP Monitor usually queries `brew` using the following command: ``. PHP Monitor received an invalid response (no JSON).";
+
+/// 7. Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";
 "startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'Force load latest PHP version' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";

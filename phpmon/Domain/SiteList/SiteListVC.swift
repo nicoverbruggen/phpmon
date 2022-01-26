@@ -93,6 +93,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         progressIndicator.startAnimation(nil)
         tableView.alphaValue = 0.3
         tableView.isEnabled = false
+        tableView.selectRowIndexes([], byExtendingSelection: true)
     }
     
     /**
@@ -201,8 +202,14 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             return
         }
         
+        let splitSearchString: [String] = searchString
+            .split(separator: " ")
+            .map { return String($0) }
+        
         sites = Valet.shared.sites.filter({ site in
-            return site.name.lowercased().contains(searchString)
+            return !splitSearchString.map { searchString in
+                return site.name.lowercased().contains(searchString)
+            }.contains(false)
         })
         
         DispatchQueue.main.async {

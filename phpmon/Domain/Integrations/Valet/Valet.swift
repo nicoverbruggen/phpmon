@@ -164,6 +164,13 @@ class Valet {
         /// The absolute path to the directory that is served.
         var absolutePath: String!
         
+        /// The absolute path to the directory that is served,
+        /// replacing the user's home folder with ~.
+        lazy var absolutePathRelative: String = {
+            return self.absolutePath
+                .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
+        }()
+        
         /// Location of the alias. If set, this is a linked domain.
         var aliasPath: String?
         
@@ -181,6 +188,9 @@ class Valet {
         
         /// The PHP version as discovered in composer.json.
         var composerPhp: String = "???"
+        
+        /// Check whether the PHP version is valid for the current version.
+        var composerPhpMatchesSystem: Bool = false
         
         /// How the PHP version was determined.
         var composerPhpSource: String = "unknown"
@@ -238,6 +248,7 @@ class Valet {
         
         public func determineComposerPhpVersion() {
             let path = "\(absolutePath!)/composer.json"
+            
             do {
                 if Filesystem.fileExists(path) {
                     let decoded = try JSONDecoder().decode(
@@ -251,6 +262,18 @@ class Valet {
             } catch {
                 Log.err("Something went wrong reading the composer JSON file.")
             }
+            
+            if self.composerPhp == "???" {
+                return
+            }
+            
+            // Split the composer list (on "|") to evaluate multiple constraints
+            // For example, for Laravel 8 projects the value is "^7.3|^8.0"
+            self.composerPhpMatchesSystem = self.composerPhp.split(separator: "|").map { string in
+                return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
+                    .count > 0
+            }.contains(true)
         }
     }
 
