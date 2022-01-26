@@ -16,7 +16,7 @@ class Valet {
     var version: String
     
     /// The Valet configuration file.
-    var config: Valet.Configuration
+    var config: Valet.Configuration!
     
     /// A cached list of sites that were detected after analyzing the paths set up for Valet.
     var sites: [Site] = []
@@ -25,9 +25,11 @@ class Valet {
     var isBusy: Bool = false
     
     init() {
-        version = VersionExtractor.from(valet("--version"))
-            ?? "UNKNOWN"
-        
+        version = VersionExtractor.from(valet("--version")) ?? "UNKNOWN"
+        self.sites = []
+    }
+    
+    public func loadConfiguration() {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
         
@@ -35,8 +37,6 @@ class Valet {
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
-        
-        self.sites = []
     }
     
     public func startPreloadingSites() {

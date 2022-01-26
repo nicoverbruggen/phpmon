@@ -71,6 +71,7 @@ extension MainMenu {
         // Attempt to find out more info about Valet
         Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
         
+        Valet.shared.loadConfiguration()
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
         

@@ -219,9 +219,13 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
 "startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` or `/opt/homebrew/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
-/// 3. Valet not installed
+/// 3a. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
 "startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
+
+/// 3b. Valet configuration file missing
+"startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
+"startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
 
 /// 4. Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
