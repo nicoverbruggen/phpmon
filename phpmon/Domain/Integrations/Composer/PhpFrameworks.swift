@@ -29,7 +29,7 @@ struct PhpFrameworks {
         
         "craftcms/craft": "Craft",
         "drupal/core": "Drupal",
-        "flarum/flarum": "Flarum",
+        "flarum/core": "Flarum",
         "tightenco/jigsaw": "Jigsaw",
         "joomla/uri": "Joomla",
         "themsaid/katana": "Katana",
