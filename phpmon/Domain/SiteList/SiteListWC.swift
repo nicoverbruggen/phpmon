@@ -78,7 +78,7 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     }
     
     func showSitePopup(_ folder: String) {
-        let storyboard = NSStoryboard(name: "Main" , bundle : nil)
+        let storyboard = NSStoryboard(name: "Main", bundle : nil)
         
         let windowController = storyboard.instantiateController(
             withIdentifier: "addSiteWindow"

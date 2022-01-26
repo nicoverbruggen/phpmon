@@ -237,7 +237,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 6. Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
-"startup.errors.services_json_error.desc" = "PHP Monitor was unable to check if any of the services are up and running. PHP Monitor usually queries `brew` using the following command: ``. PHP Monitor received an invalid response (no JSON).";
+"startup.errors.services_json_error.desc" = "PHP Monitor was unable to check if some of the services are up and running.\n\nPHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`. PHP Monitor received an invalid response (no JSON).";
 
 /// 7. Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";

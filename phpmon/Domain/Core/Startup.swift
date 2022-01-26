@@ -50,6 +50,13 @@ class Startup {
         )
         
         performEnvironmentCheck(
+            !HomebrewService.servicesCanBeLoaded(),
+            messageText:        "startup.errors.services_json_error.title".localized,
+            informativeText:    "startup.errors.services_json_error.desc".localized,
+            breaking:           true
+        )
+        
+        performEnvironmentCheck(
             !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
             messageText:        "startup.errors.sudoers_brew.title".localized,
             informativeText:    "startup.errors.sudoers_brew.desc".localized,
