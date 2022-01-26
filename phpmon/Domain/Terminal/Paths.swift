@@ -16,6 +16,7 @@ class Paths {
     
     static let shared = Paths()
     var baseDir : HomebrewDir
+    var userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
     
     init() {
         let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
@@ -56,7 +57,7 @@ class Paths {
     // - MARK: Paths
     
     public static var whoami: String {
-        return String(Shell.pipe("whoami").split(separator: "\n")[0])
+        return shared.userName
     }
     
     public static var binPath: String {
