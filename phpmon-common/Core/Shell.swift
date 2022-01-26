@@ -123,7 +123,7 @@ public class Shell {
         
         let task = Process()
         task.launchPath = self.shell
-        task.arguments = ["--login", "-c", tailoredCommand]
+        task.arguments = ["--noprofile", "-norc", "--login", "-c", tailoredCommand]
         
         return task
     }
