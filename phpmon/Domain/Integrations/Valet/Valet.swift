@@ -21,6 +21,9 @@ class Valet {
     /// A cached list of sites that were detected after analyzing the paths set up for Valet.
     var sites: [Site] = []
     
+    /// Whether we're busy with some blocking operation.
+    var isBusy: Bool = false
+    
     init() {
         version = VersionExtractor.from(valet("--version"))
             ?? "UNKNOWN"
@@ -49,6 +52,10 @@ class Valet {
     }
     
     public func reloadSites() {
+        if (isBusy) {
+            return
+        }
+        
         resolvePaths(tld: config.tld)
     }
     
@@ -88,6 +95,8 @@ class Valet {
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
     private func resolvePaths(tld: String) {
+        isBusy = true
+        
         sites = []
         
         for path in config.paths {
@@ -98,6 +107,8 @@ class Valet {
         }
         
         sites = sites.sorted { $0.absolutePath < $1.absolutePath }
+        
+        isBusy = false
     }
     
     /**
@@ -162,6 +173,9 @@ class Valet {
         /// What driver is currently in use. If not detected, defaults to nil.
         var driver: String? = nil
         
+        /// Whether the driver was determined by checking the Composer file.
+        var driverDeterminedByComposer: Bool = false
+        
         /// A list of notable Composer dependencies.
         var notableComposerDependencies: [String: String] = [:]
         
@@ -179,8 +193,8 @@ class Valet {
             self.name = URL(fileURLWithPath: absolutePath).lastPathComponent
             self.aliasPath = nil
             determineSecured(tld)
-            determineDriver()
             determineComposerPhpVersion()
+            determineDriver()
         }
         
         convenience init(aliasPath: String, tld: String) {
@@ -189,24 +203,37 @@ class Valet {
             self.name = URL(fileURLWithPath: aliasPath).lastPathComponent
             self.aliasPath = aliasPath
             determineSecured(tld)
-            determineDriver()
             determineComposerPhpVersion()
+            determineDriver()
         }
         
         public func determineSecured(_ tld: String) {
             secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
         }
         
-        public func determineDriver() {
+        public func determineDriverViaComposer() {
+            PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
+                if self.notableComposerDependencies.keys.contains(key) {
+                    self.driver = value
+                    self.driverDeterminedByComposer = true
+                }
+            }
+        }
+        
+        public func determineDriverViaValet() {
             let driver = Shell.pipe("cd '\(absolutePath!)' && valet which", requiresPath: true)
             if driver.contains("This site is served by") {
                 self.driver = driver
-                    // TODO: Use a regular expression to retrieve the driver instead?
                     .replacingOccurrences(of: "This site is served by [", with: "")
                     .replacingOccurrences(of: "ValetDriver].\n", with: "")
             } else {
                 self.driver = nil
             }
+        }
+        
+        public func determineDriver() {
+            // TODO: Offer a preference that still fetches the driver (slower)
+            self.determineDriverViaComposer()
         }
         
         public func determineComposerPhpVersion() {

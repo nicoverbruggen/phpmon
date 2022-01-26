@@ -723,6 +723,7 @@ Gw
                                                                 <outlet property="imageViewPhpVersionOK" destination="5aN-ZI-D7U" id="ePz-Cb-dWk"/>
                                                                 <outlet property="imageViewType" destination="0NQ-ZD-CqD" id="Cph-FN-LaY"/>
                                                                 <outlet property="labelDriver" destination="TbX-e2-3QL" id="qJh-Ak-Dge"/>
+                                                                <outlet property="labelDriverType" destination="jKi-Ls-7FZ" id="ZTq-pP-qUC"/>
                                                                 <outlet property="labelPathName" destination="CXK-Q9-CpO" id="iVZ-cL-azB"/>
                                                                 <outlet property="labelSiteName" destination="XJL-Uw-frD" id="f0t-vd-W68"/>
                                                             </connections>

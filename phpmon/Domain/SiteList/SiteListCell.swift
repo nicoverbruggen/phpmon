@@ -15,6 +15,7 @@ class SiteListCell: NSTableCellView
     
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
+    @IBOutlet weak var labelDriverType: NSTextField!
     
     @IBOutlet weak var imageViewLock: NSImageView!
     @IBOutlet weak var imageViewType: NSImageView!
@@ -53,6 +54,10 @@ class SiteListCell: NSTableCellView
             : NSColor.init(red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0) // red
         
         // Show the current driver
+        labelDriverType.stringValue = site.driverDeterminedByComposer
+            ? "Project Type".uppercased()
+            : "Driver Type".uppercased()
+        
         labelDriver.stringValue = "\(site.driver ?? "???")"
         
         // Determine the Laravel version

@@ -9,6 +9,7 @@
 import Foundation
 
 struct ComposerJson: Decodable {
+    
     let dependencies: Dictionary<String, String>?
     let devDependencies: Dictionary<String, String>?
     let configuration: Config?
@@ -28,9 +29,16 @@ struct ComposerJson: Decodable {
         return ("", "unknown")
     }
     
+    
+    /**
+     Checks if any notable dependencies can be resolved.
+     Only notable dependencies are saved.
+     */
     public func getNotableDependencies() -> [String: String] {
         var notable: [String: String] = [:]
-        let scan = ["php", "laravel/framework"]
+        
+        var scan = Array(PhpFrameworks.DependencyList.keys)
+        scan.append("php")
         
         scan.forEach { dependency in
             if dependencies?[dependency] != nil {
