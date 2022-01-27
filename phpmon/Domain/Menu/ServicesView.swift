@@ -78,13 +78,22 @@ class ServicesView: NSView, XibLoadable {
     }
     
     func applyServiceStyling(_ serviceName: String, _ imageView: NSImageView) {
-        if ServicesView.services[serviceName] != nil && ServicesView.services[serviceName]!.running {
+        if ServicesView.services[serviceName] == nil {
+            imageView.image = NSImage(named: "ServiceLoading")
+            imageView.contentTintColor = NSColor.black
+            return
+        }
+        
+        if ServicesView.services[serviceName]!.running {
             imageView.image = NSImage(named: "ServiceOn")
             imageView.contentTintColor = NSColor.black
-        } else {
-            imageView.image = NSImage(named: "ServiceOff")
-            imageView.contentTintColor = NSColor.init(red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0)
+            return
         }
+        
+        imageView.image = NSImage(named: "ServiceOff")
+        imageView.contentTintColor = NSColor.init(
+            red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0
+        )
     }
     
     deinit {
