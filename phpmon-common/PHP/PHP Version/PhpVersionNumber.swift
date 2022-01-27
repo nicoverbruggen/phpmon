@@ -58,43 +58,26 @@ public struct PhpVersionNumberCollection: Equatable {
     public func matching(constraint: String, strict: Bool = false) -> [PhpVersionNumber] {
         if let version = PhpVersionNumber.make(from: constraint, type: .versionOnly) {
             // Strict constraint (e.g. "7.0") -> returns specific version
-            return self.versions.filter {
-                $0.major == version.major
-                && $0.minor == version.minor
-                && (strict ? $0.patch(strict, version) == version.patch(strict) : true)
-            }
+            return self.versions.filter { $0.isSameAs(version, strict) }
         }
         
         if let version = PhpVersionNumber.make(from: constraint, type: .caretVersionRange) {
             // Caret range means that the major version is never higher but minor version can be higher
             // ^7.2 will be compatible with all versions between 7.2 and 8.0
-            return self.versions.filter {
-                $0.major == version.major &&
-                (
-                    // Either the minor version is the same and the patch is higher or equal
-                    $0.minor == version.minor && $0.patch(strict) >= version.patch(strict, $0)
-                    // or the minor version number has been bumped
-                    || $0.minor > version.minor
-                )
-            }
+            return self.versions.filter { $0.hasNewerMinorVersionOrPatch(version, strict) }
         }
         
         if let version = PhpVersionNumber.make(from: constraint, type: .tildeVersionRange) {
             // Tilde range means that most specific digit is used as the basis.
-            if version.patch != nil {
+            return self.versions.filter {
+                version.patch != nil
                 // If a patch is provided then the minor version cannot be bumped.
-                return self.versions.filter {
-                    $0.major == version.major && $0.minor == version.minor
-                    && $0.patch(strict, version) >= version.patch!
-                }
-            } else {
+                ? $0.hasSameMajorAndMinorButNewerOrSamePatch(version, strict)
                 // If a patch is not provided then the major version cannot be bumped.
-                return self.versions.filter {
-                    $0.major == version.major && $0.minor >= version.minor
-                }
+                : $0.hasSameMajorButNewerOrSameMinor(version, strict)
             }
         }
-        
+
         return []
     }
 }
@@ -116,6 +99,14 @@ public struct PhpVersionNumber: Equatable {
         case versionOnly = #"^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case caretVersionRange = #"^\^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case tildeVersionRange = #"^~(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        
+        // TODO: Handle these cases
+        /*
+        case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        case greaterThan = #"^>(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        case smallerThanOrEqual = #"^<=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        case smallerThan = #"^<(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        */
     }
     
     public static func make(from versionString: String, type: MatchType = .versionOnly) -> Self? {
@@ -137,5 +128,31 @@ public struct PhpVersionNumber: Equatable {
         }
         
         return nil
+    }
+    
+    // MARK: Comparison Logic
+    
+    internal func isSameAs(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return self.major == version.major
+            && self.minor == version.minor
+            && (strict ? self.patch(strict, version) == version.patch(strict) : true)
+    }
+    
+    internal func hasNewerMinorVersionOrPatch(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return self.major == version.major &&
+        (
+            (self.minor == version.minor && self.patch(strict) >= version.patch(strict, self))
+            || self.minor > version.minor
+        )
+    }
+    
+    internal func hasSameMajorAndMinorButNewerOrSamePatch(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return self.major == version.major && self.minor == version.minor
+            && self.patch(strict, version) >= version.patch!
+    }
+    
+    internal func hasSameMajorButNewerOrSameMinor(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return self.major == version.major
+            && self.minor >= version.minor
     }
 }
