@@ -222,10 +222,12 @@ class Valet {
         }
         
         public func determineDriverViaComposer() {
+            self.driverDeterminedByComposer = true
+            self.driver = "driver.not_detected".localized
+            
             PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
                 if self.notableComposerDependencies.keys.contains(key) {
                     self.driver = value
-                    self.driverDeterminedByComposer = true
                 }
             }
         }
