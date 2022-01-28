@@ -23,14 +23,39 @@ extension AppDelegate {
     func application(_ application: NSApplication, open urls: [URL]) {
         // Only ever interpret the first URL
         if let url = urls.first {
-            let command = url.absoluteString.replacingOccurrences(of: "phpmon://", with: "")
-            
-            switch (command) {
-            case "list":
-                SiteListVC.show()
-                break
-            default:
-                break
+            self.interpretCommand(
+                url.absoluteString.replacingOccurrences(of: "phpmon://", with: "")
+            )
+        }
+    }
+    
+    private func interpretCommand(_ command: String) {
+        switch (command) {
+        case "list":
+            SiteListVC.show()
+            break
+        default:
+            break
+        }
+        
+        if command.starts(with: "callback/switch") {
+            // TODO: Send XML for suggestions?
+            // I looked at the output of Dash (which is my example of an amazing app here)
+            // and it works like this: open -g "dash-workflow-callback://{query}"
+            // which returns XML. I'm not sure how to do that here, but if I could
+            // dynamically return a list of valid PHP versions, it'd be easy mode.
+        }
+        
+        if command.starts(with: "switch/php/") {
+            // See if the PHP version we're attempting to switch to is valid
+            let version = String(command.split(separator: "/").last!)
+            if PhpEnv.shared.availablePhpVersions.contains(version) {
+                MainMenu.shared.switchToPhpVersion(version)
+            } else {
+                Alert.notify(
+                    message: "Unsupported version",
+                    info: "PHP Monitor can't switch to PHP \(version), as it may not be installed or available."
+                )
             }
         }
     }
