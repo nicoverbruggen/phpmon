@@ -4,6 +4,7 @@
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -690,7 +691,7 @@ Gw
                                                                         <constraint firstAttribute="width" constant="14" id="wrl-lJ-3eN"/>
                                                                     </constraints>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Checkmark" id="R5o-Cd-a91"/>
-                                                                    <color key="contentTintColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="contentTintColor" name="IconColorGreen"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
@@ -784,5 +785,8 @@ Gw
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
+        <namedColor name="IconColorGreen">
+            <color red="0.2467108965" green="0.56980162858963013" blue="0.50060153009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

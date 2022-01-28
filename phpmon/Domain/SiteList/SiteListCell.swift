@@ -49,8 +49,8 @@ class SiteListCell: NSTableCellView
         // Show the green or red lock based on whether the site was secured
         // imageViewLock.image = NSImage(named: site.secured ? "Lock" : "LockUnlocked")
         imageViewLock.contentTintColor = site.secured ?
-            NSColor.init(red: 63/255, green: 195/255, blue: 128/255, alpha: 1.0) // green
-            : NSColor.init(red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0) // red
+            NSColor(named: "IconColorGreen") // green
+            : NSColor(named: "IconColorRed")
         
         // Show the current driver
         labelDriverType.stringValue = site.driverDeterminedByComposer

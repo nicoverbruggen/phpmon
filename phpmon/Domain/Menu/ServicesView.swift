@@ -21,6 +21,9 @@ class ServicesView: NSView, XibLoadable {
     
     static func asMenuItem() -> NSMenuItem {
         let view = Self.createFromXib()!
+        [view.imageViewPhp, view.imageViewNginx, view.imageViewDnsmasq].forEach { imageView in
+            imageView?.contentTintColor = NSColor(named: "IconColorNormal")
+        }
         let item = NSMenuItem()
         item.view = view
         item.target = self
@@ -80,20 +83,18 @@ class ServicesView: NSView, XibLoadable {
     func applyServiceStyling(_ serviceName: String, _ imageView: NSImageView) {
         if ServicesView.services[serviceName] == nil {
             imageView.image = NSImage(named: "ServiceLoading")
-            imageView.contentTintColor = NSColor.black
+            imageView.contentTintColor = NSColor(named: "IconColorNormal")
             return
         }
         
         if ServicesView.services[serviceName]!.running {
             imageView.image = NSImage(named: "ServiceOn")
-            imageView.contentTintColor = NSColor.black
+            imageView.contentTintColor = NSColor(named: "IconColorNormal")
             return
         }
         
         imageView.image = NSImage(named: "ServiceOff")
-        imageView.contentTintColor = NSColor.init(
-            red: 246/255, green: 71/255, blue: 71/255, alpha: 1.0
-        )
+        imageView.contentTintColor = NSColor(named: "IconColorRed")
     }
     
     deinit {
