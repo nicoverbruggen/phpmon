@@ -30,7 +30,7 @@ extension MainMenu {
     private func onEnvironmentPass() {
         PhpEnv.detectPhpVersions()
         
-        if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
+        if HomebrewDiagnostics.hasAliasConflict() {
             DispatchQueue.main.async {
                 Alert.notify(
                     message: "alert.php_alias_conflict.title".localized,

@@ -50,7 +50,7 @@ class Startup {
         )
         
         performEnvironmentCheck(
-            !HomebrewService.servicesCanBeLoaded(),
+            HomebrewDiagnostics.cannotLoadService(),
             messageText:        "startup.errors.services_json_error.title".localized,
             informativeText:    "startup.errors.services_json_error.desc".localized,
             breaking:           true

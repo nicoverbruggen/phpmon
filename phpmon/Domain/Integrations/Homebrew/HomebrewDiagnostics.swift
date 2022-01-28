@@ -10,19 +10,6 @@ import Foundation
 
 class HomebrewDiagnostics {
     
-    enum Errors: String {
-        case aliasConflict = "alias_conflict"
-    }
-    
-    static let shared = HomebrewDiagnostics()
-    var errors: [HomebrewDiagnostics.Errors] = []
-
-    init() {
-        if determineAliasConflicts() {
-            errors.append(.aliasConflict)
-        }
-    }
-    
     /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
@@ -30,7 +17,7 @@ class HomebrewDiagnostics {
      
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public func determineAliasConflicts() -> Bool
+    public static func hasAliasConflict() -> Bool
     {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
         
@@ -66,5 +53,22 @@ class HomebrewDiagnostics {
             
             return false
         }
+    }
+    
+    /**
+     In order to see if we support the --json syntax, we'll query nginx.
+     If the JSON response cannot be parsed, Homebrew is probably out of date.
+     */
+    public static func cannotLoadService(_ name: String = "nginx") -> Bool
+    {
+        let serviceInfo = try? JSONDecoder().decode(
+            [HomebrewService].self,
+            from: Shell.pipe(
+                "sudo \(Paths.brew) services info \(name) --json",
+                requiresPath: true
+            ).data(using: .utf8)!
+        )
+        
+        return serviceInfo == nil
     }
 }

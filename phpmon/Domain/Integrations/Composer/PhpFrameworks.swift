@@ -10,8 +10,10 @@ import Foundation
 
 struct PhpFrameworks {
     
-    /// This list should probably be reversed when checked, because some of these
-    /// will also require either laravel/framework or symfony/symfony.
+    /**
+     This list should probably be reversed when checked, because some of these
+     will also require either `laravel/framework` or `symfony/symfony`.
+     */
     public static let DependencyList = [
 
         // COMMON FRAMEWORKS
