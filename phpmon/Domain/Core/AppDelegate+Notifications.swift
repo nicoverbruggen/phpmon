@@ -13,6 +13,10 @@ extension AppDelegate {
     
     // MARK: - Notifications
     
+    /**
+     Sets up notifications. That does mean we need to ask for permission first.
+     If we cannot get permission, we should log this.
+     */
     public func setupNotifications() {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self
