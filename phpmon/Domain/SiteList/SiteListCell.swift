@@ -70,7 +70,7 @@ class SiteListCell: NSTableCellView
         buttonPhpVersion.isHidden = (site.composerPhp == "???")
         
 
-        imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpMatchesSystem)
+        imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
     }
     
     @IBAction func pressedPhpVersion(_ sender: Any) {

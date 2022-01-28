@@ -24,23 +24,37 @@ class Valet {
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
     
+    /// When initialising the Valet singleton, extract the Valet version and assume no sites loaded.
     init() {
         version = VersionExtractor.from(valet("--version")) ?? "UNKNOWN"
         self.sites = []
     }
     
+    /**
+     We don't want to load the initial config.json file as soon as the class is initialised.
+     Instead, we'll defer the loading of the configuration file once the initial app checks
+     have passed: if the user does not have Valet installed, we'll crash the app because we
+     force unwrap the file. Currently, this does also mean that if the JSON is invalid or
+     incompatible with the `Decodable` `Valet.Configuration` class, that the app will crash.
+     */
     public func loadConfiguration() {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
         
+        // TODO: Fix loading of invalid JSON: do not crash the app
         config = try! JSONDecoder().decode(
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
         )
     }
     
+    /**
+     Starts the preload of sites, but only if the maximum amount of sites is 30.
+     For users with more sites, the site list is loaded when they bring up the site list window.
+     (This is done to keep the startup speed as fast as possible.)
+     */
     public func startPreloadingSites() {
-        let maximumPreload = 10
+        let maximumPreload = 30
         let foundSites = self.countPaths()
         if foundSites <= maximumPreload {
             // Preload the sites and their drivers
@@ -51,6 +65,10 @@ class Valet {
         }
     }
     
+    /**
+     Reloads the list of sites, assuming that the list isn't being reloaded at the time.
+     We don't want to do duplicate or parallel work!
+     */
     public func reloadSites() {
         if (isBusy) {
             return
@@ -59,6 +77,11 @@ class Valet {
         resolvePaths(tld: config.tld)
     }
     
+    /**
+     Checks if the version of Valet is more recent than the minimum version required for PHP Monitor to function.
+     Should this procedure fail, the user will get an alert notifying them that the version of Valet they have
+     installed is not recent enough.
+     */
     public func validateVersion() -> Void {
         if version == "UNKNOWN" {
             return Log.warn("The Valet version could not be extracted... that does not bode well.")
@@ -186,11 +209,11 @@ class Valet {
         /// A list of notable Composer dependencies.
         var notableComposerDependencies: [String: String] = [:]
         
-        /// The PHP version as discovered in composer.json.
+        /// The PHP version as discovered in `composer.json`.
         var composerPhp: String = "???"
         
-        /// Check whether the PHP version is valid for the current version.
-        var composerPhpMatchesSystem: Bool = false
+        /// Check whether the PHP version is valid for the currently linked version.
+        var composerPhpCompatibleWithLinked: Bool = false
         
         /// How the PHP version was determined.
         var composerPhpSource: String = "unknown"
@@ -217,37 +240,24 @@ class Valet {
             determineDriver()
         }
         
+        /**
+         Checks if a certificate file can be found in the `valet/Certificates` directory.
+         - Note: The file is not validated, only its presence is checked.
+         */
         public func determineSecured(_ tld: String) {
             secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
         }
         
-        public func determineDriverViaComposer() {
-            self.driverDeterminedByComposer = true
-            self.driver = "driver.not_detected".localized
-            
-            PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
-                if self.notableComposerDependencies.keys.contains(key) {
-                    self.driver = value
-                }
-            }
-        }
-        
-        public func determineDriverViaValet() {
-            let driver = Shell.pipe("cd '\(absolutePath!)' && valet which", requiresPath: true)
-            if driver.contains("This site is served by") {
-                self.driver = driver
-                    .replacingOccurrences(of: "This site is served by [", with: "")
-                    .replacingOccurrences(of: "ValetDriver].\n", with: "")
-            } else {
-                self.driver = nil
-            }
-        }
-        
-        public func determineDriver() {
-            // TODO: Offer a preference that still fetches the driver (slower)
-            self.determineDriverViaComposer()
-        }
-        
+        /**
+         Checks if `composer.json` exists in the folder, and extracts notable information:
+         
+         - The PHP version required (the constraint, so it could be `^8.0`, for example)
+         - Where the PHP version was found (`require` or `platform`)
+         - Notable PHP dependencies (determined via `PhpFrameworks.DependencyList`)
+         
+         The method then also checks if the determined constraint (if found) is compatible
+         with the currently linked version of PHP (see `composerPhpMatchesSystem`).
+         */
         public func determineComposerPhpVersion() {
             let path = "\(absolutePath!)/composer.json"
             
@@ -271,11 +281,50 @@ class Valet {
             
             // Split the composer list (on "|") to evaluate multiple constraints
             // For example, for Laravel 8 projects the value is "^7.3|^8.0"
-            self.composerPhpMatchesSystem = self.composerPhp.split(separator: "|").map { string in
-                return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
-                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .count > 0
-            }.contains(true)
+            self.composerPhpCompatibleWithLinked =
+                self.composerPhp.split(separator: "|").map { string in
+                    return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                        .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
+                        .count > 0
+                }.contains(true)
+        }
+        
+        /**
+         Determine the driver to be displayed in the list of sites. In v5.0, this has been changed
+         to load the "framework" or "project type" instead.
+         */
+        public func determineDriver() {
+            self.determineDriverViaComposer()
+        }
+        
+        /**
+         Check the dependency list and see if a particular dependency can't be found.
+         We'll revert the dependency list so that Laravel and Symfony are detected last.
+         
+         (Some other frameworks might use Laravel, so if we found it first the detection would be incorrect:
+         this would happen with Statamic, for example.)
+         */
+        private func determineDriverViaComposer() {
+            self.driverDeterminedByComposer = true
+            self.driver = "driver.not_detected".localized
+            
+            PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
+                if self.notableComposerDependencies.keys.contains(key) {
+                    self.driver = value
+                }
+            }
+        }
+        
+        @available(*, deprecated, renamed: "determineDriver")
+        private func determineDriverViaValet() {
+            let driver = Shell.pipe("cd '\(absolutePath!)' && valet which", requiresPath: true)
+            if driver.contains("This site is served by") {
+                self.driver = driver
+                    .replacingOccurrences(of: "This site is served by [", with: "")
+                    .replacingOccurrences(of: "ValetDriver].\n", with: "")
+            } else {
+                self.driver = nil
+            }
         }
     }
 
