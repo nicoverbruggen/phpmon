@@ -786,7 +786,7 @@ Gw
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
         <namedColor name="IconColorGreen">
-            <color red="0.2467108965" green="0.56980162858963013" blue="0.50060153009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.2467108965" green="0.69713878631591797" blue="0.50060153009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

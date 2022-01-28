@@ -359,6 +359,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      
      */
     private func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
+        if !Shell.fileExists("/usr/local/bin/composer") {
+            Alert.notify(
+                message: "alert.composer_missing.title".localized,
+                info: "alert.composer_missing.info".localized
+            )
+            return
+        }
+        
         PhpEnv.shared.isBusy = true
         setBusyImage()
         self.rebuild()
@@ -378,14 +386,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         window?.setType(info: true)
         
         DispatchQueue.global(qos: .userInitiated).async {
-            let output = Shell.user.executeSynchronously(
-                "composer global update", requiresPath: true
+            let task = Shell.user.createTask(
+                for: "/usr/local/bin/composer global update", requiresPath: true
             )
             
-            let task = Shell.user.createTask(for: "composer global update", requiresPath: true)
-            
             DispatchQueue.main.async {
-                window?.addToConsole("composer global update\n")
+                window?.addToConsole("/usr/local/bin/composer global update\n")
             }
             
             Shell.captureOutput(
@@ -409,7 +415,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             Shell.haltCapturingOutput(task)
             
             DispatchQueue.main.async {
-                if output.task.terminationStatus <= 0 {
+                if task.terminationStatus <= 0 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         window?.close()
                         if (notify) {
