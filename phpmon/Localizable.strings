@@ -197,7 +197,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Force Reload Done
 "alert.force_reload_done.title" = "PHP has been force reloaded";
-"alert.force_reload_done.info" = "All appropriate services have been restarted, and the latest version of PHP is now active. You can now try switching to another version of PHP. If visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).";
+"alert.force_reload_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
@@ -240,7 +240,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 3c. Valet version not readable
 "startup.errors.valet_version_unknown.title" = "Your Valet version could not be read (`valet --version` failed)";
-"startup.errors.valet_version_unknown.desc" = "Make sure your Valet installation works and is up-to-date. Try running `valet --version` in a terminal to find out what's going on. \n\n(This could be your global composer dependencies having been resolved with a higher version of PHP than you're currently running.)\n\nIt is recommended that you run `composer global update` with the lowest version of PHP you'd like to run, and enable '%@' in PHP Monitor afterwards.";
+"startup.errors.valet_version_unknown.desc" = "Make sure your Valet installation works and is up-to-date.\n\nTry running `valet --version` in a terminal to find out what's going on.";
 
 /// 4. Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";

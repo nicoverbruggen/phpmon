@@ -53,9 +53,7 @@ class Startup {
         performEnvironmentCheck(
             Valet.shared.version == nil,
             messageText:        "startup.errors.valet_version_unknown.title".localized,
-            informativeText:    "startup.errors.valet_version_unknown.desc".localized(
-                "prefs.auto_composer_update_title".localized
-            ),
+            informativeText:    "startup.errors.valet_version_unknown.desc".localized,
             breaking:           true
         )
         
