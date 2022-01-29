@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ These are the keys used for every preference in the app.
+ */
 enum PreferenceName: String {
     case wasLaunchedBefore = "launched_before"
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
@@ -17,6 +20,14 @@ enum PreferenceName: String {
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
+}
+
+/**
+ These are internal stats. They NEVER get shared.
+ */
+enum InternalStats: String {
+    case launchCount = "times_launched"
+    case didSeeSponsorEncouragement = "did_see_sponsor_encouragement"
 }
 
 class Preferences {
@@ -56,6 +67,9 @@ class Preferences {
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
+            ///
+            InternalStats.launchCount.rawValue: 0,
+            InternalStats.didSeeSponsorEncouragement.rawValue: false
         ])
         
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {

@@ -69,7 +69,9 @@ extension MainMenu {
         App.shared.loadGlobalHotkey()
         
         // Attempt to find out more info about Valet
-        Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
+        if Valet.shared.version != nil {
+            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
+        }
         
         Valet.shared.loadConfiguration()
         Valet.shared.validateVersion()
@@ -89,6 +91,9 @@ extension MainMenu {
                 repeats: true
             )
         }
+        
+        Stats.incrementSuccessfulLaunchCount()
+        Stats.evaluateSponsorMessageShouldBeDisplayed()
     }
     
     /**
