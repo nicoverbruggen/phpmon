@@ -111,11 +111,14 @@ class Actions {
             brew("services stop \(formula)", sudo: true)
         }
         
+        brew("services stop dnsmasq")
         brew("services stop php")
         brew("services stop nginx")
-        brew("link php")
+        
+        brew("link php --force")
+        
         brew("services restart dnsmasq", sudo: true)
-        brew("services stop php", sudo: true)
-        brew("services stop nginx", sudo: true)
+        brew("services restart php", sudo: true)
+        brew("services restart nginx", sudo: true)
     }
 }
