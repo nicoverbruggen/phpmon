@@ -15,6 +15,7 @@ enum PreferenceName: String {
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
+    case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
 }
 
@@ -53,12 +54,14 @@ class Preferences {
             PreferenceName.shouldDisplayPhpHintInIcon.rawValue: true,
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
-            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false
+            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
+            PreferenceName.allowProtocolForIntegrations.rawValue: true,
         ])
         
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
             return
         }
+        
         Log.info("Saving first-time preferences!")
         UserDefaults.standard.setValue(true, forKey: PreferenceName.wasLaunchedBefore.rawValue)
         UserDefaults.standard.synchronize()
@@ -96,6 +99,7 @@ class Preferences {
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
             .autoServiceRestartAfterExtensionToggle: UserDefaults.standard.bool(forKey: PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue) as Any,
             .autoComposerGlobalUpdateAfterSwitch: UserDefaults.standard.bool(forKey: PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue) as Any,
+            .allowProtocolForIntegrations: UserDefaults.standard.bool(forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,

@@ -22,6 +22,11 @@ extension AppDelegate {
      */
     func application(_ application: NSApplication, open urls: [URL]) {
         
+        if !Preferences.isEnabled(.allowProtocolForIntegrations) {
+            Log.info("Acting on commands via phpmon:// has been disabled.")
+            return
+        }
+        
         guard let url = urls.first else { return }
         
         self.interpretCommand(

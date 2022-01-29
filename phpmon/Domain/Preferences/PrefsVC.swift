@@ -94,7 +94,14 @@ class PrefsVC: NSViewController {
                 sectionText: "prefs.global_shortcut".localized,
                 descriptionText: "prefs.shortcut_desc".localized,
                 self
-            )
+            ),
+            CheckboxPreferenceView.make(
+                sectionText: "prefs.integrations".localized,
+                descriptionText: "prefs.open_protocol_desc".localized,
+                checkboxText: "prefs.open_protocol_title".localized,
+                preference: .allowProtocolForIntegrations,
+                action: {}
+            ),
         ].forEach({ self.stackView.addArrangedSubview($0) })
     }
     
