@@ -336,8 +336,8 @@ class Valet {
         /// The paths that need to be checked.
         let paths: [String]
         
-        /// The loopback address.
-        let loopback: String
+        /// The loopback address. Optional.
+        let loopback: String?
         
         /// The default site that is served if the domain is not found. Optional.
         let defaultSite: String?
