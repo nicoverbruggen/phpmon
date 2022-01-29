@@ -322,6 +322,8 @@ You can always still ask Valet using the command line, should it be necessary. I
 
 This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
 
+If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information.
+
 </details>
 
 <details>
