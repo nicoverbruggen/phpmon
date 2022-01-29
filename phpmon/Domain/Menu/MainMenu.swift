@@ -104,6 +104,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             PhpEnv.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
+                PhpEnv.shared.currentInstall = ActivePhpInstallation()
                 updatePhpVersionInStatusBar()
                 NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
                 completion()
