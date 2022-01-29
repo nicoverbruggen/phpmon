@@ -41,7 +41,7 @@ class Valet {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
         
-        // TODO: Fix loading of invalid JSON: do not crash the app
+        // TODO: (5.1) Fix loading of invalid JSON: do not crash the app
         config = try! JSONDecoder().decode(
             Valet.Configuration.self,
             from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!

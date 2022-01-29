@@ -100,7 +100,7 @@ public struct PhpVersionNumber: Equatable {
         case caretVersionRange = #"^\^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case tildeVersionRange = #"^~(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         
-        // TODO: Handle these cases
+        // TODO: (5.0) Handle these cases
         /*
         case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThan = #"^>(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#

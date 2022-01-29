@@ -25,7 +25,7 @@ struct PhpFrameworks {
         "roots/bedrock": "Bedrock",
         "cakephp/app": "CakePHP",
         
-        // TODO: Handle wildcards like these (currently disabled)
+        // TODO: (5.0) Handle wildcards like these (currently disabled)
         // "concrete5/*": "Concrete5",
         // "contao/*": "Contao",
         

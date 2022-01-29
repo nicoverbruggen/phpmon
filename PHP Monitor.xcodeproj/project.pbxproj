@@ -108,6 +108,7 @@
 		C4998F0626175E7200B2526E /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = C4998F0526175E7200B2526E /* HotKey */; };
 		C4998F0A2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
 		C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
+		C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E171E27A5736E00787921 /* PMServicesView.swift */; };
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
 		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
@@ -281,6 +282,7 @@
 		C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionNumberTest.swift; sourceTree = "<group>"; };
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C4998F092617633900B2526E /* PrefsWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWC.swift; sourceTree = "<group>"; };
+		C49E171E27A5736E00787921 /* PMServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMServicesView.swift; sourceTree = "<group>"; };
 		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
 		C4AF9F70275445FF00D44ED0 /* valet-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "valet-config.json"; sourceTree = "<group>"; };
 		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C49E171E27A5736E00787921 /* PMServicesView.swift */,
 				C4EE55A627708B9E001DF387 /* PMHeaderView.swift */,
 				C4EE55A827708B9E001DF387 /* PMStatsView.swift */,
 				C4EE55A727708B9E001DF387 /* Preview.swift */,
@@ -889,6 +892,7 @@
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */,
 				C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
@@ -1212,7 +1216,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 531;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1221,7 +1225,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "5.0-b3";
+				MARKETING_VERSION = "5.0-b4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1237,7 +1241,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 531;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1246,7 +1250,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "5.0-b3";
+				MARKETING_VERSION = "5.0-b4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
