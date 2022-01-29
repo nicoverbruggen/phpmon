@@ -15,5 +15,6 @@ struct Preview_Previews: PreviewProvider {
         PMHeaderView(content: "You are running PHP 8.1")
         PMStatsView(content: "15 MB")
         PMStatsView(content: "2 GB")
+        PMServicesView() // uses live services data!
     }
 }

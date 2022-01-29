@@ -8,12 +8,37 @@
 
 import Foundation
 
+/**
+ This `Decodable` class is used to directly map `composer.json`
+ to this object.
+ */
 struct ComposerJson: Decodable {
+    
+    // MARK: - JSON structure
     
     let dependencies: Dictionary<String, String>?
     let devDependencies: Dictionary<String, String>?
     let configuration: Config?
     
+    private enum CodingKeys: String, CodingKey {
+        case dependencies = "require"
+        case devDependencies = "require-dev"
+        case configuration = "config"
+    }
+    
+    struct Config: Decodable {
+        let platform: Platform?
+    }
+    struct Platform: Decodable {
+        let php: String?
+    }
+    
+    // MARK: - Helpers
+    
+    /**
+     Checks what the PHP version constraint is.
+     Returns a tuple (constraint, location of constraint).
+     */
     public func getPhpVersion() -> (String, String) {
         // Check if in platform
         if configuration?.platform?.php != nil {
@@ -28,7 +53,6 @@ struct ComposerJson: Decodable {
         // Unknown!
         return ("", "unknown")
     }
-    
     
     /**
      Checks if any notable dependencies can be resolved.
@@ -49,19 +73,6 @@ struct ComposerJson: Decodable {
         return notable
     }
     
-    private enum CodingKeys: String, CodingKey {
-        case dependencies = "require"
-        case devDependencies = "require-dev"
-        case configuration = "config"
-    }
-    
-    struct Config: Decodable {
-        let platform: Platform?
-    }
-    
-    struct Platform: Decodable {
-        let php: String?
-    }
 }
 
 

@@ -10,6 +10,9 @@ import Foundation
 
 class VersionExtractor {
     
+    /**
+     This attempts to extract the version number from the command line output of Valet.
+     */
     public static func from(_ string: String) -> String? {
         let regex = try! NSRegularExpression(
             pattern: #"Laravel Valet (?<version>(\d+)(.)(\d+)((.)(\d+))?)"#,

@@ -9,6 +9,16 @@
 import Foundation
 import Cocoa
 
+/**
+ The ServicesView is an example of a view that I consider to be "poorly" set up.
+ Why ship it like this, then? Well, it works — that's reason number one, really.
+ 
+ However, I do believe this should be refactored at some point. Here's why:
+ this view is responsible for retaining the information about the services status.
+ 
+ The status of the services should live somewhere else, and the fetching of said
+ service information should also not happen in a view. Yet here we are.
+ */
 class ServicesView: NSView, XibLoadable {
     
     @IBOutlet weak var imageViewPhp: NSImageView!
@@ -44,6 +54,7 @@ class ServicesView: NSView, XibLoadable {
         self.loadData()
     }
     
+    // TODO: (5.1) Move data fetching, caching & retrieval somewhere else
     func loadData() {
         // Use stale data
         self.applyAllInfoFieldsFromCachedValue()

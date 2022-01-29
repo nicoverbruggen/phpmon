@@ -65,6 +65,9 @@ class MenuBarImageGenerator {
         return targetImage
     }
     
+    /**
+     The same as before, but also attempts to add an icon to the left.
+     */
     public static func textToImageWithIcon(text: String) -> NSImage {
         let textImage = self.textToImage(text: text)
         let iconImage = NSImage(named: "StatusBarPHP")!

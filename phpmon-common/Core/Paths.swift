@@ -8,8 +8,8 @@
 import Foundation
 
 /**
- The `Paths` class is used to locate various binaries on the system,
- and provides a full
+ The `Paths` class is used to locate various binaries on the system.
+ The path to the Homebrew directory and the user's name are fetched only once, at boot.
  */
 public class Paths {
     
