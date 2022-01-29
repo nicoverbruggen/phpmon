@@ -32,7 +32,7 @@ public struct PhpVersionNumberCollection: Equatable {
      https://getcomposer.org/doc/articles/versions.md#writing-version-constraints
      
      - Parameter constraint: The full constraint as a string (e.g. "^7.0")
-     - Parameter strict: Whether the minor version check is strict. See more below.
+     - Parameter strict: Whether the patch version check is strict. See more below.
      
      The strict mode does not matter if a patch version is provided for all versions in the collection.
      
@@ -45,7 +45,8 @@ public struct PhpVersionNumberCollection: Equatable {
      
      Given versions 8.0.? and 8.1.?, but the requirement is ^8.0.1, in strict mode only 8.1.? will
      be considered valid (8.0 translates to 8.0.0 and as such is older than 8.0.1, 8.1.0 is OK).
-     When checking against actual PHP versions installed by the user, use strict mode.
+     When checking against actual PHP versions installed by the user (with patch precision), use
+     strict mode.
      
      **NON-STRICT MODE (= patch precision off)**
      
@@ -77,6 +78,14 @@ public struct PhpVersionNumberCollection: Equatable {
                 : $0.hasSameMajorButNewerOrSameMinor(version, strict)
             }
         }
+        
+        if let version = PhpVersionNumber.make(from: constraint, type: .greaterThanOrEqual) {
+            return self.versions.filter { $0.isSameAs(version, strict) || $0.isNewerThan(version, strict) }
+        }
+        
+        if let version = PhpVersionNumber.make(from: constraint, type: .greaterThan) {
+            return self.versions.filter { $0.isNewerThan(version, strict) }
+        }
 
         return []
     }
@@ -87,7 +96,7 @@ public struct PhpVersionNumber: Equatable {
     let minor: Int
     let patch: Int?
     
-    public func patch(_ strictFallback: Bool, _ constraint: PhpVersionNumber? = nil) -> Int {
+    public func patch(_ strictFallback: Bool = true, _ constraint: PhpVersionNumber? = nil) -> Int {
         return patch ?? (strictFallback ? 0 : constraint?.patch ?? 999)
     }
     
@@ -99,11 +108,11 @@ public struct PhpVersionNumber: Equatable {
         case versionOnly = #"^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case caretVersionRange = #"^\^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case tildeVersionRange = #"^~(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
-        
-        // TODO: (5.0) Handle these cases
-        /*
         case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThan = #"^>(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        
+        // TODO: (5.1) Handle these cases (even though I suspect these are uncommon)
+        /*
         case smallerThanOrEqual = #"^<=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case smallerThan = #"^<(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         */
@@ -138,6 +147,15 @@ public struct PhpVersionNumber: Equatable {
             && (strict ? self.patch(strict, version) == version.patch(strict) : true)
     }
     
+    internal func isNewerThan(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return (
+            self.major > version.major ||
+            self.major == version.major && self.minor > version.minor ||
+            self.major == version.major && self.minor == version.minor
+                && self.patch(strict) > version.patch(strict)
+        )
+    }
+    
     internal func hasNewerMinorVersionOrPatch(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
         return self.major == version.major &&
         (
@@ -148,7 +166,7 @@ public struct PhpVersionNumber: Equatable {
     
     internal func hasSameMajorAndMinorButNewerOrSamePatch(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
         return self.major == version.major && self.minor == version.minor
-            && self.patch(strict, version) >= version.patch!
+            && self.patch(strict, version) >= version.patch(strict)
     }
     
     internal func hasSameMajorButNewerOrSameMinor(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {

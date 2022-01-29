@@ -159,7 +159,6 @@
 		C4EE55A927708B9E001DF387 /* PMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A627708B9E001DF387 /* PMHeaderView.swift */; };
 		C4EE55AA27708B9E001DF387 /* PMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A627708B9E001DF387 /* PMHeaderView.swift */; };
 		C4EE55AB27708B9E001DF387 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A727708B9E001DF387 /* Preview.swift */; };
-		C4EE55AC27708B9E001DF387 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A727708B9E001DF387 /* Preview.swift */; };
 		C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A827708B9E001DF387 /* PMStatsView.swift */; };
 		C4EE55AE27708B9E001DF387 /* PMStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A827708B9E001DF387 /* PMStatsView.swift */; };
 		C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
@@ -967,7 +966,6 @@
 				54AB03272763858F00A29D5F /* Timer.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
-				C4EE55AC27708B9E001DF387 /* Preview.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C493084B279F331F009C240B /* AddSiteVC.swift in Sources */,
