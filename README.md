@@ -1,15 +1,17 @@
-# PHP Monitor
-
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project.
 > You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
 
-<img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
+<h1 align="center"><b>PHP Monitor</b> (phpmon)</h1>
 
-**PHP Monitor** (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so you need to have it set up before you can use this.
+<p align="center">
+    <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
+</p>
 
-<img src="./docs/screenshot41.jpg" width="800px" alt="phpmon screenshot (menu bar app)"/>
+**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this</u>.
 
-<small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
+<img src="./docs/screenshot50.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
+
+<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
