@@ -24,11 +24,6 @@ struct PhpFrameworks {
         // VARIOUS CMS
         "roots/bedrock": "Bedrock",
         "cakephp/app": "CakePHP",
-        
-        // TODO: (5.0) Handle wildcards like these (currently disabled)
-        // "concrete5/*": "Concrete5",
-        // "contao/*": "Contao",
-        
         "craftcms/craft": "Craft",
         "drupal/core": "Drupal",
         "flarum/core": "Flarum",
@@ -36,14 +31,18 @@ struct PhpFrameworks {
         "joomla/uri": "Joomla",
         "themsaid/katana": "Katana",
         "getkirby/cms": "Kirby",
-        // "magento/*": "Magento",
         "october/october": "OctoberCMS",
         "sculpin/sculpin": "Sculpin",
-        // "slim/*": "Slim",
         "statamic/cms": "Statamic",
         "johnpbloch/wordpress-core": "Wordpress",
         "zendframework/zendframework": "Zend",
         "zendframework/zend-mvc": "Zend"
+        
+        // TODO (5.1): Handle these in v5.1
+        // "magento/*": "Magento",
+        // "concrete5/*": "Concrete5",
+        // "contao/*": "Contao",
+        // "slim/*": "Slim",
     ]
     
 }
