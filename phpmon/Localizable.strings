@@ -234,9 +234,13 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
 "startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
 
-/// 3b. Valet configuration file missing
+/// 3b. Valet configuration file missing [currently not enabled]
 "startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
 "startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
+
+/// 3c. Valet version not readable
+"startup.errors.valet_version_unknown.title" = "Your Valet version could not be read (`valet --version` failed)";
+"startup.errors.valet_version_unknown.desc" = "Make sure your Valet installation works and is up-to-date. Try running `valet --version` in a terminal to find out what's going on. \n\n(This could be your global composer dependencies having been resolved with a higher version of PHP than you're currently running.)\n\nIt is recommended that you run `composer global update` with the lowest version of PHP you'd like to run, and enable '%@' in PHP Monitor afterwards.";
 
 /// 4. Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";

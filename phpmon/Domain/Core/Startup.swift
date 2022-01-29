@@ -49,6 +49,16 @@ class Startup {
             breaking:           true
         )
         
+        Valet.shared.version = VersionExtractor.from(valet("--version"))
+        performEnvironmentCheck(
+            Valet.shared.version == nil,
+            messageText:        "startup.errors.valet_version_unknown.title".localized,
+            informativeText:    "startup.errors.valet_version_unknown.desc".localized(
+                "prefs.auto_composer_update_title".localized
+            ),
+            breaking:           true
+        )
+        
         performEnvironmentCheck(
             HomebrewDiagnostics.cannotLoadService(),
             messageText:        "startup.errors.services_json_error.title".localized,

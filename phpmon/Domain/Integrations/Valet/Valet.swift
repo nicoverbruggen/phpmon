@@ -13,7 +13,7 @@ class Valet {
     static let shared = Valet()
     
     /// The version of Valet that was detected.
-    var version: String
+    var version: String! = nil
     
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -26,7 +26,7 @@ class Valet {
     
     /// When initialising the Valet singleton, extract the Valet version and assume no sites loaded.
     init() {
-        version = VersionExtractor.from(valet("--version")) ?? "UNKNOWN"
+        self.version = nil
         self.sites = []
     }
     
@@ -83,18 +83,14 @@ class Valet {
      installed is not recent enough.
      */
     public func validateVersion() -> Void {
-        if version == "UNKNOWN" {
-            return Log.warn("The Valet version could not be extracted... that does not bode well.")
-        }
-        
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
-            Log.warn("Valet version \(version) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
             DispatchQueue.main.async {
-                Alert.notify(message: "alert.min_valet_version.title".localized, info: "alert.min_valet_version.info".localized(version, Constants.MinimumRecommendedValetVersion))
+                Alert.notify(message: "alert.min_valet_version.title".localized, info: "alert.min_valet_version.info".localized(version!, Constants.MinimumRecommendedValetVersion))
             }
         } else {
-            Log.info("Valet version \(version) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            Log.info("Valet version \(version!) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
         }
     }
     
