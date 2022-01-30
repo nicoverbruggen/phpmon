@@ -13,15 +13,28 @@ class Stats {
     
     /**
      Keep track of how many times the app has been successfully launched.
+     
      This is used to determine whether it is time to show the sponsor
-     encouragement alert, but I'd like to include this stat in the
-     preferences window as well. "PHP Monitor has been started X
-     times." If the count is over 99, it should say "Think about
-     all of the time the app has saved you!"
+     encouragement alert, but I'd like to include this stat somewhere
+     else as well.
      */
     public static var successfulLaunchCount: Int {
         UserDefaults.standard.integer(
             forKey: InternalStats.launchCount.rawValue
+        )
+    }
+    
+    /**
+     Keep track of how many times the app has successfully switched
+     between different PHP versions.
+     
+     This is used to determine whether it is time to show the sponsor
+     encouragement alert, but I'd like to include this stat somewhere
+     else as well.
+     */
+    public static var successfulSwitchCount: Int {
+        UserDefaults.standard.integer(
+            forKey: InternalStats.switchCount.rawValue
         )
     }
     
@@ -41,23 +54,29 @@ class Stats {
      up the application.
      */
     public static func incrementSuccessfulLaunchCount() {
-        let count = Stats.successfulLaunchCount
         UserDefaults.standard.set(
-            count + 1,
+            Stats.successfulLaunchCount + 1,
             forKey: InternalStats.launchCount.rawValue
+        )
+    }
+    
+    /**
+     Increment the successful switch count.
+     */
+    public static func incrementSuccessfulSwitchCount() {
+        UserDefaults.standard.set(
+            Stats.successfulSwitchCount + 1,
+            forKey: InternalStats.switchCount.rawValue
         )
     }
     
     public static func evaluateSponsorMessageShouldBeDisplayed() {
         if Stats.didSeeSponsorEncouragement {
-            Log.info("Awesome, the user has already seen the sponsor message.")
-            return
+            return Log.info("Awesome, the user has already seen the sponsor message.")
         }
         
-        if Stats.successfulLaunchCount < 7 {
-            Log.info("It is too soon to see the sponsor message.")
-            Log.info("The application has been launched successfully \(Stats.successfulLaunchCount) times.")
-            return
+        if Stats.successfulLaunchCount < 7 && Stats.successfulSwitchCount < 40 {
+            return Log.info("It is too soon to see the sponsor message (launched \(Stats.successfulLaunchCount) times, switched \(Stats.successfulSwitchCount) times).")
         }
         
         DispatchQueue.main.async {

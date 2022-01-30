@@ -27,6 +27,7 @@ enum PreferenceName: String {
  */
 enum InternalStats: String {
     case launchCount = "times_launched"
+    case switchCount = "times_switched_versions"
     case didSeeSponsorEncouragement = "did_see_sponsor_encouragement"
 }
 
@@ -61,13 +62,15 @@ class Preferences {
      */
     static func handleFirstTimeLaunch() {
         UserDefaults.standard.register(defaults: [
+            /// Preferences
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
             PreferenceName.shouldDisplayPhpHintInIcon.rawValue: true,
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
-            ///
+            /// Stats
+            InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
             InternalStats.didSeeSponsorEncouragement.rawValue: false
         ])

@@ -279,6 +279,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         self.switchToPhpVersion(sender.version)
     }
     
+    // TODO (5.1): Investigate if `waitAndExecute` cannot be used here
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnv.shared.isBusy = true
@@ -315,6 +316,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     } else {
                         sendLocalNotification()
                     }
+                    
+                    Stats.incrementSuccessfulSwitchCount()
+                    Stats.evaluateSponsorMessageShouldBeDisplayed()
                 }
             }
             
