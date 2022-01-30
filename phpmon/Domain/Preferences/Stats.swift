@@ -71,6 +71,10 @@ class Stats {
     }
     
     public static func evaluateSponsorMessageShouldBeDisplayed() {
+        if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
+            return Log.info("Sponsor messages never apply to beta builds.")
+        }
+        
         if Stats.didSeeSponsorEncouragement {
             return Log.info("Awesome, the user has already seen the sponsor message.")
         }
