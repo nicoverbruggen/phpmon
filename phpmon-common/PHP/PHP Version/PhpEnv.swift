@@ -155,4 +155,16 @@ class PhpEnv {
                 .matching(constraint: $0.trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
+    
+    /**
+     Validates whether the currently running version matches the provided version.
+     */
+    public func validate(_ version: String) -> Bool {
+        if self.currentInstall.version.short == version {
+            print("Switching to version \(version) seems to have succeeded. Validation passed.")
+            return true
+        }
+        
+        return false
+    }
 }

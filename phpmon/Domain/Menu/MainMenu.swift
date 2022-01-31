@@ -296,7 +296,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             // Update the menu
             rebuild()
             
+            let sendLocalNotification = {
+                LocalNotification.send(
+                    title: String(format: "notification.version_changed_title".localized, version),
+                    subtitle: String(format: "notification.version_changed_desc".localized, version)
+                )
+                PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
+            }
+        
             let completion = {
+                // Fire off the delegate method
                 PhpEnv.shared.delegate?.switcherDidCompleteSwitch()
                 
                 // Mark as no longer busy
@@ -307,12 +316,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                     updatePhpVersionInStatusBar()
                     rebuild()
                     
-                    let sendLocalNotification = {
-                        LocalNotification.send(
-                            title: String(format: "notification.version_changed_title".localized, version),
-                            subtitle: String(format: "notification.version_changed_desc".localized, version)
-                        )
-                        PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
+                    if !PhpEnv.shared.validate(version) {
+                        let outcome = Alert.present(
+                            messageText: "alert.php_switch_failed.title".localized(version),
+                            informativeText: "alert.php_switch_failed.info".localized(version),
+                            buttonTitle: "alert.php_switch_failed.confirm".localized,
+                            secondButtonTitle: "alert.php_switch_failed.cancel".localized, style: .informational)
+                        if outcome {
+                            MainMenu.shared.fixMyValet()
+                        }
+                        return
                     }
                     
                     // Run composer updates
@@ -322,6 +335,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                         sendLocalNotification()
                     }
                     
+                    // Update stats
                     Stats.incrementSuccessfulSwitchCount()
                     Stats.evaluateSponsorMessageShouldBeDisplayed()
                 }
@@ -366,7 +380,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - Private Methods
     
     /**
-     
+     Updates the global dependencies and runs the completion callback when done.
      */
     private func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
         if !Shell.fileExists("/usr/local/bin/composer") {

@@ -115,7 +115,7 @@ class Actions {
         brew("services stop php")
         brew("services stop nginx")
         
-        brew("link php --force")
+        brew("link php --overwrite --force")
         
         brew("services restart dnsmasq", sudo: true)
         brew("services restart php", sudo: true)

@@ -50,6 +50,9 @@ class InternalSwitcher: PhpSwitcher {
             brew("link \(formula) --overwrite --force")
             brew("services start \(formula)", sudo: true)
             
+            Log.info("Restarting nginx, just to be sure!")
+            brew("services restart nginx", sudo: true)
+            
             Log.info("The new version has been linked!")
             completion()
         }

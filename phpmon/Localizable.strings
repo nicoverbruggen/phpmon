@@ -92,7 +92,6 @@
 "site_list.alert.folder_missing.cancel" = "Cancel Link";
 "site_list.alert.folder_missing.return" = "OK";
 
-
 "site_list.add.modal_description" = "First, select which folder you would like to link.";
 
 // SITE LIST ACTIONS
@@ -191,6 +190,12 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\":\n\"%@\".";
 "alert.composer_php_requirement.info" = "This required PHP version was determined by checking the `%@` field in the `composer.json` file when the site list was last refreshed.";
 
+// Suggest Fix My Valet
+"alert.php_switch_failed.title" = "Switching to PHP %@ seems to have failed.";
+"alert.php_switch_failed.info" = "PHP Monitor has detected that PHP %@  is not active after completing its switching procedure. You can try to run \"Fix My Valet\" and switch again after that. Do you want to try \"Fix My Valet\"?";
+"alert.php_switch_failed.confirm" = "Yes, run \"Fix My Valet\"";
+"alert.php_switch_failed.cancel" = "Do Not Run";
+
 // Fix My Valet Started
 "alert.fix_my_valet.title" = "Having issues? Fix My Valet is ready to commence!";
 "alert.fix_my_valet.info" = "This can take a while. Please be patient.\n\nWhen this is done, all other services will be halted and PHP %@ will be linked. You will be able to switch to your desired version of PHP once this operation has completed.\n\n(You'll get another alert once Fix My Valet is done.)";
@@ -258,7 +263,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 7. Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";
-"startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'Force load latest PHP version' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
+"startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'First Aid & Services > Fix My Valet' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
 
 // SPONSOR ENCOURAGEMENT
 
