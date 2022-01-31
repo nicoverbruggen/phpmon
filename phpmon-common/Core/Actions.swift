@@ -88,7 +88,7 @@ class Actions {
         return URL(string: "file:///private/tmp/phpmon_phpinfo.html")!
     }
     
-    // MARK: - Quick Fix
+    // MARK: - Fix My Valet
     
     /**
      Detects all currently available PHP versions,
@@ -100,7 +100,7 @@ class Actions {
      If this does not solve the issue, the user may need to install additional
      extensions and/or run `composer global update`.
      */
-    public static func fixMyPhp()
+    public static func fixMyValet()
     {
         brew("services restart dnsmasq", sudo: true)
         

@@ -234,21 +234,26 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func forceRestartLatestPhp() {
+    @objc func fixMyValet() {
         // Tell the user the switch is about to occur
-        Alert.notify(
-            message: "alert.force_reload.title".localized,
-            info: "alert.force_reload.info".localized
-        )
-        
-        // Start switching
-        waitAndExecute {
-            Actions.fixMyPhp()
-        } completion: {
-            Alert.notify(
-                message: "alert.force_reload_done.title".localized,
-                info: "alert.force_reload_done.info".localized
-            )
+        if Alert.present(
+            messageText: "alert.fix_my_valet.title".localized,
+            informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
+            buttonTitle: "alert.fix_my_valet.ok".localized,
+            secondButtonTitle: "alert.fix_my_valet.cancel".localized,
+            style: .warning
+        ) {
+            // Start the fix
+            waitAndExecute {
+                Actions.fixMyValet()
+            } completion: {
+                Alert.notify(
+                    message: "alert.fix_my_valet_done.title".localized,
+                    info: "alert.fix_my_valet_done.info".localized
+                )
+            }
+        } else {
+            Log.info("The user has chosen to abort Fix My Valet")
         }
     }
     

@@ -25,8 +25,8 @@
 "mi_manage_services" = "Manage Services";
 "mi_restart_all_services" = "Restart All Services";
 "mi_stop_all_services" = "Stop All Services";
-"mi_force_load_latest" = "Force Load (Latest) PHP %@";
-"mi_force_load_latest_unavailable" = "Force Load Unavailable (PHP %@ Not Installed)";
+"mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
+"mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -191,13 +191,15 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\":\n\"%@\".";
 "alert.composer_php_requirement.info" = "This required PHP version was determined by checking the `%@` field in the `composer.json` file when the site list was last refreshed.";
 
-// Force Reload Started
-"alert.force_reload.title" = "PHP Monitor will force reload the latest version of PHP";
-"alert.force_reload.info" = "This can take a while. You'll get another alert when the force reload has completed.";
+// Fix My Valet Started
+"alert.fix_my_valet.title" = "Having issues? Fix My Valet is ready to commence!";
+"alert.fix_my_valet.info" = "This can take a while. Please be patient.\n\nWhen this is done, all other services will be halted and PHP %@ will be linked. You will be able to switch to your desired version of PHP once this operation has completed.\n\n(You'll get another alert once Fix My Valet is done.)";
+"alert.fix_my_valet.ok" = "Continue";
+"alert.fix_my_valet.cancel" = "Abort";
 
-// Force Reload Done
-"alert.force_reload_done.title" = "PHP has been force reloaded";
-"alert.force_reload_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).";
+// Fix My Valet Done
+"alert.fix_my_valet_done.title" = "Fix My Valet has completed its operations.";
+"alert.fix_my_valet_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";

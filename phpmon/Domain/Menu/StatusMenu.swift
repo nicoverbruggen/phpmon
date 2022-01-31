@@ -45,13 +45,13 @@ class StatusMenu : NSMenu {
         
         if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest_unavailable".localized(PhpEnv.brewPhpVersion),
+                title: "mi_fix_my_valet_unavailable".localized(PhpEnv.brewPhpVersion),
                 action: nil, keyEquivalent: "f"
             ))
         } else {
             servicesMenu.addItem(NSMenuItem(
-                title: "mi_force_load_latest".localized(PhpEnv.brewPhpVersion),
-                action: #selector(MainMenu.forceRestartLatestPhp), keyEquivalent: "f"))
+                title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+                action: #selector(MainMenu.fixMyValet), keyEquivalent: "f"))
         }
         
         servicesMenu.addItem(NSMenuItem(title: "mi_services".localized, action: nil, keyEquivalent: ""))
@@ -95,7 +95,11 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
         self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
-        self.addItem(NSMenuItem(title: "mi_update_global_composer".localized, action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateGlobalComposerDependencies), keyEquivalent: ""))
+        
+        let composerMenuItem = NSMenuItem(title: "mi_update_global_composer".localized, action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateGlobalComposerDependencies), keyEquivalent: "g")
+        composerMenuItem.keyEquivalentModifierMask = .shift
+        
+        self.addItem(composerMenuItem)
         
         if (PhpEnv.shared.isBusy) {
             return
