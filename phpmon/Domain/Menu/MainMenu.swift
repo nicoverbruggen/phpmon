@@ -361,6 +361,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         SiteListVC.show()
     }
     
+    @objc func openDonate() {
+        NSWorkspace.shared.open(Constants.DonationUrl)
+    }
+    
     @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
     }

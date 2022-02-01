@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 /**
  Any outlets connected to the app's main menu (not the menu that shows when the icon in
@@ -24,6 +25,13 @@ extension AppDelegate {
     
     // MARK: - Menu Interactions
     
+    @IBAction func addSiteLinkPressed(_ sender: Any) {
+        SiteListVC.show()
+        
+        guard let windowController = App.shared.siteListWindowController else { return }
+        windowController.pressedAddLink(nil)
+    }
+    
     @IBAction func reloadSiteListPressed(_ sender: Any) {
         let vc = App.shared.siteListWindowController?
             .window?.contentViewController as? SiteListVC
@@ -35,6 +43,13 @@ extension AppDelegate {
             // If the view does not exist, reload the cached data that was populated when the app initially launched.
             Valet.shared.reloadSites()
         }
+    }
+    
+    @IBAction func focusSearchField(_ sender: Any) {
+        SiteListVC.show()
+        
+        guard let windowController = App.shared.siteListWindowController else { return }
+        windowController.searchToolbarItem.searchField.becomeFirstResponder()
     }
     
 }

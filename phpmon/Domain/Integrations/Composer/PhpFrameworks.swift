@@ -34,7 +34,7 @@ struct PhpFrameworks {
         "october/october": "OctoberCMS",
         "sculpin/sculpin": "Sculpin",
         "statamic/cms": "Statamic",
-        "johnpbloch/wordpress-core": "Wordpress",
+        "johnpbloch/wordpress-core": "WordPress",
         "zendframework/zendframework": "Zend",
         "zendframework/zend-mvc": "Zend"
         

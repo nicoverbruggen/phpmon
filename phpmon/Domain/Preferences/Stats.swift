@@ -70,6 +70,21 @@ class Stats {
         )
     }
     
+    /**
+     Determine if the sponsor message should be displayed.
+     
+     The rationale behind this is simple, some of the stats
+     increasing beyond a certain point indicate the app
+     is being used.
+     
+     We evaluate, first:
+     - Successful version switches
+     OR
+     - Successful starts of the application
+     
+     AND, of course, you must never have seen the alert before.
+     (see `didSeeSponsorEncouragement`)
+     */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
             return Log.info("Sponsor messages never apply to beta builds.")
@@ -92,8 +107,7 @@ class Stats {
                 style: .informational)
             if donate {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")
-                guard let url = URL(string: "https://nicoverbruggen.be/sponsor#pay-now") else { return }
-                NSWorkspace.shared.open(url)
+                NSWorkspace.shared.open(Constants.DonationUrl)
             }
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
         }

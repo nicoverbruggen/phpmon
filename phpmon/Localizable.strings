@@ -52,8 +52,15 @@
 "mi_sitelist" = "View Linked and Parked Domains...";
 
 "mi_preferences" = "Preferences...";
+"mi_donate" = "Donate...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
+
+// MENU ITEMS (if window is open)
+
+"mm_add_folder_as_link" = "Add Folder as Link...";
+"mm_reload_site_list" = "Reload Site List";
+"mm_find_in_site_list" = "Search in Site List";
 
 // SITE LIST
 

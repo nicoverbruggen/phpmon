@@ -50,9 +50,29 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Sites" id="YTZ-bb-TOG">
                                     <items>
-                                        <menuItem title="Reload Site List" keyEquivalent="r" id="Ema-AU-Nbr">
+                                        <menuItem title="add-as-link" keyEquivalent="n" id="du1-bO-N2U" userLabel="Add Link" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_add_folder_as_link"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="addSiteLinkPressed:" target="Voe-Tx-rLC" id="DzS-MY-6g0"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="reload-list" keyEquivalent="r" id="Ema-AU-Nbr" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_reload_site_list"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="reloadSiteListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="2ux-8Q-UjK"/>
+                                        <menuItem title="focus-find" keyEquivalent="f" id="I95-fb-EL7" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_find_in_site_list"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="focusSearchField:" target="Voe-Tx-rLC" id="O8j-1B-hll"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -299,7 +319,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="-484" y="32"/>
+            <point key="canvasLocation" x="-495" y="-44"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
@@ -589,6 +609,10 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="600" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <customView id="j65-Lf-0lG">
+                                <rect key="frame" x="9" y="0.0" width="581" height="203"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="309"/>
                                 <clipView key="contentView" id="6IL-DW-37w">
@@ -776,7 +800,7 @@ Gw
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="251" y="742"/>
+            <point key="canvasLocation" x="251" y="741.5"/>
         </scene>
     </scenes>
     <resources>
@@ -786,7 +810,7 @@ Gw
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
         <namedColor name="IconColorGreen">
-            <color red="0.2467108965" green="0.69713878631591797" blue="0.50060153009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.24699999392032623" green="0.69700002670288086" blue="0.50099998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
