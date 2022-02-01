@@ -57,7 +57,7 @@ class SiteListCell: NSTableCellView
             ? "Project Type".uppercased()
             : "Driver Type".uppercased()
         
-        labelDriver.stringValue = "\(site.driver ?? "???")"
+        labelDriver.stringValue = site.driver ?? "driver.not_detected".localized
         
         // Determine the Laravel version
         if site.driver == "Laravel" && site.notableComposerDependencies.keys.contains("laravel/framework") {

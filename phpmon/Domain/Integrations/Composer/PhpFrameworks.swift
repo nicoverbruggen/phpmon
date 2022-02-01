@@ -45,4 +45,38 @@ struct PhpFrameworks {
         // "slim/*": "Slim",
     ]
     
+    public static let FileMapping: [String: [String]] = [
+        "Drupal": [
+            // Legacy installations
+            "/misc/drupal.js",
+            "/core/lib/Drupal.php",
+            // The default (new) installation w/ Composer puts the modules in /web
+            "/web/misc/drupal.js",
+            "/web/core/lib/Drupal.php"
+        ],
+        "WordPress": [
+            "/wp-config.php",
+            "/wp-config-sample.php"
+        ],
+    ]
+    
+    /**
+     There are two cases where users are unlikely to use `composer`,
+     when setting up a Drupal or a WordPress project. For performance
+     reasons, we only check that here!
+     */
+    public static func detectFallbackDependency(_ basePath: String) -> String? {
+        for entry in Self.FileMapping {
+            let found = entry.value
+                .map { path in return Filesystem.fileExists(basePath + path) }
+                .contains(true)
+            
+            if found {
+                return entry.key
+            }
+        }
+        
+        return nil
+    }
+    
 }

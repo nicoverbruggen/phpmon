@@ -51,7 +51,7 @@ struct ComposerJson: Decodable {
         }
         
         // Unknown!
-        return ("", "unknown")
+        return ("???", "unknown")
     }
     
     /**

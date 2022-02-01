@@ -291,6 +291,10 @@ class Valet {
          */
         public func determineDriver() {
             self.determineDriverViaComposer()
+            
+            if self.driver == nil {
+                self.driver = PhpFrameworks.detectFallbackDependency(self.absolutePath)
+            }
         }
         
         /**
@@ -302,7 +306,6 @@ class Valet {
          */
         private func determineDriverViaComposer() {
             self.driverDeterminedByComposer = true
-            self.driver = "driver.not_detected".localized
             
             PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
                 if self.notableComposerDependencies.keys.contains(key) {

@@ -119,7 +119,7 @@
 
 // DRIVERS
 
-"driver.not_detected" = "Unknown";
+"driver.not_detected" = "Other";
 
 // EDITORS
 
