@@ -495,7 +495,7 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="pressedCancel:" target="glS-wF-sEU" id="MZS-Vg-Vjf"/>
+                                    <action selector="pressedCancel:" target="glS-wF-sEU" id="q0L-YZ-F3J"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
@@ -565,6 +565,7 @@ Gw
                             <constraint firstAttribute="bottom" secondItem="SwS-o8-pbl" secondAttribute="bottom" constant="20" symbolic="YES" id="24Z-vC-4E8"/>
                             <constraint firstItem="900-Z2-tID" firstAttribute="centerY" secondItem="PVw-cM-qAB" secondAttribute="centerY" id="578-2f-4x8"/>
                             <constraint firstItem="ZX9-s1-23i" firstAttribute="leading" secondItem="6JT-Vt-3q0" secondAttribute="trailing" constant="-440" id="6eF-GS-Xcn"/>
+                            <constraint firstItem="SwS-o8-pbl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="900-Z2-tID" secondAttribute="trailing" constant="10" id="9uc-R7-CZk"/>
                             <constraint firstItem="6JT-Vt-3q0" firstAttribute="top" secondItem="P0B-Ht-R8n" secondAttribute="bottom" constant="8" symbolic="YES" id="DGN-4k-X0h"/>
                             <constraint firstItem="P0B-Ht-R8n" firstAttribute="top" secondItem="JJJ-T9-Yuv" secondAttribute="top" constant="20" symbolic="YES" id="F2r-6E-qxh"/>
                             <constraint firstItem="mmQ-7e-dlb" firstAttribute="top" secondItem="KZf-b0-9cm" secondAttribute="bottom" constant="8" symbolic="YES" id="G21-Vd-tgl"/>
@@ -581,16 +582,18 @@ Gw
                             <constraint firstAttribute="trailing" secondItem="mmQ-7e-dlb" secondAttribute="trailing" constant="20" symbolic="YES" id="hjv-Xq-cxV"/>
                             <constraint firstItem="6JT-Vt-3q0" firstAttribute="leading" secondItem="P0B-Ht-R8n" secondAttribute="leading" id="jxP-vM-eA9"/>
                             <constraint firstItem="P0B-Ht-R8n" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" constant="20" symbolic="YES" id="msC-eG-Fop"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="P0B-Ht-R8n" secondAttribute="trailing" constant="20" symbolic="YES" id="nvj-Ij-dcd"/>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="top" secondItem="ZX9-s1-23i" secondAttribute="bottom" constant="8" symbolic="YES" id="sVP-EV-07F"/>
                             <constraint firstAttribute="trailing" secondItem="ZX9-s1-23i" secondAttribute="trailing" constant="20" symbolic="YES" id="tZ3-2X-JC9"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KZf-b0-9cm" secondAttribute="trailing" constant="20" symbolic="YES" id="zq0-Ce-sCs"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonCancel" destination="SwS-o8-pbl" id="N1v-uy-2Mi"/>
                         <outlet property="buttonCreateLink" destination="PVw-cM-qAB" id="0Oo-xW-He7"/>
                         <outlet property="buttonSecure" destination="KZf-b0-9cm" id="5A7-Bn-NB7"/>
                         <outlet property="linkName" destination="ZX9-s1-23i" id="yT6-80-Zr1"/>
                         <outlet property="pathControl" destination="6JT-Vt-3q0" id="f5K-8h-VOd"/>
-                        <outlet property="pressedCancel" destination="SwS-o8-pbl" id="cLR-Yn-TSs"/>
                         <outlet property="previewText" destination="VzR-5a-cmT" id="qwd-wX-645"/>
                         <outlet property="textFieldError" destination="900-Z2-tID" id="qUk-FE-IKW"/>
                         <outlet property="textFieldSecure" destination="mmQ-7e-dlb" id="LeA-YS-hRM"/>

@@ -16,6 +16,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var previewText: NSTextField!
     @IBOutlet weak var buttonSecure: NSButton!
     @IBOutlet weak var buttonCreateLink: NSButton!
+    @IBOutlet weak var buttonCancel: NSButton!
 
     @IBOutlet weak var textFieldTitle: NSTextField!
     @IBOutlet weak var textFieldSecure: NSTextField!
@@ -39,6 +40,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         textFieldTitle.stringValue = "site_list.add.link_folder".localized
         linkName.placeholderString = "site_list.add.domain_name_placeholder".localized
         textFieldSecure.stringValue = "site_list.add.secure_description".localized
+        buttonCancel.stringValue = "site_list.add.cancel".localized
     }
     
     // MARK: - Outlet Interactions
