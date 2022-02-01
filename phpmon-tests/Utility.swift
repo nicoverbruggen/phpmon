@@ -19,7 +19,7 @@ class Utility {
                 try FileManager.default.copyItem(at: bundleURL, to: targetURL)
                 return targetURL
             } catch let error {
-                print("Unable to copy file: \(error)")
+                Log.err("Unable to copy file: \(error)")
             }
         }
         

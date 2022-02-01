@@ -11,7 +11,7 @@ import XCTest
 class ValetTest: XCTestCase {
 
     func testDetermineValetVersion() {
-        let version = Actions.valet("--version")
+        let version = valet("--version")
         XCTAssert(version.contains("Laravel Valet 2."))
     }
     

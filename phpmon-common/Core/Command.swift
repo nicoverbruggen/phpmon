@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class Command {
+public class Command {
     
     /**
      Immediately executes a command.

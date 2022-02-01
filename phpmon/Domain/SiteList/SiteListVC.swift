@@ -56,7 +56,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         ]
         windowController.window!.minSize = NSSize(width: 550, height: 200)
         windowController.window!.delegate = windowController
-        windowController.positionWindowInTopLeftCorner()
+        windowController.window!.setFrameAutosaveName("siteListWindow")
         
         App.shared.siteListWindowController = windowController
     }
@@ -93,6 +93,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         progressIndicator.startAnimation(nil)
         tableView.alphaValue = 0.3
         tableView.isEnabled = false
+        tableView.selectRowIndexes([], byExtendingSelection: true)
     }
     
     /**
@@ -135,6 +136,28 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
+    func addedNewSite(name: String, secure: Bool) {
+        waitAndExecute {
+            Valet.shared.reloadSites()
+        } completion: { [self] in
+            find(name, secure)
+        }
+    }
+    
+    private func find(_ name: String, _ secure: Bool = false) {
+        sites = Valet.shared.sites
+        searchedFor(text: "")
+        if let site = sites.enumerated().first(where: { $0.element.name == name }) {
+            DispatchQueue.main.async {
+                self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
+                self.tableView.scrollRowToVisible(site.offset)
+                if (secure && !site.element.secured) {
+                    self.toggleSecure()
+                }
+            }
+        }
+    }
+    
     // MARK: - Table View Delegate
     
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -172,20 +195,31 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
         if searchString.isEmpty {
             sites = Valet.shared.sites
-            tableView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             return
         }
         
+        let splitSearchString: [String] = searchString
+            .split(separator: " ")
+            .map { return String($0) }
+        
         sites = Valet.shared.sites.filter({ site in
-            return site.name.lowercased().contains(searchString)
+            return !splitSearchString.map { searchString in
+                return site.name.lowercased().contains(searchString)
+            }.contains(false)
         })
         
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Deinitialization
     
     deinit {
-        print("VC deallocated")
+        Log.perf("SiteListVC deallocated")
     }
 }

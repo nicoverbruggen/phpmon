@@ -16,3 +16,14 @@ extension NSMenu {
     }
     
 }
+
+@IBDesignable class LocalizedMenuItem: NSMenuItem {
+    
+    @IBInspectable
+    var localizationKey: String? {
+        didSet {
+            self.title = localizationKey?.localized ?? self.title
+        }
+    }
+    
+}

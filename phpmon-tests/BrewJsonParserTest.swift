@@ -9,15 +9,18 @@
 import XCTest
 
 class BrewJsonParserTest: XCTestCase {
+    
+    // - MARK: SYNTHETIC TESTS
 
     static var jsonBrewFile: URL {
-        return Bundle(for: Self.self).url(forResource: "brew", withExtension: "json")!
+        return Bundle(for: Self.self)
+            .url(forResource: "brew", withExtension: "json")!
     }
 
-    func testCanLoadExtension() throws {
-        let json = try? String(contentsOf: Self.jsonBrewFile, encoding: .utf8)
+    func testCanLoadExtensionJson() throws {
+        let json = try! String(contentsOf: Self.jsonBrewFile, encoding: .utf8)
         let package = try! JSONDecoder().decode(
-            [HomebrewPackage].self, from: json!.data(using: .utf8)!
+            [HomebrewPackage].self, from: json.data(using: .utf8)!
         ).first!
         
         XCTAssertEqual(package.name, "php")
@@ -27,5 +30,56 @@ class BrewJsonParserTest: XCTestCase {
             installed.version.starts(with: "8.0")
         }), true)
     }
+    
+    static var jsonBrewServicesFile: URL {
+        return Bundle(for: Self.self)
+            .url(forResource: "brew-services", withExtension: "json")!
+    }
+    
+    func testCanParseServicesJson() throws {
+        let json = try! String(contentsOf: Self.jsonBrewServicesFile, encoding: .utf8)
+        let services = try! JSONDecoder().decode(
+            [HomebrewService].self, from: json.data(using: .utf8)!
+        )
+        
+        XCTAssertGreaterThan(services.count, 0)
+        XCTAssertEqual(services.first?.name, "dnsmasq")
+        XCTAssertEqual(services.first?.service_name, "homebrew.mxcl.dnsmasq")
+    }
+    
+    // - MARK: LIVE TESTS
 
+    /// This test requires that you have a valid Homebrew installation set up,
+    /// and requires the Valet services to be installed: php, nginx and dnsmasq.
+    /// If this test fails, there is an issue with your Homebrew installation
+    /// or the JSON API of the Homebrew output may have changed.
+    func testCanParseServicesJsonFromCliOutput() throws {
+        let services = try! JSONDecoder().decode(
+            [HomebrewService].self,
+            from: Shell.pipe(
+                "sudo \(Paths.brew) services info --all --json",
+                requiresPath: true
+            ).data(using: .utf8)!
+        ).filter({ service in
+            return ["php", "nginx", "dnsmasq"].contains(service.name)
+        })
+        
+        XCTAssertTrue(services.contains(where: {$0.name == "php"} ))
+        XCTAssertTrue(services.contains(where: {$0.name == "nginx"} ))
+        XCTAssertTrue(services.contains(where: {$0.name == "dnsmasq"} ))
+        XCTAssertEqual(services.count, 3)
+    }
+    
+    /// This test requires that you have a valid Homebrew installation set up,
+    /// and requires the `php` formula to be installed.
+    /// If this test fails, there is an issue with your Homebrew installation
+    /// or the JSON API of the Homebrew output may have changed.
+    func testCanLoadExtensionJsonFromCliOutput() throws {
+        let package = try! JSONDecoder().decode(
+            [HomebrewPackage].self,
+            from: Shell.pipe("\(Paths.brew) info php --json", requiresPath: true).data(using: .utf8)!
+        ).first!
+        
+        XCTAssertTrue(package.name == "php")
+    }
 }

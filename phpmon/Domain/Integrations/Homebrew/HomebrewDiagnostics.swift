@@ -10,19 +10,6 @@ import Foundation
 
 class HomebrewDiagnostics {
     
-    enum Errors: String {
-        case aliasConflict = "alias_conflict"
-    }
-    
-    static let shared = HomebrewDiagnostics()
-    var errors: [HomebrewDiagnostics.Errors] = []
-
-    init() {
-        if determineAliasConflicts() {
-            errors.append(.aliasConflict)
-        }
-    }
-    
     /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
@@ -30,41 +17,58 @@ class HomebrewDiagnostics {
      
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public func determineAliasConflicts() -> Bool
+    public static func hasAliasConflict() -> Bool
     {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
         
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
-            print("The user does not appear to have tapped: shivammathur/php")
+            Log.info("The user does not appear to have tapped: shivammathur/php")
             return false
         } else {
-            print("The user DOES have the following tapped: shivammathur/php")
-            print("Checking for `php` formula conflicts...")
+            Log.info("The user DOES have the following tapped: shivammathur/php")
+            Log.info("Checking for `php` formula conflicts...")
             
             let tapPhp = try! JSONDecoder().decode(
                 [HomebrewPackage].self,
                 from: tapAlias.data(using: .utf8)!
             ).first!
             
-            if tapPhp.version != App.shared.brewPhpVersion {
-                print("The `php` formula alias seems to be the different between the tap and core. This could be a problem!")
-                print("Determining whether both of these versions are installed...")
+            if tapPhp.version != PhpEnv.brewPhpVersion {
+                Log.warn("The `php` formula alias seems to be the different between the tap and core. This could be a problem!")
+                Log.info("Determining whether both of these versions are installed...")
                 
-                let bothInstalled = App.shared.availablePhpVersions.contains(tapPhp.version)
-                    && App.shared.availablePhpVersions.contains(App.shared.brewPhpVersion)
+                let bothInstalled = PhpEnv.shared.availablePhpVersions.contains(tapPhp.version)
+                    && PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion)
                 
                 if bothInstalled {
-                    print("Both conflicting aliases seem to be installed, warning the user!")
+                    Log.warn("Both conflicting aliases seem to be installed, warning the user!")
                 } else {
-                    print("Conflicting aliases are not both installed, seems fine!")
+                    Log.info("Conflicting aliases are not both installed, seems fine!")
                 }
                 
                 return bothInstalled
             }
             
-            print("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
+            Log.info("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
             
             return false
         }
+    }
+    
+    /**
+     In order to see if we support the --json syntax, we'll query nginx.
+     If the JSON response cannot be parsed, Homebrew is probably out of date.
+     */
+    public static func cannotLoadService(_ name: String = "nginx") -> Bool
+    {
+        let serviceInfo = try? JSONDecoder().decode(
+            [HomebrewService].self,
+            from: Shell.pipe(
+                "sudo \(Paths.brew) services info \(name) --json",
+                requiresPath: true
+            ).data(using: .utf8)!
+        )
+        
+        return serviceInfo == nil
     }
 }

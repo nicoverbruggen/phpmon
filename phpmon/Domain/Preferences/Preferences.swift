@@ -8,13 +8,27 @@
 
 import Foundation
 
+/**
+ These are the keys used for every preference in the app.
+ */
 enum PreferenceName: String {
     case wasLaunchedBefore = "launched_before"
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
+    case shouldDisplayPhpHintInIcon = "add_php_to_icon"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
-    case useInternalSwitcher = "use_phpmon_switcher"
+    case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
+    case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
+}
+
+/**
+ These are internal stats. They NEVER get shared.
+ */
+enum InternalStats: String {
+    case launchCount = "times_launched"
+    case switchCount = "times_switched_versions"
+    case didSeeSponsorEncouragement = "did_see_sponsor_encouragement"
 }
 
 class Preferences {
@@ -23,11 +37,15 @@ class Preferences {
     
     static var shared = Preferences()
     
+    var customPreferences: CustomPrefs
+    
     var cachedPreferences: [PreferenceName: Any?]
     
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
+        customPreferences = CustomPrefs(scanApps: [])
+        loadCustomPreferences()
     }
     
     // MARK: - First Time Run
@@ -44,16 +62,24 @@ class Preferences {
      */
     static func handleFirstTimeLaunch() {
         UserDefaults.standard.register(defaults: [
+            /// Preferences
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
+            PreferenceName.shouldDisplayPhpHintInIcon.rawValue: true,
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
-            PreferenceName.useInternalSwitcher.rawValue: false
+            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
+            PreferenceName.allowProtocolForIntegrations.rawValue: true,
+            /// Stats
+            InternalStats.switchCount.rawValue: 0,
+            InternalStats.launchCount.rawValue: 0,
+            InternalStats.didSeeSponsorEncouragement.rawValue: false
         ])
         
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
             return
         }
-        print("Saving first-time preferences!")
+        
+        Log.info("Saving first-time preferences!")
         UserDefaults.standard.setValue(true, forKey: PreferenceName.wasLaunchedBefore.rawValue)
         UserDefaults.standard.synchronize()
     }
@@ -64,15 +90,33 @@ class Preferences {
         return Self.shared.cachedPreferences
     }
     
+    static var custom: CustomPrefs {
+        return Self.shared.customPreferences
+    }
+    
+    /**
+     Determine whether a particular preference is enabled.
+     - Important: Requires the preference to have a corresponding boolean value, or a fatal error will be thrown.
+     */
+    static func isEnabled(_ preference: PreferenceName) -> Bool {
+        if let bool = Preferences.preferences[preference] as? Bool {
+            return bool == true
+        } else {
+            fatalError("\(preference) is not a valid boolean preference!")
+        }
+    }
+    
     // MARK: - Internal Functionality
     
-    static func cache() -> [PreferenceName: Any] {
+    private static func cache() -> [PreferenceName: Any] {
         return [
             // Part 1: Always Booleans
             .shouldDisplayDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
+            .shouldDisplayPhpHintInIcon: UserDefaults.standard.bool(forKey: PreferenceName.shouldDisplayPhpHintInIcon.rawValue) as Any,
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
             .autoServiceRestartAfterExtensionToggle: UserDefaults.standard.bool(forKey: PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue) as Any,
-            .useInternalSwitcher: UserDefaults.standard.bool(forKey: PreferenceName.useInternalSwitcher.rawValue) as Any,
+            .autoComposerGlobalUpdateAfterSwitch: UserDefaults.standard.bool(forKey: PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue) as Any,
+            .allowProtocolForIntegrations: UserDefaults.standard.bool(forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(forKey: PreferenceName.globalHotkey.rawValue) as Any,
@@ -89,6 +133,30 @@ class Preferences {
         
         // Update the preferences cache in memory!
         Preferences.shared.cachedPreferences = Preferences.cache()
+    }
+    
+    // MARK: - Custom Preferences
+    
+    private func loadCustomPreferences() {
+        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
+        if Filesystem.fileExists(url.path) {
+            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
+            loadCustomPreferencesFile(url)
+        } else {
+            Log.info("There was no .phpmon.conf.json file to be loaded.")
+        }
+    }
+    
+    private func loadCustomPreferencesFile(_ url: URL) {
+        do {
+            customPreferences = try JSONDecoder().decode(
+                CustomPrefs.self,
+                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
+            )
+            Log.info("The .phpmon.conf.json file was successfully parsed.")
+        } catch {
+            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
+        }
     }
     
 }

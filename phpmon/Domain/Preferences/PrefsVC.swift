@@ -59,12 +59,21 @@ class PrefsVC: NSViewController {
             ),
             CheckboxPreferenceView.make(
                 sectionText: "",
+                descriptionText: "prefs.icon_hint_desc".localized,
+                checkboxText: "prefs.icon_hint_title".localized,
+                preference: .shouldDisplayPhpHintInIcon,
+                action: {
+                    MainMenu.shared.refreshIcon()
+                }
+            ),
+            CheckboxPreferenceView.make(
+                sectionText: "prefs.info_density".localized,
                 descriptionText: "prefs.display_full_php_version_desc".localized,
                 checkboxText: "prefs.display_full_php_version".localized,
                 preference: .fullPhpVersionDynamicIcon,
                 action: {
                     MainMenu.shared.refreshIcon()
-                    MainMenu.shared.update()
+                    MainMenu.shared.rebuild()
                 }
             ),
             CheckboxPreferenceView.make(
@@ -74,23 +83,29 @@ class PrefsVC: NSViewController {
                 preference: .autoServiceRestartAfterExtensionToggle,
                 action: {}
             ),
-            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
             CheckboxPreferenceView.make(
-                sectionText: "",
-                descriptionText: "prefs.use_internal_switcher_desc".localized,
-                checkboxText: "prefs.use_internal_switcher".localized,
-                preference: .useInternalSwitcher,
+                sectionText: "prefs.switcher".localized,
+                descriptionText: "prefs.auto_composer_update_desc".localized,
+                checkboxText: "prefs.auto_composer_update_title".localized,
+                preference: .autoComposerGlobalUpdateAfterSwitch,
                 action: {}
-            ), */
+            ),
             HotkeyPreferenceView.make(
                 sectionText: "prefs.global_shortcut".localized,
                 descriptionText: "prefs.shortcut_desc".localized,
                 self
-            )
+            ),
+            CheckboxPreferenceView.make(
+                sectionText: "prefs.integrations".localized,
+                descriptionText: "prefs.open_protocol_desc".localized,
+                checkboxText: "prefs.open_protocol_title".localized,
+                preference: .allowProtocolForIntegrations,
+                action: {}
+            ),
         ].forEach({ self.stackView.addArrangedSubview($0) })
     }
     
-    // MARK: - Listening for hotkey dleegate
+    // MARK: - Listening for hotkey delegate
     
     var listeningForHotkeyView: HotkeyPreferenceView? = nil
     
@@ -103,6 +118,6 @@ class PrefsVC: NSViewController {
     // MARK: - Deinitialization
     
     deinit {
-        print("VC deallocated")
+        Log.perf("PrefsVC deallocated")
     }
 }

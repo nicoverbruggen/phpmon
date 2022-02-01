@@ -8,7 +8,7 @@
 import Cocoa
 import HotKey
 
-class App {
+class App: PhpSwitcherDelegate {
     
     // MARK: Static Vars
     
@@ -22,14 +22,9 @@ class App {
         return "\(version) (\(build))"
     }
     
-    /** Information about the currently linked PHP installation. */
-    static var phpInstall: ActivePhpInstallation? {
-        return App.shared.currentInstall
-    }
-    
     /** Whether the app is busy doing something. Used to determine what UI to display. */
     static var busy: Bool {
-        return App.shared.busy
+        return PhpEnv.shared.isBusy
     }
     
     // MARK: Variables
@@ -43,42 +38,12 @@ class App {
     /** The window controller of the currently active site list window. */
     var siteListWindowController: SiteListWC? = nil
     
-    /** Whether the application is busy switching versions. */
-    var busy: Bool = false
-    
-    /** The currently active installation of PHP. */
-    var currentInstall: ActivePhpInstallation? = nil
-    
-    /** All available versions of PHP. */
-    var availablePhpVersions: [String] = []
-    
-    /** Cached information about the PHP installations. */
-    var cachedPhpInstallations: [String: PhpInstallation] = [:]
-    
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
     
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
-    
-    /** Information we were able to discern from the Homebrew info command (as JSON). */
-    var brewPhpPackage: HomebrewPackage! = nil {
-        didSet {
-            brewPhpVersion = brewPhpPackage!.version
-        }
-    }
-    
-    /**
-     The version that the `php` formula via Brew is aliased to on the current system.
-     
-     If you're up to date, `php` will be aliased to the latest version,
-     but that might not be the case.
-     
-     We'll technically default to the version in Constants.swift, but the information
-     should always be loaded from Homebrew itself upon startup.
-     */
-    var brewPhpVersion: String = Constants.LatestStablePhpVersion
-    
+
     // MARK: - Global Hotkey
     
     /**
@@ -102,4 +67,26 @@ class App {
      */
     var openWindows: [String] = []
     
+    // MARK: - App Watchers
+    
+    /**
+     The `PhpConfigWatcher` is responsible for watching the `.ini` files and the `.conf.d` folder.
+     */
+    var watcher: PhpConfigWatcher!
+    
+    // MARK: - PhpSwitcherDelegate
+    
+    func switcherDidStartSwitching() {
+    }
+    
+    func switcherDidCompleteSwitch() {
+        PhpEnv.shared.currentInstall = ActivePhpInstallation()
+        handlePhpConfigWatcher()
+        
+        if let window = siteListWindowController {
+            DispatchQueue.main.async {
+                window.contentVC.reloadSites()
+            }
+        }
+    }
 }

@@ -23,96 +23,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - UI related
     
     /**
-     Kick off the startup of the rendering of the main menu.
-     */
-    func startup() {
-        // Start with the icon
-        setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
-        
-        // Perform environment boot checks
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Startup().checkEnvironment(success: { onEnvironmentPass() },
-                                       failure: { onEnvironmentFail() }
-            )
-        }
-    }
-    
-    /**
-     When the environment is all clear and the app can run, let's go.
-     */
-    private func onEnvironmentPass() {
-        _ = Actions.detectPhpVersions()
-        
-        if HomebrewDiagnostics.shared.errors.contains(.aliasConflict) {
-            DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_alias_conflict.title".localized,
-                    info: "alert.php_alias_conflict.info".localized,
-                    style: .critical
-                )
-            }
-        }
-        
-        updatePhpVersionInStatusBar()
-        
-        print("Determining broken PHP-FPM...")
-        // Attempt to find out if PHP-FPM is broken
-        let installation = App.phpInstall!
-        installation.notifyAboutBrokenPhpFpm()
-        
-        print("Detecting applications...")
-        // Attempt to load list of applications
-        App.shared.detectedApplications = Application.detectPresetApplications()
-        let appNames = App.shared.detectedApplications.map { app in
-            return app.name
-        }
-        print("Detected applications: \(appNames)")
-        
-        // Load the global hotkey
-        App.shared.loadGlobalHotkey()
-        
-        // Attempt to find out more info about Valet
-        print("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version)")
-        Valet.shared.validateVersion()
-        Valet.shared.startPreloadingSites()
-        print("PHP Monitor is ready to serve!")
-        
-        // Schedule a request to fetch the PHP version every 60 seconds
-        DispatchQueue.main.async { [self] in
-            App.shared.timer = Timer.scheduledTimer(
-                timeInterval: 60,
-                target: self,
-                selector: #selector(updatePhpVersionInStatusBar),
-                userInfo: nil,
-                repeats: true
-            )
-        }
-    }
-    
-    /**
-     When the environment is not OK, present an alert to inform the user.
-     */
-    private func onEnvironmentFail() {
-        DispatchQueue.main.async { [self] in
-            let close = Alert.present(
-                messageText: "alert.cannot_start.title".localized,
-                informativeText: "alert.cannot_start.info".localized,
-                buttonTitle: "alert.cannot_start.close".localized,
-                secondButtonTitle: "alert.cannot_start.retry".localized
-            )
-            
-            if (close) {
-                exit(1)
-            }
-            
-            startup()
-        }
-    }
-    
-    /**
      Update the menu's contents, based on what's going on.
+     This will rebuild the entire menu, so this can take a few moments.
      */
-    func update() {
+    func rebuild() {
         // Update the menu item on the main thread
         DispatchQueue.main.async { [self] in
             // Create a new menu
@@ -131,10 +45,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
             
             // Add services
-            menu.addServicesMenuItems()
-            menu.addItem(NSMenuItem.separator())
-            
-            // Add information about services & actions
             menu.addPhpConfigurationMenuItems()
             menu.addItem(NSMenuItem.separator())
             
@@ -158,7 +68,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: MenuBarImageGenerator.textToImageWithIcon(text: version)
+            image: Preferences.isEnabled(.shouldDisplayPhpHintInIcon)
+                ? MenuBarImageGenerator.textToImageWithIcon(text: version)
+                : MenuBarImageGenerator.textToImage(text: version)
         )
     }
     
@@ -185,16 +97,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
      */
     private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
     {
-        App.shared.busy = true
+        PhpEnv.shared.isBusy = true
         setBusyImage()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            update()
             execute()
-            App.shared.busy = false
+            PhpEnv.shared.isBusy = false
             
             DispatchQueue.main.async { [self] in
+                PhpEnv.shared.currentInstall = ActivePhpInstallation()
                 updatePhpVersionInStatusBar()
-                update()
+                NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
                 completion()
             }
         }
@@ -202,10 +114,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     // MARK: - User Interface
     
+    @objc func refreshActiveInstallation() {
+        if !PhpEnv.shared.isBusy {
+            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            updatePhpVersionInStatusBar()
+        } else {
+            Log.perf("Skipping version refresh due to busy status")
+        }
+    }
+    
     @objc func updatePhpVersionInStatusBar() {
-        App.shared.currentInstall = ActivePhpInstallation()
         refreshIcon()
-        update()
+        rebuild()
     }
     
     func refreshIcon() {
@@ -219,22 +139,23 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-                    setStatusBarImage(version: long ? App.phpInstall!.version.long  : App.phpInstall!.version.short)
+                    setStatusBarImage(version: long ? PhpEnv.phpInstall.version.long  : PhpEnv.phpInstall.version.short)
                 }
             }
+        }
+    }
+    
+    @objc func reloadPhpMonitorMenuInBackground() {
+        waitAndExecute {
+            // This automatically reloads the menu
+            Log.info("Reloading information about the PHP installation (in the background)...")
         }
     }
     
     @objc func reloadPhpMonitorMenu() {
         waitAndExecute {
             // This automatically reloads the menu
-            print("Reloading information about the PHP installation...")
-        } completion: {
-            // Add a slight delay to make sure it loads the new menu
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                // Open the menu again
-                MainMenu.shared.statusItem.button?.performClick(nil)
-            }
+            Log.info("Reloading information about the PHP installation...")
         }
     }
     
@@ -296,46 +217,59 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         waitAndExecute {
             sender.phpExtension?.toggle()
             
-            if Preferences.preferences[.autoServiceRestartAfterExtensionToggle] as! Bool == true {
+            if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
                 Actions.restartPhpFpm()
             }
         }
     }
     
     @objc func openPhpInfo() {
+        var url: URL? = nil
+        
         waitAndExecute {
-            // Write a file called `phpmon_phpinfo.php` to /tmp
-            try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
-            
-            // Tell php-cgi to run the PHP and output as an .html file
-            Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+            url = Actions.createTempPhpInfoFile()
         } completion: {
             // When this has been completed, open the URL to the file in the browser
-            NSWorkspace.shared.open(URL(string: "file:///private/tmp/phpmon_phpinfo.html")!)
+            NSWorkspace.shared.open(url!)
         }
     }
     
-    @objc func forceRestartLatestPhp() {
+    @objc func fixMyValet() {
         // Tell the user the switch is about to occur
-        Alert.notify(message: "alert.force_reload.title".localized, info: "alert.force_reload.info".localized)
-        
-        // Start switching
-        waitAndExecute {
-            Actions.fixMyPhp()
-        } completion: {
-            Alert.notify(message: "alert.force_reload_done.title".localized, info: "alert.force_reload_done.info".localized)
+        if Alert.present(
+            messageText: "alert.fix_my_valet.title".localized,
+            informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
+            buttonTitle: "alert.fix_my_valet.ok".localized,
+            secondButtonTitle: "alert.fix_my_valet.cancel".localized,
+            style: .warning
+        ) {
+            // Start the fix
+            waitAndExecute {
+                Actions.fixMyValet()
+            } completion: {
+                Alert.notify(
+                    message: "alert.fix_my_valet_done.title".localized,
+                    info: "alert.fix_my_valet_done.info".localized
+                )
+            }
+        } else {
+            Log.info("The user has chosen to abort Fix My Valet")
         }
+    }
+    
+    @objc func updateGlobalComposerDependencies() {
+        self.updateGlobalDependencies(notify: true, completion: { _ in })
     }
     
     @objc func openActiveConfigFolder() {
-        if (App.phpInstall!.version.error) {
+        if (PhpEnv.phpInstall.version.error) {
             // php version was not identified
             Actions.openGenericPhpConfigFolder()
             return
         }
         
         // php version was identified
-        Actions.openPhpConfigFolder(version: App.phpInstall!.version.short)
+        Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
     }
     
     @objc func openGlobalComposerFolder() {
@@ -347,53 +281,70 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
+        self.switchToPhpVersion(sender.version)
+    }
+    
+    // TODO (5.1): Investigate if `waitAndExecute` cannot be used here
+    @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
-        App.shared.busy = true
+        PhpEnv.shared.isBusy = true
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             // Update the PHP version in the status bar
             updatePhpVersionInStatusBar()
             
             // Update the menu
-            update()
+            rebuild()
             
+            let sendLocalNotification = {
+                LocalNotification.send(
+                    title: String(format: "notification.version_changed_title".localized, version),
+                    subtitle: String(format: "notification.version_changed_desc".localized, version)
+                )
+                PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
+            }
+        
             let completion = {
+                // Fire off the delegate method
+                PhpEnv.shared.delegate?.switcherDidCompleteSwitch()
+                
                 // Mark as no longer busy
-                App.shared.busy = false
+                PhpEnv.shared.isBusy = false
                 
                 // Perform UI updates on main thread
                 DispatchQueue.main.async { [self] in
                     updatePhpVersionInStatusBar()
-                    update()
+                    rebuild()
                     
-                    // Send a notification that the switch has been completed
-                    LocalNotification.send(
-                        title: String(format: "notification.version_changed_title".localized, sender.version),
-                        subtitle: String(format: "notification.version_changed_desc".localized, sender.version)
-                    )
+                    if !PhpEnv.shared.validate(version) {
+                        let outcome = Alert.present(
+                            messageText: "alert.php_switch_failed.title".localized(version),
+                            informativeText: "alert.php_switch_failed.info".localized(version),
+                            buttonTitle: "alert.php_switch_failed.confirm".localized,
+                            secondButtonTitle: "alert.php_switch_failed.cancel".localized, style: .informational)
+                        if outcome {
+                            MainMenu.shared.fixMyValet()
+                        }
+                        return
+                    }
                     
-                    App.phpInstall?.notifyAboutBrokenPhpFpm()
+                    // Run composer updates
+                    if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
+                        self.updateGlobalDependencies(notify: false, completion: { _ in sendLocalNotification() })
+                    } else {
+                        sendLocalNotification()
+                    }
+                    
+                    // Update stats
+                    Stats.incrementSuccessfulSwitchCount()
+                    Stats.evaluateSponsorMessageShouldBeDisplayed()
                 }
             }
             
-            /* DISABLED UNTIL VALET SWITCHING IS OK (see #34)
-            if Preferences.preferences[.useInternalSwitcher] as! Bool == false {
-                // 1. Default switcher using Valet
-                // Will cause less issues, but is slower
-                Actions.switchToPhpVersionUsingValet(
-                    version: sender.version,
-                    availableVersions: App.shared.availablePhpVersions,
-                    completed: completion
-                )
-            } else { */
-                // 2. Custom switcher (internal)
-                // Will cause more issues with Homebrew and is faster
-                Actions.switchToPhpVersion(
-                    version: sender.version,
-                    availableVersions: App.shared.availablePhpVersions,
-                    completed: completion
-                )
-            /* } */
+            PhpEnv.switcher.performSwitch(
+                to: version,
+                completion: completion
+            )
         }
     }
     
@@ -410,6 +361,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         SiteListVC.show()
     }
     
+    @objc func openDonate() {
+        NSWorkspace.shared.open(Constants.DonationUrl)
+    }
+    
     @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
     }
@@ -424,5 +379,92 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     func menuDidClose(_ menu: NSMenu) {
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false
+    }
+    
+    // MARK: - Private Methods
+    
+    /**
+     Updates the global dependencies and runs the completion callback when done.
+     */
+    private func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
+        if !Shell.fileExists("/usr/local/bin/composer") {
+            Alert.notify(
+                message: "alert.composer_missing.title".localized,
+                info: "alert.composer_missing.info".localized
+            )
+            return
+        }
+        
+        PhpEnv.shared.isBusy = true
+        setBusyImage()
+        self.rebuild()
+        
+        let noLongerBusy = {
+            PhpEnv.shared.isBusy = false
+            DispatchQueue.main.async { [self] in
+                self.updatePhpVersionInStatusBar()
+                self.rebuild()
+            }
+        }
+        
+        var window: ProgressWindowController? = ProgressWindowController.display(
+            title: "alert.composer_progress.title".localized,
+            description: "alert.composer_progress.info".localized
+        )
+        window?.setType(info: true)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let task = Shell.user.createTask(
+                for: "/usr/local/bin/composer global update", requiresPath: true
+            )
+            
+            DispatchQueue.main.async {
+                window?.addToConsole("/usr/local/bin/composer global update\n")
+            }
+            
+            Shell.captureOutput(
+                task,
+                didReceiveStdOutData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
+                },
+                didReceiveStdErrData: { string in
+                    DispatchQueue.main.async {
+                        window?.addToConsole(string)
+                    }
+                    Log.perf("\(string.trimmingCharacters(in: .newlines))")
+                }
+            )
+            
+            task.launch()
+            task.waitUntilExit()
+            Shell.haltCapturingOutput(task)
+            
+            DispatchQueue.main.async {
+                if task.terminationStatus <= 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        window?.close()
+                        if (notify) {
+                            LocalNotification.send(
+                                title: "alert.composer_success.title".localized,
+                                subtitle: "alert.composer_success.info".localized
+                            )
+                        }
+                        window = nil
+                        noLongerBusy()
+                        completion(true)
+                    }
+                } else {
+                    window?.setType(info: false)
+                    window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
+                    window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
+                    window = nil
+                    noLongerBusy()
+                    completion(false)
+                }
+            }
+        }
     }
 }

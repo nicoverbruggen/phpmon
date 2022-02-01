@@ -11,7 +11,7 @@ import XCTest
 class PhpVersionDetectionTest: XCTestCase {
 
     func testCanDetectValidPhpVersions() throws {
-        let outcome = Actions.extractPhpVersions(from: [
+        let outcome = PhpEnv.shared.extractPhpVersions(from: [
             "", // empty lines should be omitted
             "php@8.0",
             "php@8.0", // should only be detected once
@@ -26,5 +26,4 @@ class PhpVersionDetectionTest: XCTestCase {
         
         XCTAssertEqual(outcome, ["8.0", "7.0", "5.6"])
     }
-
 }

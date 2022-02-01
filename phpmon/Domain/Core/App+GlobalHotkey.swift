@@ -20,13 +20,13 @@ extension App {
     func loadGlobalHotkey() {
         // Make sure we can retrieve the hotkey from preferences
         guard let hotkey = Preferences.preferences[.globalHotkey] as? String else {
-            print("No global hotkey was saved in preferences. None set.")
+            Log.info("No global hotkey was saved in preferences. None set.")
             return
         }
         
         // Make sure we can parse the JSON into the desired format
         guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
-            print("No global hotkey loaded, could not be parsed!")
+            Log.err("No global hotkey loaded, could not be parsed!")
             shortcutHotkey = nil
             return
         }

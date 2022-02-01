@@ -21,12 +21,6 @@ class PrefsWC: PMWindowController {
         return "Preferences"
     }
     
-    // MARK: - Window Lifecycle
-    
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    }
-    
     // MARK: - Key Interaction
     
     override func keyDown(with event: NSEvent) {
@@ -35,7 +29,7 @@ class PrefsWC: PMWindowController {
         if let vc = contentViewController as? PrefsVC {
             if vc.listeningForHotkeyView != nil {
                 if event.keyCode == Keys.Escape || event.keyCode == Keys.Space {
-                    print("A blacklisted key was pressed, canceling listen")
+                    Log.info("A blacklisted key was pressed, canceling listen!")
                     vc.listeningForHotkeyView = nil
                 } else {
                     vc.listeningForHotkeyView!.updateShortcut(event)

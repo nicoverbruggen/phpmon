@@ -1,15 +1,17 @@
-# PHP Monitor
-
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project.
 > You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
 
-<img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
+<h1 align="center"><b>PHP Monitor</b> (phpmon)</h1>
 
-**PHP Monitor** (or phpmon) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so you need to have it set up before you can use this.
+<p align="center">
+    <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
+</p>
 
-<img src="./docs/screenshot41.jpg" width="800px" alt="phpmon screenshot (menu bar app)"/>
+**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this</u>.
 
-<small><i>Screenshot: A menu showing all of the functionality of PHP Monitor.</i></small>
+<img src="./docs/screenshot50.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
+
+<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
@@ -19,7 +21,7 @@ PHP Monitor also gives you quick access to various useful functionality (like ac
 
 ## 🖥 System requirements
 
-PHP Monitor is a universal application that runs on Apple Silicon **and** Intel-based Macs.
+PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
@@ -30,7 +32,7 @@ _You may need to update your Valet installation to keep everything working if a 
 
 ## 🚀 How to install
 
-You can install via Homebrew (recommended), or may download the latest release on GitHub.
+Again, make sure you have **Laravel Valet** installed first. Once that's done, you can install via Homebrew (recommended), or may download the latest release on GitHub.
 
 To install via Homebrew, run:
 
@@ -41,7 +43,11 @@ To upgrade your existing installation, run:
 
 	brew upgrade phpmon
 
-_The app is signed and notarized, meaning all you have to do is approve its first launch._
+(You may need to run `brew update` first in order to update the cask file if you ran a Homebrew operation recently.)
+
+## 🔑 Is the app signed & notarized?
+
+Yes, the app is signed and notarized, meaning all you have to do is approve its first launch (or whenever it updates).
 
 ## 👨‍💻 Why build this?
 
@@ -51,9 +57,11 @@ Initially, I had an Alfred workflow for this — but it has now been replaced wi
 
 ## 🤬 The app won't start?!
 
-PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios. 
+PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios.
 
 **Follow instructions as specified in the alert in order to resolve any issues.**
+
+(If the app crashes at launch without showing you any of these messages, you might have a non-standard Homebrew and Valet setup. Those are not supported.)
 
 ## 🙋‍♂️ FAQ & Troubleshooting
 
@@ -246,6 +254,67 @@ The supported apps are: <i>PhpStorm, Visual Studio Code, Sublime Text, Sublime M
 All of these apps should just be detected correctly, no matter their location on your system. If you can open it using `open -a "appname"`, the app should be detected and work. If you have renamed the app, there might be an issue getting it detected.
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
+
+You can add your own apps by creating and editing a `~/.phpmon.conf.json` file, with the following entry:
+
+<pre>
+{
+    "scan_apps": ["Xcode", "Kraken"]
+}
+</pre>
+
+You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor will check for the existence of these apps. You do not need to set the full path, just the name of the app should work. Not all apps support opening a folder, though, so your success might vary.
+</details>
+
+<details>
+<summary><strong>How can the app integrate with third party tools, like Alfred?</strong></summary>
+
+There's an Alfred workflow usually included in the release list, you can grab it by going to releases and downloading the asset `phpmon.alfredworkflow`.
+
+If you'd like to integrate something yourself, all you need to to is use the `phpmon://` protocol and ensure that third party app integrations are enabled in Preferences (in PHP Monitor).
+
+Using app callbacks, macOS and PHP Monitor allow for the following to be called:
+
+* phpmon://list
+* phpmon://services/stop
+* phpmon://services/restart/all
+* phpmon://services/restart/nginx
+* phpmon://services/restart/php
+* phpmon://services/restart/dnsmasq
+* phpmon://locate/config
+* phpmon://locate/composer
+* phpmon://locate/valet
+* phpmon://phpinfo
+* phpmon://switch/php/{version}
+
+</details>
+
+<details>
+<summary><strong>How does the app know what PHP version is required for my app?</strong></summary>
+
+The `composer.json` file in the root of the folder (if it exists) is scanned and interpreted.
+
+If the version is set in `platform`, it takes precendence.
+If the version is not set in `platform` but it is in `require` (most common) then that version is used.
+</details>
+
+<details>
+<summary><strong>What do the checkmarks next to the PHP version mean in the site list?</strong></summary>
+
+You'll see a checkmark next to the version number if the currently enabled PHP version is compatible with the version required to run the site. 
+
+This is determined by evaluating the PHP requirement constraint (e.g. `^8.0`, `~8.0` or a specific version: `8.0`).
+</details>
+
+<details>
+<summary><strong>Why can't I see the driver type any more? It says "Project Type" now.</strong></summary>
+
+PHP Monitor currently checks your `composer.json` file to try to figure out what project you are running. 
+
+This approach is a lot faster than asking for a driver when you have many sites linked, but is slightly less reliable since the framework or type of project inferred via `composer.json` might not be 100% accurate.
+
+You can always still ask Valet using the command line, should it be necessary. In my experience fetching the drivers slowed down the app unnecessarily.
+
 </details>
 
 <details>
@@ -253,12 +322,18 @@ To see which files are checked to determine availability, see [this file](./phpm
 
 This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
 
+If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information.
+
 </details>
 
 <details>
 <summary><strong>The app has crashed!</strong></summary>
 
 Please get in touch and open an issue. PHP Monitor shouldn't crash... (unless you are actually removing PHP *while* the app is running, that’s considered normal behaviour!)
+
+If you would like to report a crash, please include the associated **log files** so I can find out what exactly went wrong.
+
+To find the logs, take a look in `~/Library/Logs/DiagnosticReports` (in Finder) and see if there's any (log) files that start with "PHP Monitor".
 
 </details>
 
@@ -279,11 +354,10 @@ Donations really help with the Apple Developer Program cost, and keep me motivat
 While I did make this application during my own free time, I have been lucky enough to do various experiments during work hours at [DIVE](https://dive.be). I'd also like to shout out the following folks:
 
 * My colleagues at [DIVE](https://dive.be)
-* The [Homebrew](https://brew.sh/) team who maintain
-* The [developers & maintainers of Valet](https://github.com/laravel/valet/graphs/contributors)
+* The [Homebrew](https://brew.sh/) team & [Valet maintainers](https://github.com/laravel/valet/graphs/contributors)
+* Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot) when PHP Monitor was still very much a small app with a handful of stars or so
 * Everyone in the Laravel community who shared the app (thanks!)
-* Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot)
-* Everyone who left feedback via issues
+* Everyone who left feedback via issues & who donated to keep the project up and running
 
 Thank you very much for your contributions, kind words and support.
 
@@ -301,11 +375,29 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
 
+### Config change detection
+
+PHP Monitor watches your filesystem in the relevant `conf.d` directory for the currently linked PHP version. 
+
+Whenever an .ini file is modified, PHP Monitor will attempt to reload the current information about the active PHP installation. 
+
+If an extension or other process writes to a single file a bunch of times in a short span of time (&lt; 1 sec), PHP Monitor will only reload the active configuration information after a while (with a slight delay).
+
+### Site detection
+
+1. **Location of your sites**: PHP Monitor uses the Valet configuration file to determine which folders to look into. Each folder is scanned and then PHP Monitor will validate if a composer.json file exists to determine the desired PHP version.
+1. **Sites secured or not secured**: Whether the directory has been secured is determined by checking if a matching certificate exists under Valet's `Certificates` directory for that site name.
+1. **Project type**: PHP Monitor checks your `composer.json` file for "notable dependencies". If you have `laravel/framework` in your `require`, there's a good chance the project type is `Laravel`, after all.
+
+*Note*: If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
+
 ### Want to know more?
 
-If you want to know more about how this works, I recommend you check out the source code. 
+If you want to know more about how this works, I recommend you check out the source code.
 
-This app isn't very complicated after all. In the end, this just (conveniently) executes some shell commands.
+I have done my best to annotate as much as humanly possible, and have avoided using an overly complicated architecture to keep the code as easy to maintain as possible. The code isn't perfect by a long shot (lots of cleanup can still happen!) but the application works well.
+
+I also have a few tests for key parts of the application that I found needed to be tested. In the future, I would like to add even more tests for some of the UI stuff, but for now the tests are more unit tests than feature tests.
 
 ## 🔧 Build instructions
 
