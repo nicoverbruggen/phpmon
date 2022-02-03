@@ -34,17 +34,42 @@ class Actions {
         brew("services stop dnsmasq", sudo: true)
     }
     
-    /**
-     Kindly asks Valet to switch to a specific PHP version.
-     */
-    public static func switchToPhpVersionUsingValet(
-        version: String,
-        availableVersions: [String],
-        completed: @escaping () -> Void
-    ) {
-        Log.info("Switching to \(version) using Valet")
-        Log.info(valet("use php@\(version)"))
-        completed()
+    public static func fixHomebrewPermissions()
+    {
+        var servicesCommands = [
+            "\(Paths.brew) services stop nginx",
+            "\(Paths.brew) services stop dnsmasq",
+        ]
+        var cellarCommands = [
+            "chown -R \(Paths.whoami):staff \(Paths.cellarPath)/nginx",
+            "chown -R \(Paths.whoami):staff \(Paths.cellarPath)/dnsmasq"
+        ]
+        
+        PhpEnv.shared.availablePhpVersions.forEach { version in
+            let formula = version == PhpEnv.brewPhpVersion
+                ? "php"
+                : "php@\(version)"
+            servicesCommands.append("\(Paths.brew) services stop \(formula)")
+            cellarCommands.append("chown -R \(Paths.whoami):staff \(Paths.cellarPath)/\(formula)")
+        }
+        
+        let script =
+            servicesCommands.joined(separator: " && ")
+            + " && "
+            + cellarCommands.joined(separator: " && ")
+        
+        let appleScript = NSAppleScript(
+            source: "do shell script \"\(script)\" with administrator privileges"
+        )
+        
+        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
+        
+        if (eventResult == nil) {
+            print("Oh no, that didn't work.")
+        } else {
+            NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+            print("Oh, that worked.")
+        }
     }
     
     // MARK: - Finding Config Files

@@ -48,6 +48,10 @@ public class Paths {
         return shared.userName
     }
     
+    public static var cellarPath: String {
+        return "\(shared.baseDir.rawValue)/Cellar"
+    }
+    
     public static var binPath: String {
         return "\(shared.baseDir.rawValue)/bin"
     }

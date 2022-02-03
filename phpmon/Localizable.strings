@@ -27,6 +27,7 @@
 "mi_stop_all_services" = "Stop All Services";
 "mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
 "mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
+"mi_fix_brew_permissions" = "Fix Homebrew Permissions";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";

@@ -167,6 +167,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     // MARK: - Actions
     
+    @objc func fixHomebrewPermissions() {
+        Actions.fixHomebrewPermissions()
+    }
+    
     @objc func restartPhpFpm() {
         waitAndExecute {
             Actions.restartPhpFpm()

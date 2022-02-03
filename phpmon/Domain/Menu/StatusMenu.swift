@@ -51,8 +51,12 @@ class StatusMenu : NSMenu {
         } else {
             servicesMenu.addItem(NSMenuItem(
                 title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-                action: #selector(MainMenu.fixMyValet), keyEquivalent: "f"))
+                action: #selector(MainMenu.fixMyValet), keyEquivalent: ""))
         }
+        
+        servicesMenu.addItem(NSMenuItem(
+            title: "mi_fix_brew_permissions".localized(),
+            action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: ""))
         
         servicesMenu.addItem(NSMenuItem(title: "mi_services".localized, action: nil, keyEquivalent: ""))
         
