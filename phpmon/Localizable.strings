@@ -180,7 +180,7 @@
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
-"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /user/local/bin`.";
+"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
 
 "alert.composer_progress.title" = "Updating global dependencies...";
 "alert.composer_progress.info" = "You can see the progress in the terminal output below.";
