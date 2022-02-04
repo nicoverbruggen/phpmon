@@ -27,13 +27,13 @@ class Log {
     
     static func err(_ item: Any) {
         if Verbosity.error.isApplicable() {
-            print(item)
+            print("[ERR] \(item)")
         }
     }
     
     static func warn(_ item: Any) {
         if Verbosity.warning.isApplicable() {
-            print(item)
+            print("[WRN] \(item)")
         }
     }
     

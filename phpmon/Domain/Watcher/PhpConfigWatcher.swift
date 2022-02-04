@@ -47,6 +47,11 @@ class PhpConfigWatcher {
     }
     
     func addWatcher(for url: URL, eventMask: DispatchSource.FileSystemEvent, behaviour: FSWatcherBehaviour = .reloadsMenu) {
+        if !Filesystem.fileExists(url.path) {
+            Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
+            return
+        }
+        
         let watcher = FSWatcher(for: url, eventMask: eventMask, parent: self, behaviour: behaviour)
         self.watchers.append(watcher)
     }
