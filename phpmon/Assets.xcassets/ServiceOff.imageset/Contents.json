@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "ServiceOff.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "times-circle.svg",
+      "filename" : "ServiceOff@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

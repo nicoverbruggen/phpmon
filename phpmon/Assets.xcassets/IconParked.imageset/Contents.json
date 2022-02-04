@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "Parked.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "car-alt.svg",
+      "filename" : "Parked@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
