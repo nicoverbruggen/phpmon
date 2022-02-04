@@ -49,14 +49,6 @@ class Startup {
             breaking:           true
         )
         
-        Valet.shared.version = VersionExtractor.from(valet("--version"))
-        performEnvironmentCheck(
-            Valet.shared.version == nil,
-            messageText:        "startup.errors.valet_version_unknown.title".localized,
-            informativeText:    "startup.errors.valet_version_unknown.desc".localized,
-            breaking:           true
-        )
-        
         performEnvironmentCheck(
             HomebrewDiagnostics.cannotLoadService(),
             messageText:        "startup.errors.services_json_error.title".localized,
@@ -81,12 +73,13 @@ class Startup {
             breaking:           true
         )
         
-        let services = Shell.pipe("\(Paths.brew) services list | grep php")
+        // Determine the Valet version only AFTER confirming the correct permission is in place
+        Valet.shared.version = VersionExtractor.from(valet("--version"))
         performEnvironmentCheck(
-            (services.countInstances(of: "started") > 1),
-            messageText:        "startup.errors.services.title".localized,
-            informativeText:    "startup.errors.services.desc".localized,
-            breaking:           false
+            Valet.shared.version == nil,
+            messageText:        "startup.errors.valet_version_unknown.title".localized,
+            informativeText:    "startup.errors.valet_version_unknown.desc".localized,
+            breaking:           true
         )
         
         if (!failed) {
