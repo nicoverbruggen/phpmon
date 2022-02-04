@@ -42,7 +42,7 @@ class MenuBarImageGenerator {
         
         let targetImage: NSImage = NSImage(size: image.size)
         
-        let rep: NSBitmapImageRep = NSBitmapImageRep(
+        let representation: NSBitmapImageRep = NSBitmapImageRep(
             bitmapDataPlanes: nil,
             pixelsWide: Int(image.size.width),
             pixelsHigh: Int(image.size.height),
@@ -55,7 +55,7 @@ class MenuBarImageGenerator {
             bitsPerPixel: 0
         )!
         
-        targetImage.addRepresentation(rep)
+        targetImage.addRepresentation(representation)
         targetImage.lockFocus()
 
         image.draw(in: imageRect)
@@ -69,32 +69,63 @@ class MenuBarImageGenerator {
      The same as before, but also attempts to add an icon to the left.
      */
     public static func textToImageWithIcon(text: String) -> NSImage {
-        let textImage = self.textToImage(text: text)
-        let iconImage = NSImage(named: "StatusBarPHP")!
-        let iconWidthSize = iconImage.size.width
-        let divider = iconWidthSize
         
+        // We'll start out with the image containing the text
+        let textImage = self.textToImage(text: text)
+        
+        // Then we'll fetch the image we want on the left
+        let iconImage = NSImage(named: "MB_PHP")!
+        
+        // We'll need to reference the width of the icon a bunch of times
+        let iconWidthSize = iconImage.size.width
+        
+        // There will also be an additional divider between the image and the text (image)
+        let divider: CGFloat = 3
+        
+        // Use a fixed size for the height of the menu bar (18pt)
         let imageRect = CGRect(
             x: 0,
             y: 0,
-            width: textImage.size.width + divider,
-            height: textImage.size.height
+            width: textImage.size.width + iconWidthSize + divider,
+            height: 18
         )
         
+        // Create a new image, we'll draw the text and our icon in there
         let image: NSImage = NSImage(size: imageRect.size)
         image.lockFocus()
+
+        // Calculate the offset between the image and the text
+        let offset = imageRect.size.width - textImage.size.width
         
-        let difference = imageRect.size.width - textImage.size.width
+        // Draw the text with a negative x offset (so there is room on the left for the icon)
+        textImage.draw(
+            in: imageRect,
+            from: NSRect(
+                x: -offset,
+                y: 0,
+                width: textImage.size.width + offset,
+                height: textImage.size.height
+            ),
+            operation: .overlay,
+            fraction: 1
+        )
         
-        textImage.draw(in: imageRect, from: NSRect(
-            x: -difference,
-            y: 0, width: textImage.size.width + difference,
-            height: textImage.size.height
-        ), operation: .overlay, fraction: 1)
+        // Draw the icon directly in the left of the imageRect (where we left space)
+        iconImage.draw(
+            in: imageRect,
+            from: NSRect(
+                x: 0,
+                y: 0,
+                width: imageRect.size.width,
+                height: imageRect.size.height
+            ),
+            operation: .overlay,
+            fraction: 1
+        )
         
-        iconImage.draw(in: imageRect, from: NSRect(x: 0, y: 0, width: imageRect.size.width * 1.6, height: imageRect.size.height * 2.0), operation: .overlay, fraction: 1)
-        
+        // We're done with this image
         image.unlockFocus()
+        
         return image
     }
     

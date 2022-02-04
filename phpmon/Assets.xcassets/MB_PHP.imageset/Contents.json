@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "Menu Bar.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "php@2x.png",
+      "filename" : "Menu Bar@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

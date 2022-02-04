@@ -20,7 +20,7 @@ public class Paths {
     private var userName : String
     
     init() {
-        baseDir = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew") ? .opt : .usr
+        baseDir = FileManager.default.fileExists(atPath: "\(HomebrewDir.opt.rawValue)/bin/brew") ? .opt : .usr
         userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
     }
     
