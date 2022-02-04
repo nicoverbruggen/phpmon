@@ -54,9 +54,11 @@ class StatusMenu : NSMenu {
                 action: #selector(MainMenu.fixMyValet), keyEquivalent: ""))
         }
         
+        /*
         servicesMenu.addItem(NSMenuItem(
             title: "mi_fix_brew_permissions".localized(),
             action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: ""))
+        */
         
         servicesMenu.addItem(NSMenuItem(title: "mi_services".localized, action: nil, keyEquivalent: ""))
         
