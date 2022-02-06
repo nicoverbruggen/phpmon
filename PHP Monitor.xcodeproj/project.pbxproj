@@ -85,6 +85,8 @@
 		C44CCD4527AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
 		C44CCD4627AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
 		C44CCD4727AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
+		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
+		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
@@ -272,6 +274,7 @@
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPermissionError.swift; sourceTree = "<group>"; };
+		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* SiteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListCell.swift; sourceTree = "<group>"; };
@@ -551,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
+				C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */,
 				C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
@@ -957,6 +961,7 @@
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */,
 				C4EC1E6D279DF87A0010F296 /* Async.swift in Sources */,
+				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
@@ -1053,6 +1058,7 @@
 				C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
+				C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */,
 				C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
