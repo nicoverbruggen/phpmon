@@ -51,6 +51,9 @@ class Alert {
         }
     }
     
+    /**
+     Notify the user about something by showing an alert.
+     */
     public static func notify(message: String, info: String, style: NSAlert.Style = .informational) {
         _ = present(
             messageText: message,
@@ -61,7 +64,11 @@ class Alert {
         )
     }
     
-    public static func notifyAbout(error: Error&AlertableError) {
+    /**
+     Notify the user about a particular error (which must be `Alertable`)
+     by showing an alert.
+     */
+    public static func notify(about error: Error & AlertableError) {
         let key = error.getErrorMessageKey()
         _ = present(
             messageText: "\(key).title".localized,

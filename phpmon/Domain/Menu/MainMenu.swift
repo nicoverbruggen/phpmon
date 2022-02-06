@@ -160,9 +160,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
                 style: .warning
             )
         } failure: { error in
-            let error = error as! HomebrewPermissionError
-            Alert.notifyAbout(error: error)
-            
+            Alert.notify(about: error as! HomebrewPermissionError)
         }
     }
     
