@@ -133,21 +133,25 @@
 "prefs.subtitle" = "Preferences";
 "prefs.close" = "Close";
 
-"prefs.global_shortcut" = "Global shortcut:";
-"prefs.dynamic_icon" = "Icon customization:";
-"prefs.info_density" = "Info density:";
+"prefs.global_shortcut" = "Global Shortcut:";
+"prefs.dynamic_icon" = "Dynamic Icon:";
+"prefs.dynamic_icon" = "Icon Type:";
+"prefs.info_density" = "Info Density:";
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 "prefs.integrations" = "Integrations:";
+
+"prefs.icon_options.php" = "Display PHP Icon";
+"prefs.icon_options.elephant" = "Display Elephant Icon";
+"prefs.icon_options.none" = "Do Not Display Icon";
+
+"prefs.icon_options_desc" = "This option decides which icon will be displayed next to the version number of the currently linked PHP version. If the Dynamic Icon option has been disabled, this will have no effect.";
 
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
 "prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when you check or uncheck an extension. Slightly slower when enabled, but this applies the extension change immediately for all sites you're serving, no need to restart PHP-FPM manually.";
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible. If checked, it will display the major version number of the currently linked PHP version.";
-
-"prefs.icon_hint_title" = "Display PHP hint next to version number";
-"prefs.icon_hint_desc" = "If you uncheck this box, the icon in the menu bar will only show the version number and not the PHP hint. This preference does not do anything if the dynamic icon has been disabled.";
 
 "prefs.display_full_php_version" = "Display full PHP version everywhere";
 "prefs.display_full_php_version_desc" = "Display the full version instead of the major version displayed in the menu bar and the dropdown menu. (This may be undesirable on smaller displays, so this is disabled by default.)";

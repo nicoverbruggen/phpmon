@@ -74,7 +74,13 @@ class MenuBarImageGenerator {
         let textImage = self.textToImage(text: text)
         
         // Then we'll fetch the image we want on the left
-        let iconImage = NSImage(named: "MB_PHP")!
+        var iconType = Preferences.preferences[.iconTypeToDisplay] as? String
+        if iconType == nil {
+            Log.warn("Invalid icon type found, using the default")
+            iconType = MenuBarIcon.iconPhp.rawValue
+        }
+        
+        let iconImage = NSImage(named: "MenuBar_\(iconType!)")!
         
         // We'll need to reference the width of the icon a bunch of times
         let iconWidthSize = iconImage.size.width

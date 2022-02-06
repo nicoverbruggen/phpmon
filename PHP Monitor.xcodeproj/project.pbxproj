@@ -14,8 +14,8 @@
 		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
-		54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
-		54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
+		54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */; };
+		54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */; };
 		54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
 		54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
 		54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
@@ -24,6 +24,12 @@
 		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
+		C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */; };
+		C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */; };
+		C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */; };
+		C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */; };
+		C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
+		C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
 		C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C40B24F227A310770018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C40B24F327A310780018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
@@ -235,12 +241,15 @@
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		54AB03252763858F00A29D5F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
-		54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
+		54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxPreferenceView.swift; sourceTree = "<group>"; };
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
+		C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
+		C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPreferenceView.swift; sourceTree = "<group>"; };
+		C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcons.swift; sourceTree = "<group>"; };
 		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
 		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -378,6 +387,7 @@
 				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
 				C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */,
+				C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */,
 				C4DEB7D327A5D60B00834718 /* Stats.swift */,
 				C41CD0272628D8E20065BBED /* Keybinds */,
 				54FCFD28276C88C0004CE748 /* Views */,
@@ -401,8 +411,10 @@
 		54FCFD28276C88C0004CE748 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */,
+				C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */,
 				54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */,
+				54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */,
+				C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */,
 				54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */,
 				54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */,
 			);
@@ -852,9 +864,10 @@
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
-				54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
+				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C4F30B07278E195800755FCE /* brew-services.json in Resources */,
+				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
@@ -866,9 +879,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
+				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
+				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
@@ -921,6 +935,7 @@
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */,
 				C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
@@ -954,6 +969,7 @@
 				C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
+				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				54AB03262763858F00A29D5F /* Timer.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C417DC74277614690015E6EE /* Helpers.swift in Sources */,
@@ -1006,6 +1022,7 @@
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
+				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
 				C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
@@ -1031,6 +1048,7 @@
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
+				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
 				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
