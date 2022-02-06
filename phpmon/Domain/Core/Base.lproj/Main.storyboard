@@ -771,7 +771,7 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="600" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="1" y="293" width="598" height="15"/>
+                                    <rect key="frame" x="1" y="292" width="598" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">
@@ -808,7 +808,7 @@ Gw
     </scenes>
     <resources>
         <image name="Checkmark" width="512" height="512"/>
-        <image name="IconLinked" width="512" height="512"/>
+        <image name="IconLinked" width="25" height="25"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>

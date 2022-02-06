@@ -79,6 +79,12 @@
 		C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
 		C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
+		C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
+		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
+		C44CCD4227AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
+		C44CCD4527AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
+		C44CCD4627AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
+		C44CCD4727AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
 		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
@@ -264,6 +270,8 @@
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
 		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
+		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
+		C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPermissionError.swift; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* SiteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListCell.swift; sourceTree = "<group>"; };
@@ -517,6 +525,15 @@
 			path = Progress;
 			sourceTree = "<group>";
 		};
+		C44CCD4327AFE93300CE40E5 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */,
+				C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		C464ADAA275A7A25003FCD53 /* SiteList */ = {
 			isa = PBXGroup;
 			children = (
@@ -617,6 +634,7 @@
 		C4B5853A2770FE2500DA4FBE /* phpmon-common */ = {
 			isa = PBXGroup;
 			children = (
+				C44CCD4327AFE93300CE40E5 /* Errors */,
 				C40C7F2127721F7300DDDCDC /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 			);
@@ -872,7 +890,9 @@
 				C4EC1E6E279DF87A0010F296 /* Async.swift in Sources */,
 				C40C7F2327721F8200DDDCDC /* ActivePhpInstallation.swift in Sources */,
 				C4B585462770FE3900DA4FBE /* Command.swift in Sources */,
+				C44CCD4727AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */,
 				C4D9ADCA277611A0007277F4 /* InternalSwitcher.swift in Sources */,
+				C44CCD4227AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C48D6C72279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C40C7F2527721F9800DDDCDC /* HomebrewPackage.swift in Sources */,
 				C417DC76277614690015E6EE /* Helpers.swift in Sources */,
@@ -919,6 +939,7 @@
 				C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
+				C44CCD4527AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
@@ -939,6 +960,7 @@
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
+				C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
@@ -1010,7 +1032,9 @@
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
+				C44CCD4627AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
+				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
 				54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
@@ -1215,7 +1239,7 @@
 		C41C1B4422B0098000E7CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = phpmon/phpmon.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1230,7 +1254,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "5.1-dev";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1240,7 +1264,7 @@
 		C41C1B4522B0098000E7CF16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconBeta;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = phpmon/phpmon.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1255,7 +1279,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "5.1-dev";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

@@ -27,7 +27,7 @@
 "mi_stop_all_services" = "Stop All Services";
 "mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
 "mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
-"mi_fix_brew_permissions" = "Fix Homebrew Permissions";
+"mi_fix_brew_permissions" = "Restore Homebrew Permissions";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -214,6 +214,15 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.fix_my_valet_done.title" = "Fix My Valet has completed its operations.";
 "alert.fix_my_valet_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
 
+// Restore Homebrew Permissions
+"alert.fix_homebrew_permissions.title" = "About \"Restore Homebrew Permissions\"";
+"alert.fix_homebrew_permissions.info" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\nThis will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.ok" = "Restore Permissions";
+"alert.fix_homebrew_permissions.cancel" = "Cancel";
+
+"alert.fix_homebrew_permissions_done.title" = "Permissions Fixed!";
+"alert.fix_homebrew_permissions_done.info" = "When you are done with Homebrew, you should open PHP Monitor and restart all services if you want Valet to work again. It is also recommended to restart PHP Monitor after running `brew upgrade`.";
+
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
 "alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config: it's not pointing to the Valet socket. This will result in 502 Bad Gateway if you visit websites linked via Valet.\n\nYou can usually fix this by running\n`valet install`, which updates your\n PHP-FPM configuration.";
@@ -279,3 +288,8 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these new features. In that case, this is a THANK YOU message to you.\n\nTo be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
 "startup.sponsor_encouragement.accept" = "Yes, I would like to sponsor";
 "startup.sponsor_encouragement.skip" = "Nevermind";
+
+// ERROR MESSAGES (based on AlertableError)
+
+"alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
+"alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";

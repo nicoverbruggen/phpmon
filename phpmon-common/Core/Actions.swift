@@ -34,7 +34,7 @@ class Actions {
         brew("services stop dnsmasq", sudo: true)
     }
     
-    public static func fixHomebrewPermissions()
+    public static func fixHomebrewPermissions() throws
     {
         var servicesCommands = [
             "\(Paths.brew) services stop nginx",
@@ -65,10 +65,7 @@ class Actions {
         let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
         
         if (eventResult == nil) {
-            print("Oh no, that didn't work.")
-        } else {
-            NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
-            print("Oh, that worked.")
+            throw HomebrewPermissionError(kind: .applescriptNilError)
         }
     }
     

@@ -59,5 +59,16 @@ class Alert {
             secondButtonTitle: "",
             style: style
         )
-    }    
+    }
+    
+    public static func notifyAbout(error: Error&AlertableError) {
+        let key = error.getErrorMessageKey()
+        _ = present(
+            messageText: "\(key).title".localized,
+            informativeText: "\(key).description".localized,
+            buttonTitle: "OK",
+            secondButtonTitle: "",
+            style: .critical
+        )
+    }
 }

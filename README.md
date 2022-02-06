@@ -320,9 +320,9 @@ You can always still ask Valet using the command line, should it be necessary. I
 <details>
 <summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
 
-This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
+You can now use **First Aid & Services > Restore Homebrew Permissions** to (temporarily) resolve this issue and allow for a clean and painless `brew upgrade` or `brew cleanup` process.
 
-If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information.
+If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information about why this is needed.
 
 </details>
 

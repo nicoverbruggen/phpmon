@@ -87,29 +87,81 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     
     // MARK: - Nicer callbacks
     
+    enum AsyncBehaviour {
+        case setsBusyUI
+        case reloadsPhpInstallation
+        case updatesMenuBarContents
+        case broadcastServicesUpdate
+    }
+    
     /**
-     Executes a specific callback and fires the completion callback,
-     while updating the UI as required. As long as the completion callback
-     does not fire, the app is presumed to be busy and the UI reflects this.
+     Attempts asynchronous execution of a callback that may throw an Error.
+     While the callback is being executed, the UI will be marked as busy.
      
      - Parameter execute: Callback of the work that needs to happen.
-     - Parameter completion: Callback that is fired when the work is done.
+     - Parameter success: Callback that is fired when all was OK.
+     - Parameter failure: Callback that is fired when an Error was thrown.
+     - Parameter behaviours: Various behaviours that can be tweaked, but usually best left to the default.
      */
-    private func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {})
-    {
-        PhpEnv.shared.isBusy = true
-        setBusyImage()
+    private func asyncExecution(
+        _ execute: @escaping () throws -> Void,
+        success: @escaping () -> Void = {},
+        failure: @escaping (Error) -> Void = { _ in },
+        behaviours: [AsyncBehaviour] = [
+            .setsBusyUI,
+            .reloadsPhpInstallation,
+            .updatesMenuBarContents,
+            .broadcastServicesUpdate
+        ]
+    ) {
+        if behaviours.contains(.reloadsPhpInstallation) {
+            PhpEnv.shared.isBusy = true
+        }
+        if behaviours.contains(.setsBusyUI) {
+            setBusyImage()
+        }
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            execute()
-            PhpEnv.shared.isBusy = false
+            var error: Error? = nil
+            
+            do { try execute() } catch let e { error = e }
+            
+            if behaviours.contains(.setsBusyUI) {
+                PhpEnv.shared.isBusy = false
+            }
             
             DispatchQueue.main.async { [self] in
-                PhpEnv.shared.currentInstall = ActivePhpInstallation()
-                updatePhpVersionInStatusBar()
-                NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
-                completion()
+                if behaviours.contains(.reloadsPhpInstallation) {
+                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
+                }
+                
+                if behaviours.contains(.updatesMenuBarContents) {
+                    // Refresh the entire menu bar menu's contents
+                    updatePhpVersionInStatusBar()
+                } else {
+                    // We do still need to refresh the icon based on the busy state
+                    if behaviours.contains(.setsBusyUI) {
+                        refreshIcon()
+                    }
+                }
+                
+                if behaviours.contains(.broadcastServicesUpdate) {
+                    NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+                }
+                
+                error == nil ? success() : failure(error!)
             }
         }
+    }
+    
+    public func asyncWithBusyUI(
+        _ execute: @escaping () throws -> Void,
+        completion: @escaping () -> Void = {}
+    ) {
+        asyncExecution({
+            try! execute()
+        }, success: {
+            completion()
+        }, behaviours: [.setsBusyUI])
     }
     
     // MARK: - User Interface
@@ -146,14 +198,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func reloadPhpMonitorMenuInBackground() {
-        waitAndExecute {
+        asyncExecution {
             // This automatically reloads the menu
             Log.info("Reloading information about the PHP installation (in the background)...")
         }
     }
     
     @objc func reloadPhpMonitorMenu() {
-        waitAndExecute {
+        asyncExecution {
             // This automatically reloads the menu
             Log.info("Reloading information about the PHP installation...")
         }
@@ -168,21 +220,43 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     // MARK: - Actions
     
     @objc func fixHomebrewPermissions() {
-        Actions.fixHomebrewPermissions()
+        if !Alert.present(
+            messageText: "alert.fix_homebrew_permissions.title".localized,
+            informativeText: "alert.fix_homebrew_permissions.info".localized,
+            buttonTitle: "alert.fix_homebrew_permissions.ok".localized,
+            secondButtonTitle: "alert.fix_homebrew_permissions.cancel".localized,
+            style: .warning
+        ) {
+            return
+        }
+        
+        asyncExecution {
+            try Actions.fixHomebrewPermissions()
+        } success: {
+            Alert.notify(
+                message: "alert.fix_homebrew_permissions_done.title".localized,
+                info: "alert.fix_homebrew_permissions_done.info".localized,
+                style: .warning
+            )
+        } failure: { error in
+            let error = error as! HomebrewPermissionError
+            Alert.notifyAbout(error: error)
+            
+        }
     }
     
     @objc func restartPhpFpm() {
-        waitAndExecute {
+        asyncExecution {
             Actions.restartPhpFpm()
         }
     }
     
     @objc func restartAllServices() {
-        waitAndExecute {
+        asyncExecution {
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
             Actions.restartNginx()
-        } completion: {
+        } success: {
             DispatchQueue.main.async {
                 LocalNotification.send(
                     title: "notification.services_restarted".localized,
@@ -193,9 +267,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func stopAllServices() {
-        waitAndExecute {
+        asyncExecution {
             Actions.stopAllServices()
-        } completion: {
+        } success: {
             DispatchQueue.main.async {
                 LocalNotification.send(
                     title: "notification.services_stopped".localized,
@@ -206,19 +280,19 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     }
     
     @objc func restartNginx() {
-        waitAndExecute {
+        asyncExecution {
             Actions.restartNginx()
         }
     }
     
     @objc func restartDnsMasq() {
-        waitAndExecute {
+        asyncExecution {
             Actions.restartDnsMasq()
         }
     }
     
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        waitAndExecute {
+        asyncExecution {
             sender.phpExtension?.toggle()
             
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
@@ -230,34 +304,32 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
     @objc func openPhpInfo() {
         var url: URL? = nil
         
-        waitAndExecute {
+        asyncWithBusyUI {
             url = Actions.createTempPhpInfoFile()
         } completion: {
-            // When this has been completed, open the URL to the file in the browser
-            NSWorkspace.shared.open(url!)
+            if url != nil { NSWorkspace.shared.open(url!) }
         }
     }
     
     @objc func fixMyValet() {
-        // Tell the user the switch is about to occur
-        if Alert.present(
+        if !Alert.present(
             messageText: "alert.fix_my_valet.title".localized,
             informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
             buttonTitle: "alert.fix_my_valet.ok".localized,
             secondButtonTitle: "alert.fix_my_valet.cancel".localized,
             style: .warning
         ) {
-            // Start the fix
-            waitAndExecute {
-                Actions.fixMyValet()
-            } completion: {
-                Alert.notify(
-                    message: "alert.fix_my_valet_done.title".localized,
-                    info: "alert.fix_my_valet_done.info".localized
-                )
-            }
-        } else {
             Log.info("The user has chosen to abort Fix My Valet")
+            return
+        }
+        
+        asyncExecution {
+            Actions.fixMyValet()
+        } success: {
+            Alert.notify(
+                message: "alert.fix_my_valet_done.title".localized,
+                info: "alert.fix_my_valet_done.info".localized
+            )
         }
     }
     
@@ -288,7 +360,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate {
         self.switchToPhpVersion(sender.version)
     }
     
-    // TODO (5.1): Investigate if `waitAndExecute` cannot be used here
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnv.shared.isBusy = true
