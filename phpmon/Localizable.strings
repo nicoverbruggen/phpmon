@@ -37,8 +37,8 @@
 "mi_upload_max_filesize" = "Max Upload";
 "mi_manual_actions" = "Manual Actions";
 "mi_services" = "Services";
-"mi_help" = "First Aid";
 "mi_other" = "First Aid & Services";
+"mi_first_aid" = "First Aid";
 
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet folder (.config/valet)";
