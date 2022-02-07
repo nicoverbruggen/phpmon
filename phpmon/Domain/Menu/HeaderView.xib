@@ -29,7 +29,7 @@
             <connections>
                 <outlet property="textField" destination="ddg-VQ-cOT" id="aaQ-Xb-o2X"/>
             </connections>
-            <point key="canvasLocation" x="-115" y="38"/>
+            <point key="canvasLocation" x="177" y="105"/>
         </customView>
     </objects>
 </document>
