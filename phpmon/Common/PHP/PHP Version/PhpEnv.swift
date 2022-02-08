@@ -156,7 +156,7 @@ class PhpEnv {
      */
     public func validate(_ version: String) -> Bool {
         if self.currentInstall.version.short == version {
-            print("Switching to version \(version) seems to have succeeded. Validation passed.")
+            Log.info("Switching to version \(version) seems to have succeeded. Validation passed.")
             return true
         }
         

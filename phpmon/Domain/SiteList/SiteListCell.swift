@@ -102,7 +102,7 @@ class SiteListCell: NSTableCellView
             if response.rawValue > NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
                 if map.keys.contains(response.rawValue) {
                     let version = map[response.rawValue]!
-                    print("Pressed button to switch to \(version)")
+                    Log.info("Pressed button to switch to \(version)")
                     MainMenu.shared.switchToPhpVersion(version)
                 }
             }

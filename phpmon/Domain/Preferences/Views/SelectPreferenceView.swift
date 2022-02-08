@@ -32,7 +32,6 @@ class SelectPreferenceView: NSView, XibLoadable {
             }
         
             self.popupButton.itemArray.enumerated().forEach { item in
-                print("\(imagePrefix!)_\(self.options[item.offset])")
                 item.element.image = NSImage(named: "\(imagePrefix!)_\(self.options[item.offset])")
             }
         }
