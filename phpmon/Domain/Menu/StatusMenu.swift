@@ -111,12 +111,10 @@ class StatusMenu : NSMenu {
             )
         }
         
-        /* (disabled until v5.1 and further tweaking)
         servicesMenu.addItem(NSMenuItem(
             title: "mi_fix_brew_permissions".localized(),
             action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: "")
         )
-        */
         
         servicesMenu.addItem(NSMenuItem.separator())
         servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
