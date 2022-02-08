@@ -41,7 +41,7 @@
 "mi_first_aid" = "First Aid";
 
 "mi_composer" = "Composer";
-"mi_valet_config" = "Locate Valet folder (.config/valet)";
+"mi_valet_config" = "Locate Valet Folder (.config/valet)";
 "mi_php_config" = "Locate PHP Configuration File (php.ini)";
 "mi_global_composer" = "Locate Global Composer File (.composer)";
 "mi_phpinfo" = "Show Current Configuration (phpinfo)";
