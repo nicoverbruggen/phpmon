@@ -39,6 +39,8 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         return sites[tableView.selectedRow]
     }
     
+    var timer: Timer? = nil
+    
     // MARK: - Display
     
     public static func create(delegate: NSWindowDelegate?) {
@@ -90,7 +92,11 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
      Also shows a spinner to indicate that we're busy.
      */
     private func setUIBusy() {
-        progressIndicator.startAnimation(nil)
+        // If it takes more than 0.5s to set the UI to not busy, show a spinner
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
+            self.progressIndicator.startAnimation(true)
+        })
+        
         tableView.alphaValue = 0.3
         tableView.isEnabled = false
         tableView.selectRowIndexes([], byExtendingSelection: true)
@@ -100,6 +106,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
      Re-enables the UI so the user can interact with it.
      */
     private func setUINotBusy() {
+        timer?.invalidate()
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
         tableView.isEnabled = true
@@ -118,7 +125,9 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         setUIBusy()
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             execute()
-            DispatchQueue.main.async { [self] in
+            
+            // For a smoother animation, expect at least a 0.2 second delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
                 completion()
                 setUINotBusy()
             }
