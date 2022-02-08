@@ -30,17 +30,22 @@ extension App {
     func handlePhpConfigWatcher(forceReload: Bool = false) {
         let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpEnv.phpInstall.version.short)")
         
-        // Watcher needs to be created
-        if self.watcher == nil {
-            startWatcher(url)
-        }
-        
-        // Watcher needs to be updated
-        if self.watcher.url != url || forceReload {
-            self.watcher.disable()
-            self.watcher = nil
-            Log.info("Watcher has stopped watching files. Starting new one...")
-            startWatcher(url)
+        // Check whether the watcher exists and schedule on the main thread
+        // if we don't consistently do this, the app will create duplicate watchers
+        // due to timing issues, which creates retain cycles.
+        DispatchQueue.main.async {
+            // Watcher needs to be created
+            if self.watcher == nil {
+                self.startWatcher(url)
+            }
+            
+            // Watcher needs to be updated
+            if self.watcher.url != url || forceReload {
+                self.watcher.disable()
+                self.watcher = nil
+                Log.info("Watcher has stopped watching files. Starting new one...")
+                self.startWatcher(url)
+            }
         }
     }
     
