@@ -27,6 +27,7 @@
 "mi_stop_all_services" = "Stop All Services";
 "mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
 "mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
+"mi_fix_brew_permissions" = "Restore Homebrew Permissions";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -36,11 +37,11 @@
 "mi_upload_max_filesize" = "Max Upload";
 "mi_manual_actions" = "Manual Actions";
 "mi_services" = "Services";
-"mi_help" = "First Aid";
 "mi_other" = "First Aid & Services";
+"mi_first_aid" = "First Aid";
 
 "mi_composer" = "Composer";
-"mi_valet_config" = "Locate Valet folder (.config/valet)";
+"mi_valet_config" = "Locate Valet Folder (.config/valet)";
 "mi_php_config" = "Locate PHP Configuration File (php.ini)";
 "mi_global_composer" = "Locate Global Composer File (.composer)";
 "mi_phpinfo" = "Show Current Configuration (phpinfo)";
@@ -132,21 +133,25 @@
 "prefs.subtitle" = "Preferences";
 "prefs.close" = "Close";
 
-"prefs.global_shortcut" = "Global shortcut:";
-"prefs.dynamic_icon" = "Icon customization:";
-"prefs.info_density" = "Info density:";
+"prefs.global_shortcut" = "Global Shortcut:";
+"prefs.dynamic_icon" = "Dynamic Icon:";
+"prefs.dynamic_icon" = "Icon Type:";
+"prefs.info_density" = "Info Density:";
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 "prefs.integrations" = "Integrations:";
+
+"prefs.icon_options.php" = "Display PHP Icon";
+"prefs.icon_options.elephant" = "Display Elephant Icon";
+"prefs.icon_options.none" = "Do Not Display Icon";
+
+"prefs.icon_options_desc" = "This option decides which icon will be displayed next to the version number of the currently linked PHP version. If the Dynamic Icon option has been disabled, this will have no effect.";
 
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
 "prefs.auto_restart_services_desc" = "When checked, will automatically restart PHP-FPM when you check or uncheck an extension. Slightly slower when enabled, but this applies the extension change immediately for all sites you're serving, no need to restart PHP-FPM manually.";
 
 "prefs.dynamic_icon_title" = "Display dynamic icon in menu bar";
 "prefs.dynamic_icon_desc" = "If you uncheck this box, the truck icon will always be visible. If checked, it will display the major version number of the currently linked PHP version.";
-
-"prefs.icon_hint_title" = "Display PHP hint next to version number";
-"prefs.icon_hint_desc" = "If you uncheck this box, the icon in the menu bar will only show the version number and not the PHP hint. This preference does not do anything if the dynamic icon has been disabled.";
 
 "prefs.display_full_php_version" = "Display full PHP version everywhere";
 "prefs.display_full_php_version_desc" = "Display the full version instead of the major version displayed in the menu bar and the dropdown menu. (This may be undesirable on smaller displays, so this is disabled by default.)";
@@ -180,7 +185,7 @@
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
-"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /user/local/bin`.";
+"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
 
 "alert.composer_progress.title" = "Updating global dependencies...";
 "alert.composer_progress.info" = "You can see the progress in the terminal output below.";
@@ -212,6 +217,15 @@ problem manually, using your own Terminal app (this just shows you the output)."
 // Fix My Valet Done
 "alert.fix_my_valet_done.title" = "Fix My Valet has completed its operations.";
 "alert.fix_my_valet_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
+
+// Restore Homebrew Permissions
+"alert.fix_homebrew_permissions.title" = "About \"Restore Homebrew Permissions\"";
+"alert.fix_homebrew_permissions.info" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\nThis will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.ok" = "Restore Permissions";
+"alert.fix_homebrew_permissions.cancel" = "Cancel";
+
+"alert.fix_homebrew_permissions_done.title" = "Permissions Fixed!";
+"alert.fix_homebrew_permissions_done.info" = "When you are done with Homebrew, you should open PHP Monitor and restart all services if you want Valet to work again. It is also recommended to restart PHP Monitor after running `brew upgrade`.";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
@@ -278,3 +292,8 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these new features. In that case, this is a THANK YOU message to you.\n\nTo be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
 "startup.sponsor_encouragement.accept" = "Yes, I would like to sponsor";
 "startup.sponsor_encouragement.skip" = "Nevermind";
+
+// ERROR MESSAGES (based on AlertableError)
+
+"alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
+"alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";

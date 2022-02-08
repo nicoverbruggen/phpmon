@@ -320,9 +320,9 @@ You can always still ask Valet using the command line, should it be necessary. I
 <details>
 <summary><strong>After running PHP Monitor, Homebrew sometimes has issues with `brew upgrade` or `brew cleanup`!</strong></summary>
 
-This is a security feature of Homebrew. When you start a service as an administrator, the root user becomes the owner of relevant binaries. You will need to manually clean up those folders yourself using `rm -rf` (or by manually removing those folders via Finder).
+You can now use **First Aid & Services > Restore Homebrew Permissions** to (temporarily) resolve this issue and allow for a clean and painless `brew upgrade` or `brew cleanup` process.
 
-If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information.
+If you would like to know more, consult [this issue](https://github.com/nicoverbruggen/phpmon/issues/85) for more information about why this is needed.
 
 </details>
 
@@ -399,15 +399,4 @@ I have done my best to annotate as much as humanly possible, and have avoided us
 
 I also have a few tests for key parts of the application that I found needed to be tested. In the future, I would like to add even more tests for some of the UI stuff, but for now the tests are more unit tests than feature tests.
 
-## 🔧 Build instructions
-
-<img src="./docs/build.png" width="404px" alt="build button in Xcode"/>
-
-If you'd like to build PHP Monitor yourself, you need:
-
-* Xcode (usually the latest version)
-* The contents of this repository
-
-Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you should be able to immediately build the app for your system by pressing Cmd-R. This will create a debug build. (If Xcode complains about code signing, you can turn it off.)
-
-If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
+For more detailed information for developers, please see [the documentation file for developers](./DEVS.md).

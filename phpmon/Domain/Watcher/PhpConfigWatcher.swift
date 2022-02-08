@@ -40,19 +40,24 @@ class PhpConfigWatcher {
             self.addWatcher(for: self.url.appendingPathComponent("conf.d/\(file)"), eventMask: .write)
         }
         
-        Log.info("A watcher exists for the following config paths:")
-        Log.info(self.watchers.map({ watcher in
+        Log.perf("A watcher exists for the following config paths:")
+        Log.perf(self.watchers.map({ watcher in
             return watcher.url.relativePath
         }))
     }
     
     func addWatcher(for url: URL, eventMask: DispatchSource.FileSystemEvent, behaviour: FSWatcherBehaviour = .reloadsMenu) {
+        if !Filesystem.fileExists(url.path) {
+            Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
+            return
+        }
+        
         let watcher = FSWatcher(for: url, eventMask: eventMask, parent: self, behaviour: behaviour)
         self.watchers.append(watcher)
     }
     
     func disable() {
-        Log.info("Turning off existing watchers...")
+        Log.perf("Turning off all individual existing watchers...")
         self.watchers.forEach { (watcher) in
             watcher.stopMonitoring()
         }

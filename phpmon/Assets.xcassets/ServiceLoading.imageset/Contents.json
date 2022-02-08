@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "ServiceLoading.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "question-circle.svg",
+      "filename" : "ServiceLoading@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

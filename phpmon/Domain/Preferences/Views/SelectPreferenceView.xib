@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="SelectPreferenceView" customModule="PHP_Monitor" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="596" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-X1-qca">
+                    <rect key="frame" x="168" y="5" width="410" height="14"/>
+                    <textFieldCell key="cell" title="DESCRIPTION" id="9fH-up-Sob">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B8f-nb-Y0A">
+                    <rect key="frame" x="-2" y="29" width="154" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="euj-t0-xv4"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="SECTION" id="46w-Sv-y21">
+                        <font key="font" metaFont="systemMedium" size="13"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YaB-Tg-Ir3">
+                    <rect key="frame" x="167" y="23" width="110" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="Icon Option" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="SaA-mm-HBo" id="Su6-C4-aGo">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="WjV-7P-3WA">
+                            <items>
+                                <menuItem title="Icon Option" state="on" id="SaA-mm-HBo"/>
+                                <menuItem title="Item 2" id="I5Z-Ka-zo6"/>
+                                <menuItem title="Item 3" id="qUM-nV-HdU"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="valueChanged:" target="c22-O7-iKe" id="M95-aC-xtz"/>
+                    </connections>
+                </popUpButton>
+            </subviews>
+            <constraints>
+                <constraint firstItem="YaB-Tg-Ir3" firstAttribute="centerY" secondItem="B8f-nb-Y0A" secondAttribute="centerY" id="1t0-bW-LpQ"/>
+                <constraint firstItem="B8f-nb-Y0A" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="2Zu-h3-qb0"/>
+                <constraint firstItem="Bcg-X1-qca" firstAttribute="leading" secondItem="YaB-Tg-Ir3" secondAttribute="leading" id="5IQ-Nb-Q3V"/>
+                <constraint firstItem="YaB-Tg-Ir3" firstAttribute="leading" secondItem="B8f-nb-Y0A" secondAttribute="trailing" constant="20" id="6sr-bU-xvG"/>
+                <constraint firstItem="Bcg-X1-qca" firstAttribute="top" secondItem="YaB-Tg-Ir3" secondAttribute="bottom" constant="8" symbolic="YES" id="Mji-pe-CNl"/>
+                <constraint firstAttribute="trailing" secondItem="Bcg-X1-qca" secondAttribute="trailing" constant="20" symbolic="YES" id="UPo-Il-l81"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YaB-Tg-Ir3" secondAttribute="trailing" constant="20" symbolic="YES" id="Zlg-jj-uKY"/>
+                <constraint firstItem="B8f-nb-Y0A" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Ztd-uk-4aw"/>
+                <constraint firstAttribute="bottom" secondItem="Bcg-X1-qca" secondAttribute="bottom" constant="5" id="hNE-mU-jcu"/>
+            </constraints>
+            <connections>
+                <outlet property="labelDescription" destination="Bcg-X1-qca" id="T23-ag-AUf"/>
+                <outlet property="labelSection" destination="B8f-nb-Y0A" id="i61-ls-yM0"/>
+                <outlet property="popupButton" destination="YaB-Tg-Ir3" id="sAB-BL-qUQ"/>
+            </connections>
+            <point key="canvasLocation" x="149" y="-115"/>
+        </customView>
+    </objects>
+</document>

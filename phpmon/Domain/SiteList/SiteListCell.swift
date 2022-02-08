@@ -47,7 +47,6 @@ class SiteListCell: NSTableCellView
         imageViewType.contentTintColor = NSColor.tertiaryLabelColor
         
         // Show the green or red lock based on whether the site was secured
-        // imageViewLock.image = NSImage(named: site.secured ? "Lock" : "LockUnlocked")
         imageViewLock.contentTintColor = site.secured ?
             NSColor(named: "IconColorGreen") // green
             : NSColor(named: "IconColorRed")
@@ -103,7 +102,7 @@ class SiteListCell: NSTableCellView
             if response.rawValue > NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
                 if map.keys.contains(response.rawValue) {
                     let version = map[response.rawValue]!
-                    print("Pressed button to switch to \(version)")
+                    Log.info("Pressed button to switch to \(version)")
                     MainMenu.shared.switchToPhpVersion(version)
                 }
             }

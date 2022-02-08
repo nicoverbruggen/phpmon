@@ -9,13 +9,11 @@
 /* Begin PBXBuildFile section */
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
-		54AB03262763858F00A29D5F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB03252763858F00A29D5F /* Timer.swift */; };
-		54AB03272763858F00A29D5F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB03252763858F00A29D5F /* Timer.swift */; };
 		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
-		54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
-		54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */; };
+		54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */; };
+		54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */; };
 		54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
 		54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */; };
 		54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
@@ -24,37 +22,31 @@
 		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
+		C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */; };
+		C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */; };
+		C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */; };
+		C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */; };
+		C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
+		C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
 		C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C40B24F227A310770018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
-		C40B24F327A310780018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C40B24F527A3108B0018C7D2 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E6C279DF87A0010F296 /* Async.swift */; };
 		C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
 		C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
-		C40C7F202772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
-		C40C7F2227721F8200DDDCDC /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
-		C40C7F2327721F8200DDDCDC /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
-		C40C7F2427721F8200DDDCDC /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
-		C40C7F2527721F9800DDDCDC /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
-		C40C7F2627721FA200DDDCDC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
-		C40C7F2B2772201C00DDDCDC /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
-		C40C7F3227722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
-		C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3DE2770F34D005EF286 /* AllowedArguments.swift */; };
-		C415D3E62770F540005EF286 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3E52770F540005EF286 /* main.swift */; };
 		C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */; };
 		C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */; };
 		C417DC74277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C417DC75277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
-		C417DC76277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
 		C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188988275FE8CB001EF227 /* Filesystem.swift */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -79,6 +71,10 @@
 		C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
 		C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
+		C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
+		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
+		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
+		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
 		C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
@@ -101,8 +97,9 @@
 		C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0CA225CC992000CC7490 /* StatsView.swift */; };
 		C48D6C70279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* PhpVersionNumber.swift */; };
 		C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* PhpVersionNumber.swift */; };
-		C48D6C72279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* PhpVersionNumber.swift */; };
 		C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */; };
+		C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4927F0A27B2DFC200C55AFD /* Errors.swift */; };
+		C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4927F0A27B2DFC200C55AFD /* Errors.swift */; };
 		C493084A279F331F009C240B /* AddSiteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4930849279F331F009C240B /* AddSiteVC.swift */; };
 		C493084B279F331F009C240B /* AddSiteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4930849279F331F009C240B /* AddSiteVC.swift */; };
 		C4998F0626175E7200B2526E /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = C4998F0526175E7200B2526E /* HotKey */; };
@@ -121,13 +118,10 @@
 		C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */; };
 		C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
 		C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
-		C4B585402770FE3900DA4FBE /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
 		C4B585412770FE3900DA4FBE /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* Shell.swift */; };
 		C4B585422770FE3900DA4FBE /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* Shell.swift */; };
-		C4B585432770FE3900DA4FBE /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* Shell.swift */; };
 		C4B585442770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B585452770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
-		C4B585462770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
@@ -142,19 +136,20 @@
 		C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */; };
 		C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
+		C4CE3BB827B31F2E0086CA49 /* MainMenu+Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */; };
+		C4CE3BBA27B31F670086CA49 /* MainMenu+Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* MainMenu+Composer.swift */; };
+		C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */; };
+		C4CE3BBC27B324250086CA49 /* MainMenu+Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* MainMenu+Composer.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
-		C4D9ADC1277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
-		C4D9ADCA277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC1E65279DE0380010F296 /* ServicesView.xib */; };
 		C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C4EC1E6D279DF87A0010F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E6C279DF87A0010F296 /* Async.swift */; };
-		C4EC1E6E279DF87A0010F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E6C279DF87A0010F296 /* Async.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4EE55A927708B9E001DF387 /* PMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A627708B9E001DF387 /* PMHeaderView.swift */; };
@@ -170,12 +165,12 @@
 		C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4392752F7D00020E974 /* PhpInstallation.swift */; };
 		C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
 		C4F30B04278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
-		C4F30B05278E16BA00755FCE /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
 		C4F30B07278E195800755FCE /* brew-services.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F30B06278E195800755FCE /* brew-services.json */; };
 		C4F30B08278E195800755FCE /* brew-services.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F30B06278E195800755FCE /* brew-services.json */; };
 		C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
+		C4F319C927B034A500AFF46F /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
 		C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */; };
@@ -209,39 +204,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		C415D3D42770F341005EF286 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		54AB03252763858F00A29D5F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
-		54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
+		54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxPreferenceView.swift; sourceTree = "<group>"; };
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
+		C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
+		C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPreferenceView.swift; sourceTree = "<group>"; };
+		C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcons.swift; sourceTree = "<group>"; };
 		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
 		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
 		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
-		C415D3D62770F341005EF286 /* phpmon-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "phpmon-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C415D3DE2770F34D005EF286 /* AllowedArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllowedArguments.swift; sourceTree = "<group>"; };
-		C415D3E52770F540005EF286 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+InterApp.swift"; sourceTree = "<group>"; };
+		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
 		C417DC73277614690015E6EE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C4188988275FE8CB001EF227 /* Filesystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filesystem.swift; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,6 +246,8 @@
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
 		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
+		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
+		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* SiteListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListCell.swift; sourceTree = "<group>"; };
@@ -280,6 +265,7 @@
 		C48D0CA225CC992000CC7490 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* PhpVersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersionNumber.swift; sourceTree = "<group>"; };
 		C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionNumberTest.swift; sourceTree = "<group>"; };
+		C4927F0A27B2DFC200C55AFD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C4998F092617633900B2526E /* PrefsWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWC.swift; sourceTree = "<group>"; };
 		C49E171E27A5736E00787921 /* PMServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMServicesView.swift; sourceTree = "<group>"; };
@@ -301,6 +287,8 @@
 		C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App+ConfigWatch.swift"; sourceTree = "<group>"; };
 		C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpConfigWatcher.swift; sourceTree = "<group>"; };
 		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
+		C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Switcher.swift"; sourceTree = "<group>"; };
+		C4CE3BB927B31F670086CA49 /* MainMenu+Composer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Composer.swift"; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
 		C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
@@ -333,13 +321,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C415D3D32770F341005EF286 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C41C1B3022B0097F00E7CF16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +346,7 @@
 				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
 				C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */,
+				C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */,
 				C4DEB7D327A5D60B00834718 /* Stats.swift */,
 				C41CD0272628D8E20065BBED /* Keybinds */,
 				54FCFD28276C88C0004CE748 /* Views */,
@@ -388,8 +370,10 @@
 		54FCFD28276C88C0004CE748 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54FCFD25276C883F004CE748 /* CheckboxPreferenceView.xib */,
+				C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */,
 				54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */,
+				54FCFD25276C883F004CE748 /* SelectPreferenceView.xib */,
+				C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */,
 				54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */,
 				54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */,
 			);
@@ -431,26 +415,16 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		C415D3D72770F341005EF286 /* phpmon-cli */ = {
-			isa = PBXGroup;
-			children = (
-				C415D3E52770F540005EF286 /* main.swift */,
-				C415D3DE2770F34D005EF286 /* AllowedArguments.swift */,
-			);
-			path = "phpmon-cli";
-			sourceTree = "<group>";
-		};
 		C41C1B2A22B0097F00E7CF16 = {
 			isa = PBXGroup;
 			children = (
 				C4F8C0A522D4FA41002EFE61 /* README.md */,
 				C4E713562570150F00007428 /* SECURITY.md */,
 				C4F7807425D7F7E5000DBC97 /* RELEASE.md */,
+				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
 				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
-				C415D3D72770F341005EF286 /* phpmon-cli */,
-				C4B5853A2770FE2500DA4FBE /* phpmon-common */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 				C4D309E72770EF2F00958BCF /* Frameworks */,
 			);
@@ -461,7 +435,6 @@
 			children = (
 				C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */,
 				C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */,
-				C415D3D62770F341005EF286 /* phpmon-cli */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,6 +442,7 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
+				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C4232EE42612526500158FC6 /* Credits.html */,
@@ -492,15 +466,13 @@
 			isa = PBXGroup;
 			children = (
 				C4AF9F6B275445D300D44ED0 /* Integrations */,
-				C4B13B1D25C4915000548C3A /* Core */,
+				C4B13B1D25C4915000548C3A /* App */,
 				C4D9ADBD27761084007277F4 /* PHP */,
 				C47331A0247093AC009A0597 /* Menu */,
 				C464ADAA275A7A25003FCD53 /* SiteList */,
 				5420395726135DB800FB00FA /* Preferences */,
 				C44C198F276E3A380072762D /* Progress */,
 				C4C8E81D276F5686003AC782 /* Watcher */,
-				C4811D2822D70D9C00B5F6B3 /* Helpers */,
-				C4F8C0A222D4F100002EFE61 /* Extensions */,
 				C4EE55B027708BB2001DF387 /* SwiftUI */,
 			);
 			path = Domain;
@@ -513,6 +485,15 @@
 				C44C1990276E44CB0072762D /* ProgressWindow.storyboard */,
 			);
 			path = Progress;
+			sourceTree = "<group>";
+		};
+		C44CCD4327AFE93300CE40E5 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */,
+				C4927F0A27B2DFC200C55AFD /* Errors.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 		C464ADAA275A7A25003FCD53 /* SiteList */ = {
@@ -532,7 +513,10 @@
 			isa = PBXGroup;
 			children = (
 				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
+				C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */,
 				C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */,
+				C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */,
+				C4CE3BB927B31F670086CA49 /* MainMenu+Composer.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
 				C48D0C9925CC888B00CC7490 /* HeaderView.xib */,
@@ -553,7 +537,6 @@
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
-				54AB03252763858F00A29D5F /* Timer.swift */,
 				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
 				C4EC1E6C279DF87A0010F296 /* Async.swift */,
 			);
@@ -595,7 +578,7 @@
 			path = Homebrew;
 			sourceTree = "<group>";
 		};
-		C4B13B1D25C4915000548C3A /* Core */ = {
+		C4B13B1D25C4915000548C3A /* App */ = {
 			isa = PBXGroup;
 			children = (
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
@@ -609,16 +592,19 @@
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 			);
-			path = Core;
+			path = App;
 			sourceTree = "<group>";
 		};
-		C4B5853A2770FE2500DA4FBE /* phpmon-common */ = {
+		C4B5853A2770FE2500DA4FBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				C40C7F2127721F7300DDDCDC /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
+				C44CCD4327AFE93300CE40E5 /* Errors */,
+				C4F8C0A222D4F100002EFE61 /* Extensions */,
+				C4811D2822D70D9C00B5F6B3 /* Helpers */,
 			);
-			path = "phpmon-common";
+			path = Common;
 			sourceTree = "<group>";
 		};
 		C4C8E81D276F5686003AC782 /* Watcher */ = {
@@ -715,23 +701,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C415D3D52770F341005EF286 /* phpmon-cli */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C415D3DA2770F341005EF286 /* Build configuration list for PBXNativeTarget "phpmon-cli" */;
-			buildPhases = (
-				C415D3D22770F341005EF286 /* Sources */,
-				C415D3D32770F341005EF286 /* Frameworks */,
-				C415D3D42770F341005EF286 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "phpmon-cli";
-			productName = "phpmon-cli";
-			productReference = C415D3D62770F341005EF286 /* phpmon-cli */;
-			productType = "com.apple.product-type.tool";
-		};
 		C41C1B3222B0097F00E7CF16 /* PHP Monitor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */;
@@ -780,9 +749,6 @@
 				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
-					C415D3D52770F341005EF286 = {
-						CreatedOnToolsVersion = 13.2.1;
-					};
 					C41C1B3222B0097F00E7CF16 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -810,7 +776,6 @@
 			targets = (
 				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
 				C4F7807825D7F84B000DBC97 /* phpmon-tests */,
-				C415D3D52770F341005EF286 /* phpmon-cli */,
 			);
 		};
 /* End PBXProject section */
@@ -827,9 +792,10 @@
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
-				54FCFD26276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
+				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C4F30B07278E195800755FCE /* brew-services.json in Resources */,
+				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
@@ -841,9 +807,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54FCFD27276C883F004CE748 /* CheckboxPreferenceView.xib in Resources */,
+				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
+				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
@@ -854,33 +821,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C415D3D22770F341005EF286 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C40C7F2427721F8200DDDCDC /* PhpExtension.swift in Sources */,
-				C40C7F2627721FA200DDDCDC /* Constants.swift in Sources */,
-				C4B585402770FE3900DA4FBE /* Paths.swift in Sources */,
-				C415D3E62770F540005EF286 /* main.swift in Sources */,
-				C40B24F327A310780018C7D2 /* Events.swift in Sources */,
-				C40C7F2227721F8200DDDCDC /* PhpInstallation.swift in Sources */,
-				C4B585432770FE3900DA4FBE /* Shell.swift in Sources */,
-				C4D9ADC1277610E1007277F4 /* PhpSwitcher.swift in Sources */,
-				C4F30B05278E16BA00755FCE /* HomebrewService.swift in Sources */,
-				C4EC1E6E279DF87A0010F296 /* Async.swift in Sources */,
-				C40C7F2327721F8200DDDCDC /* ActivePhpInstallation.swift in Sources */,
-				C4B585462770FE3900DA4FBE /* Command.swift in Sources */,
-				C4D9ADCA277611A0007277F4 /* InternalSwitcher.swift in Sources */,
-				C48D6C72279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
-				C40C7F2527721F9800DDDCDC /* HomebrewPackage.swift in Sources */,
-				C417DC76277614690015E6EE /* Helpers.swift in Sources */,
-				C40C7F3227722E8D00DDDCDC /* Logger.swift in Sources */,
-				C40C7F2B2772201C00DDDCDC /* Actions.swift in Sources */,
-				C415D3E12770F34D005EF286 /* AllowedArguments.swift in Sources */,
-				C40C7F202772136000DDDCDC /* PhpEnv.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C41C1B2F22B0097F00E7CF16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -894,6 +834,7 @@
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */,
 				C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
@@ -914,6 +855,7 @@
 				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
 				54B48B5F275F66AE006D90C5 /* Application.swift in Sources */,
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
+				C4CE3BB827B31F2E0086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
@@ -926,7 +868,7 @@
 				C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
-				54AB03262763858F00A29D5F /* Timer.swift in Sources */,
+				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C417DC74277614690015E6EE /* Helpers.swift in Sources */,
 				C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
@@ -934,9 +876,12 @@
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */,
 				C4EC1E6D279DF87A0010F296 /* Async.swift in Sources */,
+				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
+				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
+				C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
@@ -944,6 +889,7 @@
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
+				C4CE3BBA27B31F670086CA49 /* MainMenu+Composer.swift in Sources */,
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
@@ -967,7 +913,6 @@
 				C4EE55AE27708B9E001DF387 /* PMStatsView.swift in Sources */,
 				C41CA5EE2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
-				54AB03272763858F00A29D5F /* Timer.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
@@ -976,12 +921,14 @@
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
+				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
 				C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
+				C4F319C927B034A500AFF46F /* Stats.swift in Sources */,
 				C4F30B04278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
@@ -1000,15 +947,19 @@
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
+				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
 				C464ADB3275A87CA003FCD53 /* SiteListCell.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
+				C4CE3BBC27B324250086CA49 /* MainMenu+Composer.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
+				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
+				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
 				54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
@@ -1027,6 +978,8 @@
 				C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
+				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
+				C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */,
 				C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
@@ -1065,34 +1018,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C415D3DB2770F341005EF286 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8M54J5J787;
-				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		C415D3DC2770F341005EF286 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8M54J5J787;
-				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		C41C1B4122B0098000E7CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1218,7 +1143,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 560;
+				CURRENT_PROJECT_VERSION = 610;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1227,7 +1152,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1243,7 +1168,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 560;
+				CURRENT_PROJECT_VERSION = 610;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1252,7 +1177,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1305,15 +1230,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C415D3DA2770F341005EF286 /* Build configuration list for PBXNativeTarget "phpmon-cli" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C415D3DB2770F341005EF286 /* Debug */,
-				C415D3DC2770F341005EF286 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -163,7 +163,7 @@ class Valet {
         
         // We should also check that we can interpret the path correctly
         if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
-            print("Warning: could not parse the site: \(siteDir), skipping!")
+            Log.warn("Could not parse the site: \(siteDir), skipping!")
             return
         }
         

@@ -57,11 +57,12 @@ class PrefsVC: NSViewController {
                     MainMenu.shared.refreshIcon()
                 }
             ),
-            CheckboxPreferenceView.make(
+            SelectPreferenceView.make(
                 sectionText: "",
-                descriptionText: "prefs.icon_hint_desc".localized,
-                checkboxText: "prefs.icon_hint_title".localized,
-                preference: .shouldDisplayPhpHintInIcon,
+                descriptionText: "prefs.icon_options_desc".localized,
+                options: MenuBarIcon.allCases.map({ return $0.rawValue }),
+                localizationPrefix: "prefs.icon_options",
+                preference: .iconTypeToDisplay,
                 action: {
                     MainMenu.shared.refreshIcon()
                 }

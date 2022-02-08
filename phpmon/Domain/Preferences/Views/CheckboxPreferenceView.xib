@@ -61,7 +61,7 @@
                 <outlet property="labelDescription" destination="Bcg-X1-qca" id="T23-ag-AUf"/>
                 <outlet property="labelSection" destination="B8f-nb-Y0A" id="i61-ls-yM0"/>
             </connections>
-            <point key="canvasLocation" x="149" y="-114.5"/>
+            <point key="canvasLocation" x="149" y="-115"/>
         </customView>
     </objects>
 </document>

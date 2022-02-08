@@ -8,6 +8,7 @@
 import Cocoa
 
 class StatusMenu : NSMenu {
+    
     func addPhpVersionMenuItems() {
         if PhpEnv.phpInstall.version.error {
             for message in ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"] {
@@ -35,47 +36,6 @@ class StatusMenu : NSMenu {
         
         self.addItem(ServicesView.asMenuItem())
         self.addItem(NSMenuItem.separator())
-    }
-    
-    func addOtherMenuItems() {
-        let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
-        let servicesMenu = NSMenu()
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_help".localized, action: nil, keyEquivalent: ""))
-        
-        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet_unavailable".localized(PhpEnv.brewPhpVersion),
-                action: nil, keyEquivalent: "f"
-            ))
-        } else {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-                action: #selector(MainMenu.fixMyValet), keyEquivalent: "f"))
-        }
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_services".localized, action: nil, keyEquivalent: ""))
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
-        
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
-            withKeyModifier: [.command, .shift])
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_manual_actions".localized, action: nil, keyEquivalent: ""))
-        
-        servicesMenu.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
-        
-        for item in servicesMenu.items {
-            item.target = MainMenu.shared
-        }
-        
-        self.setSubmenu(servicesMenu, for: services)
-        self.addItem(services)
     }
     
     func addValetMenuItems() {
@@ -131,8 +91,58 @@ class StatusMenu : NSMenu {
         
         // Other
         self.addItem(NSMenuItem.separator())
-        self.addOtherMenuItems()
+        self.addFirstAidAndServicesMenuItems()
     }
+    
+    func addFirstAidAndServicesMenuItems() {
+        let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
+        let servicesMenu = NSMenu()
+        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
+        
+        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
+            servicesMenu.addItem(NSMenuItem(
+                title: "mi_fix_my_valet_unavailable".localized(PhpEnv.brewPhpVersion),
+                action: nil, keyEquivalent: "f")
+            )
+        } else {
+            servicesMenu.addItem(NSMenuItem(
+                title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+                action: #selector(MainMenu.fixMyValet), keyEquivalent: "")
+            )
+        }
+        
+        /* (disabled until v5.1 and further tweaking)
+        servicesMenu.addItem(NSMenuItem(
+            title: "mi_fix_brew_permissions".localized(),
+            action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: "")
+        )
+        */
+        
+        servicesMenu.addItem(NSMenuItem.separator())
+        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_all_services".localized, action: #selector(MainMenu.restartAllServices), keyEquivalent: "s"))
+        servicesMenu.addItem(
+            NSMenuItem(title: "mi_stop_all_services".localized, action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
+            withKeyModifier: [.command, .shift])
+        
+        servicesMenu.addItem(NSMenuItem.separator())
+        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_manual_actions".localized))
+        
+        servicesMenu.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenuInForeground), keyEquivalent: "r"))
+        
+        for item in servicesMenu.items {
+            item.target = MainMenu.shared
+        }
+        
+        self.setSubmenu(servicesMenu, for: services)
+        self.addItem(services)
+    }
+    
+    // PRIVATE HELPERS
     
     private func addSwitchToPhpMenuItems() {
         var shortcutKey = 1

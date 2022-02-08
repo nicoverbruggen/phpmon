@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "ServiceOn.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "check-circle.svg",
+      "filename" : "ServiceOn@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

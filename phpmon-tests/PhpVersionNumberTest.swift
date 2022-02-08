@@ -12,6 +12,10 @@ class PhpVersionNumberTest: XCTestCase {
 
     func testCanDeconstructPhpVersion() throws {
         XCTAssertEqual(
+            try! PhpVersionNumber.parse("PHP 8.1.0RC5-dev"),
+            PhpVersionNumber(major: 8, minor: 1, patch: 0)
+        )
+        XCTAssertEqual(
             PhpVersionNumber.make(from: "8.0.11"),
             PhpVersionNumber(major: 8, minor: 0, patch: 11)
         )
@@ -27,6 +31,12 @@ class PhpVersionNumberTest: XCTestCase {
             PhpVersionNumber.make(from: "7"),
             nil
         )
+    }
+    
+    func testPhpVersionNumberParse() throws {
+        XCTAssertThrowsError(try PhpVersionNumber.parse("OOF")) { error in
+            XCTAssertTrue(error is VersionParseError)
+        }
     }
     
     func testCanCheckFixedConstraints() throws {
