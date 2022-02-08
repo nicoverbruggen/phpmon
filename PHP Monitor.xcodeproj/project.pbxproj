@@ -73,8 +73,6 @@
 		C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
 		C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
-		C44CCD4527AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
-		C44CCD4627AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */; };
 		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
@@ -245,7 +243,6 @@
 		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
-		C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPermissionError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
@@ -488,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */,
-				C44CCD4427AFE94900CE40E5 /* HomebrewPermissionError.swift */,
 				C4927F0A27B2DFC200C55AFD /* Errors.swift */,
 			);
 			path = Errors;
@@ -854,7 +850,6 @@
 				C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
-				C44CCD4527AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
@@ -951,7 +946,6 @@
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
-				C44CCD4627AFE94900CE40E5 /* HomebrewPermissionError.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
@@ -1137,7 +1131,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 600;
+				CURRENT_PROJECT_VERSION = 610;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1146,7 +1140,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "5.1-dev";
+				MARKETING_VERSION = 5.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1162,7 +1156,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 600;
+				CURRENT_PROJECT_VERSION = 610;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
@@ -1171,7 +1165,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = "5.1-dev";
+				MARKETING_VERSION = 5.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
