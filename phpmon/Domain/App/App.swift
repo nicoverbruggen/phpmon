@@ -8,7 +8,7 @@
 import Cocoa
 import HotKey
 
-class App: PhpSwitcherDelegate {
+class App {
     
     // MARK: Static Vars
     
@@ -73,20 +73,4 @@ class App: PhpSwitcherDelegate {
      The `PhpConfigWatcher` is responsible for watching the `.ini` files and the `.conf.d` folder.
      */
     var watcher: PhpConfigWatcher!
-    
-    // MARK: - PhpSwitcherDelegate
-    
-    func switcherDidStartSwitching() {
-    }
-    
-    func switcherDidCompleteSwitch() {
-        PhpEnv.shared.currentInstall = ActivePhpInstallation()
-        handlePhpConfigWatcher()
-        
-        if let window = siteListWindowController {
-            DispatchQueue.main.async {
-                window.contentVC.reloadSites()
-            }
-        }
-    }
 }

@@ -8,11 +8,6 @@
 
 import Foundation
 
-protocol PhpSwitcherDelegate: AnyObject {
-    func switcherDidStartSwitching()
-    func switcherDidCompleteSwitch()
-}
-
 class PhpEnv {
     
     // MARK: - Initializer

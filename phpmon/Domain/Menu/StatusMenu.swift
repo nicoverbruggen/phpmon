@@ -132,7 +132,7 @@ class StatusMenu : NSMenu {
         servicesMenu.addItem(NSMenuItem.separator())
         servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_manual_actions".localized))
         
-        servicesMenu.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenu), keyEquivalent: "r"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_php_refresh".localized, action: #selector(MainMenu.reloadPhpMonitorMenuInForeground), keyEquivalent: "r"))
         
         for item in servicesMenu.items {
             item.target = MainMenu.shared

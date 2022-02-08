@@ -8,6 +8,14 @@
 
 import Foundation
 
+protocol PhpSwitcherDelegate: AnyObject {
+    
+    func switcherDidStartSwitching(to: String)
+    
+    func switcherDidCompleteSwitch(to: String)
+    
+}
+
 protocol PhpSwitcher {
     
     func performSwitch(to version: String, completion: @escaping () -> Void)

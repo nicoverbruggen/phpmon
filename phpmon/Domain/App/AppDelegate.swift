@@ -45,12 +45,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let valet: Valet
     
     /**
-     The PhpSwitcher singleton that handles PHP version
+     The PhpEnv singleton that handles PHP version
      detection, as well as switching. It is initialized
      when the app is ready and passed all checks.
      */
-    var switcher: PhpEnv! = nil
+    var phpEnvironment: PhpEnv! = nil
     
+    /**
+     The logger is responsible for different levels of logging.
+     You can tweak the verbosity in the `init` method here.
+     */
     var logger = Log.shared
     
     // MARK: - Initializer
@@ -59,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      When the application initializes, create all singletons.
      */
     override init() {
-        logger.verbosity = .performance
+        logger.verbosity = .info
         Log.info("==================================")
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
@@ -73,8 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func initializeSwitcher() {
-        self.switcher = PhpEnv.shared
-        self.switcher.delegate = self.state
+        self.phpEnvironment = PhpEnv.shared
     }
     
     // MARK: - Lifecycle
