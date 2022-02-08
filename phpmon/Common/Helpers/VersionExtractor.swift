@@ -16,7 +16,7 @@ class VersionExtractor {
     public static func from(_ string: String) -> String? {
         do {
             let regex = try NSRegularExpression(
-                pattern: #"Laravel Valet (?<version>(\d+)(.)(\d+)((.)(\d+))?)"#,
+                pattern: #"(?<version>(\d+)(.)(\d+)((.)(\d+))?)"#,
                 options: []
             )
             

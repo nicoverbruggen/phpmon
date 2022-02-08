@@ -27,9 +27,10 @@ class PhpInstallation {
                 arguments: ["--version"]
             ).trimmingCharacters(in: .whitespacesAndNewlines)
             
-            self.longVersion = PhpVersionNumber.make(
-                from: String(longVersionString.split(separator: "-")[0])
-            )!
+            // The parser should always work, or the string has to be very unusual.
+            // If so, the app SHOULD crash, so that the users report what's up.
+            // TODO: Alert the user that the version number could not be parsed.
+            self.longVersion = try! PhpVersionNumber.parse(longVersionString)
         }
     }
     

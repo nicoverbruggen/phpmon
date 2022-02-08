@@ -118,6 +118,14 @@ public struct PhpVersionNumber: Equatable {
         */
     }
     
+    public static func parse(_ text: String) throws -> Self {
+        guard let versionText = VersionExtractor.from(text) else {
+            throw VersionParseError()
+        }
+        
+        return Self.make(from: versionText)!
+    }
+    
     public static func make(from versionString: String, type: MatchType = .versionOnly) -> Self? {
         let regex = try! NSRegularExpression(pattern: type.rawValue, options: [])
         let match = regex.matches(in: versionString, options: [], range: NSMakeRange(0, versionString.count)).first
