@@ -24,7 +24,7 @@ class Valet {
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
     
-    /// When initialising the Valet singleton, extract the Valet version and assume no sites loaded.
+    /// When initialising the Valet singleton assume no sites loaded. We will load the version later.
     init() {
         self.version = nil
         self.sites = []
