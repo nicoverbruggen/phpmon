@@ -309,7 +309,6 @@
 		C4F2E4392752F7D00020E974 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C4F30B02278E16BA00755FCE /* HomebrewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewService.swift; sourceTree = "<group>"; };
 		C4F30B06278E195800755FCE /* brew-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brew-services.json"; sourceTree = "<group>"; };
-		C4F7807425D7F7E5000DBC97 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4F7809B25D80344000DBC97 /* CommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTest.swift; sourceTree = "<group>"; };
@@ -420,7 +419,6 @@
 			children = (
 				C4F8C0A522D4FA41002EFE61 /* README.md */,
 				C4E713562570150F00007428 /* SECURITY.md */,
-				C4F7807425D7F7E5000DBC97 /* RELEASE.md */,
 				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
