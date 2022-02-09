@@ -10,9 +10,9 @@ import Foundation
 
 protocol PhpSwitcherDelegate: AnyObject {
     
-    func switcherDidStartSwitching(to: String)
+    func switcherDidStartSwitching(to version: String)
     
-    func switcherDidCompleteSwitch(to: String)
+    func switcherDidCompleteSwitch(to version: String)
     
 }
 
