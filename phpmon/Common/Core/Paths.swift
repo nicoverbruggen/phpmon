@@ -15,15 +15,15 @@ public class Paths {
     
     public static let shared = Paths()
     
-    private var baseDir : Paths.HomebrewDir
+    internal var baseDir : Paths.HomebrewDir
     
     private var userName : String
     
     init() {
-        baseDir = FileManager.default.fileExists(atPath: "\(HomebrewDir.opt.rawValue)/bin/brew") ? .opt : .usr
+        baseDir = App.architecture != "x86_64" ? .opt : .usr
         userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
     }
-    
+
     // - MARK: Binaries
     
     public static var valet: String {

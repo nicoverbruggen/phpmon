@@ -231,8 +231,15 @@ Since v3.4 all of the loaded .ini files are sourced to determine which extension
 <details>
 <summary><strong>I've got two Homebrew installations on my Apple Silicon Mac, can I choose which installation to use with PHP Monitor?</strong></summary>
 
-Not at this time, no. PHP Monitor will prefer the `/opt/homebrew` installation over the classic installation directory.
+If you are using PHP Monitor on an Intel machine or on an Apple Silicon machine with Rosetta enabled, PHP Monitor expects the main Homebrew binary in `/usr/local/bin/brew`.
 
+If you are using PHP Monitor on Apple Silicon without Rosetta, PHP Monitor expects the main Homebrew binary in `/opt/homebrew/bin/brew`.
+
+If there's an issue here, you'll get an alert at launch.
+
+Make sure that the version of Homebrew that you are running normally is the same as the one that PHP Monitor expects. If you are on M1 hardware for example, but still using Rosetta for Homebrew, you'll need to run PHP Monitor under Rosetta as well. 
+
+PHP Monitor is a universal app and supports both architectures, so [find out here](https://support.apple.com/en-us/HT211861) how to enable Rosetta with PHP Monitor.
 </details>
 
 <details>

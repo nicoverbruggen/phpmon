@@ -10,7 +10,7 @@ import AppKit
 
 class Startup {
     
-    public var failed : Bool = false
+    public var failed: Bool = false
     public var failureCallback = {}
     
     /**
@@ -27,40 +27,34 @@ class Startup {
         performEnvironmentCheck(
             !Shell.fileExists("\(Paths.binPath)/php"),
             messageText:        "startup.errors.php_binary.title".localized,
-            informativeText:    "startup.errors.php_binary.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.php_binary.desc".localized
         )
         
         performEnvironmentCheck(
             !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php"),
             messageText:        "startup.errors.php_opt.title".localized,
-            informativeText:    "startup.errors.php_opt.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.php_opt.desc".localized
         )
         
         performEnvironmentCheck(
             // Check for Valet; it can be symlinked or in .composer/vendor/bin
-            !(Shell.fileExists("/usr/local/bin/valet")
-                || Shell.fileExists("/opt/homebrew/bin/valet")
+            !(Shell.fileExists("\(Paths.binPath))/valet")
                 || Shell.fileExists("~/.composer/vendor/bin/valet")
             ),
             messageText:        "startup.errors.valet_executable.title".localized,
-            informativeText:    "startup.errors.valet_executable.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.valet_executable.desc".localized
         )
         
         performEnvironmentCheck(
             HomebrewDiagnostics.cannotLoadService(),
             messageText:        "startup.errors.services_json_error.title".localized,
-            informativeText:    "startup.errors.services_json_error.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.services_json_error.desc".localized
         )
         
         performEnvironmentCheck(
             !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
             messageText:        "startup.errors.sudoers_brew.title".localized,
-            informativeText:    "startup.errors.sudoers_brew.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.sudoers_brew.desc".localized
         )
         
         performEnvironmentCheck(
@@ -69,8 +63,7 @@ class Startup {
                 || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")
             ),
             messageText:        "startup.errors.sudoers_valet.title".localized,
-            informativeText:    "startup.errors.sudoers_valet.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.sudoers_valet.desc".localized
         )
         
         // Determine the Valet version only AFTER confirming the correct permission is in place
@@ -78,8 +71,7 @@ class Startup {
         performEnvironmentCheck(
             Valet.shared.version == nil,
             messageText:        "startup.errors.valet_version_unknown.title".localized,
-            informativeText:    "startup.errors.valet_version_unknown.desc".localized,
-            breaking:           true
+            informativeText:    "startup.errors.valet_version_unknown.desc".localized
         )
         
         if (!failed) {
@@ -101,32 +93,28 @@ class Startup {
     }
 
     /**
-     Perform an environment check. Will cause the application to terminate, if `breaking` is set to true.
+     Perform an environment check.
      
      - Parameter condition: Fail condition to check for; if this returns `true`, the alert will be shown
      - Parameter messageText: Short description of what is wrong
      - Parameter informativeText: Expanded description of the environment check that failed
-     - Parameter breaking: If the application should terminate afterwards
      */
     private func performEnvironmentCheck(
         _ condition: Bool,
         messageText: String,
-        informativeText: String,
-        breaking: Bool
+        informativeText: String
     ) {
         if (!condition) { return }
-        
-        failed = breaking
 
         DispatchQueue.main.async { [self] in
             // Present the information to the user
             Alert.notify(
                 message: messageText,
                 info: informativeText,
-                style: breaking ? .critical : .warning
+                style: .critical
             )
             // Only breaking issues will throw the extra retry modal
-            breaking ? failureCallback() : ()
+            failureCallback()
         }
     }
     

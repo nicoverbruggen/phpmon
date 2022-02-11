@@ -183,6 +183,10 @@
 
 // ALERTS
 
+"alert.homebrew_missing.title" = "PHP Monitor cannot start";
+"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@.\n\nA working Homebrew binary is expected in `%@`, but was not found, so PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. (If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.)\n\nPHP Monitor will now quit, please restart the app after fixing this issue.";
+"alert.homebrew_missing.quit" = "Quit";
+
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
 "alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
