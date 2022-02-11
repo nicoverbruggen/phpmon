@@ -181,12 +181,6 @@
 "notification.services_restarted" = "Valet services restarted";
 "notification.services_restarted_desc" = "All services have been successfully restarted.";
 
-// ALERTS
-
-"alert.homebrew_missing.title" = "PHP Monitor cannot start";
-"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@.\n\nA working Homebrew binary is expected in `%@`, but was not found, so PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. (If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.)\n\nPHP Monitor will now quit, please restart the app after fixing this issue.";
-"alert.homebrew_missing.quit" = "Quit";
-
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
 "alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
@@ -258,17 +252,23 @@ You can do this by running `composer global update` in your terminal. After that
 
 // STARTUP
 
+/// 0. Architecture mismatch
+
+"alert.homebrew_missing.title" = "PHP Monitor cannot start";
+"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@.\n\nA working Homebrew binary is expected in `%@`, but was not found, so PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. (If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.)\n\nPHP Monitor will now quit, please restart the app after fixing this issue.";
+"alert.homebrew_missing.quit" = "Quit";
+
 /// 1. PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `%@`. The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
 
 /// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
-"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` or `/opt/homebrew/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
+"startup.errors.php_opt.desc" = "PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
 /// 3a. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
-"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
+"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `%@`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
 
 /// 3b. Valet configuration file missing [currently not enabled]
 "startup.errors.valet_config.title" = "Laravel Valet configuration file missing";

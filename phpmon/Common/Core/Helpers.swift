@@ -9,11 +9,11 @@
 // MARK: Common Shell Commands
 
 /**
- Runs a `valet` command.
+ Runs a `valet` command. Defaults to running as superuser.
  */
-func valet(_ command: String) -> String
+func valet(_ command: String, sudo: Bool = true) -> String
 {
-    return Shell.pipe("sudo \(Paths.valet) \(command)", requiresPath: true)
+    return Shell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)", requiresPath: true)
 }
 
 /**

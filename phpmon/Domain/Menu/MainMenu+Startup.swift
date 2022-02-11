@@ -16,29 +16,11 @@ extension MainMenu {
         // Start with the icon
         setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         
-        // Do the important system setup checks
-        Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
-        
-        // Make sure Homebrew is installed
-        if !FileManager.default.fileExists(atPath: Paths.brew) {
-            _ = Alert.present(
-                messageText: "alert.homebrew_missing.title".localized,
-                informativeText: "alert.homebrew_missing.info".localized(
-                    App.architecture
-                        .replacingOccurrences(of: "x86_64", with: "Intel")
-                        .replacingOccurrences(of: "arm64", with: "Apple Silicon"),
-                    Paths.brew
-                ),
-                buttonTitle: "alert.homebrew_missing.quit".localized,
-                style: .critical
-            )
-            exit(1)
-        }
-        
         // Perform environment boot checks
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Startup().checkEnvironment(success: { onEnvironmentPass() },
-                                       failure: { onEnvironmentFail() }
+        DispatchQueue.main.async {
+            Startup().checkEnvironment(
+                success: { self.onEnvironmentPass() },
+                failure: { self.onEnvironmentFail() }
             )
         }
     }

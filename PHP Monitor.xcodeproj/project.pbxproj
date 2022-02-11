@@ -511,8 +511,8 @@
 			isa = PBXGroup;
 			children = (
 				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
-				C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */,
 				C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */,
+				C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */,
 				C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */,
 				C4CE3BB927B31F670086CA49 /* MainMenu+Composer.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
@@ -587,8 +587,8 @@
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
-				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
+				C4D8016522B1584700C6DA1B /* Startup.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";

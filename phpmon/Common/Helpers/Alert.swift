@@ -54,11 +54,11 @@ class Alert {
     /**
      Notify the user about something by showing an alert.
      */
-    public static func notify(message: String, info: String, style: NSAlert.Style = .informational) {
+    public static func notify(message: String, info: String, button: String = "OK", style: NSAlert.Style = .informational) {
         _ = present(
             messageText: message,
             informativeText: info,
-            buttonTitle: "OK",
+            buttonTitle: button,
             secondButtonTitle: "",
             style: style
         )
