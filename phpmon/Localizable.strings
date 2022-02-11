@@ -208,6 +208,10 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.php_switch_failed.confirm" = "Yes, run \"Fix My Valet\"";
 "alert.php_switch_failed.cancel" = "Do Not Run";
 
+// PHP Formula Missing
+"alert.php_formula_missing.title" = "Oops! The `php` formula must be installed for Fix My Valet...";
+"alert.php_formula_missing.info" = "It seems that you do not have the `php` formula installed, which prevents PHP Monitor from running Fix My Valet. Please install it using `brew install php`, restart PHP Monitor and try again.";
+
 // Fix My Valet Started
 "alert.fix_my_valet.title" = "Having issues? Fix My Valet is ready to commence!";
 "alert.fix_my_valet.info" = "This can take a while. Please be patient.\n\nWhen this is done, all other services will be halted and PHP %@ will be linked. You will be able to switch to your desired version of PHP once this operation has completed.\n\n(You'll get another alert once Fix My Valet is done.)";

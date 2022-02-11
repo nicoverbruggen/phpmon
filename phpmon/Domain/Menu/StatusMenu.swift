@@ -97,19 +97,10 @@ class StatusMenu : NSMenu {
     func addFirstAidAndServicesMenuItems() {
         let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
-        
-        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet_unavailable".localized(PhpEnv.brewPhpVersion),
-                action: nil, keyEquivalent: "f")
-            )
-        } else {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-                action: #selector(MainMenu.fixMyValet), keyEquivalent: "")
-            )
-        }
+        servicesMenu.addItem(NSMenuItem(
+            title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+            action: #selector(MainMenu.fixMyValet), keyEquivalent: "")
+        )
         
         servicesMenu.addItem(NSMenuItem(
             title: "mi_fix_brew_permissions".localized(),

@@ -260,6 +260,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
     
     @objc func fixMyValet() {
+        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
+            Alert.notify(message: "alert.php_formula_missing.title".localized, info: "alert.php_formula_missing.info".localized, style: .warning)
+            return
+        }
+        
         if !Alert.present(
             messageText: "alert.fix_my_valet.title".localized,
             informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
