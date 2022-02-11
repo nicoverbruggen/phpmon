@@ -10,6 +10,69 @@ import AppKit
 
 class Startup {
     
+    /**
+     Checks the user's environment and checks if PHP Monitor can be used properly.
+     This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
+     
+     - Parameter success: Callback that is fired if the application can proceed with launch
+     - Parameter failure: Callback that is fired if the application must retry launch
+     */
+    func checkEnvironment(success: @escaping () -> Void, failure: @escaping () -> Void)
+    {
+        // Do the important system setup checks
+        Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
+        
+        for check in self.checks {
+            if check.succeeds() {
+                Log.info("— \(check.name): PASSED")
+                continue
+            }
+            
+            Log.info("— \(check.name): FAILED")
+            
+            showAlert(for: check)
+            
+            failure()
+            
+            return
+        }
+        
+        initializeSwitcher()
+        Log.info("PHP Monitor has determined the application has successfully passed all checks.")
+        success()
+    }
+    
+    private func showAlert(for check: EnvironmentCheck) {
+        if check.requiresAppRestart {
+            Alert.notify(
+                message: check.titleText,
+                info: check.descriptionText,
+                button: check.buttonText,
+                style: .critical
+            )
+            exit(1)
+        }
+        
+        Alert.notify(
+            message: check.titleText,
+            info: check.descriptionText,
+            style: .critical
+        )
+    }
+    
+    /**
+     Because the Switcher requires various environment guarantees, the switcher is only
+     initialized when it is done working.
+     */
+    private func initializeSwitcher() {
+        DispatchQueue.main.async {
+            let appDelegate = NSApplication.shared.delegate as! AppDelegate
+            appDelegate.initializeSwitcher()
+        }
+    }
+    
+    // MARK: - Check (List)
+    
     public var checks: [EnvironmentCheck] = [
         EnvironmentCheck(
             command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
@@ -81,67 +144,6 @@ class Startup {
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
         )
     ]
-    
-    /**
-     Checks the user's environment and checks if PHP Monitor can be used properly.
-     This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
-     
-     - Parameter success: Callback that is fired if the application can proceed with launch
-     - Parameter failure: Callback that is fired if the application must retry launch
-     */
-    func checkEnvironment(success: @escaping () -> Void, failure: @escaping () -> Void)
-    {
-        // Do the important system setup checks
-        Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
-        
-        for check in self.checks {
-            if check.succeeds() {
-                Log.info("— \(check.name): PASSED")
-                continue
-            }
-            
-            Log.info("— \(check.name): FAILED")
-            
-            showAlert(for: check)
-            
-            failure()
-            
-            return
-        }
-        
-        initializeSwitcher()
-        Log.info("PHP Monitor has determined the application has successfully passed all checks.")
-        success()
-    }
-    
-    private func showAlert(for check: EnvironmentCheck) {
-        if check.requiresAppRestart {
-            Alert.notify(
-                message: check.titleText,
-                info: check.descriptionText,
-                button: check.buttonText,
-                style: .critical
-            )
-            exit(1)
-        }
-        
-        Alert.notify(
-            message: check.titleText,
-            info: check.descriptionText,
-            style: .critical
-        )
-    }
-    
-    /**
-     Because the Switcher requires various environment guarantees, the switcher is only
-     initialized when it is done working.
-     */
-    private func initializeSwitcher() {
-        DispatchQueue.main.async {
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.initializeSwitcher()
-        }
-    }
     
     // MARK: - EnvironmentCheck struct
     
