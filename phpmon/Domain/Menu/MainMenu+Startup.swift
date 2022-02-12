@@ -12,16 +12,16 @@ extension MainMenu {
     /**
      Kick off the startup of the rendering of the main menu.
      */
-    func startup() {
+    func startup() async {
         // Start with the icon
-        setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
-        
-        // Perform environment boot checks
         DispatchQueue.main.async {
-            Startup().checkEnvironment(
-                success: { self.onEnvironmentPass() },
-                failure: { self.onEnvironmentFail() }
-            )
+            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        }
+        
+        if await Startup().checkEnvironment() {
+            self.onEnvironmentPass()
+        } else {
+            self.onEnvironmentFail()
         }
     }
     
@@ -113,7 +113,7 @@ extension MainMenu {
                 exit(1)
             }
             
-            startup()
+            Task { await startup() }
         }
     }
 }

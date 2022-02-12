@@ -17,13 +17,13 @@ class Startup {
      - Parameter success: Callback that is fired if the application can proceed with launch
      - Parameter failure: Callback that is fired if the application must retry launch
      */
-    func checkEnvironment(success: @escaping () -> Void, failure: @escaping () -> Void)
+    func checkEnvironment() async -> Bool
     {
         // Do the important system setup checks
         Log.info("[ARCH] The user is running PHP Monitor with the architecture: \(App.architecture)")
         
         for check in self.checks {
-            if check.succeeds() {
+            if await check.succeeds() {
                 Log.info("[OK] \(check.name)")
                 continue
             }
@@ -31,33 +31,34 @@ class Startup {
             // If we get here, something's gone wrong and the check has failed
             Log.info("[FAIL] \(check.name)")
             showAlert(for: check)
-            failure()
-            return
+            return false
         }
         
         // If we get here, nothing has gone wrong. That's what we want!
         initializeSwitcher()
         Log.info("==================================")
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
-        success()
+        return true
     }
     
     private func showAlert(for check: EnvironmentCheck) {
-        if check.requiresAppRestart {
+        DispatchQueue.main.async {
+            if check.requiresAppRestart {
+                Alert.notify(
+                    message: check.titleText,
+                    info: check.descriptionText,
+                    button: check.buttonText,
+                    style: .critical
+                )
+                exit(1)
+            }
+            
             Alert.notify(
                 message: check.titleText,
                 info: check.descriptionText,
-                button: check.buttonText,
                 style: .critical
             )
-            exit(1)
         }
-        
-        Alert.notify(
-            message: check.titleText,
-            info: check.descriptionText,
-            style: .critical
-        )
     }
     
     /**
@@ -152,7 +153,7 @@ class Startup {
      Checks that require an app restart will always lead to an alert and app termination shortly after.
      */
     struct EnvironmentCheck {
-        let command: () -> Bool
+        let command: () async -> Bool
         let name: String
         let titleText: String
         let descriptionText: String
@@ -160,7 +161,7 @@ class Startup {
         let requiresAppRestart: Bool
         
         init(
-            command: @escaping () -> Bool,
+            command: @escaping () async -> Bool,
             name: String,
             titleText: String,
             descriptionText: String,
@@ -175,8 +176,8 @@ class Startup {
             self.requiresAppRestart = requiresAppRestart
         }
         
-        public func succeeds() -> Bool {
-            return !self.command()
+        public func succeeds() async -> Bool {
+            return await !self.command()
         }
     }
 }
