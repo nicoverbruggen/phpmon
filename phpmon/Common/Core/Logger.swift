@@ -49,4 +49,10 @@ class Log {
         }
     }
     
+    static func separator(as verbosity: Verbosity = .info) {
+        if verbosity.isApplicable() {
+            print("==================================")
+        }
+    }
+    
 }

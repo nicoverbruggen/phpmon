@@ -28,7 +28,7 @@ class Startup {
                 continue
             }
             
-            // If we get here, something's gone wrong and the check has failed
+            // If we get here, something's gone wrong and the check has failed...
             Log.info("[FAIL] \(check.name)")
             showAlert(for: check)
             return false
@@ -36,7 +36,7 @@ class Startup {
         
         // If we get here, nothing has gone wrong. That's what we want!
         initializeSwitcher()
-        Log.info("==================================")
+        Log.separator(as: .info)
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
         return true
     }

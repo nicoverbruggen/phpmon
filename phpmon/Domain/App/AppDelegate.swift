@@ -64,10 +64,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     override init() {
         logger.verbosity = .info
-        Log.info("==================================")
+        Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
-        Log.info("==================================")
+        Log.separator(as: .info)
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
