@@ -145,7 +145,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
         DispatchQueue.main.async { [self] in
-            if (App.busy) {
+            if (PhpEnv.shared.isBusy) {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {

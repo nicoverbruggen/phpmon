@@ -36,12 +36,6 @@ class App {
         return machine
     }
     
-    /** Whether the app is busy doing something. Used to determine what UI to display. */
-    // TODO: Remove this, and always use PhpEnv.shared.isBusy
-    static var busy: Bool {
-        return PhpEnv.shared.isBusy
-    }
-    
     // MARK: Variables
     
     /** The list of preferences that are currently active. */

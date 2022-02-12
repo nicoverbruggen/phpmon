@@ -22,7 +22,7 @@ class StatusMenu : NSMenu {
     }
     
     func addPhpActionMenuItems() {
-        if App.busy {
+        if PhpEnv.shared.isBusy {
             addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
         }
