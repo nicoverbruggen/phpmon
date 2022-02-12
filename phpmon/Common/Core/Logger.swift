@@ -27,25 +27,25 @@ class Log {
     
     static func err(_ item: Any) {
         if Verbosity.error.isApplicable() {
-            print("[ERR] \(item)")
+            print("[E] \(item)")
         }
     }
     
     static func warn(_ item: Any) {
         if Verbosity.warning.isApplicable() {
-            print("[WRN] \(item)")
+            print("[W] \(item)")
         }
     }
     
     static func info(_ item: Any) {
         if Verbosity.info.isApplicable() {
-            print(item)
+            print("\(item)")
         }
     }
     
     static func perf(_ item: Any) {
         if Verbosity.performance.isApplicable() {
-            print(item)
+            print("[P] \(item)")
         }
     }
     
