@@ -14,8 +14,8 @@ class Startup {
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
      
-     - Parameter success: Callback that is fired if the application can proceed with launch
-     - Parameter failure: Callback that is fired if the application must retry launch
+     If this method returns false, there was a failed check and an alert was displayed.
+     If this method returns true, then all checks succeeded and the app can continue.
      */
     func checkEnvironment() async -> Bool
     {
@@ -41,6 +41,11 @@ class Startup {
         return true
     }
     
+    /**
+     Displays an alert for a particular check. There are two types of alerts:
+     - ones that require an app restart, which prompt the user to exit the app
+     - ones that allow the app to continue, which allow the user to retry
+     */
     private func showAlert(for check: EnvironmentCheck) {
         DispatchQueue.main.async {
             if check.requiresAppRestart {
@@ -63,7 +68,7 @@ class Startup {
     
     /**
      Because the Switcher requires various environment guarantees, the switcher is only
-     initialized when it is done working.
+     initialized when it is done working. The switcher must be initialized on the main thread.
      */
     private func initializeSwitcher() {
         DispatchQueue.main.async {
@@ -89,7 +94,7 @@ class Startup {
             requiresAppRestart: true
         ),
         EnvironmentCheck(
-            command: { return !Shell.fileExists(Paths.php) },
+            command: { return !Filesystem.fileExists(Paths.php) },
             name: "`\(Paths.php)` exists",
             titleText: "startup.errors.php_binary.title".localized,
             descriptionText: "startup.errors.php_binary.desc".localized(
@@ -106,8 +111,8 @@ class Startup {
         ),
         EnvironmentCheck(
             command: {
-                return !(Shell.fileExists(Paths.valet)
-                         || Shell.fileExists("~/.composer/vendor/bin/valet"))
+                return !(Filesystem.fileExists(Paths.valet)
+                         || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
             },
             name: "`valet` binary exists",
             titleText: "startup.errors.valet_executable.title".localized,

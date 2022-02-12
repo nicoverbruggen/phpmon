@@ -241,7 +241,7 @@ class Valet {
          - Note: The file is not validated, only its presence is checked.
          */
         public func determineSecured(_ tld: String) {
-            secured = Shell.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
+            secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
         }
         
         /**

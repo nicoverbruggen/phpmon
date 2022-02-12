@@ -52,7 +52,7 @@ extension MainMenu {
         }
     }
     
-    private func suggestFixMyValet(failed version: String) {
+    @MainActor private func suggestFixMyValet(failed version: String) {
         let outcome = Alert.present(
             messageText: "alert.php_switch_failed.title".localized(version),
             informativeText: "alert.php_switch_failed.info".localized(version),

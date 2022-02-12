@@ -16,6 +16,10 @@ class Alert {
         secondButtonTitle: String = "",
         style: NSAlert.Style = .informational
     ) -> Bool {
+        if !Thread.isMainThread {
+            fatalError("You should always present alerts on the main thread!")
+        }
+        
         let alert = NSAlert.init()
         alert.alertStyle = style
         alert.messageText = messageText
@@ -36,6 +40,10 @@ class Alert {
         style: NSAlert.Style = .warning,
         onFirstButtonPressed: @escaping (() -> Void)
     ) {
+        if !Thread.isMainThread {
+            fatalError("You should always present alerts on the main thread!")
+        }
+        
         let alert = NSAlert.init()
         alert.alertStyle = style
         alert.messageText = messageText

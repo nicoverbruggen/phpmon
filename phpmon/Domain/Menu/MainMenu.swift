@@ -180,6 +180,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             return
         }
         
+        /*
         asyncExecution {
             try Actions.fixHomebrewPermissions()
         } success: {
@@ -189,8 +190,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 style: .warning
             )
         } failure: { error in
-            Alert.notify(about: error as! HomebrewPermissionError)
+            await Alert.notify(about: error as! HomebrewPermissionError)
         }
+         */
     }
     
     @objc func restartPhpFpm() {

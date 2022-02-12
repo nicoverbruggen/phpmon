@@ -31,7 +31,6 @@
 		C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C40B24F227A310770018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
-		C40B24F527A3108B0018C7D2 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E6C279DF87A0010F296 /* Async.swift */; };
 		C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
 		C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
 		C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
@@ -149,7 +148,6 @@
 		C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC1E65279DE0380010F296 /* ServicesView.xib */; };
 		C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
-		C4EC1E6D279DF87A0010F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E6C279DF87A0010F296 /* Async.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4EE55A927708B9E001DF387 /* PMHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE55A627708B9E001DF387 /* PMHeaderView.swift */; };
@@ -298,7 +296,6 @@
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4EC1E65279DE0380010F296 /* ServicesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServicesView.xib; sourceTree = "<group>"; };
 		C4EC1E67279DE0540010F296 /* ServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
-		C4EC1E6C279DF87A0010F296 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		C4EC1E72279DFCF40010F296 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4EE55A627708B9E001DF387 /* PMHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHeaderView.swift; sourceTree = "<group>"; };
@@ -536,7 +533,6 @@
 				C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */,
 				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
 				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
-				C4EC1E6C279DF87A0010F296 /* Async.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -873,7 +869,6 @@
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */,
-				C4EC1E6D279DF87A0010F296 /* Async.swift in Sources */,
 				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
 				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
@@ -931,7 +926,6 @@
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
-				C40B24F527A3108B0018C7D2 /* Async.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,

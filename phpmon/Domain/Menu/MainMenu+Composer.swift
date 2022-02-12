@@ -15,7 +15,7 @@ extension MainMenu {
      This method should probably be broken up into several smaller methods at some point.
      */
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        if !Shell.fileExists("/usr/local/bin/composer") {
+        if !Filesystem.fileExists("/usr/local/bin/composer") {
             Alert.notify(
                 message: "alert.composer_missing.title".localized,
                 info: "alert.composer_missing.info".localized

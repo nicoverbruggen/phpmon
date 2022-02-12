@@ -105,16 +105,6 @@ public class Shell {
     }
     
     /**
-     Checks if a file exists at a certain path.
-     Used to be done with a shell command, now uses the native FileManager class instead.
-     */
-    // TODO: To be moved
-    public static func fileExists(_ path: String) -> Bool {
-        let fullPath = path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
-        return FileManager.default.fileExists(atPath: fullPath)
-    }
-    
-    /**
      Creates a new process with the correct PATH and shell.
      */
     public func createTask(for command: String, requiresPath: Bool) -> Process {
