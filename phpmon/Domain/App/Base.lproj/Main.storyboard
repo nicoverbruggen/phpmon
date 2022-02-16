@@ -493,18 +493,18 @@
             <objects>
                 <viewController storyboardIdentifier="noticeVC" id="hkw-9V-NxP" customClass="BetterAlertVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="UPH-hV-Naz">
-                        <rect key="frame" x="0.0" y="0.0" width="520" height="207"/>
+                        <rect key="frame" x="0.0" y="0.0" width="520" height="212"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
-                                <rect key="frame" x="0.0" y="0.0" width="520" height="207"/>
+                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
+                                <rect key="frame" x="0.0" y="0.0" width="520" height="212"/>
                             </visualEffectView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
                                 <rect key="frame" x="13" y="13" width="99" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="QWZ-BA-0g9"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Secondary" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eCk-FC-9Zr">
+                                <buttonCell key="cell" type="push" title="Secondary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="eCk-FC-9Zr">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -520,7 +520,7 @@ Gw
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="4Uf-fh-jWJ"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Primary" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F26-vf-hFH">
+                                <buttonCell key="cell" type="push" title="Primary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="F26-vf-hFH">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -551,7 +551,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0rX-Ss-3Xd">
-                                <rect key="frame" x="12" y="139" width="48" height="48"/>
+                                <rect key="frame" x="12" y="144" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Uib-R1-GEx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -580,7 +580,7 @@ DQ
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="JEC-0F-zaa"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mzA-Uu-gyf">
+                                <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -604,7 +604,7 @@ DQ
                             <constraint firstItem="hml-dl-Cah" firstAttribute="top" secondItem="yI6-qf-htf" secondAttribute="bottom" constant="15" id="Pmz-I9-2up"/>
                             <constraint firstItem="8zu-cF-KCX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n5T-nn-k3j" secondAttribute="trailing" constant="12" symbolic="YES" id="SrE-Z3-bDB"/>
                             <constraint firstItem="8zu-cF-KCX" firstAttribute="top" secondItem="hml-dl-Cah" secondAttribute="bottom" constant="30" id="Uah-cm-AeJ"/>
-                            <constraint firstItem="U1c-qS-cIm" firstAttribute="top" secondItem="UPH-hV-Naz" secondAttribute="top" constant="35" id="Uqt-sc-vxn"/>
+                            <constraint firstItem="U1c-qS-cIm" firstAttribute="top" secondItem="UPH-hV-Naz" secondAttribute="top" constant="40" id="Uqt-sc-vxn"/>
                             <constraint firstItem="QkM-5D-ZEQ" firstAttribute="top" secondItem="U1c-qS-cIm" secondAttribute="top" constant="-3" id="WAj-rw-srg"/>
                             <constraint firstItem="yI6-qf-htf" firstAttribute="leading" secondItem="U1c-qS-cIm" secondAttribute="leading" id="bng-pH-jSG"/>
                             <constraint firstAttribute="trailing" secondItem="JVG-5w-fPd" secondAttribute="trailing" id="dRt-Pq-6n0"/>

@@ -29,6 +29,7 @@ class BetterAlertVC: NSViewController {
     
     override func viewWillAppear() {
         imageView.image = NSApp.applicationIconImage
+        
         if actionSecondary == nil {
             buttonSecondary.isHidden = true
         }

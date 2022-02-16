@@ -24,6 +24,7 @@ class BetterAlert {
         notice.windowController = storyboard.instantiateController(
             withIdentifier: "noticeWindow"
         ) as? NSWindowController
+        
         return notice
     }
     
