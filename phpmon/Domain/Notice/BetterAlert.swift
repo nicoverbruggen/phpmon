@@ -9,18 +9,18 @@
 import Foundation
 import Cocoa
 
-class Notice {
+class BetterAlert {
     
     var windowController: NSWindowController!
     
-    var noticeVC: NoticeVC {
-        return self.windowController.contentViewController as! NoticeVC
+    var noticeVC: BetterAlertVC {
+        return self.windowController.contentViewController as! BetterAlertVC
     }
     
-    public static func make() -> Notice {
+    public static func make() -> BetterAlert {
         let storyboard = NSStoryboard(name: "Main" , bundle : nil)
         
-        let notice = Notice()
+        let notice = BetterAlert()
         notice.windowController = storyboard.instantiateController(
             withIdentifier: "noticeWindow"
         ) as? NSWindowController
@@ -29,7 +29,7 @@ class Notice {
     
     public func withPrimary(
         text: String,
-        action: @escaping (NoticeVC) -> Void = {
+        action: @escaping (BetterAlertVC) -> Void = {
             vc in vc.close(with: .alertFirstButtonReturn)
         }
     ) -> Self {
@@ -40,7 +40,7 @@ class Notice {
     
     public func withSecondary(
         text: String,
-        action: ((NoticeVC) -> Void)? = nil
+        action: ((BetterAlertVC) -> Void)? = nil
     ) -> Self {
         self.noticeVC.buttonSecondary.title = text
         self.noticeVC.actionSecondary = action
@@ -49,7 +49,7 @@ class Notice {
     
     public func withTertiary(
         text: String,
-        action: ((NoticeVC) -> Void)? = nil
+        action: ((BetterAlertVC) -> Void)? = nil
     ) -> Self {
         self.noticeVC.buttonTertiary.title = text
         self.noticeVC.actionTertiary = action

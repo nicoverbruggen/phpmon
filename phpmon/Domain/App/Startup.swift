@@ -49,13 +49,15 @@ class Startup {
     private func showAlert(for check: EnvironmentCheck) {
         DispatchQueue.main.async {
             if check.requiresAppRestart {
-                Alert.notify(
-                    message: check.titleText,
-                    info: check.descriptionText,
-                    button: check.buttonText,
-                    style: .critical
-                )
-                exit(1)
+                _ = BetterAlert.make()
+                    .withInformation(
+                        title: check.titleText,
+                        subtitle: check.subtitleText,
+                        description: check.descriptionText
+                    )
+                    .withPrimary(text: check.buttonText, action: { _ in
+                        exit(1)
+                    }).present()
             }
             
             Alert.notify(
@@ -84,6 +86,7 @@ class Startup {
             command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
             name: "`\(Paths.brew)` exists",
             titleText: "alert.homebrew_missing.title".localized,
+            subtitleText: "alert.homebrew_missing.subtitle".localized,
             descriptionText: "alert.homebrew_missing.info".localized(
                 App.architecture
                     .replacingOccurrences(of: "x86_64", with: "Intel")
@@ -161,6 +164,7 @@ class Startup {
         let command: () async -> Bool
         let name: String
         let titleText: String
+        let subtitleText: String
         let descriptionText: String
         let buttonText: String
         let requiresAppRestart: Bool
@@ -169,6 +173,7 @@ class Startup {
             command: @escaping () async -> Bool,
             name: String,
             titleText: String,
+            subtitleText: String = "",
             descriptionText: String,
             buttonText: String = "OK",
             requiresAppRestart: Bool = false
@@ -176,6 +181,7 @@ class Startup {
             self.command = command
             self.name = name
             self.titleText = titleText
+            self.subtitleText = subtitleText
             self.descriptionText = descriptionText
             self.buttonText = buttonText
             self.requiresAppRestart = requiresAppRestart

@@ -254,8 +254,10 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 0. Architecture mismatch
 
-"alert.homebrew_missing.title" = "PHP Monitor cannot start";
-"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@.\n\nA working Homebrew binary is expected in `%@`, but was not found, so PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. (If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.)\n\nPHP Monitor will now quit, please restart the app after fixing this issue.";
+"alert.homebrew_missing.title" = "PHP Monitor cannot start!";
+"alert.homebrew_missing.subtitle" = "A working Homebrew binary could not be found in the usual location. Please restart the app after fixing this issue.";
+"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@. As a result, a working Homebrew binary is expected in `%@`, but was not found. This is why PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.";
+
 "alert.homebrew_missing.quit" = "Quit";
 
 /// 1. PHP binary not found

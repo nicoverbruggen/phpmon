@@ -88,7 +88,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
         /*
         let notice = Notice.make()
             .withInformation(

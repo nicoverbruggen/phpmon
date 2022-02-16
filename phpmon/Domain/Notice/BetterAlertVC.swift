@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-class NoticeVC: NSViewController {
+class BetterAlertVC: NSViewController {
     
     @IBOutlet weak var labelTitle: NSTextField!
     @IBOutlet weak var labelSubtitle: NSTextField!
@@ -19,9 +19,9 @@ class NoticeVC: NSViewController {
     @IBOutlet weak var buttonSecondary: NSButton!
     @IBOutlet weak var buttonTertiary: NSButton!
     
-    var actionPrimary: (NoticeVC) -> Void = { _ in }
-    var actionSecondary: ((NoticeVC) -> Void)?
-    var actionTertiary: ((NoticeVC) -> Void)?
+    var actionPrimary: (BetterAlertVC) -> Void = { _ in }
+    var actionSecondary: ((BetterAlertVC) -> Void)?
+    var actionTertiary: ((BetterAlertVC) -> Void)?
     
     @IBOutlet weak var imageView: NSImageView!
     
