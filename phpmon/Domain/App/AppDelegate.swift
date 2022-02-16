@@ -88,6 +88,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        /*
+        let notice = Notice.make()
+            .withInformation(
+                title: "Oh no, your PHP is kaput?!",
+                subtitle: "Unfortunately, PHP Monitor has detected an issue. You can find more info below."
+                // description: "brew install php@8.0 has returned error code -35"
+            )
+            .withPrimary(text: "Retry")
+            .withSecondary(text: "Quit", action: { _ in
+                exit(1)
+            })
+            .withTertiary(text: "Copy to Clipboard", action: { _ in
+                // Do something here
+            })
+        
+        print(notice.present() == .alertFirstButtonReturn)
+        */
+        
         // Make sure notifications will work
         setupNotifications()
         // Make sure the menu performs its initial checks
