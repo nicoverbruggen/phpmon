@@ -175,7 +175,7 @@ class Startup {
             command: @escaping () async -> Bool,
             name: String,
             titleText: String,
-            subtitleText: String = "",
+            subtitleText: String,
             descriptionText: String,
             buttonText: String = "OK",
             requiresAppRestart: Bool = false
