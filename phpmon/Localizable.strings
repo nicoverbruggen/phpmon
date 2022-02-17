@@ -234,9 +234,10 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config: it's not pointing to the Valet socket. This will result in 502 Bad Gateway if you visit websites linked via Valet.\n\nYou can usually fix this by running\n`valet install`, which updates your\n PHP-FPM configuration.";
 
 // PHP Monitor Cannot Start
-"alert.cannot_start.title" = "PHP Monitor cannot start";
-"alert.cannot_start.info" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";
-"alert.cannot_start.close" = "Close";
+"alert.cannot_start.title" = "PHP Monitor cannot start due to a configuration problem";
+"alert.cannot_start.subtitle" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly.";
+"alert.cannot_start.description" = "You might not need to quit PHP Monitor and restart it. If you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";
+"alert.cannot_start.close" = "Quit";
 "alert.cannot_start.retry" = "Retry";
 
 // PHP alias issue
@@ -262,7 +263,9 @@ You can do this by running `composer global update` in your terminal. After that
 
 /// 1. PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `%@`. The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
+
 
 /// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";

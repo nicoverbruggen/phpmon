@@ -49,7 +49,7 @@ class Startup {
     private func showAlert(for check: EnvironmentCheck) {
         DispatchQueue.main.async {
             if check.requiresAppRestart {
-                _ = BetterAlert.make()
+                BetterAlert()
                     .withInformation(
                         title: check.titleText,
                         subtitle: check.subtitleText,
@@ -57,14 +57,17 @@ class Startup {
                     )
                     .withPrimary(text: check.buttonText, action: { _ in
                         exit(1)
-                    }).present()
+                    }).show()
             }
             
-            Alert.notify(
-                message: check.titleText,
-                info: check.descriptionText,
-                style: .critical
-            )
+            BetterAlert()
+                .withInformation(
+                    title: check.titleText,
+                    subtitle: check.subtitleText,
+                    description: check.descriptionText
+                )
+                .withPrimary(text: "OK")
+                .show()
         }
     }
     
@@ -100,9 +103,8 @@ class Startup {
             command: { return !Filesystem.fileExists(Paths.php) },
             name: "`\(Paths.php)` exists",
             titleText: "startup.errors.php_binary.title".localized,
-            descriptionText: "startup.errors.php_binary.desc".localized(
-                Paths.php
-            )
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
         ),
         EnvironmentCheck(
             command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },

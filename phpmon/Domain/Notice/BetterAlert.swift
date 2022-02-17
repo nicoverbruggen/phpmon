@@ -17,15 +17,16 @@ class BetterAlert {
         return self.windowController.contentViewController as! BetterAlertVC
     }
     
-    public static func make() -> BetterAlert {
+    init() {
         let storyboard = NSStoryboard(name: "Main" , bundle : nil)
         
-        let notice = BetterAlert()
-        notice.windowController = storyboard.instantiateController(
+        self.windowController = storyboard.instantiateController(
             withIdentifier: "noticeWindow"
         ) as? NSWindowController
-        
-        return notice
+    }
+    
+    public static func make() -> BetterAlert {
+        return BetterAlert()
     }
     
     public func withPrimary(
@@ -74,9 +75,25 @@ class BetterAlert {
         return self
     }
     
-    public func present() -> NSApplication.ModalResponse {
+    /**
+     Shows the modal and returns a ModalResponse.
+     If you wish to simply show the alert and disregard the outcome, use `show`.
+     */
+    public func runModal() -> NSApplication.ModalResponse {
         NSApp.activate(ignoringOtherApps: true)
         windowController.window?.makeKeyAndOrderFront(nil)
         return NSApplication.shared.runModal(for: windowController.window!)
+    }
+    
+    /** Shows the modal and returns true if the user pressed the primary button. */
+    public func didSelectPrimary() -> Bool {
+        return self.runModal() == .alertFirstButtonReturn
+    }
+    
+    /**
+     Shows the modal and does not return anything.
+     */
+    public func show() {
+        _ = self.runModal()
     }
 }

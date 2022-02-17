@@ -492,11 +492,11 @@
         <scene sceneID="y9E-bB-wIG">
             <objects>
                 <viewController storyboardIdentifier="noticeVC" id="hkw-9V-NxP" customClass="BetterAlertVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="UPH-hV-Naz">
+                    <view key="view" id="UPH-hV-Naz">
                         <rect key="frame" x="0.0" y="0.0" width="520" height="212"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
+                            <visualEffectView blendingMode="behindWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
                                 <rect key="frame" x="0.0" y="0.0" width="520" height="212"/>
                             </visualEffectView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
@@ -628,7 +628,7 @@ DQ
                 </viewController>
                 <customObject id="5Ts-EZ-bJh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="1624.5"/>
+            <point key="canvasLocation" x="38" y="1624"/>
         </scene>
         <!--Add SiteVC-->
         <scene sceneID="6JC-H6-u4K">

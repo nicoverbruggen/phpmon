@@ -102,16 +102,19 @@ extension MainMenu {
      */
     private func onEnvironmentFail() {
         DispatchQueue.main.async { [self] in
-            let close = Alert.present(
-                messageText: "alert.cannot_start.title".localized,
-                informativeText: "alert.cannot_start.info".localized,
-                buttonTitle: "alert.cannot_start.close".localized,
-                secondButtonTitle: "alert.cannot_start.retry".localized
-            )
             
-            if (close) {
-                exit(1)
-            }
+            BetterAlert()
+                .withInformation(
+                    title: "alert.cannot_start.title".localized,
+                    subtitle: "alert.cannot_start.subtitle".localized,
+                    description: "alert.cannot_start.description".localized
+                )
+                .withPrimary(text: "alert.cannot_start.retry".localized)
+                .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
+                    vc.close(with: .alertSecondButtonReturn)
+                    exit(1)
+                })
+                .show()
             
             Task { await startup() }
         }
