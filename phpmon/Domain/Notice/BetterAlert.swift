@@ -52,9 +52,12 @@ class BetterAlert {
     }
     
     public func withTertiary(
-        text: String,
+        text: String = "",
         action: ((BetterAlertVC) -> Void)? = nil
     ) -> Self {
+        if text == "" {
+            self.noticeVC.buttonTertiary.bezelStyle = .helpButton
+        }
         self.noticeVC.buttonTertiary.title = text
         self.noticeVC.actionTertiary = action
         return self

@@ -108,7 +108,7 @@ class Stats {
                 )
                 .withPrimary(text: "startup.sponsor_encouragement.accept".localized)
                 .withSecondary(text: "startup.sponsor_encouragement.skip".localized)
-                .withTertiary(text: "startup.sponsor_encouragement.learn_more".localized, action: { vc in
+                .withTertiary(text: "", action: { vc in
                     vc.close(with: .alertThirdButtonReturn)
                     NSWorkspace.shared.open(Constants.DonationUrl)
                 }).didSelectPrimary()

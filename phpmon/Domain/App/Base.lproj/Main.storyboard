@@ -500,9 +500,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="212"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-cF-KCX">
-                                        <rect key="frame" x="393" y="13" width="94" height="32"/>
+                                        <rect key="frame" x="383" y="13" width="104" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="4Uf-fh-jWJ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="4Uf-fh-jWJ"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="Primary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="F26-vf-hFH">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -516,9 +516,9 @@ DQ
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
-                                        <rect key="frame" x="13" y="13" width="99" height="32"/>
+                                        <rect key="frame" x="281" y="13" width="104" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="QWZ-BA-0g9"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="QWZ-BA-0g9"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="Secondary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="eCk-FC-9Zr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -532,10 +532,7 @@ Gw
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
-                                        <rect key="frame" x="110" y="13" width="94" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="JEC-0F-zaa"/>
-                                        </constraints>
+                                        <rect key="frame" x="13" y="13" width="81" height="32"/>
                                         <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -547,13 +544,14 @@ Gw
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="8zu-cF-KCX" secondAttribute="trailing" constant="20" symbolic="YES" id="0DC-rd-xbu"/>
+                                    <constraint firstItem="8zu-cF-KCX" firstAttribute="leading" secondItem="TCp-nS-HN2" secondAttribute="trailing" constant="12" symbolic="YES" id="8tH-KO-fjY"/>
                                     <constraint firstAttribute="bottom" secondItem="8zu-cF-KCX" secondAttribute="bottom" constant="20" symbolic="YES" id="L6V-KQ-nj3"/>
+                                    <constraint firstItem="n5T-nn-k3j" firstAttribute="leading" secondItem="JVG-5w-fPd" secondAttribute="leading" constant="20" symbolic="YES" id="QLS-fE-1PM"/>
                                     <constraint firstAttribute="trailing" secondItem="8zu-cF-KCX" secondAttribute="trailing" constant="20" symbolic="YES" id="RRS-WO-6KO"/>
-                                    <constraint firstItem="8zu-cF-KCX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n5T-nn-k3j" secondAttribute="trailing" constant="12" symbolic="YES" id="Wyf-wk-Eii"/>
-                                    <constraint firstItem="TCp-nS-HN2" firstAttribute="leading" secondItem="JVG-5w-fPd" secondAttribute="leading" constant="20" symbolic="YES" id="doF-sH-Uhs"/>
+                                    <constraint firstAttribute="bottom" secondItem="n5T-nn-k3j" secondAttribute="bottom" constant="20" symbolic="YES" id="Scj-z1-AdN"/>
                                     <constraint firstAttribute="bottom" secondItem="TCp-nS-HN2" secondAttribute="bottom" constant="20" symbolic="YES" id="fYa-HG-gmL"/>
                                     <constraint firstItem="n5T-nn-k3j" firstAttribute="bottom" secondItem="TCp-nS-HN2" secondAttribute="bottom" id="lOI-ZI-wCd"/>
-                                    <constraint firstItem="n5T-nn-k3j" firstAttribute="leading" secondItem="TCp-nS-HN2" secondAttribute="trailing" constant="12" symbolic="YES" id="tsf-Bv-PWo"/>
+                                    <constraint firstItem="TCp-nS-HN2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n5T-nn-k3j" secondAttribute="trailing" constant="12" symbolic="YES" id="rUC-0t-9H9"/>
                                     <constraint firstAttribute="bottom" secondItem="8zu-cF-KCX" secondAttribute="bottom" constant="20" symbolic="YES" id="wIl-uw-y3p"/>
                                 </constraints>
                             </visualEffectView>
