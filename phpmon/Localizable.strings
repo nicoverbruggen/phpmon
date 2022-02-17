@@ -218,7 +218,8 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Fix My Valet Done
 "alert.fix_my_valet_done.title" = "Fix My Valet has completed its operations.";
-"alert.fix_my_valet_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
+"alert.fix_my_valet_done.subtitle" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.";
+"alert.fix_my_valet_done.desc" = "If visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
 
 // Restore Homebrew Permissions
 "alert.fix_homebrew_permissions.title" = "About \"Restore Homebrew Permissions\"";

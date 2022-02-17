@@ -65,4 +65,8 @@ class BetterAlertVC: NSViewController {
         NSApplication.shared.stopModal(withCode: code)
     }
     
+    deinit {
+        Log.perf("A BetterAlert has been deinitialized.")
+    }
+    
 }

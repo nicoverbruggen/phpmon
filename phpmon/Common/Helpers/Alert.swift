@@ -7,6 +7,7 @@
 
 import Cocoa
 
+@available(*, deprecated, message: "Use BetterAlert API instead for 5.1 and above")
 class Alert {
     
     public static func present(

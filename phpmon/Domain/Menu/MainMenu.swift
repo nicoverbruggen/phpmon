@@ -263,17 +263,28 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     
     @objc func fixMyValet() {
         if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
-            Alert.notify(message: "alert.php_formula_missing.title".localized, info: "alert.php_formula_missing.info".localized, style: .warning)
+            BetterAlert()
+                .withInformation(
+                    title: "alert.php_formula_missing.title".localized,
+                    subtitle: "alert.php_formula_missing.info".localized
+                )
+                .withPrimary(text: "OK")
+                .show()
+            
             return
         }
         
-        if !Alert.present(
-            messageText: "alert.fix_my_valet.title".localized,
-            informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
-            buttonTitle: "alert.fix_my_valet.ok".localized,
-            secondButtonTitle: "alert.fix_my_valet.cancel".localized,
-            style: .warning
-        ) {
+        
+        
+        if !BetterAlert()
+            .withInformation(
+                title: "alert.fix_my_valet.title".localized,
+                subtitle: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion)
+            )
+            .withPrimary(text: "alert.fix_my_valet.ok".localized)
+            .withSecondary(text: "alert.fix_my_valet.cancel".localized)
+            .didSelectPrimary()
+        {
             Log.info("The user has chosen to abort Fix My Valet")
             return
         }
@@ -281,10 +292,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         asyncExecution {
             Actions.fixMyValet()
         } success: {
-            Alert.notify(
-                message: "alert.fix_my_valet_done.title".localized,
-                info: "alert.fix_my_valet_done.info".localized
+            BetterAlert()
+            .withInformation(
+                title: "alert.fix_my_valet_done.title".localized,
+                subtitle: "alert.fix_my_valet_done.subtitle".localized,
+                description: "alert.fix_my_valet_done.desc".localized
             )
+            .withPrimary(text: "alert.fix_my_valet.ok".localized)
+            .show()
         }
     }
     

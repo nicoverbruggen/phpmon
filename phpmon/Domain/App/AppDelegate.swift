@@ -64,6 +64,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     override init() {
         logger.verbosity = .info
+        #if DEBUG
+            logger.verbosity = .performance
+        #endif
         Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
