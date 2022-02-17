@@ -42,7 +42,9 @@ class BetterAlert {
     
     public func withSecondary(
         text: String,
-        action: ((BetterAlertVC) -> Void)? = nil
+        action: ((BetterAlertVC) -> Void)? = {
+            vc in vc.close(with: .alertSecondButtonReturn)
+        }
     ) -> Self {
         self.noticeVC.buttonSecondary.title = text
         self.noticeVC.actionSecondary = action

@@ -86,6 +86,7 @@ class Stats {
      (see `didSeeSponsorEncouragement`)
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
+        
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
             return Log.info("Sponsor messages never apply to beta builds.")
         }
@@ -99,16 +100,24 @@ class Stats {
         }
         
         DispatchQueue.main.async {
-            let donate = Alert.present(
-                messageText: "startup.sponsor_encouragement.title".localized,
-                informativeText: "startup.sponsor_encouragement.desc".localized,
-                buttonTitle: "startup.sponsor_encouragement.accept".localized,
-                secondButtonTitle: "startup.sponsor_encouragement.skip".localized,
-                style: .informational)
+            let donate = BetterAlert()
+                .withInformation(
+                    title: "startup.sponsor_encouragement.title".localized,
+                    subtitle: "startup.sponsor_encouragement.subtitle".localized,
+                    description: "startup.sponsor_encouragement.desc".localized
+                )
+                .withPrimary(text: "startup.sponsor_encouragement.accept".localized)
+                .withSecondary(text: "startup.sponsor_encouragement.skip".localized)
+                .withTertiary(text: "startup.sponsor_encouragement.learn_more".localized, action: { vc in
+                    vc.close(with: .alertThirdButtonReturn)
+                    NSWorkspace.shared.open(Constants.DonationUrl)
+                }).didSelectPrimary()
+
             if donate {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")
-                NSWorkspace.shared.open(Constants.DonationUrl)
+                NSWorkspace.shared.open(Constants.DonationUrlDirect)
             }
+            
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
         }
     }

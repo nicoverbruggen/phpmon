@@ -54,6 +54,7 @@ class Constants {
     /**
      The URL that people can visit if they wish to help support the project.
      */
-    static let DonationUrl = URL(string: "https://nicoverbruggen.be/sponsor#pay-now")!
+    static let DonationUrlDirect = URL(string: "https://nicoverbruggen.be/sponsor#pay-now")!
+    static let DonationUrl = URL(string: "https://nicoverbruggen.be/sponsor")!
 
 }

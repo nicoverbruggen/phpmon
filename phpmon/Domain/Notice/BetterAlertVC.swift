@@ -38,6 +38,10 @@ class BetterAlertVC: NSViewController {
         }
     }
     
+    override func viewDidAppear() {
+        view.window?.makeFirstResponder(buttonPrimary)
+    }
+    
     @IBAction func primaryButtonAction(_ sender: Any) {
         self.actionPrimary(self)
     }

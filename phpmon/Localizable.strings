@@ -302,9 +302,12 @@ You can do this by running `composer global update` in your terminal. After that
 // SPONSOR ENCOURAGEMENT
 
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
-"startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these new features. In that case, this is a THANK YOU message to you.\n\nTo be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
-"startup.sponsor_encouragement.accept" = "Yes, I would like to sponsor";
-"startup.sponsor_encouragement.skip" = "Nevermind";
+"startup.sponsor_encouragement.subtitle" = "To be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
+"startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these updates. In that case, this is a THANK YOU message to you. I appreciate the support.";
+
+"startup.sponsor_encouragement.accept" = "Sponsor Now";
+"startup.sponsor_encouragement.learn_more" = "Learn More";
+"startup.sponsor_encouragement.skip" = "No Thanks";
 
 // ERROR MESSAGES (based on AlertableError)
 
