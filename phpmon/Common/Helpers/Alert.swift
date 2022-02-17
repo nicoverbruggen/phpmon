@@ -7,7 +7,9 @@
 
 import Cocoa
 
-@available(*, deprecated, message: "Use BetterAlert API instead for 5.1 and above")
+#warning("This deprecated class should be removed at the earliest convenience once no code relies on it.")
+
+@available(*, deprecated, message: "Use the BetterAlert API instead")
 class Alert {
     
     public static func present(
@@ -17,6 +19,7 @@ class Alert {
         secondButtonTitle: String = "",
         style: NSAlert.Style = .informational
     ) -> Bool {
+        
         if !Thread.isMainThread {
             fatalError("You should always present alerts on the main thread!")
         }

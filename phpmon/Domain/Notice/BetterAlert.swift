@@ -82,6 +82,7 @@ class BetterAlert {
      If you wish to simply show the alert and disregard the outcome, use `show`.
      */
     public func runModal() -> NSApplication.ModalResponse {
+        #warning("You should be alerted if this is not being called on the main thread.")
         NSApp.activate(ignoringOtherApps: true)
         windowController.window?.makeKeyAndOrderFront(nil)
         return NSApplication.shared.runModal(for: windowController.window!)
