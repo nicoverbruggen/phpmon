@@ -468,7 +468,7 @@
         <scene sceneID="BD0-La-ygq">
             <objects>
                 <windowController storyboardIdentifier="noticeWindow" id="nfT-AN-9ZW" sceneMemberID="viewController">
-                    <window key="window" title="Notice" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" toolbarStyle="unified" titleVisibility="hidden" id="AoF-SN-xB0">
+                    <window key="window" title="Notice" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" frameAutosaveName="" titlebarAppearsTransparent="YES" toolbarStyle="unified" titleVisibility="hidden" id="AoF-SN-xB0">
                         <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="425" y="462" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
@@ -660,7 +660,10 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwS-o8-pbl">
-                                <rect key="frame" x="13" y="13" width="76" height="32"/>
+                                <rect key="frame" x="13" y="13" width="94" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="qCP-Sp-gxm"/>
+                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WHE-HW-jwp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -742,6 +745,7 @@ Gw
                             <constraint firstItem="6JT-Vt-3q0" firstAttribute="top" secondItem="P0B-Ht-R8n" secondAttribute="bottom" constant="8" symbolic="YES" id="DGN-4k-X0h"/>
                             <constraint firstItem="P0B-Ht-R8n" firstAttribute="top" secondItem="JJJ-T9-Yuv" secondAttribute="top" constant="20" symbolic="YES" id="F2r-6E-qxh"/>
                             <constraint firstItem="mmQ-7e-dlb" firstAttribute="top" secondItem="KZf-b0-9cm" secondAttribute="bottom" constant="8" symbolic="YES" id="G21-Vd-tgl"/>
+                            <constraint firstItem="900-Z2-tID" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SwS-o8-pbl" secondAttribute="trailing" constant="8" symbolic="YES" id="IMv-ZD-VXf"/>
                             <constraint firstItem="js9-OW-xzC" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" id="IpM-ot-dBG"/>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="leading" secondItem="ZX9-s1-23i" secondAttribute="leading" id="UPN-Ad-j3X"/>
                             <constraint firstItem="KZf-b0-9cm" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" constant="20" symbolic="YES" id="Vab-wq-9Nc"/>

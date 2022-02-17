@@ -89,7 +89,7 @@ class BetterAlert {
     public func didSelectPrimary() -> Bool {
         return self.runModal() == .alertFirstButtonReturn
     }
-    
+
     /**
      Shows the modal and does not return anything.
      */

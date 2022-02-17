@@ -150,6 +150,8 @@
 		C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
+		C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
+		C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
 		C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC1E65279DE0380010F296 /* ServicesView.xib */; };
 		C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
@@ -298,6 +300,7 @@
 		C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcher.swift; sourceTree = "<group>"; };
 		C4DEB7D327A5D60B00834718 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindowExtension.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4EC1E65279DE0380010F296 /* ServicesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServicesView.xib; sourceTree = "<group>"; };
@@ -704,6 +707,7 @@
 				C46FA23E246C358E00944F05 /* StringExtension.swift */,
 				C48D0C9225CC804200CC7490 /* XibLoadable.swift */,
 				C42759662627662800093CAE /* NSMenuExtension.swift */,
+				C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -846,6 +850,7 @@
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
+				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */,
 				C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
@@ -996,6 +1001,7 @@
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
+				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4B585422770FE3900DA4FBE /* Shell.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,
