@@ -262,41 +262,43 @@ You can do this by running `composer global update` in your terminal. After that
 
 "alert.homebrew_missing.quit" = "Quit";
 
-/// 1. PHP binary not found
+/// PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
 "startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
-
-/// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
+/// PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
-"startup.errors.php_opt.desc" = "PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
+"startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_opt.desc" = "If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
-/// 3a. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
-"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `%@`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
+"startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
+"startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
 
-/// 3b. Valet configuration file missing [currently not enabled]
+/// Valet configuration file missing [currently not enabled]
 "startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
 "startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
 
-/// 3c. Valet version not readable
-"startup.errors.valet_version_unknown.title" = "Your Valet version could not be read (`valet --version` failed)";
-"startup.errors.valet_version_unknown.desc" = "Make sure your Valet installation works and is up-to-date.\n\nTry running `valet --version` in a terminal to find out what's going on.";
+/// Valet version not readable
+"startup.errors.valet_version_unknown.title" = "Your Valet version could not be read";
+"startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
+"startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
 
-/// 4. Brew & sudoers
+/// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
-"startup.errors.sudoers_brew.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 
-/// 5. Valet & sudoers
+/// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
-"startup.errors.sudoers_valet.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
+"startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 
-/// 6. Cannot retrieve services
+/// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
-"startup.errors.services_json_error.desc" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response. This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet.\n\nYou can usually fix this by running `brew update`.";
+"startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
+"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
-/// 7. Multiple services active
+/// Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";
 "startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'First Aid & Services > Fix My Valet' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
 

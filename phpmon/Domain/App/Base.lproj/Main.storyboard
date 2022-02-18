@@ -499,7 +499,7 @@
                             <visualEffectView blendingMode="behindWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="212"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-cF-KCX">
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-cF-KCX">
                                         <rect key="frame" x="383" y="13" width="104" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="4Uf-fh-jWJ"/>
@@ -515,7 +515,7 @@ DQ
                                             <action selector="primaryButtonAction:" target="hkw-9V-NxP" id="W7d-3b-pZT"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
                                         <rect key="frame" x="281" y="13" width="104" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="QWZ-BA-0g9"/>
@@ -531,7 +531,7 @@ Gw
                                             <action selector="secondaryButtonAction:" target="hkw-9V-NxP" id="YJs-Hu-lFP"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
                                         <rect key="frame" x="13" y="13" width="81" height="32"/>
                                         <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

@@ -11,6 +11,8 @@ import Cocoa
 
 class BetterAlertVC: NSViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var labelTitle: NSTextField!
     @IBOutlet weak var labelSubtitle: NSTextField!
     @IBOutlet weak var labelDescription: NSTextField!
@@ -27,6 +29,8 @@ class BetterAlertVC: NSViewController {
     
     @IBOutlet weak var primaryButtonTopMargin: NSLayoutConstraint!
     
+    // MARK: - Lifecycle
+    
     override func viewWillAppear() {
         imageView.image = NSApp.applicationIconImage
         
@@ -41,6 +45,13 @@ class BetterAlertVC: NSViewController {
     override func viewDidAppear() {
         view.window?.makeFirstResponder(buttonPrimary)
     }
+    
+    
+    deinit {
+        Log.perf("A BetterAlert has been deinitialized.")
+    }
+    
+    // MARK: Outlet Actions
     
     @IBAction func primaryButtonAction(_ sender: Any) {
         self.actionPrimary(self)
@@ -63,10 +74,6 @@ class BetterAlertVC: NSViewController {
     public func close(with code: NSApplication.ModalResponse) {
         self.view.window?.close()
         NSApplication.shared.stopModal(withCode: code)
-    }
-    
-    deinit {
-        Log.perf("A BetterAlert has been deinitialized.")
     }
     
 }

@@ -110,9 +110,10 @@ class Startup {
             command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
             titleText: "startup.errors.php_opt.title".localized,
-            descriptionText: "startup.errors.php_opt.desc".localized(
+            subtitleText: "startup.errors.php_opt.subtitle".localized(
                 Paths.optPath
-            )
+            ),
+            descriptionText: "startup.errors.php_opt.desc".localized
         ),
         EnvironmentCheck(
             command: {
@@ -121,6 +122,7 @@ class Startup {
             },
             name: "`valet` binary exists",
             titleText: "startup.errors.valet_executable.title".localized,
+            subtitleText: "startup.errors.valet_executable.subtitle".localized,
             descriptionText: "startup.errors.valet_executable.desc".localized(
                 Paths.valet
             )
@@ -129,19 +131,20 @@ class Startup {
             command: { return HomebrewDiagnostics.cannotLoadService() },
             name: "`sudo \(Paths.brew) services info` JSON loaded",
             titleText: "startup.errors.services_json_error.title".localized,
+            subtitleText: "startup.errors.services_json_error.subtitle".localized,
             descriptionText: "startup.errors.services_json_error.desc".localized
         ),
         EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
-            descriptionText: "startup.errors.sudoers_brew.desc".localized
+            subtitleText: "startup.errors.sudoers_brew.subtitle".localized
         ),
         EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
-            descriptionText: "startup.errors.sudoers_valet.desc".localized
+            subtitleText: "startup.errors.sudoers_valet.subtitle".localized
         ),
         EnvironmentCheck(
             command: {
@@ -152,6 +155,7 @@ class Startup {
             },
             name: "`valet --version` was loaded",
             titleText: "startup.errors.valet_version_unknown.title".localized,
+            subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
         )
     ]
@@ -176,7 +180,7 @@ class Startup {
             name: String,
             titleText: String,
             subtitleText: String,
-            descriptionText: String,
+            descriptionText: String = "",
             buttonText: String = "OK",
             requiresAppRestart: Bool = false
         ) {
