@@ -87,7 +87,13 @@ class Valet {
             let version = version
             Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
             DispatchQueue.main.async {
-                Alert.notify(message: "alert.min_valet_version.title".localized, info: "alert.min_valet_version.info".localized(version!, Constants.MinimumRecommendedValetVersion))
+                BetterAlert()
+                    .withInformation(
+                        title: "alert.min_valet_version.title".localized,
+                        subtitle:"alert.min_valet_version.info".localized(version!, Constants.MinimumRecommendedValetVersion)
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
             }
         } else {
             Log.info("Valet version \(version!) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")

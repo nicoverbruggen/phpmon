@@ -7,33 +7,7 @@
 
 import Cocoa
 
-#warning("This deprecated class should be removed at the earliest convenience once no code relies on it.")
-
-@available(*, deprecated, message: "Use the BetterAlert API instead")
 class Alert {
-    
-    public static func present(
-        messageText: String,
-        informativeText: String,
-        buttonTitle: String = "OK",
-        secondButtonTitle: String = "",
-        style: NSAlert.Style = .informational
-    ) -> Bool {
-        
-        if !Thread.isMainThread {
-            fatalError("You should always present alerts on the main thread!")
-        }
-        
-        let alert = NSAlert.init()
-        alert.alertStyle = style
-        alert.messageText = messageText
-        alert.informativeText = informativeText
-        alert.addButton(withTitle: buttonTitle)
-        if (!secondButtonTitle.isEmpty) {
-            alert.addButton(withTitle: secondButtonTitle)
-        }
-        return alert.runModal() == .alertFirstButtonReturn
-    }
     
     public static func confirm(
         onWindow window: NSWindow,
@@ -63,31 +37,4 @@ class Alert {
         }
     }
     
-    /**
-     Notify the user about something by showing an alert.
-     */
-    public static func notify(message: String, info: String, button: String = "OK", style: NSAlert.Style = .informational) {
-        _ = present(
-            messageText: message,
-            informativeText: info,
-            buttonTitle: button,
-            secondButtonTitle: "",
-            style: style
-        )
-    }
-    
-    /**
-     Notify the user about a particular error (which must be `Alertable`)
-     by showing an alert.
-     */
-    public static func notify(about error: Error & AlertableError) {
-        let key = error.getErrorMessageKey()
-        _ = present(
-            messageText: "\(key).title".localized,
-            informativeText: "\(key).description".localized,
-            buttonTitle: "OK",
-            secondButtonTitle: "",
-            style: .critical
-        )
-    }
 }

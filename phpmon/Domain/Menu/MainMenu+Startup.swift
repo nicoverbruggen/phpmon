@@ -33,11 +33,13 @@ extension MainMenu {
         
         if HomebrewDiagnostics.hasAliasConflict() {
             DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_alias_conflict.title".localized,
-                    info: "alert.php_alias_conflict.info".localized,
-                    style: .critical
-                )
+                BetterAlert()
+                    .withInformation(
+                        title: "alert.php_alias_conflict.title".localized,
+                        subtitle: "alert.php_alias_conflict.info".localized
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
             }
         }
         

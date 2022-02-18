@@ -21,11 +21,13 @@ extension ActivePhpInstallation {
     public func notifyAboutBrokenPhpFpm() {
         if !self.checkPhpFpmStatus() {
             DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_fpm_broken.title".localized,
-                    info: "alert.php_fpm_broken.info".localized,
-                    style: .critical
-                )
+                BetterAlert()
+                    .withInformation(
+                        title: "alert.php_fpm_broken.title".localized,
+                        subtitle: "alert.php_fpm_broken.info".localized
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
             }
         }
     }

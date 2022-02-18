@@ -170,29 +170,30 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - Actions
     
     @objc func fixHomebrewPermissions() {
-        if !Alert.present(
-            messageText: "alert.fix_homebrew_permissions.title".localized,
-            informativeText: "alert.fix_homebrew_permissions.info".localized,
-            buttonTitle: "alert.fix_homebrew_permissions.ok".localized,
-            secondButtonTitle: "alert.fix_homebrew_permissions.cancel".localized,
-            style: .warning
-        ) {
+        if BetterAlert()
+            .withInformation(
+                title: "alert.fix_homebrew_permissions.title".localized,
+                subtitle: "alert.fix_homebrew_permissions.info".localized
+            )
+            .withPrimary(text: "alert.fix_homebrew_permissions.ok".localized)
+            .withSecondary(text: "alert.fix_homebrew_permissions.cancel".localized)
+            .didSelectPrimary() {
             return
         }
         
-        /*
         asyncExecution {
             try Actions.fixHomebrewPermissions()
         } success: {
-            Alert.notify(
-                message: "alert.fix_homebrew_permissions_done.title".localized,
-                info: "alert.fix_homebrew_permissions_done.info".localized,
-                style: .warning
-            )
+            BetterAlert()
+                .withInformation(
+                    title: "alert.fix_homebrew_permissions_done.title".localized,
+                    subtitle: "alert.fix_homebrew_permissions_done.info".localized
+                )
+                .withPrimary(text: "OK")
+                .show()
         } failure: { error in
-            await Alert.notify(about: error as! HomebrewPermissionError)
+            BetterAlert.show(for: error as! HomebrewPermissionError)
         }
-         */
     }
     
     @objc func restartPhpFpm() {

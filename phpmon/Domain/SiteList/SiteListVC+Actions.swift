@@ -23,10 +23,13 @@ extension SiteListVC {
         } completion: { [self] in
             selectedSite.determineSecured(Valet.shared.config.tld)
             if selectedSite.secured == originalSecureStatus {
-                Alert.notify(
-                    message: "site_list.alerts_status_not_changed.title".localized,
-                    info: "site_list.alerts_status_not_changed.desc".localized(command)
-                )
+                BetterAlert()
+                    .withInformation(
+                        title: "site_list.alerts_status_not_changed.title".localized,
+                        subtitle: "site_list.alerts_status_not_changed.desc".localized(command)
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
             } else {
                 let newState = selectedSite.secured ? "secured" : "unsecured"
                 LocalNotification.send(
@@ -51,10 +54,13 @@ extension SiteListVC {
         if url != nil {
             NSWorkspace.shared.open(url!)
         } else {
-            _ = Alert.present(
-                messageText: "site_list.alert.invalid_folder_name".localized,
-                informativeText: "site_list.alert.invalid_folder_name_desc".localized
-            )
+            BetterAlert()
+                .withInformation(
+                    title: "site_list.alert.invalid_folder_name".localized,
+                    subtitle: "site_list.alert.invalid_folder_name_desc".localized
+                )
+                .withPrimary(text: "OK")
+                .show()
         }
     }
     

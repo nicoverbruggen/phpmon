@@ -105,4 +105,15 @@ class BetterAlert {
     public func show() {
         _ = self.runModal()
     }
+    
+    /**
+     Shows the modal for a particular error.
+     */
+    public static func show(for error: Error & AlertableError) {
+        let key = error.getErrorMessageKey()
+        return BetterAlert().withInformation(
+            title: "\(key).title".localized,
+            subtitle: "\(key).description".localized
+        ).withPrimary(text: "OK").show()
+    }
 }
