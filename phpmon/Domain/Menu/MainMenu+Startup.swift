@@ -80,6 +80,16 @@ extension MainMenu {
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
         
+        if (Valet.shared.config.tld != "test") {
+            DispatchQueue.main.async {
+                BetterAlert().withInformation(
+                    title: "alert.warnings.tld_issue.title".localized,
+                    subtitle: "alert.warnings.tld_issue.subtitle".localized,
+                    description: "alert.warnings.tld_issue.description".localized
+                ).withPrimary(text: "OK").show()
+            }
+        }
+        
         NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
         
         Log.info("PHP Monitor is ready to serve!")
