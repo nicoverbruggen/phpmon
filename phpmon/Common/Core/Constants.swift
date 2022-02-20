@@ -50,11 +50,9 @@ class Constants {
         // dev release. In this case, that means that the version below is detected.
         "8.2"
     ]
-
-    /**
-     The URL that people can visit if they wish to help support the project.
-     */
+    
     static let DonationUrlDirect = URL(string: "https://nicoverbruggen.be/sponsor#pay-now")!
     static let DonationUrl = URL(string: "https://nicoverbruggen.be/sponsor")!
+    static let FrequentlyAskedQuestionsUrl = URL(string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting")!
 
 }

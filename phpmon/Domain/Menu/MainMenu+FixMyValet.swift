@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 extension MainMenu {
     
@@ -70,10 +71,13 @@ extension MainMenu {
                 subtitle: "alert.fix_my_valet_done.subtitle".localized,
                 description: "alert.fix_my_valet_done.desc".localized
             )
-            .withPrimary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpVersion))
-            .withSecondary(text: "alert.fix_my_valet_done.switch_back".localized(version), action: { alert in
+            .withPrimary(text: "alert.fix_my_valet_done.switch_back".localized(version), action: { alert in
                 alert.close(with: .alertSecondButtonReturn)
                 MainMenu.shared.switchToPhpVersion(version)
+            })
+            .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpVersion))
+            .withTertiary(text: "", action: { alert in
+                NSWorkspace.shared.open(Constants.FrequentlyAskedQuestionsUrl)
             })
             .show()
     }
