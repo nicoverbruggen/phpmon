@@ -170,7 +170,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - Actions
     
     @objc func fixHomebrewPermissions() {
-        if BetterAlert()
+        if !BetterAlert()
             .withInformation(
                 title: "alert.fix_homebrew_permissions.title".localized,
                 subtitle: "alert.fix_homebrew_permissions.info".localized
@@ -187,7 +187,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             BetterAlert()
                 .withInformation(
                     title: "alert.fix_homebrew_permissions_done.title".localized,
-                    subtitle: "alert.fix_homebrew_permissions_done.info".localized
+                    subtitle: "alert.fix_homebrew_permissions_done.subtitle".localized,
+                    description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
                 .withPrimary(text: "OK")
                 .show()

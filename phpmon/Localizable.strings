@@ -25,9 +25,8 @@
 "mi_manage_services" = "Manage Services";
 "mi_restart_all_services" = "Restart All Services";
 "mi_stop_all_services" = "Stop All Services";
-"mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
-"mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
-"mi_fix_brew_permissions" = "Restore Homebrew Permissions";
+"mi_fix_my_valet" = "Fix My Valet...";
+"mi_fix_brew_permissions" = "Restore Homebrew Permissions...";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -230,7 +229,8 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.fix_homebrew_permissions.cancel" = "Cancel";
 
 "alert.fix_homebrew_permissions_done.title" = "Permissions Fixed!";
-"alert.fix_homebrew_permissions_done.info" = "When you are done with Homebrew, you should open PHP Monitor and restart all services if you want Valet to work again. It is also recommended to restart PHP Monitor after running `brew upgrade`.";
+"alert.fix_homebrew_permissions_done.subtitle" = "All services are currently disabled. You can now interact with Homebrew.";
+"alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example, you should restart PHP Monitor and select \"Restart All Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
