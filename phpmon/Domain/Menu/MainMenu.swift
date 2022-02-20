@@ -262,48 +262,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
     
-    @objc func fixMyValet() {
-        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
-            BetterAlert()
-                .withInformation(
-                    title: "alert.php_formula_missing.title".localized,
-                    subtitle: "alert.php_formula_missing.info".localized
-                )
-                .withPrimary(text: "OK")
-                .show()
-            
-            return
-        }
-        
-        
-        
-        if !BetterAlert()
-            .withInformation(
-                title: "alert.fix_my_valet.title".localized,
-                subtitle: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion)
-            )
-            .withPrimary(text: "alert.fix_my_valet.ok".localized)
-            .withSecondary(text: "alert.fix_my_valet.cancel".localized)
-            .didSelectPrimary()
-        {
-            Log.info("The user has chosen to abort Fix My Valet")
-            return
-        }
-        
-        asyncExecution {
-            Actions.fixMyValet()
-        } success: {
-            BetterAlert()
-            .withInformation(
-                title: "alert.fix_my_valet_done.title".localized,
-                subtitle: "alert.fix_my_valet_done.subtitle".localized,
-                description: "alert.fix_my_valet_done.desc".localized
-            )
-            .withPrimary(text: "alert.fix_my_valet.ok".localized)
-            .show()
-        }
-    }
-    
     @objc func updateGlobalComposerDependencies() {
         self.updateGlobalDependencies(notify: true, completion: { _ in })
     }
