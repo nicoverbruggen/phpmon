@@ -142,7 +142,7 @@ class StatusMenu : NSMenu {
             let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.longVersion
             
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-            let versionString = long ? longVersion.homebrewVersion : shortVersion
+            let versionString = long ? longVersion.toString() : shortVersion
             
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnv.brewPhpVersion) ? "php" : "php@\(shortVersion)"

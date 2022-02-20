@@ -96,6 +96,12 @@ public struct PhpVersionNumber: Equatable {
     let minor: Int
     let patch: Int?
     
+    public func toString() -> String {
+        return self.patch == nil
+            ? "\(major).\(minor)"
+            : "\(major).\(minor).\(patch!)"
+    }
+    
     public func patch(_ strictFallback: Bool = true, _ constraint: PhpVersionNumber? = nil) -> Int {
         return patch ?? (strictFallback ? 0 : constraint?.patch ?? 999)
     }
