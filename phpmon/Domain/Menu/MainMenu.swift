@@ -173,7 +173,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         if !BetterAlert()
             .withInformation(
                 title: "alert.fix_homebrew_permissions.title".localized,
-                subtitle: "alert.fix_homebrew_permissions.info".localized
+                subtitle: "alert.fix_homebrew_permissions.subtitle".localized,
+                description: "alert.fix_homebrew_permissions.desc".localized
             )
             .withPrimary(text: "alert.fix_homebrew_permissions.ok".localized)
             .withSecondary(text: "alert.fix_homebrew_permissions.cancel".localized)

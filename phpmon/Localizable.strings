@@ -224,12 +224,13 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Restore Homebrew Permissions
 "alert.fix_homebrew_permissions.title" = "About \"Restore Homebrew Permissions\"";
-"alert.fix_homebrew_permissions.info" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\nThis will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.subtitle" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.desc" = "This will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.";
 "alert.fix_homebrew_permissions.ok" = "Restore Permissions";
 "alert.fix_homebrew_permissions.cancel" = "Cancel";
 
-"alert.fix_homebrew_permissions_done.title" = "Permissions Fixed!";
-"alert.fix_homebrew_permissions_done.subtitle" = "All services are currently disabled. You can now interact with Homebrew.";
+"alert.fix_homebrew_permissions_done.title" = "All file and folder permissions for Valet's dependencies have been restored.";
+"alert.fix_homebrew_permissions_done.subtitle" = "Because of this, all of Valet's services are currently no longer running. You can now interact with Homebrew, but your Valet sites will be unavailable as all services are disabled.";
 "alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example, you should restart PHP Monitor and select \"Restart All Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
 
 // PHP FPM Broken
