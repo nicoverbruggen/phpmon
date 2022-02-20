@@ -77,7 +77,7 @@ extension MainMenu {
             })
             .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpVersion))
             .withTertiary(text: "", action: { alert in
-                NSWorkspace.shared.open(Constants.FrequentlyAskedQuestionsUrl)
+                NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })
             .show()
     }

@@ -110,12 +110,12 @@ class Stats {
                 .withSecondary(text: "startup.sponsor_encouragement.skip".localized)
                 .withTertiary(text: "", action: { vc in
                     vc.close(with: .alertThirdButtonReturn)
-                    NSWorkspace.shared.open(Constants.DonationUrl)
+                    NSWorkspace.shared.open(Constants.Urls.DonationPage)
                 }).didSelectPrimary()
 
             if donate {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")
-                NSWorkspace.shared.open(Constants.DonationUrlDirect)
+                NSWorkspace.shared.open(Constants.Urls.DonationPayment)
             }
             
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)

@@ -323,7 +323,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
     
     @objc func openDonate() {
-        NSWorkspace.shared.open(Constants.DonationUrl)
+        NSWorkspace.shared.open(Constants.Urls.DonationPage)
     }
     
     @objc func terminateApp() {
