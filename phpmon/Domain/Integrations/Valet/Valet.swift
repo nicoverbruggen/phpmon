@@ -19,7 +19,7 @@ class Valet {
     var config: Valet.Configuration!
     
     /// A cached list of sites that were detected after analyzing the paths set up for Valet.
-    var sites: [Site] = []
+    var sites: [ValetSite] = []
     
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
@@ -174,9 +174,28 @@ class Valet {
         }
         
         if type == FileAttributeType.typeSymbolicLink {
-            sites.append(Site(aliasPath: siteDir, tld: tld))
+            sites.append(ValetSite(aliasPath: siteDir, tld: tld))
         } else if type == FileAttributeType.typeDirectory {
-            sites.append(Site(absolutePath: siteDir, tld: tld))
+            sites.append(ValetSite(absolutePath: siteDir, tld: tld))
+        }
+    }
+    
+    struct Configuration: Decodable {
+        /// Top level domain suffix. Usually "test" but can be set to something else.
+        /// - Important: Does not include the actual dot. ("test", not ".test"!)
+        let tld: String
+        
+        /// The paths that need to be checked.
+        let paths: [String]
+        
+        /// The loopback address. Optional.
+        let loopback: String?
+        
+        /// The default site that is served if the domain is not found. Optional.
+        let defaultSite: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case tld, paths, loopback, defaultSite = "default"
         }
     }
     

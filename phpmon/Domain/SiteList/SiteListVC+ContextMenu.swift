@@ -65,7 +65,7 @@ extension SiteListVC {
         }
     }
     
-    private func addUnlink(to menu: NSMenu, with site: Valet.Site) {
+    private func addUnlink(to menu: NSMenu, with site: ValetSite) {
         if (site.aliasPath != nil) {
             menu.addItem(
                 withTitle: "site_list.unlink".localized,
@@ -76,7 +76,7 @@ extension SiteListVC {
         }
     }
     
-    private func addToggleSecure(to menu: NSMenu, with site: Valet.Site) {
+    private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {
         menu.addItem(
             withTitle: site.secured
             ? "site_list.unsecure".localized

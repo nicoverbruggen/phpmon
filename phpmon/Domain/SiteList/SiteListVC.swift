@@ -20,7 +20,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Variables
     
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
-    var sites: [Valet.Site] = []
+    var sites: [ValetSite] = []
     
     /// Array that contains various apps that might open a particular site directory.
     var applications: [Application] {
@@ -32,7 +32,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Helper Variables
     
-    var selectedSite: Valet.Site? {
+    var selectedSite: ValetSite? {
         if tableView.selectedRow == -1 {
             return nil
         }

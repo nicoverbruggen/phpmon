@@ -11,7 +11,7 @@ import AppKit
 
 class SiteListCell: NSTableCellView
 {
-    var site: Valet.Site? = nil
+    var site: ValetSite? = nil
     
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
@@ -29,7 +29,7 @@ class SiteListCell: NSTableCellView
         super.draw(dirtyRect)
     }
     
-    func populateCell(with site: Valet.Site) {
+    func populateCell(with site: ValetSite) {
         self.site = site
         
         // Make sure to show the TLD
