@@ -95,35 +95,9 @@ class ValetSite {
      with the currently linked version of PHP (see `composerPhpMatchesSystem`).
      */
     public func determineComposerPhpVersion() {
-        do {
-            let path = "\(absolutePath!)/composer.json"
-            
-            if Filesystem.fileExists(path) {
-                let decoded = try JSONDecoder().decode(
-                    ComposerJson.self,
-                    from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
-                )
-                
-                (self.composerPhp, self.composerPhpSource) = decoded.getPhpVersion()
-                self.notableComposerDependencies = decoded.getNotableDependencies()
-            }
-        } catch {
-            Log.err("Something went wrong reading the Composer JSON file.")
-        }
         
-        do {
-            let path = "\(absolutePath!)/.valetphprc"
-            
-            if Filesystem.fileExists(path) {
-                let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-                if let version = VersionExtractor.from(contents) {
-                    self.composerPhp = version
-                    self.composerPhpSource = .valetphprc
-                }
-            }
-        } catch {
-            Log.err("Something went wrong parsing the .valetphprc file")
-        }
+        self.determineComposerInformation()
+        self.determineValetPhpFileInfo()
 
         if self.composerPhp == "???" {
             return
@@ -165,6 +139,47 @@ class ValetSite {
             if self.notableComposerDependencies.keys.contains(key) {
                 self.driver = value
             }
+        }
+    }
+    
+    /**
+     Checks the contents of the composer.json file and determine the notable dependencies,
+     as well as the requested PHP version. If no composer.json file is found, nothing happens.
+     */
+    private func determineComposerInformation() {
+        let path = "\(absolutePath!)/composer.json"
+        
+        do {
+            if Filesystem.fileExists(path) {
+                let decoded = try JSONDecoder().decode(
+                    ComposerJson.self,
+                    from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
+                )
+                
+                (self.composerPhp, self.composerPhpSource) = decoded.getPhpVersion()
+                self.notableComposerDependencies = decoded.getNotableDependencies()
+            }
+        } catch {
+            Log.err("Something went wrong reading the Composer JSON file.")
+        }
+    }
+    
+    /**
+     Checks the contents of the .valetphprc file and determine the version, if possible.
+     */
+    private func determineValetPhpFileInfo() {
+        let path = "\(absolutePath!)/.valetphprc"
+        
+        do {
+            if Filesystem.fileExists(path) {
+                let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+                if let version = VersionExtractor.from(contents) {
+                    self.composerPhp = version
+                    self.composerPhpSource = .valetphprc
+                }
+            }
+        } catch {
+            Log.err("Something went wrong parsing the .valetphprc file")
         }
     }
 }
