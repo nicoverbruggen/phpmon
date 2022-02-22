@@ -132,6 +132,7 @@
 		C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
 		C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
+		C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
@@ -960,6 +961,7 @@
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
+				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
 				C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
