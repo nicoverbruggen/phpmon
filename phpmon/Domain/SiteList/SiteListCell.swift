@@ -80,8 +80,8 @@ class SiteListCell: NSTableCellView
         
         alert.messageText = "alert.composer_php_requirement.title"
             .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp)
-        alert.informativeText = "alert.composer_php_requirement.info"
-            .localized(site.composerPhpSource)
+        alert.informativeText = "alert.composer_php_requirement.type.\(site.composerPhpSource.rawValue)"
+            .localized
         
         alert.addButton(withTitle: "site_link.close".localized)
         

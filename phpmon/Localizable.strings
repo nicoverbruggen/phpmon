@@ -196,8 +196,11 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Composer Version
-"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\":\n\"%@\".";
-"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the `%@` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: %@.";
+"alert.composer_php_requirement.type.unknown" = "The required PHP version was determined by an unknown factor.";
+"alert.composer_php_requirement.type.require" = "This required PHP version was determined by checking the `require` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.type.platform" = "This required PHP version was determined by checking the `platform` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.type.valetphprc" = "This required PHP version was determined by checking the .valetphprc file in your project's directory.";
 
 // Suggest Fix My Valet
 "alert.php_switch_failed.title" = "Switching to PHP %@ seems to have failed.";
