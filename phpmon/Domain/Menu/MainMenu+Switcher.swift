@@ -39,9 +39,13 @@ extension MainMenu {
             
             // Run composer updates
             if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
-                self.updateGlobalDependencies(notify: false, completion: { _ in
-                    self.notifyAboutVersionChange(to: version)
-                })
+                ComposerWindow().updateGlobalDependencies(
+                    notify: false,
+                    completion: { _ in
+                        self.notifyAboutVersionChange(to: version)
+                    }
+                )
+                
             } else {
                 self.notifyAboutVersionChange(to: version)
             }

@@ -265,7 +265,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
     
     @objc func updateGlobalComposerDependencies() {
-        self.updateGlobalDependencies(notify: true, completion: { _ in })
+        ComposerWindow().updateGlobalDependencies(
+            notify: true,
+            completion: { _ in }
+        )
     }
     
     @objc func openActiveConfigFolder() {

@@ -29,6 +29,7 @@ struct ComposerJson: Decodable {
     struct Config: Decodable {
         let platform: Platform?
     }
+    
     struct Platform: Decodable {
         let php: String?
     }
