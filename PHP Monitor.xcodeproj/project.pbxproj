@@ -133,6 +133,7 @@
 		C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
+		C4C1019627C659B7001FACC2 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = C4C1019527C659B7001FACC2 /* HotKey */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
@@ -344,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4C1019627C659B7001FACC2 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +759,9 @@
 				C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */,
 			);
 			name = "phpmon-tests";
+			packageProductDependencies = (
+				C4C1019527C659B7001FACC2 /* HotKey */,
+			);
 			productName = "phpmon-tests";
 			productReference = C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -776,7 +781,6 @@
 					};
 					C4F7807825D7F84B000DBC97 = {
 						CreatedOnToolsVersion = 12.4;
-						TestTargetID = C41C1B3222B0097F00E7CF16;
 					};
 				};
 			};
@@ -1220,7 +1224,6 @@
 		C4F7808125D7F84B000DBC97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -1234,14 +1237,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PHP Monitor.app/Contents/MacOS/PHP Monitor";
 			};
 			name = Debug;
 		};
 		C4F7808225D7F84B000DBC97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -1255,7 +1256,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PHP Monitor.app/Contents/MacOS/PHP Monitor";
 			};
 			name = Release;
 		};
@@ -1304,6 +1304,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		C4998F0526175E7200B2526E /* HotKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4998F0426175E7200B2526E /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+		C4C1019527C659B7001FACC2 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C4998F0426175E7200B2526E /* XCRemoteSwiftPackageReference "HotKey" */;
 			productName = HotKey;
