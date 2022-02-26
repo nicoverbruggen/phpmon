@@ -23,8 +23,9 @@ class ComposerWindow {
         self.shouldNotify = notify
         self.completion = completion
         
-        if !Filesystem.fileExists("/usr/local/bin/composer") {
-            presentMissingSymlinkAlert()
+        Paths.shared.detectBinaryPaths()
+        if Paths.composer == nil {
+            presentMissingAlert()
             return
         }
         
@@ -41,11 +42,11 @@ class ComposerWindow {
         
         DispatchQueue.global(qos: .userInitiated).async { [self] in
             let task = Shell.user.createTask(
-                for: "/usr/local/bin/composer global update", requiresPath: true
+                for: "\(Paths.composer!) global update", requiresPath: true
             )
             
             DispatchQueue.main.async {
-                self.window?.addToConsole("/usr/local/bin/composer global update\n")
+                self.window?.addToConsole("\(Paths.composer!) global update\n")
             }
             
             task.listen(
@@ -114,11 +115,12 @@ class ComposerWindow {
     
     // MARK: Alert
     
-    private func presentMissingSymlinkAlert() {
+    private func presentMissingAlert() {
         BetterAlert()
             .withInformation(
                 title: "alert.composer_missing.title".localized,
-                subtitle: "alert.composer_missing.info".localized
+                subtitle: "alert.composer_missing.subtitle".localized,
+                description: "alert.composer_missing.desc".localized
             )
             .withPrimary(text: "OK")
             .show()

@@ -182,7 +182,13 @@
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
-"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
+"alert.composer_missing.subtitle" = "PHP Monitor could not find Composer. Make sure that Composer is installed and try again.";
+"alert.composer_missing.desc" = "PHP Monitor assumes that Composer is located in either:
+
+• `/usr/local/bin/composer`
+• `/opt/homebrew/bin/composer`
+
+Make sure you have it installed in one of these locations, or make a symlink if you have Composer installed somewhere else.";
 
 "alert.composer_progress.title" = "Updating global dependencies...";
 "alert.composer_progress.info" = "You can see the progress in the terminal output below.";
