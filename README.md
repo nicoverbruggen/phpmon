@@ -43,7 +43,13 @@ To upgrade your existing installation, run:
 
 	brew upgrade phpmon
 
-(You may need to run `brew update` first in order to update the cask file if you ran a Homebrew operation recently.)
+(You may need to run `brew update` or `brew update-reset` first in order to update the cask file if you ran a Homebrew operation recently.)
+
+## ⚡️ Launchers (Alfred, Raycast)
+
+If you would like to integrate with your launcher of choice, you can also download an [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor) that works with PHP Monitor.
+
+The app must be running in the background for these to work, and the _Allow third-party integrations_ checkbox must be enabled in Preferences (it is by default).
 
 ## 🔑 Is the app signed & notarized?
 
@@ -274,9 +280,11 @@ You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor
 </details>
 
 <details>
-<summary><strong>How can the app integrate with third party tools, like Alfred?</strong></summary>
+<summary><strong>How can the app integrate with third party tools, like Alfred or Raycast?</strong></summary>
 
-There's an Alfred workflow usually included in the release list, you can grab it by going to releases and downloading the asset `phpmon.alfredworkflow`.
+PHP Monitor supports third party app integrations by default, and this feature is enabled in Preferences unless you disable it.
+
+You can grab the official [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor).
 
 If you'd like to integrate something yourself, all you need to to is use the `phpmon://` protocol and ensure that third party app integrations are enabled in Preferences (in PHP Monitor).
 
