@@ -10,88 +10,70 @@ import AppKit
 
 class Startup {
     
-    public var failed : Bool = false
-    public var failureCallback = {}
-    
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
      
-     - Parameter success: Callback that is fired if the application can proceed with launch
-     - Parameter failure: Callback that is fired if the application must retry launch
+     If this method returns false, there was a failed check and an alert was displayed.
+     If this method returns true, then all checks succeeded and the app can continue.
      */
-    func checkEnvironment(success: () -> Void, failure: @escaping () -> Void)
+    func checkEnvironment() async -> Bool
     {
-        failureCallback = failure
+        // Do the important system setup checks
+        Log.info("[ARCH] The user is running PHP Monitor with the architecture: \(App.architecture)")
         
-        performEnvironmentCheck(
-            !Shell.fileExists("\(Paths.binPath)/php"),
-            messageText:        "startup.errors.php_binary.title".localized,
-            informativeText:    "startup.errors.php_binary.desc".localized,
-            breaking:           true
-        )
+        for check in self.checks {
+            if await check.succeeds() {
+                Log.info("[OK] \(check.name)")
+                continue
+            }
+            
+            // If we get here, something's gone wrong and the check has failed...
+            Log.info("[FAIL] \(check.name)")
+            showAlert(for: check)
+            return false
+        }
         
-        performEnvironmentCheck(
-            !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php"),
-            messageText:        "startup.errors.php_opt.title".localized,
-            informativeText:    "startup.errors.php_opt.desc".localized,
-            breaking:           true
-        )
-        
-        performEnvironmentCheck(
-            // Check for Valet; it can be symlinked or in .composer/vendor/bin
-            !(Shell.fileExists("/usr/local/bin/valet")
-                || Shell.fileExists("/opt/homebrew/bin/valet")
-                || Shell.fileExists("~/.composer/vendor/bin/valet")
-            ),
-            messageText:        "startup.errors.valet_executable.title".localized,
-            informativeText:    "startup.errors.valet_executable.desc".localized,
-            breaking:           true
-        )
-        
-        performEnvironmentCheck(
-            HomebrewDiagnostics.cannotLoadService(),
-            messageText:        "startup.errors.services_json_error.title".localized,
-            informativeText:    "startup.errors.services_json_error.desc".localized,
-            breaking:           true
-        )
-        
-        performEnvironmentCheck(
-            !Shell.pipe("cat /private/etc/sudoers.d/brew").contains("\(Paths.binPath)/brew"),
-            messageText:        "startup.errors.sudoers_brew.title".localized,
-            informativeText:    "startup.errors.sudoers_brew.desc".localized,
-            breaking:           true
-        )
-        
-        performEnvironmentCheck(
-            // Check for Valet; it MUST be symlinked thanks to sudoers
-            !(Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/usr/local/bin/valet")
-                || Shell.pipe("cat /private/etc/sudoers.d/valet").contains("/opt/homebrew/bin/valet")
-            ),
-            messageText:        "startup.errors.sudoers_valet.title".localized,
-            informativeText:    "startup.errors.sudoers_valet.desc".localized,
-            breaking:           true
-        )
-        
-        // Determine the Valet version only AFTER confirming the correct permission is in place
-        Valet.shared.version = VersionExtractor.from(valet("--version"))
-        performEnvironmentCheck(
-            Valet.shared.version == nil,
-            messageText:        "startup.errors.valet_version_unknown.title".localized,
-            informativeText:    "startup.errors.valet_version_unknown.desc".localized,
-            breaking:           true
-        )
-        
-        if (!failed) {
-            initializeSwitcher()
-            Log.info("PHP Monitor has determined the application has successfully passed all checks.")
-            success()
+        // If we get here, nothing has gone wrong. That's what we want!
+        initializeSwitcher()
+        Log.separator(as: .info)
+        Log.info("PHP Monitor has determined the application has successfully passed all checks.")
+        return true
+    }
+    
+    /**
+     Displays an alert for a particular check. There are two types of alerts:
+     - ones that require an app restart, which prompt the user to exit the app
+     - ones that allow the app to continue, which allow the user to retry
+     */
+    private func showAlert(for check: EnvironmentCheck) {
+        DispatchQueue.main.async {
+            if check.requiresAppRestart {
+                BetterAlert()
+                    .withInformation(
+                        title: check.titleText,
+                        subtitle: check.subtitleText,
+                        description: check.descriptionText
+                    )
+                    .withPrimary(text: check.buttonText, action: { _ in
+                        exit(1)
+                    }).show()
+            }
+            
+            BetterAlert()
+                .withInformation(
+                    title: check.titleText,
+                    subtitle: check.subtitleText,
+                    description: check.descriptionText
+                )
+                .withPrimary(text: "OK")
+                .show()
         }
     }
     
     /**
      Because the Switcher requires various environment guarantees, the switcher is only
-     initialized when it is done working.
+     initialized when it is done working. The switcher must be initialized on the main thread.
      */
     private func initializeSwitcher() {
         DispatchQueue.main.async {
@@ -99,35 +81,120 @@ class Startup {
             appDelegate.initializeSwitcher()
         }
     }
-
-    /**
-     Perform an environment check. Will cause the application to terminate, if `breaking` is set to true.
-     
-     - Parameter condition: Fail condition to check for; if this returns `true`, the alert will be shown
-     - Parameter messageText: Short description of what is wrong
-     - Parameter informativeText: Expanded description of the environment check that failed
-     - Parameter breaking: If the application should terminate afterwards
-     */
-    private func performEnvironmentCheck(
-        _ condition: Bool,
-        messageText: String,
-        informativeText: String,
-        breaking: Bool
-    ) {
-        if (!condition) { return }
-        
-        failed = breaking
-
-        DispatchQueue.main.async { [self] in
-            // Present the information to the user
-            Alert.notify(
-                message: messageText,
-                info: informativeText,
-                style: breaking ? .critical : .warning
+    
+    // MARK: - Check (List)
+    
+    public var checks: [EnvironmentCheck] = [
+        EnvironmentCheck(
+            command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
+            name: "`\(Paths.brew)` exists",
+            titleText: "alert.homebrew_missing.title".localized,
+            subtitleText: "alert.homebrew_missing.subtitle".localized,
+            descriptionText: "alert.homebrew_missing.info".localized(
+                App.architecture
+                    .replacingOccurrences(of: "x86_64", with: "Intel")
+                    .replacingOccurrences(of: "arm64", with: "Apple Silicon"),
+                Paths.brew
+            ),
+            buttonText: "alert.homebrew_missing.quit".localized,
+            requiresAppRestart: true
+        ),
+        EnvironmentCheck(
+            command: { return !Filesystem.fileExists(Paths.php) },
+            name: "`\(Paths.php)` exists",
+            titleText: "startup.errors.php_binary.title".localized,
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
+        ),
+        EnvironmentCheck(
+            command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
+            name: "`ls \(Paths.optPath) | grep php` returned php result",
+            titleText: "startup.errors.php_opt.title".localized,
+            subtitleText: "startup.errors.php_opt.subtitle".localized(
+                Paths.optPath
+            ),
+            descriptionText: "startup.errors.php_opt.desc".localized
+        ),
+        EnvironmentCheck(
+            command: {
+                return !(Filesystem.fileExists(Paths.valet)
+                         || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
+            },
+            name: "`valet` binary exists",
+            titleText: "startup.errors.valet_executable.title".localized,
+            subtitleText: "startup.errors.valet_executable.subtitle".localized,
+            descriptionText: "startup.errors.valet_executable.desc".localized(
+                Paths.valet
             )
-            // Only breaking issues will throw the extra retry modal
-            breaking ? failureCallback() : ()
+        ),
+        EnvironmentCheck(
+            command: { return HomebrewDiagnostics.cannotLoadService() },
+            name: "`sudo \(Paths.brew) services info` JSON loaded",
+            titleText: "startup.errors.services_json_error.title".localized,
+            subtitleText: "startup.errors.services_json_error.subtitle".localized,
+            descriptionText: "startup.errors.services_json_error.desc".localized
+        ),
+        EnvironmentCheck(
+            command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
+            name: "`/private/etc/sudoers.d/brew` contains brew",
+            titleText: "startup.errors.sudoers_brew.title".localized,
+            subtitleText: "startup.errors.sudoers_brew.subtitle".localized
+        ),
+        EnvironmentCheck(
+            command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
+            name: "`/private/etc/sudoers.d/valet` contains valet",
+            titleText: "startup.errors.sudoers_valet.title".localized,
+            subtitleText: "startup.errors.sudoers_valet.subtitle".localized
+        ),
+        EnvironmentCheck(
+            command: {
+                // Determine the Valet version only AFTER confirming the correct permission is in place
+                // or otherwise this command will never return a valid version number
+                Valet.shared.version = VersionExtractor.from(valet("--version", sudo: false))
+                return Valet.shared.version == nil
+            },
+            name: "`valet --version` was loaded",
+            titleText: "startup.errors.valet_version_unknown.title".localized,
+            subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
+            descriptionText: "startup.errors.valet_version_unknown.desc".localized
+        )
+    ]
+    
+    // MARK: - EnvironmentCheck struct
+    
+    /**
+     The `EnvironmentCheck` is used to defer the execution of all of these commands until necessary.
+     Checks that require an app restart will always lead to an alert and app termination shortly after.
+     */
+    struct EnvironmentCheck {
+        let command: () async -> Bool
+        let name: String
+        let titleText: String
+        let subtitleText: String
+        let descriptionText: String
+        let buttonText: String
+        let requiresAppRestart: Bool
+        
+        init(
+            command: @escaping () async -> Bool,
+            name: String,
+            titleText: String,
+            subtitleText: String,
+            descriptionText: String = "",
+            buttonText: String = "OK",
+            requiresAppRestart: Bool = false
+        ) {
+            self.command = command
+            self.name = name
+            self.titleText = titleText
+            self.subtitleText = subtitleText
+            self.descriptionText = descriptionText
+            self.buttonText = buttonText
+            self.requiresAppRestart = requiresAppRestart
+        }
+        
+        public func succeeds() async -> Bool {
+            return await !self.command()
         }
     }
-    
 }

@@ -56,7 +56,10 @@ class InterApp {
             if PhpEnv.shared.availablePhpVersions.contains(version) {
                 MainMenu.shared.switchToPhpVersion(version)
             } else {
-                Alert.notify(message: "Unsupported version", info: "PHP Monitor can't switch to PHP \(version), as it may not be installed or available.")
+                BetterAlert().withInformation(
+                    title: "Unsupported version",
+                    subtitle: "PHP Monitor can't switch to PHP \(version), as it may not be installed or available."
+                ).withPrimary(text: "OK").show()
             }
         }),
     ]}

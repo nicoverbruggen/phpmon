@@ -116,6 +116,8 @@ class Actions {
      Detects all currently available PHP versions,
      and unlinks each and every one of them.
      
+     This all happens in sequence, nothing runs in parallel.
+     
      After this, the brew services are also stopped,
      the latest PHP version is linked, and php + nginx are restarted.
      

@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class Constants {
+struct Constants {
     
     /**
      * The latest PHP version that is considered to be stable at the time of release.
@@ -50,10 +50,19 @@ class Constants {
         // dev release. In this case, that means that the version below is detected.
         "8.2"
     ]
-
-    /**
-     The URL that people can visit if they wish to help support the project.
-     */
-    static let DonationUrl = URL(string: "https://nicoverbruggen.be/sponsor#pay-now")!
+    
+    struct Urls {
+        
+        static let DonationPayment = URL(
+            string: "https://nicoverbruggen.be/sponsor#pay-now"
+        )!
+        static let DonationPage = URL(
+            string: "https://nicoverbruggen.be/sponsor"
+        )!
+        static let FrequentlyAskedQuestions = URL(
+            string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting"
+        )!
+        
+    }
 
 }

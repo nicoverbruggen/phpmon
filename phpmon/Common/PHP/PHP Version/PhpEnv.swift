@@ -95,7 +95,7 @@ class PhpEnv {
         let phpAlias = homebrewPackage.version
         
         // Avoid inserting a duplicate
-        if (!versionsOnly.contains(phpAlias) && Shell.fileExists("\(Paths.optPath)/php/bin/php")) {
+        if (!versionsOnly.contains(phpAlias) && Filesystem.fileExists("\(Paths.optPath)/php/bin/php")) {
             versionsOnly.append(phpAlias)
         }
         
@@ -134,7 +134,7 @@ class PhpEnv {
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
                 && Constants.SupportedPhpVersions.contains(version)
-                && (checkBinaries ? Shell.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
+                && (checkBinaries ? Filesystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
             {
                 output.append(version)
             }

@@ -96,6 +96,12 @@ public struct PhpVersionNumber: Equatable {
     let minor: Int
     let patch: Int?
     
+    public func toString() -> String {
+        return self.patch == nil
+            ? "\(major).\(minor)"
+            : "\(major).\(minor).\(patch!)"
+    }
+    
     public func patch(_ strictFallback: Bool = true, _ constraint: PhpVersionNumber? = nil) -> Int {
         return patch ?? (strictFallback ? 0 : constraint?.patch ?? 999)
     }
@@ -111,7 +117,7 @@ public struct PhpVersionNumber: Equatable {
         case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThan = #"^>(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         
-        // TODO: (5.1) Handle these cases (even though I suspect these are uncommon)
+        // TODO: (6.0) Handle these cases (even though I suspect these are uncommon)
         /*
         case smallerThanOrEqual = #"^<=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case smallerThan = #"^<(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#

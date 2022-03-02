@@ -43,7 +43,13 @@ To upgrade your existing installation, run:
 
 	brew upgrade phpmon
 
-(You may need to run `brew update` first in order to update the cask file if you ran a Homebrew operation recently.)
+(You may need to run `brew update` or `brew update-reset` first in order to update the cask file if you ran a Homebrew operation recently.)
+
+## ⚡️ Launchers (Alfred, Raycast)
+
+If you would like to integrate with your launcher of choice, you can also download an [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor) that works with PHP Monitor.
+
+The app must be running in the background for these to work, and the _Allow third-party integrations_ checkbox must be enabled in Preferences (it is by default).
 
 ## 🔑 Is the app signed & notarized?
 
@@ -231,8 +237,15 @@ Since v3.4 all of the loaded .ini files are sourced to determine which extension
 <details>
 <summary><strong>I've got two Homebrew installations on my Apple Silicon Mac, can I choose which installation to use with PHP Monitor?</strong></summary>
 
-Not at this time, no. PHP Monitor will prefer the `/opt/homebrew` installation over the classic installation directory.
+If you are using PHP Monitor on an Intel machine or on an Apple Silicon machine with Rosetta enabled, PHP Monitor expects the main Homebrew binary in `/usr/local/bin/brew`.
 
+If you are using PHP Monitor on Apple Silicon without Rosetta, PHP Monitor expects the main Homebrew binary in `/opt/homebrew/bin/brew`.
+
+If there's an issue here, you'll get an alert at launch.
+
+Make sure that the version of Homebrew that you are running normally is the same as the one that PHP Monitor expects. If you are on M1 hardware for example, but still using Rosetta for Homebrew, you'll need to run PHP Monitor under Rosetta as well. 
+
+PHP Monitor is a universal app and supports both architectures, so [find out here](https://support.apple.com/en-us/HT211861) how to enable Rosetta with PHP Monitor.
 </details>
 
 <details>
@@ -267,9 +280,11 @@ You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor
 </details>
 
 <details>
-<summary><strong>How can the app integrate with third party tools, like Alfred?</strong></summary>
+<summary><strong>How can the app integrate with third party tools, like Alfred or Raycast?</strong></summary>
 
-There's an Alfred workflow usually included in the release list, you can grab it by going to releases and downloading the asset `phpmon.alfredworkflow`.
+PHP Monitor supports third party app integrations by default, and this feature is enabled in Preferences unless you disable it.
+
+You can grab the official [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor).
 
 If you'd like to integrate something yourself, all you need to to is use the `phpmon://` protocol and ensure that third party app integrations are enabled in Preferences (in PHP Monitor).
 

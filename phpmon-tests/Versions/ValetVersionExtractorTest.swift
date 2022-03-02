@@ -8,10 +8,10 @@
 
 import XCTest
 
-class ValetTest: XCTestCase {
+class ValetVersionExtractorTest: XCTestCase {
 
     func testDetermineValetVersion() {
-        let version = valet("--version")
+        let version = valet("--version", sudo: false)
         XCTAssert(version.contains("Laravel Valet 2."))
     }
     

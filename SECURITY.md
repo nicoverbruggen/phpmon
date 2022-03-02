@@ -6,7 +6,7 @@ Generally speaking, only the latest version of **PHP Monitor** is supported, exc
 
 | Version | Apple Silicon | Supported          | Supported macOS | Deployment Target | Detected PHP Versions | Minimum Required Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
-| 5.0       | ✅ Universal binary | ✅ Yes | Big Sur (11.0) and Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 | 2.16.2 |
+| 5       | ✅ Universal binary | ✅ Yes | Big Sur (11.0) and Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 | 2.16.2 |
 
 ## Legacy versions
 

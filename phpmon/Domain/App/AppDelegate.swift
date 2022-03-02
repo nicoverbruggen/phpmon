@@ -64,10 +64,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     override init() {
         logger.verbosity = .info
-        Log.info("==================================")
+        #if DEBUG
+            logger.verbosity = .performance
+        #endif
+        Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
-        Log.info("==================================")
+        Log.separator(as: .info)
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
@@ -91,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Make sure notifications will work
         setupNotifications()
         // Make sure the menu performs its initial checks
-        menu.startup()
+        Task { await menu.startup() }
     }
     
 }

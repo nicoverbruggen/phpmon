@@ -11,7 +11,7 @@ import AppKit
 
 class SiteListCell: NSTableCellView
 {
-    var site: Valet.Site? = nil
+    var site: ValetSite? = nil
     
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
@@ -29,7 +29,7 @@ class SiteListCell: NSTableCellView
         super.draw(dirtyRect)
     }
     
-    func populateCell(with site: Valet.Site) {
+    func populateCell(with site: ValetSite) {
         self.site = site
         
         // Make sure to show the TLD
@@ -80,8 +80,8 @@ class SiteListCell: NSTableCellView
         
         alert.messageText = "alert.composer_php_requirement.title"
             .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp)
-        alert.informativeText = "alert.composer_php_requirement.info"
-            .localized(site.composerPhpSource)
+        alert.informativeText = "alert.composer_php_requirement.type.\(site.composerPhpSource.rawValue)"
+            .localized
         
         alert.addButton(withTitle: "site_link.close".localized)
         

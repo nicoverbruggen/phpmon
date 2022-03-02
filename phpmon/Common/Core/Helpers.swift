@@ -9,11 +9,11 @@
 // MARK: Common Shell Commands
 
 /**
- Runs a `valet` command.
+ Runs a `valet` command. Defaults to running as superuser.
  */
-func valet(_ command: String) -> String
+func valet(_ command: String, sudo: Bool = true) -> String
 {
-    return Shell.pipe("sudo \(Paths.valet) \(command)", requiresPath: true)
+    return Shell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)", requiresPath: true)
 }
 
 /**
@@ -35,7 +35,7 @@ func sed(file: String, original: String, replacement: String)
     
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
-    if Shell.fileExists("\(Paths.binPath)/gsed") {
+    if Filesystem.fileExists("\(Paths.binPath)/gsed") {
         Shell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
         Shell.run("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")

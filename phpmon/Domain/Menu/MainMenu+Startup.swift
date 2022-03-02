@@ -12,15 +12,16 @@ extension MainMenu {
     /**
      Kick off the startup of the rendering of the main menu.
      */
-    func startup() {
+    func startup() async {
         // Start with the icon
-        setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        DispatchQueue.main.async {
+            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+        }
         
-        // Perform environment boot checks
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            Startup().checkEnvironment(success: { onEnvironmentPass() },
-                                       failure: { onEnvironmentFail() }
-            )
+        if await Startup().checkEnvironment() {
+            self.onEnvironmentPass()
+        } else {
+            self.onEnvironmentFail()
         }
     }
     
@@ -32,11 +33,13 @@ extension MainMenu {
         
         if HomebrewDiagnostics.hasAliasConflict() {
             DispatchQueue.main.async {
-                Alert.notify(
-                    message: "alert.php_alias_conflict.title".localized,
-                    info: "alert.php_alias_conflict.info".localized,
-                    style: .critical
-                )
+                BetterAlert()
+                    .withInformation(
+                        title: "alert.php_alias_conflict.title".localized,
+                        subtitle: "alert.php_alias_conflict.info".localized
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
             }
         }
         
@@ -73,9 +76,21 @@ extension MainMenu {
             Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
         }
         
+        Paths.shared.detectBinaryPaths()
+        
         Valet.shared.loadConfiguration()
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
+        
+        if (Valet.shared.config.tld != "test") {
+            DispatchQueue.main.async {
+                BetterAlert().withInformation(
+                    title: "alert.warnings.tld_issue.title".localized,
+                    subtitle: "alert.warnings.tld_issue.subtitle".localized,
+                    description: "alert.warnings.tld_issue.description".localized
+                ).withPrimary(text: "OK").show()
+            }
+        }
         
         NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
         
@@ -101,18 +116,21 @@ extension MainMenu {
      */
     private func onEnvironmentFail() {
         DispatchQueue.main.async { [self] in
-            let close = Alert.present(
-                messageText: "alert.cannot_start.title".localized,
-                informativeText: "alert.cannot_start.info".localized,
-                buttonTitle: "alert.cannot_start.close".localized,
-                secondButtonTitle: "alert.cannot_start.retry".localized
-            )
             
-            if (close) {
-                exit(1)
-            }
+            BetterAlert()
+                .withInformation(
+                    title: "alert.cannot_start.title".localized,
+                    subtitle: "alert.cannot_start.subtitle".localized,
+                    description: "alert.cannot_start.description".localized
+                )
+                .withPrimary(text: "alert.cannot_start.retry".localized)
+                .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
+                    vc.close(with: .alertSecondButtonReturn)
+                    exit(1)
+                })
+                .show()
             
-            startup()
+            Task { await startup() }
         }
     }
 }

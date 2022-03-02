@@ -47,35 +47,18 @@ class ServicesView: NSView, XibLoadable {
     
     override func viewWillDraw() {
         super.viewWillDraw()
-        self.loadData()
+        Task { await self.loadData() }
     }
 
     @objc func updateInformation() {
-        self.loadData()
+        Task { await self.loadData() }
     }
     
-    // TODO: (5.1) Move data fetching, caching & retrieval somewhere else
-    func loadData() {
-        // Use stale data
+    func loadData() async {
         self.applyAllInfoFieldsFromCachedValue()
-        
-        // Re-fetch services
-        runAsync {
-            let servicesList = try! JSONDecoder().decode(
-                [HomebrewService].self,
-                from: Shell.pipe(
-                    "sudo \(Paths.brew) services info --all --json",
-                    requiresPath: true
-                ).data(using: .utf8)!
-            ).filter({ service in
-                return [PhpEnv.phpInstall.formula, "nginx", "dnsmasq"].contains(service.name)
-            })
-            
-            ServicesView.services = Dictionary(uniqueKeysWithValues: servicesList.map{ ($0.name, $0) })
-        } completion: {
-            // Use fresh data
-            self.applyAllInfoFieldsFromCachedValue()
-        }
+        let services = await HomebrewService.loadAll()
+        ServicesView.services = Dictionary(uniqueKeysWithValues: services.map{ ($0.name, $0) })
+        self.applyAllInfoFieldsFromCachedValue()
     }
     
     func applyAllInfoFieldsFromCachedValue() {

@@ -21,7 +21,7 @@ class PhpInstallation {
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
         self.longVersion = PhpVersionNumber.make(from: version)!
         
-        if Shell.fileExists(phpConfigExecutablePath) {
+        if Filesystem.fileExists(phpConfigExecutablePath) {
             let longVersionString = Command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"]
@@ -29,7 +29,6 @@ class PhpInstallation {
             
             // The parser should always work, or the string has to be very unusual.
             // If so, the app SHOULD crash, so that the users report what's up.
-            // TODO: Alert the user that the version number could not be parsed.
             self.longVersion = try! PhpVersionNumber.parse(longVersionString)
         }
     }

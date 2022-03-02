@@ -22,7 +22,7 @@ class StatusMenu : NSMenu {
     }
     
     func addPhpActionMenuItems() {
-        if App.busy {
+        if PhpEnv.shared.isBusy {
             addItem(NSMenuItem(title: "mi_busy".localized, action: nil, keyEquivalent: ""))
             return
         }
@@ -97,26 +97,15 @@ class StatusMenu : NSMenu {
     func addFirstAidAndServicesMenuItems() {
         let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
+        servicesMenu.addItem(NSMenuItem(
+            title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+            action: #selector(MainMenu.fixMyValet), keyEquivalent: "")
+        )
         
-        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet_unavailable".localized(PhpEnv.brewPhpVersion),
-                action: nil, keyEquivalent: "f")
-            )
-        } else {
-            servicesMenu.addItem(NSMenuItem(
-                title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-                action: #selector(MainMenu.fixMyValet), keyEquivalent: "")
-            )
-        }
-        
-        /* (disabled until v5.1 and further tweaking)
         servicesMenu.addItem(NSMenuItem(
             title: "mi_fix_brew_permissions".localized(),
             action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: "")
         )
-        */
         
         servicesMenu.addItem(NSMenuItem.separator())
         servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
@@ -153,7 +142,7 @@ class StatusMenu : NSMenu {
             let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.longVersion
             
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-            let versionString = long ? longVersion.homebrewVersion : shortVersion
+            let versionString = long ? longVersion.toString() : shortVersion
             
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnv.brewPhpVersion) ? "php" : "php@\(shortVersion)"

@@ -39,9 +39,13 @@ extension MainMenu {
             
             // Run composer updates
             if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
-                self.updateGlobalDependencies(notify: false, completion: { _ in
-                    self.notifyAboutVersionChange(to: version)
-                })
+                ComposerWindow().updateGlobalDependencies(
+                    notify: false,
+                    completion: { _ in
+                        self.notifyAboutVersionChange(to: version)
+                    }
+                )
+                
             } else {
                 self.notifyAboutVersionChange(to: version)
             }
@@ -52,12 +56,15 @@ extension MainMenu {
         }
     }
     
-    private func suggestFixMyValet(failed version: String) {
-        let outcome = Alert.present(
-            messageText: "alert.php_switch_failed.title".localized(version),
-            informativeText: "alert.php_switch_failed.info".localized(version),
-            buttonTitle: "alert.php_switch_failed.confirm".localized,
-            secondButtonTitle: "alert.php_switch_failed.cancel".localized, style: .informational)
+    @MainActor private func suggestFixMyValet(failed version: String) {
+        let outcome = BetterAlert()
+            .withInformation(
+                title: "alert.php_switch_failed.title".localized(version),
+                subtitle: "alert.php_switch_failed.info".localized(version)
+            )
+            .withPrimary(text: "alert.php_switch_failed.confirm".localized)
+            .withSecondary(text: "alert.php_switch_failed.cancel".localized)
+            .didSelectPrimary()
         if outcome {
             MainMenu.shared.fixMyValet()
         }

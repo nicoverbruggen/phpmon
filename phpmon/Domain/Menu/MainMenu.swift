@@ -145,7 +145,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
         DispatchQueue.main.async { [self] in
-            if (App.busy) {
+            if (PhpEnv.shared.isBusy) {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
@@ -170,26 +170,31 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - Actions
     
     @objc func fixHomebrewPermissions() {
-        if !Alert.present(
-            messageText: "alert.fix_homebrew_permissions.title".localized,
-            informativeText: "alert.fix_homebrew_permissions.info".localized,
-            buttonTitle: "alert.fix_homebrew_permissions.ok".localized,
-            secondButtonTitle: "alert.fix_homebrew_permissions.cancel".localized,
-            style: .warning
-        ) {
+        if !BetterAlert()
+            .withInformation(
+                title: "alert.fix_homebrew_permissions.title".localized,
+                subtitle: "alert.fix_homebrew_permissions.subtitle".localized,
+                description: "alert.fix_homebrew_permissions.desc".localized
+            )
+            .withPrimary(text: "alert.fix_homebrew_permissions.ok".localized)
+            .withSecondary(text: "alert.fix_homebrew_permissions.cancel".localized)
+            .didSelectPrimary() {
             return
         }
         
         asyncExecution {
             try Actions.fixHomebrewPermissions()
         } success: {
-            Alert.notify(
-                message: "alert.fix_homebrew_permissions_done.title".localized,
-                info: "alert.fix_homebrew_permissions_done.info".localized,
-                style: .warning
-            )
+            BetterAlert()
+                .withInformation(
+                    title: "alert.fix_homebrew_permissions_done.title".localized,
+                    subtitle: "alert.fix_homebrew_permissions_done.subtitle".localized,
+                    description: "alert.fix_homebrew_permissions_done.desc".localized
+                )
+                .withPrimary(text: "OK")
+                .show()
         } failure: { error in
-            Alert.notify(about: error as! HomebrewPermissionError)
+            BetterAlert.show(for: error as! HomebrewPermissionError)
         }
     }
     
@@ -259,30 +264,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
     
-    @objc func fixMyValet() {
-        if !Alert.present(
-            messageText: "alert.fix_my_valet.title".localized,
-            informativeText: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion),
-            buttonTitle: "alert.fix_my_valet.ok".localized,
-            secondButtonTitle: "alert.fix_my_valet.cancel".localized,
-            style: .warning
-        ) {
-            Log.info("The user has chosen to abort Fix My Valet")
-            return
-        }
-        
-        asyncExecution {
-            Actions.fixMyValet()
-        } success: {
-            Alert.notify(
-                message: "alert.fix_my_valet_done.title".localized,
-                info: "alert.fix_my_valet_done.info".localized
-            )
-        }
-    }
-    
     @objc func updateGlobalComposerDependencies() {
-        self.updateGlobalDependencies(notify: true, completion: { _ in })
+        ComposerWindow().updateGlobalDependencies(
+            notify: true,
+            completion: { _ in }
+        )
     }
     
     @objc func openActiveConfigFolder() {
@@ -342,7 +328,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
     
     @objc func openDonate() {
-        NSWorkspace.shared.open(Constants.DonationUrl)
+        NSWorkspace.shared.open(Constants.Urls.DonationPage)
     }
     
     @objc func terminateApp() {

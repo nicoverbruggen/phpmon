@@ -22,9 +22,18 @@ class App {
         return "\(version) (\(build))"
     }
     
-    /** Whether the app is busy doing something. Used to determine what UI to display. */
-    static var busy: Bool {
-        return PhpEnv.shared.isBusy
+    static var architecture: String {
+        var systeminfo = utsname()
+        uname(&systeminfo)
+        let machine = withUnsafeBytes(of: &systeminfo.machine) {bufPtr->String in
+            let data = Data(bufPtr)
+            if let lastIndex = data.lastIndex(where: {$0 != 0}) {
+                return String(data: data[0...lastIndex], encoding: .isoLatin1)!
+            } else {
+                return String(data: data, encoding: .isoLatin1)!
+            }
+        }
+        return machine
     }
     
     // MARK: Variables

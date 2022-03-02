@@ -25,9 +25,8 @@
 "mi_manage_services" = "Manage Services";
 "mi_restart_all_services" = "Restart All Services";
 "mi_stop_all_services" = "Stop All Services";
-"mi_fix_my_valet" = "Fix My Valet (PHP & Services)";
-"mi_fix_my_valet_unavailable" = "Fix My Valet Unavailable";
-"mi_fix_brew_permissions" = "Restore Homebrew Permissions";
+"mi_fix_my_valet" = "Fix My Valet...";
+"mi_fix_brew_permissions" = "Restore Homebrew Permissions...";
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -181,11 +180,15 @@
 "notification.services_restarted" = "Valet services restarted";
 "notification.services_restarted_desc" = "All services have been successfully restarted.";
 
-// ALERTS
-
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
-"alert.composer_missing.info" = "Make sure you have Composer available in `/usr/local/bin/composer`. If Composer is located somewhere else, please create a symlink, like so (make sure to use the correct path):\n\n`ln -s /path/to/composer /usr/local/bin`.";
+"alert.composer_missing.subtitle" = "PHP Monitor could not find Composer. Make sure that Composer is installed and try again.";
+"alert.composer_missing.desc" = "PHP Monitor assumes that Composer is located in either:
+
+• `/usr/local/bin/composer`
+• `/opt/homebrew/bin/composer`
+
+Make sure you have it installed in one of these locations, or make a symlink if you have Composer installed somewhere else.";
 
 "alert.composer_progress.title" = "Updating global dependencies...";
 "alert.composer_progress.info" = "You can see the progress in the terminal output below.";
@@ -199,14 +202,21 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Composer Version
-"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: \"php\":\n\"%@\".";
-"alert.composer_php_requirement.info" = "This required PHP version was determined by checking the `%@` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: %@.";
+"alert.composer_php_requirement.type.unknown" = "The required PHP version was determined by an unknown factor.";
+"alert.composer_php_requirement.type.require" = "This required PHP version was determined by checking the `require` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.type.platform" = "This required PHP version was determined by checking the `platform` field in the `composer.json` file when the site list was last refreshed.";
+"alert.composer_php_requirement.type.valetphprc" = "This required PHP version was determined by checking the .valetphprc file in your project's directory.";
 
 // Suggest Fix My Valet
 "alert.php_switch_failed.title" = "Switching to PHP %@ seems to have failed.";
 "alert.php_switch_failed.info" = "PHP Monitor has detected that PHP %@  is not active after completing its switching procedure. You can try to run \"Fix My Valet\" and switch again after that. Do you want to try \"Fix My Valet\"?";
 "alert.php_switch_failed.confirm" = "Yes, run \"Fix My Valet\"";
 "alert.php_switch_failed.cancel" = "Do Not Run";
+
+// PHP Formula Missing
+"alert.php_formula_missing.title" = "Oops! The `php` formula must be installed for Fix My Valet...";
+"alert.php_formula_missing.info" = "It seems that you do not have the `php` formula installed, which prevents PHP Monitor from running Fix My Valet. Please install it using `brew install php`, restart PHP Monitor and try again.";
 
 // Fix My Valet Started
 "alert.fix_my_valet.title" = "Having issues? Fix My Valet is ready to commence!";
@@ -216,25 +226,31 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Fix My Valet Done
 "alert.fix_my_valet_done.title" = "Fix My Valet has completed its operations.";
-"alert.fix_my_valet_done.info" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.\n\nIf visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
+"alert.fix_my_valet_done.subtitle" = "All appropriate services have been stopped and the correct ones restarted, and the latest version of PHP should now be active. You can now try switching to another version of PHP.";
+"alert.fix_my_valet_done.stay" = "Stay on PHP %@";
+"alert.fix_my_valet_done.switch_back" = "Switch back to PHP %@";
+"alert.fix_my_valet_done.desc" = "If visiting sites still does not work, you may try running `valet install` again, this can fix a 502 issue (Bad Gateway).\n\nIf Valet is broken and you cannot run `valet install`, you may need to run `composer global update`. Please consult the FAQ on GitHub if you have further issues.";
 
 // Restore Homebrew Permissions
 "alert.fix_homebrew_permissions.title" = "About \"Restore Homebrew Permissions\"";
-"alert.fix_homebrew_permissions.info" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\nThis will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.subtitle" = "This feature was created so you can run `brew upgrade` or `brew cleanup` without permission issues.\n\n(You will be notified when this fix has been applied.)";
+"alert.fix_homebrew_permissions.desc" = "This will require administrative privileges, because PHP Monitor will restore your ownership of the files and folders that are currently owned by the `root` user, due to Valet services running as root.";
 "alert.fix_homebrew_permissions.ok" = "Restore Permissions";
 "alert.fix_homebrew_permissions.cancel" = "Cancel";
 
-"alert.fix_homebrew_permissions_done.title" = "Permissions Fixed!";
-"alert.fix_homebrew_permissions_done.info" = "When you are done with Homebrew, you should open PHP Monitor and restart all services if you want Valet to work again. It is also recommended to restart PHP Monitor after running `brew upgrade`.";
+"alert.fix_homebrew_permissions_done.title" = "All file and folder permissions for Valet's dependencies have been restored.";
+"alert.fix_homebrew_permissions_done.subtitle" = "Because of this, all of Valet's services are currently no longer running. You can now interact with Homebrew, but your Valet sites will be unavailable as all services are disabled.";
+"alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example, you should restart PHP Monitor and select \"Restart All Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
 "alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config: it's not pointing to the Valet socket. This will result in 502 Bad Gateway if you visit websites linked via Valet.\n\nYou can usually fix this by running\n`valet install`, which updates your\n PHP-FPM configuration.";
 
 // PHP Monitor Cannot Start
-"alert.cannot_start.title" = "PHP Monitor cannot start";
-"alert.cannot_start.info" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly. Please fix the issue and restart PHP Monitor. After clicking on OK, PHP Monitor will close.\n\nIf you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";
-"alert.cannot_start.close" = "Close";
+"alert.cannot_start.title" = "PHP Monitor cannot start due to a configuration problem";
+"alert.cannot_start.subtitle" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly.";
+"alert.cannot_start.description" = "You might not need to quit PHP Monitor and restart it. If you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";
+"alert.cannot_start.close" = "Quit";
 "alert.cannot_start.retry" = "Retry";
 
 // PHP alias issue
@@ -250,50 +266,71 @@ You can do this by running `composer global update` in your terminal. After that
 
 // STARTUP
 
-/// 1. PHP binary not found
+/// 0. Architecture mismatch
+
+"alert.homebrew_missing.title" = "PHP Monitor cannot start!";
+"alert.homebrew_missing.subtitle" = "A working Homebrew binary could not be found in the usual location. Please restart the app after fixing this issue.";
+"alert.homebrew_missing.info" = "You are running PHP Monitor with the following architecture: %@. As a result, a working Homebrew binary is expected in `%@`, but was not found. This is why PHP Monitor cannot work.\n\nIf you have not installed Homebrew yet, please do so. If you are on Apple Silicon, make sure your Homebrew and PHP Monitor use the same architecture, by enabling or disabling Rosetta where needed.";
+
+"alert.homebrew_missing.quit" = "Quit";
+
+/// PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary.desc" = "You must install PHP via brew. Try running `which php` in Terminal, it should return `/usr/local/bin/php` (or `/opt/homebrew/bin/php`). The app will not work correctly until you resolve this issue. (Usually `brew link php` resolves this issue.)";
+"startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
-/// 2. PHP not found in /usr/local/opt or /opt/homebrew/opt
+/// PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
-"startup.errors.php_opt.desc" = "PHP alias was not found in `/usr/local/opt` or `/opt/homebrew/opt`. The app will not work correctly until you resolve this issue. If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
+"startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_opt.desc" = "If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
-/// 3a. Valet not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
-"startup.errors.valet_executable.desc" = "You must install Valet with composer. Try running `which valet` in Terminal, it should return `/usr/local/bin/valet` or `/opt/homebrew/bin/valet`. The app will not work correctly until you resolve this issue. (PHP Monitor checks for the existence of `valet` in either of these paths.)";
+"startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
+"startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
 
-/// 3b. Valet configuration file missing [currently not enabled]
+/// Valet configuration file missing [currently not enabled]
 "startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
 "startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
 
-/// 3c. Valet version not readable
-"startup.errors.valet_version_unknown.title" = "Your Valet version could not be read (`valet --version` failed)";
-"startup.errors.valet_version_unknown.desc" = "Make sure your Valet installation works and is up-to-date.\n\nTry running `valet --version` in a terminal to find out what's going on.";
+/// Valet version not readable
+"startup.errors.valet_version_unknown.title" = "Your Valet version could not be read";
+"startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
+"startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
 
-/// 4. Brew & sudoers
+/// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
-"startup.errors.sudoers_brew.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 
-/// 5. Valet & sudoers
+/// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
-"startup.errors.sudoers_valet.desc" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
+"startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 
-/// 6. Cannot retrieve services
+/// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
-"startup.errors.services_json_error.desc" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response. This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet.\n\nYou can usually fix this by running `brew update`.";
+"startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
+"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
-/// 7. Multiple services active
+/// Multiple services active
 "startup.errors.services.title" = "Multiple PHP services are active";
 "startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'First Aid & Services > Fix My Valet' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
 
 // SPONSOR ENCOURAGEMENT
 
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
-"startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these new features. In that case, this is a THANK YOU message to you.\n\nTo be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
-"startup.sponsor_encouragement.accept" = "Yes, I would like to sponsor";
-"startup.sponsor_encouragement.skip" = "Nevermind";
+"startup.sponsor_encouragement.subtitle" = "To be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
+"startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these updates. In that case, this is a THANK YOU message to you. I appreciate the support.";
+
+"startup.sponsor_encouragement.accept" = "Sponsor Now";
+"startup.sponsor_encouragement.learn_more" = "Learn More";
+"startup.sponsor_encouragement.skip" = "No Thanks";
 
 // ERROR MESSAGES (based on AlertableError)
 
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
+
+// WARNINGS (hopefully removed in 5.2)
+
+"alert.warnings.tld_issue.title" = "You are not using `.test` as the TLD for Valet.";
+"alert.warnings.tld_issue.subtitle" = "Using a non-default TLD is currently not supported in PHP Monitor and there are a few known issues.";
+"alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`. After that, restart PHP Monitor and it should not warn you like this again.";

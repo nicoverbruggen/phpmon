@@ -105,15 +105,6 @@ public class Shell {
     }
     
     /**
-     Checks if a file exists at a certain path.
-     Used to be done with a shell command, now uses the native FileManager class instead.
-     */
-    public static func fileExists(_ path: String) -> Bool {
-        let fullPath = path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
-        return FileManager.default.fileExists(atPath: fullPath)
-    }
-    
-    /**
      Creates a new process with the correct PATH and shell.
      */
     public func createTask(for command: String, requiresPath: Bool) -> Process {
@@ -126,42 +117,6 @@ public class Shell {
         task.arguments = ["--noprofile", "-norc", "--login", "-c", tailoredCommand]
         
         return task
-    }
-    
-    public static func captureOutput(
-        _ task: Process,
-        didReceiveStdOutData: @escaping (String) -> Void,
-        didReceiveStdErrData: @escaping (String) -> Void
-    ) {
-        let outputPipe = Pipe()
-        let errorPipe = Pipe()
-        
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
-        
-        [(outputPipe, didReceiveStdOutData), (errorPipe, didReceiveStdErrData)].forEach {
-            (pipe: Pipe, callback: @escaping (String) -> Void) in
-            pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-            NotificationCenter.default.addObserver(
-                forName: NSNotification.Name.NSFileHandleDataAvailable,
-                object: pipe.fileHandleForReading,
-                queue: nil
-            ) { notification in
-                if let outputString = String(data: pipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) {
-                    callback(outputString)
-                }
-                pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-            }
-        }
-    }
-    
-    public static func haltCapturingOutput(_ task: Process) {
-        if let pipe = task.standardOutput as? Pipe {
-            NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
-        }
-        if let pipe = task.standardError as? Pipe {
-            NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
-        }
     }
     
     public class Output {
