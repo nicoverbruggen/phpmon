@@ -128,13 +128,6 @@ class Startup {
             )
         ),
         EnvironmentCheck(
-            command: { return HomebrewDiagnostics.cannotLoadService() },
-            name: "`sudo \(Paths.brew) services info` JSON loaded",
-            titleText: "startup.errors.services_json_error.title".localized,
-            subtitleText: "startup.errors.services_json_error.subtitle".localized,
-            descriptionText: "startup.errors.services_json_error.desc".localized
-        ),
-        EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
@@ -145,6 +138,13 @@ class Startup {
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
             subtitleText: "startup.errors.sudoers_valet.subtitle".localized
+        ),
+        EnvironmentCheck(
+            command: { return HomebrewDiagnostics.cannotLoadService() },
+            name: "`sudo \(Paths.brew) services info` JSON loaded",
+            titleText: "startup.errors.services_json_error.title".localized,
+            subtitleText: "startup.errors.services_json_error.subtitle".localized,
+            descriptionText: "startup.errors.services_json_error.desc".localized
         ),
         EnvironmentCheck(
             command: {
