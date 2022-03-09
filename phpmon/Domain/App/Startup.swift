@@ -85,6 +85,9 @@ class Startup {
     // MARK: - Check (List)
     
     public var checks: [EnvironmentCheck] = [
+        // =================================================================================
+        // The Homebrew binary must exist.
+        // =================================================================================
         EnvironmentCheck(
             command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
             name: "`\(Paths.brew)` exists",
@@ -99,6 +102,9 @@ class Startup {
             buttonText: "alert.homebrew_missing.quit".localized,
             requiresAppRestart: true
         ),
+        // =================================================================================
+        // The PHP binary must exist.
+        // =================================================================================
         EnvironmentCheck(
             command: { return !Filesystem.fileExists(Paths.php) },
             name: "`\(Paths.php)` exists",
@@ -106,6 +112,9 @@ class Startup {
             subtitleText: "startup.errors.php_binary.subtitle".localized,
             descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
         ),
+        // =================================================================================
+        // Make sure we can detect one or more PHP installations.
+        // =================================================================================
         EnvironmentCheck(
             command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
@@ -115,10 +124,12 @@ class Startup {
             ),
             descriptionText: "startup.errors.php_opt.desc".localized
         ),
+        // =================================================================================
+        // The Valet binary must exist.
+        // =================================================================================
         EnvironmentCheck(
             command: {
-                return !(Filesystem.fileExists(Paths.valet)
-                         || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
+                return !(Filesystem.fileExists(Paths.valet) || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
             },
             name: "`valet` binary exists",
             titleText: "startup.errors.valet_executable.title".localized,
@@ -127,6 +138,11 @@ class Startup {
                 Paths.valet
             )
         ),
+        // =================================================================================
+        // Check if Valet and Homebrew need manual password intervention. If they do, then
+        // PHP Monitor will be unable to run these commands, which prevents PHP Monitor from
+        // functioning correctly. Let the user know that they need to run `valet trust`.
+        // =================================================================================
         EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
@@ -139,6 +155,9 @@ class Startup {
             titleText: "startup.errors.sudoers_valet.title".localized,
             subtitleText: "startup.errors.sudoers_valet.subtitle".localized
         ),
+        // =================================================================================
+        // Verify if the Homebrew services are running (as root).
+        // =================================================================================
         EnvironmentCheck(
             command: { return HomebrewDiagnostics.cannotLoadService() },
             name: "`sudo \(Paths.brew) services info` JSON loaded",
@@ -146,10 +165,11 @@ class Startup {
             subtitleText: "startup.errors.services_json_error.subtitle".localized,
             descriptionText: "startup.errors.services_json_error.desc".localized
         ),
+        // =================================================================================
+        // Determine the Valet version and ensure it isn't unknown.
+        // =================================================================================
         EnvironmentCheck(
             command: {
-                // Determine the Valet version only AFTER confirming the correct permission is in place
-                // or otherwise this command will never return a valid version number
                 Valet.shared.version = VersionExtractor.from(valet("--version", sudo: false))
                 return Valet.shared.version == nil
             },
