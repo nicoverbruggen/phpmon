@@ -34,6 +34,8 @@ class InternalSwitcher: PhpSwitcher {
                 ? "php" : "php@\(available)"
                 
                 brew("unlink \(formula)")
+                
+                // TODO: (ISOLATION) Only stop formulae that are not used for isolation
                 brew("services stop \(formula)", sudo: true)
                 
                 Log.perf("Unlinked and stopped services for \(formula)")

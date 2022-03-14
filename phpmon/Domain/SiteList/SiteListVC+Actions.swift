@@ -16,12 +16,12 @@ extension SiteListVC {
         let originalSecureStatus = selectedSite!.secured
         let action = selectedSite!.secured ? "unsecure" : "secure"
         let selectedSite = selectedSite!
-        let command = "cd '\(selectedSite.absolutePath!)' && sudo \(Paths.valet) \(action) && exit;"
+        let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
         
         waitAndExecute {
             Shell.run(command, requiresPath: true)
         } completion: { [self] in
-            selectedSite.determineSecured(Valet.shared.config.tld)
+            selectedSite.determineSecured()
             if selectedSite.secured == originalSecureStatus {
                 BetterAlert()
                     .withInformation(
@@ -36,7 +36,7 @@ extension SiteListVC {
                     title: "site_list.alerts_status_changed.title".localized,
                     subtitle: "site_list.alerts_status_changed.desc"
                         .localized(
-                            "\(selectedSite.name!).\(Valet.shared.config.tld)",
+                            "\(selectedSite.name).\(Valet.shared.config.tld)",
                             newState
                         )
                 )
@@ -50,7 +50,7 @@ extension SiteListVC {
     
     @objc func openInBrowser() {
         let prefix = selectedSite!.secured ? "https://" : "http://"
-        let url = URL(string: "\(prefix)\(selectedSite!.name!).\(Valet.shared.config.tld)")
+        let url = URL(string: "\(prefix)\(selectedSite!.name).\(Valet.shared.config.tld)")
         if url != nil {
             NSWorkspace.shared.open(url!)
         } else {
@@ -65,16 +65,16 @@ extension SiteListVC {
     }
     
     @objc func openInFinder() {
-        Shell.run("open '\(selectedSite!.absolutePath!)'")
+        Shell.run("open '\(selectedSite!.absolutePath)'")
     }
     
     @objc func openInTerminal() {
-        Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath!)'")
+        Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
     }
     
     @objc func openWithEditor(sender: EditorMenuItem) {
         guard let editor = sender.editor else { return }
-        editor.openDirectory(file: selectedSite!.absolutePath!)
+        editor.openDirectory(file: selectedSite!.absolutePath)
     }
     
     @objc func unlinkSite() {
@@ -94,7 +94,7 @@ extension SiteListVC {
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
-                Shell.run("valet unlink '\(site.name!)'", requiresPath: true)
+                Shell.run("valet unlink '\(site.name)'", requiresPath: true)
                 self.reloadSites()
             }
         )

@@ -33,7 +33,7 @@ class SiteListCell: NSTableCellView
         self.site = site
         
         // Make sure to show the TLD
-        labelSiteName.stringValue = "\(site.name!).\(Valet.shared.config.tld)"
+        labelSiteName.stringValue = "\(site.name).\(Valet.shared.config.tld)"
         
         // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         labelPathName.stringValue = site.absolutePathRelative
@@ -79,7 +79,7 @@ class SiteListCell: NSTableCellView
         alert.alertStyle = .informational
         
         alert.messageText = "alert.composer_php_requirement.title"
-            .localized("\(site.name!).\(Valet.shared.config.tld)", site.composerPhp)
+            .localized("\(site.name).\(Valet.shared.config.tld)", site.composerPhp)
         alert.informativeText = "alert.composer_php_requirement.type.\(site.composerPhpSource.rawValue)"
             .localized
         
