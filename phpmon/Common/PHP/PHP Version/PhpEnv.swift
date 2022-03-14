@@ -124,6 +124,12 @@ class PhpEnv {
     ) -> [String] {
         var output : [String] = []
         
+        var supported = Constants.SupportedPhpVersions
+        
+        if !Valet.enabled(feature: .supportForPhp56) {
+            supported.removeAll { $0 == "5.6" }
+        }
+        
         versions.filter { (version) -> Bool in
             // Omit everything that doesn't start with php@
             // (e.g. something-php@8.0 won't be detected)
@@ -133,7 +139,7 @@ class PhpEnv {
             // Only append the version if it doesn't already exist (avoid dupes),
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
-                && Constants.SupportedPhpVersions.contains(version)
+                && supported.contains(version)
                 && (checkBinaries ? Filesystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
             {
                 output.append(version)

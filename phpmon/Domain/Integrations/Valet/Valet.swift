@@ -11,7 +11,8 @@ import Foundation
 class Valet {
     
     enum FeatureFlag {
-        case isolatedSites
+        case isolatedSites,
+             supportForPhp56
     }
     
     static let shared = Valet()
@@ -35,6 +36,13 @@ class Valet {
     init() {
         self.version = nil
         self.sites = []
+    }
+    
+    /**
+     Check if a particular feature is enabled.
+     */
+    public static func enabled(feature: FeatureFlag) -> Bool {
+        return self.shared.features.contains(feature)
     }
     
     /**
@@ -91,9 +99,11 @@ class Valet {
      */
     public func validateVersion() -> Void {
         if version.versionCompare("3.0") == .orderedAscending {
-            Log.warn("This version of Valet does not support isolation yet. Disabling isolation checks.")
+            Log.info("This version of Valet does not support isolation yet. Disabling isolation checks.")
+            self.features.append(.supportForPhp56)
         } else {
-            self.features.append(FeatureFlag.isolatedSites)
+            Log.info("This version of Valet does not support PHP 5.6.")
+            self.features.append(.isolatedSites)
         }
         
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
