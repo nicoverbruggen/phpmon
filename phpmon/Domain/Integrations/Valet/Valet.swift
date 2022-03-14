@@ -10,6 +10,10 @@ import Foundation
 
 class Valet {
     
+    enum FeatureFlag {
+        case isolatedSites
+    }
+    
     static let shared = Valet()
     
     /// The version of Valet that was detected.
@@ -23,6 +27,9 @@ class Valet {
     
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
+    
+    /// Various feature flags. Enabled based on the installed Valet version.
+    var features: [FeatureFlag] = []
     
     /// When initialising the Valet singleton assume no sites loaded. We will load the version later.
     init() {
@@ -85,6 +92,8 @@ class Valet {
     public func validateVersion() -> Void {
         if version.versionCompare("3.0") == .orderedAscending {
             Log.warn("This version of Valet does not support isolation yet. Disabling isolation checks.")
+        } else {
+            self.features.append(FeatureFlag.isolatedSites)
         }
         
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
