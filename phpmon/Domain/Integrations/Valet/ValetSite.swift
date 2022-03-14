@@ -83,10 +83,15 @@ class ValetSite {
         determineDriver()
     }
     
+    /**
+     Determine whether a site is isolated.
+     */
     public func determineIsolated() {
-        // TODO: (ISOLATION) Determine whether the domain is isolated by checking for `# Valet isolated PHP version`
-        // This needs to be checked in: "~/.config/valet/Nginx/\(self.name).\(self.tld)"
-        self.isolatedPhpVersion = nil
+        if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+            self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+        } else {
+            self.isolatedPhpVersion = nil
+        }
     }
     
     /**
@@ -194,5 +199,30 @@ class ValetSite {
         } catch {
             Log.err("Something went wrong parsing the .valetphprc file")
         }
+    }
+    
+    // MARK: File Parsing
+    
+    public static func isolatedVersion(_ file: String) -> String? {
+        if Filesystem.fileExists(file) && grepContains(file: file, query: "# ISOLATED_PHP_VERSION=") {
+            let regex = try! NSRegularExpression(
+                pattern: #"(ISOLATED_PHP_VERSION=(php@)?)((?<major>\d)(.)?(?<minor>\d))"#,
+                options: []
+            )
+            
+            let fileContents = try! String(contentsOfFile: file)
+            
+            let match = regex.firstMatch(in: fileContents, range: NSMakeRange(0, fileContents.count))
+    
+            let majorRange = Range(match!.range(withName: "major"), in: fileContents)!
+            let minorRange = Range(match!.range(withName: "minor"), in: fileContents)!
+            
+            let major: String = fileContents[majorRange]
+            let minor: String = fileContents[minorRange]
+            
+            return "\(major).\(minor)"
+        }
+        
+        return nil
     }
 }

@@ -66,6 +66,9 @@
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
+		C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nicoverbruggen.test */; };
+		C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */; };
+		C42CFB1A27DFE8BD00862737 /* NginxParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxParserTest.swift */; };
 		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
@@ -254,6 +257,9 @@
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
+		C42CFB1527DFDE7900862737 /* nicoverbruggen.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen.test; sourceTree = "<group>"; };
+		C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen_isolated.test; sourceTree = "<group>"; };
+		C42CFB1927DFE8BD00862737 /* NginxParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxParserTest.swift; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
@@ -417,6 +423,8 @@
 		C40C7F1C27720E1400DDDCDC /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				C42CFB1527DFDE7900862737 /* nicoverbruggen.test */,
+				C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */,
 				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 				C43A8A1F25D9D1D700591B77 /* brew.json */,
 				C4F30B06278E195800755FCE /* brew-services.json */,
@@ -639,6 +647,7 @@
 				C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */,
 				C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */,
 				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
+				C42CFB1927DFE8BD00862737 /* NginxParserTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -863,12 +872,14 @@
 			files = (
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
+				C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
+				C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,6 +1042,7 @@
 				C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */,
 				C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
+				C42CFB1A27DFE8BD00862737 /* NginxParserTest.swift in Sources */,
 				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
 				C40B24F227A310770018C7D2 /* Events.swift in Sources */,
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,

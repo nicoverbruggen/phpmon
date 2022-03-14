@@ -24,6 +24,6 @@ class PhpVersionDetectionTest: XCTestCase {
             "php@5.4" // should be omitted, not supported
         ], checkBinaries: false)
         
-        XCTAssertEqual(outcome, ["8.0", "7.0", "5.6"])
+        XCTAssertEqual(outcome, ["8.0", "7.0"])
     }
 }
