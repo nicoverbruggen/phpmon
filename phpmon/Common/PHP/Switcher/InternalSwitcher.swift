@@ -24,22 +24,23 @@ class InternalSwitcher: PhpSwitcher {
     {
         Log.info("Switching to \(version), unlinking all versions...")
         
+        let isolated = Valet.shared.sites.filter { site in
+            site.isolatedPhpVersion != nil
+        }.map { site in
+            return site.isolatedPhpVersion!.versionNumber.homebrewVersion
+        }
+        
+        var versions: Set<String> = []
+        versions = versions.union(isolated)
+        versions = versions.union([version])
+        
         let group = DispatchGroup()
         
         PhpEnv.shared.availablePhpVersions.forEach { (available) in
             group.enter()
             
             DispatchQueue.global(qos: .userInitiated).async {
-                let formula = (available == PhpEnv.brewPhpVersion)
-                ? "php" : "php@\(available)"
-                
-                brew("unlink \(formula)")
-                
-                // TODO: (ISOLATION) Only stop formulae that are not used for isolation
-                brew("services stop \(formula)", sudo: true)
-                
-                Log.perf("Unlinked and stopped services for \(formula)")
-                
+                self.stopPhpVersion(available)
                 group.leave()
             }
         }
@@ -48,16 +49,39 @@ class InternalSwitcher: PhpSwitcher {
             Log.info("All versions have been unlinked!")
             Log.info("Linking the new version!")
             
-            let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
-            brew("link \(formula) --overwrite --force")
-            brew("services start \(formula)", sudo: true)
-            
+            for formula in versions {
+                self.startPhpVersion(formula, primary: (version == formula))
+            }
+        
             Log.info("Restarting nginx, just to be sure!")
             brew("services restart nginx", sudo: true)
             
-            Log.info("The new version has been linked!")
+            Log.info("The new version(s) has been linked!")
             completion()
         }
+    }
+    
+    private func stopPhpVersion(_ version: String) {
+        let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
+        brew("unlink \(formula)")
+        brew("services stop \(formula)", sudo: true)
+        Log.perf("Unlinked and stopped services for \(formula)")
+    }
+    
+    private func startPhpVersion(_ version: String, primary: Bool) {
+        let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
+        
+        if (primary) {
+            Log.perf("PHP \(formula) is the primary formula, linking and starting services...")
+            brew("link \(formula) --overwrite --force")
+        } else {
+            Log.perf("PHP \(formula) is an isolated PHP version, starting services only...")
+        }
+        
+        brew("services start \(formula)", sudo: true)
+        let socketVersion = version.replacingOccurrences(of: ".", with: "")
+        Shell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+        Log.perf("Symlinked new socket version.")
     }
     
 }

@@ -33,7 +33,13 @@ class SiteListCell: NSTableCellView
         self.site = site
         
         // Make sure to show the TLD
-        labelSiteName.stringValue = "\(site.name).\(Valet.shared.config.tld)"
+        var siteName = "\(site.name).\(Valet.shared.config.tld)"
+        
+        if (site.isolatedPhpVersion != nil) {
+            siteName += " [isolated \(site.isolatedPhpVersion!.versionNumber.homebrewVersion)]"
+        }
+        
+        labelSiteName.stringValue = siteName
         
         // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         labelPathName.stringValue = site.absolutePathRelative

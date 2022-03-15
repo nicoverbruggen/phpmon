@@ -139,7 +139,7 @@ class StatusMenu : NSMenu {
             
             // Get the short and long version
             let shortVersion = PhpEnv.shared.availablePhpVersions[index]
-            let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.longVersion
+            let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.versionNumber
             
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
             let versionString = long ? longVersion.toString() : shortVersion

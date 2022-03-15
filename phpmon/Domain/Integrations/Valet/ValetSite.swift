@@ -60,27 +60,27 @@ class ValetSite {
         case valetphprc = "valetphprc"
     }
     
-    init(absolutePath: String, tld: String) {
-        self.absolutePath = absolutePath
+    init(name: String, tld: String, absolutePath: String, aliasPath: String? = nil) {
+        self.name = name
         self.tld = tld
-        self.name = URL(fileURLWithPath: absolutePath).lastPathComponent
-        self.aliasPath = nil
-        
-        determineSecured()
-        determineComposerPhpVersion()
-        determineDriver()
-    }
-    
-    convenience init(aliasPath: String, tld: String) {
-        let absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
-        
-        self.init(absolutePath: absolutePath, tld: tld)
-        self.name = URL(fileURLWithPath: aliasPath).lastPathComponent
+        self.absolutePath = absolutePath
         self.aliasPath = aliasPath
         
         determineSecured()
         determineComposerPhpVersion()
         determineDriver()
+        determineIsolated()
+    }
+    
+    convenience init(absolutePath: String, tld: String) {
+        let name = URL(fileURLWithPath: absolutePath).lastPathComponent
+        self.init(name: name, tld: tld, absolutePath: absolutePath)
+    }
+    
+    convenience init(aliasPath: String, tld: String) {
+        let name = URL(fileURLWithPath: aliasPath).lastPathComponent
+        let absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
+        self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
     
     /**
@@ -88,6 +88,10 @@ class ValetSite {
      */
     public func determineIsolated() {
         if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+            if (!PhpEnv.shared.cachedPhpInstallations.keys.contains(version)) {
+                Log.err("The PHP version \(version) is isolated for the site \(self.name) but that PHP version is unavailable.")
+                return
+            }
             self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
         }
     }

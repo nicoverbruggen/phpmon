@@ -13,12 +13,15 @@ class NginxConfigParser {
     var contents: String!
     
     init(filePath: String) {
-        self.contents = try! String(contentsOfFile: filePath)
+        self.contents = try! String(contentsOfFile: filePath
+            .replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
+        )
     }
         
     lazy var isolatedVersion: String? = {
         let regex = try! NSRegularExpression(
-            pattern: #"(ISOLATED_PHP_VERSION=(php@)?)((?<major>\d)(.)?(?<minor>\d))"#,
+            // PHP versions have (so far) never needed multiple digits for version numbers
+            pattern: #"(ISOLATED_PHP_VERSION=(php)?(@)?)((?<major>\d)(.)?(?<minor>\d))"#,
             options: []
         )
         
@@ -27,12 +30,9 @@ class NginxConfigParser {
         if match == nil {
             return nil
         }
-        
-        let majorRange = Range(match!.range(withName: "major"), in: contents)!
-        let minorRange = Range(match!.range(withName: "minor"), in: contents)!
-        
-        let major: String = contents[majorRange]
-        let minor: String = contents[minorRange]
+
+        let major: String = contents[Range(match!.range(withName: "major"), in: contents)!]
+        let minor: String = contents[Range(match!.range(withName: "minor"), in: contents)!]
         
         return "\(major).\(minor)"
     }()
