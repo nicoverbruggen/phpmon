@@ -31,6 +31,7 @@ class InternalSwitcher: PhpSwitcher {
         }
         
         var versions: Set<String> = []
+        // TODO: Do not use isolation if on Valet 2.x
         versions = versions.union(isolated)
         versions = versions.union([version])
         
@@ -79,6 +80,8 @@ class InternalSwitcher: PhpSwitcher {
         }
         
         brew("services start \(formula)", sudo: true)
+        
+        // TODO: Symlink might not need to be created if Valet 2.x
         let socketVersion = version.replacingOccurrences(of: ".", with: "")
         Shell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
         Log.perf("Symlinked new socket version.")
