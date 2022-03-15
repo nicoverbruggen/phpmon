@@ -203,24 +203,9 @@ class ValetSite {
     
     // MARK: File Parsing
     
-    public static func isolatedVersion(_ file: String) -> String? {
-        if Filesystem.fileExists(file) && grepContains(file: file, query: "# ISOLATED_PHP_VERSION=") {
-            let regex = try! NSRegularExpression(
-                pattern: #"(ISOLATED_PHP_VERSION=(php@)?)((?<major>\d)(.)?(?<minor>\d))"#,
-                options: []
-            )
-            
-            let fileContents = try! String(contentsOfFile: file)
-            
-            let match = regex.firstMatch(in: fileContents, range: NSMakeRange(0, fileContents.count))
-    
-            let majorRange = Range(match!.range(withName: "major"), in: fileContents)!
-            let minorRange = Range(match!.range(withName: "minor"), in: fileContents)!
-            
-            let major: String = fileContents[majorRange]
-            let minor: String = fileContents[minorRange]
-            
-            return "\(major).\(minor)"
+    public static func isolatedVersion(_ filePath: String) -> String? {
+        if Filesystem.fileExists(filePath) {
+            return NginxConfigParser.init(filePath: filePath).isolatedVersion()
         }
         
         return nil

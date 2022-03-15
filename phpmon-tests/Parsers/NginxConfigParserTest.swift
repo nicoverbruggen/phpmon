@@ -1,5 +1,5 @@
 //
-//  NginxParserTest.swift
+//  NginxConfigParserTest.swift
 //  phpmon-tests
 //
 //  Created by Nico Verbruggen on 29/11/2021.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class NginxParserTest: XCTestCase {
+class NginxConfigParserTest: XCTestCase {
     
     static var regularUrl: URL {
         return Bundle(for: Self.self).url(forResource: "nicoverbruggen", withExtension: "test")!
@@ -19,8 +19,14 @@ class NginxParserTest: XCTestCase {
     }
     
     func testCanDetermineIsolation() throws {
-        XCTAssertNil(ValetSite.isolatedVersion(NginxParserTest.regularUrl.path))
-        XCTAssertEqual("8.1", ValetSite.isolatedVersion(NginxParserTest.isolatedUrl.path))
+        XCTAssertNil(
+            NginxConfigParser(filePath: NginxConfigParserTest.regularUrl.path).isolatedVersion()
+        )
+        
+        XCTAssertEqual(
+            "8.1",
+            NginxConfigParser(filePath: NginxConfigParserTest.isolatedUrl.path).isolatedVersion()
+        )
     }
     
 }
