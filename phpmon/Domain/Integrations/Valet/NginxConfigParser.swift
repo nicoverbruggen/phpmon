@@ -16,7 +16,7 @@ class NginxConfigParser {
         self.contents = try! String(contentsOfFile: filePath)
     }
         
-    public func isolatedVersion() -> String? {
+    lazy var isolatedVersion: String? = {
         let regex = try! NSRegularExpression(
             pattern: #"(ISOLATED_PHP_VERSION=(php@)?)((?<major>\d)(.)?(?<minor>\d))"#,
             options: []
@@ -35,5 +35,5 @@ class NginxConfigParser {
         let minor: String = contents[minorRange]
         
         return "\(major).\(minor)"
-    }
+    }()
 }

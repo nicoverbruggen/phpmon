@@ -89,8 +89,6 @@ class ValetSite {
     public func determineIsolated() {
         if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
             self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
-        } else {
-            self.isolatedPhpVersion = nil
         }
     }
     
@@ -205,7 +203,9 @@ class ValetSite {
     
     public static func isolatedVersion(_ filePath: String) -> String? {
         if Filesystem.fileExists(filePath) {
-            return NginxConfigParser.init(filePath: filePath).isolatedVersion()
+            return NginxConfigParser
+                .init(filePath: filePath)
+                .isolatedVersion
         }
         
         return nil

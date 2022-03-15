@@ -20,12 +20,12 @@ class NginxConfigParserTest: XCTestCase {
     
     func testCanDetermineIsolation() throws {
         XCTAssertNil(
-            NginxConfigParser(filePath: NginxConfigParserTest.regularUrl.path).isolatedVersion()
+            NginxConfigParser(filePath: NginxConfigParserTest.regularUrl.path).isolatedVersion
         )
         
         XCTAssertEqual(
             "8.1",
-            NginxConfigParser(filePath: NginxConfigParserTest.isolatedUrl.path).isolatedVersion()
+            NginxConfigParser(filePath: NginxConfigParserTest.isolatedUrl.path).isolatedVersion
         )
     }
     
