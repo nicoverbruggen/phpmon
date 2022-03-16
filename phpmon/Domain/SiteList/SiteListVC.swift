@@ -174,13 +174,22 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let mapping: [String: String] = [
+            "AutomaticTableColumnIdentifier.0": "siteListTLSCell",
+            "AutomaticTableColumnIdentifier.1": "siteListNameCell",
+            "AutomaticTableColumnIdentifier.2": "siteListPhpCell",
+            "AutomaticTableColumnIdentifier.3": "siteListDriverCell",
+        ]
+        
+        let columnName = tableColumn!.identifier.rawValue
+        
         guard let userCell = tableView.makeView(
-            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "siteItem"), owner: self
-        ) as? SiteListCell else { return nil }
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: mapping[columnName]!), owner: self
+        ) as? SiteListCellProtocol else { return nil }
         
         userCell.populateCell(with: sites[row])
         
-        return userCell
+        return userCell as? NSView
     }
     
     func tableViewSelectionDidChange(_ notification: Notification) {

@@ -9,18 +9,14 @@
 import Cocoa
 import AppKit
 
+protocol SiteListCellProtocol {
+    func populateCell(with site: ValetSite)
+}
+
 class SiteListCell: NSTableCellView
 {
-    var site: ValetSite? = nil
-    
-    @IBOutlet weak var labelSiteName: NSTextField!
-    @IBOutlet weak var labelPathName: NSTextField!
     @IBOutlet weak var labelDriverType: NSTextField!
-    
-    @IBOutlet weak var imageViewLock: NSImageView!
-    @IBOutlet weak var imageViewType: NSImageView!
-    
-    @IBOutlet weak var labelDriver: NSTextField!
+
     
     @IBOutlet weak var buttonPhpVersion: NSButton!
     @IBOutlet weak var imageViewPhpVersionOK: NSImageView!
@@ -30,54 +26,14 @@ class SiteListCell: NSTableCellView
     }
     
     func populateCell(with site: ValetSite) {
-        self.site = site
-        
-        // Make sure to show the TLD
-        var siteName = "\(site.name).\(Valet.shared.config.tld)"
-        
-        if (site.isolatedPhpVersion != nil) {
-            siteName += " [isolated \(site.isolatedPhpVersion!.versionNumber.homebrewVersion)]"
-        }
-        
-        labelSiteName.stringValue = siteName
-        
-        // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
-        labelPathName.stringValue = site.absolutePathRelative
-        
-        // If the `aliasPath` is nil, we're dealing with a parked site (otherwise: linked).
-        imageViewType.image = NSImage(
-            named: site.aliasPath == nil
-            ? "IconParked"
-            : "IconLinked"
-        )
-        imageViewType.contentTintColor = NSColor.tertiaryLabelColor
-        
-        // Show the green or red lock based on whether the site was secured
-        imageViewLock.contentTintColor = site.secured ?
-            NSColor(named: "IconColorGreen") // green
-            : NSColor(named: "IconColorRed")
-        
-        // Show the current driver
-        labelDriverType.stringValue = site.driverDeterminedByComposer
-            ? "Project Type".uppercased()
-            : "Driver Type".uppercased()
-        
-        labelDriver.stringValue = site.driver ?? "driver.not_detected".localized
-        
-        // Determine the Laravel version
-        if site.driver == "Laravel" && site.notableComposerDependencies.keys.contains("laravel/framework") {
-            let constraint = site.notableComposerDependencies["laravel/framework"]!
-            labelDriver.stringValue = "Laravel (\(constraint))"
-        }
-        
         // Show the PHP version
         buttonPhpVersion.title = " PHP \(site.composerPhp) "
         buttonPhpVersion.isHidden = (site.composerPhp == "???")
         
-
         imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
     }
     
+    /*
     @IBAction func pressedPhpVersion(_ sender: Any) {
         guard let site = self.site else { return }
         
@@ -114,4 +70,5 @@ class SiteListCell: NSTableCellView
             }
         }
     }
+    */
 }

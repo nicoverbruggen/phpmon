@@ -74,6 +74,10 @@
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
 		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
+		C44067F527E2582B0045BD4E /* SiteListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* SiteListNameCell.swift */; };
+		C44067F727E258410045BD4E /* SiteListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* SiteListPhpCell.swift */; };
+		C44067F927E2585E0045BD4E /* SiteListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */; };
+		C44067FB27E25FD70045BD4E /* SiteListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */; };
 		C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
@@ -266,6 +270,10 @@
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
+		C44067F427E2582B0045BD4E /* SiteListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListNameCell.swift; sourceTree = "<group>"; };
+		C44067F627E258410045BD4E /* SiteListPhpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListPhpCell.swift; sourceTree = "<group>"; };
+		C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListTypeCell.swift; sourceTree = "<group>"; };
+		C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListTLSCell.swift; sourceTree = "<group>"; };
 		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
@@ -515,6 +523,17 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		C44067F327E256560045BD4E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */,
+				C44067F427E2582B0045BD4E /* SiteListNameCell.swift */,
+				C44067F627E258410045BD4E /* SiteListPhpCell.swift */,
+				C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		C44C198F276E3A380072762D /* Progress */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +555,7 @@
 		C464ADAA275A7A25003FCD53 /* SiteList */ = {
 			isa = PBXGroup;
 			children = (
+				C44067F327E256560045BD4E /* Cells */,
 				C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */,
 				C464ADAE275A7A69003FCD53 /* SiteListVC.swift */,
 				C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */,
@@ -921,8 +941,10 @@
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B585442770FE3900DA4FBE /* Command.swift in Sources */,
+				C44067F527E2582B0045BD4E /* SiteListNameCell.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C4EE55AB27708B9E001DF387 /* Preview.swift in Sources */,
+				C44067F727E258410045BD4E /* SiteListPhpCell.swift in Sources */,
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
 				C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */,
 				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
@@ -951,6 +973,7 @@
 				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
+				C44067FB27E25FD70045BD4E /* SiteListTLSCell.swift in Sources */,
 				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
@@ -968,6 +991,7 @@
 				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
+				C44067F927E2585E0045BD4E /* SiteListTypeCell.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
