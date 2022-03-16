@@ -310,10 +310,6 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
 "startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
-/// Multiple services active
-"startup.errors.services.title" = "Multiple PHP services are active";
-"startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'First Aid & Services > Fix My Valet' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
-
 // SPONSOR ENCOURAGEMENT
 
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";

@@ -98,12 +98,13 @@ class Valet {
      installed is not recent enough.
      */
     public func validateVersion() -> Void {
-        if version.versionCompare("3.0") == .orderedAscending {
-            Log.info("This version of Valet does not support isolation yet. Disabling isolation checks.")
-            self.features.append(.supportForPhp56)
-        } else {
-            Log.info("This version of Valet does not support PHP 5.6.")
+        if Shell.pipe("valet", requiresPath: true).contains("isolate") {
+            Log.info("This version of Valet supports isolation.")
             self.features.append(.isolatedSites)
+        }
+        
+        if version.versionCompare("3.0") == .orderedAscending {
+            self.features.append(.supportForPhp56)
         }
         
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {

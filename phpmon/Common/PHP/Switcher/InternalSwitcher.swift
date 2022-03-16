@@ -30,10 +30,11 @@ class InternalSwitcher: PhpSwitcher {
             return site.isolatedPhpVersion!.versionNumber.homebrewVersion
         }
         
-        var versions: Set<String> = []
-        // TODO: Do not use isolation if on Valet 2.x
-        versions = versions.union(isolated)
-        versions = versions.union([version])
+        var versions: Set<String> = [version]
+        
+        if (Valet.enabled(feature: .isolatedSites)) {
+            versions = versions.union(isolated)
+        }
         
         let group = DispatchGroup()
         
@@ -57,7 +58,7 @@ class InternalSwitcher: PhpSwitcher {
             Log.info("Restarting nginx, just to be sure!")
             brew("services restart nginx", sudo: true)
             
-            Log.info("The new version(s) has been linked!")
+            Log.info("The new version(s) have been linked!")
             completion()
         }
     }
@@ -66,25 +67,27 @@ class InternalSwitcher: PhpSwitcher {
         let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
         brew("unlink \(formula)")
         brew("services stop \(formula)", sudo: true)
-        Log.perf("Unlinked and stopped services for \(formula)")
+        Log.info("Unlinked and stopped services for \(formula)")
     }
     
     private func startPhpVersion(_ version: String, primary: Bool) {
         let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
         
         if (primary) {
-            Log.perf("PHP \(formula) is the primary formula, linking and starting services...")
+            Log.info("\(formula) is the primary formula, linking and starting services...")
             brew("link \(formula) --overwrite --force")
         } else {
-            Log.perf("PHP \(formula) is an isolated PHP version, starting services only...")
+            Log.info("\(formula) is an isolated PHP version, starting services only...")
         }
         
         brew("services start \(formula)", sudo: true)
         
-        // TODO: Symlink might not need to be created if Valet 2.x
-        let socketVersion = version.replacingOccurrences(of: ".", with: "")
-        Shell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
-        Log.perf("Symlinked new socket version.")
+        if Valet.enabled(feature: .isolatedSites) && primary {
+            let socketVersion = version.replacingOccurrences(of: ".", with: "")
+            Shell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+            Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
+        }
+
     }
     
 }
