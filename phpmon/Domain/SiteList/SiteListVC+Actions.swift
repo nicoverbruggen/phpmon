@@ -42,7 +42,7 @@ extension SiteListVC {
                 )
             }
             
-            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0])
+            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
             tableView.deselectRow(rowToReload)
             tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
         }
@@ -77,6 +77,18 @@ extension SiteListVC {
         editor.openDirectory(file: selectedSite!.absolutePath)
     }
     
+    @objc func isolateSite(sender: PhpMenuItem) {
+        self.performAction(command: "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) isolate php@\(sender.version) && exit;") {
+            self.selectedSite!.determineIsolated()
+        }
+    }
+    
+    @objc func removeIsolatedSite() {
+        self.performAction(command: "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) unisolate && exit;") {
+            self.selectedSite!.isolatedPhpVersion = nil
+        }
+    }
+    
     @objc func unlinkSite() {
         guard let site = selectedSite else {
             return
@@ -98,6 +110,19 @@ extension SiteListVC {
                 self.reloadSites()
             }
         )
+    }
+    
+    private func performAction(command: String, beforeCellReload: @escaping () -> Void) {
+        let rowToReload = tableView.selectedRow
+        
+        waitAndExecute {
+            Shell.run(command, requiresPath: true)
+        } completion: { [self] in
+            beforeCellReload()
+            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
+            tableView.deselectRow(rowToReload)
+            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
+        }
     }
     
 }

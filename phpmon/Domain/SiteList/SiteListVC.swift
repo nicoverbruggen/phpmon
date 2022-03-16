@@ -174,6 +174,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    
         let mapping: [String: String] = [
             "TLS": "siteListTLSCell",
             "DOMAIN": "siteListNameCell",

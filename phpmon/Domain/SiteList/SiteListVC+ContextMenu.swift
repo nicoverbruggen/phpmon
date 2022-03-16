@@ -78,7 +78,29 @@ extension SiteListVC {
     }
     
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
-        //
+        if site.isolatedPhpVersion == nil {
+            // ISOLATION POSSIBLE
+            let isolationMenuItem = NSMenuItem(title:"site_list.isolate".localized, action: nil, keyEquivalent: "")
+            let submenu = NSMenu()
+            submenu.addItem(withTitle: "Choose a PHP version", action: nil, keyEquivalent: "")
+            for version in PhpEnv.shared.availablePhpVersions.reversed() {
+                let item = PhpMenuItem(title: "Always use PHP \(version)", action: #selector(self.isolateSite), keyEquivalent: "")
+                item.version = version
+                submenu.addItem(item)
+            }
+            menu.setSubmenu(submenu, for: isolationMenuItem)
+            
+            menu.addItem(isolationMenuItem)
+            menu.addItem(NSMenuItem.separator())
+        } else {
+            // REMOVE ISOLATION POSSIBLE
+            menu.addItem(
+                withTitle: "site_list.remove_isolation".localized,
+                action: #selector(self.removeIsolatedSite),
+                keyEquivalent: ""
+            )
+            menu.addItem(NSMenuItem.separator())
+        }
     }
     
     private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {

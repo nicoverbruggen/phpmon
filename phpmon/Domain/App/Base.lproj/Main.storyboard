@@ -896,7 +896,7 @@ Gw
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn identifier="ENVIRONMENT" width="110" minWidth="100" maxWidth="150" id="hzb-XI-Out">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Environment">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Active">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>

@@ -93,6 +93,8 @@ class ValetSite {
                 return
             }
             self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+        } else {
+            self.isolatedPhpVersion = nil
         }
     }
     

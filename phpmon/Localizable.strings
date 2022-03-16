@@ -103,6 +103,9 @@
 
 // SITE LIST ACTIONS
 
+"site_list.isolate" = "Isolate Domain";
+"site_list.remove_isolation" = "Remove Isolation";
+
 "site_list.unlink" = "Unlink Directory";
 "site_list.secure" = "Secure Domain";
 "site_list.unsecure" = "Unsecure Domain";
