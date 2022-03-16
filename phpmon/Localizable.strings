@@ -117,6 +117,12 @@
 "site_list.alert.invalid_folder_name" = "Invalid folder name";
 "site_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
 
+"site_list.columns.tls" = "TLS";
+"site_list.columns.domain" = "Domain";
+"site_list.columns.php" = "PHP";
+"site_list.columns.type" = "Type";
+"site_list.columns.kind" = "Kind";
+
 // DRIVERS
 
 "driver.not_detected" = "Other";
@@ -202,8 +208,9 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Composer Version
+"alert.composer_php_isolated.desc" = "This site has been isolated, which means that Valet serves PHP %@ for this site specifically (the global version is %@).";
 "alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: %@.";
-"alert.composer_php_requirement.type.unknown" = "The required PHP version was determined by an unknown factor.";
+"alert.composer_php_requirement.type.unknown" = "The required PHP version is a mystery.";
 "alert.composer_php_requirement.type.require" = "This required PHP version was determined by checking the `require` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.platform" = "This required PHP version was determined by checking the `platform` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.valetphprc" = "This required PHP version was determined by checking the .valetphprc file in your project's directory.";

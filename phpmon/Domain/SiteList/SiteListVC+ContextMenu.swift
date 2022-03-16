@@ -23,6 +23,7 @@ extension SiteListVC {
         addDetectedApps(to: menu)
         addSeparator(to: menu)
         
+        addIsolate(to: menu, with: site)
         addUnlink(to: menu, with: site)
         addToggleSecure(to: menu, with: site)
         
@@ -74,6 +75,10 @@ extension SiteListVC {
             )
             menu.addItem(NSMenuItem.separator())
         }
+    }
+    
+    private func addIsolate(to menu: NSMenu, with site: ValetSite) {
+        //
     }
     
     private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {

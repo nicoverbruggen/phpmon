@@ -11,18 +11,13 @@ import AppKit
 
 class SiteListNameCell: NSTableCellView, SiteListCellProtocol
 {
-    var site: ValetSite? = nil
-    
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
     
     func populateCell(with site: ValetSite) {
-        self.site = site
-        
-        var siteName = "\(site.name).\(Valet.shared.config.tld)"
+        // Show the name of the site (including tld)
+        labelSiteName.stringValue = "\(site.name).\(Valet.shared.config.tld)"
 
-        labelSiteName.stringValue = siteName
-        
         // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
         labelPathName.stringValue = site.absolutePathRelative
     }

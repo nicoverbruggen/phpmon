@@ -11,13 +11,9 @@ import AppKit
 
 class SiteListTLSCell: NSTableCellView, SiteListCellProtocol
 {
-    var site: ValetSite? = nil
-    
     @IBOutlet weak var imageViewLock: NSImageView!
     
     func populateCell(with site: ValetSite) {
-        self.site = site
-        
         // Show the green or red lock based on whether the site was secured
         imageViewLock.contentTintColor = site.secured
             ? NSColor(named: "IconColorGreen") // green

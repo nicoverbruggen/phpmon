@@ -11,20 +11,10 @@ import AppKit
 
 class SiteListTypeCell: NSTableCellView, SiteListCellProtocol
 {
-    var site: ValetSite? = nil
-    
     @IBOutlet weak var labelDriver: NSTextField!
-    @IBOutlet weak var imageViewType: NSImageView!
+    @IBOutlet weak var labelPhpVersion: NSTextField!
     
     func populateCell(with site: ValetSite) {
-        // If the `aliasPath` is nil, we're dealing with a parked site (otherwise: linked).
-        imageViewType.image = NSImage(
-            named: site.aliasPath == nil
-            ? "IconParked"
-            : "IconLinked"
-        )
-        imageViewType.contentTintColor = NSColor.tertiaryLabelColor
-        
         labelDriver.stringValue = site.driver ?? "driver.not_detected".localized
         
         // Determine the Laravel version
@@ -33,6 +23,7 @@ class SiteListTypeCell: NSTableCellView, SiteListCellProtocol
             labelDriver.stringValue = "Laravel (\(constraint))"
         }
         
-        labelDriver.stringValue += "\nPHP \(site.composerPhp)"
+        // PHP version
+        labelPhpVersion.stringValue = site.composerPhp == "???" ? "Any PHP" : "PHP \(site.composerPhp)"
     }
 }

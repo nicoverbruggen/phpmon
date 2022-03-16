@@ -175,10 +175,11 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let mapping: [String: String] = [
-            "AutomaticTableColumnIdentifier.0": "siteListTLSCell",
-            "AutomaticTableColumnIdentifier.1": "siteListNameCell",
-            "AutomaticTableColumnIdentifier.2": "siteListPhpCell",
-            "AutomaticTableColumnIdentifier.3": "siteListDriverCell",
+            "TLS": "siteListTLSCell",
+            "DOMAIN": "siteListNameCell",
+            "ENVIRONMENT": "siteListPhpCell",
+            "KIND": "siteListKindCell",
+            "TYPE": "siteListTypeCell",
         ]
         
         let columnName = tableColumn!.identifier.rawValue
