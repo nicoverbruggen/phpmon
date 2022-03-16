@@ -23,7 +23,10 @@ extension SiteListVC {
         addDetectedApps(to: menu)
         addSeparator(to: menu)
         
-        addIsolate(to: menu, with: site)
+        if Valet.enabled(feature: .isolatedSites) {
+            addIsolate(to: menu, with: site)
+        }
+        
         addUnlink(to: menu, with: site)
         addToggleSecure(to: menu, with: site)
         
