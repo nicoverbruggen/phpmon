@@ -32,5 +32,7 @@ class SiteListTypeCell: NSTableCellView, SiteListCellProtocol
             let constraint = site.notableComposerDependencies["laravel/framework"]!
             labelDriver.stringValue = "Laravel (\(constraint))"
         }
+        
+        labelDriver.stringValue += "\nPHP \(site.composerPhp)"
     }
 }

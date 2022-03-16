@@ -15,22 +15,11 @@ protocol SiteListCellProtocol {
 
 class SiteListCell: NSTableCellView
 {
-    @IBOutlet weak var labelDriverType: NSTextField!
-
-    
-    @IBOutlet weak var buttonPhpVersion: NSButton!
-    @IBOutlet weak var imageViewPhpVersionOK: NSImageView!
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
     }
     
     func populateCell(with site: ValetSite) {
-        // Show the PHP version
-        buttonPhpVersion.title = " PHP \(site.composerPhp) "
-        buttonPhpVersion.isHidden = (site.composerPhp == "???")
-        
-        imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
     }
     
     /*

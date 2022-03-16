@@ -849,7 +849,7 @@ Gw
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn width="319.5" minWidth="300" maxWidth="10000" id="oeH-B2-0rA">
+                                                <tableColumn width="250" minWidth="250" maxWidth="10000" id="oeH-B2-0rA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Domain">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -862,19 +862,19 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="siteListNameCell" wantsLayer="YES" id="5GY-nN-BWd" customClass="SiteListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="59" y="0.0" width="319" height="54"/>
+                                                            <rect key="frame" x="59" y="0.0" width="250" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
-                                                                    <rect key="frame" x="38" y="26" width="145" height="16"/>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
+                                                                    <rect key="frame" x="3" y="26" width="145" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="my-domain-name.test" id="SGC-Gm-Mxd">
                                                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
-                                                                    <rect key="frame" x="38" y="12" width="75" height="14"/>
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
+                                                                    <rect key="frame" x="3" y="12" width="75" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="~/path/to/site" id="fe7-Ha-mR9">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -886,6 +886,7 @@ Gw
                                                                 <constraint firstItem="CXK-Q9-CpO" firstAttribute="leading" secondItem="XJL-Uw-frD" secondAttribute="leading" id="Ojw-VZ-3EG"/>
                                                                 <constraint firstItem="XJL-Uw-frD" firstAttribute="top" secondItem="5GY-nN-BWd" secondAttribute="top" constant="12" id="QeE-c7-I9U"/>
                                                                 <constraint firstItem="CXK-Q9-CpO" firstAttribute="top" secondItem="XJL-Uw-frD" secondAttribute="bottom" id="VKg-Vq-sYa"/>
+                                                                <constraint firstItem="XJL-Uw-frD" firstAttribute="leading" secondItem="5GY-nN-BWd" secondAttribute="leading" constant="5" id="u1q-b0-iKq"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="labelPathName" destination="CXK-Q9-CpO" id="iVZ-cL-azB"/>
@@ -894,7 +895,7 @@ Gw
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn width="156" minWidth="120" maxWidth="240" id="hzb-XI-Out">
+                                                <tableColumn width="120" minWidth="120" maxWidth="240" id="hzb-XI-Out">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Environment">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -907,11 +908,11 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="siteListPhpCell" wantsLayer="YES" id="T49-0U-d58" customClass="SiteListPhpCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="395.5" y="0.0" width="156" height="54"/>
+                                                            <rect key="frame" x="326" y="0.0" width="120" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZXQ-bg-Xba">
-                                                                    <rect key="frame" x="76" y="18" width="65" height="18"/>
+                                                                    <rect key="frame" x="40" y="18" width="65" height="18"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="65" id="3k8-Ad-xGO"/>
                                                                     </constraints>
@@ -920,16 +921,31 @@ Gw
                                                                         <font key="font" metaFont="smallSystemBold"/>
                                                                     </buttonCell>
                                                                 </button>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yq0-qk-bFt">
+                                                                    <rect key="frame" x="16" y="19" width="16" height="16"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="16" id="5fd-EQ-BgV"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="nP7-13-SSn"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Checkmark" id="S66-ow-Jo1"/>
+                                                                    <color key="contentTintColor" red="0.0" green="0.56984812060000001" blue="0.0" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <constraints>
+                                                                <constraint firstItem="Yq0-qk-bFt" firstAttribute="centerY" secondItem="T49-0U-d58" secondAttribute="centerY" id="4Kz-lX-kOP"/>
+                                                                <constraint firstItem="ZXQ-bg-Xba" firstAttribute="leading" secondItem="Yq0-qk-bFt" secondAttribute="trailing" constant="8" symbolic="YES" id="6jM-Qf-SG3"/>
                                                                 <constraint firstItem="ZXQ-bg-Xba" firstAttribute="centerY" secondItem="T49-0U-d58" secondAttribute="centerY" id="FFK-4B-qIb"/>
-                                                                <constraint firstAttribute="trailing" secondItem="ZXQ-bg-Xba" secondAttribute="trailing" constant="15" id="ldN-xH-gYj"/>
+                                                                <constraint firstItem="ZXQ-bg-Xba" firstAttribute="centerX" secondItem="T49-0U-d58" secondAttribute="centerX" constant="12" id="zjr-UQ-Dd7"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outlet property="buttonPhpVersion" destination="ZXQ-bg-Xba" id="vxL-if-CCC"/>
+                                                                <outlet property="imageViewPhpVersionOK" destination="Yq0-qk-bFt" id="0hT-cZ-9NI"/>
+                                                            </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn width="190.5" minWidth="120" maxWidth="200" id="7EV-ZL-92u">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Driver">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -941,7 +957,7 @@ Gw
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="siteListDriverCell" wantsLayer="YES" id="AhT-xR-16a" customClass="SiteListTypeCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="568.5" y="0.0" width="188" height="54"/>
+                                                            <rect key="frame" x="463" y="0.0" width="187" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYR-vb-OW1">
@@ -954,8 +970,8 @@ Gw
                                                                     <color key="contentTintColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                 </imageView>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="op5-1c-cMz">
-                                                                    <rect key="frame" x="34" y="20" width="156" height="14"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Driver Name" id="PHC-tD-Lmc">
+                                                                    <rect key="frame" x="34" y="13" width="155" height="28"/>
+                                                                    <textFieldCell key="cell" title="Driver Name PHP X.X" id="PHC-tD-Lmc">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1030,6 +1046,7 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="Checkmark" width="512" height="512"/>
         <image name="IconLinked" width="25" height="25"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
