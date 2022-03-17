@@ -157,10 +157,6 @@ class PhpEnv {
         return output
     }
     
-    private func writeHelpers(with versions: [String]) {
-        
-    }
-    
     public func validVersions(for constraint: String) -> [PhpVersionNumber] {
         constraint.split(separator: "|").flatMap {
             return PhpVersionNumberCollection
