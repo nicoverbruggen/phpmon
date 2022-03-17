@@ -146,7 +146,50 @@ class PhpEnv {
             }
         }
         
+        writeHelpers(with: output)
+        
         return output
+    }
+    
+    private func writeHelpers(with versions: [String]) {
+        for version in versions {
+            do {
+                let resolve = "\(Paths.optPath)/php@\(version)/bin"
+                let path = URL(fileURLWithPath: resolve).resolvingSymlinksInPath().path
+                let dotless = version.replacingOccurrences(of: ".", with: "")
+                try! FileManager.default.createDirectory(
+                    at: URL(fileURLWithPath: "/Users/\(Paths.whoami)/.local/phpmon"),
+                    withIntermediateDirectories: true
+                )
+                let sourcePath = "/Users/\(Paths.whoami)/.local/phpmon/source_php\(dotless)"
+                let source = """
+                export PATH=\(path):$PATH
+                """
+                try source.write(
+                    to: URL(fileURLWithPath: sourcePath),
+                    atomically: true,
+                    encoding: String.Encoding.utf8
+                )
+                let script = """
+                #!/bin/zsh
+                [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
+                    && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
+                    || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
+                source ~/.local/phpmon/source_php\(dotless);
+                """
+                let alias = "/usr/local/bin/pm\(dotless)"
+                try script.write(
+                    to: URL(fileURLWithPath: alias),
+                    atomically: true,
+                    encoding: String.Encoding.utf8
+                )
+                Shell.run("chmod +x \(sourcePath)")
+                Shell.run("chmod +x \(path)")
+            } catch {
+                print(error)
+                Log.err("Could not write PHP Monitor helper for PHP \(version) to /usr/local/bin")
+            }
+        }
     }
     
     public func validVersions(for constraint: String) -> [PhpVersionNumber] {
