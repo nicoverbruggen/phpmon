@@ -117,10 +117,14 @@ class PhpEnv {
     /**
      Extracts valid PHP versions from an array of strings.
      This array of strings is usually retrieved from `grep`.
+     
+     If `generateHelpers` is set to true, after detecting
+     all versions, helper scripts are generated as well.
      */
     public func extractPhpVersions(
         from versions: [String],
-        checkBinaries: Bool = true
+        checkBinaries: Bool = true,
+        generateHelpers: Bool = true
     ) -> [String] {
         var output : [String] = []
         
@@ -146,15 +150,15 @@ class PhpEnv {
             }
         }
         
-        writeHelpers(with: output)
+        if generateHelpers {
+            versions.forEach { PhpHelper.generate(for: $0) }
+        }
         
         return output
     }
     
     private func writeHelpers(with versions: [String]) {
-        for version in versions {
-            PhpHelper.generate(for: version)
-        }
+        
     }
     
     public func validVersions(for constraint: String) -> [PhpVersionNumber] {

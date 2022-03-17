@@ -22,7 +22,7 @@ class PhpVersionDetectionTest: XCTestCase {
             "unrelatedphp@1.0", // should be omitted, invalid
             "php@5.6",
             "php@5.4" // should be omitted, not supported
-        ], checkBinaries: false)
+        ], checkBinaries: false, generateHelpers: false)
         
         XCTAssertEqual(outcome, ["8.0", "7.0"])
     }

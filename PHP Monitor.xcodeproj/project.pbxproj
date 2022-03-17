@@ -161,6 +161,7 @@
 		C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
 		C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
+		C4D936CB27E3EE4A00BD69FE /* SiteListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* SiteListCellProtocol.swift */; };
 		C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
@@ -1052,6 +1053,7 @@
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
+				C4D936CB27E3EE4A00BD69FE /* SiteListCellProtocol.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
