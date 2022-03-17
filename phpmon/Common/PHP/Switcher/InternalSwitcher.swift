@@ -42,6 +42,7 @@ class InternalSwitcher: PhpSwitcher {
             group.enter()
             
             DispatchQueue.global(qos: .userInitiated).async {
+                self.disableDefaultPhpFpmPool(available)
                 self.stopPhpVersion(available)
                 group.leave()
             }
@@ -60,6 +61,21 @@ class InternalSwitcher: PhpSwitcher {
             
             Log.info("The new version(s) have been linked!")
             completion()
+        }
+    }
+    
+    private func disableDefaultPhpFpmPool(_ version: String) {
+        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+        if FileManager.default.fileExists(atPath: pool) {
+            Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
+            let existing = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf")!
+            let new = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon")!
+            do {
+                try FileManager.default.moveItem(at: existing, to: new)
+                Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
+            } catch {
+                Log.err(error)
+            }
         }
     }
     
