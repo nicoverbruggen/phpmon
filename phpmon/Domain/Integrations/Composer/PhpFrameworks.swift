@@ -36,7 +36,8 @@ struct PhpFrameworks {
         "statamic/cms": "Statamic",
         "johnpbloch/wordpress-core": "WordPress",
         "zendframework/zendframework": "Zend",
-        "zendframework/zend-mvc": "Zend"
+        "zendframework/zend-mvc": "Zend",
+        "typo3/cms-core": "Typo3",
         
         // TODO (5.1): Handle these in v5.1
         // "magento/*": "Magento",
@@ -58,6 +59,10 @@ struct PhpFrameworks {
             "/wp-config.php",
             "/wp-config-sample.php"
         ],
+        "Typo3": [
+            "/typo3",
+            "/public/typo3",
+        ]
     ]
     
     /**
