@@ -70,11 +70,25 @@ extension SiteListVC {
     
     @objc func openInTerminal() {
         Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
+        // TODO: (ISOLATION) If isolated, make it so that the PATH is set for the isolated PHP version
+        // This might be possible with AppleScript? Worth a shot, using:
+        /*
+         tell application "Terminal"
+             activate
+             set shell to do script "echo 1" in window 1
+             do script "echo 2" in shell
+             do script "echo 3" in shell
+         end tell
+         */
     }
     
     @objc func openWithEditor(sender: EditorMenuItem) {
         guard let editor = sender.editor else { return }
         editor.openDirectory(file: selectedSite!.absolutePath)
+        
+        if editor.type == .terminal {
+            // TODO: (ISOLATION) Attempt to do automatic scripting here too (see above)
+        }
     }
     
     @objc func isolateSite(sender: PhpMenuItem) {
