@@ -340,6 +340,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
+        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
     }
     
     func menuDidClose(_ menu: NSMenu) {

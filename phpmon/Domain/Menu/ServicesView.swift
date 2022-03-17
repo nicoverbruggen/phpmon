@@ -44,11 +44,6 @@ class ServicesView: NSView, XibLoadable {
         )
         return item
     }
-    
-    override func viewWillDraw() {
-        super.viewWillDraw()
-        Task { await self.loadData() }
-    }
 
     @objc func updateInformation() {
         Task { await self.loadData() }
