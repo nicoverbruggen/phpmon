@@ -124,25 +124,13 @@ class Actions {
      If this does not solve the issue, the user may need to install additional
      extensions and/or run `composer global update`.
      */
-    public static func fixMyValet()
+    public static func fixMyValet(completed: @escaping () -> Void)
     {
-        brew("services restart dnsmasq", sudo: true)
-        
-        PhpEnv.shared.detectPhpVersions().forEach { (version) in
-            let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
-            brew("unlink php@\(version)")
-            brew("services stop \(formula)")
-            brew("services stop \(formula)", sudo: true)
-        }
-        
-        brew("services stop dnsmasq")
-        brew("services stop php")
-        brew("services stop nginx")
-        
-        brew("link php --overwrite --force")
-        
-        brew("services restart dnsmasq", sudo: true)
-        brew("services restart php", sudo: true)
-        brew("services restart nginx", sudo: true)
+        InternalSwitcher().performSwitch(to: PhpEnv.brewPhpVersion, completion: {
+            brew("services restart dnsmasq", sudo: true)
+            brew("services restart php", sudo: true)
+            brew("services restart nginx", sudo: true)
+            completed()
+        })
     }
 }
