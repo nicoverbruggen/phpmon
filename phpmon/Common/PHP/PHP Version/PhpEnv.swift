@@ -151,7 +151,7 @@ class PhpEnv {
         }
         
         if generateHelpers {
-            versions.forEach { PhpHelper.generate(for: $0) }
+            output.forEach { PhpHelper.generate(for: $0) }
         }
         
         return output
