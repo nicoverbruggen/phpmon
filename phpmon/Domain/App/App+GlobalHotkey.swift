@@ -6,7 +6,6 @@
 //  Copyright © 2021 Nico Verbruggen. All rights reserved.
 //
 
-import HotKey
 import Cocoa
 
 extension App {

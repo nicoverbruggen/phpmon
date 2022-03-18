@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import HotKey
 import Carbon
 
 class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
