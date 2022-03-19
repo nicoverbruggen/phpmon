@@ -31,7 +31,7 @@ class FakeSiteScanner: SiteScanner
                   path: "~/Sites/drupal", linked: false, driver: "Drupal", constraint: "^7.4", isolated: "7.4"),
         
         ValetSite(fakeWithName: "wordpress", tld: "test", secure: false,
-                  path: "~/Sites/wordpress", linked: false, driver: "Wordpress", constraint: "^7.4", isolated: "7.4")
+                  path: "~/Sites/wordpress", linked: false, driver: "WordPress", constraint: "^7.4", isolated: "7.4")
     ]
     
     func resolveSiteCount(paths: [String]) -> Int {
