@@ -39,6 +39,19 @@ class Valet {
     }
     
     /**
+     If marketing mode is enabled, show a list of sites that are used for promotional screenshots.
+     This can be done by swapping out the real Valet scanner with one that always returns a fixed
+     list of fake sites. You should not interact with these sites!
+     */
+    static var siteScanner: SiteScanner {
+        if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
+            return FakeSiteScanner()
+        }
+        
+        return ValetSiteScanner()
+    }
+    
+    /**
      Check if a particular feature is enabled.
      */
     public static func enabled(feature: FeatureFlag) -> Bool {
@@ -89,7 +102,7 @@ class Valet {
             return
         }
         
-        resolvePaths(tld: config.tld)
+        resolvePaths()
     }
     
     /**
@@ -128,80 +141,21 @@ class Valet {
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() -> Int {
-        var count = 0
-        for path in config.paths {
-            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
-            for entry in entries {
-                if resolveSite(entry, forPath: path) {
-                    count += 1
-                }
-            }
-        }
-        return count
+        return Self.siteScanner
+            .resolveSiteCount(paths: config.paths)
     }
     
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
-    private func resolvePaths(tld: String) {
+    private func resolvePaths() {
         isBusy = true
         
-        sites = []
-        
-        for path in config.paths {
-            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
-            for entry in entries {
-                resolvePath(entry, forPath: path, tld: tld)
-            }
-        }
-        
-        sites = sites.sorted { $0.absolutePath < $1.absolutePath }
+        sites = Self.siteScanner
+            .resolveSitesFrom(paths: config.paths)
+            .sorted { $0.absolutePath < $1.absolutePath }
         
         isBusy = false
-    }
-    
-    /**
-     Determines whether the site can be resolved as a symbolic link or as a directory.
-     Regular files are ignored. Returns true if the path can be parsed.
-     */
-    private func resolveSite(_ entry: String, forPath path: String) -> Bool {
-        let siteDir = path + "/" + entry
-
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-        
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-        
-        if type == FileAttributeType.typeSymbolicLink || type == FileAttributeType.typeDirectory {
-            return true
-        }
-        
-        return false
-    }
-    
-    /**
-     Determines whether the site can be resolved as a symbolic link or as a directory.
-     Regular files are ignored, and the site is added to Valet's list of sites.
-     */
-    private func resolvePath(_ entry: String, forPath path: String, tld: String) {
-        let siteDir = path + "/" + entry
-        
-        // See if the file is a symlink, if so, resolve it
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-        
-        // We can also determine whether the thing at the path is a directory, too
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-        
-        // We should also check that we can interpret the path correctly
-        if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
-            Log.warn("Could not parse the site: \(siteDir), skipping!")
-            return
-        }
-        
-        if type == FileAttributeType.typeSymbolicLink {
-            sites.append(ValetSite(aliasPath: siteDir, tld: tld))
-        } else if type == FileAttributeType.typeDirectory {
-            sites.append(ValetSite(absolutePath: siteDir, tld: tld))
-        }
     }
     
     struct Configuration: Decodable {

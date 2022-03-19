@@ -60,16 +60,25 @@ class ValetSite {
         case valetphprc = "valetphprc"
     }
     
-    init(name: String, tld: String, absolutePath: String, aliasPath: String? = nil) {
+    init(
+        name: String,
+        tld: String,
+        absolutePath: String,
+        aliasPath: String? = nil,
+        makeDeterminations: Bool = true
+    ) {
         self.name = name
         self.tld = tld
         self.absolutePath = absolutePath
         self.aliasPath = aliasPath
+        self.secured = false
         
-        determineSecured()
-        determineComposerPhpVersion()
-        determineDriver()
-        determineIsolated()
+        if makeDeterminations {
+            determineSecured()
+            determineComposerPhpVersion()
+            determineDriver()
+            determineIsolated()
+        }
     }
     
     convenience init(absolutePath: String, tld: String) {
