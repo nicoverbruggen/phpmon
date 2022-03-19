@@ -24,6 +24,13 @@ extension ValetSite {
         self.secured = secure
         self.composerPhp = constraint
         
+        self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
+            .map { string in
+                return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
+                    .count > 0
+            }.contains(true)
+        
         self.driver = driver
         self.driverDeterminedByComposer = true
         if linked {
