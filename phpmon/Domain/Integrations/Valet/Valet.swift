@@ -98,6 +98,8 @@ class Valet {
      We don't want to do duplicate or parallel work!
      */
     public func reloadSites() {
+        loadConfiguration()
+        
         if (isBusy) {
             return
         }
@@ -154,6 +156,11 @@ class Valet {
         sites = Self.siteScanner
             .resolveSitesFrom(paths: config.paths)
             .sorted { $0.absolutePath < $1.absolutePath }
+        
+        if let defaultPath = Valet.shared.config.defaultSite,
+            let site = ValetSiteScanner().resolveSite(path: defaultPath) {
+            sites.insert(site, at: 0)
+        }
         
         isBusy = false
     }

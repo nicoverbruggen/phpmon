@@ -13,6 +13,8 @@ protocol SiteScanner
     func resolveSiteCount(paths: [String]) -> Int
     
     func resolveSitesFrom(paths: [String]) -> [ValetSite]
+    
+    func resolveSite(path: String) -> ValetSite?
 }
 
 class FakeSiteScanner: SiteScanner
@@ -41,6 +43,10 @@ class FakeSiteScanner: SiteScanner
     func resolveSitesFrom(paths: [String]) -> [ValetSite] {
         return fakes
     }
+    
+    func resolveSite(path: String) -> ValetSite? {
+        return nil
+    }
 }
 
 class ValetSiteScanner: SiteScanner
@@ -67,13 +73,42 @@ class ValetSiteScanner: SiteScanner
                 .contentsOfDirectory(atPath: path)
             
             return entries.forEach {
-                if let site = self.getSite($0, forPath: path, tld: Valet.shared.config.tld) {
+                if let site = self.resolveSite(path: "\($0)/\(path))") {
                     sites.append(site)
                 }
             }
         }
         
         return sites
+    }
+    
+    /**
+     Determines whether the site can be resolved as a symbolic link or as a directory.
+     Regular files are ignored, and the site is added to Valet's list of sites.
+     */
+    func resolveSite(path: String) -> ValetSite? {
+        // Get the TLD from the global Valet object
+        let tld = Valet.shared.config.tld
+        
+        // See if the file is a symlink, if so, resolve it
+        let attrs = try! FileManager.default.attributesOfItem(atPath: path)
+        
+        // We can also determine whether the thing at the path is a directory, too
+        let type = attrs[FileAttributeKey.type] as! FileAttributeType
+        
+        // We should also check that we can interpret the path correctly
+        if URL(fileURLWithPath: path).lastPathComponent == "" {
+            Log.warn("Could not parse the site: \(path), skipping!")
+            return nil
+        }
+        
+        if type == FileAttributeType.typeSymbolicLink {
+            return ValetSite(aliasPath: path, tld: tld)
+        } else if type == FileAttributeType.typeDirectory {
+            return ValetSite(absolutePath: path, tld: tld)
+        }
+        
+        return nil
     }
     
     /**
@@ -92,33 +127,5 @@ class ValetSiteScanner: SiteScanner
         }
         
         return false
-    }
-    
-    /**
-     Determines whether the site can be resolved as a symbolic link or as a directory.
-     Regular files are ignored, and the site is added to Valet's list of sites.
-     */
-    private func getSite(_ entry: String, forPath path: String, tld: String) -> ValetSite? {
-        let siteDir = path + "/" + entry
-        
-        // See if the file is a symlink, if so, resolve it
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-        
-        // We can also determine whether the thing at the path is a directory, too
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-        
-        // We should also check that we can interpret the path correctly
-        if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
-            Log.warn("Could not parse the site: \(siteDir), skipping!")
-            return nil
-        }
-        
-        if type == FileAttributeType.typeSymbolicLink {
-            return ValetSite(aliasPath: siteDir, tld: tld)
-        } else if type == FileAttributeType.typeDirectory {
-            return ValetSite(absolutePath: siteDir, tld: tld)
-        }
-        
-        return nil
     }
 }

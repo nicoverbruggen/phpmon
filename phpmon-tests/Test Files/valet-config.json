@@ -4,5 +4,6 @@
         "/Users/username/.config/valet/Sites",
         "/Users/username/Sites"
     ],
-    "loopback": "127.0.0.1"
+    "loopback": "127.0.0.1",
+    "default": "/Users/username/default-site"
 }

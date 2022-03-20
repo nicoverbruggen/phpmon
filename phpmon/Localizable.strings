@@ -67,7 +67,11 @@
 "site_list.title" = "Domains";
 "site_list.subtitle" = "Linked & Parked";
 
-"site_list.alerts_status_not_changed.title" = "SSL Status Not Changed";
+"site_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
+"site_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
+"site_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
+
+"site_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
 "site_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
 
 "site_list.alerts_status_changed.title" = "SSL Status Changed";

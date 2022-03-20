@@ -78,8 +78,21 @@ extension SiteListVC {
     }
     
     @objc func isolateSite(sender: PhpMenuItem) {
-        self.performAction(command: "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) isolate php@\(sender.version) && exit;") {
+        let command = "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) isolate php@\(sender.version) && exit;"
+        
+        self.performAction(command: command) {
             self.selectedSite!.determineIsolated()
+            
+            if self.selectedSite!.isolatedPhpVersion == nil {
+                BetterAlert()
+                    .withInformation(
+                        title: "site_list.alerts_isolation_failed.title".localized,
+                        subtitle: "site_list.alerts_isolation_failed.subtitle".localized,
+                        description: "site_list.alerts_isolation_failed.desc".localized(command)
+                    )
+                    .withPrimary(text: "OK")
+                    .show()
+            }
         }
     }
     
