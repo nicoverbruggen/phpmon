@@ -73,7 +73,7 @@ class ValetSiteScanner: SiteScanner
                 .contentsOfDirectory(atPath: path)
             
             return entries.forEach {
-                if let site = self.resolveSite(path: "\(path)/\($0))") {
+                if let site = self.resolveSite(path: "\(path)/\($0)") {
                     sites.append(site)
                 }
             }
