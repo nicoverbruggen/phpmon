@@ -73,7 +73,7 @@ class ValetSiteScanner: SiteScanner
                 .contentsOfDirectory(atPath: path)
             
             return entries.forEach {
-                if let site = self.resolveSite(path: "\($0)/\(path))") {
+                if let site = self.resolveSite(path: "\(path)/\($0))") {
                     sites.append(site)
                 }
             }
@@ -91,7 +91,10 @@ class ValetSiteScanner: SiteScanner
         let tld = Valet.shared.config.tld
         
         // See if the file is a symlink, if so, resolve it
-        let attrs = try! FileManager.default.attributesOfItem(atPath: path)
+        guard let attrs = try? FileManager.default.attributesOfItem(atPath: path) else {
+            Log.warn("Could not parse the site: \(path), skipping!")
+            return nil
+        }
         
         // We can also determine whether the thing at the path is a directory, too
         let type = attrs[FileAttributeKey.type] as! FileAttributeType
