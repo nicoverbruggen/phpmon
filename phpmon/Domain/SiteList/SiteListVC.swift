@@ -162,7 +162,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             case "Kind":
                 sorted = self.sites.sorted { ($0.aliasPath == nil) && !($1.aliasPath == nil) }; break
             case "Type":
-                sorted = self.sites.sorted { $0.driver ?? "QQQ" < $1.driver ?? "QQQ" }; break
+                sorted = self.sites.sorted { $0.driver ?? "ZZZ" < $1.driver ?? "ZZZ" }; break
             default: break;
         }
         
