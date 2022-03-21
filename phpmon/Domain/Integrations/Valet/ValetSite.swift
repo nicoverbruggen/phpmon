@@ -53,6 +53,12 @@ class ValetSite {
     /// How the PHP version was determined.
     var composerPhpSource: VersionSource = .unknown
     
+    /// Which version of PHP is actually used to serve this site.
+    var servingPhpVersion: String {
+        return self.isolatedPhpVersion?.versionNumber.homebrewVersion
+            ?? PhpEnv.phpInstall.version.short
+    }
+    
     enum VersionSource: String {
         case unknown = "unknown"
         case require = "require"

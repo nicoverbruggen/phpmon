@@ -11,6 +11,8 @@ import AppKit
 
 class SiteListTLSCell: NSTableCellView, SiteListCellProtocol
 {
+    static let reusableName = "siteListTLSCell"
+    
     @IBOutlet weak var imageViewLock: NSImageView!
     
     func populateCell(with site: ValetSite) {

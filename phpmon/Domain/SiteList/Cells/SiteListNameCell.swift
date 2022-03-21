@@ -11,6 +11,8 @@ import AppKit
 
 class SiteListNameCell: NSTableCellView, SiteListCellProtocol
 {
+    static let reusableName = "siteListNameCell"
+    
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
     

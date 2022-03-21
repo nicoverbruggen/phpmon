@@ -26,6 +26,9 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         return App.shared.detectedApplications
     }
     
+    /// The last sort descriptor used.
+    var sortDescriptor: NSSortDescriptor? = nil
+    
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
     
@@ -144,6 +147,28 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         }
     }
     
+    func applySortDescriptor(_ descriptor: NSSortDescriptor) {
+        sortDescriptor = descriptor
+        
+        var sorted = self.sites
+        
+        switch descriptor.key {
+            case "Secure":
+                sorted = self.sites.sorted { $0.secured && !$1.secured }; break
+            case "Domain":
+                sorted = self.sites.sorted { $0.absolutePath < $1.absolutePath }; break
+            case "PHP":
+                sorted = self.sites.sorted { $0.servingPhpVersion < $1.servingPhpVersion }; break
+            case "Kind":
+                sorted = self.sites.sorted { ($0.aliasPath == nil) && !($1.aliasPath == nil) }; break
+            case "Type":
+                sorted = self.sites.sorted { $0.driver ?? "QQQ" < $1.driver ?? "QQQ" }; break
+            default: break;
+        }
+        
+        self.sites = descriptor.ascending ? sorted.reversed() : sorted
+    }
+    
     func addedNewSite(name: String, secure: Bool) {
         waitAndExecute {
             Valet.shared.reloadSites()
@@ -172,21 +197,28 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         return sites.count
     }
     
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
+        guard let sortDescriptor = tableView.sortDescriptors.first else { return }
+        // Kinda scuffed way of applying sort descriptors here, but it works.
+        Log.info("Applying sort descriptor for column: \(sortDescriptor.key ?? "Unknown")")
+        applySortDescriptor(sortDescriptor)
+        searchedFor(text: lastSearchedFor)
+    }
     
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let mapping: [String: String] = [
-            "TLS": "siteListTLSCell",
-            "DOMAIN": "siteListNameCell",
-            "ENVIRONMENT": "siteListPhpCell",
-            "KIND": "siteListKindCell",
-            "TYPE": "siteListTypeCell",
+            "TLS": SiteListTLSCell.reusableName,
+            "DOMAIN": SiteListNameCell.reusableName,
+            "ENVIRONMENT": SiteListPhpCell.reusableName,
+            "KIND": SiteListKindCell.reusableName,
+            "TYPE": SiteListTypeCell.reusableName,
         ]
         
         let columnName = tableColumn!.identifier.rawValue
+        let identifier = NSUserInterfaceItemIdentifier(rawValue: mapping[columnName]!)
         
-        guard let userCell = tableView.makeView(
-            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: mapping[columnName]!), owner: self
-        ) as? SiteListCellProtocol else { return nil }
+        guard let userCell = tableView.makeView(withIdentifier: identifier, owner: self)
+            as? SiteListCellProtocol else { return nil }
         
         userCell.populateCell(with: sites[row])
         
@@ -215,9 +247,14 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         if searchString.isEmpty {
             sites = Valet.shared.sites
             
+            if let sortDescriptor = sortDescriptor {
+                self.applySortDescriptor(sortDescriptor)
+            }
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+            
             return
         }
         
@@ -230,6 +267,10 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
                 return site.name.lowercased().contains(searchString)
             }.contains(false)
         })
+        
+        if let sortDescriptor = sortDescriptor {
+            self.applySortDescriptor(sortDescriptor)
+        }
         
         DispatchQueue.main.async {
             self.tableView.reloadData()

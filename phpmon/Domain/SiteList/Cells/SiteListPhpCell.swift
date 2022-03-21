@@ -11,6 +11,8 @@ import AppKit
 
 class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
 {
+    static let reusableName = "siteListPhpCell"
+    
     var site: ValetSite? = nil
     
     @IBOutlet weak var buttonPhpVersion: NSButton!
@@ -19,8 +21,7 @@ class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
     func populateCell(with site: ValetSite) {
         self.site = site
         
-        let versionInUse = site.isolatedPhpVersion?.versionNumber.homebrewVersion ?? PhpEnv.phpInstall.version.short
-        buttonPhpVersion.title = " PHP \(versionInUse)"
+        buttonPhpVersion.title = " PHP \(site.servingPhpVersion)"
         
         if site.isolatedPhpVersion != nil {
             imageViewPhpVersionOK.isHidden = false

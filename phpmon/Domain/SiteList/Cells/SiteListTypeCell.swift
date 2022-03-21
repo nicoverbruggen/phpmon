@@ -11,6 +11,8 @@ import AppKit
 
 class SiteListTypeCell: NSTableCellView, SiteListCellProtocol
 {
+    static let reusableName = "siteListTypeCell"
+    
     @IBOutlet weak var labelDriver: NSTextField!
     @IBOutlet weak var labelPhpVersion: NSTextField!
     
