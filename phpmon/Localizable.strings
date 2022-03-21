@@ -25,8 +25,12 @@
 "mi_manage_services" = "Manage Services";
 "mi_restart_all_services" = "Restart All Services";
 "mi_stop_all_services" = "Stop All Services";
+
 "mi_fix_my_valet" = "Fix My Valet...";
+"mi_fix_my_valet_tooltip" = "Something wrong with your Valet installation? Try PHP Monitor’s automatic fixes that’ll get you back up and running in no time!";
 "mi_fix_brew_permissions" = "Restore Homebrew Permissions...";
+"mi_fix_brew_permissions_tooltip" = "Having permission issues when running `brew upgrade`? PHP Monitor to the rescue!";
+
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
