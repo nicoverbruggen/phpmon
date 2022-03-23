@@ -76,9 +76,6 @@ extension MainMenu {
             Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
         }
         
-        Paths.shared.detectBinaryPaths()
-        
-        Valet.shared.loadConfiguration()
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
         

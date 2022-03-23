@@ -166,6 +166,23 @@ class Startup {
             descriptionText: "startup.errors.services_json_error.desc".localized
         ),
         // =================================================================================
+        // Determine that the Valet configuration JSON file is valid.
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                // Detect additional binaries (e.g. Composer)
+                Paths.shared.detectBinaryPaths()
+                // Load the configuration file (config.json)
+                Valet.shared.loadConfiguration()
+                // This check fails when the config is nil
+                return Valet.shared.config == nil
+            },
+            name: "`config.json` was valid",
+            titleText: "startup.errors.valet_json_invalid.title".localized,
+            subtitleText: "startup.errors.valet_json_invalid.subtitle".localized,
+            descriptionText: "startup.errors.valet_json_invalid.desc".localized
+        ),
+        // =================================================================================
         // Determine the Valet version and ensure it isn't unknown.
         // =================================================================================
         EnvironmentCheck(

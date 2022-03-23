@@ -60,10 +60,12 @@ class Valet {
     
     /**
      We don't want to load the initial config.json file as soon as the class is initialised.
+     
      Instead, we'll defer the loading of the configuration file once the initial app checks
-     have passed: if the user does not have Valet installed, we'll crash the app because we
-     force unwrap the file. Currently, this does also mean that if the JSON is invalid or
-     incompatible with the `Decodable` `Valet.Configuration` class, that the app will crash.
+     have passed: otherwise the file might not exist, leading to a crash.
+     
+     Since version 5.2, it is no longer possible for an invalid file to crash the app.
+     If the JSON is invalid when the app launches, an alert will be presented, however.
      */
     public func loadConfiguration() {
         let file = FileManager.default.homeDirectoryForCurrentUser
@@ -85,7 +87,7 @@ class Valet {
      (This is done to keep the startup speed as fast as possible.)
      */
     public func startPreloadingSites() {
-        let maximumPreload = 30
+        let maximumPreload = 50
         let foundSites = self.countPaths()
         if foundSites <= maximumPreload {
             // Preload the sites and their drivers
@@ -98,7 +100,7 @@ class Valet {
     
     /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
-     We don't want to do duplicate or parallel work!
+     (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() {
         loadConfiguration()
@@ -111,20 +113,33 @@ class Valet {
     }
     
     /**
+     Depending on the version of Valet that is active, the feature set of PHP Monitor will change.
+     
+     In version 6.0, support for Valet 2.x will be dropped, but until then features are evaluated by using the helper
+     `enabled(feature)`, which contains information about the feature set of the version of Valet that is currently
+     in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
+     */
+    public func evaluateFeatureSupport() -> Void {
+        let isOlderThanVersionThree = version.versionCompare("3.0") == .orderedAscending
+        
+        if isOlderThanVersionThree {
+            self.features.append(.supportForPhp56)
+        } else {
+            Log.info("This version of Valet supports isolation.")
+            self.features.append(.isolatedSites)
+        }
+    }
+    
+    /**
      Checks if the version of Valet is more recent than the minimum version required for PHP Monitor to function.
      Should this procedure fail, the user will get an alert notifying them that the version of Valet they have
      installed is not recent enough.
      */
     public func validateVersion() -> Void {
-        if version.versionCompare("3.0") == .orderedAscending {
-            // < 3.0: This version still supports PHP 5.6
-            self.features.append(.supportForPhp56)
-        } else {
-            // >= 3.0: This version introduces isolation but drops PHP 5.6 support
-            Log.info("This version of Valet supports isolation.")
-            self.features.append(.isolatedSites)
-        }
+        // 1. Evaluate feature support
+        Valet.shared.evaluateFeatureSupport()
         
+        // 2. Notify user if the version is too old
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
             Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")

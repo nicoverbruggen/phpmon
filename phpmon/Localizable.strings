@@ -306,9 +306,10 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
 "startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
 
-/// Valet configuration file missing [currently not enabled]
-"startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
-"startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
+/// Valet configuration file missing or broken
+"startup.errors.valet_json_invalid.title" = "Laravel Valet configuration file invalid or missing";
+"startup.errors.valet_json_invalid.subtitle" = "PHP Monitor needs to be able to read the configuration file. It appears the file is malformed or missing. Please check that it exists and is formatted correctly.";
+"startup.errors.valet_json_invalid.desc" = "You can find the file at `~/.config/valet/config.json`. If Laravel Valet cannot parse the configuration file, running any `valet` command will usually automatically fix the JSON file. Try running `valet --version` to automatically fix the file.";
 
 /// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "Your Valet version could not be read";

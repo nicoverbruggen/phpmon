@@ -34,7 +34,7 @@ struct Constants {
         // STABLE RELEASES
         // ====================
         // Versions of PHP that are stable and are supported.
-        "5.6",
+        "5.6", // only supported when Valet 2.x is active
         "7.0",
         "7.1",
         "7.2",
