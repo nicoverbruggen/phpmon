@@ -1,5 +1,4 @@
-> If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project.
-> You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
+> If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
 
 <h1 align="center"><b>PHP Monitor</b> (phpmon)</h1>
 
@@ -7,11 +6,11 @@
     <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
 </p>
 
-**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this</u>.
+**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
 <img src="./docs/screenshot.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
 
-<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
+<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
@@ -25,8 +24,8 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 
 * macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
-* The brew formula `php` has to be installed (which version is detected)
-* Laravel Valet 2.16.2 or higher (older versions might be compatible but are not supported)
+* Homebrew `php` formula is installed
+* Laravel Valet 3.0 or newer (Valet 2.16 also still supported until v6)
 
 _You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`._
 
@@ -79,7 +78,7 @@ If you're still having issues, here's a few common questions & answers, as well 
 <summary><strong>Which versions of PHP are supported?</strong></summary>
 
 <ul>
-<li>PHP 5.6</li>
+<li>PHP 5.6 (only if you are running Valet 2)</li>
 <li>PHP 7.0</li>
 <li>PHP 7.1</li>
 <li>PHP 7.2</li>
@@ -90,7 +89,7 @@ If you're still having issues, here's a few common questions & answers, as well 
 <li>PHP 8.2 (experimental)</li>
 </ul>
 
-For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Constants.swift#L16) file to see which versions are supported.
+For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
 
 </details>
 
@@ -202,6 +201,12 @@ You should see an error or a warning here in the output.
 
 Usually this is a duplicate extension declaration causing issues, or an extension that couldn't be loaded. You'll have to solve that issue yourself (usually by removing the offending extension or reinstalling).
 
+</details>
+
+<details>
+<summary><strong>The option to isolate a site is disabled! What's going on?</strong></summary>
+
+Make sure you have at least **Valet 3.0** installed, since support for isolation was added in this version of Valet. (Please note that this version of Valet drops support for PHP 5.6.)
 </details>
 	
 <details>
