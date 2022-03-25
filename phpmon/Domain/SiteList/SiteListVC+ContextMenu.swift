@@ -25,6 +25,8 @@ extension SiteListVC {
         
         if Valet.enabled(feature: .isolatedSites) {
             addIsolate(to: menu, with: site)
+        } else {
+            addDisabledIsolation(to: menu)
         }
         
         addUnlink(to: menu, with: site)
@@ -78,6 +80,11 @@ extension SiteListVC {
             )
             menu.addItem(NSMenuItem.separator())
         }
+    }
+    
+    private func addDisabledIsolation(to menu: NSMenu) {
+        menu.addItem(withTitle: "site_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
+        menu.addItem(NSMenuItem.separator())
     }
     
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {

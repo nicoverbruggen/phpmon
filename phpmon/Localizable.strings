@@ -113,6 +113,7 @@
 
 "site_list.isolate" = "Isolate Domain";
 "site_list.remove_isolation" = "Remove Isolation";
+"site_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
 "site_list.unlink" = "Unlink Directory";
 "site_list.secure" = "Secure Domain";
