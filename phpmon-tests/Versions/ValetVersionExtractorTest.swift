@@ -12,7 +12,7 @@ class ValetVersionExtractorTest: XCTestCase {
 
     func testDetermineValetVersion() {
         let version = valet("--version", sudo: false)
-        XCTAssert(version.contains("Laravel Valet"))
+        XCTAssert(version.contains("Laravel Valet 2") || version.contains("Laravel Valet 3"))
     }
     
 }
