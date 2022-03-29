@@ -96,6 +96,27 @@ For more details, consult the [constants file](https://github.com/nicoverbruggen
 </details>
 
 <details>
+<summary><strong>I have PHP Monitor installed, and it works. But... I want to upgrade my PHP versions, what's the best way to do this?</strong></summary>
+
+It's easy to make a mistake here and and up with an unlinked version of PHP or have versions missing from PHP Monitor. Here's what I usually do:
+
+* Open PHP Monitor and select **First Aid & Services** > **Restore Homebrew Permissions**.
+* Close PHP Monitor after the pop-up tells you the permissions were restored.
+* Run `brew update-reset`
+* Run `brew upgrade`
+
+If after this, any PHP versions are missing in PHP Monitor, please run the following for the versions that are missing:
+
+* Run `brew uninstall php@x.x` (where `x.x` is the version)
+* Run `brew cleanup`
+* Run `brew install php@x.x` (where `x.x` is the version)
+
+You may still need to run `brew link php` after upgrading, too.
+
+That's it. Now start up PHP Monitor again and you should be golden!
+</details>
+
+<details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
 
 You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
