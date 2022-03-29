@@ -71,6 +71,7 @@ class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
                 mapIndex += 1
             }
             
+            // Site is not isolated, show options to switch global PHP version
             alert.beginSheetModal(for: App.shared.siteListWindowController!.window!) { response in
                 if response.rawValue > NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
                     if map.keys.contains(response.rawValue) {
@@ -81,9 +82,8 @@ class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
                 }
             }
         } else {
-            alert.beginSheetModal(for: App.shared.siteListWindowController!.window!) { response in
-                //
-            }
+            // Site is isolated, do not show any options to switch
+            alert.beginSheetModal(for: App.shared.siteListWindowController!.window!)
         }
     }
     
