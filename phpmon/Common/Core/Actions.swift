@@ -41,8 +41,8 @@ class Actions {
             "\(Paths.brew) services stop dnsmasq",
         ]
         var cellarCommands = [
-            "chown -R \(Paths.whoami):staff \(Paths.cellarPath)/nginx",
-            "chown -R \(Paths.whoami):staff \(Paths.cellarPath)/dnsmasq"
+            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/nginx",
+            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/dnsmasq"
         ]
         
         PhpEnv.shared.availablePhpVersions.forEach { version in
@@ -50,7 +50,7 @@ class Actions {
                 ? "php"
                 : "php@\(version)"
             servicesCommands.append("\(Paths.brew) services stop \(formula)")
-            cellarCommands.append("chown -R \(Paths.whoami):staff \(Paths.cellarPath)/\(formula)")
+            cellarCommands.append("chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(formula)")
         }
         
         let script =
