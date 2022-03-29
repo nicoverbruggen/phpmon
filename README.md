@@ -10,13 +10,15 @@
 
 <img src="./docs/screenshot.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
 
-<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
+<small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
 <img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
+
+You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP link issues.
 
 ## 🖥 System requirements
 
@@ -25,9 +27,9 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 * macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
-* Laravel Valet 3.0 or newer (Valet 2.16 also still supported until v6)
+* Laravel Valet 2.16 or newer (supports Valet 3)
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`._
+_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
 
 ## 🚀 How to install
 
@@ -371,13 +373,14 @@ Donations really help with the Apple Developer Program cost, and keep me motivat
 
 ## 😎 Acknowledgements
 
-While I did make this application during my own free time, I have been lucky enough to do various experiments during work hours at [DIVE](https://dive.be). I'd also like to shout out the following folks:
+While I did make this application during my own free time, PHP Monitor started out from various learning experiments during work hours at my employer, DIVE. I'd also like to shout out the following folks:
 
 * My colleagues at [DIVE](https://dive.be)
 * The [Homebrew](https://brew.sh/) team & [Valet maintainers](https://github.com/laravel/valet/graphs/contributors)
 * Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot) when PHP Monitor was still very much a small app with a handful of stars or so
+* My [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen) and those who have donated
+* Everyone who has left feedback and reported bugs (appreciate it!)
 * Everyone in the Laravel community who shared the app (thanks!)
-* Everyone who left feedback via issues & who donated to keep the project up and running
 
 Thank you very much for your contributions, kind words and support.
 
@@ -393,7 +396,9 @@ In order to save power, this only happens once every 60 seconds.
 
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
-The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
+The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be a bit faster than Valet’s switcher.
+
+If you're using Valet 3, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
 
 ### Config change detection
 
