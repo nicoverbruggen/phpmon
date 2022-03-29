@@ -32,13 +32,13 @@ extension MainMenu {
             return
         }
         
-        asyncExecution {
-            Actions.fixMyValet()
-        } success: {
-            if previousVersion == PhpEnv.brewPhpVersion {
-                self.presentAlertForSameVersion()
-            } else {
-                self.presentAlertForDifferentVersion(version: previousVersion)
+        Actions.fixMyValet {
+            DispatchQueue.main.async {
+                if previousVersion == PhpEnv.brewPhpVersion {
+                    self.presentAlertForSameVersion()
+                } else {
+                    self.presentAlertForDifferentVersion(version: previousVersion)
+                }
             }
         }
     }

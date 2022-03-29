@@ -9,7 +9,6 @@
 import Foundation
 
 import Foundation
-import HotKey
 import Cocoa
 
 class HotkeyPreferenceView: NSView, XibLoadable {

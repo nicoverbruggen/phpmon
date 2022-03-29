@@ -23,6 +23,12 @@ extension SiteListVC {
         addDetectedApps(to: menu)
         addSeparator(to: menu)
         
+        if Valet.enabled(feature: .isolatedSites) {
+            addIsolate(to: menu, with: site)
+        } else {
+            addDisabledIsolation(to: menu)
+        }
+        
         addUnlink(to: menu, with: site)
         addToggleSecure(to: menu, with: site)
         
@@ -70,6 +76,37 @@ extension SiteListVC {
             menu.addItem(
                 withTitle: "site_list.unlink".localized,
                 action: #selector(self.unlinkSite),
+                keyEquivalent: ""
+            )
+            menu.addItem(NSMenuItem.separator())
+        }
+    }
+    
+    private func addDisabledIsolation(to menu: NSMenu) {
+        menu.addItem(withTitle: "site_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
+        menu.addItem(NSMenuItem.separator())
+    }
+    
+    private func addIsolate(to menu: NSMenu, with site: ValetSite) {
+        if site.isolatedPhpVersion == nil {
+            // ISOLATION POSSIBLE
+            let isolationMenuItem = NSMenuItem(title:"site_list.isolate".localized, action: nil, keyEquivalent: "")
+            let submenu = NSMenu()
+            submenu.addItem(withTitle: "Choose a PHP version", action: nil, keyEquivalent: "")
+            for version in PhpEnv.shared.availablePhpVersions.reversed() {
+                let item = PhpMenuItem(title: "Always use PHP \(version)", action: #selector(self.isolateSite), keyEquivalent: "")
+                item.version = version
+                submenu.addItem(item)
+            }
+            menu.setSubmenu(submenu, for: isolationMenuItem)
+            
+            menu.addItem(isolationMenuItem)
+            menu.addItem(NSMenuItem.separator())
+        } else {
+            // REMOVE ISOLATION POSSIBLE
+            menu.addItem(
+                withTitle: "site_list.remove_isolation".localized,
+                action: #selector(self.removeIsolatedSite),
                 keyEquivalent: ""
             )
             menu.addItem(NSMenuItem.separator())

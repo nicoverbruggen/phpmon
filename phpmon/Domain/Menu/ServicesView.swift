@@ -44,21 +44,17 @@ class ServicesView: NSView, XibLoadable {
         )
         return item
     }
-    
-    override func viewWillDraw() {
-        super.viewWillDraw()
-        Task { await self.loadData() }
-    }
 
     @objc func updateInformation() {
-        Task { await self.loadData() }
+        self.loadData()
     }
     
-    func loadData() async {
+    func loadData() {
         self.applyAllInfoFieldsFromCachedValue()
-        let services = await HomebrewService.loadAll()
-        ServicesView.services = Dictionary(uniqueKeysWithValues: services.map{ ($0.name, $0) })
-        self.applyAllInfoFieldsFromCachedValue()
+        HomebrewService.loadAll { services in
+            ServicesView.services = Dictionary(uniqueKeysWithValues: services.map{ ($0.name, $0) })
+            self.applyAllInfoFieldsFromCachedValue()
+        }
     }
     
     func applyAllInfoFieldsFromCachedValue() {

@@ -20,16 +20,19 @@ struct HomebrewService: Decodable, Equatable {
     let error_log_path: String?
     
     public static func loadAll(
-        filter: [String] = [PhpEnv.phpInstall.formula, "nginx", "dnsmasq"]
-    ) async -> [HomebrewService] {
-        return try! JSONDecoder().decode(
-            [HomebrewService].self,
-            from: Shell.pipe(
-                "sudo \(Paths.brew) services info --all --json",
-                requiresPath: true
-            ).data(using: .utf8)!
-        ).filter({ service in
-            return filter.contains(service.name)
-        })
+        filter: [String] = [PhpEnv.phpInstall.formula, "nginx", "dnsmasq"],
+        completion: @escaping ([HomebrewService]) -> Void
+    ) {
+        DispatchQueue.global(qos: .background).async {
+            let data = Shell
+                .pipe("sudo \(Paths.brew) services info --all --json", requiresPath: true)
+                .data(using: .utf8)!
+            
+            let services = try! JSONDecoder()
+                .decode([HomebrewService].self, from: data)
+                .filter({ return filter.contains($0.name) })
+            
+            completion(services)
+        }
     }
 }

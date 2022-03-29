@@ -1,17 +1,12 @@
-> If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project.
-> You can also send me [feedback](https://twitter.com/nicoverbruggen) if the app came in handy.<br>**Thank you!** ⭐️
+> If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
 
-<h1 align="center"><b>PHP Monitor</b> (phpmon)</h1>
+<p align="center"><img src="./docs/logo.png" alt="PHP Monitor Logo" width="500px" /></p>
 
-<p align="center">
-    <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
-</p>
+**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
-**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this</u>.
+<img src="./docs/screenshot.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
 
-<img src="./docs/screenshot50.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
-
-<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can also add new domains as links, manage various services, and perform First Aid to fix all kinds of common PHP link issues.</i></small>
+<small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
@@ -19,16 +14,19 @@ It's super convenient to switch between different versions of PHP. You'll even g
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
+You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP link issues.
+
 ## 🖥 System requirements
 
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
+* Your user account can administer your computer (required for some functionality, e.g. certificate generation)
 * macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
-* The brew formula `php` has to be installed (which version is detected)
-* Laravel Valet 2.16.2 or higher (older versions might be compatible but are not supported)
+* Homebrew `php` formula is installed
+* Laravel Valet 2.16 or newer (supports Valet 3)
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`._
+_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
 
 ## 🚀 How to install
 
@@ -79,7 +77,7 @@ If you're still having issues, here's a few common questions & answers, as well 
 <summary><strong>Which versions of PHP are supported?</strong></summary>
 
 <ul>
-<li>PHP 5.6</li>
+<li>PHP 5.6 (only if you are running Valet 2)</li>
 <li>PHP 7.0</li>
 <li>PHP 7.1</li>
 <li>PHP 7.2</li>
@@ -90,7 +88,7 @@ If you're still having issues, here's a few common questions & answers, as well 
 <li>PHP 8.2 (experimental)</li>
 </ul>
 
-For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Constants.swift#L16) file to see which versions are supported.
+For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
 
 </details>
 
@@ -152,6 +150,29 @@ Finally, run PHP Monitor. Since the app is notarized and signed with a developer
 </details>
 
 <details>
+<summary><strong>I have PHP Monitor installed, and it works. I want to upgrade my PHP installations to the latest version, what's the best way to do this?</strong></summary>
+
+It's easy to make a mistake here, and end up with an unlinked version of PHP or have versions missing from PHP Monitor.
+
+Here's what I usually do:
+
+* Open PHP Monitor and select **First Aid & Services** > **Restore Homebrew Permissions**.
+* Close PHP Monitor after the pop-up tells you the permissions were restored.
+* Run `brew update-reset`
+* Run `brew upgrade`
+
+If after this, any PHP versions are missing in PHP Monitor, please run the following for the versions that are missing:
+
+* Run `brew uninstall php@x.x` (where `x.x` is the version)
+* Run `brew cleanup` (if you get any permission issues you may need to manually clean up the folder)
+* Run `brew install php@x.x` (where `x.x` is the version)
+
+You may still need to run `brew link php` after upgrading, too.
+
+That's it. Now start up PHP Monitor again and you should be golden!
+</details>
+
+<details>
 <summary><strong>PHP Monitor tells me `php` is not installed...</strong></summary>
 
 Try installing again using `brew install php`. 
@@ -202,6 +223,12 @@ You should see an error or a warning here in the output.
 
 Usually this is a duplicate extension declaration causing issues, or an extension that couldn't be loaded. You'll have to solve that issue yourself (usually by removing the offending extension or reinstalling).
 
+</details>
+
+<details>
+<summary><strong>The option to isolate a site is disabled! What's going on?</strong></summary>
+
+Make sure you have at least **Valet 3.0** installed, since support for isolation was added in this version of Valet. (Please note that this version of Valet drops support for PHP 5.6.)
 </details>
 	
 <details>
@@ -366,13 +393,14 @@ Donations really help with the Apple Developer Program cost, and keep me motivat
 
 ## 😎 Acknowledgements
 
-While I did make this application during my own free time, I have been lucky enough to do various experiments during work hours at [DIVE](https://dive.be). I'd also like to shout out the following folks:
+While I did make this application during my own free time, PHP Monitor started out from various learning experiments during work hours at my employer, DIVE. I'd also like to shout out the following folks:
 
 * My colleagues at [DIVE](https://dive.be)
 * The [Homebrew](https://brew.sh/) team & [Valet maintainers](https://github.com/laravel/valet/graphs/contributors)
 * Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot) when PHP Monitor was still very much a small app with a handful of stars or so
+* My [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen) and those who have donated
+* Everyone who has left feedback and reported bugs (appreciate it!)
 * Everyone in the Laravel community who shared the app (thanks!)
-* Everyone who left feedback via issues & who donated to keep the project up and running
 
 Thank you very much for your contributions, kind words and support.
 
@@ -388,7 +416,9 @@ In order to save power, this only happens once every 60 seconds.
 
 This utility will detect which PHP versions you have installed via Homebrew, and then allows you to switch between them.
 
-The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be much faster than Valet’s switcher.
+The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be a bit faster than Valet’s switcher.
+
+If you're using Valet 3, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
 
 ### Config change detection
 

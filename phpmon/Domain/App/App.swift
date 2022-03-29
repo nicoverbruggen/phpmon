@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import HotKey
 
 class App {
     

@@ -63,7 +63,9 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
             return
         }
         
-        Shell.run("cd '\(path)' && \(Paths.valet) link '\(name)'", requiresPath: true)
+        // Adding `valet links` is a workaround for Valet malforming the config.json file
+        // TODO: I will have to investigate and report this behaviour if possible
+        Shell.run("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links", requiresPath: true)
         
         self.dismissView(outcome: .OK)
         

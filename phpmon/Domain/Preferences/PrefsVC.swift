@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import HotKey
 import Carbon
 
 class PrefsVC: NSViewController {

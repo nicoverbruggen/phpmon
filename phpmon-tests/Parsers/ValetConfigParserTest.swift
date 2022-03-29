@@ -32,6 +32,7 @@ class ValetConfigParserTest: XCTestCase {
             "/Users/username/.config/valet/Sites",
             "/Users/username/Sites"
         ])
+        XCTAssertEqual(config.defaultSite, "/Users/username/default-site")
         XCTAssertEqual(config.loopback, "127.0.0.1")
     }
     

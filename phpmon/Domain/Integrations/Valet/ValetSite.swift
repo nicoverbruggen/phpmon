@@ -11,10 +11,10 @@ import Foundation
 class ValetSite {
     
     /// Name of the site. Does not include the TLD.
-    var name: String!
+    var name: String
     
     /// The absolute path to the directory that is served.
-    var absolutePath: String!
+    var absolutePath: String
     
     /// The absolute path to the directory that is served,
     /// replacing the user's home folder with ~.
@@ -22,6 +22,12 @@ class ValetSite {
         return self.absolutePath
             .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
     }()
+    
+    /// The TLD used to locate this site.
+    var tld: String = "test"
+    
+    /// The PHP version that is being used to serve this site specifically (if not global).
+    var isolatedPhpVersion: PhpInstallation?
     
     /// Location of the alias. If set, this is a linked domain.
     var aliasPath: String?
@@ -47,6 +53,12 @@ class ValetSite {
     /// How the PHP version was determined.
     var composerPhpSource: VersionSource = .unknown
     
+    /// Which version of PHP is actually used to serve this site.
+    var servingPhpVersion: String {
+        return self.isolatedPhpVersion?.versionNumber.homebrewVersion
+            ?? PhpEnv.phpInstall.version.short
+    }
+    
     enum VersionSource: String {
         case unknown = "unknown"
         case require = "require"
@@ -54,34 +66,59 @@ class ValetSite {
         case valetphprc = "valetphprc"
     }
     
-    init() {}
+    init(
+        name: String,
+        tld: String,
+        absolutePath: String,
+        aliasPath: String? = nil,
+        makeDeterminations: Bool = true
+    ) {
+        self.name = name
+        self.tld = tld
+        self.absolutePath = absolutePath
+        self.aliasPath = aliasPath
+        self.secured = false
+        
+        if makeDeterminations {
+            determineSecured()
+            determineComposerPhpVersion()
+            determineDriver()
+            determineIsolated()
+        }
+    }
     
     convenience init(absolutePath: String, tld: String) {
-        self.init()
-        self.absolutePath = absolutePath
-        self.name = URL(fileURLWithPath: absolutePath).lastPathComponent
-        self.aliasPath = nil
-        determineSecured(tld)
-        determineComposerPhpVersion()
-        determineDriver()
+        let name = URL(fileURLWithPath: absolutePath).lastPathComponent
+        self.init(name: name, tld: tld, absolutePath: absolutePath)
     }
     
     convenience init(aliasPath: String, tld: String) {
-        self.init()
-        self.absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
-        self.name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        self.aliasPath = aliasPath
-        determineSecured(tld)
-        determineComposerPhpVersion()
-        determineDriver()
+        let name = URL(fileURLWithPath: aliasPath).lastPathComponent
+        let absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
+        self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
+    }
+    
+    /**
+     Determine whether a site is isolated.
+     */
+    public func determineIsolated() {
+        if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+            if (!PhpEnv.shared.cachedPhpInstallations.keys.contains(version)) {
+                Log.err("The PHP version \(version) is isolated for the site \(self.name) but that PHP version is unavailable.")
+                return
+            }
+            self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+        } else {
+            self.isolatedPhpVersion = nil
+        }
     }
     
     /**
      Checks if a certificate file can be found in the `valet/Certificates` directory.
      - Note: The file is not validated, only its presence is checked.
      */
-    public func determineSecured(_ tld: String) {
-        secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.name!).\(tld).key")
+    public func determineSecured() {
+        secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
     }
     
     /**
@@ -147,7 +184,7 @@ class ValetSite {
      as well as the requested PHP version. If no composer.json file is found, nothing happens.
      */
     private func determineComposerInformation() {
-        let path = "\(absolutePath!)/composer.json"
+        let path = "\(absolutePath)/composer.json"
         
         do {
             if Filesystem.fileExists(path) {
@@ -168,7 +205,7 @@ class ValetSite {
      Checks the contents of the .valetphprc file and determine the version, if possible.
      */
     private func determineValetPhpFileInfo() {
-        let path = "\(absolutePath!)/.valetphprc"
+        let path = "\(absolutePath)/.valetphprc"
         
         do {
             if Filesystem.fileExists(path) {
@@ -181,5 +218,17 @@ class ValetSite {
         } catch {
             Log.err("Something went wrong parsing the .valetphprc file")
         }
+    }
+    
+    // MARK: File Parsing
+    
+    public static func isolatedVersion(_ filePath: String) -> String? {
+        if Filesystem.fileExists(filePath) {
+            return NginxConfigParser
+                .init(filePath: filePath)
+                .isolatedVersion
+        }
+        
+        return nil
     }
 }

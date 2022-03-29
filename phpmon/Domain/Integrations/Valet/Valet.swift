@@ -10,6 +10,11 @@ import Foundation
 
 class Valet {
     
+    enum FeatureFlag {
+        case isolatedSites,
+             supportForPhp56
+    }
+    
     static let shared = Valet()
     
     /// The version of Valet that was detected.
@@ -24,6 +29,9 @@ class Valet {
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
     
+    /// Various feature flags. Enabled based on the installed Valet version.
+    var features: [FeatureFlag] = []
+    
     /// When initialising the Valet singleton assume no sites loaded. We will load the version later.
     init() {
         self.version = nil
@@ -31,21 +39,46 @@ class Valet {
     }
     
     /**
+     If marketing mode is enabled, show a list of sites that are used for promotional screenshots.
+     This can be done by swapping out the real Valet scanner with one that always returns a fixed
+     list of fake sites. You should not interact with these sites!
+     */
+    static var siteScanner: SiteScanner {
+        if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
+            return FakeSiteScanner()
+        }
+        
+        return ValetSiteScanner()
+    }
+    
+    /**
+     Check if a particular feature is enabled.
+     */
+    public static func enabled(feature: FeatureFlag) -> Bool {
+        return self.shared.features.contains(feature)
+    }
+    
+    /**
      We don't want to load the initial config.json file as soon as the class is initialised.
+     
      Instead, we'll defer the loading of the configuration file once the initial app checks
-     have passed: if the user does not have Valet installed, we'll crash the app because we
-     force unwrap the file. Currently, this does also mean that if the JSON is invalid or
-     incompatible with the `Decodable` `Valet.Configuration` class, that the app will crash.
+     have passed: otherwise the file might not exist, leading to a crash.
+     
+     Since version 5.2, it is no longer possible for an invalid file to crash the app.
+     If the JSON is invalid when the app launches, an alert will be presented, however.
      */
     public func loadConfiguration() {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
         
-        // TODO: (5.1) Fix loading of invalid JSON: do not crash the app
-        config = try! JSONDecoder().decode(
-            Valet.Configuration.self,
-            from: try! String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
-        )
+        do {
+            config = try JSONDecoder().decode(
+                Valet.Configuration.self,
+                from: try String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
+            )
+        } catch {
+            Log.err(error)
+        }
     }
     
     /**
@@ -54,7 +87,7 @@ class Valet {
      (This is done to keep the startup speed as fast as possible.)
      */
     public func startPreloadingSites() {
-        let maximumPreload = 30
+        let maximumPreload = 50
         let foundSites = self.countPaths()
         if foundSites <= maximumPreload {
             // Preload the sites and their drivers
@@ -67,14 +100,34 @@ class Valet {
     
     /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
-     We don't want to do duplicate or parallel work!
+     (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() {
+        loadConfiguration()
+        
         if (isBusy) {
             return
         }
         
-        resolvePaths(tld: config.tld)
+        resolvePaths()
+    }
+    
+    /**
+     Depending on the version of Valet that is active, the feature set of PHP Monitor will change.
+     
+     In version 6.0, support for Valet 2.x will be dropped, but until then features are evaluated by using the helper
+     `enabled(feature)`, which contains information about the feature set of the version of Valet that is currently
+     in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
+     */
+    public func evaluateFeatureSupport() -> Void {
+        let isOlderThanVersionThree = version.versionCompare("3.0") == .orderedAscending
+        
+        if isOlderThanVersionThree {
+            self.features.append(.supportForPhp56)
+        } else {
+            Log.info("This version of Valet supports isolation.")
+            self.features.append(.isolatedSites)
+        }
     }
     
     /**
@@ -83,6 +136,10 @@ class Valet {
      installed is not recent enough.
      */
     public func validateVersion() -> Void {
+        // 1. Evaluate feature support
+        Valet.shared.evaluateFeatureSupport()
+        
+        // 2. Notify user if the version is too old
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
             Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
@@ -104,80 +161,26 @@ class Valet {
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() -> Int {
-        var count = 0
-        for path in config.paths {
-            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
-            for entry in entries {
-                if resolveSite(entry, forPath: path) {
-                    count += 1
-                }
-            }
-        }
-        return count
+        return Self.siteScanner
+            .resolveSiteCount(paths: config.paths)
     }
     
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
-    private func resolvePaths(tld: String) {
+    private func resolvePaths() {
         isBusy = true
         
-        sites = []
+        sites = Self.siteScanner
+            .resolveSitesFrom(paths: config.paths)
+            .sorted { $0.absolutePath < $1.absolutePath }
         
-        for path in config.paths {
-            let entries = try! FileManager.default.contentsOfDirectory(atPath: path)
-            for entry in entries {
-                resolvePath(entry, forPath: path, tld: tld)
-            }
+        if let defaultPath = Valet.shared.config.defaultSite,
+            let site = ValetSiteScanner().resolveSite(path: defaultPath) {
+            sites.insert(site, at: 0)
         }
-        
-        sites = sites.sorted { $0.absolutePath < $1.absolutePath }
         
         isBusy = false
-    }
-    
-    /**
-     Determines whether the site can be resolved as a symbolic link or as a directory.
-     Regular files are ignored. Returns true if the path can be parsed.
-     */
-    private func resolveSite(_ entry: String, forPath path: String) -> Bool {
-        let siteDir = path + "/" + entry
-
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-        
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-        
-        if type == FileAttributeType.typeSymbolicLink || type == FileAttributeType.typeDirectory {
-            return true
-        }
-        
-        return false
-    }
-    
-    /**
-     Determines whether the site can be resolved as a symbolic link or as a directory.
-     Regular files are ignored, and the site is added to Valet's list of sites.
-     */
-    private func resolvePath(_ entry: String, forPath path: String, tld: String) {
-        let siteDir = path + "/" + entry
-        
-        // See if the file is a symlink, if so, resolve it
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-        
-        // We can also determine whether the thing at the path is a directory, too
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-        
-        // We should also check that we can interpret the path correctly
-        if URL(fileURLWithPath: siteDir).lastPathComponent == "" {
-            Log.warn("Could not parse the site: \(siteDir), skipping!")
-            return
-        }
-        
-        if type == FileAttributeType.typeSymbolicLink {
-            sites.append(ValetSite(aliasPath: siteDir, tld: tld))
-        } else if type == FileAttributeType.typeDirectory {
-            sites.append(ValetSite(absolutePath: siteDir, tld: tld))
-        }
     }
     
     struct Configuration: Decodable {

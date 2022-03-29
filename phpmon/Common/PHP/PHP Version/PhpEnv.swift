@@ -117,12 +117,22 @@ class PhpEnv {
     /**
      Extracts valid PHP versions from an array of strings.
      This array of strings is usually retrieved from `grep`.
+     
+     If `generateHelpers` is set to true, after detecting
+     all versions, helper scripts are generated as well.
      */
     public func extractPhpVersions(
         from versions: [String],
-        checkBinaries: Bool = true
+        checkBinaries: Bool = true,
+        generateHelpers: Bool = true
     ) -> [String] {
         var output : [String] = []
+        
+        var supported = Constants.SupportedPhpVersions
+        
+        if !Valet.enabled(feature: .supportForPhp56) {
+            supported.removeAll { $0 == "5.6" }
+        }
         
         versions.filter { (version) -> Bool in
             // Omit everything that doesn't start with php@
@@ -133,11 +143,15 @@ class PhpEnv {
             // Only append the version if it doesn't already exist (avoid dupes),
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
-                && Constants.SupportedPhpVersions.contains(version)
+                && supported.contains(version)
                 && (checkBinaries ? Filesystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true)
             {
                 output.append(version)
             }
+        }
+        
+        if generateHelpers {
+            output.forEach { PhpHelper.generate(for: $0) }
         }
         
         return output

@@ -25,8 +25,12 @@
 "mi_manage_services" = "Manage Services";
 "mi_restart_all_services" = "Restart All Services";
 "mi_stop_all_services" = "Stop All Services";
+
 "mi_fix_my_valet" = "Fix My Valet...";
+"mi_fix_my_valet_tooltip" = "Something wrong with your Valet installation? Try PHP Monitor’s automatic fixes that’ll get you back up and running in no time!";
 "mi_fix_brew_permissions" = "Restore Homebrew Permissions...";
+"mi_fix_brew_permissions_tooltip" = "Having permission issues when running `brew upgrade`? PHP Monitor to the rescue!";
+
 "mi_php_refresh" = "Refresh Information";
 
 "mi_configuration" = "PHP Configuration";
@@ -67,7 +71,11 @@
 "site_list.title" = "Domains";
 "site_list.subtitle" = "Linked & Parked";
 
-"site_list.alerts_status_not_changed.title" = "SSL Status Not Changed";
+"site_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
+"site_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
+"site_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
+
+"site_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
 "site_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
 
 "site_list.alerts_status_changed.title" = "SSL Status Changed";
@@ -103,6 +111,10 @@
 
 // SITE LIST ACTIONS
 
+"site_list.isolate" = "Isolate Domain";
+"site_list.remove_isolation" = "Remove Isolation";
+"site_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
+
 "site_list.unlink" = "Unlink Directory";
 "site_list.secure" = "Secure Domain";
 "site_list.unsecure" = "Unsecure Domain";
@@ -116,6 +128,12 @@
 
 "site_list.alert.invalid_folder_name" = "Invalid folder name";
 "site_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
+
+"site_list.columns.tls" = "TLS";
+"site_list.columns.domain" = "Domain";
+"site_list.columns.php" = "PHP";
+"site_list.columns.type" = "Type";
+"site_list.columns.kind" = "Kind";
 
 // DRIVERS
 
@@ -202,8 +220,9 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_success.info" = "Your global Composer dependencies have been successfully updated.";
 
 // Composer Version
+"alert.composer_php_isolated.desc" = "This site has been isolated, which means that Valet serves PHP %@ for this site specifically (the global version is %@).";
 "alert.composer_php_requirement.title" = "`%@` has the following PHP requirement: %@.";
-"alert.composer_php_requirement.type.unknown" = "The required PHP version was determined by an unknown factor.";
+"alert.composer_php_requirement.type.unknown" = "The required PHP version is a mystery.";
 "alert.composer_php_requirement.type.require" = "This required PHP version was determined by checking the `require` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.platform" = "This required PHP version was determined by checking the `platform` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.valetphprc" = "This required PHP version was determined by checking the .valetphprc file in your project's directory.";
@@ -288,9 +307,10 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
 "startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
 
-/// Valet configuration file missing [currently not enabled]
-"startup.errors.valet_config.title" = "Laravel Valet configuration file missing";
-"startup.errors.valet_config.desc" = "PHP Monitor needs to be able to read the configuration file in `~/.config/valet/config.json`.";
+/// Valet configuration file missing or broken
+"startup.errors.valet_json_invalid.title" = "Laravel Valet configuration file invalid or missing";
+"startup.errors.valet_json_invalid.subtitle" = "PHP Monitor needs to be able to read the configuration file. It appears the file is malformed or missing. Please check that it exists and is formatted correctly.";
+"startup.errors.valet_json_invalid.desc" = "You can find the file at `~/.config/valet/config.json`. If Laravel Valet cannot parse the configuration file, running any `valet` command will usually automatically fix the JSON file. Try running `valet --version` to automatically fix the file.";
 
 /// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "Your Valet version could not be read";
@@ -309,10 +329,6 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.services_json_error.title" = "Cannot determine services status";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
 "startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
-
-/// Multiple services active
-"startup.errors.services.title" = "Multiple PHP services are active";
-"startup.errors.services.desc" = "This can cause php-fpm to serve a more recent version of PHP than the one you'd like to see active. Please terminate all extra PHP processes.\n\nThe easiest solution is to choose the option 'First Aid & Services > Fix My Valet' in the menu bar.\n\nAlternatively, you can fix this manually. You can do this by running `brew services list` and running `sudo brew services stop php@7.3` (and use the version that applies).\n\nPHP Monitor usually handles the starting and stopping of these services, so once the correct version is the only PHP version running you should not have any issues. It is recommended to restart PHP Monitor once you have resolved this issue.\n\nFor more information about this issue, please see the README.md file in the repository on GitHub.";
 
 // SPONSOR ENCOURAGEMENT
 
