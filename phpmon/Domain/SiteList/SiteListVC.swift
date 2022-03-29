@@ -212,6 +212,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             "ENVIRONMENT": SiteListPhpCell.reusableName,
             "KIND": SiteListKindCell.reusableName,
             "TYPE": SiteListTypeCell.reusableName,
+            "PROXY": SiteListProxiesCell.reusableName,
         ]
         
         let columnName = tableColumn!.identifier.rawValue
@@ -239,6 +240,30 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - (Search) Text Field Delegate
     
+    func toggleProxyColumnBasedOnActiveProxies() {
+        let id = self.tableView.column(
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PROXY")
+        )
+        
+        let column = self.tableView.tableColumns[id]
+        
+        column.isHidden = !sites.contains(where: { site in
+            site.proxies.count > 0
+        })
+    }
+    
+    func reloadTable() {
+        toggleProxyColumnBasedOnActiveProxies()
+        
+        if let sortDescriptor = sortDescriptor {
+            self.applySortDescriptor(sortDescriptor)
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     func searchedFor(text: String) {
         lastSearchedFor = text
         
@@ -247,13 +272,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         if searchString.isEmpty {
             sites = Valet.shared.sites
             
-            if let sortDescriptor = sortDescriptor {
-                self.applySortDescriptor(sortDescriptor)
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            reloadTable()
             
             return
         }
@@ -268,13 +287,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
             }.contains(false)
         })
         
-        if let sortDescriptor = sortDescriptor {
-            self.applySortDescriptor(sortDescriptor)
-        }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        reloadTable()
     }
 
     // MARK: - Deinitialization
