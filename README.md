@@ -1,6 +1,6 @@
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
 
-<h1 align="center"><b>PHP Monitor</b> (phpmon)</h1>
+<p align="center"><img src="./docs/logo.png" alt="PHP Monitor Logo" width="500px" /></p>
 
 <p align="center">
     <img src="./phpmon/Assets.xcassets/AppIcon.appiconset/icon_128x128@2x.png" alt="phpmon icon" width="128px" />
