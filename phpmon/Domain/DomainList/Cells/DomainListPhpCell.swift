@@ -23,12 +23,16 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol
         
         buttonPhpVersion.title = " PHP \(site.servingPhpVersion)"
         
+        imageViewPhpVersionOK.toolTip = nil
+        
         if site.isolatedPhpVersion != nil {
             imageViewPhpVersionOK.isHidden = false
             imageViewPhpVersionOK.image = NSImage(named: "Isolated")
+            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
         } else {
             imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
+            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
         }
     }
     
