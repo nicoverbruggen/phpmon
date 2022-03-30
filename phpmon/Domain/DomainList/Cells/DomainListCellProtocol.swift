@@ -1,5 +1,5 @@
 //
-//  SiteListCellProtocol.swift
+//  DomainListCellProtocol.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/12/2021.
@@ -9,6 +9,6 @@
 import Cocoa
 import AppKit
 
-protocol SiteListCellProtocol {
+protocol DomainListCellProtocol {
     func populateCell(with site: ValetSite)
 }

@@ -26,15 +26,15 @@ extension AppDelegate {
     // MARK: - Menu Interactions
     
     @IBAction func addSiteLinkPressed(_ sender: Any) {
-        SiteListVC.show()
+        DomainListVC.show()
         
-        guard let windowController = App.shared.siteListWindowController else { return }
+        guard let windowController = App.shared.domainListWindowController else { return }
         windowController.pressedAddLink(nil)
     }
     
-    @IBAction func reloadSiteListPressed(_ sender: Any) {
-        let vc = App.shared.siteListWindowController?
-            .window?.contentViewController as? SiteListVC
+    @IBAction func reloadDomainListPressed(_ sender: Any) {
+        let vc = App.shared.domainListWindowController?
+            .window?.contentViewController as? DomainListVC
         
         if vc != nil {
             // If the view exists, directly reload the list of sites
@@ -46,9 +46,9 @@ extension AppDelegate {
     }
     
     @IBAction func focusSearchField(_ sender: Any) {
-        SiteListVC.show()
+        DomainListVC.show()
         
-        guard let windowController = App.shared.siteListWindowController else { return }
+        guard let windowController = App.shared.domainListWindowController else { return }
         windowController.searchToolbarItem.searchField.becomeFirstResponder()
     }
     

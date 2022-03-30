@@ -1,5 +1,5 @@
 //
-//  SiteListWC.swift
+//  DomainListWC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/12/2021.
@@ -8,12 +8,12 @@
 
 import Cocoa
 
-class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
+class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     // MARK: - Window Identifier
     
     override var windowName: String {
-        return "SiteList"
+        return "DomainList"
     }
     
     // MARK: - Outlets
@@ -30,8 +30,8 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     // MARK: - Search functionality
     
-    var contentVC: SiteListVC {
-        return self.contentViewController as! SiteListVC
+    var contentVC: DomainListVC {
+        return self.contentViewController as! DomainListVC
     }
     
     var searchTimer: Timer?
@@ -62,7 +62,7 @@ class SiteListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
     
     func selectFolder() {
         let dialog = NSOpenPanel()
-        dialog.message = "site_list.add.modal_description".localized
+        dialog.message = "domain_list.add.modal_description".localized
         dialog.showsResizeIndicator = true
         dialog.showsHiddenFiles = false
         dialog.allowsMultipleSelection = false

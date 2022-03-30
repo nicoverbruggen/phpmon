@@ -1,5 +1,5 @@
 //
-//  SiteListVC+ContextMenu.swift
+//  DomainListVC+ContextMenu.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 10/12/2021.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-extension SiteListVC {
+extension DomainListVC {
     
     internal func reloadContextMenu() {
         guard let site = selectedSite else {
@@ -36,19 +36,19 @@ extension SiteListVC {
     }
     
     private func addSystemApps(to menu: NSMenu) {
-        menu.addItem(withTitle: "site_list.system_apps".localized, action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: "domain_list.system_apps".localized, action: nil, keyEquivalent: "")
         menu.addItem(
-            withTitle: "site_list.open_in_finder".localized,
+            withTitle: "domain_list.open_in_finder".localized,
             action: #selector(self.openInFinder),
             keyEquivalent: "F"
         )
         menu.addItem(
-            withTitle: "site_list.open_in_terminal".localized,
+            withTitle: "domain_list.open_in_terminal".localized,
             action: #selector(self.openInTerminal),
             keyEquivalent: "T"
         )
         menu.addItem(
-            withTitle: "site_list.open_in_browser".localized,
+            withTitle: "domain_list.open_in_browser".localized,
             action: #selector(self.openInBrowser),
             keyEquivalent: "B"
         )
@@ -57,7 +57,7 @@ extension SiteListVC {
     private func addDetectedApps(to menu: NSMenu) {
         if (applications.count > 0) {
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(withTitle: "site_list.detected_apps".localized, action: nil, keyEquivalent: "")
+            menu.addItem(withTitle: "domain_list.detected_apps".localized, action: nil, keyEquivalent: "")
             
             for (_, editor) in applications.enumerated() {
                 let editorMenuItem = EditorMenuItem(
@@ -74,7 +74,7 @@ extension SiteListVC {
     private func addUnlink(to menu: NSMenu, with site: ValetSite) {
         if (site.aliasPath != nil) {
             menu.addItem(
-                withTitle: "site_list.unlink".localized,
+                withTitle: "domain_list.unlink".localized,
                 action: #selector(self.unlinkSite),
                 keyEquivalent: ""
             )
@@ -83,14 +83,14 @@ extension SiteListVC {
     }
     
     private func addDisabledIsolation(to menu: NSMenu) {
-        menu.addItem(withTitle: "site_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: "domain_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
         menu.addItem(NSMenuItem.separator())
     }
     
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
         if site.isolatedPhpVersion == nil {
             // ISOLATION POSSIBLE
-            let isolationMenuItem = NSMenuItem(title:"site_list.isolate".localized, action: nil, keyEquivalent: "")
+            let isolationMenuItem = NSMenuItem(title:"domain_list.isolate".localized, action: nil, keyEquivalent: "")
             let submenu = NSMenu()
             submenu.addItem(withTitle: "Choose a PHP version", action: nil, keyEquivalent: "")
             for version in PhpEnv.shared.availablePhpVersions.reversed() {
@@ -105,7 +105,7 @@ extension SiteListVC {
         } else {
             // REMOVE ISOLATION POSSIBLE
             menu.addItem(
-                withTitle: "site_list.remove_isolation".localized,
+                withTitle: "domain_list.remove_isolation".localized,
                 action: #selector(self.removeIsolatedSite),
                 keyEquivalent: ""
             )
@@ -116,8 +116,8 @@ extension SiteListVC {
     private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {
         menu.addItem(
             withTitle: site.secured
-            ? "site_list.unsecure".localized
-            : "site_list.secure".localized,
+            ? "domain_list.unsecure".localized
+            : "domain_list.secure".localized,
             action: #selector(toggleSecure),
             keyEquivalent: ""
         )

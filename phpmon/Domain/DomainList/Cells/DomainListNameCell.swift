@@ -1,5 +1,5 @@
 //
-//  SiteListNameCell.swift
+//  DomainListNameCell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
@@ -9,9 +9,9 @@
 import Cocoa
 import AppKit
 
-class SiteListNameCell: NSTableCellView, SiteListCellProtocol
+class DomainListNameCell: NSTableCellView, DomainListCellProtocol
 {
-    static let reusableName = "siteListNameCell"
+    static let reusableName = "domainListNameCell"
     
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!

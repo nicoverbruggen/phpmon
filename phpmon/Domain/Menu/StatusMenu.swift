@@ -41,7 +41,7 @@ class StatusMenu : NSMenu {
     func addValetMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_valet".localized))
         self.addItem(NSMenuItem(title: "mi_valet_config".localized, action: #selector(MainMenu.openValetConfigFolder), keyEquivalent: "v"))
-        self.addItem(NSMenuItem(title: "mi_sitelist".localized, action: #selector(MainMenu.openSiteList), keyEquivalent: "l"))
+        self.addItem(NSMenuItem(title: "mi_domain_list".localized, action: #selector(MainMenu.openDomainList), keyEquivalent: "l"))
         self.addItem(NSMenuItem.separator())
     }
     

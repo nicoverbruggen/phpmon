@@ -1,5 +1,5 @@
 //
-//  SiteListNameCell.swift
+//  DomainListNameCell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
@@ -9,9 +9,9 @@
 import Cocoa
 import AppKit
 
-class SiteListProxiesCell: NSTableCellView, SiteListCellProtocol
+class DomainListProxiesCell: NSTableCellView, DomainListCellProtocol
 {
-    static let reusableName = "siteListProxiesCell"
+    static let reusableName = "domainListProxiesCell"
     
     @IBOutlet weak var textFieldPrimary: NSTextField!
     @IBOutlet weak var textFieldAdditional: NSTextField!

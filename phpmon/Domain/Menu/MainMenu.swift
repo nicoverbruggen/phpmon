@@ -323,8 +323,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         PrefsVC.show()
     }
     
-    @objc func openSiteList() {
-        SiteListVC.show()
+    @objc func openDomainList() {
+        DomainListVC.show()
     }
     
     @objc func openDonate() {

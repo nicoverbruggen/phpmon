@@ -53,7 +53,7 @@
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
 "mi_valet" = "Laravel Valet";
-"mi_sitelist" = "View Linked and Parked Domains...";
+"mi_domain_list" = "View Linked and Parked Domains...";
 
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
@@ -63,25 +63,25 @@
 // MENU ITEMS (if window is open)
 
 "mm_add_folder_as_link" = "Add Folder as Link...";
-"mm_reload_site_list" = "Reload Site List";
-"mm_find_in_site_list" = "Search in Site List";
+"mm_reload_domain_list" = "Reload Site List";
+"mm_find_in_domain_list" = "Search in Site List";
 
 // SITE LIST
 
-"site_list.title" = "Domains";
-"site_list.subtitle" = "Linked & Parked";
+"domain_list.title" = "Domains";
+"domain_list.subtitle" = "Linked & Parked";
 
-"site_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
-"site_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
-"site_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
+"domain_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
+"domain_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
+"domain_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
 
-"site_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
-"site_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
+"domain_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
+"domain_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
 
-"site_list.alerts_status_changed.title" = "SSL Status Changed";
-"site_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
+"domain_list.alerts_status_changed.title" = "SSL Status Changed";
+"domain_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
 
-"site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
+"domain_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
 "site_link.confirm_link" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
 
 "site_link.close" = "Close";
@@ -89,51 +89,51 @@
 
 // ADD SITE TO SITE LIST
 
-"site_list.add.link_folder" = "Link a Folder";
-"site_list.add.domain_name_placeholder" = "Enter a domain name here";
-"site_list.add.secure_after_creation" = "Secure %@.%@ after creation";
-"site_list.add.secure_description" = "Securing a site requires administrative privileges.\nYou will be prompted for your password or Touch ID.";
-"site_list.add.create_link" = "Create Link";
-"site_list.add.cancel" = "Cancel";
-"site_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
+"domain_list.add.link_folder" = "Link a Folder";
+"domain_list.add.domain_name_placeholder" = "Enter a domain name here";
+"domain_list.add.secure_after_creation" = "Secure %@.%@ after creation";
+"domain_list.add.secure_description" = "Securing a site requires administrative privileges.\nYou will be prompted for your password or Touch ID.";
+"domain_list.add.create_link" = "Create Link";
+"domain_list.add.cancel" = "Cancel";
+"domain_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
 
-"site_list.add.errors.empty" = "You must enter a name.";
-"site_list.add.errors.already_exists" = "A link with that name already exists.";
+"domain_list.add.errors.empty" = "You must enter a name.";
+"domain_list.add.errors.already_exists" = "A link with that name already exists.";
 
 // ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
 
-"site_list.alert.folder_missing.desc" = "The folder you chose no longer seems to exist. Do you want to cancel adding this folder? If you moved the folder, you could always put it back and try again.";
-"site_list.alert.folder_missing.title" = "Folder missing!";
-"site_list.alert.folder_missing.cancel" = "Cancel Link";
-"site_list.alert.folder_missing.return" = "OK";
+"domain_list.alert.folder_missing.desc" = "The folder you chose no longer seems to exist. Do you want to cancel adding this folder? If you moved the folder, you could always put it back and try again.";
+"domain_list.alert.folder_missing.title" = "Folder missing!";
+"domain_list.alert.folder_missing.cancel" = "Cancel Link";
+"domain_list.alert.folder_missing.return" = "OK";
 
-"site_list.add.modal_description" = "First, select which folder you would like to link.";
+"domain_list.add.modal_description" = "First, select which folder you would like to link.";
 
 // SITE LIST ACTIONS
 
-"site_list.isolate" = "Isolate Domain";
-"site_list.remove_isolation" = "Remove Isolation";
-"site_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
+"domain_list.isolate" = "Isolate Domain";
+"domain_list.remove_isolation" = "Remove Isolation";
+"domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
-"site_list.unlink" = "Unlink Directory";
-"site_list.secure" = "Secure Domain";
-"site_list.unsecure" = "Unsecure Domain";
-"site_list.open_in_finder" = "Open in Finder";
-"site_list.open_in_browser" = "Open in Browser";
-"site_list.open_in_terminal" = "Open in Terminal";
-"site_list.detected_apps" = "Detected Applications";
-"site_list.system_apps" = "System Applications";
+"domain_list.unlink" = "Unlink Directory";
+"domain_list.secure" = "Secure Domain";
+"domain_list.unsecure" = "Unsecure Domain";
+"domain_list.open_in_finder" = "Open in Finder";
+"domain_list.open_in_browser" = "Open in Browser";
+"domain_list.open_in_terminal" = "Open in Terminal";
+"domain_list.detected_apps" = "Detected Applications";
+"domain_list.system_apps" = "System Applications";
 
-"site_list.warning.spaces" = "Warning! This site has a space in its folder.\nThe site will not be reachable via the browser.";
+"domain_list.warning.spaces" = "Warning! This site has a space in its folder.\nThe site will not be reachable via the browser.";
 
-"site_list.alert.invalid_folder_name" = "Invalid folder name";
-"site_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
+"domain_list.alert.invalid_folder_name" = "Invalid folder name";
+"domain_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
 
-"site_list.columns.tls" = "TLS";
-"site_list.columns.domain" = "Domain";
-"site_list.columns.php" = "PHP";
-"site_list.columns.type" = "Type";
-"site_list.columns.kind" = "Kind";
+"domain_list.columns.tls" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.php" = "PHP";
+"domain_list.columns.type" = "Type";
+"domain_list.columns.kind" = "Kind";
 
 // DRIVERS
 

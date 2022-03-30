@@ -1,5 +1,5 @@
 //
-//  SiteListPhpCell.swift
+//  DomainListPhpCell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
@@ -9,9 +9,9 @@
 import Cocoa
 import AppKit
 
-class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
+class DomainListPhpCell: NSTableCellView, DomainListCellProtocol
 {
-    static let reusableName = "siteListPhpCell"
+    static let reusableName = "domainListPhpCell"
     
     var site: ValetSite? = nil
     
@@ -72,7 +72,7 @@ class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
             }
             
             // Site is not isolated, show options to switch global PHP version
-            alert.beginSheetModal(for: App.shared.siteListWindowController!.window!) { response in
+            alert.beginSheetModal(for: App.shared.domainListWindowController!.window!) { response in
                 if response.rawValue > NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
                     if map.keys.contains(response.rawValue) {
                         let version = map[response.rawValue]!
@@ -83,7 +83,7 @@ class SiteListPhpCell: NSTableCellView, SiteListCellProtocol
             }
         } else {
             // Site is isolated, do not show any options to switch
-            alert.beginSheetModal(for: App.shared.siteListWindowController!.window!)
+            alert.beginSheetModal(for: App.shared.domainListWindowController!.window!)
         }
     }
     

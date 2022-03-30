@@ -25,7 +25,7 @@ extension MainMenu {
         PhpEnv.shared.isBusy = false
         
         // Reload the site list
-        self.reloadSiteListData()
+        self.reloadDomainListData()
         
         // Perform UI updates on main thread
         DispatchQueue.main.async { [self] in
@@ -70,8 +70,8 @@ extension MainMenu {
         }
     }
     
-    private func reloadSiteListData() {
-        if let window = App.shared.siteListWindowController {
+    private func reloadDomainListData() {
+        if let window = App.shared.domainListWindowController {
             DispatchQueue.main.async {
                 window.contentVC.reloadSites()
             }

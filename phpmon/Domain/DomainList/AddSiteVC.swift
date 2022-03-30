@@ -37,10 +37,10 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     // MARK: - Localisation
     
     func loadStaticLocalisedStrings() {
-        textFieldTitle.stringValue = "site_list.add.link_folder".localized
-        linkName.placeholderString = "site_list.add.domain_name_placeholder".localized
-        textFieldSecure.stringValue = "site_list.add.secure_description".localized
-        buttonCancel.stringValue = "site_list.add.cancel".localized
+        textFieldTitle.stringValue = "domain_list.add.link_folder".localized
+        linkName.placeholderString = "domain_list.add.domain_name_placeholder".localized
+        textFieldSecure.stringValue = "domain_list.add.secure_description".localized
+        buttonCancel.stringValue = "domain_list.add.cancel".localized
     }
     
     // MARK: - Outlet Interactions
@@ -52,10 +52,10 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         if !FileManager.default.fileExists(atPath: path) {
             Alert.confirm(
                 onWindow: self.view.window!,
-                messageText: "site_list.alert.folder_missing.title".localized,
-                informativeText: "site_list.alert.folder_missing.desc".localized,
-                buttonTitle: "site_list.alert.folder_missing.cancel".localized,
-                secondButtonTitle: "site_list.alert.folder_missing.return".localized,
+                messageText: "domain_list.alert.folder_missing.title".localized,
+                informativeText: "domain_list.alert.folder_missing.desc".localized,
+                buttonTitle: "domain_list.alert.folder_missing.cancel".localized,
+                secondButtonTitle: "domain_list.alert.folder_missing.return".localized,
                 onFirstButtonPressed: {
                     self.dismissView(outcome: .cancel)
                 }
@@ -70,12 +70,12 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         self.dismissView(outcome: .OK)
         
         // Reset search
-        App.shared.siteListWindowController?
+        App.shared.domainListWindowController?
             .searchToolbarItem
             .searchField.stringValue = ""
         
         // Add the new item and scrolls to it
-        App.shared.siteListWindowController?
+        App.shared.domainListWindowController?
             .contentVC
             .addedNewSite(
                 name: name,
@@ -102,13 +102,13 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     private func isValidLinkName(_ name: String) -> Bool {
         if self.linkName.stringValue.isEmpty {
             self.textFieldError.isHidden = false
-            self.textFieldError.stringValue = "site_list.add.errors.empty".localized
+            self.textFieldError.stringValue = "domain_list.add.errors.empty".localized
             return false
         }
         
         if Valet.shared.sites.contains(where: { $0.name == name }) {
             self.textFieldError.isHidden = false
-            self.textFieldError.stringValue = "site_list.add.errors.already_exists".localized
+            self.textFieldError.stringValue = "domain_list.add.errors.already_exists".localized
             return false
         }
         
@@ -125,13 +125,13 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     }
     
     func updatePreview() {
-        buttonSecure.title = "site_list.add.secure_after_creation"
+        buttonSecure.title = "domain_list.add.secure_after_creation"
             .localized(
                 self.linkName.stringValue,
                 Valet.shared.config.tld
             )
         
-        previewText.stringValue = "site_list.add.folder_available"
+        previewText.stringValue = "domain_list.add.folder_available"
             .localized(
                 self.buttonSecure.state == .on ? "https" : "http",
                 self.linkName.stringValue,

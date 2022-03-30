@@ -23,7 +23,7 @@ class InterApp {
     
     static func getCommands() -> [InterApp.Action] { return [
         InterApp.Action(command: "list", action: { _ in
-            SiteListVC.show()
+            DomainListVC.show()
         }),
         InterApp.Action(command: "services/stop", action: { _ in
             MainMenu.shared.stopAllServices()

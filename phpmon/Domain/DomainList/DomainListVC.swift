@@ -1,5 +1,5 @@
 //
-//  SiteListVC.swift
+//  DomainListVC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
@@ -9,7 +9,7 @@
 import Cocoa
 import Carbon
 
-class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - Outlets
     
@@ -49,28 +49,28 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         let storyboard = NSStoryboard(name: "Main" , bundle : nil)
         
         let windowController = storyboard.instantiateController(
-            withIdentifier: "siteListWindow"
-        ) as! SiteListWC
+            withIdentifier: "domainListWindow"
+        ) as! DomainListWC
         
-        windowController.window!.title = "site_list.title".localized
-        windowController.window!.subtitle = "site_list.subtitle".localized
+        windowController.window!.title = "domain_list.title".localized
+        windowController.window!.subtitle = "domain_list.subtitle".localized
         windowController.window!.delegate = delegate
         windowController.window!.styleMask = [
             .titled, .closable, .resizable, .miniaturizable
         ]
         windowController.window!.minSize = NSSize(width: 550, height: 200)
         windowController.window!.delegate = windowController
-        windowController.window!.setFrameAutosaveName("siteListWindow")
+        windowController.window!.setFrameAutosaveName("domainListWindow")
         
-        App.shared.siteListWindowController = windowController
+        App.shared.domainListWindowController = windowController
     }
     
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if (App.shared.siteListWindowController == nil) {
+        if (App.shared.domainListWindowController == nil) {
             Self.create(delegate: delegate)
         }
         
-        App.shared.siteListWindowController!.showWindow(self)
+        App.shared.domainListWindowController!.showWindow(self)
         NSApp.activate(ignoringOtherApps: true)
     }
     
@@ -207,19 +207,18 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let mapping: [String: String] = [
-            "TLS": SiteListTLSCell.reusableName,
-            "DOMAIN": SiteListNameCell.reusableName,
-            "ENVIRONMENT": SiteListPhpCell.reusableName,
-            "KIND": SiteListKindCell.reusableName,
-            "TYPE": SiteListTypeCell.reusableName,
-            "PROXY": SiteListProxiesCell.reusableName,
+            "TLS": DomainListTLSCell.reusableName,
+            "DOMAIN": DomainListNameCell.reusableName,
+            "ENVIRONMENT": DomainListPhpCell.reusableName,
+            "KIND": DomainListKindCell.reusableName,
+            "TYPE": DomainListTypeCell.reusableName
         ]
         
         let columnName = tableColumn!.identifier.rawValue
         let identifier = NSUserInterfaceItemIdentifier(rawValue: mapping[columnName]!)
         
         guard let userCell = tableView.makeView(withIdentifier: identifier, owner: self)
-            as? SiteListCellProtocol else { return nil }
+            as? DomainListCellProtocol else { return nil }
         
         userCell.populateCell(with: sites[row])
         
@@ -240,21 +239,7 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     
     // MARK: - (Search) Text Field Delegate
     
-    func toggleProxyColumnBasedOnActiveProxies() {
-        let id = self.tableView.column(
-            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "PROXY")
-        )
-        
-        let column = self.tableView.tableColumns[id]
-        
-        column.isHidden = !sites.contains(where: { site in
-            site.proxies.count > 0
-        })
-    }
-    
     func reloadTable() {
-        toggleProxyColumnBasedOnActiveProxies()
-        
         if let sortDescriptor = sortDescriptor {
             self.applySortDescriptor(sortDescriptor)
         }
@@ -293,6 +278,6 @@ class SiteListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     // MARK: - Deinitialization
     
     deinit {
-        Log.perf("SiteListVC deallocated")
+        Log.perf("DomainListVC deallocated")
     }
 }

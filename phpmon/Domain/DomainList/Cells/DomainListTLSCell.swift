@@ -1,5 +1,5 @@
 //
-//  SiteListNameCell.swift
+//  DomainListNameCell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
@@ -9,9 +9,9 @@
 import Cocoa
 import AppKit
 
-class SiteListTLSCell: NSTableCellView, SiteListCellProtocol
+class DomainListTLSCell: NSTableCellView, DomainListCellProtocol
 {
-    static let reusableName = "siteListTLSCell"
+    static let reusableName = "domainListTLSCell"
     
     @IBOutlet weak var imageViewLock: NSImageView!
     

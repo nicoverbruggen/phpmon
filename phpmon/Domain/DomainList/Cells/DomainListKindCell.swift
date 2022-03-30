@@ -1,5 +1,5 @@
 //
-//  SiteListTypeCell.swift
+//  DomainListTypeCell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
@@ -9,9 +9,9 @@
 import Cocoa
 import AppKit
 
-class SiteListKindCell: NSTableCellView, SiteListCellProtocol
+class DomainListKindCell: NSTableCellView, DomainListCellProtocol
 {
-    static let reusableName = "siteListKindCell"
+    static let reusableName = "domainListKindCell"
     
     @IBOutlet weak var imageViewType: NSImageView!
     

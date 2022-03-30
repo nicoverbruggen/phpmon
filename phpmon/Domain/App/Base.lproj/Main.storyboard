@@ -60,16 +60,16 @@
                                         </menuItem>
                                         <menuItem title="reload-list" keyEquivalent="r" id="Ema-AU-Nbr" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_reload_site_list"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_reload_domain_list"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <action selector="reloadSiteListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
+                                                <action selector="reloadDomainListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2ux-8Q-UjK"/>
                                         <menuItem title="focus-find" keyEquivalent="f" id="I95-fb-EL7" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_find_in_site_list"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_find_in_domain_list"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="focusSearchField:" target="Voe-Tx-rLC" id="O8j-1B-hll"/>
@@ -383,7 +383,7 @@
         <!--Window Controller-->
         <scene sceneID="4XS-kY-YIS">
             <objects>
-                <windowController storyboardIdentifier="siteListWindow" id="8Ec-9q-82s" customClass="SiteListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="domainListWindow" id="8Ec-9q-82s" customClass="DomainListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Domains" subtitle="Linked &amp; Parked" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="raw-02-3Q1">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -790,10 +790,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="191" y="1098.5"/>
         </scene>
-        <!--Site ListVC-->
+        <!--Domain ListVC-->
         <scene sceneID="aZt-6w-TFl">
             <objects>
-                <viewController identifier="siteList" storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController identifier="domainList" storyboardIdentifier="domainList" id="JZI-Vd-9oq" customClass="DomainListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="rIZ-4U-bhj">
                         <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -805,7 +805,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="689" height="281"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="626" height="281"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -825,7 +825,7 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Secure"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListTLSCell" id="hft-M4-nWb" customClass="SiteListTLSCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                        <tableCellView identifier="domainListTLSCell" id="hft-M4-nWb" customClass="DomainListTLSCell" customModule="PHP_Monitor" customModuleProvider="target">
                                                             <rect key="frame" x="18" y="0.0" width="34" height="55"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -861,7 +861,7 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Domain"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListNameCell" wantsLayer="YES" id="5GY-nN-BWd" customClass="SiteListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                        <tableCellView identifier="domainListNameCell" wantsLayer="YES" id="5GY-nN-BWd" customClass="DomainListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
                                                             <rect key="frame" x="69" y="0.0" width="200" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -910,7 +910,7 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="PHP"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListPhpCell" wantsLayer="YES" id="T49-0U-d58" customClass="SiteListPhpCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                        <tableCellView identifier="domainListPhpCell" wantsLayer="YES" id="T49-0U-d58" customClass="DomainListPhpCell" customModule="PHP_Monitor" customModuleProvider="target">
                                                             <rect key="frame" x="286" y="0.0" width="100" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -965,7 +965,7 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Kind"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListKindCell" wantsLayer="YES" id="AhT-xR-16a" customClass="SiteListKindCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                        <tableCellView identifier="domainListKindCell" wantsLayer="YES" id="AhT-xR-16a" customClass="DomainListKindCell" customModule="PHP_Monitor" customModuleProvider="target">
                                                             <rect key="frame" x="403" y="0.0" width="36" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1002,12 +1002,12 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Type"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListTypeCell" wantsLayer="YES" id="ntU-Rl-ciP" customClass="SiteListTypeCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="456" y="0.0" width="100" height="54"/>
+                                                        <tableCellView identifier="domainListTypeCell" wantsLayer="YES" id="ntU-Rl-ciP" customClass="DomainListTypeCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="456" y="0.0" width="97" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
-                                                                    <rect key="frame" x="6" y="26" width="96" height="14"/>
+                                                                    <rect key="frame" x="6" y="26" width="93" height="14"/>
                                                                     <textFieldCell key="cell" alignment="left" title="Laravel" id="0lu-L6-oKr">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1015,7 +1015,7 @@ Gw
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPK-Xc-J4B">
-                                                                    <rect key="frame" x="6" y="15" width="96" height="11"/>
+                                                                    <rect key="frame" x="6" y="15" width="93" height="11"/>
                                                                     <textFieldCell key="cell" alignment="left" title="PHP 8.0" id="puf-Jh-ham">
                                                                         <font key="font" metaFont="miniSystem"/>
                                                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1038,66 +1038,6 @@ Gw
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="PROXY" width="125" minWidth="125" maxWidth="10000" id="x9O-Z3-87p" userLabel="Proxy">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Proxies">
-                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                    </tableHeaderCell>
-                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="Y0C-YC-tFJ">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Proxy"/>
-                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                    <prototypeCellViews>
-                                                        <tableCellView identifier="siteListProxiesCell" wantsLayer="YES" id="jC5-iZ-jmh" customClass="SiteListProxiesCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="573" y="0.0" width="97" height="54"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BSU-DN-9K8">
-                                                                    <rect key="frame" x="30" y="26" width="69" height="14"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="127.0.0.1:9999" id="0An-oy-1Xj">
-                                                                        <font key="font" metaFont="smallSystem"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9o7-xL-J28">
-                                                                    <rect key="frame" x="30" y="12" width="49" height="14"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="and 1 more..." id="tqn-Uz-aDP">
-                                                                        <font key="font" metaFont="smallSystem"/>
-                                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LiO-BE-pT7">
-                                                                    <rect key="frame" x="0.0" y="16" width="24" height="22"/>
-                                                                    <buttonCell key="cell" type="inline" bezelStyle="inline" image="IconProxy" imagePosition="overlaps" alignment="center" borderStyle="border" inset="2" id="ClW-pH-7Y3">
-                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="smallSystemBold"/>
-                                                                    </buttonCell>
-                                                                    <color key="contentTintColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                                </button>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BSU-DN-9K8" secondAttribute="trailing" id="2jc-cn-oc0"/>
-                                                                <constraint firstItem="BSU-DN-9K8" firstAttribute="top" secondItem="jC5-iZ-jmh" secondAttribute="top" constant="14" id="BIK-YX-9Yv"/>
-                                                                <constraint firstItem="9o7-xL-J28" firstAttribute="top" secondItem="BSU-DN-9K8" secondAttribute="bottom" id="Dmr-nS-mBc"/>
-                                                                <constraint firstItem="BSU-DN-9K8" firstAttribute="leading" secondItem="LiO-BE-pT7" secondAttribute="trailing" constant="8" id="P2i-wa-PuT"/>
-                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9o7-xL-J28" secondAttribute="trailing" constant="20" symbolic="YES" id="Wpu-Eb-jMe"/>
-                                                                <constraint firstItem="LiO-BE-pT7" firstAttribute="centerY" secondItem="jC5-iZ-jmh" secondAttribute="centerY" id="gHf-jc-vFe"/>
-                                                                <constraint firstItem="9o7-xL-J28" firstAttribute="leading" secondItem="BSU-DN-9K8" secondAttribute="leading" id="r0a-nJ-Ncm"/>
-                                                                <constraint firstItem="LiO-BE-pT7" firstAttribute="leading" secondItem="jC5-iZ-jmh" secondAttribute="leading" id="y20-rI-Yfg"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <outlet property="buttonProxyList" destination="LiO-BE-pT7" id="pl2-AC-p1A"/>
-                                                                <outlet property="textFieldAdditional" destination="9o7-xL-J28" id="wLz-Lj-QMd"/>
-                                                                <outlet property="textFieldPrimary" destination="BSU-DN-9K8" id="iwQ-wJ-aZH"/>
-                                                            </connections>
-                                                        </tableCellView>
-                                                    </prototypeCellViews>
-                                                </tableColumn>
                                             </tableColumns>
                                             <connections>
                                                 <outlet property="dataSource" destination="JZI-Vd-9oq" id="sbf-YF-ENF"/>
@@ -1111,7 +1051,7 @@ Gw
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="R3Z-g3-tYQ"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="620" id="iRQ-sz-oyv"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.69841269841269837" horizontal="YES" id="TDE-ff-DQT">
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
                                     <rect key="frame" x="0.0" y="293" width="626" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -1120,7 +1060,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="xUg-Mq-OSh">
-                                    <rect key="frame" x="0.0" y="0.0" width="689" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="626" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1154,7 +1094,6 @@ Gw
     <resources>
         <image name="Checkmark" width="512" height="512"/>
         <image name="IconLinked" width="25" height="25"/>
-        <image name="IconProxy" width="18" height="18"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>

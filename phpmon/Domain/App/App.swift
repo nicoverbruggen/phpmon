@@ -44,7 +44,7 @@ class App {
     var preferencesWindowController: PrefsWC? = nil
     
     /** The window controller of the currently active site list window. */
-    var siteListWindowController: SiteListWC? = nil
+    var domainListWindowController: DomainListWC? = nil
     
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []

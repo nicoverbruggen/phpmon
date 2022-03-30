@@ -1,5 +1,5 @@
 //
-//  SiteListVC+Actions.swift
+//  DomainListVC+Actions.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 23/12/2021.
@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-extension SiteListVC {
+extension DomainListVC {
 
     @objc func toggleSecure() {
         let rowToReload = tableView.selectedRow
@@ -25,16 +25,16 @@ extension SiteListVC {
             if selectedSite.secured == originalSecureStatus {
                 BetterAlert()
                     .withInformation(
-                        title: "site_list.alerts_status_not_changed.title".localized,
-                        subtitle: "site_list.alerts_status_not_changed.desc".localized(command)
+                        title: "domain_list.alerts_status_not_changed.title".localized,
+                        subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
                     )
                     .withPrimary(text: "OK")
                     .show()
             } else {
                 let newState = selectedSite.secured ? "secured" : "unsecured"
                 LocalNotification.send(
-                    title: "site_list.alerts_status_changed.title".localized,
-                    subtitle: "site_list.alerts_status_changed.desc"
+                    title: "domain_list.alerts_status_changed.title".localized,
+                    subtitle: "domain_list.alerts_status_changed.desc"
                         .localized(
                             "\(selectedSite.name).\(Valet.shared.config.tld)",
                             newState
@@ -56,8 +56,8 @@ extension SiteListVC {
         } else {
             BetterAlert()
                 .withInformation(
-                    title: "site_list.alert.invalid_folder_name".localized,
-                    subtitle: "site_list.alert.invalid_folder_name_desc".localized
+                    title: "domain_list.alert.invalid_folder_name".localized,
+                    subtitle: "domain_list.alert.invalid_folder_name_desc".localized
                 )
                 .withPrimary(text: "OK")
                 .show()
@@ -86,9 +86,9 @@ extension SiteListVC {
             if self.selectedSite!.isolatedPhpVersion == nil {
                 BetterAlert()
                     .withInformation(
-                        title: "site_list.alerts_isolation_failed.title".localized,
-                        subtitle: "site_list.alerts_isolation_failed.subtitle".localized,
-                        description: "site_list.alerts_isolation_failed.desc".localized(command)
+                        title: "domain_list.alerts_isolation_failed.title".localized,
+                        subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,
+                        description: "domain_list.alerts_isolation_failed.desc".localized(command)
                     )
                     .withPrimary(text: "OK")
                     .show()
@@ -113,9 +113,9 @@ extension SiteListVC {
         
         Alert.confirm(
             onWindow: view.window!,
-            messageText: "site_list.confirm_unlink".localized(site.name),
+            messageText: "domain_list.confirm_unlink".localized(site.name),
             informativeText: "site_link.confirm_link".localized,
-            buttonTitle: "site_list.unlink".localized,
+            buttonTitle: "domain_list.unlink".localized,
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
