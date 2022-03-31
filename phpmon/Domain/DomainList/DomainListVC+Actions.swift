@@ -78,7 +78,7 @@ extension DomainListVC {
     }
     
     @objc func isolateSite(sender: PhpMenuItem) {
-        let command = "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) isolate php@\(sender.version) && exit;"
+        let command = "sudo \(Paths.valet) isolate php@\(sender.version) --site '\(self.selectedSite!.name)' && exit;"
         
         self.performAction(command: command) {
             self.selectedSite!.determineIsolated()
@@ -97,7 +97,7 @@ extension DomainListVC {
     }
     
     @objc func removeIsolatedSite() {
-        self.performAction(command: "cd '\(selectedSite!.absolutePath)' && sudo \(Paths.valet) unisolate && exit;") {
+        self.performAction(command: "sudo \(Paths.valet) unisolate --site '\(self.selectedSite!.name)' && exit;") {
             self.selectedSite!.isolatedPhpVersion = nil
         }
     }
