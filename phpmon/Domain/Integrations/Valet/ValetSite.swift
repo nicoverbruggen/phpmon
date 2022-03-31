@@ -59,9 +59,6 @@ class ValetSite {
             ?? PhpEnv.phpInstall.version.short
     }
     
-    /// Proxies set up for this domain.
-    var proxies: [String] = []
-    
     enum VersionSource: String {
         case unknown = "unknown"
         case require = "require"
@@ -87,7 +84,6 @@ class ValetSite {
             determineComposerPhpVersion()
             determineDriver()
             determineIsolated()
-            determineProxies()
         }
     }
     
@@ -221,18 +217,6 @@ class ValetSite {
             }
         } catch {
             Log.err("Something went wrong parsing the .valetphprc file")
-        }
-    }
-    
-    /**
-     TODO: This method should determine which proxies are active for this site.
-     For test purposes this method currently will set a fixed value for
-     my own website, eyo. Fun. I will need to check how to determine which
-     sites are being proxied, first (and how this works!).
-     */
-    private func determineProxies() {
-        if self.name == "nicoverbruggen" {
-            self.proxies = ["127.0.0.1:1337", "127.0.0.1:9999"]
         }
     }
     

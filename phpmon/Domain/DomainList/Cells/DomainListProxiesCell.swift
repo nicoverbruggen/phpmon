@@ -18,6 +18,7 @@ class DomainListProxiesCell: NSTableCellView, DomainListCellProtocol
     @IBOutlet weak var buttonProxyList: NSButton!
     
     func populateCell(with site: ValetSite) {
+        /*
         // Show the first proxy
         textFieldPrimary.stringValue = (site.proxies.count == 0)
             ? ""
@@ -30,5 +31,7 @@ class DomainListProxiesCell: NSTableCellView, DomainListCellProtocol
         
         // Show button
         buttonProxyList.isHidden = site.proxies.count == 0
+        */
     }
+   
 }
