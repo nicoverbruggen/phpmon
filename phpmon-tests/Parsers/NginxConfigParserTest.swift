@@ -33,4 +33,10 @@ class NginxConfigParserTest: XCTestCase {
         )
     }
     
+    func testCanDetermineProxy() throws {
+        let parsed = NginxConfigParser(filePath: NginxConfigParserTest.proxyUrl.path)
+        XCTAssertTrue(parsed.contents.contains("# valet stub: proxy.valet.conf"))
+        XCTAssertEqual("http://127.0.0.1:90", parsed.proxy)
+    }
+    
 }

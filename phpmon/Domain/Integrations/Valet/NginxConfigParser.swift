@@ -17,7 +17,25 @@ class NginxConfigParser {
             .replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
         )
     }
+    
+    /**
+     Retrieves what address this domain is proxying.
+     */
+    lazy var proxy: String? = {
+        let regex = try! NSRegularExpression(
+            pattern: #"proxy_pass (?<proxy>.*:\d*);"#,
+            options: []
+        )
         
+        guard let match = regex.firstMatch(in: contents, range: NSMakeRange(0, contents.count))
+            else { return nil }
+        
+        return contents[Range(match.range(withName: "proxy"), in: contents)!]
+    }()
+        
+    /**
+     Retrieves which isolated version is active for this domain.
+     */
     lazy var isolatedVersion: String? = {
         let regex = try! NSRegularExpression(
             // PHP versions have (so far) never needed multiple digits for version numbers
@@ -25,14 +43,11 @@ class NginxConfigParser {
             options: []
         )
         
-        let match = regex.firstMatch(in: contents, range: NSMakeRange(0, contents.count))
-        
-        if match == nil {
-            return nil
-        }
+        guard let match = regex.firstMatch(in: contents, range: NSMakeRange(0, contents.count))
+            else { return nil }
 
-        let major: String = contents[Range(match!.range(withName: "major"), in: contents)!]
-        let minor: String = contents[Range(match!.range(withName: "minor"), in: contents)!]
+        let major: String = contents[Range(match.range(withName: "major"), in: contents)!],
+            minor: String = contents[Range(match.range(withName: "minor"), in: contents)!]
         
         return "\(major).\(minor)"
     }()
