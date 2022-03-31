@@ -14,7 +14,7 @@ class BrewJsonParserTest: XCTestCase {
 
     static var jsonBrewFile: URL {
         return Bundle(for: Self.self)
-            .url(forResource: "brew", withExtension: "json")!
+            .url(forResource: "brew-formula", withExtension: "json")!
     }
 
     func testCanLoadExtensionJson() throws {

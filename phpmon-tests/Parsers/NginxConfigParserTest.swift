@@ -11,11 +11,15 @@ import XCTest
 class NginxConfigParserTest: XCTestCase {
     
     static var regularUrl: URL {
-        return Bundle(for: Self.self).url(forResource: "nicoverbruggen", withExtension: "test")!
+        return Bundle(for: Self.self).url(forResource: "nginx-site", withExtension: "test")!
     }
     
     static var isolatedUrl: URL {
-        return Bundle(for: Self.self).url(forResource: "nicoverbruggen_isolated", withExtension: "test")!
+        return Bundle(for: Self.self).url(forResource: "nginx-site-isolated", withExtension: "test")!
+    }
+    
+    static var proxyUrl: URL {
+        return Bundle(for: Self.self).url(forResource: "nginx-proxy", withExtension: "test")!
     }
     
     func testCanDetermineIsolation() throws {

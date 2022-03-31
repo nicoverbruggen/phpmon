@@ -84,13 +84,13 @@
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
-		C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nicoverbruggen.test */; };
-		C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */; };
+		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
+		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
 		C42CFB1A27DFE8BD00862737 /* NginxConfigParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigParserTest.swift */; };
 		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
-		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
+		C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
 		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
 		C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* DomainListNameCell.swift */; };
 		C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
@@ -109,6 +109,7 @@
 		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
+		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
 		C464ADAC275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
 		C464ADAD275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
 		C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* DomainListVC.swift */; };
@@ -298,12 +299,12 @@
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
-		C42CFB1527DFDE7900862737 /* nicoverbruggen.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen.test; sourceTree = "<group>"; };
-		C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen_isolated.test; sourceTree = "<group>"; };
+		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
+		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
 		C42CFB1927DFE8BD00862737 /* NginxConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigParserTest.swift; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
+		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
 		C44067F427E2582B0045BD4E /* DomainListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListNameCell.swift; sourceTree = "<group>"; };
 		C44067F627E258410045BD4E /* DomainListPhpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListPhpCell.swift; sourceTree = "<group>"; };
@@ -313,6 +314,7 @@
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
+		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
@@ -490,12 +492,10 @@
 		C40C7F1C27720E1400DDDCDC /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
-				C42CFB1527DFDE7900862737 /* nicoverbruggen.test */,
-				C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */,
-				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
-				C43A8A1F25D9D1D700591B77 /* brew.json */,
-				C4F30B06278E195800755FCE /* brew-services.json */,
-				C4F780A725D80AE8000DBC97 /* php.ini */,
+				C459B4C127F6097E00E9B4B4 /* php */,
+				C459B4C027F6096300E9B4B4 /* valet */,
+				C459B4BF27F6094100E9B4B4 /* brew */,
+				C459B4BE27F6093A00E9B4B4 /* nginx */,
 			);
 			path = "Test Files";
 			sourceTree = "<group>";
@@ -611,6 +611,41 @@
 				C4927F0A27B2DFC200C55AFD /* Errors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
+			isa = PBXGroup;
+			children = (
+				C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */,
+				C42CFB1527DFDE7900862737 /* nginx-site.test */,
+				C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */,
+			);
+			path = nginx;
+			sourceTree = "<group>";
+		};
+		C459B4BF27F6094100E9B4B4 /* brew */ = {
+			isa = PBXGroup;
+			children = (
+				C43A8A1F25D9D1D700591B77 /* brew-formula.json */,
+				C4F30B06278E195800755FCE /* brew-services.json */,
+			);
+			path = brew;
+			sourceTree = "<group>";
+		};
+		C459B4C027F6096300E9B4B4 /* valet */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
+			);
+			path = valet;
+			sourceTree = "<group>";
+		};
+		C459B4C127F6097E00E9B4B4 /* php */ = {
+			isa = PBXGroup;
+			children = (
+				C4F780A725D80AE8000DBC97 /* php.ini */,
+			);
+			path = php;
 			sourceTree = "<group>";
 		};
 		C464ADAA275A7A25003FCD53 /* DomainList */ = {
@@ -957,14 +992,15 @@
 			files = (
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
-				C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */,
+				C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
-				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
+				C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
-				C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */,
+				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
+				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
