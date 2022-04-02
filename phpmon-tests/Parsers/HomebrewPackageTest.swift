@@ -8,7 +8,7 @@
 
 import XCTest
 
-class BrewJsonParserTest: XCTestCase {
+class HomebrewPackageTest: XCTestCase {
     
     // - MARK: SYNTHETIC TESTS
 

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ExtensionParserTest: XCTestCase {
+class PhpExtensionTest: XCTestCase {
     
     static var phpIniFileUrl: URL {
         return Bundle(for: Self.self).url(forResource: "php", withExtension: "ini")!

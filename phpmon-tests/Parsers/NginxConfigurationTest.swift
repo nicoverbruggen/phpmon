@@ -1,5 +1,5 @@
 //
-//  NginxConfigParserTest.swift
+//  NginxConfigurationTest.swift
 //  phpmon-tests
 //
 //  Created by Nico Verbruggen on 29/11/2021.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class NginxConfigParserTest: XCTestCase {
+class NginxConfigurationTest: XCTestCase {
     
     static var regularUrl: URL {
         return Bundle(for: Self.self).url(forResource: "nginx-site", withExtension: "test")!
@@ -24,21 +24,21 @@ class NginxConfigParserTest: XCTestCase {
     
     func testCanDetermineIsolation() throws {
         XCTAssertNil(
-            NginxConfigParser(filePath: NginxConfigParserTest.regularUrl.path).isolatedVersion
+            NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path).isolatedVersion
         )
         
         XCTAssertEqual(
             "8.1",
-            NginxConfigParser(filePath: NginxConfigParserTest.isolatedUrl.path).isolatedVersion
+            NginxConfiguration(filePath: NginxConfigurationTest.isolatedUrl.path).isolatedVersion
         )
     }
     
     func testCanDetermineProxy() throws {
-        let proxied = NginxConfigParser(filePath: NginxConfigParserTest.proxyUrl.path)
+        let proxied = NginxConfiguration(filePath: NginxConfigurationTest.proxyUrl.path)
         XCTAssertTrue(proxied.contents.contains("# valet stub: proxy.valet.conf"))
         XCTAssertEqual("http://127.0.0.1:90", proxied.proxy)
         
-        let normal = NginxConfigParser(filePath: NginxConfigParserTest.regularUrl.path)
+        let normal = NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path)
         XCTAssertFalse(normal.contents.contains("# valet stub: proxy.valet.conf"))
         XCTAssertEqual(nil, normal.proxy)
     }

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ValetConfigParserTest: XCTestCase {
+class ValetConfigurationTest: XCTestCase {
     
     static var jsonConfigFileUrl: URL {
         return Bundle(for: Self.self).url(

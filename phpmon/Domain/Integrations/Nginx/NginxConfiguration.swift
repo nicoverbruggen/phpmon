@@ -1,5 +1,5 @@
 //
-//  NginxConfigParser.swift
+//  NginxConfiguration.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 15/03/2022.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NginxConfigParser {
+class NginxConfiguration {
     
     var contents: String!
     

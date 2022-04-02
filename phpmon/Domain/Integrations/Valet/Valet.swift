@@ -26,6 +26,9 @@ class Valet {
     /// A cached list of sites that were detected after analyzing the paths set up for Valet.
     var sites: [ValetSite] = []
     
+    /// A cached list of proxies that were detecting after analyzing the Nginx paths.
+    var proxies: [ValetProxy] = []
+    
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
     

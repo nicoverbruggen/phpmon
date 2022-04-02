@@ -224,7 +224,7 @@ class ValetSite {
     
     public static func isolatedVersion(_ filePath: String) -> String? {
         if Filesystem.fileExists(filePath) {
-            return NginxConfigParser
+            return NginxConfiguration
                 .init(filePath: filePath)
                 .isolatedVersion
         }
