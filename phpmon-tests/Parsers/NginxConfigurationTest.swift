@@ -22,6 +22,17 @@ class NginxConfigurationTest: XCTestCase {
         return Bundle(for: Self.self).url(forResource: "nginx-proxy", withExtension: "test")!
     }
     
+    func testCanDetermineSiteNameAndTld() throws {
+        XCTAssertEqual(
+            "nginx-site",
+            NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path).domain
+        )
+        XCTAssertEqual(
+            "test",
+            NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path).tld
+        )
+    }
+    
     func testCanDetermineIsolation() throws {
         XCTAssertNil(
             NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path).isolatedVersion

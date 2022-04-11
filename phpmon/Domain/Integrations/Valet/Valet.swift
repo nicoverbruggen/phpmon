@@ -35,10 +35,12 @@ class Valet {
     /// Various feature flags. Enabled based on the installed Valet version.
     var features: [FeatureFlag] = []
     
-    /// When initialising the Valet singleton assume no sites loaded. We will load the version later.
+    /// When initialising the Valet singleton, assume no sites or proxies loaded.
+    /// We will load the version later.
     init() {
         self.version = nil
         self.sites = []
+        self.proxies = []
     }
     
     /**
@@ -52,6 +54,10 @@ class Valet {
         }
         
         return ValetSiteScanner()
+    }
+    
+    static var proxyScanner: ProxyScanner {
+        return ValetProxyScanner()
     }
     
     /**
@@ -176,7 +182,17 @@ class Valet {
         
         sites = Self.siteScanner
             .resolveSitesFrom(paths: config.paths)
-            .sorted { $0.absolutePath < $1.absolutePath }
+            .sorted {
+                $0.absolutePath < $1.absolutePath
+            }
+        
+        proxies = Self.proxyScanner
+            .resolveProxies(
+                directoryPath: FileManager.default
+                    .homeDirectoryForCurrentUser
+                    .appendingPathComponent(".config/valet/Nginx")
+                    .path
+            )
         
         if let defaultPath = Valet.shared.config.defaultSite,
             let site = ValetSiteScanner().resolveSite(path: defaultPath) {

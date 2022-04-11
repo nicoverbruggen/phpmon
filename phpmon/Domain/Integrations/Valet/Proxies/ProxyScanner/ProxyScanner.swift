@@ -10,6 +10,6 @@ import Foundation
 
 protocol ProxyScanner {
     
-    // TODO
+    func resolveProxies(directoryPath: String) -> [ValetProxy]
     
 }

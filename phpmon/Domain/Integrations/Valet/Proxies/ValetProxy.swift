@@ -8,11 +8,15 @@
 
 import Foundation
 
-struct ValetProxy
+class ValetProxy
 {
     var domain: String
-    
     var tld: String
-    
     var target: String
+    
+    init(_ configuration: NginxConfiguration) {
+        self.domain = configuration.domain
+        self.tld = configuration.tld
+        self.target = configuration.proxy!
+    }
 }

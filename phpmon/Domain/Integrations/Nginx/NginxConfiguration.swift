@@ -12,10 +12,23 @@ class NginxConfiguration {
     
     var contents: String!
     
+    var domain: String
+    var tld: String
+    
     init(filePath: String) {
-        self.contents = try! String(contentsOfFile: filePath
-            .replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
+        let path = filePath.replacingOccurrences(
+            of: "~",
+            with: "/Users/\(Paths.whoami)"
         )
+        
+        self.contents = try! String(contentsOfFile: path)
+        
+        let domain = String(path.split(separator: "/").last!)
+        let tld = String(domain.split(separator: ".").last!)
+        
+        self.domain = domain
+            .replacingOccurrences(of: ".\(tld)", with: "")
+        self.tld = tld
     }
     
     /**

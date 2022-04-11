@@ -124,6 +124,8 @@
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
 		C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		C484437B2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
+		C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
 		C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48D0C8F25CC7FD000CC7490 /* StatsView.xib */; };
 		C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9225CC804200CC7490 /* XibLoadable.swift */; };
 		C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9525CC80B100CC7490 /* HeaderView.swift */; };
@@ -333,6 +335,7 @@
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C484437A2804BB560041A78A /* ValetProxyScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetProxyScanner.swift; sourceTree = "<group>"; };
 		C48D0C8F25CC7FD000CC7490 /* StatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D0C9525CC80B100CC7490 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -816,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				C4C0E8E627F88B41002D32A9 /* ProxyScanner.swift */,
+				C484437A2804BB560041A78A /* ValetProxyScanner.swift */,
 			);
 			path = ProxyScanner;
 			sourceTree = "<group>";
@@ -1131,6 +1135,7 @@
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C417DC74277614690015E6EE /* Helpers.swift in Sources */,
 				C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
+				C484437B2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */,
@@ -1232,6 +1237,7 @@
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
+				C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */,
 				C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
