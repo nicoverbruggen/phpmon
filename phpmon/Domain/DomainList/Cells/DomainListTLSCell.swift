@@ -22,7 +22,7 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol
     }
     
     func populateCell(with proxy: ValetProxy) {
-        imageViewLock.contentTintColor = proxy.target.contains("https")
+        imageViewLock.contentTintColor = proxy.secured
             ? NSColor(named: "IconColorGreen")
             : NSColor(named: "IconColorRed")
     }

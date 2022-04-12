@@ -87,6 +87,7 @@
 		C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */; };
 		C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
 		C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */; };
 		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
@@ -312,6 +313,7 @@
 		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
 		C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationTest.swift; sourceTree = "<group>"; };
 		C42F26722805B4B400938AC7 /* DomainListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListable.swift; sourceTree = "<group>"; };
+		C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy.test"; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
 			isa = PBXGroup;
 			children = (
+				C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */,
 				C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */,
 				C42CFB1527DFDE7900862737 /* nginx-site.test */,
 				C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */,
@@ -1058,6 +1061,7 @@
 				C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
+				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,

@@ -45,6 +45,10 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     
     // MARK: - Outlet Interactions
     
+    @IBAction func pressedCreateProxy(_ sender: Any) {
+        // valet proxy (domain) http://127.0.0.1:90 (--secure)
+    }
+    
     @IBAction func pressedCreateLink(_ sender: Any) {
         let path = self.pathControl.url!.path
         let name = self.linkName.stringValue

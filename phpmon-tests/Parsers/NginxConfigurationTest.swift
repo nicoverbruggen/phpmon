@@ -22,6 +22,10 @@ class NginxConfigurationTest: XCTestCase {
         return Bundle(for: Self.self).url(forResource: "nginx-proxy", withExtension: "test")!
     }
     
+    static var secureProxyUrl: URL {
+        return Bundle(for: Self.self).url(forResource: "nginx-secure-proxy", withExtension: "test")!
+    }
+    
     func testCanDetermineSiteNameAndTld() throws {
         XCTAssertEqual(
             "nginx-site",
@@ -52,6 +56,12 @@ class NginxConfigurationTest: XCTestCase {
         let normal = NginxConfiguration(filePath: NginxConfigurationTest.regularUrl.path)
         XCTAssertFalse(normal.contents.contains("# valet stub: proxy.valet.conf"))
         XCTAssertEqual(nil, normal.proxy)
+    }
+    
+    func testCanDetermineSecuredProxy() throws {
+        let proxied = NginxConfiguration(filePath: NginxConfigurationTest.secureProxyUrl.path)
+        XCTAssertTrue(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
+        XCTAssertEqual("http://127.0.0.1:90", proxied.proxy)
     }
     
 }

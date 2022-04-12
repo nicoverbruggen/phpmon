@@ -13,11 +13,13 @@ class ValetProxy: DomainListable
     var domain: String
     var tld: String
     var target: String
+    var secured: Bool = false
     
     init(_ configuration: NginxConfiguration) {
         self.domain = configuration.domain
         self.tld = configuration.tld
         self.target = configuration.proxy!
+        self.secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
     }
     
     // MARK: - DomainListable Protocol
@@ -27,7 +29,7 @@ class ValetProxy: DomainListable
     }
     
     func getListableSecured() -> Bool {
-        return false
+        return self.secured
     }
     
     func getListableAbsolutePath() -> String {
