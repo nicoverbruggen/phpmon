@@ -69,7 +69,7 @@
 // SITE LIST
 
 "domain_list.title" = "Domains";
-"domain_list.subtitle" = "Linked & Parked";
+"domain_list.subtitle" = "";
 
 "domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
 "domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";

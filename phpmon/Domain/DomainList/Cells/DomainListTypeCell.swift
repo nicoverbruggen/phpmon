@@ -28,4 +28,10 @@ class DomainListTypeCell: NSTableCellView, DomainListCellProtocol
         // PHP version
         labelPhpVersion.stringValue = site.composerPhp == "???" ? "Any PHP" : "PHP \(site.composerPhp)"
     }
+    
+    func populateCell(with proxy: ValetProxy) {
+        labelDriver.stringValue = "Proxy"
+        labelPhpVersion.stringValue = "Active"
+        return
+    }
 }

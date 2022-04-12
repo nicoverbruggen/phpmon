@@ -17,10 +17,12 @@ class DomainListNameCell: NSTableCellView, DomainListCellProtocol
     @IBOutlet weak var labelPathName: NSTextField!
     
     func populateCell(with site: ValetSite) {
-        // Show the name of the site (including tld)
-        labelSiteName.stringValue = "\(site.name).\(Valet.shared.config.tld)"
-
-        // Show the absolute path, except make sure to replace the /Users/username segment with ~ for readability
+        labelSiteName.stringValue = "\(site.name).\(site.tld)"
         labelPathName.stringValue = site.absolutePathRelative
+    }
+    
+    func populateCell(with proxy: ValetProxy) {
+        labelSiteName.stringValue = "\(proxy.domain).\(proxy.tld)"
+        labelPathName.stringValue = proxy.target
     }
 }

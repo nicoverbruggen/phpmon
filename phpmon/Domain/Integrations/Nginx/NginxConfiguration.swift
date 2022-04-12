@@ -10,9 +10,13 @@ import Foundation
 
 class NginxConfiguration {
     
+    /** Contents of the Nginx file in question, as a string. */
     var contents: String!
     
+    /** The name of the domain, usually derived from the name of the file. */
     var domain: String
+    
+    /** The TLD of the domain, usually derived from the name of the file. */
     var tld: String
     
     init(filePath: String) {
@@ -47,7 +51,7 @@ class NginxConfiguration {
     }()
         
     /**
-     Retrieves which isolated version is active for this domain.
+     Retrieves which isolated version is active for this domain (if applicable).
      */
     lazy var isolatedVersion: String? = {
         let regex = try! NSRegularExpression(

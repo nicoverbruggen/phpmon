@@ -16,9 +16,14 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol
     @IBOutlet weak var imageViewLock: NSImageView!
     
     func populateCell(with site: ValetSite) {
-        // Show the green or red lock based on whether the site was secured
         imageViewLock.contentTintColor = site.secured
-            ? NSColor(named: "IconColorGreen") // green
+            ? NSColor(named: "IconColorGreen")
+            : NSColor(named: "IconColorRed")
+    }
+    
+    func populateCell(with proxy: ValetProxy) {
+        imageViewLock.contentTintColor = proxy.target.contains("https")
+            ? NSColor(named: "IconColorGreen")
             : NSColor(named: "IconColorRed")
     }
 }

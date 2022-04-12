@@ -19,7 +19,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Variables
     
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
-    var sites: [ValetSite] = []
+    var domains: [DomainListable] = []
     
     /// Array that contains various apps that might open a particular site directory.
     var applications: [Application] {
@@ -38,7 +38,14 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         if tableView.selectedRow == -1 {
             return nil
         }
-        return sites[tableView.selectedRow]
+        return domains[tableView.selectedRow] as? ValetSite
+    }
+    
+    var selectedProxy: ValetProxy? {
+        if tableView.selectedRow == -1 {
+            return nil
+        }
+        return domains[tableView.selectedRow] as? ValetProxy
     }
     
     var timer: Timer? = nil
@@ -78,9 +85,10 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
+        
         if !Valet.shared.sites.isEmpty {
             // Preloaded list
-            sites = Valet.shared.sites
+            domains = Valet.getDomainListable()
             searchedFor(text: lastSearchedFor)
         } else {
             reloadSites()
@@ -142,7 +150,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         waitAndExecute {
             Valet.shared.reloadSites()
         } completion: { [self] in
-            sites = Valet.shared.sites
+            domains = Valet.shared.sites
             searchedFor(text: lastSearchedFor)
         }
     }
@@ -150,23 +158,23 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     func applySortDescriptor(_ descriptor: NSSortDescriptor) {
         sortDescriptor = descriptor
         
-        var sorted = self.sites
+        var sorted = self.domains
         
         switch descriptor.key {
             case "Secure":
-                sorted = self.sites.sorted { $0.secured && !$1.secured }; break
+                sorted = self.domains.sorted { $0.getListableSecured() && !$1.getListableSecured() }; break
             case "Domain":
-                sorted = self.sites.sorted { $0.absolutePath < $1.absolutePath }; break
+                sorted = self.domains.sorted { $0.getListableAbsolutePath() < $1.getListableAbsolutePath() }; break
             case "PHP":
-                sorted = self.sites.sorted { $0.servingPhpVersion < $1.servingPhpVersion }; break
+                sorted = self.domains.sorted { $0.getListablePhpVersion() < $1.getListablePhpVersion() }; break
             case "Kind":
-                sorted = self.sites.sorted { ($0.aliasPath == nil) && !($1.aliasPath == nil) }; break
+                sorted = self.domains.sorted { $0.getListableKind() < $1.getListableKind() }; break
             case "Type":
-                sorted = self.sites.sorted { $0.driver ?? "ZZZ" < $1.driver ?? "ZZZ" }; break
+                sorted = self.domains.sorted { $0.getListableType() < $1.getListableType() }; break
             default: break;
         }
         
-        self.sites = descriptor.ascending ? sorted.reversed() : sorted
+        self.domains = descriptor.ascending ? sorted.reversed() : sorted
     }
     
     func addedNewSite(name: String, secure: Bool) {
@@ -178,13 +186,13 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
     
     private func find(_ name: String, _ secure: Bool = false) {
-        sites = Valet.shared.sites
+        domains = Valet.getDomainListable()
         searchedFor(text: "")
-        if let site = sites.enumerated().first(where: { $0.element.name == name }) {
+        if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
             DispatchQueue.main.async {
                 self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
                 self.tableView.scrollRowToVisible(site.offset)
-                if (secure && !site.element.secured) {
+                if (secure && !site.element.getListableSecured()) {
                     self.toggleSecure()
                 }
             }
@@ -194,7 +202,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Table View Delegate
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return sites.count
+        return domains.count
     }
     
     func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
@@ -220,7 +228,13 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         guard let userCell = tableView.makeView(withIdentifier: identifier, owner: self)
             as? DomainListCellProtocol else { return nil }
         
-        userCell.populateCell(with: sites[row])
+        if let site = domains[row] as? ValetSite {
+            userCell.populateCell(with: site)
+        }
+        
+        if let proxy = domains[row] as? ValetProxy {
+            userCell.populateCell(with: proxy)
+        }
         
         return userCell as? NSView
     }
@@ -255,7 +269,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         let searchString = text.lowercased()
         
         if searchString.isEmpty {
-            sites = Valet.shared.sites
+            domains = Valet.getDomainListable()
             
             reloadTable()
             
@@ -266,9 +280,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             .split(separator: " ")
             .map { return String($0) }
         
-        sites = Valet.shared.sites.filter({ site in
+        domains = Valet.getDomainListable().filter({ site in
             return !splitSearchString.map { searchString in
-                return site.name.lowercased().contains(searchString)
+                return site.getListableName().lowercased().contains(searchString)
             }.contains(false)
         })
         

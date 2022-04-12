@@ -30,4 +30,8 @@ class DomainListKindCell: NSTableCellView, DomainListCellProtocol
         
         imageViewType.contentTintColor = NSColor.tertiaryLabelColor
     }
+    
+    func populateCell(with proxy: ValetProxy) {
+        imageViewType.image = NSImage(named: "IconProxy")
+    }
 }

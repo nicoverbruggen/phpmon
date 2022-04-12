@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetProxy
+class ValetProxy: DomainListable
 {
     var domain: String
     var tld: String
@@ -18,5 +18,31 @@ class ValetProxy
         self.domain = configuration.domain
         self.tld = configuration.tld
         self.target = configuration.proxy!
+    }
+    
+    // MARK: - DomainListable Protocol
+    
+    func getListableName() -> String {
+        return self.domain
+    }
+    
+    func getListableSecured() -> Bool {
+        return false
+    }
+    
+    func getListableAbsolutePath() -> String {
+        return self.domain
+    }
+    
+    func getListablePhpVersion() -> String {
+        return ""
+    }
+    
+    func getListableKind() -> String {
+        return "proxy"
+    }
+    
+    func getListableType() -> String {
+        return "proxy"
     }
 }

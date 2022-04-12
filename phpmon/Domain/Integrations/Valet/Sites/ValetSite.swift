@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetSite {
+class ValetSite: DomainListable {
     
     /// Name of the site. Does not include the TLD.
     var name: String
@@ -220,7 +220,7 @@ class ValetSite {
         }
     }
     
-    // MARK: File Parsing
+    // MARK: - File Parsing
     
     public static func isolatedVersion(_ filePath: String) -> String? {
         if Filesystem.fileExists(filePath) {
@@ -230,5 +230,31 @@ class ValetSite {
         }
         
         return nil
+    }
+    
+    // MARK: - DomainListable Protocol
+    
+    func getListableName() -> String {
+        return self.name
+    }
+    
+    func getListableSecured() -> Bool {
+        return self.secured
+    }
+    
+    func getListableAbsolutePath() -> String {
+        return self.absolutePath
+    }
+    
+    func getListablePhpVersion() -> String {
+        return self.servingPhpVersion
+    }
+    
+    func getListableKind() -> String {
+        return (self.aliasPath == nil) ? "linked" : "parked"
+    }
+    
+    func getListableType() -> String {
+        return self.driver ?? "ZZZ"
     }
 }

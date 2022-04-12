@@ -67,6 +67,10 @@ class Valet {
         return self.shared.features.contains(feature)
     }
     
+    public static func getDomainListable() -> [DomainListable] {
+        return self.shared.sites + self.shared.proxies
+    }
+    
     /**
      We don't want to load the initial config.json file as soon as the class is initialised.
      

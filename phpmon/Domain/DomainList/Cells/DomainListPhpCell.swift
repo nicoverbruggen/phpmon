@@ -34,6 +34,15 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
         }
+        
+        buttonPhpVersion.isHidden = false
+        imageViewPhpVersionOK.isHidden = false
+    }
+    
+    func populateCell(with proxy: ValetProxy) {
+        buttonPhpVersion.isHidden = true
+        imageViewPhpVersionOK.isHidden = true
+        return
     }
     
     @IBAction func pressedPhpVersion(_ sender: Any) {

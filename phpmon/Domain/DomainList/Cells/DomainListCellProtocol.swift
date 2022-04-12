@@ -11,4 +11,5 @@ import AppKit
 
 protocol DomainListCellProtocol {
     func populateCell(with site: ValetSite)
+    func populateCell(with proxy: ValetProxy)
 }
