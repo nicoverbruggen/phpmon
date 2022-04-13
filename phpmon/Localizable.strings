@@ -95,7 +95,7 @@
 "domain_list.add.link_folder" = "Link a Folder";
 "domain_list.add.domain_name_placeholder" = "Enter a domain name here";
 "domain_list.add.secure_after_creation" = "Secure %@.%@ after creation";
-"domain_list.add.secure_description" = "Securing a site requires administrative privileges.\nYou will be prompted for your password or Touch ID.";
+"domain_list.add.secure_description" = "Securing a domain requires administrative privileges.\nYou may be prompted for your password or Touch ID.";
 "domain_list.add.create_link" = "Create Link";
 "domain_list.add.cancel" = "Cancel";
 "domain_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
