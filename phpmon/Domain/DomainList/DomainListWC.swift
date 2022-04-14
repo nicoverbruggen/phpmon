@@ -55,10 +55,22 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
     }
     
     @IBAction func pressedAddLink(_ sender: Any?) {
-        selectFolder()
+        showSelectionWindow()
     }
     
     // MARK: - Add a new site
+    
+    func showSelectionWindow() {
+        let storyboard = NSStoryboard(name: "Main", bundle : nil)
+        
+        let windowController = storyboard.instantiateController(
+            withIdentifier: "showSelectionWindow"
+        ) as! NSWindowController
+        
+        // let viewController = windowController.window!.contentViewController!
+        
+        self.window?.beginSheet(windowController.window!)
+    }
     
     func selectFolder() {
         let dialog = NSOpenPanel()

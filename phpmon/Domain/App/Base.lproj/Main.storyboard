@@ -487,7 +487,7 @@
                 </windowController>
                 <customObject id="i3j-z8-nxv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-384" y="1909"/>
+            <point key="canvasLocation" x="-374" y="2267"/>
         </scene>
         <!--Better AlertVC-->
         <scene sceneID="y9E-bB-wIG">
@@ -533,7 +533,7 @@ Gw
                                         </connections>
                                     </button>
                                     <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
-                                        <rect key="frame" x="13" y="13" width="81" height="32"/>
+                                        <rect key="frame" x="13" y="13" width="82" height="32"/>
                                         <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -633,7 +633,7 @@ Gw
                 </viewController>
                 <customObject id="5Ts-EZ-bJh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="229" y="1909"/>
+            <point key="canvasLocation" x="230" y="2267"/>
         </scene>
         <!--Add SiteVC-->
         <scene sceneID="6JC-H6-u4K">
@@ -652,7 +652,7 @@ Gw
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PVw-cM-qAB">
-                                <rect key="frame" x="364" y="13" width="103" height="32"/>
+                                <rect key="frame" x="363" y="13" width="104" height="32"/>
                                 <buttonCell key="cell" type="push" title="Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwW-Wv-I8s">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -733,7 +733,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
-                                <rect key="frame" x="230" y="23" width="128" height="14"/>
+                                <rect key="frame" x="229" y="23" width="128" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That link already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -1147,11 +1147,13 @@ Gw
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="SNw-oQ-bnb" secondAttribute="trailing" constant="20" id="2ui-Jg-BUV"/>
                                         <constraint firstItem="mlA-Zt-Hu8" firstAttribute="top" secondItem="QCK-Z9-w7g" secondAttribute="bottom" constant="10" id="8sn-dT-SW6"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uib-vA-HRc" secondAttribute="trailing" constant="20" symbolic="YES" id="Cue-3e-doM"/>
                                         <constraint firstItem="QCK-Z9-w7g" firstAttribute="leading" secondItem="SNw-oQ-bnb" secondAttribute="leading" id="N1K-69-wLz"/>
                                         <constraint firstItem="mlA-Zt-Hu8" firstAttribute="leading" secondItem="QCK-Z9-w7g" secondAttribute="leading" id="R74-k0-96U"/>
                                         <constraint firstItem="SNw-oQ-bnb" firstAttribute="leading" secondItem="IXW-35-8NJ" secondAttribute="leading" constant="20" id="WZR-f8-mgf"/>
                                         <constraint firstItem="SNw-oQ-bnb" firstAttribute="top" secondItem="mlA-Zt-Hu8" secondAttribute="bottom" constant="4" id="XDn-h9-dgp"/>
                                         <constraint firstItem="QCK-Z9-w7g" firstAttribute="top" secondItem="Uib-vA-HRc" secondAttribute="bottom" constant="4" id="fGU-al-B0w"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mlA-Zt-Hu8" secondAttribute="trailing" constant="20" symbolic="YES" id="uFE-cU-KOg"/>
                                         <constraint firstItem="QCK-Z9-w7g" firstAttribute="trailing" secondItem="SNw-oQ-bnb" secondAttribute="trailing" id="xQE-yY-gPd"/>
                                     </constraints>
                                 </view>
@@ -1298,10 +1300,152 @@ Gw
             </objects>
             <point key="canvasLocation" x="-374" y="1530"/>
         </scene>
+        <!--SelectionVC-->
+        <scene sceneID="UXm-Ci-yEB">
+            <objects>
+                <viewController storyboardIdentifier="addDomainChoice" id="gOD-Gu-zDG" customClass="SelectionVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="ysc-sm-sli">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="162"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <visualEffectView blendingMode="behindWindow" material="toolTip" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="F37-zt-gM3">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="162"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
+                                        <rect key="frame" x="13" y="13" width="94" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Zhu-D8-cLK"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LxP-t4-H2W">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="pressedCancel:" target="gOD-Gu-zDG" id="wMp-sM-0A4"/>
+                                        </connections>
+                                    </button>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-Qu-qnK">
+                                        <rect key="frame" x="203" y="20" width="257" height="20"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
+                                                <rect key="frame" x="-7" y="-7" width="134" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="8UP-Sw-TP6">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">l</string>
+                                                </buttonCell>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
+                                                <rect key="frame" x="121" y="-7" width="143" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="bJ4-q8-1Ej">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">p</string>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
+                                        <rect key="frame" x="18" y="123" width="444" height="19"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="What would you like to do?" id="agk-Nj-FLd">
+                                            <font key="font" metaFont="systemBold" size="15"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
+                                        <rect key="frame" x="18" y="87" width="444" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="tbl-AV-4qB"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" id="3i9-RG-Ift">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <string key="title">If you would like to link a folder, choose "Create a Link".  If you would like to proxy an IP address, you can "Create a Proxy".</string>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="FhN-AM-SkI" firstAttribute="leading" secondItem="F37-zt-gM3" secondAttribute="leading" constant="20" symbolic="YES" id="3dg-JM-MDr"/>
+                                    <constraint firstItem="fJK-Ke-IK3" firstAttribute="top" secondItem="F37-zt-gM3" secondAttribute="top" constant="20" symbolic="YES" id="FbX-Le-O7Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="pYe-Qu-qnK" secondAttribute="trailing" constant="20" symbolic="YES" id="IJA-vN-Rbv"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="leading" secondItem="fJK-Ke-IK3" secondAttribute="leading" id="JcY-ae-6ZH"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" id="ZBI-pN-kOz"/>
+                                    <constraint firstItem="fJK-Ke-IK3" firstAttribute="leading" secondItem="F37-zt-gM3" secondAttribute="leading" constant="20" symbolic="YES" id="d4o-6b-Dho"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="top" secondItem="fJK-Ke-IK3" secondAttribute="bottom" constant="8" symbolic="YES" id="hOk-eL-Eg0"/>
+                                    <constraint firstAttribute="bottom" secondItem="pYe-Qu-qnK" secondAttribute="bottom" constant="20" id="lPX-ZF-XZN"/>
+                                    <constraint firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" constant="20" symbolic="YES" id="spl-Bn-xtw"/>
+                                    <constraint firstAttribute="bottom" secondItem="FhN-AM-SkI" secondAttribute="bottom" constant="20" symbolic="YES" id="t5w-aL-tOa"/>
+                                </constraints>
+                            </visualEffectView>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">
+                                <rect key="frame" x="200" y="94" width="0.0" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OQ5-hX-qai">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="F37-zt-gM3" secondAttribute="trailing" id="ZRD-3j-s4x"/>
+                            <constraint firstAttribute="bottom" secondItem="F37-zt-gM3" secondAttribute="bottom" id="et1-At-Rgj"/>
+                            <constraint firstItem="F37-zt-gM3" firstAttribute="top" secondItem="ysc-sm-sli" secondAttribute="top" id="jp3-eE-mOy"/>
+                            <constraint firstItem="F37-zt-gM3" firstAttribute="leading" secondItem="ysc-sm-sli" secondAttribute="leading" id="wIo-zP-KId"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonCancel" destination="FhN-AM-SkI" id="iqV-2E-q7e"/>
+                        <outlet property="buttonCreateLink" destination="L5n-Gw-J27" id="SHV-4l-Red"/>
+                        <outlet property="buttonCreateProxy" destination="01Z-IV-hv1" id="J1v-7J-4fx"/>
+                    </connections>
+                </viewController>
+                <customObject id="bZa-dD-d4J" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="197" y="1884"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="HW6-nV-trE">
+            <objects>
+                <windowController storyboardIdentifier="showSelectionWindow" id="t4x-Mh-iya" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IeW-fo-4yK">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="Oe0-yv-Jcy">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="t4x-Mh-iya" id="4oO-gI-bd2"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="gOD-Gu-zDG" kind="relationship" relationship="window.shadowedContentViewController" id="KRt-OH-8uc"/>
+                    </connections>
+                </windowController>
+                <customObject id="hBK-Bw-dwa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-374" y="1909"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Checkmark" width="512" height="512"/>
         <image name="IconLinked" width="25" height="25"/>
+        <image name="IconProxy" width="25" height="25"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
