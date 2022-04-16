@@ -1093,7 +1093,7 @@ Gw
         <!--Add ProxyVC-->
         <scene sceneID="g8z-pE-RL9">
             <objects>
-                <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="U5U-QR-YXS">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="310"/>
                         <autoresizingMask key="autoresizingMask"/>
