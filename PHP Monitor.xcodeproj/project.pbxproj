@@ -199,6 +199,8 @@
 		C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
+		C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */; };
+		C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */; };
 		C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
 		C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
@@ -383,6 +385,7 @@
 		C4D936C827E3EB6100BD69FE /* PhpHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelper.swift; sourceTree = "<group>"; };
 		C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcher.swift; sourceTree = "<group>"; };
+		C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProxyVC.swift; sourceTree = "<group>"; };
 		C4DEB7D327A5D60B00834718 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindowExtension.swift; sourceTree = "<group>"; };
 		C4E4404527C56F4700D225E1 /* ValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSite.swift; sourceTree = "<group>"; };
@@ -678,6 +681,7 @@
 				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
 				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
 				C4930849279F331F009C240B /* AddSiteVC.swift */,
+				C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */,
 			);
 			path = DomainList;
 			sourceTree = "<group>";
@@ -1101,6 +1105,7 @@
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
+				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
@@ -1290,6 +1295,7 @@
 				C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C41C02AB27E61CB3009F26CB /* ValetSite+Fake.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
+				C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,

@@ -67,12 +67,25 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
             withIdentifier: "showSelectionWindow"
         ) as! NSWindowController
         
-        // let viewController = windowController.window!.contentViewController!
+        let viewController = windowController.window!
+            .contentViewController as! SelectionVC
+        
+        viewController.domainListWC = self
         
         self.window?.beginSheet(windowController.window!)
     }
     
-    func selectFolder() {
+    func startCreateLinkFlow() {
+        self.showFolderSelectionForLink()
+    }
+    
+    func startCreateProxyFlow() {
+        self.showProxyPopup()
+    }
+    
+    // MARK: - Popups
+    
+    private func showFolderSelectionForLink() {
         let dialog = NSOpenPanel()
         dialog.message = "domain_list.add.modal_description".localized
         dialog.showsResizeIndicator = true
@@ -84,12 +97,12 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
             let result = dialog.url
             if (result != nil && response == .OK) {
                 let path: String = result!.path
-                self.showSitePopup(path)
+                self.showLinkPopup(path)
             }
         }
     }
     
-    func showSitePopup(_ folder: String) {
+    private func showLinkPopup(_ folder: String) {
         let storyboard = NSStoryboard(name: "Main", bundle : nil)
         
         let windowController = storyboard.instantiateController(
@@ -100,6 +113,18 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
         viewController.pathControl.url = URL(fileURLWithPath: folder)
         viewController.linkName.stringValue = String(folder.split(separator: "/").last!)
         viewController.updateTextField()
+        
+        self.window?.beginSheet(windowController.window!)
+    }
+    
+    private func showProxyPopup() {
+        let storyboard = NSStoryboard(name: "Main", bundle : nil)
+        
+        let windowController = storyboard.instantiateController(
+            withIdentifier: "addProxyWindow"
+        ) as! NSWindowController
+        
+        // let viewController = windowController.window!.contentViewController as! AddSiteVC
         
         self.window?.beginSheet(windowController.window!)
     }

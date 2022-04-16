@@ -6,7 +6,6 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
-        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1120,7 +1119,7 @@ Gw
                                             <rect key="frame" x="18" y="245" width="290" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Proxy subject (usually: protocol, IP address and port)" id="G1Z-3f-BhL">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
-                                                <color key="textColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -1128,7 +1127,7 @@ Gw
                                             <rect key="frame" x="18" y="196" width="77" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Domain name" id="dQs-oZ-80e">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
-                                                <color key="textColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -1337,6 +1336,9 @@ Gw
                                                     <font key="font" metaFont="system"/>
                                                     <string key="keyEquivalent">l</string>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="pressedCreateLink:" target="gOD-Gu-zDG" id="77M-Ip-GMi"/>
+                                                </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
                                                 <rect key="frame" x="121" y="-7" width="143" height="32"/>
@@ -1345,6 +1347,9 @@ Gw
                                                     <font key="font" metaFont="system"/>
                                                     <string key="keyEquivalent">p</string>
                                                 </buttonCell>
+                                                <connections>
+                                                    <action selector="pressedCreateProxy:" target="gOD-Gu-zDG" id="UDf-lD-KCS"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <visibilityPriorities>
