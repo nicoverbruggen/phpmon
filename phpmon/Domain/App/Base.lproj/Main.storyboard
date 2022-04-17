@@ -639,13 +639,13 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="newSiteLink" id="glS-wF-sEU" customClass="AddSiteVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JJJ-T9-Yuv">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="js9-OW-xzC">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                                 <view key="contentView" id="HRC-RT-LxR">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -680,7 +680,7 @@ Gw
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
-                                <rect key="frame" x="20" y="156" width="440" height="21"/>
+                                <rect key="frame" x="20" y="150" width="440" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="NFa-1D-Bi4">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -691,7 +691,7 @@ Gw
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-5a-cmT">
-                                <rect key="frame" x="18" y="134" width="444" height="14"/>
+                                <rect key="frame" x="18" y="128" width="444" height="14"/>
                                 <textFieldCell key="cell" title="Preview text here" id="bJr-s6-tdP">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -699,7 +699,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-b0-9cm">
-                                <rect key="frame" x="18" y="101" width="227" height="18"/>
+                                <rect key="frame" x="18" y="95" width="227" height="18"/>
                                 <buttonCell key="cell" type="check" title="Secure this domain after creation" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vFv-Of-2yZ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -709,7 +709,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-7e-dlb">
-                                <rect key="frame" x="18" y="66" width="444" height="28"/>
+                                <rect key="frame" x="18" y="60" width="444" height="28"/>
                                 <textFieldCell key="cell" title="Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="4gd-KM-5Fu">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -717,14 +717,14 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6JT-Vt-3q0">
-                                <rect key="frame" x="20" y="185" width="440" height="22"/>
+                                <rect key="frame" x="20" y="179" width="440" height="22"/>
                                 <pathCell key="cell" selectable="YES" refusesFirstResponder="YES" alignment="left" id="m8d-XF-kh9">
                                     <font key="font" metaFont="system"/>
                                     <url key="url" string="file:///Users/"/>
                                 </pathCell>
                             </pathControl>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-Ht-R8n">
-                                <rect key="frame" x="18" y="215" width="87" height="16"/>
+                                <rect key="frame" x="18" y="209" width="87" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Link a Folder" id="S4j-ZC-ddT">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -732,8 +732,8 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
-                                <rect key="frame" x="229" y="23" width="128" height="14"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="That link already exists." id="jOt-n6-TQf">
+                                <rect key="frame" x="177" y="23" width="180" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -752,6 +752,7 @@ Gw
                             <constraint firstItem="900-Z2-tID" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SwS-o8-pbl" secondAttribute="trailing" constant="8" symbolic="YES" id="IMv-ZD-VXf"/>
                             <constraint firstItem="js9-OW-xzC" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" id="IpM-ot-dBG"/>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="leading" secondItem="ZX9-s1-23i" secondAttribute="leading" id="UPN-Ad-j3X"/>
+                            <constraint firstItem="SwS-o8-pbl" firstAttribute="top" secondItem="mmQ-7e-dlb" secondAttribute="bottom" constant="20" id="VNW-fB-2Xj"/>
                             <constraint firstItem="KZf-b0-9cm" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" constant="20" symbolic="YES" id="Vab-wq-9Nc"/>
                             <constraint firstAttribute="bottom" secondItem="PVw-cM-qAB" secondAttribute="bottom" constant="20" symbolic="YES" id="VsP-Q0-zRW"/>
                             <constraint firstAttribute="trailing" secondItem="PVw-cM-qAB" secondAttribute="trailing" constant="20" symbolic="YES" id="X5z-G4-CBv"/>
@@ -1095,17 +1096,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="U5U-QR-YXS">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="310"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="kkd-UV-SnA">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="310"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
                                 <view key="contentView" id="IXW-35-8NJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="310"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
-                                            <rect key="frame" x="20" y="220" width="440" height="21"/>
+                                            <rect key="frame" x="20" y="196" width="440" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="http://127.0.0.1:80" placeholderString="http://127.0.0.1:80" drawsBackground="YES" id="muS-8M-KSy">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1116,7 +1117,7 @@ Gw
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uib-vA-HRc">
-                                            <rect key="frame" x="18" y="245" width="290" height="14"/>
+                                            <rect key="frame" x="18" y="221" width="290" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Proxy subject (usually: protocol, IP address and port)" id="G1Z-3f-BhL">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1124,7 +1125,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-Zt-Hu8">
-                                            <rect key="frame" x="18" y="196" width="77" height="14"/>
+                                            <rect key="frame" x="18" y="172" width="77" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Domain name" id="dQs-oZ-80e">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1132,7 +1133,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
-                                            <rect key="frame" x="20" y="171" width="440" height="21"/>
+                                            <rect key="frame" x="20" y="147" width="440" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="gTQ-Y2-Y9w">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1167,9 +1168,6 @@ Gw
 DQ
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="pressedCreateLink:" target="dwh-CF-6iv" id="tTE-zm-rHq"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-dk-QaF">
                                 <rect key="frame" x="13" y="13" width="94" height="32"/>
@@ -1188,15 +1186,15 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
-                                <rect key="frame" x="18" y="152" width="444" height="14"/>
-                                <textFieldCell key="cell" title="Preview text here" id="ISE-9R-ncQ">
+                                <rect key="frame" x="18" y="128" width="444" height="14"/>
+                                <textFieldCell key="cell" title="Please enter a domain name first." id="ISE-9R-ncQ">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rJa-yg-nCn">
-                                <rect key="frame" x="18" y="119" width="132" height="18"/>
+                                <rect key="frame" x="18" y="95" width="132" height="18"/>
                                 <buttonCell key="cell" type="check" title="Secure this proxy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5LI-lt-Asl">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1206,7 +1204,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
-                                <rect key="frame" x="18" y="84" width="444" height="28"/>
+                                <rect key="frame" x="18" y="60" width="444" height="28"/>
                                 <textFieldCell key="cell" title="Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="IMB-O5-ZOy">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1214,16 +1212,16 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAh-br-Dfx">
-                                <rect key="frame" x="18" y="274" width="81" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Add a Proxy" id="AZ1-04-kUl">
+                                <rect key="frame" x="18" y="250" width="97" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Set up a Proxy" id="AZ1-04-kUl">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
-                                <rect key="frame" x="221" y="23" width="128" height="14"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="That link already exists." id="4sH-94-UJl">
+                                <rect key="frame" x="169" y="23" width="180" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="4sH-94-UJl">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1249,6 +1247,7 @@ Gw
                             <constraint firstItem="rJa-yg-nCn" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="IEg-SN-bHB"/>
                             <constraint firstItem="rJa-yg-nCn" firstAttribute="top" secondItem="JSZ-x8-Pqi" secondAttribute="bottom" constant="16" id="IW3-MX-3Kh"/>
                             <constraint firstItem="DAh-br-Dfx" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="LY1-r0-viF"/>
+                            <constraint firstItem="nC0-dk-QaF" firstAttribute="top" secondItem="5x7-ll-2f7" secondAttribute="bottom" constant="20" id="OjY-dM-dOG"/>
                             <constraint firstItem="nC0-dk-QaF" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="V6L-YR-ufX"/>
                             <constraint firstItem="JSZ-x8-Pqi" firstAttribute="leading" secondItem="SNw-oQ-bnb" secondAttribute="leading" id="dpc-5M-0Cq"/>
                             <constraint firstItem="5x7-ll-2f7" firstAttribute="top" secondItem="rJa-yg-nCn" secondAttribute="bottom" constant="8" symbolic="YES" id="dzE-Ob-SVG"/>
@@ -1261,13 +1260,8 @@ Gw
                     </view>
                     <connections>
                         <outlet property="buttonCancel" destination="nC0-dk-QaF" id="n5Q-jg-UCe"/>
-                        <outlet property="buttonCreateLink" destination="4Vi-cN-ude" id="RRi-0F-pne"/>
-                        <outlet property="buttonSecure" destination="rJa-yg-nCn" id="rmb-8B-Yui"/>
-                        <outlet property="linkName" destination="SNw-oQ-bnb" id="pLw-W5-rX6"/>
-                        <outlet property="previewText" destination="JSZ-x8-Pqi" id="3rw-8i-Leg"/>
                         <outlet property="textFieldError" destination="w0k-CK-0u4" id="28h-bn-igB"/>
                         <outlet property="textFieldSecure" destination="5x7-ll-2f7" id="NlV-g8-rYP"/>
-                        <outlet property="textFieldTitle" destination="DAh-br-Dfx" id="a2J-Vw-SMy"/>
                     </connections>
                 </viewController>
                 <customObject id="VaP-ZM-OcY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1304,11 +1298,11 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="addDomainChoice" id="gOD-Gu-zDG" customClass="SelectionVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ysc-sm-sli">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="162"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <visualEffectView blendingMode="behindWindow" material="toolTip" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="F37-zt-gM3">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="162"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
                                         <rect key="frame" x="13" y="13" width="94" height="32"/>
@@ -1327,7 +1321,7 @@ Gw
                                         </connections>
                                     </button>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-Qu-qnK">
-                                        <rect key="frame" x="203" y="20" width="257" height="20"/>
+                                        <rect key="frame" x="263" y="20" width="257" height="20"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
                                                 <rect key="frame" x="-7" y="-7" width="134" height="32"/>
@@ -1362,21 +1356,21 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
-                                        <rect key="frame" x="18" y="123" width="444" height="19"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="What would you like to do?" id="agk-Nj-FLd">
+                                        <rect key="frame" x="18" y="138" width="504" height="19"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="left" title="What kind of domain would you like to set up?" id="agk-Nj-FLd">
                                             <font key="font" metaFont="systemBold" size="15"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
-                                        <rect key="frame" x="18" y="87" width="444" height="28"/>
+                                        <rect key="frame" x="18" y="60" width="504" height="70"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="tbl-AV-4qB"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="tbl-AV-4qB"/>
                                         </constraints>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" id="3i9-RG-Ift">
+                                        <textFieldCell key="cell" selectable="YES" alignment="left" id="3i9-RG-Ift">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <string key="title">If you would like to link a folder, choose "Create a Link".  If you would like to proxy an IP address, you can "Create a Proxy".</string>
+                                            <mutableString key="title">Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.  If you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.</mutableString>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -1390,13 +1384,14 @@ Gw
                                     <constraint firstItem="urj-Xq-TrJ" firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" id="ZBI-pN-kOz"/>
                                     <constraint firstItem="fJK-Ke-IK3" firstAttribute="leading" secondItem="F37-zt-gM3" secondAttribute="leading" constant="20" symbolic="YES" id="d4o-6b-Dho"/>
                                     <constraint firstItem="urj-Xq-TrJ" firstAttribute="top" secondItem="fJK-Ke-IK3" secondAttribute="bottom" constant="8" symbolic="YES" id="hOk-eL-Eg0"/>
+                                    <constraint firstItem="FhN-AM-SkI" firstAttribute="top" secondItem="urj-Xq-TrJ" secondAttribute="bottom" constant="20" id="kCc-Vp-Gvq"/>
                                     <constraint firstAttribute="bottom" secondItem="pYe-Qu-qnK" secondAttribute="bottom" constant="20" id="lPX-ZF-XZN"/>
                                     <constraint firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" constant="20" symbolic="YES" id="spl-Bn-xtw"/>
                                     <constraint firstAttribute="bottom" secondItem="FhN-AM-SkI" secondAttribute="bottom" constant="20" symbolic="YES" id="t5w-aL-tOa"/>
                                 </constraints>
                             </visualEffectView>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">
-                                <rect key="frame" x="200" y="94" width="0.0" height="48"/>
+                                <rect key="frame" x="200" y="109" width="0.0" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OQ5-hX-qai">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1415,11 +1410,13 @@ Gw
                         <outlet property="buttonCancel" destination="FhN-AM-SkI" id="iqV-2E-q7e"/>
                         <outlet property="buttonCreateLink" destination="L5n-Gw-J27" id="SHV-4l-Red"/>
                         <outlet property="buttonCreateProxy" destination="01Z-IV-hv1" id="J1v-7J-4fx"/>
+                        <outlet property="textFieldDescription" destination="urj-Xq-TrJ" id="u1w-O0-kI3"/>
+                        <outlet property="textFieldTitle" destination="fJK-Ke-IK3" id="x8p-qx-HX4"/>
                     </connections>
                 </viewController>
                 <customObject id="bZa-dD-d4J" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="1884"/>
+            <point key="canvasLocation" x="250" y="1900"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="HW6-nV-trE">

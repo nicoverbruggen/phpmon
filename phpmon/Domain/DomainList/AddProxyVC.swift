@@ -11,6 +11,8 @@ import Cocoa
 
 class AddProxyVC: NSViewController, NSTextFieldDelegate {
     
+    // MARK: - Outlets
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {

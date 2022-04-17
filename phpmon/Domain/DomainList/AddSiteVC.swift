@@ -10,6 +10,8 @@ import Foundation
 import Cocoa
 
 class AddSiteVC: NSViewController, NSTextFieldDelegate {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var pathControl: NSPathControl!
     @IBOutlet weak var linkName: NSTextField!

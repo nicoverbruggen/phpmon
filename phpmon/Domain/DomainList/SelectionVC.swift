@@ -13,6 +13,8 @@ class SelectionVC: NSViewController {
     
     weak var domainListWC: DomainListWC?
     
+    @IBOutlet weak var textFieldTitle: NSTextField!
+    @IBOutlet weak var textFieldDescription: NSTextField!
     @IBOutlet weak var buttonCreateLink: NSButton!
     @IBOutlet weak var buttonCreateProxy: NSButton!
     @IBOutlet weak var buttonCancel: NSButton!
@@ -34,7 +36,11 @@ class SelectionVC: NSViewController {
     // MARK: - Localisation
     
     func loadStaticLocalisedStrings() {
-        // TODO
+        textFieldTitle.stringValue = "selection.title".localized
+        textFieldDescription.stringValue = "selection.description".localized
+        buttonCancel.title = "selection.cancel".localized
+        buttonCreateLink.title = "selection.create_link".localized
+        buttonCreateProxy.title = "selection.create_proxy".localized
     }
     
     // MARK: - Outlet Interactions

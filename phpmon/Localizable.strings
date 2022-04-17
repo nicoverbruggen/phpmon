@@ -90,7 +90,22 @@
 "site_link.close" = "Close";
 "site_link.switch_to_php" = "Switch to PHP %@";
 
-// ADD SITE TO SITE LIST
+// CHOOSE WHAT TO ADD
+
+"selection.title" = "What kind of domain would you like to set up?";
+"selection.description" = "Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.\n\nIf you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.";
+"selection.create_link" = "Create a Link";
+"selection.create_proxy" = "Create a Proxy";
+"selection.cancel" = "Cancel";
+
+
+// ADD PROXY TO DOMAINS LIST
+
+"domain_list.add.set_up_proxy" = "Set up a Proxy";
+"domain_list.add.proxy_subject" = "Proxy subject (usually: protocol, IP address and port)";
+"domain_list.add.domain_name" = "Domain name";
+
+// ADD SITE TO DOMAINS LIST
 
 "domain_list.add.link_folder" = "Link a Folder";
 "domain_list.add.domain_name_placeholder" = "Enter a domain name here";
