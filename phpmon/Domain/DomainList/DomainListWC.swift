@@ -111,7 +111,7 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
         
         let viewController = windowController.window!.contentViewController as! AddSiteVC
         viewController.pathControl.url = URL(fileURLWithPath: folder)
-        viewController.linkName.stringValue = String(folder.split(separator: "/").last!)
+        viewController.inputDomainName.stringValue = String(folder.split(separator: "/").last!)
         viewController.updateTextField()
         
         self.window?.beginSheet(windowController.window!)

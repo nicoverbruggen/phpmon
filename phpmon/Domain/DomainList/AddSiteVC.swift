@@ -12,15 +12,18 @@ import Cocoa
 class AddSiteVC: NSViewController, NSTextFieldDelegate {
     
     // MARK: - Outlets
+    
+    @IBOutlet weak var textFieldTitle: NSTextField!
 
     @IBOutlet weak var pathControl: NSPathControl!
-    @IBOutlet weak var linkName: NSTextField!
+    @IBOutlet weak var inputDomainName: NSTextField!
+    
     @IBOutlet weak var previewText: NSTextField!
+    
     @IBOutlet weak var buttonSecure: NSButton!
     @IBOutlet weak var buttonCreateLink: NSButton!
     @IBOutlet weak var buttonCancel: NSButton!
-
-    @IBOutlet weak var textFieldTitle: NSTextField!
+    
     @IBOutlet weak var textFieldSecure: NSTextField!
     @IBOutlet weak var textFieldError: NSTextField!
     
@@ -40,30 +43,27 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     
     func loadStaticLocalisedStrings() {
         textFieldTitle.stringValue = "domain_list.add.link_folder".localized
-        linkName.placeholderString = "domain_list.add.domain_name_placeholder".localized
+        inputDomainName.placeholderString = "domain_list.add.domain_name_placeholder".localized
         textFieldSecure.stringValue = "domain_list.add.secure_description".localized
-        buttonCancel.stringValue = "domain_list.add.cancel".localized
+        buttonCancel.title = "domain_list.add.cancel".localized
+        buttonCreateLink.title = "domain_list.add.create_link".localized
     }
     
     // MARK: - Outlet Interactions
     
-    @IBAction func pressedCreateProxy(_ sender: Any) {
-        // valet proxy (domain) http://127.0.0.1:90 (--secure)
-    }
-    
     @IBAction func pressedCreateLink(_ sender: Any) {
-        let path = self.pathControl.url!.path
-        let name = self.linkName.stringValue
+        let path = pathControl.url!.path
+        let name = inputDomainName.stringValue
         
         if !FileManager.default.fileExists(atPath: path) {
             Alert.confirm(
-                onWindow: self.view.window!,
+                onWindow: view.window!,
                 messageText: "domain_list.alert.folder_missing.title".localized,
                 informativeText: "domain_list.alert.folder_missing.desc".localized,
                 buttonTitle: "domain_list.alert.folder_missing.cancel".localized,
                 secondButtonTitle: "domain_list.alert.folder_missing.return".localized,
-                onFirstButtonPressed: {
-                    self.dismissView(outcome: .cancel)
+                onFirstButtonPressed: { [self] in
+                    dismissView(outcome: .cancel)
                 }
             )
             return
@@ -73,7 +73,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         // TODO: I will have to investigate and report this behaviour if possible
         Shell.run("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links", requiresPath: true)
         
-        self.dismissView(outcome: .OK)
+        dismissView(outcome: .OK)
         
         // Reset search
         App.shared.domainListWindowController?
@@ -90,7 +90,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     }
     
     @IBAction func pressedCancel(_ sender: Any) {
-        self.dismissView(outcome: .cancel)
+        dismissView(outcome: .cancel)
     }
     
     @IBAction func pressedSecure(_ sender: Any) {
@@ -106,41 +106,46 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
     // MARK: - Helper Methods
     
     private func isValidLinkName(_ name: String) -> Bool {
-        if self.linkName.stringValue.isEmpty {
-            self.textFieldError.isHidden = false
-            self.textFieldError.stringValue = "domain_list.add.errors.empty".localized
+        if name.isEmpty {
+            textFieldError.isHidden = false
+            textFieldError.stringValue = "domain_list.add.errors.empty".localized
             return false
         }
         
         if Valet.shared.sites.contains(where: { $0.name == name }) {
-            self.textFieldError.isHidden = false
-            self.textFieldError.stringValue = "domain_list.add.errors.already_exists".localized
+            textFieldError.isHidden = false
+            textFieldError.stringValue = "domain_list.add.errors.already_exists".localized
             return false
         }
         
-        self.textFieldError.isHidden = true
+        textFieldError.isHidden = true
         return true
     }
     
     func updateTextField() {
-        self.linkName.stringValue = self.linkName.stringValue
+        inputDomainName.stringValue = inputDomainName.stringValue
             .replacingOccurrences(of: " ", with: "-")
         
-        buttonCreateLink.isEnabled = isValidLinkName(self.linkName.stringValue)
-        self.updatePreview()
+        buttonCreateLink.isEnabled = isValidLinkName(inputDomainName.stringValue)
+        updatePreview()
     }
     
     func updatePreview() {
         buttonSecure.title = "domain_list.add.secure_after_creation"
             .localized(
-                self.linkName.stringValue,
+                inputDomainName.stringValue,
                 Valet.shared.config.tld
             )
         
+        if (inputDomainName.stringValue.isEmpty) {
+            previewText.stringValue = "domain_list.add.empty_fields".localized
+            return
+        }
+        
         previewText.stringValue = "domain_list.add.folder_available"
             .localized(
-                self.buttonSecure.state == .on ? "https" : "http",
-                self.linkName.stringValue,
+                buttonSecure.state == .on ? "https" : "http",
+                inputDomainName.stringValue,
                 Valet.shared.config.tld
             )
     }
