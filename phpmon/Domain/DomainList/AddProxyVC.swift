@@ -63,7 +63,23 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     }
     
     @IBAction func pressedCreateProxy(_ sender: Any) {
-        // valet proxy (domain) http://127.0.0.1:90 (--secure)
+        let domain = self.inputDomainName.stringValue
+        let proxyName = self.inputProxySubject.stringValue
+        let secure = self.buttonSecure.state == .on ? " --secure" : ""
+        
+        dismissView(outcome: .OK)
+        
+        App.shared.domainListWindowController?.contentVC.setUIBusy()
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            Shell.run("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)", requiresPath: true)
+            Actions.restartNginx()
+            
+            DispatchQueue.main.async {
+                App.shared.domainListWindowController?.contentVC.setUINotBusy()
+                App.shared.domainListWindowController?.pressedReload(nil)
+            }
+        }
     }
     
     @IBAction func pressedCancel(_ sender: Any) {

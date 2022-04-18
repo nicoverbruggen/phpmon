@@ -101,7 +101,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      Disables the UI so the user cannot interact with it.
      Also shows a spinner to indicate that we're busy.
      */
-    private func setUIBusy() {
+    public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             self.progressIndicator.startAnimation(true)
@@ -115,7 +115,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     /**
      Re-enables the UI so the user can interact with it.
      */
-    private func setUINotBusy() {
+    public func setUINotBusy() {
         timer?.invalidate()
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
