@@ -39,7 +39,7 @@ struct PhpFrameworks {
         "zendframework/zend-mvc": "Zend",
         "typo3/cms-core": "Typo3",
         
-        // TODO (5.1): Handle these in v5.1
+        // TODO (6.0): Handle these in v6.0
         // "magento/*": "Magento",
         // "concrete5/*": "Concrete5",
         // "contao/*": "Contao",

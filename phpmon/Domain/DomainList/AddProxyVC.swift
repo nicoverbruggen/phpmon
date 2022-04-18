@@ -63,6 +63,8 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     }
     
     @IBAction func pressedCreateProxy(_ sender: Any) {
+        // TODO: Validate the input before allowing proxy creation
+        
         let domain = self.inputDomainName.stringValue
         let proxyName = self.inputProxySubject.stringValue
         let secure = self.buttonSecure.state == .on ? " --secure" : ""

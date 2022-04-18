@@ -10,6 +10,8 @@ import Cocoa
 
 extension DomainListVC {
     
+    // TODO: Add context menu for proxies
+    
     internal func reloadContextMenu() {
         guard let site = selectedSite else {
             tableView.menu = nil
