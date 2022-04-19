@@ -53,7 +53,7 @@
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
 "mi_valet" = "Laravel Valet";
-"mi_domain_list" = "View Linked and Parked Domains...";
+"mi_domain_list" = "View Domains List...";
 
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
@@ -63,8 +63,8 @@
 // MENU ITEMS (if window is open)
 
 "mm_add_folder_as_link" = "Add Folder as Link...";
-"mm_reload_domain_list" = "Reload Site List";
-"mm_find_in_domain_list" = "Search in Site List";
+"mm_reload_domain_list" = "Reload Domains List";
+"mm_find_in_domain_list" = "Search in Domains List";
 
 // SITE LIST
 
