@@ -79,6 +79,7 @@ extension MainMenu {
         Valet.shared.validateVersion()
         Valet.shared.startPreloadingSites()
         
+        // A non-default TLD is not officially supported since Valet 3.2.x
         if (Valet.shared.config.tld != "test") {
             DispatchQueue.main.async {
                 BetterAlert().withInformation(

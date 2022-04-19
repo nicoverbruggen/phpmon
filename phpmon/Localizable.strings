@@ -367,8 +367,8 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
 
-// WARNINGS (hopefully removed in 5.2)
+// WARNINGS ABOUT NON-DEFAULT TLD
 
 "alert.warnings.tld_issue.title" = "You are not using `.test` as the TLD for Valet.";
-"alert.warnings.tld_issue.subtitle" = "Using a non-default TLD is currently not supported in PHP Monitor and there are a few known issues.";
-"alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`. After that, restart PHP Monitor and it should not warn you like this again.";
+"alert.warnings.tld_issue.subtitle" = "Using a non-default TLD may not work correctly and is not officially supported.";
+"alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`.";
