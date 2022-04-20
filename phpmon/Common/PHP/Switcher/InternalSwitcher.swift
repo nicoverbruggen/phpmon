@@ -71,6 +71,10 @@ class InternalSwitcher: PhpSwitcher {
             let existing = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf")!
             let new = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon")!
             do {
+                if (FileManager.default.fileExists(atPath: new.path)) {
+                    Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), cleaning up so the newer `www.conf` can be moved again.")
+                    try FileManager.default.removeItem(at: new)
+                }
                 try FileManager.default.moveItem(at: existing, to: new)
                 Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
             } catch {
