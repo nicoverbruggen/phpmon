@@ -29,8 +29,18 @@ extension MainMenu {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
+        // Attempt to find out more info about Valet
+        if Valet.shared.version != nil {
+            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
+        }
+        
+        // Validate the version (this will enforce which versions of PHP are supported)
+        Valet.shared.validateVersion()
+        
+        // Actually detect the PHP versions
         PhpEnv.detectPhpVersions()
         
+        // Check for an alias conflict
         if HomebrewDiagnostics.hasAliasConflict() {
             DispatchQueue.main.async {
                 BetterAlert()
@@ -71,12 +81,7 @@ extension MainMenu {
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
         
-        // Attempt to find out more info about Valet
-        if Valet.shared.version != nil {
-            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
-        }
-        
-        Valet.shared.validateVersion()
+        // Preload sites
         Valet.shared.startPreloadingSites()
         
         if (Valet.shared.config.tld != "test") {
