@@ -49,11 +49,11 @@ extension DomainListVC {
     }
     
     @objc func openInBrowser() {
-        let prefix = selectedSite!.secured ? "https://" : "http://"
-        let url = URL(string: "\(prefix)\(selectedSite!.name).\(Valet.shared.config.tld)")
-        if url != nil {
-            NSWorkspace.shared.open(url!)
-        } else {
+        guard let selected = self.selected else {
+            return
+        }
+        
+        guard let url = selected.getListableUrl() else {
             BetterAlert()
                 .withInformation(
                     title: "domain_list.alert.invalid_folder_name".localized,
@@ -61,7 +61,10 @@ extension DomainListVC {
                 )
                 .withPrimary(text: "OK")
                 .show()
+            return
         }
+        
+        NSWorkspace.shared.open(url)
     }
     
     @objc func openInFinder() {

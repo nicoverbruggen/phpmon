@@ -140,8 +140,18 @@ extension DomainListVC {
     
     private func addMenuItemsForProxy(_ proxy: ValetProxy) {
         let menu = NSMenu()
+        addOpenProxyInBrowser(to: menu)
+        addSeparator(to: menu)
         addRemoveProxy(to: menu)
         tableView.menu = menu
+    }
+    
+    private func addOpenProxyInBrowser(to menu: NSMenu) {
+        menu.addItem(
+            withTitle: "domain_list.open_in_browser".localized,
+            action: #selector(self.openInBrowser),
+            keyEquivalent: "B"
+        )
     }
     
     private func addRemoveProxy(to menu: NSMenu) {

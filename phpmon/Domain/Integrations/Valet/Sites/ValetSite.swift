@@ -257,4 +257,8 @@ class ValetSite: DomainListable {
     func getListableType() -> String {
         return self.driver ?? "ZZZ"
     }
+    
+    func getListableUrl() -> URL? {
+        return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
+    }
 }

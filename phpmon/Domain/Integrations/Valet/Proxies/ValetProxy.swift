@@ -47,4 +47,8 @@ class ValetProxy: DomainListable
     func getListableType() -> String {
         return "proxy"
     }
+    
+    func getListableUrl() -> URL? {
+        return URL(string: "\(self.secured ? "https://" : "http://")\(self.domain).\(self.tld)")
+    }
 }

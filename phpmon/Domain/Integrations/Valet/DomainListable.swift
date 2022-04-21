@@ -22,4 +22,6 @@ protocol DomainListable {
     
     func getListableType() -> String
     
+    func getListableUrl() -> URL?
+    
 }

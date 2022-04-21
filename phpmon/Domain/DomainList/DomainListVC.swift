@@ -251,7 +251,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
     
     @objc func doubleClicked(sender: Any) {
-        guard self.selectedSite != nil else {
+        guard self.selected != nil else {
             return
         }
         
