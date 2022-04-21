@@ -85,10 +85,12 @@
 "domain_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
 
 "domain_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
-"site_link.confirm_link" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
-
+"domain_list.confirm_unlink_desc" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
 "site_link.close" = "Close";
 "site_link.switch_to_php" = "Switch to PHP %@";
+
+"domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
+"domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";
 
 // CHOOSE WHAT TO ADD
 
@@ -97,7 +99,6 @@
 "selection.create_link" = "Create a Link";
 "selection.create_proxy" = "Create a Proxy";
 "selection.cancel" = "Cancel";
-
 
 // ADD PROXY TO DOMAINS LIST
 
@@ -145,6 +146,7 @@
 "domain_list.open_in_terminal" = "Open in Terminal";
 "domain_list.detected_apps" = "Detected Applications";
 "domain_list.system_apps" = "System Applications";
+"domain_list.unproxy" = "Remove Proxy";
 
 "domain_list.warning.spaces" = "Warning! This site has a space in its folder.\nThe site will not be reachable via the browser.";
 

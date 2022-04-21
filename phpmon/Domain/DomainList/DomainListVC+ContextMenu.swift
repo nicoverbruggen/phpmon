@@ -10,14 +10,25 @@ import Cocoa
 
 extension DomainListVC {
     
-    // TODO: Add context menu for proxies
-    
     internal func reloadContextMenu() {
-        guard let site = selectedSite else {
+        guard let selected = selected else {
             tableView.menu = nil
             return
         }
         
+        if let selected = selected as? ValetSite {
+            addMenuItemsForSite(selected)
+            return
+        }
+        if let selected = selected as? ValetProxy {
+            addMenuItemsForProxy(selected)
+            return
+        }
+    }
+    
+    // MARK: - Menu Items for Site
+    
+    private func addMenuItemsForSite(_ site: ValetSite) {
         let menu = NSMenu()
         
         addSystemApps(to: menu)
@@ -124,6 +135,24 @@ extension DomainListVC {
             keyEquivalent: ""
         )
     }
+    
+    // MARK: - Menu Items for Proxy
+    
+    private func addMenuItemsForProxy(_ proxy: ValetProxy) {
+        let menu = NSMenu()
+        addRemoveProxy(to: menu)
+        tableView.menu = menu
+    }
+    
+    private func addRemoveProxy(to menu: NSMenu) {
+        menu.addItem(
+            withTitle: "domain_list.unproxy".localized,
+            action: #selector(self.removeProxy),
+            keyEquivalent: ""
+        )
+    }
+    
+    // MARK: - Shared
     
     private func addSeparator(to menu: NSMenu) {
         menu.addItem(NSMenuItem.separator())

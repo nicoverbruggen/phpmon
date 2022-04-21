@@ -48,6 +48,13 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         return domains[tableView.selectedRow] as? ValetProxy
     }
     
+    var selected: DomainListable? {
+        if tableView.selectedRow == -1 {
+            return nil
+        }
+        return domains[tableView.selectedRow]
+    }
+    
     var timer: Timer? = nil
     
     // MARK: - Display
@@ -91,7 +98,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             domains = Valet.getDomainListable()
             searchedFor(text: lastSearchedFor)
         } else {
-            reloadSites()
+            reloadDomains()
         }
     }
     
@@ -146,7 +153,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     
     // MARK: - Site Data Loading
     
-    func reloadSites() {
+    func reloadDomains() {
         waitAndExecute {
             Valet.shared.reloadSites()
         } completion: { [self] in

@@ -73,7 +73,7 @@ extension MainMenu {
     private func reloadDomainListData() {
         if let window = App.shared.domainListWindowController {
             DispatchQueue.main.async {
-                window.contentVC.reloadSites()
+                window.contentVC.reloadDomains()
             }
         } else {
             Valet.shared.reloadSites()

@@ -114,13 +114,32 @@ extension DomainListVC {
         Alert.confirm(
             onWindow: view.window!,
             messageText: "domain_list.confirm_unlink".localized(site.name),
-            informativeText: "site_link.confirm_link".localized,
+            informativeText: "domain_list.confirm_unlink_desc".localized,
             buttonTitle: "domain_list.unlink".localized,
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
                 Shell.run("valet unlink '\(site.name)'", requiresPath: true)
-                self.reloadSites()
+                self.reloadDomains()
+            }
+        )
+    }
+    
+    @objc func removeProxy() {
+        guard let proxy = selectedProxy else {
+            return
+        }
+        
+        Alert.confirm(
+            onWindow: view.window!,
+            messageText: "domain_list.confirm_unproxy".localized("\(proxy.domain).\(proxy.tld)"),
+            informativeText: "domain_list.confirm_unproxy_desc".localized,
+            buttonTitle: "domain_list.unproxy".localized,
+            secondButtonTitle: "Cancel",
+            style: .critical,
+            onFirstButtonPressed: {
+                Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
+                self.reloadDomains()
             }
         )
     }

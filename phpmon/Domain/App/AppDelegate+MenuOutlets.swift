@@ -38,7 +38,7 @@ extension AppDelegate {
         
         if vc != nil {
             // If the view exists, directly reload the list of sites
-            vc!.reloadSites()
+            vc!.reloadDomains()
         } else {
             // If the view does not exist, reload the cached data that was populated when the app initially launched.
             Valet.shared.reloadSites()

@@ -51,7 +51,7 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
     // MARK: - Reload functionality
     
     @IBAction func pressedReload(_ sender: Any?) {
-        contentVC.reloadSites()
+        contentVC.reloadDomains()
     }
     
     @IBAction func pressedAddLink(_ sender: Any?) {
