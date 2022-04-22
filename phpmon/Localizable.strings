@@ -262,8 +262,9 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example) you should restart PHP Monitor and select \"Restart All Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
 
 // PHP FPM Broken
-"alert.php_fpm_broken.title" = "PHP-FPM configuration is incorrect";
-"alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config: it's not pointing to the Valet socket. This will result in 502 Bad Gateway if you visit websites linked via Valet.\n\nYou can usually fix this by running\n`valet install`, which updates your\n PHP-FPM configuration.";
+"alert.php_fpm_broken.title" = "Your PHP-FPM configuration is not pointing at the Valet socket!";
+"alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config. This will result in '502 Bad Gateway' responses if you visit websites linked via Valet.";
+"alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nIf that is the case, you can try the following workaround: edit the file at `~/.composer/vendor/laravel/valet/cli/Valet/Brew.php` and add e.g. `php@8.2` to the `SUPPORTED_PHP_VERSIONS` array. After editing the file, try running `valet install`. (This will, if all goes well, set up all the required Valet configuration files.)";
 
 // PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor cannot start due to a configuration problem";

@@ -13,7 +13,7 @@ public struct PhpVersionNumberCollection: Equatable {
     
     public static func make(from versions: [String]) -> Self {
         return PhpVersionNumberCollection(
-            versions: versions.map { PhpVersionNumber.make(from: $0)! }
+            versions: versions.map { try! PhpVersionNumber.parse($0) }
         )
     }
     

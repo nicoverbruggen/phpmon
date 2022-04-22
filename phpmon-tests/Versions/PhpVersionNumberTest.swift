@@ -12,19 +12,23 @@ class PhpVersionNumberTest: XCTestCase {
 
     func testCanDeconstructPhpVersion() throws {
         XCTAssertEqual(
+            try! PhpVersionNumber.parse("PHP 8.2.0-dev"),
+            PhpVersionNumber(major: 8, minor: 2, patch: 0)
+        )
+        XCTAssertEqual(
             try! PhpVersionNumber.parse("PHP 8.1.0RC5-dev"),
             PhpVersionNumber(major: 8, minor: 1, patch: 0)
         )
         XCTAssertEqual(
-            PhpVersionNumber.make(from: "8.0.11"),
+            try! PhpVersionNumber.parse("8.0.11"),
             PhpVersionNumber(major: 8, minor: 0, patch: 11)
         )
         XCTAssertEqual(
-            PhpVersionNumber.make(from: "7.4.2"),
+            try! PhpVersionNumber.parse("7.4.2"),
             PhpVersionNumber(major: 7, minor: 4, patch: 2)
         )
         XCTAssertEqual(
-            PhpVersionNumber.make(from: "7.4"),
+            try! PhpVersionNumber.parse("7.4"),
             PhpVersionNumber(major: 7, minor: 4, patch: nil)
         )
         XCTAssertEqual(

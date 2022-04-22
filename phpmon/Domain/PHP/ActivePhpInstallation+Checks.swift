@@ -24,7 +24,8 @@ extension ActivePhpInstallation {
                 BetterAlert()
                     .withInformation(
                         title: "alert.php_fpm_broken.title".localized,
-                        subtitle: "alert.php_fpm_broken.info".localized
+                        subtitle: "alert.php_fpm_broken.info".localized,
+                        description: "alert.php_fpm_broken.description".localized
                     )
                     .withPrimary(text: "OK")
                     .show()
