@@ -11,7 +11,7 @@ import Foundation
 class VersionExtractor {
     
     /**
-     This attempts to extract the version number from the command line output of Valet.
+     This attempts to extract the version number from any given string.
      */
     public static func from(_ string: String) -> String? {
         do {
