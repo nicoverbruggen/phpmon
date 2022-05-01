@@ -89,9 +89,35 @@ class StatusMenu : NSMenu {
             shortcutKey += 1
         }
         
-        // Other
         self.addItem(NSMenuItem.separator())
+        
+        // Xdebug
+        if Xdebug.enabled {
+            // TODO: Ensure that the Xdebug mode switcher works
+            // self.addXdebugMenuItem()
+        }
+        
+        // First Aid & Services
         self.addFirstAidAndServicesMenuItems()
+    }
+        
+    func addXdebugMenuItem() {
+        let xdebugSwitch = NSMenuItem(title: "mi_xdebug_mode".localized, action: nil, keyEquivalent: "")
+        let xdebugModesMenu = NSMenu()
+        let xdebugMode = Xdebug.mode
+        
+        for mode in Xdebug.modes {
+            let item = NSMenuItem(title: mode, action: nil, keyEquivalent: "")
+            item.state = xdebugMode == mode ? .on : .off
+            xdebugModesMenu.addItem(item)
+        }
+        
+        for item in xdebugModesMenu.items {
+            item.target = MainMenu.shared
+        }
+        
+        self.setSubmenu(xdebugModesMenu, for: xdebugSwitch)
+        self.addItem(xdebugSwitch)
     }
     
     func addFirstAidAndServicesMenuItems() {

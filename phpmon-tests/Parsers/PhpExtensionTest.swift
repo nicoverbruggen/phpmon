@@ -68,5 +68,10 @@ class PhpExtensionTest: XCTestCase {
         // Make sure if we load the data again, it's disabled
         XCTAssertEqual(PhpExtension.load(from: destination).first!.enabled, false)
     }
+    
+    func testCanRetrieveXdebugMode() throws {
+        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('xdebug.mode');"])
+        XCTAssertEqual(value, "coverage")
+    }
 
 }
