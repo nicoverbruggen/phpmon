@@ -45,14 +45,47 @@ class StatusMenu : NSMenu {
         self.addItem(NSMenuItem.separator())
     }
     
-    func addPhpConfigurationMenuItems() {
-        // Configuration
+    func addRemainingMenuItems() {
+        self.addConfigurationMenuItems()
+        
+        self.addItem(NSMenuItem.separator())
+
+        self.addComposerMenuItems()
+        
+        if (PhpEnv.shared.isBusy) {
+            return
+        }
+        
+        self.addItem(NSMenuItem.separator())
+        
+        self.addStatsMenuItem()
+
+        self.addItem(NSMenuItem.separator())
+        
+        self.addExtensionsMenuItems()
+        
+        self.addItem(NSMenuItem.separator())
+        
+        self.addXdebugMenuItem()
+
+        self.addFirstAidAndServicesMenuItems()
+    }
+    
+    func addCoreMenuItems() {
+        self.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(MainMenu.openPrefs), keyEquivalent: ","))
+        self.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(MainMenu.openAbout), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(MainMenu.terminateApp), keyEquivalent: "q"))
+    }
+     
+    // MARK: Remaining Menu Items
+    
+    func addConfigurationMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_configuration".localized))
         self.addItem(NSMenuItem(title: "mi_php_config".localized, action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c"))
         self.addItem(NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i"))
-        
-        // Composer
-        self.addItem(NSMenuItem.separator())
+    }
+    
+    func addComposerMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
         self.addItem(NSMenuItem(title: "mi_global_composer".localized, action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g"))
         
@@ -60,23 +93,19 @@ class StatusMenu : NSMenu {
         composerMenuItem.keyEquivalentModifierMask = .shift
         
         self.addItem(composerMenuItem)
+    }
+    
+    func addStatsMenuItem() {
+        guard let stats = PhpEnv.phpInstall.limits else { return }
         
-        if (PhpEnv.shared.isBusy) {
-            return
-        }
-        
-        let stats = PhpEnv.phpInstall.limits
-        
-        // Stats
-        self.addItem(NSMenuItem.separator())
         self.addItem(StatsView.asMenuItem(
-            memory: stats!.memory_limit,
-            post: stats!.post_max_size,
-            upload: stats!.upload_max_filesize)
+            memory: stats.memory_limit,
+            post: stats.post_max_size,
+            upload: stats.upload_max_filesize)
         )
-        
-        // Extensions
-        self.addItem(NSMenuItem.separator())
+    }
+    
+    func addExtensionsMenuItems() {
         self.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
         
         if (PhpEnv.phpInstall.extensions.count == 0) {
@@ -88,27 +117,29 @@ class StatusMenu : NSMenu {
             self.addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }
-        
-        self.addItem(NSMenuItem.separator())
-        
-        // Xdebug
-        if Xdebug.enabled {
-            // TODO: Ensure that the Xdebug mode switcher works
-            // self.addXdebugMenuItem()
-        }
-        
-        // First Aid & Services
-        self.addFirstAidAndServicesMenuItems()
     }
         
     func addXdebugMenuItem() {
-        let xdebugSwitch = NSMenuItem(title: "mi_xdebug_mode".localized, action: nil, keyEquivalent: "")
+        if !Xdebug.enabled {
+            return
+        }
+        
+        let xdebugSwitch = NSMenuItem(
+            title: "mi_xdebug_mode".localized,
+            action: nil,
+            keyEquivalent: ""
+        )
         let xdebugModesMenu = NSMenu()
         let xdebugMode = Xdebug.mode
         
         for mode in Xdebug.modes {
-            let item = NSMenuItem(title: mode, action: nil, keyEquivalent: "")
+            let item = XdebugMenuItem(
+                title: mode,
+                action: #selector(MainMenu.toggleXdebugMode(sender:)),
+                keyEquivalent: ""
+            )
             item.state = xdebugMode == mode ? .on : .off
+            item.mode = mode
             xdebugModesMenu.addItem(item)
         }
         
@@ -162,7 +193,7 @@ class StatusMenu : NSMenu {
         self.addItem(services)
     }
     
-    // PRIVATE HELPERS
+    // MARK: Private Helpers
     
     private func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
@@ -209,10 +240,14 @@ class StatusMenu : NSMenu {
     }
 }
 
-// MARK: - In order to store extra data in each item, NSMenuItem is subclassed
+// MARK: - NSMenuItem subclasses
 
 class PhpMenuItem: NSMenuItem {
     var version: String = ""
+}
+
+class XdebugMenuItem: NSMenuItem {
+    var mode: String = ""
 }
 
 class ExtensionMenuItem: NSMenuItem {

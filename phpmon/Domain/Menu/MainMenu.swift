@@ -61,13 +61,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         menu.addItem(NSMenuItem.separator())
         
         // Add services
-        menu.addPhpConfigurationMenuItems()
+        menu.addRemainingMenuItems()
         menu.addItem(NSMenuItem.separator())
         
         // Add about & quit menu items
-        menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ","))
-        menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
-        menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(terminateApp), keyEquivalent: "q"))
+        menu.addCoreMenuItems()
         
         // Make sure every item can be interacted with
         menu.items.forEach({ (item) in
@@ -242,6 +240,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         asyncExecution {
             Actions.restartDnsMasq()
         }
+    }
+    
+    @objc func toggleXdebugMode(sender: XdebugMenuItem) {
+        Log.info("Switching Xdebug to mode: \(sender.mode)")
     }
     
     @objc func toggleExtension(sender: ExtensionMenuItem) {
