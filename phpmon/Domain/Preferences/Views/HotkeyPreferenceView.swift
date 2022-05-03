@@ -7,20 +7,18 @@
 //
 
 import Foundation
-
-import Foundation
 import Cocoa
 
 class HotkeyPreferenceView: NSView, XibLoadable {
-    
+
     weak var delegate: PrefsVC?
-    
+
     @IBOutlet weak var labelSection: NSTextField!
     @IBOutlet weak var labelDescription: NSTextField!
-    
+
     @IBOutlet weak var buttonSetShortcut: NSButton!
     @IBOutlet weak var buttonClearShortcut: NSButton!
-    
+
     static func make(sectionText: String, descriptionText: String, _ prefsVC: PrefsVC) -> NSView {
         let view = Self.createFromXib()!
         view.labelSection.stringValue = sectionText
@@ -30,14 +28,14 @@ class HotkeyPreferenceView: NSView, XibLoadable {
         view.loadGlobalKeybindFromPreferences()
         return view
     }
-    
+
     // MARK: - Shortcut Functionality
-    
+
     // Adapted from: https://dev.to/mitchartemis/creating-a-global-configurable-shortcut-for-macos-apps-in-swift-25e9
-    
+
     func updateShortcut(_ event: NSEvent) {
         guard let characters = event.charactersIgnoringModifiers else { return }
-        
+
         let newGlobalKeybind = GlobalKeybindPreference.init(
             function: event.modifierFlags.contains(.function),
             control: event.modifierFlags.contains(.control),
@@ -49,12 +47,12 @@ class HotkeyPreferenceView: NSView, XibLoadable {
             characters: characters,
             keyCode: UInt32(event.keyCode)
         )
-        
+
         Preferences.update(.globalHotkey, value: newGlobalKeybind.toJson())
-        
+
         updateKeybindButton(newGlobalKeybind)
         buttonClearShortcut.isEnabled = true
-        
+
         App.shared.shortcutHotkey = HotKey(
             keyCombo: KeyCombo(
                 carbonKeyCode: UInt32(event.keyCode),
@@ -62,35 +60,35 @@ class HotkeyPreferenceView: NSView, XibLoadable {
             )
         )
     }
-    
+
     func loadGlobalKeybindFromPreferences() {
         let globalKeybind = GlobalKeybindPreference.fromJson(Preferences.preferences[.globalHotkey] as! String?)
-        
-        if (globalKeybind != nil) {
+
+        if globalKeybind != nil {
             updateKeybindButton(globalKeybind!)
         } else {
             buttonSetShortcut.title = "prefs.shortcut_set".localized
         }
-        
+
         buttonClearShortcut.isEnabled = globalKeybind != nil
     }
-    
+
     func updateKeybindButton(_ globalKeybindPreference: GlobalKeybindPreference) {
         buttonSetShortcut.title = globalKeybindPreference.description
     }
-    
+
     @IBAction func register(_ sender: Any) {
         unregister(nil)
         delegate?.listeningForHotkeyView = self
         delegate?.view.window?.makeFirstResponder(nil)
         buttonSetShortcut.title = "prefs.shortcut_listening".localized
     }
-    
+
     @IBAction func unregister(_ sender: Any?) {
         delegate?.listeningForHotkeyView = nil
         App.shared.shortcutHotkey = nil
         buttonSetShortcut.title = "prefs.shortcut_set".localized
         Preferences.update(.globalHotkey, value: nil)
     }
-    
+
 }

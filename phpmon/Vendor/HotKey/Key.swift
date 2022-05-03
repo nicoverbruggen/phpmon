@@ -269,7 +269,7 @@ public enum Key {
 		default: return nil
 		}
 	}
-	
+
 	public var carbonKeyCode: UInt32 {
 		switch self {
 		case .a: return UInt32(kVK_ANSI_A)
@@ -387,7 +387,7 @@ public enum Key {
 		case .upArrow: return UInt32(kVK_UpArrow)
 		}
 	}
-    
+
 }
 
 extension Key: CustomStringConvertible {

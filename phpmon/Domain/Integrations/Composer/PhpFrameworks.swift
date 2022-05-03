@@ -9,7 +9,7 @@
 import Foundation
 
 struct PhpFrameworks {
-    
+
     /**
      This list should probably be reversed when checked, because some of these
      will also require either `laravel/framework` or `symfony/symfony`.
@@ -17,10 +17,10 @@ struct PhpFrameworks {
     public static let DependencyList = [
 
         // COMMON FRAMEWORKS
-        "laravel/framework" : "Laravel",
+        "laravel/framework": "Laravel",
         "symfony/symfony": "Symfony",
         "laravel/lumen": "Lumen",
-        
+
         // VARIOUS CMS
         "roots/bedrock": "Bedrock",
         "cakephp/app": "CakePHP",
@@ -37,15 +37,15 @@ struct PhpFrameworks {
         "johnpbloch/wordpress-core": "WordPress",
         "zendframework/zendframework": "Zend",
         "zendframework/zend-mvc": "Zend",
-        "typo3/cms-core": "Typo3",
-        
+        "typo3/cms-core": "Typo3"
+
         // TODO (6.0): Handle these in v6.0
         // "magento/*": "Magento",
         // "concrete5/*": "Concrete5",
         // "contao/*": "Contao",
         // "slim/*": "Slim",
     ]
-    
+
     public static let FileMapping: [String: [String]] = [
         "Drupal": [
             // Legacy installations
@@ -61,10 +61,10 @@ struct PhpFrameworks {
         ],
         "Typo3": [
             "/typo3",
-            "/public/typo3",
+            "/public/typo3"
         ]
     ]
-    
+
     /**
      There are two cases where users are unlikely to use `composer`,
      when setting up a Drupal or a WordPress project. For performance
@@ -75,13 +75,13 @@ struct PhpFrameworks {
             let found = entry.value
                 .map { path in return Filesystem.fileExists(basePath + path) }
                 .contains(true)
-            
+
             if found {
                 return entry.key
             }
         }
-        
+
         return nil
     }
-    
+
 }

@@ -7,28 +7,28 @@
 import Foundation
 
 extension String {
-    
+
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
-    
+
     func localized(_ args: CVarArg...) -> String {
         String(format: self.localized, arguments: args)
     }
-    
+
     func countInstances(of stringToFind: String) -> Int {
-        if (stringToFind.isEmpty) {
+        if stringToFind.isEmpty {
             return 0
         }
-        
+
         var count = 0
         var searchRange: Range<String.Index>?
-        
+
         while let foundRange = range(of: stringToFind, options: [], range: searchRange) {
             count += 1
             searchRange = Range(uncheckedBounds: (lower: foundRange.upperBound, upper: endIndex))
         }
-        
+
         return count
     }
 
@@ -37,7 +37,7 @@ extension String {
         let end = r.upperBound
         return String(self[start ..< end])
     }
-    
+
     // Code taken from: https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
     /*
      <1> We split the version by period (.).
@@ -50,12 +50,12 @@ extension String {
      */
     func versionCompare(_ otherVersion: String) -> ComparisonResult {
         let versionDelimiter = "."
-        
+
         var versionComponents = self.components(separatedBy: versionDelimiter) // <1>
         var otherVersionComponents = otherVersion.components(separatedBy: versionDelimiter)
-        
+
         let zeroDiff = versionComponents.count - otherVersionComponents.count // <2>
-        
+
         if zeroDiff == 0 { // <3>
             // Same format, compare normally
             return self.compare(otherVersion, options: .numeric)
@@ -70,5 +70,5 @@ extension String {
                 .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
         }
     }
-    
+
 }

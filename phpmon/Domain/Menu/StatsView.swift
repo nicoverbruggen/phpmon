@@ -10,15 +10,15 @@ import Foundation
 import Cocoa
 
 class StatsView: NSView, XibLoadable {
-    
+
     @IBOutlet weak var titleMemLimit: NSTextField!
     @IBOutlet weak var titleMaxPost: NSTextField!
     @IBOutlet weak var titleMaxUpload: NSTextField!
-    
+
     @IBOutlet weak var labelMemLimit: NSTextField!
     @IBOutlet weak var labelMaxPost: NSTextField!
     @IBOutlet weak var labelMaxUpload: NSTextField!
-    
+
     static func asMenuItem(memory: String, post: String, upload: String) -> NSMenuItem {
         let view = Self.createFromXib()
         view!.titleMemLimit.stringValue = "mi_memory_limit".localized.uppercased()
@@ -32,5 +32,5 @@ class StatsView: NSView, XibLoadable {
         item.target = self
         return item
     }
-    
+
 }

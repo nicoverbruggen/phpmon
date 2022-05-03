@@ -9,9 +9,9 @@
 import Cocoa
 
 extension App {
-    
+
     // MARK: - Methods
-    
+
     /**
      On startup, the preferences should be loaded from the .plist,
      and we'll enable the shortcut if it is set.
@@ -22,20 +22,20 @@ extension App {
             Log.info("No global hotkey was saved in preferences. None set.")
             return
         }
-        
+
         // Make sure we can parse the JSON into the desired format
         guard let keybindPref = GlobalKeybindPreference.fromJson(hotkey) else {
             Log.err("No global hotkey loaded, could not be parsed!")
             shortcutHotkey = nil
             return
         }
-        
+
         shortcutHotkey = HotKey(keyCombo: KeyCombo(
             carbonKeyCode: keybindPref.keyCode,
             carbonModifiers: keybindPref.carbonFlags
         ))
     }
-    
+
     /**
      Sets up the action that needs to occur when the shortcut key is pressed
      (opens the menu).
@@ -44,11 +44,11 @@ extension App {
         guard let hotkey = shortcutHotkey else {
             return
         }
-        
+
         hotkey.keyDownHandler = {
             MainMenu.shared.statusItem.button?.performClick(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
-    
+
 }

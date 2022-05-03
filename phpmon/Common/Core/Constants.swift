@@ -8,13 +8,13 @@
 import Cocoa
 
 struct Constants {
-    
+
     /**
      * The latest PHP version that is considered to be stable at the time of release.
      * This version number is currently not used (only as a default fallback).
      */
     static let LatestStablePhpVersion = "8.1"
-    
+
     /**
      The minimum version of Valet that is recommended.
      If the installed version is older, a notification will be shown
@@ -24,7 +24,7 @@ struct Constants {
      See also: https://github.com/laravel/valet/releases/tag/v2.16.2
      */
     static let MinimumRecommendedValetVersion = "2.16.2"
-    
+
     /**
      * The PHP versions supported by this application.
      * Versions that do not appear in this array are omitted from the list.
@@ -42,7 +42,7 @@ struct Constants {
         "7.4",
         "8.0",
         "8.1",
-        
+
         // ====================
         // EXPERIMENTAL SUPPORT
         // ====================
@@ -50,9 +50,9 @@ struct Constants {
         // dev release. In this case, that means that the version below is detected.
         "8.2"
     ]
-    
+
     struct Urls {
-        
+
         static let DonationPayment = URL(
             string: "https://nicoverbruggen.be/sponsor#pay-now"
         )!
@@ -62,7 +62,7 @@ struct Constants {
         static let FrequentlyAskedQuestions = URL(
             string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting"
         )!
-        
+
     }
 
 }

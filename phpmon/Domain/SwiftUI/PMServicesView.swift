@@ -20,6 +20,6 @@ struct PMServices: NSViewRepresentable {
     func makeNSView(context: Context) -> some NSView {
         return ServicesView.asMenuItem().view!
     }
-    
+
     func updateNSView(_ nsView: NSViewType, context: Context) {}
 }

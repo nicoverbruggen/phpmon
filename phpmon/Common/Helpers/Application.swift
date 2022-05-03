@@ -12,23 +12,23 @@ import Foundation
 /// In most cases this is going to be a code editor, but it could also be another application
 /// that supports opening those directories, like a visual Git client or a terminal app.
 class Application {
-    
+
     enum AppType {
         case editor, browser, git_gui, terminal, user_supplied
     }
-    
+
     /// Name of the app. Used for display purposes and to determine `name.app` exists.
     let name: String
-    
+
     /// Application type. Depending on the type, a different action might occur.
     let type: AppType
-    
+
     /// Initializer. Used to detect a specific app of a specific type.
     init(_ name: String, _ type: AppType) {
         self.name = name
         self.type = type
     }
-    
+
     /**
      Attempt to open a specific directory in the app of choice.
      (This will open the app if it isn't open yet.)
@@ -36,7 +36,7 @@ class Application {
     @objc public func openDirectory(file: String) {
         return Shell.run("/usr/bin/open -a \"\(name)\" \"\(file)\"")
     }
-    
+
     /** Checks if the app is installed. */
     func isInstalled() -> Bool {
         // If this script does not complain, the app exists!
@@ -45,7 +45,7 @@ class Application {
             requiresPath: false
         ).task.terminationStatus == 0
     }
-    
+
     /**
      Detect which apps are available to open a specific directory.
      */

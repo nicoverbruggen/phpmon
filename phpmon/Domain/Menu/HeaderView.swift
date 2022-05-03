@@ -10,9 +10,9 @@ import Foundation
 import Cocoa
 
 class HeaderView: NSView, XibLoadable {
-    
+
     @IBOutlet weak var textField: NSTextField!
-    
+
     static func asMenuItem(text: String) -> NSMenuItem {
         let view = Self.createFromXib()
         view!.textField.stringValue = text.uppercased()
@@ -21,5 +21,5 @@ class HeaderView: NSView, XibLoadable {
         item.target = self
         return item
     }
-    
+
 }

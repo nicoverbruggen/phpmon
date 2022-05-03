@@ -11,28 +11,25 @@
 /**
  Runs a `valet` command. Defaults to running as superuser.
  */
-func valet(_ command: String, sudo: Bool = true) -> String
-{
+func valet(_ command: String, sudo: Bool = true) -> String {
     return Shell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)", requiresPath: true)
 }
 
 /**
  Runs a `brew` command. Can run as superuser.
  */
-func brew(_ command: String, sudo: Bool = false)
-{
+func brew(_ command: String, sudo: Bool = false) {
     Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
 }
 
 /**
  Runs `sed` in order to replace all occurrences of a string in a specific file with another.
  */
-func sed(file: String, original: String, replacement: String)
-{
+func sed(file: String, original: String, replacement: String) {
     // Escape slashes (or `sed` won't work)
     let e_original = original.replacingOccurrences(of: "/", with: "\\/")
     let e_replacement = replacement.replacingOccurrences(of: "/", with: "\\/")
-    
+
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
     if Filesystem.fileExists("\(Paths.binPath)/gsed") {
@@ -45,8 +42,7 @@ func sed(file: String, original: String, replacement: String)
 /**
  Uses `grep` to determine whether a particular query string can be found in a particular file.
  */
-func grepContains(file: String, query: String) -> Bool
-{
+func grepContains(file: String, query: String) -> Bool {
     return Shell.pipe("""
             grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
             """)

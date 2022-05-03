@@ -9,7 +9,7 @@
 import Foundation
 
 extension ValetSite {
-    
+
     convenience init(
         fakeWithName name: String,
         tld: String,
@@ -23,14 +23,14 @@ extension ValetSite {
         self.init(name: name, tld: tld, absolutePath: path, aliasPath: nil, makeDeterminations: false)
         self.secured = secure
         self.composerPhp = constraint
-        
+
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
-                return PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                return !PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
                     .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .count > 0
+                    .isEmpty
             }.contains(true)
-        
+
         self.driver = driver
         self.driverDeterminedByComposer = true
         if linked {
@@ -40,5 +40,5 @@ extension ValetSite {
             self.isolatedPhpVersion = PhpInstallation(isolated)
         }
     }
-    
+
 }

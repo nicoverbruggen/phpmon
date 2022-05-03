@@ -8,11 +8,10 @@
 
 import Foundation
 
-protocol SiteScanner
-{
+protocol SiteScanner {
     func resolveSiteCount(paths: [String]) -> Int
-    
+
     func resolveSitesFrom(paths: [String]) -> [ValetSite]
-    
+
     func resolveSite(path: String) -> ValetSite?
 }

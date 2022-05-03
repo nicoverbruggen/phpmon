@@ -9,15 +9,15 @@
 import Foundation
 
 class Xdebug {
-    
+
     public static var enabled: Bool {
         return !self.mode.isEmpty
     }
-    
+
     public static var mode: String {
         return Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('xdebug.mode');"])
     }
-    
+
     public static var modes: [String] {
         return [
             "off",
@@ -26,8 +26,8 @@ class Xdebug {
             "debug",
             "gcstats",
             "profile",
-            "trace",
+            "trace"
         ]
     }
-    
+
 }

@@ -10,9 +10,9 @@ import Cocoa
 import Foundation
 
 extension App {
-    
+
     // MARK: - Application State
-    
+
     /**
      Registers a window as currently open.
      */
@@ -22,7 +22,7 @@ extension App {
         }
         updateActivationPolicy()
     }
-    
+
     /**
      Removes a window, assuming it was closed.
      */
@@ -32,13 +32,13 @@ extension App {
         }
         updateActivationPolicy()
     }
-    
+
     /**
      If there are any open windows, the app will be a regular app.
      If there are no windows open, the app will be an accessory (toolbar) app.
      */
     public func updateActivationPolicy() {
-        NSApp.setActivationPolicy(openWindows.count > 0 ? .regular : .accessory)
+        NSApp.setActivationPolicy(!openWindows.isEmpty ? .regular : .accessory)
     }
-    
+
 }

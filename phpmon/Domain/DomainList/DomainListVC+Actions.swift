@@ -17,7 +17,7 @@ extension DomainListVC {
         let action = selectedSite!.secured ? "unsecure" : "secure"
         let selectedSite = selectedSite!
         let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
-        
+
         waitAndExecute {
             Shell.run(command, requiresPath: true)
         } completion: { [self] in
@@ -41,18 +41,18 @@ extension DomainListVC {
                         )
                 )
             }
-            
+
             tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
             tableView.deselectRow(rowToReload)
             tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
         }
     }
-    
+
     @objc func openInBrowser() {
         guard let selected = self.selected else {
             return
         }
-        
+
         guard let url = selected.getListableUrl() else {
             BetterAlert()
                 .withInformation(
@@ -63,29 +63,29 @@ extension DomainListVC {
                 .show()
             return
         }
-        
+
         NSWorkspace.shared.open(url)
     }
-    
+
     @objc func openInFinder() {
         Shell.run("open '\(selectedSite!.absolutePath)'")
     }
-    
+
     @objc func openInTerminal() {
         Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
     }
-    
+
     @objc func openWithEditor(sender: EditorMenuItem) {
         guard let editor = sender.editor else { return }
         editor.openDirectory(file: selectedSite!.absolutePath)
     }
-    
+
     @objc func isolateSite(sender: PhpMenuItem) {
         let command = "sudo \(Paths.valet) isolate php@\(sender.version) --site '\(self.selectedSite!.name)' && exit;"
-        
+
         self.performAction(command: command) {
             self.selectedSite!.determineIsolated()
-            
+
             if self.selectedSite!.isolatedPhpVersion == nil {
                 BetterAlert()
                     .withInformation(
@@ -98,22 +98,22 @@ extension DomainListVC {
             }
         }
     }
-    
+
     @objc func removeIsolatedSite() {
         self.performAction(command: "sudo \(Paths.valet) unisolate --site '\(self.selectedSite!.name)' && exit;") {
             self.selectedSite!.isolatedPhpVersion = nil
         }
     }
-    
+
     @objc func unlinkSite() {
         guard let site = selectedSite else {
             return
         }
-        
+
         if site.aliasPath == nil {
             return
         }
-        
+
         Alert.confirm(
             onWindow: view.window!,
             messageText: "domain_list.confirm_unlink".localized(site.name),
@@ -127,12 +127,12 @@ extension DomainListVC {
             }
         )
     }
-    
+
     @objc func removeProxy() {
         guard let proxy = selectedProxy else {
             return
         }
-        
+
         Alert.confirm(
             onWindow: view.window!,
             messageText: "domain_list.confirm_unproxy".localized("\(proxy.domain).\(proxy.tld)"),
@@ -146,10 +146,10 @@ extension DomainListVC {
             }
         )
     }
-    
+
     private func performAction(command: String, beforeCellReload: @escaping () -> Void) {
         let rowToReload = tableView.selectedRow
-        
+
         waitAndExecute {
             Shell.run(command, requiresPath: true)
         } completion: { [self] in
@@ -159,5 +159,5 @@ extension DomainListVC {
             tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
         }
     }
-    
+
 }

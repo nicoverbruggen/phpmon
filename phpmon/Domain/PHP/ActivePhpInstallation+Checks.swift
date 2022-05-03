@@ -9,7 +9,7 @@
 import Foundation
 
 extension ActivePhpInstallation {
-    
+
     /**
      It is always possible that the system configuration for PHP-FPM has not been set up for Valet.
      This can occur when a user manually installs a new PHP version, but does not run `valet install`.
@@ -32,5 +32,5 @@ extension ActivePhpInstallation {
             }
         }
     }
-    
+
 }

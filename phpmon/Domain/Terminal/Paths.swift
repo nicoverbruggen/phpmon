@@ -13,19 +13,19 @@ enum HomebrewDir: String {
 }
 
 class Paths {
-    
+
     static let shared = Paths()
-    var baseDir : HomebrewDir
+    var baseDir: HomebrewDir
     var userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
-    
+
     init() {
         let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
         let usrBrewFound = Shell.fileExists("\(HomebrewDir.usr.rawValue)/bin/brew")
-        
-        if (optBrewFound) {
+
+        if optBrewFound {
             // This is usually the case with Homebrew installed on Apple Silicon
             baseDir = .opt
-        } else if (usrBrewFound) {
+        } else if usrBrewFound {
             // This is usually the case with Homebrew installed on Intel (or Rosetta 2)
             baseDir = .usr
         } else {
@@ -35,41 +35,41 @@ class Paths {
             baseDir = .usr
         }
     }
-    
+
     // - MARK: Binaries
-    
+
     public static var valet: String {
         return "\(binPath)/valet"
     }
-    
+
     public static var brew: String {
         return "\(binPath)/brew"
     }
-    
+
     public static var php: String {
         return "\(binPath)/php"
     }
-    
+
     public static var phpConfig: String {
         return "\(binPath)/php-config"
     }
-    
+
     // - MARK: Paths
-    
+
     public static var whoami: String {
         return shared.userName
     }
-    
+
     public static var binPath: String {
         return "\(shared.baseDir.rawValue)/bin"
     }
-    
+
     public static var optPath: String {
         return "\(shared.baseDir.rawValue)/opt"
     }
-    
+
     public static var etcPath: String {
         return "\(shared.baseDir.rawValue)/etc"
     }
-    
+
 }

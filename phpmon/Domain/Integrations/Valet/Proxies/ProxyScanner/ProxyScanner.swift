@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ProxyScanner {
-    
+
     func resolveProxies(directoryPath: String) -> [ValetProxy]
-    
+
 }

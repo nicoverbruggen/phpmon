@@ -10,9 +10,9 @@ import Foundation
 import UserNotifications
 
 extension AppDelegate {
-    
+
     // MARK: - Notifications
-    
+
     /**
      Sets up notifications. That does mean we need to ask for permission first.
      If we cannot get permission, we should log this.
@@ -30,7 +30,7 @@ extension AppDelegate {
             }
         })
     }
-    
+
     /**
      Ensure that the application displays notifications even when the app is active.
      */
@@ -42,5 +42,5 @@ extension AppDelegate {
     ) {
         completionHandler([.banner])
     }
-    
+
 }

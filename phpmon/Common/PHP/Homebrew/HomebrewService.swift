@@ -18,7 +18,7 @@ struct HomebrewService: Decodable, Equatable {
     let status: String?
     let log_path: String?
     let error_log_path: String?
-    
+
     public static func loadAll(
         filter: [String] = [PhpEnv.phpInstall.formula, "nginx", "dnsmasq"],
         completion: @escaping ([HomebrewService]) -> Void
@@ -27,11 +27,11 @@ struct HomebrewService: Decodable, Equatable {
             let data = Shell
                 .pipe("sudo \(Paths.brew) services info --all --json", requiresPath: true)
                 .data(using: .utf8)!
-            
+
             let services = try! JSONDecoder()
                 .decode([HomebrewService].self, from: data)
                 .filter({ return filter.contains($0.name) })
-            
+
             completion(services)
         }
     }

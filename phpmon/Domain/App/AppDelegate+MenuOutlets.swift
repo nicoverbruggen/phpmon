@@ -22,20 +22,20 @@ import AppKit
  For more information about this, please see the ActivationPolicy-related extension.
  */
 extension AppDelegate {
-    
+
     // MARK: - Menu Interactions
-    
+
     @IBAction func addSiteLinkPressed(_ sender: Any) {
         DomainListVC.show()
-        
+
         guard let windowController = App.shared.domainListWindowController else { return }
         windowController.pressedAddLink(nil)
     }
-    
+
     @IBAction func reloadDomainListPressed(_ sender: Any) {
         let vc = App.shared.domainListWindowController?
             .window?.contentViewController as? DomainListVC
-        
+
         if vc != nil {
             // If the view exists, directly reload the list of sites
             vc!.reloadDomains()
@@ -44,12 +44,12 @@ extension AppDelegate {
             Valet.shared.reloadSites()
         }
     }
-    
+
     @IBAction func focusSearchField(_ sender: Any) {
         DomainListVC.show()
-        
+
         guard let windowController = App.shared.domainListWindowController else { return }
         windowController.searchToolbarItem.searchField.becomeFirstResponder()
     }
-    
+
 }

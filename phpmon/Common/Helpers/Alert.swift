@@ -8,7 +8,7 @@
 import Cocoa
 
 class Alert {
-    
+
     public static func confirm(
         onWindow window: NSWindow,
         messageText: String,
@@ -21,13 +21,13 @@ class Alert {
         if !Thread.isMainThread {
             fatalError("You should always present alerts on the main thread!")
         }
-        
+
         let alert = NSAlert.init()
         alert.alertStyle = style
         alert.messageText = messageText
         alert.informativeText = informativeText
         alert.addButton(withTitle: buttonTitle)
-        if (!secondButtonTitle.isEmpty) {
+        if !secondButtonTitle.isEmpty {
             alert.addButton(withTitle: secondButtonTitle)
         }
         alert.beginSheetModal(for: window) { response in
@@ -36,5 +36,5 @@ class Alert {
             }
         }
     }
-    
+
 }

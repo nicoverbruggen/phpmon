@@ -15,11 +15,11 @@ class CommandTest: XCTestCase {
             path: Paths.php,
             arguments: ["-v"]
         )
-        
+
         XCTAssert(version.contains("(cli)"))
         XCTAssert(version.contains("NTS"))
         XCTAssert(version.contains("built"))
         XCTAssert(version.contains("Zend"))
     }
-    
+
 }

@@ -9,18 +9,17 @@
 import Cocoa
 import AppKit
 
-class DomainListNameCell: NSTableCellView, DomainListCellProtocol
-{
+class DomainListNameCell: NSTableCellView, DomainListCellProtocol {
     static let reusableName = "domainListNameCell"
-    
+
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
-    
+
     func populateCell(with site: ValetSite) {
         labelSiteName.stringValue = "\(site.name).\(site.tld)"
         labelPathName.stringValue = site.absolutePathRelative
     }
-    
+
     func populateCell(with proxy: ValetProxy) {
         labelSiteName.stringValue = "\(proxy.domain).\(proxy.tld)"
         labelPathName.stringValue = proxy.target

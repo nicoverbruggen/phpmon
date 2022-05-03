@@ -10,15 +10,15 @@ import Foundation
 import AppKit
 
 extension MainMenu {
-    
+
     @objc func fixMyValet() {
         let previousVersion = PhpEnv.phpInstall.version.short
-        
+
         if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
             presentAlertForMissingFormula()
             return
         }
-        
+
         if !BetterAlert()
             .withInformation(
                 title: "alert.fix_my_valet.title".localized,
@@ -26,12 +26,11 @@ extension MainMenu {
             )
             .withPrimary(text: "alert.fix_my_valet.ok".localized)
             .withSecondary(text: "alert.fix_my_valet.cancel".localized)
-            .didSelectPrimary()
-        {
+            .didSelectPrimary() {
             Log.info("The user has chosen to abort Fix My Valet")
             return
         }
-        
+
         Actions.fixMyValet {
             DispatchQueue.main.async {
                 if previousVersion == PhpEnv.brewPhpVersion {
@@ -42,7 +41,7 @@ extension MainMenu {
             }
         }
     }
-    
+
     private func presentAlertForMissingFormula() {
         BetterAlert()
             .withInformation(
@@ -52,7 +51,7 @@ extension MainMenu {
             .withPrimary(text: "OK")
             .show()
     }
-    
+
     private func presentAlertForSameVersion() {
         BetterAlert()
             .withInformation(
@@ -63,7 +62,7 @@ extension MainMenu {
             .withPrimary(text: "OK")
             .show()
     }
-    
+
     private func presentAlertForDifferentVersion(version: String) {
         BetterAlert()
             .withInformation(
@@ -76,10 +75,10 @@ extension MainMenu {
                 MainMenu.shared.switchToPhpVersion(version)
             })
             .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpVersion))
-            .withTertiary(text: "", action: { alert in
+            .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })
             .show()
     }
-    
+
 }

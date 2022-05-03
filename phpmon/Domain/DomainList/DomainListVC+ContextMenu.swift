@@ -9,13 +9,13 @@
 import Cocoa
 
 extension DomainListVC {
-    
+
     internal func reloadContextMenu() {
         guard let selected = selected else {
             tableView.menu = nil
             return
         }
-        
+
         if let selected = selected as? ValetSite {
             addMenuItemsForSite(selected)
             return
@@ -25,29 +25,29 @@ extension DomainListVC {
             return
         }
     }
-    
+
     // MARK: - Menu Items for Site
-    
+
     private func addMenuItemsForSite(_ site: ValetSite) {
         let menu = NSMenu()
-        
+
         addSystemApps(to: menu)
         addSeparator(to: menu)
         addDetectedApps(to: menu)
         addSeparator(to: menu)
-        
+
         if Valet.enabled(feature: .isolatedSites) {
             addIsolate(to: menu, with: site)
         } else {
             addDisabledIsolation(to: menu)
         }
-        
+
         addUnlink(to: menu, with: site)
         addToggleSecure(to: menu, with: site)
-        
+
         tableView.menu = menu
     }
-    
+
     private func addSystemApps(to menu: NSMenu) {
         menu.addItem(withTitle: "domain_list.system_apps".localized, action: nil, keyEquivalent: "")
         menu.addItem(
@@ -66,13 +66,13 @@ extension DomainListVC {
             keyEquivalent: "B"
         )
     }
-    
+
     private func addDetectedApps(to menu: NSMenu) {
-        if (applications.count > 0) {
+        if !applications.isEmpty {
             menu.addItem(NSMenuItem.separator())
             menu.addItem(withTitle: "domain_list.detected_apps".localized, action: nil, keyEquivalent: "")
-            
-            for (_, editor) in applications.enumerated() {
+
+            for editor in applications {
                 let editorMenuItem = EditorMenuItem(
                     title: "Open with \(editor.name)",
                     action: #selector(self.openWithEditor(sender:)),
@@ -83,9 +83,9 @@ extension DomainListVC {
             }
         }
     }
-    
+
     private func addUnlink(to menu: NSMenu, with site: ValetSite) {
-        if (site.aliasPath != nil) {
+        if site.aliasPath != nil {
             menu.addItem(
                 withTitle: "domain_list.unlink".localized,
                 action: #selector(self.unlinkSite),
@@ -94,25 +94,29 @@ extension DomainListVC {
             menu.addItem(NSMenuItem.separator())
         }
     }
-    
+
     private func addDisabledIsolation(to menu: NSMenu) {
         menu.addItem(withTitle: "domain_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
         menu.addItem(NSMenuItem.separator())
     }
-    
+
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
         if site.isolatedPhpVersion == nil {
             // ISOLATION POSSIBLE
-            let isolationMenuItem = NSMenuItem(title:"domain_list.isolate".localized, action: nil, keyEquivalent: "")
+            let isolationMenuItem = NSMenuItem(title: "domain_list.isolate".localized, action: nil, keyEquivalent: "")
             let submenu = NSMenu()
             submenu.addItem(withTitle: "Choose a PHP version", action: nil, keyEquivalent: "")
             for version in PhpEnv.shared.availablePhpVersions.reversed() {
-                let item = PhpMenuItem(title: "Always use PHP \(version)", action: #selector(self.isolateSite), keyEquivalent: "")
+                let item = PhpMenuItem(
+                    title: "Always use PHP \(version)",
+                    action: #selector(self.isolateSite),
+                    keyEquivalent: ""
+                )
                 item.version = version
                 submenu.addItem(item)
             }
             menu.setSubmenu(submenu, for: isolationMenuItem)
-            
+
             menu.addItem(isolationMenuItem)
             menu.addItem(NSMenuItem.separator())
         } else {
@@ -125,7 +129,7 @@ extension DomainListVC {
             menu.addItem(NSMenuItem.separator())
         }
     }
-    
+
     private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {
         menu.addItem(
             withTitle: site.secured
@@ -135,9 +139,9 @@ extension DomainListVC {
             keyEquivalent: ""
         )
     }
-    
+
     // MARK: - Menu Items for Proxy
-    
+
     private func addMenuItemsForProxy(_ proxy: ValetProxy) {
         let menu = NSMenu()
         addOpenProxyInBrowser(to: menu)
@@ -145,7 +149,7 @@ extension DomainListVC {
         addRemoveProxy(to: menu)
         tableView.menu = menu
     }
-    
+
     private func addOpenProxyInBrowser(to menu: NSMenu) {
         menu.addItem(
             withTitle: "domain_list.open_in_browser".localized,
@@ -153,7 +157,7 @@ extension DomainListVC {
             keyEquivalent: "B"
         )
     }
-    
+
     private func addRemoveProxy(to menu: NSMenu) {
         menu.addItem(
             withTitle: "domain_list.unproxy".localized,
@@ -161,11 +165,11 @@ extension DomainListVC {
             keyEquivalent: ""
         )
     }
-    
+
     // MARK: - Shared
-    
+
     private func addSeparator(to menu: NSMenu) {
         menu.addItem(NSMenuItem.separator())
     }
-    
+
 }

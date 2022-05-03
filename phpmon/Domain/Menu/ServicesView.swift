@@ -20,15 +20,15 @@ import Cocoa
  service information should also not happen in a view. Yet here we are.
  */
 class ServicesView: NSView, XibLoadable {
-    
+
     @IBOutlet weak var imageViewPhp: NSImageView!
     @IBOutlet weak var imageViewNginx: NSImageView!
     @IBOutlet weak var imageViewDnsmasq: NSImageView!
-    
+
     @IBOutlet weak var textFieldPhp: NSTextField!
-    
+
     static var services: [String: HomebrewService] = [:]
-    
+
     static func asMenuItem() -> NSMenuItem {
         let view = Self.createFromXib()!
         [view.imageViewPhp, view.imageViewNginx, view.imageViewDnsmasq].forEach { imageView in
@@ -48,20 +48,20 @@ class ServicesView: NSView, XibLoadable {
     @objc func updateInformation() {
         self.loadData()
     }
-    
+
     func loadData() {
         self.applyAllInfoFieldsFromCachedValue()
         HomebrewService.loadAll { services in
-            ServicesView.services = Dictionary(uniqueKeysWithValues: services.map{ ($0.name, $0) })
+            ServicesView.services = Dictionary(uniqueKeysWithValues: services.map { ($0.name, $0) })
             self.applyAllInfoFieldsFromCachedValue()
         }
     }
-    
+
     func applyAllInfoFieldsFromCachedValue() {
         if ServicesView.services.keys.isEmpty {
             return
         }
-        
+
         DispatchQueue.main.async {
             self.textFieldPhp.stringValue = PhpEnv.phpInstall.formula.uppercased()
             self.applyServiceStyling(PhpEnv.phpInstall.formula, self.imageViewPhp)
@@ -69,24 +69,24 @@ class ServicesView: NSView, XibLoadable {
             self.applyServiceStyling("dnsmasq", self.imageViewDnsmasq)
         }
     }
-    
+
     func applyServiceStyling(_ serviceName: String, _ imageView: NSImageView) {
         if ServicesView.services[serviceName] == nil {
             imageView.image = NSImage(named: "ServiceLoading")
             imageView.contentTintColor = NSColor(named: "IconColorNormal")
             return
         }
-        
+
         if ServicesView.services[serviceName]!.running {
             imageView.image = NSImage(named: "ServiceOn")
             imageView.contentTintColor = NSColor(named: "IconColorNormal")
             return
         }
-        
+
         imageView.image = NSImage(named: "ServiceOff")
         imageView.contentTintColor = NSColor(named: "IconColorRed")
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: Events.ServicesUpdated, object: nil)
     }

@@ -9,7 +9,7 @@
 import Cocoa
 
 class Filesystem {
-    
+
     /**
      Checks if a file exists at the provided path.
      Uses `FileManager`.
@@ -19,5 +19,5 @@ class Filesystem {
             atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
         )
     }
-    
+
 }

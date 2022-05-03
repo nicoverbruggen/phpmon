@@ -230,6 +230,7 @@
 		C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4F319C927B034A500AFF46F /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
+		C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
 		C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */; };
@@ -405,6 +406,7 @@
 		C4F2E4392752F7D00020E974 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C4F30B02278E16BA00755FCE /* HomebrewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewService.swift; sourceTree = "<group>"; };
 		C4F30B06278E195800755FCE /* brew-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brew-services.json"; sourceTree = "<group>"; };
+		C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4F7809B25D80344000DBC97 /* CommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTest.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				C4E713562570150F00007428 /* SECURITY.md */,
 				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
 				54D9E0C027E4F5E9003B9AD9 /* LICENSE */,
+				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
 				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
@@ -974,6 +977,7 @@
 				C41C1B2F22B0097F00E7CF16 /* Sources */,
 				C41C1B3022B0097F00E7CF16 /* Frameworks */,
 				C41C1B3122B0097F00E7CF16 /* Resources */,
+				C4F5FBCB28216985001065C5 /* Run `swiftlint` */,
 			);
 			buildRules = (
 			);
@@ -1088,6 +1092,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C4F5FBCB28216985001065C5 /* Run `swiftlint` */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run `swiftlint`";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C41C1B2F22B0097F00E7CF16 /* Sources */ = {
@@ -1291,6 +1316,7 @@
 				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
 				C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */,
 				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
+				C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */,
 				C40B24F227A310770018C7D2 /* Events.swift in Sources */,
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
 				C4C0E8E027F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */,

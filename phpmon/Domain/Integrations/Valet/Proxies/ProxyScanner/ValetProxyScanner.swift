@@ -8,10 +8,8 @@
 
 import Foundation
 
-class ValetProxyScanner: ProxyScanner
-{
-    func resolveProxies(directoryPath: String) -> [ValetProxy]
-    {
+class ValetProxyScanner: ProxyScanner {
+    func resolveProxies(directoryPath: String) -> [ValetProxy] {
         return try! FileManager
             .default
             .contentsOfDirectory(atPath: directoryPath)

@@ -91,7 +91,6 @@ final class HotKeysController {
 		hotKeys.removeValue(forKey: box.carbonHotKeyID)
 	}
 
-
 	// MARK: - Events
 
 	static func handleCarbonEvent(_ event: EventRef?) -> OSStatus {
@@ -156,7 +155,6 @@ final class HotKeysController {
 		// Install the handler
 		InstallEventHandler(GetEventDispatcherTarget(), hotKeyEventHandler, 2, eventSpec, nil, &eventHandler)
 	}
-
 
 	// MARK: - Querying
 

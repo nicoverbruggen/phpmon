@@ -10,11 +10,11 @@ import Foundation
 
 class ComposerWindow {
 
-    private var menu: MainMenu? = nil
+    private var menu: MainMenu?
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
-    private var window: ProgressWindowController? = nil
-    
+    private var window: ProgressWindowController?
+
     /**
      Updates the global dependencies and runs the completion callback when done.
      */
@@ -22,33 +22,33 @@ class ComposerWindow {
         self.menu = MainMenu.shared
         self.shouldNotify = notify
         self.completion = completion
-        
+
         Paths.shared.detectBinaryPaths()
         if Paths.composer == nil {
             presentMissingAlert()
             return
         }
-        
+
         PhpEnv.shared.isBusy = true
         menu?.setBusyImage()
         menu?.rebuild()
-        
+
         window = ProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
             description: "alert.composer_progress.info".localized
         )
-        
+
         window?.setType(info: true)
-        
+
         DispatchQueue.global(qos: .userInitiated).async { [self] in
             let task = Shell.user.createTask(
                 for: "\(Paths.composer!) global update", requiresPath: true
             )
-            
+
             DispatchQueue.main.async {
                 self.window?.addToConsole("\(Paths.composer!) global update\n")
             }
-            
+
             task.listen(
                 didReceiveStandardOutputData: { string in
                     DispatchQueue.main.async {
@@ -63,11 +63,11 @@ class ComposerWindow {
                     // Log.perf("\(string.trimmingCharacters(in: .newlines))")
                 }
             )
-            
+
             task.launch()
             task.waitUntilExit()
             task.haltListening()
-            
+
             if task.terminationStatus <= 0 {
                 composerUpdateSucceeded()
             } else {
@@ -75,12 +75,12 @@ class ComposerWindow {
             }
         }
     }
-    
+
     private func composerUpdateSucceeded() {
         // Closing the window should happen after a slight delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             window?.close()
-            if (shouldNotify) {
+            if shouldNotify {
                 LocalNotification.send(
                     title: "alert.composer_success.title".localized,
                     subtitle: "alert.composer_success.info".localized
@@ -91,7 +91,7 @@ class ComposerWindow {
             completion(true)
         }
     }
-    
+
     private func composerUpdateFailed() {
         // Showing that something failed should be shown immediately
         DispatchQueue.main.async { [self] in
@@ -103,18 +103,18 @@ class ComposerWindow {
             completion(false)
         }
     }
-    
+
     // MARK: Main Menu Update
-    
+
     private func removeBusyStatus() {
         PhpEnv.shared.isBusy = false
         DispatchQueue.main.async { [self] in
             menu?.updatePhpVersionInStatusBar()
         }
     }
-    
+
     // MARK: Alert
-    
+
     private func presentMissingAlert() {
         BetterAlert()
             .withInformation(

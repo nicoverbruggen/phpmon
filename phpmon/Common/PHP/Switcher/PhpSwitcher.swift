@@ -9,15 +9,15 @@
 import Foundation
 
 protocol PhpSwitcherDelegate: AnyObject {
-    
+
     func switcherDidStartSwitching(to version: String)
-    
+
     func switcherDidCompleteSwitch(to version: String)
-    
+
 }
 
 protocol PhpSwitcher {
-    
+
     func performSwitch(to version: String, completion: @escaping () -> Void)
-    
+
 }

@@ -9,19 +9,19 @@
 import Foundation
 
 protocol DomainListable {
-    
+
     func getListableName() -> String
-    
+
     func getListableSecured() -> Bool
-    
+
     func getListableAbsolutePath() -> String
-    
+
     func getListablePhpVersion() -> String
-    
+
     func getListableKind() -> String
-    
+
     func getListableType() -> String
-    
+
     func getListableUrl() -> URL?
-    
+
 }
