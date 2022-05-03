@@ -1,5 +1,19 @@
 # DEVELOPER README
 
+## ✅ Linting
+
+This project uses the [SwiftLint](https://github.com/realm/SwiftLint) linter. You must install it and can run it like so:
+
+```
+swiftlint
+```
+
+It also automatically runs when you try to build the project. You'll get a warning if `swiftlint` is not installed, though. You can attempt to automatically fix issues:
+
+```
+swiftlint --fix
+```
+
 ## 🔧 Build instructions
 
 <img src="./docs/build.png" width="404px" alt="build button in Xcode"/>
