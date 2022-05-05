@@ -20,7 +20,7 @@ class ActivePhpInstallation {
 
     var version: Version!
     var limits: Limits!
-    var iniFiles: [PhpInitializationFile] = []
+    var iniFiles: [PhpConfigurationFile] = []
 
     var extensions: [PhpExtension] {
         return iniFiles.flatMap { initFile in
@@ -53,7 +53,7 @@ class ActivePhpInstallation {
         let mainConfigurationFileUrl = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
 
         iniFiles.append(
-            PhpInitializationFile(fileUrl: mainConfigurationFileUrl)
+            PhpConfigurationFile(fileUrl: mainConfigurationFileUrl)
         )
 
         // extensions.append(contentsOf: PhpExtension.load(from: mainConfigurationFileUrl))
@@ -76,7 +76,7 @@ class ActivePhpInstallation {
             let fileUrl = URL(fileURLWithPath: iniFilePath)
 
             iniFiles.append(
-                PhpInitializationFile(fileUrl: fileUrl)
+                PhpConfigurationFile(fileUrl: fileUrl)
             )
         }
     }
