@@ -43,9 +43,12 @@ class PhpConfigurationFile {
      */
     private static func parseConfig(from lines: [String]) -> Config {
         var config = Config()
+
         var currentSectionName = "main"
+
         for line in lines {
             let line = trim(line)
+
             if line.hasPrefix("[") && line.hasSuffix("]") {
                 currentSectionName = parseSectionHeader(line)
             } else if let (key, value) = parseLine(line) {
@@ -54,15 +57,16 @@ class PhpConfigurationFile {
                 config[currentSectionName] = section
             }
         }
+
         return config
     }
 
     /**
      Remove all whitespace and additional characters from individual lines.
      */
-    private static func trim(_ s: String) -> String {
+    private static func trim(_ string: String) -> String {
         let whitespaces = CharacterSet(charactersIn: " \n\r\t")
-        return s.trimmingCharacters(in: whitespaces)
+        return string.trimmingCharacters(in: whitespaces)
     }
 
     /**
@@ -96,9 +100,11 @@ class PhpConfigurationFile {
             maxSplits: 1,
             omittingEmptySubsequences: false
         )
+
         if !parts.isEmpty {
             return String(parts[0])
         }
+
         return ""
     }
 
@@ -108,6 +114,7 @@ class PhpConfigurationFile {
     private static func parseSectionHeader(_ line: String) -> String {
         let from = line.index(after: line.startIndex)
         let to = line.index(before: line.endIndex)
+
         return line[from..<to]
     }
 
@@ -117,11 +124,13 @@ class PhpConfigurationFile {
     private static func parseLine(_ line: String) -> (String, String)? {
         let parts = stripComment(line)
             .split(separator: "=", maxSplits: 1)
+
         if parts.count == 2 {
             let k = trim(String(parts[0]))
             let v = trim(String(parts[1]))
             return (k, v)
         }
+
         return nil
     }
 
