@@ -43,7 +43,7 @@ extension DomainListVC {
         }
 
         addUnlink(to: menu, with: site)
-        addToggleSecure(to: menu, with: site)
+        addToggleSecure(to: menu, secured: site.secured)
 
         tableView.menu = menu
     }
@@ -130,9 +130,9 @@ extension DomainListVC {
         }
     }
 
-    private func addToggleSecure(to menu: NSMenu, with site: ValetSite) {
+    private func addToggleSecure(to menu: NSMenu, secured: Bool) {
         menu.addItem(
-            withTitle: site.secured
+            withTitle: secured
             ? "domain_list.unsecure".localized
             : "domain_list.secure".localized,
             action: #selector(toggleSecure),
@@ -146,6 +146,7 @@ extension DomainListVC {
         let menu = NSMenu()
         addOpenProxyInBrowser(to: menu)
         addSeparator(to: menu)
+        addToggleSecure(to: menu, secured: proxy.secured)
         addRemoveProxy(to: menu)
         tableView.menu = menu
     }

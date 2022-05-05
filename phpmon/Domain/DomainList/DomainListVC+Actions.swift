@@ -12,6 +12,19 @@ import Cocoa
 extension DomainListVC {
 
     @objc func toggleSecure() {
+        if selected is ValetSite {
+            toggleSecureForSite()
+        } else {
+            toggleSecureForProxy()
+        }
+    }
+
+    func toggleSecureForProxy() {
+        // TODO: Handle this correctly
+        print("Will secure or unsecure proxy")
+    }
+
+    func toggleSecureForSite() {
         let rowToReload = tableView.selectedRow
         let originalSecureStatus = selectedSite!.secured
         let action = selectedSite!.secured ? "unsecure" : "secure"
