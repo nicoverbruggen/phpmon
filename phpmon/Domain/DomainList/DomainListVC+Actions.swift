@@ -20,8 +20,26 @@ extension DomainListVC {
     }
 
     func toggleSecureForProxy() {
-        // TODO: Handle this correctly
-        print("Will secure or unsecure proxy")
+        let originalSecureStatus = selectedProxy!.secured
+        let selectedProxy = selectedProxy!
+
+        self.waitAndExecute {
+            // 1. Remove the original proxy
+            Shell.run("\(Paths.valet) unproxy \(selectedProxy.domain)", requiresPath: true)
+
+            // 2. Add a new proxy, which is either secured/unsecured
+            let secure = originalSecureStatus ? "" : " --secure"
+            Shell.run("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)",
+                      requiresPath: true)
+
+            // 3. Restart nginx
+            Actions.restartNginx()
+
+            // 4. Reload site list
+            DispatchQueue.main.async {
+                App.shared.domainListWindowController?.pressedReload(nil)
+            }
+        }
     }
 
     func toggleSecureForSite() {
