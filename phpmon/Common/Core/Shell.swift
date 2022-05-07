@@ -91,7 +91,7 @@ public class Shell {
         task.launch()
         task.waitUntilExit()
 
-        return Shell.Output(
+        let output = Shell.Output(
             standardOutput: String(
                 data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
                 encoding: .utf8
@@ -102,6 +102,22 @@ public class Shell {
             )!,
             task: task
         )
+
+        if CommandLine.arguments.contains("--v") {
+            Log.info("")
+            Log.info("==== COMMAND ====")
+            Log.info("")
+            Log.info("\(self.shell) \(task.arguments?.joined(separator: " ") ?? "")")
+            Log.info("")
+            Log.info("==== OUTPUT ====")
+            Log.info("")
+            dump(output)
+            Log.info("")
+            Log.info("==== END OUTPUT ====")
+            Log.info("")
+        }
+
+        return output
     }
 
     /**
