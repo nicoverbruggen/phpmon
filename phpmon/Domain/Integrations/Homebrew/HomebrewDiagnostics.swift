@@ -11,6 +11,25 @@ import Foundation
 class HomebrewDiagnostics {
 
     /**
+     Determines the Homebrew taps the user has installed.
+     */
+    public static var installedTaps: [String] = {
+        return Shell
+            .pipe("\(Paths.brew) tap")
+            .split(separator: "\n")
+            .map { string in
+                return String(string)
+            }
+    }()
+
+    /**
+     Determines whether the PHP Monitor Cask is installed.
+     */
+    public static var customCaskInstalled: Bool = {
+        return installedTaps.contains("nicoverbruggen/cask")
+    }()
+
+    /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
      This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
@@ -55,6 +74,10 @@ class HomebrewDiagnostics {
         }
     }
 
+    /**
+     This method, unsurprisingly, is supposed to show a specific alert about this alias conflict
+     with the `shivammathur/php` tap.
+     */
     public static func presentAlertAboutConflict() {
         DispatchQueue.main.async {
             BetterAlert()

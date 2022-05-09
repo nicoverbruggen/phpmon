@@ -29,6 +29,12 @@ extension MainMenu {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
+        // Determine install method
+        Log.info(HomebrewDiagnostics.customCaskInstalled
+            ? "The app has probably been installed via Homebrew Cask."
+            : "The app has probably been installed directly."
+        )
+
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
             Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
@@ -86,8 +92,6 @@ extension MainMenu {
 
         NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
 
-        Log.info("PHP Monitor is ready to serve!")
-
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in
             App.shared.timer = Timer.scheduledTimer(
@@ -100,7 +104,12 @@ extension MainMenu {
         }
 
         Stats.incrementSuccessfulLaunchCount()
+
         Stats.evaluateSponsorMessageShouldBeDisplayed()
+
+        Updater.checkForUpdates()
+
+        Log.info("PHP Monitor is ready to serve!")
     }
 
     /**

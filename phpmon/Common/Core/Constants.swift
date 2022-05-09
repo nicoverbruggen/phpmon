@@ -65,6 +65,10 @@ struct Constants {
             string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting"
         )!
 
+        static let GitHubReleases = URL(
+            string: "https://github.com/nicoverbruggen/phpmon/releases"
+        )!
+
         static let StableBuildCaskFile = URL(
             string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb"
         )!
