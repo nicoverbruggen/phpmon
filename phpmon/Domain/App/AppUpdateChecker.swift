@@ -24,9 +24,9 @@ class AppUpdateChecker {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
                 return
-            } else {
-                Log.info("Automatic updates are enabled, a check will be performed.")
             }
+
+            Log.info("Automatic updates are enabled, a check will be performed.")
         }
 
         // Actually check for updates
