@@ -61,7 +61,7 @@ class ActivePhpInstallation {
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
             let loadedExtensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
-            if loadedExtensions.isEmpty {
+            if !loadedExtensions.isEmpty {
                 extensions.append(contentsOf: loadedExtensions)
             }
         }
