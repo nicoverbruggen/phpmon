@@ -19,9 +19,8 @@ class AppUpdateChecker {
         return App.version.contains("-dev")
     }()
 
-    public static func checkIfNewerVersionIsAvailable(automaticallyInitiated: Bool = true) {
-        // Information about the status of a potential background update
-        if automaticallyInitiated {
+    public static func checkIfNewerVersionIsAvailable(initiatedFromBackground: Bool = true) {
+        if initiatedFromBackground {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
                 return
@@ -38,7 +37,7 @@ class AppUpdateChecker {
         // We'll find out what the new version is by using `curl`
         var command = "curl -s"
 
-        if automaticallyInitiated {
+        if initiatedFromBackground {
             // If running as a background check, should only waste at most 3 secs of time
             command = "curl -s --max-time 3"
         }
@@ -51,7 +50,7 @@ class AppUpdateChecker {
             Log.err("We couldn't check for updates!")
 
             // Only notify about connection issues if the request to check for updates was explicit
-            if !automaticallyInitiated {
+            if !initiatedFromBackground {
                 notifyAboutConnectionIssue()
             }
 
@@ -63,7 +62,7 @@ class AppUpdateChecker {
             return
         }
 
-        handleVersionComparison(currentVersion, onlineVersion, automaticallyInitiated)
+        handleVersionComparison(currentVersion, onlineVersion, initiatedFromBackground)
     }
 
     private static func handleVersionComparison(
