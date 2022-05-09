@@ -119,6 +119,7 @@
 		C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */; };
 		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
+		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
@@ -340,6 +341,7 @@
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
 		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
+		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
+				C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */,
 			);
 			path = Versions;
 			sourceTree = "<group>";
@@ -1305,6 +1308,7 @@
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
+				C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */,

@@ -19,6 +19,22 @@ class AppUpdateChecker {
         return App.version.contains("-dev")
     }()
 
+    public static func retrieveVersionFromCask(_ initiatedFromBackground: Bool = true) -> String {
+        let caskFile = App.version.contains("-dev")
+        ? Constants.Urls.DevBuildCaskFile.absoluteString
+        : Constants.Urls.StableBuildCaskFile.absoluteString
+
+        var command = "curl -s"
+
+        if initiatedFromBackground {
+            command = "curl -s --max-time 5"
+        }
+
+        return Shell.pipe(
+            "\(command) '\(caskFile)' | grep version"
+        )
+    }
+
     public static func checkIfNewerVersionIsAvailable(initiatedFromBackground: Bool = true) {
         if initiatedFromBackground {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
@@ -29,22 +45,7 @@ class AppUpdateChecker {
             Log.info("Automatic updates are enabled, a check will be performed.")
         }
 
-        // Actually check for updates
-        let caskFile = App.version.contains("-dev")
-            ? Constants.Urls.DevBuildCaskFile.absoluteString
-            : Constants.Urls.StableBuildCaskFile.absoluteString
-
-        // We'll find out what the new version is by using `curl`
-        var command = "curl -s"
-
-        if initiatedFromBackground {
-            // If running as a background check, should only waste at most 3 secs of time
-            command = "curl -s --max-time 3"
-        }
-
-        let versionString = Shell.pipe(
-            "\(command) '\(caskFile)' | grep version"
-        )
+        let versionString = retrieveVersionFromCask(initiatedFromBackground)
 
         guard let onlineVersion = VersionExtractor.from(versionString) else {
             Log.err("We couldn't check for updates!")
@@ -80,7 +81,7 @@ class AppUpdateChecker {
             Log.info("There is a newer version (\(onlineVersion)) available!")
             notifyAboutNewerVersion(version: onlineVersion)
         case .orderedSame:
-            Log.info("The installed version \(currentVersion) matches the latest release (\(onlineVersion)).")
+            Log.info("The installed version (\(currentVersion)) matches the latest release (\(onlineVersion)).")
             if !background {
                 notifyVersionDoesNotNeedUpgrade()
             }
