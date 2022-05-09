@@ -14,6 +14,22 @@
 			<key>IsIncoming</key>
 			<false/>
 			<key>Host</key>
+			<string>raw.githubusercontent.com</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>80, 443</string>
+			<key>Relevance</key>
+			<string>Essential</string>
+			<key>Purpose</key>
+			<string>PHP Monitor connects to GitHub to check the Cask file to determine what the latest release of PHP Monitor is.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny this connection, PHP Monitor will not be able to search for updates. If you don&apos;t want this check to happen, you can disable automatic updates in the Preferences menu instead.</string>
+		</dict>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
 			<string>registry.npmjs.org</string>
 			<key>NetworkProtocol</key>
 			<string>TCP</string>

@@ -56,11 +56,21 @@ struct Constants {
         static let DonationPayment = URL(
             string: "https://nicoverbruggen.be/sponsor#pay-now"
         )!
+
         static let DonationPage = URL(
             string: "https://nicoverbruggen.be/sponsor"
         )!
+
         static let FrequentlyAskedQuestions = URL(
             string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting"
+        )!
+
+        static let StableBuildCaskFile = URL(
+            string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb"
+        )!
+
+        static let DevBuildCaskFile = URL(
+            string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon-dev.rb"
         )!
 
     }

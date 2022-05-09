@@ -337,6 +337,37 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         NSApplication.shared.terminate(nil)
     }
 
+    @objc func checkForUpdates() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let caskFile = App.version.contains("-dev")
+                ? Constants.Urls.DevBuildCaskFile.absoluteString
+                : Constants.Urls.StableBuildCaskFile.absoluteString
+
+            let versionString = Shell.pipe(
+                "curl -s '\(caskFile)' | grep version"
+            )
+
+            guard let onlineVersion = VersionExtractor.from(versionString) else {
+                Log.err("We couldn't check for updates!")
+                return
+            }
+
+            guard let current = VersionExtractor.from(App.shortVersion) else {
+                Log.err("We couldn't parse the current version number!")
+                return
+            }
+
+            switch onlineVersion.versionCompare(current) {
+            case .orderedAscending:
+                Log.info("You are running a newer version of PHP Monitor.")
+            case .orderedDescending:
+                Log.info("There is a newer version (\(onlineVersion)) available!")
+            case .orderedSame:
+                Log.info("The installed version matches the latest release (\(current)).")
+            }
+        }
+    }
+
     // MARK: - Menu Delegate
 
     func menuWillOpen(_ menu: NSMenu) {

@@ -59,6 +59,7 @@
 
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
+"mi_check_for_updates" = "Check for Updates...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 

@@ -74,15 +74,16 @@ class StatusMenu: NSMenu {
     }
 
     func addCoreMenuItems() {
-        self.addItem(
-            NSMenuItem(title: "mi_preferences".localized, action: #selector(MainMenu.openPrefs), keyEquivalent: ",")
-        )
-        self.addItem(
-            NSMenuItem(title: "mi_about".localized, action: #selector(MainMenu.openAbout), keyEquivalent: "")
-        )
-        self.addItem(
-            NSMenuItem(title: "mi_quit".localized, action: #selector(MainMenu.terminateApp), keyEquivalent: "q")
-        )
+        self.addItem(NSMenuItem.separator())
+        self.addItem(NSMenuItem(title: "mi_preferences".localized,
+                                action: #selector(MainMenu.openPrefs), keyEquivalent: ","))
+        self.addItem(NSMenuItem(title: "mi_check_for_updates".localized,
+                                action: #selector(MainMenu.checkForUpdates), keyEquivalent: ""))
+        self.addItem(NSMenuItem.separator())
+        self.addItem(NSMenuItem(title: "mi_about".localized,
+                                action: #selector(MainMenu.openAbout), keyEquivalent: ""))
+        self.addItem(NSMenuItem(title: "mi_quit".localized,
+                                action: #selector(MainMenu.terminateApp), keyEquivalent: "q"))
     }
 
     // MARK: Remaining Menu Items

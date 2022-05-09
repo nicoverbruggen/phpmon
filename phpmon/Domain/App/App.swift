@@ -21,6 +21,12 @@ class App {
         return "\(version) (\(build))"
     }
 
+    /** Retrieve the version number from the main info dictionary, Info.plist, but without the build number. */
+    static var shortVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        return "\(version)"
+    }
+
     static var architecture: String {
         var systeminfo = utsname()
         uname(&systeminfo)
