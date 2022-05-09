@@ -108,7 +108,7 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
             return false
         }
 
-        if proxy.range(of: #"(http:\/\/|https:\/\/)(.*)(:)(\d*)"#, options: .regularExpression) == nil {
+        if proxy.range(of: #"(http:\/\/|https:\/\/)(.+)(:)(\d+)$"#, options: .regularExpression) == nil {
             textFieldError.isHidden = false
             textFieldError.stringValue = "domain_list.add.errors.subject_invalid".localized
             return false
@@ -132,6 +132,9 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
 
     func updateTextField() {
         inputDomainName.stringValue = inputDomainName.stringValue
+            .replacingOccurrences(of: " ", with: "-")
+
+        inputProxySubject.stringValue = inputProxySubject.stringValue
             .replacingOccurrences(of: " ", with: "-")
 
         buttonCreateProxy.isEnabled = validate(
