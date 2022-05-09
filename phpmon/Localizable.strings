@@ -106,7 +106,7 @@
 // ADD PROXY TO DOMAINS LIST
 
 "domain_list.add.set_up_proxy" = "Set up a Proxy";
-"domain_list.add.proxy_subject" = "Proxy subject (usually: protocol, IP address and port)";
+"domain_list.add.proxy_subject" = "Proxy subject (must include protocol and port)";
 "domain_list.add.domain_name" = "Domain name";
 "domain_list.add.create_proxy" = "Create Proxy";
 "domain_list.add.proxy_available" = "%@ will be proxied and will be available via: %@://%@.%@";
@@ -124,6 +124,7 @@
 "domain_list.add.empty_fields" = "One or more fields are empty. Please fill all required fields.";
 "domain_list.add.errors.empty" = "You must enter a domain name.";
 "domain_list.add.errors.empty_proxy" = "You must enter what will be proxied.";
+"domain_list.add.errors.subject_invalid" = "The subject you've entered is not valid.\nYou must include the protocol and port.";
 "domain_list.add.errors.already_exists" = "A link with that name already exists.";
 
 // ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
