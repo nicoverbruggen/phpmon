@@ -33,10 +33,19 @@ class HomebrewDiagnostics {
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
      This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
-     
+
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public static func hasAliasConflict() -> Bool {
+    public static func checkForCaskConflict() {
+        if hasAliasConflict() {
+            presentAlertAboutConflict()
+        }
+    }
+
+    /**
+     Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
+     */
+    private static func hasAliasConflict() -> Bool {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
@@ -75,10 +84,9 @@ class HomebrewDiagnostics {
     }
 
     /**
-     This method, unsurprisingly, is supposed to show a specific alert about this alias conflict
-     with the `shivammathur/php` tap.
+     Show this alert in case the tapped Cask does cause issues because of the conflict.
      */
-    public static func presentAlertAboutConflict() {
+    private static func presentAlertAboutConflict() {
         DispatchQueue.main.async {
             BetterAlert()
                 .withInformation(

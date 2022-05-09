@@ -47,9 +47,7 @@ extension MainMenu {
         PhpEnv.detectPhpVersions()
 
         // Check for an alias conflict
-        if HomebrewDiagnostics.hasAliasConflict() {
-            HomebrewDiagnostics.presentAlertAboutConflict()
-        }
+        HomebrewDiagnostics.checkForCaskConflict()
 
         updatePhpVersionInStatusBar()
 
@@ -104,10 +102,11 @@ extension MainMenu {
         }
 
         Stats.incrementSuccessfulLaunchCount()
-
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
-        Updater.checkForUpdates()
+        DispatchQueue.global(qos: .utility).async {
+            AppUpdateChecker.checkIfNewerVersionIsAvailable()
+        }
 
         Log.info("PHP Monitor is ready to serve!")
     }

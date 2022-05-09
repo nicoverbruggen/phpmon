@@ -9,15 +9,19 @@
 import Foundation
 import AppKit
 
-class Updater {
+class AppUpdateChecker {
 
     public static var enabled: Bool = {
         return Preferences.isEnabled(.automaticBackgroundUpdateCheck)
     }()
 
-    public static func checkForUpdates(background: Bool = true) {
+    public static var isDev: Bool = {
+        return App.version.contains("-dev")
+    }()
+
+    public static func checkIfNewerVersionIsAvailable(automaticallyInitiated: Bool = true) {
         // Information about the status of a potential background update
-        if background {
+        if automaticallyInitiated {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
                 return
@@ -34,9 +38,9 @@ class Updater {
         // We'll find out what the new version is by using `curl`
         var command = "curl -s"
 
-        if background {
-            // If running as a background check, should only waste at most 2 secs of time
-            command = "curl -s --max-time 2"
+        if automaticallyInitiated {
+            // If running as a background check, should only waste at most 3 secs of time
+            command = "curl -s --max-time 3"
         }
 
         let versionString = Shell.pipe(
@@ -47,38 +51,67 @@ class Updater {
             Log.err("We couldn't check for updates!")
 
             // Only notify about connection issues if the request to check for updates was explicit
-            if !background {
+            if !automaticallyInitiated {
                 notifyAboutConnectionIssue()
             }
 
             return
         }
 
-        guard let current = VersionExtractor.from(App.shortVersion) else {
+        guard let currentVersion = VersionExtractor.from(App.shortVersion) else {
             Log.err("We couldn't parse the current version number!")
             return
         }
 
-        switch onlineVersion.versionCompare(current) {
+        handleVersionComparison(currentVersion, onlineVersion, automaticallyInitiated)
+    }
+
+    private static func handleVersionComparison(
+        _ currentVersion: String,
+        _ onlineVersion: String,
+        _ background: Bool
+    ) {
+        switch onlineVersion.versionCompare(currentVersion) {
         case .orderedAscending:
             Log.info("You are running a newer version of PHP Monitor.")
+            if !background {
+                notifyVersionDoesNotNeedUpgrade()
+            }
         case .orderedDescending:
             Log.info("There is a newer version (\(onlineVersion)) available!")
             notifyAboutNewerVersion(version: onlineVersion)
         case .orderedSame:
-            Log.info("The installed version \(current) matches the latest release (\(onlineVersion)).")
+            Log.info("The installed version \(currentVersion) matches the latest release (\(onlineVersion)).")
+            if !background {
+                notifyVersionDoesNotNeedUpgrade()
+            }
+        }
+    }
+
+    private static func notifyVersionDoesNotNeedUpgrade() {
+        DispatchQueue.main.async {
+            BetterAlert().withInformation(
+                title: "updater.alerts.is_latest_version.title\(isDev ? "_dev" : "")"
+                    .localized,
+                subtitle: "updater.alerts.is_latest_version.subtitle\(isDev ? "_dev" : "")"
+                    .localized(App.shortVersion),
+                description: ""
+            )
+            .withPrimary(text: "OK")
+            .show()
         }
     }
 
     private static func notifyAboutNewerVersion(version: String) {
-        let dev = App.version.contains("-dev") ? "-dev" : ""
+        let devSuffix = isDev ? "-dev" : ""
+        let command = isDev ? "brew upgrade phpmon" : "brew upgrade phpmon-dev"
 
         DispatchQueue.main.async {
             BetterAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title".localized(version),
                 subtitle: "updater.alerts.newer_version_available.subtitle".localized,
                 description: HomebrewDiagnostics.customCaskInstalled
-                    ? "updater.installation_source.brew".localized
+                    ? "updater.installation_source.brew".localized(command)
                     : "updater.installation_source.direct".localized
             )
             .withPrimary(
@@ -86,11 +119,11 @@ class Updater {
                 action: { vc in
                     vc.close(with: .OK)
                     NSWorkspace.shared.open(
-                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version)\(dev)")
+                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version)\(devSuffix)")
                     )
                 }
             )
-            .withTertiary(text: "Close", action: { vc in
+            .withTertiary(text: "Dismiss", action: { vc in
                 vc.close(with: .OK)
             })
             .show()

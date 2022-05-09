@@ -339,7 +339,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func checkForUpdates() {
         DispatchQueue.global(qos: .userInitiated).async {
-            Updater.checkForUpdates(background: false)
+            AppUpdateChecker.checkIfNewerVersionIsAvailable(automaticallyInitiated: false)
         }
     }
 
