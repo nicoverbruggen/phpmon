@@ -380,7 +380,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 // CHECK FOR UPDATES
 
-"updater.alerts.newer_version_available.title" = "A newer version of PHP Monitor (v%@) is now available!";
+"updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
 "updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
 "updater.alerts.newer_version_available.description" = "PHP Monitor is supposed to be updated via Homebrew, so there is no built-in updater. This check is only meant to inform you of the existence of a new version, you do not need to upgrade.";
 "updater.installation_source.brew" = "You appear to have installed PHP Monitor via Homebrew (or have at least tapped the required Caskfile) so it is recommended that you upgrade via the terminal by running `%@`.";
@@ -389,9 +389,6 @@ You can do this by running `composer global update` in your terminal. After that
 
 "updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
 "updater.alerts.is_latest_version.subtitle" = "The currently installed version (v%@) is up-to-date.\nThere is no newer version available.";
-
-"updater.alerts.is_latest_version.title_dev" = "PHP Monitor DEV is (probably) up-to-date!";
-"updater.alerts.is_latest_version.subtitle_dev" = "You appear to be running a development build. While no major newer version seems to be available, a newer dev build for the same version may be available, and it is recommended that you check if that is the case. Thanks for testing!";
 
 "updater.alerts.cannot_check_for_update.title" = "PHP Monitor could not determine if a newer version is available.";
 "updater.alerts.cannot_check_for_update.subtitle" = "You might not be connected to the internet, are blocking traffic or GitHub is down and won't allow you to check for updates. If you keep seeing this message, you may want to manually check the releases page.";

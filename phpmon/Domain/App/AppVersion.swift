@@ -69,8 +69,12 @@ class AppVersion {
         )
     }
 
+    var humanReadable: String {
+        return "\(version) (\(build ?? "0"))"
+    }
+
     var comparable: String {
-        return "\(version).\(build)"
+        return "\(version).\(build ?? "0")"
     }
 
 }

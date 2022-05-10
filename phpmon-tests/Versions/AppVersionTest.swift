@@ -23,6 +23,15 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual(nil, version?.suffix)
     }
 
+    func testCanParseCaskVersionString() {
+        let version = AppVersion.from("1.0.0_600")
+
+        XCTAssertNotNil(version)
+        XCTAssertEqual("1.0.0", version?.version)
+        XCTAssertEqual("600", version?.build)
+        XCTAssertEqual(nil, version?.suffix)
+    }
+
     func testCanParseDevVersionStringWithoutBuildNumber() {
         let version = AppVersion.from("1.0.0-dev")
 

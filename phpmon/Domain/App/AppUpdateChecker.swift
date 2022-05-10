@@ -51,7 +51,7 @@ class AppUpdateChecker {
 
         let versionString = retrieveVersionFromCask(initiatedFromBackground)
 
-        guard let onlineVersion = VersionExtractor.from(versionString) else {
+        guard let onlineVersion = AppVersion.from(versionString) else {
             Log.err("We couldn't check for updates!")
 
             // Only notify about connection issues if the request to check for updates was explicit
@@ -62,10 +62,7 @@ class AppUpdateChecker {
             return
         }
 
-        guard let currentVersion = VersionExtractor.from(App.shortVersion) else {
-            Log.err("We couldn't parse the current version number!")
-            return
-        }
+        let currentVersion = AppVersion.fromCurrentVersion()
 
         handleVersionComparison(
             currentVersion,
@@ -75,11 +72,11 @@ class AppUpdateChecker {
     }
 
     private static func handleVersionComparison(
-        _ currentVersion: String,
-        _ onlineVersion: String,
+        _ currentVersion: AppVersion,
+        _ onlineVersion: AppVersion,
         _ background: Bool
     ) {
-        switch onlineVersion.versionCompare(currentVersion) {
+        switch onlineVersion.comparable.versionCompare(currentVersion.comparable) {
         case .orderedAscending:
             Log.info("You are running a newer version of PHP Monitor.")
             if !background { notifyVersionDoesNotNeedUpgrade() }
@@ -95,10 +92,8 @@ class AppUpdateChecker {
     private static func notifyVersionDoesNotNeedUpgrade() {
         DispatchQueue.main.async {
             BetterAlert().withInformation(
-                title: "updater.alerts.is_latest_version.title\(isDev ? "_dev" : "")"
-                    .localized,
-                subtitle: "updater.alerts.is_latest_version.subtitle\(isDev ? "_dev" : "")"
-                    .localized(App.shortVersion),
+                title: "updater.alerts.is_latest_version.title".localized,
+                subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
                 description: ""
             )
             .withPrimary(text: "OK")
@@ -106,13 +101,13 @@ class AppUpdateChecker {
         }
     }
 
-    private static func notifyAboutNewerVersion(version: String) {
+    private static func notifyAboutNewerVersion(version: AppVersion) {
         let devSuffix = isDev ? "-dev" : ""
-        let command = isDev ? "brew upgrade phpmon" : "brew upgrade phpmon-dev"
+        let command = isDev ? "brew upgrade phpmon-dev" : "brew upgrade phpmon"
 
         DispatchQueue.main.async {
             BetterAlert().withInformation(
-                title: "updater.alerts.newer_version_available.title".localized(version),
+                title: "updater.alerts.newer_version_available.title".localized(version.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle".localized,
                 description: HomebrewDiagnostics.customCaskInstalled
                     ? "updater.installation_source.brew".localized(command)
@@ -123,7 +118,7 @@ class AppUpdateChecker {
                 action: { vc in
                     vc.close(with: .OK)
                     NSWorkspace.shared.open(
-                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version)\(devSuffix)")
+                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version.version)\(devSuffix)")
                     )
                 }
             )
