@@ -52,6 +52,9 @@
 		C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
+		C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
+		C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
+		C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
@@ -296,6 +299,8 @@
 		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
 		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		C40FE736282ABA4F00A302C2 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTest.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
 		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
@@ -795,6 +800,7 @@
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
+				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -876,6 +882,7 @@
 				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
+				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
 				C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */,
 			);
 			path = Versions;
@@ -1160,6 +1167,7 @@
 				C41C02A927E61A65009F26CB /* ValetSite+Fake.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
+				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B585442770FE3900DA4FBE /* Command.swift in Sources */,
 				C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */,
@@ -1301,6 +1309,7 @@
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
+				C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */,
@@ -1357,6 +1366,7 @@
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
 				C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */,
+				C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
 				C4EE55AA27708B9E001DF387 /* PMHeaderView.swift in Sources */,
 				C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,

@@ -19,7 +19,9 @@ class AppUpdateChecker {
         return App.version.contains("-dev")
     }()
 
-    public static func retrieveVersionFromCask(_ initiatedFromBackground: Bool = true) -> String {
+    public static func retrieveVersionFromCask(
+        _ initiatedFromBackground: Bool = true
+    ) -> String {
         let caskFile = App.version.contains("-dev")
         ? Constants.Urls.DevBuildCaskFile.absoluteString
         : Constants.Urls.StableBuildCaskFile.absoluteString
@@ -35,7 +37,9 @@ class AppUpdateChecker {
         )
     }
 
-    public static func checkIfNewerVersionIsAvailable(initiatedFromBackground: Bool = true) {
+    public static func checkIfNewerVersionIsAvailable(
+        initiatedFromBackground: Bool = true
+    ) {
         if initiatedFromBackground {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
@@ -63,7 +67,11 @@ class AppUpdateChecker {
             return
         }
 
-        handleVersionComparison(currentVersion, onlineVersion, initiatedFromBackground)
+        handleVersionComparison(
+            currentVersion,
+            onlineVersion,
+            initiatedFromBackground
+        )
     }
 
     private static func handleVersionComparison(
@@ -74,17 +82,13 @@ class AppUpdateChecker {
         switch onlineVersion.versionCompare(currentVersion) {
         case .orderedAscending:
             Log.info("You are running a newer version of PHP Monitor.")
-            if !background {
-                notifyVersionDoesNotNeedUpgrade()
-            }
+            if !background { notifyVersionDoesNotNeedUpgrade() }
         case .orderedDescending:
             Log.info("There is a newer version (\(onlineVersion)) available!")
             notifyAboutNewerVersion(version: onlineVersion)
         case .orderedSame:
             Log.info("The installed version (\(currentVersion)) matches the latest release (\(onlineVersion)).")
-            if !background {
-                notifyVersionDoesNotNeedUpgrade()
-            }
+            if !background { notifyVersionDoesNotNeedUpgrade() }
         }
     }
 

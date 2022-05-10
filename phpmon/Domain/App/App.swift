@@ -21,10 +21,14 @@ class App {
         return "\(version) (\(build))"
     }
 
-    /** Retrieve the version number from the main info dictionary, Info.plist, but without the build number. */
+    /** Just the bundle version (build). */
+    static var bundleVersion: String {
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    }
+
+    /** Just the version number. */
     static var shortVersion: String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-        return "\(version)"
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
     static var architecture: String {
