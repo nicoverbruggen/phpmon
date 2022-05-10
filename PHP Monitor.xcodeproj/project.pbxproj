@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */ = {isa = PBXBuildFile; fileRef = 54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */; };
 		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54D9E0B227E4F51E003B9AD9 /* HotKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9E0AC27E4F51E003B9AD9 /* HotKeysController.swift */; };
@@ -272,6 +273,7 @@
 /* Begin PBXFileReference section */
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy-custom-tld.test"; sourceTree = "<group>"; };
 		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		54D9E0AC27E4F51E003B9AD9 /* HotKeysController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotKeysController.swift; sourceTree = "<group>"; };
 		54D9E0AD27E4F51E003B9AD9 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
@@ -657,8 +659,9 @@
 		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
 			isa = PBXGroup;
 			children = (
-				C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */,
 				C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */,
+				C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */,
+				54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */,
 				C42CFB1527DFDE7900862737 /* nginx-site.test */,
 				C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */,
 			);
@@ -1093,6 +1096,7 @@
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
+				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
 			);
@@ -1506,7 +1510,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 780;
+				CURRENT_PROJECT_VERSION = 781;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1532,7 +1536,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 780;
+				CURRENT_PROJECT_VERSION = 781;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -10,6 +10,8 @@ import XCTest
 
 class NginxConfigurationTest: XCTestCase {
 
+    // MARK: - Test Files
+
     static var regularUrl: URL {
         return Bundle(for: Self.self).url(forResource: "nginx-site", withExtension: "test")!
     }
@@ -25,6 +27,12 @@ class NginxConfigurationTest: XCTestCase {
     static var secureProxyUrl: URL {
         return Bundle(for: Self.self).url(forResource: "nginx-secure-proxy", withExtension: "test")!
     }
+
+    static var customTldProxyUrl: URL {
+        return Bundle(for: Self.self).url(forResource: "nginx-secure-proxy-custom-tld", withExtension: "test")!
+    }
+
+    // MARK: - Tests
 
     func testCanDetermineSiteNameAndTld() throws {
         XCTAssertEqual(
@@ -62,6 +70,12 @@ class NginxConfigurationTest: XCTestCase {
         let proxied = NginxConfiguration(filePath: NginxConfigurationTest.secureProxyUrl.path)
         XCTAssertTrue(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
         XCTAssertEqual("http://127.0.0.1:90", proxied.proxy)
+    }
+
+    func testCanDetermineProxyWithCustomTld() throws {
+        let proxied = NginxConfiguration(filePath: NginxConfigurationTest.customTldProxyUrl.path)
+        XCTAssertTrue(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
+        XCTAssertEqual("http://localhost:8080", proxied.proxy)
     }
 
 }

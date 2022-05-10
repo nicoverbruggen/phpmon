@@ -40,7 +40,7 @@ class NginxConfiguration {
      */
     lazy var proxy: String? = {
         let regex = try! NSRegularExpression(
-            pattern: #"proxy_pass (?<proxy>.*:\d*);"#,
+            pattern: #"proxy_pass (?<proxy>.*:\d*)(\/*);"#,
             options: []
         )
 
