@@ -76,17 +76,48 @@ class AppUpdateChecker {
         _ onlineVersion: AppVersion,
         _ background: Bool
     ) {
-        switch onlineVersion.comparable.versionCompare(currentVersion.comparable) {
+        switch onlineVersion.version.versionCompare(currentVersion.version) {
         case .orderedAscending:
-            Log.info("You are running a newer version of PHP Monitor.")
+            Log.info("You are running a newer version of PHP Monitor "
+                     + "(\(currentVersion.computerReadable) > \(onlineVersion.computerReadable)).")
             if !background { notifyVersionDoesNotNeedUpgrade() }
         case .orderedDescending:
-            Log.info("There is a newer version (\(onlineVersion)) available!")
+            Log.info("There is a newer version (\(onlineVersion)) available! "
+                     + "(\(onlineVersion.computerReadable) > \(currentVersion.computerReadable))")
             notifyAboutNewerVersion(version: onlineVersion)
         case .orderedSame:
-            Log.info("The installed version (\(currentVersion)) matches the latest release (\(onlineVersion)).")
+            // Check if the build number differs
+            if currentVersion.build != nil
+                && onlineVersion.build != nil
+                && buildDiffers(currentVersion, onlineVersion, background) {
+                return
+            }
+
+            // If the build number does not differ... it's the same release
+            Log.info("The installed version (\(currentVersion.computerReadable)) matches the latest release "
+                     + "(\(onlineVersion.computerReadable)).")
             if !background { notifyVersionDoesNotNeedUpgrade() }
         }
+    }
+
+    private static func buildDiffers(
+        _ currentVersion: AppVersion,
+        _ onlineVersion: AppVersion,
+        _ background: Bool
+    ) -> Bool {
+        if Int(onlineVersion.build!)! > Int(currentVersion.build!)! {
+            Log.info("There is a newer build of PHP Monitor available! "
+                     + "(\(onlineVersion.computerReadable) > \(currentVersion.computerReadable))")
+            notifyAboutNewerVersion(version: onlineVersion)
+            return true
+        } else if Int(onlineVersion.build!)! < Int(currentVersion.build!)! {
+            Log.info("You are running a newer build of PHP Monitor "
+                     + "(\(currentVersion.computerReadable) > \(onlineVersion.computerReadable)).")
+            if !background { notifyVersionDoesNotNeedUpgrade() }
+            return true
+        }
+
+        return false
     }
 
     private static func notifyVersionDoesNotNeedUpgrade() {

@@ -64,17 +64,17 @@ class AppVersion {
 
     public static func fromCurrentVersion() -> AppVersion {
         return AppVersion(
-            version: App.shortVersion,
+            version: VersionExtractor.from(App.shortVersion)!,
             build: App.bundleVersion
         )
     }
 
-    var humanReadable: String {
-        return "\(version) (\(build ?? "0"))"
+    var computerReadable: String {
+        return "\(version)_\(build ?? "???")"
     }
 
-    var comparable: String {
-        return "\(version).\(build ?? "0")"
+    var humanReadable: String {
+        return "\(version) (\(build ?? "???"))"
     }
 
 }
