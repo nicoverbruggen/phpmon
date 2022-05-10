@@ -86,14 +86,12 @@ class AppUpdateChecker {
                      + "(\(onlineVersion.computerReadable) > \(currentVersion.computerReadable))")
             notifyAboutNewerVersion(version: onlineVersion)
         case .orderedSame:
-            // Check if the build number differs
             if currentVersion.build != nil
                 && onlineVersion.build != nil
                 && buildDiffers(currentVersion, onlineVersion, background) {
                 return
             }
 
-            // If the build number does not differ... it's the same release
             Log.info("The installed version (\(currentVersion.computerReadable)) matches the latest release "
                      + "(\(onlineVersion.computerReadable)).")
             if !background { notifyVersionDoesNotNeedUpgrade() }

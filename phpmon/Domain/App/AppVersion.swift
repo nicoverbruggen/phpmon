@@ -63,14 +63,11 @@ class AppVersion {
     }
 
     public static func fromCurrentVersion() -> AppVersion {
-        return AppVersion(
-            version: VersionExtractor.from(App.shortVersion)!,
-            build: App.bundleVersion
-        )
+        return AppVersion.from("\(App.shortVersion)_\(App.bundleVersion)")!
     }
 
     var computerReadable: String {
-        return "\(version)_\(build ?? "???")"
+        return "\(version)_\(build ?? "0")"
     }
 
     var humanReadable: String {
