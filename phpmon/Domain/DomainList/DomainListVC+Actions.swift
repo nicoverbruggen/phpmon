@@ -153,8 +153,11 @@ extension DomainListVC {
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
-                Shell.run("valet unlink '\(site.name)'", requiresPath: true)
-                self.reloadDomains()
+                self.waitAndExecute {
+                    Shell.run("valet unlink '\(site.name)'", requiresPath: true)
+                } completion: {
+                    self.reloadDomains()
+                }
             }
         )
     }
@@ -172,8 +175,11 @@ extension DomainListVC {
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
-                Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
-                self.reloadDomains()
+                self.waitAndExecute {
+                    Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
+                } completion: {
+                    self.reloadDomains()
+                }
             }
         )
     }
