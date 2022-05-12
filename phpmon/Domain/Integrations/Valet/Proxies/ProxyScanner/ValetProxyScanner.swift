@@ -13,12 +13,8 @@ class ValetProxyScanner: ProxyScanner {
         return try! FileManager
             .default
             .contentsOfDirectory(atPath: directoryPath)
-            .filter {
-                // Skip .DS_Store files
-                return $0 != ".DS_Store"
-            }
-            .map {
-                return NginxConfiguration.init(filePath: "\(directoryPath)/\($0)")
+            .compactMap {
+                return NginxConfiguration.from(filePath: "\(directoryPath)/\($0)")
             }
             .filter {
                 return $0.proxy != nil

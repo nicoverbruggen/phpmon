@@ -19,19 +19,30 @@ class NginxConfiguration {
     /** The TLD of the domain, usually derived from the name of the file. */
     var tld: String
 
-    init(filePath: String) {
+    static func from(filePath: String) -> NginxConfiguration? {
         let path = filePath.replacingOccurrences(
             of: "~",
             with: "/Users/\(Paths.whoami)"
         )
 
-        self.contents = try! String(contentsOfFile: path)
+        do {
+            let fileContents = try String(contentsOfFile: path)
+            return NginxConfiguration.init(
+                path: path,
+                contents: fileContents
+            )
+        } catch {
+            Log.warn("Could not read the nginx configuration file at: `\(filePath)`")
+            return nil
+        }
+    }
 
+    init(path: String, contents: String) {
         let domain = String(path.split(separator: "/").last!)
         let tld = String(domain.split(separator: ".").last!)
 
-        self.domain = domain
-            .replacingOccurrences(of: ".\(tld)", with: "")
+        self.contents = contents
+        self.domain = domain.replacingOccurrences(of: ".\(tld)", with: "")
         self.tld = tld
     }
 
