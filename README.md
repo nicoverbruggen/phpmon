@@ -150,6 +150,15 @@ Finally, run PHP Monitor. Since the app is notarized and signed with a developer
 </details>
 
 <details>
+<summary><strong>How frequently does PHP Monitor check for updates?</strong></summary>
+
+PHP Monitor will check if an update is available every time you start the app.
+
+You can disable this behaviour by going to Preferences (via the PHP Monitor icon in the menu bar) and unchecking "Automatically check for updates". You can always check for updates manually.
+
+</details>
+
+<details>
 <summary><strong>I have PHP Monitor installed, and it works. I want to upgrade my PHP installations to the latest version, what's the best way to do this?</strong></summary>
 
 It's easy to make a mistake here, and end up with an unlinked version of PHP or have versions missing from PHP Monitor.
