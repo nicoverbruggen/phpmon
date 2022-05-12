@@ -287,9 +287,13 @@ PHP Monitor is a universal app and supports both architectures, so [find out her
 <details>
 <summary><strong>Why is the app doing network requests?</strong></summary>
 
-It's Homebrew. I can't prevent `brew` from doing things via the network when I invoke it.
+The app will automatically check for updates, which is the most likely culprit. 
 
-PHP Monitor itself doesn't do any network requests. Feel free to check the source code or intercept the traffic, if you don't believe me.
+This happens at launch (unless disabled), and the app directly checks the Caskfile hosted on GitHub. This data is not, and will not be used for analytics (and, as far as I can tell, cannot).
+
+I also can't prevent `brew` from doing things via the network when PHP Monitor uses the binary.
+
+The app includes an Internet Access Policy file, so if you're using something like Little Snitch there should be a description why these calls occur.
 
 </details>
 
