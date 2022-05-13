@@ -1,0 +1,15 @@
+disabled_rules:
+  - todo
+  - identifier_name
+  - force_try
+  - force_cast
+  
+opt_in_rules:
+  - empty_count
+
+included:
+  - phpmon
+  - phpmon-tests
+
+excluded:
+  - phpmon/Vendor

@@ -3,7 +3,7 @@
   PHP Monitor
 
   Created by Nico Verbruggen on 16/05/2020.
-  Copyright © 2020 Nico Verbruggen. All rights reserved.
+  Copyright © 2022 Nico Verbruggen. All rights reserved.
 */
 
 // MENU ITEMS (MI)
@@ -43,6 +43,8 @@
 "mi_other" = "First Aid & Services";
 "mi_first_aid" = "First Aid";
 
+"mi_xdebug_mode" = "Switch Xdebug Mode";
+
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet Folder (.config/valet)";
 "mi_php_config" = "Locate PHP Configuration File (php.ini)";
@@ -53,87 +55,113 @@
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
 "mi_valet" = "Laravel Valet";
-"mi_sitelist" = "View Linked and Parked Domains...";
+"mi_domain_list" = "View Domains List...";
 
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
+"mi_check_for_updates" = "Check for Updates...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
 // MENU ITEMS (if window is open)
 
 "mm_add_folder_as_link" = "Add Folder as Link...";
-"mm_reload_site_list" = "Reload Site List";
-"mm_find_in_site_list" = "Search in Site List";
+"mm_reload_domain_list" = "Reload Domains List";
+"mm_find_in_domain_list" = "Search in Domains List";
 
 // SITE LIST
 
-"site_list.title" = "Domains";
-"site_list.subtitle" = "Linked & Parked";
+"domain_list.title" = "Domains";
+"domain_list.subtitle" = "";
 
-"site_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
-"site_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
-"site_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
+"domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
+"domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";
 
-"site_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
-"site_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
+"domain_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
+"domain_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
+"domain_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
 
-"site_list.alerts_status_changed.title" = "SSL Status Changed";
-"site_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
+"domain_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";
+"domain_list.alerts_status_not_changed.desc" = "Something went wrong. Try running the command in your terminal manually: %@";
 
-"site_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
-"site_link.confirm_link" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
+"domain_list.alerts_status_changed.title" = "SSL Status Changed";
+"domain_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
 
+"domain_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
+"domain_list.confirm_unlink_desc" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
 "site_link.close" = "Close";
 "site_link.switch_to_php" = "Switch to PHP %@";
 
-// ADD SITE TO SITE LIST
+"domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
+"domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";
 
-"site_list.add.link_folder" = "Link a Folder";
-"site_list.add.domain_name_placeholder" = "Enter a domain name here";
-"site_list.add.secure_after_creation" = "Secure %@.%@ after creation";
-"site_list.add.secure_description" = "Securing a site requires administrative privileges.\nYou will be prompted for your password or Touch ID.";
-"site_list.add.create_link" = "Create Link";
-"site_list.add.cancel" = "Cancel";
-"site_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
+// CHOOSE WHAT TO ADD
 
-"site_list.add.errors.empty" = "You must enter a name.";
-"site_list.add.errors.already_exists" = "A link with that name already exists.";
+"selection.title" = "What kind of domain would you like to set up?";
+"selection.description" = "Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.\n\nIf you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.";
+"selection.create_link" = "Create a Link";
+"selection.create_proxy" = "Create a Proxy";
+"selection.cancel" = "Cancel";
+
+// ADD PROXY TO DOMAINS LIST
+
+"domain_list.add.set_up_proxy" = "Set up a Proxy";
+"domain_list.add.proxy_subject" = "Proxy subject (must include protocol and port)";
+"domain_list.add.domain_name" = "Domain name";
+"domain_list.add.create_proxy" = "Create Proxy";
+"domain_list.add.proxy_available" = "%@ will be proxied and will be available via: %@://%@.%@";
+
+// ADD SITE TO DOMAINS LIST
+
+"domain_list.add.link_folder" = "Link a Folder";
+"domain_list.add.domain_name_placeholder" = "Enter a domain name here";
+"domain_list.add.secure_after_creation" = "Secure %@.%@ after creation";
+"domain_list.add.secure_description" = "Securing a domain requires administrative privileges.\nYou may be prompted for your password or Touch ID.";
+"domain_list.add.create_link" = "Create Link";
+"domain_list.add.cancel" = "Cancel";
+"domain_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
+
+"domain_list.add.empty_fields" = "One or more fields are empty. Please fill all required fields.";
+"domain_list.add.errors.empty" = "You must enter a domain name.";
+"domain_list.add.errors.empty_proxy" = "You must enter what will be proxied.";
+"domain_list.add.errors.subject_invalid" = "The subject you've entered is not valid.\nYou must include the protocol and port.";
+"domain_list.add.errors.already_exists" = "A link with that name already exists.";
 
 // ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
 
-"site_list.alert.folder_missing.desc" = "The folder you chose no longer seems to exist. Do you want to cancel adding this folder? If you moved the folder, you could always put it back and try again.";
-"site_list.alert.folder_missing.title" = "Folder missing!";
-"site_list.alert.folder_missing.cancel" = "Cancel Link";
-"site_list.alert.folder_missing.return" = "OK";
+"domain_list.alert.folder_missing.desc" = "The folder you chose no longer seems to exist. Do you want to cancel adding this folder? If you moved the folder, you could always put it back and try again.";
+"domain_list.alert.folder_missing.title" = "Folder missing!";
+"domain_list.alert.folder_missing.cancel" = "Cancel Link";
+"domain_list.alert.folder_missing.return" = "OK";
 
-"site_list.add.modal_description" = "First, select which folder you would like to link.";
+"domain_list.add.modal_description" = "First, select which folder you would like to link.";
 
 // SITE LIST ACTIONS
 
-"site_list.isolate" = "Isolate Domain";
-"site_list.remove_isolation" = "Remove Isolation";
-"site_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
+"domain_list.isolate" = "Isolate Domain";
+"domain_list.remove_isolation" = "Remove Isolation";
+"domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
-"site_list.unlink" = "Unlink Directory";
-"site_list.secure" = "Secure Domain";
-"site_list.unsecure" = "Unsecure Domain";
-"site_list.open_in_finder" = "Open in Finder";
-"site_list.open_in_browser" = "Open in Browser";
-"site_list.open_in_terminal" = "Open in Terminal";
-"site_list.detected_apps" = "Detected Applications";
-"site_list.system_apps" = "System Applications";
+"domain_list.unlink" = "Unlink Directory";
+"domain_list.secure" = "Secure Domain";
+"domain_list.unsecure" = "Unsecure Domain";
+"domain_list.open_in_finder" = "Open in Finder";
+"domain_list.open_in_browser" = "Open in Browser";
+"domain_list.open_in_terminal" = "Open in Terminal";
+"domain_list.detected_apps" = "Detected Applications";
+"domain_list.system_apps" = "System Applications";
+"domain_list.unproxy" = "Remove Proxy";
 
-"site_list.warning.spaces" = "Warning! This site has a space in its folder.\nThe site will not be reachable via the browser.";
+"domain_list.warning.spaces" = "Warning! This site has a space in its folder.\nThe site will not be reachable via the browser.";
 
-"site_list.alert.invalid_folder_name" = "Invalid folder name";
-"site_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
+"domain_list.alert.invalid_folder_name" = "Invalid folder name";
+"domain_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
 
-"site_list.columns.tls" = "TLS";
-"site_list.columns.domain" = "Domain";
-"site_list.columns.php" = "PHP";
-"site_list.columns.type" = "Type";
-"site_list.columns.kind" = "Kind";
+"domain_list.columns.tls" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.php" = "PHP";
+"domain_list.columns.type" = "Type";
+"domain_list.columns.kind" = "Kind";
 
 // DRIVERS
 
@@ -157,6 +185,7 @@
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 "prefs.integrations" = "Integrations:";
+"prefs.updates" = "Updates:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -178,6 +207,9 @@
 
 "prefs.open_protocol_title" = "Allow third-party integrations";
 "prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them.";
+
+"prefs.automatic_update_check_title" = "Automatically check for updates";
+"prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
@@ -346,8 +378,25 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
 
-// WARNINGS (hopefully removed in 5.2)
+// CHECK FOR UPDATES
+
+"updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
+"updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
+"updater.alerts.newer_version_available.description" = "PHP Monitor is supposed to be updated via Homebrew, so there is no built-in updater. This check is only meant to inform you of the existence of a new version, you do not need to upgrade.";
+"updater.installation_source.brew" = "You appear to have installed PHP Monitor via Homebrew (or have at least tapped the required Caskfile) so it is recommended that you upgrade via the terminal by running `%@`.";
+"updater.installation_source.direct" = "You do not appear to have installed PHP Monitor via Homebrew, so you will need to visit GitHub to download the latest update.";
+"updater.alerts.buttons.release_notes" = "View Release Notes";
+
+"updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
+"updater.alerts.is_latest_version.subtitle" = "The currently installed version (v%@) is up-to-date.\nThere is no newer version available.";
+
+"updater.alerts.cannot_check_for_update.title" = "PHP Monitor could not determine if a newer version is available.";
+"updater.alerts.cannot_check_for_update.subtitle" = "You might not be connected to the internet, are blocking traffic or GitHub is down and won't allow you to check for updates. If you keep seeing this message, you may want to manually check the releases page.";
+"updater.alerts.cannot_check_for_update.description" = "The currently installed version is: %@. You can go to the list of the latest releases (on GitHub) by clicking on the button on the left.";
+"updater.alerts.buttons.releases_on_github" = "View Releases";
+
+// WARNINGS ABOUT NON-DEFAULT TLD
 
 "alert.warnings.tld_issue.title" = "You are not using `.test` as the TLD for Valet.";
-"alert.warnings.tld_issue.subtitle" = "Using a non-default TLD is currently not supported in PHP Monitor and there are a few known issues.";
-"alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`. After that, restart PHP Monitor and it should not warn you like this again.";
+"alert.warnings.tld_issue.subtitle" = "Using a non-default TLD may not work correctly and is not officially supported.";
+"alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`.";

@@ -3,13 +3,13 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/12/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 class VersionExtractor {
-    
+
     /**
      This attempts to extract the version number from any given string.
      */
@@ -19,26 +19,26 @@ class VersionExtractor {
                 pattern: #"(?<version>(\d+)(.)(\d+)((.)(\d+))?)"#,
                 options: []
             )
-            
+
             let match = regex.matches(
                 in: string,
                 options: [],
-                range: NSMakeRange(0, string.count)
+                range: NSRange(location: 0, length: string.count)
             ).first
-            
+
             guard let match = match else {
                 return nil
             }
-            
+
             let range = Range(
                 match.range(withName: "version"),
                 in: string
             )!
-            
+
             return String(string[range])
         } catch {
             return nil
         }
     }
-    
+
 }

@@ -2,7 +2,7 @@
 //  ActivePhpInstallation.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -21,78 +21,78 @@ class ActivePhpInstallation {
     var version: Version!
     var limits: Limits!
     var extensions: [PhpExtension]!
-    
+
     // MARK: - Computed
-    
+
     var formula: String {
         return (version.short == PhpEnv.brewPhpVersion) ? "php" : "php@\(version.short)"
     }
-    
+
     // MARK: - Initializer
 
     init() {
         // Show information about the current version
         getVersion()
-        
+
         // If an error occurred, exit early
-        if (version.error) {
+        if version.error {
             limits = Limits()
             extensions = []
             return
         }
-        
+
         // Load extension information
         let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
         extensions = PhpExtension.load(from: path)
-        
+
         // Get configuration values
         limits = Limits(
             memory_limit: getByteCount(key: "memory_limit"),
             upload_max_filesize: getByteCount(key: "upload_max_filesize"),
             post_max_size: getByteCount(key: "post_max_size")
         )
-        
+
         // Return a list of .ini files parsed after php.ini
         let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"])
             .replacingOccurrences(of: "\n", with: "")
             .split(separator: ",")
             .map { String($0) }
-        
+
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            let exts = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
-            if exts.count > 0 {
-                extensions.append(contentsOf: exts)
+            let loadedExtensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
+            if !loadedExtensions.isEmpty {
+                extensions.append(contentsOf: loadedExtensions)
             }
         }
     }
-    
+
     /**
      When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
-    private func getVersion() -> Void {
+    private func getVersion() {
         self.version = Version()
-        
+
         let version = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
-        
-        if (version == "" || version.contains("Warning") || version.contains("Error")) {
+
+        if version == "" || version.contains("Warning") || version.contains("Error") {
             self.version.short = "💩 BROKEN"
             self.version.long = ""
             self.version.error = true
             return
         }
-        
+
         // That's the long version
         self.version.long = version
-        
+
         // Next up, let's strip away the minor version number
         let segments = self.version.long.components(separatedBy: ".")
-        
+
         // Get the first two elements
         self.version.short = segments[0...1].joined(separator: ".")
     }
-    
+
     /**
      Retrieves the display value for a specific key in the `.ini` file.
      
@@ -110,18 +110,18 @@ class ActivePhpInstallation {
      */
     private func getByteCount(key: String) -> String {
         let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"])
-        
+
         // Check if the value is unlimited
-        if (value == "-1") {
+        if value == "-1" {
             return "∞"
         }
-        
+
         // Check if the syntax is valid otherwise
         let regex = try! NSRegularExpression(pattern: #"^([0-9]*)(K|M|G|)$"#, options: [])
-        let match = regex.matches(in: value, options: [], range: NSMakeRange(0, value.count)).first
+        let match = regex.matches(in: value, options: [], range: NSRange(location: 0, length: value.count)).first
         return (match == nil) ? "⚠️" : "\(value)B"
     }
-    
+
     /**
      Determine if PHP-FPM is configured correctly.
      
@@ -135,11 +135,11 @@ class ActivePhpInstallation {
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
             return Shell.pipe("cat \(fileName)").contains("valet.sock")
         }
-        
+
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
         return Filesystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
     }
-    
+
     // MARK: - Structs
 
     /**
@@ -153,7 +153,7 @@ class ActivePhpInstallation {
         var long = "???"
         var error = false
     }
-    
+
     /**
      Struct containing information about the limits of the current PHP installation.
      Includes: memory limit, max upload size and max post size.
@@ -163,5 +163,5 @@ class ActivePhpInstallation {
         var upload_max_filesize = "???"
         var post_max_size = "???"
     }
-    
+
 }

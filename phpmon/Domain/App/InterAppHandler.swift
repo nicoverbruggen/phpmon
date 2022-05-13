@@ -9,21 +9,21 @@
 import Foundation
 
 class InterApp {
-    
+
     public static var bindings: [Action] = []
-    
+
     public static func register(_ action: Action) {
         self.bindings.append(action)
     }
-    
+
     public struct Action {
         let command: String
         let action: (String) -> Void
     }
-    
+
     static func getCommands() -> [InterApp.Action] { return [
         InterApp.Action(command: "list", action: { _ in
-            SiteListVC.show()
+            DomainListVC.show()
         }),
         InterApp.Action(command: "services/stop", action: { _ in
             MainMenu.shared.stopAllServices()
@@ -61,7 +61,7 @@ class InterApp {
                     subtitle: "PHP Monitor can't switch to PHP \(version), as it may not be installed or available."
                 ).withPrimary(text: "OK").show()
             }
-        }),
+        })
     ]}
-    
+
 }

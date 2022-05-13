@@ -2,14 +2,14 @@
 //  Environment.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 import AppKit
 
 class Startup {
-    
+
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
@@ -17,30 +17,29 @@ class Startup {
      If this method returns false, there was a failed check and an alert was displayed.
      If this method returns true, then all checks succeeded and the app can continue.
      */
-    func checkEnvironment() async -> Bool
-    {
+    func checkEnvironment() async -> Bool {
         // Do the important system setup checks
         Log.info("[ARCH] The user is running PHP Monitor with the architecture: \(App.architecture)")
-        
+
         for check in self.checks {
             if await check.succeeds() {
                 Log.info("[OK] \(check.name)")
                 continue
             }
-            
+
             // If we get here, something's gone wrong and the check has failed...
             Log.info("[FAIL] \(check.name)")
             showAlert(for: check)
             return false
         }
-        
+
         // If we get here, nothing has gone wrong. That's what we want!
         initializeSwitcher()
         Log.separator(as: .info)
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
         return true
     }
-    
+
     /**
      Displays an alert for a particular check. There are two types of alerts:
      - ones that require an app restart, which prompt the user to exit the app
@@ -59,7 +58,7 @@ class Startup {
                         exit(1)
                     }).show()
             }
-            
+
             BetterAlert()
                 .withInformation(
                     title: check.titleText,
@@ -70,7 +69,7 @@ class Startup {
                 .show()
         }
     }
-    
+
     /**
      Because the Switcher requires various environment guarantees, the switcher is only
      initialized when it is done working. The switcher must be initialized on the main thread.
@@ -81,9 +80,9 @@ class Startup {
             appDelegate.initializeSwitcher()
         }
     }
-    
+
     // MARK: - Check (List)
-    
+
     public var checks: [EnvironmentCheck] = [
         // =================================================================================
         // The Homebrew binary must exist.
@@ -196,9 +195,9 @@ class Startup {
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
         )
     ]
-    
+
     // MARK: - EnvironmentCheck struct
-    
+
     /**
      The `EnvironmentCheck` is used to defer the execution of all of these commands until necessary.
      Checks that require an app restart will always lead to an alert and app termination shortly after.
@@ -211,7 +210,7 @@ class Startup {
         let descriptionText: String
         let buttonText: String
         let requiresAppRestart: Bool
-        
+
         init(
             command: @escaping () async -> Bool,
             name: String,
@@ -229,7 +228,7 @@ class Startup {
             self.buttonText = buttonText
             self.requiresAppRestart = requiresAppRestart
         }
-        
+
         public func succeeds() async -> Bool {
             return await !self.command()
         }

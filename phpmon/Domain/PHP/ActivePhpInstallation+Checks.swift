@@ -3,13 +3,13 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/12/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 extension ActivePhpInstallation {
-    
+
     /**
      It is always possible that the system configuration for PHP-FPM has not been set up for Valet.
      This can occur when a user manually installs a new PHP version, but does not run `valet install`.
@@ -32,5 +32,5 @@ extension ActivePhpInstallation {
             }
         }
     }
-    
+
 }

@@ -60,16 +60,16 @@
                                         </menuItem>
                                         <menuItem title="reload-list" keyEquivalent="r" id="Ema-AU-Nbr" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_reload_site_list"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_reload_domain_list"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <action selector="reloadSiteListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
+                                                <action selector="reloadDomainListPressed:" target="Voe-Tx-rLC" id="geC-Ld-haX"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2ux-8Q-UjK"/>
                                         <menuItem title="focus-find" keyEquivalent="f" id="I95-fb-EL7" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_find_in_site_list"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_find_in_domain_list"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="focusSearchField:" target="Voe-Tx-rLC" id="O8j-1B-hll"/>
@@ -319,7 +319,7 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="-495" y="-44"/>
+            <point key="canvasLocation" x="-360" y="-94"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
@@ -348,7 +348,7 @@
                 </windowController>
                 <customObject id="OF0-qs-3Oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-374" y="327"/>
+            <point key="canvasLocation" x="-374" y="238"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="iyi-IS-7Ps">
@@ -378,13 +378,13 @@
                 </viewController>
                 <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="251" y="205"/>
+            <point key="canvasLocation" x="260" y="217"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="4XS-kY-YIS">
             <objects>
-                <windowController storyboardIdentifier="siteListWindow" id="8Ec-9q-82s" customClass="SiteListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Domains" subtitle="Linked &amp; Parked" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="raw-02-3Q1">
+                <windowController storyboardIdentifier="domainListWindow" id="8Ec-9q-82s" customClass="DomainListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" separatorStyle="line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="raw-02-3Q1">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="600" height="263"/>
@@ -437,7 +437,7 @@
                 </windowController>
                 <customObject id="VCP-dF-cqM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-374" y="746"/>
+            <point key="canvasLocation" x="-374" y="745.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="HTI-x5-rOp">
@@ -462,7 +462,7 @@
                 </windowController>
                 <customObject id="d2k-57-mLZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-409" y="1137"/>
+            <point key="canvasLocation" x="-374" y="1137"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="BD0-La-ygq">
@@ -486,7 +486,7 @@
                 </windowController>
                 <customObject id="i3j-z8-nxv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-575" y="1624"/>
+            <point key="canvasLocation" x="-374" y="2267"/>
         </scene>
         <!--Better AlertVC-->
         <scene sceneID="y9E-bB-wIG">
@@ -632,27 +632,27 @@ Gw
                 </viewController>
                 <customObject id="5Ts-EZ-bJh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="1624"/>
+            <point key="canvasLocation" x="230" y="2267"/>
         </scene>
         <!--Add SiteVC-->
         <scene sceneID="6JC-H6-u4K">
             <objects>
                 <viewController storyboardIdentifier="newSiteLink" id="glS-wF-sEU" customClass="AddSiteVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JJJ-T9-Yuv">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="js9-OW-xzC">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                                 <view key="contentView" id="HRC-RT-LxR">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="251"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PVw-cM-qAB">
-                                <rect key="frame" x="363" y="13" width="104" height="32"/>
-                                <buttonCell key="cell" type="push" title="Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwW-Wv-I8s">
+                                <rect key="frame" x="325" y="13" width="142" height="32"/>
+                                <buttonCell key="cell" type="push" title="[i18n] Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwW-Wv-I8s">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -664,11 +664,11 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwS-o8-pbl">
-                                <rect key="frame" x="13" y="13" width="94" height="32"/>
+                                <rect key="frame" x="13" y="13" width="114" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="qCP-Sp-gxm"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WHE-HW-jwp">
+                                <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WHE-HW-jwp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                     <string key="keyEquivalent" base64-UTF8="YES">
@@ -680,8 +680,8 @@ Gw
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
-                                <rect key="frame" x="20" y="156" width="440" height="21"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a potential domain name here." drawsBackground="YES" id="NFa-1D-Bi4">
+                                <rect key="frame" x="20" y="150" width="440" height="21"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="NFa-1D-Bi4">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -691,16 +691,16 @@ Gw
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-5a-cmT">
-                                <rect key="frame" x="18" y="134" width="444" height="14"/>
-                                <textFieldCell key="cell" title="FOLDER_AVAILABLE" id="bJr-s6-tdP">
+                                <rect key="frame" x="18" y="128" width="444" height="14"/>
+                                <textFieldCell key="cell" title="[i18n] Preview text here" id="bJr-s6-tdP">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-b0-9cm">
-                                <rect key="frame" x="18" y="101" width="227" height="18"/>
-                                <buttonCell key="cell" type="check" title="Secure this domain after creation" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vFv-Of-2yZ">
+                                <rect key="frame" x="18" y="95" width="266" height="18"/>
+                                <buttonCell key="cell" type="check" title="[i18n] Secure this domain after creation" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vFv-Of-2yZ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -709,31 +709,31 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-7e-dlb">
-                                <rect key="frame" x="18" y="66" width="444" height="28"/>
-                                <textFieldCell key="cell" title="Securing a site requires administrative privileges.  You will be prompted for your password or Touch ID." id="4gd-KM-5Fu">
+                                <rect key="frame" x="18" y="60" width="444" height="28"/>
+                                <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="4gd-KM-5Fu">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6JT-Vt-3q0">
-                                <rect key="frame" x="20" y="185" width="440" height="22"/>
+                                <rect key="frame" x="20" y="179" width="440" height="22"/>
                                 <pathCell key="cell" selectable="YES" refusesFirstResponder="YES" alignment="left" id="m8d-XF-kh9">
                                     <font key="font" metaFont="system"/>
                                     <url key="url" string="file:///Users/"/>
                                 </pathCell>
                             </pathControl>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-Ht-R8n">
-                                <rect key="frame" x="18" y="215" width="87" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Link a Folder" id="S4j-ZC-ddT">
+                                <rect key="frame" x="18" y="209" width="128" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Link a Folder" id="S4j-ZC-ddT">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
-                                <rect key="frame" x="229" y="23" width="128" height="14"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="That link already exists." id="jOt-n6-TQf">
+                                <rect key="frame" x="139" y="23" width="180" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -752,6 +752,7 @@ Gw
                             <constraint firstItem="900-Z2-tID" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SwS-o8-pbl" secondAttribute="trailing" constant="8" symbolic="YES" id="IMv-ZD-VXf"/>
                             <constraint firstItem="js9-OW-xzC" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" id="IpM-ot-dBG"/>
                             <constraint firstItem="VzR-5a-cmT" firstAttribute="leading" secondItem="ZX9-s1-23i" secondAttribute="leading" id="UPN-Ad-j3X"/>
+                            <constraint firstItem="SwS-o8-pbl" firstAttribute="top" secondItem="mmQ-7e-dlb" secondAttribute="bottom" constant="20" id="VNW-fB-2Xj"/>
                             <constraint firstItem="KZf-b0-9cm" firstAttribute="leading" secondItem="JJJ-T9-Yuv" secondAttribute="leading" constant="20" symbolic="YES" id="Vab-wq-9Nc"/>
                             <constraint firstAttribute="bottom" secondItem="PVw-cM-qAB" secondAttribute="bottom" constant="20" symbolic="YES" id="VsP-Q0-zRW"/>
                             <constraint firstAttribute="trailing" secondItem="PVw-cM-qAB" secondAttribute="trailing" constant="20" symbolic="YES" id="X5z-G4-CBv"/>
@@ -778,7 +779,7 @@ Gw
                         <outlet property="buttonCancel" destination="SwS-o8-pbl" id="N1v-uy-2Mi"/>
                         <outlet property="buttonCreateLink" destination="PVw-cM-qAB" id="0Oo-xW-He7"/>
                         <outlet property="buttonSecure" destination="KZf-b0-9cm" id="5A7-Bn-NB7"/>
-                        <outlet property="linkName" destination="ZX9-s1-23i" id="yT6-80-Zr1"/>
+                        <outlet property="inputDomainName" destination="ZX9-s1-23i" id="yT6-80-Zr1"/>
                         <outlet property="pathControl" destination="6JT-Vt-3q0" id="f5K-8h-VOd"/>
                         <outlet property="previewText" destination="VzR-5a-cmT" id="qwd-wX-645"/>
                         <outlet property="textFieldError" destination="900-Z2-tID" id="qUk-FE-IKW"/>
@@ -788,12 +789,12 @@ Gw
                 </viewController>
                 <customObject id="6XV-bG-0N1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="191" y="1098.5"/>
+            <point key="canvasLocation" x="210" y="1128"/>
         </scene>
-        <!--Site ListVC-->
+        <!--Domain ListVC-->
         <scene sceneID="aZt-6w-TFl">
             <objects>
-                <viewController identifier="siteList" storyboardIdentifier="siteList" id="JZI-Vd-9oq" customClass="SiteListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController identifier="domainList" storyboardIdentifier="domainList" id="JZI-Vd-9oq" customClass="DomainListVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="rIZ-4U-bhj">
                         <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -805,7 +806,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj">
-                                            <rect key="frame" x="0.0" y="0.0" width="662" height="281"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="626" height="281"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -825,7 +826,7 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Secure"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListTLSCell" id="hft-M4-nWb" customClass="SiteListTLSCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                        <tableCellView identifier="domainListTLSCell" id="hft-M4-nWb" customClass="DomainListTLSCell" customModule="PHP_Monitor" customModuleProvider="target">
                                                             <rect key="frame" x="18" y="0.0" width="34" height="55"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -848,7 +849,7 @@ Gw
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="DOMAIN" width="290" minWidth="250" maxWidth="10000" id="oeH-B2-0rA">
+                                                <tableColumn identifier="DOMAIN" width="200" minWidth="200" maxWidth="10000" id="oeH-B2-0rA">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Domain">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -861,8 +862,8 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Domain"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListNameCell" wantsLayer="YES" id="5GY-nN-BWd" customClass="SiteListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="69" y="0.0" width="290" height="54"/>
+                                                        <tableCellView identifier="domainListNameCell" wantsLayer="YES" id="5GY-nN-BWd" customClass="DomainListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="69" y="0.0" width="200" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
@@ -910,8 +911,8 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="PHP"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListPhpCell" wantsLayer="YES" id="T49-0U-d58" customClass="SiteListPhpCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="376" y="0.0" width="100" height="54"/>
+                                                        <tableCellView identifier="domainListPhpCell" wantsLayer="YES" id="T49-0U-d58" customClass="DomainListPhpCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="286" y="0.0" width="100" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZXQ-bg-Xba">
@@ -965,8 +966,8 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Kind"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListKindCell" wantsLayer="YES" id="AhT-xR-16a" customClass="SiteListKindCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="493" y="0.0" width="36" height="54"/>
+                                                        <tableCellView identifier="domainListKindCell" wantsLayer="YES" id="AhT-xR-16a" customClass="DomainListKindCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="403" y="0.0" width="36" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYR-vb-OW1">
@@ -1002,8 +1003,8 @@ Gw
                                                     <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="Type"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="siteListTypeCell" wantsLayer="YES" id="ntU-Rl-ciP" customClass="SiteListTypeCell" customModule="PHP_Monitor" customModuleProvider="target">
-                                                            <rect key="frame" x="546" y="0.0" width="97" height="54"/>
+                                                        <tableCellView identifier="domainListTypeCell" wantsLayer="YES" id="ntU-Rl-ciP" customClass="DomainListTypeCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="456" y="0.0" width="97" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
@@ -1060,7 +1061,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="xUg-Mq-OSh">
-                                    <rect key="frame" x="0.0" y="0.0" width="662" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="626" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1088,12 +1089,376 @@ Gw
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="388" y="715.5"/>
+            <point key="canvasLocation" x="323" y="723"/>
+        </scene>
+        <!--Add ProxyVC-->
+        <scene sceneID="g8z-pE-RL9">
+            <objects>
+                <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="U5U-QR-YXS">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="kkd-UV-SnA">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                                <view key="contentView" id="IXW-35-8NJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
+                                            <rect key="frame" x="20" y="196" width="440" height="21"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="http://127.0.0.1:80" placeholderString="http://127.0.0.1:80" drawsBackground="YES" id="muS-8M-KSy">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="dwh-CF-6iv" id="lNE-OI-G93"/>
+                                            </connections>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uib-vA-HRc">
+                                            <rect key="frame" x="18" y="221" width="325" height="14"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Proxy subject (usually: protocol, IP address and port)" id="G1Z-3f-BhL">
+                                                <font key="font" metaFont="systemMedium" size="11"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-Zt-Hu8">
+                                            <rect key="frame" x="18" y="172" width="112" height="14"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Domain name" id="dQs-oZ-80e">
+                                                <font key="font" metaFont="systemMedium" size="11"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
+                                            <rect key="frame" x="20" y="147" width="440" height="21"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="gTQ-Y2-Y9w">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <outlet property="delegate" destination="dwh-CF-6iv" id="e9n-PM-7s8"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="SNw-oQ-bnb" secondAttribute="trailing" constant="20" id="2ui-Jg-BUV"/>
+                                        <constraint firstItem="mlA-Zt-Hu8" firstAttribute="top" secondItem="QCK-Z9-w7g" secondAttribute="bottom" constant="10" id="8sn-dT-SW6"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uib-vA-HRc" secondAttribute="trailing" constant="20" symbolic="YES" id="Cue-3e-doM"/>
+                                        <constraint firstItem="QCK-Z9-w7g" firstAttribute="leading" secondItem="SNw-oQ-bnb" secondAttribute="leading" id="N1K-69-wLz"/>
+                                        <constraint firstItem="mlA-Zt-Hu8" firstAttribute="leading" secondItem="QCK-Z9-w7g" secondAttribute="leading" id="R74-k0-96U"/>
+                                        <constraint firstItem="SNw-oQ-bnb" firstAttribute="leading" secondItem="IXW-35-8NJ" secondAttribute="leading" constant="20" id="WZR-f8-mgf"/>
+                                        <constraint firstItem="SNw-oQ-bnb" firstAttribute="top" secondItem="mlA-Zt-Hu8" secondAttribute="bottom" constant="4" id="XDn-h9-dgp"/>
+                                        <constraint firstItem="QCK-Z9-w7g" firstAttribute="top" secondItem="Uib-vA-HRc" secondAttribute="bottom" constant="4" id="fGU-al-B0w"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mlA-Zt-Hu8" secondAttribute="trailing" constant="20" symbolic="YES" id="uFE-cU-KOg"/>
+                                        <constraint firstItem="QCK-Z9-w7g" firstAttribute="trailing" secondItem="SNw-oQ-bnb" secondAttribute="trailing" id="xQE-yY-gPd"/>
+                                    </constraints>
+                                </view>
+                                <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </box>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Vi-cN-ude">
+                                <rect key="frame" x="317" y="13" width="150" height="32"/>
+                                <buttonCell key="cell" type="push" title="[i18n] Create Proxy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H2Z-c5-5Vk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedCreateProxy:" target="dwh-CF-6iv" id="wFW-Aw-FOR"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-dk-QaF">
+                                <rect key="frame" x="13" y="13" width="114" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="uCc-fF-wS2"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D8g-GE-7TU">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedCancel:" target="dwh-CF-6iv" id="J2T-Zj-A0j"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
+                                <rect key="frame" x="18" y="128" width="444" height="14"/>
+                                <textFieldCell key="cell" title="[i18n] Preview text here" id="ISE-9R-ncQ">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rJa-yg-nCn">
+                                <rect key="frame" x="18" y="95" width="170" height="18"/>
+                                <buttonCell key="cell" type="check" title="[i18n] Secure this proxy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5LI-lt-Asl">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pressedSecure:" target="dwh-CF-6iv" id="b74-8T-AzO"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
+                                <rect key="frame" x="18" y="60" width="444" height="28"/>
+                                <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="IMB-O5-ZOy">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAh-br-Dfx">
+                                <rect key="frame" x="18" y="250" width="123" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Add a Proxy" id="AZ1-04-kUl">
+                                    <font key="font" textStyle="headline" name=".SFNS-Bold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
+                                <rect key="frame" x="131" y="23" width="180" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="4sH-94-UJl">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="nC0-dk-QaF" secondAttribute="bottom" constant="20" symbolic="YES" id="3Kk-fY-SB7"/>
+                            <constraint firstItem="JSZ-x8-Pqi" firstAttribute="trailing" secondItem="SNw-oQ-bnb" secondAttribute="trailing" id="3So-Wu-1cz"/>
+                            <constraint firstItem="DAh-br-Dfx" firstAttribute="top" secondItem="U5U-QR-YXS" secondAttribute="top" constant="20" symbolic="YES" id="3im-Qd-loW"/>
+                            <constraint firstItem="kkd-UV-SnA" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" id="6iw-dd-hTX"/>
+                            <constraint firstItem="Uib-vA-HRc" firstAttribute="leading" secondItem="DAh-br-Dfx" secondAttribute="leading" id="6jA-Kj-Q7l"/>
+                            <constraint firstAttribute="trailing" secondItem="kkd-UV-SnA" secondAttribute="trailing" id="8YX-CO-sY2"/>
+                            <constraint firstAttribute="trailing" secondItem="5x7-ll-2f7" secondAttribute="trailing" constant="20" symbolic="YES" id="8jr-cl-x78"/>
+                            <constraint firstItem="kkd-UV-SnA" firstAttribute="top" secondItem="U5U-QR-YXS" secondAttribute="top" id="Afh-Ur-QgJ"/>
+                            <constraint firstItem="4Vi-cN-ude" firstAttribute="leading" secondItem="w0k-CK-0u4" secondAttribute="trailing" constant="15" id="D3C-co-B10"/>
+                            <constraint firstItem="w0k-CK-0u4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nC0-dk-QaF" secondAttribute="trailing" constant="8" symbolic="YES" id="FGk-wm-1Mu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rJa-yg-nCn" secondAttribute="trailing" constant="20" symbolic="YES" id="Fa7-Rc-1lj"/>
+                            <constraint firstAttribute="trailing" secondItem="4Vi-cN-ude" secondAttribute="trailing" constant="20" symbolic="YES" id="Fbg-C8-v6E"/>
+                            <constraint firstItem="5x7-ll-2f7" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="Fd0-zd-od8"/>
+                            <constraint firstAttribute="bottom" secondItem="4Vi-cN-ude" secondAttribute="bottom" constant="20" symbolic="YES" id="GyL-uL-sjW"/>
+                            <constraint firstItem="w0k-CK-0u4" firstAttribute="centerY" secondItem="4Vi-cN-ude" secondAttribute="centerY" id="HcL-wb-0s6"/>
+                            <constraint firstItem="rJa-yg-nCn" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="IEg-SN-bHB"/>
+                            <constraint firstItem="rJa-yg-nCn" firstAttribute="top" secondItem="JSZ-x8-Pqi" secondAttribute="bottom" constant="16" id="IW3-MX-3Kh"/>
+                            <constraint firstItem="DAh-br-Dfx" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="LY1-r0-viF"/>
+                            <constraint firstItem="nC0-dk-QaF" firstAttribute="top" secondItem="5x7-ll-2f7" secondAttribute="bottom" constant="20" id="OjY-dM-dOG"/>
+                            <constraint firstItem="nC0-dk-QaF" firstAttribute="leading" secondItem="U5U-QR-YXS" secondAttribute="leading" constant="20" symbolic="YES" id="V6L-YR-ufX"/>
+                            <constraint firstItem="JSZ-x8-Pqi" firstAttribute="leading" secondItem="SNw-oQ-bnb" secondAttribute="leading" id="dpc-5M-0Cq"/>
+                            <constraint firstItem="5x7-ll-2f7" firstAttribute="top" secondItem="rJa-yg-nCn" secondAttribute="bottom" constant="8" symbolic="YES" id="dzE-Ob-SVG"/>
+                            <constraint firstAttribute="bottom" secondItem="4Vi-cN-ude" secondAttribute="bottom" constant="20" symbolic="YES" id="ny2-RO-bEI"/>
+                            <constraint firstAttribute="bottom" secondItem="kkd-UV-SnA" secondAttribute="bottom" id="oCP-dn-6dx"/>
+                            <constraint firstItem="JSZ-x8-Pqi" firstAttribute="top" secondItem="SNw-oQ-bnb" secondAttribute="bottom" constant="5" id="sX3-MK-14k"/>
+                            <constraint firstItem="Uib-vA-HRc" firstAttribute="top" secondItem="DAh-br-Dfx" secondAttribute="bottom" constant="15" id="tWI-S8-17J"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DAh-br-Dfx" secondAttribute="trailing" constant="20" symbolic="YES" id="vDR-5D-1eN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonCancel" destination="nC0-dk-QaF" id="n5Q-jg-UCe"/>
+                        <outlet property="buttonCreateProxy" destination="4Vi-cN-ude" id="rdK-xc-N7F"/>
+                        <outlet property="buttonSecure" destination="rJa-yg-nCn" id="WIs-zt-f3a"/>
+                        <outlet property="inputDomainName" destination="SNw-oQ-bnb" id="ELH-63-cAe"/>
+                        <outlet property="inputProxySubject" destination="QCK-Z9-w7g" id="76U-te-Jzt"/>
+                        <outlet property="previewText" destination="JSZ-x8-Pqi" id="Mve-6W-Owd"/>
+                        <outlet property="textFieldDomainName" destination="mlA-Zt-Hu8" id="cHL-Yu-Yvx"/>
+                        <outlet property="textFieldError" destination="w0k-CK-0u4" id="28h-bn-igB"/>
+                        <outlet property="textFieldProxySubject" destination="Uib-vA-HRc" id="5tV-3l-Wbw"/>
+                        <outlet property="textFieldSecure" destination="5x7-ll-2f7" id="NlV-g8-rYP"/>
+                        <outlet property="textFieldTitle" destination="DAh-br-Dfx" id="8SA-EW-wcq"/>
+                    </connections>
+                </viewController>
+                <customObject id="VaP-ZM-OcY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="210" y="1524"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="5Gf-7O-tdA">
+            <objects>
+                <windowController storyboardIdentifier="addProxyWindow" id="ogq-ok-UVi" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="SMz-Va-x2z">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="HsN-qQ-BhO">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="ogq-ok-UVi" id="9CA-sB-ZTD"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="dwh-CF-6iv" kind="relationship" relationship="window.shadowedContentViewController" id="My6-qb-eRg"/>
+                    </connections>
+                </windowController>
+                <customObject id="5qP-qX-rbc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-374" y="1530"/>
+        </scene>
+        <!--SelectionVC-->
+        <scene sceneID="UXm-Ci-yEB">
+            <objects>
+                <viewController storyboardIdentifier="addDomainChoice" id="gOD-Gu-zDG" customClass="SelectionVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="ysc-sm-sli">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <visualEffectView blendingMode="behindWindow" material="toolTip" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="F37-zt-gM3">
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
+                                        <rect key="frame" x="13" y="13" width="114" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="Zhu-D8-cLK"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LxP-t4-H2W">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="pressedCancel:" target="gOD-Gu-zDG" id="wMp-sM-0A4"/>
+                                        </connections>
+                                    </button>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-Qu-qnK">
+                                        <rect key="frame" x="187" y="20" width="333" height="20"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
+                                                <rect key="frame" x="-7" y="-7" width="172" height="32"/>
+                                                <buttonCell key="cell" type="push" title="[i18n] Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="8UP-Sw-TP6">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">l</string>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="pressedCreateLink:" target="gOD-Gu-zDG" id="77M-Ip-GMi"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
+                                                <rect key="frame" x="159" y="-7" width="181" height="32"/>
+                                                <buttonCell key="cell" type="push" title="[i18n] Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="bJ4-q8-1Ej">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <string key="keyEquivalent">p</string>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="pressedCreateProxy:" target="gOD-Gu-zDG" id="UDf-lD-KCS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
+                                        <rect key="frame" x="18" y="138" width="504" height="19"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="left" title="[i18n] What kind of domain would you like to set up?" id="agk-Nj-FLd">
+                                            <font key="font" metaFont="systemBold" size="15"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
+                                        <rect key="frame" x="18" y="60" width="504" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="tbl-AV-4qB"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" selectable="YES" alignment="left" id="3i9-RG-Ift">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <mutableString key="title">[i18n] Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.  If you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.</mutableString>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="FhN-AM-SkI" firstAttribute="leading" secondItem="F37-zt-gM3" secondAttribute="leading" constant="20" symbolic="YES" id="3dg-JM-MDr"/>
+                                    <constraint firstItem="fJK-Ke-IK3" firstAttribute="top" secondItem="F37-zt-gM3" secondAttribute="top" constant="20" symbolic="YES" id="FbX-Le-O7Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="pYe-Qu-qnK" secondAttribute="trailing" constant="20" symbolic="YES" id="IJA-vN-Rbv"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="leading" secondItem="fJK-Ke-IK3" secondAttribute="leading" id="JcY-ae-6ZH"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" id="ZBI-pN-kOz"/>
+                                    <constraint firstItem="fJK-Ke-IK3" firstAttribute="leading" secondItem="F37-zt-gM3" secondAttribute="leading" constant="20" symbolic="YES" id="d4o-6b-Dho"/>
+                                    <constraint firstItem="urj-Xq-TrJ" firstAttribute="top" secondItem="fJK-Ke-IK3" secondAttribute="bottom" constant="8" symbolic="YES" id="hOk-eL-Eg0"/>
+                                    <constraint firstItem="FhN-AM-SkI" firstAttribute="top" secondItem="urj-Xq-TrJ" secondAttribute="bottom" constant="20" id="kCc-Vp-Gvq"/>
+                                    <constraint firstAttribute="bottom" secondItem="pYe-Qu-qnK" secondAttribute="bottom" constant="20" id="lPX-ZF-XZN"/>
+                                    <constraint firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" constant="20" symbolic="YES" id="spl-Bn-xtw"/>
+                                    <constraint firstAttribute="bottom" secondItem="FhN-AM-SkI" secondAttribute="bottom" constant="20" symbolic="YES" id="t5w-aL-tOa"/>
+                                </constraints>
+                            </visualEffectView>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">
+                                <rect key="frame" x="200" y="109" width="0.0" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OQ5-hX-qai">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="F37-zt-gM3" secondAttribute="trailing" id="ZRD-3j-s4x"/>
+                            <constraint firstAttribute="bottom" secondItem="F37-zt-gM3" secondAttribute="bottom" id="et1-At-Rgj"/>
+                            <constraint firstItem="F37-zt-gM3" firstAttribute="top" secondItem="ysc-sm-sli" secondAttribute="top" id="jp3-eE-mOy"/>
+                            <constraint firstItem="F37-zt-gM3" firstAttribute="leading" secondItem="ysc-sm-sli" secondAttribute="leading" id="wIo-zP-KId"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonCancel" destination="FhN-AM-SkI" id="iqV-2E-q7e"/>
+                        <outlet property="buttonCreateLink" destination="L5n-Gw-J27" id="SHV-4l-Red"/>
+                        <outlet property="buttonCreateProxy" destination="01Z-IV-hv1" id="J1v-7J-4fx"/>
+                        <outlet property="textFieldDescription" destination="urj-Xq-TrJ" id="u1w-O0-kI3"/>
+                        <outlet property="textFieldTitle" destination="fJK-Ke-IK3" id="x8p-qx-HX4"/>
+                    </connections>
+                </viewController>
+                <customObject id="bZa-dD-d4J" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="250" y="1900"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="HW6-nV-trE">
+            <objects>
+                <windowController storyboardIdentifier="showSelectionWindow" id="t4x-Mh-iya" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="IeW-fo-4yK">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="Oe0-yv-Jcy">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="t4x-Mh-iya" id="4oO-gI-bd2"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="gOD-Gu-zDG" kind="relationship" relationship="window.shadowedContentViewController" id="KRt-OH-8uc"/>
+                    </connections>
+                </windowController>
+                <customObject id="hBK-Bw-dwa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-374" y="1909"/>
         </scene>
     </scenes>
     <resources>
         <image name="Checkmark" width="512" height="512"/>
         <image name="IconLinked" width="25" height="25"/>
+        <image name="IconProxy" width="25" height="25"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>

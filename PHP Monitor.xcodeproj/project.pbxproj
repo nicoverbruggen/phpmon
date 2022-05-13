@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */ = {isa = PBXBuildFile; fileRef = 54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */; };
 		54B48B5F275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54B48B60275F66AE006D90C5 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B48B5E275F66AE006D90C5 /* Application.swift */; };
 		54D9E0B227E4F51E003B9AD9 /* HotKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9E0AC27E4F51E003B9AD9 /* HotKeysController.swift */; };
@@ -51,6 +52,9 @@
 		C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
+		C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
+		C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
+		C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
 		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
@@ -71,32 +75,38 @@
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
 		C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */; };
 		C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */; };
-		C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */; };
-		C41CA5EE2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */; };
+		C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */; };
+		C41CA5EE2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */; };
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
-		C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
-		C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */; };
+		C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */; };
+		C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */; };
+		C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
+		C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
 		C4232EE52612526500158FC6 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = C4232EE42612526500158FC6 /* Credits.html */; };
+		C42337A3281F19F000459A48 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
-		C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nicoverbruggen.test */; };
-		C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */; };
-		C42CFB1A27DFE8BD00862737 /* NginxConfigParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigParserTest.swift */; };
+		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
+		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
+		C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */; };
+		C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */; };
 		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
-		C43A8A2025D9D1D700591B77 /* brew.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew.json */; };
-		C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */; };
-		C44067F527E2582B0045BD4E /* SiteListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* SiteListNameCell.swift */; };
-		C44067F727E258410045BD4E /* SiteListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* SiteListPhpCell.swift */; };
-		C44067F927E2585E0045BD4E /* SiteListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */; };
-		C44067FB27E25FD70045BD4E /* SiteListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */; };
-		C449B4F027EE7FB800C47E8A /* SiteListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */; };
-		C449B4F127EE7FC200C47E8A /* SiteListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* SiteListNameCell.swift */; };
-		C449B4F227EE7FC400C47E8A /* SiteListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* SiteListPhpCell.swift */; };
-		C449B4F327EE7FC600C47E8A /* SiteListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */; };
-		C449B4F427EE7FC800C47E8A /* SiteListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* SiteListKindCell.swift */; };
+		C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
+		C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */; };
+		C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* DomainListNameCell.swift */; };
+		C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
+		C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */; };
+		C44067FB27E25FD70045BD4E /* DomainListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */; };
+		C449B4F027EE7FB800C47E8A /* DomainListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */; };
+		C449B4F127EE7FC200C47E8A /* DomainListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* DomainListNameCell.swift */; };
+		C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
+		C449B4F327EE7FC600C47E8A /* DomainListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */; };
+		C449B4F427EE7FC800C47E8A /* DomainListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */; };
 		C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
@@ -105,11 +115,15 @@
 		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
-		C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
-		C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */; };
-		C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
-		C464ADB0275A7A6A003FCD53 /* SiteListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* SiteListVC.swift */; };
-		C464ADB2275A87CA003FCD53 /* SiteListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* SiteListCellProtocol.swift */; };
+		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
+		C464ADAC275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
+		C464ADAD275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
+		C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* DomainListVC.swift */; };
+		C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* DomainListVC.swift */; };
+		C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */; };
+		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
+		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
+		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
@@ -119,6 +133,8 @@
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
 		C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		C484437B2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
+		C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
 		C48D0C9025CC7FD000CC7490 /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48D0C8F25CC7FD000CC7490 /* StatsView.xib */; };
 		C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9225CC804200CC7490 /* XibLoadable.swift */; };
 		C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9525CC80B100CC7490 /* HeaderView.swift */; };
@@ -134,11 +150,11 @@
 		C4998F0A2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
 		C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PrefsWC.swift */; };
 		C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49E171E27A5736E00787921 /* PMServicesView.swift */; };
-		C4AC51FC27E27F47008528CA /* SiteListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* SiteListKindCell.swift */; };
+		C4AC51FC27E27F47008528CA /* DomainListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */; };
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4AF9F71275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
 		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
-		C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */; };
+		C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */; };
 		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */; };
@@ -158,6 +174,14 @@
 		C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */; };
 		C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
+		C4C0E8DF27F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8DE27F88AEB002D32A9 /* FakeSiteScanner.swift */; };
+		C4C0E8E027F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8DE27F88AEB002D32A9 /* FakeSiteScanner.swift */; };
+		C4C0E8E227F88B13002D32A9 /* ValetSiteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E127F88B13002D32A9 /* ValetSiteScanner.swift */; };
+		C4C0E8E327F88B13002D32A9 /* ValetSiteScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E127F88B13002D32A9 /* ValetSiteScanner.swift */; };
+		C4C0E8E727F88B41002D32A9 /* ProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* ProxyScanner.swift */; };
+		C4C0E8E827F88B41002D32A9 /* ProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* ProxyScanner.swift */; };
+		C4C0E8EA27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
+		C4C0E8EB27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
 		C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1019A27C65C6F001FACC2 /* Process.swift */; };
 		C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1019A27C65C6F001FACC2 /* Process.swift */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
@@ -172,17 +196,19 @@
 		C4CE3BBA27B31F670086CA49 /* ComposerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */; };
 		C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */; };
 		C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */; };
-		C4D5CFCA27E0F9CD00035329 /* NginxConfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigParser.swift */; };
-		C4D5CFCB27E0F9CD00035329 /* NginxConfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigParser.swift */; };
+		C4D5CFCA27E0F9CD00035329 /* NginxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfiguration.swift */; };
+		C4D5CFCB27E0F9CD00035329 /* NginxConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfiguration.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
 		C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
-		C4D936CB27E3EE4A00BD69FE /* SiteListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* SiteListCellProtocol.swift */; };
+		C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */; };
 		C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
 		C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
+		C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */; };
+		C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */; };
 		C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
 		C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
@@ -211,9 +237,10 @@
 		C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4F319C927B034A500AFF46F /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
+		C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
-		C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */; };
+		C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */; };
 		C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4F780B725D80B5D000DBC97 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
 		C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -232,6 +259,8 @@
 		C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
 		C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */; };
+		C4FE011128084FC200D1DE6D /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE011028084FC200D1DE6D /* SelectionVC.swift */; };
+		C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE011028084FC200D1DE6D /* SelectionVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -247,6 +276,7 @@
 /* Begin PBXFileReference section */
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy-custom-tld.test"; sourceTree = "<group>"; };
 		54B48B5E275F66AE006D90C5 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		54D9E0AC27E4F51E003B9AD9 /* HotKeysController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotKeysController.swift; sourceTree = "<group>"; };
 		54D9E0AD27E4F51E003B9AD9 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
@@ -269,6 +299,8 @@
 		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
 		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		C40FE736282ABA4F00A302C2 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTest.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
 		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
@@ -286,30 +318,37 @@
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
 		C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivePhpInstallation.swift; sourceTree = "<group>"; };
-		C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+Actions.swift"; sourceTree = "<group>"; };
+		C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Actions.swift"; sourceTree = "<group>"; };
 		C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreference.swift; sourceTree = "<group>"; };
-		C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SiteListVC+ContextMenu.swift"; sourceTree = "<group>"; };
+		C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+ContextMenu.swift"; sourceTree = "<group>"; };
+		C4205A7D27F4D21800191A39 /* ValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetProxy.swift; sourceTree = "<group>"; };
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		C42337A2281F19F000459A48 /* Xdebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xdebug.swift; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
-		C42CFB1527DFDE7900862737 /* nicoverbruggen.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen.test; sourceTree = "<group>"; };
-		C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nicoverbruggen_isolated.test; sourceTree = "<group>"; };
-		C42CFB1927DFE8BD00862737 /* NginxConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigParserTest.swift; sourceTree = "<group>"; };
+		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
+		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
+		C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationTest.swift; sourceTree = "<group>"; };
+		C42F26722805B4B400938AC7 /* DomainListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListable.swift; sourceTree = "<group>"; };
+		C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy.test"; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		C43A8A1F25D9D1D700591B77 /* brew.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = brew.json; sourceTree = "<group>"; };
-		C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewJsonParserTest.swift; sourceTree = "<group>"; };
-		C44067F427E2582B0045BD4E /* SiteListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListNameCell.swift; sourceTree = "<group>"; };
-		C44067F627E258410045BD4E /* SiteListPhpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListPhpCell.swift; sourceTree = "<group>"; };
-		C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListTypeCell.swift; sourceTree = "<group>"; };
-		C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListTLSCell.swift; sourceTree = "<group>"; };
+		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
+		C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackageTest.swift; sourceTree = "<group>"; };
+		C44067F427E2582B0045BD4E /* DomainListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListNameCell.swift; sourceTree = "<group>"; };
+		C44067F627E258410045BD4E /* DomainListPhpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListPhpCell.swift; sourceTree = "<group>"; };
+		C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListTypeCell.swift; sourceTree = "<group>"; };
+		C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListTLSCell.swift; sourceTree = "<group>"; };
 		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
-		C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListWC.swift; sourceTree = "<group>"; };
-		C464ADAE275A7A69003FCD53 /* SiteListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListVC.swift; sourceTree = "<group>"; };
-		C464ADB1275A87CA003FCD53 /* SiteListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteListCellProtocol.swift; sourceTree = "<group>"; };
+		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
+		C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWC.swift; sourceTree = "<group>"; };
+		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
+		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
+		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
+		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -317,6 +356,7 @@
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C484437A2804BB560041A78A /* ValetProxyScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetProxyScanner.swift; sourceTree = "<group>"; };
 		C48D0C8F25CC7FD000CC7490 /* StatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D0C9525CC80B100CC7490 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -328,10 +368,10 @@
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C4998F092617633900B2526E /* PrefsWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWC.swift; sourceTree = "<group>"; };
 		C49E171E27A5736E00787921 /* PMServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMServicesView.swift; sourceTree = "<group>"; };
-		C4AC51FB27E27F47008528CA /* SiteListKindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListKindCell.swift; sourceTree = "<group>"; };
+		C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListKindCell.swift; sourceTree = "<group>"; };
 		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
 		C4AF9F70275445FF00D44ED0 /* valet-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "valet-config.json"; sourceTree = "<group>"; };
-		C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigParserTest.swift; sourceTree = "<group>"; };
+		C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigurationTest.swift; sourceTree = "<group>"; };
 		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
 		C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetVersionExtractorTest.swift; sourceTree = "<group>"; };
 		C4B5635D276AB09000F12CCB /* VersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionExtractor.swift; sourceTree = "<group>"; };
@@ -342,6 +382,10 @@
 		C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuOutlets.swift"; sourceTree = "<group>"; };
 		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
 		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
+		C4C0E8DE27F88AEB002D32A9 /* FakeSiteScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSiteScanner.swift; sourceTree = "<group>"; };
+		C4C0E8E127F88B13002D32A9 /* ValetSiteScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSiteScanner.swift; sourceTree = "<group>"; };
+		C4C0E8E627F88B41002D32A9 /* ProxyScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyScanner.swift; sourceTree = "<group>"; };
+		C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValetProxy+Fake.swift"; sourceTree = "<group>"; };
 		C4C1019A27C65C6F001FACC2 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
 		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
@@ -350,12 +394,13 @@
 		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
 		C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Switcher.swift"; sourceTree = "<group>"; };
 		C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerWindow.swift; sourceTree = "<group>"; };
-		C4D5CFC927E0F9CD00035329 /* NginxConfigParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigParser.swift; sourceTree = "<group>"; };
+		C4D5CFC927E0F9CD00035329 /* NginxConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfiguration.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
 		C4D936C827E3EB6100BD69FE /* PhpHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelper.swift; sourceTree = "<group>"; };
 		C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpSwitcher.swift; sourceTree = "<group>"; };
 		C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcher.swift; sourceTree = "<group>"; };
+		C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProxyVC.swift; sourceTree = "<group>"; };
 		C4DEB7D327A5D60B00834718 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindowExtension.swift; sourceTree = "<group>"; };
 		C4E4404527C56F4700D225E1 /* ValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSite.swift; sourceTree = "<group>"; };
@@ -373,14 +418,16 @@
 		C4F2E4392752F7D00020E974 /* PhpInstallation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpInstallation.swift; sourceTree = "<group>"; };
 		C4F30B02278E16BA00755FCE /* HomebrewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewService.swift; sourceTree = "<group>"; };
 		C4F30B06278E195800755FCE /* brew-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brew-services.json"; sourceTree = "<group>"; };
+		C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* phpmon-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "phpmon-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7807D25D7F84B000DBC97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4F7809B25D80344000DBC97 /* CommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTest.swift; sourceTree = "<group>"; };
 		C4F780A725D80AE8000DBC97 /* php.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = php.ini; sourceTree = "<group>"; };
-		C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionParserTest.swift; sourceTree = "<group>"; };
+		C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtensionTest.swift; sourceTree = "<group>"; };
 		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionDetectionTest.swift; sourceTree = "<group>"; };
+		C4FE011028084FC200D1DE6D /* SelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +469,7 @@
 				C48D6C6E279CD29C00F26D7E /* PHP Version */,
 				C4D9ADC2277610E4007277F4 /* Switcher */,
 				C4F30B01278E169B00755FCE /* Homebrew */,
+				C42337A1281F19DC00459A48 /* Extensions */,
 				C41C1B4A22B019FF00E7CF16 /* ActivePhpInstallation.swift */,
 				C4F2E4392752F7D00020E974 /* PhpInstallation.swift */,
 				C4ACA38E25C754C100060C66 /* PhpExtension.swift */,
@@ -484,12 +532,10 @@
 		C40C7F1C27720E1400DDDCDC /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
-				C42CFB1527DFDE7900862737 /* nicoverbruggen.test */,
-				C42CFB1727DFDFDC00862737 /* nicoverbruggen_isolated.test */,
-				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
-				C43A8A1F25D9D1D700591B77 /* brew.json */,
-				C4F30B06278E195800755FCE /* brew-services.json */,
-				C4F780A725D80AE8000DBC97 /* php.ini */,
+				C459B4C127F6097E00E9B4B4 /* php */,
+				C459B4C027F6096300E9B4B4 /* valet */,
+				C459B4BF27F6094100E9B4B4 /* brew */,
+				C459B4BE27F6093A00E9B4B4 /* nginx */,
 			);
 			path = "Test Files";
 			sourceTree = "<group>";
@@ -517,6 +563,7 @@
 				C4E713562570150F00007428 /* SECURITY.md */,
 				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
 				54D9E0C027E4F5E9003B9AD9 /* LICENSE */,
+				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
 				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
@@ -566,7 +613,7 @@
 				C4B13B1D25C4915000548C3A /* App */,
 				C4D9ADBD27761084007277F4 /* PHP */,
 				C47331A0247093AC009A0597 /* Menu */,
-				C464ADAA275A7A25003FCD53 /* SiteList */,
+				C464ADAA275A7A25003FCD53 /* DomainList */,
 				5420395726135DB800FB00FA /* Preferences */,
 				C44C198F276E3A380072762D /* Progress */,
 				C4C8E81D276F5686003AC782 /* Watcher */,
@@ -575,15 +622,23 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		C42337A1281F19DC00459A48 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C42337A2281F19F000459A48 /* Xdebug.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C44067F327E256560045BD4E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C464ADB1275A87CA003FCD53 /* SiteListCellProtocol.swift */,
-				C44067FA27E25FD70045BD4E /* SiteListTLSCell.swift */,
-				C44067F427E2582B0045BD4E /* SiteListNameCell.swift */,
-				C44067F627E258410045BD4E /* SiteListPhpCell.swift */,
-				C44067F827E2585E0045BD4E /* SiteListTypeCell.swift */,
-				C4AC51FB27E27F47008528CA /* SiteListKindCell.swift */,
+				C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */,
+				C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */,
+				C44067F427E2582B0045BD4E /* DomainListNameCell.swift */,
+				C44067F627E258410045BD4E /* DomainListPhpCell.swift */,
+				C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */,
+				C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -606,17 +661,56 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		C464ADAA275A7A25003FCD53 /* SiteList */ = {
+		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
+			isa = PBXGroup;
+			children = (
+				C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */,
+				C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */,
+				54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */,
+				C42CFB1527DFDE7900862737 /* nginx-site.test */,
+				C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */,
+			);
+			path = nginx;
+			sourceTree = "<group>";
+		};
+		C459B4BF27F6094100E9B4B4 /* brew */ = {
+			isa = PBXGroup;
+			children = (
+				C43A8A1F25D9D1D700591B77 /* brew-formula.json */,
+				C4F30B06278E195800755FCE /* brew-services.json */,
+			);
+			path = brew;
+			sourceTree = "<group>";
+		};
+		C459B4C027F6096300E9B4B4 /* valet */ = {
+			isa = PBXGroup;
+			children = (
+				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
+			);
+			path = valet;
+			sourceTree = "<group>";
+		};
+		C459B4C127F6097E00E9B4B4 /* php */ = {
+			isa = PBXGroup;
+			children = (
+				C4F780A725D80AE8000DBC97 /* php.ini */,
+			);
+			path = php;
+			sourceTree = "<group>";
+		};
+		C464ADAA275A7A25003FCD53 /* DomainList */ = {
 			isa = PBXGroup;
 			children = (
 				C44067F327E256560045BD4E /* Cells */,
-				C464ADAB275A7A3F003FCD53 /* SiteListWC.swift */,
-				C464ADAE275A7A69003FCD53 /* SiteListVC.swift */,
-				C41E87192763D42300161EE0 /* SiteListVC+ContextMenu.swift */,
-				C41CA5EC2774F8EE00A2C80E /* SiteListVC+Actions.swift */,
+				C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */,
+				C464ADAE275A7A69003FCD53 /* DomainListVC.swift */,
+				C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */,
+				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
+				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
 				C4930849279F331F009C240B /* AddSiteVC.swift */,
+				C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */,
 			);
-			path = SiteList;
+			path = DomainList;
 			sourceTree = "<group>";
 		};
 		C47331A0247093AC009A0597 /* Menu */ = {
@@ -666,10 +760,9 @@
 			isa = PBXGroup;
 			children = (
 				C4AF9F792754499000D44ED0 /* Valet.swift */,
-				C4E4404527C56F4700D225E1 /* ValetSite.swift */,
-				C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */,
-				C41C02A527E60D7A009F26CB /* SiteScanner.swift */,
-				C4D5CFC927E0F9CD00035329 /* NginxConfigParser.swift */,
+				C42F26722805B4B400938AC7 /* DomainListable.swift */,
+				C4C0E8D927F887BD002D32A9 /* Proxies */,
+				C4C0E8D827F887A5002D32A9 /* Sites */,
 			);
 			path = Valet;
 			sourceTree = "<group>";
@@ -677,6 +770,7 @@
 		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
+				C4C0E8DA27F887CC002D32A9 /* Nginx */,
 				C4D89BC42783C98800A02B68 /* Composer */,
 				C4AF9F6C275445D900D44ED0 /* Homebrew */,
 				C4AF9F6A275445C900D44ED0 /* Valet */,
@@ -705,6 +799,8 @@
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
+				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -721,13 +817,60 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		C4C0E8D827F887A5002D32A9 /* Sites */ = {
+			isa = PBXGroup;
+			children = (
+				C4E4404527C56F4700D225E1 /* ValetSite.swift */,
+				C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */,
+				C4C0E8E427F88B1F002D32A9 /* SiteScanner */,
+			);
+			path = Sites;
+			sourceTree = "<group>";
+		};
+		C4C0E8D927F887BD002D32A9 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				C4205A7D27F4D21800191A39 /* ValetProxy.swift */,
+				C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */,
+				C4C0E8E527F88B36002D32A9 /* ProxyScanner */,
+			);
+			path = Proxies;
+			sourceTree = "<group>";
+		};
+		C4C0E8DA27F887CC002D32A9 /* Nginx */ = {
+			isa = PBXGroup;
+			children = (
+				C4D5CFC927E0F9CD00035329 /* NginxConfiguration.swift */,
+			);
+			path = Nginx;
+			sourceTree = "<group>";
+		};
+		C4C0E8E427F88B1F002D32A9 /* SiteScanner */ = {
+			isa = PBXGroup;
+			children = (
+				C41C02A527E60D7A009F26CB /* SiteScanner.swift */,
+				C4C0E8E127F88B13002D32A9 /* ValetSiteScanner.swift */,
+				C4C0E8DE27F88AEB002D32A9 /* FakeSiteScanner.swift */,
+			);
+			path = SiteScanner;
+			sourceTree = "<group>";
+		};
+		C4C0E8E527F88B36002D32A9 /* ProxyScanner */ = {
+			isa = PBXGroup;
+			children = (
+				C4C0E8E627F88B41002D32A9 /* ProxyScanner.swift */,
+				C484437A2804BB560041A78A /* ValetProxyScanner.swift */,
+			);
+			path = ProxyScanner;
+			sourceTree = "<group>";
+		};
 		C4C1019727C65A11001FACC2 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				C4AF9F76275447F100D44ED0 /* ValetConfigParserTest.swift */,
-				C4F780AD25D80B37000DBC97 /* ExtensionParserTest.swift */,
-				C43A8A2325D9D20D00591B77 /* BrewJsonParserTest.swift */,
-				C42CFB1927DFE8BD00862737 /* NginxConfigParserTest.swift */,
+				C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */,
+				C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */,
+				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
+				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -739,6 +882,8 @@
 				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
+				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
+				C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */,
 			);
 			path = Versions;
 			sourceTree = "<group>";
@@ -849,6 +994,7 @@
 				C41C1B2F22B0097F00E7CF16 /* Sources */,
 				C41C1B3022B0097F00E7CF16 /* Frameworks */,
 				C41C1B3122B0097F00E7CF16 /* Resources */,
+				C4F5FBCB28216985001065C5 /* Run `swiftlint` */,
 			);
 			buildRules = (
 			);
@@ -949,18 +1095,42 @@
 			files = (
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
-				C42CFB1827DFDFDC00862737 /* nicoverbruggen_isolated.test in Resources */,
+				C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
-				C43A8A2025D9D1D700591B77 /* brew.json in Resources */,
+				C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
+				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
-				C42CFB1627DFDE7900862737 /* nicoverbruggen.test in Resources */,
+				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
+				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
+				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C4F5FBCB28216985001065C5 /* Run `swiftlint` */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run `swiftlint`";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C41C1B2F22B0097F00E7CF16 /* Sources */ = {
@@ -975,6 +1145,7 @@
 				C4998F0A2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
+				C4C0E8EA27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
@@ -982,27 +1153,32 @@
 				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C49E171F27A5736E00787921 /* PMServicesView.swift in Sources */,
 				C4EE55AD27708B9E001DF387 /* PMStatsView.swift in Sources */,
+				C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
-				C41E871A2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
+				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
+				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C48D0CA325CC992000CC7490 /* StatsView.swift in Sources */,
 				C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C4EE55A927708B9E001DF387 /* PMHeaderView.swift in Sources */,
 				C41C02A927E61A65009F26CB /* ValetSite+Fake.swift in Sources */,
+				C4C0E8DF27F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
+				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B585442770FE3900DA4FBE /* Command.swift in Sources */,
-				C44067F527E2582B0045BD4E /* SiteListNameCell.swift in Sources */,
+				C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C4EE55AB27708B9E001DF387 /* Preview.swift in Sources */,
-				C44067F727E258410045BD4E /* SiteListPhpCell.swift in Sources */,
+				C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */,
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
-				C4AC51FC27E27F47008528CA /* SiteListKindCell.swift in Sources */,
+				C4AC51FC27E27F47008528CA /* DomainListKindCell.swift in Sources */,
 				C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */,
 				54D9E0B827E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
+				C4C0E8E727F88B41002D32A9 /* ProxyScanner.swift in Sources */,
 				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
 				54B48B5F275F66AE006D90C5 /* Application.swift in Sources */,
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
@@ -1012,29 +1188,34 @@
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				54D9E0B427E4F51E003B9AD9 /* Key.swift in Sources */,
+				C4C0E8E227F88B13002D32A9 /* ValetSiteScanner.swift in Sources */,
+				C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				54D9E0B227E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
-				C41CA5ED2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
+				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
+				C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C417DC74277614690015E6EE /* Helpers.swift in Sources */,
 				C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
+				C484437B2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
-				C464ADAF275A7A69003FCD53 /* SiteListVC.swift in Sources */,
+				C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */,
 				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
-				C44067FB27E25FD70045BD4E /* SiteListTLSCell.swift in Sources */,
+				C44067FB27E25FD70045BD4E /* DomainListTLSCell.swift in Sources */,
 				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
+				C4FE011128084FC200D1DE6D /* SelectionVC.swift in Sources */,
 				C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
@@ -1043,7 +1224,7 @@
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C48D0C9625CC80B100CC7490 /* HeaderView.swift in Sources */,
-				C4D5CFCA27E0F9CD00035329 /* NginxConfigParser.swift in Sources */,
+				C4D5CFCA27E0F9CD00035329 /* NginxConfiguration.swift in Sources */,
 				C4CE3BBA27B31F670086CA49 /* ComposerWindow.swift in Sources */,
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
@@ -1051,15 +1232,16 @@
 				54D9E0B627E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
-				C44067F927E2585E0045BD4E /* SiteListTypeCell.swift in Sources */,
+				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
+				C42337A3281F19F000459A48 /* Xdebug.swift in Sources */,
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C41C02A627E60D7A009F26CB /* SiteScanner.swift in Sources */,
-				C464ADAC275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
-				C464ADB2275A87CA003FCD53 /* SiteListCellProtocol.swift in Sources */,
+				C464ADAC275A7A3F003FCD53 /* DomainListWC.swift in Sources */,
+				C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */,
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 				C493084A279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */,
@@ -1070,15 +1252,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C449B4F427EE7FC800C47E8A /* SiteListKindCell.swift in Sources */,
+				C449B4F427EE7FC800C47E8A /* DomainListKindCell.swift in Sources */,
 				54EAC806262F212B0092D14E /* GlobalKeybindPreference.swift in Sources */,
 				C4EE55AE27708B9E001DF387 /* PMStatsView.swift in Sources */,
-				C41CA5EE2774F8EE00A2C80E /* SiteListVC+Actions.swift in Sources */,
+				C41CA5EE2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				54D9E0B727E4F51E003B9AD9 /* HotKey.swift in Sources */,
+				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
+				C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
+				C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C493084B279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
@@ -1087,13 +1272,14 @@
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				54D9E0BB27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
-				C4D5CFCB27E0F9CD00035329 /* NginxConfigParser.swift in Sources */,
+				C4D5CFCB27E0F9CD00035329 /* NginxConfiguration.swift in Sources */,
 				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
 				C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
-				C449B4F027EE7FB800C47E8A /* SiteListTLSCell.swift in Sources */,
+				C4C0E8E827F88B41002D32A9 /* ProxyScanner.swift in Sources */,
+				C449B4F027EE7FB800C47E8A /* DomainListTLSCell.swift in Sources */,
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
-				C43A8A2425D9D20D00591B77 /* BrewJsonParserTest.swift in Sources */,
+				C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C4F319C927B034A500AFF46F /* Stats.swift in Sources */,
@@ -1102,27 +1288,31 @@
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C4C0E8E327F88B13002D32A9 /* ValetSiteScanner.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
+				C4C0E8EB27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
-				C4F780AE25D80B37000DBC97 /* ExtensionParserTest.swift in Sources */,
+				C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */,
 				C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				54D9E0B927E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
 				C4EED88A27A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
-				C4D936CB27E3EE4A00BD69FE /* SiteListCellProtocol.swift in Sources */,
+				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
-				C41E871B2763D42300161EE0 /* SiteListVC+ContextMenu.swift in Sources */,
+				C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
+				C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
-				C4AF9F78275447F100D44ED0 /* ValetConfigParserTest.swift in Sources */,
+				C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
+				C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */,
 				C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
@@ -1131,10 +1321,11 @@
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
+				C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */,
-				C449B4F127EE7FC200C47E8A /* SiteListNameCell.swift in Sources */,
+				C449B4F127EE7FC200C47E8A /* DomainListNameCell.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
 				54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
@@ -1144,11 +1335,13 @@
 				C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */,
 				C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
-				C449B4F227EE7FC400C47E8A /* SiteListPhpCell.swift in Sources */,
-				C42CFB1A27DFE8BD00862737 /* NginxConfigParserTest.swift in Sources */,
+				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
+				C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */,
 				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
+				C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */,
 				C40B24F227A310770018C7D2 /* Events.swift in Sources */,
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
+				C4C0E8E027F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* Command.swift in Sources */,
@@ -1158,22 +1351,25 @@
 				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */,
-				C449B4F327EE7FC600C47E8A /* SiteListTypeCell.swift in Sources */,
+				C449B4F327EE7FC600C47E8A /* DomainListTypeCell.swift in Sources */,
 				C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C41C02AB27E61CB3009F26CB /* ValetSite+Fake.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
+				C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4B585422770FE3900DA4FBE /* Shell.swift in Sources */,
-				C464ADAD275A7A3F003FCD53 /* SiteListWC.swift in Sources */,
+				C464ADAD275A7A3F003FCD53 /* DomainListWC.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,
 				C4F780CB25D80B75000DBC97 /* StatsView.swift in Sources */,
-				C464ADB0275A7A6A003FCD53 /* SiteListVC.swift in Sources */,
+				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
 				C418898A275FE8CB001EF227 /* Filesystem.swift in Sources */,
+				C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
 				C4EE55AA27708B9E001DF387 /* PMHeaderView.swift in Sources */,
+				C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1324,7 +1520,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 761;
+				CURRENT_PROJECT_VERSION = 786;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1334,7 +1530,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.2.2;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1350,7 +1546,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 761;
+				CURRENT_PROJECT_VERSION = 786;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1360,7 +1556,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.2.2;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

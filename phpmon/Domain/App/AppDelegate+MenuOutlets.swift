@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 05/12/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -22,34 +22,34 @@ import AppKit
  For more information about this, please see the ActivationPolicy-related extension.
  */
 extension AppDelegate {
-    
+
     // MARK: - Menu Interactions
-    
+
     @IBAction func addSiteLinkPressed(_ sender: Any) {
-        SiteListVC.show()
-        
-        guard let windowController = App.shared.siteListWindowController else { return }
+        DomainListVC.show()
+
+        guard let windowController = App.shared.domainListWindowController else { return }
         windowController.pressedAddLink(nil)
     }
-    
-    @IBAction func reloadSiteListPressed(_ sender: Any) {
-        let vc = App.shared.siteListWindowController?
-            .window?.contentViewController as? SiteListVC
-        
+
+    @IBAction func reloadDomainListPressed(_ sender: Any) {
+        let vc = App.shared.domainListWindowController?
+            .window?.contentViewController as? DomainListVC
+
         if vc != nil {
             // If the view exists, directly reload the list of sites
-            vc!.reloadSites()
+            vc!.reloadDomains()
         } else {
             // If the view does not exist, reload the cached data that was populated when the app initially launched.
             Valet.shared.reloadSites()
         }
     }
-    
+
     @IBAction func focusSearchField(_ sender: Any) {
-        SiteListVC.show()
-        
-        guard let windowController = App.shared.siteListWindowController else { return }
+        DomainListVC.show()
+
+        guard let windowController = App.shared.domainListWindowController else { return }
         windowController.searchToolbarItem.searchField.becomeFirstResponder()
     }
-    
+
 }

@@ -9,34 +9,34 @@
 import Foundation
 
 extension MainMenu {
-    
+
     // MARK: - PhpSwitcherDelegate
-    
+
     func switcherDidStartSwitching(to version: String) {}
-    
+
     func switcherDidCompleteSwitch(to version: String) {
         // Update the PHP version
         PhpEnv.shared.currentInstall = ActivePhpInstallation()
-        
+
         // Ensure the config watcher gets reloaded
         App.shared.handlePhpConfigWatcher()
-        
+
         // Mark as no longer busy
         PhpEnv.shared.isBusy = false
-        
+
         // Reload the site list
-        self.reloadSiteListData()
-        
+        self.reloadDomainListData()
+
         // Perform UI updates on main thread
         DispatchQueue.main.async { [self] in
             updatePhpVersionInStatusBar()
             rebuild()
-            
+
             if !PhpEnv.shared.validate(version) {
                 self.suggestFixMyValet(failed: version)
                 return
             }
-            
+
             // Run composer updates
             if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
                 ComposerWindow().updateGlobalDependencies(
@@ -45,17 +45,17 @@ extension MainMenu {
                         self.notifyAboutVersionChange(to: version)
                     }
                 )
-                
+
             } else {
                 self.notifyAboutVersionChange(to: version)
             }
-            
+
             // Update stats
             Stats.incrementSuccessfulSwitchCount()
             Stats.evaluateSponsorMessageShouldBeDisplayed()
         }
     }
-    
+
     @MainActor private func suggestFixMyValet(failed version: String) {
         let outcome = BetterAlert()
             .withInformation(
@@ -69,23 +69,23 @@ extension MainMenu {
             MainMenu.shared.fixMyValet()
         }
     }
-    
-    private func reloadSiteListData() {
-        if let window = App.shared.siteListWindowController {
+
+    private func reloadDomainListData() {
+        if let window = App.shared.domainListWindowController {
             DispatchQueue.main.async {
-                window.contentVC.reloadSites()
+                window.contentVC.reloadDomains()
             }
         } else {
             Valet.shared.reloadSites()
         }
     }
-    
+
     private func notifyAboutVersionChange(to version: String) {
         LocalNotification.send(
             title: String(format: "notification.version_changed_title".localized, version),
             subtitle: String(format: "notification.version_changed_desc".localized, version)
         )
-        
+
         PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 extension Process {
-    
+
     /**
      When a process is running in the background, it can send content to standard
      output or standard error, just like it would in a terminal. Using `listen`
@@ -22,10 +22,10 @@ extension Process {
     ) {
         let outputPipe = Pipe()
         let errorPipe = Pipe()
-        
+
         self.standardOutput = outputPipe
         self.standardError = errorPipe
-        
+
         [
          (outputPipe, didReceiveStandardOutputData),
          (errorPipe, didReceiveStandardErrorData)
@@ -35,15 +35,18 @@ extension Process {
                 forName: NSNotification.Name.NSFileHandleDataAvailable,
                 object: pipe.fileHandleForReading,
                 queue: nil
-            ) { notification in
-                if let outputString = String(data: pipe.fileHandleForReading.availableData, encoding: String.Encoding.utf8) {
+            ) { _ in
+                if let outputString = String(
+                    data: pipe.fileHandleForReading.availableData,
+                    encoding: String.Encoding.utf8
+                ) {
                     callback(outputString)
                 }
                 pipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
             }
         }
     }
-    
+
     /**
      After the process is done running, you'll want to stop listening.
      */
@@ -55,5 +58,5 @@ extension Process {
             NotificationCenter.default.removeObserver(pipe.fileHandleForReading)
         }
     }
-    
+
 }

@@ -3,41 +3,46 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/11/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 class Valet {
-    
+
     enum FeatureFlag {
         case isolatedSites,
              supportForPhp56
     }
-    
+
     static let shared = Valet()
-    
+
     /// The version of Valet that was detected.
     var version: String! = nil
-    
+
     /// The Valet configuration file.
     var config: Valet.Configuration!
-    
+
     /// A cached list of sites that were detected after analyzing the paths set up for Valet.
     var sites: [ValetSite] = []
-    
+
+    /// A cached list of proxies that were detecting after analyzing the Nginx paths.
+    var proxies: [ValetProxy] = []
+
     /// Whether we're busy with some blocking operation.
     var isBusy: Bool = false
-    
+
     /// Various feature flags. Enabled based on the installed Valet version.
     var features: [FeatureFlag] = []
-    
-    /// When initialising the Valet singleton assume no sites loaded. We will load the version later.
+
+    /// When initialising the Valet singleton, assume no sites or proxies loaded.
+    /// We will load the version later.
     init() {
         self.version = nil
         self.sites = []
+        self.proxies = []
     }
-    
+
     /**
      If marketing mode is enabled, show a list of sites that are used for promotional screenshots.
      This can be done by swapping out the real Valet scanner with one that always returns a fixed
@@ -47,17 +52,43 @@ class Valet {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
             return FakeSiteScanner()
         }
-        
+
         return ValetSiteScanner()
     }
-    
+
+    static var proxyScanner: ProxyScanner {
+        return ValetProxyScanner()
+    }
+
     /**
      Check if a particular feature is enabled.
      */
     public static func enabled(feature: FeatureFlag) -> Bool {
         return self.shared.features.contains(feature)
     }
-    
+
+    /**
+     Retrieve a list of all domains, including sites & proxies.
+     */
+    public static func getDomainListable() -> [DomainListable] {
+        return self.shared.sites + self.shared.proxies
+    }
+
+    /**
+     Notify the user about a non-default TLD being set.
+     */
+    public static func notifyAboutUnsupportedTLD() {
+        if Valet.shared.config.tld != "test" {
+            DispatchQueue.main.async {
+                BetterAlert().withInformation(
+                    title: "alert.warnings.tld_issue.title".localized,
+                    subtitle: "alert.warnings.tld_issue.subtitle".localized,
+                    description: "alert.warnings.tld_issue.description".localized
+                ).withPrimary(text: "OK").show()
+            }
+        }
+    }
+
     /**
      We don't want to load the initial config.json file as soon as the class is initialised.
      
@@ -70,7 +101,7 @@ class Valet {
     public func loadConfiguration() {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet/config.json")
-        
+
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
@@ -80,7 +111,7 @@ class Valet {
             Log.err(error)
         }
     }
-    
+
     /**
      Starts the preload of sites, but only if the maximum amount of sites is 30.
      For users with more sites, the site list is loaded when they bring up the site list window.
@@ -97,21 +128,21 @@ class Valet {
             Log.info("\(foundSites) sites found, exceeds \(maximumPreload) for preload at launch!")
         }
     }
-    
+
     /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
      (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() {
         loadConfiguration()
-        
-        if (isBusy) {
+
+        if isBusy {
             return
         }
-        
+
         resolvePaths()
     }
-    
+
     /**
      Depending on the version of Valet that is active, the feature set of PHP Monitor will change.
      
@@ -119,9 +150,9 @@ class Valet {
      `enabled(feature)`, which contains information about the feature set of the version of Valet that is currently
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
-    public func evaluateFeatureSupport() -> Void {
+    public func evaluateFeatureSupport() {
         let isOlderThanVersionThree = version.versionCompare("3.0") == .orderedAscending
-        
+
         if isOlderThanVersionThree {
             self.features.append(.supportForPhp56)
         } else {
@@ -129,16 +160,16 @@ class Valet {
             self.features.append(.isolatedSites)
         }
     }
-    
+
     /**
      Checks if the version of Valet is more recent than the minimum version required for PHP Monitor to function.
      Should this procedure fail, the user will get an alert notifying them that the version of Valet they have
      installed is not recent enough.
      */
-    public func validateVersion() -> Void {
+    public func validateVersion() {
         // 1. Evaluate feature support
         Valet.shared.evaluateFeatureSupport()
-        
+
         // 2. Notify user if the version is too old
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
@@ -147,16 +178,20 @@ class Valet {
                 BetterAlert()
                     .withInformation(
                         title: "alert.min_valet_version.title".localized,
-                        subtitle:"alert.min_valet_version.info".localized(version!, Constants.MinimumRecommendedValetVersion)
+                        subtitle: "alert.min_valet_version.info".localized(
+                            version!,
+                            Constants.MinimumRecommendedValetVersion
+                        )
                     )
                     .withPrimary(text: "OK")
                     .show()
             }
         } else {
-            Log.info("Valet version \(version!) is recent enough, OK (recommended: \(Constants.MinimumRecommendedValetVersion))")
+            Log.info("Valet version \(version!) is recent enough, OK " +
+                     "(recommended: \(Constants.MinimumRecommendedValetVersion))")
         }
     }
-    
+
     /**
      Returns a count of how many sites are linked and parked.
      */
@@ -164,42 +199,54 @@ class Valet {
         return Self.siteScanner
             .resolveSiteCount(paths: config.paths)
     }
-    
+
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
     private func resolvePaths() {
         isBusy = true
-        
+
         sites = Self.siteScanner
             .resolveSitesFrom(paths: config.paths)
-            .sorted { $0.absolutePath < $1.absolutePath }
-        
+            .sorted {
+                $0.absolutePath < $1.absolutePath
+            }
+
+        proxies = Self.proxyScanner
+            .resolveProxies(
+                directoryPath: FileManager.default
+                    .homeDirectoryForCurrentUser
+                    .appendingPathComponent(".config/valet/Nginx")
+                    .path
+            )
+
         if let defaultPath = Valet.shared.config.defaultSite,
             let site = ValetSiteScanner().resolveSite(path: defaultPath) {
             sites.insert(site, at: 0)
         }
-        
+
         isBusy = false
     }
-    
+
     struct Configuration: Decodable {
         /// Top level domain suffix. Usually "test" but can be set to something else.
         /// - Important: Does not include the actual dot. ("test", not ".test"!)
         let tld: String
-        
+
         /// The paths that need to be checked.
         let paths: [String]
-        
+
         /// The loopback address. Optional.
         let loopback: String?
-        
+
         /// The default site that is served if the domain is not found. Optional.
         let defaultSite: String?
-        
+
+        // swiftlint:disable nesting
         private enum CodingKeys: String, CodingKey {
             case tld, paths, loopback, defaultSite = "default"
         }
+        // swiftlint:enable nesting
     }
-    
+
 }

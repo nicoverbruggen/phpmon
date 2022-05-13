@@ -2,7 +2,7 @@
 //  MainMenu.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -10,18 +10,18 @@ import Cocoa
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
 
     static let shared = MainMenu()
-    
-    weak var menuDelegate: NSMenuDelegate? = nil
-    
+
+    weak var menuDelegate: NSMenuDelegate?
+
     /**
      The status bar item with variable length.
      */
     let statusItem = NSStatusBar.system.statusItem(
         withLength: NSStatusItem.variableLength
     )
-    
+
     // MARK: - UI related
-    
+
     /**
      Rebuilds the menu (either asynchronously or synchronously).
      Defaults to rebuilding the menu asynchronously.
@@ -31,13 +31,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             self.rebuildMenu()
             return
         }
-        
+
         // Update the menu item on the main thread
         DispatchQueue.main.async { [self] in
             self.rebuildMenu()
         }
     }
-    
+
     /**
      Update the menu's contents, based on what's going on.
      This will rebuild the entire menu, so this can take a few moments.
@@ -47,37 +47,35 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     private func rebuildMenu() {
         // Create a new menu
         let menu = StatusMenu()
-        
+
         // Add the PHP versions (or error messages)
         menu.addPhpVersionMenuItems()
         menu.addItem(NSMenuItem.separator())
-        
+
         // Add the possible actions
         menu.addPhpActionMenuItems()
         menu.addItem(NSMenuItem.separator())
-        
+
         // Add Valet interactions
         menu.addValetMenuItems()
         menu.addItem(NSMenuItem.separator())
-        
+
         // Add services
-        menu.addPhpConfigurationMenuItems()
+        menu.addRemainingMenuItems()
         menu.addItem(NSMenuItem.separator())
-        
+
         // Add about & quit menu items
-        menu.addItem(NSMenuItem(title: "mi_preferences".localized, action: #selector(openPrefs), keyEquivalent: ","))
-        menu.addItem(NSMenuItem(title: "mi_about".localized, action: #selector(openAbout), keyEquivalent: ""))
-        menu.addItem(NSMenuItem(title: "mi_quit".localized, action: #selector(terminateApp), keyEquivalent: "q"))
-        
+        menu.addCoreMenuItems()
+
         // Make sure every item can be interacted with
         menu.items.forEach({ (item) in
             item.target = self
         })
-        
+
         statusItem.menu = menu
         statusItem.menu?.delegate = self
     }
-    
+
     /**
      Sets the status bar image based on a version string.
      */
@@ -88,7 +86,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 : MenuBarImageGenerator.textToImage(text: version)
         )
     }
-    
+
     /**
      Sets the status bar image, based on the provided NSImage.
      The image will be used as a template image.
@@ -99,9 +97,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             button.image = image
         }
     }
-    
+
     // MARK: - User Interface
-    
+
     /** Reloads which PHP versions is currently active. */
     @objc func refreshActiveInstallation() {
         if !PhpEnv.shared.isBusy {
@@ -111,13 +109,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             Log.perf("Skipping version refresh due to busy status")
         }
     }
-    
+
     /** Updates the icon (refresh icon) and rebuilds the menu. */
     @objc func updatePhpVersionInStatusBar() {
         refreshIcon()
         rebuild()
     }
-    
+
     /**
      Reloads the menu in the foreground.
      This mimics the exact behaviours of `asyncExecution` as set in the method below.
@@ -128,7 +126,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         rebuild(async: false)
         NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
     }
-    
+
     /** Reloads the menu in the background, using `asyncExecution`. */
     @objc func reloadPhpMonitorMenuInBackground() {
         asyncExecution({
@@ -141,11 +139,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             .updatesMenuBarContents
         ])
     }
-    
+
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
         DispatchQueue.main.async { [self] in
-            if (PhpEnv.shared.isBusy) {
+            if PhpEnv.shared.isBusy {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
@@ -159,16 +157,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             }
         }
     }
-    
+
     /** Updates the icon to be displayed as busy. */
     @objc func setBusyImage() {
         DispatchQueue.main.async { [self] in
             setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(
@@ -181,7 +179,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             .didSelectPrimary() {
             return
         }
-        
+
         asyncExecution {
             try Actions.fixHomebrewPermissions()
         } success: {
@@ -197,13 +195,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             BetterAlert.show(for: error as! HomebrewPermissionError)
         }
     }
-    
+
     @objc func restartPhpFpm() {
         asyncExecution {
             Actions.restartPhpFpm()
         }
     }
-    
+
     @objc func restartAllServices() {
         asyncExecution {
             Actions.restartDnsMasq()
@@ -218,7 +216,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             }
         }
     }
-    
+
     @objc func stopAllServices() {
         asyncExecution {
             Actions.stopAllServices()
@@ -231,75 +229,79 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             }
         }
     }
-    
+
     @objc func restartNginx() {
         asyncExecution {
             Actions.restartNginx()
         }
     }
-    
+
     @objc func restartDnsMasq() {
         asyncExecution {
             Actions.restartDnsMasq()
         }
     }
-    
+
+    @objc func toggleXdebugMode(sender: XdebugMenuItem) {
+        Log.info("Switching Xdebug to mode: \(sender.mode)")
+    }
+
     @objc func toggleExtension(sender: ExtensionMenuItem) {
         asyncExecution {
             sender.phpExtension?.toggle()
-            
+
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
                 Actions.restartPhpFpm()
             }
         }
     }
-    
+
     @objc func openPhpInfo() {
-        var url: URL? = nil
-        
+        var url: URL?
+
         asyncWithBusyUI {
             url = Actions.createTempPhpInfoFile()
         } completion: {
             if url != nil { NSWorkspace.shared.open(url!) }
         }
     }
-    
+
     @objc func updateGlobalComposerDependencies() {
         ComposerWindow().updateGlobalDependencies(
             notify: true,
             completion: { _ in }
         )
     }
-    
+
     @objc func openActiveConfigFolder() {
-        if (PhpEnv.phpInstall.version.error) {
+        if PhpEnv.phpInstall.version.error {
             // php version was not identified
             Actions.openGenericPhpConfigFolder()
             return
         }
-        
+
         // php version was identified
         Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
     }
-    
+
     @objc func openGlobalComposerFolder() {
         Actions.openGlobalComposerFolder()
     }
-    
+
     @objc func openValetConfigFolder() {
         Actions.openValetConfigFolder()
     }
-    
+
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
         self.switchToPhpVersion(sender.version)
     }
-    
+
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnv.shared.isBusy = true
         PhpEnv.shared.delegate = self
         PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
-        
+
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             updatePhpVersionInStatusBar()
             rebuild()
@@ -311,38 +313,44 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             )
         }
     }
-    
+
     // MARK: - Menu Item Functionality
-    
+
     @objc func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
-    
+
     @objc func openPrefs() {
         PrefsVC.show()
     }
-    
-    @objc func openSiteList() {
-        SiteListVC.show()
+
+    @objc func openDomainList() {
+        DomainListVC.show()
     }
-    
+
     @objc func openDonate() {
         NSWorkspace.shared.open(Constants.Urls.DonationPage)
     }
-    
+
     @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
     }
-    
+
+    @objc func checkForUpdates() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false)
+        }
+    }
+
     // MARK: - Menu Delegate
-    
+
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
         NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
     }
-    
+
     func menuDidClose(_ menu: NSMenu) {
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false

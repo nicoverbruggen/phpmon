@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 15/04/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
@@ -20,6 +20,6 @@ struct PMServices: NSViewRepresentable {
     func makeNSView(context: Context) -> some NSView {
         return ServicesView.asMenuItem().view!
     }
-    
+
     func updateNSView(_ nsView: NSViewType, context: Context) {}
 }

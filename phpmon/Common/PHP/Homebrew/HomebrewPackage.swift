@@ -2,24 +2,24 @@
 //  HomebrewPackage.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 struct HomebrewPackage: Decodable {
-    
+
     let name: String
     let full_name: String
     let aliases: [String]
     let installed: [HomebrewInstalled]
     let linked_keg: String?
-    
+
     public var version: String {
         return aliases.first!
             .replacingOccurrences(of: "php@", with: "")
     }
-    
+
 }
 
 struct HomebrewInstalled: Decodable {

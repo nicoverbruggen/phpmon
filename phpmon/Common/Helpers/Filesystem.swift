@@ -3,13 +3,13 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 07/12/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
 class Filesystem {
-    
+
     /**
      Checks if a file exists at the provided path.
      Uses `FileManager`.
@@ -19,5 +19,5 @@ class Filesystem {
             atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
         )
     }
-    
+
 }

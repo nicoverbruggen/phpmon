@@ -8,9 +8,9 @@
 
 import Foundation
 import Cocoa
- 
+
 class Stats {
-    
+
     /**
      Keep track of how many times the app has been successfully launched.
      
@@ -23,7 +23,7 @@ class Stats {
             forKey: InternalStats.launchCount.rawValue
         )
     }
-    
+
     /**
      Keep track of how many times the app has successfully switched
      between different PHP versions.
@@ -37,7 +37,7 @@ class Stats {
             forKey: InternalStats.switchCount.rawValue
         )
     }
-    
+
     /**
      Did the user see the sponsor encouragement / thank you message?
      Annoying the user is the worst, so let's not show the message twice.
@@ -47,7 +47,7 @@ class Stats {
             forKey: InternalStats.didSeeSponsorEncouragement.rawValue
         )
     }
-    
+
     /**
      Increment the successful launch count. This should only be
      called when the user has not encountered ANY issues starting
@@ -59,7 +59,7 @@ class Stats {
             forKey: InternalStats.launchCount.rawValue
         )
     }
-    
+
     /**
      Increment the successful switch count.
      */
@@ -69,7 +69,7 @@ class Stats {
             forKey: InternalStats.switchCount.rawValue
         )
     }
-    
+
     /**
      Determine if the sponsor message should be displayed.
      
@@ -86,19 +86,20 @@ class Stats {
      (see `didSeeSponsorEncouragement`)
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
-        
+
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
             return Log.info("Sponsor messages never apply to beta builds.")
         }
-        
+
         if Stats.didSeeSponsorEncouragement {
             return Log.info("Awesome, the user has already seen the sponsor message.")
         }
-        
+
         if Stats.successfulLaunchCount < 7 && Stats.successfulSwitchCount < 40 {
-            return Log.info("It is too soon to see the sponsor message (launched \(Stats.successfulLaunchCount) times, switched \(Stats.successfulSwitchCount) times).")
+            return Log.info("It is too soon to see the sponsor message (launched \(Stats.successfulLaunchCount) " +
+                            "times, switched \(Stats.successfulSwitchCount) times).")
         }
-        
+
         DispatchQueue.main.async {
             let donate = BetterAlert()
                 .withInformation(
@@ -117,9 +118,9 @@ class Stats {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")
                 NSWorkspace.shared.open(Constants.Urls.DonationPayment)
             }
-            
+
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
         }
     }
-    
+
 }
