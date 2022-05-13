@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/11/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -11,13 +11,41 @@ import Foundation
 class HomebrewDiagnostics {
 
     /**
+     Determines the Homebrew taps the user has installed.
+     */
+    public static var installedTaps: [String] = {
+        return Shell
+            .pipe("\(Paths.brew) tap")
+            .split(separator: "\n")
+            .map { string in
+                return String(string)
+            }
+    }()
+
+    /**
+     Determines whether the PHP Monitor Cask is installed.
+     */
+    public static var customCaskInstalled: Bool = {
+        return installedTaps.contains("nicoverbruggen/cask")
+    }()
+
+    /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
      This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
-     
+
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public static func hasAliasConflict() -> Bool {
+    public static func checkForCaskConflict() {
+        if hasAliasConflict() {
+            presentAlertAboutConflict()
+        }
+    }
+
+    /**
+     Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
+     */
+    private static func hasAliasConflict() -> Bool {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
@@ -55,7 +83,10 @@ class HomebrewDiagnostics {
         }
     }
 
-    public static func presentAlertAboutConflict() {
+    /**
+     Show this alert in case the tapped Cask does cause issues because of the conflict.
+     */
+    private static func presentAlertAboutConflict() {
         DispatchQueue.main.async {
             BetterAlert()
                 .withInformation(

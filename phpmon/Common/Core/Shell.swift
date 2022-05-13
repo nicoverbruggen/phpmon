@@ -2,7 +2,7 @@
 //  Shell.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -91,7 +91,7 @@ public class Shell {
         task.launch()
         task.waitUntilExit()
 
-        return Shell.Output(
+        let output = Shell.Output(
             standardOutput: String(
                 data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
                 encoding: .utf8
@@ -102,6 +102,12 @@ public class Shell {
             )!,
             task: task
         )
+
+        if CommandLine.arguments.contains("--v") {
+            log(task: task, output: output)
+        }
+
+        return output
     }
 
     /**
@@ -117,6 +123,23 @@ public class Shell {
         task.arguments = ["--noprofile", "-norc", "--login", "-c", tailoredCommand]
 
         return task
+    }
+
+    /**
+     Verbose logging for PHP Monitor's synchronous shell output.
+     */
+    private func log(task: Process, output: Output) {
+        Log.info("")
+        Log.info("==== COMMAND ====")
+        Log.info("")
+        Log.info("\(self.shell) \(task.arguments?.joined(separator: " ") ?? "")")
+        Log.info("")
+        Log.info("==== OUTPUT ====")
+        Log.info("")
+        dump(output)
+        Log.info("")
+        Log.info("==== END OUTPUT ====")
+        Log.info("")
     }
 
     public class Output {

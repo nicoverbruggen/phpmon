@@ -2,7 +2,7 @@
 //  MainMenu.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -335,6 +335,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func terminateApp() {
         NSApplication.shared.terminate(nil)
+    }
+
+    @objc func checkForUpdates() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false)
+        }
     }
 
     // MARK: - Menu Delegate

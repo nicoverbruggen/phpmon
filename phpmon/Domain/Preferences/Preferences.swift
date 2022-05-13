@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -20,6 +20,7 @@ enum PreferenceName: String {
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
+    case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
 }
 
 /**
@@ -76,6 +77,7 @@ class Preferences {
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
+            PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
@@ -145,6 +147,8 @@ class Preferences {
                 forKey: PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue) as Any,
             .allowProtocolForIntegrations: UserDefaults.standard.bool(
                 forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
+            .automaticBackgroundUpdateCheck: UserDefaults.standard.bool(
+                forKey: PreferenceName.automaticBackgroundUpdateCheck.rawValue) as Any,
 
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(

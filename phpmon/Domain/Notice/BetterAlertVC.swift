@@ -65,7 +65,7 @@ class BetterAlertVC: NSViewController {
     }
 
     @IBAction func tertiaryButtonAction(_ sender: Any) {
-        if self.actionSecondary != nil {
+        if self.actionTertiary != nil {
             self.actionTertiary!(self)
         }
     }

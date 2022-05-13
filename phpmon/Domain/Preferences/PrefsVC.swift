@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -53,7 +53,8 @@ class PrefsVC: NSViewController {
             getAutoRestartPreferenceView(),
             getAutomaticComposerUpdatePreferenceView(),
             getShortcutPreferenceView(),
-            getIntegrationsPreferenceView()
+            getIntegrationsPreferenceView(),
+            getAutomaticUpdateCheckPreferenceView()
         ].forEach({ self.stackView.addArrangedSubview($0) })
     }
 
@@ -129,6 +130,16 @@ class PrefsVC: NSViewController {
             descriptionText: "prefs.open_protocol_desc".localized,
             checkboxText: "prefs.open_protocol_title".localized,
             preference: .allowProtocolForIntegrations,
+            action: {}
+        )
+    }
+
+    private func getAutomaticUpdateCheckPreferenceView() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.updates".localized,
+            descriptionText: "prefs.automatic_update_check_desc".localized,
+            checkboxText: "prefs.automatic_update_check_title".localized,
+            preference: .automaticBackgroundUpdateCheck,
             action: {}
         )
     }

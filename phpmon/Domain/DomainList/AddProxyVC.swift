@@ -63,8 +63,6 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     }
 
     @IBAction func pressedCreateProxy(_ sender: Any) {
-        // TODO: Validate the input before allowing proxy creation
-
         let domain = self.inputDomainName.stringValue
         let proxyName = self.inputProxySubject.stringValue
         let secure = self.buttonSecure.state == .on ? " --secure" : ""
@@ -104,15 +102,21 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     }
 
     private func validate(domain: String, proxy: String) -> Bool {
-        if domain.isEmpty {
-            textFieldError.isHidden = false
-            textFieldError.stringValue = "domain_list.add.errors.empty".localized
-            return false
-        }
-
         if proxy.isEmpty {
             textFieldError.isHidden = false
             textFieldError.stringValue = "domain_list.add.errors.empty_proxy".localized
+            return false
+        }
+
+        if proxy.range(of: #"(http:\/\/|https:\/\/)(.+)(:)(\d+)$"#, options: .regularExpression) == nil {
+            textFieldError.isHidden = false
+            textFieldError.stringValue = "domain_list.add.errors.subject_invalid".localized
+            return false
+        }
+
+        if domain.isEmpty {
+            textFieldError.isHidden = false
+            textFieldError.stringValue = "domain_list.add.errors.empty".localized
             return false
         }
 
@@ -128,6 +132,9 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
 
     func updateTextField() {
         inputDomainName.stringValue = inputDomainName.stringValue
+            .replacingOccurrences(of: " ", with: "-")
+
+        inputProxySubject.stringValue = inputProxySubject.stringValue
             .replacingOccurrences(of: " ", with: "-")
 
         buttonCreateProxy.isEnabled = validate(

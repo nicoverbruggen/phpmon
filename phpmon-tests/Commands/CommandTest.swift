@@ -3,7 +3,7 @@
 //  phpmon-tests
 //
 //  Created by Nico Verbruggen on 13/02/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import XCTest

@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -67,6 +67,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         #if DEBUG
             logger.verbosity = .performance
         #endif
+        if CommandLine.arguments.contains("--v") {
+            logger.verbosity = .performance
+            Log.info("Extra verbose mode has been activated.")
+        }
         Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")

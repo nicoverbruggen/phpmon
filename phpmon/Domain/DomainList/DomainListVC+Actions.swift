@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 23/12/2021.
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -12,6 +12,37 @@ import Cocoa
 extension DomainListVC {
 
     @objc func toggleSecure() {
+        if selected is ValetSite {
+            toggleSecureForSite()
+        } else {
+            toggleSecureForProxy()
+        }
+    }
+
+    func toggleSecureForProxy() {
+        let originalSecureStatus = selectedProxy!.secured
+        let selectedProxy = selectedProxy!
+
+        self.waitAndExecute {
+            // 1. Remove the original proxy
+            Shell.run("\(Paths.valet) unproxy \(selectedProxy.domain)", requiresPath: true)
+
+            // 2. Add a new proxy, which is either secured/unsecured
+            let secure = originalSecureStatus ? "" : " --secure"
+            Shell.run("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)",
+                      requiresPath: true)
+
+            // 3. Restart nginx
+            Actions.restartNginx()
+
+            // 4. Reload site list
+            DispatchQueue.main.async {
+                App.shared.domainListWindowController?.pressedReload(nil)
+            }
+        }
+    }
+
+    func toggleSecureForSite() {
         let rowToReload = tableView.selectedRow
         let originalSecureStatus = selectedSite!.secured
         let action = selectedSite!.secured ? "unsecure" : "secure"
@@ -122,8 +153,11 @@ extension DomainListVC {
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
-                Shell.run("valet unlink '\(site.name)'", requiresPath: true)
-                self.reloadDomains()
+                self.waitAndExecute {
+                    Shell.run("valet unlink '\(site.name)'", requiresPath: true)
+                } completion: {
+                    self.reloadDomains()
+                }
             }
         )
     }
@@ -141,8 +175,11 @@ extension DomainListVC {
             secondButtonTitle: "Cancel",
             style: .critical,
             onFirstButtonPressed: {
-                Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
-                self.reloadDomains()
+                self.waitAndExecute {
+                    Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
+                } completion: {
+                    self.reloadDomains()
+                }
             }
         )
     }

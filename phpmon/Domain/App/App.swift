@@ -2,7 +2,7 @@
 //  StateManager.swift
 //  PHP Monitor
 //
-//  Copyright © 2021 Nico Verbruggen. All rights reserved.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -19,6 +19,16 @@ class App {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
         return "\(version) (\(build))"
+    }
+
+    /** Just the bundle version (build). */
+    static var bundleVersion: String {
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    }
+
+    /** Just the version number. */
+    static var shortVersion: String {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
     static var architecture: String {

@@ -3,7 +3,7 @@
   PHP Monitor
 
   Created by Nico Verbruggen on 16/05/2020.
-  Copyright © 2020 Nico Verbruggen. All rights reserved.
+  Copyright © 2022 Nico Verbruggen. All rights reserved.
 */
 
 // MENU ITEMS (MI)
@@ -59,6 +59,7 @@
 
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
+"mi_check_for_updates" = "Check for Updates...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
@@ -105,7 +106,7 @@
 // ADD PROXY TO DOMAINS LIST
 
 "domain_list.add.set_up_proxy" = "Set up a Proxy";
-"domain_list.add.proxy_subject" = "Proxy subject (usually: protocol, IP address and port)";
+"domain_list.add.proxy_subject" = "Proxy subject (must include protocol and port)";
 "domain_list.add.domain_name" = "Domain name";
 "domain_list.add.create_proxy" = "Create Proxy";
 "domain_list.add.proxy_available" = "%@ will be proxied and will be available via: %@://%@.%@";
@@ -123,6 +124,7 @@
 "domain_list.add.empty_fields" = "One or more fields are empty. Please fill all required fields.";
 "domain_list.add.errors.empty" = "You must enter a domain name.";
 "domain_list.add.errors.empty_proxy" = "You must enter what will be proxied.";
+"domain_list.add.errors.subject_invalid" = "The subject you've entered is not valid.\nYou must include the protocol and port.";
 "domain_list.add.errors.already_exists" = "A link with that name already exists.";
 
 // ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
@@ -183,6 +185,7 @@
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 "prefs.integrations" = "Integrations:";
+"prefs.updates" = "Updates:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -204,6 +207,9 @@
 
 "prefs.open_protocol_title" = "Allow third-party integrations";
 "prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them.";
+
+"prefs.automatic_update_check_title" = "Automatically check for updates";
+"prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
@@ -371,6 +377,23 @@ You can do this by running `composer global update` in your terminal. After that
 
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
+
+// CHECK FOR UPDATES
+
+"updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
+"updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
+"updater.alerts.newer_version_available.description" = "PHP Monitor is supposed to be updated via Homebrew, so there is no built-in updater. This check is only meant to inform you of the existence of a new version, you do not need to upgrade.";
+"updater.installation_source.brew" = "You appear to have installed PHP Monitor via Homebrew (or have at least tapped the required Caskfile) so it is recommended that you upgrade via the terminal by running `%@`.";
+"updater.installation_source.direct" = "You do not appear to have installed PHP Monitor via Homebrew, so you will need to visit GitHub to download the latest update.";
+"updater.alerts.buttons.release_notes" = "View Release Notes";
+
+"updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
+"updater.alerts.is_latest_version.subtitle" = "The currently installed version (v%@) is up-to-date.\nThere is no newer version available.";
+
+"updater.alerts.cannot_check_for_update.title" = "PHP Monitor could not determine if a newer version is available.";
+"updater.alerts.cannot_check_for_update.subtitle" = "You might not be connected to the internet, are blocking traffic or GitHub is down and won't allow you to check for updates. If you keep seeing this message, you may want to manually check the releases page.";
+"updater.alerts.cannot_check_for_update.description" = "The currently installed version is: %@. You can go to the list of the latest releases (on GitHub) by clicking on the button on the left.";
+"updater.alerts.buttons.releases_on_github" = "View Releases";
 
 // WARNINGS ABOUT NON-DEFAULT TLD
 
