@@ -225,7 +225,7 @@ class ValetSite: DomainListable {
 
     public static func isolatedVersion(_ filePath: String) -> String? {
         if Filesystem.fileExists(filePath) {
-            return NginxConfiguration
+            return NginxConfigurationFile
                 .from(filePath: filePath)?
                 .isolatedVersion ?? nil
         }

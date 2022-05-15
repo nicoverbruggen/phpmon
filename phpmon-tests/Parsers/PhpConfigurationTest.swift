@@ -8,14 +8,14 @@
 
 import XCTest
 
-class PhpIniTest: XCTestCase {
+class PhpConfigurationTest: XCTestCase {
 
     static var phpIniFileUrl: URL {
         return Bundle(for: Self.self).url(forResource: "php", withExtension: "ini")!
     }
 
     func testCanLoadExtension() throws {
-        let iniFile = PhpInitializationFile(fileUrl: Self.phpIniFileUrl)
+        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)
 
         XCTAssertNotNil(iniFile)
     }

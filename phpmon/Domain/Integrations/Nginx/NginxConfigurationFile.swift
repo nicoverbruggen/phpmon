@@ -1,5 +1,5 @@
 //
-//  NginxConfiguration.swift
+//  NginxConfigurationFile.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 15/03/2022.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NginxConfiguration {
+class NginxConfigurationFile: CreatedFromFile {
 
     /** Contents of the Nginx file in question, as a string. */
     var contents: String!
@@ -19,7 +19,7 @@ class NginxConfiguration {
     /** The TLD of the domain, usually derived from the name of the file. */
     var tld: String
 
-    static func from(filePath: String) -> NginxConfiguration? {
+    static func from(filePath: String) -> Self? {
         let path = filePath.replacingOccurrences(
             of: "~",
             with: "/Users/\(Paths.whoami)"
@@ -27,7 +27,8 @@ class NginxConfiguration {
 
         do {
             let fileContents = try String(contentsOfFile: path)
-            return NginxConfiguration.init(
+
+            return Self.init(
                 path: path,
                 contents: fileContents
             )
@@ -37,7 +38,7 @@ class NginxConfiguration {
         }
     }
 
-    init(path: String, contents: String) {
+    required init(path: String, contents: String) {
         let domain = String(path.split(separator: "/").last!)
         let tld = String(domain.split(separator: ".").last!)
 

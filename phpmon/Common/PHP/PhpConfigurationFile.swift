@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PhpConfigurationFile {
+class PhpConfigurationFile: CreatedFromFile {
 
     typealias Section = [String: String]
     typealias Config = [String: Section]
@@ -22,14 +22,31 @@ class PhpConfigurationFile {
     /// The actual content of the configuration file.
     var content: Config
 
-    init(fileUrl: URL) {
-        self.file = fileUrl.path
+    static func from(filePath: String) -> Self? {
+        let path = filePath.replacingOccurrences(
+            of: "~",
+            with: "/Users/\(Paths.whoami)"
+        )
 
-        let rawString = (try? String(contentsOf: fileUrl, encoding: .utf8)) ?? ""
+        do {
+            let fileContents = try String(contentsOfFile: path)
 
-        self.extensions = PhpExtension.load(from: fileUrl)
+            return Self.init(
+                path: path,
+                contents: fileContents
+            )
+        } catch {
+            Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
+            return nil
+        }
+    }
 
-        self.content = Self.parseConfig(from: rawString.components(separatedBy: "\n"))
+    required init(path: String, contents: String) {
+        self.file = path
+
+        self.extensions = PhpExtension.load(from: URL(string: path)!)
+
+        self.content = Self.parseConfig(from: contents.components(separatedBy: "\n"))
 
         dump(self)
     }

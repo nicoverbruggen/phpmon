@@ -52,11 +52,9 @@ class ActivePhpInstallation {
         // Load extension information
         let mainConfigurationFileUrl = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
 
-        iniFiles.append(
-            PhpConfigurationFile(fileUrl: mainConfigurationFileUrl)
-        )
-
-        // extensions.append(contentsOf: PhpExtension.load(from: mainConfigurationFileUrl))
+        if let file = PhpConfigurationFile.from(filePath: mainConfigurationFileUrl.path) {
+            iniFiles.append(file)
+        }
 
         // Get configuration values
         limits = Limits(
@@ -73,11 +71,9 @@ class ActivePhpInstallation {
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            let fileUrl = URL(fileURLWithPath: iniFilePath)
-
-            iniFiles.append(
-                PhpConfigurationFile(fileUrl: fileUrl)
-            )
+            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+                iniFiles.append(file)
+            }
         }
     }
 
