@@ -299,7 +299,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nIf that is the case, you can try the following workaround: edit the file at `~/.composer/vendor/laravel/valet/cli/Valet/Brew.php` and add e.g. `php@8.2` to the `SUPPORTED_PHP_VERSIONS` array. After editing the file, try running `valet install`. (This will, if all goes well, set up all the required Valet configuration files.)";
 
 // PHP Monitor Cannot Start
-"alert.cannot_start.title" = "PHP Monitor cannot start due to a configuration problem";
+"alert.cannot_start.title" = "PHP Monitor cannot start due to a problem with your system configuration";
 "alert.cannot_start.subtitle" = "The issue you were just notified about is keeping PHP Monitor from functioning correctly.";
 "alert.cannot_start.description" = "You might not need to quit PHP Monitor and restart it. If you have fixed the issue (or don't remember what the exact issue is) you can click on Retry, which will have PHP Monitor retry the startup checks.";
 "alert.cannot_start.close" = "Quit";
@@ -353,10 +353,12 @@ You can do this by running `composer global update` in your terminal. After that
 /// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
 /// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
+"startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";

@@ -146,13 +146,15 @@ class Startup {
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
-            subtitleText: "startup.errors.sudoers_brew.subtitle".localized
+            subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
+            descriptionText: "startup.errors.sudoers_brew.desc".localized
         ),
         EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
-            subtitleText: "startup.errors.sudoers_valet.subtitle".localized
+            subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
+            descriptionText: "startup.errors.sudoers_valet.desc".localized
         ),
         // =================================================================================
         // Verify if the Homebrew services are running (as root).
