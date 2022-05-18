@@ -22,6 +22,7 @@ class PhpConfigurationFile: CreatedFromFile {
     /// The actual content of the configuration file.
     var content: Config
 
+    /** Resolves a PHP configuration file (.ini) */
     static func from(filePath: String) -> Self? {
         let path = filePath.replacingOccurrences(
             of: "~",
@@ -44,11 +45,24 @@ class PhpConfigurationFile: CreatedFromFile {
     required init(path: String, contents: String) {
         self.file = path
 
-        self.extensions = PhpExtension.load(from: URL(string: path)!)
+        let lines = contents.components(separatedBy: "\n")
 
-        self.content = Self.parseConfig(from: contents.components(separatedBy: "\n"))
+        self.extensions = PhpExtension.from(lines, filePath: path)
+        self.content = Self.parseConfig(lines: lines)
+    }
 
-        dump(self)
+    // MARK: API
+
+    public func has(key: String) {
+        // TODO
+    }
+
+    public func value(for key: String) {
+        // TODO
+    }
+
+    public func replace(key: String, value: String) {
+        // TODO
     }
 
     // MARK: Parsing Logic
@@ -58,7 +72,7 @@ class PhpConfigurationFile: CreatedFromFile {
      Attempts to parse the configuration file, based on an array of strings.
      Each string is a line from the configuration file.
      */
-    private static func parseConfig(from lines: [String]) -> Config {
+    private static func parseConfig(lines: [String]) -> Config {
         var config = Config()
 
         var currentSectionName = "main"

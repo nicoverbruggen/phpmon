@@ -10,15 +10,16 @@ import Foundation
 
 class NginxConfigurationFile: CreatedFromFile {
 
-    /** Contents of the Nginx file in question, as a string. */
+    /// Contents of the Nginx file in question, as a string.
     var contents: String!
 
-    /** The name of the domain, usually derived from the name of the file. */
+    /// The name of the domain, usually derived from the name of the file.
     var domain: String
 
-    /** The TLD of the domain, usually derived from the name of the file. */
+    /// The TLD of the domain, usually derived from the name of the file.
     var tld: String
 
+    /** Resolves an nginx configuration file (.conf) */
     static func from(filePath: String) -> Self? {
         let path = filePath.replacingOccurrences(
             of: "~",
@@ -47,9 +48,7 @@ class NginxConfigurationFile: CreatedFromFile {
         self.tld = tld
     }
 
-    /**
-     Retrieves what address this domain is proxying.
-     */
+    /** Retrieves what address this domain is proxying. */
     lazy var proxy: String? = {
         let regex = try! NSRegularExpression(
             pattern: #"proxy_pass (?<proxy>.*:\d*)(\/*);"#,
@@ -62,9 +61,7 @@ class NginxConfigurationFile: CreatedFromFile {
         return contents[Range(match.range(withName: "proxy"), in: contents)!]
     }()
 
-    /**
-     Retrieves which isolated version is active for this domain (if applicable).
-     */
+    /** Retrieves which isolated version is active for this domain (if applicable). */
     lazy var isolatedVersion: String? = {
         let regex = try! NSRegularExpression(
             // PHP versions have (so far) never needed multiple digits for version numbers

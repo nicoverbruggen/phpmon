@@ -15,13 +15,13 @@ class PhpExtensionTest: XCTestCase {
     }
 
     func testCanLoadExtension() throws {
-        let extensions = PhpExtension.load(from: Self.phpIniFileUrl)
+        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         XCTAssertGreaterThan(extensions.count, 0)
     }
 
     func testExtensionNameIsCorrect() throws {
-        let extensions = PhpExtension.load(from: Self.phpIniFileUrl)
+        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         let extensionNames = extensions.map { (ext) -> String in
             return ext.name
@@ -40,7 +40,7 @@ class PhpExtensionTest: XCTestCase {
     }
 
     func testExtensionStatusIsCorrect() throws {
-        let extensions = PhpExtension.load(from: Self.phpIniFileUrl)
+        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         // xdebug should be enabled
         XCTAssertEqual(extensions[0].enabled, true)
@@ -51,7 +51,7 @@ class PhpExtensionTest: XCTestCase {
 
     func testToggleWorksAsExpected() throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
-        let extensions = PhpExtension.load(from: destination)
+        let extensions = PhpExtension.from(filePath: destination.path)
         XCTAssertEqual(extensions.count, 6)
 
         // Try to disable xdebug (should be detected first)!
@@ -66,7 +66,7 @@ class PhpExtensionTest: XCTestCase {
         XCTAssertTrue(file.contains("; zend_extension=\"xdebug.so\""))
 
         // Make sure if we load the data again, it's disabled
-        XCTAssertEqual(PhpExtension.load(from: destination).first!.enabled, false)
+        XCTAssertEqual(PhpExtension.from(filePath: destination.path).first!.enabled, false)
     }
 
     func testCanRetrieveXdebugMode() throws {

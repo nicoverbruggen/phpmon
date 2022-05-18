@@ -89,24 +89,26 @@ class PhpExtension {
 
     // MARK: - Static Methods
 
-    /**
-     This method will attempt to identify all extensions in the .ini file at a certain URL.
-     */
-    static func load(from path: URL) -> [PhpExtension] {
-        let file = try? String(contentsOf: path, encoding: .utf8)
+    static func from(_ lines: [String], filePath: String) -> [PhpExtension] {
+        return lines.filter {
+            return $0.range(of: Self.extensionRegex, options: .regularExpression) != nil
+        }.map {
+            return PhpExtension($0, file: filePath)
+        }
+    }
+
+    static func from(filePath: String) -> [PhpExtension] {
+        let file = try? String(contentsOfFile: filePath)
 
         if file == nil {
             Log.err("There was an issue reading the file. Assuming no extensions were found.")
             return []
         }
 
-        return file!.components(separatedBy: "\n")
-            .filter {
-                return $0.range(of: Self.extensionRegex, options: .regularExpression) != nil
-            }
-            .map {
-                return PhpExtension($0, file: path.path)
-            }
+        return Self.from(
+            file!.components(separatedBy: "\n"),
+            filePath: filePath
+        )
     }
 
 }

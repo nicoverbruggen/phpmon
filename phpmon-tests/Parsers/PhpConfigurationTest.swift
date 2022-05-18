@@ -15,9 +15,19 @@ class PhpConfigurationTest: XCTestCase {
     }
 
     func testCanLoadExtension() throws {
-        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)
+        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
 
         XCTAssertNotNil(iniFile)
+
+        XCTAssertGreaterThan(iniFile.extensions.count, 0)
+    }
+
+    func testCanSwapConfigurationValue() throws {
+        let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
+
+        let configurationFile = PhpConfigurationFile.from(filePath: destination.path)
+
+        XCTAssertNotNil(configurationFile)
     }
 
 }
