@@ -53,12 +53,19 @@ class PhpConfigurationFile: CreatedFromFile {
 
     // MARK: API
 
-    public func has(key: String) {
-        // TODO
+    public func has(key: String) -> Bool {
+        return self.content.contains { (_: String, section: Section) in
+            return section.keys.contains(key)
+        }
     }
 
-    public func value(for key: String) {
-        // TODO
+    public func get(for key: String) -> String? {
+        for (_, section) in self.content {
+            if section.keys.contains(key) {
+                return section[key]
+            }
+        }
+        return nil
     }
 
     public func replace(key: String, value: String) {

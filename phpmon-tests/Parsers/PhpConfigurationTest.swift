@@ -22,6 +22,24 @@ class PhpConfigurationTest: XCTestCase {
         XCTAssertGreaterThan(iniFile.extensions.count, 0)
     }
 
+    func testCanCheckKeyExistence() throws {
+        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
+
+        XCTAssertTrue(iniFile.has(key: "error_reporting"))
+        XCTAssertTrue(iniFile.has(key: "display_errors"))
+        XCTAssertFalse(iniFile.has(key: "my_unknown_key"))
+    }
+
+    func testCanCheckKeyValue() throws {
+        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
+
+        XCTAssertNotNil(iniFile.get(for: "error_reporting"))
+        XCTAssert(iniFile.get(for: "error_reporting") == "E_ALL")
+
+        XCTAssertNotNil(iniFile.get(for: "display_errors"))
+        XCTAssert(iniFile.get(for: "display_errors") == "On")
+    }
+
     func testCanSwapConfigurationValue() throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
 
