@@ -117,6 +117,7 @@
 		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
+		C44F868E2835BD8D005C353A /* phpmon-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C44F868D2835BD8D005C353A /* phpmon-config.json */; };
 		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
 		C464ADAC275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
 		C464ADAD275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
@@ -349,6 +350,7 @@
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
+		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 		C40C7F1C27720E1400DDDCDC /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				C44F868C2835BD60005C353A /* phpmon */,
 				C459B4C127F6097E00E9B4B4 /* php */,
 				C459B4C027F6096300E9B4B4 /* valet */,
 				C459B4BF27F6094100E9B4B4 /* brew */,
@@ -676,6 +679,14 @@
 				C4927F0A27B2DFC200C55AFD /* Errors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		C44F868C2835BD60005C353A /* phpmon */ = {
+			isa = PBXGroup;
+			children = (
+				C44F868D2835BD8D005C353A /* phpmon-config.json */,
+			);
+			path = phpmon;
 			sourceTree = "<group>";
 		};
 		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
@@ -1117,6 +1128,7 @@
 				C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */,
 				C4F780A825D80AE8000DBC97 /* php.ini in Resources */,
 				C4068CA527B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
+				C44F868E2835BD8D005C353A /* phpmon-config.json in Resources */,
 				C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */,
 				C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,

@@ -1,0 +1,24 @@
+{
+    "scan_apps": [],
+    "presets": [
+        {
+            "name": "Default PHP",
+            "extensions": {
+                "xdebug": false
+            },
+            "ini": {
+                "memory_limit": "128M"
+            }
+        },
+        {
+            "name": "Personal Website",
+            "extensions": {
+                "xdebug": true
+            },
+            "ini": {
+                "xdebug.mode": "coverage",
+                "memory_limit": "512M"
+            }
+        }
+    ]
+}
