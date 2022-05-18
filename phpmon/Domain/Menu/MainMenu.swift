@@ -244,6 +244,23 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func toggleXdebugMode(sender: XdebugMenuItem) {
         Log.info("Switching Xdebug to mode: \(sender.mode)")
+
+        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+            Log.info("xdebug.mode could not be found in any .ini file, aborting.")
+            return
+        }
+
+        do {
+            // Replace the xdebug mode
+            try file.replace(key: "xdebug.mode", value: sender.mode)
+            // Refresh the menu
+            Log.perf("Refreshing menu...")
+            MainMenu.shared.rebuild()
+            // Restart PHP-FPM
+            restartPhpFpm()
+        } catch {
+            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
+        }
     }
 
     @objc func toggleExtension(sender: ExtensionMenuItem) {

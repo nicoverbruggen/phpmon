@@ -68,7 +68,7 @@ class StatusMenu: NSMenu {
 
         self.addItem(NSMenuItem.separator())
 
-        // self.addXdebugMenuItem()
+        self.addXdebugMenuItem()
 
         self.addFirstAidAndServicesMenuItems()
     }

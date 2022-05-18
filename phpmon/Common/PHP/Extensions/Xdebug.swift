@@ -15,7 +15,11 @@ class Xdebug {
     }
 
     public static var mode: String {
-        return Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('xdebug.mode');"])
+        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+            return ""
+        }
+
+        return file.get(for: "xdebug.mode") ?? ""
     }
 
     public static var modes: [String] {
