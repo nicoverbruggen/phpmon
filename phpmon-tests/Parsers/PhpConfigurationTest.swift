@@ -1,5 +1,5 @@
 //
-//  PhpIniTest.swift
+//  PhpConfigurationTest.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/05/2022.
@@ -40,12 +40,45 @@ class PhpConfigurationTest: XCTestCase {
         XCTAssert(iniFile.get(for: "display_errors") == "On")
     }
 
-    func testCanSwapConfigurationValue() throws {
-        let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
+    func testCanCustomizeConfigurationValue() throws {
+        let destination = Utility
+            .copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
 
-        let configurationFile = PhpConfigurationFile.from(filePath: destination.path)
+        let configurationFile = PhpConfigurationFile
+            .from(filePath: destination.path)!
 
-        XCTAssertNotNil(configurationFile)
+        // 0. Verify the original value
+        XCTAssertEqual(configurationFile.get(for: "error_reporting"), "E_ALL")
+
+        // 1. Change the value
+        try! configurationFile.replace(
+            key: "error_reporting",
+            value: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+        )
+        XCTAssertEqual(
+            configurationFile.get(for: "error_reporting"),
+            "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+        )
+
+        // 2. Ensure that same key and value doesn't break subsequent saves
+        try! configurationFile.replace(
+            key: "error_reporting",
+            value: "error_reporting"
+        )
+        XCTAssertEqual(
+            configurationFile.get(for: "error_reporting"),
+            "error_reporting"
+        )
+
+        // 3. Verify subsequent saves weren't broken
+        try! configurationFile.replace(
+            key: "error_reporting",
+            value: "E_ALL"
+        )
+        XCTAssertEqual(
+            configurationFile.get(for: "error_reporting"),
+            "E_ALL"
+        )
     }
 
 }

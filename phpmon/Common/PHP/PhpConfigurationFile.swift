@@ -1,5 +1,5 @@
 //
-//  PhpInitFile.swift
+//  PhpConfigurationFile.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/05/2022.
@@ -10,17 +10,25 @@ import Foundation
 
 class PhpConfigurationFile: CreatedFromFile {
 
-    typealias Section = [String: String]
+    struct ConfigValue {
+        let lineIndex: Int
+        let value: String
+    }
+
+    typealias Section = [String: ConfigValue]
     typealias Config = [String: Section]
 
     /// The file where this configuration file was located.
-    let file: String
+    let filePath: String
 
     /// The extensions found in this .ini file.
-    let extensions: [PhpExtension]
+    var extensions: [PhpExtension]
 
-    /// The actual content of the configuration file.
+    /// The actual, structured content of the configuration file.
     var content: Config
+
+    /// The original lines of the file.
+    var lines: [String]
 
     /** Resolves a PHP configuration file (.ini) */
     static func from(filePath: String) -> Self? {
@@ -43,10 +51,8 @@ class PhpConfigurationFile: CreatedFromFile {
     }
 
     required init(path: String, contents: String) {
-        self.file = path
-
-        let lines = contents.components(separatedBy: "\n")
-
+        self.filePath = path
+        self.lines = contents.components(separatedBy: "\n")
         self.extensions = PhpExtension.from(lines, filePath: path)
         self.content = Self.parseConfig(lines: lines)
     }
@@ -60,16 +66,57 @@ class PhpConfigurationFile: CreatedFromFile {
     }
 
     public func get(for key: String) -> String? {
+        return getConfig(for: key)?.value
+    }
+
+    public func getConfig(for key: String) -> ConfigValue? {
         for (_, section) in self.content {
             if section.keys.contains(key) {
-                return section[key]
+                return section[key]!
             }
         }
         return nil
     }
 
-    public func replace(key: String, value: String) {
-        // TODO
+    enum ReplacementErrors: Error {
+        case missingKey
+    }
+
+    /**
+     Replaces the value for a specific (existing) key with a new value.
+     The key must exist for this to work.
+     */
+    public func replace(key: String, value: String) throws {
+        // Ensure that the key exists
+        guard let item = getConfig(for: key) else {
+            throw ReplacementErrors.missingKey
+        }
+
+        // Figure out what comes after the assignment
+        var components = self
+            .lines[item.lineIndex]
+            .components(separatedBy: "=")
+
+        // Replace the value with the new one
+        components[1] = components[1]
+            .replacingOccurrences(of: item.value, with: value)
+
+        // Replace the specific line
+        self.lines[item.lineIndex] = components.joined(separator: "=")
+
+        // Finally, join the string and save the file atomatically again
+        try self.lines.joined(separator: "\n")
+            .write(toFile: self.filePath, atomically: true, encoding: .utf8)
+
+        // Reload the original file
+        self.reload()
+    }
+
+    public func reload() {
+        self.lines = try! String(contentsOfFile: self.filePath)
+            .components(separatedBy: "\n")
+        self.extensions = PhpExtension.from(lines, filePath: self.filePath)
+        self.content = Self.parseConfig(lines: lines)
     }
 
     // MARK: Parsing Logic
@@ -84,14 +131,17 @@ class PhpConfigurationFile: CreatedFromFile {
 
         var currentSectionName = "main"
 
-        for line in lines {
+        for (index, line) in lines.enumerated() {
             let line = trim(line)
 
             if line.hasPrefix("[") && line.hasSuffix("]") {
                 currentSectionName = parseSectionHeader(line)
             } else if let (key, value) = parseLine(line) {
                 var section = config[currentSectionName] ?? [:]
-                section[key] = value
+                section[key] = ConfigValue(
+                    lineIndex: index,
+                    value: value
+                )
                 config[currentSectionName] = section
             }
         }
