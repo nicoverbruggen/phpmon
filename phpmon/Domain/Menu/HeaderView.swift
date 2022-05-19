@@ -13,12 +13,23 @@ class HeaderView: NSView, XibLoadable {
 
     @IBOutlet weak var textField: NSTextField!
 
-    static func asMenuItem(text: String) -> NSMenuItem {
-        let view = Self.createFromXib()
-        view!.textField.stringValue = text.uppercased()
+    static func asMenuItem(
+        text: String,
+        width: Int? = nil
+    ) -> NSMenuItem {
+        let view = Self.createFromXib()!
+
+        view.autoresizingMask = [.width, .height]
+
+        view.textField.stringValue = text.uppercased()
+        view.textField.sizeToFit()
+
+        view.setFrameSize(CGSize(width: view.textField.frame.width + 40, height: view.frame.height))
+
         let item = NSMenuItem()
         item.view = view
         item.target = self
+
         return item
     }
 

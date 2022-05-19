@@ -43,7 +43,7 @@
 "mi_other" = "First Aid & Services";
 "mi_first_aid" = "First Aid";
 
-"mi_xdebug_mode" = "Switch Xdebug Mode";
+"mi_xdebug_mode" = "Manage Xdebug";
 
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet Folder (.config/valet)";

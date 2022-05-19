@@ -69,9 +69,4 @@ class PhpExtensionTest: XCTestCase {
         XCTAssertEqual(PhpExtension.from(filePath: destination.path).first!.enabled, false)
     }
 
-    func testCanRetrieveXdebugMode() throws {
-        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('xdebug.mode');"])
-        XCTAssertEqual(value, "coverage")
-    }
-
 }

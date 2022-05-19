@@ -151,7 +151,9 @@ class StatusMenu: NSMenu {
             keyEquivalent: ""
         )
         let xdebugModesMenu = NSMenu()
-        let xdebugMode = Xdebug.mode
+        let activeModes = Xdebug.activeModes
+
+        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "Available Modes"))
 
         for mode in Xdebug.modes {
             let item = XdebugMenuItem(
@@ -159,10 +161,18 @@ class StatusMenu: NSMenu {
                 action: #selector(MainMenu.toggleXdebugMode(sender:)),
                 keyEquivalent: ""
             )
-            item.state = xdebugMode == mode ? .on : .off
+
+            item.state = activeModes.contains(mode) ? .on : .off
             item.mode = mode
             xdebugModesMenu.addItem(item)
         }
+
+        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "Actions"))
+        xdebugModesMenu.addItem(
+            withTitle: "Disable All",
+            action: #selector(MainMenu.disableAllXdebugModes),
+            keyEquivalent: ""
+        )
 
         for item in xdebugModesMenu.items {
             item.target = MainMenu.shared

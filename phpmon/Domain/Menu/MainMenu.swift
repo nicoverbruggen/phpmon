@@ -242,6 +242,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    @objc func disableAllXdebugModes() {
+        // TODO
+    }
+
     @objc func toggleXdebugMode(sender: XdebugMenuItem) {
         Log.info("Switching Xdebug to mode: \(sender.mode)")
 
