@@ -243,7 +243,20 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func disableAllXdebugModes() {
-        // TODO
+        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+            Log.info("xdebug.mode could not be found in any .ini file, aborting.")
+            return
+        }
+
+        do {
+            try file.replace(key: "xdebug.mode", value: "off")
+
+            Log.perf("Refreshing menu...")
+            MainMenu.shared.rebuild()
+            restartPhpFpm()
+        } catch {
+            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
+        }
     }
 
     @objc func toggleXdebugMode(sender: XdebugMenuItem) {
@@ -255,12 +268,25 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
 
         do {
+            // Get the active modes
+            var modes = Xdebug.activeModes
+            // Set the new modes
+            if let index = modes.firstIndex(of: sender.mode) {
+                modes.remove(at: index)
+            } else {
+                modes.append(sender.mode)
+            }
+
             // Replace the xdebug mode
-            try file.replace(key: "xdebug.mode", value: sender.mode)
-            // Refresh the menu
+            var newValue = modes.joined(separator: ",")
+            if newValue.isEmpty {
+                newValue = "off"
+            }
+
+            try file.replace(key: "xdebug.mode", value: newValue)
+
             Log.perf("Refreshing menu...")
             MainMenu.shared.rebuild()
-            // Restart PHP-FPM
             restartPhpFpm()
         } catch {
             Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
