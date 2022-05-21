@@ -145,6 +145,12 @@ extension MainMenu {
         }
     }
 
+    @objc func togglePreset(sender: PresetMenuItem) {
+        asyncExecution {
+            dump(sender.preset)
+        }
+    }
+
     @objc func openPhpInfo() {
         var url: URL?
 

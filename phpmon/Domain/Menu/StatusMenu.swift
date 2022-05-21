@@ -69,6 +69,7 @@ class StatusMenu: NSMenu {
         self.addItem(NSMenuItem.separator())
 
         self.addXdebugMenuItem()
+        self.addPresetsMenuItem()
 
         self.addFirstAidAndServicesMenuItems()
     }
@@ -138,6 +139,43 @@ class StatusMenu: NSMenu {
             self.addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }
+    }
+
+    func addPresetsMenuItem() {
+        if Preferences.custom.presets.isEmpty {
+            return
+        }
+
+        let presets = NSMenuItem(title: "Configuration Presets", action: nil, keyEquivalent: "")
+        let presetsMenu = NSMenu()
+        presetsMenu.addItem(NSMenuItem.separator())
+        presetsMenu.addItem(HeaderView.asMenuItem(text: "Apply Configuration Presets"))
+
+        for preset in Preferences.custom.presets {
+            let presetMenuItem = PresetMenuItem(
+                title: "\(preset.name) (\(preset.extensions.count) extension, \(preset.configuration.count) prefs)",
+                action: #selector(MainMenu.togglePreset(sender:)),
+                keyEquivalent: ""
+            )
+            presetMenuItem.preset = preset
+            presetsMenu.addItem(presetMenuItem)
+        }
+
+        presetsMenu.addItem(NSMenuItem.separator())
+        presetsMenu.addItem(NSMenuItem(
+            title: "Revert to Previous Configuration...",
+            action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "")
+        )
+        presetsMenu.addItem(NSMenuItem.separator())
+        presetsMenu.addItem(NSMenuItem(
+            title: "\(Preferences.custom.presets.count) profiles loaded from configuration file",
+            action: nil, keyEquivalent: "")
+        )
+        for item in presetsMenu.items {
+            item.target = MainMenu.shared
+        }
+        self.setSubmenu(presetsMenu, for: presets)
+        self.addItem(presets)
     }
 
     func addXdebugMenuItem() {
@@ -288,22 +326,4 @@ class StatusMenu: NSMenu {
 
         self.addItem(menuItem)
     }
-}
-
-// MARK: - NSMenuItem subclasses
-
-class PhpMenuItem: NSMenuItem {
-    var version: String = ""
-}
-
-class XdebugMenuItem: NSMenuItem {
-    var mode: String = ""
-}
-
-class ExtensionMenuItem: NSMenuItem {
-    var phpExtension: PhpExtension?
-}
-
-class EditorMenuItem: NSMenuItem {
-    var editor: Application?
 }

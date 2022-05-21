@@ -27,3 +27,25 @@ extension NSMenu {
     }
 
 }
+
+// MARK: - NSMenuItem subclasses
+
+class PhpMenuItem: NSMenuItem {
+    var version: String = ""
+}
+
+class XdebugMenuItem: NSMenuItem {
+    var mode: String = ""
+}
+
+class ExtensionMenuItem: NSMenuItem {
+    var phpExtension: PhpExtension?
+}
+
+class EditorMenuItem: NSMenuItem {
+    var editor: Application?
+}
+
+class PresetMenuItem: NSMenuItem {
+    var preset: CustomPrefs.Preset?
+}

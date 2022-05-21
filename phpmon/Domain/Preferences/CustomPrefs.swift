@@ -10,8 +10,16 @@ import Foundation
 
 struct CustomPrefs: Decodable {
     let scanApps: [String]
+    let presets: [Preset]
 
     private enum CodingKeys: String, CodingKey {
         case scanApps = "scan_apps"
+        case presets = "presets"
+    }
+
+    struct Preset: Decodable {
+        let name: String
+        let extensions: [String: Bool]
+        let configuration: [String: String?]
     }
 }

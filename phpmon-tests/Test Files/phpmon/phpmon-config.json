@@ -1,0 +1,34 @@
+{
+    "scan_apps": [],
+    "presets": [
+        {
+            "name": "Default PHP",
+            "extensions": {
+                "xdebug": false
+            },
+            "configuration": {
+                "memory_limit": "128M"
+            }
+        },
+        {
+            "name": "Personal Site",
+            "extensions": {
+                "xdebug": true
+            },
+            "configuration": {
+                "xdebug.mode": "coverage",
+                "memory_limit": "512M"
+            }
+        },
+        {
+            "name": "PHP Monitor",
+            "extensions": {
+                "xdebug": true
+            },
+            "configuration": {
+                "xdebug.mode": "coverage",
+                "memory_limit": "512M"
+            }
+        }
+    ]
+}

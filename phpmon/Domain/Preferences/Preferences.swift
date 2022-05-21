@@ -52,7 +52,7 @@ class Preferences {
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
-        customPreferences = CustomPrefs(scanApps: [])
+        customPreferences = CustomPrefs(scanApps: [], presets: [])
         loadCustomPreferences()
     }
 
@@ -188,7 +188,9 @@ class Preferences {
                 CustomPrefs.self,
                 from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
             )
+
             Log.info("The .phpmon.conf.json file was successfully parsed.")
+            Log.info("There are \(customPreferences.presets.count) custom presets.")
         } catch {
             Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
         }
