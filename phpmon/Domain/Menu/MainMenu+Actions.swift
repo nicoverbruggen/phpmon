@@ -147,7 +147,7 @@ extension MainMenu {
 
     @objc func togglePreset(sender: PresetMenuItem) {
         asyncExecution {
-            dump(sender.preset)
+            sender.preset?.apply()
         }
     }
 
