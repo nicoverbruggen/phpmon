@@ -184,6 +184,21 @@ class Startup {
             descriptionText: "startup.errors.valet_json_invalid.desc".localized
         ),
         // =================================================================================
+        // Check for `which` alias issue
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                return App.architecture == "x86_64"
+                    && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
+                    && Shell.pipe("which node", requiresPath: false)
+                        .contains("env: node: No such file or directory")
+            },
+            name: "`env: node` issue does not apply",
+            titleText: "startup.errors.which_alias_issue.title".localized,
+            subtitleText: "startup.errors.which_alias_issue.subtitle".localized,
+            descriptionText: "startup.errors.which_alias_issue.desc".localized
+        ),
+        // =================================================================================
         // Determine the Valet version and ensure it isn't unknown.
         // =================================================================================
         EnvironmentCheck(

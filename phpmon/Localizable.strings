@@ -365,6 +365,11 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
 "startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
+/// Issue with `which` alias
+"startup.errors.which_alias_issue.title" = "A configuration issue was detected";
+"startup.errors.which_alias_issue.subtitle" = "It appears that there's a file in `/usr/local/bin/which`. This is usually set up by NodeJS, but `node` isn't in the PATH in `/usr/local/bin`. To fix this, keep reading.";
+"startup.errors.which_alias_issue.desc" = "You will need to symlink `node` into the `/usr/local/bin` directory to make sure PHP Monitor can start successfully. For more info, see: https://github.com/nicoverbruggen/phpmon/issues/174";
+
 // SPONSOR ENCOURAGEMENT
 
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
