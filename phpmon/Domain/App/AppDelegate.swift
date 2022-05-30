@@ -65,7 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         logger.verbosity = .info
         #if DEBUG
-            logger.verbosity = .performance
+            // logger.verbosity = .performance
         #endif
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance

@@ -167,6 +167,13 @@
 
 "driver.not_detected" = "Other";
 
+// PRESET
+
+"preset.extension" = "%i extension";
+"preset.extensions" = "%i extensions";
+"preset.preference" = "%i preference";
+"preset.preferences" = "%i preferences";
+
 // EDITORS
 
 "editors.alert.try_again" = "Try Again";

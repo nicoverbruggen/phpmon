@@ -47,5 +47,5 @@ class EditorMenuItem: NSMenuItem {
 }
 
 class PresetMenuItem: NSMenuItem {
-    var preset: CustomPrefs.Preset?
+    var preset: Preset?
 }

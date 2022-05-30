@@ -88,6 +88,8 @@
 		C42337A3281F19F000459A48 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
+		C42800AA28452AA10099C999 /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42800A928452AA10099C999 /* StatusMenu+Items.swift */; };
+		C42800AB28452AA50099C999 /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42800A928452AA10099C999 /* StatusMenu+Items.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
 		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
 		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
@@ -334,6 +336,7 @@
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42337A2281F19F000459A48 /* Xdebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xdebug.swift; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
+		C42800A928452AA10099C999 /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
 		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
 		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
@@ -754,6 +757,7 @@
 				C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */,
 				C4F361602836BFD9003598CC /* MainMenu+Actions.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
+				C42800A928452AA10099C999 /* StatusMenu+Items.swift */,
 				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
 				C48D0C9925CC888B00CC7490 /* HeaderView.xib */,
 				C48D0CA225CC992000CC7490 /* StatsView.swift */,
@@ -1211,6 +1215,7 @@
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
 				C4EE55AB27708B9E001DF387 /* Preview.swift in Sources */,
 				C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */,
+				C42800AA28452AA10099C999 /* StatusMenu+Items.swift in Sources */,
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
 				C4AC51FC27E27F47008528CA /* DomainListKindCell.swift in Sources */,
 				C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */,
@@ -1349,6 +1354,7 @@
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
+				C42800AB28452AA50099C999 /* StatusMenu+Items.swift in Sources */,
 				C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */,
