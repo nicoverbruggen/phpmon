@@ -15,12 +15,6 @@ extension MainMenu {
     func switcherDidStartSwitching(to version: String) {}
 
     func switcherDidCompleteSwitch(to version: String) {
-        // Update the PHP version
-        PhpEnv.shared.currentInstall = ActivePhpInstallation()
-
-        // Ensure the config watcher gets reloaded
-        App.shared.handlePhpConfigWatcher()
-
         // Mark as no longer busy
         PhpEnv.shared.isBusy = false
 
@@ -56,7 +50,7 @@ extension MainMenu {
         }
     }
 
-    @MainActor private func suggestFixMyValet(failed version: String) {
+    private func suggestFixMyValet(failed version: String) {
         let outcome = BetterAlert()
             .withInformation(
                 title: "alert.php_switch_failed.title".localized(version),

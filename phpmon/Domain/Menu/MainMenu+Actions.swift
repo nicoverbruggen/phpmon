@@ -201,10 +201,48 @@ extension MainMenu {
             PhpEnv.switcher.performSwitch(
                 to: version,
                 completion: {
+                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
+                    App.shared.handlePhpConfigWatcher()
                     PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
                 }
             )
         }
+    }
+
+    // MARK: - Async
+
+    /**
+     This async-friendly version of the switcher can be invoked elsewhere in the app:
+     ```
+     Task {
+        await MainMenu.shared.switchToPhp("8.1")
+        // thing to do after the switch
+     }
+     ```
+     Since this async function uses `withCheckedContinuation`
+     any code after will run only after the switcher is done.
+     */
+    func switchToPhp(_ version: String) async {
+        DispatchQueue.main.async { [self] in
+            setBusyImage()
+            PhpEnv.shared.isBusy = true
+            PhpEnv.shared.delegate = self
+            PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
+        }
+
+        return await withCheckedContinuation({ continuation in
+            updatePhpVersionInStatusBar()
+            rebuild()
+            PhpEnv.switcher.performSwitch(
+                to: version,
+                completion: {
+                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
+                    App.shared.handlePhpConfigWatcher()
+                    PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
+                    continuation.resume()
+                }
+            )
+        })
     }
 
 }
