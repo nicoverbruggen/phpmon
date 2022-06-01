@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Preset: Decodable {
+struct Preset: Codable {
     let name: String
     let version: String?
     let extensions: [String: Bool]
@@ -21,33 +21,16 @@ struct Preset: Decodable {
              configuration = "configuration"
     }
 
-    public func getMenuItemText() -> String {
-        var info = extensions.count == 1
-        ? "preset.extension".localized(extensions.count)
-        : "preset.extensions".localized(extensions.count)
-        info += ", "
-        info += configuration.count == 1
-        ? "preset.preference".localized(configuration.count)
-        : "preset.preferences".localized(configuration.count)
+    // MARK: Applying
 
-        if self.version == nil {
-            return "<span style=\"font-family: '-apple-system'; font-size: 12px;\">"
-            + "<b>\(name.stripped)</b><br/>"
-            + "<i style=\"font-size: 11px;\">"
-            + info + "</i>"
-            + "</span>"
-        }
-
-        return "<span style=\"font-family: '-apple-system'; font-size: 12px;\">"
-        + "<b>\(name.stripped)</b><br/>"
-        + "<i style=\"font-size: 11px;\">"
-        + "Switches to PHP \(version!)<br/>"
-        + info + "</i>"
-        + "</span>"
-    }
-
+    /**
+     Applies a given preset.
+     */
     public func apply() {
         Task {
+            // Save the preset that would revert this preset
+            self.persistRevert()
+
             // Apply the PHP version if is considered a valid version
             if self.version != nil {
                 await switchToPhpVersionIfValid()
@@ -71,6 +54,8 @@ struct Preset: Decodable {
             Actions.restartPhpFpm()
         }
     }
+
+    // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async {
         if PhpEnv.shared.currentInstall.version.short == self.version! {
@@ -112,5 +97,109 @@ struct Preset: Decodable {
         } catch {
             Log.err("Setting \(key) to \(value) failed.")
         }
+    }
+
+    // MARK: - Menu Items
+
+    public func getMenuItemText() -> String {
+        var info = extensions.count == 1
+        ? "preset.extension".localized(extensions.count)
+        : "preset.extensions".localized(extensions.count)
+        info += ", "
+        info += configuration.count == 1
+        ? "preset.preference".localized(configuration.count)
+        : "preset.preferences".localized(configuration.count)
+
+        if self.version == nil {
+            return "<span style=\"font-family: '-apple-system'; font-size: 12px;\">"
+            + "<b>\(name.stripped)</b><br/>"
+            + "<i style=\"font-size: 11px;\">"
+            + info + "</i>"
+            + "</span>"
+        }
+
+        return "<span style=\"font-family: '-apple-system'; font-size: 12px;\">"
+        + "<b>\(name.stripped)</b><br/>"
+        + "<i style=\"font-size: 11px;\">"
+        + "Switches to PHP \(version!)<br/>"
+        + info + "</i>"
+        + "</span>"
+    }
+
+    // MARK: - Reverting
+
+    public var revertSnapshot: Preset {
+        return Preset(
+            name: "Revert",
+            version: diffVersion(),
+            extensions: diffExtensions(),
+            configuration: diffConfiguration()
+        )
+    }
+
+    /**
+     Returns the version that was previously active, which would revert this preset's version.
+     Returns nil if the version is not specified or the same.
+     */
+    private func diffVersion() -> String? {
+        guard let version = self.version else {
+            return nil
+        }
+
+        if PhpEnv.shared.currentInstall.version.short != version {
+            return PhpEnv.shared.currentInstall.version.short
+        } else {
+            return nil
+        }
+    }
+
+    /**
+     Returns a list of extensions which would revert this presets's setup.
+     */
+    private func diffExtensions() -> [String: Bool] {
+        var items: [String: Bool] = [:]
+
+        for (key, value) in self.extensions {
+            for foundExt in PhpEnv.phpInstall.extensions
+            where foundExt.name == key && foundExt.enabled != value {
+                // Save the original value of the extension
+                items[foundExt.name] = foundExt.enabled
+            }
+        }
+
+        return items
+    }
+
+    /**
+     Returns a list of configuration items which would revert this presets's setup.
+     */
+    private func diffConfiguration() -> [String: String?] {
+        var items: [String: String?] = [:]
+
+        for (key, _) in self.configuration {
+            guard let file = PhpEnv.shared.getConfigFile(forKey: key) else {
+                break
+            }
+
+            items[key] = file.get(for: key)
+        }
+
+        return items
+    }
+
+    /**
+     Persists the revert as a JSON file, so it can be read from a file after restarting PHP Monitor.
+     */
+    private func persistRevert() {
+        let data = try! JSONEncoder().encode(self.revertSnapshot)
+
+        Shell.run("mkdir -p ~/.config/phpmon")
+
+        try! String(data: data, encoding: .utf8)!
+            .write(
+                toFile: "/Users/\(Paths.whoami)/.config/phpmon/preset_revert.json",
+                atomically: true,
+                encoding: .utf8
+            )
     }
 }
