@@ -10,7 +10,11 @@
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
-<img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
+<picture>
+    <source srcset="./docs/notification-dark.png" media="(prefers-color-scheme: dark)">
+    <img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
+</picture>
+
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
