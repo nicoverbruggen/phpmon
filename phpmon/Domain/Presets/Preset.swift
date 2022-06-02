@@ -51,6 +51,10 @@ struct Preset: Codable {
                 }
             }
 
+            // Reload what rollback file exists
+            PresetHelper.loadRollbackPresetFromFile()
+
+            // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
             Actions.restartPhpFpm()
         }
     }

@@ -103,8 +103,11 @@ extension StatusMenu {
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(NSMenuItem(
             title: "Revert to Previous Configuration...",
-            action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "")
-        )
+            action: PresetHelper.rollbackPreset != nil
+                ? #selector(MainMenu.rollbackPreset)
+                : nil,
+            keyEquivalent: ""
+        ))
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(NSMenuItem(
             title: "\(Preferences.custom.presets.count) profiles loaded from configuration file",

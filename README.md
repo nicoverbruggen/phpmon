@@ -309,7 +309,7 @@ All of these apps should just be detected correctly, no matter their location on
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
 
-You can add your own apps by creating and editing a `~/.phpmon.conf.json` file, with the following entry:
+You can add your own apps by creating and editing a `~/.config/phpmon/config.json` file, with the following entry:
 
 <pre>
 {

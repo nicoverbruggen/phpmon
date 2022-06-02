@@ -145,6 +145,14 @@ extension MainMenu {
         }
     }
 
+    @objc func rollbackPreset() {
+        asyncExecution {
+            PresetHelper.rollbackPreset?.apply()
+            PresetHelper.rollbackPreset = nil
+            MainMenu.shared.rebuild()
+        }
+    }
+
     @objc func togglePreset(sender: PresetMenuItem) {
         asyncExecution {
             sender.preset?.apply()

@@ -62,22 +62,10 @@ extension MainMenu {
         App.shared.handlePhpConfigWatcher()
 
         // Detect applications (preset + custom)
-        Log.info("Detecting applications...")
-        App.shared.detectedApplications = Application.detectPresetApplications()
+        self.loadApps()
 
-        let customApps = Preferences.custom.scanApps.map { appName in
-            return Application(appName, .user_supplied)
-        }.filter { app in
-            return app.isInstalled()
-        }
-
-        App.shared.detectedApplications.append(contentsOf: customApps)
-
-        let appNames = App.shared.detectedApplications.map { app in
-            return app.name
-        }
-
-        Log.info("Detected applications: \(appNames)")
+        // Load the rollback preset
+        PresetHelper.loadRollbackPresetFromFile()
 
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
@@ -132,5 +120,24 @@ extension MainMenu {
 
             Task { await startup() }
         }
+    }
+
+    private func loadApps() {
+        Log.info("Detecting applications...")
+        App.shared.detectedApplications = Application.detectPresetApplications()
+
+        let customApps = Preferences.custom.scanApps.map { appName in
+            return Application(appName, .user_supplied)
+        }.filter { app in
+            return app.isInstalled()
+        }
+
+        App.shared.detectedApplications.append(contentsOf: customApps)
+
+        let appNames = App.shared.detectedApplications.map { app in
+            return app.name
+        }
+
+        Log.info("Detected applications: \(appNames)")
     }
 }

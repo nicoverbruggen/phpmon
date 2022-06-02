@@ -173,12 +173,12 @@ class Preferences {
     // MARK: - Custom Preferences
 
     private func loadCustomPreferences() {
-        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
+        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.config/phpmon/config.json")
         if Filesystem.fileExists(url.path) {
-            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
+            Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
         } else {
-            Log.info("There was no .phpmon.conf.json file to be loaded.")
+            Log.info("There was no /.config/phpmon/config.json file to be loaded.")
         }
     }
 
@@ -189,10 +189,10 @@ class Preferences {
                 from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
             )
 
-            Log.info("The .phpmon.conf.json file was successfully parsed.")
+            Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
             Log.info("There are \(customPreferences.presets.count) custom presets.")
         } catch {
-            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
+            Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")
         }
     }
 
