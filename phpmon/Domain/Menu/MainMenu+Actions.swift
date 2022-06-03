@@ -145,12 +145,30 @@ extension MainMenu {
         }
     }
 
-    @objc func rollbackPreset() {
+    private func performRollback() {
         asyncExecution {
             PresetHelper.rollbackPreset?.apply()
             PresetHelper.rollbackPreset = nil
             MainMenu.shared.rebuild()
         }
+    }
+
+    @objc func rollbackPreset() {
+        guard let preset = PresetHelper.rollbackPreset else {
+            return
+        }
+
+        BetterAlert().withInformation(
+            title: "alert.revert_description.title".localized,
+            subtitle: "alert.revert_description.subtitle".localized(
+                preset.textDescription
+            )
+        )
+        .withPrimary(text: "alert.revert_description.ok".localized, action: { _ in
+            self.performRollback()
+        })
+        .withSecondary(text: "alert.revert_description.cancel".localized)
+        .show()
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {

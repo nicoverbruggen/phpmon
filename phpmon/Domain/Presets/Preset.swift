@@ -21,6 +21,32 @@ struct Preset: Codable {
              configuration = "configuration"
     }
 
+    var textDescription: String {
+        var text = ""
+
+        if self.version != nil {
+            text += "Switches to PHP \(self.version!).\n"
+        }
+
+        if !self.extensions.isEmpty {
+            text += "\nApplies the following extensions:\n"
+        }
+
+        for (ext, extValue) in self.extensions {
+            text += "• \(ext): \(extValue ? "enabled" : "disabled") \n"
+        }
+
+        if !self.configuration.isEmpty {
+            text += "\nApplies the following configuration values:\n"
+        }
+
+        for (key, value) in self.configuration {
+            text += "• \(key)=\(value ?? "(empty)") \n"
+        }
+
+        return text
+    }
+
     // MARK: Applying
 
     /**
