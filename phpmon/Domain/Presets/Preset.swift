@@ -33,7 +33,11 @@ struct Preset: Codable {
 
             // Apply the PHP version if is considered a valid version
             if self.version != nil {
-                await switchToPhpVersionIfValid()
+                if await !switchToPhpVersionIfValid() {
+                    PresetHelper.rollbackPreset = nil
+                    Actions.restartPhpFpm()
+                    return
+                }
             }
 
             // Apply the configuration changes first
@@ -61,30 +65,29 @@ struct Preset: Codable {
 
     // MARK: - Apply Functionality
 
-    private func switchToPhpVersionIfValid() async {
+    private func switchToPhpVersionIfValid() async -> Bool {
         if PhpEnv.shared.currentInstall.version.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
-            return
+            return true
         }
 
         if PhpEnv.shared.availablePhpVersions.first(where: { $0 == self.version }) != nil {
             await MainMenu.shared.switchToPhp(self.version!)
-            return
+            return true
         } else {
             DispatchQueue.main.async {
-                BetterAlert()
-                    .withInformation(
-                        title: "PHP version unavailable",
-                        subtitle: "You have specified a PHP version (\(version!)) that is unavailable.",
-                        description: "Please make sure this version of PHP is installed "
-                        + "and you can switch to it in the dropdown. "
-                        + "Currently supported versions include: "
-                        + "\(PhpEnv.shared.availablePhpVersions.joined(separator: ", "))."
+                BetterAlert().withInformation(
+                    title: "alert.php_switch_unavailable.title".localized,
+                    subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
+                    description: "alert.php_switch_unavailable.info".localized(
+                        version!,
+                        PhpEnv.shared.availablePhpVersions.joined(separator: ", ")
                     )
-                    .withPrimary(text: "OK")
-                    .show()
+                ).withPrimary(
+                    text: "alert.php_switch_unavailable.ok".localized
+                ).show()
             }
-            return
+            return false
         }
     }
 
