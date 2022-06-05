@@ -32,7 +32,9 @@ struct HomebrewService: Decodable, Equatable {
                 .decode([HomebrewService].self, from: data)
                 .filter({ return filter.contains($0.name) })
 
-            completion(services)
+            DispatchQueue.main.async {
+                completion(services)
+            }
         }
     }
 }

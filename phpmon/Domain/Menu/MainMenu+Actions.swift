@@ -164,8 +164,9 @@ extension MainMenu {
                 preset.textDescription
             )
         )
-        .withPrimary(text: "alert.revert_description.ok".localized, action: { _ in
+        .withPrimary(text: "alert.revert_description.ok".localized, action: { alert in
             self.performRollback()
+            alert.close(with: .OK)
         })
         .withSecondary(text: "alert.revert_description.cancel".localized)
         .show()

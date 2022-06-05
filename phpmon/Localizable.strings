@@ -323,6 +323,14 @@ For optimal support of the latest versions of PHP and proper version switching, 
 
 You can do this by running `composer global update` in your terminal. After that, run `valet install` again. For best results, restart PHP Monitor after that.";
 
+// Preset text description
+"alert.preset_description.switcher_version" = "Switches to PHP %@.\n\n";
+"alert.preset_description.applying_extensions" = "Applies the following extensions:\n";
+"alert.preset_description.applying_config" = "Applies the following configuration values:\n";
+"alert.preset_description.enabled" = "enabled";
+"alert.preset_description.disabled" = "disabled";
+"alert.preset_description.empty" = "(empty)";
+
 // PHP version unavailable
 "alert.php_switch_unavailable.title" = "Unsupported PHP version";
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor can't switch to PHP %@, as it may not be installed or available. Applying this preset has been cancelled.";

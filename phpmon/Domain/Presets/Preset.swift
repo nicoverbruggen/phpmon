@@ -21,27 +21,42 @@ struct Preset: Codable {
              configuration = "configuration"
     }
 
+    /**
+     What the preset does, in text form. Used to display what's going on.
+     */
     var textDescription: String {
         var text = ""
 
         if self.version != nil {
-            text += "Switches to PHP \(self.version!).\n"
+            text += "alert.preset_description.switcher_version".localized(self.version!)
         }
 
         if !self.extensions.isEmpty {
-            text += "\nApplies the following extensions:\n"
+            // Show a subsection header
+            text += "alert.preset_description.applying_extensions".localized
         }
 
         for (ext, extValue) in self.extensions {
-            text += "• \(ext): \(extValue ? "enabled" : "disabled") \n"
+            // An extension is either enabled or disabled
+            let status = extValue
+                ? "alert.preset_description.enabled".localized
+                : "alert.preset_description.disabled".localized
+            text += "• \(ext): \(status)\n"
         }
 
         if !self.configuration.isEmpty {
-            text += "\nApplies the following configuration values:\n"
+            // Extra spacing if the previous section was extensions
+            if !self.extensions.isEmpty {
+                text += "\n"
+            }
+
+            // Show a subsection header
+            text += "alert.preset_description.applying_config".localized
         }
 
         for (key, value) in self.configuration {
-            text += "• \(key)=\(value ?? "(empty)") \n"
+            // A value is either displayed, or the value is "(empty)"
+            text += "• \(key)=\(value ?? "alert.preset_description.empty".localized) \n"
         }
 
         return text
