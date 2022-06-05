@@ -11,7 +11,8 @@ import Cocoa
 
 class HotkeyPreferenceView: NSView, XibLoadable {
 
-    weak var delegate: PrefsVC?
+    #warning("Refactor so this applies to any given preferences VC")
+    weak var delegate: GeneralPreferencesVC?
 
     @IBOutlet weak var labelSection: NSTextField!
     @IBOutlet weak var labelDescription: NSTextField!
@@ -19,7 +20,7 @@ class HotkeyPreferenceView: NSView, XibLoadable {
     @IBOutlet weak var buttonSetShortcut: NSButton!
     @IBOutlet weak var buttonClearShortcut: NSButton!
 
-    static func make(sectionText: String, descriptionText: String, _ prefsVC: PrefsVC) -> NSView {
+    static func make(sectionText: String, descriptionText: String, _ prefsVC: GeneralPreferencesVC) -> NSView {
         let view = Self.createFromXib()!
         view.labelSection.stringValue = sectionText
         view.labelDescription.stringValue = descriptionText

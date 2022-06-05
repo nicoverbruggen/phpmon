@@ -166,7 +166,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func openPrefs() {
-        PrefsVC.show()
+        PrefsWC.show()
     }
 
     @objc func openDomainList() {

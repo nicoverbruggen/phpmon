@@ -1,5 +1,5 @@
 //
-//  PrefsVC.swift
+//  GeneralPreferencesVC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
@@ -9,56 +9,54 @@
 import Cocoa
 import Carbon
 
-class PrefsVC: NSViewController {
+class GenericPreferenceVC: NSViewController {
 
-    // MARK: - Window Identifier
+    // MARK: - Content
 
     @IBOutlet weak var stackView: NSStackView!
 
-    // MARK: - Display
+    var views: [NSView] = []
 
-    public static func create(delegate: NSWindowDelegate?) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "preferencesWindow"
-        ) as! PrefsWC
-
-        windowController.window!.title = "prefs.title".localized
-        windowController.window!.subtitle = "prefs.subtitle".localized
-        windowController.window!.delegate = delegate
-        windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
-        windowController.window!.delegate = windowController
-        windowController.positionWindowInTopLeftCorner()
-
-        App.shared.preferencesWindowController = windowController
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.views.forEach({ self.stackView.addArrangedSubview($0) })
     }
 
-    public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.preferencesWindowController == nil {
-            Self.create(delegate: delegate)
-        }
+    // MARK: - Deinitialization
 
-        App.shared.preferencesWindowController!.showWindow(self)
-        NSApp.activate(ignoringOtherApps: true)
+    deinit {
+        Log.perf("PrefsVC deallocated")
     }
+
+}
+
+class GeneralPreferencesVC: GenericPreferenceVC {
+
+    // MARK: - Icon and title
+
+    var icon: String = "gear"
 
     // MARK: - Lifecycle
 
-    override func viewDidLoad() {
-        [
+    public static func fromStoryboard() -> GenericPreferenceVC {
+        let vc = NSStoryboard(name: "Main", bundle: nil)
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+
+        vc.views = [
             getDynamicIconPreferenceView(),
             getIconOptionsPreferenceView(),
             getIconDensityPreferenceView(),
             getAutoRestartPreferenceView(),
             getAutomaticComposerUpdatePreferenceView(),
-            getShortcutPreferenceView(),
+            // getShortcutPreferenceView(),
             getIntegrationsPreferenceView(),
             getAutomaticUpdateCheckPreferenceView()
-        ].forEach({ self.stackView.addArrangedSubview($0) })
+        ]
+
+        return vc
     }
 
-    private func getDynamicIconPreferenceView() -> NSView {
+    private static func getDynamicIconPreferenceView() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.dynamic_icon".localized,
             descriptionText: "prefs.dynamic_icon_desc".localized,
@@ -70,7 +68,7 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getIconOptionsPreferenceView() -> NSView {
+    private static func getIconOptionsPreferenceView() -> NSView {
         return SelectPreferenceView.make(
             sectionText: "",
             descriptionText: "prefs.icon_options_desc".localized,
@@ -83,7 +81,7 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getIconDensityPreferenceView() -> NSView {
+    private static func getIconDensityPreferenceView() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.info_density".localized,
             descriptionText: "prefs.display_full_php_version_desc".localized,
@@ -96,7 +94,7 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getAutoRestartPreferenceView() -> NSView {
+    private static func getAutoRestartPreferenceView() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.services".localized,
             descriptionText: "prefs.auto_restart_services_desc".localized,
@@ -106,7 +104,7 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getAutomaticComposerUpdatePreferenceView() -> NSView {
+    private static func getAutomaticComposerUpdatePreferenceView() -> NSView {
         CheckboxPreferenceView.make(
             sectionText: "prefs.switcher".localized,
             descriptionText: "prefs.auto_composer_update_desc".localized,
@@ -116,15 +114,17 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getShortcutPreferenceView() -> NSView {
+    /*
+    private static func getShortcutPreferenceView() -> NSView {
         return HotkeyPreferenceView.make(
             sectionText: "prefs.global_shortcut".localized,
             descriptionText: "prefs.shortcut_desc".localized,
             self
         )
     }
+    */
 
-    private func getIntegrationsPreferenceView() -> NSView {
+    private static func getIntegrationsPreferenceView() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.integrations".localized,
             descriptionText: "prefs.open_protocol_desc".localized,
@@ -134,7 +134,7 @@ class PrefsVC: NSViewController {
         )
     }
 
-    private func getAutomaticUpdateCheckPreferenceView() -> NSView {
+    private static func getAutomaticUpdateCheckPreferenceView() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.updates".localized,
             descriptionText: "prefs.automatic_update_check_desc".localized,
@@ -152,11 +152,5 @@ class PrefsVC: NSViewController {
         if listeningForHotkeyView !== nil {
             listeningForHotkeyView = nil
         }
-    }
-
-    // MARK: - Deinitialization
-
-    deinit {
-        Log.perf("PrefsVC deallocated")
     }
 }
