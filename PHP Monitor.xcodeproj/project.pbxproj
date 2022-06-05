@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5420395926135DC100FB00FA /* GeneralPreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* GeneralPreferencesVC.swift */; };
+		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489625728312FAD004F647A /* CreatedFromFile.swift */; };
 		5489625928313231004F647A /* CreatedFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489625728312FAD004F647A /* CreatedFromFile.swift */; };
@@ -143,7 +143,7 @@
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4811D2422D70A4700B5F6B3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
-		C481F79726164A78004FBCFF /* GeneralPreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* GeneralPreferencesVC.swift */; };
+		C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		C484437B2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
 		C484437C2804BB560041A78A /* ValetProxyScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C484437A2804BB560041A78A /* ValetProxyScanner.swift */; };
@@ -288,7 +288,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5420395826135DC100FB00FA /* GeneralPreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesVC.swift; sourceTree = "<group>"; };
+		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5489625728312FAD004F647A /* CreatedFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedFromFile.swift; sourceTree = "<group>"; };
 		54A18D3F282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy-custom-tld.test"; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				C4998F092617633900B2526E /* PrefsWC.swift */,
-				5420395826135DC100FB00FA /* GeneralPreferencesVC.swift */,
+				5420395826135DC100FB00FA /* PrefsVC.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
 				C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */,
 				C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */,
@@ -1202,7 +1202,7 @@
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C0E8EA27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */,
-				5420395926135DC100FB00FA /* GeneralPreferencesVC.swift in Sources */,
+				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
@@ -1368,7 +1368,7 @@
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
-				C481F79726164A78004FBCFF /* GeneralPreferencesVC.swift in Sources */,
+				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,

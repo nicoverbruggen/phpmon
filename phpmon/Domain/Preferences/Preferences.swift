@@ -12,15 +12,28 @@ import Foundation
  These are the keys used for every preference in the app.
  */
 enum PreferenceName: String {
+    // FIRST-TIME LAUNCH
     case wasLaunchedBefore = "launched_before"
-    case shouldDisplayDynamicIcon = "use_dynamic_icon"
-    case iconTypeToDisplay = "icon_type_to_display"
-    case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+
+    // GENERAL
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
     case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
+
+    // APPEARANCE
+    case shouldDisplayDynamicIcon = "use_dynamic_icon"
+    case iconTypeToDisplay = "icon_type_to_display"
+    case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+
+    // NOTIFICATIONS
+    case notifyAboutVersionChange = "notify_about_version_change"
+    case notifyAboutPhpFpmRestart = "notify_about_php_fpm_restart"
+    case notifyAboutServices = "notify_about_services_restart"
+    case notifyAboutPresets = "notify_about_presets"
+    case notifyAboutSecureToggle = "notify_about_secure_toggle"
+    case notifyAboutGlobalComposerStatus = "notify_about_composer_status"
 }
 
 /**
@@ -70,14 +83,25 @@ class Preferences {
      */
     static func handleFirstTimeLaunch() {
         UserDefaults.standard.register(defaults: [
-            /// Preferences
-            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
-            PreferenceName.iconTypeToDisplay.rawValue: MenuBarIcon.iconPhp.rawValue,
-            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+            /// Preferences: General
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
+
+            /// Preferences: Appearance
+            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
+            PreferenceName.iconTypeToDisplay.rawValue: MenuBarIcon.iconPhp.rawValue,
+            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+
+            /// Preferences: Notifications
+            PreferenceName.notifyAboutVersionChange.rawValue: true,
+            PreferenceName.notifyAboutPhpFpmRestart.rawValue: true,
+            PreferenceName.notifyAboutServices.rawValue: true,
+            PreferenceName.notifyAboutPresets.rawValue: true,
+            PreferenceName.notifyAboutSecureToggle.rawValue: true,
+            PreferenceName.notifyAboutGlobalComposerStatus.rawValue: true,
+
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
@@ -137,7 +161,8 @@ class Preferences {
     private static func cache() -> [PreferenceName: Any] {
         return [
             // Part 1: Always Booleans
-            .shouldDisplayDynamicIcon: UserDefaults.standard.bool(
+            .shouldDisplayDynamicIcon:
+                UserDefaults.standard.bool(
                 forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(
                 forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
@@ -149,6 +174,19 @@ class Preferences {
                 forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             .automaticBackgroundUpdateCheck: UserDefaults.standard.bool(
                 forKey: PreferenceName.automaticBackgroundUpdateCheck.rawValue) as Any,
+
+            .notifyAboutVersionChange: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutVersionChange.rawValue) as Any,
+            .notifyAboutPhpFpmRestart: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutPhpFpmRestart.rawValue) as Any,
+            .notifyAboutServices: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutServices.rawValue) as Any,
+            .notifyAboutPresets: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutPresets.rawValue) as Any,
+            .notifyAboutSecureToggle: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutSecureToggle.rawValue) as Any,
+            .notifyAboutGlobalComposerStatus: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutGlobalComposerStatus.rawValue) as Any,
 
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(

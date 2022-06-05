@@ -77,7 +77,8 @@ extension MainMenu {
     private func notifyAboutVersionChange(to version: String) {
         LocalNotification.send(
             title: String(format: "notification.version_changed_title".localized, version),
-            subtitle: String(format: "notification.version_changed_desc".localized, version)
+            subtitle: String(format: "notification.version_changed_desc".localized, version),
+            preference: .notifyAboutVersionChange
         )
 
         PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()

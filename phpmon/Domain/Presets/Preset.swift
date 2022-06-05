@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Preset: Codable {
+struct Preset: Codable, Equatable {
     let name: String
     let version: String?
     let extensions: [String: Bool]
@@ -69,6 +69,9 @@ struct Preset: Codable {
      */
     public func apply() {
         Task {
+            // Was this a rollback?
+            let wasRollback = (self.name == "AutomaticRevertSnapshot")
+
             // Save the preset that would revert this preset
             self.persistRevert()
 
@@ -101,6 +104,21 @@ struct Preset: Codable {
 
             // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
             Actions.restartPhpFpm()
+
+            // Show the correct notification
+            if wasRollback {
+                LocalNotification.send(
+                    title: "notification.preset_reverted_title".localized,
+                    subtitle: "notification.preset_reverted_desc".localized,
+                    preference: .notifyAboutPresets
+                )
+            } else {
+                LocalNotification.send(
+                    title: "notification.preset_applied_title".localized,
+                    subtitle: "notification.preset_applied_desc".localized(self.name),
+                    preference: .notifyAboutPresets
+                )
+            }
         }
     }
 
@@ -178,7 +196,7 @@ struct Preset: Codable {
 
     public var revertSnapshot: Preset {
         return Preset(
-            name: "Revert",
+            name: "AutomaticRevertSnapshot",
             version: diffVersion(),
             extensions: diffExtensions(),
             configuration: diffConfiguration()

@@ -38,6 +38,8 @@ class PrefsWC: PMWindowController {
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
+        var justCreated = false
+
         if App.shared.preferencesWindowController == nil {
             Self.create(delegate: delegate)
 
@@ -60,9 +62,16 @@ class PrefsWC: PMWindowController {
                 width: tabVC.view.frame.size.width,
                 height: tabVC.view.frame.size.height
             )
+
+            justCreated = true
         }
 
         App.shared.preferencesWindowController?.showWindow(self)
+
+        if justCreated {
+            App.shared.preferencesWindowController?.positionWindowInTopLeftCorner()
+        }
+
         NSApp.activate(ignoringOtherApps: true)
     }
 
@@ -77,7 +86,17 @@ class PrefsWC: PMWindowController {
             PrefTabView(
                 viewController: GeneralPreferencesVC.fromStoryboard(),
                 label: "General",
-                icon: "gear"
+                icon: "gearshape"
+            ),
+            PrefTabView(
+                viewController: AppearancePreferencesVC.fromStoryboard(),
+                label: "Appearance",
+                icon: "paintbrush"
+            ),
+            PrefTabView(
+                viewController: NotificationPreferencesVC.fromStoryboard(),
+                label: "Notifications",
+                icon: "bell.badge"
             )
         ]
     }()
@@ -87,18 +106,24 @@ class PrefsWC: PMWindowController {
     override func keyDown(with event: NSEvent) {
         super.keyDown(with: event)
 
-        /*
-        if let vc = contentViewController as? PrefsVC {
+        guard let tabVC = self.contentViewController as? NSTabViewController else {
+            return
+        }
+
+        guard let selected = tabVC.tabViewItems[tabVC.selectedTabViewItemIndex].viewController else {
+            return
+        }
+
+        if let vc = selected as? GenericPreferenceVC {
             if vc.listeningForHotkeyView != nil {
                 if event.keyCode == Keys.Escape || event.keyCode == Keys.Space {
                     Log.info("A blacklisted key was pressed, canceling listen!")
-                    vc.listeningForHotkeyView = nil
+                    vc.listeningForHotkeyView!.unregister(nil)
                 } else {
                     vc.listeningForHotkeyView!.updateShortcut(event)
                 }
             }
         }
-        */
     }
 
 }

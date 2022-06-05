@@ -56,7 +56,8 @@ extension MainMenu {
             DispatchQueue.main.async {
                 LocalNotification.send(
                     title: "notification.services_restarted".localized,
-                    subtitle: "notification.services_restarted_desc".localized
+                    subtitle: "notification.services_restarted_desc".localized,
+                    preference: .notifyAboutServices
                 )
             }
         }
@@ -69,7 +70,8 @@ extension MainMenu {
             DispatchQueue.main.async {
                 LocalNotification.send(
                     title: "notification.services_stopped".localized,
-                    subtitle: "notification.services_stopped_desc".localized
+                    subtitle: "notification.services_stopped_desc".localized,
+                    preference: .notifyAboutServices
                 )
             }
         }
@@ -165,8 +167,8 @@ extension MainMenu {
             )
         )
         .withPrimary(text: "alert.revert_description.ok".localized, action: { alert in
-            self.performRollback()
             alert.close(with: .OK)
+            self.performRollback()
         })
         .withSecondary(text: "alert.revert_description.cancel".localized)
         .show()

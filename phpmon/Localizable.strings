@@ -193,6 +193,7 @@
 "prefs.switcher" = "Switcher:";
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
+"prefs.notifications" = "Notifications:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -223,6 +224,24 @@
 "prefs.shortcut_clear" = "Clear";
 "prefs.shortcut_desc" = "If a shortcut combination is set up, you can toggle PHP Monitor wherever you are by pressing the key combination you chose. (Cancel choosing a shortcut by pressing the spacebar.)";
 
+"prefs.notify_about_version_change_desc" = "Displays a notification whenever the active PHP version changes.";
+"prefs.notify_about_version_change" = "Notify about PHP version switch";
+
+"prefs.notify_about_php_fpm_change_desc" = "Displays a notification whenever the active PHP-FPM process has restarted due to a configuration change.";
+"prefs.notify_about_php_fpm_change" = "Notify about PHP-FPM restart";
+
+"prefs.notify_about_services_desc" = "Displays a notification whenever any of the Homebrew services (installed and configured by Valet) have been restarted or stopped.";
+"prefs.notify_about_services" = "Notify about services status";
+
+"prefs.notify_about_presets_desc" = "Displays a notification whenever a preset has been successfully applied or reverted.";
+"prefs.notify_about_presets" = "Notify about applied presets";
+
+"prefs.notify_about_secure_status_desc" = "Displays a notification when a domain has been secured or unsecured.";
+"prefs.notify_about_secure_status" = "Notify about secure/unsecure status";
+
+"prefs.notify_about_composer_success_desc" = "Displays a notification when the global composer configuration was successfully updated.";
+"prefs.notify_about_composer_success" = "Notify about global composer update";
+
 // NOTIFICATIONS
 
 "notification.version_changed_title" = "PHP %@ now active";
@@ -236,6 +255,12 @@
 
 "notification.services_restarted" = "Valet services restarted";
 "notification.services_restarted_desc" = "All services have been successfully restarted.";
+
+"notification.preset_applied_title" = "Preset applied";
+"notification.preset_applied_desc" = "The preset '%@' has been successfully applied.";
+
+"notification.preset_reverted_title" = "Preset reverted";
+"notification.preset_reverted_desc" = "The last preset you applied has been undone. Your previous configuration is now active.";
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";

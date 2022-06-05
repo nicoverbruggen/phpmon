@@ -69,7 +69,8 @@ extension DomainListVC {
                         .localized(
                             "\(selectedSite.name).\(Valet.shared.config.tld)",
                             newState
-                        )
+                        ),
+                    preference: .notifyAboutSecureToggle
                 )
             }
 
