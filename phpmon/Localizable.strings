@@ -63,6 +63,24 @@
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
+"mi_presets_title" = "Configuration Presets";
+"mi_apply_presets_title" = "Apply Configuration Presets";
+"mi_revert_to_prev_config" = "Revert to Previous Configuration...";
+"mi_profiles_loaded" = "%i profiles loaded from configuration file";
+
+"mi_no_presets" = "No presets available.";
+"mi_set_up_presets" = "Learn more about presets...";
+
+"mi_xdebug_available_modes" = "Available Modes";
+"mi_xdebug_actions" = "Actions";
+"mi_xdebug_disable_all" = "Disable All Modes";
+
+// PRESET LOADING
+
+"preset_help_title" = "Working with Configuration Presets";
+"preset_help_info" = "You can set up configuration presets in the config.json file, located in ~/.config/phpmon/config.json. These presets can apply a selection of configuration values all at once. This is a powerful feature, but currently needs to be set up manually.";
+"preset_help_desc" = "After restarting PHP Monitor, all presets found in the file will be loaded. If no presets appear, the file probably could not be parsed correctly.\n\nYou can click the question mark in this alert to go to the FAQ on GitHub, where you can find more information about this feature, including a sample file.";
+
 // MENU ITEMS (if window is open)
 
 "mm_add_folder_as_link" = "Add Folder as Link...";

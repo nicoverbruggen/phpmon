@@ -180,6 +180,20 @@ extension MainMenu {
         }
     }
 
+    @objc func showPresetHelp() {
+        BetterAlert().withInformation(
+            title: "preset_help_title".localized,
+            subtitle: "preset_help_info".localized,
+            description: "preset_help_desc".localized
+        )
+        .withPrimary(text: "OK")
+        .withTertiary(text: "", action: { alert in
+            NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
+            alert.close(with: .OK)
+        })
+        .show()
+    }
+
     @objc func openPhpInfo() {
         var url: URL?
 

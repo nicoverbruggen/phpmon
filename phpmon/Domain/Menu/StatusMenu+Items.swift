@@ -66,13 +66,41 @@ extension StatusMenu {
 
     func addPresetsMenuItem() {
         if Preferences.custom.presets.isEmpty {
+            addEmptyPresetHelp()
             return
         }
 
-        let presets = NSMenuItem(title: "Configuration Presets", action: nil, keyEquivalent: "")
+        addLoadedPresets()
+    }
+
+    func addEmptyPresetHelp() {
+        let presets = NSMenuItem(title: "mi_presets_title".localized, action: nil, keyEquivalent: "")
+
         let presetsMenu = NSMenu()
+
+        presetsMenu.addItem(NSMenuItem(title: "mi_no_presets".localized, action: nil, keyEquivalent: ""))
         presetsMenu.addItem(NSMenuItem.separator())
-        presetsMenu.addItem(HeaderView.asMenuItem(text: "Apply Configuration Presets"))
+        presetsMenu.addItem(NSMenuItem(
+            title: "mi_set_up_presets".localized,
+            action: #selector(MainMenu.showPresetHelp),
+            keyEquivalent: "")
+        )
+
+        presetsMenu.items.forEach { $0.target = MainMenu.shared }
+
+        self.setSubmenu(presetsMenu, for: presets)
+        self.addItem(presets)
+
+        return
+    }
+
+    func addLoadedPresets() {
+        let presets = NSMenuItem(title: "mi_presets_title".localized, action: nil, keyEquivalent: "")
+
+        let presetsMenu = NSMenu()
+        
+        presetsMenu.addItem(NSMenuItem.separator())
+        presetsMenu.addItem(HeaderView.asMenuItem(text: "mi_apply_presets_title".localized))
 
         for preset in Preferences.custom.presets {
             let presetMenuItem = PresetMenuItem(
@@ -86,13 +114,6 @@ extension StatusMenu {
                 options: [.documentType: NSAttributedString.DocumentType.html],
                 documentAttributes: nil
             ) {
-                /*
-                attributedString.addAttribute(
-                    .font,
-                    value: NSFont.systemFont(ofSize: 12),
-                    range: NSRange(location: 0, length: attributedString.length)
-                )
-                */
                 presetMenuItem.attributedTitle = attributedString
             }
 
@@ -102,15 +123,17 @@ extension StatusMenu {
 
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(NSMenuItem(
-            title: "Revert to Previous Configuration...",
+            title: "mi_revert_to_prev_config".localized,
             action: PresetHelper.rollbackPreset != nil
-                ? #selector(MainMenu.rollbackPreset)
-                : nil,
+            ? #selector(MainMenu.rollbackPreset)
+            : nil,
             keyEquivalent: ""
         ))
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(NSMenuItem(
-            title: "\(Preferences.custom.presets.count) profiles loaded from configuration file",
+            title: "mi_profiles_loaded".localized(
+                Preferences.custom.presets.count
+            ),
             action: nil, keyEquivalent: "")
         )
         for item in presetsMenu.items {
@@ -133,7 +156,7 @@ extension StatusMenu {
         let xdebugModesMenu = NSMenu()
         let activeModes = Xdebug.activeModes
 
-        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "Available Modes"))
+        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized))
 
         for mode in Xdebug.modes {
             let item = XdebugMenuItem(
@@ -147,9 +170,9 @@ extension StatusMenu {
             xdebugModesMenu.addItem(item)
         }
 
-        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "Actions"))
+        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "mi_xdebug_actions".localized))
         xdebugModesMenu.addItem(
-            withTitle: "Disable All",
+            withTitle: "mi_xdebug_disable_all".localized,
             action: #selector(MainMenu.disableAllXdebugModes),
             keyEquivalent: ""
         )

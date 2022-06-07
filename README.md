@@ -25,7 +25,7 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 * macOS 11 Big Sur or higher (supports macOS 12 Monterey)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
-* Laravel Valet 2.16 or newer (supports Valet 3)
+* Laravel Valet 3 recommended (but compatible with Valet 2)
 
 _You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
 
