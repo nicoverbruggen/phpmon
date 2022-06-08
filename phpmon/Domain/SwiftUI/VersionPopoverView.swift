@@ -55,15 +55,11 @@ struct VersionPopoverView: View {
             if !validPhpVersions.isEmpty {
                 // Suggestions for alternative PHP versions
                 VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .center, spacing: 5) {
-                        Image(systemName: "info.circle.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Color("AppColor"))
-                        Text("alert.php_suggestions".localized)
-                            .font(.subheadline)
-                            .foregroundColor(Color("AppColor"))
-
-                    }.padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                    DisclaimerView(
+                        iconName: "info.circle",
+                        message: "alert.php_suggestions".localized,
+                        color: Color("AppColor")
+                    )
                     HStack {
                         ForEach(validPhpVersions, id: \.self) { version in
                             Button("site_link.switch_to_php".localized(version.homebrewVersion), action: {
@@ -75,23 +71,16 @@ struct VersionPopoverView: View {
                 }
             } else {
                 if site.composerPhpSource != .unknown {
-                    HStack(alignment: .center, spacing: 5) {
-                        Image(systemName: "checkmark.seal.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Color("IconColorGreen"))
-                        Text("alert.php_version_ideal".localized)
-                            .font(.subheadline)
-                            .foregroundColor(Color("IconColorGreen"))
-                    }.padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                    DisclaimerView(
+                        iconName: "checkmark.seal.fill",
+                        message: "alert.php_version_ideal".localized,
+                        color: Color("IconColorGreen")
+                    )
                 } else {
-                    HStack(alignment: .firstTextBaseline, spacing: 5) {
-                        Image(systemName: "questionmark.circle.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Color.secondary)
-                        Text("alert.unable_to_determine_is_fine".localized)
-                            .font(.subheadline)
-                            .foregroundColor(Color.secondary)
-                    }.padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                    DisclaimerView(
+                        iconName: "questionmark.circle",
+                        message: "alert.unable_to_determine_is_fine".localized
+                    )
                 }
             }
         }.frame(width: 400, height: nil, alignment: .center)
@@ -99,6 +88,23 @@ struct VersionPopoverView: View {
             .background(
                 Color(NSColor.windowBackgroundColor).padding(-80)
             )
+    }
+}
+
+struct DisclaimerView: View {
+    @State var iconName: String
+    @State var message: String
+    @State var color: Color = Color.secondary
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+            Image(systemName: iconName)
+                .renderingMode(.template)
+                .foregroundColor(color)
+            Text(message)
+                .font(.subheadline)
+                .foregroundColor(color)
+        }.padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
     }
 }
 
