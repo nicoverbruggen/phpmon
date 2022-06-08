@@ -28,6 +28,10 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         imageViewPhpVersionOK.toolTip = nil
 
+        imageViewPhpVersionOK.contentTintColor = site.composerPhpCompatibleWithLinked
+            ? NSColor(named: "IconColorGreen")
+            : NSColor(named: "IconColorRed")
+
         if site.isolatedPhpVersion != nil {
             imageViewPhpVersionOK.isHidden = false
             imageViewPhpVersionOK.image = NSImage(named: "Isolated")
@@ -36,6 +40,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
+
         }
     }
 
