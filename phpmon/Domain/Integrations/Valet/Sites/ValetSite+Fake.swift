@@ -23,6 +23,7 @@ extension ValetSite {
         self.init(name: name, tld: tld, absolutePath: path, aliasPath: nil, makeDeterminations: false)
         self.secured = secure
         self.composerPhp = constraint
+        self.composerPhpSource = constraint != "" ? .require : .unknown
 
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
@@ -33,6 +34,7 @@ extension ValetSite {
 
         self.driver = driver
         self.driverDeterminedByComposer = true
+
         if linked {
             self.aliasPath = self.absolutePath
         }

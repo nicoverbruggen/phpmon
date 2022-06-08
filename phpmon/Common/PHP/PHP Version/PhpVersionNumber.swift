@@ -91,7 +91,7 @@ public struct PhpVersionNumberCollection: Equatable {
     }
 }
 
-public struct PhpVersionNumber: Equatable {
+public struct PhpVersionNumber: Equatable, Hashable {
     let major: Int
     let minor: Int
     let patch: Int?

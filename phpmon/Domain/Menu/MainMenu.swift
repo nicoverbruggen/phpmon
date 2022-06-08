@@ -11,6 +11,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     static let shared = MainMenu()
 
+    override init() {
+        super.init()
+        statusItem.isVisible = !isRunningSwiftUIPreview
+    }
+
     weak var menuDelegate: NSMenuDelegate?
 
     /**

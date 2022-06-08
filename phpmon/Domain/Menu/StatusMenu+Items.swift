@@ -98,7 +98,7 @@ extension StatusMenu {
         let presets = NSMenuItem(title: "mi_presets_title".localized, action: nil, keyEquivalent: "")
 
         let presetsMenu = NSMenu()
-        
+
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(HeaderView.asMenuItem(text: "mi_apply_presets_title".localized))
 
