@@ -16,7 +16,63 @@ struct VersionPopoverView: View {
 
     @State var parent: NSPopover!
 
-    func getTitle() -> String {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(getTitleText())
+                .fontWeight(.bold)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(getSourceText())
+                .fixedSize(horizontal: false, vertical: true)
+                .font(.subheadline)
+            if !validPhpVersions.isEmpty {
+                // Suggestions for alternative PHP versions
+                VStack(alignment: .leading, spacing: 10) {
+                    DisclaimerView(
+                        iconName: "info.circle.fill",
+                        message: "alert.php_suggestions".localized,
+                        color: Color("AppColor")
+                    )
+                    HStack {
+                        ForEach(validPhpVersions, id: \.self) { version in
+                            Button("site_link.switch_to_php".localized(version.homebrewVersion), action: {
+                                MainMenu.shared.switchToPhpVersion(version.homebrewVersion)
+                                parent?.close()
+                            })
+                        }
+                    }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                }
+            } else {
+                if site.composerPhpSource == .unknown {
+                    // We don't know which PHP version is required
+                    DisclaimerView(
+                        iconName: "questionmark.circle.fill",
+                        message: "alert.unable_to_determine_is_fine".localized
+                    )
+                } else {
+                    if site.composerPhpCompatibleWithLinked {
+                        DisclaimerView(
+                            iconName: "checkmark.circle.fill",
+                            message: "alert.php_version_ideal".localized,
+                            color: Color("IconColorGreen")
+                        )
+                    } else {
+                        DisclaimerView(
+                            iconName: "exclamationmark.circle.fill",
+                            message: "alert.php_version_incorrect".localized,
+                            color: Color("IconColorRed")
+                        )
+                    }
+                }
+            }
+        }.frame(width: 400, height: nil, alignment: .center)
+            .padding(20)
+            .background(
+                Color(NSColor.windowBackgroundColor)
+                    .padding(-80)
+            )
+    }
+
+    func getTitleText() -> String {
         if site.composerPhpSource == .unknown {
             return "alert.composer_php_requirement.unable_to_determine".localized
         }
@@ -27,7 +83,7 @@ struct VersionPopoverView: View {
         )
     }
 
-    func getSource() -> String {
+    func getSourceText() -> String {
         var information = ""
 
         if site.isolatedPhpVersion != nil {
@@ -42,52 +98,6 @@ struct VersionPopoverView: View {
             .localized
 
         return information
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(getTitle())
-                .fontWeight(.bold)
-                .fixedSize(horizontal: false, vertical: true)
-            Text(getSource())
-                .fixedSize(horizontal: false, vertical: true)
-                .font(.subheadline)
-            if !validPhpVersions.isEmpty {
-                // Suggestions for alternative PHP versions
-                VStack(alignment: .leading, spacing: 10) {
-                    DisclaimerView(
-                        iconName: "info.circle",
-                        message: "alert.php_suggestions".localized,
-                        color: Color("AppColor")
-                    )
-                    HStack {
-                        ForEach(validPhpVersions, id: \.self) { version in
-                            Button("site_link.switch_to_php".localized(version.homebrewVersion), action: {
-                                MainMenu.shared.switchToPhpVersion(version.homebrewVersion)
-                                parent?.close()
-                            })
-                        }
-                    }
-                }
-            } else {
-                if site.composerPhpSource != .unknown {
-                    DisclaimerView(
-                        iconName: "checkmark.seal.fill",
-                        message: "alert.php_version_ideal".localized,
-                        color: Color("IconColorGreen")
-                    )
-                } else {
-                    DisclaimerView(
-                        iconName: "questionmark.circle",
-                        message: "alert.unable_to_determine_is_fine".localized
-                    )
-                }
-            }
-        }.frame(width: 400, height: nil, alignment: .center)
-            .padding(20)
-            .background(
-                Color(NSColor.windowBackgroundColor).padding(-80)
-            )
     }
 }
 
@@ -122,6 +132,8 @@ struct VersionPopoverView_Previews: PreviewProvider {
             validPhpVersions: [],
             parent: nil
         )
+        .previewDisplayName("Unknown Requirement")
+
         VersionPopoverView(
             site: ValetSite(
                 fakeWithName: "amazingwebsite",
@@ -134,6 +146,35 @@ struct VersionPopoverView_Previews: PreviewProvider {
             validPhpVersions: [],
             parent: nil
         )
+        .previewDisplayName("Requirement Matches")
+        VersionPopoverView(
+            site: ValetSite(
+                fakeWithName: "anothersite",
+                tld: "test",
+                secure: true,
+                path: "/path/to/site",
+                linked: true,
+                constraint: "^8.0",
+                isolated: "8.0"
+            ),
+            validPhpVersions: [],
+            parent: nil
+        )
+        .previewDisplayName("Isolated")
+        VersionPopoverView(
+            site: ValetSite(
+                fakeWithName: "anothersite",
+                tld: "test",
+                secure: true,
+                path: "/path/to/site",
+                linked: true,
+                constraint: "^8.0",
+                isolated: "7.4"
+            ),
+            validPhpVersions: [],
+            parent: nil
+        )
+        .previewDisplayName("Isolated Mismatch")
         VersionPopoverView(
             site: ValetSite(
                 fakeWithName: "anothersite",
@@ -149,5 +190,6 @@ struct VersionPopoverView_Previews: PreviewProvider {
             ],
             parent: nil
         )
+        .previewDisplayName("Recommend Alternatives")
     }
 }
