@@ -20,6 +20,9 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
     func populateCell(with site: ValetSite) {
         self.site = site
 
+        buttonPhpVersion.isHidden = false
+        imageViewPhpVersionOK.isHidden = false
+
         buttonPhpVersion.title = " PHP \(site.servingPhpVersion)"
 
         imageViewPhpVersionOK.toolTip = nil
@@ -33,9 +36,6 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
         }
-
-        buttonPhpVersion.isHidden = false
-        imageViewPhpVersionOK.isHidden = false
     }
 
     func populateCell(with proxy: ValetProxy) {
