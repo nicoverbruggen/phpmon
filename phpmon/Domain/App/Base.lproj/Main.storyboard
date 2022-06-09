@@ -335,10 +335,6 @@
                             <rect key="frame" x="0.0" y="0.0" width="550" height="270"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
-                        <toolbar key="toolbar" implicitIdentifier="611E3485-DC7F-46A0-8528-11CF9366370C" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="fcq-wR-7iv">
-                            <allowedToolbarItems/>
-                            <defaultToolbarItems/>
-                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="hLJ-Fd-wRr" id="6HE-8Y-aCO"/>
                         </connections>
@@ -1419,6 +1415,7 @@ Gw
                                     <constraint firstAttribute="bottom" secondItem="pYe-Qu-qnK" secondAttribute="bottom" constant="20" id="lPX-ZF-XZN"/>
                                     <constraint firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" constant="20" symbolic="YES" id="spl-Bn-xtw"/>
                                     <constraint firstAttribute="bottom" secondItem="FhN-AM-SkI" secondAttribute="bottom" constant="20" symbolic="YES" id="t5w-aL-tOa"/>
+                                    <constraint firstItem="pYe-Qu-qnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FhN-AM-SkI" secondAttribute="trailing" constant="8" symbolic="YES" id="y7k-sl-xqe"/>
                                 </constraints>
                             </visualEffectView>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">
