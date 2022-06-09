@@ -303,7 +303,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Composer Version
 
-"alert.composer_php_isolated.desc" = "This site has been isolated, which means that Valet serves PHP %@ for this site specifically (the global version is %@).";
+"alert.composer_php_isolated.desc" = "This site has been isolated, which means that Valet serves PHP %@ for this site specifically. The global version is currently PHP %@.";
 "alert.composer_php_requirement.title" = "'%@' requires PHP %@.";
 "alert.composer_php_requirement.unable_to_determine" = "Unable to determine PHP requirement";
 "alert.composer_php_requirement.type.unknown" = "PHP Monitor was unable to determine which version of PHP is required for this domain. The constraint may be determined if you have a `composer.json` or a `.valetphprc` file in your project's directory.";
