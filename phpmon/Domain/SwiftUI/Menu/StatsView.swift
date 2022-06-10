@@ -31,35 +31,24 @@ struct StatsView: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 30) {
             VStack(alignment: .center, spacing: 3) {
-                StatHeader(text: "mi_memory_limit".localized.uppercased())
+                MiniHeaderView(text: "mi_memory_limit".localized.uppercased())
                 Text(memoryLimit)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
             VStack(alignment: .center, spacing: 3) {
-                StatHeader(text: "mi_post_max_size".localized.uppercased())
+                MiniHeaderView(text: "mi_post_max_size".localized.uppercased())
                 Text(maxPostSize)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
             VStack(alignment: .center, spacing: 3) {
-                StatHeader(text: "mi_upload_max_filesize".localized.uppercased())
+                MiniHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
                 Text(maxUploadSize)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
         }.padding(10)
-    }
-}
-
-struct StatHeader: View {
-    @State var text: String
-
-    var body: some View {
-        Text(text)
-            .font(.system(size: 11))
-            .fontWeight(.medium)
-            .foregroundColor(.secondary)
     }
 }
 

@@ -179,6 +179,8 @@
 		C4B585422770FE3900DA4FBE /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* Shell.swift */; };
 		C4B585442770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B585452770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
+		C4B6091A2853AAD300C95265 /* MiniHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* MiniHeaderView.swift */; };
+		C4B6091D2853AB9700C95265 /* NXServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* NXServicesView.swift */; };
 		C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
@@ -394,6 +396,8 @@
 		C4B5853B2770FE3900DA4FBE /* Paths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		C4B5853C2770FE3900DA4FBE /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C4B5853D2770FE3900DA4FBE /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		C4B609192853AAD300C95265 /* MiniHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniHeaderView.swift; sourceTree = "<group>"; };
+		C4B6091C2853AB9700C95265 /* NXServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXServicesView.swift; sourceTree = "<group>"; };
 		C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuOutlets.swift"; sourceTree = "<group>"; };
 		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
 		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
@@ -859,6 +863,32 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		C4B609162853AA9A00C95265 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		C4B609172853AA9E00C95265 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				C4B6091C2853AB9700C95265 /* NXServicesView.swift */,
+				C4709CA128524B3400088BB8 /* StatsView.swift */,
+				C4B609192853AAD300C95265 /* MiniHeaderView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		C4B609182853AAA700C95265 /* Domains */ = {
+			isa = PBXGroup;
+			children = (
+				C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */,
+			);
+			path = Domains;
+			sourceTree = "<group>";
+		};
 		C4C0E8D827F887A5002D32A9 /* Sites */ = {
 			isa = PBXGroup;
 			children = (
@@ -985,9 +1015,9 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				C4709CA128524B3400088BB8 /* StatsView.swift */,
-				C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */,
-				C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */,
+				C4B609182853AAA700C95265 /* Domains */,
+				C4B609172853AA9E00C95265 /* Menu */,
+				C4B609162853AA9A00C95265 /* Common */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -1215,6 +1245,7 @@
 				C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */,
 				C40C5C9C2846A40600E28255 /* Preset.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
+				C4B6091A2853AAD300C95265 /* MiniHeaderView.swift in Sources */,
 				C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */,
 				C42800AA28452AA10099C999 /* StatusMenu+Items.swift in Sources */,
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
@@ -1264,6 +1295,7 @@
 				C4709CA228524B3400088BB8 /* StatsView.swift in Sources */,
 				C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
+				C4B6091D2853AB9700C95265 /* NXServicesView.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */,
