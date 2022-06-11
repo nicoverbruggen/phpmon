@@ -65,7 +65,12 @@ extension StatusMenu {
     }
 
     func addPresetsMenuItem() {
-        if Preferences.custom.presets.isEmpty {
+        guard let presets = Preferences.custom.presets else {
+            addEmptyPresetHelp()
+            return
+        }
+
+        if presets.isEmpty {
             addEmptyPresetHelp()
             return
         }
@@ -102,7 +107,7 @@ extension StatusMenu {
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(HeaderView.asMenuItem(text: "mi_apply_presets_title".localized))
 
-        for preset in Preferences.custom.presets {
+        for preset in Preferences.custom.presets! {
             let presetMenuItem = PresetMenuItem(
                 title: preset.getMenuItemText(),
                 action: #selector(MainMenu.togglePreset(sender:)),
@@ -132,7 +137,7 @@ extension StatusMenu {
         presetsMenu.addItem(NSMenuItem.separator())
         presetsMenu.addItem(NSMenuItem(
             title: "mi_profiles_loaded".localized(
-                Preferences.custom.presets.count
+                Preferences.custom.presets!.count
             ),
             action: nil, keyEquivalent: "")
         )
@@ -219,12 +224,12 @@ extension StatusMenu {
                        action: #selector(MainMenu.restartNginx), keyEquivalent: "n")
         )
         servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_all_services".localized,
-                       action: #selector(MainMenu.restartAllServices), keyEquivalent: "s")
+            NSMenuItem(title: "mi_restart_valet_services".localized,
+                       action: #selector(MainMenu.restartValetServices), keyEquivalent: "s")
         )
         servicesMenu.addItem(
-            NSMenuItem(title: "mi_stop_all_services".localized,
-                       action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
+            NSMenuItem(title: "mi_stop_valet_services".localized,
+                       action: #selector(MainMenu.stopValetServices), keyEquivalent: "s"),
             withKeyModifier: [.command, .shift]
         )
 

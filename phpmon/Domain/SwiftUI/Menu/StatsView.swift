@@ -19,7 +19,8 @@ struct StatsView: View {
                 maxUploadSize: upload
             )
         )
-        view.frame = CGRect(x: 0, y: 0, width: 330, height: 55)
+        view.autoresizingMask = [.width, .height]
+        view.setFrameSize(CGSize(width: view.frame.width, height: 55))
         item.view = view
         return item
     }
@@ -31,24 +32,26 @@ struct StatsView: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 30) {
             VStack(alignment: .center, spacing: 3) {
-                MiniHeaderView(text: "mi_memory_limit".localized.uppercased())
+                SectionHeaderView(text: "mi_memory_limit".localized.uppercased())
                 Text(memoryLimit)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
             VStack(alignment: .center, spacing: 3) {
-                MiniHeaderView(text: "mi_post_max_size".localized.uppercased())
+                SectionHeaderView(text: "mi_post_max_size".localized.uppercased())
                 Text(maxPostSize)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
             VStack(alignment: .center, spacing: 3) {
-                MiniHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
+                SectionHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
                 Text(maxUploadSize)
                     .fontWeight(.medium)
                     .font(.system(size: 16))
             }
-        }.padding(10)
+        }
+        .padding(10)
+        .background(Color.debug)
     }
 }
 

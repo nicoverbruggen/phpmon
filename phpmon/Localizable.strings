@@ -23,8 +23,8 @@
 "mi_restart_nginx" = "Restart Service: nginx";
 "mi_restart_dnsmasq" = "Restart Service: dnsmasq";
 "mi_manage_services" = "Manage Services";
-"mi_restart_all_services" = "Restart All Services";
-"mi_stop_all_services" = "Stop All Services";
+"mi_restart_valet_services" = "Restart Valet Services";
+"mi_stop_valet_services" = "Stop Valet Services";
 
 "mi_fix_my_valet" = "Fix My Valet...";
 "mi_fix_my_valet_tooltip" = "Something wrong with your Valet installation? Try PHP Monitor’s automatic fixes that’ll get you back up and running in no time!";
@@ -347,7 +347,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 "alert.fix_homebrew_permissions_done.title" = "All file and folder permissions for Valet's dependencies have been restored.";
 "alert.fix_homebrew_permissions_done.subtitle" = "Because of this, all of Valet's services are currently no longer running. You can now interact with Homebrew, but your Valet sites will be unavailable as all services are disabled.";
-"alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example) you should restart PHP Monitor and select \"Restart All Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
+"alert.fix_homebrew_permissions_done.desc" = "When you are done with Homebrew (after running `brew upgrade`, for example) you should restart PHP Monitor and select \"Restart Valet Services\" if you want Valet to work again. It is always recommended to restart PHP Monitor whenever you upgrade PHP versions with `brew upgrade`, or things might break.";
 
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "Your PHP-FPM configuration is not pointing at the Valet socket!";

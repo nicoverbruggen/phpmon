@@ -26,10 +26,10 @@ class InterApp {
             DomainListVC.show()
         }),
         InterApp.Action(command: "services/stop", action: { _ in
-            MainMenu.shared.stopAllServices()
+            MainMenu.shared.stopValetServices()
         }),
         InterApp.Action(command: "services/restart/all", action: { _ in
-            MainMenu.shared.restartAllServices()
+            MainMenu.shared.restartValetServices()
         }),
         InterApp.Action(command: "services/restart/nginx", action: { _ in
             MainMenu.shared.restartNginx()

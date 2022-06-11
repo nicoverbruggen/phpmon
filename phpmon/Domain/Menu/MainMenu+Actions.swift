@@ -47,7 +47,7 @@ extension MainMenu {
         }
     }
 
-    @objc func restartAllServices() {
+    @objc func restartValetServices() {
         asyncExecution {
             Actions.restartDnsMasq()
             Actions.restartPhpFpm()
@@ -63,9 +63,9 @@ extension MainMenu {
         }
     }
 
-    @objc func stopAllServices() {
+    @objc func stopValetServices() {
         asyncExecution {
-            Actions.stopAllServices()
+            Actions.stopValetServices()
         } success: {
             DispatchQueue.main.async {
                 LocalNotification.send(

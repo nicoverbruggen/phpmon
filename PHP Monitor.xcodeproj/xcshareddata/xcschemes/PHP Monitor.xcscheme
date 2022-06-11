@@ -69,8 +69,8 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "PHPMON_MARKETING_MODE"
-            value = "YES"
+            key = "PAINT_PHPMON_SWIFTUI_VIEWS"
+            value = ""
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

@@ -8,7 +8,8 @@
 
 import SwiftUI
 
-struct MiniHeaderView: View {
+struct SectionHeaderView: View {
+
     @State var text: String
 
     var body: some View {
@@ -16,5 +17,6 @@ struct MiniHeaderView: View {
             .font(.system(size: 11))
             .fontWeight(.medium)
             .foregroundColor(.secondary)
+            .background(Color.debug)
     }
 }

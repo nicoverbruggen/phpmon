@@ -24,7 +24,7 @@ class Actions {
         brew("services restart dnsmasq", sudo: true)
     }
 
-    public static func stopAllServices() {
+    public static func stopValetServices() {
         brew("services stop \(PhpEnv.phpInstall.formula)", sudo: true)
         brew("services stop nginx", sudo: true)
         brew("services stop dnsmasq", sudo: true)

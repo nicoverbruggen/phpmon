@@ -15,31 +15,47 @@ struct ServicesView: View {
 
     static func asMenuItem() -> NSMenuItem {
         let item = NSMenuItem()
+        var services = [
+            PhpEnv.phpInstall.formula,
+            "nginx",
+            "dnsmasq"
+        ]
+
+        if Preferences.custom.hasServices() {
+            services += Preferences.custom.services!
+        }
+
         let view = NSHostingView(
             rootView: Self(
                 manager: ServicesManager.shared,
-                servicesToDisplay: [
-                    PhpEnv.phpInstall.formula,
-                    "nginx",
-                    "dnsmasq"
-                ]
+                servicesToDisplay: services
             )
         )
-        view.frame = CGRect(x: 0, y: 0, width: 330, height: 45)
+
+        view.autoresizingMask = [.width, .height]
+        let height = CGFloat(45 * services.chunked(by: 3).count)
+        view.setFrameSize(CGSize(width: view.frame.width, height: height))
         item.view = view
         return item
     }
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            ForEach(servicesToDisplay, id: \.self) { service in
-                VStack(alignment: .center, spacing: 3) {
-                    MiniHeaderView(text: service.uppercased())
-                    CheckmarkView(serviceName: service)
-                        .environmentObject(manager)
-                }.frame(minWidth: 0, maxWidth: .infinity)
+        VStack(alignment: .leading, spacing: 10) {
+            ForEach(servicesToDisplay.chunked(by: 3), id: \.self) { chunk in
+                HStack {
+                    ForEach(chunk, id: \.self) { service in
+                        VStack(alignment: .center, spacing: 3) {
+                            SectionHeaderView(text: service.uppercased())
+                            CheckmarkView(serviceName: service)
+                                .environmentObject(manager)
+                        }.frame(minWidth: 0, maxWidth: .infinity)
+                    }
+                }
             }
-        }.padding(10)
+        }
+        .padding(10)
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .background(Color.debug)
     }
 }
 
@@ -48,28 +64,39 @@ struct CheckmarkView: View {
     @EnvironmentObject var manager: ServicesManager
 
     public func hasAnyServices() -> Bool {
-        return !manager.services.isEmpty
+        return !manager.rootServices.isEmpty
     }
 
-    public func active() -> Bool {
-        guard let service = manager.services[serviceName] else {
-            return false
+    public func active() -> Bool? {
+        if manager.rootServices.keys.contains(serviceName) {
+            return manager.rootServices[serviceName]!.running
         }
 
-        return service.running
+        if manager.userServices.keys.contains(serviceName) {
+            return manager.userServices[serviceName]!.running
+        }
+
+        return nil
     }
 
     var body: some View {
         if !hasAnyServices() {
-            Image(systemName: "questionmark.circle")
+            Image(systemName: "hourglass.circle")
                 .resizable()
                 .frame(width: 16.0, height: 16.0)
                 .foregroundColor(.secondary)
         } else {
-            Image(systemName: active() ? "checkmark.circle" : "exclamationmark.triangle")
-                .resizable()
-                .frame(width: 16.0, height: 16.0)
-                .foregroundColor(active() ? Color("IconColorGreen") : Color("IconColorRed"))
+            if active() == nil {
+                Image(systemName: "questionmark.square.dashed")
+                    .resizable()
+                    .frame(width: 16.0, height: 16.0)
+                    .foregroundColor(Color("IconColorRed"))
+            } else {
+                Image(systemName: active()! ? "checkmark.circle" : "xmark.circle")
+                    .resizable()
+                    .frame(width: 16.0, height: 16.0)
+                    .foregroundColor(active()! ? Color.primary : Color("IconColorRed"))
+            }
         }
     }
 }
@@ -104,7 +131,8 @@ struct ServicesView_Previews: PreviewProvider {
                     "dnsmasq": true,
                     "mysql": false
                 ]),
-            servicesToDisplay: ["php", "nginx", "dnsmasq", "mysql"]
+            servicesToDisplay: ["php", "nginx", "dnsmasq",
+                                "mysql", "redis", "mailhog"]
         )
         .frame(width: 330.0)
         .previewDisplayName("Dark Mode")

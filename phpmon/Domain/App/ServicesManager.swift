@@ -13,14 +13,55 @@ class ServicesManager: ObservableObject {
 
     static var shared = ServicesManager()
 
-    @Published var services: [String: HomebrewService] = [:]
+    @Published var rootServices: [String: HomebrewService] = [:]
+    @Published var userServices: [String: HomebrewService] = [:]
+
+    public static func loadHomebrewServices() {
+        let rootServiceNames = [
+            PhpEnv.phpInstall.formula,
+            "nginx",
+            "dnsmasq"
+        ]
+
+        DispatchQueue.global(qos: .background).async {
+            let data = Shell
+                .pipe("sudo \(Paths.brew) services info --all --json", requiresPath: true)
+                .data(using: .utf8)!
+
+            let services = try! JSONDecoder()
+                .decode([HomebrewService].self, from: data)
+                .filter({ return rootServiceNames.contains($0.name) })
+
+            DispatchQueue.main.async {
+                ServicesManager.shared.rootServices = Dictionary(
+                    uniqueKeysWithValues: services.map { ($0.name, $0) }
+                )
+            }
+        }
+
+        guard let userServiceNames = Preferences.custom.services else {
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            let data = Shell
+                .pipe("\(Paths.brew) services info --all --json", requiresPath: true)
+                .data(using: .utf8)!
+
+            let services = try! JSONDecoder()
+                .decode([HomebrewService].self, from: data)
+                .filter({ return userServiceNames.contains($0.name) })
+
+            DispatchQueue.main.async {
+                ServicesManager.shared.userServices = Dictionary(
+                    uniqueKeysWithValues: services.map { ($0.name, $0) }
+                )
+            }
+        }
+    }
 
     func loadData() {
-        HomebrewService.loadAll { services in
-            self.services = Dictionary(
-                uniqueKeysWithValues: services.map { ($0.name, $0) }
-            )
-        }
+        Self.loadHomebrewServices()
     }
 
     /**
@@ -29,7 +70,7 @@ class ServicesManager: ObservableObject {
     func withDummyServices(_ services: [String: Bool]) -> Self {
         for (service, enabled) in services {
             let item = HomebrewService.dummy(named: service, enabled: enabled)
-            self.services[service] = item
+            self.rootServices[service] = item
         }
 
         return self

@@ -7,8 +7,18 @@
 //
 
 import Foundation
+import SwiftUI
 
 var isRunningSwiftUIPreview: Bool {
     return ProcessInfo.processInfo
         .environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+}
+
+extension Color {
+    public static var debug: Color = {
+        if ProcessInfo.processInfo.environment["PAINT_PHPMON_SWIFTUI_VIEWS"] != nil {
+            return Color.yellow
+        }
+        return Color.clear
+    }()
 }
