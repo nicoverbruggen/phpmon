@@ -17,8 +17,22 @@ class ServicesManager: ObservableObject {
 
     func loadData() {
         HomebrewService.loadAll { services in
-            self.services = Dictionary(uniqueKeysWithValues: services.map { ($0.name, $0) })
+            self.services = Dictionary(
+                uniqueKeysWithValues: services.map { ($0.name, $0) }
+            )
         }
+    }
+
+    /**
+     Dummy data for preview purposes.
+     */
+    func withDummyServices(_ services: [String: Bool]) -> Self {
+        for (service, enabled) in services {
+            let item = HomebrewService.dummy(named: service, enabled: enabled)
+            self.services[service] = item
+        }
+
+        return self
     }
 
 }

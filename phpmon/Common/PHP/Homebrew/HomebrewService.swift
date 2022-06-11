@@ -37,4 +37,21 @@ struct HomebrewService: Decodable, Equatable {
             }
         }
     }
+
+    /**
+     Dummy data for preview purposes.
+     */
+    public static func dummy(named service: String, enabled: Bool) -> Self {
+        return HomebrewService(
+            name: service,
+            service_name: service,
+            running: enabled,
+            loaded: enabled,
+            pid: nil,
+            user: nil,
+            status: nil,
+            log_path: nil,
+            error_log_path: nil
+        )
+    }
 }

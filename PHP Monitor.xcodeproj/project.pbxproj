@@ -45,7 +45,6 @@
 		C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
 		C4080FFB27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
-		C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C40B24F227A310770018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C40C5C9C2846A40600E28255 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C5C9B2846A40600E28255 /* Preset.swift */; };
@@ -182,7 +181,7 @@
 		C4B585442770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B585452770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B6091A2853AAD300C95265 /* MiniHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* MiniHeaderView.swift */; };
-		C4B6091D2853AB9700C95265 /* NXServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* NXServicesView.swift */; };
+		C4B6091D2853AB9700C95265 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */; };
 		C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */; };
@@ -230,8 +229,6 @@
 		C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */; };
 		C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
 		C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
-		C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EC1E65279DE0380010F296 /* ServicesView.xib */; };
-		C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E67279DE0540010F296 /* ServicesView.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C4EE188422D3386B00E126E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EE188322D3386B00E126E5 /* Constants.swift */; };
 		C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
@@ -400,7 +397,7 @@
 		C4B5853C2770FE3900DA4FBE /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		C4B5853D2770FE3900DA4FBE /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4B609192853AAD300C95265 /* MiniHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniHeaderView.swift; sourceTree = "<group>"; };
-		C4B6091C2853AB9700C95265 /* NXServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXServicesView.swift; sourceTree = "<group>"; };
+		C4B6091C2853AB9700C95265 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+MenuOutlets.swift"; sourceTree = "<group>"; };
 		C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+ActivationPolicy.swift"; sourceTree = "<group>"; };
 		C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+GlobalHotkey.swift"; sourceTree = "<group>"; };
@@ -428,8 +425,6 @@
 		C4E4404527C56F4700D225E1 /* ValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSite.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
-		C4EC1E65279DE0380010F296 /* ServicesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServicesView.xib; sourceTree = "<group>"; };
-		C4EC1E67279DE0540010F296 /* ServicesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
 		C4EC1E72279DFCF40010F296 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		C4EE188322D3386B00E126E5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4EED88827A48778006D7272 /* InterAppHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterAppHandler.swift; sourceTree = "<group>"; };
@@ -774,8 +769,6 @@
 				C42800A928452AA10099C999 /* StatusMenu+Items.swift */,
 				C48D0C9525CC80B100CC7490 /* HeaderView.swift */,
 				C48D0C9925CC888B00CC7490 /* HeaderView.xib */,
-				C4EC1E67279DE0540010F296 /* ServicesView.swift */,
-				C4EC1E65279DE0380010F296 /* ServicesView.xib */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -878,7 +871,7 @@
 		C4B609172853AA9E00C95265 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				C4B6091C2853AB9700C95265 /* NXServicesView.swift */,
+				C4B6091C2853AB9700C95265 /* ServicesView.swift */,
 				C4709CA128524B3400088BB8 /* StatsView.swift */,
 				C4B609192853AAD300C95265 /* MiniHeaderView.swift */,
 			);
@@ -1157,7 +1150,6 @@
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C4F30B07278E195800755FCE /* brew-services.json in Resources */,
 				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
-				C4EC1E66279DE0380010F296 /* ServicesView.xib in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 				C48D0C9A25CC888B00CC7490 /* HeaderView.xib in Resources */,
@@ -1233,7 +1225,6 @@
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
-				C4EC1E68279DE0540010F296 /* ServicesView.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
@@ -1300,7 +1291,7 @@
 				C4709CA228524B3400088BB8 /* StatsView.swift in Sources */,
 				C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
 				C4188989275FE8CB001EF227 /* Filesystem.swift in Sources */,
-				C4B6091D2853AB9700C95265 /* NXServicesView.swift in Sources */,
+				C4B6091D2853AB9700C95265 /* ServicesView.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */,
@@ -1433,7 +1424,6 @@
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* Command.swift in Sources */,
-				C40B24F127A3106D0018C7D2 /* ServicesView.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
 				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
