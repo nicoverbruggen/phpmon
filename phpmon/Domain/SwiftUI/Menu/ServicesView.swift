@@ -10,14 +10,14 @@ import Foundation
 import SwiftUI
 
 struct ServicesView: View {
-    @ObservedObject var serviceManager: ServicesManager
+    @ObservedObject var manager: ServicesManager
     @State var servicesToDisplay: [String]
 
     static func asMenuItem() -> NSMenuItem {
         let item = NSMenuItem()
         let view = NSHostingView(
             rootView: Self(
-                serviceManager: ServicesManager.shared,
+                manager: ServicesManager.shared,
                 servicesToDisplay: [
                     PhpEnv.phpInstall.formula,
                     "nginx",
@@ -35,7 +35,8 @@ struct ServicesView: View {
             ForEach(servicesToDisplay, id: \.self) { service in
                 VStack(alignment: .center, spacing: 3) {
                     MiniHeaderView(text: service.uppercased())
-                    CheckmarkView(serviceName: service).environmentObject(serviceManager)
+                    CheckmarkView(serviceName: service)
+                        .environmentObject(manager)
                 }.frame(minWidth: 0, maxWidth: .infinity)
             }
         }.padding(10)
@@ -44,14 +45,14 @@ struct ServicesView: View {
 
 struct CheckmarkView: View {
     @State var serviceName: String
-    @EnvironmentObject var serviceManager: ServicesManager
+    @EnvironmentObject var manager: ServicesManager
 
     public func hasAnyServices() -> Bool {
-        return !serviceManager.services.isEmpty
+        return !manager.services.isEmpty
     }
 
     public func active() -> Bool {
-        guard let service = serviceManager.services[serviceName] else {
+        guard let service = manager.services[serviceName] else {
             return false
         }
 
@@ -76,7 +77,7 @@ struct CheckmarkView: View {
 struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
         ServicesView(
-            serviceManager: ServicesManager()
+            manager: ServicesManager()
                 .withDummyServices([:]),
             servicesToDisplay: ["php", "nginx", "dnsmasq"]
         )
@@ -84,7 +85,7 @@ struct ServicesView_Previews: PreviewProvider {
         .previewDisplayName("Loading")
 
         ServicesView(
-            serviceManager: ServicesManager()
+            manager: ServicesManager()
                 .withDummyServices([
                     "php": false,
                     "nginx": true,
@@ -96,7 +97,7 @@ struct ServicesView_Previews: PreviewProvider {
         .previewDisplayName("Light Mode")
 
         ServicesView(
-            serviceManager: ServicesManager()
+            manager: ServicesManager()
                 .withDummyServices([
                     "php": false,
                     "nginx": true,
