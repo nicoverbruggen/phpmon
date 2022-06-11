@@ -76,7 +76,7 @@ extension MainMenu {
         // A non-default TLD is not officially supported since Valet 3.2.x
         Valet.notifyAboutUnsupportedTLD()
 
-        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+        ServicesManager.shared.loadData()
 
         // Schedule a request to fetch the PHP version every 60 seconds
         DispatchQueue.main.async { [self] in

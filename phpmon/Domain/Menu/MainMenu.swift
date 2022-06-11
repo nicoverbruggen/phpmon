@@ -122,7 +122,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         refreshActiveInstallation()
         refreshIcon()
         rebuild(async: false)
-        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+        ServicesManager.shared.loadData()
     }
 
     /** Reloads the menu in the background, using `asyncExecution`. */
@@ -197,7 +197,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
-        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+        ServicesManager.shared.loadData()
     }
 
     func menuDidClose(_ menu: NSMenu) {

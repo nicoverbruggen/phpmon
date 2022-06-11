@@ -74,7 +74,7 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {
-                    NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+                    ServicesManager.shared.loadData()
                 }
 
                 error == nil ? success() : failure(error!)

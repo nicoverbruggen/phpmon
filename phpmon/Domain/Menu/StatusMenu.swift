@@ -34,7 +34,7 @@ class StatusMenu: NSMenu {
         self.addSwitchToPhpMenuItems()
         self.addItem(NSMenuItem.separator())
 
-        self.addItem(ServicesView.asMenuItem())
+        self.addItem(NXServicesView.asMenuItem())
         self.addItem(NSMenuItem.separator())
     }
 

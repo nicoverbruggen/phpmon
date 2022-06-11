@@ -125,6 +125,8 @@
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44F868E2835BD8D005C353A /* phpmon-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C44F868D2835BD8D005C353A /* phpmon-config.json */; };
 		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
+		C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
+		C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C463E380284930EE00422731 /* PresetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463E37F284930EE00422731 /* PresetHelper.swift */; };
 		C463E381284930EE00422731 /* PresetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463E37F284930EE00422731 /* PresetHelper.swift */; };
 		C464ADAC275A7A3F003FCD53 /* DomainListWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */; };
@@ -360,6 +362,7 @@
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
+		C45E76132854A65300B4FE0C /* ServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesManager.swift; sourceTree = "<group>"; };
 		C463E37F284930EE00422731 /* PresetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetHelper.swift; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* DomainListWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWC.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
@@ -846,6 +849,7 @@
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
+				C45E76132854A65300B4FE0C /* ServicesManager.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1275,6 +1279,7 @@
 				C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
+				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C44264C02850BD2A007400F1 /* VersionPopoverView.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
@@ -1444,6 +1449,7 @@
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4B585422770FE3900DA4FBE /* Shell.swift in Sources */,
+				C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWC.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,

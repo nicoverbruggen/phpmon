@@ -59,6 +59,9 @@ class App {
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 
+    /** The services manager, responsible for figuring out what services are active/inactive. */
+    var services = ServicesManager.shared
+
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
 
