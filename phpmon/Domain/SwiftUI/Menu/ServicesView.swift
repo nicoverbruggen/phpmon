@@ -70,6 +70,7 @@ struct ServicesView: View {
 
 struct CheckmarkView: View {
     @State var serviceName: String
+    @State var busy: Bool = false
     @EnvironmentObject var manager: ServicesManager
 
     public func hasAnyServices() -> Bool {
@@ -88,6 +89,18 @@ struct CheckmarkView: View {
         return nil
     }
 
+    public func toggleService() {
+        if active()! {
+            Actions.stopService(name: serviceName, completion: {
+                busy = false
+            })
+        } else {
+            Actions.startService(name: serviceName, completion: {
+                busy = false
+            })
+        }
+    }
+
     var body: some View {
         if !hasAnyServices() {
             Image(systemName: "hourglass.circle")
@@ -95,16 +108,24 @@ struct CheckmarkView: View {
                 .frame(width: 16.0, height: 16.0)
                 .foregroundColor(.secondary)
         } else {
-            if active() == nil {
-                Image(systemName: "questionmark.square.dashed")
-                    .resizable()
-                    .frame(width: 16.0, height: 16.0)
-                    .foregroundColor(Color("IconColorRed"))
+            if busy {
+                ProgressView()
+                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                    .frame(width: 16.0, height: 20.0)
+            } else if active() == nil {
+                Button { } label: {
+                    Text("?")
+                }.disabled(true)
             } else {
-                Image(systemName: active()! ? "checkmark.circle" : "xmark.circle")
-                    .resizable()
-                    .frame(width: 16.0, height: 16.0)
-                    .foregroundColor(active()! ? Color.primary : Color("IconColorRed"))
+                Button {
+                    busy = true
+                    toggleService()
+                } label: {
+                    Image(systemName: active()! ? "checkmark" : "xmark")
+                        .resizable()
+                        .frame(width: 12.0, height: 12.0)
+                        .foregroundColor(active()! ? Color.primary : Color("IconColorRed"))
+                }
             }
         }
     }
@@ -142,7 +163,7 @@ struct ServicesView_Previews: PreviewProvider {
                 ]),
             servicesToDisplay: ["php", "nginx", "dnsmasq",
                                 "mysql", "redis", "php@7.4"],
-            perRow: 4
+            perRow: 3
         )
         .frame(width: 330.0)
         .previewDisplayName("Dark Mode")

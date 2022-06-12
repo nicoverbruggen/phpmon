@@ -64,6 +64,29 @@ class Actions {
         }
     }
 
+    // MARK: - Third Party Services
+    public static func stopService(name: String, completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            brew("services stop \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
+            ServicesManager.loadHomebrewServices(completed: {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            })
+        }
+    }
+
+    public static func startService(name: String, completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            brew("services start \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
+            ServicesManager.loadHomebrewServices(completed: {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            })
+        }
+    }
+
     // MARK: - Finding Config Files
 
     public static func openGenericPhpConfigFolder() {

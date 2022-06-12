@@ -16,7 +16,7 @@ class ServicesManager: ObservableObject {
     @Published var rootServices: [String: HomebrewService] = [:]
     @Published var userServices: [String: HomebrewService] = [:]
 
-    public static func loadHomebrewServices() {
+    public static func loadHomebrewServices(completed: (() -> Void)? = nil) {
         let rootServiceNames = [
             PhpEnv.phpInstall.formula,
             "nginx",
@@ -56,6 +56,7 @@ class ServicesManager: ObservableObject {
                 ServicesManager.shared.userServices = Dictionary(
                     uniqueKeysWithValues: services.map { ($0.name, $0) }
                 )
+                completed?()
             }
         }
     }
