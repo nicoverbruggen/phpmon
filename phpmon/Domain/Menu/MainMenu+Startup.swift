@@ -49,20 +49,20 @@ extension MainMenu {
         // Check for an alias conflict
         HomebrewDiagnostics.checkForCaskConflict()
 
+        // Update the icon
         updatePhpVersionInStatusBar()
 
-        Log.info("Determining broken PHP-FPM...")
         // Attempt to find out if PHP-FPM is broken
+        Log.info("Determining broken PHP-FPM...")
         let installation = PhpEnv.phpInstall
         installation.notifyAboutBrokenPhpFpm()
 
-        // Set up the config watchers on launch
-        // (these are automatically updated via delegate methods if the user switches)
+        // Set up the config watchers on launch (updated automatically when switching)
         Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
 
-        // Detect applications (preset + custom)
-        self.loadApps()
+        // Detect built-in and custom applications
+        detectApplications()
 
         // Load the rollback preset
         PresetHelper.loadRollbackPresetFromFile()
@@ -73,29 +73,27 @@ extension MainMenu {
         // Preload sites
         Valet.shared.startPreloadingSites()
 
+        // After preloading sites, check for PHP-FPM pool conflicts
+        HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
+
         // A non-default TLD is not officially supported since Valet 3.2.x
         Valet.notifyAboutUnsupportedTLD()
 
         ServicesManager.shared.loadData()
 
-        // Schedule a request to fetch the PHP version every 60 seconds
-        DispatchQueue.main.async { [self] in
-            App.shared.timer = Timer.scheduledTimer(
-                timeInterval: 60,
-                target: self,
-                selector: #selector(refreshActiveInstallation),
-                userInfo: nil,
-                repeats: true
-            )
-        }
+        // Start the background refresh timer
+        startSharedTimer()
 
+        // Update the stats
         Stats.incrementSuccessfulLaunchCount()
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
+        // Check for updates
         DispatchQueue.global(qos: .utility).async {
             AppUpdateChecker.checkIfNewerVersionIsAvailable()
         }
 
+        // We are ready!
         Log.info("PHP Monitor is ready to serve!")
     }
 
@@ -122,8 +120,27 @@ extension MainMenu {
         }
     }
 
-    private func loadApps() {
+    /**
+     Schedule a request to fetch the PHP version every 60 seconds.
+     */
+    private func startSharedTimer() {
+        DispatchQueue.main.async { [self] in
+            App.shared.timer = Timer.scheduledTimer(
+                timeInterval: 60,
+                target: self,
+                selector: #selector(refreshActiveInstallation),
+                userInfo: nil,
+                repeats: true
+            )
+        }
+    }
+
+    /**
+     Detect which applications are installed that can be used to open a domain's source directory.
+     */
+    private func detectApplications() {
         Log.info("Detecting applications...")
+
         App.shared.detectedApplications = Application.detectPresetApplications()
 
         let customApps = Preferences.custom.scanApps.map { appName in
