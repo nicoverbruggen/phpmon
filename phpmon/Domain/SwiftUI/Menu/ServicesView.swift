@@ -56,7 +56,7 @@ struct ServicesView: View {
                             }.frame(minWidth: 0, maxWidth: .infinity)
                         } else {
                             // Empty cell
-                            VStack { Text("") }.frame(minWidth: 0, maxWidth: .infinity)
+                            VStack { EmptyView() }.frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
                 }
