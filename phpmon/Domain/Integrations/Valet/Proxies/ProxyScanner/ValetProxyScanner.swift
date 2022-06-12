@@ -13,6 +13,9 @@ class ValetProxyScanner: ProxyScanner {
         return try! FileManager
             .default
             .contentsOfDirectory(atPath: directoryPath)
+            .filter {
+                return !$0.starts(with: ".")
+            }
             .compactMap {
                 return NginxConfigurationFile.from(filePath: "\(directoryPath)/\($0)")
             }

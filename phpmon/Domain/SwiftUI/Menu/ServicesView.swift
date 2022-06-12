@@ -12,8 +12,9 @@ import SwiftUI
 struct ServicesView: View {
     @ObservedObject var manager: ServicesManager
     @State var servicesToDisplay: [String]
+    @State var perRow: Int = 3
 
-    static func asMenuItem() -> NSMenuItem {
+    static func asMenuItem(perRow: Int = 3) -> NSMenuItem {
         let item = NSMenuItem()
         var services = [
             PhpEnv.phpInstall.formula,
@@ -28,12 +29,13 @@ struct ServicesView: View {
         let view = NSHostingView(
             rootView: Self(
                 manager: ServicesManager.shared,
-                servicesToDisplay: services
+                servicesToDisplay: services,
+                perRow: perRow
             )
         )
 
         view.autoresizingMask = [.width, .height]
-        let height = CGFloat(45 * services.chunked(by: 3).count)
+        let height = CGFloat(45 * services.chunked(by: perRow).count)
         view.setFrameSize(CGSize(width: view.frame.width, height: height))
         item.view = view
         return item
@@ -41,14 +43,21 @@ struct ServicesView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ForEach(servicesToDisplay.chunked(by: 3), id: \.self) { chunk in
+            ForEach(servicesToDisplay.chunked(by: self.perRow), id: \.self) { chunk in
                 HStack {
-                    ForEach(chunk, id: \.self) { service in
-                        VStack(alignment: .center, spacing: 3) {
-                            SectionHeaderView(text: service.uppercased())
-                            CheckmarkView(serviceName: service)
-                                .environmentObject(manager)
-                        }.frame(minWidth: 0, maxWidth: .infinity)
+                    ForEach(0...self.perRow - 1, id: \.self) { index in
+                        if chunk.indices.contains(index) {
+                            // A service exists to fill the cell
+                            let service = chunk[index]
+                            VStack(alignment: .center, spacing: 3) {
+                                SectionHeaderView(text: service.uppercased())
+                                CheckmarkView(serviceName: service)
+                                    .environmentObject(manager)
+                            }.frame(minWidth: 0, maxWidth: .infinity)
+                        } else {
+                            // Empty cell
+                            VStack { Text("") }.frame(minWidth: 0, maxWidth: .infinity)
+                        }
                     }
                 }
             }
@@ -132,7 +141,8 @@ struct ServicesView_Previews: PreviewProvider {
                     "mysql": false
                 ]),
             servicesToDisplay: ["php", "nginx", "dnsmasq",
-                                "mysql", "redis", "mailhog"]
+                                "mysql", "redis", "php@7.4"],
+            perRow: 4
         )
         .frame(width: 330.0)
         .previewDisplayName("Dark Mode")
