@@ -48,6 +48,7 @@
 "mi_composer" = "Composer";
 "mi_valet_config" = "Locate Valet Folder (.config/valet)";
 "mi_php_config" = "Locate PHP Configuration File (php.ini)";
+"mi_phpmon_config" = "Locate PHP Monitor Folder (.config/phpmon)";
 "mi_global_composer" = "Locate Global Composer File (.composer)";
 "mi_phpinfo" = "Show Current Configuration (phpinfo)";
 "mi_update_global_composer" = "Update Global Composer Dependencies...";

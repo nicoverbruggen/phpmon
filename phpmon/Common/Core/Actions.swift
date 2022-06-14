@@ -111,6 +111,12 @@ class Actions {
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
+    public static func openPhpMonitorConfigFile() {
+        let file = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".config/phpmon")
+        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+    }
+
     // MARK: - Other Actions
 
     public static func createTempPhpInfoFile() -> URL {

@@ -211,9 +211,16 @@ class Preferences {
     // MARK: - Custom Preferences
 
     private func loadCustomPreferences() {
+        // Ensure the configuration directory is created if missing
+        Shell.run("mkdir -p ~/.config/phpmon")
+
+        // Move the legacy file
         moveOutdatedConfigurationFile()
+
+        // Attempt to load the file if it exists
         let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.config/phpmon/config.json")
         if Filesystem.fileExists(url.path) {
+
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
         } else {
@@ -224,7 +231,6 @@ class Preferences {
     private func moveOutdatedConfigurationFile() {
         if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            Shell.run("mkdir -p ~/.config/phpmon")
             Shell.run("mv ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was moved successfully!")
         }

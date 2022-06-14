@@ -21,6 +21,10 @@ extension StatusMenu {
         self.addItem(
             NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i")
         )
+        self.addItem(
+            NSMenuItem(title: "mi_phpmon_config".localized,
+                       action: #selector(MainMenu.openPhpMonitorConfigurationFile), keyEquivalent: "y")
+        )
     }
 
     func addComposerMenuItems() {
@@ -194,6 +198,7 @@ extension StatusMenu {
         let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu()
 
+        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
         let fixMyValetMenuItem = NSMenuItem(
             title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
             action: #selector(MainMenu.fixMyValet), keyEquivalent: ""

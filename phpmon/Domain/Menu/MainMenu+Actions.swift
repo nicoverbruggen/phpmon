@@ -220,6 +220,10 @@ extension MainMenu {
         Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
     }
 
+    @objc func openPhpMonitorConfigurationFile() {
+        Actions.openPhpMonitorConfigFile()
+    }
+
     @objc func openGlobalComposerFolder() {
         Actions.openGlobalComposerFolder()
     }
