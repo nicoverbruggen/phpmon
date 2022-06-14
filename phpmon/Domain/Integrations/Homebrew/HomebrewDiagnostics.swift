@@ -43,6 +43,35 @@ class HomebrewDiagnostics {
     }
 
     /**
+     It is possible to upgrade PHP, but forget running `valet install`.
+     This results in a scenario where a rogue www.conf file exists.
+     */
+    public static func checkForPhpFpmPoolConflicts() {
+        Log.info("Checking for PHP-FPM pool conflicts...")
+
+        // We'll need to know what the primary PHP version is
+        let primary = PhpEnv.shared.currentInstall.version.short
+
+        // Versions to be handled
+        let switcher = InternalSwitcher()
+        var versions = switcher.getVersionsToBeHandled(primary)
+
+        versions = versions.filter { version in
+            return switcher.requiresDisablingOfDefaultPhpFpmPool(version)
+        }
+
+        if versions.isEmpty {
+            Log.info("No PHP-FPM pools need to be fixed. All OK.")
+        }
+
+        versions.forEach { version in
+            switcher.disableDefaultPhpFpmPool(version)
+            switcher.stopPhpVersion(version)
+            switcher.startPhpVersion(version, primary: version == primary)
+        }
+    }
+
+    /**
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
     private static func hasAliasConflict() -> Bool {

@@ -23,17 +23,7 @@ class InternalSwitcher: PhpSwitcher {
     func performSwitch(to version: String, completion: @escaping () -> Void) {
         Log.info("Switching to \(version), unlinking all versions...")
 
-        let isolated = Valet.shared.sites.filter { site in
-            site.isolatedPhpVersion != nil
-        }.map { site in
-            return site.isolatedPhpVersion!.versionNumber.homebrewVersion
-        }
-
-        var versions: Set<String> = [version]
-
-        if Valet.enabled(feature: .isolatedSites) {
-            versions = versions.union(isolated)
-        }
+        let versions = getVersionsToBeHandled(version)
 
         let group = DispatchGroup()
 
@@ -63,7 +53,28 @@ class InternalSwitcher: PhpSwitcher {
         }
     }
 
-    private func disableDefaultPhpFpmPool(_ version: String) {
+    func getVersionsToBeHandled(_ primary: String) -> Set<String> {
+        let isolated = Valet.shared.sites.filter { site in
+            site.isolatedPhpVersion != nil
+        }.map { site in
+            return site.isolatedPhpVersion!.versionNumber.homebrewVersion
+        }
+
+        var versions: Set<String> = [primary]
+
+        if Valet.enabled(feature: .isolatedSites) {
+            versions = versions.union(isolated)
+        }
+
+        return versions
+    }
+
+    func requiresDisablingOfDefaultPhpFpmPool(_ version: String) -> Bool {
+        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+        return FileManager.default.fileExists(atPath: pool)
+    }
+
+    func disableDefaultPhpFpmPool(_ version: String) {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
         if FileManager.default.fileExists(atPath: pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
@@ -83,14 +94,14 @@ class InternalSwitcher: PhpSwitcher {
         }
     }
 
-    private func stopPhpVersion(_ version: String) {
+    func stopPhpVersion(_ version: String) {
         let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
         brew("unlink \(formula)")
         brew("services stop \(formula)", sudo: true)
         Log.info("Unlinked and stopped services for \(formula)")
     }
 
-    private func startPhpVersion(_ version: String, primary: Bool) {
+    func startPhpVersion(_ version: String, primary: Bool) {
         let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
 
         if primary {

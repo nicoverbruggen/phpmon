@@ -113,20 +113,11 @@ class Valet {
     }
 
     /**
-     Starts the preload of sites, but only if the maximum amount of sites is 30.
-     For users with more sites, the site list is loaded when they bring up the site list window.
-     (This is done to keep the startup speed as fast as possible.)
+     Starts the preload of sites. In order to make sure PHP Monitor can correctly
+     handle all PHP versions including isolation, it needs to know about all sites.
      */
     public func startPreloadingSites() {
-        let maximumPreload = 50
-        let foundSites = self.countPaths()
-        if foundSites <= maximumPreload {
-            // Preload the sites and their drivers
-            Log.info("Fewer than or \(maximumPreload) sites found, preloading list of sites...")
-            self.reloadSites()
-        } else {
-            Log.info("\(foundSites) sites found, exceeds \(maximumPreload) for preload at launch!")
-        }
+        self.reloadSites()
     }
 
     /**
