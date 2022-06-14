@@ -299,6 +299,38 @@ The app includes an Internet Access Policy file, so if you're using something li
 </details>
 
 <details>
+<summary><strong>How do I various presets to show up?</strong></summary>
+
+You must set these presets up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+You must have set up at least one valid preset for this presets to work in PHP Monitor.
+
+Here's an example of a working preset:
+
+<pre>
+{
+    "scan_apps": [],
+    "presets": [
+        {
+            "name": "Legacy Project",
+            "php": "8.0",
+            "extensions": {
+                "xdebug": false
+            },
+            "configuration": {
+                "memory_limit": "128M",
+                "upload_max_filesize": "128M",
+                "post_max_size": "128M"
+            }
+        }
+    ]
+}
+</pre>
+
+You can omit the `php` key in the preset if you do not wish for the preset to switch to a given PHP version.
+</details>
+
+<details>
 <summary><strong>How do I get various applications to show up in the domain list's right-click menu?</strong></summary>
 
 When you select and right-click on a domain, you can open these directories with various applications. This can help speed up your workflow. However, for these apps to show up, they must be detected first.
@@ -309,11 +341,12 @@ All of these apps should just be detected correctly, no matter their location on
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
 
-You can add your own apps by creating and editing a `~/.config/phpmon/config.json` file, with the following entry:
+You can add your own apps by creating and editing a `~/.config/phpmon/config.json` file, and make sure the `scan_apps` key is set:
 
 <pre>
 {
-    "scan_apps": ["Xcode", "Kraken"]
+    "scan_apps": ["Xcode", "Kraken"],
+    "presets": []
 }
 </pre>
 
