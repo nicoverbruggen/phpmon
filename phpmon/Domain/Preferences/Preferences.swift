@@ -232,7 +232,7 @@ class Preferences {
         if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
             Shell.run("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
-            Log.info("The configuration file was moved successfully!")
+            Log.info("The configuration file was copied successfully!")
         }
     }
 
