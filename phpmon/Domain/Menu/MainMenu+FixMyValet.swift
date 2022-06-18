@@ -11,7 +11,7 @@ import AppKit
 
 extension MainMenu {
 
-    @objc func fixMyValet() {
+    @MainActor @objc func fixMyValet() {
         let previousVersion = PhpEnv.phpInstall.version.short
 
         if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
@@ -42,7 +42,7 @@ extension MainMenu {
         }
     }
 
-    private func presentAlertForMissingFormula() {
+    @MainActor private func presentAlertForMissingFormula() {
         BetterAlert()
             .withInformation(
                 title: "alert.php_formula_missing.title".localized,
@@ -52,7 +52,7 @@ extension MainMenu {
             .show()
     }
 
-    private func presentAlertForSameVersion() {
+    @MainActor private func presentAlertForSameVersion() {
         BetterAlert()
             .withInformation(
                 title: "alert.fix_my_valet_done.title".localized,
@@ -63,7 +63,7 @@ extension MainMenu {
             .show()
     }
 
-    private func presentAlertForDifferentVersion(version: String) {
+    @MainActor private func presentAlertForDifferentVersion(version: String) {
         BetterAlert()
             .withInformation(
                 title: "alert.fix_my_valet_done.title".localized,

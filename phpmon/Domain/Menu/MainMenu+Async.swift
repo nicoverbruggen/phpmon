@@ -36,8 +36,8 @@ extension MainMenu {
      */
     func asyncExecution(
         _ execute: @escaping () throws -> Void,
-        success: @escaping () -> Void = {},
-        failure: @escaping (Error) -> Void = { _ in },
+        success: @MainActor @escaping () -> Void = {},
+        failure: @MainActor @escaping (Error) -> Void = { _ in },
         behaviours: [AsyncBehaviour] = [
             .setsBusyUI,
             .reloadsPhpInstallation,

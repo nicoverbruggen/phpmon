@@ -56,12 +56,14 @@ class InterApp {
             if PhpEnv.shared.availablePhpVersions.contains(version) {
                 MainMenu.shared.switchToPhpVersion(version)
             } else {
-                BetterAlert().withInformation(
-                    title: "alert.php_switch_unavailable.title".localized,
-                    subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
-                ).withPrimary(
-                    text: "alert.php_switch_unavailable.ok".localized
-                ).show()
+                DispatchQueue.main.async {
+                    BetterAlert().withInformation(
+                        title: "alert.php_switch_unavailable.title".localized,
+                        subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
+                    ).withPrimary(
+                        text: "alert.php_switch_unavailable.ok".localized
+                    ).show()
+                }
             }
         })
     ]}

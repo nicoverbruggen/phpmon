@@ -25,7 +25,9 @@ class ComposerWindow {
 
         Paths.shared.detectBinaryPaths()
         if Paths.composer == nil {
-            presentMissingAlert()
+            DispatchQueue.main.async {
+                self.presentMissingAlert()
+            }
             return
         }
 
@@ -116,7 +118,7 @@ class ComposerWindow {
 
     // MARK: Alert
 
-    private func presentMissingAlert() {
+    @MainActor private func presentMissingAlert() {
         BetterAlert()
             .withInformation(
                 title: "alert.composer_missing.title".localized,

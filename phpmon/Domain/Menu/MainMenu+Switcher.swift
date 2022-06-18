@@ -50,7 +50,7 @@ extension MainMenu {
         }
     }
 
-    private func suggestFixMyValet(failed version: String) {
+    @MainActor private func suggestFixMyValet(failed version: String) {
         let outcome = BetterAlert()
             .withInformation(
                 title: "alert.php_switch_failed.title".localized(version),
@@ -75,12 +75,14 @@ extension MainMenu {
     }
 
     private func notifyAboutVersionChange(to version: String) {
-        LocalNotification.send(
-            title: String(format: "notification.version_changed_title".localized, version),
-            subtitle: String(format: "notification.version_changed_desc".localized, version),
-            preference: .notifyAboutVersionChange
-        )
+        DispatchQueue.main.async {
+            LocalNotification.send(
+                title: String(format: "notification.version_changed_title".localized, version),
+                subtitle: String(format: "notification.version_changed_desc".localized, version),
+                preference: .notifyAboutVersionChange
+            )
 
-        PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
+            PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
+        }
     }
 }
