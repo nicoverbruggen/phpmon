@@ -318,7 +318,8 @@ problem manually, using your own Terminal app (this just shows you the output)."
 
 // Suggest Fix My Valet
 "alert.php_switch_failed.title" = "Switching to PHP %@ seems to have failed.";
-"alert.php_switch_failed.info" = "PHP Monitor has detected that PHP %@  is not active after completing its switching procedure. You can try to run \"Fix My Valet\" and switch again after that. Do you want to try \"Fix My Valet\"?";
+"alert.php_switch_failed.info" = "PHP Monitor has detected that PHP %@ is not active after completing its switching procedure. You can try to run \"Fix My Valet\" and switch again after that. Do you want to try this fix?";
+"alert.php_switch_failed.desc" = "First off, you should try \"Fix My Valet\" if you haven't tried it yet. If PHP Monitor remains unable to change the active PHP version even after that, you may need to upgrade Valet and the Homebrew packages on your system. You can do this by running `brew update && brew upgrade` as well as upgrading Valet by running `composer global update && valet install`.";
 "alert.php_switch_failed.confirm" = "Yes, run \"Fix My Valet\"";
 "alert.php_switch_failed.cancel" = "Do Not Run";
 

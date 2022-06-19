@@ -54,7 +54,8 @@ extension MainMenu {
         let outcome = BetterAlert()
             .withInformation(
                 title: "alert.php_switch_failed.title".localized(version),
-                subtitle: "alert.php_switch_failed.info".localized(version)
+                subtitle: "alert.php_switch_failed.info".localized(version),
+                description: "alert.php_switch_failed.desc".localized()
             )
             .withPrimary(text: "alert.php_switch_failed.confirm".localized)
             .withSecondary(text: "alert.php_switch_failed.cancel".localized)
