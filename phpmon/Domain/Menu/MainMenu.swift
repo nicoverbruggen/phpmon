@@ -21,7 +21,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /**
      The status bar item with variable length.
      */
-    let statusItem = NSStatusBar.system.statusItem(
+    @MainActor let statusItem = NSStatusBar.system.statusItem(
         withLength: NSStatusItem.variableLength
     )
 
@@ -77,7 +77,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /**
      Sets the status bar image based on a version string.
      */
-    func setStatusBarImage(version: String) {
+    @MainActor func setStatusBarImage(version: String) {
         setStatusBar(
             image: (Preferences.preferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
                 ? MenuBarImageGenerator.textToImageWithIcon(text: version)
@@ -89,7 +89,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Sets the status bar image, based on the provided NSImage.
      The image will be used as a template image.
      */
-    func setStatusBar(image: NSImage) {
+    @MainActor func setStatusBar(image: NSImage) {
         if let button = statusItem.button {
             image.isTemplate = true
             button.image = image
