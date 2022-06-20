@@ -106,7 +106,7 @@ struct CheckmarkView: View {
             Image(systemName: "hourglass.circle")
                 .resizable()
                 .frame(width: 16.0, height: 16.0)
-                .foregroundColor(.secondary)
+                .foregroundColor(.appSecondary)
         } else {
             if busy {
                 ProgressView()

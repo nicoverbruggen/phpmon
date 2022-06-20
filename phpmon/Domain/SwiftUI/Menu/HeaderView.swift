@@ -15,7 +15,7 @@ struct HeaderView: View {
         Text(text.uppercased())
             .font(.system(size: 12))
             .fontWeight(.bold)
-            .foregroundColor(.secondary)
+            .foregroundColor(.appSecondary)
             .multilineTextAlignment(.leading)
             .padding(.leading, 14.0)
             .frame(maxWidth: .infinity, alignment: .leading)

@@ -16,7 +16,7 @@ struct SectionHeaderView: View {
         Text(text)
             .font(.system(size: 11))
             .fontWeight(.medium)
-            .foregroundColor(.secondary)
+            .foregroundColor(.appSecondary)
             .background(Color.debug)
     }
 }
