@@ -132,10 +132,11 @@ If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
+If you are *not* on Apple Silicon, you should remove the third line.
+
 Install the `php` and `composer` formulae:
 
     brew install php composer
-    brew install composer
 
 Make sure PHP is linked correctly:
 
