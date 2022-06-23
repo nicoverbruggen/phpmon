@@ -4,7 +4,8 @@
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
-<img src="./docs/screenshot.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.jpg#gh-light-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot-dark.jpg#gh-dark-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
@@ -22,7 +23,7 @@ You can also add new domains as links, isolate sites, manage various services, a
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
-* macOS 11 Big Sur or higher (supports macOS 12 Monterey)
+* macOS 11 Big Sur or later
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
 * Laravel Valet 3 recommended (but compatible with Valet 2)
@@ -106,12 +107,10 @@ Super convenient!
 
 If you want to set up your computer for the very first time with PHP Monitor, here's how I do it:
 
-Install [Homebrew](https://brew.sh) first.
+Install [Homebrew](https://brew.sh) first. Follow the instructions there first!
 
-Install PHP, composer, add to path:
+Then, you'll need to set up your PATH. 
 
-    brew install php
-    brew install composer
     nano .zshrc
 
 Make sure the following line is not in the comments:
@@ -124,21 +123,27 @@ If you're on an Apple Silicon-based Mac, you'll need to add:
     # on an M1 Mac
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
-and add the following to your .zshrc, but add this BEFORE the homebrew PATH additions:
+and add the following to your `.zshrc` file, but add this BEFORE the homebrew PATH additions:
 
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
     
-If you're adding composer and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
+If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
 
     export PATH=$HOME/bin:/usr/local/bin:$PATH
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
+If you are *not* on Apple Silicon, you should remove the third line.
+
+Install the `php` and `composer` formulae:
+
+    brew install php composer
+
 Make sure PHP is linked correctly:
 
     which php
 
-should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
+should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
     composer global require laravel/valet
     valet install
@@ -147,7 +152,12 @@ This should install `dnsmasq` and set up Valet. Great, almost there!
 
     valet trust
 
-Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work.
+You can now install PHP Monitor, if you haven't already:
+
+    brew tap nicoverbruggen/homebrew-cask
+	brew install --cask phpmon
+
+Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work. You will need to approve the initial launch of the app, but you should be ready to go now.
 </details>
 
 <details>

@@ -7,8 +7,13 @@
 import Foundation
 
 extension String {
-
     var localized: String {
+        if #available(macOS 13, *) {
+            return NSLocalizedString(
+                self, tableName: nil, bundle: Bundle.main, value: "", comment: ""
+            ).replacingOccurrences(of: "Preferences", with: "Settings")
+        }
+
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
 
@@ -32,7 +37,7 @@ extension String {
         return count
     }
 
-    subscript (r: Range<String.Index>) -> String {
+    subscript(r: Range<String.Index>) -> String {
         let start = r.lowerBound
         let end = r.upperBound
         return String(self[start ..< end])

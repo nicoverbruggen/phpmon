@@ -6,9 +6,9 @@ Generally speaking, only the latest version of **PHP Monitor** is supported, exc
 
 | Version | Apple Silicon | Supported          | Supported macOS | Deployment Target | Detected PHP Versions | Recommended Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
-| 5.x       | ✅ Universal binary | ✅ Yes | Big Sur (11.0) and Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 (*) | 3.0 (2.16.2 minimum) |
+| 5.x       | ✅ Universal binary | ✅ Yes | Big Sur (11.0)<br/>Monterey (12.0)<br/>Ventura (13.0)* | macOS 11+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.2 (w/ Valet 3.x) | 3.0 recommended<br/> 2.16.2 minimum |
 
-_(*) Support for PHP 5.6 is only included if you are using Valet 2.x, since support for PHP 5.6 was dropped in Valet 3.0._
+_(*) macOS Ventura (13.0) is not officially supported until it officially releases._
 
 ## Legacy versions
 
@@ -16,9 +16,9 @@ These versions of PHP Monitor are no longer supported, but if you’re using an 
 
 | Version | Apple Silicon | Supported          | Supported macOS | Deployment Target | Detected PHP Versions | Minimum Required Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
-| 4.1       | ✅ Universal binary | ❌ | Big Sur (11.0) and Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 | 2.16.2 |
-| 4.0       | ✅ Universal binary | ❌ | Big Sur (11.0) and Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |
-| 3.5       | ✅ Universal binary | ❌ | Big Sur (11.0) and Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |
+| 4.1       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 | 2.16.2 |
+| 4.0       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |
+| 3.5       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |
 | 3.0—3.4   | ✅ Universal binary | ❌ | Big Sur (11.0) | macOS 10.14+ | PHP 5.6—PHP 8.1 | 2.13 |
 | 2.6       | ✅ Universal binary | ❌ | Big Sur (11.0) | macOS 10.14+ | PHP 5.6—PHP 8.0 | 2.13 |
 | 2.5       | ✴️ Universal binary<br/>`/usr/local/homebrew` installations only | ❌ | Big Sur (11.0)<br/>Catalina (10.15) | macOS 10.14+ | not applicable | not applicable |

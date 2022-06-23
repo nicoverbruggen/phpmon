@@ -19,11 +19,11 @@ extension StatusMenu {
                        action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c")
         )
         self.addItem(
-            NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i")
-        )
-        self.addItem(
             NSMenuItem(title: "mi_phpmon_config".localized,
                        action: #selector(MainMenu.openPhpMonitorConfigurationFile), keyEquivalent: "y")
+        )
+        self.addItem(
+            NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i")
         )
     }
 

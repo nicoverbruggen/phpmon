@@ -41,6 +41,12 @@ If you'd like to create a production build, choose "Any Mac" as the target and s
 10. Update Cask with new version + hash
 11. Check new version can be installed via Cask
 
+## 🍱 Marketing Mode
+
+You can enable marketing mode by setting the `PHPMON_MARKETING_MODE` environment variable. It preloads a list of (fake) domains in the domain window list for screenshot & marketing purposes.
+
+    launchctl setenv PHPMON_MARKETING_MODE true
+
 ## 🐛 Symbolication of crashes
 
 If you have an archived build of the app and exported the DSYM, it is possible to symbolicate .ips crash logs.
