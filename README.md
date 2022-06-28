@@ -4,13 +4,15 @@
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
-<img src="./docs/screenshot.jpg" width="1085px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.jpg#gh-light-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot-dark.jpg#gh-dark-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
-<img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
+<img src="./docs/notification.png#gh-light-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
+<img src="./docs/notification-dark.png#gh-dark-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
@@ -21,10 +23,10 @@ You can also add new domains as links, isolate sites, manage various services, a
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
-* macOS 11 Big Sur or higher (supports macOS 12 Monterey)
+* macOS 11 Big Sur or later
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
-* Laravel Valet 2.16 or newer (supports Valet 3)
+* Laravel Valet 3 recommended (but compatible with Valet 2)
 
 _You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
 
@@ -105,12 +107,10 @@ Super convenient!
 
 If you want to set up your computer for the very first time with PHP Monitor, here's how I do it:
 
-Install [Homebrew](https://brew.sh) first.
+Install [Homebrew](https://brew.sh) first. Follow the instructions there first!
 
-Install PHP, composer, add to path:
+Then, you'll need to set up your PATH. 
 
-    brew install php
-    brew install composer
     nano .zshrc
 
 Make sure the following line is not in the comments:
@@ -123,21 +123,27 @@ If you're on an Apple Silicon-based Mac, you'll need to add:
     # on an M1 Mac
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
-and add the following to your .zshrc, but add this BEFORE the homebrew PATH additions:
+and add the following to your `.zshrc` file, but add this BEFORE the homebrew PATH additions:
 
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
     
-If you're adding composer and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
+If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
 
     export PATH=$HOME/bin:/usr/local/bin:$PATH
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
     export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
 
+If you are *not* on Apple Silicon, you should remove the third line.
+
+Install the `php` and `composer` formulae:
+
+    brew install php composer
+
 Make sure PHP is linked correctly:
 
     which php
 
-should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php`)
+should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
     composer global require laravel/valet
     valet install
@@ -146,7 +152,12 @@ This should install `dnsmasq` and set up Valet. Great, almost there!
 
     valet trust
 
-Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work.
+You can now install PHP Monitor, if you haven't already:
+
+    brew tap nicoverbruggen/homebrew-cask
+	brew install --cask phpmon
+
+Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work. You will need to approve the initial launch of the app, but you should be ready to go now.
 </details>
 
 <details>
@@ -298,6 +309,38 @@ The app includes an Internet Access Policy file, so if you're using something li
 </details>
 
 <details>
+<summary><strong>How do I various presets to show up?</strong></summary>
+
+You must set these presets up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+You must have set up at least one valid preset for this presets to work in PHP Monitor.
+
+Here's an example of a working preset:
+
+<pre>
+{
+    "scan_apps": [],
+    "presets": [
+        {
+            "name": "Legacy Project",
+            "php": "8.0",
+            "extensions": {
+                "xdebug": false
+            },
+            "configuration": {
+                "memory_limit": "128M",
+                "upload_max_filesize": "128M",
+                "post_max_size": "128M"
+            }
+        }
+    ]
+}
+</pre>
+
+You can omit the `php` key in the preset if you do not wish for the preset to switch to a given PHP version.
+</details>
+
+<details>
 <summary><strong>How do I get various applications to show up in the domain list's right-click menu?</strong></summary>
 
 When you select and right-click on a domain, you can open these directories with various applications. This can help speed up your workflow. However, for these apps to show up, they must be detected first.
@@ -308,11 +351,12 @@ All of these apps should just be detected correctly, no matter their location on
 
 To see which files are checked to determine availability, see [this file](./phpmon/Domain/Helpers/Application.swift).
 
-You can add your own apps by creating and editing a `~/.phpmon.conf.json` file, with the following entry:
+You can add your own apps by creating and editing a `~/.config/phpmon/config.json` file, and make sure the `scan_apps` key is set:
 
 <pre>
 {
-    "scan_apps": ["Xcode", "Kraken"]
+    "scan_apps": ["Xcode", "Kraken"],
+    "presets": []
 }
 </pre>
 

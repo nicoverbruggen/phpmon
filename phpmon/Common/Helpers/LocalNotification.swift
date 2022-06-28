@@ -10,7 +10,11 @@ import UserNotifications
 
 class LocalNotification {
 
-    public static func send(title: String, subtitle: String) {
+    public static func send(title: String, subtitle: String, preference: PreferenceName) {
+        if !Preferences.isEnabled(preference) {
+            return
+        }
+
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = subtitle

@@ -174,4 +174,14 @@ class PhpEnv {
 
         return false
     }
+
+    /**
+     Returns the configuration file instance that is used for a specific config value.
+     You can then use the configuration file instance to change values.
+     */
+    public func getConfigFile(forKey key: String) -> PhpConfigurationFile? {
+        return PhpEnv.phpInstall.iniFiles
+            .reversed()
+            .first(where: { $0.has(key: key) })
+    }
 }

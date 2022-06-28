@@ -20,7 +20,13 @@ class ActivePhpInstallation {
 
     var version: Version!
     var limits: Limits!
-    var extensions: [PhpExtension]!
+    var iniFiles: [PhpConfigurationFile] = []
+
+    var extensions: [PhpExtension] {
+        return iniFiles.flatMap { initFile in
+            return initFile.extensions
+        }
+    }
 
     // MARK: - Computed
 
@@ -34,16 +40,21 @@ class ActivePhpInstallation {
         // Show information about the current version
         getVersion()
 
+        // Initialize the list of ini files that are loaded
+        iniFiles = []
+
         // If an error occurred, exit early
         if version.error {
             limits = Limits()
-            extensions = []
             return
         }
 
         // Load extension information
-        let path = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
-        extensions = PhpExtension.load(from: path)
+        let mainConfigurationFileUrl = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
+
+        if let file = PhpConfigurationFile.from(filePath: mainConfigurationFileUrl.path) {
+            iniFiles.append(file)
+        }
 
         // Get configuration values
         limits = Limits(
@@ -60,9 +71,8 @@ class ActivePhpInstallation {
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            let loadedExtensions = PhpExtension.load(from: URL(fileURLWithPath: iniFilePath))
-            if !loadedExtensions.isEmpty {
-                extensions.append(contentsOf: loadedExtensions)
+            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+                iniFiles.append(file)
             }
         }
     }

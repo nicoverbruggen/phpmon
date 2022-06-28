@@ -68,7 +68,8 @@ class StatusMenu: NSMenu {
 
         self.addItem(NSMenuItem.separator())
 
-        // self.addXdebugMenuItem()
+        self.addXdebugMenuItem()
+        self.addPresetsMenuItem()
 
         self.addFirstAidAndServicesMenuItems()
     }
@@ -86,154 +87,9 @@ class StatusMenu: NSMenu {
                                 action: #selector(MainMenu.terminateApp), keyEquivalent: "q"))
     }
 
-    // MARK: Remaining Menu Items
-
-    func addConfigurationMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_configuration".localized))
-        self.addItem(
-            NSMenuItem(title: "mi_php_config".localized,
-                       action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c")
-        )
-        self.addItem(
-            NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i")
-        )
-    }
-
-    func addComposerMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
-        self.addItem(
-            NSMenuItem(title: "mi_global_composer".localized,
-                       action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g")
-        )
-
-        let composerMenuItem = NSMenuItem(
-            title: "mi_update_global_composer".localized,
-            action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateGlobalComposerDependencies),
-            keyEquivalent: "g"
-        )
-        composerMenuItem.keyEquivalentModifierMask = .shift
-
-        self.addItem(composerMenuItem)
-    }
-
-    func addStatsMenuItem() {
-        guard let stats = PhpEnv.phpInstall.limits else { return }
-
-        self.addItem(StatsView.asMenuItem(
-            memory: stats.memory_limit,
-            post: stats.post_max_size,
-            upload: stats.upload_max_filesize)
-        )
-    }
-
-    func addExtensionsMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
-
-        if PhpEnv.phpInstall.extensions.isEmpty {
-            self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
-        }
-
-        var shortcutKey = 1
-        for phpExtension in PhpEnv.phpInstall.extensions {
-            self.addExtensionItem(phpExtension, shortcutKey)
-            shortcutKey += 1
-        }
-    }
-
-    func addXdebugMenuItem() {
-        if !Xdebug.enabled {
-            return
-        }
-
-        let xdebugSwitch = NSMenuItem(
-            title: "mi_xdebug_mode".localized,
-            action: nil,
-            keyEquivalent: ""
-        )
-        let xdebugModesMenu = NSMenu()
-        let xdebugMode = Xdebug.mode
-
-        for mode in Xdebug.modes {
-            let item = XdebugMenuItem(
-                title: mode,
-                action: #selector(MainMenu.toggleXdebugMode(sender:)),
-                keyEquivalent: ""
-            )
-            item.state = xdebugMode == mode ? .on : .off
-            item.mode = mode
-            xdebugModesMenu.addItem(item)
-        }
-
-        for item in xdebugModesMenu.items {
-            item.target = MainMenu.shared
-        }
-
-        self.setSubmenu(xdebugModesMenu, for: xdebugSwitch)
-        self.addItem(xdebugSwitch)
-    }
-
-    func addFirstAidAndServicesMenuItems() {
-        let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
-        let servicesMenu = NSMenu()
-
-        let fixMyValetMenuItem = NSMenuItem(
-            title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-            action: #selector(MainMenu.fixMyValet), keyEquivalent: ""
-        )
-        fixMyValetMenuItem.toolTip = "mi_fix_my_valet_tooltip".localized
-        servicesMenu.addItem(fixMyValetMenuItem)
-
-        let fixHomebrewMenuItem = NSMenuItem(
-            title: "mi_fix_brew_permissions".localized(),
-            action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: ""
-        )
-        fixHomebrewMenuItem.toolTip = "mi_fix_brew_permissions_tooltip".localized
-        servicesMenu.addItem(fixHomebrewMenuItem)
-
-        servicesMenu.addItem(NSMenuItem.separator())
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
-
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_dnsmasq".localized,
-                       action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_php_fpm".localized,
-                       action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_nginx".localized,
-                       action: #selector(MainMenu.restartNginx), keyEquivalent: "n")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_all_services".localized,
-                       action: #selector(MainMenu.restartAllServices), keyEquivalent: "s")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_stop_all_services".localized,
-                       action: #selector(MainMenu.stopAllServices), keyEquivalent: "s"),
-            withKeyModifier: [.command, .shift]
-        )
-
-        servicesMenu.addItem(NSMenuItem.separator())
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_manual_actions".localized))
-
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_php_refresh".localized,
-                       action: #selector(MainMenu.reloadPhpMonitorMenuInForeground), keyEquivalent: "r")
-        )
-
-        for item in servicesMenu.items {
-            item.target = MainMenu.shared
-        }
-
-        self.setSubmenu(servicesMenu, for: services)
-        self.addItem(services)
-    }
-
     // MARK: Private Helpers
 
-    private func addSwitchToPhpMenuItems() {
+    internal func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<PhpEnv.shared.availablePhpVersions.count).reversed() {
 
@@ -260,7 +116,7 @@ class StatusMenu: NSMenu {
         }
     }
 
-    private func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
+    internal func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
         let keyEquivalent = shortcutKey < 9 ? "\(shortcutKey)" : ""
 
         let menuItem = ExtensionMenuItem(
@@ -278,22 +134,4 @@ class StatusMenu: NSMenu {
 
         self.addItem(menuItem)
     }
-}
-
-// MARK: - NSMenuItem subclasses
-
-class PhpMenuItem: NSMenuItem {
-    var version: String = ""
-}
-
-class XdebugMenuItem: NSMenuItem {
-    var mode: String = ""
-}
-
-class ExtensionMenuItem: NSMenuItem {
-    var phpExtension: PhpExtension?
-}
-
-class EditorMenuItem: NSMenuItem {
-    var editor: Application?
 }

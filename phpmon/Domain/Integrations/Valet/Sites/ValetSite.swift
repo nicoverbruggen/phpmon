@@ -81,9 +81,9 @@ class ValetSite: DomainListable {
 
         if makeDeterminations {
             determineSecured()
+            determineIsolated()
             determineComposerPhpVersion()
             determineDriver()
-            determineIsolated()
         }
     }
 
@@ -133,7 +133,6 @@ class ValetSite: DomainListable {
      with the currently linked version of PHP (see `composerPhpMatchesSystem`).
      */
     public func determineComposerPhpVersion() {
-
         self.determineComposerInformation()
         self.determineValetPhpFileInfo()
 
@@ -145,7 +144,8 @@ class ValetSite: DomainListable {
         // For example, for Laravel 8 projects the value is "^7.3|^8.0"
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
-                return !PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
+                let origin = self.isolatedPhpVersion?.versionNumber.homebrewVersion ?? PhpEnv.phpInstall.version.long
+                return !PhpVersionNumberCollection.make(from: [origin])
                     .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
                     .isEmpty
             }.contains(true)
@@ -225,7 +225,7 @@ class ValetSite: DomainListable {
 
     public static func isolatedVersion(_ filePath: String) -> String? {
         if Filesystem.fileExists(filePath) {
-            return NginxConfiguration
+            return NginxConfigurationFile
                 .from(filePath: filePath)?
                 .isolatedVersion ?? nil
         }

@@ -324,36 +324,32 @@
         <!--Window Controller-->
         <scene sceneID="PQa-AT-b2a">
             <objects>
+                <customObject id="OF0-qs-3Oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" customClass="PrefsWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="h4c-3b-nko">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="372" y="403" width="480" height="270"/>
+                        <rect key="contentRect" x="372" y="403" width="550" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="2304" height="1271"/>
                         <view key="contentView" id="2yL-50-11x">
-                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <rect key="frame" x="0.0" y="0.0" width="550" height="270"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </view>
-                        <toolbar key="toolbar" implicitIdentifier="611E3485-DC7F-46A0-8528-11CF9366370C" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="fcq-wR-7iv">
-                            <allowedToolbarItems/>
-                            <defaultToolbarItems/>
-                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="hLJ-Fd-wRr" id="6HE-8Y-aCO"/>
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="AW2-rV-rbS" kind="relationship" relationship="window.shadowedContentViewController" id="3dX-9V-eA0"/>
+                        <segue destination="PCI-2c-55Y" kind="relationship" relationship="window.shadowedContentViewController" id="egC-A4-am8"/>
                     </connections>
                 </windowController>
-                <customObject id="OF0-qs-3Oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-374" y="238"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="iyi-IS-7Ps">
             <objects>
-                <viewController title="Preferences" storyboardIdentifier="preferences" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PrefsVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Preferences" identifier="preferencesTemplateVC" storyboardIdentifier="preferencesTemplateVC" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="GenericPreferenceVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="498"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -378,7 +374,27 @@
                 </viewController>
                 <customObject id="eQC-8B-FkX" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="260" y="217"/>
+            <point key="canvasLocation" x="844" y="-153"/>
+        </scene>
+        <!--Tab View Controller-->
+        <scene sceneID="B5x-d3-c7D">
+            <objects>
+                <customObject id="pNW-tM-SQu" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <tabViewController tabStyle="toolbar" canPropagateSelectedChildViewControllerTitle="NO" id="PCI-2c-55Y" sceneMemberID="viewController">
+                    <tabView key="tabView" type="noTabsNoBorder" id="l0U-9a-nM6">
+                        <rect key="frame" x="0.0" y="0.0" width="508" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <connections>
+                            <outlet property="delegate" destination="PCI-2c-55Y" id="6gR-GR-cwq"/>
+                        </connections>
+                    </tabView>
+                    <connections>
+                        <outlet property="tabView" destination="l0U-9a-nM6" id="tfn-UN-1Aa"/>
+                    </connections>
+                </tabViewController>
+            </objects>
+            <point key="canvasLocation" x="283" y="-252"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="4XS-kY-YIS">
@@ -532,7 +548,7 @@ Gw
                                         </connections>
                                     </button>
                                     <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
-                                        <rect key="frame" x="13" y="13" width="82" height="32"/>
+                                        <rect key="frame" x="13" y="13" width="81" height="32"/>
                                         <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -651,7 +667,7 @@ Gw
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PVw-cM-qAB">
-                                <rect key="frame" x="325" y="13" width="142" height="32"/>
+                                <rect key="frame" x="326" y="13" width="141" height="32"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwW-Wv-I8s">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -732,7 +748,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
-                                <rect key="frame" x="139" y="23" width="180" height="14"/>
+                                <rect key="frame" x="140" y="23" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -1381,7 +1397,7 @@ Gw
                                         </constraints>
                                         <textFieldCell key="cell" selectable="YES" alignment="left" id="3i9-RG-Ift">
                                             <font key="font" metaFont="smallSystem"/>
-                                            <mutableString key="title">[i18n] Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.  If you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.</mutableString>
+                                            <string key="title">[i18n] Links are used to directly serve projects. If you have a Laravel, Symfony, WordPress, etc. folder with code, you'll want to create a link and choose the folder where your code lives.  If you are in need of a proxy, you can proxy e.g. a container to a particular domain name. This can be useful in combination with Docker, for example.</string>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -1399,6 +1415,7 @@ Gw
                                     <constraint firstAttribute="bottom" secondItem="pYe-Qu-qnK" secondAttribute="bottom" constant="20" id="lPX-ZF-XZN"/>
                                     <constraint firstAttribute="trailing" secondItem="fJK-Ke-IK3" secondAttribute="trailing" constant="20" symbolic="YES" id="spl-Bn-xtw"/>
                                     <constraint firstAttribute="bottom" secondItem="FhN-AM-SkI" secondAttribute="bottom" constant="20" symbolic="YES" id="t5w-aL-tOa"/>
+                                    <constraint firstItem="pYe-Qu-qnK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FhN-AM-SkI" secondAttribute="trailing" constant="8" symbolic="YES" id="y7k-sl-xqe"/>
                                 </constraints>
                             </visualEffectView>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">

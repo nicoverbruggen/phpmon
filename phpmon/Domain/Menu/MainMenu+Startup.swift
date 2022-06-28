@@ -64,6 +64,9 @@ extension MainMenu {
         // Detect built-in and custom applications
         detectApplications()
 
+        // Load the rollback preset
+        PresetHelper.loadRollbackPresetFromFile()
+
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
 
@@ -76,8 +79,7 @@ extension MainMenu {
         // A non-default TLD is not officially supported since Valet 3.2.x
         Valet.notifyAboutUnsupportedTLD()
 
-        // Update the services list in the background
-        NotificationCenter.default.post(name: Events.ServicesUpdated, object: nil)
+        ServicesManager.shared.loadData()
 
         // Start the background refresh timer
         startSharedTimer()
@@ -155,5 +157,4 @@ extension MainMenu {
 
         Log.info("Detected applications: \(appNames)")
     }
-
 }

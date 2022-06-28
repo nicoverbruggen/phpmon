@@ -13,8 +13,11 @@ class ValetProxyScanner: ProxyScanner {
         return try! FileManager
             .default
             .contentsOfDirectory(atPath: directoryPath)
+            .filter {
+                return !$0.starts(with: ".")
+            }
             .compactMap {
-                return NginxConfiguration.from(filePath: "\(directoryPath)/\($0)")
+                return NginxConfigurationFile.from(filePath: "\(directoryPath)/\($0)")
             }
             .filter {
                 return $0.proxy != nil

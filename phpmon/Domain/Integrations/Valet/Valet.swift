@@ -216,6 +216,8 @@ class Valet {
             sites.insert(site, at: 0)
         }
 
+        Log.info("\(sites.count) sites & \(proxies.count) proxies have been scanned.")
+
         isBusy = false
     }
 

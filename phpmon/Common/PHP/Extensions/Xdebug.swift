@@ -11,16 +11,23 @@ import Foundation
 class Xdebug {
 
     public static var enabled: Bool {
-        return !self.mode.isEmpty
+        return PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") != nil
     }
 
-    public static var mode: String {
-        return Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('xdebug.mode');"])
+    public static var activeModes: [String] {
+        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+            return []
+        }
+
+        guard let value = file.get(for: "xdebug.mode") else {
+            return []
+        }
+
+        return value.components(separatedBy: ",").filter { self.modes.contains($0) }
     }
 
     public static var modes: [String] {
         return [
-            "off",
             "develop",
             "coverage",
             "debug",

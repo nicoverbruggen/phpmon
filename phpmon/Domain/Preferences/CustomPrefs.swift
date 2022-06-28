@@ -10,8 +10,20 @@ import Foundation
 
 struct CustomPrefs: Decodable {
     let scanApps: [String]
+    let presets: [Preset]?
+    let services: [String]?
+
+    public func hasPresets() -> Bool {
+        return self.presets != nil && !self.presets!.isEmpty
+    }
+
+    public func hasServices() -> Bool {
+        return self.services != nil && !self.services!.isEmpty
+    }
 
     private enum CodingKeys: String, CodingKey {
         case scanApps = "scan_apps"
+        case presets = "presets"
+        case services = "services"
     }
 }

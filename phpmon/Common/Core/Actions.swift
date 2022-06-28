@@ -24,7 +24,7 @@ class Actions {
         brew("services restart dnsmasq", sudo: true)
     }
 
-    public static func stopAllServices() {
+    public static func stopValetServices() {
         brew("services stop \(PhpEnv.phpInstall.formula)", sudo: true)
         brew("services stop nginx", sudo: true)
         brew("services stop dnsmasq", sudo: true)
@@ -64,6 +64,29 @@ class Actions {
         }
     }
 
+    // MARK: - Third Party Services
+    public static func stopService(name: String, completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            brew("services stop \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
+            ServicesManager.loadHomebrewServices(completed: {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            })
+        }
+    }
+
+    public static func startService(name: String, completion: @escaping () -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            brew("services start \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
+            ServicesManager.loadHomebrewServices(completed: {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            })
+        }
+    }
+
     // MARK: - Finding Config Files
 
     public static func openGenericPhpConfigFolder() {
@@ -85,6 +108,12 @@ class Actions {
     public static func openValetConfigFolder() {
         let file = FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent(".config/valet")
+        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+    }
+
+    public static func openPhpMonitorConfigFile() {
+        let file = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(".config/phpmon")
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 

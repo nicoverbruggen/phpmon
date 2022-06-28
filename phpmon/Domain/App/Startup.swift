@@ -146,13 +146,15 @@ class Startup {
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
-            subtitleText: "startup.errors.sudoers_brew.subtitle".localized
+            subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
+            descriptionText: "startup.errors.sudoers_brew.desc".localized
         ),
         EnvironmentCheck(
             command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
-            subtitleText: "startup.errors.sudoers_valet.subtitle".localized
+            subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
+            descriptionText: "startup.errors.sudoers_valet.desc".localized
         ),
         // =================================================================================
         // Verify if the Homebrew services are running (as root).
@@ -180,6 +182,21 @@ class Startup {
             titleText: "startup.errors.valet_json_invalid.title".localized,
             subtitleText: "startup.errors.valet_json_invalid.subtitle".localized,
             descriptionText: "startup.errors.valet_json_invalid.desc".localized
+        ),
+        // =================================================================================
+        // Check for `which` alias issue
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                return App.architecture == "x86_64"
+                    && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
+                    && Shell.pipe("which node", requiresPath: false)
+                        .contains("env: node: No such file or directory")
+            },
+            name: "`env: node` issue does not apply",
+            titleText: "startup.errors.which_alias_issue.title".localized,
+            subtitleText: "startup.errors.which_alias_issue.subtitle".localized,
+            descriptionText: "startup.errors.which_alias_issue.desc".localized
         ),
         // =================================================================================
         // Determine the Valet version and ensure it isn't unknown.

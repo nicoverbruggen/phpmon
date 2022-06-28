@@ -14,7 +14,7 @@ class ValetProxy: DomainListable {
     var target: String
     var secured: Bool = false
 
-    init(_ configuration: NginxConfiguration) {
+    init(_ configuration: NginxConfigurationFile) {
         self.domain = configuration.domain
         self.tld = configuration.tld
         self.target = configuration.proxy!

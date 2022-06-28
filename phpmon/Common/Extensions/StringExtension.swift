@@ -7,8 +7,13 @@
 import Foundation
 
 extension String {
-
     var localized: String {
+        if #available(macOS 13, *) {
+            return NSLocalizedString(
+                self, tableName: nil, bundle: Bundle.main, value: "", comment: ""
+            ).replacingOccurrences(of: "Preferences", with: "Settings")
+        }
+
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
 
@@ -32,7 +37,7 @@ extension String {
         return count
     }
 
-    subscript (r: Range<String.Index>) -> String {
+    subscript(r: Range<String.Index>) -> String {
         let start = r.lowerBound
         let end = r.upperBound
         return String(self[start ..< end])
@@ -68,6 +73,24 @@ extension String {
             }
             return versionComponents.joined(separator: versionDelimiter)
                 .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
+        }
+    }
+
+    var stripped: String {
+        do {
+            guard let data = self.data(using: .unicode) else {
+                return ""
+            }
+            let attributed = try NSAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding: String.Encoding.utf8.rawValue],
+                documentAttributes: nil
+            )
+            return attributed.string
+        } catch {
+            return ""
         }
     }
 

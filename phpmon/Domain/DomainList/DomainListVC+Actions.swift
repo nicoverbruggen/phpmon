@@ -69,7 +69,8 @@ extension DomainListVC {
                         .localized(
                             "\(selectedSite.name).\(Valet.shared.config.tld)",
                             newState
-                        )
+                        ),
+                    preference: .notifyAboutSecureToggle
                 )
             }
 
@@ -116,6 +117,7 @@ extension DomainListVC {
 
         self.performAction(command: command) {
             self.selectedSite!.determineIsolated()
+            self.selectedSite!.determineComposerPhpVersion()
 
             if self.selectedSite!.isolatedPhpVersion == nil {
                 BetterAlert()
@@ -133,6 +135,7 @@ extension DomainListVC {
     @objc func removeIsolatedSite() {
         self.performAction(command: "sudo \(Paths.valet) unisolate --site '\(self.selectedSite!.name)' && exit;") {
             self.selectedSite!.isolatedPhpVersion = nil
+            self.selectedSite!.determineComposerPhpVersion()
         }
     }
 

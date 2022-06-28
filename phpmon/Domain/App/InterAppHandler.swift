@@ -26,10 +26,10 @@ class InterApp {
             DomainListVC.show()
         }),
         InterApp.Action(command: "services/stop", action: { _ in
-            MainMenu.shared.stopAllServices()
+            MainMenu.shared.stopValetServices()
         }),
         InterApp.Action(command: "services/restart/all", action: { _ in
-            MainMenu.shared.restartAllServices()
+            MainMenu.shared.restartValetServices()
         }),
         InterApp.Action(command: "services/restart/nginx", action: { _ in
             MainMenu.shared.restartNginx()
@@ -57,9 +57,11 @@ class InterApp {
                 MainMenu.shared.switchToPhpVersion(version)
             } else {
                 BetterAlert().withInformation(
-                    title: "Unsupported version",
-                    subtitle: "PHP Monitor can't switch to PHP \(version), as it may not be installed or available."
-                ).withPrimary(text: "OK").show()
+                    title: "alert.php_switch_unavailable.title".localized,
+                    subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
+                ).withPrimary(
+                    text: "alert.php_switch_unavailable.ok".localized
+                ).show()
             }
         })
     ]}

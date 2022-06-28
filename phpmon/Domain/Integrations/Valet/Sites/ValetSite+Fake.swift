@@ -23,22 +23,26 @@ extension ValetSite {
         self.init(name: name, tld: tld, absolutePath: path, aliasPath: nil, makeDeterminations: false)
         self.secured = secure
         self.composerPhp = constraint
-
-        self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
-            .map { string in
-                return !PhpVersionNumberCollection.make(from: [PhpEnv.phpInstall.version.long])
-                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .isEmpty
-            }.contains(true)
+        self.composerPhpSource = constraint != "" ? .require : .unknown
 
         self.driver = driver
         self.driverDeterminedByComposer = true
+
         if linked {
             self.aliasPath = self.absolutePath
         }
+
         if let isolated = isolated {
             self.isolatedPhpVersion = PhpInstallation(isolated)
         }
+
+        self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
+            .map { string in
+                let origin = self.isolatedPhpVersion?.versionNumber.homebrewVersion ?? PhpEnv.phpInstall.version.long
+                return !PhpVersionNumberCollection.make(from: [origin])
+                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
+                    .isEmpty
+            }.contains(true)
     }
 
 }

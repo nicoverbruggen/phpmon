@@ -12,15 +12,28 @@ import Foundation
  These are the keys used for every preference in the app.
  */
 enum PreferenceName: String {
+    // FIRST-TIME LAUNCH
     case wasLaunchedBefore = "launched_before"
-    case shouldDisplayDynamicIcon = "use_dynamic_icon"
-    case iconTypeToDisplay = "icon_type_to_display"
-    case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+
+    // GENERAL
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
     case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
+
+    // APPEARANCE
+    case shouldDisplayDynamicIcon = "use_dynamic_icon"
+    case iconTypeToDisplay = "icon_type_to_display"
+    case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+
+    // NOTIFICATIONS
+    case notifyAboutVersionChange = "notify_about_version_change"
+    case notifyAboutPhpFpmRestart = "notify_about_php_fpm_restart"
+    case notifyAboutServices = "notify_about_services_restart"
+    case notifyAboutPresets = "notify_about_presets"
+    case notifyAboutSecureToggle = "notify_about_secure_toggle"
+    case notifyAboutGlobalComposerStatus = "notify_about_composer_status"
 }
 
 /**
@@ -52,7 +65,7 @@ class Preferences {
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
-        customPreferences = CustomPrefs(scanApps: [])
+        customPreferences = CustomPrefs(scanApps: [], presets: [], services: [])
         loadCustomPreferences()
     }
 
@@ -70,14 +83,25 @@ class Preferences {
      */
     static func handleFirstTimeLaunch() {
         UserDefaults.standard.register(defaults: [
-            /// Preferences
-            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
-            PreferenceName.iconTypeToDisplay.rawValue: MenuBarIcon.iconPhp.rawValue,
-            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+            /// Preferences: General
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
+
+            /// Preferences: Appearance
+            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
+            PreferenceName.iconTypeToDisplay.rawValue: MenuBarIcon.iconPhp.rawValue,
+            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+
+            /// Preferences: Notifications
+            PreferenceName.notifyAboutVersionChange.rawValue: true,
+            PreferenceName.notifyAboutPhpFpmRestart.rawValue: true,
+            PreferenceName.notifyAboutServices.rawValue: true,
+            PreferenceName.notifyAboutPresets.rawValue: true,
+            PreferenceName.notifyAboutSecureToggle.rawValue: true,
+            PreferenceName.notifyAboutGlobalComposerStatus.rawValue: true,
+
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
@@ -137,7 +161,8 @@ class Preferences {
     private static func cache() -> [PreferenceName: Any] {
         return [
             // Part 1: Always Booleans
-            .shouldDisplayDynamicIcon: UserDefaults.standard.bool(
+            .shouldDisplayDynamicIcon:
+                UserDefaults.standard.bool(
                 forKey: PreferenceName.shouldDisplayDynamicIcon.rawValue) as Any,
             .fullPhpVersionDynamicIcon: UserDefaults.standard.bool(
                 forKey: PreferenceName.fullPhpVersionDynamicIcon.rawValue) as Any,
@@ -149,6 +174,19 @@ class Preferences {
                 forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             .automaticBackgroundUpdateCheck: UserDefaults.standard.bool(
                 forKey: PreferenceName.automaticBackgroundUpdateCheck.rawValue) as Any,
+
+            .notifyAboutVersionChange: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutVersionChange.rawValue) as Any,
+            .notifyAboutPhpFpmRestart: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutPhpFpmRestart.rawValue) as Any,
+            .notifyAboutServices: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutServices.rawValue) as Any,
+            .notifyAboutPresets: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutPresets.rawValue) as Any,
+            .notifyAboutSecureToggle: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutSecureToggle.rawValue) as Any,
+            .notifyAboutGlobalComposerStatus: UserDefaults.standard.bool(
+                forKey: PreferenceName.notifyAboutGlobalComposerStatus.rawValue) as Any,
 
             // Part 2: Always Strings
             .globalHotkey: UserDefaults.standard.string(
@@ -173,12 +211,28 @@ class Preferences {
     // MARK: - Custom Preferences
 
     private func loadCustomPreferences() {
-        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.phpmon.conf.json")
+        // Ensure the configuration directory is created if missing
+        Shell.run("mkdir -p ~/.config/phpmon")
+
+        // Move the legacy file
+        moveOutdatedConfigurationFile()
+
+        // Attempt to load the file if it exists
+        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.config/phpmon/config.json")
         if Filesystem.fileExists(url.path) {
-            Log.info("A custom .phpmon.conf.json file was found. Attempting to parse...")
+
+            Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
         } else {
-            Log.info("There was no .phpmon.conf.json file to be loaded.")
+            Log.info("There was no /.config/phpmon/config.json file to be loaded.")
+        }
+    }
+
+    private func moveOutdatedConfigurationFile() {
+        if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
+            Log.info("An outdated configuration file was found. Moving it...")
+            Shell.run("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            Log.info("The configuration file was copied successfully!")
         }
     }
 
@@ -188,9 +242,18 @@ class Preferences {
                 CustomPrefs.self,
                 from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
             )
-            Log.info("The .phpmon.conf.json file was successfully parsed.")
+
+            Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
+
+            if customPreferences.hasPresets() {
+                Log.info("There are \(customPreferences.presets!.count) custom presets.")
+            }
+
+            if customPreferences.hasServices() {
+                Log.info("There are custom services: \(customPreferences.services!)")
+            }
         } catch {
-            Log.warn("The .phpmon.conf.json file seems to be missing or malformed.")
+            Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")
         }
     }
 

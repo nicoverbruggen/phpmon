@@ -83,7 +83,8 @@ class ComposerWindow {
             if shouldNotify {
                 LocalNotification.send(
                     title: "alert.composer_success.title".localized,
-                    subtitle: "alert.composer_success.info".localized
+                    subtitle: "alert.composer_success.info".localized,
+                    preference: .notifyAboutGlobalComposerStatus
                 )
             }
             window = nil
