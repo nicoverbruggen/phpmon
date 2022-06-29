@@ -105,7 +105,9 @@ Super convenient!
 <details>
 <summary><strong>I want to set up PHP Monitor from scratch! I don't have Homebrew installed either, where do I begin?</strong></summary>
 
-If you want to set up your computer for the very first time with PHP Monitor, here's how I do it:
+If you want to set up your computer for the very first time with PHP Monitor, here's how I do it.
+
+**I have also created [a video tutorial](https://www.youtube.com/watch?v=fO3hVhkvm3w) which may be easier to follow. If you just want the terminal commands, keep reading.**
 
 Install [Homebrew](https://brew.sh) first. Follow the instructions there first!
 
