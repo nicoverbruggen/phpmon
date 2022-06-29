@@ -199,6 +199,19 @@ class Startup {
             descriptionText: "startup.errors.which_alias_issue.desc".localized
         ),
         // =================================================================================
+        // Determine that Valet works correctly (no issues in platform detected)
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                let output = valet("--version", sudo: false)
+                return output.contains("Composer detected issues in your platform")
+            },
+            name: "`no global composer issues",
+            titleText: "startup.errors.global_composer_platform_issues.title".localized,
+            subtitleText: "startup.errors.global_composer_platform_issues.subtitle".localized,
+            descriptionText: "startup.errors.global_composer_platform_issues.desc".localized
+        ),
+        // =================================================================================
         // Determine the Valet version and ensure it isn't unknown.
         // =================================================================================
         EnvironmentCheck(

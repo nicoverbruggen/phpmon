@@ -438,6 +438,11 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
+/// Platform issue detected
+"startup.errors.global_composer_platform_issues.title" = "Composer detected issues in your platform";
+"startup.errors.global_composer_platform_issues.subtitle" = "You will have to run `composer global update`. The easiest way to prevent this issue from occurring in the future is to:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. It should work again!\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again (via the Terminal or via PHP Monitor).";
+"startup.errors.global_composer_platform_issues.desc" = "Alternatively, you can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.";
+
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
