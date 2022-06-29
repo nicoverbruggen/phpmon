@@ -183,6 +183,11 @@ class Valet {
         }
     }
 
+    public func hasPlatformIssues() -> Bool {
+        return valet("--version", sudo: false)
+            .contains("Composer detected issues in your platform")
+    }
+
     /**
      Returns a count of how many sites are linked and parked.
      */

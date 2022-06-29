@@ -388,6 +388,13 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.php_switch_unavailable.info" = "Please make sure PHP %@ is installed and you can switch to it in the dropdown. Currently supported versions include PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
 
+// Composer issues
+"alert.global_composer_platform_issues.title" = "Composer detected issues in your platform";
+"alert.global_composer_platform_issues.subtitle" = "The version of PHP you switched to is too old for the global Composer dependencies you have installed. These dependencies will need to be updated.";
+"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.";
+"alert.global_composer_platform_issues.buttons.update" = "Update Global Dependencies";
+"alert.global_composer_platform_issues.buttons.quit" = "Quit PHP Monitor";
+
 // Revert
 "alert.revert_description.title" = "Revert Configuration?";
 "alert.revert_description.subtitle" = "PHP Monitor can revert to the previous configuration that was active. Here's what will be applied: \n\n%@";

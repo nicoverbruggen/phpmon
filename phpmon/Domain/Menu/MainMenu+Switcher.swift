@@ -39,9 +39,14 @@ extension MainMenu {
                         self.notifyAboutVersionChange(to: version)
                     }
                 )
-
             } else {
                 self.notifyAboutVersionChange(to: version)
+            }
+
+            // Check if Valet still works correctly
+            if Valet.shared.hasPlatformIssues() {
+                Log.info("Composer platform issue(s) detected.")
+                self.suggestFixMyComposer()
             }
 
             // Update stats
@@ -63,6 +68,24 @@ extension MainMenu {
         if outcome {
             MainMenu.shared.fixMyValet()
         }
+    }
+
+    private func suggestFixMyComposer() {
+        BetterAlert().withInformation(
+            title: "alert.global_composer_platform_issues.title".localized,
+            subtitle: "alert.global_composer_platform_issues.subtitle".localized,
+            description: "alert.global_composer_platform_issues.desc".localized
+        )
+        .withPrimary(text: "alert.global_composer_platform_issues.buttons.update".localized, action: { alert in
+            alert.close(with: .OK)
+            self.updateGlobalComposerDependencies()
+        })
+        .withSecondary(text: "", action: nil)
+        .withTertiary(text: "alert.global_composer_platform_issues.buttons.quit".localized, action: { alert in
+            alert.close(with: .OK)
+            self.terminateApp()
+        })
+        .show()
     }
 
     private func reloadDomainListData() {
