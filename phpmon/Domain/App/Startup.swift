@@ -201,7 +201,6 @@ class Startup {
         // =================================================================================
         // Determine that Valet works correctly (no issues in platform detected)
         // =================================================================================
-        /*
         EnvironmentCheck(
             command: {
                 return valet("--version", sudo: false)
@@ -212,7 +211,6 @@ class Startup {
             subtitleText: "startup.errors.global_composer_platform_issues.subtitle".localized,
             descriptionText: "startup.errors.global_composer_platform_issues.desc".localized
         ),
-        */
         // =================================================================================
         // Determine the Valet version and ensure it isn't unknown.
         // =================================================================================

@@ -258,7 +258,7 @@
 "prefs.notify_about_secure_status_desc" = "Displays a notification when a domain has been secured or unsecured.";
 "prefs.notify_about_secure_status" = "Notify about secure/unsecure status";
 
-"prefs.notify_about_composer_success_desc" = "Displays a notification when the global composer configuration was successfully updated.";
+"prefs.notify_about_composer_success_desc" = "Displays a notification when the global Composer configuration was successfully updated.";
 "prefs.notify_about_composer_success" = "Notify about global composer update";
 
 // NOTIFICATIONS
@@ -391,7 +391,7 @@ You can do this by running `composer global update` in your terminal. After that
 // Composer issues
 "alert.global_composer_platform_issues.title" = "Composer detected issues in your platform";
 "alert.global_composer_platform_issues.subtitle" = "The version of PHP you switched to is too old for the global Composer dependencies you have installed. These dependencies will need to be updated.";
-"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.";
+"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
 "alert.global_composer_platform_issues.buttons.update" = "Update Global Dependencies";
 "alert.global_composer_platform_issues.buttons.quit" = "Quit PHP Monitor";
 
@@ -448,7 +448,7 @@ You can do this by running `composer global update` in your terminal. After that
 /// Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "Composer detected issues in your platform";
 "startup.errors.global_composer_platform_issues.subtitle" = "You will have to run `composer global update`. The easiest way to prevent this issue from occurring in the future is to:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. It should work again!\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again (via the Terminal or via PHP Monitor).";
-"startup.errors.global_composer_platform_issues.desc" = "Alternatively, you can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.";
+"startup.errors.global_composer_platform_issues.desc" = "Alternatively, you can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out what's going wrong, try running `valet --version`. (Valet is currently not functional with the currently installed dependencies.)";
 
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";

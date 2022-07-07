@@ -44,14 +44,18 @@ extension MainMenu {
             }
 
             // Check if Valet still works correctly
-            if Valet.shared.hasPlatformIssues() {
-                Log.info("Composer platform issue(s) detected.")
-                self.suggestFixMyComposer()
-            }
+            self.checkForPlatformIssues()
 
             // Update stats
             Stats.incrementSuccessfulSwitchCount()
             Stats.evaluateSponsorMessageShouldBeDisplayed()
+        }
+    }
+
+    private func checkForPlatformIssues() {
+        if Valet.shared.hasPlatformIssues() {
+            Log.info("Composer platform issue(s) detected.")
+            self.suggestFixMyComposer()
         }
     }
 
@@ -78,7 +82,12 @@ extension MainMenu {
         )
         .withPrimary(text: "alert.global_composer_platform_issues.buttons.update".localized, action: { alert in
             alert.close(with: .OK)
-            self.updateGlobalComposerDependencies()
+            ComposerWindow().updateGlobalDependencies(
+                notify: true,
+                completion: { _ in
+                    self.checkForPlatformIssues()
+                }
+            )
         })
         .withSecondary(text: "", action: nil)
         .withTertiary(text: "alert.global_composer_platform_issues.buttons.quit".localized, action: { alert in
