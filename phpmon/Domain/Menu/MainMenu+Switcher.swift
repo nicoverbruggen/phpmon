@@ -52,7 +52,7 @@ extension MainMenu {
         }
     }
 
-    private func checkForPlatformIssues() {
+    @MainActor private func checkForPlatformIssues() {
         if Valet.shared.hasPlatformIssues() {
             Log.info("Composer platform issue(s) detected.")
             self.suggestFixMyComposer()
@@ -74,7 +74,7 @@ extension MainMenu {
         }
     }
 
-    private func suggestFixMyComposer() {
+    @MainActor private func suggestFixMyComposer() {
         BetterAlert().withInformation(
             title: "alert.global_composer_platform_issues.title".localized,
             subtitle: "alert.global_composer_platform_issues.subtitle".localized,
