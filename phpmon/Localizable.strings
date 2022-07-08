@@ -446,9 +446,9 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 /// Platform issue detected
-"startup.errors.global_composer_platform_issues.title" = "Composer detected issues in your platform";
-"startup.errors.global_composer_platform_issues.subtitle" = "You will have to run `composer global update`. The easiest way to prevent this issue from occurring in the future is to:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. It should work again!\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again (via the Terminal or via PHP Monitor).";
-"startup.errors.global_composer_platform_issues.desc" = "Alternatively, you can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out what's going wrong, try running `valet --version`. (Valet is currently not functional with the currently installed dependencies.)";
+"startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
+"startup.errors.global_composer_platform_issues.subtitle" = "Please follow these recommended steps to avoid seeing this issue in the future:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. (It should work again.)\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again.";
+"startup.errors.global_composer_platform_issues.desc" = "You can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
 
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";

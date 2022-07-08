@@ -148,6 +148,26 @@ Make sure PHP is linked correctly:
 should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
     composer global require laravel/valet
+    
+For optimal results, you should lock your PHP platform for global dependencies to the oldest version of PHP you intend to run. If that version is PHP 7.0, your `~/.composer/composer.json` file could look like this (please adjust the version accordingly!):
+
+```
+{
+    "require": {
+        "laravel/valet": "^3.0",
+    },
+    "config": {
+        "platform": {
+            "php": "7.0"
+        }
+    }
+}
+```
+
+Run `composer global update` again. This ensures that when you switch to a different global PHP version, [Valet won't break](https://github.com/nicoverbruggen/phpmon/issues/178). If it does, PHP Monitor will let you know what you can do about this.
+
+Then, install Valet:
+    
     valet install
 
 This should install `dnsmasq` and set up Valet. Great, almost there!
