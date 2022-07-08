@@ -258,7 +258,7 @@
 "prefs.notify_about_secure_status_desc" = "Displays a notification when a domain has been secured or unsecured.";
 "prefs.notify_about_secure_status" = "Notify about secure/unsecure status";
 
-"prefs.notify_about_composer_success_desc" = "Displays a notification when the global composer configuration was successfully updated.";
+"prefs.notify_about_composer_success_desc" = "Displays a notification when the global Composer configuration was successfully updated.";
 "prefs.notify_about_composer_success" = "Notify about global composer update";
 
 // NOTIFICATIONS
@@ -388,6 +388,13 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.php_switch_unavailable.info" = "Please make sure PHP %@ is installed and you can switch to it in the dropdown. Currently supported versions include PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
 
+// Composer issues
+"alert.global_composer_platform_issues.title" = "Composer detected issues in your platform";
+"alert.global_composer_platform_issues.subtitle" = "The version of PHP you switched to is too old for the global Composer dependencies you have installed. These dependencies will need to be updated.";
+"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
+"alert.global_composer_platform_issues.buttons.update" = "Update Global Dependencies";
+"alert.global_composer_platform_issues.buttons.quit" = "Quit PHP Monitor";
+
 // Revert
 "alert.revert_description.title" = "Revert Configuration?";
 "alert.revert_description.subtitle" = "PHP Monitor can revert to the previous configuration that was active. Here's what will be applied: \n\n%@";
@@ -437,6 +444,11 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
+
+/// Platform issue detected
+"startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
+"startup.errors.global_composer_platform_issues.subtitle" = "Please follow these recommended steps to avoid seeing this issue in the future:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. (It should work again.)\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again.";
+"startup.errors.global_composer_platform_issues.desc" = "You can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
 
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";

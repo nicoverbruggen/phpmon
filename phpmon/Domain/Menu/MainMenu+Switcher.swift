@@ -39,14 +39,23 @@ extension MainMenu {
                         self.notifyAboutVersionChange(to: version)
                     }
                 )
-
             } else {
                 self.notifyAboutVersionChange(to: version)
             }
 
+            // Check if Valet still works correctly
+            self.checkForPlatformIssues()
+
             // Update stats
             Stats.incrementSuccessfulSwitchCount()
             Stats.evaluateSponsorMessageShouldBeDisplayed()
+        }
+    }
+
+    private func checkForPlatformIssues() {
+        if Valet.shared.hasPlatformIssues() {
+            Log.info("Composer platform issue(s) detected.")
+            self.suggestFixMyComposer()
         }
     }
 
@@ -63,6 +72,32 @@ extension MainMenu {
         if outcome {
             MainMenu.shared.fixMyValet()
         }
+    }
+
+    private func suggestFixMyComposer() {
+        BetterAlert().withInformation(
+            title: "alert.global_composer_platform_issues.title".localized,
+            subtitle: "alert.global_composer_platform_issues.subtitle".localized,
+            description: "alert.global_composer_platform_issues.desc".localized
+        )
+        .withPrimary(text: "alert.global_composer_platform_issues.buttons.update".localized, action: { alert in
+            alert.close(with: .OK)
+            Log.info("The user has chosen to update global dependencies.")
+            ComposerWindow().updateGlobalDependencies(
+                notify: true,
+                completion: { success in
+                    Log.info("Dependencies updated successfully: \(success)")
+                    Log.info("Re-checking for platform issue(s)...")
+                    self.checkForPlatformIssues()
+                }
+            )
+        })
+        .withSecondary(text: "", action: nil)
+        .withTertiary(text: "alert.global_composer_platform_issues.buttons.quit".localized, action: { alert in
+            alert.close(with: .OK)
+            self.terminateApp()
+        })
+        .show()
     }
 
     private func reloadDomainListData() {
