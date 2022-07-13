@@ -10,41 +10,66 @@ import SwiftUI
 
 struct OnboardingView: View {
     var body: some View {
-        HStack(alignment: .top) {
-            Image(nsImage: NSApp.applicationIconImage)
-                .resizable()
-                .padding()
-                .frame(width: 120, height: 120)
-            VStack(alignment: .leading) {
-                Text("Welcome to PHP Monitor!")
+            VStack(alignment: .center) {
+                Image(nsImage: NSApp.applicationIconImage)
+                    .resizable()
+                    .frame(width: 90, height: 90)
+                Text("onboarding.welcome".localized)
                     .font(.title)
                     .bold()
                     .padding(.bottom, 5)
-                Text("If you're seeing this message, then the app has successfully started without any issues. That's honestly the hardest part — from now on I hope it's smooth sailing for you.")
+                Text("onboarding.explore".localized)
                     .padding(.bottom)
-                VStack(alignment: .leading) {
-                    Text("Switch PHP versions").font(.headline)
-                    Text("Manage your domains").font(.headline)
-                    Text("Domain-specific PHP version isolation").font(.headline)
-                    Text("Find your configuration files").font(.headline)
+                TabView {
+                    VStack {
+                        Image("Tour.MenuBar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top)
+                        Text("onboarding.tour.menu_bar".localized)
+                            .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
+                    }.tabItem { Label("onboarding.tour.menu_bar.title".localized, systemImage: "") }
+                    VStack {
+                        Image("Tour.Domains")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top)
+                        Text("onboarding.tour.domains".localized)
+                            .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
+                    }.tabItem { Label("onboarding.tour.domains.title".localized, systemImage: "") }
+                    VStack {
+                        Image("Tour.Isolation")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top)
+                        Text("onboarding.tour.isolation".localized)
+                            .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
+                    }.tabItem { Label("onboarding.tour.isolation.title".localized, systemImage: "") }
                 }
-                Text("I hope you find the app as useful as I do. Enjoy, and if you can, please consider supporting the app. Thank you!")
-                    .padding(.top)
-                    .padding(.bottom)
-                VStack(alignment: .leading) {
-                    Button("Get Started") {
-                        //
-                    }
+                Text("onboarding.tour.once".localized)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .padding(.top, 5)
+                Button("Close Tour") {
+
                 }
-            }.frame(maxWidth: .infinity)
-        }.padding(20)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
     }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView().frame(
-            width: 600
-        )
+        Group {
+            OnboardingView().frame(
+                width: 600,
+                height: 600
+            )
+            OnboardingView().preferredColorScheme(.dark).frame(
+                width: 600,
+                height: 600
+            )
+        }
     }
 }

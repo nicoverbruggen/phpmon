@@ -497,3 +497,15 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.warnings.tld_issue.title" = "You are not using `.test` as the TLD for Valet.";
 "alert.warnings.tld_issue.subtitle" = "Using a non-default TLD may not work correctly and is not officially supported.";
 "alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`.";
+
+// ONBOARDING
+
+"onboarding.welcome" = "Welcome to PHP Monitor!";
+"onboarding.explore" = "Explore some of the features below, or close the tour and get started.";
+"onboarding.tour.menu_bar.title" = "Get Started";
+"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate configuration files, and more.";
+"onboarding.tour.domains.title" = "Domains";
+"onboarding.tour.domains" = "By opening the Domains window via the Menu Bar item, you can view which domains are linked and parked.";
+"onboarding.tour.isolation.title" = "Isolation";
+"onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain!";
+"onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon.";
