@@ -500,6 +500,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 // ONBOARDING
 
+"onboarding.title" = "";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
 "onboarding.explore" = "Explore some of the features below, or close the tour and get started.";
 "onboarding.tour.menu_bar.title" = "Get Started";

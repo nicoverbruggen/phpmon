@@ -56,6 +56,9 @@ class App {
     /** The window controller of the currently active site list window. */
     var domainListWindowController: DomainListWC?
 
+    /** The window controller of the onboarding window. */
+    var onboardingWindowController: OnboardingWC?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 

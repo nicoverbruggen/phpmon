@@ -51,7 +51,7 @@ struct OnboardingView: View {
                 .foregroundColor(.gray)
                 .padding(.top, 5)
             Button("Close Tour") {
-
+                App.shared.onboardingWindowController?.close()
             }
         }
         .frame(maxWidth: .infinity)
