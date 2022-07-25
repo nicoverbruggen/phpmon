@@ -65,7 +65,7 @@ class Preferences {
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
-        customPreferences = CustomPrefs(scanApps: [], presets: [], services: [])
+        customPreferences = CustomPrefs(scanApps: [], presets: [], services: [], environmentVariables: [:])
         loadCustomPreferences()
     }
 
@@ -251,6 +251,11 @@ class Preferences {
 
             if customPreferences.hasServices() {
                 Log.info("There are custom services: \(customPreferences.services!)")
+            }
+
+            if customPreferences.hasEnvironmentVariables() {
+                Log.info("Configuring the additional exports...")
+                Shell.user.exports = customPreferences.getEnvironmentVariables()
             }
         } catch {
             Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")
