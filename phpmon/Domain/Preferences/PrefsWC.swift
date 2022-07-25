@@ -8,11 +8,6 @@
 
 import Cocoa
 
-struct Keys {
-    static let Escape = 53
-    static let Space = 49
-}
-
 class PrefsWC: PMWindowController {
 
     // MARK: - Window Identifier
@@ -54,7 +49,7 @@ class PrefsWC: PMWindowController {
             for vc in preferencesWC.tabVCs {
                 tabVC.addChild(vc.viewController)
                 let item = tabVC.tabViewItem(for: vc.viewController)
-                item?.image = NSImage(systemSymbolName: vc.icon, accessibilityDescription: "")
+                item?.image = NSImage(systemSymbolName: vc.icon, accessibilityDescription: "\(vc.label) Icon")
                 item?.label = vc.label
             }
 
@@ -74,6 +69,8 @@ class PrefsWC: PMWindowController {
 
         NSApp.activate(ignoringOtherApps: true)
     }
+
+    // MARK: - Tabs
 
     struct PrefTabView {
         let viewController: GenericPreferenceVC
@@ -100,30 +97,5 @@ class PrefsWC: PMWindowController {
             )
         ]
     }()
-
-    // MARK: - Key Interaction
-
-    override func keyDown(with event: NSEvent) {
-        super.keyDown(with: event)
-
-        guard let tabVC = self.contentViewController as? NSTabViewController else {
-            return
-        }
-
-        guard let selected = tabVC.tabViewItems[tabVC.selectedTabViewItemIndex].viewController else {
-            return
-        }
-
-        if let vc = selected as? GenericPreferenceVC {
-            if vc.listeningForHotkeyView != nil {
-                if event.keyCode == Keys.Escape || event.keyCode == Keys.Space {
-                    Log.info("A blacklisted key was pressed, canceling listen!")
-                    vc.listeningForHotkeyView!.unregister(nil)
-                } else {
-                    vc.listeningForHotkeyView!.updateShortcut(event)
-                }
-            }
-        }
-    }
 
 }
