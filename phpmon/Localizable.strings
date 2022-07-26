@@ -500,11 +500,12 @@ You can do this by running `composer global update` in your terminal. After that
 
 // ONBOARDING
 
-"onboarding.title" = "";
+"onboarding.title" = "Welcome Tour";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
-"onboarding.explore" = "Explore some of the features below, or close the tour and get started.";
+"onboarding.explore" = "Explore some of the cool features PHP Monitor has to offer.";
 "onboarding.tour.menu_bar.title" = "Get Started";
 "onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate configuration files, and more.";
+"onboarding.tour.faq_hint" = "**If you are new to PHP Monitor**, I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers. Don't hesitate to get in touch either.";
 "onboarding.tour.domains.title" = "Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the Menu Bar item, you can view which domains are linked and parked.";
 "onboarding.tour.isolation.title" = "Isolation";

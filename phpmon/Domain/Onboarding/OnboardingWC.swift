@@ -20,12 +20,14 @@ class OnboardingWC: PMWindowController {
     public static func create(delegate: NSWindowDelegate?) {
         let windowController = OnboardingWC()
         windowController.window = NSWindow()
-        windowController.window!.title = "onboarding.title".localized
-        windowController.window!.delegate = delegate
-        windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
-        windowController.window!.delegate = windowController
-        windowController.window!.contentView = NSHostingView(rootView: OnboardingView())
-        windowController.window!.setContentSize(NSSize(width: 600, height: 600))
+
+        guard let window = windowController.window else { return }
+        window.title = ""
+        window.styleMask = [.titled, .closable, .miniaturizable]
+        window.titlebarAppearsTransparent = true
+        window.delegate = delegate ?? windowController
+        window.contentView = NSHostingView(rootView: OnboardingView())
+        window.setContentSize(NSSize(width: 600, height: 600))
 
         App.shared.onboardingWindowController = windowController
     }

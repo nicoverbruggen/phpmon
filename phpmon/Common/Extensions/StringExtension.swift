@@ -5,6 +5,7 @@
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 import Foundation
+import SwiftUI
 
 extension String {
     var localized: String {
@@ -15,6 +16,10 @@ extension String {
         }
 
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+    }
+
+    var localizedForSwiftUI: LocalizedStringKey {
+        return LocalizedStringKey(self.localized)
     }
 
     func localized(_ args: CVarArg...) -> String {
