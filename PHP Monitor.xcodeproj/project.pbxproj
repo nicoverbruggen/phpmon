@@ -114,8 +114,10 @@
 		C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
 		C449B4F327EE7FC600C47E8A /* DomainListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */; };
 		C449B4F427EE7FC800C47E8A /* DomainListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */; };
-		C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
-		C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWindow.swift */; };
+		C44A874828905BB000498BC4 /* ProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A874728905BB000498BC4 /* ProgressVC.swift */; };
+		C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A874728905BB000498BC4 /* ProgressVC.swift */; };
+		C44C198D276E3A1C0072762D /* ProgressWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWC.swift */; };
+		C44C198E276E3A1C0072762D /* ProgressWC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* ProgressWC.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
 		C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
 		C44CCD4027AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
@@ -352,7 +354,8 @@
 		C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListTLSCell.swift; sourceTree = "<group>"; };
 		C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIHelper.swift; sourceTree = "<group>"; };
 		C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionPopoverView.swift; sourceTree = "<group>"; };
-		C44C198C276E3A1C0072762D /* ProgressWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindow.swift; sourceTree = "<group>"; };
+		C44A874728905BB000498BC4 /* ProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVC.swift; sourceTree = "<group>"; };
+		C44C198C276E3A1C0072762D /* ProgressWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWC.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
@@ -649,6 +652,7 @@
 				C4D9ADBD27761084007277F4 /* PHP */,
 				C47331A0247093AC009A0597 /* Menu */,
 				C464ADAA275A7A25003FCD53 /* DomainList */,
+				C44A874628905B8500498BC4 /* Onboarding */,
 				5420395726135DB800FB00FA /* Preferences */,
 				C44C198F276E3A380072762D /* Progress */,
 				C4C8E81D276F5686003AC782 /* Watcher */,
@@ -679,10 +683,19 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C44A874628905B8500498BC4 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				C4FACE82288F1F9700FC478F /* OnboardingWC.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		C44C198F276E3A380072762D /* Progress */ = {
 			isa = PBXGroup;
 			children = (
-				C44C198C276E3A1C0072762D /* ProgressWindow.swift */,
+				C44C198C276E3A1C0072762D /* ProgressWC.swift */,
+				C44A874728905BB000498BC4 /* ProgressVC.swift */,
 				C44C1990276E44CB0072762D /* ProgressWindow.storyboard */,
 			);
 			path = Progress;
@@ -1013,7 +1026,6 @@
 			isa = PBXGroup;
 			children = (
 				C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */,
-				C4FACE82288F1F9700FC478F /* OnboardingWC.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1246,6 +1258,7 @@
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */,
 				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
+				C44A874828905BB000498BC4 /* ProgressVC.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B585442770FE3900DA4FBE /* Command.swift in Sources */,
 				C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */,
@@ -1257,7 +1270,7 @@
 				C415D3B72770F294005EF286 /* Actions.swift in Sources */,
 				C4AC51FC27E27F47008528CA /* DomainListKindCell.swift in Sources */,
 				C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */,
-				C44C198D276E3A1C0072762D /* ProgressWindow.swift in Sources */,
+				C44C198D276E3A1C0072762D /* ProgressWC.swift in Sources */,
 				54D9E0B827E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
 				C4C0E8E727F88B41002D32A9 /* ProxyScanner.swift in Sources */,
 				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
@@ -1350,6 +1363,7 @@
 				C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C493084B279F331F009C240B /* AddSiteVC.swift in Sources */,
+				C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */,
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C41C02AA27E61CA3009F26CB /* SiteScanner.swift in Sources */,
 				C4080FFB27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
@@ -1421,7 +1435,7 @@
 				C4998F0B2617633900B2526E /* PrefsWC.swift in Sources */,
 				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
-				C44C198E276E3A1C0072762D /* ProgressWindow.swift in Sources */,
+				C44C198E276E3A1C0072762D /* ProgressWC.swift in Sources */,
 				C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
