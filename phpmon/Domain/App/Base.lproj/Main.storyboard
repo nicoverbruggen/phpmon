@@ -397,28 +397,6 @@
             <point key="canvasLocation" x="283" y="-252"/>
         </scene>
         <!--Window Controller-->
-        <scene sceneID="V0z-jV-4FM">
-            <objects>
-                <windowController storyboardIdentifier="onboardingWindow" id="7r0-ZV-qX6" customClass="OnboardingWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="29a-6B-cdR">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
-                        <view key="contentView" id="Zxc-EX-vzB">
-                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </view>
-                        <connections>
-                            <outlet property="delegate" destination="7r0-ZV-qX6" id="4ET-xO-W3Y"/>
-                        </connections>
-                    </window>
-                </windowController>
-                <customObject id="Gd5-Ea-Y2l" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="303" y="329"/>
-        </scene>
-        <!--Window Controller-->
         <scene sceneID="4XS-kY-YIS">
             <objects>
                 <windowController storyboardIdentifier="domainListWindow" id="8Ec-9q-82s" customClass="DomainListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">

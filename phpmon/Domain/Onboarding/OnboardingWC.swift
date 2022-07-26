@@ -18,12 +18,8 @@ class OnboardingWC: PMWindowController {
     }
 
     public static func create(delegate: NSWindowDelegate?) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "onboardingWindow"
-        ) as! OnboardingWC
-
+        let windowController = OnboardingWC()
+        windowController.window = NSWindow()
         windowController.window!.title = "onboarding.title".localized
         windowController.window!.delegate = delegate
         windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
