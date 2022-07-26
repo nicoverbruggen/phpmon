@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Window Controller-->
         <scene sceneID="pUZ-6w-gUX">
             <objects>
-                <windowController storyboardIdentifier="progressWindow" id="LSr-Iw-X1T" customClass="ProgressWindowController" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="progressWindow" id="LSr-Iw-X1T" customClass="ProgressWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="none" frameAutosaveName="" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="PD9-0p-i0S" customClass="NSPanel">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
                         <windowPositionMask key="initialPositionMask" rightStrut="YES" topStrut="YES"/>
@@ -43,7 +42,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="591" height="210"/>
                                 <clipView key="contentView" drawsBackground="NO" id="2Mc-oy-AzN">
                                     <rect key="frame" x="0.0" y="0.0" width="591" height="210"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="d1T-N1-CRe">
                                             <rect key="frame" x="0.0" y="0.0" width="591" height="210"/>
@@ -65,11 +64,11 @@
                                         </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="51v-CN-AuA">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="51v-CN-AuA">
                                     <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="lSO-JG-QOf">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="lSO-JG-QOf">
                                     <rect key="frame" x="-100" y="-100" width="15" height="173"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

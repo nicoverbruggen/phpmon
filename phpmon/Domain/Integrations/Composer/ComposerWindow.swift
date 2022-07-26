@@ -13,7 +13,7 @@ class ComposerWindow {
     private var menu: MainMenu?
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
-    private var window: ProgressWindowController?
+    private var window: ProgressWC?
 
     /**
      Updates the global dependencies and runs the completion callback when done.
@@ -35,7 +35,7 @@ class ComposerWindow {
         menu?.setBusyImage()
         menu?.rebuild()
 
-        window = ProgressWindowController.display(
+        window = ProgressWC.display(
             title: "alert.composer_progress.title".localized,
             description: "alert.composer_progress.info".localized
         )

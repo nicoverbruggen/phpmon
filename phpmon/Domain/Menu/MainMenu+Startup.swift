@@ -88,6 +88,14 @@ extension MainMenu {
         Stats.incrementSuccessfulLaunchCount()
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
+        // Present first launch screen if needed
+        if Stats.successfulLaunchCount >= 1 { // TODO: Make this == 1 for release
+            Log.info("Should present the first launch screen!")
+            DispatchQueue.main.async {
+                OnboardingWC.show()
+            }
+        }
+
         // Check for updates
         DispatchQueue.global(qos: .utility).async {
             AppUpdateChecker.checkIfNewerVersionIsAvailable()
