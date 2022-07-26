@@ -89,7 +89,8 @@ extension MainMenu {
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
         // Present first launch screen if needed
-        if Stats.successfulLaunchCount >= 1 { // TODO: Make this == 1 for release
+        #warning("The launch screen will be presented every time you launch the app.")
+        if Stats.successfulLaunchCount >= 1 {
             Log.info("Should present the first launch screen!")
             DispatchQueue.main.async {
                 OnboardingWC.show()
