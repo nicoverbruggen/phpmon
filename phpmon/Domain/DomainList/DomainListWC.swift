@@ -124,8 +124,6 @@ class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate
             withIdentifier: "addProxyWindow"
         ) as! NSWindowController
 
-        // let viewController = windowController.window!.contentViewController as! AddSiteVC
-
         self.window?.beginSheet(windowController.window!)
     }
 }

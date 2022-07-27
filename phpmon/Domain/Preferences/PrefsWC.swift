@@ -23,11 +23,12 @@ class PrefsWC: PMWindowController {
             withIdentifier: "preferencesWindow"
         ) as! PrefsWC
 
-        windowController.window!.title = "prefs.title".localized
-        windowController.window!.subtitle = "prefs.subtitle".localized
-        windowController.window!.delegate = delegate
-        windowController.window!.styleMask = [.titled, .closable, .miniaturizable]
-        windowController.window!.delegate = windowController
+        guard let window = windowController.window else { return }
+
+        window.title = "prefs.title".localized
+        window.subtitle = "prefs.subtitle".localized
+        window.delegate = delegate ?? windowController
+        window.styleMask = [.titled, .closable, .miniaturizable]
 
         App.shared.preferencesWindowController = windowController
     }
