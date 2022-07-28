@@ -71,7 +71,7 @@ struct PhpFrameworks {
     public static func detectFallbackDependency(_ basePath: String) -> String? {
         for entry in Self.FileMapping {
             let found = entry.value
-                .map { path in return Filesystem.fileExists(basePath + path) }
+                .map { path in return Filesystem.exists(basePath + path) }
                 .contains(true)
 
             if found {

@@ -435,6 +435,12 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
 "startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
 
+"startup.errors.valet_not_installed.title" = "Your Valet configuration directory is missing";
+"startup.errors.valet_not_installed.subtitle" = "The required directory `~/.config/valet` is missing. This usually means that you forgot to run `valet install`.";
+"startup.errors.valet_not_installed.desc" = "Assuming you already installed Valet via Composer, please run `valet install` to finish setting up Laravel Valet.
+
+If you are seeing this message but are confused why this folder has gone missing, then you may want to investigate why it is gone—it shouldn't just disappear and it means your Valet installation is broken.";
+
 /// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";

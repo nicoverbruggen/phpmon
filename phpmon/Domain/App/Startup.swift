@@ -167,6 +167,18 @@ class Startup {
             descriptionText: "startup.errors.services_json_error.desc".localized
         ),
         // =================================================================================
+        // Determine that Valet is installed
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                return !Filesystem.directoryExists("~/.config/valet")
+            },
+            name: "`.config/valet` not empty (Valet installed)",
+            titleText: "startup.errors.valet_not_installed.title".localized,
+            subtitleText: "startup.errors.valet_not_installed.subtitle".localized,
+            descriptionText: "startup.errors.valet_not_installed.desc".localized
+        ),
+        // =================================================================================
         // Determine that the Valet configuration JSON file is valid.
         // =================================================================================
         EnvironmentCheck(
@@ -224,7 +236,7 @@ class Startup {
             titleText: "startup.errors.valet_version_unknown.title".localized,
             subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
-        )
+        ),
     ]
 
     // MARK: - EnvironmentCheck struct

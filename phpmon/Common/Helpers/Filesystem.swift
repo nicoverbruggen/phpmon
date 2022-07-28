@@ -1,5 +1,5 @@
 //
-//  FileSystem.swift
+//  Filesystem.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 07/12/2021.
@@ -7,17 +7,43 @@
 //
 
 import Cocoa
+import Foundation
 
 class Filesystem {
 
     /**
-     Checks if a file exists at the provided path.
-     Uses `FileManager`.
+     Checks if a file or directory exists at the provided path.
      */
-    public static func fileExists(_ path: String) -> Bool {
+    public static func exists(_ path: String) -> Bool {
         return FileManager.default.fileExists(
             atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
         )
+    }
+
+    /**
+     Checks if a file exists at the provided path.
+     */
+    public static func fileExists(_ path: String) -> Bool {
+        var isDirectory: ObjCBool = true
+        let exists = FileManager.default.fileExists(
+            atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)"),
+            isDirectory: &isDirectory
+        )
+
+        return exists && !isDirectory.boolValue
+    }
+
+    /**
+     Checks if a directory exists at the provided path.
+     */
+    public static func directoryExists(_ path: String) -> Bool {
+        var isDirectory: ObjCBool = true
+        let exists = FileManager.default.fileExists(
+            atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)"),
+            isDirectory: &isDirectory
+        )
+
+        return exists && isDirectory.boolValue
     }
 
 }

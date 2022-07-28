@@ -51,7 +51,7 @@ class PhpConfigWatcher {
         eventMask: DispatchSource.FileSystemEvent,
         behaviour: FSWatcherBehaviour = .reloadsMenu
     ) {
-        if !Filesystem.fileExists(url.path) {
+        if !Filesystem.exists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }
