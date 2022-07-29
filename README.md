@@ -342,6 +342,7 @@ Here's an example of a working preset:
 <pre>
 {
     "scan_apps": [],
+    "services": [],
     "presets": [
         {
             "name": "Legacy Project",
@@ -355,11 +356,54 @@ Here's an example of a working preset:
                 "post_max_size": "128M"
             }
         }
-    ]
+    ],
+    "export": {}
 }
 </pre>
 
 You can omit the `php` key in the preset if you do not wish for the preset to switch to a given PHP version.
+</details>
+
+<details>
+<summary><strong>How do I ensure additional Homebrew services are shown in the app?</strong></summary>
+
+You must set these services up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+You can specify custom services in the configuration file for Homebrew services that run as your own user (not root). 
+
+You can find out which services are available by running `brew services list`. 
+
+Here's an example where we add the `mailgun` and `mysql` services to PHP Monitor:
+
+<pre>
+{
+    "scan_apps": [],
+    "services": ["mailgun", "mysql"],
+    "presets": [],
+    "export": {}
+}
+</pre>
+</details>
+
+<details>
+<summary><strong>How do I set custom environment variables?</strong></summary>
+
+You must configure these custom environment variables up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+PHP Monitor uses a default Shell environment, with no custom environment variables. You need to set custom environment variables manually. These are then used for e.g. Composer.
+
+Here's an example of a working `COMPOSER_HOME` environment variable which is respected:
+
+<pre>
+{
+    "scan_apps": [],
+    "services": [],
+    "presets": [],
+    "export": {
+        "COMPOSER_HOME": "/absolute/path/to/composer/folder"
+    }
+}
+</pre>
 </details>
 
 <details>
@@ -377,8 +421,7 @@ You can add your own apps by creating and editing a `~/.config/phpmon/config.jso
 
 <pre>
 {
-    "scan_apps": ["Xcode", "Kraken"],
-    "presets": []
+    "scan_apps": ["Xcode", "Kraken"]
 }
 </pre>
 
@@ -472,14 +515,14 @@ Donations really help with the Apple Developer Program cost, and keep me motivat
 
 ## 😎 Acknowledgements
 
-While I did make this application during my own free time, PHP Monitor started out from various learning experiments during work hours at my employer, DIVE. I'd also like to shout out the following folks:
+Special thanks go out to:
 
-* My colleagues at [DIVE](https://dive.be)
+* Everyone supporting me via [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen)
+* Everyone who has donated via [my sponsor page](https://nicoverbruggen.be/sponsor)
 * The [Homebrew](https://brew.sh/) team & [Valet maintainers](https://github.com/laravel/valet/graphs/contributors)
 * Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot) when PHP Monitor was still very much a small app with a handful of stars or so
-* My [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen) and those who have donated
-* Everyone who has left feedback and reported bugs (appreciate it!)
-* Everyone in the Laravel community who shared the app (thanks!)
+* Everyone who has left feedback and reported bugs
+* Everyone in the Laravel community who shared the app, especially on Twitter
 
 Thank you very much for your contributions, kind words and support.
 
