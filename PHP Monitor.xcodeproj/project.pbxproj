@@ -91,6 +91,7 @@
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42800AA28452AA10099C999 /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42800A928452AA10099C999 /* StatusMenu+Items.swift */; };
 		C42800AB28452AA50099C999 /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42800A928452AA10099C999 /* StatusMenu+Items.swift */; };
+		C4297F7A28970D59004C4630 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
 		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
 		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
@@ -342,6 +343,7 @@
 		C42337A2281F19F000459A48 /* Xdebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xdebug.swift; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
 		C42800A928452AA10099C999 /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
+		C4297F7928970D59004C4630 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
 		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
 		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
@@ -449,8 +451,8 @@
 		C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtensionTest.swift; sourceTree = "<group>"; };
 		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		C4FACE82288F1F9700FC478F /* OnboardingWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWC.swift; sourceTree = "<group>"; };
 		C4FACE7F288F1C0D00FC478F /* PrefsWC+Hotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrefsWC+Hotkey.swift"; sourceTree = "<group>"; };
+		C4FACE82288F1F9700FC478F /* OnboardingWC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWC.swift; sourceTree = "<group>"; };
 		C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionDetectionTest.swift; sourceTree = "<group>"; };
 		C4FE011028084FC200D1DE6D /* SelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -676,6 +678,14 @@
 				C42337A2281F19F000459A48 /* Xdebug.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C4297F7828970D4E004C4630 /* Warning */ = {
+			isa = PBXGroup;
+			children = (
+				C4297F7928970D59004C4630 /* WarningView.swift */,
+			);
+			path = Warning;
 			sourceTree = "<group>";
 		};
 		C44067F327E256560045BD4E /* Cells */ = {
@@ -1041,6 +1051,7 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C4297F7828970D4E004C4630 /* Warning */,
 				C4E9D2BE2878B32D008FFDAD /* Onboarding */,
 				C4B609182853AAA700C95265 /* Domains */,
 				C4B609172853AA9E00C95265 /* Menu */,
@@ -1292,6 +1303,7 @@
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				54D9E0B427E4F51E003B9AD9 /* Key.swift in Sources */,
+				C4297F7A28970D59004C4630 /* WarningView.swift in Sources */,
 				C4C0E8E227F88B13002D32A9 /* ValetSiteScanner.swift in Sources */,
 				C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
