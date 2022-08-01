@@ -513,12 +513,13 @@ If you are seeing this message but are confused why this folder has gone missing
 
 "onboarding.title" = "Welcome Tour";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
-"onboarding.explore" = "Explore some of the cool features PHP Monitor has to offer.";
+"onboarding.explore" = "Learn more about some of the features that PHP Monitor has to offer.";
 "onboarding.tour.menu_bar.title" = "Get Started";
 "onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate configuration files, and more.";
-"onboarding.tour.faq_hint" = "**If you are new to PHP Monitor**, I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers. Don't hesitate to get in touch either.";
+"onboarding.tour.faq_hint" = "I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
 "onboarding.tour.domains.title" = "Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the Menu Bar item, you can view which domains are linked and parked.";
 "onboarding.tour.isolation.title" = "Isolation";
 "onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain!";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon.";
+"onboarding.tour.close" = "Close Tour";

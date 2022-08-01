@@ -8,96 +8,109 @@
 
 import SwiftUI
 
+struct OnboardingTextItem: View {
+    @State var icon: String
+    @State var title: String
+    @State var description: String
+    var body: some View {
+        HStack(spacing: 15) {
+            Image(systemName: icon)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 24, height: 24)
+                .foregroundColor(Color.appPrimary)
+                .padding(.trailing, 10)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title.localizedForSwiftUI)
+                    .font(.system(size: 15))
+                Text(description.localizedForSwiftUI)
+                    .foregroundColor(Color.secondary)
+                    .font(.system(size: 13))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+}
+
 struct OnboardingView: View {
     var body: some View {
-        VStack {
-        VStack(alignment: .leading) {
-            HStack {
-                Image(nsImage: NSApp.applicationIconImage)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .padding(.bottom, 5)
-                    .padding(.trailing, 25)
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("onboarding.welcome".localized)
-                        .font(.title)
-                        .bold()
+        VStack(spacing: 10) {
+            VStack(alignment: .center) {
+                HStack {
+                    Image(nsImage: NSApp.applicationIconImage)
+                        .resizable()
+                        .frame(width: 80, height: 80)
                         .padding(.bottom, 5)
-                    Text("onboarding.explore".localized)
-                        .padding(.bottom)
-                }.padding(.top, 10)
-            }
-
-            TabView {
+                        .padding(.trailing, 25)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("onboarding.welcome".localized)
+                            .font(.title)
+                            .bold()
+                            .padding(.bottom, 5)
+                        Text("onboarding.explore".localized)
+                            .padding(.bottom)
+                    }
+                    .padding(.top, 10)
+                }
                 VStack {
-                    Image("Tour.MenuBar")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.top)
-                    Text("onboarding.tour.menu_bar".localizedForSwiftUI)
-                        .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
-                }.tabItem { Label("onboarding.tour.menu_bar.title".localized,
-                                  systemImage: "info.circle.fill") }
-                VStack {
-                    Image("Tour.Domains")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.top)
-                    Text("onboarding.tour.domains".localized)
-                        .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
-                }.tabItem { Label("onboarding.tour.domains.title".localized,
-                                  systemImage: "info.circle.fill") }
-                VStack {
-                    Image("Tour.Isolation")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.top)
-                    Text("onboarding.tour.isolation".localized)
-                        .padding(.init(top: 5, leading: 20, bottom: 20, trailing: 20))
-                }.tabItem { Label("onboarding.tour.isolation.title".localized,
-                                  systemImage: "info.circle.fill") }
+                    VStack(alignment: .leading, spacing: 20) {
+                        OnboardingTextItem(
+                            icon: "sparkles.rectangle.stack",
+                            title: "onboarding.tour.menu_bar.title",
+                            description: "onboarding.tour.menu_bar"
+                        )
+                        OnboardingTextItem(
+                            icon: "list.star",
+                            title: "onboarding.tour.domains.title",
+                            description: "onboarding.tour.domains"
+                        )
+                        OnboardingTextItem(
+                            icon: "pin.fill",
+                            title: "onboarding.tour.isolation.title",
+                            description: "onboarding.tour.isolation"
+                        )
+                    }
+                    .padding(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+                }.padding()
+                VStack(spacing: 20) {
+                    HStack {
+                        Image(systemName: "questionmark.circle.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color.appSecondary)
+                            .padding(.trailing, 10)
+                        Text("onboarding.tour.faq_hint".localizedForSwiftUI)
+                    }
+                    VStack {
+                        Text("onboarding.tour.once".localized)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                        Button("onboarding.tour.close".localized) {
+                            App.shared.onboardingWindowController?.close()
+                        }
+                    }
+                }.padding()
             }
-        }
-        .frame(maxWidth: .infinity)
-
-        VStack(alignment: .center) {
-            HStack {
-                Image(systemName: "person.fill.questionmark")
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.accentColor)
-                    .padding(.trailing, 10)
-                Text("onboarding.tour.faq_hint".localizedForSwiftUI)
-            }.padding()
-            Text("onboarding.tour.once".localized)
-                .font(.subheadline)
-                .foregroundColor(.gray)
-                .padding(.top, 5)
-                .padding(.bottom, 5)
-            Button("Close Tour") {
-                App.shared.onboardingWindowController?.close()
-            }
-        }
-        .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 580)
         }
         .padding(.top, 8)
         .padding(.leading)
         .padding(.trailing)
-        .padding(.bottom)
     }
 }
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OnboardingView().frame(
-                width: 600,
-                height: 600
-            )
-            OnboardingView().preferredColorScheme(.dark).frame(
-                width: 600,
-                height: 600
-            )
+            OnboardingView()
+            OnboardingView().preferredColorScheme(.dark)
         }
     }
 }
