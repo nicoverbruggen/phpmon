@@ -18,12 +18,13 @@ struct WarningView: View {
                 .resizable()
                 .frame(width: 25, height: 25)
                 .padding()
-            VStack(alignment: .leading) {
-                Text(title)
+                .foregroundColor(Color.orange)
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title.localizedForSwiftUI)
                     .fontWeight(.bold)
-                    .padding(.bottom, 1)
-                Text(description)
+                Text(description.localizedForSwiftUI)
                     .font(.body)
+
             }
         }.padding()
     }
@@ -32,8 +33,13 @@ struct WarningView: View {
 struct WarningView_Previews: PreviewProvider {
     static var previews: some View {
         WarningView(
-            title: "Helpers not written",
-            description: "The helper files in `/usr/local/bin` could not be written because PHP Monitor does not have permission to write there."
+            title: "warnings.helper_permissions_title",
+            description: "warnings.helper_permissions.description"
         )
+        WarningView(
+            title: "warnings.helper_permissions_title",
+            description: "warnings.helper_permissions.description"
+        )
+        .preferredColorScheme(.dark)
     }
 }

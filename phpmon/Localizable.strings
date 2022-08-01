@@ -504,6 +504,11 @@ If you are seeing this message but are confused why this folder has gone missing
 "alert.warnings.tld_issue.subtitle" = "Using a non-default TLD may not work correctly and is not officially supported.";
 "alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`.";
 
+// WARNINGS
+
+"warnings.helper_permissions_title" = "Helpers could not be written!";
+"warnings.helper_permissions.description" = "The helper files in `/usr/local/bin` could not be written because PHP Monitor does not have permission to write there.";
+
 // ONBOARDING
 
 "onboarding.title" = "Welcome Tour";
