@@ -13,7 +13,7 @@ struct OnboardingTextItem: View {
     @State var title: String
     @State var description: String
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(alignment: .top, spacing: 5) {
             Image(systemName: icon)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -22,13 +22,21 @@ struct OnboardingTextItem: View {
                 .padding(.trailing, 10)
             VStack(alignment: .leading, spacing: 4) {
                 Text(title.localizedForSwiftUI)
-                    .font(.system(size: 15))
+                    .font(.system(size: 14))
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 Text(description.localizedForSwiftUI)
                     .foregroundColor(Color.secondary)
                     .font(.system(size: 13))
                     .fixedSize(horizontal: false, vertical: true)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(18)
+        .overlay(
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+        )
     }
 }
 
@@ -53,28 +61,23 @@ struct OnboardingView: View {
                     .padding(.top, 10)
                 }
                 VStack {
-                    VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 10) {
                         OnboardingTextItem(
-                            icon: "sparkles.rectangle.stack",
+                            icon: "bolt.circle.fill",
                             title: "onboarding.tour.menu_bar.title",
                             description: "onboarding.tour.menu_bar"
                         )
                         OnboardingTextItem(
-                            icon: "list.star",
+                            icon: "list.bullet.circle.fill",
                             title: "onboarding.tour.domains.title",
                             description: "onboarding.tour.domains"
                         )
                         OnboardingTextItem(
-                            icon: "pin.fill",
+                            icon: "pin.circle.fill",
                             title: "onboarding.tour.isolation.title",
                             description: "onboarding.tour.isolation"
                         )
                     }
-                    .padding(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                    )
                 }.padding()
                 VStack(spacing: 20) {
                     HStack {
