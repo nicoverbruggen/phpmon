@@ -12,6 +12,7 @@ struct OnboardingTextItem: View {
     @State var icon: String
     @State var title: String
     @State var description: String
+
     var body: some View {
         HStack(alignment: .top, spacing: 5) {
             Image(systemName: icon)
@@ -23,20 +24,19 @@ struct OnboardingTextItem: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title.localizedForSwiftUI)
                     .font(.system(size: 14))
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                Text(description.localizedForSwiftUI)
-                    .foregroundColor(Color.secondary)
-                    .font(.system(size: 13))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(3)
+                HStack {
+                    Text(description.localizedForSwiftUI)
+                        .foregroundColor(Color.secondary)
+                        .font(.system(size: 13))
+                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    }
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(18)
-        .overlay(
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-        )
+        .padding()
+        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.3), lineWidth: 1))
     }
 }
 
@@ -86,7 +86,10 @@ struct OnboardingView: View {
                             .frame(width: 24, height: 24)
                             .foregroundColor(Color.appSecondary)
                             .padding(.trailing, 10)
-                        Text("onboarding.tour.faq_hint".localizedForSwiftUI)
+                        HStack {
+                            Text("onboarding.tour.faq_hint".localizedForSwiftUI)
+                                .lineLimit(5)
+                        }.fixedSize(horizontal: false, vertical: true)
                     }
                     VStack {
                         Text("onboarding.tour.once".localized)
@@ -94,18 +97,15 @@ struct OnboardingView: View {
                             .foregroundColor(.gray)
                             .padding(.top, 5)
                             .padding(.bottom, 5)
+                            .lineLimit(5)
                         Button("onboarding.tour.close".localized) {
                             App.shared.onboardingWindowController?.close()
                         }
                     }
                 }.padding()
             }
-            .frame(maxWidth: .infinity)
-            .frame(maxHeight: 580)
         }
         .padding(.top, 8)
-        .padding(.leading)
-        .padding(.trailing)
     }
 }
 

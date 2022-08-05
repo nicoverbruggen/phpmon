@@ -515,7 +515,7 @@ If you are seeing this message but are confused why this folder has gone missing
 "onboarding.welcome" = "Welcome to PHP Monitor!";
 "onboarding.explore" = "Learn more about some of the features that PHP Monitor has to offer.";
 "onboarding.tour.menu_bar.title" = "Get Started";
-"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate configuration files, and more.";
+"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate config files, and more.";
 "onboarding.tour.faq_hint" = "I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
 "onboarding.tour.domains.title" = "Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the Menu Bar item, you can view which domains are linked and parked.";
