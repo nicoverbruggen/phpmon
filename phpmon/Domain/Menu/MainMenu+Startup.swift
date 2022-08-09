@@ -93,7 +93,8 @@ extension MainMenu {
         if Stats.successfulLaunchCount >= 1 && !isRunningSwiftUIPreview {
             Log.info("Should present the first launch screen!")
             DispatchQueue.main.async {
-                OnboardingWindowController.show()
+                // OnboardingWindowController.show()
+                WarningsWindowController.show()
             }
         }
 

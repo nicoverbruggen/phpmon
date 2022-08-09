@@ -11,22 +11,29 @@ import SwiftUI
 struct WarningView: View {
     @State var title: String
     @State var description: String
+    @State var documentationUrl: String?
 
     var body: some View {
-        HStack {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .resizable()
-                .frame(width: 25, height: 25)
-                .padding()
-                .foregroundColor(Color.orange)
-            VStack(alignment: .leading, spacing: 5) {
-                Text(title.localizedForSwiftUI)
-                    .fontWeight(.bold)
-                Text(description.localizedForSwiftUI)
-                    .font(.body)
-
-            }
-        }.padding()
+        VStack(alignment: .leading) {
+            HStack(spacing: 5) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+                    .padding()
+                    .foregroundColor(Color.orange)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(title.localizedForSwiftUI)
+                        .fontWeight(.bold)
+                    Text(description.localizedForSwiftUI)
+                        .font(.body)
+                }
+                if documentationUrl != nil {
+                    Button("Learn More") {
+                        NSWorkspace.shared.open(URL(string: documentationUrl!)!)
+                    }
+                }
+            }.padding()
+        }
     }
 }
 

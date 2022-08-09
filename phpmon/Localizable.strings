@@ -506,8 +506,13 @@ If you are seeing this message but are confused why this folder has gone missing
 
 // WARNINGS
 
+"warnings.title" = "Warnings";
+
 "warnings.helper_permissions_title" = "Helpers could not be written!";
 "warnings.helper_permissions.description" = "The helper files in `/usr/local/bin` could not be written because PHP Monitor does not have permission to write there.";
+
+"warnings.arm_compatibility_title" = "You are running PHP Monitor using Rosetta";
+"warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
 
 // ONBOARDING
 

@@ -59,6 +59,9 @@ class App {
     /** The window controller of the onboarding window. */
     var onboardingWindowController: OnboardingWindowController?
 
+    /** The window controller of the warnings window. */
+    var warningsWindowController: WarningsWindowController?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 

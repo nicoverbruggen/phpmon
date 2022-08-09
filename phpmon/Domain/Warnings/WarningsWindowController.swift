@@ -1,20 +1,20 @@
 //
-//  OnboardingWindowController.swift
+//  WarningsWindowController.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 25/06/2022.
+//  Created by Nico Verbruggen on 09/08/2022.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 import SwiftUI
 
-class OnboardingWindowController: PMWindowController {
+class WarningsWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
     override var windowName: String {
-        return "Onboarding"
+        return "Warnings"
     }
 
     public static func create(delegate: NSWindowDelegate?) {
@@ -22,23 +22,23 @@ class OnboardingWindowController: PMWindowController {
         windowController.window = NSWindow()
 
         guard let window = windowController.window else { return }
-        window.title = ""
+        window.title = "warnings.title".localized
         window.styleMask = [.titled, .closable, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
-        window.contentView = NSHostingView(rootView: OnboardingView())
-        window.setContentSize(NSSize(width: 600, height: 600))
+        window.contentView = NSHostingView(rootView: WarningListView())
+        window.setContentSize(NSSize(width: 600, height: 300))
 
-        App.shared.onboardingWindowController = windowController
+        App.shared.warningsWindowController = windowController
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.onboardingWindowController == nil {
+        if App.shared.warningsWindowController == nil {
             Self.create(delegate: delegate)
         }
 
-        App.shared.onboardingWindowController?.showWindow(self)
-        App.shared.onboardingWindowController?.window?.setCenterPosition(offsetY: 70)
+        App.shared.warningsWindowController?.showWindow(self)
+        App.shared.warningsWindowController?.window?.setCenterPosition(offsetY: 70)
 
         NSApp.activate(ignoringOtherApps: true)
     }
