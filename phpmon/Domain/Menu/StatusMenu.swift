@@ -76,6 +76,10 @@ class StatusMenu: NSMenu {
 
     func addCoreMenuItems() {
         self.addItem(NSMenuItem.separator())
+        if (WarningManager.hasWarnings()) {
+            self.addItem(NSMenuItem(title: "mi_warnings".localized(2),
+                                    action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
+        }
         self.addItem(NSMenuItem(title: "mi_preferences".localized,
                                 action: #selector(MainMenu.openPrefs), keyEquivalent: ","))
         self.addItem(NSMenuItem(title: "mi_check_for_updates".localized,

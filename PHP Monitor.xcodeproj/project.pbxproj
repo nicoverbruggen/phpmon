@@ -149,6 +149,8 @@
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
+		C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
+		C47699F128A2F3150060FEB8 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699F028A2F3150060FEB8 /* Warning.swift */; };
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
 		C4811D2422D70A4700B5F6B3 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2322D70A4700B5F6B3 /* App.swift */; };
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
@@ -385,6 +387,8 @@
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		C474B00524C0E98C00066A22 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		C47699EE28A2F2A30060FEB8 /* WarningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManager.swift; sourceTree = "<group>"; };
+		C47699F028A2F3150060FEB8 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -680,6 +684,8 @@
 		C422DDAB28A2DAA100CEAC97 /* Warnings */ = {
 			isa = PBXGroup;
 			children = (
+				C47699F028A2F3150060FEB8 /* Warning.swift */,
+				C47699EE28A2F2A30060FEB8 /* WarningManager.swift */,
 				C422DDAC28A2DAC600CEAC97 /* WarningsWindowController.swift */,
 			);
 			path = Warnings;
@@ -1258,6 +1264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
@@ -1324,6 +1331,7 @@
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
+				C47699F128A2F3150060FEB8 /* Warning.swift in Sources */,
 				54D9E0B227E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,

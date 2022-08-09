@@ -174,6 +174,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         PreferencesWindowController.show()
     }
 
+    @objc func openWarnings() {
+        WarningsWindowController.show()
+    }
+
     @objc func openDomainList() {
         DomainListVC.show()
     }

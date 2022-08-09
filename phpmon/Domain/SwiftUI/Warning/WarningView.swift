@@ -15,24 +15,24 @@ struct WarningView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(spacing: 5) {
+            HStack(spacing: 10) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .resizable()
-                    .frame(width: 25, height: 25)
-                    .padding()
+                    .frame(width: 18, height: 18)
                     .foregroundColor(Color.orange)
+                    .padding()
                 VStack(alignment: .leading, spacing: 5) {
                     Text(title.localizedForSwiftUI)
                         .fontWeight(.bold)
                     Text(description.localizedForSwiftUI)
-                        .font(.body)
+                        .font(.system(size: 12))
                 }
                 if documentationUrl != nil {
                     Button("Learn More") {
                         NSWorkspace.shared.open(URL(string: documentationUrl!)!)
-                    }
+                    }.padding()
                 }
-            }.padding()
+            }.padding(5)
         }
     }
 }
@@ -41,7 +41,8 @@ struct WarningView_Previews: PreviewProvider {
     static var previews: some View {
         WarningView(
             title: "warnings.helper_permissions_title",
-            description: "warnings.helper_permissions.description"
+            description: "warnings.helper_permissions.description",
+            documentationUrl: "https://nicoverbruggen.be"
         )
         WarningView(
             title: "warnings.helper_permissions_title",

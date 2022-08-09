@@ -94,7 +94,6 @@ extension MainMenu {
             Log.info("Should present the first launch screen!")
             DispatchQueue.main.async {
                 // OnboardingWindowController.show()
-                WarningsWindowController.show()
             }
         }
 

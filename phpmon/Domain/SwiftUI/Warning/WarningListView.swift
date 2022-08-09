@@ -13,12 +13,17 @@ struct WarningListView: View {
         List {
             VStack(alignment: .leading) {
                 WarningView(
-                    title: "warnings.arm_compatibility_title".localized,
-                    description: "warnings.arm_compatibility.description".localized,
+                    title: "warnings.arm_compatibility_title",
+                    description: "warnings.arm_compatibility.description",
                     documentationUrl: "https://phpmon.app/documentation/apple-silicon-transition"
                 )
                 Divider()
-            }.frame(height: 90)
+                WarningView(
+                    title: "warnings.helper_permissions_title",
+                    description: "warnings.helper_permissions.description"
+                )
+                Divider()
+            }
 
         }
         .navigationTitle("Warnings")
