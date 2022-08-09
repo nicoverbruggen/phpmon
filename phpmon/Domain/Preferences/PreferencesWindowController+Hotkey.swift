@@ -1,5 +1,5 @@
 //
-//  PrefsWC+Hotkey.swift
+//  PreferencesWindowController+Hotkey.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 25/07/2022.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-extension PrefsWC {
+extension PreferencesWindowController {
 
     // MARK: - Key Interaction
 

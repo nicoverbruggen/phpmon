@@ -1,5 +1,5 @@
 //
-//  DomainListWC.swift
+//  DomainListWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/12/2021.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class DomainListWC: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
+class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
 
     // MARK: - Window Identifier
 

@@ -1,5 +1,5 @@
 //
-//  PrefsWC.swift
+//  PreferencesWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 02/04/2021.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PrefsWC: PMWindowController {
+class PreferencesWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
@@ -21,7 +21,7 @@ class PrefsWC: PMWindowController {
 
         let windowController = storyboard.instantiateController(
             withIdentifier: "preferencesWindow"
-        ) as! PrefsWC
+        ) as! PreferencesWindowController
 
         guard let window = windowController.window else { return }
 

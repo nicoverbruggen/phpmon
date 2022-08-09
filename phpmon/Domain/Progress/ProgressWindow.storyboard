@@ -8,7 +8,7 @@
         <!--Window Controller-->
         <scene sceneID="pUZ-6w-gUX">
             <objects>
-                <windowController storyboardIdentifier="progressWindow" id="LSr-Iw-X1T" customClass="ProgressWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="progressWindow" id="LSr-Iw-X1T" customClass="TerminalProgressWindowController" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="none" frameAutosaveName="" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="PD9-0p-i0S" customClass="NSPanel">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
                         <windowPositionMask key="initialPositionMask" rightStrut="YES" topStrut="YES"/>

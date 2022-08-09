@@ -51,13 +51,13 @@ class App {
     var preferences: [PreferenceName: Bool]!
 
     /** The window controller of the currently active preferences window. */
-    var preferencesWindowController: PrefsWC?
+    var preferencesWindowController: PreferencesWindowController?
 
     /** The window controller of the currently active site list window. */
-    var domainListWindowController: DomainListWC?
+    var domainListWindowController: DomainListWindowController?
 
     /** The window controller of the onboarding window. */
-    var onboardingWindowController: OnboardingWC?
+    var onboardingWindowController: OnboardingWindowController?
 
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []

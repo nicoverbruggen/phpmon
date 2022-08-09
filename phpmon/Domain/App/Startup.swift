@@ -236,7 +236,7 @@ class Startup {
             titleText: "startup.errors.valet_version_unknown.title".localized,
             subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
-        ),
+        )
     ]
 
     // MARK: - EnvironmentCheck struct

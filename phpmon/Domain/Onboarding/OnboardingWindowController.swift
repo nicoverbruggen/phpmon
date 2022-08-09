@@ -1,5 +1,5 @@
 //
-//  OnboardingWC.swift
+//  OnboardingWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 25/06/2022.
@@ -9,7 +9,7 @@
 import Cocoa
 import SwiftUI
 
-class OnboardingWC: PMWindowController {
+class OnboardingWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
@@ -18,7 +18,7 @@ class OnboardingWC: PMWindowController {
     }
 
     public static func create(delegate: NSWindowDelegate?) {
-        let windowController = OnboardingWC()
+        let windowController = OnboardingWindowController()
         windowController.window = NSWindow()
 
         guard let window = windowController.window else { return }

@@ -1,5 +1,5 @@
 //
-//  ProgressView.swift
+//  TerminalProgressWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 18/12/2021.
@@ -9,14 +9,14 @@
 import Foundation
 import AppKit
 
-class ProgressWC: NSWindowController, NSWindowDelegate {
+class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
 
-    static func display(title: String, description: String) -> ProgressWC {
+    static func display(title: String, description: String) -> TerminalProgressWindowController {
         let storyboard = NSStoryboard(name: "ProgressWindow", bundle: nil)
 
         let windowController = storyboard.instantiateController(
             withIdentifier: "progressWindow"
-        ) as! ProgressWC
+        ) as! TerminalProgressWindowController
 
         windowController.showWindow(windowController)
         windowController.window?.makeKeyAndOrderFront(nil)

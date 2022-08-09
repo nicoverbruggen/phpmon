@@ -64,7 +64,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         let windowController = storyboard.instantiateController(
             withIdentifier: "domainListWindow"
-        ) as! DomainListWC
+        ) as! DomainListWindowController
 
         guard let window = windowController.window else { return }
 
