@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 class WarningManager {
 
@@ -15,13 +16,22 @@ class WarningManager {
     public let evaluations: [Warning] = [
         Warning(
             command: {
+                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/pm81")
+            },
+            name: "`/usr/local/bin` not writable",
+            titleText: "warnings.helper_permissions.title",
+            descriptionText: "warnings.helper_permissions.description",
+            url: nil
+        ),
+        Warning(
+            command: {
                 return Shell.pipe("sysctl -n sysctl.proc_translated")
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
             titleText: "warnings.arm_compatibility.title",
             descriptionText: "warnings.arm_compatibility.description",
-            url: nil
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
         )
     ]
 
