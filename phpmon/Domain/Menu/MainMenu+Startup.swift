@@ -79,21 +79,25 @@ extension MainMenu {
         // A non-default TLD is not officially supported since Valet 3.2.x
         Valet.notifyAboutUnsupportedTLD()
 
+        // Find out which services are active
         ServicesManager.shared.loadData()
 
         // Start the background refresh timer
         startSharedTimer()
+
+        // Check warnings
+        WarningManager.shared.evaluateWarnings()
 
         // Update the stats
         Stats.incrementSuccessfulLaunchCount()
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
         // Present first launch screen if needed
-        #warning("The launch screen will be presented every time you launch the app.")
-        if Stats.successfulLaunchCount >= 1 && !isRunningSwiftUIPreview {
+        #warning("You should definitely tweak this view again")
+        if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
             Log.info("Should present the first launch screen!")
             DispatchQueue.main.async {
-                // OnboardingWindowController.show()
+                OnboardingWindowController.show()
             }
         }
 

@@ -68,6 +68,9 @@ class App {
     /** The services manager, responsible for figuring out what services are active/inactive. */
     var services = ServicesManager.shared
 
+    /** The warning manager, responsible for keeping track of warnings. */
+    var warnings = WarningManager.shared
+
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
 

@@ -74,12 +74,21 @@ class StatusMenu: NSMenu {
         self.addFirstAidAndServicesMenuItems()
     }
 
+    func addWarningsMenuItem() {
+        if !WarningManager.shared.hasWarnings() {
+            return
+        }
+
+        self.addItem(NSMenuItem.separator())
+
+        let count = WarningManager.shared.warnings.count
+        self.addItem(NSMenuItem(title: (count == 1 ? "mi_warning" : "mi_warnings").localized(count),
+                                action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
+    }
+
     func addCoreMenuItems() {
         self.addItem(NSMenuItem.separator())
-        if (WarningManager.hasWarnings()) {
-            self.addItem(NSMenuItem(title: "mi_warnings".localized(2),
-                                    action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
-        }
+
         self.addItem(NSMenuItem(title: "mi_preferences".localized,
                                 action: #selector(MainMenu.openPrefs), keyEquivalent: ","))
         self.addItem(NSMenuItem(title: "mi_check_for_updates".localized,

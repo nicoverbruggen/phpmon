@@ -8,6 +8,29 @@
 
 import Foundation
 
-struct Warning {
+struct Warning: Identifiable {
+    var id = UUID()
+    let command: () async -> Bool
+    let name: String
+    let titleText: String
+    let descriptionText: String
+    let url: String?
 
+    init(
+        command: @escaping () async -> Bool,
+        name: String,
+        titleText: String,
+        descriptionText: String,
+        url: String?
+    ) {
+        self.command = command
+        self.name = name
+        self.titleText = titleText
+        self.descriptionText = descriptionText
+        self.url = url
+    }
+
+    public func applies() async -> Bool {
+        return await self.command()
+    }
 }

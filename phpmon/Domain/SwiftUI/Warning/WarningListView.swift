@@ -12,17 +12,14 @@ struct WarningListView: View {
     var body: some View {
         List {
             VStack(alignment: .leading) {
-                WarningView(
-                    title: "warnings.arm_compatibility_title",
-                    description: "warnings.arm_compatibility.description",
-                    documentationUrl: "https://phpmon.app/documentation/apple-silicon-transition"
-                )
-                Divider()
-                WarningView(
-                    title: "warnings.helper_permissions_title",
-                    description: "warnings.helper_permissions.description"
-                )
-                Divider()
+                ForEach(WarningManager.shared.warnings) { warning in
+                    WarningView(
+                        title: warning.titleText,
+                        description: warning.descriptionText,
+                        documentationUrl: warning.url
+                    )
+                    Divider()
+                }
             }
 
         }

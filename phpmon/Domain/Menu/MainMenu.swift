@@ -64,6 +64,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         menu.addRemainingMenuItems()
         menu.addItem(NSMenuItem.separator())
 
+        menu.addWarningsMenuItem()
         menu.addCoreMenuItems()
 
         menu.items.forEach({ (item) in
