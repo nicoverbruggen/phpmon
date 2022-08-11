@@ -16,7 +16,7 @@ class WarningManager {
     public let evaluations: [Warning] = [
         Warning(
             command: {
-                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/pm81")
+                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
             },
             name: "`/usr/local/bin` not writable",
             titleText: "warnings.helper_permissions.title",
