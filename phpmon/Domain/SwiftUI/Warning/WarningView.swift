@@ -49,6 +49,21 @@ struct WarningView: View {
 
 struct WarningView_Previews: PreviewProvider {
     static var previews: some View {
-        WarningListView().frame(width: 600, height: 480)
+        WarningView(
+            title: "warnings.helper_permissions.title",
+            paragraphs: ["warnings.helper_permissions.description"],
+            documentationUrl: "https://nicoverbruggen.be"
+        )
+        .frame(width: 600, height: 105)
+
+        WarningView(
+            title: "warnings.helper_permissions.title",
+            paragraphs: ["warnings.helper_permissions.description"],
+            documentationUrl: "https://nicoverbruggen.be"
+        )
+        .preferredColorScheme(.dark)
+        .frame(width: 600, height: 105)
+
+        // WarningListView().frame(width: 600, height: 580)
     }
 }
