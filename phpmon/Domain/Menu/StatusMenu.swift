@@ -82,7 +82,7 @@ class StatusMenu: NSMenu {
         self.addItem(NSMenuItem.separator())
 
         let count = WarningManager.shared.warnings.count
-        self.addItem(NSMenuItem(title: (count == 1 ? "mi_warning" : "mi_warnings").localized(count),
+        self.addItem(NSMenuItem(title: "mi_warnings".localized(count),
                                 action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
     }
 

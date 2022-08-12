@@ -10,27 +10,37 @@ import SwiftUI
 
 struct WarningView: View {
     @State var title: String
-    @State var description: String
+    @State var paragraphs: [String]
     @State var documentationUrl: String?
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(spacing: 10) {
-                Image(systemName: "exclamationmark.triangle.fill")
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "bandage.fill")
                     .resizable()
                     .frame(width: 18, height: 18)
                     .foregroundColor(Color.orange)
-                    .padding()
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(title.localizedForSwiftUI)
-                        .fontWeight(.bold)
-                    Text(description.localizedForSwiftUI)
-                        .font(.system(size: 12))
-                }
-                if documentationUrl != nil {
-                    Button("Learn More") {
-                        NSWorkspace.shared.open(URL(string: documentationUrl!)!)
-                    }.padding()
+                    .padding(.trailing, 5)
+                VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(title.localizedForSwiftUI)
+                            .fontWeight(.bold)
+                        ForEach(paragraphs, id: \.self) { paragraph in
+                            Text(paragraph.localizedForSwiftUI)
+                                .font(.system(size: 13))
+                        }
+                    }
+                    .fixedSize(horizontal: false, vertical: false)
+                    .frame(
+                        minWidth: 0, maxWidth: .infinity,
+                        minHeight: 0, maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
+                    if documentationUrl != nil {
+                        Button("Learn More") {
+                            NSWorkspace.shared.open(URL(string: documentationUrl!)!)
+                        }
+                    }
                 }
             }.padding(5)
         }
@@ -39,15 +49,6 @@ struct WarningView: View {
 
 struct WarningView_Previews: PreviewProvider {
     static var previews: some View {
-        WarningView(
-            title: "warnings.helper_permissions_title",
-            description: "warnings.helper_permissions.description",
-            documentationUrl: "https://nicoverbruggen.be"
-        )
-        WarningView(
-            title: "warnings.helper_permissions_title",
-            description: "warnings.helper_permissions.description"
-        )
-        .preferredColorScheme(.dark)
+        WarningListView().frame(width: 600, height: 480)
     }
 }

@@ -13,25 +13,31 @@ class WarningManager {
 
     static var shared = WarningManager()
 
+    init() {
+        if isRunningSwiftUIPreview {
+            self.warnings = self.evaluations
+        }
+    }
+
     public let evaluations: [Warning] = [
-        Warning(
-            command: {
-                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
-            },
-            name: "`/usr/local/bin` not writable",
-            titleText: "warnings.helper_permissions.title",
-            descriptionText: "warnings.helper_permissions.description",
-            url: nil
-        ),
         Warning(
             command: {
                 return Shell.pipe("sysctl -n sysctl.proc_translated")
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
-            titleText: "warnings.arm_compatibility.title",
-            descriptionText: "warnings.arm_compatibility.description",
+            title: "warnings.arm_compatibility.title",
+            paragraphs: ["warnings.arm_compatibility.description"],
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
+        ),
+        Warning(
+            command: {
+                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+            },
+            name: "`/usr/local/bin` not writable",
+            title: "warnings.helper_permissions.title",
+            paragraphs: ["warnings.helper_permissions.description", "warnings.helper_permissions.unavailable"],
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
         )
     ]
 
@@ -50,12 +56,18 @@ class WarningManager {
      */
     func checkEnvironment() async {
         self.warnings = []
+
         for check in self.evaluations {
             if await check.applies() {
                 Log.info("[WARNING] \(check.name)")
                 self.warnings.append(check)
                 continue
             }
+        }
+
+        // For debugging purposes, we may wish to see all possible evaluations listed
+        if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
+            self.warnings = self.evaluations
         }
     }
 

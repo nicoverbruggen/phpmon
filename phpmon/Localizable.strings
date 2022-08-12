@@ -55,8 +55,7 @@
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
-"mi_warning" = "⚠️ %i Warning";
-"mi_warnings" = "⚠️ %i Warnings...";
+"mi_warnings" = "(%i) PHP Doctor...";
 
 "mi_valet" = "Laravel Valet";
 "mi_domain_list" = "View Domains List...";
@@ -509,12 +508,15 @@ If you are seeing this message but are confused why this folder has gone missing
 
 // WARNINGS
 
-"warnings.title" = "Warnings";
+"warnings.title" = "PHP Doctor";
+"warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
+"warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
 
-"warnings.helper_permissions.title" = "Helpers could not be written!";
-"warnings.helper_permissions.description" = "The helper files in `/usr/local/bin` could not be written because PHP Monitor does not have permission to write there.";
+"warnings.helper_permissions.title" = "PHP Monitor’s helpers are currently unavailable.";
+"warnings.helper_permissions.description" = "PHP Monitor comes with various helper binaries. Using these binaries allows you to easily invoke a specific version of PHP without switching the linked PHP version.";
+"warnings.helper_permissions.unavailable" = "However, these helpers are currently *unavailable* because PHP Monitor could not create the required symlinks (alternatively, you could add PHP Monitor's helper directory to your `PATH` variable to make this warning go away as well).";
 
-"warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta";
+"warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta on Apple Silicon, which means your PHP environment is also running via Rosetta.";
 "warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
 
 // ONBOARDING

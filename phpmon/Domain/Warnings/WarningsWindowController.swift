@@ -22,12 +22,12 @@ class WarningsWindowController: PMWindowController {
         windowController.window = NSWindow()
 
         guard let window = windowController.window else { return }
-        window.title = "warnings.title".localized
+        window.title = ""
         window.styleMask = [.titled, .closable, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: WarningListView())
-        window.setContentSize(NSSize(width: 600, height: 300))
+        window.setContentSize(NSSize(width: 600, height: 480))
 
         App.shared.warningsWindowController = windowController
     }

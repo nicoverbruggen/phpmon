@@ -12,21 +12,21 @@ struct Warning: Identifiable {
     var id = UUID()
     let command: () async -> Bool
     let name: String
-    let titleText: String
-    let descriptionText: String
+    let title: String
+    let paragraphs: [String]
     let url: String?
 
     init(
         command: @escaping () async -> Bool,
         name: String,
-        titleText: String,
-        descriptionText: String,
+        title: String,
+        paragraphs: [String],
         url: String?
     ) {
         self.command = command
         self.name = name
-        self.titleText = titleText
-        self.descriptionText = descriptionText
+        self.title = title
+        self.paragraphs = paragraphs
         self.url = url
     }
 
