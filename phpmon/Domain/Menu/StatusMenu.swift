@@ -75,7 +75,8 @@ class StatusMenu: NSMenu {
     }
 
     func addWarningsMenuItem() {
-        if !WarningManager.shared.hasWarnings() {
+        if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
+           !WarningManager.shared.hasWarnings() {
             return
         }
 

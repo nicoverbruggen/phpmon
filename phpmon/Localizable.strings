@@ -212,6 +212,7 @@
 "prefs.info_density" = "Info Density:";
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
+"prefs.php_doctor" = "PHP Doctor:";
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
 "prefs.notifications" = "Notifications:";
@@ -239,6 +240,9 @@
 
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
+
+"prefs.php_doctor_suggestions_title" = "Show suggestions (if applicable)";
+"prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";
  
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";

@@ -21,6 +21,7 @@ enum PreferenceName: String {
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
     case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
+    case showPhpDoctorSuggestions = "show_php_doctor_suggestions"
 
     // APPEARANCE
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
@@ -88,6 +89,7 @@ class Preferences {
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
+            PreferenceName.showPhpDoctorSuggestions.rawValue: true,
 
             /// Preferences: Appearance
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
@@ -174,6 +176,8 @@ class Preferences {
                 forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             .automaticBackgroundUpdateCheck: UserDefaults.standard.bool(
                 forKey: PreferenceName.automaticBackgroundUpdateCheck.rawValue) as Any,
+            .showPhpDoctorSuggestions: UserDefaults.standard.bool(
+                forKey: PreferenceName.showPhpDoctorSuggestions.rawValue) as Any,
 
             .notifyAboutVersionChange: UserDefaults.standard.bool(
                 forKey: PreferenceName.notifyAboutVersionChange.rawValue) as Any,

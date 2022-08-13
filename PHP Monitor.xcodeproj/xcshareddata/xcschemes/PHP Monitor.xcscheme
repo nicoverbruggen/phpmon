@@ -71,7 +71,7 @@
          <EnvironmentVariable
             key = "EXTREME_DOCTOR_MODE"
             value = ""
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "PAINT_PHPMON_SWIFTUI_VIEWS"
