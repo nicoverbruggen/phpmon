@@ -32,8 +32,8 @@ class WarningManager {
         ),
         Warning(
             command: {
-                !Paths.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin") &&
-                !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+                return !Shell.user.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin") &&
+                    !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
             title: "warnings.helper_permissions.title",
@@ -74,6 +74,8 @@ class WarningManager {
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.warnings = self.evaluations
         }
+
+        MainMenu.shared.rebuild()
     }
 
 }

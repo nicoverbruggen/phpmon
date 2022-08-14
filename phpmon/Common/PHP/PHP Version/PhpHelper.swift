@@ -20,7 +20,7 @@ class PhpHelper {
         let destination = "/Users/\(Paths.whoami)/.config/phpmon/bin/pm\(dotless)"
 
         // Check if the ~/.config/phpmon/bin directory is in the PATH
-        let inPath = Paths.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin")
+        let inPath = Shell.user.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin")
 
         // Check if we can create symlinks (`/usr/local/bin` must be writable)
         let canWriteSymlinks = FileManager.default.isWritableFile(atPath: "/usr/local/bin/")

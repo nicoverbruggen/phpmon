@@ -157,6 +157,7 @@ extension StatusMenu {
             return
         }
 
+        self.addItem(NSMenuItem.separator())
         let xdebugSwitch = NSMenuItem(
             title: "mi_xdebug_mode".localized,
             action: nil,

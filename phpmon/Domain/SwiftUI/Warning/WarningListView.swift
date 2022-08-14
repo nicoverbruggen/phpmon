@@ -11,20 +11,32 @@ import SwiftUI
 struct WarningListView: View {
     var body: some View {
         VStack {
-            HStack(spacing: 15) {
+            HStack(alignment: .center, spacing: 15) {
                 Image(systemName: "stethoscope.circle.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color.red)
                     .padding(12)
-                VStack(alignment: .trailing, spacing: 5) {
+                VStack(alignment: .leading, spacing: 5) {
                     Text("warnings.description".localizedForSwiftUI)
+                        .font(.system(size: 12))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Text("warnings.disclaimer".localizedForSwiftUI)
                         .font(.system(size: 12))
-                        .foregroundColor(.gray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+            }
+            .padding(10)
+
+            Divider()
+
+            HStack(alignment: .center, spacing: 15) {
+                Button("warnings.refresh.button".localizedForSwiftUI) {
+                    WarningManager.shared.evaluateWarnings()
+                }
+                Text("warnings.refresh.button.description".localizedForSwiftUI)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 11))
             }
             .padding(10)
 

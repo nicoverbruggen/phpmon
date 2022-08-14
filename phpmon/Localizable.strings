@@ -55,7 +55,9 @@
 "mi_detected_extensions" = "Detected Extensions";
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
-"mi_warnings" = "(%i) PHP Doctor...";
+"mi_php_doctor" = "PHP Doctor";
+"mi_recommendations_count" = "%i Issue(s) Detected!";
+"mi_view_recommendations" = "View Recommendations...";
 
 "mi_valet" = "Laravel Valet";
 "mi_domain_list" = "View Domains List...";
@@ -517,6 +519,8 @@ If you are seeing this message but are confused why this folder has gone missing
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
 "warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
+"warnings.refresh.button" = "Scan Again";
+"warnings.refresh.button.description" = "Press this button once you've fixed an issue. This will cause PHP Monitor to re-evaluate your environment. If it's really fixed, the recommendation should disappear.";
 
 "warnings.helper_permissions.title" = "PHP Monitor’s helpers are currently unavailable.";
 "warnings.helper_permissions.description" = "PHP Monitor comes with various helper binaries. Using these binaries allows you to easily invoke a specific version of PHP without switching the linked PHP version.";
@@ -531,14 +535,14 @@ If you are seeing this message but are confused why this folder has gone missing
 "onboarding.title" = "Welcome Tour";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
 "onboarding.explore" = "Learn more about some of the features that PHP Monitor has to offer. You can find a more comprehensive list of features on GitHub.";
-"onboarding.tour.menu_bar.title" = "Get Started";
-"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From here, you can switch the globally linked PHP version, start or stop services, locate config files, and more.";
+"onboarding.tour.menu_bar.title" = "Power In Your Menu Bar";
+"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, and much more.";
 "onboarding.tour.faq_hint" = "I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
-"onboarding.tour.services.title" = "Manage Services";
-"onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it. You can also add your own!";
+"onboarding.tour.services.title" = "Manage Homebrew Services";
+"onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
 "onboarding.tour.domains.title" = "Manage Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the menu bar item, you can view which domains are linked and parked, as well as active nginx proxies.";
 "onboarding.tour.isolation.title" = "Isolate Domains";
-"onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only!";
+"onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (under First Aid & Services).";
 "onboarding.tour.close" = "Close Tour";
