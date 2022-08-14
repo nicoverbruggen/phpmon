@@ -161,14 +161,14 @@ class AppUpdateChecker {
     private static func notifyAboutConnectionIssue() {
         DispatchQueue.main.async {
             BetterAlert().withInformation(
-                title: "updater.errors.cannot_check_for_update.title".localized,
-                subtitle: "updater.errors.cannot_check_for_update.subtitle".localized,
-                description: "updater.errors.cannot_check_for_update.description".localized(
+                title: "updater.alerts.cannot_check_for_update.title".localized,
+                subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,
+                description: "updater.alerts.cannot_check_for_update.description".localized(
                     App.version
                 )
             )
             .withTertiary(
-                text: "updater.errors.buttons.releases_on_github".localized,
+                text: "updater.alerts.buttons.releases_on_github".localized,
                 action: { _ in
                     NSWorkspace.shared.open(Constants.Urls.GitHubReleases)
                 }
