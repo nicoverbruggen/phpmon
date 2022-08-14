@@ -25,18 +25,17 @@ struct OnboardingTextItem: View {
                 Text(title.localizedForSwiftUI)
                     .font(.system(size: 14))
                     .lineLimit(3)
-                HStack {
-                    Text(description.localizedForSwiftUI)
-                        .foregroundColor(Color.secondary)
-                        .font(.system(size: 13))
-                        .lineLimit(3)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                    }
+                Text(description.localizedForSwiftUI)
+                    .foregroundColor(Color.secondary)
+                    .font(.system(size: 13))
+                    .lineLimit(6)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             }
         }
         .padding()
-        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.gray.opacity(0.3), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 5)
+        .stroke(Color.gray.opacity(0.3), lineWidth: 1))
     }
 }
 
@@ -57,15 +56,24 @@ struct OnboardingView: View {
                             .padding(.bottom, 5)
                         Text("onboarding.explore".localized)
                             .padding(.bottom)
+                            .padding(.trailing)
                     }
                     .padding(.top, 10)
                 }
+                .padding(.leading)
+                .padding(.trailing)
+
                 VStack {
                     VStack(alignment: .leading, spacing: 10) {
                         OnboardingTextItem(
                             icon: "bolt.circle.fill",
                             title: "onboarding.tour.menu_bar.title",
                             description: "onboarding.tour.menu_bar"
+                        )
+                        OnboardingTextItem(
+                            icon: "checkmark.circle.fill",
+                            title: "onboarding.tour.services.title",
+                            description: "onboarding.tour.services"
                         )
                         OnboardingTextItem(
                             icon: "list.bullet.circle.fill",
@@ -79,6 +87,7 @@ struct OnboardingView: View {
                         )
                     }
                 }.padding()
+
                 VStack(spacing: 20) {
                     HStack {
                         Image(systemName: "questionmark.circle.fill")

@@ -199,6 +199,10 @@ extension StatusMenu {
         let servicesMenu = NSMenu()
 
         servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
+
+        servicesMenu.addItem(NSMenuItem(title: "mi_view_onboarding".localized,
+                       action: #selector(MainMenu.showWelcomeTour), keyEquivalent: ""))
+
         let fixMyValetMenuItem = NSMenuItem(
             title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
             action: #selector(MainMenu.fixMyValet), keyEquivalent: ""
@@ -216,22 +220,15 @@ extension StatusMenu {
         servicesMenu.addItem(NSMenuItem.separator())
         servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
 
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_dnsmasq".localized,
-                       action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_php_fpm".localized,
-                       action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_nginx".localized,
-                       action: #selector(MainMenu.restartNginx), keyEquivalent: "n")
-        )
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_restart_valet_services".localized,
-                       action: #selector(MainMenu.restartValetServices), keyEquivalent: "s")
-        )
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized,
+            action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized,
+            action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
+
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized,
+            action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
+        servicesMenu.addItem(NSMenuItem(title: "mi_restart_valet_services".localized,
+            action: #selector(MainMenu.restartValetServices), keyEquivalent: "s"))
         servicesMenu.addItem(
             NSMenuItem(title: "mi_stop_valet_services".localized,
                        action: #selector(MainMenu.stopValetServices), keyEquivalent: "s"),

@@ -57,6 +57,9 @@ extension MainMenu {
         let installation = PhpEnv.phpInstall
         installation.notifyAboutBrokenPhpFpm()
 
+        // Check for other problems
+        WarningManager.shared.evaluateWarnings()
+
         // Set up the config watchers on launch (updated automatically when switching)
         Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
@@ -85,15 +88,11 @@ extension MainMenu {
         // Start the background refresh timer
         startSharedTimer()
 
-        // Check warnings
-        WarningManager.shared.evaluateWarnings()
-
         // Update the stats
         Stats.incrementSuccessfulLaunchCount()
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
         // Present first launch screen if needed
-        #warning("You should definitely tweak this view again")
         if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
             Log.info("Should present the first launch screen!")
             DispatchQueue.main.async {

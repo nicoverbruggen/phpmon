@@ -16,8 +16,18 @@ class PhpHelper {
         // Take the PHP version (e.g. "7.2") and generate a dotless version
         let dotless = version.replacingOccurrences(of: ".", with: "")
 
+        // Determine the dotless name for this PHP version
+        let destination = "/Users/\(Paths.whoami)/.config/phpmon/bin/pm\(dotless)"
+
+        // Check if the ~/.config/phpmon/bin directory is in the PATH
+        let inPath = Paths.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin")
+
+        // Check if we can create symlinks (`/usr/local/bin` must be writable)
+        let canWriteSymlinks = FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+
         do {
-            let destination = "/usr/local/bin/pm\(dotless)"
+            Shell.run("mkdir -p ~/.config/phpmon/bin")
+
             if FileManager.default.fileExists(atPath: destination) {
                 let contents = try String(contentsOfFile: destination)
                 if !contents.contains(keyPhrase) {
@@ -52,10 +62,40 @@ class PhpHelper {
 
             // Make sure the file is executable
             Shell.run("chmod +x \(destination)")
+
+            // Create a symlink if the folder is not in the PATH
+            if !inPath {
+                // First, check if we can create symlinks at all
+                if !canWriteSymlinks {
+                    Log.err("PHP Monitor does not have permission to symlink `/usr/local/bin/\(dotless)`.")
+                    return
+                }
+
+                // Write the symlink
+                self.createSymlink(dotless)
+            }
         } catch {
             print(error)
-            Log.err("Could not write PHP Monitor helper for PHP \(version) to /usr/local/bin/pm\(dotless)")
+            Log.err("Could not write PHP Monitor helper for PHP \(version) to \(destination))")
         }
     }
 
+    private static func createSymlink(_ dotless: String) {
+        let source = "/Users/\(Paths.whoami)/.config/phpmon/bin/pm\(dotless)"
+        let destination = "/usr/local/bin/pm\(dotless)"
+
+        if !Filesystem.fileExists(destination) {
+            Log.info("Creating new symlink: \(destination)")
+            Shell.run("ln -s \(source) \(destination)")
+            return
+        }
+
+        if !Filesystem.fileIsSymlink(destination) {
+            Log.info("Overwriting existing file with new symlink: \(destination)")
+            Shell.run("ln -fs \(source) \(destination)")
+            return
+        }
+
+        Log.info("Symlink in \(destination) already exists, OK.")
+    }
 }

@@ -32,11 +32,16 @@ class WarningManager {
         ),
         Warning(
             command: {
+                !Paths.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin") &&
                 !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
             },
-            name: "`/usr/local/bin` not writable",
+            name: "Helpers cannot be symlinked and not in PATH",
             title: "warnings.helper_permissions.title",
-            paragraphs: ["warnings.helper_permissions.description", "warnings.helper_permissions.unavailable"],
+            paragraphs: [
+                "warnings.helper_permissions.description",
+                "warnings.helper_permissions.unavailable",
+                "warnings.helper_permissions.symlink"
+            ],
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
         )
     ]
@@ -59,7 +64,7 @@ class WarningManager {
 
         for check in self.evaluations {
             if await check.applies() {
-                Log.info("[WARNING] \(check.name)")
+                Log.info("[DOCTOR] \(check.name) (!)")
                 self.warnings.append(check)
                 continue
             }

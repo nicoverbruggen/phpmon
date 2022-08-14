@@ -126,6 +126,16 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         ServicesManager.shared.loadData()
     }
 
+    /**
+     Shows the Welcome Tour screen, again.
+     Did this need a comment? No, probably not.
+     */
+    @objc func showWelcomeTour() {
+        DispatchQueue.main.async {
+            OnboardingWindowController.show()
+        }
+    }
+
     /** Reloads the menu in the background, using `asyncExecution`. */
     @objc func reloadPhpMonitorMenuInBackground() {
         asyncExecution({

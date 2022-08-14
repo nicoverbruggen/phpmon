@@ -33,6 +33,15 @@ class Filesystem {
         return exists && !isDirectory.boolValue
     }
 
+    public static func fileIsSymlink(_ path: String) -> Bool {
+        do {
+            let attribs = try FileManager.default.attributesOfItem(atPath: path)
+            return attribs[.type] as! FileAttributeType == FileAttributeType.typeSymbolicLink
+        } catch {
+            return false
+        }
+    }
+
     /**
      Checks if a directory exists at the provided path.
      */
