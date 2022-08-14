@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct WarningListView: View {
+    @State var warnings: [Warning] = WarningManager.shared.warnings
+
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 15) {
@@ -32,7 +34,10 @@ struct WarningListView: View {
 
             HStack(alignment: .center, spacing: 15) {
                 Button("warnings.refresh.button".localizedForSwiftUI) {
-                    WarningManager.shared.evaluateWarnings()
+                    Task {
+                        await WarningManager.shared.checkEnvironment()
+                        self.warnings = WarningManager.shared.warnings
+                    }
                 }
                 Text("warnings.refresh.button.description".localizedForSwiftUI)
                     .foregroundColor(.gray)
@@ -42,7 +47,7 @@ struct WarningListView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(WarningManager.shared.warnings) { warning in
+                    ForEach(warnings) { warning in
                         Group {
                             WarningView(
                                 title: warning.title,
