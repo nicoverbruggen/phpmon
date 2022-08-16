@@ -204,6 +204,10 @@ extension StatusMenu {
         servicesMenu.addItem(NSMenuItem(title: "mi_view_onboarding".localized,
                        action: #selector(MainMenu.showWelcomeTour), keyEquivalent: ""))
 
+        servicesMenu.addItem(NSMenuItem(title: "mi_fa_php_doctor".localized,
+                       action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
+        servicesMenu.addItem(NSMenuItem.separator())
+
         let fixMyValetMenuItem = NSMenuItem(
             title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
             action: #selector(MainMenu.fixMyValet), keyEquivalent: ""

@@ -56,6 +56,7 @@
 "mi_no_extensions_detected" = "No additional extensions detected.";
 
 "mi_php_doctor" = "PHP Doctor";
+"mi_fa_php_doctor" = "Open PHP Doctor...";
 "mi_recommendations_count" = "%i Issue(s) Detected!";
 "mi_view_recommendations" = "View Recommendations...";
 
@@ -76,7 +77,7 @@
 "mi_no_presets" = "No presets available.";
 "mi_set_up_presets" = "Learn more about presets...";
 
-"mi_view_onboarding" = "Show Welcome Tour...";
+"mi_view_onboarding" = "Open Welcome Tour...";
 
 "mi_xdebug_available_modes" = "Available Modes";
 "mi_xdebug_actions" = "Actions";

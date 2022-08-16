@@ -73,6 +73,7 @@ class StatusMenu: NSMenu {
         self.addItem(NSMenuItem.separator())
 
         self.addPresetsMenuItem()
+
         self.addFirstAidAndServicesMenuItems()
     }
 
