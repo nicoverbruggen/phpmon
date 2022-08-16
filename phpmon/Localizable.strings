@@ -530,6 +530,8 @@ If you are seeing this message but are confused why this folder has gone missing
 "warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta on Apple Silicon, which means your PHP environment is also running via Rosetta.";
 "warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
 
+"warnings.none" = "There are no recommendations available for you right now. You're all good!";
+
 // ONBOARDING
 
 "onboarding.title" = "Welcome Tour";

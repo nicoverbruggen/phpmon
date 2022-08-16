@@ -9,7 +9,11 @@
 import SwiftUI
 
 struct WarningListView: View {
-    @State var warnings: [Warning] = WarningManager.shared.warnings
+    @State var warnings: [Warning]
+
+    init(empty: Bool = false) {
+        self.warnings = empty ? [] : WarningManager.shared.warnings
+    }
 
     var body: some View {
         VStack {
@@ -47,17 +51,21 @@ struct WarningListView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(warnings) { warning in
-                        Group {
-                            WarningView(
-                                title: warning.title,
-                                paragraphs: warning.paragraphs,
-                                documentationUrl: warning.url
-                            )
-                            .fixedSize(horizontal: false, vertical: true)
+                    if warnings.isEmpty {
+                        NoWarningsView()
+                    } else {
+                        ForEach(warnings) { warning in
+                            Group {
+                                WarningView(
+                                    title: warning.title,
+                                    paragraphs: warning.paragraphs,
+                                    documentationUrl: warning.url
+                                )
+                                .fixedSize(horizontal: false, vertical: true)
 
-                            Divider()
-                        }.padding(5)
+                                Divider()
+                            }.padding(5)
+                        }
                     }
                 }.frame(minHeight: 0, maxHeight: .infinity).padding(5)
             }
@@ -70,7 +78,14 @@ struct WarningListView: View {
 
 struct WarningListView_Previews: PreviewProvider {
     static var previews: some View {
-        WarningListView()
+        WarningListView(empty: true)
             .frame(width: 600, height: 480)
+
+        /*
+        WarningListView()
+            // TODO: Figure out how the empty() only applies to this single instance
+            // .empty()
+            .frame(width: 600, height: 480)
+         */
     }
 }

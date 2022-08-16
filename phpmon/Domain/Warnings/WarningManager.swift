@@ -62,6 +62,18 @@ class WarningManager {
     func checkEnvironment() async {
         self.warnings = []
 
+        if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
+            // For debugging purposes, we may wish to see all possible evaluations listed
+            self.warnings = self.evaluations
+        } else {
+            // Otherwise, loop over the actual evaluations and list the warnings
+            await loopOverEvaluations()
+        }
+
+        MainMenu.shared.rebuild()
+    }
+
+    private func loopOverEvaluations() async {
         for check in self.evaluations {
             if await check.applies() {
                 Log.info("[DOCTOR] \(check.name) (!)")
@@ -69,13 +81,5 @@ class WarningManager {
                 continue
             }
         }
-
-        // For debugging purposes, we may wish to see all possible evaluations listed
-        if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
-            self.warnings = self.evaluations
-        }
-
-        MainMenu.shared.rebuild()
     }
-
 }
