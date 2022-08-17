@@ -9,43 +9,28 @@
 import Cocoa
 
 extension NSMenu {
-
-    open func addItem(_ newItem: NSMenuItem, withKeyModifier modifier: NSEvent.ModifierFlags) {
+    open func addItem(
+        _ newItem: NSMenuItem,
+        withKeyModifier modifier: NSEvent.ModifierFlags
+    ) {
         newItem.keyEquivalentModifierMask = modifier
         self.addItem(newItem)
     }
 
+    open func addItems(_ items: [NSMenuItem], target: NSObject? = nil) {
+        for item in items {
+            self.addItem(item)
+            if target != nil {
+                item.target = target
+            }
+        }
+    }
 }
 
 @IBDesignable class LocalizedMenuItem: NSMenuItem {
-
-    @IBInspectable
-    var localizationKey: String? {
+    @IBInspectable var localizationKey: String? {
         didSet {
             self.title = localizationKey?.localized ?? self.title
         }
     }
-
-}
-
-// MARK: - NSMenuItem subclasses
-
-class PhpMenuItem: NSMenuItem {
-    var version: String = ""
-}
-
-class XdebugMenuItem: NSMenuItem {
-    var mode: String = ""
-}
-
-class ExtensionMenuItem: NSMenuItem {
-    var phpExtension: PhpExtension?
-}
-
-class EditorMenuItem: NSMenuItem {
-    var editor: Application?
-}
-
-class PresetMenuItem: NSMenuItem {
-    var preset: Preset?
 }

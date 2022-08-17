@@ -13,35 +13,37 @@ extension StatusMenu {
     // MARK: Remaining Menu Items
 
     func addConfigurationMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_configuration".localized))
-        self.addItem(
+        self.addItems([
+            HeaderView.asMenuItem(text: "mi_configuration".localized),
             NSMenuItem(title: "mi_php_config".localized,
-                       action: #selector(MainMenu.openActiveConfigFolder), keyEquivalent: "c")
-        )
-        self.addItem(
+                       action: #selector(MainMenu.openActiveConfigFolder),
+                       keyEquivalent: "c"),
             NSMenuItem(title: "mi_phpmon_config".localized,
-                       action: #selector(MainMenu.openPhpMonitorConfigurationFile), keyEquivalent: "y")
-        )
-        self.addItem(
-            NSMenuItem(title: "mi_phpinfo".localized, action: #selector(MainMenu.openPhpInfo), keyEquivalent: "i")
-        )
+                       action: #selector(MainMenu.openPhpMonitorConfigurationFile),
+                       keyEquivalent: "y"),
+            NSMenuItem(title: "mi_phpinfo".localized,
+                       action: #selector(MainMenu.openPhpInfo),
+                       keyEquivalent: "i")
+        ])
     }
 
     func addComposerMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_composer".localized))
-        self.addItem(
-            NSMenuItem(title: "mi_global_composer".localized,
-                       action: #selector(MainMenu.openGlobalComposerFolder), keyEquivalent: "g")
-        )
-
-        let composerMenuItem = NSMenuItem(
-            title: "mi_update_global_composer".localized,
-            action: PhpEnv.shared.isBusy ? nil : #selector(MainMenu.updateGlobalComposerDependencies),
-            keyEquivalent: "g"
-        )
-        composerMenuItem.keyEquivalentModifierMask = .shift
-
-        self.addItem(composerMenuItem)
+        self.addItems([
+            HeaderView.asMenuItem(text: "mi_composer".localized),
+            NSMenuItem(
+                title: "mi_global_composer".localized,
+                action: #selector(MainMenu.openGlobalComposerFolder),
+                keyEquivalent: "g"
+            ),
+            NSMenuItem(
+                title: "mi_update_global_composer".localized,
+                action: PhpEnv.shared.isBusy
+                    ? nil
+                    : #selector(MainMenu.updateGlobalComposerDependencies),
+                keyEquivalent: "g",
+                keyModifier: [.shift]
+            )
+        ])
     }
 
     func addStatsMenuItem() {
@@ -157,100 +159,64 @@ extension StatusMenu {
             return
         }
 
-        self.addItem(NSMenuItem.separator())
-        let xdebugSwitch = NSMenuItem(
-            title: "mi_xdebug_mode".localized,
-            action: nil,
-            keyEquivalent: ""
-        )
-        let xdebugModesMenu = NSMenu()
-        let activeModes = Xdebug.activeModes
-
-        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized))
-
-        for mode in Xdebug.modes {
-            let item = XdebugMenuItem(
-                title: mode,
-                action: #selector(MainMenu.toggleXdebugMode(sender:)),
-                keyEquivalent: ""
-            )
-
-            item.state = activeModes.contains(mode) ? .on : .off
-            item.mode = mode
-            xdebugModesMenu.addItem(item)
-        }
-
-        xdebugModesMenu.addItem(HeaderView.asMenuItem(text: "mi_xdebug_actions".localized))
-        xdebugModesMenu.addItem(
-            withTitle: "mi_xdebug_disable_all".localized,
-            action: #selector(MainMenu.disableAllXdebugModes),
-            keyEquivalent: ""
+        let submenu = NSMenu()
+        submenu.addItems(
+            [HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized)]
+            + Xdebug.asMenuItems()
+            + [HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
+               NSMenuItem(title: "mi_xdebug_disable_all".localized,
+                          action: #selector(MainMenu.disableAllXdebugModes))
+            ],
+            target: MainMenu.shared
         )
 
-        for item in xdebugModesMenu.items {
-            item.target = MainMenu.shared
-        }
+        let xdebugItem = NSMenuItem(title: "mi_xdebug_mode".localized)
+        self.setSubmenu(submenu, for: xdebugItem)
 
-        self.setSubmenu(xdebugModesMenu, for: xdebugSwitch)
-        self.addItem(xdebugSwitch)
+        self.addItems([
+            NSMenuItem.separator(),
+            xdebugItem
+        ], target: MainMenu.shared)
     }
 
     func addFirstAidAndServicesMenuItems() {
-        let services = NSMenuItem(title: "mi_other".localized, action: nil, keyEquivalent: "")
+        let services = NSMenuItem(title: "mi_other".localized)
+
         let servicesMenu = NSMenu()
+        servicesMenu.addItems([
+            // FIRST AID
+            HeaderView.asMenuItem(text: "mi_first_aid".localized),
+            NSMenuItem(title: "mi_view_onboarding".localized, action: #selector(MainMenu.showWelcomeTour)),
+            NSMenuItem(title: "mi_fa_php_doctor".localized, action: #selector(MainMenu.openWarnings)),
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+                       action: #selector(MainMenu.fixMyValet),
+                       tooltip: "mi_fix_my_valet_tooltip".localized),
+            NSMenuItem(title: "mi_fix_brew_permissions".localized(), action: #selector(MainMenu.fixHomebrewPermissions),
+                       tooltip: "mi_fix_brew_permissions_tooltip".localized),
+            NSMenuItem.separator(),
 
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_first_aid".localized))
+            // SERVICES
+            HeaderView.asMenuItem(text: "mi_services".localized),
+            NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq),
+                       keyEquivalent: "d"),
+            NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm),
+                       keyEquivalent: "p"),
+            NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx),
+                       keyEquivalent: "n"),
+            NSMenuItem(title: "mi_restart_valet_services".localized, action: #selector(MainMenu.restartValetServices),
+                       keyEquivalent: "s"),
+            NSMenuItem(title: "mi_stop_valet_services".localized, action: #selector(MainMenu.stopValetServices),
+                       keyEquivalent: "s",
+                       keyModifier: [.command, .shift]),
+            NSMenuItem.separator(),
 
-        servicesMenu.addItem(NSMenuItem(title: "mi_view_onboarding".localized,
-                       action: #selector(MainMenu.showWelcomeTour), keyEquivalent: ""))
-
-        servicesMenu.addItem(NSMenuItem(title: "mi_fa_php_doctor".localized,
-                       action: #selector(MainMenu.openWarnings), keyEquivalent: ""))
-        servicesMenu.addItem(NSMenuItem.separator())
-
-        let fixMyValetMenuItem = NSMenuItem(
-            title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
-            action: #selector(MainMenu.fixMyValet), keyEquivalent: ""
-        )
-        fixMyValetMenuItem.toolTip = "mi_fix_my_valet_tooltip".localized
-        servicesMenu.addItem(fixMyValetMenuItem)
-
-        let fixHomebrewMenuItem = NSMenuItem(
-            title: "mi_fix_brew_permissions".localized(),
-            action: #selector(MainMenu.fixHomebrewPermissions), keyEquivalent: ""
-        )
-        fixHomebrewMenuItem.toolTip = "mi_fix_brew_permissions_tooltip".localized
-        servicesMenu.addItem(fixHomebrewMenuItem)
-
-        servicesMenu.addItem(NSMenuItem.separator())
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_services".localized))
-
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_dnsmasq".localized,
-            action: #selector(MainMenu.restartDnsMasq), keyEquivalent: "d"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_php_fpm".localized,
-            action: #selector(MainMenu.restartPhpFpm), keyEquivalent: "p"))
-
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_nginx".localized,
-            action: #selector(MainMenu.restartNginx), keyEquivalent: "n"))
-        servicesMenu.addItem(NSMenuItem(title: "mi_restart_valet_services".localized,
-            action: #selector(MainMenu.restartValetServices), keyEquivalent: "s"))
-        servicesMenu.addItem(
-            NSMenuItem(title: "mi_stop_valet_services".localized,
-                       action: #selector(MainMenu.stopValetServices), keyEquivalent: "s"),
-            withKeyModifier: [.command, .shift]
-        )
-
-        servicesMenu.addItem(NSMenuItem.separator())
-        servicesMenu.addItem(HeaderView.asMenuItem(text: "mi_manual_actions".localized))
-
-        servicesMenu.addItem(
+            // MANUAL ACTIONS
+            HeaderView.asMenuItem(text: "mi_manual_actions".localized),
             NSMenuItem(title: "mi_php_refresh".localized,
-                       action: #selector(MainMenu.reloadPhpMonitorMenuInForeground), keyEquivalent: "r")
-        )
-
-        for item in servicesMenu.items {
-            item.target = MainMenu.shared
-        }
+                       action: #selector(MainMenu.reloadPhpMonitorMenuInForeground),
+                       keyEquivalent: "r")
+        ], target: MainMenu.shared)
 
         self.setSubmenu(servicesMenu, for: services)
         self.addItem(services)

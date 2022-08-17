@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 class Xdebug {
 
@@ -24,6 +25,26 @@ class Xdebug {
         }
 
         return value.components(separatedBy: ",").filter { self.modes.contains($0) }
+    }
+
+    public static func asMenuItems() -> [NSMenuItem] {
+        var items: [NSMenuItem] = []
+
+        let activeModes = Self.activeModes
+
+        for mode in Self.modes {
+            let item = XdebugMenuItem(
+                title: mode,
+                action: #selector(MainMenu.toggleXdebugMode(sender:)),
+                keyEquivalent: ""
+            )
+
+            item.state = activeModes.contains(mode) ? .on : .off
+            item.mode = mode
+            items.append(item)
+        }
+
+        return items
     }
 
     public static var modes: [String] {
