@@ -2,18 +2,105 @@
 //  StatusMenu+Items.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 30/05/2022.
+//  Created by Nico Verbruggen on 18/08/2022.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
+// MARK: - PHP Version
+
 extension StatusMenu {
 
-    // MARK: Remaining Menu Items
+    func addPhpVersionMenuItems() {
+        if PhpEnv.phpInstall.version.error {
+            let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
+            return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
+        }
+
+        addItem(HeaderView.asMenuItem(
+            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)")
+        )
+    }
+
+    func addPhpActionMenuItems() {
+        if PhpEnv.shared.isBusy {
+            addItem(NSMenuItem(title: "mi_busy".localized))
+            return
+        }
+
+        if PhpEnv.shared.availablePhpVersions.isEmpty { return }
+
+        addSwitchToPhpMenuItems()
+
+        addItems([
+            NSMenuItem.separator(),
+            ServicesView.asMenuItem(),
+            NSMenuItem.separator()
+        ])
+    }
+
+    func addSwitchToPhpMenuItems() {
+        var shortcutKey = 1
+        for index in (0..<PhpEnv.shared.availablePhpVersions.count).reversed() {
+
+            // Get the short and long version
+            let shortVersion = PhpEnv.shared.availablePhpVersions[index]
+            let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.versionNumber
+
+            let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+            let versionString = long ? longVersion.toString() : shortVersion
+
+            let action = #selector(MainMenu.switchToPhpVersion(sender:))
+            let brew = (shortVersion == PhpEnv.brewPhpVersion) ? "php" : "php@\(shortVersion)"
+            let menuItem = PhpMenuItem(
+                title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
+                action: (shortVersion == PhpEnv.phpInstall.version.short)
+                ? nil
+                : action, keyEquivalent: "\(shortcutKey)"
+            )
+
+            menuItem.version = shortVersion
+            shortcutKey += 1
+
+            addItem(menuItem)
+        }
+    }
+
+    func addCoreMenuItems() {
+        addItems([
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_preferences".localized,
+                       action: #selector(MainMenu.openPrefs), keyEquivalent: ","),
+            NSMenuItem(title: "mi_check_for_updates".localized,
+                       action: #selector(MainMenu.checkForUpdates)),
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_about".localized,
+                       action: #selector(MainMenu.openAbout)),
+            NSMenuItem(title: "mi_quit".localized,
+                       action: #selector(MainMenu.terminateApp), keyEquivalent: "q")
+        ])
+    }
+
+    // MARK: - Valet
+
+    func addValetMenuItems() {
+        addItems([
+            HeaderView.asMenuItem(text: "mi_valet".localized),
+            NSMenuItem(title: "mi_valet_config".localized,
+                       action: #selector(MainMenu.openValetConfigFolder),
+                       keyEquivalent: "v"),
+            NSMenuItem(title: "mi_domain_list".localized,
+                       action: #selector(MainMenu.openDomainList),
+                       keyEquivalent: "l"),
+            NSMenuItem.separator()
+        ])
+    }
+
+    // MARK: - PHP Configuration
 
     func addConfigurationMenuItems() {
-        self.addItems([
+        addItems([
             HeaderView.asMenuItem(text: "mi_configuration".localized),
             NSMenuItem(title: "mi_php_config".localized,
                        action: #selector(MainMenu.openActiveConfigFolder),
@@ -27,8 +114,10 @@ extension StatusMenu {
         ])
     }
 
+    // MARK: - Composer
+
     func addComposerMenuItems() {
-        self.addItems([
+        addItems([
             HeaderView.asMenuItem(text: "mi_composer".localized),
             NSMenuItem(
                 title: "mi_global_composer".localized,
@@ -38,37 +127,43 @@ extension StatusMenu {
             NSMenuItem(
                 title: "mi_update_global_composer".localized,
                 action: PhpEnv.shared.isBusy
-                    ? nil
-                    : #selector(MainMenu.updateGlobalComposerDependencies),
+                ? nil
+                : #selector(MainMenu.updateGlobalComposerDependencies),
                 keyEquivalent: "g",
                 keyModifier: [.shift]
             )
         ])
     }
 
+    // MARK: - Stats
+
     func addStatsMenuItem() {
         guard let stats = PhpEnv.phpInstall.limits else { return }
 
-        self.addItem(StatsView.asMenuItem(
+        addItem(StatsView.asMenuItem(
             memory: stats.memory_limit,
             post: stats.post_max_size,
             upload: stats.upload_max_filesize)
         )
     }
 
+    // MARK: - Extensions
+
     func addExtensionsMenuItems() {
-        self.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
+        addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
 
         if PhpEnv.phpInstall.extensions.isEmpty {
-            self.addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
+            addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
         }
 
         var shortcutKey = 1
         for phpExtension in PhpEnv.phpInstall.extensions {
-            self.addExtensionItem(phpExtension, shortcutKey)
+            addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }
     }
+
+    // MARK: - Presets
 
     func addPresetsMenuItem() {
         guard let presets = Preferences.custom.presets else {
@@ -84,7 +179,7 @@ extension StatusMenu {
         addLoadedPresets()
     }
 
-    func addEmptyPresetHelp() {
+    private func addEmptyPresetHelp() {
         let presets = NSMenuItem(title: "mi_presets_title".localized)
 
         let presetsMenu = NSMenu()
@@ -95,13 +190,13 @@ extension StatusMenu {
                        action: #selector(MainMenu.showPresetHelp))
         ], target: MainMenu.shared)
 
-        self.setSubmenu(presetsMenu, for: presets)
-        self.addItem(presets)
+        setSubmenu(presetsMenu, for: presets)
+        addItem(presets)
 
         return
     }
 
-    func addLoadedPresets() {
+    private func addLoadedPresets() {
         let presets = NSMenuItem(title: "mi_presets_title".localized)
 
         let presetsMenu = NSMenu()
@@ -118,9 +213,11 @@ extension StatusMenu {
         ]
 
         presetsMenu.addItems(items, target: MainMenu.shared)
-        self.setSubmenu(presetsMenu, for: presets)
-        self.addItem(presets)
+        setSubmenu(presetsMenu, for: presets)
+        addItem(presets)
     }
+
+    // MARK: - Xdebug
 
     func addXdebugMenuItem() {
         if !Xdebug.enabled {
@@ -134,18 +231,36 @@ extension StatusMenu {
             + [HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
                NSMenuItem(title: "mi_xdebug_disable_all".localized,
                           action: #selector(MainMenu.disableAllXdebugModes))
-            ],
+              ],
             target: MainMenu.shared
         )
 
         let xdebugItem = NSMenuItem(title: "mi_xdebug_mode".localized)
-        self.setSubmenu(submenu, for: xdebugItem)
+        setSubmenu(submenu, for: xdebugItem)
 
-        self.addItems([
+        addItems([
             NSMenuItem.separator(),
             xdebugItem
         ], target: MainMenu.shared)
     }
+
+    // MARK: - PHP Doctor
+
+    func addPhpDoctorMenuItem() {
+        if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
+            !WarningManager.shared.hasWarnings() {
+            return
+        }
+
+        addItems([
+            NSMenuItem.separator(),
+            HeaderView.asMenuItem(text: "mi_php_doctor".localized),
+            NSMenuItem(title: "mi_recommendations_count".localized(WarningManager.shared.warnings.count)),
+            NSMenuItem(title: "mi_view_recommendations".localized, action: #selector(MainMenu.openWarnings))
+        ])
+    }
+
+    // MARK: - First Aid & Services
 
     func addFirstAidAndServicesMenuItems() {
         let services = NSMenuItem(title: "mi_other".localized)
@@ -159,9 +274,9 @@ extension StatusMenu {
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
                        action: #selector(MainMenu.fixMyValet),
-                       tooltip: "mi_fix_my_valet_tooltip".localized),
+                       toolTip: "mi_fix_my_valet_tooltip".localized),
             NSMenuItem(title: "mi_fix_brew_permissions".localized(), action: #selector(MainMenu.fixHomebrewPermissions),
-                       tooltip: "mi_fix_brew_permissions_tooltip".localized),
+                       toolTip: "mi_fix_brew_permissions_tooltip".localized),
             NSMenuItem.separator(),
 
             // SERVICES
@@ -186,8 +301,28 @@ extension StatusMenu {
                        keyEquivalent: "r")
         ], target: MainMenu.shared)
 
-        self.setSubmenu(servicesMenu, for: services)
-        self.addItem(services)
+        setSubmenu(servicesMenu, for: services)
+        addItem(services)
     }
 
+    // MARK: - Other helper methods to generate menu items
+
+    func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
+        let keyEquivalent = shortcutKey < 9 ? "\(shortcutKey)" : ""
+
+        let menuItem = ExtensionMenuItem(
+            title: "\(phpExtension.name) (\(phpExtension.fileNameOnly))",
+            action: #selector(MainMenu.toggleExtension),
+            keyEquivalent: keyEquivalent
+        )
+
+        if menuItem.keyEquivalent != "" {
+            menuItem.keyEquivalentModifierMask = [.option]
+        }
+
+        menuItem.state = phpExtension.enabled ? .on : .off
+        menuItem.phpExtension = phpExtension
+
+        addItem(menuItem)
+    }
 }

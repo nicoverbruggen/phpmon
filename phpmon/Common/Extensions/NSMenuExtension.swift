@@ -9,13 +9,11 @@
 import Cocoa
 
 extension NSMenu {
-    open func addItem(
-        _ newItem: NSMenuItem,
-        withKeyModifier modifier: NSEvent.ModifierFlags
-    ) {
-        newItem.keyEquivalentModifierMask = modifier
-        self.addItem(newItem)
+    /* TODO: convenience initializer with items, target and parent menu item
+    convenience init() {
+        super.init()
     }
+    */
 
     open func addItems(_ items: [NSMenuItem], target: NSObject? = nil) {
         for item in items {

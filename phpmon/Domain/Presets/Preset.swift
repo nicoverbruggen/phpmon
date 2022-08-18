@@ -167,14 +167,15 @@ struct Preset: Codable, Equatable {
 
     // MARK: - Menu Items
 
+    // swiftlint:disable void_function_in_ternary
     public func getMenuItemText() -> String {
         var info = extensions.count == 1
-        ? "preset.extension".localized(extensions.count)
-        : "preset.extensions".localized(extensions.count)
+            ? "preset.extension".localized(extensions.count)
+            : "preset.extensions".localized(extensions.count)
         info += ", "
         info += configuration.count == 1
-        ? "preset.preference".localized(configuration.count)
-        : "preset.preferences".localized(configuration.count)
+            ? "preset.preference".localized(configuration.count)
+            : "preset.preferences".localized(configuration.count)
 
         if self.version == nil {
             return "<span style=\"font-family: '-apple-system'; font-size: 12px;\">"

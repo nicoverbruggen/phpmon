@@ -14,11 +14,11 @@ extension NSMenuItem {
         action: Selector? = nil,
         keyEquivalent: String = "",
         keyModifier: NSEvent.ModifierFlags = [],
-        tooltip: String = "",
-        submenu: NSMenu? = nil
+        toolTip: String? = nil
     ) {
         self.init(title: title, action: action, keyEquivalent: keyEquivalent)
         self.keyEquivalentModifierMask = keyModifier
+        self.toolTip = toolTip
     }
 }
 

@@ -77,7 +77,11 @@ extension MainMenu {
                     ServicesManager.shared.loadData()
                 }
 
-                error == nil ? success() : failure(error!)
+                if error != nil {
+                    return failure(error!)
+                }
+
+                success()
             }
         }
     }
