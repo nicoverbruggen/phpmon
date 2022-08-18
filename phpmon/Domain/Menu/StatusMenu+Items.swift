@@ -85,19 +85,15 @@ extension StatusMenu {
     }
 
     func addEmptyPresetHelp() {
-        let presets = NSMenuItem(title: "mi_presets_title".localized, action: nil, keyEquivalent: "")
+        let presets = NSMenuItem(title: "mi_presets_title".localized)
 
         let presetsMenu = NSMenu()
-
-        presetsMenu.addItem(NSMenuItem(title: "mi_no_presets".localized, action: nil, keyEquivalent: ""))
-        presetsMenu.addItem(NSMenuItem.separator())
-        presetsMenu.addItem(NSMenuItem(
-            title: "mi_set_up_presets".localized,
-            action: #selector(MainMenu.showPresetHelp),
-            keyEquivalent: "")
-        )
-
-        presetsMenu.items.forEach { $0.target = MainMenu.shared }
+        presetsMenu.addItems([
+            NSMenuItem(title: "mi_no_presets".localized),
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_set_up_presets".localized,
+                       action: #selector(MainMenu.showPresetHelp))
+        ], target: MainMenu.shared)
 
         self.setSubmenu(presetsMenu, for: presets)
         self.addItem(presets)
@@ -106,50 +102,22 @@ extension StatusMenu {
     }
 
     func addLoadedPresets() {
-        let presets = NSMenuItem(title: "mi_presets_title".localized, action: nil, keyEquivalent: "")
+        let presets = NSMenuItem(title: "mi_presets_title".localized)
 
         let presetsMenu = NSMenu()
 
-        presetsMenu.addItem(NSMenuItem.separator())
-        presetsMenu.addItem(HeaderView.asMenuItem(text: "mi_apply_presets_title".localized))
+        let items = [
+            NSMenuItem.separator(),
+            HeaderView.asMenuItem(text: "mi_apply_presets_title".localized)
+        ] + PresetMenuItem.getAll() + [
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_revert_to_prev_config".localized,
+                       action: PresetHelper.rollbackPreset != nil ? #selector(MainMenu.rollbackPreset) : nil),
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_profiles_loaded".localized(Preferences.custom.presets!.count))
+        ]
 
-        for preset in Preferences.custom.presets! {
-            let presetMenuItem = PresetMenuItem(
-                title: preset.getMenuItemText(),
-                action: #selector(MainMenu.togglePreset(sender:)),
-                keyEquivalent: ""
-            )
-
-            if let attributedString = try? NSMutableAttributedString(
-                data: preset.getMenuItemText().data(using: .utf8)!,
-                options: [.documentType: NSAttributedString.DocumentType.html],
-                documentAttributes: nil
-            ) {
-                presetMenuItem.attributedTitle = attributedString
-            }
-
-            presetMenuItem.preset = preset
-            presetsMenu.addItem(presetMenuItem)
-        }
-
-        presetsMenu.addItem(NSMenuItem.separator())
-        presetsMenu.addItem(NSMenuItem(
-            title: "mi_revert_to_prev_config".localized,
-            action: PresetHelper.rollbackPreset != nil
-            ? #selector(MainMenu.rollbackPreset)
-            : nil,
-            keyEquivalent: ""
-        ))
-        presetsMenu.addItem(NSMenuItem.separator())
-        presetsMenu.addItem(NSMenuItem(
-            title: "mi_profiles_loaded".localized(
-                Preferences.custom.presets!.count
-            ),
-            action: nil, keyEquivalent: "")
-        )
-        for item in presetsMenu.items {
-            item.target = MainMenu.shared
-        }
+        presetsMenu.addItems(items, target: MainMenu.shared)
         self.setSubmenu(presetsMenu, for: presets)
         self.addItem(presets)
     }

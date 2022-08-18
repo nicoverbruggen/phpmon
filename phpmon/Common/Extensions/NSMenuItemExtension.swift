@@ -42,4 +42,24 @@ class EditorMenuItem: NSMenuItem {
 
 class PresetMenuItem: NSMenuItem {
     var preset: Preset?
+
+    static func getAll() -> [NSMenuItem] {
+        return Preferences.custom.presets!.map { preset in
+            let presetMenuItem = PresetMenuItem(
+                title: preset.getMenuItemText(),
+                action: #selector(MainMenu.togglePreset(sender:))
+            )
+
+            if let attributedString = try? NSMutableAttributedString(
+                data: preset.getMenuItemText().data(using: .utf8)!,
+                options: [.documentType: NSAttributedString.DocumentType.html],
+                documentAttributes: nil
+            ) {
+                presetMenuItem.attributedTitle = attributedString
+            }
+
+            presetMenuItem.preset = preset
+            return presetMenuItem
+        }
+    }
 }
