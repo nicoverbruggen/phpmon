@@ -9,11 +9,10 @@
 import Cocoa
 
 extension NSMenu {
-    /* TODO: convenience initializer with items, target and parent menu item
-    convenience init() {
-        super.init()
+    convenience init(items: [NSMenuItem], target: NSObject? = nil) {
+        self.init()
+        self.addItems(items, target: target)
     }
-    */
 
     open func addItems(_ items: [NSMenuItem], target: NSObject? = nil) {
         for item in items {
@@ -21,14 +20,6 @@ extension NSMenu {
             if target != nil {
                 item.target = target
             }
-        }
-    }
-}
-
-@IBDesignable class LocalizedMenuItem: NSMenuItem {
-    @IBInspectable var localizationKey: String? {
-        didSet {
-            self.title = localizationKey?.localized ?? self.title
         }
     }
 }

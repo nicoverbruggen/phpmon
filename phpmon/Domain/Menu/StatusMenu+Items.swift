@@ -180,28 +180,16 @@ extension StatusMenu {
     }
 
     private func addEmptyPresetHelp() {
-        let presets = NSMenuItem(title: "mi_presets_title".localized)
-
-        let presetsMenu = NSMenu()
-        presetsMenu.addItems([
+        addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem(title: "mi_no_presets".localized),
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_set_up_presets".localized,
                        action: #selector(MainMenu.showPresetHelp))
-        ], target: MainMenu.shared)
-
-        setSubmenu(presetsMenu, for: presets)
-        addItem(presets)
-
-        return
+        ], target: MainMenu.shared))
     }
 
     private func addLoadedPresets() {
-        let presets = NSMenuItem(title: "mi_presets_title".localized)
-
-        let presetsMenu = NSMenu()
-
-        let items = [
+        addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem.separator(),
             HeaderView.asMenuItem(text: "mi_apply_presets_title".localized)
         ] + PresetMenuItem.getAll() + [
@@ -210,11 +198,7 @@ extension StatusMenu {
                        action: PresetHelper.rollbackPreset != nil ? #selector(MainMenu.rollbackPreset) : nil),
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_profiles_loaded".localized(Preferences.custom.presets!.count))
-        ]
-
-        presetsMenu.addItems(items, target: MainMenu.shared)
-        setSubmenu(presetsMenu, for: presets)
-        addItem(presets)
+        ], target: MainMenu.shared))
     }
 
     // MARK: - Xdebug
@@ -224,23 +208,15 @@ extension StatusMenu {
             return
         }
 
-        let submenu = NSMenu()
-        submenu.addItems(
-            [HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized)]
-            + Xdebug.asMenuItems()
-            + [HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
-               NSMenuItem(title: "mi_xdebug_disable_all".localized,
-                          action: #selector(MainMenu.disableAllXdebugModes))
-              ],
-            target: MainMenu.shared
-        )
-
-        let xdebugItem = NSMenuItem(title: "mi_xdebug_mode".localized)
-        setSubmenu(submenu, for: xdebugItem)
-
         addItems([
             NSMenuItem.separator(),
-            xdebugItem
+            NSMenuItem(title: "mi_xdebug_mode".localized, submenu: [
+                HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized)
+            ] + Xdebug.asMenuItems() + [
+                HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
+                NSMenuItem(title: "mi_xdebug_disable_all".localized,
+                           action: #selector(MainMenu.disableAllXdebugModes))
+            ], target: MainMenu.shared)
         ], target: MainMenu.shared)
     }
 

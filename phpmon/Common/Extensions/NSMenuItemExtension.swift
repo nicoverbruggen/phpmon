@@ -20,9 +20,31 @@ extension NSMenuItem {
         self.keyEquivalentModifierMask = keyModifier
         self.toolTip = toolTip
     }
+
+    convenience init(
+        title: String,
+        keyEquivalent: String = "",
+        keyModifier: NSEvent.ModifierFlags = [],
+        toolTip: String? = nil,
+        submenu: [NSMenuItem],
+        target: NSObject? = nil
+    ) {
+        self.init(title: title, action: nil, keyEquivalent: keyEquivalent)
+        self.keyEquivalentModifierMask = keyModifier
+        self.toolTip = toolTip
+        self.submenu = NSMenu(items: submenu, target: target)
+    }
 }
 
 // MARK: - NSMenuItem subclasses
+
+@IBDesignable class LocalizedMenuItem: NSMenuItem {
+    @IBInspectable var localizationKey: String? {
+        didSet {
+            self.title = localizationKey?.localized ?? self.title
+        }
+    }
+}
 
 class PhpMenuItem: NSMenuItem {
     var version: String = ""
