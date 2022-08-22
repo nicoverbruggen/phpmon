@@ -1,3 +1,4 @@
+> **Note**
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
 
 <p align="center"><img src="./docs/logo.png" alt="PHP Monitor Logo" width="500px" /></p>
@@ -362,6 +363,9 @@ Here's an example of a working preset:
 </pre>
 
 You can omit the `php` key in the preset if you do not wish for the preset to switch to a given PHP version.
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
 </details>
 
 <details>
@@ -371,18 +375,24 @@ You must set these services up in a JSON file, located in `~/.config/phpmon/conf
 
 You can specify custom services in the configuration file for Homebrew services that run as your own user (not root). 
 
+> **Info**
+> If your service must run as root, it cannot currently be added to PHP Monitor.
+
 You can find out which services are available by running `brew services list`. 
 
-Here's an example where we add the `mailgun` and `mysql` services to PHP Monitor:
+Here's an example where we add the `mailhog` and `mysql` services to PHP Monitor:
 
 <pre>
 {
     "scan_apps": [],
-    "services": ["mailgun", "mysql"],
+    "services": ["mailhog", "mysql"],
     "presets": [],
     "export": {}
 }
 </pre>
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
 </details>
 
 <details>
@@ -404,6 +414,10 @@ Here's an example of a working `COMPOSER_HOME` environment variable which is res
     }
 }
 </pre>
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
+
 </details>
 
 <details>
@@ -426,6 +440,9 @@ You can add your own apps by creating and editing a `~/.config/phpmon/config.jso
 </pre>
 
 You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor will check for the existence of these apps. You do not need to set the full path, just the name of the app should work. Not all apps support opening a folder, though, so your success might vary.
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
 </details>
 
 <details>
@@ -556,7 +573,8 @@ If an extension or other process writes to a single file a bunch of times in a s
 1. **Sites secured or not secured**: Whether the directory has been secured is determined by checking if a matching certificate exists under Valet's `Certificates` directory for that site name.
 1. **Project type**: PHP Monitor checks your `composer.json` file for "notable dependencies". If you have `laravel/framework` in your `require`, there's a good chance the project type is `Laravel`, after all.
 
-*Note*: If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
+> **Note**
+> If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
 
 ### Want to know more?
 
