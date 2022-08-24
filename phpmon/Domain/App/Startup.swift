@@ -229,8 +229,19 @@ class Startup {
         EnvironmentCheck(
             command: {
                 let output = valet("--version", sudo: false)
+                // Failure condition #1: does not contain Laravel Valet
+                if !output.contains("Laravel Valet") {
+                    return true
+                }
+                // Failure condition #2: version cannot be parsed
+                let versionString = output
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .components(separatedBy: "Laravel Valet")[1]
+                    .trimmingCharacters(in: .whitespaces)
+                // Extract the version number
                 Valet.shared.version = VersionExtractor.from(output)
-                return Valet.shared.version == nil && output.contains("Laravel Valet")
+                // Get the actual version
+                return Valet.shared.version == nil
             },
             name: "`valet --version` was loaded",
             titleText: "startup.errors.valet_version_unknown.title".localized,
