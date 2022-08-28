@@ -114,6 +114,20 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getShowPhpDoctorSuggestionsPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.php_doctor".localized,
+            descriptionText: "prefs.php_doctor_suggestions_desc".localized,
+            checkboxText: "prefs.php_doctor_suggestions_title".localized,
+            preference: .showPhpDoctorSuggestions,
+            action: {
+                MainMenu.shared.refreshIcon()
+                MainMenu.shared.rebuild()
+            }
+        )
+
+    }
+
     func getNotifyAboutVersionChangePV() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.notifications".localized,
@@ -194,6 +208,7 @@ class GeneralPreferencesVC: GenericPreferenceVC {
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
         vc.views = [
+            vc.getShowPhpDoctorSuggestionsPV(),
             vc.getAutoRestartPV(),
             vc.getAutomaticComposerUpdatePV(),
             vc.getShortcutPV(),

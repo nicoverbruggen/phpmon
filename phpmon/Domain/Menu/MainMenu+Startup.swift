@@ -57,6 +57,9 @@ extension MainMenu {
         let installation = PhpEnv.phpInstall
         installation.notifyAboutBrokenPhpFpm()
 
+        // Check for other problems
+        WarningManager.shared.evaluateWarnings()
+
         // Set up the config watchers on launch (updated automatically when switching)
         Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
@@ -79,6 +82,7 @@ extension MainMenu {
         // A non-default TLD is not officially supported since Valet 3.2.x
         Valet.notifyAboutUnsupportedTLD()
 
+        // Find out which services are active
         ServicesManager.shared.loadData()
 
         // Start the background refresh timer
@@ -87,6 +91,14 @@ extension MainMenu {
         // Update the stats
         Stats.incrementSuccessfulLaunchCount()
         Stats.evaluateSponsorMessageShouldBeDisplayed()
+
+        // Present first launch screen if needed
+        if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
+            Log.info("Should present the first launch screen!")
+            DispatchQueue.main.async {
+                OnboardingWindowController.show()
+            }
+        }
 
         // Check for updates
         DispatchQueue.global(qos: .utility).async {

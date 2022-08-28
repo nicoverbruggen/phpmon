@@ -66,16 +66,40 @@ class StatusMenu: NSMenu {
 
         self.addExtensionsMenuItems()
 
+        self.addXdebugMenuItem()
+
+        self.addPhpDoctorMenuItem()
+
         self.addItem(NSMenuItem.separator())
 
-        self.addXdebugMenuItem()
         self.addPresetsMenuItem()
 
         self.addFirstAidAndServicesMenuItems()
     }
 
+    func addPhpDoctorMenuItem() {
+        if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
+           !WarningManager.shared.hasWarnings() {
+            return
+        }
+
+        self.addItem(NSMenuItem.separator())
+        self.addItem(HeaderView.asMenuItem(text: "mi_php_doctor".localized))
+        self.addItem(NSMenuItem(
+            title: "mi_recommendations_count".localized(WarningManager.shared.warnings.count),
+            action: nil,
+            keyEquivalent: ""
+        ))
+        self.addItem(NSMenuItem(
+            title: "mi_view_recommendations".localized,
+            action: #selector(MainMenu.openWarnings),
+            keyEquivalent: ""
+        ))
+    }
+
     func addCoreMenuItems() {
         self.addItem(NSMenuItem.separator())
+
         self.addItem(NSMenuItem(title: "mi_preferences".localized,
                                 action: #selector(MainMenu.openPrefs), keyEquivalent: ","))
         self.addItem(NSMenuItem(title: "mi_check_for_updates".localized,

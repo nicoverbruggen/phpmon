@@ -11,7 +11,7 @@ import Cocoa
 
 class SelectionVC: NSViewController {
 
-    weak var domainListWC: DomainListWC?
+    weak var domainListWC: DomainListWindowController?
 
     @IBOutlet weak var textFieldTitle: NSTextField!
     @IBOutlet weak var textFieldDescription: NSTextField!

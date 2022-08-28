@@ -69,6 +69,11 @@
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
+            key = "EXTREME_DOCTOR_MODE"
+            value = ""
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "PAINT_PHPMON_SWIFTUI_VIEWS"
             value = ""
             isEnabled = "NO">

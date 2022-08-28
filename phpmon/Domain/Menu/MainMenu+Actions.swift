@@ -53,13 +53,11 @@ extension MainMenu {
             Actions.restartPhpFpm()
             Actions.restartNginx()
         } success: {
-            DispatchQueue.main.async {
-                LocalNotification.send(
-                    title: "notification.services_restarted".localized,
-                    subtitle: "notification.services_restarted_desc".localized,
-                    preference: .notifyAboutServices
-                )
-            }
+            LocalNotification.send(
+                title: "notification.services_restarted".localized,
+                subtitle: "notification.services_restarted_desc".localized,
+                preference: .notifyAboutServices
+            )
         }
     }
 
@@ -67,13 +65,11 @@ extension MainMenu {
         asyncExecution {
             Actions.stopValetServices()
         } success: {
-            DispatchQueue.main.async {
-                LocalNotification.send(
-                    title: "notification.services_stopped".localized,
-                    subtitle: "notification.services_stopped_desc".localized,
-                    preference: .notifyAboutServices
-                )
-            }
+            LocalNotification.send(
+                title: "notification.services_stopped".localized,
+                subtitle: "notification.services_stopped_desc".localized,
+                preference: .notifyAboutServices
+            )
         }
     }
 
@@ -155,7 +151,7 @@ extension MainMenu {
         }
     }
 
-    @objc func rollbackPreset() {
+    @MainActor @objc func rollbackPreset() {
         guard let preset = PresetHelper.rollbackPreset else {
             return
         }
@@ -180,7 +176,7 @@ extension MainMenu {
         }
     }
 
-    @objc func showPresetHelp() {
+    @MainActor @objc func showPresetHelp() {
         BetterAlert().withInformation(
             title: "preset_help_title".localized,
             subtitle: "preset_help_info".localized,

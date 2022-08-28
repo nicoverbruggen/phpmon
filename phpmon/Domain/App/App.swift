@@ -51,16 +51,25 @@ class App {
     var preferences: [PreferenceName: Bool]!
 
     /** The window controller of the currently active preferences window. */
-    var preferencesWindowController: PrefsWC?
+    var preferencesWindowController: PreferencesWindowController?
 
     /** The window controller of the currently active site list window. */
-    var domainListWindowController: DomainListWC?
+    var domainListWindowController: DomainListWindowController?
+
+    /** The window controller of the onboarding window. */
+    var onboardingWindowController: OnboardingWindowController?
+
+    /** The window controller of the warnings window. */
+    var warningsWindowController: WarningsWindowController?
 
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 
     /** The services manager, responsible for figuring out what services are active/inactive. */
     var services = ServicesManager.shared
+
+    /** The warning manager, responsible for keeping track of warnings. */
+    var warnings = WarningManager.shared
 
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?

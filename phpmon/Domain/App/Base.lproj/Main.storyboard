@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -325,7 +324,7 @@
         <scene sceneID="PQa-AT-b2a">
             <objects>
                 <customObject id="OF0-qs-3Oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" customClass="PrefsWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="preferencesWindow" showSeguePresentationStyle="single" id="hLJ-Fd-wRr" customClass="PreferencesWindowController" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="h4c-3b-nko">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -399,7 +398,7 @@
         <!--Window Controller-->
         <scene sceneID="4XS-kY-YIS">
             <objects>
-                <windowController storyboardIdentifier="domainListWindow" id="8Ec-9q-82s" customClass="DomainListWC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="domainListWindow" id="8Ec-9q-82s" customClass="DomainListWindowController" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" separatorStyle="line" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="raw-02-3Q1">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -819,7 +818,7 @@ Gw
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
                                     <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj">
                                             <rect key="frame" x="0.0" y="0.0" width="626" height="281"/>

@@ -13,7 +13,7 @@ class ComposerWindow {
     private var menu: MainMenu?
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
-    private var window: ProgressWindowController?
+    private var window: TerminalProgressWindowController?
 
     /**
      Updates the global dependencies and runs the completion callback when done.
@@ -25,7 +25,9 @@ class ComposerWindow {
 
         Paths.shared.detectBinaryPaths()
         if Paths.composer == nil {
-            presentMissingAlert()
+            DispatchQueue.main.async {
+                self.presentMissingAlert()
+            }
             return
         }
 
@@ -33,7 +35,7 @@ class ComposerWindow {
         menu?.setBusyImage()
         menu?.rebuild()
 
-        window = ProgressWindowController.display(
+        window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
             description: "alert.composer_progress.info".localized
         )
@@ -116,7 +118,7 @@ class ComposerWindow {
 
     // MARK: Alert
 
-    private func presentMissingAlert() {
+    @MainActor private func presentMissingAlert() {
         BetterAlert()
             .withInformation(
                 title: "alert.composer_missing.title".localized,

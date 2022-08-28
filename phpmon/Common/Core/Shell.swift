@@ -32,6 +32,9 @@ public class Shell {
      */
     public var shell: String = "/bin/sh"
 
+    /** Additional exports that are sent if `requiresPath` is set to true. */
+    public var exports: String = ""
+
     /**
      Singleton to access a user shell (with --login)
      */
@@ -114,13 +117,23 @@ public class Shell {
      Creates a new process with the correct PATH and shell.
      */
     public func createTask(for command: String, requiresPath: Bool) -> Process {
-        let tailoredCommand = requiresPath
-        ? "export PATH=\(Paths.binPath):$PATH && \(command)"
-        : command
+        var completeCommand = ""
+
+        if requiresPath {
+            // Basic export (PATH)
+            completeCommand += "export PATH=\(Paths.binPath):$PATH && "
+
+            // Put additional exports in between
+            if !self.exports.isEmpty {
+                completeCommand += "\(self.exports) && "
+            }
+        }
+
+        completeCommand += command
 
         let task = Process()
         task.launchPath = self.shell
-        task.arguments = ["--noprofile", "-norc", "--login", "-c", tailoredCommand]
+        task.arguments = ["--noprofile", "-norc", "--login", "-c", completeCommand]
 
         return task
     }

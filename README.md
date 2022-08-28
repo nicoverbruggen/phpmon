@@ -1,3 +1,4 @@
+> **Note**
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider leaving [a one-time donation](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
 
 <p align="center"><img src="./docs/logo.png" alt="PHP Monitor Logo" width="500px" /></p>
@@ -342,6 +343,7 @@ Here's an example of a working preset:
 <pre>
 {
     "scan_apps": [],
+    "services": [],
     "presets": [
         {
             "name": "Legacy Project",
@@ -355,11 +357,67 @@ Here's an example of a working preset:
                 "post_max_size": "128M"
             }
         }
-    ]
+    ],
+    "export": {}
 }
 </pre>
 
 You can omit the `php` key in the preset if you do not wish for the preset to switch to a given PHP version.
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
+</details>
+
+<details>
+<summary><strong>How do I ensure additional Homebrew services are shown in the app?</strong></summary>
+
+You must set these services up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+You can specify custom services in the configuration file for Homebrew services that run as your own user (not root). 
+
+> **Info**
+> If your service must run as root, it cannot currently be added to PHP Monitor.
+
+You can find out which services are available by running `brew services list`. 
+
+Here's an example where we add the `mailhog` and `mysql` services to PHP Monitor:
+
+<pre>
+{
+    "scan_apps": [],
+    "services": ["mailhog", "mysql"],
+    "presets": [],
+    "export": {}
+}
+</pre>
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
+</details>
+
+<details>
+<summary><strong>How do I set custom environment variables?</strong></summary>
+
+You must configure these custom environment variables up in a JSON file, located in `~/.config/phpmon/config.json`. 
+
+PHP Monitor uses a default Shell environment, with no custom environment variables. You need to set custom environment variables manually. These are then used for e.g. Composer.
+
+Here's an example of a working `COMPOSER_HOME` environment variable which is respected:
+
+<pre>
+{
+    "scan_apps": [],
+    "services": [],
+    "presets": [],
+    "export": {
+        "COMPOSER_HOME": "/absolute/path/to/composer/folder"
+    }
+}
+</pre>
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
+
 </details>
 
 <details>
@@ -377,12 +435,14 @@ You can add your own apps by creating and editing a `~/.config/phpmon/config.jso
 
 <pre>
 {
-    "scan_apps": ["Xcode", "Kraken"],
-    "presets": []
+    "scan_apps": ["Xcode", "Kraken"]
 }
 </pre>
 
 You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor will check for the existence of these apps. You do not need to set the full path, just the name of the app should work. Not all apps support opening a folder, though, so your success might vary.
+
+> **Warning**
+> You must restart PHP Monitor for these changes to be detected.
 </details>
 
 <details>
@@ -472,14 +532,14 @@ Donations really help with the Apple Developer Program cost, and keep me motivat
 
 ## 😎 Acknowledgements
 
-While I did make this application during my own free time, PHP Monitor started out from various learning experiments during work hours at my employer, DIVE. I'd also like to shout out the following folks:
+Special thanks go out to:
 
-* My colleagues at [DIVE](https://dive.be)
+* Everyone supporting me via [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen)
+* Everyone who has donated via [my sponsor page](https://nicoverbruggen.be/sponsor)
 * The [Homebrew](https://brew.sh/) team & [Valet maintainers](https://github.com/laravel/valet/graphs/contributors)
 * Various folks who [reached](https://twitter.com/stauffermatt) [out](https://twitter.com/marcelpociot) when PHP Monitor was still very much a small app with a handful of stars or so
-* My [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen) and those who have donated
-* Everyone who has left feedback and reported bugs (appreciate it!)
-* Everyone in the Laravel community who shared the app (thanks!)
+* Everyone who has left feedback and reported bugs
+* Everyone in the Laravel community who shared the app, especially on Twitter
 
 Thank you very much for your contributions, kind words and support.
 
@@ -513,7 +573,8 @@ If an extension or other process writes to a single file a bunch of times in a s
 1. **Sites secured or not secured**: Whether the directory has been secured is determined by checking if a matching certificate exists under Valet's `Certificates` directory for that site name.
 1. **Project type**: PHP Monitor checks your `composer.json` file for "notable dependencies". If you have `laravel/framework` in your `require`, there's a good chance the project type is `Laravel`, after all.
 
-*Note*: If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
+> **Note**
+> If you have linked a folder in Documents, Desktop or Downloads you might need to grant PHP Monitor access to those directories for PHP Monitor to work correctly.
 
 ### Want to know more?
 

@@ -107,13 +107,13 @@ struct Preset: Codable, Equatable {
 
             // Show the correct notification
             if wasRollback {
-                LocalNotification.send(
+                await LocalNotification.send(
                     title: "notification.preset_reverted_title".localized,
                     subtitle: "notification.preset_reverted_desc".localized,
                     preference: .notifyAboutPresets
                 )
             } else {
-                LocalNotification.send(
+                await LocalNotification.send(
                     title: "notification.preset_applied_title".localized,
                     subtitle: "notification.preset_applied_desc".localized(self.name),
                     preference: .notifyAboutPresets

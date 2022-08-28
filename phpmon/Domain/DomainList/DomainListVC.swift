@@ -64,17 +64,16 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         let windowController = storyboard.instantiateController(
             withIdentifier: "domainListWindow"
-        ) as! DomainListWC
+        ) as! DomainListWindowController
 
-        windowController.window!.title = "domain_list.title".localized
-        windowController.window!.subtitle = "domain_list.subtitle".localized
-        windowController.window!.delegate = delegate
-        windowController.window!.styleMask = [
-            .titled, .closable, .resizable, .miniaturizable
-        ]
-        windowController.window!.minSize = NSSize(width: 550, height: 200)
-        windowController.window!.delegate = windowController
-        windowController.window!.setFrameAutosaveName("domainListWindow")
+        guard let window = windowController.window else { return }
+
+        window.title = "domain_list.title".localized
+        window.subtitle = "domain_list.subtitle".localized
+        window.delegate = delegate ?? windowController
+        window.styleMask = [.titled, .closable, .resizable, .miniaturizable]
+        window.minSize = NSSize(width: 550, height: 200)
+        window.setFrameAutosaveName("domainListWindow")
 
         App.shared.domainListWindowController = windowController
     }

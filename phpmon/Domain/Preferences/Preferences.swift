@@ -21,6 +21,7 @@ enum PreferenceName: String {
     case allowProtocolForIntegrations = "allow_protocol_for_integrations"
     case globalHotkey = "global_hotkey"
     case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
+    case showPhpDoctorSuggestions = "show_php_doctor_suggestions"
 
     // APPEARANCE
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
@@ -65,7 +66,7 @@ class Preferences {
     public init() {
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
-        customPreferences = CustomPrefs(scanApps: [], presets: [], services: [])
+        customPreferences = CustomPrefs(scanApps: [], presets: [], services: [], environmentVariables: [:])
         loadCustomPreferences()
     }
 
@@ -88,6 +89,7 @@ class Preferences {
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
+            PreferenceName.showPhpDoctorSuggestions.rawValue: true,
 
             /// Preferences: Appearance
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
@@ -174,6 +176,8 @@ class Preferences {
                 forKey: PreferenceName.allowProtocolForIntegrations.rawValue) as Any,
             .automaticBackgroundUpdateCheck: UserDefaults.standard.bool(
                 forKey: PreferenceName.automaticBackgroundUpdateCheck.rawValue) as Any,
+            .showPhpDoctorSuggestions: UserDefaults.standard.bool(
+                forKey: PreferenceName.showPhpDoctorSuggestions.rawValue) as Any,
 
             .notifyAboutVersionChange: UserDefaults.standard.bool(
                 forKey: PreferenceName.notifyAboutVersionChange.rawValue) as Any,
@@ -251,6 +255,11 @@ class Preferences {
 
             if customPreferences.hasServices() {
                 Log.info("There are custom services: \(customPreferences.services!)")
+            }
+
+            if customPreferences.hasEnvironmentVariables() {
+                Log.info("Configuring the additional exports...")
+                Shell.user.exports = customPreferences.getEnvironmentVariables()
             }
         } catch {
             Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")

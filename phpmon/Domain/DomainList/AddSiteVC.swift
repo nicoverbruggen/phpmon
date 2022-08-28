@@ -55,7 +55,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         let path = pathControl.url!.path
         let name = inputDomainName.stringValue
 
-        if !FileManager.default.fileExists(atPath: path) {
+        if !Filesystem.exists(path) {
             Alert.confirm(
                 onWindow: view.window!,
                 messageText: "domain_list.alert.folder_missing.title".localized,

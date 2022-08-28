@@ -167,6 +167,18 @@ class Startup {
             descriptionText: "startup.errors.services_json_error.desc".localized
         ),
         // =================================================================================
+        // Determine that Valet is installed
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                return !Filesystem.directoryExists("~/.config/valet")
+            },
+            name: "`.config/valet` not empty (Valet installed)",
+            titleText: "startup.errors.valet_not_installed.title".localized,
+            subtitleText: "startup.errors.valet_not_installed.subtitle".localized,
+            descriptionText: "startup.errors.valet_not_installed.desc".localized
+        ),
+        // =================================================================================
         // Determine that the Valet configuration JSON file is valid.
         // =================================================================================
         EnvironmentCheck(
@@ -217,8 +229,19 @@ class Startup {
         EnvironmentCheck(
             command: {
                 let output = valet("--version", sudo: false)
+                // Failure condition #1: does not contain Laravel Valet
+                if !output.contains("Laravel Valet") {
+                    return true
+                }
+                // Failure condition #2: version cannot be parsed
+                let versionString = output
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .components(separatedBy: "Laravel Valet")[1]
+                    .trimmingCharacters(in: .whitespaces)
+                // Extract the version number
                 Valet.shared.version = VersionExtractor.from(output)
-                return Valet.shared.version == nil && output.contains("Laravel Valet")
+                // Get the actual version
+                return Valet.shared.version == nil
             },
             name: "`valet --version` was loaded",
             titleText: "startup.errors.valet_version_unknown.title".localized,
@@ -226,42 +249,4 @@ class Startup {
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
         )
     ]
-
-    // MARK: - EnvironmentCheck struct
-
-    /**
-     The `EnvironmentCheck` is used to defer the execution of all of these commands until necessary.
-     Checks that require an app restart will always lead to an alert and app termination shortly after.
-     */
-    struct EnvironmentCheck {
-        let command: () async -> Bool
-        let name: String
-        let titleText: String
-        let subtitleText: String
-        let descriptionText: String
-        let buttonText: String
-        let requiresAppRestart: Bool
-
-        init(
-            command: @escaping () async -> Bool,
-            name: String,
-            titleText: String,
-            subtitleText: String,
-            descriptionText: String = "",
-            buttonText: String = "OK",
-            requiresAppRestart: Bool = false
-        ) {
-            self.command = command
-            self.name = name
-            self.titleText = titleText
-            self.subtitleText = subtitleText
-            self.descriptionText = descriptionText
-            self.buttonText = buttonText
-            self.requiresAppRestart = requiresAppRestart
-        }
-
-        public func succeeds() async -> Bool {
-            return await !self.command()
-        }
-    }
 }
