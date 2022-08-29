@@ -21,18 +21,12 @@ class NginxConfigurationFile: CreatedFromFile {
 
     /** Resolves an nginx configuration file (.conf) */
     static func from(filePath: String) -> Self? {
-        let path = filePath.replacingOccurrences(
-            of: "~",
-            with: "/Users/\(Paths.whoami)"
-        )
+        let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
 
         do {
             let fileContents = try String(contentsOfFile: path)
 
-            return Self.init(
-                path: path,
-                contents: fileContents
-            )
+            return Self.init(path: path, contents: fileContents)
         } catch {
             Log.warn("Could not read the nginx configuration file at: `\(filePath)`")
             return nil

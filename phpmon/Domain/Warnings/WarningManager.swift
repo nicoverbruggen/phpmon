@@ -32,7 +32,7 @@ class WarningManager {
         ),
         Warning(
             command: {
-                return !Shell.user.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin") &&
+                return !Shell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
                     !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",

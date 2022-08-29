@@ -20,7 +20,7 @@ class ValetSite: DomainListable {
     /// replacing the user's home folder with ~.
     lazy var absolutePathRelative: String = {
         return self.absolutePath
-            .replacingOccurrences(of: "/Users/\(Paths.whoami)", with: "~")
+            .replacingOccurrences(of: Paths.homePath, with: "~")
     }()
 
     /// The TLD used to locate this site.
