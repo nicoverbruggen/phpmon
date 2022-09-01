@@ -263,7 +263,7 @@ struct Preset: Codable, Equatable {
 
         try! String(data: data, encoding: .utf8)!
             .write(
-                toFile: "/Users/\(Paths.whoami)/.config/phpmon/preset_revert.json",
+                toFile: "\(Paths.homePath)/.config/phpmon/preset_revert.json",
                 atomically: true,
                 encoding: .utf8
             )

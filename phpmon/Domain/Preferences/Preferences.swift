@@ -222,7 +222,7 @@ class Preferences {
         moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
-        let url = URL(fileURLWithPath: "/Users/\(Paths.whoami)/.config/phpmon/config.json")
+        let url = URL(fileURLWithPath: "\(Paths.homePath)/.config/phpmon/config.json")
         if Filesystem.fileExists(url.path) {
 
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")

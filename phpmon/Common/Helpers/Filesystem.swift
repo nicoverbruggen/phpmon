@@ -16,7 +16,7 @@ class Filesystem {
      */
     public static func exists(_ path: String) -> Bool {
         return FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)")
+            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath)
         )
     }
 
@@ -26,20 +26,11 @@ class Filesystem {
     public static func fileExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)"),
+            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath),
             isDirectory: &isDirectory
         )
 
         return exists && !isDirectory.boolValue
-    }
-
-    public static func fileIsSymlink(_ path: String) -> Bool {
-        do {
-            let attribs = try FileManager.default.attributesOfItem(atPath: path)
-            return attribs[.type] as! FileAttributeType == FileAttributeType.typeSymbolicLink
-        } catch {
-            return false
-        }
     }
 
     /**
@@ -48,11 +39,23 @@ class Filesystem {
     public static func directoryExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: "/Users/\(Paths.whoami)"),
+            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath),
             isDirectory: &isDirectory
         )
 
         return exists && isDirectory.boolValue
+    }
+
+    /**
+     Checks if a given file is a symbolic link.
+     */
+    public static func fileIsSymlink(_ path: String) -> Bool {
+        do {
+            let attribs = try FileManager.default.attributesOfItem(atPath: path)
+            return attribs[.type] as! FileAttributeType == FileAttributeType.typeSymbolicLink
+        } catch {
+            return false
+        }
     }
 
 }

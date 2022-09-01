@@ -17,10 +17,10 @@ class PhpHelper {
         let dotless = version.replacingOccurrences(of: ".", with: "")
 
         // Determine the dotless name for this PHP version
-        let destination = "/Users/\(Paths.whoami)/.config/phpmon/bin/pm\(dotless)"
+        let destination = "\(Paths.homePath)/.config/phpmon/bin/pm\(dotless)"
 
         // Check if the ~/.config/phpmon/bin directory is in the PATH
-        let inPath = Shell.user.PATH.contains("/Users/\(Paths.whoami)/.config/phpmon/bin")
+        let inPath = Shell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin")
 
         // Check if we can create symlinks (`/usr/local/bin` must be writable)
         let canWriteSymlinks = FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
@@ -81,7 +81,7 @@ class PhpHelper {
     }
 
     private static func createSymlink(_ dotless: String) {
-        let source = "/Users/\(Paths.whoami)/.config/phpmon/bin/pm\(dotless)"
+        let source = "\(Paths.homePath)/.config/phpmon/bin/pm\(dotless)"
         let destination = "/usr/local/bin/pm\(dotless)"
 
         if !Filesystem.fileExists(destination) {

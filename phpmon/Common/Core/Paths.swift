@@ -21,7 +21,7 @@ public class Paths {
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
-        userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
+        userName = String(Shell.pipe("id -un").split(separator: "\n")[0])
     }
 
     public func detectBinaryPaths() {
@@ -55,6 +55,10 @@ public class Paths {
 
     public static var whoami: String {
         return shared.userName
+    }
+
+    public static var homePath: String {
+        return NSHomeDirectory()
     }
 
     public static var cellarPath: String {
