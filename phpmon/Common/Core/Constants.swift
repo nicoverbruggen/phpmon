@@ -53,17 +53,21 @@ struct Constants {
 
     struct Urls {
 
-        static let DonationPayment = URL(
-            string: "https://nicoverbruggen.be/sponsor#pay-now"
-        )!
+        // phpmon.app URLs (these are aliased to redirect correctly)
 
         static let DonationPage = URL(
-            string: "https://nicoverbruggen.be/sponsor"
+            string: "https://phpmon.app/sponsor"
         )!
 
         static let FrequentlyAskedQuestions = URL(
-            string: "https://github.com/nicoverbruggen/phpmon#%EF%B8%8F-faq--troubleshooting"
+            string: "https://phpmon.app/faq"
         )!
+
+        static let DonationPayment = URL(
+            string: "https://phpmon.app/sponsor/now"
+        )!
+
+        // GitHub URLs (do not alias these)
 
         static let GitHubReleases = URL(
             string: "https://github.com/nicoverbruggen/phpmon/releases"
