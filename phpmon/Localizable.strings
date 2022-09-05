@@ -167,10 +167,13 @@
 
 // SITE LIST ACTIONS
 
-"domain_list.isolate" = "Isolate Domain";
+"domain_list.isolate" = "Switch PHP Version";
+"domain_list.site_isolation" = "Site Isolation";
 "domain_list.remove_isolation" = "Remove Isolation";
+"domain_list.always_use_php" = "Always use PHP %@";
 "domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
+"domain_list.actions" = "Actions";
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
 "domain_list.unsecure" = "Unsecure Domain";

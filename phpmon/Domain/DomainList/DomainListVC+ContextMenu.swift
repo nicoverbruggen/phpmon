@@ -42,14 +42,15 @@ extension DomainListVC {
             addDisabledIsolation(to: menu)
         }
 
-        addUnlink(to: menu, with: site)
+        menu.addItem(HeaderView.asMenuItem(text: "domain_list.actions".localized))
         addToggleSecure(to: menu, secured: site.secured)
+        addUnlink(to: menu, with: site)
 
         tableView.menu = menu
     }
 
     private func addSystemApps(to menu: NSMenu) {
-        menu.addItem(withTitle: "domain_list.system_apps".localized, action: nil, keyEquivalent: "")
+        menu.addItem(HeaderView.asMenuItem(text: "domain_list.system_apps".localized))
         menu.addItem(
             withTitle: "domain_list.open_in_finder".localized,
             action: #selector(self.openInFinder),
@@ -70,7 +71,7 @@ extension DomainListVC {
     private func addDetectedApps(to menu: NSMenu) {
         if !applications.isEmpty {
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(withTitle: "domain_list.detected_apps".localized, action: nil, keyEquivalent: "")
+            menu.addItem(HeaderView.asMenuItem(text: "domain_list.detected_apps".localized))
 
             for editor in applications {
                 let editorMenuItem = EditorMenuItem(
@@ -96,38 +97,40 @@ extension DomainListVC {
     }
 
     private func addDisabledIsolation(to menu: NSMenu) {
+        menu.addItem(HeaderView.asMenuItem(text: "domain_list.site_isolation".localized))
         menu.addItem(withTitle: "domain_list.isolation_unavailable".localized, action: nil, keyEquivalent: "")
         menu.addItem(NSMenuItem.separator())
     }
 
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
-        if site.isolatedPhpVersion == nil {
-            // ISOLATION POSSIBLE
-            let isolationMenuItem = NSMenuItem(title: "domain_list.isolate".localized, action: nil, keyEquivalent: "")
-            let submenu = NSMenu()
-            submenu.addItem(withTitle: "Choose a PHP version", action: nil, keyEquivalent: "")
-            for version in PhpEnv.shared.availablePhpVersions.reversed() {
-                let item = PhpMenuItem(
-                    title: "Always use PHP \(version)",
-                    action: #selector(self.isolateSite),
-                    keyEquivalent: ""
-                )
-                item.version = version
-                submenu.addItem(item)
-            }
-            menu.setSubmenu(submenu, for: isolationMenuItem)
+        var items: [NSMenuItem] = []
 
-            menu.addItem(isolationMenuItem)
-            menu.addItem(NSMenuItem.separator())
-        } else {
-            // REMOVE ISOLATION POSSIBLE
-            menu.addItem(
-                withTitle: "domain_list.remove_isolation".localized,
-                action: #selector(self.removeIsolatedSite),
+        for version in PhpEnv.shared.availablePhpVersions.reversed() {
+            let item = PhpMenuItem(
+                title: "domain_list.always_use_php".localized(version),
+                action: #selector(self.isolateSite),
                 keyEquivalent: ""
             )
-            menu.addItem(NSMenuItem.separator())
+            if site.servingPhpVersion == version && site.isolatedPhpVersion != nil {
+                item.state = .on
+                item.action = nil
+            }
+            item.version = version
+            items.append(item)
         }
+
+        // Add the option to remove site isolation
+        if site.isolatedPhpVersion != nil {
+            items.append(NSMenuItem.separator())
+            items.append(NSMenuItem(
+                title: "domain_list.remove_isolation".localized,
+                action: #selector(self.removeIsolatedSite)
+            ))
+        }
+
+        menu.addItem(HeaderView.asMenuItem(text: "domain_list.site_isolation".localized))
+        menu.addItem(NSMenuItem(title: "domain_list.isolate".localized, submenu: items))
+        menu.addItem(NSMenuItem.separator())
     }
 
     private func addToggleSecure(to menu: NSMenu, secured: Bool) {
