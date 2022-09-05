@@ -189,6 +189,8 @@
 		C495F5B028A42E080087F70A /* EnvironmentCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */; };
 		C4998F0A2617633900B2526E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PreferencesWindowController.swift */; };
 		C4998F0B2617633900B2526E /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PreferencesWindowController.swift */; };
+		C4A81CA428C67101008DD9D1 /* PMTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A81CA328C67101008DD9D1 /* PMTableView.swift */; };
+		C4A81CA528C67101008DD9D1 /* PMTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A81CA328C67101008DD9D1 /* PMTableView.swift */; };
 		C4AC51FC27E27F47008528CA /* DomainListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */; };
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
@@ -426,6 +428,7 @@
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentCheck.swift; sourceTree = "<group>"; };
 		C4998F092617633900B2526E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		C4A81CA328C67101008DD9D1 /* PMTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMTableView.swift; sourceTree = "<group>"; };
 		C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListKindCell.swift; sourceTree = "<group>"; };
 		C4ACA38E25C754C100060C66 /* PhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtension.swift; sourceTree = "<group>"; };
 		C4AF9F70275445FF00D44ED0 /* valet-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "valet-config.json"; sourceTree = "<group>"; };
@@ -834,6 +837,7 @@
 				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
 				C4930849279F331F009C240B /* AddSiteVC.swift */,
 				C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */,
+				C4A81CA328C67101008DD9D1 /* PMTableView.swift */,
 			);
 			path = DomainList;
 			sourceTree = "<group>";
@@ -1388,6 +1392,7 @@
 				C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */,
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
 				C44067FB27E25FD70045BD4E /* DomainListTLSCell.swift in Sources */,
+				C4A81CA428C67101008DD9D1 /* PMTableView.swift in Sources */,
 				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C41C1B4B22B019FF00E7CF16 /* ActivePhpInstallation.swift in Sources */,
@@ -1566,6 +1571,7 @@
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
+				C4A81CA528C67101008DD9D1 /* PMTableView.swift in Sources */,
 				C4B585422770FE3900DA4FBE /* Shell.swift in Sources */,
 				C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,

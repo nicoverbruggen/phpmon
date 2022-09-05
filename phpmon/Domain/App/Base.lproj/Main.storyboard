@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -818,9 +819,9 @@ Gw
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
                                     <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj">
+                                        <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj" customClass="PMTableView" customModule="PHP_Monitor" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="626" height="281"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
