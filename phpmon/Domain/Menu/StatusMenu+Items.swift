@@ -35,7 +35,7 @@ extension StatusMenu {
         self.addItem(NSMenuItem.separator())
     }
 
-    func addValetServicesMenuItems() {
+    func addServicesManagerMenuItem() {
         if PhpEnv.shared.isBusy {
             return
         }

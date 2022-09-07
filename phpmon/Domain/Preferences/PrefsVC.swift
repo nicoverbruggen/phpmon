@@ -257,9 +257,22 @@ class NotificationPreferencesVC: GenericPreferenceVC {
 
 }
 
-class AppearancePreferencesVC: GenericPreferenceVC {
+class MenuStructurePreferencesVC: GenericPreferenceVC {
 
-    // MARK: - Lifecycle
+    public static func fromStoryboard() -> GenericPreferenceVC {
+        let vc = NSStoryboard(name: "Main", bundle: nil)
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+
+        vc.views = [
+            vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true),
+            vc.getDisplayMenuSectionPV("prefs.display_services_manager", .displayServicesManager)
+        ]
+
+        return vc
+    }
+}
+
+class AppearancePreferencesVC: GenericPreferenceVC {
 
     public static func fromStoryboard() -> GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
@@ -268,8 +281,7 @@ class AppearancePreferencesVC: GenericPreferenceVC {
         vc.views = [
             vc.getDynamicIconPV(),
             vc.getIconOptionsPV(),
-            vc.getIconDensityPV(),
-            vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true)
+            vc.getIconDensityPV()
         ]
 
         return vc

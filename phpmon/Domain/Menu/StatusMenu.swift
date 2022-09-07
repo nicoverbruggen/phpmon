@@ -17,8 +17,10 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        addValetServicesMenuItems()
-        addItem(NSMenuItem.separator())
+        if Preferences.isEnabled(.displayServicesManager) {
+            addServicesManagerMenuItem()
+            addItem(NSMenuItem.separator())
+        }
 
         addValetMenuItems()
         addItem(NSMenuItem.separator())

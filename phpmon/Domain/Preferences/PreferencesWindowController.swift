@@ -92,6 +92,11 @@ class PreferencesWindowController: PMWindowController {
                 icon: "paintbrush"
             ),
             PrefTabView(
+                viewController: MenuStructurePreferencesVC.fromStoryboard(),
+                label: "Visibility",
+                icon: "eye"
+            ),
+            PrefTabView(
                 viewController: NotificationPreferencesVC.fromStoryboard(),
                 label: "Notifications",
                 icon: "bell.badge"
