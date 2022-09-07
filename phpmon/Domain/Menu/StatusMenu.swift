@@ -12,7 +12,12 @@ class StatusMenu: NSMenu {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        addPhpActionMenuItems()
+        if Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+            addPhpActionMenuItems()
+            addItem(NSMenuItem.separator())
+        }
+
+        addValetServicesMenuItems()
         addItem(NSMenuItem.separator())
 
         addValetMenuItems()

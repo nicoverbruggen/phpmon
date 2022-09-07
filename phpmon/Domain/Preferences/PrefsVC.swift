@@ -188,6 +188,23 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getDisplayMenuSectionPV(
+        _ localizationKey: String,
+        _ preference: PreferenceName,
+        _ first: Bool = false
+    ) -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: first ? "prefs.menu_contents".localized : "",
+            descriptionText: "\(localizationKey)_desc".localized,
+            checkboxText: localizationKey.localized,
+            preference: preference,
+            action: {
+                MainMenu.shared.refreshIcon()
+                MainMenu.shared.rebuild()
+            }
+        )
+    }
+
     // MARK: - Listening for hotkey delegate
 
     var listeningForHotkeyView: HotkeyPreferenceView?
@@ -251,7 +268,8 @@ class AppearancePreferencesVC: GenericPreferenceVC {
         vc.views = [
             vc.getDynamicIconPV(),
             vc.getIconOptionsPV(),
-            vc.getIconDensityPV()
+            vc.getIconDensityPV(),
+            vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true)
         ]
 
         return vc

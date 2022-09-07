@@ -65,7 +65,7 @@ class Preferences {
             PreferenceName.notifyAboutGlobalComposerStatus.rawValue: true,
 
             /// Preferences: UI Preferences
-            PreferenceName.displayVersionSwitcher.rawValue: true,
+            PreferenceName.displayGlobalVersionSwitcher.rawValue: true,
             PreferenceName.displayServicesManager.rawValue: true,
             PreferenceName.displayValetConfigFinder.rawValue: true,
             PreferenceName.displayPhpConfigFinder.rawValue: true,

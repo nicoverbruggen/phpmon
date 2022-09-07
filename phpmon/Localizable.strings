@@ -227,6 +227,7 @@
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
 "prefs.notifications" = "Notifications:";
+"prefs.menu_contents" = "Display In Menu:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -277,6 +278,9 @@
 
 "prefs.notify_about_composer_success_desc" = "Displays a notification when the global Composer configuration was successfully updated.";
 "prefs.notify_about_composer_success" = "Notify about global composer update";
+
+"prefs.display_global_version_switcher_desc" = "Display the global PHP version switcher. If disabled, the global switcher will not be accessible via the main menu.";
+"prefs.display_global_version_switcher" = "Show Global PHP Switcher";
 
 // NOTIFICATIONS
 

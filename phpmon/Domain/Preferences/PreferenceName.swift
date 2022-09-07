@@ -35,7 +35,7 @@ enum PreferenceName: String {
     case notifyAboutGlobalComposerStatus = "notify_about_composer_status"
 
     // MENU CUSTOMIZATION
-    case displayVersionSwitcher = "display_version_switcher"
+    case displayGlobalVersionSwitcher = "display_global_version_switcher"
     case displayServicesManager = "display_services_manager"
     case displayValetConfigFinder = "display_valet_config_finder"
     case displayPhpConfigFinder = "display_php_config_finder"
@@ -66,7 +66,7 @@ enum PreferenceName: String {
             .notifyAboutGlobalComposerStatus,
 
             // UI Preferences
-            .displayVersionSwitcher,
+            .displayGlobalVersionSwitcher,
             .displayServicesManager,
             .displayValetConfigFinder,
             .displayPhpConfigFinder,

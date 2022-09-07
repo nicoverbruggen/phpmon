@@ -32,9 +32,15 @@ extension StatusMenu {
         if PhpEnv.shared.availablePhpVersions.isEmpty { return }
 
         addSwitchToPhpMenuItems()
+        self.addItem(NSMenuItem.separator())
+    }
+
+    func addValetServicesMenuItems() {
+        if PhpEnv.shared.isBusy {
+            return
+        }
 
         addItems([
-            NSMenuItem.separator(),
             ServicesView.asMenuItem(),
             NSMenuItem.separator()
         ])
