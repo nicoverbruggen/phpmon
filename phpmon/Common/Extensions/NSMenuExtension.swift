@@ -14,7 +14,7 @@ extension NSMenu {
         self.addItems(items, target: target)
     }
 
-    open func addItems(_ items: [NSMenuItem], target: NSObject? = nil) {
+    public func addItems(_ items: [NSMenuItem], target: NSObject? = nil) {
         for item in items {
             self.addItem(item)
             if target != nil {
