@@ -378,7 +378,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "Your PHP-FPM configuration is not pointing at the Valet socket!";
 "alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config. This will result in '502 Bad Gateway' responses if you visit websites linked via Valet.";
-"alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nIf that is the case, you can try the following workaround: edit the file at `~/.composer/vendor/laravel/valet/cli/Valet/Brew.php` and add e.g. `php@8.2` to the `SUPPORTED_PHP_VERSIONS` array. After editing the file, try running `valet install`. (This will, if all goes well, set up all the required Valet configuration files.)";
+"alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nYou may need to upgrade your installation of Laravel Valet to at least v3.1.11, after that you should run `valet install`. More information here: https://phpmon.app/prerelease-php";
 
 // PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor cannot start due to a problem with your system configuration";
