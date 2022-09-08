@@ -37,11 +37,13 @@ enum PreferenceName: String {
     // MENU CUSTOMIZATION
     case displayGlobalVersionSwitcher = "display_global_version_switcher"
     case displayServicesManager = "display_services_manager"
-    case displayValetConfigFinder = "display_valet_config_finder"
+    case displayValetIntegration = "display_valet_integration"
     case displayPhpConfigFinder = "display_php_config_finder"
     case displayComposerToolkit = "display_composer_toolkit"
     case displayLimitsWidget = "display_limits_widget"
     case displayExtensions = "display_extensions"
+    case displayPresets = "display_presets"
+    case displayMisc = "display_misc"
 
     /**
      What type of data each preference contains.
@@ -68,11 +70,13 @@ enum PreferenceName: String {
             // UI Preferences
             .displayGlobalVersionSwitcher,
             .displayServicesManager,
-            .displayValetConfigFinder,
+            .displayValetIntegration,
             .displayPhpConfigFinder,
             .displayComposerToolkit,
             .displayLimitsWidget,
-            .displayExtensions
+            .displayExtensions,
+            .displayPresets,
+            .displayMisc
         ],
         .string: [
             .globalHotkey,

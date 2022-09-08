@@ -265,7 +265,15 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
 
         vc.views = [
             vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true),
-            vc.getDisplayMenuSectionPV("prefs.display_services_manager", .displayServicesManager)
+            vc.getDisplayMenuSectionPV("prefs.display_services_manager", .displayServicesManager),
+            vc.getDisplayMenuSectionPV("prefs.display_valet_integration", .displayValetIntegration),
+            vc.getDisplayMenuSectionPV("prefs.display_php_config_finder", .displayPhpConfigFinder),
+            vc.getDisplayMenuSectionPV("prefs.display_composer_toolkit", .displayComposerToolkit),
+            vc.getDisplayMenuSectionPV("prefs.display_limits_widget", .displayLimitsWidget),
+            vc.getDisplayMenuSectionPV("prefs.display_extensions", .displayExtensions),
+            vc.getDisplayMenuSectionPV("prefs.display_presets", .displayPresets),
+            vc.getDisplayMenuSectionPV("prefs.display_misc", .displayMisc)
+
         ]
 
         return vc

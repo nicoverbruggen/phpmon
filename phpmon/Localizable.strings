@@ -227,7 +227,7 @@
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
 "prefs.notifications" = "Notifications:";
-"prefs.menu_contents" = "Display In Menu:";
+"prefs.menu_contents" = "Features in Menu:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -253,7 +253,7 @@
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
 
-"prefs.php_doctor_suggestions_title" = "Show suggestions (if applicable)";
+"prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";
  
 "prefs.shortcut_set" = "Set global shortcut";
@@ -280,10 +280,31 @@
 "prefs.notify_about_composer_success" = "Notify about global composer update";
 
 "prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
-"prefs.display_global_version_switcher" = "Show Global PHP Switcher";
+"prefs.display_global_version_switcher" = "PHP Switcher";
 
 "prefs.display_services_manager_desc" = "If disabled, you will not be able to see, start or stop individual services. (If any services are disabled, you will not be easily able to see that this is the case.)";
-"prefs.display_services_manager" = "Show Services Manager";
+"prefs.display_services_manager" = "Services Manager";
+
+"prefs.display_valet_integration_desc" = "If disabled, you will not be able to locate the main Valet folder or open the list of domains.";
+"prefs.display_valet_integration" = "Valet Integration";
+
+"prefs.display_php_config_finder_desc" = "If disabled, you will not be able to easily locate your PHP configuration files and/or generate a phpinfo() dump.";
+"prefs.display_php_config_finder" = "PHP Config Finder";
+
+"prefs.display_composer_toolkit_desc" = "If disabled, you will not be able to invoke Composer via the main menu. The automatic Composer update after switching preference is unaffected by this change.";
+"prefs.display_composer_toolkit" = "Composer Toolkit";
+
+"prefs.display_limits_widget_desc" = "If disabled, you will not be able to see the limits widget (memory, POST, upload) in the main menu.";
+"prefs.display_limits_widget" = "Limits Widget";
+
+"prefs.display_extensions_desc" = "If disabled, you will not be able to easily toggle extensions via the main menu.";
+"prefs.display_extensions" = "Extensions";
+
+"prefs.display_presets_desc" = "If disabled, you will not be able to apply or revert PHP configuration presets.";
+"prefs.display_presets" = "Presets";
+
+"prefs.display_misc_desc" = "If disabled, you will not be able to access the First Aid & Services menu.";
+"prefs.display_misc" = "First Aid & Services Menu";
 
 // NOTIFICATIONS
 

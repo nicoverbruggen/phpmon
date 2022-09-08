@@ -22,29 +22,45 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        addValetMenuItems()
-        addItem(NSMenuItem.separator())
+        if Preferences.isEnabled(.displayValetIntegration) {
+            addValetMenuItems()
+            addItem(NSMenuItem.separator())
+        }
 
-        addConfigurationMenuItems()
-        addItem(NSMenuItem.separator())
+        if Preferences.isEnabled(.displayPhpConfigFinder) {
+            addConfigurationMenuItems()
+            addItem(NSMenuItem.separator())
+        }
 
-        addComposerMenuItems()
-        addItem(NSMenuItem.separator())
+        if Preferences.isEnabled(.displayComposerToolkit) {
+            addComposerMenuItems()
+            addItem(NSMenuItem.separator())
+        }
 
         if PhpEnv.shared.isBusy {
             return
         }
 
-        addStatsMenuItem()
-        addItem(NSMenuItem.separator())
+        if Preferences.isEnabled(.displayLimitsWidget) {
+            addStatsMenuItem()
+            addItem(NSMenuItem.separator())
+        }
 
-        addExtensionsMenuItems()
-        addXdebugMenuItem()
+        if Preferences.isEnabled(.displayExtensions) {
+            addExtensionsMenuItems()
+            addXdebugMenuItem()
+            NSMenuItem.separator()
+        }
+
         addPhpDoctorMenuItem()
-        addItem(NSMenuItem.separator())
 
-        addPresetsMenuItem()
-        addFirstAidAndServicesMenuItems()
+        if Preferences.isEnabled(.displayPresets) {
+            addPresetsMenuItem()
+        }
+
+        if Preferences.isEnabled(.displayMisc) {
+            addFirstAidAndServicesMenuItems()
+        }
 
         addItem(NSMenuItem.separator())
 

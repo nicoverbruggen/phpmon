@@ -67,11 +67,13 @@ class Preferences {
             /// Preferences: UI Preferences
             PreferenceName.displayGlobalVersionSwitcher.rawValue: true,
             PreferenceName.displayServicesManager.rawValue: true,
-            PreferenceName.displayValetConfigFinder.rawValue: true,
+            PreferenceName.displayValetIntegration.rawValue: true,
             PreferenceName.displayPhpConfigFinder.rawValue: true,
             PreferenceName.displayComposerToolkit.rawValue: true,
             PreferenceName.displayLimitsWidget.rawValue: true,
             PreferenceName.displayExtensions.rawValue: true,
+            PreferenceName.displayPresets.rawValue: true,
+            PreferenceName.displayMisc.rawValue: true,
 
             /// Stats
             InternalStats.switchCount.rawValue: 0,
