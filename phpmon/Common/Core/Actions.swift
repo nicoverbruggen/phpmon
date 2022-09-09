@@ -41,7 +41,7 @@ class Actions {
         ]
 
         PhpEnv.shared.availablePhpVersions.forEach { version in
-            let formula = version == PhpEnv.brewPhpVersion
+            let formula = version == PhpEnv.brewPhpAlias
                 ? "php"
                 : "php@\(version)"
             servicesCommands.append("\(Paths.brew) services stop \(formula)")
@@ -144,7 +144,7 @@ class Actions {
      extensions and/or run `composer global update`.
      */
     public static func fixMyValet(completed: @escaping () -> Void) {
-        InternalSwitcher().performSwitch(to: PhpEnv.brewPhpVersion, completion: {
+        InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias, completion: {
             brew("services restart dnsmasq", sudo: true)
             brew("services restart php", sudo: true)
             brew("services restart nginx", sudo: true)

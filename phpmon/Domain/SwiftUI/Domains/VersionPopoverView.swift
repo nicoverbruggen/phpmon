@@ -34,8 +34,8 @@ struct VersionPopoverView: View {
                     )
                     HStack {
                         ForEach(validPhpVersions, id: \.self) { version in
-                            Button("site_link.switch_to_php".localized(version.homebrewVersion), action: {
-                                MainMenu.shared.switchToPhpVersion(version.homebrewVersion)
+                            Button("site_link.switch_to_php".localized(version.short), action: {
+                                MainMenu.shared.switchToPhpVersion(version.short)
                                 parent?.close()
                             })
                         }
@@ -88,7 +88,7 @@ struct VersionPopoverView: View {
 
         if site.isolatedPhpVersion != nil {
             information += "alert.composer_php_isolated.desc".localized(
-                site.isolatedPhpVersion!.versionNumber.homebrewVersion,
+                site.isolatedPhpVersion!.versionNumber.short,
                 PhpEnv.phpInstall.version.short
             )
             information += "\n\n"

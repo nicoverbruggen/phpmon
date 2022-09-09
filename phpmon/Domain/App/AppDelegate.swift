@@ -65,14 +65,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         logger.verbosity = .info
         #if DEBUG
-            // logger.verbosity = .performance
+            logger.verbosity = .performance
         #endif
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance
             Log.info("Extra verbose mode has been activated.")
         }
         Log.separator(as: .info)
-        Log.info("PHP MONITOR by Nico Verbruggen")
+        #if SPONSOR
+            Log.info("PHP MONITOR SE by Nico Verbruggen")
+        #else
+            Log.info("PHP MONITOR by Nico Verbruggen")
+        #endif
+
         Log.info("Version \(App.version)")
         Log.separator(as: .info)
         self.sharedShell = Shell.user

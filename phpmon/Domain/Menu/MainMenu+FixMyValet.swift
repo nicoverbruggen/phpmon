@@ -14,7 +14,7 @@ extension MainMenu {
     @MainActor @objc func fixMyValet() {
         let previousVersion = PhpEnv.phpInstall.version.short
 
-        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion) {
+        if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpAlias) {
             presentAlertForMissingFormula()
             return
         }
@@ -22,7 +22,7 @@ extension MainMenu {
         if !BetterAlert()
             .withInformation(
                 title: "alert.fix_my_valet.title".localized,
-                subtitle: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpVersion)
+                subtitle: "alert.fix_my_valet.info".localized(PhpEnv.brewPhpAlias)
             )
             .withPrimary(text: "alert.fix_my_valet.ok".localized)
             .withSecondary(text: "alert.fix_my_valet.cancel".localized)
@@ -33,7 +33,7 @@ extension MainMenu {
 
         Actions.fixMyValet {
             DispatchQueue.main.async {
-                if previousVersion == PhpEnv.brewPhpVersion {
+                if previousVersion == PhpEnv.brewPhpAlias {
                     self.presentAlertForSameVersion()
                 } else {
                     self.presentAlertForDifferentVersion(version: previousVersion)
@@ -74,7 +74,7 @@ extension MainMenu {
                 alert.close(with: .alertSecondButtonReturn)
                 MainMenu.shared.switchToPhpVersion(version)
             })
-            .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpVersion))
+            .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnv.brewPhpAlias))
             .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })

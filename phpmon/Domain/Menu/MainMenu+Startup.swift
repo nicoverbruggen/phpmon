@@ -90,7 +90,12 @@ extension MainMenu {
 
         // Update the stats
         Stats.incrementSuccessfulLaunchCount()
-        Stats.evaluateSponsorMessageShouldBeDisplayed()
+
+        #if SPONSOR
+            Log.info("Sponsor encouragement messages are omitted in SE builds.")
+        #else
+            Stats.evaluateSponsorMessageShouldBeDisplayed()
+        #endif
 
         // Present first launch screen if needed
         if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {

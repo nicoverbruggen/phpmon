@@ -106,7 +106,11 @@ public struct PhpVersionNumber: Equatable, Hashable {
         return patch ?? (strictFallback ? 0 : constraint?.patch ?? 999)
     }
 
-    public var homebrewVersion: String {
+    public var long: String {
+        return "\(major).\(minor).\(patch ?? 0)"
+    }
+
+    public var short: String {
         return "\(major).\(minor)"
     }
 

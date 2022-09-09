@@ -13,13 +13,13 @@ import Cocoa
 extension StatusMenu {
 
     func addPhpVersionMenuItems() {
-        if PhpEnv.phpInstall.version.error {
+        if PhpEnv.phpInstall.hasErrorState {
             let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
             return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
         }
 
         addItem(HeaderView.asMenuItem(
-            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)")
+            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.toString())")
         )
     }
 
@@ -58,7 +58,7 @@ extension StatusMenu {
             let versionString = long ? longVersion.toString() : shortVersion
 
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (shortVersion == PhpEnv.brewPhpVersion) ? "php" : "php@\(shortVersion)"
+            let brew = (shortVersion == PhpEnv.brewPhpAlias) ? "php" : "php@\(shortVersion)"
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
                 action: (shortVersion == PhpEnv.phpInstall.version.short)
@@ -254,7 +254,7 @@ extension StatusMenu {
             NSMenuItem(title: "mi_view_onboarding".localized, action: #selector(MainMenu.showWelcomeTour)),
             NSMenuItem(title: "mi_fa_php_doctor".localized, action: #selector(MainMenu.openWarnings)),
             NSMenuItem.separator(),
-            NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpVersion),
+            NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpAlias),
                        action: #selector(MainMenu.fixMyValet),
                        toolTip: "mi_fix_my_valet_tooltip".localized),
             NSMenuItem(title: "mi_fix_brew_permissions".localized(), action: #selector(MainMenu.fixHomebrewPermissions),

@@ -55,7 +55,7 @@ class ValetSite: DomainListable {
 
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
-        return self.isolatedPhpVersion?.versionNumber.homebrewVersion
+        return self.isolatedPhpVersion?.versionNumber.short
             ?? PhpEnv.phpInstall.version.short
     }
 
@@ -144,7 +144,7 @@ class ValetSite: DomainListable {
         // For example, for Laravel 8 projects the value is "^7.3|^8.0"
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
-                let origin = self.isolatedPhpVersion?.versionNumber.homebrewVersion ?? PhpEnv.phpInstall.version.long
+                let origin = self.isolatedPhpVersion?.versionNumber.short ?? PhpEnv.phpInstall.version.long
                 return !PhpVersionNumberCollection.make(from: [origin])
                     .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
                     .isEmpty

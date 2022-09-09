@@ -17,10 +17,11 @@ import Foundation
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
 class ActivePhpInstallation {
-
-    var version: Version!
+    var version: PhpVersionNumber!
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
+
+    var hasErrorState: Bool = false
 
     var extensions: [PhpExtension] {
         return iniFiles.flatMap { initFile in
@@ -31,20 +32,20 @@ class ActivePhpInstallation {
     // MARK: - Computed
 
     var formula: String {
-        return (version.short == PhpEnv.brewPhpVersion) ? "php" : "php@\(version.short)"
+        return (version.short == PhpEnv.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Initializer
 
     init() {
         // Show information about the current version
-        getVersion()
+        determineVersion()
 
         // Initialize the list of ini files that are loaded
         iniFiles = []
 
         // If an error occurred, exit early
-        if version.error {
+        if self.hasErrorState {
             limits = Limits()
             return
         }
@@ -81,26 +82,11 @@ class ActivePhpInstallation {
      When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
-    private func getVersion() {
-        self.version = Version()
+    private func determineVersion() {
+        let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
 
-        let version = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
-
-        if version == "" || version.contains("Warning") || version.contains("Error") {
-            self.version.short = "💩 BROKEN"
-            self.version.long = ""
-            self.version.error = true
-            return
-        }
-
-        // That's the long version
-        self.version.long = version
-
-        // Next up, let's strip away the minor version number
-        let segments = self.version.long.components(separatedBy: ".")
-
-        // Get the first two elements
-        self.version.short = segments[0...1].joined(separator: ".")
+        self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
+        self.version = PhpVersionNumber.make(from: output)
     }
 
     /**
@@ -151,18 +137,6 @@ class ActivePhpInstallation {
     }
 
     // MARK: - Structs
-
-    /**
-     Struct containing information about the version number of the current PHP installation.
-     Also includes information about whether the install is considered "broken" or not.
-     If an error was found in the terminal output, `error` is set to `true` and the installation
-     can be considered broken. (The app will display this as well.)
-     */
-    struct Version {
-        var short = "???"
-        var long = "???"
-        var error = false
-    }
 
     /**
      Struct containing information about the limits of the current PHP installation.

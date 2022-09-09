@@ -54,7 +54,7 @@ class PhpEnv {
      
      As such, we take that information from Homebrew.
      */
-    static var brewPhpVersion: String {
+    static var brewPhpAlias: String {
         return Self.shared.homebrewPackage.version
     }
 

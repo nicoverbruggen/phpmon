@@ -57,7 +57,7 @@ class InternalSwitcher: PhpSwitcher {
         let isolated = Valet.shared.sites.filter { site in
             site.isolatedPhpVersion != nil
         }.map { site in
-            return site.isolatedPhpVersion!.versionNumber.homebrewVersion
+            return site.isolatedPhpVersion!.versionNumber.short
         }
 
         var versions: Set<String> = [primary]
@@ -95,14 +95,14 @@ class InternalSwitcher: PhpSwitcher {
     }
 
     func stopPhpVersion(_ version: String) {
-        let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
+        let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
         brew("unlink \(formula)")
         brew("services stop \(formula)", sudo: true)
         Log.info("Unlinked and stopped services for \(formula)")
     }
 
     func startPhpVersion(_ version: String, primary: Bool) {
-        let formula = (version == PhpEnv.brewPhpVersion) ? "php" : "php@\(version)"
+        let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
 
         if primary {
             Log.info("\(formula) is the primary formula, linking and starting services...")

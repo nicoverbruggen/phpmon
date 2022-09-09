@@ -208,7 +208,7 @@ extension MainMenu {
     }
 
     @objc func openActiveConfigFolder() {
-        if PhpEnv.phpInstall.version.error {
+        if PhpEnv.phpInstall.hasErrorState {
             Actions.openGenericPhpConfigFolder()
             return
         }

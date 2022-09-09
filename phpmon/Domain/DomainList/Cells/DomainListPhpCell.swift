@@ -59,7 +59,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             }
 
             return PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
-                version.homebrewVersion != PhpEnv.phpInstall.version.short
+                version.short != PhpEnv.phpInstall.version.short
             })
         }
 
