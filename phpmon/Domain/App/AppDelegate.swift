@@ -71,15 +71,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             logger.verbosity = .performance
             Log.info("Extra verbose mode has been activated.")
         }
-        Log.separator(as: .info)
-        #if SPONSOR
-            Log.info("PHP MONITOR SE by Nico Verbruggen")
-        #else
-            Log.info("PHP MONITOR by Nico Verbruggen")
-        #endif
 
+        Log.separator(as: .info)
+        Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
         Log.separator(as: .info)
+
         self.sharedShell = Shell.user
         self.state = App.shared
         self.menu = MainMenu.shared
