@@ -19,8 +19,9 @@ extension StatusMenu {
         }
 
         addItem(HeaderView.asMenuItem(
-            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)")
-        )
+            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)",
+            minimumWidth: 280 // this ensures the menu is at least wide enough not to cause clipping
+        ))
     }
 
     func addPhpActionMenuItems() {
