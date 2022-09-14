@@ -47,6 +47,9 @@ class App {
 
     // MARK: Variables
 
+    /** Technical information about the current environment. */
+    var environment = EnvironmentManager()
+
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
 
