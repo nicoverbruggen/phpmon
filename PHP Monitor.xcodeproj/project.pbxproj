@@ -388,7 +388,6 @@
 		C42E3BF328A9BF5100AFECFC /* Shell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shell+PATH.swift"; sourceTree = "<group>"; };
 		C42F26722805B4B400938AC7 /* DomainListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListable.swift; sourceTree = "<group>"; };
 		C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy.test"; sourceTree = "<group>"; };
-		C4358BA828CBCC2600121D18 /* PHP Monitor SE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PHP Monitor SE-Info.plist"; path = "/Users/nicoverbruggen/Code/phpmon/PHP Monitor SE-Info.plist"; sourceTree = "<absolute>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
@@ -665,7 +664,6 @@
 				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 				C4D309E72770EF2F00958BCF /* Frameworks */,
-				C4358BA828CBCC2600121D18 /* PHP Monitor SE-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
