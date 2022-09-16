@@ -188,6 +188,23 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getDisplayMenuSectionPV(
+        _ localizationKey: String,
+        _ preference: PreferenceName,
+        _ first: Bool = false
+    ) -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: first ? "prefs.menu_contents".localized : "",
+            descriptionText: "\(localizationKey)_desc".localized,
+            checkboxText: localizationKey.localized,
+            preference: preference,
+            action: {
+                MainMenu.shared.refreshIcon()
+                MainMenu.shared.rebuild()
+            }
+        )
+    }
+
     // MARK: - Listening for hotkey delegate
 
     var listeningForHotkeyView: HotkeyPreferenceView?
@@ -240,9 +257,30 @@ class NotificationPreferencesVC: GenericPreferenceVC {
 
 }
 
-class AppearancePreferencesVC: GenericPreferenceVC {
+class MenuStructurePreferencesVC: GenericPreferenceVC {
 
-    // MARK: - Lifecycle
+    public static func fromStoryboard() -> GenericPreferenceVC {
+        let vc = NSStoryboard(name: "Main", bundle: nil)
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+
+        vc.views = [
+            vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true),
+            vc.getDisplayMenuSectionPV("prefs.display_services_manager", .displayServicesManager),
+            vc.getDisplayMenuSectionPV("prefs.display_valet_integration", .displayValetIntegration),
+            vc.getDisplayMenuSectionPV("prefs.display_php_config_finder", .displayPhpConfigFinder),
+            vc.getDisplayMenuSectionPV("prefs.display_composer_toolkit", .displayComposerToolkit),
+            vc.getDisplayMenuSectionPV("prefs.display_limits_widget", .displayLimitsWidget),
+            vc.getDisplayMenuSectionPV("prefs.display_extensions", .displayExtensions),
+            vc.getDisplayMenuSectionPV("prefs.display_presets", .displayPresets),
+            vc.getDisplayMenuSectionPV("prefs.display_misc", .displayMisc)
+
+        ]
+
+        return vc
+    }
+}
+
+class AppearancePreferencesVC: GenericPreferenceVC {
 
     public static func fromStoryboard() -> GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)

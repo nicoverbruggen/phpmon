@@ -26,11 +26,17 @@ struct HeaderView: View {
 
     static func asMenuItem(
         text: String,
-        width: Int? = nil
+        minimumWidth: CGFloat? = nil
     ) -> NSMenuItem {
         let view = NSHostingView(rootView: Self(text: text))
         view.autoresizingMask = [.width, .height]
-        view.setFrameSize(CGSize(width: view.frame.width, height: 24))
+
+        var finalWidth = view.frame.width
+        if minimumWidth != nil && minimumWidth! > finalWidth {
+            finalWidth = minimumWidth!
+        }
+
+        view.setFrameSize(CGSize(width: finalWidth, height: 24))
 
         let item = NSMenuItem()
         item.view = view

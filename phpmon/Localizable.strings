@@ -100,6 +100,9 @@
 "domain_list.title" = "Domains";
 "domain_list.subtitle" = "";
 
+"domain_list.no_domains" = "You have not set up any domains or proxies yet.";
+"domain_list.no_domains_for_search_query" = "There are no results for your search query.";
+
 "domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
 "domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";
 
@@ -164,10 +167,13 @@
 
 // SITE LIST ACTIONS
 
-"domain_list.isolate" = "Isolate Domain";
+"domain_list.isolate" = "Switch PHP Version";
+"domain_list.site_isolation" = "Site Isolation";
 "domain_list.remove_isolation" = "Remove Isolation";
+"domain_list.always_use_php" = "Always use PHP %@";
 "domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
+"domain_list.actions" = "Actions";
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
 "domain_list.unsecure" = "Unsecure Domain";
@@ -221,6 +227,7 @@
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
 "prefs.notifications" = "Notifications:";
+"prefs.menu_contents" = "Features in Menu:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -246,7 +253,7 @@
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
 
-"prefs.php_doctor_suggestions_title" = "Show suggestions (if applicable)";
+"prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";
  
 "prefs.shortcut_set" = "Set global shortcut";
@@ -271,6 +278,33 @@
 
 "prefs.notify_about_composer_success_desc" = "Displays a notification when the global Composer configuration was successfully updated.";
 "prefs.notify_about_composer_success" = "Notify about global composer update";
+
+"prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
+"prefs.display_global_version_switcher" = "PHP Switcher";
+
+"prefs.display_services_manager_desc" = "If disabled, you will not be able to see, start or stop individual services. (If any services are disabled, you will not be easily able to see that this is the case.)";
+"prefs.display_services_manager" = "Services Manager";
+
+"prefs.display_valet_integration_desc" = "If disabled, you will not be able to locate the main Valet folder or open the list of domains.";
+"prefs.display_valet_integration" = "Valet Integration";
+
+"prefs.display_php_config_finder_desc" = "If disabled, you will not be able to easily locate your PHP configuration files and/or generate a phpinfo() dump.";
+"prefs.display_php_config_finder" = "PHP Config Finder";
+
+"prefs.display_composer_toolkit_desc" = "If disabled, you will not be able to invoke Composer via the main menu. The automatic Composer update after switching preference is unaffected by this change.";
+"prefs.display_composer_toolkit" = "Composer Toolkit";
+
+"prefs.display_limits_widget_desc" = "If disabled, you will not be able to see the limits widget (memory, POST, upload) in the main menu.";
+"prefs.display_limits_widget" = "Limits Widget";
+
+"prefs.display_extensions_desc" = "If disabled, you will not be able to easily toggle extensions via the main menu.";
+"prefs.display_extensions" = "Extensions";
+
+"prefs.display_presets_desc" = "If disabled, you will not be able to apply or revert PHP configuration presets.";
+"prefs.display_presets" = "Presets";
+
+"prefs.display_misc_desc" = "If disabled, you will not be able to access the First Aid & Services menu.";
+"prefs.display_misc" = "First Aid & Services Menu";
 
 // NOTIFICATIONS
 
@@ -365,7 +399,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 // PHP FPM Broken
 "alert.php_fpm_broken.title" = "Your PHP-FPM configuration is not pointing at the Valet socket!";
 "alert.php_fpm_broken.info" = "PHP Monitor has determined that there are issues with your PHP-FPM config. This will result in '502 Bad Gateway' responses if you visit websites linked via Valet.";
-"alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nIf that is the case, you can try the following workaround: edit the file at `~/.composer/vendor/laravel/valet/cli/Valet/Brew.php` and add e.g. `php@8.2` to the `SUPPORTED_PHP_VERSIONS` array. After editing the file, try running `valet install`. (This will, if all goes well, set up all the required Valet configuration files.)";
+"alert.php_fpm_broken.description" = "If it's been a while, you can usually fix this by running `valet install`, which updates your PHP-FPM configuration.\n\nIf you are seeing this message and you are trying to run a pre-release version of PHP, it is possible that Valet does not support this pre-release version of PHP yet.\n\nYou may need to upgrade your installation of Laravel Valet to at least v3.1.11, after that you should run `valet install`. More information here: https://phpmon.app/prerelease-php";
 
 // PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor cannot start due to a problem with your system configuration";

@@ -51,25 +51,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      */
     private func rebuildMenu() {
         let menu = StatusMenu()
-
-        menu.addPhpVersionMenuItems()
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addPhpActionMenuItems()
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addValetMenuItems()
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addRemainingMenuItems()
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addCoreMenuItems()
-
+        menu.addMenuItems()
         menu.items.forEach({ (item) in
             item.target = self
         })
-
         statusItem.menu = menu
         statusItem.menu?.delegate = self
     }

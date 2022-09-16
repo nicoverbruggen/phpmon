@@ -13,7 +13,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     // MARK: - Outlets
 
-    @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var tableView: PMTableView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
 
     // MARK: - Variables

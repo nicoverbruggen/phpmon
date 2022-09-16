@@ -63,10 +63,8 @@ class PhpConfigurationFile: CreatedFromFile {
     }
 
     public func getConfig(for key: String) -> ConfigValue? {
-        for (_, section) in self.content {
-            if section.keys.contains(key) {
-                return section[key]!
-            }
+        for (_, section) in self.content where section.keys.contains(key) {
+            return section[key]!
         }
         return nil
     }

@@ -74,12 +74,10 @@ class WarningManager {
     }
 
     private func loopOverEvaluations() async {
-        for check in self.evaluations {
-            if await check.applies() {
-                Log.info("[DOCTOR] \(check.name) (!)")
-                self.warnings.append(check)
-                continue
-            }
+        for check in self.evaluations where await check.applies() {
+            Log.info("[DOCTOR] \(check.name) (!)")
+            self.warnings.append(check)
+            continue
         }
     }
 }
