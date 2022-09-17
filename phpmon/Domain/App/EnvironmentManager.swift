@@ -14,17 +14,19 @@ public class EnvironmentManager {
     public func process() async {
         self.values[.hasValetInstalled] = !{
             let output = valet("--version", sudo: false)
+
             // Failure condition #1: does not contain Laravel Valet
             if !output.contains("Laravel Valet") {
                 return true
             }
+
             // Extract the version number
             Valet.shared.version = VersionExtractor.from(output)
+
             // Get the actual version
             return Valet.shared.version == nil
-        }() // returns true if none of the failure conditions are met
 
-        dump(self.values)
+        }() // returns true if none of the failure conditions are met
     }
 }
 

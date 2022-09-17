@@ -37,7 +37,7 @@ extension AppDelegate {
             .window?.contentViewController as? DomainListVC
 
         if vc != nil {
-            // If the view exists, directly reload the list of sites
+            // If the view exists, directly reload the list of sites.
             vc!.reloadDomains()
         } else {
             // If the view does not exist, reload the cached data that was populated when the app initially launched.
