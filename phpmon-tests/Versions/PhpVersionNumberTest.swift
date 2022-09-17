@@ -8,6 +8,7 @@
 
 import XCTest
 
+// swiftlint:disable type_body_length
 class PhpVersionNumberTest: XCTestCase {
 
     func testCanDeconstructPhpVersion() throws {
@@ -285,6 +286,78 @@ class PhpVersionNumberTest: XCTestCase {
             // 7.2 will not be valid due to strict mode (resolves to 7.2.0)
             PhpVersionNumberCollection
                 .make(from: ["7.3.1", "7.2.9"]).all
+        )
+    }
+
+    func testCanCheckLessThanOrEqualConstraints() throws {
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<=7.2", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.2", "7.1", "7.0"]).all
+        )
+
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<=7.2.0", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.2", "7.1", "7.0"]).all
+        )
+
+        // Strict check (>7.2.5 is too new for 7.2 which resolves to 7.2.0)
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<=7.2.5", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.2", "7.1", "7.0"]).all
+        )
+
+        // Non-strict check (ignoring patch has no effect)
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<=7.2.5", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.2", "7.1", "7.0"]).all
+        )
+    }
+
+    func testCanCheckLessThanConstraints() throws {
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<7.2", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.1", "7.0"]).all
+        )
+
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<7.2.0", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.1", "7.0"]).all
+        )
+
+        // Strict check (>7.2.5 is too new for 7.2 which resolves to 7.2.0)
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<7.2.5", strict: true),
+            PhpVersionNumberCollection
+                .make(from: ["7.2", "7.1", "7.0"]).all
+        )
+
+        // Non-strict check (patch resolves to 7.2.999, which is bigger than 7.2.5)
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
+                .matching(constraint: "<7.2.5", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.1", "7.0"]).all
         )
     }
 }
