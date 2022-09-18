@@ -16,7 +16,7 @@ In short: It is usually best to *get in touch first* if you are making substanti
 
 ## About destination branches
 
-Please keep in mind that `main` is reserved for the current code state of the latest release and should *never* be the destination branch unless a new release is happening. **Merge requests that target `main` will be closed without mercy.**
+Please keep in mind that `main` is reserved for the current code state of the latest release and should *never* be the destination branch unless a new release is happening. **Pull requests that target `main` will be closed without mercy.**
 
 Usually, the best target is the stable `dev/x.x` branch that corresponds with the latest major version that is released. 
 
