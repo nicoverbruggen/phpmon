@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03E36FE728D9219000636F7F /* NewShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* NewShell.swift */; };
+		03E36FE828D9219000636F7F /* NewShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* NewShell.swift */; };
 		5420395926135DC100FB00FA /* PrefsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PrefsVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489625728312FAD004F647A /* CreatedFromFile.swift */; };
@@ -322,6 +324,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03E36FE628D9219000636F7F /* NewShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShell.swift; sourceTree = "<group>"; };
 		5420395826135DC100FB00FA /* PrefsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5489625728312FAD004F647A /* CreatedFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedFromFile.swift; sourceTree = "<group>"; };
@@ -647,6 +650,7 @@
 				C4C1019A27C65C6F001FACC2 /* Process.swift */,
 				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 				C417DC73277614690015E6EE /* Helpers.swift */,
+				03E36FE628D9219000636F7F /* NewShell.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1386,6 +1390,7 @@
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
+				03E36FE728D9219000636F7F /* NewShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
@@ -1536,6 +1541,7 @@
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
+				03E36FE828D9219000636F7F /* NewShell.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */,
