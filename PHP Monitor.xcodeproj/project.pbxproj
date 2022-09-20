@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,6 +63,7 @@
 		C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
+		C413E43528DA3EB100AE33C7 /* ShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C413E43428DA3EB100AE33C7 /* ShellTest.swift */; };
 		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
@@ -357,6 +358,7 @@
 		C40FE736282ABA4F00A302C2 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTest.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
+		C413E43428DA3EB100AE33C7 /* ShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellTest.swift; sourceTree = "<group>"; };
 		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+InterApp.swift"; sourceTree = "<group>"; };
@@ -653,6 +655,14 @@
 				03E36FE628D9219000636F7F /* NewShell.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		C413E43328DA3E8F00AE33C7 /* Concord */ = {
+			isa = PBXGroup;
+			children = (
+				C413E43428DA3EB100AE33C7 /* ShellTest.swift */,
+			);
+			path = Concord;
 			sourceTree = "<group>";
 		};
 		C41C1B2A22B0097F00E7CF16 = {
@@ -1140,6 +1150,7 @@
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
+				C413E43328DA3E8F00AE33C7 /* Concord */,
 				C4F7807D25D7F84B000DBC97 /* Info.plist */,
 				C43A8A1925D9CD1000591B77 /* Utility.swift */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
@@ -1290,6 +1301,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		C4F5FBCB28216985001065C5 /* Run `swiftlint` */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1460,6 +1472,7 @@
 				C41CA5EE2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C4FACE81288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift in Sources */,
 				54D9E0B727E4F51E003B9AD9 /* HotKey.swift in Sources */,
+				C413E43528DA3EB100AE33C7 /* ShellTest.swift in Sources */,
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
