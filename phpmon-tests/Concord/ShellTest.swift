@@ -14,7 +14,9 @@ class ShellTest: XCTestCase {
 
         XCTAssertTrue(NewShell.shared.syncPipe("php -v")
             .contains("Copyright (c) The PHP Group"))
+    }
 
+    func test_we_can_predefine_responses_for_dummy_shell() {
         let expectedPhpOutput = """
                 PHP 8.1.10 (cli) (built: Sep  3 2022 12:09:27) (NTS)
                 Copyright (c) The PHP Group
@@ -26,6 +28,8 @@ class ShellTest: XCTestCase {
         NewShell.useTestable([
             "php -v": expectedPhpOutput
         ])
+
+        XCTAssertTrue(NewShell.shared is TestableShell)
 
         XCTAssertEqual(expectedPhpOutput, NewShell.shared.syncPipe("php -v"))
     }
