@@ -11,7 +11,24 @@ import Foundation
 class SystemShell: Shellable {
     public var launchPath: String = "/bin/sh"
 
-    public var exports: String = ""
+    public var PATH: String = {
+        let task = Process()
+        task.launchPath = "/bin/zsh"
+
+        // We need an interactive shell so the user's PATH is loaded in correctly
+        task.arguments = ["--login", "-ilc", "echo $PATH"]
+
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.launch()
+
+        return String(
+            data: pipe.fileHandleForReading.readDataToEndOfFile(),
+            encoding: String.Encoding.utf8
+        ) ?? ""
+    }()
+
+    var exports: String = ""
 
     private func getShellProcess(for command: String) -> Process {
         var completeCommand = ""
@@ -19,7 +36,7 @@ class SystemShell: Shellable {
         // Basic export (PATH)
         completeCommand += "export PATH=\(Paths.binPath):$PATH && "
 
-        // Put additional exports in between
+        // Put additional exports (as defined by the user) in between
         if !self.exports.isEmpty {
             completeCommand += "\(self.exports) && "
         }
@@ -31,6 +48,8 @@ class SystemShell: Shellable {
         task.arguments = ["--noprofile", "-norc", "--login", "-c", completeCommand]
         return task
     }
+
+    // MARK: - Shellable Protocol
 
     func syncPipe(_ command: String) -> String {
         let task = getShellProcess(for: command)

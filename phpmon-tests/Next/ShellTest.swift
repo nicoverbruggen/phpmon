@@ -16,6 +16,13 @@ class ShellTest: XCTestCase {
             .contains("Copyright (c) The PHP Group"))
     }
 
+    func test_system_shell_has_path() {
+        let systemShell = NxtShell.shared as! SystemShell
+
+        XCTAssertTrue(systemShell.PATH.contains(":/usr/local/bin"))
+        XCTAssertTrue(systemShell.PATH.contains(":/usr/bin"))
+    }
+
     func test_we_can_predefine_responses_for_dummy_shell() {
         let expectedPhpOutput = """
                 PHP 8.1.10 (cli) (built: Sep  3 2022 12:09:27) (NTS)
