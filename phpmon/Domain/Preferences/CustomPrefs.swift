@@ -26,6 +26,7 @@ struct CustomPrefs: Decodable {
         return self.environmentVariables != nil && !self.environmentVariables!.keys.isEmpty
     }
 
+    @available(*, deprecated, message: "Use `setCustomEnvironmentVariables` instead")
     public func getEnvironmentVariables() -> String {
         return self.environmentVariables!.map { (key, value) in
             return "export \(key)=\(value)"

@@ -656,8 +656,6 @@
 				C4EC1E72279DFCF40010F296 /* Events.swift */,
 				C4B5853D2770FE3900DA4FBE /* Command.swift */,
 				C4B5853B2770FE3900DA4FBE /* Paths.swift */,
-				C4B5853C2770FE3900DA4FBE /* Shell.swift */,
-				C42E3BF328A9BF5100AFECFC /* Shell+PATH.swift */,
 				C4C1019A27C65C6F001FACC2 /* Process.swift */,
 				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 				C417DC73277614690015E6EE /* Helpers.swift */,
@@ -883,6 +881,15 @@
 			path = Next;
 			sourceTree = "<group>";
 		};
+		C46EBC4C28DB9F43007ACC74 /* Pending Removal */ = {
+			isa = PBXGroup;
+			children = (
+				C4B5853C2770FE3900DA4FBE /* Shell.swift */,
+				C42E3BF328A9BF5100AFECFC /* Shell+PATH.swift */,
+			);
+			path = "Pending Removal";
+			sourceTree = "<group>";
+		};
 		C47331A0247093AC009A0597 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +984,7 @@
 		C4B5853A2770FE2500DA4FBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C46EBC4C28DB9F43007ACC74 /* Pending Removal */,
 				C40C7F2127721F7300DDDCDC /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 				C44CCD4327AFE93300CE40E5 /* Errors */,

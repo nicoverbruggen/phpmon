@@ -7,6 +7,8 @@
 
 import Cocoa
 
+// TODO: Enable this to see where deprecations and replacements are needed.
+// @available(*, deprecated, message: "Use the new replacement `NxtShell` instead")
 public class Shell {
 
     // MARK: - Invoke static functions
