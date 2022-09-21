@@ -1,31 +1,12 @@
 //
-//  NewShell.swift
+//  SystemShell.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 20/09/2022.
+//  Created by Nico Verbruggen on 21/09/2022.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
-
-class NewShell {
-    static var shared: Shellable = SystemShell()
-
-    /// Uses a testable shell with predefined responses. You specify the terminal's output.
-    public static func useTestable(_ expectations: [String: String]) {
-        Self.shared = TestableShell(expectations: expectations)
-    }
-
-    /// Reverts back to the system shell. You do not need to call this, only after using `useTestable()`.
-    public static func useSystem() {
-        Self.shared = SystemShell()
-    }
-}
-
-protocol Shellable {
-    func syncPipe(_ command: String) -> String
-    func pipe(_ command: String) async -> String
-}
 
 class SystemShell: Shellable {
     public var launchPath: String = "/bin/sh"
@@ -67,21 +48,5 @@ class SystemShell: Shellable {
     func pipe(_ command: String) async -> String {
         // TODO
         return ""
-    }
-}
-
-class TestableShell: Shellable {
-    init(expectations: [String: String]) {
-        self.expectations = expectations
-    }
-
-    var expectations: [String: String] = [:]
-
-    func pipe(_ command: String) async -> String {
-        return expectations[command] ?? ""
-    }
-
-    func syncPipe(_ command: String) -> String {
-        return expectations[command] ?? ""
     }
 }

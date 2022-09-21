@@ -10,9 +10,9 @@ import XCTest
 
 class ShellTest: XCTestCase {
     func test_default_shell_is_system_shell() {
-        XCTAssertTrue(NewShell.shared is SystemShell)
+        XCTAssertTrue(NxtShell.shared is SystemShell)
 
-        XCTAssertTrue(NewShell.shared.syncPipe("php -v")
+        XCTAssertTrue(NxtShell.shared.syncPipe("php -v")
             .contains("Copyright (c) The PHP Group"))
     }
 
@@ -25,12 +25,12 @@ class ShellTest: XCTestCase {
                 with Xdebug v3.1.4, Copyright (c) 2002-2022, by Derick Rethans
             """
 
-        NewShell.useTestable([
+        NxtShell.useTestable([
             "php -v": expectedPhpOutput
         ])
 
-        XCTAssertTrue(NewShell.shared is TestableShell)
+        XCTAssertTrue(NxtShell.shared is TestableShell)
 
-        XCTAssertEqual(expectedPhpOutput, NewShell.shared.syncPipe("php -v"))
+        XCTAssertEqual(expectedPhpOutput, NxtShell.shared.syncPipe("php -v"))
     }
 }
