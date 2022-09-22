@@ -66,6 +66,14 @@ class AppVersion {
         return AppVersion.from("\(App.shortVersion)_\(App.bundleVersion)")!
     }
 
+    var tagged: String {
+        if version.suffix(2) == ".0" && version.count > 3 {
+            return String(version.dropLast(2))
+        }
+
+        return version
+    }
+
     var computerReadable: String {
         return "\(version)_\(build ?? "0")"
     }
