@@ -162,11 +162,11 @@ extension MainMenu {
 
         App.shared.detectedApplications = Application.detectPresetApplications()
 
-        let customApps = Preferences.custom.scanApps.map { appName in
+        let customApps = Preferences.custom.scanApps?.map { appName in
             return Application(appName, .user_supplied)
         }.filter { app in
             return app.isInstalled()
-        }
+        } ?? []
 
         App.shared.detectedApplications.append(contentsOf: customApps)
 

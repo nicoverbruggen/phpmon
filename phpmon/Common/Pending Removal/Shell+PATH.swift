@@ -14,12 +14,18 @@ extension Shell {
         let task = Process()
         task.launchPath = "/bin/zsh"
 
-        // We need an interactive shell so the user's PATH is loaded in correctly
-        task.arguments = ["--login", "-ilc", "echo $PATH"]
+        let command = Filesystem.fileExists("~/.zshrc")
+            // source the user's .zshrc file if it exists to complete $PATH
+            ? ". ~/.zshrc && echo $PATH"
+            // otherwise, non-interactive mode is sufficient
+            : "echo $PATH"
+
+        task.arguments = ["--login", "-lc", command]
 
         let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
+
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
 
         return String(data: data, encoding: String.Encoding.utf8) ?? ""
