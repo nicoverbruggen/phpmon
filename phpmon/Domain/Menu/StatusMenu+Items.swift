@@ -216,14 +216,14 @@ extension StatusMenu {
         }
 
         addItems([
-            NSMenuItem.separator(),
             NSMenuItem(title: "mi_xdebug_mode".localized, submenu: [
                 HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized)
             ] + Xdebug.asMenuItems() + [
                 HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
                 NSMenuItem(title: "mi_xdebug_disable_all".localized,
                            action: #selector(MainMenu.disableAllXdebugModes))
-            ], target: MainMenu.shared)
+            ], target: MainMenu.shared),
+            NSMenuItem.separator()
         ], target: MainMenu.shared)
     }
 

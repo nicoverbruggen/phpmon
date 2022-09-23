@@ -9,7 +9,7 @@
 import Foundation
 
 struct CustomPrefs: Decodable {
-    let scanApps: [String]
+    let scanApps: [String]?
     let presets: [Preset]?
     let services: [String]?
     let environmentVariables: [String: String]?

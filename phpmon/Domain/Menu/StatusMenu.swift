@@ -48,8 +48,9 @@ class StatusMenu: NSMenu {
 
         if Preferences.isEnabled(.displayExtensions) {
             addExtensionsMenuItems()
-            addXdebugMenuItem()
             NSMenuItem.separator()
+
+            addXdebugMenuItem()
         }
 
         addPhpDoctorMenuItem()
