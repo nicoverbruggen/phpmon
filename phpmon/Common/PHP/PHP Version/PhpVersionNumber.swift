@@ -87,6 +87,14 @@ public struct PhpVersionNumberCollection: Equatable {
             return self.versions.filter { $0.isNewerThan(version, strict) }
         }
 
+        if let version = PhpVersionNumber.make(from: constraint, type: .smallerThanOrEqual) {
+            return self.versions.filter { $0.isSameAs(version, strict) || $0.isOlderThan(version, strict)}
+        }
+
+        if let version = PhpVersionNumber.make(from: constraint, type: .smallerThan) {
+            return self.versions.filter { $0.isOlderThan(version, strict)}
+        }
+
         return []
     }
 }
@@ -116,12 +124,8 @@ public struct PhpVersionNumber: Equatable, Hashable {
         case tildeVersionRange = #"^~(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThan = #"^>(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
-
-        // TODO: (6.0) Handle these cases (even though I suspect these are uncommon)
-        /*
         case smallerThanOrEqual = #"^<=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case smallerThan = #"^<(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
-        */
     }
 
     public static func parse(_ text: String) throws -> Self {
@@ -172,6 +176,15 @@ public struct PhpVersionNumber: Equatable, Hashable {
             self.major == version.major && self.minor > version.minor ||
             self.major == version.major && self.minor == version.minor
                 && self.patch(strict) > version.patch(strict)
+        )
+    }
+
+    internal func isOlderThan(_ version: PhpVersionNumber, _ strict: Bool) -> Bool {
+        return (
+            self.major < version.major ||
+            self.major == version.major && self.minor < version.minor ||
+            self.major == version.major && self.minor == version.minor
+            && self.patch(strict) < version.patch(strict)
         )
     }
 

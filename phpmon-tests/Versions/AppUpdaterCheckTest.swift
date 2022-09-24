@@ -18,4 +18,30 @@ class AppUpdaterCheckTest: XCTestCase {
         XCTAssertNotNil(version)
     }
 
+    func testTaggedReleaseOmitsZeroPatch() {
+        let version = AppVersion.from("3.5.0_333")!
+
+        XCTAssertEqual(version.tagged, "3.5")
+        XCTAssertEqual(version.version, "3.5.0")
+    }
+
+    func testTaggedReleaseDoesntOmitNonZeroPatch() {
+        let version = AppVersion.from("3.5.1_333")!
+
+        XCTAssertEqual(version.tagged, "3.5.1")
+        XCTAssertEqual(version.version, "3.5.1")
+    }
+
+    func testTagTruncationDoesntAffectMajorVersions() {
+        var version = AppVersion.from("5.0_333")!
+
+        XCTAssertEqual(version.tagged, "5.0")
+        XCTAssertEqual(version.version, "5.0")
+
+        version = AppVersion.from("5.0.0_333")!
+
+        XCTAssertEqual(version.tagged, "5.0")
+        XCTAssertEqual(version.version, "5.0.0")
+    }
+
 }

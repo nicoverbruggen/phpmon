@@ -146,8 +146,9 @@ class AppUpdateChecker {
                 text: "updater.alerts.buttons.release_notes".localized,
                 action: { vc in
                     vc.close(with: .OK)
+
                     NSWorkspace.shared.open(
-                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version.version)\(devSuffix)")
+                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/v\(version.tagged)\(devSuffix)")
                     )
                 }
             )

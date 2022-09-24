@@ -10,8 +10,13 @@ import Foundation
 import SwiftUI
 
 var isRunningSwiftUIPreview: Bool {
-    return ProcessInfo.processInfo
-        .environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+    #if DEBUG
+        // If running SwiftUI *and* when debugging
+        return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil
+    #else
+        // Release builds should always return false here
+        return false
+    #endif
 }
 
 extension Color {
