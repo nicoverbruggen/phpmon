@@ -12,7 +12,8 @@ class NxtShell {
     static var shared: Shellable = SystemShell()
 
     /// Uses a testable shell with predefined responses. You specify the terminal's output.
-    public static func useTestable(_ expectations: [String: String]) {
+    /// they also work with simple String objects.
+    public static func useTestable(_ expectations: [String: OutputsToShell]) {
         Self.shared = TestableShell(expectations: expectations)
     }
 

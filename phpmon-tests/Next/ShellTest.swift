@@ -32,12 +32,21 @@ class ShellTest: XCTestCase {
                 with Xdebug v3.1.4, Copyright (c) 2002-2022, by Derick Rethans
             """
 
+        let slowVersionOutput = FakeTerminalOutput(
+            output: expectedPhpOutput,
+            duration: 1000,
+            isError: false
+        )
+
         NxtShell.useTestable([
-            "php -v": expectedPhpOutput
+            "php -v": expectedPhpOutput,
+            "php --version": slowVersionOutput
         ])
 
         XCTAssertTrue(NxtShell.shared is TestableShell)
 
         XCTAssertEqual(expectedPhpOutput, NxtShell.shared.syncPipe("php -v"))
+
+        XCTAssertEqual(expectedPhpOutput, NxtShell.shared.syncPipe("php --version"))
     }
 }
