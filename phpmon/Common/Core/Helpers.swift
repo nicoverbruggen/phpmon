@@ -12,14 +12,14 @@
  Runs a `valet` command. Defaults to running as superuser.
  */
 func valet(_ command: String, sudo: Bool = true) -> String {
-    return Shell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)", requiresPath: true)
+    return LegacyShell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)", requiresPath: true)
 }
 
 /**
  Runs a `brew` command. Can run as superuser.
  */
 func brew(_ command: String, sudo: Bool = false) {
-    Shell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
+    LegacyShell.run("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
 }
 
 /**
@@ -33,9 +33,9 @@ func sed(file: String, original: String, replacement: String) {
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
     if Filesystem.fileExists("\(Paths.binPath)/gsed") {
-        Shell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
+        LegacyShell.run("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
-        Shell.run("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
+        LegacyShell.run("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
     }
 }
 
@@ -43,7 +43,7 @@ func sed(file: String, original: String, replacement: String) {
  Uses `grep` to determine whether a particular query string can be found in a particular file.
  */
 func grepContains(file: String, query: String) -> Bool {
-    return Shell.pipe("""
+    return LegacyShell.pipe("""
             grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
             """)
         .trimmingCharacters(in: .whitespacesAndNewlines)

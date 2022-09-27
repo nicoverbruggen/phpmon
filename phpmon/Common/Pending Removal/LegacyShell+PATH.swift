@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Shell {
+extension LegacyShell {
 
     var PATH: String {
         let task = Process()

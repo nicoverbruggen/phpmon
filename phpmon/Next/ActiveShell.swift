@@ -8,7 +8,11 @@
 
 import Foundation
 
-class NxtShell {
+var Shell: Shellable {
+    return ActiveShell.shared
+}
+
+class ActiveShell {
     static var shared: Shellable = SystemShell()
 
     /// Uses a testable shell with predefined responses. You specify the terminal's output.

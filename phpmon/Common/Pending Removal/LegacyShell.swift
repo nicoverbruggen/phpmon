@@ -8,8 +8,8 @@
 import Cocoa
 
 // TODO: Enable this to see where deprecations and replacements are needed.
-// @available(*, deprecated, message: "Use the new replacement `NxtShell` instead")
-public class Shell {
+// @available(*, deprecated, message: "Use the new replacement `Shell` instead")
+public class LegacyShell {
 
     // MARK: - Invoke static functions
 
@@ -17,14 +17,14 @@ public class Shell {
         _ command: String,
         requiresPath: Bool = false
     ) {
-        Shell.user.run(command, requiresPath: requiresPath)
+        LegacyShell.user.run(command, requiresPath: requiresPath)
     }
 
     public static func pipe(
         _ command: String,
         requiresPath: Bool = false
     ) -> String {
-        return Shell.user.pipe(command, requiresPath: requiresPath)
+        return LegacyShell.user.pipe(command, requiresPath: requiresPath)
     }
 
     // MARK: - Singleton
@@ -40,7 +40,7 @@ public class Shell {
     /**
      Singleton to access a user shell (with --login)
      */
-    public static let user = Shell()
+    public static let user = LegacyShell()
 
     /**
      Runs a shell command without using the output.
@@ -54,7 +54,7 @@ public class Shell {
         requiresPath: Bool = false
     ) {
         // Equivalent of piping to /dev/null; don't do anything with the string
-        _ = Shell.pipe(command, requiresPath: requiresPath)
+        _ = LegacyShell.pipe(command, requiresPath: requiresPath)
     }
 
     /**
@@ -85,7 +85,7 @@ public class Shell {
     public func executeSynchronously(
         _ command: String,
         requiresPath: Bool = false
-    ) -> Shell.Output {
+    ) -> LegacyShell.Output {
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -96,7 +96,7 @@ public class Shell {
         task.launch()
         task.waitUntilExit()
 
-        let output = Shell.Output(
+        let output = LegacyShell.Output(
             standardOutput: String(
                 data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
                 encoding: .utf8

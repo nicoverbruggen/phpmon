@@ -129,7 +129,7 @@ class ActivePhpInstallation {
         if self.version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return Shell.pipe("cat \(fileName)").contains("valet.sock")
+            return LegacyShell.pipe("cat \(fileName)").contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)

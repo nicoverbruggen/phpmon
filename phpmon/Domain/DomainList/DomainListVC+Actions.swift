@@ -25,11 +25,11 @@ extension DomainListVC {
 
         self.waitAndExecute {
             // 1. Remove the original proxy
-            Shell.run("\(Paths.valet) unproxy \(selectedProxy.domain)", requiresPath: true)
+            LegacyShell.run("\(Paths.valet) unproxy \(selectedProxy.domain)", requiresPath: true)
 
             // 2. Add a new proxy, which is either secured/unsecured
             let secure = originalSecureStatus ? "" : " --secure"
-            Shell.run("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)",
+            LegacyShell.run("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)",
                       requiresPath: true)
 
             // 3. Restart nginx
@@ -50,7 +50,7 @@ extension DomainListVC {
         let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
 
         waitAndExecute {
-            Shell.run(command, requiresPath: true)
+            LegacyShell.run(command, requiresPath: true)
         } completion: { [self] in
             selectedSite.determineSecured()
             if selectedSite.secured == originalSecureStatus {
@@ -100,11 +100,11 @@ extension DomainListVC {
     }
 
     @objc func openInFinder() {
-        Shell.run("open '\(selectedSite!.absolutePath)'")
+        LegacyShell.run("open '\(selectedSite!.absolutePath)'")
     }
 
     @objc func openInTerminal() {
-        Shell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
+        LegacyShell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
     }
 
     @objc func openWithEditor(sender: EditorMenuItem) {
@@ -157,7 +157,7 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Shell.run("valet unlink '\(site.name)'", requiresPath: true)
+                    LegacyShell.run("valet unlink '\(site.name)'", requiresPath: true)
                 } completion: {
                     self.reloadDomains()
                 }
@@ -179,7 +179,7 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Shell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
+                    LegacyShell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
                 } completion: {
                     self.reloadDomains()
                 }
@@ -191,7 +191,7 @@ extension DomainListVC {
         let rowToReload = tableView.selectedRow
 
         waitAndExecute {
-            Shell.run(command, requiresPath: true)
+            LegacyShell.run(command, requiresPath: true)
         } completion: { [self] in
             beforeCellReload()
             tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])

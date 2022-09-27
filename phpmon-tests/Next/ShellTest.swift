@@ -10,14 +10,14 @@ import XCTest
 
 class ShellTest: XCTestCase {
     func test_default_shell_is_system_shell() {
-        XCTAssertTrue(NxtShell.shared is SystemShell)
+        XCTAssertTrue(Shell is SystemShell)
 
-        XCTAssertTrue(NxtShell.shared.syncPipe("php -v")
+        XCTAssertTrue(Shell.syncPipe("php -v")
             .contains("Copyright (c) The PHP Group"))
     }
 
     func test_system_shell_has_path() {
-        let systemShell = NxtShell.shared as! SystemShell
+        let systemShell = Shell as! SystemShell
 
         XCTAssertTrue(systemShell.PATH.contains(":/usr/local/bin"))
         XCTAssertTrue(systemShell.PATH.contains(":/usr/bin"))
@@ -38,15 +38,15 @@ class ShellTest: XCTestCase {
             isError: false
         )
 
-        NxtShell.useTestable([
+        ActiveShell.useTestable([
             "php -v": expectedPhpOutput,
             "php --version": slowVersionOutput
         ])
 
-        XCTAssertTrue(NxtShell.shared is TestableShell)
+        XCTAssertTrue(Shell is TestableShell)
 
-        XCTAssertEqual(expectedPhpOutput, NxtShell.shared.syncPipe("php -v"))
+        XCTAssertEqual(expectedPhpOutput, Shell.syncPipe("php -v"))
 
-        XCTAssertEqual(expectedPhpOutput, NxtShell.shared.syncPipe("php --version"))
+        XCTAssertEqual(expectedPhpOutput, Shell.syncPipe("php --version"))
     }
 }

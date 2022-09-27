@@ -21,7 +21,7 @@ public class Paths {
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
-        userName = String(Shell.pipe("id -un").split(separator: "\n")[0])
+        userName = String(LegacyShell.pipe("id -un").split(separator: "\n")[0])
     }
 
     public func detectBinaryPaths() {

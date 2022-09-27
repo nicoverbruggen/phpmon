@@ -32,7 +32,7 @@ class AppUpdateChecker {
             command = "curl -s --max-time 5"
         }
 
-        return Shell.pipe(
+        return LegacyShell.pipe(
             "\(command) '\(caskFile)' | grep version"
         )
     }

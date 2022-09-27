@@ -14,7 +14,7 @@ class HomebrewDiagnostics {
      Determines the Homebrew taps the user has installed.
      */
     public static var installedTaps: [String] = {
-        return Shell
+        return LegacyShell
             .pipe("\(Paths.brew) tap")
             .split(separator: "\n")
             .map { string in
@@ -75,7 +75,7 @@ class HomebrewDiagnostics {
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
     private static func hasAliasConflict() -> Bool {
-        let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
+        let tapAlias = LegacyShell.pipe("\(Paths.brew) info shivammathur/php/php --json")
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
             Log.info("The user does not appear to have tapped: shivammathur/php")
@@ -134,7 +134,7 @@ class HomebrewDiagnostics {
     public static func cannotLoadService(_ name: String = "nginx") -> Bool {
         let serviceInfo = try? JSONDecoder().decode(
             [HomebrewService].self,
-            from: Shell.pipe(
+            from: LegacyShell.pipe(
                 "sudo \(Paths.brew) services info \(name) --json",
                 requiresPath: true
             ).data(using: .utf8)!

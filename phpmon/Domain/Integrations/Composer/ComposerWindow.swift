@@ -43,7 +43,7 @@ class ComposerWindow {
         window?.setType(info: true)
 
         DispatchQueue.global(qos: .userInitiated).async { [self] in
-            let task = Shell.user.createTask(
+            let task = LegacyShell.user.createTask(
                 for: "\(Paths.composer!) global update", requiresPath: true
             )
 

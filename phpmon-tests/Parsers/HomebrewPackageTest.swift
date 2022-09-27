@@ -56,7 +56,7 @@ class HomebrewPackageTest: XCTestCase {
     func testCanParseServicesJsonFromCliOutput() throws {
         let services = try! JSONDecoder().decode(
             [HomebrewService].self,
-            from: Shell.pipe(
+            from: LegacyShell.pipe(
                 "sudo \(Paths.brew) services info --all --json",
                 requiresPath: true
             ).data(using: .utf8)!
@@ -77,7 +77,7 @@ class HomebrewPackageTest: XCTestCase {
     func testCanLoadExtensionJsonFromCliOutput() throws {
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self,
-            from: Shell.pipe("\(Paths.brew) info php --json", requiresPath: true).data(using: .utf8)!
+            from: LegacyShell.pipe("\(Paths.brew) info php --json", requiresPath: true).data(using: .utf8)!
         ).first!
 
         XCTAssertTrue(package.name == "php")

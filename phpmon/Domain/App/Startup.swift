@@ -115,7 +115,7 @@ class Startup {
         // Make sure we can detect one or more PHP installations.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
+            command: { return !LegacyShell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
             titleText: "startup.errors.php_opt.title".localized,
             subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -143,14 +143,14 @@ class Startup {
         // functioning correctly. Let the user know that they need to run `valet trust`.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
+            command: { return !LegacyShell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
             subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
             descriptionText: "startup.errors.sudoers_brew.desc".localized
         ),
         EnvironmentCheck(
-            command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
+            command: { return !LegacyShell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
             subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
@@ -202,7 +202,7 @@ class Startup {
             command: {
                 return App.architecture == "x86_64"
                     && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
-                    && Shell.pipe("which node", requiresPath: false)
+                    && LegacyShell.pipe("which node", requiresPath: false)
                         .contains("env: node: No such file or directory")
             },
             name: "`env: node` issue does not apply",

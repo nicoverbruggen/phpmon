@@ -24,7 +24,7 @@ class ServicesManager: ObservableObject {
         ]
 
         DispatchQueue.global(qos: .background).async {
-            let data = Shell
+            let data = LegacyShell
                 .pipe("sudo \(Paths.brew) services info --all --json", requiresPath: true)
                 .data(using: .utf8)!
 
@@ -44,7 +44,7 @@ class ServicesManager: ObservableObject {
         }
 
         DispatchQueue.global(qos: .background).async {
-            let data = Shell
+            let data = LegacyShell
                 .pipe("\(Paths.brew) services info --all --json", requiresPath: true)
                 .data(using: .utf8)!
 

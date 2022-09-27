@@ -9,7 +9,9 @@
 import Foundation
 
 protocol Shellable {
-    // TODO: Rework this so it supports listening for updates (when piping) and
-    func syncPipe(_ command: String) -> String
-    func pipe(_ command: String) async -> String
+    typealias Output = String
+
+    func syncPipe(_ command: String) -> Output
+
+    func pipe(_ command: String) async -> Output
 }

@@ -20,13 +20,13 @@ class PhpHelper {
         let destination = "\(Paths.homePath)/.config/phpmon/bin/pm\(dotless)"
 
         // Check if the ~/.config/phpmon/bin directory is in the PATH
-        let inPath = Shell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin")
+        let inPath = LegacyShell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin")
 
         // Check if we can create symlinks (`/usr/local/bin` must be writable)
         let canWriteSymlinks = FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
 
         do {
-            Shell.run("mkdir -p ~/.config/phpmon/bin")
+            LegacyShell.run("mkdir -p ~/.config/phpmon/bin")
 
             if FileManager.default.fileExists(atPath: destination) {
                 let contents = try String(contentsOfFile: destination)
@@ -61,7 +61,7 @@ class PhpHelper {
             )
 
             // Make sure the file is executable
-            Shell.run("chmod +x \(destination)")
+            LegacyShell.run("chmod +x \(destination)")
 
             // Create a symlink if the folder is not in the PATH
             if !inPath {
@@ -86,13 +86,13 @@ class PhpHelper {
 
         if !Filesystem.fileExists(destination) {
             Log.info("Creating new symlink: \(destination)")
-            Shell.run("ln -s \(source) \(destination)")
+            LegacyShell.run("ln -s \(source) \(destination)")
             return
         }
 
         if !Filesystem.fileIsSymlink(destination) {
             Log.info("Overwriting existing file with new symlink: \(destination)")
-            Shell.run("ln -fs \(source) \(destination)")
+            LegacyShell.run("ln -fs \(source) \(destination)")
             return
         }
 

@@ -72,7 +72,7 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
         App.shared.domainListWindowController?.contentVC.setUIBusy()
 
         DispatchQueue.global(qos: .userInitiated).async {
-            Shell.run("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)", requiresPath: true)
+            LegacyShell.run("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)", requiresPath: true)
             Actions.restartNginx()
 
             DispatchQueue.main.async {

@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      (invoked by PHP Monitor) shell commands. It is used to
      invoke all commands in this application.
      */
-    let sharedShell: Shell
+    let sharedShell: LegacyShell
 
     /**
      The App singleton contains information about the state of
@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         Log.info("Version \(App.version)")
         Log.separator(as: .info)
 
-        self.sharedShell = Shell.user
+        self.sharedShell = LegacyShell.user
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared

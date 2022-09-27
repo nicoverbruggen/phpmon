@@ -34,13 +34,13 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        return Shell.run("/usr/bin/open -a \"\(name)\" \"\(file)\"")
+        return LegacyShell.run("/usr/bin/open -a \"\(name)\" \"\(file)\"")
     }
 
     /** Checks if the app is installed. */
     func isInstalled() -> Bool {
         // If this script does not complain, the app exists!
-        return Shell.user.executeSynchronously(
+        return LegacyShell.user.executeSynchronously(
             "/usr/bin/open -Ra \"\(name)\"",
             requiresPath: false
         ).task.terminationStatus == 0

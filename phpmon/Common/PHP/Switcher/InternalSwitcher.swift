@@ -115,7 +115,7 @@ class InternalSwitcher: PhpSwitcher {
 
         if Valet.enabled(feature: .isolatedSites) && primary {
             let socketVersion = version.replacingOccurrences(of: ".", with: "")
-            Shell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+            LegacyShell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
             Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
         }
 

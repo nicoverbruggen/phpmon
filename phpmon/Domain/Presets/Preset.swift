@@ -260,7 +260,7 @@ struct Preset: Codable, Equatable {
     private func persistRevert() {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        Shell.run("mkdir -p ~/.config/phpmon")
+        LegacyShell.run("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(

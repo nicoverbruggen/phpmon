@@ -15,7 +15,7 @@ class PhpEnv {
     init() {
         self.currentInstall = ActivePhpInstallation()
 
-        let brewPhpAlias = Shell.pipe("\(Paths.brew) info php --json")
+        let brewPhpAlias = LegacyShell.pipe("\(Paths.brew) info php --json")
 
         self.homebrewPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
@@ -84,7 +84,7 @@ class PhpEnv {
      Detects which versions of PHP are installed.
      */
     public func detectPhpVersions() -> [String] {
-        let files = Shell.pipe("ls \(Paths.optPath) | grep php@")
+        let files = LegacyShell.pipe("ls \(Paths.optPath) | grep php@")
 
         var versionsOnly = extractPhpVersions(from: files.components(separatedBy: "\n"))
 
