@@ -18,14 +18,24 @@ public class TestableShell: Shellable {
 
     var expectations: [Input: OutputsToShell] = [:]
 
-    func pipe(_ command: String) async -> String {
-        // TODO: Deal with the duration and output to error
-        return expectations[command]?.getOutputAsString() ?? ""
+    func quiet(_ command: String) async {
+        return
     }
 
-    func syncPipe(_ command: String) -> String {
-        // TODO: Deal with the duration and output to error
-        return expectations[command]?.getOutputAsString() ?? ""
+    func pipe(_ command: String) async -> ShellOutput {
+        self.sync(command)
+    }
+
+    func attach(_ command: String, didReceiveOutput: @escaping (ShellOutput) -> Void) async -> ShellOutput {
+        self.sync(command)
+    }
+
+    func sync(_ command: String) -> ShellOutput {
+        guard let expectation = expectations[command] else {
+            return ShellOutput(output: "Unexpected Command", isError: true)
+        }
+
+        return ShellOutput(output: expectation.getOutputAsString(), isError: expectation.outputsToError())
     }
 }
 

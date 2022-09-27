@@ -12,8 +12,7 @@ class ShellTest: XCTestCase {
     func test_default_shell_is_system_shell() {
         XCTAssertTrue(Shell is SystemShell)
 
-        XCTAssertTrue(Shell.syncPipe("php -v")
-            .contains("Copyright (c) The PHP Group"))
+        XCTAssertTrue(Shell.sync("php -v").output.contains("Copyright (c) The PHP Group"))
     }
 
     func test_system_shell_has_path() {
@@ -45,8 +44,14 @@ class ShellTest: XCTestCase {
 
         XCTAssertTrue(Shell is TestableShell)
 
-        XCTAssertEqual(expectedPhpOutput, Shell.syncPipe("php -v"))
+        XCTAssertEqual(expectedPhpOutput, Shell.sync("php -v").output)
 
-        XCTAssertEqual(expectedPhpOutput, Shell.syncPipe("php --version"))
+        XCTAssertEqual(expectedPhpOutput, Shell.sync("php --version").output)
+    }
+
+    func test_unrecognized_commands_output_stderr() {
+        ActiveShell.useTestable([:])
+
+        XCTAssertEqual("Unexpected Command", Shell.sync("unrecognized command").output)
     }
 }

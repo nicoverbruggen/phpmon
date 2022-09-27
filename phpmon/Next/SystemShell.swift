@@ -82,21 +82,43 @@ class SystemShell: Shellable {
 
     // MARK: - Shellable Protocol
 
-    func syncPipe(_ command: String) -> String {
+    func sync(_ command: String) -> ShellOutput {
         let task = getShellProcess(for: command)
-        let pipe = Pipe()
 
-        task.standardOutput = pipe
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
+
+        task.standardOutput = outputPipe
+        task.standardError = errorPipe
+        task.waitUntilExit()
         task.launch()
 
-        return String(
-            data: pipe.fileHandleForReading.readDataToEndOfFile(),
+        let stdOut = String(
+            data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
             encoding: .utf8
-        ) ?? ""
+        )!
+
+        let stdErr = String(
+            data: errorPipe.fileHandleForReading.readDataToEndOfFile(),
+            encoding: .utf8
+        )!
+
+        if stdErr.lengthOfBytes(using: .utf8) > 0 {
+            return ShellOutput(output: stdErr, isError: true)
+        }
+
+        return ShellOutput(output: stdOut, isError: false)
     }
 
-    func pipe(_ command: String) async -> String {
-        // TODO
-        return ""
+    func pipe(_ command: String) async -> ShellOutput {
+        return sync(command)
+    }
+
+    func quiet(_ command: String) async {
+        _ = await self.pipe(command)
+    }
+
+    func attach(_ command: String, didReceiveOutput: @escaping (ShellOutput) -> Void) async -> ShellOutput {
+        return sync(command)
     }
 }

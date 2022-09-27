@@ -8,10 +8,37 @@
 
 import Foundation
 
+struct ShellOutput: CustomStringConvertible {
+    var output: String
+    var isError: Bool
+
+    var description: String {
+        return output
+    }
+}
+
 protocol Shellable {
-    typealias Output = String
+    /**
+     Run a command synchronously. Waits until the command is done.
+     */
+    func sync(_ command: String) -> ShellOutput
 
-    func syncPipe(_ command: String) -> Output
+    /**
+     Run a command asynchronously.
+     */
+    func pipe(_ command: String) async -> ShellOutput
 
-    func pipe(_ command: String) async -> Output
+    /**
+     Run a command asynchronously, without returning the output of the command.
+     */
+    func quiet(_ command: String) async
+
+    /**
+     Attach to a given command and listen for progress updates.
+     Any data that ends up in standard out or standard error becomes available.
+     */
+    func attach(
+        _ command: String,
+        didReceiveOutput: @escaping (ShellOutput) -> Void
+    ) async -> ShellOutput
 }
