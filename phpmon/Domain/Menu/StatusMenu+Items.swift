@@ -212,6 +212,7 @@ extension StatusMenu {
 
     func addXdebugMenuItem() {
         if !Xdebug.enabled {
+            addItem(NSMenuItem.separator())
             return
         }
 
