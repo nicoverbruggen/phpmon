@@ -60,4 +60,18 @@ class SystemShellTest: XCTestCase {
 
         wait(for: [expectation], timeout: 5.0)
     }
+
+    func test_system_processes_run_in_parallel() async {
+        let expectation = XCTestExpectation(description: #function)
+
+        let thing = {
+            await Shell.quiet("php -r \"usleep(700);\"")
+            await Shell.quiet("php -r \"usleep(700);\"")
+            await Shell.quiet("php -r \"usleep(700);\"")
+            expectation.fulfill()
+        }
+
+        await thing()
+        wait(for: [expectation], timeout: 1.0)
+    }
 }
