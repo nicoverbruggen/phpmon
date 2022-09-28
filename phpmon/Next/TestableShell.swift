@@ -9,7 +9,6 @@
 import Foundation
 
 public class TestableShell: Shellable {
-
     public typealias Input = String
 
     init(expectations: [Input: OutputsToShell]) {
@@ -26,7 +25,11 @@ public class TestableShell: Shellable {
         self.sync(command)
     }
 
-    func attach(_ command: String, didReceiveOutput: @escaping (ShellOutput) -> Void) async -> ShellOutput {
+    func attach(
+        _ command: String,
+        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        withTimeout timeout: TimeInterval
+    ) async throws -> ShellOutput {
         self.sync(command)
     }
 

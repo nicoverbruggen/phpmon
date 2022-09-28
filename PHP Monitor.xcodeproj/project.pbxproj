@@ -63,9 +63,10 @@
 		C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */; };
-		C413E43528DA3EB100AE33C7 /* ShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C413E43428DA3EB100AE33C7 /* ShellTest.swift */; };
+		C413E43528DA3EB100AE33C7 /* FakeShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C413E43428DA3EB100AE33C7 /* FakeShellTest.swift */; };
 		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
 		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
+		C4159AF728E4D40400545349 /* SystemShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4159AF628E4D40400545349 /* SystemShellTest.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */; };
@@ -364,8 +365,9 @@
 		C40FE736282ABA4F00A302C2 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTest.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackage.swift; sourceTree = "<group>"; };
-		C413E43428DA3EB100AE33C7 /* ShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellTest.swift; sourceTree = "<group>"; };
+		C413E43428DA3EB100AE33C7 /* FakeShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeShellTest.swift; sourceTree = "<group>"; };
 		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
+		C4159AF628E4D40400545349 /* SystemShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemShellTest.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+InterApp.swift"; sourceTree = "<group>"; };
 		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
@@ -666,7 +668,8 @@
 		C413E43328DA3E8F00AE33C7 /* Next */ = {
 			isa = PBXGroup;
 			children = (
-				C413E43428DA3EB100AE33C7 /* ShellTest.swift */,
+				C413E43428DA3EB100AE33C7 /* FakeShellTest.swift */,
+				C4159AF628E4D40400545349 /* SystemShellTest.swift */,
 			);
 			path = Next;
 			sourceTree = "<group>";
@@ -1503,7 +1506,7 @@
 				C41CA5EE2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C4FACE81288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift in Sources */,
 				54D9E0B727E4F51E003B9AD9 /* HotKey.swift in Sources */,
-				C413E43528DA3EB100AE33C7 /* ShellTest.swift in Sources */,
+				C413E43528DA3EB100AE33C7 /* FakeShellTest.swift in Sources */,
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */,
 				C46EBC4528DB95F0007ACC74 /* Shellable.swift in Sources */,
@@ -1557,6 +1560,7 @@
 				C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */,
 				54D9E0B927E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
 				C4EED88A27A48778006D7272 /* InterAppHandler.swift in Sources */,
+				C4159AF728E4D40400545349 /* SystemShellTest.swift in Sources */,
 				C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,
 				C485707B28BF458900539B36 /* VersionPopoverView.swift in Sources */,

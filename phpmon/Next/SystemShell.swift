@@ -90,8 +90,8 @@ class SystemShell: Shellable {
 
         task.standardOutput = outputPipe
         task.standardError = errorPipe
-        task.waitUntilExit()
         task.launch()
+        task.waitUntilExit()
 
         let stdOut = String(
             data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
@@ -118,7 +118,45 @@ class SystemShell: Shellable {
         _ = await self.pipe(command)
     }
 
-    func attach(_ command: String, didReceiveOutput: @escaping (ShellOutput) -> Void) async -> ShellOutput {
-        return sync(command)
+    func attach(
+        _ command: String,
+        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        withTimeout timeout: TimeInterval = 5.0
+    ) async throws -> ShellOutput {
+        let task = getShellProcess(for: command)
+
+        var allOut: String = ""
+        var allErr: String = ""
+
+        task.listen { stdOut in
+            allOut += stdOut; didReceiveOutput(.out(stdOut))
+        } didReceiveStandardErrorData: { stdErr in
+            allErr += stdErr; didReceiveOutput(.err(stdErr))
+        }
+
+        return try await withCheckedThrowingContinuation({ continuation in
+            var timer: Timer?
+
+            task.terminationHandler = { process in
+                process.haltListening()
+
+                timer?.invalidate()
+
+                if !allErr.isEmpty {
+                    return continuation.resume(returning: .err(allErr))
+                }
+
+                return continuation.resume(returning: .out(allOut))
+            }
+
+            timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in
+                task.terminationHandler = nil
+                task.terminate()
+                return continuation.resume(throwing: ShellError.timedOut)
+            }
+
+            task.launch()
+            task.waitUntilExit()
+        })
     }
 }
