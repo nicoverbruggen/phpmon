@@ -31,14 +31,18 @@ class FakeShellTest: XCTestCase {
 
         XCTAssertTrue(Shell is TestableShell)
 
-        XCTAssertEqual(expectedPhpOutput, Shell.sync("php -v").output)
+        XCTAssertEqual(expectedPhpOutput, Shell.sync("php -v").out)
 
-        XCTAssertEqual(expectedPhpOutput, Shell.sync("php --version").output)
+        XCTAssertEqual(expectedPhpOutput, Shell.sync("php --version").out)
     }
 
     func test_unrecognized_commands_output_stderr() {
         ActiveShell.useTestable([:])
 
-        XCTAssertEqual("Unexpected Command", Shell.sync("unrecognized command").output)
+        let output = Shell.sync("unrecognized command")
+
+        XCTAssertTrue(output.hasError)
+        XCTAssertEqual("Unexpected Command", output.err)
+        XCTAssertEqual("", output.out)
     }
 }

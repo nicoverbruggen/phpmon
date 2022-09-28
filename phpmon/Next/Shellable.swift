@@ -8,19 +8,20 @@
 
 import Foundation
 
-struct ShellOutput: CustomStringConvertible {
-    var output: String
-    var isError: Bool
-    var description: String {
-        return output
+struct ShellOutput {
+    var out: String
+    var err: String
+
+    var hasError: Bool {
+        return err.lengthOfBytes(using: .utf8) > 0
     }
 
-    static func out(_ output: String) -> ShellOutput {
-        return ShellOutput(output: output, isError: false)
+    static func out(_ out: String?, _ err: String? = nil) -> ShellOutput {
+        return ShellOutput(out: out ?? "", err: err ?? "")
     }
 
-    static func err(_ output: String) -> ShellOutput {
-        return ShellOutput(output: output, isError: true)
+    static func err(_ err: String?) -> ShellOutput {
+        return ShellOutput(out: "", err: err ?? "")
     }
 }
 

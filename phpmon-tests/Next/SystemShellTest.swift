@@ -9,10 +9,16 @@
 import XCTest
 
 class SystemShellTest: XCTestCase {
+
+    override class func setUp() {
+        // Reset to the default shell
+        ActiveShell.useSystem()
+    }
+
     func test_system_shell_is_default() {
         XCTAssertTrue(Shell is SystemShell)
 
-        XCTAssertTrue(Shell.sync("php -v").output.contains("Copyright (c) The PHP Group"))
+        XCTAssertTrue(Shell.sync("php -v").out.contains("Copyright (c) The PHP Group"))
     }
 
     func test_system_shell_has_path() {
@@ -28,14 +34,14 @@ class SystemShellTest: XCTestCase {
         let shellOutput = try! await Shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(200); echo 'Goodbye world';\"",
             didReceiveOutput: { incoming in
-                bits.append(incoming.output)
+                bits.append(incoming.out)
             },
             withTimeout: 2.0
         )
 
         XCTAssertTrue(bits.contains("Hello world\n"))
         XCTAssertTrue(bits.contains("Goodbye world"))
-        XCTAssertEqual("Hello world\nGoodbye world", shellOutput.output)
+        XCTAssertEqual("Hello world\nGoodbye world", shellOutput.out)
     }
 
     func test_system_shell_can_timeout_and_throw_error() async {
@@ -52,6 +58,6 @@ class SystemShellTest: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 3.0)
+        wait(for: [expectation], timeout: 5.0)
     }
 }

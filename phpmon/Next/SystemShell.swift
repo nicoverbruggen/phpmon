@@ -103,11 +103,7 @@ class SystemShell: Shellable {
             encoding: .utf8
         )!
 
-        if stdErr.lengthOfBytes(using: .utf8) > 0 {
-            return ShellOutput(output: stdErr, isError: true)
-        }
-
-        return ShellOutput(output: stdOut, isError: false)
+        return .out(stdOut, stdErr)
     }
 
     func pipe(_ command: String) async -> ShellOutput {

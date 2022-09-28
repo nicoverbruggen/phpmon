@@ -35,10 +35,11 @@ public class TestableShell: Shellable {
 
     func sync(_ command: String) -> ShellOutput {
         guard let expectation = expectations[command] else {
-            return ShellOutput(output: "Unexpected Command", isError: true)
+            return .err("Unexpected Command")
         }
 
-        return ShellOutput(output: expectation.getOutputAsString(), isError: expectation.outputsToError())
+        let output = expectation.getOutputAsString()
+        return expectation.outputsToError() ? .err(output) : .out(output)
     }
 }
 
