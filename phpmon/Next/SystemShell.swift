@@ -118,7 +118,7 @@ class SystemShell: Shellable {
         _ command: String,
         didReceiveOutput: @escaping (ShellOutput) -> Void,
         withTimeout timeout: TimeInterval = 5.0
-    ) async throws -> ShellOutput {
+    ) async throws -> (Process, ShellOutput) {
         let task = getShellProcess(for: command)
 
         var allOut: String = ""
@@ -139,10 +139,10 @@ class SystemShell: Shellable {
                 timer?.invalidate()
 
                 if !allErr.isEmpty {
-                    return continuation.resume(returning: .err(allErr))
+                    return continuation.resume(returning: (process, .err(allErr)))
                 }
 
-                return continuation.resume(returning: .out(allOut))
+                return continuation.resume(returning: (process, .out(allOut)))
             }
 
             timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in

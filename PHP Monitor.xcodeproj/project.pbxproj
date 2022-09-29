@@ -125,6 +125,8 @@
 		C449B4F427EE7FC800C47E8A /* DomainListKindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC51FB27E27F47008528CA /* DomainListKindCell.swift */; };
 		C44A874828905BB000498BC4 /* ProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A874728905BB000498BC4 /* ProgressVC.swift */; };
 		C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A874728905BB000498BC4 /* ProgressVC.swift */; };
+		C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */; };
+		C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */; };
 		C44C198D276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* TerminalProgressWindowController.swift */; };
 		C44C198E276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44C198C276E3A1C0072762D /* TerminalProgressWindowController.swift */; };
 		C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C44C1990276E44CB0072762D /* ProgressWindow.storyboard */; };
@@ -412,6 +414,7 @@
 		C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIHelper.swift; sourceTree = "<group>"; };
 		C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionPopoverView.swift; sourceTree = "<group>"; };
 		C44A874728905BB000498BC4 /* ProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVC.swift; sourceTree = "<group>"; };
+		C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		C44C198C276E3A1C0072762D /* TerminalProgressWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalProgressWindowController.swift; sourceTree = "<group>"; };
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
@@ -1202,6 +1205,7 @@
 				C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */,
 				C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */,
 				C4EB53E628553117006F9937 /* ArrayExtension.swift */,
+				C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1388,6 +1392,7 @@
 				C463E380284930EE00422731 /* PresetHelper.swift in Sources */,
 				C41C02A927E61A65009F26CB /* ValetSite+Fake.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeSiteScanner.swift in Sources */,
+				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
 				C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
@@ -1510,6 +1515,7 @@
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */,
 				C46EBC4528DB95F0007ACC74 /* Shellable.swift in Sources */,
+				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,

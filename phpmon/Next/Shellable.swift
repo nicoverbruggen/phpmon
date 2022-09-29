@@ -58,7 +58,7 @@ protocol Shellable {
         _ command: String,
         didReceiveOutput: @escaping (ShellOutput) -> Void,
         withTimeout timeout: TimeInterval
-    ) async throws -> ShellOutput
+    ) async throws -> (Process, ShellOutput)
 }
 
 enum ShellError: Error {

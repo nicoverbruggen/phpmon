@@ -200,7 +200,7 @@ extension MainMenu {
         }
     }
 
-    @objc func updateGlobalComposerDependencies() {
+    @MainActor @objc func updateGlobalComposerDependencies() {
         ComposerWindow().updateGlobalDependencies(
             notify: true,
             completion: { _ in }

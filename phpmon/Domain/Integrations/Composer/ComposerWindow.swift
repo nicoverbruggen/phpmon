@@ -8,8 +8,7 @@
 
 import Foundation
 
-class ComposerWindow {
-
+@MainActor class ComposerWindow {
     private var menu: MainMenu?
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
@@ -42,39 +41,37 @@ class ComposerWindow {
 
         window?.setType(info: true)
 
-        DispatchQueue.global(qos: .userInitiated).async { [self] in
-            let task = LegacyShell.user.createTask(
-                for: "\(Paths.composer!) global update", requiresPath: true
-            )
+        Task { await performComposerUpdate() }
+    }
+
+    private func performComposerUpdate() async {
+        do {
+            let command = "\(Paths.composer!) global update"
 
             DispatchQueue.main.async {
-                self.window?.addToConsole("\(Paths.composer!) global update\n")
+                self.window?.addToConsole("\(command)\n")
             }
 
-            task.listen(
-                didReceiveStandardOutputData: { [weak self] string in
-                    DispatchQueue.main.async {
-                        self?.window?.addToConsole(string)
+            let (process, _) = try await Shell.attach(
+                command,
+                didReceiveOutput: { [weak self] output in
+                    if output.hasError {
+                        DispatchQueue.main.async { self?.window?.addToConsole(output.err) }
                     }
-                    // Log.perf("\(string.trimmingCharacters(in: .newlines))")
+                    if !output.out.isEmpty {
+                        DispatchQueue.main.async { self?.window?.addToConsole(output.out) }
+                    }
                 },
-                didReceiveStandardErrorData: { [weak self] string in
-                    DispatchQueue.main.async {
-                        self?.window?.addToConsole(string)
-                    }
-                    // Log.perf("\(string.trimmingCharacters(in: .newlines))")
-                }
+                withTimeout: .minutes(5)
             )
 
-            task.launch()
-            task.waitUntilExit()
-            task.haltListening()
-
-            if task.terminationStatus <= 0 {
-                composerUpdateSucceeded()
-            } else {
-                composerUpdateFailed()
-            }
+             if process.terminationStatus <= 0 {
+                 composerUpdateSucceeded()
+             } else {
+                 composerUpdateFailed()
+             }
+        } catch {
+            composerUpdateFailed()
         }
     }
 

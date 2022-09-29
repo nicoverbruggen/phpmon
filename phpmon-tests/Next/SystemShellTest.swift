@@ -31,7 +31,7 @@ class SystemShellTest: XCTestCase {
     func test_system_shell_can_buffer_output() async {
         var bits: [String] = []
 
-        let shellOutput = try! await Shell.attach(
+        let (_, shellOutput) = try! await Shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(200); echo 'Goodbye world';\"",
             didReceiveOutput: { incoming in
                 bits.append(incoming.out)

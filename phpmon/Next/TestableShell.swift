@@ -29,8 +29,8 @@ public class TestableShell: Shellable {
         _ command: String,
         didReceiveOutput: @escaping (ShellOutput) -> Void,
         withTimeout timeout: TimeInterval
-    ) async throws -> ShellOutput {
-        self.sync(command)
+    ) async throws -> (Process, ShellOutput) {
+        return (Process(), self.sync(command))
     }
 
     func sync(_ command: String) -> ShellOutput {
