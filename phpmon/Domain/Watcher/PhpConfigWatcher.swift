@@ -68,7 +68,7 @@ class PhpConfigWatcher {
     }
 
     deinit {
-        Log.perf("A PhpConfigWatcher has been deinitialized.")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
 }
