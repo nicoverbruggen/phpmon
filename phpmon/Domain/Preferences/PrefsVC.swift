@@ -25,7 +25,7 @@ class GenericPreferenceVC: NSViewController {
     // MARK: - Deinitialization
 
     deinit {
-        Log.perf("PrefsVC deallocated")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
     func getDynamicIconPV() -> NSView {
