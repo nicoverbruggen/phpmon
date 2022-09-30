@@ -9,7 +9,6 @@
 import Foundation
 
 @MainActor class ComposerWindow {
-    private var menu: MainMenu?
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
@@ -18,7 +17,6 @@ import Foundation
      Updates the global dependencies and runs the completion callback when done.
      */
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        self.menu = MainMenu.shared
         self.shouldNotify = notify
         self.completion = completion
 
@@ -31,8 +29,8 @@ import Foundation
         }
 
         PhpEnv.shared.isBusy = true
-        menu?.setBusyImage()
-        menu?.rebuild()
+        MainMenu.shared.setBusyImage()
+        MainMenu.shared.rebuild()
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -88,7 +86,6 @@ import Foundation
             }
             window = nil
             removeBusyStatus()
-            menu = nil
             completion(true)
         }
     }
@@ -101,7 +98,6 @@ import Foundation
             window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
             window = nil
             removeBusyStatus()
-            menu = nil
             completion(false)
         }
     }
@@ -110,8 +106,8 @@ import Foundation
 
     private func removeBusyStatus() {
         PhpEnv.shared.isBusy = false
-        DispatchQueue.main.async { [self] in
-            menu?.updatePhpVersionInStatusBar()
+        DispatchQueue.main.async {
+            MainMenu.shared.updatePhpVersionInStatusBar()
         }
     }
 
