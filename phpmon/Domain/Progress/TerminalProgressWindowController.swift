@@ -35,12 +35,14 @@ class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
     }
 
     public func addToConsole(_ string: String) {
-        guard let textView = self.progressView?.textView else {
-            return
-        }
+        DispatchQueue.main.async {
+            guard let textView = self.progressView?.textView else {
+                return
+            }
 
-        textView.string += string
-        textView.scrollToEndOfDocument(nil)
+            textView.string += string
+            textView.scrollToEndOfDocument(nil)
+        }
     }
 
     public func setType(info: Bool = true) {

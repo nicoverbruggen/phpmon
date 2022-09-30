@@ -44,31 +44,36 @@ import Foundation
 
     private func performComposerUpdate() async {
         do {
-            let command = "\(Paths.composer!) global update"
-
-            DispatchQueue.main.async {
-                self.window?.addToConsole("\(command)\n")
-            }
-
-            let (process, _) = try await Shell.attach(
-                command,
-                didReceiveOutput: { [weak self] output in
-                    if output.hasError {
-                        DispatchQueue.main.async { self?.window?.addToConsole(output.err) }
-                    }
-                    if !output.out.isEmpty {
-                        DispatchQueue.main.async { self?.window?.addToConsole(output.out) }
-                    }
-                },
-                withTimeout: .minutes(5)
-            )
-
-             if process.terminationStatus <= 0 {
-                 composerUpdateSucceeded()
-             } else {
-                 composerUpdateFailed()
-             }
+            try await runComposerUpdateShellCommand()
         } catch {
+            composerUpdateFailed()
+        }
+    }
+
+    private func runComposerUpdateShellCommand() async throws {
+        let command = "\(Paths.composer!) global update"
+
+        self.window?.addToConsole("\(command)\n")
+
+        let (process, _) = try await Shell.attach(
+            command,
+            didReceiveOutput: { [weak self] output in
+                guard let window = self?.window else { return }
+
+                if output.hasError {
+                    window.addToConsole(output.err)
+                }
+
+                if !output.out.isEmpty {
+                    window.addToConsole(output.out)
+                }
+            },
+            withTimeout: .minutes(5)
+        )
+
+        if process.terminationStatus <= 0 {
+            composerUpdateSucceeded()
+        } else {
             composerUpdateFailed()
         }
     }
