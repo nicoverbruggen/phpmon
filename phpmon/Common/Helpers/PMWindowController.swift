@@ -30,7 +30,7 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
     }
 
     deinit {
-        Log.perf("Window controller '\(windowName)' was deinitialized")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
 }

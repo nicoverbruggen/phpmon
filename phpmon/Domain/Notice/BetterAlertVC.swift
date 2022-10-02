@@ -47,7 +47,7 @@ class BetterAlertVC: NSViewController {
     }
 
     deinit {
-        Log.perf("A BetterAlert has been deinitialized.")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
     // MARK: Outlet Actions

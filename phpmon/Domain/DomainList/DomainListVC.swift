@@ -292,6 +292,6 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Deinitialization
 
     deinit {
-        Log.perf("DomainListVC deallocated")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 }

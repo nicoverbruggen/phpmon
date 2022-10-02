@@ -47,7 +47,7 @@ extension DomainListVC {
         let originalSecureStatus = selectedSite!.secured
         let action = selectedSite!.secured ? "unsecure" : "secure"
         let selectedSite = selectedSite!
-        let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+        let command = "sudo \(Paths.valet) \(action) '\(selectedSite.name)' && exit;"
 
         waitAndExecute {
             Shell.run(command, requiresPath: true)

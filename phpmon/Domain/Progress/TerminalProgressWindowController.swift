@@ -56,7 +56,7 @@ class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
     }
 
     deinit {
-        Log.perf("Deinitializing ProgressWindowController")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
 }

@@ -18,7 +18,7 @@ class ProgressViewController: NSViewController {
     @IBOutlet weak var imageViewType: NSImageView!
 
     deinit {
-        Log.perf("Deinitializing ProgressViewController")
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
 }

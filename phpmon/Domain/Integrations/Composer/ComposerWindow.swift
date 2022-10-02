@@ -52,15 +52,15 @@ class ComposerWindow {
             }
 
             task.listen(
-                didReceiveStandardOutputData: { string in
+                didReceiveStandardOutputData: { [weak self] string in
                     DispatchQueue.main.async {
-                        self.window?.addToConsole(string)
+                        self?.window?.addToConsole(string)
                     }
                     // Log.perf("\(string.trimmingCharacters(in: .newlines))")
                 },
-                didReceiveStandardErrorData: { string in
+                didReceiveStandardErrorData: { [weak self] string in
                     DispatchQueue.main.async {
-                        self.window?.addToConsole(string)
+                        self?.window?.addToConsole(string)
                     }
                     // Log.perf("\(string.trimmingCharacters(in: .newlines))")
                 }
@@ -91,6 +91,7 @@ class ComposerWindow {
             }
             window = nil
             removeBusyStatus()
+            menu = nil
             completion(true)
         }
     }
@@ -103,6 +104,7 @@ class ComposerWindow {
             window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
             window = nil
             removeBusyStatus()
+            menu = nil
             completion(false)
         }
     }
@@ -127,5 +129,9 @@ class ComposerWindow {
             )
             .withPrimary(text: "OK")
             .show()
+    }
+
+    deinit {
+        Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 }
