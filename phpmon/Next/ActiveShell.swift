@@ -15,13 +15,10 @@ var Shell: Shellable {
 class ActiveShell {
     static var shared: Shellable = SystemShell()
 
-    /// Uses a testable shell with predefined responses. You specify the terminal's output.
-    /// they also work with simple String objects.
-    public static func useTestable(_ expectations: [String: OutputsToShell]) {
+    public static func useTestable(_ expectations: [String: BatchFakeShellOutput]) {
         Self.shared = TestableShell(expectations: expectations)
     }
 
-    /// Reverts back to the system shell. You do not need to call this, only after using `useTestable()`.
     public static func useSystem() {
         Self.shared = SystemShell()
     }

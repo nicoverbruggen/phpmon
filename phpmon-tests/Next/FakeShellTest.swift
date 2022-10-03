@@ -9,6 +9,19 @@
 import XCTest
 
 class FakeShellTest: XCTestCase {
+
+    func test_fake_shell_output_can_be_declared() {
+        let greeting = BatchFakeShellOutput(items: [
+            .instant("Hello world"),
+            .delayed(0.3, "Goodbye world")
+        ])
+
+        let output = greeting.outputInstantaneously()
+
+        XCTAssertEqual("Hello world\nGoodbye world", output.out)
+    }
+
+    /*
     func test_we_can_predefine_responses_for_dummy_shell() {
         let expectedPhpOutput = """
                 PHP 8.1.10 (cli) (built: Sep  3 2022 12:09:27) (NTS)
@@ -45,4 +58,5 @@ class FakeShellTest: XCTestCase {
         XCTAssertEqual("Unexpected Command", output.err)
         XCTAssertEqual("", output.out)
     }
+    */
 }

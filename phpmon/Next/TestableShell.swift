@@ -11,11 +11,11 @@ import Foundation
 public class TestableShell: Shellable {
     public typealias Input = String
 
-    init(expectations: [Input: OutputsToShell]) {
+    init(expectations: [Input: BatchFakeShellOutput]) {
         self.expectations = expectations
     }
 
-    var expectations: [Input: OutputsToShell] = [:]
+    var expectations: [Input: BatchFakeShellOutput] = [:]
 
     func quiet(_ command: String) async {
         return
@@ -37,9 +37,7 @@ public class TestableShell: Shellable {
         guard let expectation = expectations[command] else {
             return .err("Unexpected Command")
         }
-
-        let output = expectation.getOutputAsString()
-        return expectation.outputsToError() ? .err(output) : .out(output)
+        return ShellOutput(out: "", err: "")
     }
 }
 
@@ -49,40 +47,57 @@ public class TestableShell: Shellable {
 // 2. Delayed but then all at once: `.delay(300, "string")`
 // 3. A stream of data spread over multiple seconds: `.multiple([.delay(300, "hello"), .delay(300, "bye")])`
 
-protocol OutputsToShell {
-    func getOutputAsString() -> String
-    func getDuration() -> Int
-    func outputsToError() -> Bool
-}
+struct FakeShellOutput {
+    let delay: TimeInterval
+    let output: ShellOutput
 
-struct FakeTerminalOutput: OutputsToShell {
-    var output: String
-    var duration: Int
-    var isError: Bool
-
-    func getOutputAsString() -> String {
-        return output
+    static func instant(_ stdOut: String, _ stdErr: String? = nil) -> FakeShellOutput {
+        return FakeShellOutput(delay: 0, output: ShellOutput(out: stdOut, err: stdErr ?? ""))
     }
 
-    func getDuration() -> Int {
-        return duration
-    }
-
-    func outputsToError() -> Bool {
-        return isError
+    static func delayed(_ delay: TimeInterval, _ stdOut: String, _ stdErr: String? = nil) -> FakeShellOutput {
+        return FakeShellOutput(delay: delay, output: ShellOutput(out: stdOut, err: stdErr ?? ""))
     }
 }
 
-extension String: OutputsToShell {
-    func getOutputAsString() -> String {
-        return self
+struct BatchFakeShellOutput {
+    var items: [FakeShellOutput]
+
+    /**
+     Outputs the fake shell output as expected.
+     */
+    public func output(
+        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        ignoreDelay: Bool = false
+    ) async -> ShellOutput {
+        var allOut: String = ""
+        var allErr: String = ""
+
+        Task {
+            self.items.forEach { fakeShellOutput in
+                let delay = UInt64(fakeShellOutput.delay * 1_000_000_000)
+                try await Task.sleep(nanoseconds: delay)
+
+                allOut += fakeShellOutput.output.out
+
+                if fakeShellOutput.output.hasError {
+                    allErr += fakeShellOutput.output.err
+                }
+            }
+        }
+
+        return ShellOutput(
+            out: allOut,
+            err: allErr
+        )
     }
 
-    func getDuration() -> Int {
-        return 100
-    }
-
-    func outputsToError() -> Bool {
-        return false
+    /**
+     For testing purposes (and speed) we may omit the delay, regardless of its timespan.
+     */
+    public func outputInstantaneously(
+        didReceiveOutput: @escaping (ShellOutput) -> Void
+    ) -> ShellOutput {
+        self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
     }
 }
