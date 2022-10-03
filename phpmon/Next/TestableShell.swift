@@ -43,6 +43,12 @@ public class TestableShell: Shellable {
     }
 }
 
+// TODO: Test env shell output should be modeled differently
+// So the possible outcome is either:
+// 1. Immediate with almost zero delay `.instant("string")`
+// 2. Delayed but then all at once: `.delay(300, "string")`
+// 3. A stream of data spread over multiple seconds: `.multiple([.delay(300, "hello"), .delay(300, "bye")])`
+
 protocol OutputsToShell {
     func getOutputAsString() -> String
     func getDuration() -> Int
