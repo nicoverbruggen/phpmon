@@ -183,9 +183,9 @@ class Valet {
         }
     }
 
-    public func hasPlatformIssues() -> Bool {
-        return valet("--version", sudo: false)
-            .contains("Composer detected issues in your platform")
+    public func hasPlatformIssues() async -> Bool {
+        return await Shell.pipe("valet --version")
+            .out.contains("Composer detected issues in your platform")
     }
 
     /**

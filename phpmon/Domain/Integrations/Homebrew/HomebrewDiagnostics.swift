@@ -9,18 +9,23 @@
 import Foundation
 
 class HomebrewDiagnostics {
-
     /**
      Determines the Homebrew taps the user has installed.
      */
-    public static var installedTaps: [String] = {
-        return LegacyShell
+    public static var installedTaps: [String] = []
+
+    /**
+     Load which taps are installed.
+     */
+    public static func loadInstalledTaps() async {
+        installedTaps = await Shell
             .pipe("\(Paths.brew) tap")
+            .out
             .split(separator: "\n")
             .map { string in
                 return String(string)
             }
-    }()
+    }
 
     /**
      Determines whether the PHP Monitor Cask is installed.
@@ -131,13 +136,14 @@ class HomebrewDiagnostics {
      In order to see if we support the --json syntax, we'll query nginx.
      If the JSON response cannot be parsed, Homebrew is probably out of date.
      */
-    public static func cannotLoadService(_ name: String = "nginx") -> Bool {
+    public static func cannotLoadService(_ name: String) async -> Bool {
+        let nginxJson = await Shell
+            .pipe("sudo \(Paths.brew) services info \(name) --json")
+            .out
+
         let serviceInfo = try? JSONDecoder().decode(
             [HomebrewService].self,
-            from: LegacyShell.pipe(
-                "sudo \(Paths.brew) services info \(name) --json",
-                requiresPath: true
-            ).data(using: .utf8)!
+            from: nginxJson.data(using: .utf8)!
         )
 
         return serviceInfo == nil

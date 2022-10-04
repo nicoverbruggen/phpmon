@@ -53,9 +53,11 @@ extension MainMenu {
     }
 
     @MainActor private func checkForPlatformIssues() {
-        if Valet.shared.hasPlatformIssues() {
-            Log.info("Composer platform issue(s) detected.")
-            self.suggestFixMyComposer()
+        Task {
+            if await Valet.shared.hasPlatformIssues() {
+                Log.info("Composer platform issue(s) detected.")
+                self.suggestFixMyComposer()
+            }
         }
     }
 

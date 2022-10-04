@@ -15,14 +15,16 @@ class PhpEnv {
     init() {
         self.currentInstall = ActivePhpInstallation()
 
-        let brewPhpAlias = LegacyShell.pipe("\(Paths.brew) info php --json")
+        Task {
+            let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
-        self.homebrewPackage = try! JSONDecoder().decode(
-            [HomebrewPackage].self,
-            from: brewPhpAlias.data(using: .utf8)!
-        ).first!
+            self.homebrewPackage = try! JSONDecoder().decode(
+                [HomebrewPackage].self,
+                from: brewPhpAlias.data(using: .utf8)!
+            ).first!
 
-        Log.info("When on your system, the `php` formula means version \(homebrewPackage.version)!")
+            Log.info("When on your system, the `php` formula means version \(homebrewPackage.version)!")
+        }
     }
 
     // MARK: - Properties

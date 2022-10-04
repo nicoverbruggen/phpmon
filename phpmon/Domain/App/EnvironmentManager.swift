@@ -12,8 +12,8 @@ public class EnvironmentManager {
     var values: [EnvironmentProperty: Bool] = [:]
 
     public func process() async {
-        self.values[.hasValetInstalled] = !{
-            let output = valet("--version", sudo: false)
+        self.values[.hasValetInstalled] = await !{
+            let output = await Shell.pipe("valet --version").out
 
             // Failure condition #1: does not contain Laravel Valet
             if !output.contains("Laravel Valet") {

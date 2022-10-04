@@ -59,7 +59,6 @@
 		C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */; };
 		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
-		C40F505528ECA64E004AD45B /* Testables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F505428ECA64E004AD45B /* Testables.swift */; };
 		C40F505628ECA64E004AD45B /* Testables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F505428ECA64E004AD45B /* Testables.swift */; };
 		C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
@@ -213,6 +212,8 @@
 		C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ACA38E25C754C100060C66 /* PhpExtension.swift */; };
 		C4AD38B228ECD9D300FA8D83 /* TestableFilesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AD38B128ECD9D300FA8D83 /* TestableFilesystem.swift */; };
 		C4AD38B328ECD9D300FA8D83 /* TestableFilesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AD38B128ECD9D300FA8D83 /* TestableFilesystem.swift */; };
+		C4AD38B528ECE2DB00FA8D83 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
+		C4AD38B628ECE56D00FA8D83 /* Testables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F505428ECA64E004AD45B /* Testables.swift */; };
 		C4AF9F72275445FF00D44ED0 /* valet-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AF9F70275445FF00D44ED0 /* valet-config.json */; };
 		C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */; };
 		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
@@ -711,6 +712,7 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
+				C4AD38B428ECE1E100FA8D83 /* Tests */,
 				C46EBC3F28DB9550007ACC74 /* Next */,
 				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
@@ -941,6 +943,13 @@
 				C4D936C827E3EB6100BD69FE /* PhpHelper.swift */,
 			);
 			path = "PHP Version";
+			sourceTree = "<group>";
+		};
+		C4AD38B428ECE1E100FA8D83 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		C4AF9F6A275445C900D44ED0 /* Valet */ = {
@@ -1313,6 +1322,7 @@
 				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
 				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
+				C4AD38B528ECE2DB00FA8D83 /* brew-formula.json in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
 			);
@@ -1453,6 +1463,7 @@
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C46EBC4728DB9644007ACC74 /* SystemShell.swift in Sources */,
+				C4AD38B628ECE56D00FA8D83 /* Testables.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C44264C02850BD2A007400F1 /* VersionPopoverView.swift in Sources */,
 				C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
@@ -1497,7 +1508,6 @@
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
-				C40F505528ECA64E004AD45B /* Testables.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
 				C42E3BF428A9BF5100AFECFC /* LegacyShell+PATH.swift in Sources */,
 				C42337A3281F19F000459A48 /* Xdebug.swift in Sources */,

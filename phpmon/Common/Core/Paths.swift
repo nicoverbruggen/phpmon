@@ -17,11 +17,15 @@ public class Paths {
 
     internal var baseDir: Paths.HomebrewDir
 
-    private var userName: String
+    private var userName: String! = nil
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
-        userName = String(LegacyShell.pipe("id -un").split(separator: "\n")[0])
+
+        Task {
+            let output = await Shell.pipe("id -un").out
+            userName = String(output.split(separator: "\n")[0])
+        }
     }
 
     public func detectBinaryPaths() {
