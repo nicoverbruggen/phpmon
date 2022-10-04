@@ -115,7 +115,7 @@ class Startup {
         // Make sure we can detect one or more PHP installations.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !LegacyShell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
+            command: { return await !Shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php") },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
             titleText: "startup.errors.php_opt.title".localized,
             subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -143,14 +143,14 @@ class Startup {
         // functioning correctly. Let the user know that they need to run `valet trust`.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !LegacyShell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
+            command: { return await !Shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
             subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
             descriptionText: "startup.errors.sudoers_brew.desc".localized
         ),
         EnvironmentCheck(
-            command: { return !LegacyShell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
+            command: { return await !Shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
             subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
@@ -200,10 +200,10 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
+                let nodePath = await Shell.pipe("which node").out
                 return App.architecture == "x86_64"
                     && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
-                    && LegacyShell.pipe("which node", requiresPath: false)
-                        .contains("env: node: No such file or directory")
+                    && nodePath.contains("env: node: No such file or directory")
             },
             name: "`env: node` issue does not apply",
             titleText: "startup.errors.which_alias_issue.title".localized,
@@ -215,7 +215,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return valet("--version", sudo: false)
+                return await Shell.pipe("valet --version").out
                     .contains("Composer detected issues in your platform")
             },
             name: "`no global composer issues",
@@ -228,7 +228,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                let output = valet("--version", sudo: false)
+                let output = await Shell.pipe("valet --version").out
                 // Failure condition #1: does not contain Laravel Valet
                 if !output.contains("Laravel Valet") {
                     return true

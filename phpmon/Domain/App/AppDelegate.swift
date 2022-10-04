@@ -66,6 +66,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         logger.verbosity = .info
         #if DEBUG
             logger.verbosity = .performance
+            // TODO: Enable to fake broken setup during testing
+            ActiveShell.useTestable(Testables.broken)
         #endif
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance

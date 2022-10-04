@@ -62,6 +62,14 @@ struct FakeShellOutput {
 struct BatchFakeShellOutput {
     var items: [FakeShellOutput]
 
+    static func with(_ items: [FakeShellOutput]) -> BatchFakeShellOutput {
+        return BatchFakeShellOutput(items: items)
+    }
+
+    static func instant(_ output: String, _ stream: ShellStream = .stdOut) -> BatchFakeShellOutput {
+        return BatchFakeShellOutput(items: [.instant(output, stream)])
+    }
+
     /**
      Outputs the fake shell output as expected.
      */
