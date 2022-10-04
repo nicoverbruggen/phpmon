@@ -32,4 +32,10 @@ class FakeShellTest: XCTestCase {
 
         XCTAssertEqual("Hello world\nGoodbye world", output.out)
     }
+
+    func test_fake_shell_has_path() {
+        ActiveShell.useTestable([:])
+
+        XCTAssertEqual(Shell.PATH, "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
+    }
 }

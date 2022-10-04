@@ -9,13 +9,15 @@
 import Foundation
 
 public class TestableShell: Shellable {
-    public typealias Input = String
+    var PATH: String {
+        return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
+    }
 
-    init(expectations: [Input: BatchFakeShellOutput]) {
+    init(expectations: [String: BatchFakeShellOutput]) {
         self.expectations = expectations
     }
 
-    var expectations: [Input: BatchFakeShellOutput] = [:]
+    var expectations: [String: BatchFakeShellOutput] = [:]
 
     func quiet(_ command: String) async {
         _ = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)

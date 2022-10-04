@@ -31,8 +31,18 @@ struct ShellOutput {
 
 protocol Shellable {
     /**
+     The PATH for the current shell.
+     */
+    var PATH: String { get }
+
+    /**
      Run a command asynchronously.
      Returns the most relevant output (prefers error output if it exists).
+
+     Common usage:
+     ```
+    let output = await Shell.pipe("php -v")
+     ```
      */
     func pipe(_ command: String) async -> ShellOutput
 

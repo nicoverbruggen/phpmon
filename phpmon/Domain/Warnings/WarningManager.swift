@@ -22,7 +22,7 @@ class WarningManager {
     public let evaluations: [Warning] = [
         Warning(
             command: {
-                return LegacyShell.pipe("sysctl -n sysctl.proc_translated")
+                return await Shell.pipe("sysctl -n sysctl.proc_translated").out
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
@@ -32,7 +32,7 @@ class WarningManager {
         ),
         Warning(
             command: {
-                return !LegacyShell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
+                return !Shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
                     !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
