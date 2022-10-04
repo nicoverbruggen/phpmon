@@ -82,7 +82,7 @@ class SystemShell: Shellable {
 
     // MARK: - Shellable Protocol
 
-    func sync(_ command: String) -> ShellOutput {
+    func pipe(_ command: String) async -> ShellOutput {
         let task = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -104,10 +104,6 @@ class SystemShell: Shellable {
         )!
 
         return .out(stdOut, stdErr)
-    }
-
-    func pipe(_ command: String) async -> ShellOutput {
-        return sync(command)
     }
 
     func quiet(_ command: String) async {

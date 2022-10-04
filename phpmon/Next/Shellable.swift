@@ -31,12 +31,6 @@ struct ShellOutput {
 
 protocol Shellable {
     /**
-     Run a command synchronously. Waits until the command is done.
-     Returns the most relevant output (prefers error output if it exists).
-     */
-    func sync(_ command: String) -> ShellOutput
-
-    /**
      Run a command asynchronously.
      Returns the most relevant output (prefers error output if it exists).
      */

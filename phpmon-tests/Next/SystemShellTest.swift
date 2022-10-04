@@ -15,10 +15,12 @@ class SystemShellTest: XCTestCase {
         ActiveShell.useSystem()
     }
 
-    func test_system_shell_is_default() {
+    func test_system_shell_is_default() async {
         XCTAssertTrue(Shell is SystemShell)
 
-        XCTAssertTrue(Shell.sync("php -v").out.contains("Copyright (c) The PHP Group"))
+        let output = await Shell.pipe("php -v")
+
+        XCTAssertTrue(output.out.contains("Copyright (c) The PHP Group"))
     }
 
     func test_system_shell_has_path() {

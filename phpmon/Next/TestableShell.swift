@@ -18,11 +18,12 @@ public class TestableShell: Shellable {
     var expectations: [Input: BatchFakeShellOutput] = [:]
 
     func quiet(_ command: String) async {
-        return
+        _ = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
     }
 
     func pipe(_ command: String) async -> ShellOutput {
-        self.sync(command)
+        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
+        return output
     }
 
     func attach(
@@ -30,14 +31,15 @@ public class TestableShell: Shellable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput) {
-        return (Process(), self.sync(command))
-    }
-
-    func sync(_ command: String) -> ShellOutput {
         guard let expectation = expectations[command] else {
-            return .err("Unexpected Command")
+            return (Process(), .err("No Expected Output"))
         }
-        return ShellOutput(out: "", err: "")
+
+        let output = await expectation.output(didReceiveOutput: { output, type in
+            didReceiveOutput(output, type)
+        }, ignoreDelay: isRunningTests)
+
+        return (Process(), output)
     }
 }
 
