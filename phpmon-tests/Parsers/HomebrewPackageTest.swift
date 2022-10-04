@@ -25,9 +25,9 @@ class HomebrewPackageTest: XCTestCase {
 
         XCTAssertEqual(package.name, "php")
         XCTAssertEqual(package.full_name, "php")
-        XCTAssertEqual(package.aliases.first!, "php@8.0")
+        XCTAssertEqual(package.aliases.first!, "php@8.1")
         XCTAssertEqual(package.installed.contains(where: { installed in
-            installed.version.starts(with: "8.0")
+            installed.version.starts(with: "8.1")
         }), true)
     }
 

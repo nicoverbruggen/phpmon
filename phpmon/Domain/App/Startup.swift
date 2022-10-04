@@ -115,7 +115,9 @@ class Startup {
         // Make sure we can detect one or more PHP installations.
         // =================================================================================
         EnvironmentCheck(
-            command: { return await !Shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php") },
+            command: {
+                return await !Shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php")
+            },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
             titleText: "startup.errors.php_opt.title".localized,
             subtitleText: "startup.errors.php_opt.subtitle".localized(

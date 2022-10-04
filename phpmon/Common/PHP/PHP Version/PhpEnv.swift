@@ -14,7 +14,9 @@ class PhpEnv {
 
     init() {
         self.currentInstall = ActivePhpInstallation()
+    }
 
+    func determinePhpAlias() {
         Task {
             let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
@@ -23,7 +25,7 @@ class PhpEnv {
                 from: brewPhpAlias.data(using: .utf8)!
             ).first!
 
-            Log.info("When on your system, the `php` formula means version \(homebrewPackage.version)!")
+            Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version)!")
         }
     }
 
@@ -79,14 +81,14 @@ class PhpEnv {
     }
 
     public static func detectPhpVersions() {
-        _ = Self.shared.detectPhpVersions()
+        Task { await Self.shared.detectPhpVersions() }
     }
 
     /**
      Detects which versions of PHP are installed.
      */
-    public func detectPhpVersions() -> [String] {
-        let files = LegacyShell.pipe("ls \(Paths.optPath) | grep php@")
+    public func detectPhpVersions() async -> [String] {
+        let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
 
         var versionsOnly = extractPhpVersions(from: files.components(separatedBy: "\n"))
 

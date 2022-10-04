@@ -42,8 +42,10 @@ class HomebrewDiagnostics {
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
     public static func checkForCaskConflict() {
-        if hasAliasConflict() {
-            presentAlertAboutConflict()
+        Task {
+            if await hasAliasConflict() {
+                presentAlertAboutConflict()
+            }
         }
     }
 
@@ -79,8 +81,8 @@ class HomebrewDiagnostics {
     /**
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
-    private static func hasAliasConflict() -> Bool {
-        let tapAlias = LegacyShell.pipe("\(Paths.brew) info shivammathur/php/php --json")
+    private static func hasAliasConflict() async -> Bool {
+        let tapAlias = await Shell.pipe("brew info shivammathur/php/php --json").out
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
             Log.info("The user does not appear to have tapped: shivammathur/php")

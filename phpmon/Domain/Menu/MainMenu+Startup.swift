@@ -31,6 +31,9 @@ extension MainMenu {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
+        // Determine what the `php` formula is aliased to
+        PhpEnv.shared.determinePhpAlias()
+
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
             ? "The app has probably been installed via Homebrew Cask."
