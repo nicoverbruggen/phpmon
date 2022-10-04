@@ -70,6 +70,14 @@ struct BatchFakeShellOutput {
         return BatchFakeShellOutput(items: [.instant(output, stream)])
     }
 
+    static func delayed(
+        _ delay: TimeInterval,
+        _ output: String,
+        _ stream: ShellStream = .stdOut
+    ) -> BatchFakeShellOutput {
+        return BatchFakeShellOutput(items: [.delayed(delay, output, stream)])
+    }
+
     /**
      Outputs the fake shell output as expected.
      */

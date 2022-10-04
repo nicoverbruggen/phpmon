@@ -121,6 +121,8 @@ public class LegacyShell {
     public func createTask(for command: String, requiresPath: Bool) -> Process {
         var completeCommand = ""
 
+        Log.info("LEGACY COMMAND: \(command)")
+
         if requiresPath {
             // Basic export (PATH)
             completeCommand += "export PATH=\(Paths.binPath):$PATH && "

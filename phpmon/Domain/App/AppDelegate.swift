@@ -65,9 +65,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         logger.verbosity = .info
         #if DEBUG
-            logger.verbosity = .performance
-            // TODO: Enable to fake broken setup during testing
-            ActiveShell.useTestable(Testables.broken)
+        logger.verbosity = .performance
+
+        // TODO: Enable to fake broken setup during testing
+        ActiveShell.useTestable(Testables.working.shellOutput)
+
         #endif
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance
