@@ -27,7 +27,7 @@ public class TestableShell: Shellable {
 
     func attach(
         _ command: String,
-        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput) {
         return (Process(), self.sync(command))
@@ -41,22 +41,17 @@ public class TestableShell: Shellable {
     }
 }
 
-// TODO: Test env shell output should be modeled differently
-// So the possible outcome is either:
-// 1. Immediate with almost zero delay `.instant("string")`
-// 2. Delayed but then all at once: `.delay(300, "string")`
-// 3. A stream of data spread over multiple seconds: `.multiple([.delay(300, "hello"), .delay(300, "bye")])`
-
 struct FakeShellOutput {
     let delay: TimeInterval
-    let output: ShellOutput
+    let output: String
+    let stream: ShellStream
 
-    static func instant(_ stdOut: String, _ stdErr: String? = nil) -> FakeShellOutput {
-        return FakeShellOutput(delay: 0, output: ShellOutput(out: stdOut, err: stdErr ?? ""))
+    static func instant(_ output: String, _ stream: ShellStream = .stdOut) -> FakeShellOutput {
+        return FakeShellOutput(delay: 0, output: output, stream: stream)
     }
 
-    static func delayed(_ delay: TimeInterval, _ stdOut: String, _ stdErr: String? = nil) -> FakeShellOutput {
-        return FakeShellOutput(delay: delay, output: ShellOutput(out: stdOut, err: stdErr ?? ""))
+    static func delayed(_ delay: TimeInterval, _ output: String, _ stream: ShellStream = .stdOut) -> FakeShellOutput {
+        return FakeShellOutput(delay: delay, output: output, stream: stream)
     }
 }
 
@@ -67,37 +62,33 @@ struct BatchFakeShellOutput {
      Outputs the fake shell output as expected.
      */
     public func output(
-        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        didReceiveOutput: @escaping (String, ShellStream) -> Void,
         ignoreDelay: Bool = false
     ) async -> ShellOutput {
-        var allOut: String = ""
-        var allErr: String = ""
+        var output = ShellOutput(out: "", err: "")
 
-        Task {
-            self.items.forEach { fakeShellOutput in
-                let delay = UInt64(fakeShellOutput.delay * 1_000_000_000)
-                try await Task.sleep(nanoseconds: delay)
+        for item in items {
+            if !ignoreDelay {
+                let delay = UInt64(item.delay * 1_000_000_000)
+                try! await Task.sleep(nanoseconds: delay)
+            }
 
-                allOut += fakeShellOutput.output.out
-
-                if fakeShellOutput.output.hasError {
-                    allErr += fakeShellOutput.output.err
-                }
+            if item.stream == .stdErr {
+                output.err += item.output
+            } else if item.stream == .stdOut {
+                output.out += item.output
             }
         }
 
-        return ShellOutput(
-            out: allOut,
-            err: allErr
-        )
+        return output
     }
 
     /**
      For testing purposes (and speed) we may omit the delay, regardless of its timespan.
      */
     public func outputInstantaneously(
-        didReceiveOutput: @escaping (ShellOutput) -> Void
-    ) -> ShellOutput {
-        self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
+        didReceiveOutput: @escaping (String, ShellStream) -> Void = { _, _ in }
+    ) async -> ShellOutput {
+        return await self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
     }
 }

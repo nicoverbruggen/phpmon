@@ -116,18 +116,16 @@ class SystemShell: Shellable {
 
     func attach(
         _ command: String,
-        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let task = getShellProcess(for: command)
+        var output = ShellOutput(out: "", err: "")
 
-        var allOut: String = ""
-        var allErr: String = ""
-
-        task.listen { stdOut in
-            allOut += stdOut; didReceiveOutput(.out(stdOut))
-        } didReceiveStandardErrorData: { stdErr in
-            allErr += stdErr; didReceiveOutput(.err(stdErr))
+        task.listen { incoming in
+            output.out += incoming; didReceiveOutput(incoming, .stdOut)
+        } didReceiveStandardErrorData: { incoming in
+            output.err += incoming; didReceiveOutput(incoming, .stdErr)
         }
 
         return try await withCheckedThrowingContinuation({ continuation in
@@ -138,11 +136,11 @@ class SystemShell: Shellable {
 
                 timer?.invalidate()
 
-                if !allErr.isEmpty {
-                    return continuation.resume(returning: (process, .err(allErr)))
+                if !output.err.isEmpty {
+                    return continuation.resume(returning: (process, .err(output.err)))
                 }
 
-                return continuation.resume(returning: (process, .out(allOut)))
+                return continuation.resume(returning: (process, .out(output.out)))
             }
 
             timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in

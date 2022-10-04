@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum ShellStream {
+    case stdOut, stdErr, stdIn
+}
+
 struct ShellOutput {
     var out: String
     var err: String
@@ -56,7 +60,7 @@ protocol Shellable {
      */
     func attach(
         _ command: String,
-        didReceiveOutput: @escaping (ShellOutput) -> Void,
+        didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput)
 }

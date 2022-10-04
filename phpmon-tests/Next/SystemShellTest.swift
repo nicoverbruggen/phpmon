@@ -33,8 +33,8 @@ class SystemShellTest: XCTestCase {
 
         let (_, shellOutput) = try! await Shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(200); echo 'Goodbye world';\"",
-            didReceiveOutput: { incoming in
-                bits.append(incoming.out)
+            didReceiveOutput: { incoming, _ in
+                bits.append(incoming)
             },
             withTimeout: 2.0
         )
@@ -50,7 +50,7 @@ class SystemShellTest: XCTestCase {
         do {
             _ = try await Shell.attach(
                 "php -r \"sleep(1);\"",
-                didReceiveOutput: { _ in },
+                didReceiveOutput: { _, _ in },
                 withTimeout: 0.1
             )
         } catch {

@@ -57,16 +57,9 @@ import Foundation
 
         let (process, _) = try await Shell.attach(
             command,
-            didReceiveOutput: { [weak self] output in
+            didReceiveOutput: { [weak self] (incoming, _) in
                 guard let window = self?.window else { return }
-
-                if output.hasError {
-                    window.addToConsole(output.err)
-                }
-
-                if !output.out.isEmpty {
-                    window.addToConsole(output.out)
-                }
+                window.addToConsole(incoming)
             },
             withTimeout: .minutes(5)
         )
