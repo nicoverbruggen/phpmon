@@ -8,7 +8,7 @@
 import Cocoa
 
 // TODO: Enable this to see where deprecations and replacements are needed.
-// @available(*, deprecated, message: "Use the new replacement `Shell` instead")
+@available(*, deprecated, message: "Use the new replacement `Shell` instead")
 public class LegacyShell {
 
     // MARK: - Invoke static functions
