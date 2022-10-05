@@ -107,9 +107,9 @@ extension DomainListVC {
         LegacyShell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
     }
 
-    @objc func openWithEditor(sender: EditorMenuItem) {
+    @objc func openWithEditor(sender: EditorMenuItem) async {
         guard let editor = sender.editor else { return }
-        editor.openDirectory(file: selectedSite!.absolutePath)
+        await editor.openDirectory(file: selectedSite!.absolutePath)
     }
 
     @objc func isolateSite(sender: PhpMenuItem) {

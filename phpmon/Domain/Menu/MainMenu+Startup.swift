@@ -161,22 +161,29 @@ extension MainMenu {
      Detect which applications are installed that can be used to open a domain's source directory.
      */
     private func detectApplications() {
-        Log.info("Detecting applications...")
+        Task {
+            Log.info("Detecting applications...")
 
-        App.shared.detectedApplications = Application.detectPresetApplications()
+            App.shared.detectedApplications = await Application.detectPresetApplications()
 
-        let customApps = Preferences.custom.scanApps?.map { appName in
-            return Application(appName, .user_supplied)
-        }.filter { app in
-            return app.isInstalled()
-        } ?? []
+            let customApps = Preferences.custom.scanApps?.map { appName in
+                return Application(appName, .user_supplied)
+            } ?? []
 
-        App.shared.detectedApplications.append(contentsOf: customApps)
+            var detectedCustomApps: [Application] = []
 
-        let appNames = App.shared.detectedApplications.map { app in
-            return app.name
+            for app in customApps where await app.isInstalled() {
+                detectedCustomApps.append(app)
+            }
+
+            App.shared.detectedApplications
+                .append(contentsOf: detectedCustomApps)
+
+            let appNames = App.shared.detectedApplications.map { app in
+                return app.name
+            }
+
+            Log.info("Detected applications: \(appNames)")
         }
-
-        Log.info("Detected applications: \(appNames)")
     }
 }

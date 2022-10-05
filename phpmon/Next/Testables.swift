@@ -77,10 +77,22 @@ class Testables {
                     nicoverbruggen/cask
                     shivammathur/php
                     """),
+                "mkdir -p ~/.config/phpmon"
+                    : .instant(""),
                 "/opt/homebrew/bin/brew info php --json"
                     : .instant(ShellStrings.brewJson),
                 "brew info shivammathur/php/php --json"
-                    : .instant("Error: No available formula with the name \"shivammathur/php/php\".")
+                    : .instant("Error: No available formula with the name \"shivammathur/php/php\"."),
+                "/usr/bin/open -Ra \"PhpStorm\""
+                    : .instant("Unable to find application named 'PhpStorm'", .stdErr),
+                "/usr/bin/open -Ra \"Visual Studio Code\""
+                    : .instant("Unable to find application named 'Visual Studio Code'", .stdErr),
+                "/usr/bin/open -Ra \"Sublime Text\""
+                    : .instant("Unable to find application named 'Sublime Text'", .stdErr),
+                "/usr/bin/open -Ra \"Sublime Merge\""
+                    : .instant("Unable to find application named 'Sublime Merge'", .stdErr),
+                "/usr/bin/open -Ra \"iTerm\""
+                    : .instant("Unable to find application named 'iTerm'", .stdErr)
             ]
         )
     }
