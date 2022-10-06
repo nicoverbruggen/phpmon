@@ -33,6 +33,8 @@ public class TestableShell: Shellable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput) {
+        // TODO: Add delay to track down issues
+        // TODO: Remove assertion
         assert(expectations.keys.contains(command), "No response declared for command: \(command)")
 
         guard let expectation = expectations[command] else {
