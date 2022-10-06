@@ -1,5 +1,5 @@
 //
-//  Testables.swift
+//  TestableConfigurations.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/10/2022.
@@ -15,7 +15,7 @@ struct TestableConfiguration {
 }
 
 // swiftlint:disable colon trailing_comma
-class Testables {
+class TestableConfigurations {
     static var broken: TestableConfiguration {
         return TestableConfiguration(
             architecture: "arm64",
