@@ -27,7 +27,10 @@ class Preferences {
             services: [],
             environmentVariables: [:]
         )
-        loadCustomPreferences()
+
+        Task {
+            await loadCustomPreferences()
+        }
     }
 
     // MARK: - First Time Run

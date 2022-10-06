@@ -103,11 +103,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Reloads the menu in the foreground.
      This mimics the exact behaviours of `asyncExecution` as set in the method below.
      */
-    @objc func reloadPhpMonitorMenuInForeground() {
+    @MainActor @objc func reloadPhpMonitorMenuInForeground() async {
         refreshActiveInstallation()
         refreshIcon()
         rebuild(async: false)
-        ServicesManager.shared.loadData()
+        await ServicesManager.loadHomebrewServices()
     }
 
     /**
@@ -185,10 +185,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         NSApplication.shared.terminate(nil)
     }
 
-    @objc func checkForUpdates() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false)
-        }
+    @objc func checkForUpdates() async {
+        await AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false)
     }
 
     // MARK: - Menu Delegate
@@ -196,7 +194,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
-        ServicesManager.shared.loadData()
+        Task {
+            await ServicesManager.loadHomebrewServices()
+        }
     }
 
     func menuDidClose(_ menu: NSMenu) {

@@ -125,11 +125,12 @@ class ActivePhpInstallation {
      versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
      that means that Valet won't work properly.
      */
-    func checkPhpFpmStatus() -> Bool {
+    func checkPhpFpmStatus() async -> Bool {
         if self.version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return LegacyShell.pipe("cat \(fileName)").contains("valet.sock")
+            return await Shell.pipe("cat \(fileName)").out
+                .contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)

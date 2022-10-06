@@ -103,8 +103,6 @@
 		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
 		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
 		C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */; };
-		C42E3BF428A9BF5100AFECFC /* LegacyShell+PATH.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E3BF328A9BF5100AFECFC /* LegacyShell+PATH.swift */; };
-		C42E3BF528A9BF5100AFECFC /* LegacyShell+PATH.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E3BF328A9BF5100AFECFC /* LegacyShell+PATH.swift */; };
 		C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
 		C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
 		C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */; };
@@ -224,8 +222,6 @@
 		C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */; };
 		C4B5853E2770FE3900DA4FBE /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
 		C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
-		C4B585412770FE3900DA4FBE /* LegacyShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* LegacyShell.swift */; };
-		C4B585422770FE3900DA4FBE /* LegacyShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853C2770FE3900DA4FBE /* LegacyShell.swift */; };
 		C4B585442770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B585452770FE3900DA4FBE /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* Command.swift */; };
 		C4B6091A2853AAD300C95265 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -406,7 +402,6 @@
 		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
 		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
 		C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationTest.swift; sourceTree = "<group>"; };
-		C42E3BF328A9BF5100AFECFC /* LegacyShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LegacyShell+PATH.swift"; sourceTree = "<group>"; };
 		C42F26722805B4B400938AC7 /* DomainListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListable.swift; sourceTree = "<group>"; };
 		C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy.test"; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
@@ -470,7 +465,6 @@
 		C4B5635D276AB09000F12CCB /* VersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionExtractor.swift; sourceTree = "<group>"; };
 		C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionExtractorTest.swift; sourceTree = "<group>"; };
 		C4B5853B2770FE3900DA4FBE /* Paths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
-		C4B5853C2770FE3900DA4FBE /* LegacyShell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyShell.swift; sourceTree = "<group>"; };
 		C4B5853D2770FE3900DA4FBE /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		C4B609192853AAD300C95265 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		C4B6091C2853AB9700C95265 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
@@ -897,15 +891,6 @@
 			path = Next;
 			sourceTree = "<group>";
 		};
-		C46EBC4C28DB9F43007ACC74 /* Pending Removal */ = {
-			isa = PBXGroup;
-			children = (
-				C4B5853C2770FE3900DA4FBE /* LegacyShell.swift */,
-				C42E3BF328A9BF5100AFECFC /* LegacyShell+PATH.swift */,
-			);
-			path = "Pending Removal";
-			sourceTree = "<group>";
-		};
 		C47331A0247093AC009A0597 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,7 +992,6 @@
 		C4B5853A2770FE2500DA4FBE /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				C46EBC4C28DB9F43007ACC74 /* Pending Removal */,
 				C40C7F2127721F7300DDDCDC /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 				C44CCD4327AFE93300CE40E5 /* Errors */,
@@ -1383,7 +1367,6 @@
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
 				C48D6C70279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
-				C4B585412770FE3900DA4FBE /* LegacyShell.swift in Sources */,
 				C4998F0A2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
@@ -1509,7 +1492,6 @@
 				C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
-				C42E3BF428A9BF5100AFECFC /* LegacyShell+PATH.swift in Sources */,
 				C42337A3281F19F000459A48 /* Xdebug.swift in Sources */,
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C41C02A627E60D7A009F26CB /* SiteScanner.swift in Sources */,
@@ -1563,7 +1545,6 @@
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */,
 				C485707928BF456C00539B36 /* ArrayExtension.swift in Sources */,
-				C42E3BF528A9BF5100AFECFC /* LegacyShell+PATH.swift in Sources */,
 				C4F780CA25D80B75000DBC97 /* HomebrewPackage.swift in Sources */,
 				C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */,
 				C4F319C927B034A500AFF46F /* Stats.swift in Sources */,
@@ -1668,7 +1649,6 @@
 				C4A6957728D23EE300A14CF8 /* EnvironmentManager.swift in Sources */,
 				C4E0F7EE27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4A81CA528C67101008DD9D1 /* PMTableView.swift in Sources */,
-				C4B585422770FE3900DA4FBE /* LegacyShell.swift in Sources */,
 				C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,

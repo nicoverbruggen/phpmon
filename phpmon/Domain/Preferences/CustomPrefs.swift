@@ -26,7 +26,7 @@ struct CustomPrefs: Decodable {
         return self.environmentVariables != nil && !self.environmentVariables!.keys.isEmpty
     }
 
-    @available(*, deprecated, message: "Use `setCustomEnvironmentVariables` instead")
+    // TODO: Rework this
     public func getEnvironmentVariables() -> String {
         return self.environmentVariables!.map { (key, value) in
             return "export \(key)=\(value)"
@@ -42,12 +42,12 @@ struct CustomPrefs: Decodable {
 }
 
 extension Preferences {
-    func loadCustomPreferences() {
+    func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        LegacyShell.run("mkdir -p ~/.config/phpmon")
+        await Shell.quiet("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
-        moveOutdatedConfigurationFile()
+        await moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
         let url = URL(fileURLWithPath: "\(Paths.homePath)/.config/phpmon/config.json")
@@ -60,10 +60,10 @@ extension Preferences {
         }
     }
 
-    func moveOutdatedConfigurationFile() {
+    func moveOutdatedConfigurationFile() async {
         if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            LegacyShell.run("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await Shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }
@@ -87,7 +87,9 @@ extension Preferences {
 
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
-                LegacyShell.user.exports = customPreferences.getEnvironmentVariables()
+                if let shell = Shell as? SystemShell {
+                    shell.exports = customPreferences.getEnvironmentVariables()
+                }
             }
         } catch {
             Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")

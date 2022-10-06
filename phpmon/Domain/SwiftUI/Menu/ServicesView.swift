@@ -91,15 +91,13 @@ struct CheckmarkView: View {
         return nil
     }
 
-    public func toggleService() {
+    public func toggleService() async {
         if active()! {
-            Actions.stopService(name: serviceName, completion: {
-                busy = false
-            })
+            await Actions.stopService(name: serviceName)
+            busy = false
         } else {
-            Actions.startService(name: serviceName, completion: {
-                busy = false
-            })
+            await Actions.startService(name: serviceName)
+            busy = false
         }
     }
 
@@ -121,7 +119,7 @@ struct CheckmarkView: View {
             } else {
                 Button {
                     busy = true
-                    toggleService()
+                    Task { await toggleService() }
                 } label: {
                     Image(systemName: active()! ? "checkmark" : "xmark")
                         .resizable()

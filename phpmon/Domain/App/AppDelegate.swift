@@ -14,13 +14,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     // MARK: - Variables
 
     /**
-     The Shell singleton that keeps track of the history of all
-     (invoked by PHP Monitor) shell commands. It is used to
-     invoke all commands in this application.
-     */
-    let sharedShell: LegacyShell
-
-    /**
      The App singleton contains information about the state of
      the application and global variables.
      */
@@ -68,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         logger.verbosity = .performance
 
         // TODO: Enable to fake broken setup during testing
-        ActiveShell.useTestable(Testables.working.shellOutput)
+        // ActiveShell.useTestable(Testables.working.shellOutput)
 
         #endif
         if CommandLine.arguments.contains("--v") {
@@ -81,7 +74,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         Log.info("Version \(App.version)")
         Log.separator(as: .info)
 
-        self.sharedShell = LegacyShell.user
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared
@@ -103,8 +95,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Make sure notifications will work
         setupNotifications()
-        // Make sure the menu performs its initial checks
-        Task { await menu.startup() }
+        Task { // Make sure the menu performs its initial checks
+            await paths.loadUser()
+            await menu.startup()
+        }
     }
 
 }

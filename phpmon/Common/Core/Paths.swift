@@ -21,11 +21,11 @@ public class Paths {
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
+    }
 
-        Task {
-            let output = await Shell.pipe("id -un").out
-            userName = String(output.split(separator: "\n")[0])
-        }
+    public func loadUser() async {
+        let output = await Shell.pipe("id -un").out
+        userName = String(output.split(separator: "\n")[0])
     }
 
     public func detectBinaryPaths() {

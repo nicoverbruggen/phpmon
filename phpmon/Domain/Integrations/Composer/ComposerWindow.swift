@@ -21,10 +21,9 @@ import Foundation
         self.completion = completion
 
         Paths.shared.detectBinaryPaths()
+
         if Paths.composer == nil {
-            DispatchQueue.main.async {
-                self.presentMissingAlert()
-            }
+            self.presentMissingAlert()
             return
         }
 
@@ -39,7 +38,9 @@ import Foundation
 
         window?.setType(info: true)
 
-        Task { await performComposerUpdate() }
+        Task { // Start the Composer global update as a separate task
+            await performComposerUpdate()
+        }
     }
 
     private func performComposerUpdate() async {

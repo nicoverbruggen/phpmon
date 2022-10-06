@@ -67,19 +67,19 @@ struct Preset: Codable, Equatable {
     /**
      Applies a given preset.
      */
-    public func apply() {
+    public func apply() async {
         Task {
             // Was this a rollback?
             let wasRollback = (self.name == "AutomaticRevertSnapshot")
 
             // Save the preset that would revert this preset
-            self.persistRevert()
+            await self.persistRevert()
 
             // Apply the PHP version if is considered a valid version
             if self.version != nil {
                 if await !switchToPhpVersionIfValid() {
                     PresetHelper.rollbackPreset = nil
-                    Actions.restartPhpFpm()
+                    await Actions.restartPhpFpm()
                     return
                 }
             }
@@ -94,7 +94,7 @@ struct Preset: Codable, Equatable {
                 for foundExt in PhpEnv.phpInstall.extensions
                 where foundExt.name == ext.key && foundExt.enabled != ext.value {
                     Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
-                    foundExt.toggle()
+                    await foundExt.toggle()
                     break
                 }
             }
@@ -103,7 +103,7 @@ struct Preset: Codable, Equatable {
             PresetHelper.loadRollbackPresetFromFile()
 
             // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-            Actions.restartPhpFpm()
+            await Actions.restartPhpFpm()
 
             // Show the correct notification
             if wasRollback {
@@ -257,10 +257,10 @@ struct Preset: Codable, Equatable {
     /**
      Persists the revert as a JSON file, so it can be read from a file after restarting PHP Monitor.
      */
-    private func persistRevert() {
+    private func persistRevert() async {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        LegacyShell.run("mkdir -p ~/.config/phpmon")
+        await Shell.quiet("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(

@@ -116,15 +116,15 @@ class Valet {
      Starts the preload of sites. In order to make sure PHP Monitor can correctly
      handle all PHP versions including isolation, it needs to know about all sites.
      */
-    public func startPreloadingSites() {
-        self.reloadSites()
+    public func startPreloadingSites() async {
+        await self.reloadSites()
     }
 
     /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
      (We don't want to do duplicate or parallel work!)
      */
-    public func reloadSites() {
+    public func reloadSites() async {
         loadConfiguration()
 
         if isBusy {

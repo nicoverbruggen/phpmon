@@ -74,7 +74,7 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {
-                    ServicesManager.shared.loadData()
+                    Task { await ServicesManager.loadHomebrewServices() }
                 }
 
                 if error != nil {

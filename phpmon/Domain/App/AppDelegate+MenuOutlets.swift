@@ -33,15 +33,17 @@ extension AppDelegate {
     }
 
     @IBAction func reloadDomainListPressed(_ sender: Any) {
-        let vc = App.shared.domainListWindowController?
-            .window?.contentViewController as? DomainListVC
+        Task { // Reload domains
+            let vc = App.shared.domainListWindowController?
+                .window?.contentViewController as? DomainListVC
 
-        if vc != nil {
-            // If the view exists, directly reload the list of sites.
-            vc!.reloadDomains()
-        } else {
-            // If the view does not exist, reload the cached data that was populated when the app initially launched.
-            Valet.shared.reloadSites()
+            if vc != nil {
+                // If the view exists, directly reload the list of sites.
+                await vc!.reloadDomains()
+            } else {
+                // If the view does not exist, reload the cached data that was populated when the app launched.
+                await Valet.shared.reloadSites()
+            }
         }
     }
 

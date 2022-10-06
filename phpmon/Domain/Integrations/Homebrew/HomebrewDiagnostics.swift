@@ -42,7 +42,7 @@ class HomebrewDiagnostics {
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
     public static func checkForCaskConflict() {
-        Task {
+        Task { // Check if there's a conflict
             if await hasAliasConflict() {
                 presentAlertAboutConflict()
             }
@@ -72,9 +72,11 @@ class HomebrewDiagnostics {
         }
 
         versions.forEach { version in
-            switcher.disableDefaultPhpFpmPool(version)
-            switcher.stopPhpVersion(version)
-            switcher.startPhpVersion(version, primary: version == primary)
+            Task { // Fix each pool concurrently (but perform the tasks sequentially)
+                await switcher.disableDefaultPhpFpmPool(version)
+                await switcher.stopPhpVersion(version)
+                await switcher.startPhpVersion(version, primary: version == primary)
+            }
         }
     }
 

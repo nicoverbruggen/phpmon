@@ -75,14 +75,14 @@ class PhpExtension {
      This simply toggles the extension in the .ini file.
      You may need to restart the other services in order for this change to apply.
      */
-    func toggle() {
+    func toggle() async {
         let newLine = enabled
             // DISABLED: Commented out line
             ? "; \(line)"
             // ENABLED: Line where the comment delimiter (;) is removed
             : line.replacingOccurrences(of: "; ", with: "")
 
-        sed(file: file, original: line, replacement: newLine)
+        await sed(file: file, original: line, replacement: newLine)
 
         enabled.toggle()
     }

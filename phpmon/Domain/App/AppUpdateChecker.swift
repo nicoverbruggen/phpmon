@@ -21,7 +21,7 @@ class AppUpdateChecker {
 
     public static func retrieveVersionFromCask(
         _ initiatedFromBackground: Bool = true
-    ) -> String {
+    ) async -> String {
         let caskFile = App.version.contains("-dev")
         ? Constants.Urls.DevBuildCaskFile.absoluteString
         : Constants.Urls.StableBuildCaskFile.absoluteString
@@ -32,14 +32,14 @@ class AppUpdateChecker {
             command = "curl -s --max-time 5"
         }
 
-        return LegacyShell.pipe(
+        return await Shell.pipe(
             "\(command) '\(caskFile)' | grep version"
-        )
+        ).out
     }
 
     public static func checkIfNewerVersionIsAvailable(
         initiatedFromBackground: Bool = true
-    ) {
+    ) async {
         if initiatedFromBackground {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
@@ -49,7 +49,7 @@ class AppUpdateChecker {
             Log.info("Automatic updates are enabled, a check will be performed.")
         }
 
-        let versionString = retrieveVersionFromCask(initiatedFromBackground)
+        let versionString = await retrieveVersionFromCask(initiatedFromBackground)
 
         guard let onlineVersion = AppVersion.from(versionString) else {
             Log.err("We couldn't check for updates!")

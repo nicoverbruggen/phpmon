@@ -19,6 +19,8 @@ class InternalSwitcher: PhpSwitcher {
      Please note that depending on which version is installed,
      the version that is switched to may or may not be identical to `php`
      (without @version).
+
+     TODO: Use `async` and use structured concurrency: https://www.hackingwithswift.com/swift/5.5/structured-concurrency
      */
     func performSwitch(to version: String, completion: @escaping () -> Void) {
         Log.info("Switching to \(version), unlinking all versions...")
@@ -30,26 +32,28 @@ class InternalSwitcher: PhpSwitcher {
         PhpEnv.shared.availablePhpVersions.forEach { (available) in
             group.enter()
 
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.disableDefaultPhpFpmPool(available)
-                self.stopPhpVersion(available)
+            Task { // TODO: Use structured concurrency
+                await self.disableDefaultPhpFpmPool(available)
+                await self.stopPhpVersion(available)
                 group.leave()
             }
         }
 
         group.notify(queue: .global(qos: .userInitiated)) {
-            Log.info("All versions have been unlinked!")
-            Log.info("Linking the new version!")
+            Task { // TODO: Use structured concurrency
+                Log.info("All versions have been unlinked!")
+                Log.info("Linking the new version!")
 
-            for formula in versions {
-                self.startPhpVersion(formula, primary: (version == formula))
+                for formula in versions {
+                    await self.startPhpVersion(formula, primary: (version == formula))
+                }
+
+                Log.info("Restarting nginx, just to be sure!")
+                await brew("services restart nginx", sudo: true)
+
+                Log.info("The new version(s) have been linked!")
+                completion()
             }
-
-            Log.info("Restarting nginx, just to be sure!")
-            brew("services restart nginx", sudo: true)
-
-            Log.info("The new version(s) have been linked!")
-            completion()
         }
     }
 
@@ -74,7 +78,7 @@ class InternalSwitcher: PhpSwitcher {
         return FileManager.default.fileExists(atPath: pool)
     }
 
-    func disableDefaultPhpFpmPool(_ version: String) {
+    func disableDefaultPhpFpmPool(_ version: String) async {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
         if FileManager.default.fileExists(atPath: pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
@@ -94,28 +98,28 @@ class InternalSwitcher: PhpSwitcher {
         }
     }
 
-    func stopPhpVersion(_ version: String) {
+    func stopPhpVersion(_ version: String) async {
         let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
-        brew("unlink \(formula)")
-        brew("services stop \(formula)", sudo: true)
+        await brew("unlink \(formula)")
+        await brew("services stop \(formula)", sudo: true)
         Log.info("Unlinked and stopped services for \(formula)")
     }
 
-    func startPhpVersion(_ version: String, primary: Bool) {
+    func startPhpVersion(_ version: String, primary: Bool) async {
         let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
 
         if primary {
             Log.info("\(formula) is the primary formula, linking and starting services...")
-            brew("link \(formula) --overwrite --force")
+            await brew("link \(formula) --overwrite --force")
         } else {
             Log.info("\(formula) is an isolated PHP version, starting services only...")
         }
 
-        brew("services start \(formula)", sudo: true)
+        await brew("services start \(formula)", sudo: true)
 
         if Valet.enabled(feature: .isolatedSites) && primary {
             let socketVersion = version.replacingOccurrences(of: ".", with: "")
-            LegacyShell.run("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+            await Shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
             Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
         }
 

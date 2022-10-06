@@ -25,15 +25,14 @@ extension DomainListVC {
 
         self.waitAndExecute {
             // 1. Remove the original proxy
-            LegacyShell.run("\(Paths.valet) unproxy \(selectedProxy.domain)", requiresPath: true)
+            await Shell.quiet("\(Paths.valet) unproxy \(selectedProxy.domain)")
 
             // 2. Add a new proxy, which is either secured/unsecured
             let secure = originalSecureStatus ? "" : " --secure"
-            LegacyShell.run("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)",
-                      requiresPath: true)
+            await Shell.quiet("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)")
 
             // 3. Restart nginx
-            Actions.restartNginx()
+            await Actions.restartNginx()
 
             // 4. Reload site list
             DispatchQueue.main.async {
@@ -50,7 +49,7 @@ extension DomainListVC {
         let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
 
         waitAndExecute {
-            LegacyShell.run(command, requiresPath: true)
+            await Shell.quiet(command)
         } completion: { [self] in
             selectedSite.determineSecured()
             if selectedSite.secured == originalSecureStatus {
@@ -99,12 +98,12 @@ extension DomainListVC {
         NSWorkspace.shared.open(url)
     }
 
-    @objc func openInFinder() {
-        LegacyShell.run("open '\(selectedSite!.absolutePath)'")
+    @objc func openInFinder() async {
+        await Shell.quiet("open '\(selectedSite!.absolutePath)'")
     }
 
-    @objc func openInTerminal() {
-        LegacyShell.run("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
+    @objc func openInTerminal() async {
+        await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
     }
 
     @objc func openWithEditor(sender: EditorMenuItem) async {
@@ -157,9 +156,9 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    LegacyShell.run("valet unlink '\(site.name)'", requiresPath: true)
+                    Task { await Shell.quiet("valet unlink '\(site.name)'") }
                 } completion: {
-                    self.reloadDomains()
+                    Task { await self.reloadDomains() }
                 }
             }
         )
@@ -179,9 +178,9 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    LegacyShell.run("valet unproxy '\(proxy.domain)'", requiresPath: true)
+                    Task { await Shell.quiet("valet unproxy '\(proxy.domain)'") }
                 } completion: {
-                    self.reloadDomains()
+                    Task { await self.reloadDomains() }
                 }
             }
         )
@@ -191,7 +190,7 @@ extension DomainListVC {
         let rowToReload = tableView.selectedRow
 
         waitAndExecute {
-            LegacyShell.run(command, requiresPath: true)
+            await Shell.quiet(command)
         } completion: { [self] in
             beforeCellReload()
             tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])

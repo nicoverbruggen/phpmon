@@ -25,7 +25,7 @@ class SystemShell: Shellable {
      Exports are additional environment variables set by the user via the custom configuration.
      These are populated when the configuration file is being loaded.
      */
-    private(set) var exports: String = ""
+    var exports: String = ""
 
     /** Retrieves the user's PATH by opening an interactive shell and echoing $PATH. */
     private static func getPath() -> String {

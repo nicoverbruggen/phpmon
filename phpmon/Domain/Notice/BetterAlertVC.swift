@@ -74,5 +74,4 @@ class BetterAlertVC: NSViewController {
         self.view.window?.close()
         NSApplication.shared.stopModal(withCode: code)
     }
-
 }

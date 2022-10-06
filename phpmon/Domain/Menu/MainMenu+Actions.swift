@@ -42,17 +42,17 @@ extension MainMenu {
     }
 
     @objc func restartPhpFpm() {
-        asyncExecution {
-            Actions.restartPhpFpm()
+        Task { // Simple restart service
+            await Actions.restartPhpFpm()
         }
     }
 
-    @objc func restartValetServices() {
-        asyncExecution {
-            Actions.restartDnsMasq()
-            Actions.restartPhpFpm()
-            Actions.restartNginx()
-        } success: {
+    @MainActor @objc func restartValetServices() {
+        Task { // Restart services and show notification
+            await Actions.restartDnsMasq()
+            await Actions.restartPhpFpm()
+            await Actions.restartNginx()
+
             LocalNotification.send(
                 title: "notification.services_restarted".localized,
                 subtitle: "notification.services_restarted_desc".localized,
@@ -61,10 +61,10 @@ extension MainMenu {
         }
     }
 
-    @objc func stopValetServices() {
-        asyncExecution {
-            Actions.stopValetServices()
-        } success: {
+    @MainActor @objc func stopValetServices() {
+        Task { // Stop services and show notification
+            await Actions.stopValetServices()
+
             LocalNotification.send(
                 title: "notification.services_stopped".localized,
                 subtitle: "notification.services_stopped_desc".localized,
@@ -74,14 +74,14 @@ extension MainMenu {
     }
 
     @objc func restartNginx() {
-        asyncExecution {
-            Actions.restartNginx()
+        Task {
+            await Actions.restartNginx()
         }
     }
 
     @objc func restartDnsMasq() {
-        asyncExecution {
-            Actions.restartDnsMasq()
+        Task {
+            await Actions.restartDnsMasq()
         }
     }
 
@@ -134,18 +134,18 @@ extension MainMenu {
     }
 
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        asyncExecution {
-            sender.phpExtension?.toggle()
+        Task {
+            await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
-                Actions.restartPhpFpm()
+                await Actions.restartPhpFpm()
             }
         }
     }
 
     private func performRollback() {
-        asyncExecution {
-            PresetHelper.rollbackPreset?.apply()
+        Task {
+            await PresetHelper.rollbackPreset?.apply()
             PresetHelper.rollbackPreset = nil
             MainMenu.shared.rebuild()
         }
@@ -171,8 +171,8 @@ extension MainMenu {
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {
-        asyncExecution {
-            sender.preset?.apply()
+        Task {
+            await sender.preset?.apply()
         }
     }
 
@@ -191,12 +191,11 @@ extension MainMenu {
     }
 
     @objc func openPhpInfo() {
-        var url: URL?
-
         asyncWithBusyUI {
-            url = Actions.createTempPhpInfoFile()
-        } completion: {
-            if url != nil { NSWorkspace.shared.open(url!) }
+            Task {
+                let url = await Actions.createTempPhpInfoFile()
+                NSWorkspace.shared.open(url)
+            }
         }
     }
 

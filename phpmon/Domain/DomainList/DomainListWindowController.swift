@@ -51,7 +51,9 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     // MARK: - Reload functionality
 
     @IBAction func pressedReload(_ sender: Any?) {
-        contentVC.reloadDomains()
+        Task {
+            await contentVC.reloadDomains()
+        }
     }
 
     @IBAction func pressedAddLink(_ sender: Any?) {

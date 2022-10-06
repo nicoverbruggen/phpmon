@@ -21,18 +21,18 @@ extension MainMenu {
         await App.shared.environment.process()
 
         if await Startup().checkEnvironment() {
-            self.onEnvironmentPass()
+            await self.onEnvironmentPass()
         } else {
-            self.onEnvironmentFail()
+            await self.onEnvironmentFail()
         }
     }
 
     /**
      When the environment is all clear and the app can run, let's go.
      */
-    private func onEnvironmentPass() {
+    private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        PhpEnv.shared.determinePhpAlias()
+        await PhpEnv.shared.determinePhpAlias()
 
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
@@ -49,7 +49,7 @@ extension MainMenu {
         Valet.shared.validateVersion()
 
         // Actually detect the PHP versions
-        PhpEnv.detectPhpVersions()
+        await PhpEnv.detectPhpVersions()
 
         // Check for an alias conflict
         HomebrewDiagnostics.checkForCaskConflict()
@@ -79,7 +79,7 @@ extension MainMenu {
         App.shared.loadGlobalHotkey()
 
         // Preload sites
-        Valet.shared.startPreloadingSites()
+        await Valet.shared.startPreloadingSites()
 
         // After preloading sites, check for PHP-FPM pool conflicts
         HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
@@ -88,7 +88,7 @@ extension MainMenu {
         Valet.notifyAboutUnsupportedTLD()
 
         // Find out which services are active
-        ServicesManager.shared.loadData()
+        await ServicesManager.loadHomebrewServices()
 
         // Start the background refresh timer
         startSharedTimer()
@@ -111,9 +111,7 @@ extension MainMenu {
         }
 
         // Check for updates
-        DispatchQueue.global(qos: .utility).async {
-            AppUpdateChecker.checkIfNewerVersionIsAvailable()
-        }
+        await AppUpdateChecker.checkIfNewerVersionIsAvailable()
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
@@ -122,9 +120,8 @@ extension MainMenu {
     /**
      When the environment is not OK, present an alert to inform the user.
      */
-    private func onEnvironmentFail() {
+    private func onEnvironmentFail() async {
         DispatchQueue.main.async { [self] in
-
             BetterAlert()
                 .withInformation(
                     title: "alert.cannot_start.title".localized,

@@ -16,17 +16,15 @@ class PhpEnv {
         self.currentInstall = ActivePhpInstallation()
     }
 
-    func determinePhpAlias() {
-        Task {
-            let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
+    func determinePhpAlias() async {
+        let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
-            self.homebrewPackage = try! JSONDecoder().decode(
-                [HomebrewPackage].self,
-                from: brewPhpAlias.data(using: .utf8)!
-            ).first!
+        self.homebrewPackage = try! JSONDecoder().decode(
+            [HomebrewPackage].self,
+            from: brewPhpAlias.data(using: .utf8)!
+        ).first!
 
-            Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version)!")
-        }
+        Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version)!")
     }
 
     // MARK: - Properties
@@ -80,8 +78,8 @@ class PhpEnv {
         return InternalSwitcher()
     }
 
-    public static func detectPhpVersions() {
-        Task { await Self.shared.detectPhpVersions() }
+    public static func detectPhpVersions() async {
+        _ = await Self.shared.detectPhpVersions()
     }
 
     /**
@@ -90,7 +88,7 @@ class PhpEnv {
     public func detectPhpVersions() async -> [String] {
         let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
 
-        var versionsOnly = extractPhpVersions(from: files.components(separatedBy: "\n"))
+        var versionsOnly = await extractPhpVersions(from: files.components(separatedBy: "\n"))
 
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
@@ -128,7 +126,7 @@ class PhpEnv {
         from versions: [String],
         checkBinaries: Bool = true,
         generateHelpers: Bool = true
-    ) -> [String] {
+    ) async -> [String] {
         var output: [String] = []
 
         var supported = Constants.SupportedPhpVersions
@@ -153,7 +151,9 @@ class PhpEnv {
         }
 
         if generateHelpers {
-            output.forEach { PhpHelper.generate(for: $0) }
+            for item in output {
+                await PhpHelper.generate(for: item)
+            }
         }
 
         return output

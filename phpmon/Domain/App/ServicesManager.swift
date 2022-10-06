@@ -16,53 +16,44 @@ class ServicesManager: ObservableObject {
     @Published var rootServices: [String: HomebrewService] = [:]
     @Published var userServices: [String: HomebrewService] = [:]
 
-    public static func loadHomebrewServices(completed: (() -> Void)? = nil) {
+    public static func loadHomebrewServices() async {
         let rootServiceNames = [
             PhpEnv.phpInstall.formula,
             "nginx",
             "dnsmasq"
         ]
 
-        DispatchQueue.global(qos: .background).async {
-            let data = LegacyShell
-                .pipe("sudo \(Paths.brew) services info --all --json", requiresPath: true)
-                .data(using: .utf8)!
+        let normalJson = await Shell
+            .pipe("sudo \(Paths.brew) services info --all --json")
+            .out
+            .data(using: .utf8)!
 
-            let services = try! JSONDecoder()
-                .decode([HomebrewService].self, from: data)
-                .filter({ return rootServiceNames.contains($0.name) })
+        let normalServices = try! JSONDecoder()
+            .decode([HomebrewService].self, from: normalJson)
+            .filter({ return rootServiceNames.contains($0.name) })
 
-            DispatchQueue.main.async {
-                ServicesManager.shared.rootServices = Dictionary(
-                    uniqueKeysWithValues: services.map { ($0.name, $0) }
-                )
-            }
+        DispatchQueue.main.async {
+            ServicesManager.shared.rootServices = Dictionary(
+                uniqueKeysWithValues: normalServices.map { ($0.name, $0) }
+            )
         }
 
         guard let userServiceNames = Preferences.custom.services else {
             return
         }
 
-        DispatchQueue.global(qos: .background).async {
-            let data = LegacyShell
-                .pipe("\(Paths.brew) services info --all --json", requiresPath: true)
-                .data(using: .utf8)!
+        let rootJson = await Shell
+            .pipe("\(Paths.brew) services info --all --json")
+            .out
+            .data(using: .utf8)!
 
-            let services = try! JSONDecoder()
-                .decode([HomebrewService].self, from: data)
-                .filter({ return userServiceNames.contains($0.name) })
+        let rootServices = try! JSONDecoder()
+            .decode([HomebrewService].self, from: rootJson)
+            .filter({ return userServiceNames.contains($0.name) })
 
-            DispatchQueue.main.async {
-                ServicesManager.shared.userServices = Dictionary(
-                    uniqueKeysWithValues: services.map { ($0.name, $0) }
-                )
-                completed?()
-            }
-        }
-    }
-
-    func loadData() {
-        Self.loadHomebrewServices()
+        ServicesManager.shared.userServices = Dictionary(
+            uniqueKeysWithValues: rootServices.map { ($0.name, $0) }
+        )
     }
 
     /**

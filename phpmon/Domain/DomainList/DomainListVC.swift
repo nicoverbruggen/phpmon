@@ -97,7 +97,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             domains = Valet.getDomainListable()
             searchedFor(text: lastSearchedFor)
         } else {
-            reloadDomains()
+            Task { await reloadDomains() }
         }
     }
 
@@ -107,7 +107,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      Disables the UI so the user cannot interact with it.
      Also shows a spinner to indicate that we're busy.
      */
-    public func setUIBusy() {
+    @MainActor public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             self.progressIndicator.startAnimation(true)
@@ -121,7 +121,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     /**
      Re-enables the UI so the user can interact with it.
      */
-    public func setUINotBusy() {
+    @MainActor public func setUINotBusy() {
         timer?.invalidate()
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
@@ -136,12 +136,11 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      - Parameter execute: Callback of the work that needs to happen.
      - Parameter completion: Callback that is fired when the work is done.
      */
-    internal func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {}) {
-        setUIBusy()
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            execute()
+    internal func waitAndExecute(_ execute: @escaping () async -> Void, completion: @escaping () -> Void = {}) {
+        Task {
+            setUIBusy()
+            await execute()
 
-            // For a smoother animation, expect at least a 0.2 second delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
                 completion()
                 setUINotBusy()
@@ -151,9 +150,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     // MARK: - Site Data Loading
 
-    func reloadDomains() {
+    func reloadDomains() async {
         waitAndExecute {
-            Valet.shared.reloadSites()
+            await Valet.shared.reloadSites()
         } completion: { [self] in
             domains = Valet.shared.sites
             searchedFor(text: lastSearchedFor)
@@ -177,9 +176,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         self.domains = descriptor.ascending ? sorted.reversed() : sorted
     }
 
-    func addedNewSite(name: String, secure: Bool) {
+    func addedNewSite(name: String, secure: Bool) async {
         waitAndExecute {
-            Valet.shared.reloadSites()
+            await Valet.shared.reloadSites()
         } completion: { [self] in
             find(name, secure)
         }

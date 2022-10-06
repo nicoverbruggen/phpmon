@@ -51,7 +51,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
     // MARK: - Outlet Interactions
 
-    @IBAction func pressedCreateLink(_ sender: Any) {
+    @IBAction func pressedCreateLink(_ sender: Any) async {
         let path = pathControl.url!.path
         let name = inputDomainName.stringValue
 
@@ -71,7 +71,9 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
         // Adding `valet links` is a workaround for Valet malforming the config.json file
         // TODO: I will have to investigate and report this behaviour if possible
-        LegacyShell.run("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links", requiresPath: true)
+        Task {
+            await Shell.quiet("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links")
+        }
 
         dismissView(outcome: .OK)
 
@@ -81,7 +83,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
             .searchField.stringValue = ""
 
         // Add the new item and scrolls to it
-        App.shared.domainListWindowController?
+        await App.shared.domainListWindowController?
             .contentVC
             .addedNewSite(
                 name: name,
