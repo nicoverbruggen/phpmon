@@ -139,7 +139,7 @@ class Actions {
      */
     public static func fixMyValet(completed: @escaping () -> Void) {
         InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias, completion: {
-            Task { // restart all services and fire callback upon completion
+            Task { // Restart all services asynchronously and fire callback upon completion
                 await brew("services restart dnsmasq", sudo: true)
                 await brew("services restart php", sudo: true)
                 await brew("services restart nginx", sudo: true)

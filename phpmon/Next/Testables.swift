@@ -45,8 +45,10 @@ class Testables {
                     : .fake(.binary)
             ],
             shellOutput: [
+                "sysctl -n sysctl.proc_translated"
+                    : .instant("0"),
                 "id -un"
-                    : .instant("username"),
+                    : .instant("nicoverbruggen"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
                 "php -v"
@@ -77,7 +79,11 @@ class Testables {
                     nicoverbruggen/cask
                     shivammathur/php
                     """),
+                "chmod +x /Users/nicoverbruggen/.config/phpmon/bin/pm81"
+                    : .instant(""),
                 "mkdir -p ~/.config/phpmon"
+                    : .instant(""),
+                "mkdir -p ~/.config/phpmon/bin"
                     : .instant(""),
                 "/opt/homebrew/bin/brew info php --json"
                     : .instant(ShellStrings.brewJson),
@@ -92,7 +98,8 @@ class Testables {
                 "/usr/bin/open -Ra \"Sublime Merge\""
                     : .instant("Unable to find application named 'Sublime Merge'", .stdErr),
                 "/usr/bin/open -Ra \"iTerm\""
-                    : .instant("Unable to find application named 'iTerm'", .stdErr)
+                    : .instant("Unable to find application named 'iTerm'", .stdErr),
+                
             ]
         )
     }

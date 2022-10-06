@@ -59,7 +59,6 @@ extension MainMenu {
         }
     }
 
-
     @MainActor @objc func restartValetServices() {
         Task { // Restart services and show notification
             await Actions.restartDnsMasq()
@@ -135,7 +134,7 @@ extension MainMenu {
     }
 
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        Task {
+        Task { // Toggle extension async
             await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
@@ -145,7 +144,7 @@ extension MainMenu {
     }
 
     private func performRollback() {
-        Task {
+        Task { // Rollback preset async
             await PresetHelper.rollbackPreset?.apply()
             PresetHelper.rollbackPreset = nil
             MainMenu.shared.rebuild()
@@ -172,7 +171,7 @@ extension MainMenu {
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {
-        Task {
+        Task { // Apply preset async
             await sender.preset?.apply()
         }
     }
@@ -193,7 +192,7 @@ extension MainMenu {
 
     @objc func openPhpInfo() {
         asyncWithBusyUI {
-            Task {
+            Task { // Create temporary file and open the URL
                 let url = await Actions.createTempPhpInfoFile()
                 NSWorkspace.shared.open(url)
             }
@@ -257,10 +256,8 @@ extension MainMenu {
     /**
      This async-friendly version of the switcher can be invoked elsewhere in the app:
      ```
-     Task {
-        await MainMenu.shared.switchToPhp("8.1")
-        // thing to do after the switch
-     }
+    await MainMenu.shared.switchToPhp("8.1")
+    // thing to do after the switch
      ```
      Since this async function uses `withCheckedContinuation`
      any code after will run only after the switcher is done.

@@ -71,7 +71,7 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
 
         App.shared.domainListWindowController?.contentVC.setUIBusy()
 
-        Task {
+        Task { // Ensure we proxy the site asynchronously and reload UI on main thread again
             await Shell.quiet("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)")
             await Actions.restartNginx()
 

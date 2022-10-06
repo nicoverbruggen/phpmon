@@ -68,52 +68,52 @@ struct Preset: Codable, Equatable {
      Applies a given preset.
      */
     public func apply() async {
-        Task {
-            // Was this a rollback?
-            let wasRollback = (self.name == "AutomaticRevertSnapshot")
+        // Was this a rollback?
+        let wasRollback = (self.name == "AutomaticRevertSnapshot")
 
-            // Save the preset that would revert this preset
-            await self.persistRevert()
+        // Save the preset that would revert this preset
+        await self.persistRevert()
 
-            // Apply the PHP version if is considered a valid version
-            if self.version != nil {
-                if await !switchToPhpVersionIfValid() {
-                    PresetHelper.rollbackPreset = nil
-                    await Actions.restartPhpFpm()
-                    return
-                }
+        // Apply the PHP version if is considered a valid version
+        if self.version != nil {
+            if await !switchToPhpVersionIfValid() {
+                PresetHelper.rollbackPreset = nil
+                await Actions.restartPhpFpm()
+                return
             }
+        }
 
-            // Apply the configuration changes first
-            for conf in configuration {
-                applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+        // Apply the configuration changes first
+        for conf in configuration {
+            applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+        }
+
+        // Apply the extension changes in-place afterward
+        for ext in extensions {
+            for foundExt in PhpEnv.phpInstall.extensions
+            where foundExt.name == ext.key && foundExt.enabled != ext.value {
+                Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
+                await foundExt.toggle()
+                break
             }
+        }
 
-            // Apply the extension changes in-place afterward
-            for ext in extensions {
-                for foundExt in PhpEnv.phpInstall.extensions
-                where foundExt.name == ext.key && foundExt.enabled != ext.value {
-                    Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
-                    await foundExt.toggle()
-                    break
-                }
-            }
+        // Reload what rollback file exists
+        PresetHelper.loadRollbackPresetFromFile()
 
-            // Reload what rollback file exists
-            PresetHelper.loadRollbackPresetFromFile()
+        // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
+        await Actions.restartPhpFpm()
 
-            // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-            await Actions.restartPhpFpm()
-
+        DispatchQueue.main.async {
             // Show the correct notification
             if wasRollback {
-                await LocalNotification.send(
+                LocalNotification.send(
                     title: "notification.preset_reverted_title".localized,
                     subtitle: "notification.preset_reverted_desc".localized,
                     preference: .notifyAboutPresets
                 )
             } else {
-                await LocalNotification.send(
+                LocalNotification.send(
                     title: "notification.preset_applied_title".localized,
                     subtitle: "notification.preset_applied_desc".localized(self.name),
                     preference: .notifyAboutPresets

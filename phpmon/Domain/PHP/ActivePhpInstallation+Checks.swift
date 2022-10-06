@@ -19,7 +19,7 @@ extension ActivePhpInstallation {
      This method actively presents a modal if said checks fails, so don't call this method too many times.
      */
     public func notifyAboutBrokenPhpFpm() {
-        Task {
+        Task { // Determine whether FPM status is configured correctly in the background
             let fpmStatusConfiguredCorrectly =  await self.checkPhpFpmStatus()
 
             if fpmStatusConfiguredCorrectly {

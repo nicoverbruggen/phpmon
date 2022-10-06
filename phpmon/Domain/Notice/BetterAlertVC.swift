@@ -70,7 +70,7 @@ class BetterAlertVC: NSViewController {
         }
     }
 
-    public func close(with code: NSApplication.ModalResponse) {
+    @MainActor public func close(with code: NSApplication.ModalResponse) {
         self.view.window?.close()
         NSApplication.shared.stopModal(withCode: code)
     }

@@ -137,7 +137,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      - Parameter completion: Callback that is fired when the work is done.
      */
     internal func waitAndExecute(_ execute: @escaping () async -> Void, completion: @escaping () -> Void = {}) {
-        Task {
+        Task { // Legacy `waitAndExecute` with UI
             setUIBusy()
             await execute()
 

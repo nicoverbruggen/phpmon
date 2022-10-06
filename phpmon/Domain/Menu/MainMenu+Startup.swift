@@ -70,7 +70,7 @@ extension MainMenu {
         App.shared.handlePhpConfigWatcher()
 
         // Detect built-in and custom applications
-        detectApplications()
+        await detectApplications()
 
         // Load the rollback preset
         PresetHelper.loadRollbackPresetFromFile()
@@ -135,7 +135,9 @@ extension MainMenu {
                 })
                 .show()
 
-            Task { await startup() }
+            Task { // An issue occurred, fire startup checks again after dismissal
+                await startup()
+            }
         }
     }
 
@@ -157,30 +159,28 @@ extension MainMenu {
     /**
      Detect which applications are installed that can be used to open a domain's source directory.
      */
-    private func detectApplications() {
-        Task {
-            Log.info("Detecting applications...")
+    private func detectApplications() async {
+        Log.info("Detecting applications...")
 
-            App.shared.detectedApplications = await Application.detectPresetApplications()
+        App.shared.detectedApplications = await Application.detectPresetApplications()
 
-            let customApps = Preferences.custom.scanApps?.map { appName in
-                return Application(appName, .user_supplied)
-            } ?? []
+        let customApps = Preferences.custom.scanApps?.map { appName in
+            return Application(appName, .user_supplied)
+        } ?? []
 
-            var detectedCustomApps: [Application] = []
+        var detectedCustomApps: [Application] = []
 
-            for app in customApps where await app.isInstalled() {
-                detectedCustomApps.append(app)
-            }
-
-            App.shared.detectedApplications
-                .append(contentsOf: detectedCustomApps)
-
-            let appNames = App.shared.detectedApplications.map { app in
-                return app.name
-            }
-
-            Log.info("Detected applications: \(appNames)")
+        for app in customApps where await app.isInstalled() {
+            detectedCustomApps.append(app)
         }
+
+        App.shared.detectedApplications
+            .append(contentsOf: detectedCustomApps)
+
+        let appNames = App.shared.detectedApplications.map { app in
+            return app.name
+        }
+
+        Log.info("Detected applications: \(appNames)")
     }
 }

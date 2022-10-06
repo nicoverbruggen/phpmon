@@ -18,8 +18,7 @@ extension MainMenu {
         // Mark as no longer busy
         PhpEnv.shared.isBusy = false
 
-        // Reload the site list
-        Task {
+        Task { // Things to do after reloading domain list data
             await self.reloadDomainListData()
 
             // Perform UI updates on main thread
@@ -55,7 +54,7 @@ extension MainMenu {
     }
 
     @MainActor private func checkForPlatformIssues() {
-        Task {
+        Task { // Asynchronously check for platform issues
             if await Valet.shared.hasPlatformIssues() {
                 Log.info("Composer platform issue(s) detected.")
                 self.suggestFixMyComposer()

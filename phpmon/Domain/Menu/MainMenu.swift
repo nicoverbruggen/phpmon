@@ -194,7 +194,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
-        Task {
+        Task { // Reload Homebrew services information asynchronously
             await ServicesManager.loadHomebrewServices()
         }
     }

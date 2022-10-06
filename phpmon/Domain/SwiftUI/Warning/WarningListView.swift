@@ -38,7 +38,7 @@ struct WarningListView: View {
 
             HStack(alignment: .center, spacing: 15) {
                 Button("warnings.refresh.button".localizedForSwiftUI) {
-                    Task {
+                    Task { // Reload warnings
                         await WarningManager.shared.checkEnvironment()
                         self.warnings = WarningManager.shared.warnings
                     }

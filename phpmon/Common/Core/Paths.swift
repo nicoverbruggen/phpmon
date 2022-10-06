@@ -62,7 +62,12 @@ public class Paths {
     }
 
     public static var homePath: String {
-        return NSHomeDirectory()
+        // TODO: Depending on the filesystem abstraction, return the correct information
+        if Shell is SystemShell {
+            return NSHomeDirectory()
+        }
+
+        return "/Users/\(Paths.whoami)"
     }
 
     public static var cellarPath: String {

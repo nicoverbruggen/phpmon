@@ -32,7 +32,7 @@ class BetterAlert {
     public func withPrimary(
         text: String,
         action: @escaping (BetterAlertVC) -> Void = { vc in
-            vc.close(with: .alertFirstButtonReturn)
+            DispatchQueue.main.async { vc.close(with: .alertFirstButtonReturn) }
         }
     ) -> Self {
         self.noticeVC.buttonPrimary.title = text
@@ -43,7 +43,7 @@ class BetterAlert {
     public func withSecondary(
         text: String,
         action: ((BetterAlertVC) -> Void)? = { vc in
-            vc.close(with: .alertSecondButtonReturn)
+            DispatchQueue.main.async { vc.close(with: .alertSecondButtonReturn) }
         }
     ) -> Self {
         self.noticeVC.buttonSecondary.title = text
