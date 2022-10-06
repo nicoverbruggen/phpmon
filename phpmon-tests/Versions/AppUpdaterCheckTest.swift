@@ -10,8 +10,8 @@ import XCTest
 
 class AppUpdaterCheckTest: XCTestCase {
 
-    func testCanRetrieveVersionFromCask() {
-        let caskVersion = AppUpdateChecker.retrieveVersionFromCask()
+    func testCanRetrieveVersionFromCask() async {
+        let caskVersion = await AppUpdateChecker.retrieveVersionFromCask()
 
         let version = VersionExtractor.from(caskVersion)
 

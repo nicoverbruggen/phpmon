@@ -10,8 +10,8 @@ import XCTest
 
 class PhpVersionDetectionTest: XCTestCase {
 
-    func testCanDetectValidPhpVersions() throws {
-        let outcome = PhpEnv.shared.extractPhpVersions(from: [
+    func testCanDetectValidPhpVersions() async throws {
+        let outcome = await PhpEnv.shared.extractPhpVersions(from: [
             "", // empty lines should be omitted
             "php@8.0",
             "php@8.0", // should only be detected once

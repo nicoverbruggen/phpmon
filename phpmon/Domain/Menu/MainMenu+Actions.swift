@@ -47,6 +47,19 @@ extension MainMenu {
         }
     }
 
+    @objc func restartNginx() {
+        Task { // Simple restart service
+            await Actions.restartNginx()
+        }
+    }
+
+    @objc func restartDnsMasq() {
+        Task { // Simple restart service
+            await Actions.restartDnsMasq()
+        }
+    }
+
+
     @MainActor @objc func restartValetServices() {
         Task { // Restart services and show notification
             await Actions.restartDnsMasq()
@@ -70,18 +83,6 @@ extension MainMenu {
                 subtitle: "notification.services_stopped_desc".localized,
                 preference: .notifyAboutServices
             )
-        }
-    }
-
-    @objc func restartNginx() {
-        Task {
-            await Actions.restartNginx()
-        }
-    }
-
-    @objc func restartDnsMasq() {
-        Task {
-            await Actions.restartDnsMasq()
         }
     }
 

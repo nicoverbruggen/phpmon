@@ -49,7 +49,7 @@ class PhpExtensionTest: XCTestCase {
         XCTAssertEqual(extensions[1].enabled, false)
     }
 
-    func testToggleWorksAsExpected() throws {
+    func testToggleWorksAsExpected() async throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.from(filePath: destination.path)
         XCTAssertEqual(extensions.count, 6)
@@ -58,7 +58,7 @@ class PhpExtensionTest: XCTestCase {
         let xdebug = extensions.first!
         XCTAssertTrue(xdebug.name == "xdebug")
         XCTAssertEqual(xdebug.enabled, true)
-        xdebug.toggle()
+        await xdebug.toggle()
         XCTAssertEqual(xdebug.enabled, false)
 
         // Check if the file contains the appropriate data

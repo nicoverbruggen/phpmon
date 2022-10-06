@@ -53,13 +53,14 @@ class HomebrewPackageTest: XCTestCase {
     /// and requires the Valet services to be installed: php, nginx and dnsmasq.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
-    func testCanParseServicesJsonFromCliOutput() throws {
+    func testCanParseServicesJsonFromCliOutput() async throws {
+        ActiveShell.useSystem()
+
         let services = try! JSONDecoder().decode(
             [HomebrewService].self,
-            from: LegacyShell.pipe(
-                "sudo \(Paths.brew) services info --all --json",
-                requiresPath: true
-            ).data(using: .utf8)!
+            from: await Shell.pipe(
+                "sudo \(Paths.brew) services info --all --json"
+            ).out.data(using: .utf8)!
         ).filter({ service in
             return ["php", "nginx", "dnsmasq"].contains(service.name)
         })
@@ -74,10 +75,12 @@ class HomebrewPackageTest: XCTestCase {
     /// and requires the `php` formula to be installed.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
-    func testCanLoadExtensionJsonFromCliOutput() throws {
+    func testCanLoadExtensionJsonFromCliOutput() async throws {
+        ActiveShell.useSystem()
+
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self,
-            from: LegacyShell.pipe("\(Paths.brew) info php --json", requiresPath: true).data(using: .utf8)!
+            from: await Shell.pipe("\(Paths.brew) info php --json").out.data(using: .utf8)!
         ).first!
 
         XCTAssertTrue(package.name == "php")
