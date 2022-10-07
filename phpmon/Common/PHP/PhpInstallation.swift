@@ -21,7 +21,7 @@ class PhpInstallation {
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
         self.versionNumber = PhpVersionNumber.make(from: version)!
 
-        if Filesystem.fileExists(phpConfigExecutablePath) {
+        if FileSystem.fileExists(phpConfigExecutablePath) {
             let longVersionString = Command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"]

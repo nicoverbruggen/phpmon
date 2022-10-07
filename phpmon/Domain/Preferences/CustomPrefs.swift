@@ -51,7 +51,7 @@ extension Preferences {
 
         // Attempt to load the file if it exists
         let url = URL(fileURLWithPath: "\(Paths.homePath)/.config/phpmon/config.json")
-        if Filesystem.fileExists(url.path) {
+        if FileSystem.fileExists(url.path) {
 
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
@@ -61,7 +61,7 @@ extension Preferences {
     }
 
     func moveOutdatedConfigurationFile() async {
-        if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
+        if FileSystem.fileExists("~/.phpmon.conf.json") && !FileSystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
             await Shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
@@ -87,7 +87,7 @@ extension Preferences {
 
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
-                if let shell = Shell as? SystemShell {
+                if let shell = Shell as? RealShell {
                     shell.exports = customPreferences.getEnvironmentVariables()
                 }
             }

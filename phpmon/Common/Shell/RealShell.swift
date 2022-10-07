@@ -1,5 +1,5 @@
 //
-//  SystemShell.swift
+//  RealShell.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/09/2022.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SystemShell: Shellable {
+class RealShell: ShellProtocol {
     /**
      The launch path of the terminal in question that is used.
      On macOS, we use /bin/sh since it's pretty fast.
@@ -19,7 +19,7 @@ class SystemShell: Shellable {
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private(set) var PATH: String = { return SystemShell.getPath() }()
+    private(set) var PATH: String = { return RealShell.getPath() }()
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.

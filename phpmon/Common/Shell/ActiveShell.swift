@@ -8,18 +8,18 @@
 
 import Foundation
 
-var Shell: Shellable {
+var Shell: ShellProtocol {
     return ActiveShell.shared
 }
 
 class ActiveShell {
-    static var shared: Shellable = SystemShell()
+    static var shared: ShellProtocol = RealShell()
 
     public static func useTestable(_ expectations: [String: BatchFakeShellOutput]) {
         Self.shared = TestableShell(expectations: expectations)
     }
 
     public static func useSystem() {
-        Self.shared = SystemShell()
+        Self.shared = RealShell()
     }
 }

@@ -63,7 +63,7 @@ public class Paths {
 
     public static var homePath: String {
         // TODO: Depending on the filesystem abstraction, return the correct information
-        if Shell is SystemShell {
+        if Shell is RealShell {
             return NSHomeDirectory()
         }
 
@@ -91,9 +91,9 @@ public class Paths {
     // (PHP Monitor will not use the user's own PATH)
 
     private func detectComposerBinary() {
-        if Filesystem.fileExists("/usr/local/bin/composer") {
+        if FileSystem.fileExists("/usr/local/bin/composer") {
             Paths.composer = "/usr/local/bin/composer"
-        } else if Filesystem.fileExists("/opt/homebrew/bin/composer") {
+        } else if FileSystem.fileExists("/opt/homebrew/bin/composer") {
             Paths.composer = "/opt/homebrew/bin/composer"
         } else {
             Paths.composer = nil

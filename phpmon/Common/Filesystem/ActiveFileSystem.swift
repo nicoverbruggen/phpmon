@@ -1,0 +1,26 @@
+//
+//  FS.swift
+//  PHP Monitor
+//
+//  Created by Nico Verbruggen on 08/10/2022.
+//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//
+
+import Foundation
+
+var FileSystem: FileSystemProtocol {
+    return ActiveFileSystem.shared
+}
+
+class ActiveFileSystem {
+    static var shared: FileSystemProtocol = RealFileSystem()
+
+    public static func useTestable(_ files: [String: FakeFile]) {
+        // TODO
+        // Self.shared = TestableShell(expectations: expectations)
+    }
+
+    public static func useSystem() {
+        Self.shared = RealFileSystem()
+    }
+}

@@ -134,7 +134,7 @@ class ActivePhpInstallation {
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return Filesystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
+        return FileSystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     // MARK: - Structs

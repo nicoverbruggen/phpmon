@@ -18,7 +18,7 @@ class ValetProxy: DomainListable {
         self.domain = configuration.domain
         self.tld = configuration.tld
         self.target = configuration.proxy!
-        self.secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+        self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
     }
 
     // MARK: - DomainListable Protocol

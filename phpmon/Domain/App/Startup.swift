@@ -105,7 +105,7 @@ class Startup {
         // The PHP binary must exist.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Filesystem.fileExists(Paths.php) },
+            command: { return !FileSystem.fileExists(Paths.php) },
             name: "`\(Paths.php)` exists",
             titleText: "startup.errors.php_binary.title".localized,
             subtitleText: "startup.errors.php_binary.subtitle".localized,
@@ -130,7 +130,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return !(Filesystem.fileExists(Paths.valet) || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
+                return !(FileSystem.fileExists(Paths.valet) || FileSystem.fileExists("~/.composer/vendor/bin/valet"))
             },
             name: "`valet` binary exists",
             titleText: "startup.errors.valet_executable.title".localized,
@@ -176,7 +176,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return !Filesystem.directoryExists("~/.config/valet")
+                return !FileSystem.directoryExists("~/.config/valet")
             },
             name: "`.config/valet` not empty (Valet installed)",
             titleText: "startup.errors.valet_not_installed.title".localized,

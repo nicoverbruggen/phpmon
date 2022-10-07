@@ -32,7 +32,7 @@ func sed(file: String, original: String, replacement: String) async {
 
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
-    if Filesystem.fileExists("\(Paths.binPath)/gsed") {
+    if FileSystem.fileExists("\(Paths.binPath)/gsed") {
         await Shell.quiet("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
         await Shell.quiet("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")

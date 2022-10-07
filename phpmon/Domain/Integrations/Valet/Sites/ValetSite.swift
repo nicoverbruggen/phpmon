@@ -119,7 +119,7 @@ class ValetSite: DomainListable {
      - Note: The file is not validated, only its presence is checked.
      */
     public func determineSecured() {
-        secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
     }
 
     /**
@@ -188,7 +188,7 @@ class ValetSite: DomainListable {
         let path = "\(absolutePath)/composer.json"
 
         do {
-            if Filesystem.fileExists(path) {
+            if FileSystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
                     from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
@@ -209,7 +209,7 @@ class ValetSite: DomainListable {
         let path = "\(absolutePath)/.valetphprc"
 
         do {
-            if Filesystem.fileExists(path) {
+            if FileSystem.fileExists(path) {
                 let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
                 if let version = VersionExtractor.from(contents) {
                     self.composerPhp = version
@@ -224,7 +224,7 @@ class ValetSite: DomainListable {
     // MARK: - File Parsing
 
     public static func isolatedVersion(_ filePath: String) -> String? {
-        if Filesystem.fileExists(filePath) {
+        if FileSystem.fileExists(filePath) {
             return NginxConfigurationFile
                 .from(filePath: filePath)?
                 .isolatedVersion ?? nil

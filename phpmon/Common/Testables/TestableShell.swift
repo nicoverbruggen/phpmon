@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TestableShell: Shellable {
+public class TestableShell: ShellProtocol {
     var PATH: String {
         return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
     }
