@@ -88,6 +88,14 @@ class SystemShell: Shellable {
         let outputPipe = Pipe()
         let errorPipe = Pipe()
 
+        // Seriously slow down how long it takes for the shell to return output
+        // (in order to debug or identify async issues)
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            print("[SLOW SHELL] \(command)")
+            let delayInSeconds = 3
+            try! await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
+        }
+
         task.standardOutput = outputPipe
         task.standardError = errorPipe
         task.launch()

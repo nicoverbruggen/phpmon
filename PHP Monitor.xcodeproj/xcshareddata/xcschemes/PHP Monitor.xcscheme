@@ -74,6 +74,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "SLOW_SHELL_MODE"
+            value = ""
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "PAINT_PHPMON_SWIFTUI_VIEWS"
             value = ""
             isEnabled = "NO">

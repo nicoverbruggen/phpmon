@@ -85,6 +85,10 @@ class PhpExtension {
         await sed(file: file, original: line, replacement: newLine)
 
         enabled.toggle()
+
+        DispatchQueue.main.async {
+            MainMenu.shared.rebuild(async: false)
+        }
     }
 
     // MARK: - Static Methods

@@ -33,8 +33,15 @@ public class TestableShell: Shellable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput) {
-        // TODO: Add delay to track down issues
-        // TODO: Remove assertion
+
+        // Seriously slow down the shell's return rate in order to debug or identify async issues
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            print("[SLOW SHELL] \(command)")
+            let delayInSeconds = 3
+            try! await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
+        }
+
+        // This assertion will only fire during test builds
         assert(expectations.keys.contains(command), "No response declared for command: \(command)")
 
         guard let expectation = expectations[command] else {

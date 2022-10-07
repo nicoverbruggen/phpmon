@@ -118,6 +118,6 @@ extension MainMenu {
             preference: .notifyAboutVersionChange
         )
 
-        Task { await PhpEnv.phpInstall.notifyAboutBrokenPhpFpm() }
+        Task { PhpEnv.phpInstall.notifyAboutBrokenPhpFpm() }
     }
 }

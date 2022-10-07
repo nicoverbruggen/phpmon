@@ -12,11 +12,20 @@ import Foundation
 class Filesystem {
 
     /**
+     Checks if a given path is a file *and* executable.
+     */
+    public static func isExecutableFile(_ path: String) -> Bool {
+        return FileManager.default.isExecutableFile(
+            atPath: path.replacingTildeWithHomeDirectory
+        )
+    }
+
+    /**
      Checks if a file or directory exists at the provided path.
      */
     public static func exists(_ path: String) -> Bool {
         return FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath)
+            atPath: path.replacingTildeWithHomeDirectory
         )
     }
 
@@ -26,7 +35,7 @@ class Filesystem {
     public static func fileExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath),
+            atPath: path.replacingTildeWithHomeDirectory,
             isDirectory: &isDirectory
         )
 
@@ -39,7 +48,7 @@ class Filesystem {
     public static func directoryExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
-            atPath: path.replacingOccurrences(of: "~", with: Paths.homePath),
+            atPath: path.replacingTildeWithHomeDirectory,
             isDirectory: &isDirectory
         )
 
@@ -56,6 +65,14 @@ class Filesystem {
         } catch {
             return false
         }
+    }
+
+}
+
+extension String {
+
+    var replacingTildeWithHomeDirectory: String {
+        return self.replacingOccurrences(of: "~", with: Paths.homePath)
     }
 
 }

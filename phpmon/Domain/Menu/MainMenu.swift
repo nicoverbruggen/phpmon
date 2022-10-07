@@ -106,7 +106,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @MainActor @objc func reloadPhpMonitorMenuInForeground() async {
         refreshActiveInstallation()
         refreshIcon()
-        rebuild(async: false)
+        DispatchQueue.main.async {
+            self.rebuild(async: false)
+        }
         await ServicesManager.loadHomebrewServices()
     }
 

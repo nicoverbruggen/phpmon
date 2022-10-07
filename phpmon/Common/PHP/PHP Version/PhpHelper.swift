@@ -27,7 +27,9 @@ class PhpHelper {
 
         Task { // Create the appropriate folders and check if the files exist
             do {
-                await Shell.quiet("mkdir -p ~/.config/phpmon/bin")
+                if !Filesystem.directoryExists("~/.config/phpmon/bin") {
+                    await Shell.quiet("mkdir -p ~/.config/phpmon/bin")
+                }
 
                 if Filesystem.fileExists(destination) {
                     let contents = try String(contentsOfFile: destination)
@@ -62,7 +64,9 @@ class PhpHelper {
                 )
 
                 // Make sure the file is executable
-                await Shell.quiet("chmod +x \(destination)")
+                if !Filesystem.isExecutableFile(destination) {
+                    await Shell.quiet("chmod +x \(destination)")
+                }
 
                 // Create a symlink if the folder is not in the PATH
                 if !inPath {

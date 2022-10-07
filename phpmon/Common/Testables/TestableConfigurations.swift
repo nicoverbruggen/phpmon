@@ -99,7 +99,6 @@ class TestableConfigurations {
                     : .instant("Unable to find application named 'Sublime Merge'", .stdErr),
                 "/usr/bin/open -Ra \"iTerm\""
                     : .instant("Unable to find application named 'iTerm'", .stdErr),
-                
             ]
         )
     }
