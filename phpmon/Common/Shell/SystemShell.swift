@@ -92,8 +92,7 @@ class SystemShell: Shellable {
         // (in order to debug or identify async issues)
         if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
             print("[SLOW SHELL] \(command)")
-            let delayInSeconds = 3
-            try! await Task.sleep(nanoseconds: UInt64(delayInSeconds * 1_000_000_000))
+            await delay(seconds: 3.0)
         }
 
         task.standardOutput = outputPipe

@@ -49,3 +49,11 @@ func grepContains(file: String, query: String) async -> Bool {
         .trimmingCharacters(in: .whitespacesAndNewlines)
         .contains("YES")
 }
+
+/**
+ Attempts to introduce sleep for a particular duration. Use with caution.
+ Only intended for testing purposes.
+ */
+func delay(seconds: Double) async {
+    try! await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+}
