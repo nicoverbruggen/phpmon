@@ -98,7 +98,9 @@ For more details, consult the [constants file](https://github.com/nicoverbruggen
 <details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
 
-You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+On macOS Ventura, you can accomplish this by going to **System Settings > General > Login Items** and adding PHP Monitor.app to the list **Open at Login**. You can do this with any application, by the way.
+
+On older versions of macOS, you can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
 
 Super convenient!
 </details>
