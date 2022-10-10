@@ -58,6 +58,7 @@ class Preferences {
             PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
 
             /// Preferences: Notifications
+            PreferenceName.warnAboutNonStandardTLD.rawValue: true,
             PreferenceName.notifyAboutVersionChange.rawValue: true,
             PreferenceName.notifyAboutPhpFpmRestart.rawValue: true,
             PreferenceName.notifyAboutServices.rawValue: true,
