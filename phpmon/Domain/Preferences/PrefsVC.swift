@@ -188,6 +188,16 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getWarnAboutNonStandardTLD() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.warnings".localized,
+            descriptionText: "prefs.warn_about_non_standard_tld_desc".localized,
+            checkboxText: "prefs.warn_about_non_standard_tld".localized,
+            preference: .warnAboutNonStandardTLD,
+            action: {}
+        )
+    }
+
     func getDisplayMenuSectionPV(
         _ localizationKey: String,
         _ preference: PreferenceName,
@@ -249,7 +259,8 @@ class NotificationPreferencesVC: GenericPreferenceVC {
             vc.getNotifyAboutSecureTogglePV(),
             vc.getNotifyAboutGlobalComposerStatusPV(),
             vc.getNotifyAboutServicesPV(),
-            vc.getNotifyAboutPhpFpmChangePV()
+            vc.getNotifyAboutPhpFpmChangePV(),
+            vc.getWarnAboutNonStandardTLD()
         ]
 
         return vc

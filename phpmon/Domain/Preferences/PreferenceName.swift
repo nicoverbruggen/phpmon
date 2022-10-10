@@ -26,6 +26,9 @@ enum PreferenceName: String {
     case iconTypeToDisplay = "icon_type_to_display"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
 
+    // WARNINGS
+    case warnAboutNonStandardTLD = "warn_about_non_standard_tld"
+
     // NOTIFICATIONS
     case notifyAboutVersionChange = "notify_about_version_change"
     case notifyAboutPhpFpmRestart = "notify_about_php_fpm_restart"
@@ -60,6 +63,7 @@ enum PreferenceName: String {
             .showPhpDoctorSuggestions,
 
             // Notifications
+            .warnAboutNonStandardTLD,
             .notifyAboutVersionChange,
             .notifyAboutPhpFpmRestart,
             .notifyAboutServices,
