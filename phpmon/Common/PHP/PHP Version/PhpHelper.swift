@@ -80,7 +80,7 @@ class PhpHelper {
                     await self.createSymlink(dotless)
                 }
             } catch {
-                print(error)
+                Log.err(error)
                 Log.err("Could not write PHP Monitor helper for PHP \(version) to \(destination))")
             }
         }

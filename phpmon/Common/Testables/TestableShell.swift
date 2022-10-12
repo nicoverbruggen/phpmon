@@ -36,7 +36,7 @@ public class TestableShell: ShellProtocol {
 
         // Seriously slow down the shell's return rate in order to debug or identify async issues
         if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
-            print("[SLOW SHELL] \(command)")
+            Log.info("[SLOW SHELL] \(command)")
             await delay(seconds: 3.0)
         }
 

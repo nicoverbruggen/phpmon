@@ -26,9 +26,7 @@ class FakeShellTest: XCTestCase {
             .delayed(2, "Goodbye world")
         ])
 
-        let output = await greeting.output(didReceiveOutput: { output, _ in
-            print(output)
-        })
+        let output = await greeting.output(didReceiveOutput: { output, _ in })
 
         XCTAssertEqual("Hello world\nGoodbye world", output.out)
     }

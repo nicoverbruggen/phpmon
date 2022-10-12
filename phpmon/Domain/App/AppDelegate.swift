@@ -60,6 +60,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         #if DEBUG
         logger.verbosity = .performance
+
+        // Use a "working" test configuration
         TestableConfigurations.working.apply()
         #endif
 

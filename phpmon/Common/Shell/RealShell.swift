@@ -91,7 +91,7 @@ class RealShell: ShellProtocol {
         // Seriously slow down how long it takes for the shell to return output
         // (in order to debug or identify async issues)
         if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
-            print("[SLOW SHELL] \(command)")
+            Log.info("[SLOW SHELL] \(command)")
             await delay(seconds: 3.0)
         }
 
