@@ -21,6 +21,8 @@ struct TestableConfiguration {
 
 // swiftlint:disable colon trailing_comma
 class TestableConfigurations {
+
+    /** A broken system, that will not get past initialization due to missing binaries. */
     static var broken: TestableConfiguration {
         return TestableConfiguration(
             architecture: "arm64",
@@ -33,7 +35,7 @@ class TestableConfigurations {
         )
     }
 
-    // TODO: All expected, correct Terminal responses
+    /** A functional, working system setup that is compatible with PHP Monitor. */
     static var working: TestableConfiguration {
         return TestableConfiguration(
             architecture: "arm64",
