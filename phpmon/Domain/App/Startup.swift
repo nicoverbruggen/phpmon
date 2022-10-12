@@ -29,7 +29,7 @@ class Startup {
 
             // If we get here, something's gone wrong and the check has failed...
             Log.info("[FAIL] \(check.name)")
-            showAlert(for: check)
+            await showAlert(for: check)
             return false
         }
 
@@ -45,29 +45,27 @@ class Startup {
      - ones that require an app restart, which prompt the user to exit the app
      - ones that allow the app to continue, which allow the user to retry
      */
-    private func showAlert(for check: EnvironmentCheck) {
-        DispatchQueue.main.async {
-            if check.requiresAppRestart {
-                BetterAlert()
-                    .withInformation(
-                        title: check.titleText,
-                        subtitle: check.subtitleText,
-                        description: check.descriptionText
-                    )
-                    .withPrimary(text: check.buttonText, action: { _ in
-                        exit(1)
-                    }).show()
-            }
-
+    @MainActor private func showAlert(for check: EnvironmentCheck) {
+        if check.requiresAppRestart {
             BetterAlert()
                 .withInformation(
                     title: check.titleText,
                     subtitle: check.subtitleText,
                     description: check.descriptionText
                 )
-                .withPrimary(text: "OK")
-                .show()
+                .withPrimary(text: check.buttonText, action: { _ in
+                    exit(1)
+                }).show()
         }
+
+        BetterAlert()
+            .withInformation(
+                title: check.titleText,
+                subtitle: check.subtitleText,
+                description: check.descriptionText
+            )
+            .withPrimary(text: "OK")
+            .show()
     }
 
     /**

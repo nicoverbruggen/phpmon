@@ -57,13 +57,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     override init() {
         logger.verbosity = .info
+
         #if DEBUG
         logger.verbosity = .performance
-
-        // TODO: Enable to fake broken setup during testing
-        // ActiveShell.useTestable(Testables.working.shellOutput)
-
+        TestableConfigurations.working.apply()
         #endif
+
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance
             Log.info("Extra verbose mode has been activated.")

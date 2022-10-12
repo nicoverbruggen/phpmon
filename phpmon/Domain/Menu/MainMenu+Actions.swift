@@ -12,7 +12,7 @@ extension MainMenu {
 
     // MARK: - Actions
 
-    @objc func fixHomebrewPermissions() {
+    @MainActor @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(
                 title: "alert.fix_homebrew_permissions.title".localized,

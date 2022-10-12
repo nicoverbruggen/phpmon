@@ -16,8 +16,7 @@ class ActiveFileSystem {
     static var shared: FileSystemProtocol = RealFileSystem()
 
     public static func useTestable(_ files: [String: FakeFile]) {
-        // TODO
-        // Self.shared = TestableShell(expectations: expectations)
+        Self.shared = TestableFileSystem(files: files)
     }
 
     public static func useSystem() {

@@ -9,6 +9,12 @@
 import Foundation
 
 class TestableFileSystem: FileSystemProtocol {
+    init(files: [String: FakeFile]) {
+        self.files = files
+    }
+
+    var files: [String: FakeFile]
+
     func isExecutableFile(_ path: String) -> Bool {
         // TODO
         return false

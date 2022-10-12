@@ -12,6 +12,11 @@ struct TestableConfiguration {
     let architecture: String
     let filesystem: [String: FakeFile]
     let shellOutput: [String: BatchFakeShellOutput]
+
+    func apply() {
+        ActiveShell.useTestable(shellOutput)
+        ActiveFileSystem.useTestable(filesystem)
+    }
 }
 
 // swiftlint:disable colon trailing_comma

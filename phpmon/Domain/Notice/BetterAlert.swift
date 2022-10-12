@@ -31,8 +31,8 @@ class BetterAlert {
 
     public func withPrimary(
         text: String,
-        action: @escaping (BetterAlertVC) -> Void = { vc in
-            DispatchQueue.main.async { vc.close(with: .alertFirstButtonReturn) }
+        action: @MainActor @escaping (BetterAlertVC) -> Void = { vc in
+            vc.close(with: .alertFirstButtonReturn)
         }
     ) -> Self {
         self.noticeVC.buttonPrimary.title = text
@@ -42,8 +42,8 @@ class BetterAlert {
 
     public func withSecondary(
         text: String,
-        action: ((BetterAlertVC) -> Void)? = { vc in
-            DispatchQueue.main.async { vc.close(with: .alertSecondButtonReturn) }
+        action: (@MainActor (BetterAlertVC) -> Void)? = { vc in
+            vc.close(with: .alertSecondButtonReturn)
         }
     ) -> Self {
         self.noticeVC.buttonSecondary.title = text
@@ -53,7 +53,7 @@ class BetterAlert {
 
     public func withTertiary(
         text: String = "",
-        action: ((BetterAlertVC) -> Void)? = nil
+        action: (@MainActor (BetterAlertVC) -> Void)? = nil
     ) -> Self {
         if text == "" {
             self.noticeVC.buttonTertiary.bezelStyle = .helpButton
@@ -84,7 +84,7 @@ class BetterAlert {
      Shows the modal and returns a ModalResponse.
      If you wish to simply show the alert and disregard the outcome, use `show`.
      */
-    public func runModal() -> NSApplication.ModalResponse {
+    @MainActor public func runModal() -> NSApplication.ModalResponse {
         if !Thread.isMainThread {
             fatalError("You should always present alerts on the main thread!")
         }
@@ -96,7 +96,7 @@ class BetterAlert {
     }
 
     /** Shows the modal and returns true if the user pressed the primary button. */
-    public func didSelectPrimary() -> Bool {
+    @MainActor public func didSelectPrimary() -> Bool {
         return self.runModal() == .alertFirstButtonReturn
     }
 

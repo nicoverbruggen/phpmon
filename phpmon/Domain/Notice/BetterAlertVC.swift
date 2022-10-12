@@ -21,9 +21,9 @@ class BetterAlertVC: NSViewController {
     @IBOutlet weak var buttonSecondary: NSButton!
     @IBOutlet weak var buttonTertiary: NSButton!
 
-    var actionPrimary: (BetterAlertVC) -> Void = { _ in }
-    var actionSecondary: ((BetterAlertVC) -> Void)?
-    var actionTertiary: ((BetterAlertVC) -> Void)?
+    var actionPrimary: (@MainActor (BetterAlertVC) -> Void) = { _ in }
+    var actionSecondary: (@MainActor (BetterAlertVC) -> Void)?
+    var actionTertiary: (@MainActor (BetterAlertVC) -> Void)?
 
     @IBOutlet weak var imageView: NSImageView!
 
