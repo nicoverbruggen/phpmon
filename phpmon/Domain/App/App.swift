@@ -31,7 +31,17 @@ class App {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
+    /**
+     A fake architecture.
+     When set, the real machine's system architecture is not used,
+     but this fixed value is used instead.
+     */
+    static var fakeArchitecture: String?
+
+    /** The system architecture. Paths differ based on this value. */
     static var architecture: String {
+        if fakeArchitecture != nil { return fakeArchitecture! }
+
         var systeminfo = utsname()
         uname(&systeminfo)
         let machine = withUnsafeBytes(of: &systeminfo.machine) {bufPtr->String in

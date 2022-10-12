@@ -16,28 +16,39 @@ class TestableFileSystem: FileSystemProtocol {
     var files: [String: FakeFile]
 
     func isExecutableFile(_ path: String) -> Bool {
-        // TODO
-        return false
+        guard let file = files[path] else {
+            return false
+        }
+
+        return file.type == .binary
     }
 
     func exists(_ path: String) -> Bool {
-        // TODO
-        return false
+        return files.keys.contains(path)
     }
 
     func fileExists(_ path: String) -> Bool {
-        // TODO
-        return false
+        guard let file = files[path] else {
+            return false
+        }
+
+        return [.binary, .symlink, .text].contains(file.type)
     }
 
     func directoryExists(_ path: String) -> Bool {
-        // TODO
-        return false
+        guard let file = files[path] else {
+            return false
+        }
+
+        return [.directory].contains(file.type)
     }
 
     func fileIsSymlink(_ path: String) -> Bool {
-        // TODO
-        return false
+        guard let file = files[path] else {
+            return false
+        }
+
+        return file.type == .symlink
     }
 }
 

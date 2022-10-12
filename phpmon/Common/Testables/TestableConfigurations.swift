@@ -38,7 +38,11 @@ class TestableConfigurations {
         return TestableConfiguration(
             architecture: "arm64",
             filesystem: [
-                "/opt/homebrew/brew"
+                "/opt/homebrew/bin/brew"
+                    : .fake(.binary),
+                "/opt/homebrew/bin/php"
+                    : .fake(.binary),
+                "/opt/homebrew/bin/valet"
                     : .fake(.binary),
                 "/opt/homebrew/opt/php"
                     : .fake(.symlink, "/opt/homebrew/Cellar/php/8.1.10_1"),
@@ -47,13 +51,15 @@ class TestableConfigurations {
                 "/opt/homebrew/Cellar/php/8.1.10_1/bin/php"
                     : .fake(.binary),
                 "/opt/homebrew/Cellar/php/8.1.10_1/bin/php-config"
-                    : .fake(.binary)
+                    : .fake(.binary),
+                "~/.config/valet"
+                    : .fake(.directory)
             ],
             shellOutput: [
                 "sysctl -n sysctl.proc_translated"
                     : .instant("0"),
                 "id -un"
-                    : .instant("nicoverbruggen"),
+                    : .instant("user"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
                 "php -v"
