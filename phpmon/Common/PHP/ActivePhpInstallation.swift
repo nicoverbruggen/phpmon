@@ -65,7 +65,7 @@ class ActivePhpInstallation {
         )
 
         // Return a list of .ini files parsed after php.ini
-        let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"])
+        let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"], trimNewlines: false)
             .replacingOccurrences(of: "\n", with: "")
             .split(separator: ",")
             .map { String($0) }
@@ -105,7 +105,7 @@ class ActivePhpInstallation {
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
     private func getByteCount(key: String) -> String {
-        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"])
+        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
 
         // Check if the value is unlimited
         if value == "-1" {

@@ -12,10 +12,12 @@ struct TestableConfiguration {
     let architecture: String
     let filesystem: [String: FakeFile]
     let shellOutput: [String: BatchFakeShellOutput]
+    let commandOutput: [String: String]
 
     func apply() {
         ActiveShell.useTestable(shellOutput)
         ActiveFileSystem.useTestable(filesystem)
+        ActiveCommand.useTestable(commandOutput)
     }
 }
 
@@ -31,7 +33,8 @@ class TestableConfigurations {
                 "id -un"                            : .instant("username"),
                 "php -v"                            : .instant(""),
                 "ls /opt/homebrew/opt | grep php"   : .instant(""),
-            ]
+            ],
+            commandOutput: [:]
         )
     }
 
@@ -112,6 +115,19 @@ class TestableConfigurations {
                     : .instant("Unable to find application named 'Sublime Merge'", .stdErr),
                 "/usr/bin/open -Ra \"iTerm\""
                     : .instant("Unable to find application named 'iTerm'", .stdErr),
+            ],
+            commandOutput: [
+                "/opt/homebrew/bin/php-config --version": "8.1.10",
+                "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
+                "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "512M",
+                "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
+                "/opt/homebrew/bin/php -r echo php_ini_scanned_files();"
+                : """
+                /opt/homebrew/etc/php/8.1/conf.d/error_log.ini,
+                /opt/homebrew/etc/php/8.1/conf.d/ext-opcache.ini,
+                /opt/homebrew/etc/php/8.1/conf.d/php-memory-limits.ini,
+                /opt/homebrew/etc/php/8.1/conf.d/xdebug.ini
+                """
             ]
         )
     }

@@ -7,16 +7,9 @@
 
 import Cocoa
 
-public class Command {
+public class RealCommand: CommandProtocol {
 
-    /**
-     Immediately executes a command.
-     
-     - Parameter path: The path of the command or program to invoke.
-     - Parameter arguments: A list of arguments that are passed on.
-     - Parameter trimNewlines: Removes empty new line output.
-     */
-    public static func execute(path: String, arguments: [String], trimNewlines: Bool = false) -> String {
+    public func execute(path: String, arguments: [String], trimNewlines: Bool = false) -> String {
         let task = Process()
         task.launchPath = path
         task.arguments = arguments

@@ -24,7 +24,8 @@ class PhpInstallation {
         if FileSystem.fileExists(phpConfigExecutablePath) {
             let longVersionString = Command.execute(
                 path: phpConfigExecutablePath,
-                arguments: ["--version"]
+                arguments: ["--version"],
+                trimNewlines: false
             ).trimmingCharacters(in: .whitespacesAndNewlines)
 
             // The parser should always work, or the string has to be very unusual.

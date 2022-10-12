@@ -28,6 +28,11 @@ extension App {
     }
 
     func handlePhpConfigWatcher(forceReload: Bool = false) {
+        if ActiveFileSystem.shared is TestableFileSystem {
+            Log.warn("FS watcher is disabled when using testable filesystem.")
+            return
+        }
+
         let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpEnv.phpInstall.version.short)")
 
         // Check whether the watcher exists and schedule on the main thread
