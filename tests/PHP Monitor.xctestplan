@@ -41,10 +41,25 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:PHP Monitor.xcodeproj",
         "identifier" : "C4F7807825D7F84B000DBC97",
-        "name" : "phpmon-tests"
+        "name" : "Unit Tests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7AC28F9B4940021E251",
+        "name" : "Feature Tests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7BB28F9B90F0021E251",
+        "name" : "UI Tests"
       }
     }
   ],

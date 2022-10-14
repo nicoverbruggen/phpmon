@@ -21,7 +21,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /**
      The status bar item with variable length.
      */
-    @MainActor let statusItem = NSStatusBar.system.statusItem(
+    let statusItem = NSStatusBar.system.statusItem(
         withLength: NSStatusItem.variableLength
     )
 

@@ -61,8 +61,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         #if DEBUG
         logger.verbosity = .performance
 
-        // Use a "working" test configuration
-        TestableConfigurations.working.apply()
+        if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
+            Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
+        }
         #endif
 
         if CommandLine.arguments.contains("--v") {
@@ -84,6 +85,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     func initializeSwitcher() {
         self.phpEnvironment = PhpEnv.shared
+    }
+
+    static func initializeTestingProfile(_ profile: String) {
+        Log.info("The profile `\(profile)` is being requested...")
     }
 
     // MARK: - Lifecycle

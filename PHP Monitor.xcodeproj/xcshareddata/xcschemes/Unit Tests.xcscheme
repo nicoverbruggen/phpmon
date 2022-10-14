@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C4F7807825D7F84B000DBC97"
-               BuildableName = "phpmon-tests.xctest"
-               BlueprintName = "phpmon-tests"
+               BuildableName = "Unit Tests.xctest"
+               BlueprintName = "Unit Tests"
                ReferencedContainer = "container:PHP Monitor.xcodeproj">
             </BuildableReference>
          </TestableReference>

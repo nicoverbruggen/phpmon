@@ -42,6 +42,11 @@ extension String {
         return count
     }
 
+    func matches(pattern: String) -> Bool {
+        let pred = NSPredicate(format: "self LIKE %@", pattern)
+        return !NSArray(object: self).filtered(using: pred).isEmpty
+    }
+
     subscript(r: Range<String.Index>) -> String {
         let start = r.lowerBound
         let end = r.upperBound
@@ -98,5 +103,4 @@ extension String {
             return ""
         }
     }
-
 }

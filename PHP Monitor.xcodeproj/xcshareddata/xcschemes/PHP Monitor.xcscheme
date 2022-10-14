@@ -39,8 +39,30 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C4F7807825D7F84B000DBC97"
-               BuildableName = "phpmon-tests.xctest"
-               BlueprintName = "phpmon-tests"
+               BuildableName = "Unit Tests.xctest"
+               BlueprintName = "Unit Tests"
+               ReferencedContainer = "container:PHP Monitor.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C471E7AC28F9B4940021E251"
+               BuildableName = "Feature Tests.xctest"
+               BlueprintName = "Feature Tests"
+               ReferencedContainer = "container:PHP Monitor.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C471E7BB28F9B90F0021E251"
+               BuildableName = "UI Tests.xctest"
+               BlueprintName = "UI Tests"
                ReferencedContainer = "container:PHP Monitor.xcodeproj">
             </BuildableReference>
          </TestableReference>
