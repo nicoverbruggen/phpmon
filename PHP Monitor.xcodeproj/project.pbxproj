@@ -159,6 +159,9 @@
 		C46FA9892822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */; };
 		C46FA98C2822F08F00D78807 /* PhpConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA98A2822F08F00D78807 /* PhpConfigurationTest.swift */; };
 		C4709CA228524B3400088BB8 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
+		C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
+		C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
+		C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
 		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
@@ -443,6 +446,7 @@
 		C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFile.swift; sourceTree = "<group>"; };
 		C46FA98A2822F08F00D78807 /* PhpConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationTest.swift; sourceTree = "<group>"; };
 		C4709CA128524B3400088BB8 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = "PHP Monitor.xctestplan"; path = "PHP Monitor.xcodeproj/PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		C474B00524C0E98C00066A22 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
@@ -697,6 +701,7 @@
 				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
 				54D9E0C027E4F5E9003B9AD9 /* LICENSE */,
 				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
+				C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
 				C4F7807A25D7F84B000DBC97 /* phpmon-tests */,
@@ -1581,6 +1586,7 @@
 				C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
 				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
+				C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
@@ -1661,6 +1667,7 @@
 				C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
+				C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
@@ -1686,6 +1693,7 @@
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
 				C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */,
+				C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */,
 				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
 				C485707C28BF459500539B36 /* NoWarningsView.swift in Sources */,
 				C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */,

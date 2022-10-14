@@ -86,9 +86,14 @@ class PhpExtension {
 
         enabled.toggle()
 
-        DispatchQueue.main.async {
-            MainMenu.shared.rebuild(async: false)
+        if !isRunningTests {
+            // When running unit tests, the MainMenu will not be available
+            // TODO: Fix this dependency issue, set up a notification mechanism
+            DispatchQueue.main.async {
+                MainMenu.shared.rebuild(async: false)
+            }
         }
+
     }
 
     // MARK: - Static Methods

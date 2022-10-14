@@ -13,7 +13,8 @@ class CommandTest: XCTestCase {
     func testDeterminePhpVersion() {
         let version = Command.execute(
             path: Paths.php,
-            arguments: ["-v"]
+            arguments: ["-v"],
+            trimNewlines: false
         )
 
         XCTAssert(version.contains("(cli)"))

@@ -16,7 +16,7 @@ class SystemShellTest: XCTestCase {
     }
 
     func test_system_shell_is_default() async {
-        XCTAssertTrue(Shell is SystemShell)
+        XCTAssertTrue(Shell is RealShell)
 
         let output = await Shell.pipe("php -v")
 
@@ -24,7 +24,7 @@ class SystemShellTest: XCTestCase {
     }
 
     func test_system_shell_has_path() {
-        let systemShell = Shell as! SystemShell
+        let systemShell = Shell as! RealShell
 
         XCTAssertTrue(systemShell.PATH.contains(":/usr/local/bin"))
         XCTAssertTrue(systemShell.PATH.contains(":/usr/bin"))
