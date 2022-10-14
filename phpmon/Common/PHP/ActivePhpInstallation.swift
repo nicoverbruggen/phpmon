@@ -65,10 +65,14 @@ class ActivePhpInstallation {
         )
 
         // Return a list of .ini files parsed after php.ini
-        let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"], trimNewlines: false)
-            .replacingOccurrences(of: "\n", with: "")
-            .split(separator: ",")
-            .map { String($0) }
+        let paths = Command.execute(
+            path: Paths.php,
+            arguments: ["-r", "echo php_ini_scanned_files();"],
+            trimNewlines: false
+        )
+        .replacingOccurrences(of: "\n", with: "")
+        .split(separator: ",")
+        .map { String($0) }
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in

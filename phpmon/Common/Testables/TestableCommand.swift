@@ -21,7 +21,7 @@ class TestableCommand: CommandProtocol {
 
     public func execute(path: String, arguments: [String], trimNewlines: Bool) -> String {
         let concatenatedCommand = "\(path) \(arguments.joined(separator: " "))"
-        assert(commands.keys.contains(concatenatedCommand), "The expected command (\(concatenatedCommand)) was not found")
+        assert(commands.keys.contains(concatenatedCommand), "Command `\(concatenatedCommand)` not found")
         return self.commands[concatenatedCommand]!
     }
 }
