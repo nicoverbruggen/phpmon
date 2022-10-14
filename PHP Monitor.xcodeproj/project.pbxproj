@@ -680,13 +680,13 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		C413E43328DA3E8F00AE33C7 /* Next */ = {
+		C413E43328DA3E8F00AE33C7 /* Shell */ = {
 			isa = PBXGroup;
 			children = (
 				C413E43428DA3EB100AE33C7 /* FakeShellTest.swift */,
 				C4159AF628E4D40400545349 /* SystemShellTest.swift */,
 			);
-			path = Next;
+			path = Shell;
 			sourceTree = "<group>";
 		};
 		C41C1B2A22B0097F00E7CF16 = {
@@ -717,8 +717,6 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
-				C4AD38B428ECE1E100FA8D83 /* Tests */,
-				C46EBC3F28DB9550007ACC74 /* Next */,
 				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
 				54D9E0BE27E4F5C0003B9AD9 /* Vendor */,
@@ -889,11 +887,28 @@
 			path = DomainList;
 			sourceTree = "<group>";
 		};
-		C46EBC3F28DB9550007ACC74 /* Next */ = {
+		C471E6D928F9AFC20021E251 /* Testables */ = {
+			isa = PBXGroup;
+			children = (
+				C471E6DB28F9AFD10021E251 /* Command */,
+				C471E6DA28F9AFCB0021E251 /* Filesystem */,
+				C413E43328DA3E8F00AE33C7 /* Shell */,
+			);
+			path = Testables;
+			sourceTree = "<group>";
+		};
+		C471E6DA28F9AFCB0021E251 /* Filesystem */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Next;
+			path = Filesystem;
+			sourceTree = "<group>";
+		};
+		C471E6DB28F9AFD10021E251 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Command;
 			sourceTree = "<group>";
 		};
 		C47331A0247093AC009A0597 /* Menu */ = {
@@ -932,13 +947,6 @@
 				C4D936C827E3EB6100BD69FE /* PhpHelper.swift */,
 			);
 			path = "PHP Version";
-			sourceTree = "<group>";
-		};
-		C4AD38B428ECE1E100FA8D83 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Tests;
 			sourceTree = "<group>";
 		};
 		C4AF9F6A275445C900D44ED0 /* Valet */ = {
@@ -1213,7 +1221,7 @@
 		C4F7807A25D7F84B000DBC97 /* phpmon-tests */ = {
 			isa = PBXGroup;
 			children = (
-				C413E43328DA3E8F00AE33C7 /* Next */,
+				C471E6D928F9AFC20021E251 /* Testables */,
 				C4F7807D25D7F84B000DBC97 /* Info.plist */,
 				C43A8A1925D9CD1000591B77 /* Utility.swift */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
