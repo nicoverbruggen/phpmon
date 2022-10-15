@@ -80,6 +80,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--configuration:working"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--configuration:broken"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

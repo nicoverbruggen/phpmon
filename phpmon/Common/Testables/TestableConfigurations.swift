@@ -33,6 +33,7 @@ class TestableConfigurations {
                 "id -un"                            : .instant("username"),
                 "php -v"                            : .instant(""),
                 "ls /opt/homebrew/opt | grep php"   : .instant(""),
+                "valet --version"                   : .instant("zsh: command not found: valet")
             ],
             commandOutput: [:]
         )
