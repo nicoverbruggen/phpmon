@@ -12,24 +12,15 @@ final class UI_Tests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
-        TestableConfigurations.broken.apply()
     }
 
-    override func tearDownWithError() throws {
-    }
+    override func tearDownWithError() throws {}
 
-    func testExample() throws {
+    func testApplicationCanLaunchWithTestConfigurationAndIdles() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launchArguments = ["--configuration:broken"]
+        app.launchArguments = ["--configuration:working"]
         app.launch()
+        sleep(10)
     }
-
-    /*
-    func testLaunchPerformance() throws {
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
-    }
-    */
 }

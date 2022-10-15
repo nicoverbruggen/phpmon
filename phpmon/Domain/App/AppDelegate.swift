@@ -89,6 +89,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     static func initializeTestingProfile(_ profile: String) {
         Log.info("The profile `\(profile)` is being requested...")
+
+        switch profile {
+        case "broken":
+            Log.info("Applying broken PHP Monitor configuration profile!")
+            TestableConfigurations.broken.apply()
+        case "working":
+            Log.info("Applying working PHP Monitor configuration profile!")
+            TestableConfigurations.working.apply()
+        default:
+            assert(true, "No profile for this name is supported.")
+        }
     }
 
     // MARK: - Lifecycle
