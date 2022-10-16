@@ -1,5 +1,5 @@
 //
-//  UI_Tests.swift
+//  StartupTest.swift
 //  UI Tests
 //
 //  Created by Nico Verbruggen on 14/10/2022.
@@ -17,14 +17,18 @@ final class StartupTest: UITestCase {
     override func tearDownWithError() throws {}
 
     func testApplicationCanLaunchWithTestConfigurationAndIdles() throws {
-        let app = XCUIApplication()
-        app.launchArguments = ["--configuration:working"]
+        let app = XCPMApplication()
+        app.withConfiguration(TestableConfigurations.working)
         app.launch()
+        sleep(5)
     }
 
     func testApplicationCanLaunchWithTestConfigurationAndThrowsAlert() throws {
-        let app = XCUIApplication()
-        app.launchArguments = ["--configuration:broken"]
+        var configuration = TestableConfigurations.working
+        configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
+
+        let app = XCPMApplication()
+        app.withConfiguration(configuration)
         app.launch()
 
         // Dialog 1: "PHP is not correctly installed"

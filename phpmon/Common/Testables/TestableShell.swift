@@ -55,7 +55,7 @@ public class TestableShell: ShellProtocol {
     }
 }
 
-struct FakeShellOutput {
+struct FakeShellOutput: Codable {
     let delay: TimeInterval
     let output: String
     let stream: ShellStream
@@ -69,7 +69,7 @@ struct FakeShellOutput {
     }
 }
 
-struct BatchFakeShellOutput {
+struct BatchFakeShellOutput: Codable {
     var items: [FakeShellOutput]
 
     static func with(_ items: [FakeShellOutput]) -> BatchFakeShellOutput {

@@ -48,7 +48,7 @@ protocol ShellProtocol {
     ) async throws -> (Process, ShellOutput)
 }
 
-enum ShellStream {
+enum ShellStream: Codable {
     case stdOut, stdErr, stdIn
 }
 

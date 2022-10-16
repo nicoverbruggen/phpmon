@@ -52,11 +52,11 @@ class TestableFileSystem: FileSystemProtocol {
     }
 }
 
-enum FakeFileType {
+enum FakeFileType: Codable {
     case binary, text, directory, symlink
 }
 
-struct FakeFile {
+struct FakeFile: Codable {
     var type: FakeFileType
     var content: String?
 

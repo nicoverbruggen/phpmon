@@ -79,12 +79,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--configuration:working"
+            argument = "--configuration:/tmp/pmc_working.json"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--configuration:broken"
-            isEnabled = "YES">
+            argument = "--configuration:/tmp/pmc_broken.json"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>

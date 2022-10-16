@@ -47,6 +47,11 @@ extension String {
         return !NSArray(object: self).filtered(using: pred).isEmpty
     }
 
+    static func random(_ length: Int) -> String {
+        let characters = "0123456789abcdefghijklmnopqrstuvwxyz"
+        return String((0..<length).map{ _ in characters.randomElement()! })
+    }
+
     subscript(r: Range<String.Index>) -> String {
         let start = r.lowerBound
         let end = r.upperBound

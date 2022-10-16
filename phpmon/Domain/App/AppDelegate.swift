@@ -87,19 +87,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.phpEnvironment = PhpEnv.shared
     }
 
-    static func initializeTestingProfile(_ profile: String) {
-        Log.info("The profile `\(profile)` is being requested...")
-
-        switch profile {
-        case "broken":
-            Log.info("Applying broken PHP Monitor configuration profile!")
-            TestableConfigurations.broken.apply()
-        case "working":
-            Log.info("Applying working PHP Monitor configuration profile!")
-            TestableConfigurations.working.apply()
-        default:
-            assert(true, "No profile for this name is supported.")
-        }
+    static func initializeTestingProfile(_ path: String) {
+        Log.info("The configuration with path `\(path)` is being requested...")
+        TestableConfiguration
+            .loadFrom(path: path)
+            .apply()
     }
 
     // MARK: - Lifecycle
