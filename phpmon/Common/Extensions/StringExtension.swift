@@ -7,15 +7,26 @@
 import Foundation
 import SwiftUI
 
+struct Localization {
+    static var bundle: Bundle = {
+        var bundle = Bundle.main
+        if isRunningTests {
+            bundle = Bundle(identifier: "com.nicoverbruggen.phpmon.dev")
+                ?? Bundle(identifier: "com.nicoverbruggen.phpmon")!
+        }
+        return bundle
+    }()
+}
+
 extension String {
     var localized: String {
         if #available(macOS 13, *) {
             return NSLocalizedString(
-                self, tableName: nil, bundle: Bundle.main, value: "", comment: ""
+                self, tableName: nil, bundle: Localization.bundle, value: "", comment: ""
             ).replacingOccurrences(of: "Preferences", with: "Settings")
         }
 
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        return NSLocalizedString(self, tableName: nil, bundle: Localization.bundle, value: "", comment: "")
     }
 
     var localizedForSwiftUI: LocalizedStringKey {
@@ -49,7 +60,7 @@ extension String {
 
     static func random(_ length: Int) -> String {
         let characters = "0123456789abcdefghijklmnopqrstuvwxyz"
-        return String((0..<length).map{ _ in characters.randomElement()! })
+        return String((0..<length).map { _ in characters.randomElement()! })
     }
 
     subscript(r: Range<String.Index>) -> String {

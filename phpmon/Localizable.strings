@@ -83,6 +83,12 @@
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
 
+// GENERIC
+
+"generic.ok" = "OK";
+"generic.retry" = "Retry";
+"generic.notice" = "Notice";
+
 // PRESET LOADING
 
 "preset_help_title" = "Working with Configuration Presets";

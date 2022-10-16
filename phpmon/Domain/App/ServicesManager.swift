@@ -51,9 +51,11 @@ class ServicesManager: ObservableObject {
             .decode([HomebrewService].self, from: rootJson)
             .filter({ return userServiceNames.contains($0.name) })
 
-        ServicesManager.shared.userServices = Dictionary(
-            uniqueKeysWithValues: rootServices.map { ($0.name, $0) }
-        )
+        DispatchQueue.main.async {
+            ServicesManager.shared.userServices = Dictionary(
+                uniqueKeysWithValues: rootServices.map { ($0.name, $0) }
+            )
+        }
     }
 
     /**

@@ -31,12 +31,10 @@ class App {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
-    /**
-     A fake architecture.
-     When set, the real machine's system architecture is not used,
-     but this fixed value is used instead.
-     */
-    static var fakeArchitecture: String?
+    /** Just the bundle name. */
+    static var identifier: String {
+        Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
+    }
 
     /** The system architecture. Paths differ based on this value. */
     static var architecture: String {
@@ -54,6 +52,13 @@ class App {
         }
         return machine
     }
+
+    /**
+     A fake architecture.
+     When set, the real machine's system architecture is not used,
+     but this fixed value is used instead.
+     */
+    static var fakeArchitecture: String?
 
     // MARK: Variables
 
