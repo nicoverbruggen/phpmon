@@ -11,12 +11,10 @@ import XCTest
 class TestableConfigurationTest: XCTestCase {
     func test_configuration_can_be_saved_as_json() async {
         var configuration = TestableConfigurations.working
+        try! configuration.toJson().write(toFile: "/tmp/pmc_working.json", atomically: true, encoding: .utf8)
+
         configuration.filesystem["/opt/homebrew/bin/php"] = nil
-
-        let json = configuration.toJson()
-
-        try! json.write(toFile: "/tmp/pmc_working.json", atomically: true, encoding: .utf8)
-        try! json.write(toFile: "/tmp/pmc_broken.json", atomically: true, encoding: .utf8)
+        try! configuration.toJson().write(toFile: "/tmp/pmc_broken.json", atomically: true, encoding: .utf8)
     }
 }
 
