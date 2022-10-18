@@ -14,13 +14,13 @@ class PhpExtensionTest: XCTestCase {
         return Bundle(for: Self.self).url(forResource: "php", withExtension: "ini")!
     }
 
-    func testCanLoadExtension() throws {
+    func test_can_load_extension() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         XCTAssertGreaterThan(extensions.count, 0)
     }
 
-    func testExtensionNameIsCorrect() throws {
+    func test_extension_name_is_correct() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         let extensionNames = extensions.map { (ext) -> String in
@@ -39,7 +39,7 @@ class PhpExtensionTest: XCTestCase {
         XCTAssertFalse(extensionNames.contains("nice"))
     }
 
-    func testExtensionStatusIsCorrect() throws {
+    func test_extension_status_is_correct() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         // xdebug should be enabled
@@ -49,7 +49,7 @@ class PhpExtensionTest: XCTestCase {
         XCTAssertEqual(extensions[1].enabled, false)
     }
 
-    func testToggleWorksAsExpected() async throws {
+    func test_toggle_works_as_expected() async throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.from(filePath: destination.path)
         XCTAssertEqual(extensions.count, 6)

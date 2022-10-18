@@ -10,11 +10,11 @@ import XCTest
 
 class AppVersionTest: XCTestCase {
 
-    func testCanRetrieveInternalAppVersion() {
+    func test_can_retrieve_internal_app_version() {
         XCTAssertNotNil(AppVersion.fromCurrentVersion())
     }
 
-    func testCanParseNormalVersionString() {
+    func test_can_parse_normal_version_string() {
         let version = AppVersion.from("1.0.0")
 
         XCTAssertNotNil(version)
@@ -23,7 +23,7 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual(nil, version?.suffix)
     }
 
-    func testCanParseCaskVersionString() {
+    func test_can_parse_cask_version_string() {
         let version = AppVersion.from("1.0.0_600")
 
         XCTAssertNotNil(version)
@@ -32,7 +32,7 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual(nil, version?.suffix)
     }
 
-    func testCanParseDevVersionStringWithoutBuildNumber() {
+    func test_can_parse_dev_version_string_without_build_number() {
         let version = AppVersion.from("1.0.0-dev")
 
         XCTAssertNotNil(version)
@@ -41,7 +41,7 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual("dev", version?.suffix)
     }
 
-    func testCanParseDevVersionStringWithBuildNumber() {
+    func test_can_parse_dev_version_string_with_build_number() {
         let version = AppVersion.from("1.0.0-dev,870")
 
         XCTAssertNotNil(version)
@@ -50,7 +50,7 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual("dev", version?.suffix)
     }
 
-    func testCanParseUnderscoresAsBuildSeparatorToo() {
+    func test_can_parse_underscores_as_build_separator() {
         let version = AppVersion.from("1.0.0-dev_870")
 
         XCTAssertNotNil(version)

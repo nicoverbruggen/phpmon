@@ -11,7 +11,7 @@ import XCTest
 // swiftlint:disable type_body_length
 class PhpVersionNumberTest: XCTestCase {
 
-    func testCanDeconstructPhpVersion() throws {
+    func test_can_deconstruct_php_version() throws {
         XCTAssertEqual(
             try! PhpVersionNumber.parse("PHP 8.2.0-dev"),
             PhpVersionNumber(major: 8, minor: 2, patch: 0)
@@ -38,13 +38,13 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testPhpVersionNumberParse() throws {
+    func test_php_version_number_parse() throws {
         XCTAssertThrowsError(try PhpVersionNumber.parse("OOF")) { error in
             XCTAssertTrue(error is VersionParseError)
         }
     }
 
-    func testCanCheckFixedConstraints() throws {
+    func test_can_check_fixed_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
                 .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
@@ -78,7 +78,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckCaretConstraints() throws {
+    func test_can_check_caret_constraints() throws {
         // 1. Imprecise checks
         XCTAssertEqual(
             PhpVersionNumberCollection
@@ -138,7 +138,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckTildeConstraints() throws {
+    func test_can_check_tilde_constraints() throws {
         // 1. Imprecise checks
         XCTAssertEqual(
             PhpVersionNumberCollection
@@ -207,7 +207,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckGreaterThanOrEqualConstraints() throws {
+    func test_can_check_greater_than_or_equal_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
                 .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
@@ -243,7 +243,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckGreaterThanConstraints() throws {
+    func test_can_check_greater_than_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
                 .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
@@ -289,7 +289,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckLessThanOrEqualConstraints() throws {
+    func test_can_check_less_than_or_equal_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
                 .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])
@@ -325,7 +325,7 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 
-    func testCanCheckLessThanConstraints() throws {
+    func test_can_check_less_than_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
                 .make(from: ["7.4", "7.3", "7.2", "7.1", "7.0"])

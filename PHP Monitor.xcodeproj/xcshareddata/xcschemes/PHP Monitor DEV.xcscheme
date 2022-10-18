@@ -80,7 +80,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--configuration:/tmp/pmc_working.json"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--configuration:/tmp/pmc_broken.json"

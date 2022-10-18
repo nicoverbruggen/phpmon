@@ -34,7 +34,7 @@ class NginxConfigurationTest: XCTestCase {
 
     // MARK: - Tests
 
-    func testCanDetermineSiteNameAndTld() throws {
+    func test_can_determine_site_name_and_tld() throws {
         XCTAssertEqual(
             "nginx-site",
             NginxConfigurationFile.from(filePath: NginxConfigurationTest.regularUrl.path)?.domain
@@ -45,7 +45,7 @@ class NginxConfigurationTest: XCTestCase {
         )
     }
 
-    func testCanDetermineIsolation() throws {
+    func test_can_determine_isolation() throws {
         XCTAssertNil(
             NginxConfigurationFile.from(filePath: NginxConfigurationTest.regularUrl.path)?.isolatedVersion
         )
@@ -56,7 +56,7 @@ class NginxConfigurationTest: XCTestCase {
         )
     }
 
-    func testCanDetermineProxy() throws {
+    func test_can_determine_proxy() throws {
         let proxied = NginxConfigurationFile.from(filePath: NginxConfigurationTest.proxyUrl.path)!
         XCTAssertTrue(proxied.contents.contains("# valet stub: proxy.valet.conf"))
         XCTAssertEqual("http://127.0.0.1:90", proxied.proxy)
@@ -66,13 +66,13 @@ class NginxConfigurationTest: XCTestCase {
         XCTAssertEqual(nil, normal.proxy)
     }
 
-    func testCanDetermineSecuredProxy() throws {
+    func test_can_determine_secured_proxy() throws {
         let proxied = NginxConfigurationFile.from(filePath: NginxConfigurationTest.secureProxyUrl.path)!
         XCTAssertTrue(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
         XCTAssertEqual("http://127.0.0.1:90", proxied.proxy)
     }
 
-    func testCanDetermineProxyWithCustomTld() throws {
+    func test_can_determine_proxy_with_custom_tld() throws {
         let proxied = NginxConfigurationFile.from(filePath: NginxConfigurationTest.customTldProxyUrl.path)!
         XCTAssertTrue(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
         XCTAssertEqual("http://localhost:8080", proxied.proxy)

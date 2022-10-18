@@ -16,7 +16,7 @@ final class StartupTest: UITestCase {
 
     override func tearDownWithError() throws {}
 
-    final func testApplicationCanLaunchWithTestConfigurationAndThrowsAlert() throws {
+    final func test_launch_halts_due_to_system_configuration_issue() throws {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
 
@@ -48,7 +48,7 @@ final class StartupTest: UITestCase {
         app.terminate()
     }
 
-    final func testApplicationCanWarnAboutPhpFpmIssue() throws {
+    final func test_get_warning_about_missing_fpm_symlink() throws {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/etc/php/8.1/php-fpm.d/valet-fpm.conf"] = nil
 
@@ -60,7 +60,7 @@ final class StartupTest: UITestCase {
         click(app.buttons["generic.ok".localized])
     }
 
-    final func testPhpMonitorLaunchesCorrectlyAndIdles() throws {
+    final func test_can_open_status_menu_item() throws {
         let app = XCPMApplication()
         app.withConfiguration(TestableConfigurations.working)
         app.launch()

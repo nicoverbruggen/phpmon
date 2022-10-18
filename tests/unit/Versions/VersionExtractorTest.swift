@@ -10,12 +10,12 @@ import XCTest
 
 class VersionExtractorTest: XCTestCase {
 
-    func testExtractVersion() {
+    func test_extract_version() {
         XCTAssertEqual(VersionExtractor.from("Laravel Valet 2.17.1"), "2.17.1")
         XCTAssertEqual(VersionExtractor.from("Laravel Valet 2.0"), "2.0")
     }
 
-    func testVersionComparison() {
+    func test_version_comparison() {
         XCTAssertEqual("2.0".versionCompare("2.1"), .orderedAscending)
         XCTAssertEqual("2.1".versionCompare("2.0"), .orderedDescending)
         XCTAssertEqual("2.0".versionCompare("2.0"), .orderedSame)

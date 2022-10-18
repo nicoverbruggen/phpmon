@@ -10,7 +10,7 @@ import XCTest
 
 class AppUpdaterCheckTest: XCTestCase {
 
-    func testCanRetrieveVersionFromCask() async {
+    func test_can_retrieve_version_from_cask() async {
         let caskVersion = await AppUpdateChecker.retrieveVersionFromCask()
 
         let version = VersionExtractor.from(caskVersion)
@@ -18,21 +18,21 @@ class AppUpdaterCheckTest: XCTestCase {
         XCTAssertNotNil(version)
     }
 
-    func testTaggedReleaseOmitsZeroPatch() {
+    func test_tagged_release_omits_zero_patch() {
         let version = AppVersion.from("3.5.0_333")!
 
         XCTAssertEqual(version.tagged, "3.5")
         XCTAssertEqual(version.version, "3.5.0")
     }
 
-    func testTaggedReleaseDoesntOmitNonZeroPatch() {
+    func test_tagged_release_doesnt_omit_non_zero_patch() {
         let version = AppVersion.from("3.5.1_333")!
 
         XCTAssertEqual(version.tagged, "3.5.1")
         XCTAssertEqual(version.version, "3.5.1")
     }
 
-    func testTagTruncationDoesntAffectMajorVersions() {
+    func test_tag_truncation_does_not_affect_major_versions() {
         var version = AppVersion.from("5.0_333")!
 
         XCTAssertEqual(version.tagged, "5.0")

@@ -17,7 +17,7 @@ class ValetConfigurationTest: XCTestCase {
         )!
     }
 
-    func testCanLoadConfigFile() throws {
+    func test_can_load_config_file() throws {
         let json = try? String(
             contentsOf: Self.jsonConfigFileUrl,
             encoding: .utf8

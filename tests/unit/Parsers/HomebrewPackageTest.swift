@@ -17,7 +17,7 @@ class HomebrewPackageTest: XCTestCase {
             .url(forResource: "brew-formula", withExtension: "json")!
     }
 
-    func testCanLoadExtensionJson() throws {
+    func test_can_load_extension_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewFile, encoding: .utf8)
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self, from: json.data(using: .utf8)!
@@ -36,7 +36,7 @@ class HomebrewPackageTest: XCTestCase {
             .url(forResource: "brew-services", withExtension: "json")!
     }
 
-    func testCanParseServicesJson() throws {
+    func test_can_parse_services_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewServicesFile, encoding: .utf8)
         let services = try! JSONDecoder().decode(
             [HomebrewService].self, from: json.data(using: .utf8)!
@@ -49,11 +49,12 @@ class HomebrewPackageTest: XCTestCase {
 
     // - MARK: LIVE TESTS
 
+    /// TODO: Use fake data or make this an integration test
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the Valet services to be installed: php, nginx and dnsmasq.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
-    func testCanParseServicesJsonFromCliOutput() async throws {
+    func test_can_parse_services_json_from_cli_output() async throws {
         ActiveShell.useSystem()
 
         let services = try! JSONDecoder().decode(
@@ -71,11 +72,12 @@ class HomebrewPackageTest: XCTestCase {
         XCTAssertEqual(services.count, 3)
     }
 
+    /// TODO: Use fake data or make this an integration test
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the `php` formula to be installed.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
-    func testCanLoadExtensionJsonFromCliOutput() async throws {
+    func test_can_load_extension_json_from_cli_output() async throws {
         ActiveShell.useSystem()
 
         let package = try! JSONDecoder().decode(

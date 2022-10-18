@@ -10,7 +10,7 @@ import XCTest
 
 class CommandTest: XCTestCase {
 
-    func testDeterminePhpVersion() {
+    func test_determine_php_version() {
         let version = Command.execute(
             path: Paths.php,
             arguments: ["-v"],
