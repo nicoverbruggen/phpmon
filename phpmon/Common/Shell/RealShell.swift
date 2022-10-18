@@ -126,8 +126,8 @@ class RealShell: ShellProtocol {
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let task = getShellProcess(for: command)
-        // TODO: Make ShellOutput a struct again and add a class type for this use case only
-        let output = ShellOutput(out: "", err: "")
+
+        let output = ShellOutput.empty()
 
         task.listen { incoming in
             output.out += incoming; didReceiveOutput(incoming, .stdOut)

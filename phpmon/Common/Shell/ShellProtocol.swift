@@ -65,6 +65,10 @@ class ShellOutput {
         self.err = err
     }
 
+    static func empty() -> ShellOutput {
+        return ShellOutput(out: "", err: "")
+    }
+
     static func out(_ out: String?, _ err: String? = nil) -> ShellOutput {
         return ShellOutput(out: out ?? "", err: err ?? "")
     }

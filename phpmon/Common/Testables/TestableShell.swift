@@ -95,7 +95,7 @@ struct BatchFakeShellOutput: Codable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         ignoreDelay: Bool = false
     ) async -> ShellOutput {
-        var output = ShellOutput(out: "", err: "")
+        let output = ShellOutput.empty()
 
         for item in items {
             if !ignoreDelay {
