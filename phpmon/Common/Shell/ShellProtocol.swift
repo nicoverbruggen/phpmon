@@ -52,12 +52,17 @@ enum ShellStream: Codable {
     case stdOut, stdErr, stdIn
 }
 
-struct ShellOutput {
+class ShellOutput {
     var out: String
     var err: String
 
     var hasError: Bool {
         return err.lengthOfBytes(using: .utf8) > 0
+    }
+
+    init(out: String, err: String) {
+        self.out = out
+        self.err = err
     }
 
     static func out(_ out: String?, _ err: String? = nil) -> ShellOutput {

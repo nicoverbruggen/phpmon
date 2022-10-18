@@ -8,6 +8,9 @@
 
 import Foundation
 
+extension Process: @unchecked Sendable {}
+extension Timer: @unchecked Sendable {}
+
 class RealShell: ShellProtocol {
     /**
      The launch path of the terminal in question that is used.
@@ -123,7 +126,8 @@ class RealShell: ShellProtocol {
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let task = getShellProcess(for: command)
-        var output = ShellOutput(out: "", err: "")
+        // TODO: Make ShellOutput a struct again and add a class type for this use case only
+        let output = ShellOutput(out: "", err: "")
 
         task.listen { incoming in
             output.out += incoming; didReceiveOutput(incoming, .stdOut)
@@ -134,7 +138,7 @@ class RealShell: ShellProtocol {
         return try await withCheckedThrowingContinuation({ continuation in
             var timer: Timer?
 
-            task.terminationHandler = { process in
+            task.terminationHandler = { [timer, output] process in
                 process.haltListening()
 
                 timer?.invalidate()

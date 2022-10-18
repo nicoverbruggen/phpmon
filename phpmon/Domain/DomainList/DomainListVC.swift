@@ -110,7 +110,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     @MainActor public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            self.progressIndicator.startAnimation(true)
+            DispatchQueue.main.async { self.progressIndicator.startAnimation(true) }
         })
 
         tableView.alphaValue = 0.3

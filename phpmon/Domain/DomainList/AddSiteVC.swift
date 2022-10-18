@@ -51,7 +51,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
     // MARK: - Outlet Interactions
 
-    @IBAction func pressedCreateLink(_ sender: Any) async {
+    func createLink() async {
         let path = pathControl.url!.path
         let name = inputDomainName.stringValue
 
@@ -87,6 +87,10 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
                 name: name,
                 secure: buttonSecure.state == .on
             )
+    }
+
+    @IBAction func pressedCreateLink(_ sender: Any) {
+        Task { await createLink() }
     }
 
     @IBAction func pressedCancel(_ sender: Any) {

@@ -79,11 +79,11 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--configuration:/tmp/pmc_working.json"
+            argument = "--configuration:~/.phpmon_fconf_working.json"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--configuration:/tmp/pmc_broken.json"
+            argument = "--configuration:~/.phpmon_fconf_broken.json"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

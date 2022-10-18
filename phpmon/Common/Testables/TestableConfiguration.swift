@@ -31,10 +31,11 @@ public struct TestableConfiguration: Codable {
     }
 
     static func loadFrom(path: String) -> TestableConfiguration {
+        let url = URL(fileURLWithPath: path.replacingTildeWithHomeDirectory)
+
         return try! JSONDecoder().decode(
             TestableConfiguration.self,
-            from: try! String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-                .data(using: .utf8)!
+            from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
         )
     }
 }
