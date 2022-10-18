@@ -22,6 +22,8 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/opt/php"
                     : .fake(.symlink, "/opt/homebrew/Cellar/php/8.1.10_1"),
+                "/opt/homebrew/opt/php@8.1/bin/php"
+                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.1.10_1/bin/php"),
                 "/opt/homebrew/Cellar/php/8.1.10_1"
                     : .fake(.directory),
                 "/opt/homebrew/Cellar/php/8.1.10_1/bin/php"

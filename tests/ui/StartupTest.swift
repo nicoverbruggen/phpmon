@@ -70,6 +70,9 @@ final class StartupTest: UITestCase {
         let statusBarItem = app.statusItems.firstMatch
         statusBarItem.click()
         assertAllExist([
+            // "Switch to PHP 8.1 (php)" should be visible since it is aliased to `php`
+            app.menuItems["\("mi_php_switch".localized) 8.1 (php)"],
+            // We should see the about and quit items
             app.menuItems["mi_about".localized],
             app.menuItems["mi_quit".localized]
         ])
