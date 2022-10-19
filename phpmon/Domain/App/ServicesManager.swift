@@ -25,8 +25,7 @@ class ServicesManager: ObservableObject {
 
         let normalJson = await Shell
             .pipe("sudo \(Paths.brew) services info --all --json")
-            .out
-            .data(using: .utf8)!
+            .out.data(using: .utf8)!
 
         let normalServices = try! JSONDecoder()
             .decode([HomebrewService].self, from: normalJson)
@@ -38,9 +37,7 @@ class ServicesManager: ObservableObject {
             )
         }
 
-        guard let userServiceNames = Preferences.custom.services else {
-            return
-        }
+        guard let userServiceNames = Preferences.custom.services else { return }
 
         let rootJson = await Shell
             .pipe("\(Paths.brew) services info --all --json")

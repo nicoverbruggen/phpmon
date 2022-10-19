@@ -136,24 +136,22 @@ class RealShell: ShellProtocol {
         }
 
         return try await withCheckedThrowingContinuation({ continuation in
-            var timer: Timer?
+            let timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in
+                task.terminationHandler = nil
+                task.terminate()
+                return continuation.resume(throwing: ShellError.timedOut)
+            }
 
             task.terminationHandler = { [timer, output] process in
                 process.haltListening()
 
-                timer?.invalidate()
+                timer.invalidate()
 
                 if !output.err.isEmpty {
                     return continuation.resume(returning: (process, .err(output.err)))
                 }
 
                 return continuation.resume(returning: (process, .out(output.out)))
-            }
-
-            timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in
-                task.terminationHandler = nil
-                task.terminate()
-                return continuation.resume(throwing: ShellError.timedOut)
             }
 
             task.launch()
