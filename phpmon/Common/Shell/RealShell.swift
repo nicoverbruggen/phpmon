@@ -125,11 +125,11 @@ class RealShell: ShellProtocol {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
-        let task = getShellProcess(for: command)
+        let process = getShellProcess(for: command)
 
         let output = ShellOutput.empty()
 
-        task.listen { incoming in
+        process.listen { incoming in
             output.out += incoming; didReceiveOutput(incoming, .stdOut)
         } didReceiveStandardErrorData: { incoming in
             output.err += incoming; didReceiveOutput(incoming, .stdErr)
@@ -137,15 +137,18 @@ class RealShell: ShellProtocol {
 
         return try await withCheckedThrowingContinuation({ continuation in
             let timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in
-                task.terminationHandler = nil
-                task.terminate()
-                return continuation.resume(throwing: ShellError.timedOut)
+                // Only terminate if the process is still running
+                if process.isRunning {
+                    process.terminationHandler = nil
+                    process.terminate()
+                    return continuation.resume(throwing: ShellError.timedOut)
+                }
             }
 
-            task.terminationHandler = { [timer, output] process in
-                process.haltListening()
-
+            process.terminationHandler = { [timer, output] process in
                 timer.invalidate()
+
+                process.haltListening()
 
                 if !output.err.isEmpty {
                     return continuation.resume(returning: (process, .err(output.err)))
@@ -154,8 +157,8 @@ class RealShell: ShellProtocol {
                 return continuation.resume(returning: (process, .out(output.out)))
             }
 
-            task.launch()
-            task.waitUntilExit()
+            process.launch()
+            process.waitUntilExit()
         })
     }
 }
