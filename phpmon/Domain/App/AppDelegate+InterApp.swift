@@ -20,8 +20,7 @@ extension AppDelegate {
      
      Please note that PHP Monitor needs to be running in the background for this to work.
      */
-    func application(_ application: NSApplication, open urls: [URL]) {
-
+    @MainActor func application(_ application: NSApplication, open urls: [URL]) {
         if !Preferences.isEnabled(.allowProtocolForIntegrations) {
             Log.info("Acting on commands via phpmon:// has been disabled.")
             return

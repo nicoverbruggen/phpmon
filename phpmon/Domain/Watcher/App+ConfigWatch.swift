@@ -21,7 +21,7 @@ extension App {
             let distance = self.watcher.lastUpdate?.distance(to: Date().timeIntervalSince1970)
             if distance == nil || distance != nil && distance! > 0.75 {
                 Log.perf("Refreshing menu...")
-                MainMenu.shared.reloadPhpMonitorMenuInBackground()
+                Task { @MainActor in MainMenu.shared.reloadPhpMonitorMenuInBackground() }
                 self.watcher.lastUpdate = Date().timeIntervalSince1970
             }
         }

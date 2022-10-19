@@ -70,7 +70,7 @@ class WarningManager {
             await loopOverEvaluations()
         }
 
-        MainMenu.shared.rebuild()
+        await MainMenu.shared.rebuild()
     }
 
     private func loopOverEvaluations() async {

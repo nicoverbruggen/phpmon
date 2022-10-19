@@ -7,6 +7,7 @@
 
 import Cocoa
 
+@MainActor
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
 
     static let shared = MainMenu()
@@ -31,38 +32,22 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Rebuilds the menu (either asynchronously or synchronously).
      Defaults to rebuilding the menu asynchronously.
      */
-    func rebuild(async: Bool = true) {
-        if !async {
-            self.rebuildMenu()
-            return
-        }
-
-        // Update the menu item on the main thread
+    func rebuild() {
         Task { @MainActor [self] in
-            self.rebuildMenu()
+            let menu = StatusMenu()
+            menu.addMenuItems()
+            menu.items.forEach({ (item) in
+                item.target = self
+            })
+            statusItem.menu = menu
+            statusItem.menu?.delegate = self
         }
-    }
-
-    /**
-     Update the menu's contents, based on what's going on.
-     This will rebuild the entire menu, so this can take a few moments.
-     
-     Use `rebuild(async:)` to ensure the rebuilding happens in the background.
-     */
-    private func rebuildMenu() {
-        let menu = StatusMenu()
-        menu.addMenuItems()
-        menu.items.forEach({ (item) in
-            item.target = self
-        })
-        statusItem.menu = menu
-        statusItem.menu?.delegate = self
     }
 
     /**
      Sets the status bar image based on a version string.
      */
-    @MainActor func setStatusBarImage(version: String) {
+    func setStatusBarImage(version: String) {
         setStatusBar(
             image: (Preferences.preferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
                 ? MenuBarImageGenerator.textToImageWithIcon(text: version)
@@ -74,7 +59,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Sets the status bar image, based on the provided NSImage.
      The image will be used as a template image.
      */
-    @MainActor func setStatusBar(image: NSImage) {
+    func setStatusBar(image: NSImage) {
         if let button = statusItem.button {
             image.isTemplate = true
             button.image = image
@@ -89,7 +74,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             PhpEnv.shared.currentInstall = ActivePhpInstallation()
             updatePhpVersionInStatusBar()
         } else {
-            Log.perf("Skipping version refresh due to busy status")
+            Log.perf("Skipping version refresh due to busy status!")
         }
     }
 
@@ -103,13 +88,15 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Reloads the menu in the foreground.
      This mimics the exact behaviours of `asyncExecution` as set in the method below.
      */
-    @MainActor @objc func reloadPhpMonitorMenuInForeground() async {
-        refreshActiveInstallation()
-        refreshIcon()
-        Task { @MainActor in
-            self.rebuild(async: false)
+    @objc func reloadPhpMonitorMenuInForeground() {
+        Log.perf("The menu will be reloaded...")
+        Task { [self] in
+            self.refreshActiveInstallation()
+            self.refreshIcon()
+            self.rebuild()
+            await ServicesManager.loadHomebrewServices()
+            Log.perf("The menu has been reloaded!")
         }
-        await ServicesManager.loadHomebrewServices()
     }
 
     /**

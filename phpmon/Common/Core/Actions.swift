@@ -88,23 +88,23 @@ class Actions {
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
 
-    public static func openGlobalComposerFolder() {
-        let file = URL(string: "~/.composer/composer.json".replacingTildeWithHomeDirectory)!
-        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
-    }
-
     public static func openPhpConfigFolder(version: String) {
         let files = [NSURL(fileURLWithPath: "\(Paths.etcPath)/php/\(version)/php.ini")]
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
 
+    public static func openGlobalComposerFolder() {
+        let file = URL(string: "file://~/.composer/composer.json".replacingTildeWithHomeDirectory)!
+        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+    }
+
     public static func openValetConfigFolder() {
-        let file = URL(string: "~/.config/valet".replacingTildeWithHomeDirectory)!
+        let file = URL(string: "file://~/.config/valet".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
     public static func openPhpMonitorConfigFile() {
-        let file = URL(string: "~/.config/phpmon".replacingTildeWithHomeDirectory)!
+        let file = URL(string: "file://~/.config/phpmon".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
