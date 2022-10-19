@@ -74,7 +74,8 @@ import Foundation
 
     private func composerUpdateSucceeded() {
         // Closing the window should happen after a slight delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+        Task { @MainActor in
+            await delay(seconds: 1.0)
             window?.close()
             if shouldNotify {
                 LocalNotification.send(
@@ -91,7 +92,7 @@ import Foundation
 
     private func composerUpdateFailed() {
         // Showing that something failed should be shown immediately
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             window?.setType(info: false)
             window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
             window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
@@ -105,7 +106,7 @@ import Foundation
 
     private func removeBusyStatus() {
         PhpEnv.shared.isBusy = false
-        DispatchQueue.main.async {
+        Task { @MainActor in
             MainMenu.shared.updatePhpVersionInStatusBar()
         }
     }

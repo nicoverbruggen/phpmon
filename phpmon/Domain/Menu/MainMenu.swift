@@ -38,7 +38,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
 
         // Update the menu item on the main thread
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             self.rebuildMenu()
         }
     }
@@ -106,7 +106,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @MainActor @objc func reloadPhpMonitorMenuInForeground() async {
         refreshActiveInstallation()
         refreshIcon()
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.rebuild(async: false)
         }
         await ServicesManager.loadHomebrewServices()
@@ -117,7 +117,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Did this need a comment? No, probably not.
      */
     @objc func showWelcomeTour() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             OnboardingWindowController.show()
         }
     }
@@ -137,7 +137,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             if PhpEnv.shared.isBusy {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
@@ -155,7 +155,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Updates the icon to be displayed as busy. */
     @objc func setBusyImage() {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
     }

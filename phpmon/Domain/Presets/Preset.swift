@@ -104,7 +104,7 @@ struct Preset: Codable, Equatable {
         // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
         await Actions.restartPhpFpm()
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             // Show the correct notification
             if wasRollback {
                 LocalNotification.send(
@@ -134,7 +134,7 @@ struct Preset: Codable, Equatable {
             await MainMenu.shared.switchToPhp(self.version!)
             return true
         } else {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),

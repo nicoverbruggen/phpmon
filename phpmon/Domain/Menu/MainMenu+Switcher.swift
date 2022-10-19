@@ -22,7 +22,7 @@ extension MainMenu {
             await self.reloadDomainListData()
 
             // Perform UI updates on main thread
-            DispatchQueue.main.async { [self] in
+            Task { @MainActor [self] in
                 updatePhpVersionInStatusBar()
                 rebuild()
 

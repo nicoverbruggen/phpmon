@@ -75,7 +75,8 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
             await Shell.quiet("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)")
             await Actions.restartNginx()
 
-            DispatchQueue.main.async {
+            Task { @MainActor in
+                // TODO: Check if this can be removed
                 App.shared.domainListWindowController?.contentVC.setUINotBusy()
                 App.shared.domainListWindowController?.pressedReload(nil)
             }

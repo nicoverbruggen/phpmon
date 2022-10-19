@@ -38,7 +38,7 @@ extension App {
         // Check whether the watcher exists and schedule on the main thread
         // if we don't consistently do this, the app will create duplicate watchers
         // due to timing issues, which creates retain cycles.
-        DispatchQueue.main.async {
+        Task { @MainActor in
             // Watcher needs to be created
             if self.watcher == nil {
                 self.startWatcher(url)

@@ -110,7 +110,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     @MainActor public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            DispatchQueue.main.async { self.progressIndicator.startAnimation(true) }
+            Task {
+                @MainActor in self.progressIndicator.startAnimation(true)
+            }
         })
 
         tableView.alphaValue = 0.3
@@ -141,7 +143,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             setUIBusy()
             await execute()
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            Task { @MainActor in
+                await delay(seconds: 0.2)
                 completion()
                 setUINotBusy()
             }
@@ -188,7 +191,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         domains = Valet.getDomainListable()
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
                 self.tableView.scrollRowToVisible(site.offset)
                 if secure && !site.element.getListableSecured() {
@@ -257,7 +260,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             self.applySortDescriptor(sortDescriptor)
         }
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.tableView.reloadData()
         }
     }

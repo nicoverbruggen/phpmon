@@ -26,13 +26,12 @@ class InternalSwitcher: PhpSwitcher {
         Log.info("Switching to \(version), unlinking all versions...")
 
         let versions = getVersionsToBeHandled(version)
-
         let group = DispatchGroup()
 
         PhpEnv.shared.availablePhpVersions.forEach { (available) in
             group.enter()
 
-            Task { // TODO: Use structured concurrency
+            Task {
                 await self.disableDefaultPhpFpmPool(available)
                 await self.stopPhpVersion(available)
                 group.leave()
@@ -40,7 +39,7 @@ class InternalSwitcher: PhpSwitcher {
         }
 
         group.notify(queue: .global(qos: .userInitiated)) {
-            Task { // TODO: Use structured concurrency
+            Task {
                 Log.info("All versions have been unlinked!")
                 Log.info("Linking the new version!")
 

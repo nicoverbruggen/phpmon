@@ -125,7 +125,7 @@ class HomebrewDiagnostics {
      Show this alert in case the tapped Cask does cause issues because of the conflict.
      */
     private static func presentAlertAboutConflict() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert()
                 .withInformation(
                     title: "alert.php_alias_conflict.title".localized,

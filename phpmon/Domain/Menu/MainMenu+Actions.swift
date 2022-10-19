@@ -237,7 +237,7 @@ extension MainMenu {
         PhpEnv.shared.delegate = self
         PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
 
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+        Task(priority: .userInitiated) { [unowned self] in
             updatePhpVersionInStatusBar()
             rebuild()
             PhpEnv.switcher.performSwitch(
@@ -263,7 +263,7 @@ extension MainMenu {
      any code after will run only after the switcher is done.
      */
     func switchToPhp(_ version: String) async {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             setBusyImage()
             PhpEnv.shared.isBusy = true
             PhpEnv.shared.delegate = self

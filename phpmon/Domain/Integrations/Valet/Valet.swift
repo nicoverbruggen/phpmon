@@ -79,7 +79,7 @@ class Valet {
      */
     public static func notifyAboutUnsupportedTLD() {
         if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert().withInformation(
                     title: "alert.warnings.tld_issue.title".localized,
                     subtitle: "alert.warnings.tld_issue.subtitle".localized,
@@ -171,7 +171,7 @@ class Valet {
         if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version
             Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert()
                     .withInformation(
                         title: "alert.min_valet_version.title".localized,

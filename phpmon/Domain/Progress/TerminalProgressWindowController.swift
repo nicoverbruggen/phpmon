@@ -35,7 +35,7 @@ class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
     }
 
     public func addToConsole(_ string: String) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             guard let textView = self.progressView?.textView else {
                 return
             }

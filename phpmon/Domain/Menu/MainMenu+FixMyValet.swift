@@ -32,7 +32,7 @@ extension MainMenu {
         }
 
         Actions.fixMyValet {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 if previousVersion == PhpEnv.brewPhpAlias {
                     self.presentAlertForSameVersion()
                 } else {

@@ -100,7 +100,7 @@ class Stats {
                             "times, switched \(Stats.successfulSwitchCount) times).")
         }
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             let donate = BetterAlert()
                 .withInformation(
                     title: "startup.sponsor_encouragement.title".localized,

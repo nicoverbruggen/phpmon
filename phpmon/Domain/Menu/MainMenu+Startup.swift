@@ -14,7 +14,7 @@ extension MainMenu {
      */
     func startup() async {
         // Start with the icon
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
 
@@ -105,7 +105,7 @@ extension MainMenu {
         // Present first launch screen if needed
         if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
             Log.info("Should present the first launch screen!")
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 OnboardingWindowController.show()
             }
         }
@@ -121,7 +121,7 @@ extension MainMenu {
      When the environment is not OK, present an alert to inform the user.
      */
     private func onEnvironmentFail() async {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             BetterAlert()
                 .withInformation(
                     title: "alert.cannot_start.title".localized,
@@ -145,7 +145,7 @@ extension MainMenu {
      Schedule a request to fetch the PHP version every 60 seconds.
      */
     private func startSharedTimer() {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             App.shared.timer = Timer.scheduledTimer(
                 timeInterval: 60,
                 target: self,

@@ -60,7 +60,7 @@ class InterApp {
             if PhpEnv.shared.availablePhpVersions.contains(version) {
                 MainMenu.shared.switchToPhpVersion(version)
             } else {
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     BetterAlert().withInformation(
                         title: "alert.php_switch_unavailable.title".localized,
                         subtitle: "alert.php_switch_unavailable.subtitle".localized(version)

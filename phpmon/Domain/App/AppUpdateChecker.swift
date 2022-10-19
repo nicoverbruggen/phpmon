@@ -119,7 +119,7 @@ class AppUpdateChecker {
     }
 
     private static func notifyVersionDoesNotNeedUpgrade() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.is_latest_version.title".localized,
                 subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
@@ -134,7 +134,7 @@ class AppUpdateChecker {
         let devSuffix = isDev ? "-dev" : ""
         let command = isDev ? "brew upgrade phpmon-dev" : "brew upgrade phpmon"
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title".localized(version.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle".localized,
@@ -160,7 +160,7 @@ class AppUpdateChecker {
     }
 
     private static func notifyAboutConnectionIssue() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.cannot_check_for_update.title".localized,
                 subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,

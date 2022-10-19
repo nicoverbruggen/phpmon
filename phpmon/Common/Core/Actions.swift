@@ -89,8 +89,7 @@ class Actions {
     }
 
     public static func openGlobalComposerFolder() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".composer/composer.json")
+        let file = URL(string: "~/.composer/composer.json".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
@@ -100,14 +99,12 @@ class Actions {
     }
 
     public static func openValetConfigFolder() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/valet")
+        let file = URL(string: "~/.config/valet".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
     public static func openPhpMonitorConfigFile() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/phpmon")
+        let file = URL(string: "~/.config/phpmon".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
@@ -115,6 +112,7 @@ class Actions {
 
     public static func createTempPhpInfoFile() async -> URL {
         // Write a file called `phpmon_phpinfo.php` to /tmp
+        // TODO: Use FileSystem abstraction
         try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
 
         // Tell php-cgi to run the PHP and output as an .html file

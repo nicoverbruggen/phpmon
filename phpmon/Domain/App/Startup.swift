@@ -73,7 +73,7 @@ class Startup {
      initialized when it is done working. The switcher must be initialized on the main thread.
      */
     private func initializeSwitcher() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             let appDelegate = NSApplication.shared.delegate as! AppDelegate
             appDelegate.initializeSwitcher()
         }

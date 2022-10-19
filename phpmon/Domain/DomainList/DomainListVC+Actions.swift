@@ -35,7 +35,7 @@ extension DomainListVC {
             await Actions.restartNginx()
 
             // 4. Reload site list
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 App.shared.domainListWindowController?.pressedReload(nil)
             }
         }

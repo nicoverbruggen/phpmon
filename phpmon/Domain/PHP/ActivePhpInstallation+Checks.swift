@@ -26,7 +26,7 @@ extension ActivePhpInstallation {
                 return
             }
 
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert()
                     .withInformation(
                         title: "alert.php_fpm_broken.title".localized,
