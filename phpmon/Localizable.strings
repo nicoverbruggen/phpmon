@@ -508,7 +508,7 @@ If you are seeing this message but are confused why this folder has gone missing
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
-"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
+"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update` or `brew tap homebrew/services`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
 /// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "A configuration issue was detected";
