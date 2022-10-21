@@ -90,7 +90,8 @@ class ActivePhpInstallation {
         let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
-        self.version = PhpVersionNumber.make(from: output)
+
+        self.version = try! PhpVersionNumber.parse(output)
     }
 
     /**
