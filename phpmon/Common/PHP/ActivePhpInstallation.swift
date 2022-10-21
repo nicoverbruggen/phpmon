@@ -39,7 +39,12 @@ class ActivePhpInstallation {
 
     init() {
         // Show information about the current version
-        determineVersion()
+        do {
+            try determineVersion()
+        } catch {
+            // TODO: Throw up an alert if the PHP version cannot be parsed
+            fatalError("Could not determine or parse PHP version")
+        }
 
         // Initialize the list of ini files that are loaded
         iniFiles = []
@@ -86,12 +91,12 @@ class ActivePhpInstallation {
      When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
-    private func determineVersion() {
+    private func determineVersion() throws {
         let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
-        self.version = try! PhpVersionNumber.parse(output)
+        self.version = try? PhpVersionNumber.parse(output)
     }
 
     /**
