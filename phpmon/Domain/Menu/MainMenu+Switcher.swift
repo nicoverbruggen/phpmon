@@ -12,9 +12,9 @@ extension MainMenu {
 
     // MARK: - PhpSwitcherDelegate
 
-    func switcherDidStartSwitching(to version: String) {}
+    nonisolated func switcherDidStartSwitching(to version: String) {}
 
-    func switcherDidCompleteSwitch(to version: String) {
+    nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
         PhpEnv.shared.isBusy = false
 

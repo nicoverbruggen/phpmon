@@ -145,7 +145,7 @@ extension MainMenu {
      Schedule a request to fetch the PHP version every 60 seconds.
      */
     private func startSharedTimer() {
-        Task { @MainActor [self] in
+        DispatchQueue.main.async { [self] in
             App.shared.timer = Timer.scheduledTimer(
                 timeInterval: 60,
                 target: self,
