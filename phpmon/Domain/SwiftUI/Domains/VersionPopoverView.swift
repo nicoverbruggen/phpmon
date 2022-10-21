@@ -121,7 +121,7 @@ struct DisclaimerView: View {
 struct VersionPopoverView_Previews: PreviewProvider {
     static var previews: some View {
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "amazingwebsite",
                 tld: "test",
                 secure: true,
@@ -135,7 +135,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         .previewDisplayName("Unknown Requirement")
 
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "amazingwebsite",
                 tld: "test",
                 secure: true,
@@ -148,7 +148,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Requirement Matches")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,
@@ -162,7 +162,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Isolated")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,
@@ -176,7 +176,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Isolated Mismatch")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,

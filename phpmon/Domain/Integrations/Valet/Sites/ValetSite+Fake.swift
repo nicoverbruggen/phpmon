@@ -8,8 +8,7 @@
 
 import Foundation
 
-extension ValetSite {
-
+class FakeValetSite: ValetSite {
     convenience init(
         fakeWithName name: String,
         tld: String,
@@ -44,5 +43,4 @@ extension ValetSite {
                     .isEmpty
             }.contains(true)
     }
-
 }
