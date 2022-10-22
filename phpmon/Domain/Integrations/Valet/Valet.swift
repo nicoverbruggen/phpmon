@@ -78,8 +78,7 @@ class Valet {
      Notify the user about a non-default TLD being set.
      */
     public static func notifyAboutUnsupportedTLD() {
-        if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD)
-        {
+        if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
             DispatchQueue.main.async {
                 BetterAlert().withInformation(
                     title: "alert.warnings.tld_issue.title".localized,
