@@ -227,6 +227,7 @@
 "prefs.integrations" = "Integrations:";
 "prefs.updates" = "Updates:";
 "prefs.notifications" = "Notifications:";
+"prefs.warnings" = "Warnings:";
 "prefs.menu_contents" = "Features in Menu:";
 
 "prefs.icon_options.php" = "Display PHP Icon";
@@ -278,6 +279,9 @@
 
 "prefs.notify_about_composer_success_desc" = "Displays a notification when the global Composer configuration was successfully updated.";
 "prefs.notify_about_composer_success" = "Notify about global composer update";
+
+"prefs.warn_about_non_standard_tld_desc" = "If you use a non-standard TLD, you may not wish to get repeated notifications about this.";
+"prefs.warn_about_non_standard_tld" = "Warn about non-standard TLD";
 
 "prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
 "prefs.display_global_version_switcher" = "PHP Switcher";
@@ -504,7 +508,7 @@ If you are seeing this message but are confused why this folder has gone missing
 /// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
-"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
+"startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update` or `brew tap homebrew/services`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
 /// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "A configuration issue was detected";
@@ -548,6 +552,7 @@ If you are seeing this message but are confused why this folder has gone missing
 "alert.warnings.tld_issue.title" = "You are not using `.test` as the TLD for Valet.";
 "alert.warnings.tld_issue.subtitle" = "Using a non-default TLD may not work correctly and is not officially supported.";
 "alert.warnings.tld_issue.description" = "PHP Monitor will remain functional, but there might be issues: the app might not correctly show which domains have been secured. For optimal results, go to your Valet configuration file (config.json in the Valet directory) and change the TLD back to `test`.";
+"alert.do_not_tell_again" = "Don't Tell Me Again";
 
 // WARNINGS
 
