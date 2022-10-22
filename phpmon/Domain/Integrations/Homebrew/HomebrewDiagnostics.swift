@@ -77,7 +77,7 @@ class HomebrewDiagnostics {
     private static func hasAliasConflict() -> Bool {
         let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
 
-        if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") {
+        if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") || tapAlias.isEmpty {
             Log.info("The user does not appear to have tapped: shivammathur/php")
             return false
         } else {
