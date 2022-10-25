@@ -25,3 +25,35 @@ protocol DomainListable {
     func getListableUrl() -> URL?
 
 }
+
+extension ValetSite {
+
+    func getListableName() -> String {
+        return self.name
+    }
+
+    func getListableSecured() -> Bool {
+        return self.secured
+    }
+
+    func getListableAbsolutePath() -> String {
+        return self.absolutePath
+    }
+
+    func getListablePhpVersion() -> String {
+        return self.servingPhpVersion
+    }
+
+    func getListableKind() -> String {
+        return (self.aliasPath == nil) ? "linked" : "parked"
+    }
+
+    func getListableType() -> String {
+        return self.driver ?? "ZZZ"
+    }
+
+    func getListableUrl() -> URL? {
+        return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
+    }
+
+}

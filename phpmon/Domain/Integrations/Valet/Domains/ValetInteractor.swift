@@ -9,7 +9,6 @@
 import Foundation
 
 class ValetInteractor {
-
     public static func secure(site: ValetSite) async throws {
         // TODO
     }
@@ -25,5 +24,4 @@ class ValetInteractor {
     public static func unlink(site: ValetSite) async throws {
         // TODO
     }
-
 }

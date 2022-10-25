@@ -19,11 +19,10 @@ struct Constants {
      The minimum version of Valet that is recommended.
      If the installed version is older, a notification will be shown
      every time the app launches (with a recommendation to upgrade).
-     
-     The minimum requirement is currently synced to PHP 8.1 compatibility.
-     See also: https://github.com/laravel/valet/releases/tag/v2.16.2
+
+     See also: https://github.com/laravel/valet/releases/tag/v3.1.10
      */
-    static let MinimumRecommendedValetVersion = "2.16.2"
+    static let MinimumRecommendedValetVersion = "3.1.10"
 
     /**
      * The PHP versions supported by this application.
@@ -42,13 +41,14 @@ struct Constants {
         "7.4",
         "8.0",
         "8.1",
+        "8.2",
 
         // ====================
         // EXPERIMENTAL SUPPORT
         // ====================
         // Every release that supports the next release will always support the next
         // dev release. In this case, that means that the version below is detected.
-        "8.2"
+        "8.3"
     ]
 
     struct Urls {
