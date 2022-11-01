@@ -41,23 +41,16 @@ class Valet {
         self.version = nil
         self.sites = []
         self.proxies = []
+        self.checkForMarketingMode()
     }
 
-    /**
-     If marketing mode is enabled, show a list of sites that are used for promotional screenshots.
-     This can be done by swapping out the real Valet scanner with one that always returns a fixed
-     list of fake sites. You should not interact with these sites!
-     */
-    static var siteScanner: SiteScanner {
+    /// If marketing mode is enabled, you can tinker around with the site list
+    /// without actually modifying items on your local system.
+    public func checkForMarketingMode() {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
-            return FakeSiteScanner()
+            Log.info("Using a fake list of sites for Marketing Mode!")
+            ValetScanners.useFake()
         }
-
-        return ValetSiteScanner()
-    }
-
-    static var proxyScanner: ProxyScanner {
-        return ValetProxyScanner()
     }
 
     /**
@@ -198,7 +191,7 @@ class Valet {
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() -> Int {
-        return Self.siteScanner
+        return ValetScanners.siteScanner
             .resolveSiteCount(paths: config.paths)
     }
 
@@ -208,13 +201,13 @@ class Valet {
     private func resolvePaths() {
         isBusy = true
 
-        sites = Self.siteScanner
+        sites = ValetScanners.siteScanner
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        proxies = Self.proxyScanner
+        proxies = ValetScanners.proxyScanner
             .resolveProxies(
                 directoryPath: FileManager.default
                     .homeDirectoryForCurrentUser

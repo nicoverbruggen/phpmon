@@ -60,7 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         #if DEBUG
         logger.verbosity = .performance
-
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
         }
@@ -89,9 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     static func initializeTestingProfile(_ path: String) {
         Log.info("The configuration with path `\(path)` is being requested...")
-        TestableConfiguration
-            .loadFrom(path: path)
-            .apply()
+        TestableConfiguration.loadFrom(path: path).apply()
     }
 
     // MARK: - Lifecycle

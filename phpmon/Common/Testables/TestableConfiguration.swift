@@ -15,9 +15,18 @@ public struct TestableConfiguration: Codable {
     var commandOutput: [String: String]
 
     func apply() {
+        Log.separator()
+        Log.info("USING TESTABLE CONFIGURATION...")
+        Log.separator()
+        Log.info("Applying fake shell...")
         ActiveShell.useTestable(shellOutput)
+        Log.info("Applying fake filesystem...")
         ActiveFileSystem.useTestable(filesystem)
+        Log.info("Applying fake commands...")
         ActiveCommand.useTestable(commandOutput)
+        Log.info("Applying fake scanner...")
+        ValetScanners.useFake()
+        Log.separator()
     }
 
     func toJson(pretty: Bool = false) -> String {

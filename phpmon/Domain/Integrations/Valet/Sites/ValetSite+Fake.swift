@@ -35,6 +35,8 @@ class FakeValetSite: ValetSite {
             self.isolatedPhpVersion = PhpInstallation(isolated)
         }
 
+        // TODO: Resolve this at a later time
+        /*
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
                 let origin = self.isolatedPhpVersion?.versionNumber.short ?? PhpEnv.phpInstall.version.long
@@ -42,5 +44,6 @@ class FakeValetSite: ValetSite {
                     .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
                     .isEmpty
             }.contains(true)
+         */
     }
 }
