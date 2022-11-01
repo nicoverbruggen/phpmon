@@ -89,5 +89,27 @@ class TestableFileSystemTest: XCTestCase {
         )
     }
 
-    // TODO: Implement and test the remove() and move() methods and reorganize method order
+    func test_can_delete_directory_recursively() {
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/documents"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/documents/filters"))
+        XCTAssertTrue(FileSystem.fileExists("/home/user/documents/filters/filter1.txt"))
+
+        try! FileSystem.remove("/home/user/documents")
+
+        XCTAssertFalse(FileSystem.directoryExists("/home/user/documents"))
+        XCTAssertFalse(FileSystem.directoryExists("/home/user/documents/filters"))
+        XCTAssertFalse(FileSystem.fileExists("/home/user/documents/filters/filter1.txt"))
+    }
+
+    func test_can_move_directory() {
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/documents"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/documents/filters"))
+        XCTAssertTrue(FileSystem.fileExists("/home/user/documents/filters/filter1.txt"))
+
+        try! FileSystem.move(from: "/home/user/documents", to: "/home/user/new")
+
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/new"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/new/filters"))
+        XCTAssertTrue(FileSystem.fileExists("/home/user/new/filters/filter1.txt"))
+    }
 }

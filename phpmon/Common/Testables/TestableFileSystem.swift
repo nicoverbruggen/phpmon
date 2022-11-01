@@ -9,23 +9,41 @@
 import Foundation
 
 class TestableFileSystem: FileSystemProtocol {
+
+    /**
+     Initialize a fake filesystem with a bunch of files.
+     You do not need to specify directories (unless symlinks), those will be created automatically.
+     */
     init(files: [String: FakeFile]) {
         self.files = files
 
-        for key in files.keys where key.contains("~") {
+        // Ensure that each of the ~ characters are replaced with the home directory path
+        for key in self.files.keys where key.contains("~") {
             self.files.renameKey(
                 fromKey: key,
                 toKey: key.replacingOccurrences(of: "~", with: self.homeDirectory)
             )
         }
 
+        // Ensure that intermediate directories are created
         for file in self.files {
             self.createIntermediateDirectories(file.key)
         }
     }
 
-    var files: [String: FakeFile]
+    /**
+     Internal file handling of the fake filesystem.
+     You can easily dump what's in here by using:
+     ```
+     let fs = FileSystem as! TestableFileSystem
+     fs.printContents()
+     ```
+     */
+    private(set) var files: [String: FakeFile]
 
+    /**
+     The home directory for the fake filesystem.
+     */
     private(set) var homeDirectory = "/Users/fake"
 
     // MARK: - Basics
@@ -104,12 +122,27 @@ class TestableFileSystem: FileSystemProtocol {
         let path = path.replacingTildeWithHomeDirectory
         let newPath = newPath.replacingTildeWithHomeDirectory
 
-        // TODO
+        self.files.keys.forEach { key in
+            if key.hasPrefix(path) {
+                self.files.renameKey(
+                    fromKey: key,
+                    toKey: key.replacingOccurrences(of: path, with: newPath)
+                )
+            }
+        }
+
+        self.files.renameKey(fromKey: path, toKey: newPath)
     }
 
     func remove(_ path: String) throws {
-        let path = path.replacingTildeWithHomeDirectory
-        // TODO
+        // Remove recursively
+        self.files.keys.forEach { key in
+            if key.hasPrefix(path) {
+                self.files.removeValue(forKey: key)
+            }
+        }
+
+        self.files.removeValue(forKey: path)
     }
 
     // MARK: — Attributes

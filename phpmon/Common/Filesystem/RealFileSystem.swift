@@ -41,23 +41,21 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
-        todo()
-        return []
+        return try FileManager.default.contentsOfDirectory(atPath: path)
     }
 
     func getDestinationOfSymlink(_ path: String) throws -> String {
-        todo()
-        return ""
+        return try FileManager.default.destinationOfSymbolicLink(atPath: path)
     }
 
     // MARK: - Move & Delete Files
 
     func move(from path: String, to newPath: String) throws {
-        // TODO
+        try FileManager.default.moveItem(atPath: path, toPath: newPath)
     }
 
     func remove(_ path: String) throws {
-        // TODO
+        try FileManager.default.removeItem(atPath: path)
     }
 
     // MARK: — FS Attributes
