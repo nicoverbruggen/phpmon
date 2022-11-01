@@ -16,6 +16,8 @@ class TestableConfigurations {
             filesystem: [
                 "/usr/local/bin/"
                     : .fake(.directory, readOnly: true),
+                "/usr/local/bin/composer"
+                    : .fake(.binary),
                 "/opt/homebrew/bin/brew"
                     : .fake(.binary),
                 "/opt/homebrew/bin/php"
