@@ -1,6 +1,6 @@
 //
 //  Utility.swift
-//  phpmon-tests
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 14/02/2021.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  VersionExtractorTest.swift
-//  phpmon-tests
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/12/2021.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.

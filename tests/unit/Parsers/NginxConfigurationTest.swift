@@ -1,6 +1,6 @@
 //
 //  NginxConfigurationTest.swift
-//  phpmon-tests
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/11/2021.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.

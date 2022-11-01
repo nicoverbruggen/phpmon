@@ -15,27 +15,67 @@ extension String {
 }
 
 class RealFileSystem: FileSystemProtocol {
-    /**
-     Checks if a given path is a file *and* executable.
-     */
+
+    // MARK: - Basics
+
+    func createDirectory(_ path: String, withIntermediateDirectories: Bool) {
+        try! FileManager.default.createDirectory(
+            atPath: path.replacingTildeWithHomeDirectory,
+            withIntermediateDirectories: withIntermediateDirectories
+        )
+    }
+
+    func writeAtomicallyToFile(_ path: String, content: String) throws {
+        try content.write(
+            to: URL(fileURLWithPath: path.replacingTildeWithHomeDirectory),
+            atomically: true,
+            encoding: String.Encoding.utf8
+        )
+    }
+
+    func readStringFromFile(_ path: String) throws -> String {
+        return try String(
+            contentsOf: URL(fileURLWithPath: path.replacingTildeWithHomeDirectory),
+            encoding: .utf8
+        )
+    }
+
+    // MARK: - Move & Delete Files
+
+    func move(from path: String, to newPath: String) throws {
+        // TODO
+    }
+
+    func remove(_ path: String) throws {
+        // TODO
+    }
+
+    // MARK: — FS Attributes
+
+    func makeExecutable(_ path: String) throws {
+        system("chmod +x \(path.replacingTildeWithHomeDirectory)")
+    }
+
+    // MARK: - Checks
+
     func isExecutableFile(_ path: String) -> Bool {
         return FileManager.default.isExecutableFile(
             atPath: path.replacingTildeWithHomeDirectory
         )
     }
 
-    /**
-     Checks if a file or directory exists at the provided path.
-     */
-    func exists(_ path: String) -> Bool {
+    func isWriteableFile(_ path: String) -> Bool {
+        return FileManager.default.isWritableFile(
+            atPath: path.replacingTildeWithHomeDirectory
+        )
+    }
+
+    func anyExists(_ path: String) -> Bool {
         return FileManager.default.fileExists(
             atPath: path.replacingTildeWithHomeDirectory
         )
     }
 
-    /**
-     Checks if a file exists at the provided path.
-     */
     func fileExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
@@ -46,9 +86,6 @@ class RealFileSystem: FileSystemProtocol {
         return exists && !isDirectory.boolValue
     }
 
-    /**
-     Checks if a directory exists at the provided path.
-     */
     func directoryExists(_ path: String) -> Bool {
         var isDirectory: ObjCBool = true
         let exists = FileManager.default.fileExists(
@@ -59,9 +96,6 @@ class RealFileSystem: FileSystemProtocol {
         return exists && isDirectory.boolValue
     }
 
-    /**
-     Checks if a given file is a symbolic link.
-     */
     func fileIsSymlink(_ path: String) -> Bool {
         do {
             let attribs = try FileManager.default.attributesOfItem(atPath: path)

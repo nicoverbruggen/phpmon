@@ -98,13 +98,10 @@ class Valet {
      If the JSON is invalid when the app launches, an alert will be presented, however.
      */
     public func loadConfiguration() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/valet/config.json")
-
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
-                from: try String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
+                from: FileSystem.readStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
             )
         } catch {
             Log.err(error)

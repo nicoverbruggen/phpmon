@@ -9,28 +9,36 @@
 import Foundation
 
 protocol FileSystemProtocol {
-    /**
-     Checks if a given path is a file *and* executable.
-     */
+
+    // MARK: - Basics
+
+    func createDirectory(_ path: String, withIntermediateDirectories: Bool) throws
+
+    func writeAtomicallyToFile(_ path: String, content: String) throws
+
+    func readStringFromFile(_ path: String) throws -> String
+
+    // MARK: - Move & Delete Files
+
+    func move(from path: String, to newPath: String) throws
+
+    func remove(_ path: String) throws
+
+    // MARK: — Attributes
+
+    func makeExecutable(_ path: String) throws
+
+    // MARK: - Checks
+
     func isExecutableFile(_ path: String) -> Bool
 
-    /**
-     Checks if a file or directory exists at the provided path.
-     */
-    func exists(_ path: String) -> Bool
+    func isWriteableFile(_ path: String) -> Bool
 
-    /**
-     Checks if a file exists at the provided path.
-     */
+    func anyExists(_ path: String) -> Bool
+
     func fileExists(_ path: String) -> Bool
 
-    /**
-     Checks if a directory exists at the provided path.
-     */
     func directoryExists(_ path: String) -> Bool
 
-    /**
-     Checks if a given file is a symbolic link.
-     */
     func fileIsSymlink(_ path: String) -> Bool
 }

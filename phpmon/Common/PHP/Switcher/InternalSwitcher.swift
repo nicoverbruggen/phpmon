@@ -74,22 +74,22 @@ class InternalSwitcher: PhpSwitcher {
 
     func requiresDisablingOfDefaultPhpFpmPool(_ version: String) -> Bool {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-        return FileManager.default.fileExists(atPath: pool)
+        return FileSystem.fileExists(pool)
     }
 
     func disableDefaultPhpFpmPool(_ version: String) async {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-        if FileManager.default.fileExists(atPath: pool) {
+        if FileSystem.fileExists(pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
-            let existing = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf")!
-            let new = URL(string: "file://\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon")!
+            let existing = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+            let new = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
             do {
-                if FileManager.default.fileExists(atPath: new.path) {
+                if FileSystem.fileExists(new) {
                     Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
                              + "cleaning up so the newer `www.conf` can be moved again.")
-                    try FileManager.default.removeItem(at: new)
+                    try FileSystem.remove(new)
                 }
-                try FileManager.default.moveItem(at: existing, to: new)
+                try FileSystem.move(from: existing, to: new)
                 Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
             } catch {
                 Log.err(error)

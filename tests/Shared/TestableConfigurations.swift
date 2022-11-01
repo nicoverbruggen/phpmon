@@ -14,6 +14,8 @@ class TestableConfigurations {
         return TestableConfiguration(
             architecture: "arm64",
             filesystem: [
+                "/usr/local/bin/"
+                    : .fake(.directory, readOnly: true),
                 "/opt/homebrew/bin/brew"
                     : .fake(.binary),
                 "/opt/homebrew/bin/php"
@@ -30,10 +32,21 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/Cellar/php/8.1.10_1/bin/php-config"
                     : .fake(.binary),
-                "~/.config/valet"
+                "/Users/user/.config/valet"
                     : .fake(.directory),
+                "/Users/user/.config/valet/config.json"
+                    : .fake(.text, """
+                    {
+                    "tld": "test",
+                    "paths": [
+                        "/Users/user/.config/valet/Sites",
+                        "/Users/user/Sites"
+                    ],
+                        "loopback": "127.0.0.1"
+                    }
+                    """),
                 "/opt/homebrew/etc/php/8.1/php-fpm.d/valet-fpm.conf"
-                    : .fake(.text)
+                    : .fake(.text),
             ],
             shellOutput: [
                 "sysctl -n sysctl.proc_translated"

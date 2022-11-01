@@ -1,6 +1,6 @@
 //
 //  ExtensionParserTest.swift
-//  phpmon-tests
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 13/02/2021.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.

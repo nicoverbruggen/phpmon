@@ -1,6 +1,6 @@
 //
-//  ShellTest.swift
-//  phpmon-tests
+//  TestableShellTest.swift
+//  PHP Monitor
 //
 //  Created by Nico Verbruggen on 20/09/2022.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class FakeShellTest: XCTestCase {
+class TestableShellTest: XCTestCase {
     func test_fake_shell_output_can_be_declared() async {
         let greeting = BatchFakeShellOutput(items: [
             .instant("Hello world\n"),

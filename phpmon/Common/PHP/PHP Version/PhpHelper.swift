@@ -23,12 +23,15 @@ class PhpHelper {
         let inPath = Shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin")
 
         // Check if we can create symlinks (`/usr/local/bin` must be writable)
-        let canWriteSymlinks = FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+        let canWriteSymlinks = FileSystem.isWriteableFile("/usr/local/bin/")
 
         Task { // Create the appropriate folders and check if the files exist
             do {
                 if !FileSystem.directoryExists("~/.config/phpmon/bin") {
-                    await Shell.quiet("mkdir -p ~/.config/phpmon/bin")
+                    try FileSystem.createDirectory(
+                        "~/.config/phpmon/bin",
+                        withIntermediateDirectories: true
+                    )
                 }
 
                 if FileSystem.fileExists(destination) {
@@ -56,17 +59,10 @@ class PhpHelper {
                     export PATH=\(path):$PATH
                     """
 
-                // Write to the destination
-                // TODO: Use FileSystem abstraction
-                try script.write(
-                    to: URL(fileURLWithPath: destination),
-                    atomically: true,
-                    encoding: String.Encoding.utf8
-                )
+                try FileSystem.writeAtomicallyToFile(destination, content: script)
 
-                // Make sure the file is executable
                 if !FileSystem.isExecutableFile(destination) {
-                    await Shell.quiet("chmod +x \(destination)")
+                   try FileSystem.makeExecutable(destination)
                 }
 
                 // Create a symlink if the folder is not in the PATH
