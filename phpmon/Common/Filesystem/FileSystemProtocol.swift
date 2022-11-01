@@ -16,7 +16,11 @@ protocol FileSystemProtocol {
 
     func writeAtomicallyToFile(_ path: String, content: String) throws
 
-    func readStringFromFile(_ path: String) throws -> String
+    func getStringFromFile(_ path: String) throws -> String
+
+    func getContentsOfDirectory(_ path: String) throws -> [String]
+
+    func getDestinationOfSymlink(_ path: String) throws -> String
 
     // MARK: - Move & Delete Files
 
@@ -40,5 +44,7 @@ protocol FileSystemProtocol {
 
     func directoryExists(_ path: String) -> Bool
 
-    func fileIsSymlink(_ path: String) -> Bool
+    func isSymlink(_ path: String) -> Bool
+
+    func isDirectory(_ path: String) -> Bool
 }

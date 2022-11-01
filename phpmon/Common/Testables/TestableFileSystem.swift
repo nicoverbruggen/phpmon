@@ -33,12 +33,36 @@ class TestableFileSystem: FileSystemProtocol {
         self.files[path] = .fake(.text, content)
     }
 
-    func readStringFromFile(_ path: String) throws -> String {
+    func getStringFromFile(_ path: String) throws -> String {
         guard let file = files[path] else {
             throw TestableFileSystemError.fileMissing
         }
 
         return file.content ?? ""
+    }
+
+    func getContentsOfDirectory(_ path: String) throws -> [String] {
+        // TODO
+    }
+
+    func getDestinationOfSymlink(_ path: String) throws -> String {
+        guard let file = files[path] else {
+            throw TestableFileSystemError.fileMissing
+        }
+
+        if file.type != .symlink {
+            throw TestableFileSystemError.notSymlink
+        }
+
+        guard let pathToSymlink = file.content else {
+            throw TestableFileSystemError.invalidSymlink
+        }
+
+        if !files.keys.contains(pathToSymlink) {
+            throw TestableFileSystemError.invalidSymlink
+        }
+
+        return pathToSymlink
     }
 
     // MARK: - Move & Delete Files
@@ -99,12 +123,20 @@ class TestableFileSystem: FileSystemProtocol {
         return [.directory].contains(file.type)
     }
 
-    func fileIsSymlink(_ path: String) -> Bool {
+    func isSymlink(_ path: String) -> Bool {
         guard let file = files[path] else {
             return false
         }
 
         return file.type == .symlink
+    }
+
+    func isDirectory(_ path: String) -> Bool {
+        guard let file = files[path] else {
+            return false
+        }
+
+        return file.type == .directory
     }
 }
 
@@ -139,4 +171,6 @@ class FakeFile: Codable {
 enum TestableFileSystemError: Error {
     case fileMissing
     case alreadyExists
+    case notSymlink
+    case invalidSymlink
 }

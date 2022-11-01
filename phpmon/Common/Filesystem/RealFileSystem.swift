@@ -33,11 +33,19 @@ class RealFileSystem: FileSystemProtocol {
         )
     }
 
-    func readStringFromFile(_ path: String) throws -> String {
+    func getStringFromFile(_ path: String) throws -> String {
         return try String(
             contentsOf: URL(fileURLWithPath: path.replacingTildeWithHomeDirectory),
             encoding: .utf8
         )
+    }
+
+    func getContentsOfDirectory(_ path: String) throws -> [String] {
+        // TODO
+    }
+
+    func getDestinationOfSymlink(_ path: String) throws -> String {
+        // TODO
     }
 
     // MARK: - Move & Delete Files
@@ -96,10 +104,19 @@ class RealFileSystem: FileSystemProtocol {
         return exists && isDirectory.boolValue
     }
 
-    func fileIsSymlink(_ path: String) -> Bool {
+    func isSymlink(_ path: String) -> Bool {
         do {
             let attribs = try FileManager.default.attributesOfItem(atPath: path)
             return attribs[.type] as! FileAttributeType == FileAttributeType.typeSymbolicLink
+        } catch {
+            return false
+        }
+    }
+
+    func isDirectory(_ path: String) -> Bool {
+        do {
+            let attribs = try FileManager.default.attributesOfItem(atPath: path)
+            return attribs[.type] as! FileAttributeType == FileAttributeType.typeDirectory
         } catch {
             return false
         }

@@ -86,7 +86,7 @@ class Startup {
         // The Homebrew binary must exist.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
+            command: { return !FileSystem.fileExists(Paths.brew) },
             name: "`\(Paths.brew)` exists",
             titleText: "alert.homebrew_missing.title".localized,
             subtitleText: "alert.homebrew_missing.subtitle".localized,
@@ -205,7 +205,7 @@ class Startup {
             command: {
                 let nodePath = await Shell.pipe("which node").out
                 return App.architecture == "x86_64"
-                    && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
+                    && FileSystem.fileExists("/usr/local/bin/which")
                     && nodePath.contains("env: node: No such file or directory")
             },
             name: "`env: node` issue does not apply",

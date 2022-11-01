@@ -33,7 +33,7 @@ class WarningManager {
         Warning(
             command: {
                 return !Shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
-                    !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+                    !FileSystem.isWriteableFile("/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
             title: "warnings.helper_permissions.title",

@@ -93,7 +93,7 @@ class PhpHelper {
             return
         }
 
-        if !FileSystem.fileIsSymlink(destination) {
+        if !FileSystem.isSymlink(destination) {
             Log.info("Overwriting existing file with new symlink: \(destination)")
             await Shell.quiet("ln -fs \(source) \(destination)")
             return

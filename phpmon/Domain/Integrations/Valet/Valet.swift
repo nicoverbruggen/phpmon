@@ -101,7 +101,7 @@ class Valet {
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
-                from: FileSystem.readStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
+                from: FileSystem.getStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
             )
         } catch {
             Log.err(error)
@@ -206,10 +206,7 @@ class Valet {
 
         proxies = ValetScanners.proxyScanner
             .resolveProxies(
-                directoryPath: FileManager.default
-                    .homeDirectoryForCurrentUser
-                    .appendingPathComponent(".config/valet/Nginx")
-                    .path
+                directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
         if let defaultPath = Valet.shared.config.defaultSite,

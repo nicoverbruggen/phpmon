@@ -21,6 +21,10 @@ class PhpConfigWatcher {
     var watchers: [FSWatcher] = []
 
     init(for url: URL) {
+        if FileSystem is TestableFileSystem {
+            fatalError("PhpConfigWatcher is not compatible with testable FS! You are not allowed to instantiate these while using a testable FS.")
+        }
+
         self.url = url
 
         // Add a watcher for php.ini

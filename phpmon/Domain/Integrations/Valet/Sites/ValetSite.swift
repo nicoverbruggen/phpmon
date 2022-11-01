@@ -94,7 +94,7 @@ class ValetSite: DomainListable {
 
     convenience init(aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
+        let absolutePath = try! FileSystem.getDestinationOfSymlink(aliasPath)
         self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 

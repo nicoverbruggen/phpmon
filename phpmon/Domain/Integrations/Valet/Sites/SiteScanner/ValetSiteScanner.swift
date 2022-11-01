@@ -12,8 +12,8 @@ class ValetSiteScanner: SiteScanner {
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
 
-            let entries = try! FileManager.default
-                .contentsOfDirectory(atPath: path)
+            let entries = try! FileSystem
+                .getContentsOfDirectory(path)
 
             return entries
                 .map { self.isSite($0, forPath: path) }
@@ -27,8 +27,8 @@ class ValetSiteScanner: SiteScanner {
         var sites: [ValetSite] = []
 
         paths.forEach { path in
-            let entries = try! FileManager.default
-                .contentsOfDirectory(atPath: path)
+            let entries = try! FileSystem
+                .getContentsOfDirectory(path)
 
             return entries.forEach {
                 if let site = self.resolveSite(path: "\(path)/\($0)") {
@@ -48,14 +48,9 @@ class ValetSiteScanner: SiteScanner {
         // Get the TLD from the global Valet object
         let tld = Valet.shared.config.tld
 
-        // See if the file is a symlink, if so, resolve it
-        guard let attrs = try? FileManager.default.attributesOfItem(atPath: path) else {
+        if !FileSystem.anyExists(path) {
             Log.warn("Could not parse the site: \(path), skipping!")
-            return nil
         }
-
-        // We can also determine whether the thing at the path is a directory, too
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
 
         // We should also check that we can interpret the path correctly
         if URL(fileURLWithPath: path).lastPathComponent == "" {
@@ -63,9 +58,9 @@ class ValetSiteScanner: SiteScanner {
             return nil
         }
 
-        if type == FileAttributeType.typeSymbolicLink {
+        if FileSystem.isSymlink(path) {
             return ValetSite(aliasPath: path, tld: tld)
-        } else if type == FileAttributeType.typeDirectory {
+        } else if FileSystem.isDirectory(path) {
             return ValetSite(absolutePath: path, tld: tld)
         }
 
@@ -79,14 +74,6 @@ class ValetSiteScanner: SiteScanner {
     private func isSite(_ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
-        let attrs = try! FileManager.default.attributesOfItem(atPath: siteDir)
-
-        let type = attrs[FileAttributeKey.type] as! FileAttributeType
-
-        if type == FileAttributeType.typeSymbolicLink || type == FileAttributeType.typeDirectory {
-            return true
-        }
-
-        return false
+        return (FileSystem.isDirectory(siteDir) || FileSystem.isSymlink(siteDir))
     }
 }
