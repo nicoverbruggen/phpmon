@@ -12,12 +12,12 @@ class TestableFileSystemTest: XCTestCase {
 
     override class func setUp() {
         ActiveFileSystem.useTestable([
-            "/home/user/bin": .fake(.directory),
             "/home/user/bin/foo": .fake(.binary),
-            "/home/user/documents": .fake(.directory),
             "/home/user/docs": .fake(.symlink, "/home/user/documents"),
+            "/home/user/documents/script.sh": .fake(.text, "echo 'cool';"),
             "/home/user/documents/nice.txt": .fake(.text, "69"),
-            "/home/user/documents/script.sh": .fake(.text, "echo 'cool';")
+            "/home/user/documents/filters/filter1.txt": .fake(.text, "F1"),
+            "/home/user/documents/filters/filter2.txt": .fake(.text, "F2")
         ])
     }
 
@@ -25,7 +25,11 @@ class TestableFileSystemTest: XCTestCase {
         XCTAssertTrue(FileSystem is TestableFileSystem)
     }
 
-    func test_binary_directory_exists() {
+    func test_intermediate_directories_are_automatically_created() {
+        XCTAssertTrue(FileSystem.directoryExists("/"))
+        XCTAssertTrue(FileSystem.directoryExists("/home"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/documents"))
         XCTAssertTrue(FileSystem.directoryExists("/home/user/bin"))
     }
 
@@ -53,8 +57,36 @@ class TestableFileSystemTest: XCTestCase {
             withIntermediateDirectories: true
         )
 
-        XCTAssertTrue(FileSystem.anyExists("/home/nico/phpmon/config"))
+        XCTAssertTrue(FileSystem
+            .anyExists("/home/nico/phpmon/config"))
         XCTAssertTrue(FileSystem.directoryExists("/home/nico/phpmon/config"))
+    }
+
+    func test_can_create_nested_directories() throws {
+        try FileSystem.createDirectory(
+            "/home/user/thing/epic/nested/directories",
+            withIntermediateDirectories: true
+        )
+
+        XCTAssertTrue(FileSystem.directoryExists("/"))
+        XCTAssertTrue(FileSystem.directoryExists("/home"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/thing"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/thing/epic/nested"))
+        XCTAssertTrue(FileSystem.directoryExists("/home/user/thing/epic/nested/directories"))
+    }
+
+    func test_can_list_directory_contents() throws {
+        let contents = try! FileSystem.getShallowContentsOfDirectory("/home/user/documents")
+
+        XCTAssertEqual(
+            contents.sorted(),
+            [
+                "script.sh",
+                "nice.txt",
+                "filters"
+            ].sorted()
+        )
     }
 
     // TODO: Implement and test the remove() and move() methods and reorganize method order

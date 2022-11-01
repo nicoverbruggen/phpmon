@@ -15,6 +15,7 @@ var FileSystem: FileSystemProtocol {
 class ActiveFileSystem {
     static var shared: FileSystemProtocol = RealFileSystem()
 
+    /** Note: Intermediate directories are not automatically inferred and have to be manually declared. */
     public static func useTestable(_ files: [String: FakeFile]) {
         Self.shared = TestableFileSystem(files: files)
     }

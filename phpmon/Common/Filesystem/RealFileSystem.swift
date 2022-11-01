@@ -40,12 +40,14 @@ class RealFileSystem: FileSystemProtocol {
         )
     }
 
-    func getContentsOfDirectory(_ path: String) throws -> [String] {
-        // TODO
+    func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
+        todo()
+        return []
     }
 
     func getDestinationOfSymlink(_ path: String) throws -> String {
-        // TODO
+        todo()
+        return ""
     }
 
     // MARK: - Move & Delete Files

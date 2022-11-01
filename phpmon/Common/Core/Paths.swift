@@ -62,12 +62,16 @@ public class Paths {
     }
 
     public static var homePath: String {
-        // TODO: Depending on the filesystem abstraction, return the correct information
-        if Shell is RealShell {
+        if FileSystem is RealFileSystem {
             return NSHomeDirectory()
         }
 
-        return "/Users/\(Paths.whoami)"
+        if FileSystem is TestableFileSystem {
+            let fs = FileSystem as! TestableFileSystem
+            return fs.homeDirectory
+        }
+
+        fatalError("A valid FileSystem must be allowed to return the home path")
     }
 
     public static var cellarPath: String {

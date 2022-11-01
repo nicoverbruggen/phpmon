@@ -18,7 +18,7 @@ protocol FileSystemProtocol {
 
     func getStringFromFile(_ path: String) throws -> String
 
-    func getContentsOfDirectory(_ path: String) throws -> [String]
+    func getShallowContentsOfDirectory(_ path: String) throws -> [String]
 
     func getDestinationOfSymlink(_ path: String) throws -> String
 

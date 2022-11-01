@@ -574,6 +574,14 @@
 		C4D3660D29113F20006BD146 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660A29113F20006BD146 /* System.swift */; };
 		C4D3660E29113F20006BD146 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660A29113F20006BD146 /* System.swift */; };
 		C4D36611291140BE006BD146 /* TestableFileSystemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660F291140BE006BD146 /* TestableFileSystemTest.swift */; };
+		C4D36615291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
+		C4D36616291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
+		C4D36617291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
+		C4D36618291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
+		C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
+		C4D3661B291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
+		C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
+		C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
 		C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
@@ -858,6 +866,8 @@
 		C4D366052911331E006BD146 /* EmptyProxyScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyProxyScanner.swift; sourceTree = "<group>"; };
 		C4D3660A29113F20006BD146 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		C4D3660F291140BE006BD146 /* TestableFileSystemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableFileSystemTest.swift; sourceTree = "<group>"; };
+		C4D36614291160A1006BD146 /* WIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIP.swift; sourceTree = "<group>"; };
+		C4D36619291173EA006BD146 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationFile.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
@@ -1364,6 +1374,7 @@
 				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
 				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
 				C4D3660A29113F20006BD146 /* System.swift */,
+				C4D36614291160A1006BD146 /* WIP.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1704,6 +1715,7 @@
 				C4EB53E628553117006F9937 /* ArrayExtension.swift */,
 				C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */,
 				C4E2E84928FC1E70003B070C /* DataExtension.swift */,
+				C4D36619291173EA006BD146 /* DictionaryExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1932,6 +1944,7 @@
 			files = (
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
+				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
@@ -2054,6 +2067,7 @@
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
+				C4D36615291160A1006BD146 /* WIP.swift in Sources */,
 				C485707028BF452300539B36 /* WarningsWindowController.swift in Sources */,
 				C4CE3BBA27B31F670086CA49 /* ComposerWindow.swift in Sources */,
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
@@ -2130,6 +2144,7 @@
 				C471E85428F9BB650021E251 /* StatusMenu.swift in Sources */,
 				C471E85528F9BB650021E251 /* StatusMenu+Items.swift in Sources */,
 				C471E85628F9BB650021E251 /* DomainListCellProtocol.swift in Sources */,
+				C4D36617291160A1006BD146 /* WIP.swift in Sources */,
 				C471E85728F9BB650021E251 /* DomainListTLSCell.swift in Sources */,
 				C4D366082911331E006BD146 /* EmptyProxyScanner.swift in Sources */,
 				C471E85828F9BB650021E251 /* DomainListNameCell.swift in Sources */,
@@ -2237,6 +2252,7 @@
 				C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */,
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
+				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C471E7F128F9BAC70021E251 /* PhpVersionNumber.swift in Sources */,
 				C471E7DC28F9BA8F0021E251 /* ShellProtocol.swift in Sources */,
 			);
@@ -2300,6 +2316,7 @@
 				C471E8C028F9BB8F0021E251 /* DomainListVC.swift in Sources */,
 				C471E8C128F9BB8F0021E251 /* DomainListVC+ContextMenu.swift in Sources */,
 				C471E8C228F9BB8F0021E251 /* DomainListVC+Actions.swift in Sources */,
+				C4D36618291160A1006BD146 /* WIP.swift in Sources */,
 				C471E8C328F9BB8F0021E251 /* SelectionVC.swift in Sources */,
 				C471E8C428F9BB8F0021E251 /* AddSiteVC.swift in Sources */,
 				C471E8C528F9BB8F0021E251 /* AddProxyVC.swift in Sources */,
@@ -2392,6 +2409,7 @@
 				C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */,
 				C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */,
+				C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C471E80D28F9BAE80021E251 /* ArrayExtension.swift in Sources */,
 				C471E7CD28F9BA600021E251 /* ShellProtocol.swift in Sources */,
 				C471E7EC28F9BAC30021E251 /* Events.swift in Sources */,
@@ -2424,6 +2442,7 @@
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
 				C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */,
+				C4D3661B291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C493084B279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */,
@@ -2507,6 +2526,7 @@
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
 				C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
+				C4D36616291160A1006BD146 /* WIP.swift in Sources */,
 				03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,

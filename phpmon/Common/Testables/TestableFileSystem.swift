@@ -11,21 +11,40 @@ import Foundation
 class TestableFileSystem: FileSystemProtocol {
     init(files: [String: FakeFile]) {
         self.files = files
+
+        for key in files.keys where key.contains("~") {
+            self.files.renameKey(
+                fromKey: key,
+                toKey: key.replacingOccurrences(of: "~", with: self.homeDirectory)
+            )
+        }
+
+        for file in self.files {
+            self.createIntermediateDirectories(file.key)
+        }
     }
 
     var files: [String: FakeFile]
 
+    private(set) var homeDirectory = "/Users/fake"
+
     // MARK: - Basics
 
     func createDirectory(_ path: String, withIntermediateDirectories: Bool) throws {
+        let path = path.replacingTildeWithHomeDirectory
+
         if files[path] != nil {
             throw TestableFileSystemError.alreadyExists
         }
+
+        self.createIntermediateDirectories(path)
 
         self.files[path] = .fake(.directory)
     }
 
     func writeAtomicallyToFile(_ path: String, content: String) throws {
+        let path = path.replacingTildeWithHomeDirectory
+
         if files[path] != nil {
             throw TestableFileSystemError.alreadyExists
         }
@@ -34,6 +53,8 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func getStringFromFile(_ path: String) throws -> String {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             throw TestableFileSystemError.fileMissing
         }
@@ -41,11 +62,23 @@ class TestableFileSystem: FileSystemProtocol {
         return file.content ?? ""
     }
 
-    func getContentsOfDirectory(_ path: String) throws -> [String] {
-        // TODO
+    func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
+        let path = path.replacingTildeWithHomeDirectory
+
+        var seek = path
+        if !seek.hasSuffix("/") {
+            seek = "\(seek)/"
+        }
+
+        return self.files.keys
+            .filter { $0.hasPrefix(seek) }
+            .map { $0.replacingOccurrences(of: seek, with: "") }
+            .filter { !$0.contains("/") }
     }
 
     func getDestinationOfSymlink(_ path: String) throws -> String {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             throw TestableFileSystemError.fileMissing
         }
@@ -68,16 +101,22 @@ class TestableFileSystem: FileSystemProtocol {
     // MARK: - Move & Delete Files
 
     func move(from path: String, to newPath: String) throws {
+        let path = path.replacingTildeWithHomeDirectory
+        let newPath = newPath.replacingTildeWithHomeDirectory
+
         // TODO
     }
 
     func remove(_ path: String) throws {
+        let path = path.replacingTildeWithHomeDirectory
         // TODO
     }
 
     // MARK: — Attributes
 
     func makeExecutable(_ path: String) throws {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             throw TestableFileSystemError.fileMissing
         }
@@ -88,7 +127,9 @@ class TestableFileSystem: FileSystemProtocol {
     // MARK: - Checks
 
     func isExecutableFile(_ path: String) -> Bool {
-        guard let file = files[path] else {
+        let path = path.replacingTildeWithHomeDirectory
+
+        guard let file = files[path.replacingTildeWithHomeDirectory] else {
             return false
         }
 
@@ -96,7 +137,9 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func isWriteableFile(_ path: String) -> Bool {
-        guard let file = files[path] else {
+        let path = path.replacingTildeWithHomeDirectory
+
+        guard let file = files[path.replacingTildeWithHomeDirectory] else {
             return false
         }
 
@@ -104,10 +147,14 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func anyExists(_ path: String) -> Bool {
+        let path = path.replacingTildeWithHomeDirectory
+
         return files.keys.contains(path)
     }
 
     func fileExists(_ path: String) -> Bool {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             return false
         }
@@ -116,6 +163,8 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func directoryExists(_ path: String) -> Bool {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             return false
         }
@@ -124,6 +173,8 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func isSymlink(_ path: String) -> Bool {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             return false
         }
@@ -132,11 +183,39 @@ class TestableFileSystem: FileSystemProtocol {
     }
 
     func isDirectory(_ path: String) -> Bool {
+        let path = path.replacingTildeWithHomeDirectory
+
         guard let file = files[path] else {
             return false
         }
 
         return file.type == .directory
+    }
+
+    public func printContents() {
+        for key in self.files.keys.sorted() {
+            print("\(key) -> \(self.files[key]!.type)")
+        }
+    }
+
+    private func createIntermediateDirectories(_ path: String) {
+        let path = path.replacingTildeWithHomeDirectory
+
+        let items = path.components(separatedBy: "/")
+
+        var preceding = ""
+
+        for item in items {
+            let key = preceding == "/"
+                ? "/\(item)"
+                : "\(preceding)/\(item)"
+
+            if !self.files.keys.contains(key) {
+                self.files[key] = .fake(.directory)
+            }
+
+            preceding = key
+        }
     }
 }
 

@@ -13,7 +13,7 @@ class ValetSiteScanner: SiteScanner {
         return paths.map { path in
 
             let entries = try! FileSystem
-                .getContentsOfDirectory(path)
+                .getShallowContentsOfDirectory(path)
 
             return entries
                 .map { self.isSite($0, forPath: path) }
@@ -28,7 +28,7 @@ class ValetSiteScanner: SiteScanner {
 
         paths.forEach { path in
             let entries = try! FileSystem
-                .getContentsOfDirectory(path)
+                .getShallowContentsOfDirectory(path)
 
             return entries.forEach {
                 if let site = self.resolveSite(path: "\(path)/\($0)") {
