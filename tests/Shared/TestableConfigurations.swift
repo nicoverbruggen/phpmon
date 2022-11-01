@@ -32,6 +32,8 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/Cellar/php/8.1.10_1/bin/php-config"
                     : .fake(.binary),
+                "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf"
+                    : .fake(.text),
                 "~/.config/valet/config.json"
                     : .fake(.text, """
                     {
