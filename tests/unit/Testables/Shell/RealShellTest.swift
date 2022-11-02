@@ -1,5 +1,5 @@
 //
-//  SystemShellTest.swift
+//  RealShellTest.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/09/2022.
@@ -8,9 +8,9 @@
 
 import XCTest
 
-class SystemShellTest: XCTestCase {
+class RealShellTest: XCTestCase {
 
-    override class func setUp() {
+    override func setUp() async throws {
         // Reset to the default shell
         ActiveShell.useSystem()
     }

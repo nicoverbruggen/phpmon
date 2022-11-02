@@ -10,7 +10,7 @@ import XCTest
 
 class TestableFileSystemTest: XCTestCase {
 
-    override class func setUp() {
+    override func setUp() async throws {
         ActiveFileSystem.useTestable([
             "/home/user/bin/foo": .fake(.binary),
             "/home/user/docs": .fake(.symlink, "/home/user/documents"),
