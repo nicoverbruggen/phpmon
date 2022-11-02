@@ -135,7 +135,25 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsUser),
                 "curl -s --max-time 5 '\(Constants.Urls.StableBuildCaskFile.absoluteString)' | grep version"
-                    : .instant("version '5.6.2_976'")
+                    : .instant("version '5.6.2_976'"),
+                "/opt/homebrew/bin/brew unlink php"
+                    : .delayed(0.2, "OK"),
+                "/opt/homebrew/bin/brew link php --overwrite --force"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services stop php"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services start php"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services stop nginx"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services start nginx"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services stop dnsmasq"
+                    : .delayed(0.2, "OK"),
+                "sudo /opt/homebrew/bin/brew services start dnsmasq"
+                    : .delayed(0.2, "OK"),
+                "ln -sF ~/.config/valet/valet81.sock ~/.config/valet/valet.sock"
+                    : .instant("OK"),
             ],
             commandOutput: [
                 "/opt/homebrew/bin/php-config --version": "8.1.10",

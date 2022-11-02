@@ -22,7 +22,10 @@ class PhpConfigWatcher {
 
     init(for url: URL) {
         if FileSystem is TestableFileSystem {
-            fatalError("PhpConfigWatcher is not compatible with testable FS! You are not allowed to instantiate these while using a testable FS.")
+            fatalError("""
+                PhpConfigWatcher is not compatible with testable FS! "
+                You are not allowed to instantiate these while using a testable FS.
+            """)
         }
 
         self.url = url
