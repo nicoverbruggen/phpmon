@@ -9,12 +9,24 @@ import SwiftUI
 
 struct Localization {
     static var bundle: Bundle = {
-        var bundle = Bundle.main
-        if isRunningTests {
-            bundle = Bundle(identifier: "com.nicoverbruggen.phpmon.dev")
-                ?? Bundle(identifier: "com.nicoverbruggen.phpmon")!
+        if !isRunningTests {
+            return Bundle.main
         }
-        return bundle
+
+        let foundBundle = Bundle(identifier: "com.nicoverbruggen.phpmon.dev")
+            ?? Bundle(identifier: "com.nicoverbruggen.phpmon")
+            ?? Bundle(identifier: "com.nicoverbruggen.phpmon.ui-tests")
+
+        if foundBundle == nil {
+            let bundles = Bundle.allBundles
+                .map { $0.bundleIdentifier }
+                .filter { $0 != nil }
+                .map { $0! }
+
+            fatalError("The following bundles were found: \(bundles)")
+        }
+
+        return foundBundle!
     }()
 }
 
