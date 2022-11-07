@@ -149,6 +149,8 @@
 		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
+		C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */; };
+		C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */; };
 		C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C463E380284930EE00422731 /* PresetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463E37F284930EE00422731 /* PresetHelper.swift */; };
@@ -175,7 +177,6 @@
 		C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
-		C471E7B028F9B4940021E251 /* EmptyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C471E7AF28F9B4940021E251 /* EmptyTest.swift */; };
 		C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C471E7BE28F9B90F0021E251 /* StartupTest.swift */; };
 		C471E7C928F9BA2F0021E251 /* TestableConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F505428ECA64E004AD45B /* TestableConfigurations.swift */; };
 		C471E7CA28F9BA480021E251 /* TestableFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AD38B128ECD9D300FA8D83 /* TestableFileSystem.swift */; };
@@ -794,6 +795,7 @@
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
+		C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTestCase.swift; sourceTree = "<group>"; };
 		C45E76132854A65300B4FE0C /* ServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesManager.swift; sourceTree = "<group>"; };
 		C463E37F284930EE00422731 /* PresetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetHelper.swift; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWindowController.swift; sourceTree = "<group>"; };
@@ -810,7 +812,7 @@
 		C4709CA128524B3400088BB8 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feature Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C471E7AF28F9B4940021E251 /* EmptyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTest.swift; sourceTree = "<group>"; };
+		C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcherTest.swift; sourceTree = "<group>"; };
 		C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C471E7BE28F9B90F0021E251 /* StartupTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupTest.swift; sourceTree = "<group>"; };
 		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -1338,7 +1340,8 @@
 		C471E7AE28F9B4940021E251 /* feature */ = {
 			isa = PBXGroup;
 			children = (
-				C471E7AF28F9B4940021E251 /* EmptyTest.swift */,
+				C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */,
+				C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */,
 			);
 			path = feature;
 			sourceTree = "<group>";
@@ -2128,6 +2131,7 @@
 				C471E84228F9BB650021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E84328F9BB650021E251 /* App.swift in Sources */,
 				C4E2E85E28FC282B003B070C /* TestableConfiguration.swift in Sources */,
+				C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */,
 				C471E84428F9BB650021E251 /* App+ActivationPolicy.swift in Sources */,
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
@@ -2239,7 +2243,6 @@
 				C471E81428F9BAE80021E251 /* NSWindowExtension.swift in Sources */,
 				C471E7D328F9BA8F0021E251 /* ActiveShell.swift in Sources */,
 				C471E7DE28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
-				C471E7B028F9B4940021E251 /* EmptyTest.swift in Sources */,
 				C471E81B28F9BB250021E251 /* BetterAlertVC.swift in Sources */,
 				C471E82928F9BB330021E251 /* Valet.swift in Sources */,
 				C471E80728F9BAD40021E251 /* PhpConfigurationFile.swift in Sources */,
@@ -2247,6 +2250,7 @@
 				C471E7E328F9BAC20021E251 /* Logger.swift in Sources */,
 				C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */,
+				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */,
 				C471E81528F9BAE80021E251 /* ArrayExtension.swift in Sources */,

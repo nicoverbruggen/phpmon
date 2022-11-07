@@ -26,7 +26,8 @@
       buildConfiguration = "Debug.Dev"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -47,6 +48,16 @@
                BlueprintIdentifier = "C471E7BB28F9B90F0021E251"
                BuildableName = "UI Tests.xctest"
                BlueprintName = "UI Tests"
+               ReferencedContainer = "container:PHP Monitor.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C471E7AC28F9B4940021E251"
+               BuildableName = "Feature Tests.xctest"
+               BlueprintName = "Feature Tests"
                ReferencedContainer = "container:PHP Monitor.xcodeproj">
             </BuildableReference>
          </TestableReference>
