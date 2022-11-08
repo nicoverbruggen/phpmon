@@ -8,11 +8,21 @@
 
 import Foundation
 
-public func system(_ command: String) {
-    let argsArray = command.split(separator: " ").map { String($0) }
-    guard argsArray.isEmpty else { return  }
-    let command = strdup(argsArray.first!)
-    let args = argsArray.map { strdup($0) } + [nil]
-    posix_spawn(nil, command, nil, nil, args, nil)
-    return
+/**
+ Run a simple blocking Shell command on the user's own system.
+ Avoid using this method in favor of the fakeable Shell class unless needed for express system operations.
+ */
+public func system(_ command: String) -> String {
+    let task = Process()
+    task.launchPath = "/bin/sh"
+    task.arguments = ["-c", command]
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
+
+    return output
 }

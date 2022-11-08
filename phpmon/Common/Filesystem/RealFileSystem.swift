@@ -61,13 +61,15 @@ class RealFileSystem: FileSystemProtocol {
     // MARK: — FS Attributes
 
     func makeExecutable(_ path: String) throws {
-        system("chmod +x \(path.replacingTildeWithHomeDirectory)")
+        _ = system("chmod +x \(path.replacingTildeWithHomeDirectory)")
     }
 
     // MARK: - Checks
 
     func isExecutableFile(_ path: String) -> Bool {
         return FileManager.default.isExecutableFile(
+            atPath: path.replacingTildeWithHomeDirectory
+        ) && FileManager.default.isReadableFile(
             atPath: path.replacingTildeWithHomeDirectory
         )
     }
