@@ -88,7 +88,8 @@ If you're still having issues, here's a few common questions & answers, as well 
 <li>PHP 7.4</li>
 <li>PHP 8.0</li>
 <li>PHP 8.1</li>
-<li>PHP 8.2 (experimental)</li>
+<li>PHP 8.2</li>
+<li>PHP 8.3 (experimental)</li>
 </ul>
 
 For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
