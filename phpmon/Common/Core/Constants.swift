@@ -10,12 +10,6 @@ import Cocoa
 struct Constants {
 
     /**
-     * The latest PHP version that is considered to be stable at the time of release.
-     * This version number is currently not used (only as a default fallback).
-     */
-    static let LatestStablePhpVersion = "8.1"
-
-    /**
      The minimum version of Valet that is recommended.
      If the installed version is older, a notification will be shown
      every time the app launches (with a recommendation to upgrade).
