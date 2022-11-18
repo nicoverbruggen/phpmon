@@ -39,9 +39,7 @@ class ServicesManager: ObservableObject {
             }
         }
 
-        guard let userServiceNames = Preferences.custom.services else {
-            return
-        }
+        let userServiceNames = Preferences.custom.services ?? []
 
         DispatchQueue.global(qos: .background).async {
             let data = Shell
