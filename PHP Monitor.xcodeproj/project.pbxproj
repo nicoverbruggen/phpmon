@@ -555,6 +555,10 @@
 		C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
 		C4C8E81B276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */; };
 		C4C8E81C276F54E5003AC782 /* PhpConfigWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */; };
+		C4CB6E65292C362C002E9027 /* Homebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB6E64292C362C002E9027 /* Homebrew.swift */; };
+		C4CB6E66292C362C002E9027 /* Homebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB6E64292C362C002E9027 /* Homebrew.swift */; };
+		C4CB6E67292C362C002E9027 /* Homebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB6E64292C362C002E9027 /* Homebrew.swift */; };
+		C4CB6E68292C362C002E9027 /* Homebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB6E64292C362C002E9027 /* Homebrew.swift */; };
 		C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C4CDA893288F1A71007CE25F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CDA892288F1A71007CE25F /* Keys.swift */; };
@@ -862,6 +866,7 @@
 		C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveFileSystem.swift; sourceTree = "<group>"; };
 		C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App+ConfigWatch.swift"; sourceTree = "<group>"; };
 		C4C8E81A276F54E5003AC782 /* PhpConfigWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpConfigWatcher.swift; sourceTree = "<group>"; };
+		C4CB6E64292C362C002E9027 /* Homebrew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Homebrew.swift; sourceTree = "<group>"; };
 		C4CCBA6B275C567B008C7055 /* PMWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMWindowController.swift; sourceTree = "<group>"; };
 		C4CDA892288F1A71007CE25F /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Switcher.swift"; sourceTree = "<group>"; };
@@ -1083,6 +1088,7 @@
 				C4C1019A27C65C6F001FACC2 /* Process.swift */,
 				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 				C417DC73277614690015E6EE /* Helpers.swift */,
+				C4CB6E64292C362C002E9027 /* Homebrew.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2094,6 +2100,7 @@
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C41C02A627E60D7A009F26CB /* SiteScanner.swift in Sources */,
 				C464ADAC275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
+				C4CB6E65292C362C002E9027 /* Homebrew.swift in Sources */,
 				C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */,
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 				C493084A279F331F009C240B /* AddSiteVC.swift in Sources */,
@@ -2250,6 +2257,7 @@
 				C471E7E328F9BAC20021E251 /* Logger.swift in Sources */,
 				C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */,
+				C4CB6E67292C362C002E9027 /* Homebrew.swift in Sources */,
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */,
@@ -2413,6 +2421,7 @@
 				C471E7EA28F9BAC30021E251 /* Logger.swift in Sources */,
 				C471E7FB28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7EB28F9BAC30021E251 /* Helpers.swift in Sources */,
+				C4CB6E68292C362C002E9027 /* Homebrew.swift in Sources */,
 				C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */,
 				C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */,
@@ -2502,6 +2511,7 @@
 				C485707B28BF458900539B36 /* VersionPopoverView.swift in Sources */,
 				C4E2E85D28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C485706E28BF451C00539B36 /* OnboardingWindowController.swift in Sources */,
+				C4CB6E66292C362C002E9027 /* Homebrew.swift in Sources */,
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,

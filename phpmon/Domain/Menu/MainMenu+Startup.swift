@@ -36,8 +36,13 @@ extension MainMenu {
 
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
-            ? "The app has probably been installed via Homebrew Cask."
-            : "The app has probably been installed directly."
+            ? "[BREW] The app has probably been installed via Homebrew Cask."
+            : "[BREW] The app has probably been installed directly."
+        )
+
+        Log.info(HomebrewDiagnostics.usesNginxFullFormula
+             ? "[BREW] The app will be using the `nginx-full` formula."
+             : "[BREW] The app will be using the `nginx` formula."
         )
 
         // Attempt to find out more info about Valet

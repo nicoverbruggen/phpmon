@@ -17,9 +17,9 @@ struct ServicesView: View {
     static func asMenuItem(perRow: Int = 3) -> NSMenuItem {
         let item = NSMenuItem()
         var services = [
-            PhpEnv.phpInstall.formula,
-            "nginx",
-            "dnsmasq"
+            Homebrew.Formulae.php.name,
+            Homebrew.Formulae.nginx.name,
+            Homebrew.Formulae.dnsmasq.name
         ]
 
         if Preferences.custom.hasServices() {
@@ -76,16 +76,12 @@ struct CheckmarkView: View {
     @EnvironmentObject var manager: ServicesManager
 
     public func hasAnyServices() -> Bool {
-        return !manager.rootServices.isEmpty
+        return !manager.services.isEmpty
     }
 
     public func active() -> Bool? {
-        if manager.rootServices.keys.contains(serviceName) {
-            return manager.rootServices[serviceName]!.running
-        }
-
-        if manager.userServices.keys.contains(serviceName) {
-            return manager.userServices[serviceName]!.running
+        if manager.services.keys.contains(serviceName) {
+            return manager.services[serviceName]!.service?.running ?? nil
         }
 
         return nil

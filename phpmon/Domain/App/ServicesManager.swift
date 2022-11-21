@@ -13,45 +13,78 @@ class ServicesManager: ObservableObject {
 
     static var shared = ServicesManager()
 
-    @Published var rootServices: [String: HomebrewService] = [:]
-    @Published var userServices: [String: HomebrewService] = [:]
+    private var formulae: [HomebrewFormula]
 
-    public static func loadHomebrewServices() async {
-        let rootServiceNames = [
-            PhpEnv.phpInstall.formula,
-            "nginx",
-            "dnsmasq"
+    @Published var services: [String: ServiceWrapper] = [:]
+
+    init() {
+        formulae = [
+            Homebrew.Formulae.php,
+            Homebrew.Formulae.nginx,
+            Homebrew.Formulae.dnsmasq
         ]
 
-        let normalJson = await Shell
-            .pipe("sudo \(Paths.brew) services info --all --json")
-            .out.data(using: .utf8)!
+        let additionalFormulae = (Preferences.custom.services ?? []).map({ item in
+            return HomebrewFormula(item, elevated: false)
+        })
 
-        let normalServices = try! JSONDecoder()
-            .decode([HomebrewService].self, from: normalJson)
-            .filter({ return rootServiceNames.contains($0.name) })
+        formulae.append(contentsOf: additionalFormulae)
 
-        Task { @MainActor in
-            ServicesManager.shared.rootServices = Dictionary(
-                uniqueKeysWithValues: normalServices.map { ($0.name, $0) }
-            )
+        services = Dictionary(uniqueKeysWithValues: formulae.map { ($0.name, ServiceWrapper(formula: $0)) })
+    }
+
+    public static func loadHomebrewServices() async {
+        Task {
+            let rootServiceNames = Self.shared.formulae
+                .filter { $0.elevated }
+                .map { $0.name }
+
+            let rootJson = await Shell
+                .pipe("sudo \(Paths.brew) services info --all --json")
+                .out.data(using: .utf8)!
+
+            let rootServices = try! JSONDecoder()
+                .decode([HomebrewService].self, from: rootJson)
+                .filter({ return rootServiceNames.contains($0.name) })
+
+            Task { @MainActor in
+                for service in rootServices {
+                    Self.shared.services[service.name]!.service = service
+                }
+            }
         }
 
-        guard let userServiceNames = Preferences.custom.services else { return }
+        Task {
+            let userServiceNames = Self.shared.formulae
+                .filter { !$0.elevated }
+                .map { $0.name }
 
-        let rootJson = await Shell
-            .pipe("\(Paths.brew) services info --all --json")
-            .out
-            .data(using: .utf8)!
+            let normalJson = await Shell
+                .pipe("\(Paths.brew) services info --all --json")
+                .out.data(using: .utf8)!
 
-        let rootServices = try! JSONDecoder()
-            .decode([HomebrewService].self, from: rootJson)
-            .filter({ return userServiceNames.contains($0.name) })
+            let userServices = try! JSONDecoder()
+                .decode([HomebrewService].self, from: normalJson)
+                .filter({ return userServiceNames.contains($0.name) })
 
-        Task { @MainActor in
-            ServicesManager.shared.userServices = Dictionary(
-                uniqueKeysWithValues: rootServices.map { ($0.name, $0) }
-            )
+            Task { @MainActor in
+                for service in userServices {
+                    Self.shared.services[service.name]!.service = service
+                }
+            }
+        }
+    }
+
+    /**
+     Service wrapper, that contains the Homebrew JSON output (if determined) and the formula.
+     This helps the app determine whether a service should run as an administrator or not.
+     */
+    public class ServiceWrapper {
+        public let formula: HomebrewFormula
+        public var service: HomebrewService?
+
+        init(formula: HomebrewFormula) {
+            self.formula = formula
         }
     }
 
@@ -60,11 +93,11 @@ class ServicesManager: ObservableObject {
      */
     func withDummyServices(_ services: [String: Bool]) -> Self {
         for (service, enabled) in services {
-            let item = HomebrewService.dummy(named: service, enabled: enabled)
-            self.rootServices[service] = item
+            let item = ServiceWrapper(formula: HomebrewFormula(service))
+            item.service = HomebrewService.dummy(named: service, enabled: enabled)
+            self.services[service] = item
         }
 
         return self
     }
-
 }

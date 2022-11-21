@@ -35,6 +35,17 @@ class HomebrewDiagnostics {
     }()
 
     /**
+     Determines whether to use the regular `nginx` or `nginx-full` formula.
+     */
+    public static var usesNginxFullFormula: Bool = {
+        guard let destination = try? FileManager.default
+            .destinationOfSymbolicLink(atPath: "\(Paths.binPath)/nginx") else { return false }
+
+        // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
+        return destination.contains("/nginx-full/")
+    }()
+
+    /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
      This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
