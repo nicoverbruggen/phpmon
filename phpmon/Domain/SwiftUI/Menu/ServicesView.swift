@@ -16,15 +16,10 @@ struct ServicesView: View {
 
     static func asMenuItem(perRow: Int = 3) -> NSMenuItem {
         let item = NSMenuItem()
-        var services = [
-            Homebrew.Formulae.php.name,
-            Homebrew.Formulae.nginx.name,
-            Homebrew.Formulae.dnsmasq.name
-        ]
 
-        if Preferences.custom.hasServices() {
-            services += Preferences.custom.services!
-        }
+        let services = ServicesManager.shared.services.keys.map({ item in
+            return item
+        })
 
         let view = NSHostingView(
             rootView: Self(
@@ -90,9 +85,11 @@ struct CheckmarkView: View {
     public func toggleService() async {
         if active()! {
             await Actions.stopService(name: serviceName)
+            await delay(seconds: 1.2)
             busy = false
         } else {
             await Actions.startService(name: serviceName)
+            await delay(seconds: 1.2)
             busy = false
         }
     }

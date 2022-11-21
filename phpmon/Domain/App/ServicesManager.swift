@@ -18,6 +18,8 @@ class ServicesManager: ObservableObject {
     @Published var services: [String: ServiceWrapper] = [:]
 
     init() {
+        Log.info("Initializing ServicesManager")
+
         formulae = [
             Homebrew.Formulae.php,
             Homebrew.Formulae.nginx,
@@ -79,8 +81,8 @@ class ServicesManager: ObservableObject {
      Service wrapper, that contains the Homebrew JSON output (if determined) and the formula.
      This helps the app determine whether a service should run as an administrator or not.
      */
-    public class ServiceWrapper {
-        public let formula: HomebrewFormula
+    public struct ServiceWrapper {
+        public var formula: HomebrewFormula
         public var service: HomebrewService?
 
         init(formula: HomebrewFormula) {
@@ -93,7 +95,7 @@ class ServicesManager: ObservableObject {
      */
     func withDummyServices(_ services: [String: Bool]) -> Self {
         for (service, enabled) in services {
-            let item = ServiceWrapper(formula: HomebrewFormula(service))
+            var item = ServiceWrapper(formula: HomebrewFormula(service))
             item.service = HomebrewService.dummy(named: service, enabled: enabled)
             self.services[service] = item
         }

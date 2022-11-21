@@ -34,6 +34,9 @@ extension MainMenu {
         // Determine what the `php` formula is aliased to
         await PhpEnv.shared.determinePhpAlias()
 
+        // Initialize preferences
+        _ = Preferences.shared
+
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
             ? "[BREW] The app has probably been installed via Homebrew Cask."
