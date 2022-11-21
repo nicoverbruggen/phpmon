@@ -30,6 +30,21 @@ class HomebrewDiagnostics {
     }()
 
     /**
+     Determines whether to use the regular `nginx` or `nginx-full` formula.
+     */
+    public static var usesNginxFullFormula: Bool = {
+        guard let destination = try? FileManager.default
+            .destinationOfSymbolicLink(atPath: "\(Paths.binPath)/nginx") else { return false }
+
+        return
+            // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
+            destination.contains("/nginx-full/")
+            // Verify that the formula exists.
+            && !Shell.pipe("\(Paths.brew) info nginx-full --json")
+                .contains("Error: No available formula")
+    }()
+
+    /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
      This will then result in two different aliases claiming to point to the same formula (`php`).
      This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
@@ -128,10 +143,10 @@ class HomebrewDiagnostics {
     }
 
     /**
-     In order to see if we support the --json syntax, we'll query nginx.
+     In order to see if we support the --json syntax, we'll query dnsmasq.
      If the JSON response cannot be parsed, Homebrew is probably out of date.
      */
-    public static func cannotLoadService(_ name: String = "nginx") -> Bool {
+    public static func cannotLoadService(_ name: String) -> Bool {
         let serviceInfo = try? JSONDecoder().decode(
             [HomebrewService].self,
             from: Shell.pipe(

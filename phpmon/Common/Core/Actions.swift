@@ -13,37 +13,35 @@ class Actions {
     // MARK: - Services
 
     public static func restartPhpFpm() {
-        brew("services restart \(PhpEnv.phpInstall.formula)", sudo: true)
+        brew("services restart \(Homebrew.Formulae.php)", sudo: true)
     }
 
     public static func restartNginx() {
-        brew("services restart nginx", sudo: true)
+        brew("services restart \(Homebrew.Formulae.nginx)", sudo: true)
     }
 
     public static func restartDnsMasq() {
-        brew("services restart dnsmasq", sudo: true)
+        brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: true)
     }
 
     public static func stopValetServices() {
-        brew("services stop \(PhpEnv.phpInstall.formula)", sudo: true)
-        brew("services stop nginx", sudo: true)
-        brew("services stop dnsmasq", sudo: true)
+        brew("services stop \(Homebrew.Formulae.php)", sudo: true)
+        brew("services stop \(Homebrew.Formulae.nginx)", sudo: true)
+        brew("services stop \(Homebrew.Formulae.dnsmasq)", sudo: true)
     }
 
     public static func fixHomebrewPermissions() throws {
         var servicesCommands = [
-            "\(Paths.brew) services stop nginx",
-            "\(Paths.brew) services stop dnsmasq"
+            "\(Paths.brew) services stop \(Homebrew.Formulae.nginx)",
+            "\(Paths.brew) services stop \(Homebrew.Formulae.dnsmasq)"
         ]
         var cellarCommands = [
-            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/nginx",
-            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/dnsmasq"
+            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(Homebrew.Formulae.nginx)",
+            "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(Homebrew.Formulae.dnsmasq)"
         ]
 
         PhpEnv.shared.availablePhpVersions.forEach { version in
-            let formula = version == PhpEnv.brewPhpVersion
-                ? "php"
-                : "php@\(version)"
+            let formula = version == PhpEnv.brewPhpVersion ? "php" : "php@\(version)"
             servicesCommands.append("\(Paths.brew) services stop \(formula)")
             cellarCommands.append("chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(formula)")
         }
@@ -145,9 +143,9 @@ class Actions {
      */
     public static func fixMyValet(completed: @escaping () -> Void) {
         InternalSwitcher().performSwitch(to: PhpEnv.brewPhpVersion, completion: {
-            brew("services restart dnsmasq", sudo: true)
-            brew("services restart php", sudo: true)
-            brew("services restart nginx", sudo: true)
+            brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: true)
+            brew("services restart \(Homebrew.Formulae.php)", sudo: true)
+            brew("services restart \(Homebrew.Formulae.nginx)", sudo: true)
             completed()
         })
     }

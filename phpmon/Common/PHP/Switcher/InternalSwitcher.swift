@@ -46,7 +46,7 @@ class InternalSwitcher: PhpSwitcher {
             }
 
             Log.info("Restarting nginx, just to be sure!")
-            brew("services restart nginx", sudo: true)
+            brew("services restart \(Homebrew.Formulae.nginx)", sudo: true)
 
             Log.info("The new version(s) have been linked!")
             completion()
