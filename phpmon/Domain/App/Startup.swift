@@ -160,7 +160,7 @@ class Startup {
         // Verify if the Homebrew services are running (as root).
         // =================================================================================
         EnvironmentCheck(
-            command: { return HomebrewDiagnostics.cannotLoadService() },
+            command: { return HomebrewDiagnostics.cannotLoadService("dnsmasq") },
             name: "`sudo \(Paths.brew) services info` JSON loaded",
             titleText: "startup.errors.services_json_error.title".localized,
             subtitleText: "startup.errors.services_json_error.subtitle".localized,

@@ -113,9 +113,7 @@ class ComposerWindow {
 
     private func removeBusyStatus() {
         PhpEnv.shared.isBusy = false
-        DispatchQueue.main.async { [self] in
-            menu?.updatePhpVersionInStatusBar()
-        }
+        menu?.updatePhpVersionInStatusBar()
     }
 
     // MARK: Alert

@@ -29,10 +29,14 @@ extension MainMenu {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() {
-        // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
             ? "The app has probably been installed via Homebrew Cask."
             : "The app has probably been installed directly."
+        )
+
+        Log.info(HomebrewDiagnostics.usesNginxFullFormula
+            ? "The app will be using the `nginx-full` formula."
+            : "The app will be using the `nginx` formula."
         )
 
         // Attempt to find out more info about Valet

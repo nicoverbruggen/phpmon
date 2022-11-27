@@ -18,9 +18,9 @@ class ServicesManager: ObservableObject {
 
     public static func loadHomebrewServices(completed: (() -> Void)? = nil) {
         let rootServiceNames = [
-            PhpEnv.phpInstall.formula,
-            "nginx",
-            "dnsmasq"
+            Homebrew.Formulae.php,
+            Homebrew.Formulae.nginx,
+            Homebrew.Formulae.dnsmasq
         ]
 
         DispatchQueue.global(qos: .background).async {

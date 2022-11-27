@@ -17,9 +17,9 @@ struct ServicesView: View {
     static func asMenuItem(perRow: Int = 3) -> NSMenuItem {
         let item = NSMenuItem()
         var services = [
-            PhpEnv.phpInstall.formula,
-            "nginx",
-            "dnsmasq"
+            Homebrew.Formulae.php,
+            Homebrew.Formulae.nginx,
+            Homebrew.Formulae.dnsmasq
         ]
 
         if Preferences.custom.hasServices() {
