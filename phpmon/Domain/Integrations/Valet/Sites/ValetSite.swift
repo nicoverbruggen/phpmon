@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetSite: DomainListable, DomainInteractable {
+class ValetSite: ValetListable, ValetInteractable {
 
     /// Name of the site. Does not include the TLD.
     var name: String
@@ -233,7 +233,7 @@ class ValetSite: DomainListable, DomainInteractable {
         return nil
     }
 
-    // MARK: DomainListable
+    // MARK: ValetListable
 
     func getListableName() -> String {
         return self.name
@@ -263,7 +263,7 @@ class ValetSite: DomainListable, DomainInteractable {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
     }
 
-    // MARK: DomainInteractable
+    // MARK: ValetInteractable
 
     func secure() async throws {
         try await ValetInteractor.secure(site: self)

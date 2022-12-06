@@ -8,6 +8,7 @@
 
 import Foundation
 
+#warning("ValetInteractor needs to be implemented and used")
 class ValetInteractor {
     public static func secure(site: ValetSite) async throws {
         // TODO

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DomainInteractable {
+protocol ValetInteractable {
 
     func secure() async throws
 

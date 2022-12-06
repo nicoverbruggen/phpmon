@@ -19,7 +19,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Variables
 
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
-    var domains: [DomainListable] = []
+    var domains: [ValetListable] = []
 
     /// Array that contains various apps that might open a particular site directory.
     var applications: [Application] {
@@ -48,7 +48,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         return domains[tableView.selectedRow] as? ValetProxy
     }
 
-    var selected: DomainListable? {
+    var selected: ValetListable? {
         if tableView.selectedRow == -1 {
             return nil
         }

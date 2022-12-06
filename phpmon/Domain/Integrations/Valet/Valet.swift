@@ -63,7 +63,7 @@ class Valet {
     /**
      Retrieve a list of all domains, including sites & proxies.
      */
-    public static func getDomainListable() -> [DomainListable] {
+    public static func getDomainListable() -> [ValetListable] {
         return self.shared.sites + self.shared.proxies
     }
 

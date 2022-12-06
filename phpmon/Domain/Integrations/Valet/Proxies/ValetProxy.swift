@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetProxy: DomainListable {
+class ValetProxy: ValetListable {
     var domain: String
     var tld: String
     var target: String
@@ -21,7 +21,7 @@ class ValetProxy: DomainListable {
         self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
     }
 
-    // MARK: - DomainListable Protocol
+    // MARK: - ValetListable Protocol
 
     func getListableName() -> String {
         return self.domain

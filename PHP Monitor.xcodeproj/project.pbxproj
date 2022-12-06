@@ -110,8 +110,8 @@
 		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
 		C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */; };
 		C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */; };
-		C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
-		C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C42F26732805B4B400938AC7 /* ValetListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* ValetListable.swift */; };
+		C42F26742805B4B400938AC7 /* ValetListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* ValetListable.swift */; };
 		C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */; };
 		C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
 		C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */; };
@@ -275,9 +275,9 @@
 		C471E82728F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
 		C471E82828F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */; };
 		C471E82928F9BB330021E251 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
-		C471E82A28F9BB330021E251 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C471E82A28F9BB330021E251 /* ValetListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* ValetListable.swift */; };
 		C471E82B28F9BB340021E251 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
-		C471E82C28F9BB340021E251 /* DomainListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* DomainListable.swift */; };
+		C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42F26722805B4B400938AC7 /* ValetListable.swift */; };
 		C471E82D28F9BB650021E251 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C471E82E28F9BB650021E251 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4927F0A27B2DFC200C55AFD /* Errors.swift */; };
 		C471E82F28F9BB650021E251 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
@@ -777,7 +777,7 @@
 		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
 		C42CFB1727DFDFDC00862737 /* nginx-site-isolated.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site-isolated.test"; sourceTree = "<group>"; };
 		C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationTest.swift; sourceTree = "<group>"; };
-		C42F26722805B4B400938AC7 /* DomainListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListable.swift; sourceTree = "<group>"; };
+		C42F26722805B4B400938AC7 /* ValetListable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetListable.swift; sourceTree = "<group>"; };
 		C42F26752805FEE200938AC7 /* nginx-secure-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-secure-proxy.test"; sourceTree = "<group>"; };
 		C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Notifications.swift"; sourceTree = "<group>"; };
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
@@ -1032,7 +1032,7 @@
 		C40175B629030F7A00763A68 /* Domains */ = {
 			isa = PBXGroup;
 			children = (
-				C42F26722805B4B400938AC7 /* DomainListable.swift */,
+				C42F26722805B4B400938AC7 /* ValetListable.swift */,
 				C40175B129030F4600763A68 /* ValetInteractable.swift */,
 				C40175B72903108900763A68 /* ValetInteractor.swift */,
 			);
@@ -2032,7 +2032,7 @@
 				54D9E0B427E4F51E003B9AD9 /* Key.swift in Sources */,
 				C4297F7A28970D59004C4630 /* WarningView.swift in Sources */,
 				C4C0E8E227F88B13002D32A9 /* ValetSiteScanner.swift in Sources */,
-				C42F26732805B4B400938AC7 /* DomainListable.swift in Sources */,
+				C42F26732805B4B400938AC7 /* ValetListable.swift in Sources */,
 				5420395F2613607600FB00FA /* Preferences.swift in Sources */,
 				C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */,
 				54FCFD2A276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
@@ -2238,7 +2238,7 @@
 				C471E82528F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
 				C471E80828F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C471E7F928F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
-				C471E82A28F9BB330021E251 /* DomainListable.swift in Sources */,
+				C471E82A28F9BB330021E251 /* ValetListable.swift in Sources */,
 				C471E82728F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */,
 				C471E81C28F9BB250021E251 /* BetterAlert.swift in Sources */,
 				C471E7DB28F9BA8F0021E251 /* RealShell.swift in Sources */,
@@ -2401,7 +2401,7 @@
 				C4D3660E29113F20006BD146 /* System.swift in Sources */,
 				C471E80428F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
-				C471E82C28F9BB340021E251 /* DomainListable.swift in Sources */,
+				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */,
 				C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */,
 				C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */,
@@ -2449,7 +2449,7 @@
 				54D9E0B727E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C413E43528DA3EB100AE33C7 /* TestableShellTest.swift in Sources */,
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
-				C42F26742805B4B400938AC7 /* DomainListable.swift in Sources */,
+				C42F26742805B4B400938AC7 /* ValetListable.swift in Sources */,
 				C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
 				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,

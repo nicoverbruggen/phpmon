@@ -1,5 +1,5 @@
 //
-//  DomainListable.swift
+//  ValetListable.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 12/04/2022.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DomainListable {
+protocol ValetListable {
 
     func getListableName() -> String
 
