@@ -50,4 +50,10 @@ class ValetProxy: ValetListable {
     func getListableUrl() -> URL? {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.domain).\(self.tld)")
     }
+
+    // MARK: - Interactions
+
+    func toggleSecure() async throws {
+        try await ValetInteractor.toggleSecure(proxy: self)
+    }
 }

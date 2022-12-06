@@ -35,10 +35,6 @@
 		54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
 		54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
-		C40175B229030F4600763A68 /* ValetInteractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B129030F4600763A68 /* ValetInteractable.swift */; };
-		C40175B329030F4600763A68 /* ValetInteractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B129030F4600763A68 /* ValetInteractable.swift */; };
-		C40175B429030F4600763A68 /* ValetInteractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B129030F4600763A68 /* ValetInteractable.swift */; };
-		C40175B529030F4600763A68 /* ValetInteractable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B129030F4600763A68 /* ValetInteractable.swift */; };
 		C40175B82903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175B92903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
@@ -725,7 +721,6 @@
 		54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxPreferenceView.swift; sourceTree = "<group>"; };
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
-		C40175B129030F4600763A68 /* ValetInteractable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractable.swift; sourceTree = "<group>"; };
 		C40175B72903108900763A68 /* ValetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractor.swift; sourceTree = "<group>"; };
 		C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDomainResultsView.swift; sourceTree = "<group>"; };
 		C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemExtension.swift; sourceTree = "<group>"; };
@@ -1033,7 +1028,6 @@
 			isa = PBXGroup;
 			children = (
 				C42F26722805B4B400938AC7 /* ValetListable.swift */,
-				C40175B129030F4600763A68 /* ValetInteractable.swift */,
 				C40175B72903108900763A68 /* ValetInteractor.swift */,
 			);
 			path = Domains;
@@ -1960,7 +1954,6 @@
 				C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
-				C40175B229030F4600763A68 /* ValetInteractable.swift in Sources */,
 				C48D6C70279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C4998F0A2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
@@ -2168,7 +2161,6 @@
 				C471E85C28F9BB650021E251 /* DomainListWindowController.swift in Sources */,
 				C471E85D28F9BB650021E251 /* DomainListVC.swift in Sources */,
 				C471E85E28F9BB650021E251 /* DomainListVC+ContextMenu.swift in Sources */,
-				C40175B429030F4600763A68 /* ValetInteractable.swift in Sources */,
 				C4E2E86628FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C471E85F28F9BB650021E251 /* DomainListVC+Actions.swift in Sources */,
 				C471E86028F9BB650021E251 /* SelectionVC.swift in Sources */,
@@ -2277,7 +2269,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C40175B529030F4600763A68 /* ValetInteractable.swift in Sources */,
 				C471E89028F9BB8F0021E251 /* AlertableError.swift in Sources */,
 				C471E89128F9BB8F0021E251 /* Errors.swift in Sources */,
 				C471E89228F9BB8F0021E251 /* Alert.swift in Sources */,
@@ -2522,7 +2513,6 @@
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C495F5B028A42E080087F70A /* EnvironmentCheck.swift in Sources */,
-				C40175B329030F4600763A68 /* ValetInteractable.swift in Sources */,
 				C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,

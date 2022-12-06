@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetSite: ValetListable, ValetInteractable {
+class ValetSite: ValetListable {
 
     /// Name of the site. Does not include the TLD.
     var name: String
@@ -263,14 +263,10 @@ class ValetSite: ValetListable, ValetInteractable {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
     }
 
-    // MARK: ValetInteractable
+    // MARK: - Interactions
 
-    func secure() async throws {
-        try await ValetInteractor.secure(site: self)
-    }
-
-    func unsecure() async throws {
-        try await ValetInteractor.unsecure(site: self)
+    func toggleSecure() async throws {
+        try await ValetInteractor.toggleSecure(site: self)
     }
 
     func isolate(version: PhpVersionNumber) async throws {
