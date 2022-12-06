@@ -19,23 +19,3 @@ protocol DomainInteractable {
     func unlink() async throws
 
 }
-
-extension ValetSite: DomainInteractable {
-
-    func secure() async throws {
-        try await ValetInteractor.secure(site: self)
-    }
-
-    func unsecure() async throws {
-        try await ValetInteractor.unsecure(site: self)
-    }
-
-    func isolate(version: PhpVersionNumber) async throws {
-        try await ValetInteractor.isolate(site: self, version: version)
-    }
-
-    func unlink() async throws {
-        try await ValetInteractor.unlink(site: self)
-    }
-
-}

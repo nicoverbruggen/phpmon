@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetSite: DomainListable {
+class ValetSite: DomainListable, DomainInteractable {
 
     /// Name of the site. Does not include the TLD.
     var name: String
@@ -231,5 +231,53 @@ class ValetSite: DomainListable {
         }
 
         return nil
+    }
+
+    // MARK: DomainListable
+
+    func getListableName() -> String {
+        return self.name
+    }
+
+    func getListableSecured() -> Bool {
+        return self.secured
+    }
+
+    func getListableAbsolutePath() -> String {
+        return self.absolutePath
+    }
+
+    func getListablePhpVersion() -> String {
+        return self.servingPhpVersion
+    }
+
+    func getListableKind() -> String {
+        return (self.aliasPath == nil) ? "linked" : "parked"
+    }
+
+    func getListableType() -> String {
+        return self.driver ?? "ZZZ"
+    }
+
+    func getListableUrl() -> URL? {
+        return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
+    }
+
+    // MARK: DomainInteractable
+
+    func secure() async throws {
+        try await ValetInteractor.secure(site: self)
+    }
+
+    func unsecure() async throws {
+        try await ValetInteractor.unsecure(site: self)
+    }
+
+    func isolate(version: PhpVersionNumber) async throws {
+        try await ValetInteractor.isolate(site: self, version: version)
+    }
+
+    func unlink() async throws {
+        try await ValetInteractor.unlink(site: self)
     }
 }
