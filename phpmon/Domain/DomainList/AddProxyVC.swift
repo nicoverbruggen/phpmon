@@ -158,8 +158,14 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
             return
         }
 
-        previewText.stringValue = "domain_list.add.proxy_available"
-            .localized(
+        var translationKey = "domain_list.add.proxy_available"
+
+        if inputProxySubject.stringValue.starts(with: "https://") {
+            translationKey = "domain_list.add.proxy_https_warning"
+        }
+
+        previewText.stringValue =
+            translationKey.localized(
                 inputProxySubject.stringValue,
                 buttonSecure.state == .on ? "https" : "http",
                 inputDomainName.stringValue,
