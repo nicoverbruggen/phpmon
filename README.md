@@ -80,19 +80,50 @@ If you're still having issues, here's a few common questions & answers, as well 
 <summary><strong>Which versions of PHP are supported?</strong></summary>
 
 <ul>
-<li>PHP 5.6 (only if you are running Valet 2)</li>
-<li>PHP 7.0</li>
-<li>PHP 7.1</li>
-<li>PHP 7.2</li>
-<li>PHP 7.3</li>
-<li>PHP 7.4</li>
-<li>PHP 8.0</li>
-<li>PHP 8.1</li>
-<li>PHP 8.2 (experimental)</li>
+<li>PHP 5.6 (backport + only if you are running Valet 2)</li>
+<li>PHP 7.0 (backport)</li>
+<li>PHP 7.1 (backport)</li>
+<li>PHP 7.2 (backport)</li>
+<li>PHP 7.3 (backport)</li>
+<li>PHP 7.4 (backport)</li>
+<li>PHP 8.0 (official support)</li>
+<li>PHP 8.1 (official support)</li>
+<li>PHP 8.2 (latest version)</li>
+<li>PHP 8.3-dev (experimental)</li>
 </ul>
 
 For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
 
+Backports are available via [this tap](https://github.com/shivammathur/homebrew-php). For more information about those backports, please see the next FAQ entry.
+
+</details>
+
+<details>
+<summary><strong>How do I install additional versions of PHP, including legacy versions?</strong></summary>
+
+Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
+
+You can install other supported versions of PHP out of the box, so `php@8.0` and `php@8.1` at the time of writing.
+
+If you wish to install older (officially unsupported) versions of PHP for local use, you can do so by using [Shivam Mathur's tap](https://github.com/shivammathur/homebrew-php):
+
+```sh
+brew tap shivammathur/php
+```
+
+You may find that this tap is already in use: if you've used Valet before, it automatically uses this tap for legacy versions of PHP.
+
+You can then install those older versions:
+
+```sh
+brew install php@7.0
+brew install php@7.1
+...
+```
+
+**Always make sure to restart PHP Monitor after installing or upgrading PHP versions!**
+
+> *Note*: Using this tap may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
 </details>
 
 <details>
