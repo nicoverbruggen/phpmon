@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -1112,17 +1112,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="U5U-QR-YXS">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="kkd-UV-SnA">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
                                 <view key="contentView" id="IXW-35-8NJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="286"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
-                                            <rect key="frame" x="20" y="196" width="440" height="21"/>
+                                            <rect key="frame" x="20" y="196" width="500" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="http://127.0.0.1:80" placeholderString="http://127.0.0.1:80" drawsBackground="YES" id="muS-8M-KSy">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1149,7 +1149,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
-                                            <rect key="frame" x="20" y="147" width="440" height="21"/>
+                                            <rect key="frame" x="20" y="147" width="500" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="gTQ-Y2-Y9w">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1176,7 +1176,7 @@ Gw
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Vi-cN-ude">
-                                <rect key="frame" x="317" y="13" width="150" height="32"/>
+                                <rect key="frame" x="377" y="13" width="150" height="32"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Create Proxy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H2Z-c5-5Vk">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1205,7 +1205,10 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
-                                <rect key="frame" x="18" y="128" width="444" height="14"/>
+                                <rect key="frame" x="18" y="128" width="504" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="sF1-RG-URI"/>
+                                </constraints>
                                 <textFieldCell key="cell" title="[i18n] Preview text here" id="ISE-9R-ncQ">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1223,7 +1226,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
-                                <rect key="frame" x="18" y="60" width="444" height="28"/>
+                                <rect key="frame" x="18" y="60" width="504" height="28"/>
                                 <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="IMB-O5-ZOy">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1239,7 +1242,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
-                                <rect key="frame" x="131" y="23" width="180" height="14"/>
+                                <rect key="frame" x="191" y="23" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="4sH-94-UJl">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -1293,7 +1296,7 @@ Gw
                 </viewController>
                 <customObject id="VaP-ZM-OcY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="210" y="1524"/>
+            <point key="canvasLocation" x="220" y="1522"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="5Gf-7O-tdA">
