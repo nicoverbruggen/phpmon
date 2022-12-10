@@ -139,6 +139,9 @@
 "domain_list.add.domain_name" = "Domain name";
 "domain_list.add.create_proxy" = "Create Proxy";
 "domain_list.add.proxy_available" = "%@ will be proxied and will be available via: %@://%@.%@";
+"domain_list.add.proxy_https_warning" = "%@ will be proxied and will be available via: %@://%@.%@.
+
+(!) IMPORTANT: This proxy may not work until you manually add `proxy_ssl_verify off;` to the nginx configuration file for this domain. It is recommended that you use an unsecured domain as the proxy subject.";
 
 // ADD SITE TO DOMAINS LIST
 
