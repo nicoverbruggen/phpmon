@@ -266,14 +266,14 @@ class ValetSite: ValetListable {
     // MARK: - Interactions
 
     func toggleSecure() async throws {
-        try await ValetInteractor.toggleSecure(site: self)
+        try await ValetInteractor.shared.toggleSecure(site: self)
     }
 
     func isolate(version: PhpVersionNumber) async throws {
-        try await ValetInteractor.isolate(site: self, version: version)
+        try await ValetInteractor.shared.isolate(site: self, version: version)
     }
 
     func unlink() async throws {
-        try await ValetInteractor.unlink(site: self)
+        try await ValetInteractor.shared.unlink(site: self)
     }
 }

@@ -15,11 +15,31 @@ struct ValetInteractionError: Error {
 
 #warning("ValetInteractor needs to be implemented and used")
 class ValetInteractor {
-    public static func toggleSecure(site: ValetSite) async throws {
-        // TODO
+    static var shared = ValetInteractor()
+
+    public static func useFake() {
+        ValetInteractor.shared = FakeValetInteractor()
     }
 
-    public static func toggleSecure(proxy: ValetProxy) async throws {
+    public func toggleSecure(site: ValetSite) async throws {
+        // Keep track of the original status (secure or not?)
+        let originalSecureStatus = site.secured
+
+        // Keep track of the command we wish to run
+        let action = site.secured ? "unsecure" : "secure"
+        let command = "cd '\(site.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+
+        // Run the command
+        await Shell.quiet(command)
+
+        // Check if the secured status has actually changed
+        site.determineSecured()
+        if site.secured == originalSecureStatus {
+            throw ValetInteractionError(command: command)
+        }
+    }
+
+    public func toggleSecure(proxy: ValetProxy) async throws {
         // Keep track of the original status (secure or not?)
         let originalSecureStatus = proxy.secured
 
@@ -33,6 +53,7 @@ class ValetInteractor {
                 : "\(Paths.valet) proxy \(proxy.domain) \(proxy.target) --secure"
         ]
 
+        // Run the commands
         for command in commands {
             await Shell.quiet(command)
         }
@@ -49,15 +70,29 @@ class ValetInteractor {
         await Actions.restartNginx()
     }
 
-    public static func isolate(site: ValetSite, version: PhpVersionNumber) async throws {
+    public func isolate(site: ValetSite, version: PhpVersionNumber) async throws {
         // TODO
     }
 
-    public static func unlink(site: ValetSite) async throws {
+    public func unlink(site: ValetSite) async throws {
         // TODO
     }
 
-    public static func remove(proxy: ValetProxy) async throws {
+    public func remove(proxy: ValetProxy) async throws {
         await Shell.quiet("valet unproxy '\(proxy.domain)'")
+    }
+}
+
+class FakeValetInteractor: ValetInteractor {
+    override func toggleSecure(proxy: ValetProxy) async throws {
+        proxy.secured = !proxy.secured
+    }
+
+    override func toggleSecure(site: ValetSite) async throws {
+        site.secured = !site.secured
+    }
+
+    override func remove(proxy: ValetProxy) async throws {
+        fatalError("This should remove the proxy")
     }
 }

@@ -26,6 +26,8 @@ public struct TestableConfiguration: Codable {
         ActiveCommand.useTestable(commandOutput)
         Log.info("Applying fake scanner...")
         ValetScanners.useFake()
+        Log.info("Applying fake Valet domain interactor...")
+        ValetInteractor.useFake()
     }
 
     func toJson(pretty: Bool = false) -> String {

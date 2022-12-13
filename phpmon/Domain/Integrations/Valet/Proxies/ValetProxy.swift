@@ -58,10 +58,10 @@ class ValetProxy: ValetListable {
     }
 
     func toggleSecure() async throws {
-        try await ValetInteractor.toggleSecure(proxy: self)
+        try await ValetInteractor.shared.toggleSecure(proxy: self)
     }
 
     func remove() async {
-        try! await ValetInteractor.remove(proxy: self)
+        try! await ValetInteractor.shared.remove(proxy: self)
     }
 }

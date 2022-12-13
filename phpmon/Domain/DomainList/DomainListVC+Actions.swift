@@ -68,7 +68,7 @@ extension DomainListVC {
 
     @objc func toggleSecure() {
         if selected is ValetSite {
-            Task { toggleSecureForSite() }
+            Task { await toggleSecureForSite() }
         } else {
             Task { await toggleSecureForProxy() }
         }
@@ -78,74 +78,33 @@ extension DomainListVC {
         guard let proxy = selectedProxy else { return }
 
         do {
-            // Toggle secure
+            // Recreate proxy as secure or unsecured proxy
             try await proxy.toggleSecure()
-
             // Send a notification about the new status (if applicable)
-            LocalNotification.send(
-                title: "domain_list.alerts_status_changed.title".localized,
-                subtitle: "domain_list.alerts_status_changed.desc"
-                    .localized(
-                        // 1. The domain that was secured is listed
-                        "\(proxy.domain).\(Valet.shared.config.tld)",
-                        // 2. What the domain is is listed (secure / unsecure)
-                        proxy.secured
-                            ? "domain_list.alerts_status_secure".localized
-                            : "domain_list.alerts_status_secure".localized
-                    ),
-                preference: .notifyAboutSecureToggle
-            )
-
+            self.notifyAboutModifiedSecureStatus(domain: proxy.domain, secured: proxy.secured)
             // Reload the UI (do this last so we don't invalidate the proxy)
             self.reloadSelectedRow()
         } catch {
+            // Notify the user about a failed command
             let error = error as! ValetInteractionError
-
-            BetterAlert()
-                .withInformation(
-                    title: "domain_list.alerts_status_not_changed.title".localized,
-                    subtitle: "domain_list.alerts_status_not_changed.desc".localized(error.command)
-                )
-                .withPrimary(text: "OK")
-                .show()
+            self.notifyAboutFailedSecureStatus(command: error.command)
         }
     }
 
-    func toggleSecureForSite() {
-        let rowToReload = tableView.selectedRow
-        let originalSecureStatus = selectedSite!.secured
-        let action = selectedSite!.secured ? "unsecure" : "secure"
-        let selectedSite = selectedSite!
-        let command = "cd '\(selectedSite.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+    func toggleSecureForSite() async {
+        guard let site = selectedSite else { return }
 
-        waitAndExecute {
-            await Shell.quiet(command)
-        } completion: { [self] in
-            selectedSite.determineSecured()
-            if selectedSite.secured == originalSecureStatus {
-                BetterAlert()
-                    .withInformation(
-                        title: "domain_list.alerts_status_not_changed.title".localized,
-                        subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
-                    )
-                    .withPrimary(text: "OK")
-                    .show()
-            } else {
-                let newState = selectedSite.secured ? "secured" : "unsecured"
-                LocalNotification.send(
-                    title: "domain_list.alerts_status_changed.title".localized,
-                    subtitle: "domain_list.alerts_status_changed.desc"
-                        .localized(
-                            "\(selectedSite.name).\(Valet.shared.config.tld)",
-                            newState
-                        ),
-                    preference: .notifyAboutSecureToggle
-                )
-            }
-
-            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
-            tableView.deselectRow(rowToReload)
-            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
+        do {
+            // Instruct Valet to secure or unsecure a site
+            try await site.toggleSecure()
+            // Send a notification about the new status (if applicable)
+            self.notifyAboutModifiedSecureStatus(domain: site.name, secured: site.secured)
+            // Reload the UI (do this last so we don't invalidate the proxy)
+            self.reloadSelectedRow()
+        } catch {
+            // Notify the user about a failed command
+            let error = error as! ValetInteractionError
+            self.notifyAboutFailedSecureStatus(command: error.command)
         }
     }
 
@@ -222,5 +181,33 @@ extension DomainListVC {
                 }
             }
         )
+    }
+
+    // MARK: - Alerts & Modals
+
+    private func notifyAboutModifiedSecureStatus(domain: String, secured: Bool) {
+        LocalNotification.send(
+            title: "domain_list.alerts_status_changed.title".localized,
+            subtitle: "domain_list.alerts_status_changed.desc"
+                .localized(
+                    // 1. The domain that was secured is listed
+                    "\(domain).\(Valet.shared.config.tld)",
+                    // 2. What the domain is is listed (secure / unsecure)
+                    secured
+                    ? "domain_list.alerts_status_secure".localized
+                    : "domain_list.alerts_status_unsecure".localized
+                ),
+            preference: .notifyAboutSecureToggle
+        )
+    }
+
+    private func notifyAboutFailedSecureStatus(command: String) {
+        BetterAlert()
+            .withInformation(
+                title: "domain_list.alerts_status_not_changed.title".localized,
+                subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
+            )
+            .withPrimary(text: "OK")
+            .show()
     }
 }
