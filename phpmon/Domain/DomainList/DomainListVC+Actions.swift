@@ -68,43 +68,45 @@ extension DomainListVC {
 
     @objc func toggleSecure() {
         if selected is ValetSite {
-            Task { await toggleSecureForSite() }
-        } else {
-            Task { await toggleSecureForProxy() }
+            Task { await toggleSecure(site: selected as! ValetSite) }
+        }
+
+        if selected is ValetProxy {
+            Task { await toggleSecure(proxy: selected as! ValetProxy) }
         }
     }
 
-    func toggleSecureForProxy() async {
-        guard let proxy = selectedProxy else { return }
-
-        do {
-            // Recreate proxy as secure or unsecured proxy
-            try await proxy.toggleSecure()
-            // Send a notification about the new status (if applicable)
-            self.notifyAboutModifiedSecureStatus(domain: proxy.domain, secured: proxy.secured)
-            // Reload the UI (do this last so we don't invalidate the proxy)
-            self.reloadSelectedRow()
-        } catch {
-            // Notify the user about a failed command
-            let error = error as! ValetInteractionError
-            self.notifyAboutFailedSecureStatus(command: error.command)
+    func toggleSecure(proxy: ValetProxy) async {
+        waitAndExecute {
+            do {
+                // Recreate proxy as secure or unsecured proxy
+                try await proxy.toggleSecure()
+                // Send a notification about the new status (if applicable)
+                self.notifyAboutModifiedSecureStatus(domain: proxy.domain, secured: proxy.secured)
+                // Reload the UI (do this last so we don't invalidate the proxy)
+                self.reloadSelectedRow()
+            } catch {
+                // Notify the user about a failed command
+                let error = error as! ValetInteractionError
+                self.notifyAboutFailedSecureStatus(command: error.command)
+            }
         }
     }
 
-    func toggleSecureForSite() async {
-        guard let site = selectedSite else { return }
-
-        do {
-            // Instruct Valet to secure or unsecure a site
-            try await site.toggleSecure()
-            // Send a notification about the new status (if applicable)
-            self.notifyAboutModifiedSecureStatus(domain: site.name, secured: site.secured)
-            // Reload the UI (do this last so we don't invalidate the proxy)
-            self.reloadSelectedRow()
-        } catch {
-            // Notify the user about a failed command
-            let error = error as! ValetInteractionError
-            self.notifyAboutFailedSecureStatus(command: error.command)
+    func toggleSecure(site: ValetSite) async {
+        waitAndExecute {
+            do {
+                // Instruct Valet to secure or unsecure a site
+                try await site.toggleSecure()
+                // Send a notification about the new status (if applicable)
+                self.notifyAboutModifiedSecureStatus(domain: site.name, secured: site.secured)
+                // Reload the UI (do this last so we don't invalidate the site)
+                self.reloadSelectedRow()
+            } catch {
+                // Notify the user about a failed command
+                let error = error as! ValetInteractionError
+                self.notifyAboutFailedSecureStatus(command: error.command)
+            }
         }
     }
 
