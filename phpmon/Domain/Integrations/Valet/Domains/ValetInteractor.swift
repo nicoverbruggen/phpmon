@@ -13,7 +13,6 @@ struct ValetInteractionError: Error {
     var command: String
 }
 
-#warning("ValetInteractor needs to be implemented and used")
 class ValetInteractor {
     static var shared = ValetInteractor()
 
@@ -75,7 +74,7 @@ class ValetInteractor {
     }
 
     public func unlink(site: ValetSite) async throws {
-        // TODO
+        await Shell.quiet("valet unlink '\(site.name)'")
     }
 
     public func remove(proxy: ValetProxy) async throws {
@@ -92,7 +91,13 @@ class FakeValetInteractor: ValetInteractor {
         site.secured = !site.secured
     }
 
+    override func unlink(site: ValetSite) async throws {
+        if let scanner = ValetScanners.siteScanner as? FakeSiteScanner {
+            scanner.fakes.removeAll { $0 === site }
+        }
+    }
+
     override func remove(proxy: ValetProxy) async throws {
-        fatalError("This should remove the proxy")
+        #warning("A fake proxy scanner needs to be added")
     }
 }

@@ -108,6 +108,7 @@ extension DomainListVC {
         }
     }
 
+    #warning("ValetInteractor needs to be used here instead of directly issuing commands to valet")
     @objc func isolateSite(sender: PhpMenuItem) {
         let command = "sudo \(Paths.valet) isolate php@\(sender.version) --site '\(self.selectedSite!.name)' && exit;"
 
@@ -128,6 +129,7 @@ extension DomainListVC {
         }
     }
 
+    #warning("ValetInteractor needs to be used here instead of directly issuing commands to valet")
     @objc func removeIsolatedSite() {
         self.performAction(command: "sudo \(Paths.valet) unisolate --site '\(self.selectedSite!.name)' && exit;") {
             self.selectedSite!.isolatedPhpVersion = nil
@@ -153,7 +155,7 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Task { await Shell.quiet("valet unlink '\(site.name)'") }
+                    Task { await site.unlink() }
                 } completion: {
                     Task { await self.reloadDomains() }
                 }

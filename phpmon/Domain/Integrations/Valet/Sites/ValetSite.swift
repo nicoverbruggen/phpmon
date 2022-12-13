@@ -273,7 +273,7 @@ class ValetSite: ValetListable {
         try await ValetInteractor.shared.isolate(site: self, version: version)
     }
 
-    func unlink() async throws {
-        try await ValetInteractor.shared.unlink(site: self)
+    func unlink() async {
+        try! await ValetInteractor.shared.unlink(site: self)
     }
 }

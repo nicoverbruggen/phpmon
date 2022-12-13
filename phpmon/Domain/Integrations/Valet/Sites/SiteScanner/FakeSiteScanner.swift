@@ -7,7 +7,7 @@
 //
 
 class FakeSiteScanner: SiteScanner {
-    let fakes = [
+    var fakes = [
         FakeValetSite(fakeWithName: "laravel", tld: "test", secure: true,
                   path: "~/Code/laravel/framework", linked: true),
 
