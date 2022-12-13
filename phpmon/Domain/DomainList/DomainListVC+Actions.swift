@@ -81,19 +81,23 @@ extension DomainListVC {
             // Toggle secure
             try await proxy.toggleSecure()
 
-            // Reload the UI
-            self.reloadSelectedRow()
-
             // Send a notification about the new status (if applicable)
             LocalNotification.send(
                 title: "domain_list.alerts_status_changed.title".localized,
                 subtitle: "domain_list.alerts_status_changed.desc"
                     .localized(
+                        // 1. The domain that was secured is listed
                         "\(proxy.domain).\(Valet.shared.config.tld)",
+                        // 2. What the domain is is listed (secure / unsecure)
                         proxy.secured
+                            ? "domain_list.alerts_status_secure".localized
+                            : "domain_list.alerts_status_secure".localized
                     ),
                 preference: .notifyAboutSecureToggle
             )
+
+            // Reload the UI (do this last so we don't invalidate the proxy)
+            self.reloadSelectedRow()
         } catch {
             let error = error as! ValetInteractionError
 
