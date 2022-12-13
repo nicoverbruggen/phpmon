@@ -11,33 +11,99 @@ import Cocoa
 
 extension DomainListVC {
 
-    @objc func toggleSecure() {
-        if selected is ValetSite {
-            toggleSecureForSite()
-        } else {
-            toggleSecureForProxy()
+    @objc func openInBrowser() {
+        guard let selected = self.selected else {
+            return
+        }
+
+        guard let url = selected.getListableUrl() else {
+            BetterAlert()
+                .withInformation(
+                    title: "domain_list.alert.invalid_folder_name".localized,
+                    subtitle: "domain_list.alert.invalid_folder_name_desc".localized
+                )
+                .withPrimary(text: "OK")
+                .show()
+            return
+        }
+
+        NSWorkspace.shared.open(url)
+    }
+
+    @objc func openInFinder() async {
+        await Shell.quiet("open '\(selectedSite!.absolutePath)'")
+    }
+
+    @objc func openInTerminal() async {
+        await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
+    }
+
+    @objc func openWithEditor(sender: EditorMenuItem) async {
+        guard let editor = sender.editor else { return }
+        await editor.openDirectory(file: selectedSite!.absolutePath)
+    }
+
+    // MARK: - UI interaction
+
+    private func performAction(command: String, beforeCellReload: @escaping () -> Void) {
+        let rowToReload = tableView.selectedRow
+
+        waitAndExecute {
+            await Shell.quiet(command)
+        } completion: { [self] in
+            beforeCellReload()
+            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
+            tableView.deselectRow(rowToReload)
+            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
         }
     }
 
-    func toggleSecureForProxy() {
-        let originalSecureStatus = selectedProxy!.secured
-        let selectedProxy = selectedProxy!
+    private func reloadSelectedRow() {
+        tableView.reloadData(forRowIndexes: [tableView.selectedRow], columnIndexes: [0, 1, 2, 3, 4])
+        tableView.deselectRow(tableView.selectedRow)
+        tableView.selectRowIndexes([tableView.selectedRow], byExtendingSelection: true)
+    }
 
-        self.waitAndExecute {
-            // 1. Remove the original proxy
-            await Shell.quiet("\(Paths.valet) unproxy \(selectedProxy.domain)")
+    // MARK: - Interactions with `valet` or terminal
 
-            // 2. Add a new proxy, which is either secured/unsecured
-            let secure = originalSecureStatus ? "" : " --secure"
-            await Shell.quiet("\(Paths.valet) proxy \(selectedProxy.domain) \(selectedProxy.target)\(secure)")
+    @objc func toggleSecure() {
+        if selected is ValetSite {
+            Task { toggleSecureForSite() }
+        } else {
+            Task { await toggleSecureForProxy() }
+        }
+    }
 
-            // 3. Restart nginx
-            await Actions.restartNginx()
+    func toggleSecureForProxy() async {
+        guard let proxy = selectedProxy else { return }
 
-            // 4. Reload site list
-            Task { @MainActor in
-                App.shared.domainListWindowController?.pressedReload(nil)
-            }
+        do {
+            // Toggle secure
+            try await proxy.toggleSecure()
+
+            // Reload the UI
+            self.reloadSelectedRow()
+
+            // Send a notification about the new status (if applicable)
+            LocalNotification.send(
+                title: "domain_list.alerts_status_changed.title".localized,
+                subtitle: "domain_list.alerts_status_changed.desc"
+                    .localized(
+                        "\(proxy.domain).\(Valet.shared.config.tld)",
+                        proxy.secured
+                    ),
+                preference: .notifyAboutSecureToggle
+            )
+        } catch {
+            let error = error as! ValetInteractionError
+
+            BetterAlert()
+                .withInformation(
+                    title: "domain_list.alerts_status_not_changed.title".localized,
+                    subtitle: "domain_list.alerts_status_not_changed.desc".localized(error.command)
+                )
+                .withPrimary(text: "OK")
+                .show()
         }
     }
 
@@ -77,38 +143,6 @@ extension DomainListVC {
             tableView.deselectRow(rowToReload)
             tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
         }
-    }
-
-    @objc func openInBrowser() {
-        guard let selected = self.selected else {
-            return
-        }
-
-        guard let url = selected.getListableUrl() else {
-            BetterAlert()
-                .withInformation(
-                    title: "domain_list.alert.invalid_folder_name".localized,
-                    subtitle: "domain_list.alert.invalid_folder_name_desc".localized
-                )
-                .withPrimary(text: "OK")
-                .show()
-            return
-        }
-
-        NSWorkspace.shared.open(url)
-    }
-
-    @objc func openInFinder() async {
-        await Shell.quiet("open '\(selectedSite!.absolutePath)'")
-    }
-
-    @objc func openInTerminal() async {
-        await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
-    }
-
-    @objc func openWithEditor(sender: EditorMenuItem) async {
-        guard let editor = sender.editor else { return }
-        await editor.openDirectory(file: selectedSite!.absolutePath)
     }
 
     @objc func isolateSite(sender: PhpMenuItem) {
@@ -178,25 +212,11 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Task { await Shell.quiet("valet unproxy '\(proxy.domain)'") }
+                    Task { await proxy.remove() }
                 } completion: {
                     Task { await self.reloadDomains() }
                 }
             }
         )
     }
-
-    private func performAction(command: String, beforeCellReload: @escaping () -> Void) {
-        let rowToReload = tableView.selectedRow
-
-        waitAndExecute {
-            await Shell.quiet(command)
-        } completion: { [self] in
-            beforeCellReload()
-            tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])
-            tableView.deselectRow(rowToReload)
-            tableView.selectRowIndexes([rowToReload], byExtendingSelection: true)
-        }
-    }
-
 }

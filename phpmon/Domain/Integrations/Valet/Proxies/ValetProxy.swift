@@ -18,7 +18,7 @@ class ValetProxy: ValetListable {
         self.domain = configuration.domain
         self.tld = configuration.tld
         self.target = configuration.proxy!
-        self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+        self.determineSecured()
     }
 
     // MARK: - ValetListable Protocol
@@ -53,7 +53,15 @@ class ValetProxy: ValetListable {
 
     // MARK: - Interactions
 
+    func determineSecured() {
+        self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+    }
+
     func toggleSecure() async throws {
         try await ValetInteractor.toggleSecure(proxy: self)
+    }
+
+    func remove() async {
+        try! await ValetInteractor.remove(proxy: self)
     }
 }
