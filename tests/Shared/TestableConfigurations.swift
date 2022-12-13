@@ -66,7 +66,7 @@ class TestableConfigurations {
                     : .instant("php"),
                 "ls /opt/homebrew/opt | grep php@"
                     : .instant("php@8.1"),
-                "sudo /opt/homebrew/bin/brew services info nginx --json"
+                "sudo /opt/homebrew/bin/brew services info dnsmasq --json"
                     : .delayed(0.2, """
                         [
                             {
