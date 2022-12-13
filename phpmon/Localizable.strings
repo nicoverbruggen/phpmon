@@ -122,7 +122,7 @@
 "domain_list.alerts_status_changed.title" = "SSL Status Changed";
 "domain_list.alerts_status_changed.desc" = "The domain '%@' is now %@.";
 "domain_list.alerts_status_secure" = "secure";
-"domain_list.alerts_status_unsecure" = "unsecure";
+"domain_list.alerts_status_unsecure" = "unsecured";
 
 "domain_list.confirm_unlink" = "Are you sure you want to unlink '%@'?";
 "domain_list.confirm_unlink_desc" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
