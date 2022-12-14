@@ -28,6 +28,20 @@ class FakeValetInteractor: ValetInteractor {
         }
     }
 
+    override func isolate(site: ValetSite, version: String) async throws {
+        await delay(seconds: delayTime)
+
+        site.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+        site.evaluateCompatibility()
+    }
+
+    override func unisolate(site: ValetSite) async throws {
+        await delay(seconds: delayTime)
+
+        site.isolatedPhpVersion = nil
+        site.evaluateCompatibility()
+    }
+
     override func remove(proxy: ValetProxy) async throws {
         await delay(seconds: delayTime)
         #warning("A fake proxy scanner needs to be added")

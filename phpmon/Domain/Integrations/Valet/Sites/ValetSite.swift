@@ -135,7 +135,10 @@ class ValetSite: ValetListable {
     public func determineComposerPhpVersion() {
         self.determineComposerInformation()
         self.determineValetPhpFileInfo()
+        self.evaluateCompatibility()
+    }
 
+    public func evaluateCompatibility() {
         if self.composerPhp == "???" {
             return
         }
