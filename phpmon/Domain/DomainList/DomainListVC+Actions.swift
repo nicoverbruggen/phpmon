@@ -110,32 +110,41 @@ extension DomainListVC {
         }
     }
 
-    #warning("ValetInteractor needs to be used here instead of directly issuing commands to valet")
     @objc func isolateSite(sender: PhpMenuItem) {
-        let command = "sudo \(Paths.valet) isolate php@\(sender.version) --site '\(self.selectedSite!.name)' && exit;"
+        guard let site = selectedSite else {
+            return
+        }
 
-        self.performAction(command: command) {
-            self.selectedSite!.determineIsolated()
-            self.selectedSite!.determineComposerPhpVersion()
-
-            if self.selectedSite!.isolatedPhpVersion == nil {
-                BetterAlert()
-                    .withInformation(
-                        title: "domain_list.alerts_isolation_failed.title".localized,
-                        subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,
-                        description: "domain_list.alerts_isolation_failed.desc".localized(command)
-                    )
-                    .withPrimary(text: "OK")
-                    .show()
+        waitAndExecute {
+            do {
+                // Instruct Valet to isolate a given PHP version
+                try await site.isolate(version: sender.version)
+                // Reload the UI
+                self.reloadSelectedRow()
+            } catch {
+                // Notify the user about a failed command
+                let error = error as! ValetInteractionError
+                self.notifyAboutFailedSiteIsolation(command: error.command)
             }
         }
     }
 
-    #warning("ValetInteractor needs to be used here instead of directly issuing commands to valet")
     @objc func removeIsolatedSite() {
-        self.performAction(command: "sudo \(Paths.valet) unisolate --site '\(self.selectedSite!.name)' && exit;") {
-            self.selectedSite!.isolatedPhpVersion = nil
-            self.selectedSite!.determineComposerPhpVersion()
+        guard let site = selectedSite else {
+            return
+        }
+
+        waitAndExecute {
+            do {
+                // Instruct Valet to remove isolation
+                try await site.unisolate()
+                // Reload the UI
+                self.reloadSelectedRow()
+            } catch {
+                // Notify the user about a failed command
+                let error = error as! ValetInteractionError
+                self.notifyAboutFailedSiteIsolation(command: error.command)
+            }
         }
     }
 
@@ -210,6 +219,17 @@ extension DomainListVC {
             .withInformation(
                 title: "domain_list.alerts_status_not_changed.title".localized,
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
+            )
+            .withPrimary(text: "OK")
+            .show()
+    }
+
+    private func notifyAboutFailedSiteIsolation(command: String) {
+        BetterAlert()
+            .withInformation(
+                title: "domain_list.alerts_isolation_failed.title".localized,
+                subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,
+                description: "domain_list.alerts_isolation_failed.desc".localized(command)
             )
             .withPrimary(text: "OK")
             .show()

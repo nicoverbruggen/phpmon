@@ -18,7 +18,7 @@ class ServicesManager: ObservableObject {
     @Published var services: [String: ServiceWrapper] = [:]
 
     init() {
-        Log.info("Initializing ServicesManager")
+        Log.info("Initializing ServicesManager...")
 
         formulae = [
             Homebrew.Formulae.php,

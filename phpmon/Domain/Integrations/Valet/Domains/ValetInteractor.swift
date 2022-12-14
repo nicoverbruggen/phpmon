@@ -69,8 +69,36 @@ class ValetInteractor {
         await Actions.restartNginx()
     }
 
-    public func isolate(site: ValetSite, version: PhpVersionNumber) async throws {
-        // TODO
+    public func isolate(site: ValetSite, version: String) async throws {
+        let command = "sudo \(Paths.valet) isolate php@\(version) --site '\(site.name)'"
+
+        // Run the command
+        await Shell.quiet(command)
+
+        // Check if the secured status has actually changed
+        site.determineIsolated()
+        site.determineComposerPhpVersion()
+
+        // If the version is not isolated, this failed
+        if site.isolatedPhpVersion == nil {
+            throw ValetInteractionError(command: command)
+        }
+    }
+
+    public func unisolate(site: ValetSite) async throws {
+        let command = "sudo \(Paths.valet) unisolate --site '\(site.name)'"
+
+        // Run the command
+        await Shell.quiet(command)
+
+        // Check if the secured status has actually changed
+        site.determineIsolated()
+        site.determineComposerPhpVersion()
+
+        // If the version is somehow still isolated, this failed
+        if site.isolatedPhpVersion != nil {
+            throw ValetInteractionError(command: command)
+        }
     }
 
     public func unlink(site: ValetSite) async throws {

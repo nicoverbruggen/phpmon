@@ -112,8 +112,8 @@
 "domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
 "domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";
 
-"domain_list.alerts_isolation_failed.title" = "Oops! Site Not Isolated";
-"domain_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to isolate this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
+"domain_list.alerts_isolation_failed.title" = "Oops! Site Isolation Not Applied";
+"domain_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to change the isolation status for this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
 "domain_list.alerts_isolation_failed.desc" = "To find out what goes wrong, you can try running the command in your terminal manually: %@";
 
 "domain_list.alerts_status_not_changed.title" = "Oops! SSL Status Not Changed";

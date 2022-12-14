@@ -269,8 +269,12 @@ class ValetSite: ValetListable {
         try await ValetInteractor.shared.toggleSecure(site: self)
     }
 
-    func isolate(version: PhpVersionNumber) async throws {
+    func isolate(version: String) async throws {
         try await ValetInteractor.shared.isolate(site: self, version: version)
+    }
+
+    func unisolate() async throws {
+        try await ValetInteractor.shared.unisolate(site: self)
     }
 
     func unlink() async {
