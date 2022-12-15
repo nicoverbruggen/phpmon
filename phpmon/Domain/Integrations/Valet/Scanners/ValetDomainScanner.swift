@@ -1,5 +1,5 @@
 //
-//  ValetSiteScanner.swift
+//  ValetDomainScanner.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 02/04/2022.
@@ -8,7 +8,10 @@
 
 import Foundation
 
-class ValetSiteScanner: SiteScanner {
+class ValetDomainScanner: DomainScanner {
+
+    // MARK: - Sites
+
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
 
@@ -75,5 +78,25 @@ class ValetSiteScanner: SiteScanner {
         let siteDir = path + "/" + entry
 
         return (FileSystem.isDirectory(siteDir) || FileSystem.isSymlink(siteDir))
+    }
+
+    // MARK: - Proxies
+
+    func resolveProxies(directoryPath: String) -> [ValetProxy] {
+        return try! FileManager
+            .default
+            .contentsOfDirectory(atPath: directoryPath)
+            .filter {
+                return !$0.starts(with: ".")
+            }
+            .compactMap {
+                return NginxConfigurationFile.from(filePath: "\(directoryPath)/\($0)")
+            }
+            .filter {
+                return $0.proxy != nil
+            }
+            .map {
+                return ValetProxy($0)
+            }
     }
 }

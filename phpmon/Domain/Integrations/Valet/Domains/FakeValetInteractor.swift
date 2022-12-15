@@ -23,8 +23,9 @@ class FakeValetInteractor: ValetInteractor {
 
     override func unlink(site: ValetSite) async throws {
         await delay(seconds: delayTime)
-        if let scanner = ValetScanners.siteScanner as? FakeSiteScanner {
-            scanner.fakes.removeAll { $0 === site }
+
+        if let scanner = ValetScanner.active as? FakeDomainScanner {
+            scanner.sites.removeAll { $0 === site }
         }
     }
 
@@ -44,6 +45,9 @@ class FakeValetInteractor: ValetInteractor {
 
     override func remove(proxy: ValetProxy) async throws {
         await delay(seconds: delayTime)
-        #warning("A fake proxy scanner needs to be added")
+
+        if let scanner = ValetScanner.active as? FakeDomainScanner {
+            scanner.proxies.removeAll { $0 === proxy }
+        }
     }
 }

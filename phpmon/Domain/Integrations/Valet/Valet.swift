@@ -49,7 +49,7 @@ class Valet {
     public func checkForMarketingMode() {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
             Log.info("Using a fake list of sites for Marketing Mode!")
-            ValetScanners.useFake()
+            ValetScanner.useFake()
         }
     }
 
@@ -188,8 +188,7 @@ class Valet {
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() -> Int {
-        return ValetScanners.siteScanner
-            .resolveSiteCount(paths: config.paths)
+        return ValetScanner.active.resolveSiteCount(paths: config.paths)
     }
 
     /**
@@ -198,19 +197,19 @@ class Valet {
     private func resolvePaths() {
         isBusy = true
 
-        sites = ValetScanners.siteScanner
+        sites = ValetScanner.active
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        proxies = ValetScanners.proxyScanner
+        proxies = ValetScanner.active
             .resolveProxies(
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
         if let defaultPath = Valet.shared.config.defaultSite,
-            let site = ValetSiteScanner().resolveSite(path: defaultPath) {
+           let site = ValetScanner.active.resolveSite(path: defaultPath) {
             sites.insert(site, at: 0)
         }
 

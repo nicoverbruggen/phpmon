@@ -25,7 +25,7 @@ public struct TestableConfiguration: Codable {
         Log.info("Applying fake commands...")
         ActiveCommand.useTestable(commandOutput)
         Log.info("Applying fake scanner...")
-        ValetScanners.useFake()
+        ValetScanner.useFake()
         Log.info("Applying fake Valet domain interactor...")
         ValetInteractor.useFake()
     }

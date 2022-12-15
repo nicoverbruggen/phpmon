@@ -1,13 +1,14 @@
 //
-//  FakeSiteScanner.swift
+//  FakeDomainScanner.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 02/04/2022.
 //  Copyright © 2022 Nico Verbruggen. All rights reserved.
 //
 
-class FakeSiteScanner: SiteScanner {
-    var fakes = [
+class FakeDomainScanner: DomainScanner {
+
+    var sites: [ValetSite] = [
         FakeValetSite(fakeWithName: "laravel", tld: "test", secure: true,
                   path: "~/Code/laravel/framework", linked: true),
 
@@ -27,15 +28,27 @@ class FakeSiteScanner: SiteScanner {
                   path: "~/Sites/wordpress", linked: false, driver: "WordPress", constraint: "^7.4", isolated: "7.4")
     ]
 
+    var proxies: [ValetProxy] = [
+        // TODO: Add new proxy here
+    ]
+
+    // MARK: - Sites
+
     func resolveSiteCount(paths: [String]) -> Int {
-        return fakes.count
+        return sites.count
     }
 
     func resolveSitesFrom(paths: [String]) -> [ValetSite] {
-        return fakes
+        return sites
     }
 
     func resolveSite(path: String) -> ValetSite? {
         return nil
+    }
+
+    // MARK: - Proxies
+
+    func resolveProxies(directoryPath: String) -> [ValetProxy] {
+        return proxies
     }
 }
