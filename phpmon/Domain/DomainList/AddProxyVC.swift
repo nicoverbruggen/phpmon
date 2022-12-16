@@ -79,7 +79,6 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
             )
 
             Task { @MainActor in
-                // TODO: Check if this can be removed
                 App.shared.domainListWindowController?.contentVC.setUINotBusy()
                 App.shared.domainListWindowController?.pressedReload(nil)
             }

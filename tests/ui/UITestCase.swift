@@ -28,3 +28,20 @@ class UITestCase: XCTestCase {
     }
 
 }
+
+extension XCUIElement {
+    /**
+     Clears all the text from a given element.
+     */
+    func clearText() {
+        guard let stringValue = self.value as? String else {
+            return
+        }
+
+        var deleteString = String()
+        for _ in stringValue {
+            deleteString += XCUIKeyboardKey.delete.rawValue
+        }
+        typeText(deleteString)
+    }
+}

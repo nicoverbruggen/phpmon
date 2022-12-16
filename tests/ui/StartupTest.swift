@@ -67,8 +67,8 @@ final class StartupTest: UITestCase {
 
         // Note: If this fails here, make sure the menu bar item can be displayed
         // If you use Bartender or something like this, this item may be hidden and tests will fail
-        let statusBarItem = app.statusItems.firstMatch
-        statusBarItem.click()
+        app.statusItems.firstMatch.click()
+        
         assertAllExist([
             // "Switch to PHP 8.1 (php)" should be visible since it is aliased to `php`
             app.menuItems["\("mi_php_switch".localized) 8.1 (php)"],
