@@ -79,8 +79,8 @@
 		C417DC74277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C417DC75277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4181F1028FAF9330042EA28 /* UITestCase.swift */; };
-		C41C02A927E61A65009F26CB /* ValetSite+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */; };
-		C41C02AB27E61CB3009F26CB /* ValetSite+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */; };
+		C41C02A927E61A65009F26CB /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
+		C41C02AB27E61CB3009F26CB /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
 		C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
 		C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3C22B0098000E7CF16 /* Main.storyboard */; };
@@ -154,6 +154,10 @@
 		C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* DomainListVC.swift */; };
 		C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAE275A7A69003FCD53 /* DomainListVC.swift */; };
 		C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */; };
+		C469E6FE294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
+		C469E6FF294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
+		C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
+		C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
@@ -281,10 +285,9 @@
 		C471E83328F9BB650021E251 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C471E83428F9BB650021E251 /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
 		C471E83528F9BB650021E251 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
-		C471E83628F9BB650021E251 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
 		C471E83728F9BB650021E251 /* DomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */; };
 		C471E83928F9BB650021E251 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
-		C471E83A28F9BB650021E251 /* ValetSite+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */; };
+		C471E83A28F9BB650021E251 /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
 		C471E83C28F9BB650021E251 /* ValetDomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E127F88B13002D32A9 /* ValetDomainScanner.swift */; };
 		C471E83D28F9BB650021E251 /* FakeDomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8DE27F88AEB002D32A9 /* FakeDomainScanner.swift */; };
 		C471E83F28F9BB650021E251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -372,10 +375,9 @@
 		C471E89628F9BB8F0021E251 /* PMWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CCBA6B275C567B008C7055 /* PMWindowController.swift */; };
 		C471E89728F9BB8F0021E251 /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
 		C471E89828F9BB8F0021E251 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
-		C471E89928F9BB8F0021E251 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
 		C471E89A28F9BB8F0021E251 /* DomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */; };
 		C471E89C28F9BB8F0021E251 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
-		C471E89D28F9BB8F0021E251 /* ValetSite+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */; };
+		C471E89D28F9BB8F0021E251 /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
 		C471E89F28F9BB8F0021E251 /* ValetDomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E127F88B13002D32A9 /* ValetDomainScanner.swift */; };
 		C471E8A028F9BB8F0021E251 /* FakeDomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8DE27F88AEB002D32A9 /* FakeDomainScanner.swift */; };
 		C471E8A228F9BB8F0021E251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -532,8 +534,6 @@
 		C4C0E8E327F88B13002D32A9 /* ValetDomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E127F88B13002D32A9 /* ValetDomainScanner.swift */; };
 		C4C0E8E727F88B41002D32A9 /* DomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */; };
 		C4C0E8E827F88B41002D32A9 /* DomainScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */; };
-		C4C0E8EA27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
-		C4C0E8EB27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */; };
 		C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1019A27C65C6F001FACC2 /* Process.swift */; };
 		C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1019A27C65C6F001FACC2 /* Process.swift */; };
 		C4C3643928AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */; };
@@ -739,7 +739,7 @@
 		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
 		C417DC73277614690015E6EE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C4181F1028FAF9330042EA28 /* UITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestCase.swift; sourceTree = "<group>"; };
-		C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValetSite+Fake.swift"; sourceTree = "<group>"; };
+		C41C02A827E61A65009F26CB /* FakeValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetSite.swift; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -791,6 +791,7 @@
 		C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWindowController.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
+		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
 		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
@@ -842,7 +843,6 @@
 		C4C0E8DE27F88AEB002D32A9 /* FakeDomainScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDomainScanner.swift; sourceTree = "<group>"; };
 		C4C0E8E127F88B13002D32A9 /* ValetDomainScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetDomainScanner.swift; sourceTree = "<group>"; };
 		C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainScanner.swift; sourceTree = "<group>"; };
-		C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValetProxy+Fake.swift"; sourceTree = "<group>"; };
 		C4C1019A27C65C6F001FACC2 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
 		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
@@ -1488,7 +1488,7 @@
 			isa = PBXGroup;
 			children = (
 				C4E4404527C56F4700D225E1 /* ValetSite.swift */,
-				C41C02A827E61A65009F26CB /* ValetSite+Fake.swift */,
+				C41C02A827E61A65009F26CB /* FakeValetSite.swift */,
 				C4C0E8E427F88B1F002D32A9 /* SiteScanner */,
 			);
 			path = Sites;
@@ -1498,7 +1498,7 @@
 			isa = PBXGroup;
 			children = (
 				C4205A7D27F4D21800191A39 /* ValetProxy.swift */,
-				C4C0E8E927F88B80002D32A9 /* ValetProxy+Fake.swift */,
+				C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */,
 			);
 			path = Proxies;
 			sourceTree = "<group>";
@@ -1947,7 +1947,6 @@
 				C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
 				C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */,
-				C4C0E8EA27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */,
 				C4EB53E728553117006F9937 /* ArrayExtension.swift in Sources */,
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */,
@@ -1970,7 +1969,7 @@
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C40C7F2827721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C463E380284930EE00422731 /* PresetHelper.swift in Sources */,
-				C41C02A927E61A65009F26CB /* ValetSite+Fake.swift in Sources */,
+				C41C02A927E61A65009F26CB /* FakeValetSite.swift in Sources */,
 				C4E2E85C28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
@@ -2035,6 +2034,7 @@
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C422DDAA28A2C49900CEAC97 /* WarningListView.swift in Sources */,
+				C469E6FE294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
 				C464ADAF275A7A69003FCD53 /* DomainListVC.swift in Sources */,
 				C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */,
 				C4C1019B27C65C6F001FACC2 /* Process.swift in Sources */,
@@ -2101,10 +2101,9 @@
 				C471E83328F9BB650021E251 /* PMWindowController.swift in Sources */,
 				C471E83428F9BB650021E251 /* VersionExtractor.swift in Sources */,
 				C471E83528F9BB650021E251 /* ValetProxy.swift in Sources */,
-				C471E83628F9BB650021E251 /* ValetProxy+Fake.swift in Sources */,
 				C471E83728F9BB650021E251 /* DomainScanner.swift in Sources */,
 				C471E83928F9BB650021E251 /* ValetSite.swift in Sources */,
-				C471E83A28F9BB650021E251 /* ValetSite+Fake.swift in Sources */,
+				C471E83A28F9BB650021E251 /* FakeValetSite.swift in Sources */,
 				C471E83C28F9BB650021E251 /* ValetDomainScanner.swift in Sources */,
 				C4E2E86928FC3002003B070C /* Utility.swift in Sources */,
 				C471E83D28F9BB650021E251 /* FakeDomainScanner.swift in Sources */,
@@ -2199,6 +2198,7 @@
 				C471E7F328F9BAC70021E251 /* PhpHelper.swift in Sources */,
 				C471E7E728F9BAC20021E251 /* Constants.swift in Sources */,
 				C471E81628F9BAE80021E251 /* DateExtension.swift in Sources */,
+				C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
 				C471E7D728F9BA8F0021E251 /* TestableFileSystem.swift in Sources */,
 				C471E81A28F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7E128F9BAAB0021E251 /* RealCommand.swift in Sources */,
@@ -2263,10 +2263,9 @@
 				C471E89728F9BB8F0021E251 /* VersionExtractor.swift in Sources */,
 				C4E2E86728FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C471E89828F9BB8F0021E251 /* ValetProxy.swift in Sources */,
-				C471E89928F9BB8F0021E251 /* ValetProxy+Fake.swift in Sources */,
 				C471E89A28F9BB8F0021E251 /* DomainScanner.swift in Sources */,
 				C471E89C28F9BB8F0021E251 /* ValetSite.swift in Sources */,
-				C471E89D28F9BB8F0021E251 /* ValetSite+Fake.swift in Sources */,
+				C471E89D28F9BB8F0021E251 /* FakeValetSite.swift in Sources */,
 				C471E89F28F9BB8F0021E251 /* ValetDomainScanner.swift in Sources */,
 				C471E8A028F9BB8F0021E251 /* FakeDomainScanner.swift in Sources */,
 				C471E8A228F9BB8F0021E251 /* AppDelegate.swift in Sources */,
@@ -2360,6 +2359,7 @@
 				C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */,
 				C471E81228F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7DF28F9BAAB0021E251 /* RealCommand.swift in Sources */,
+				C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
 				C471E7E028F9BAAB0021E251 /* ActiveCommand.swift in Sources */,
 				C40175BB2903108900763A68 /* ValetInteractor.swift in Sources */,
 				C471E80928F9BADC0021E251 /* CreatedFromFile.swift in Sources */,
@@ -2467,7 +2467,6 @@
 				C463E381284930EE00422731 /* PresetHelper.swift in Sources */,
 				C46FA98C2822F08F00D78807 /* PhpConfigurationTest.swift in Sources */,
 				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
-				C4C0E8EB27F88B80002D32A9 /* ValetProxy+Fake.swift in Sources */,
 				C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* HomebrewDiagnostics.swift in Sources */,
 				C485707428BF454E00539B36 /* ServicesView.swift in Sources */,
@@ -2507,6 +2506,7 @@
 				C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
+				C469E6FF294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
 				C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
@@ -2564,7 +2564,7 @@
 				C48D6C71279CD2AC00F26D7E /* PhpVersionNumber.swift in Sources */,
 				C485706F28BF452300539B36 /* WarningsWindowController.swift in Sources */,
 				C46FA9892822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
-				C41C02AB27E61CB3009F26CB /* ValetSite+Fake.swift in Sources */,
+				C41C02AB27E61CB3009F26CB /* FakeValetSite.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,

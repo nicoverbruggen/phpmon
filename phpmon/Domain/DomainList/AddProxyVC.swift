@@ -65,16 +65,18 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     @IBAction func pressedCreateProxy(_ sender: Any) {
         let domain = self.inputDomainName.stringValue
         let proxyName = self.inputProxySubject.stringValue
-        let secure = self.buttonSecure.state == .on ? " --secure" : ""
+        let secure = (self.buttonSecure.state == .on)
 
         dismissView(outcome: .OK)
 
         App.shared.domainListWindowController?.contentVC.setUIBusy()
 
         Task { // Ensure we proxy the site asynchronously and reload UI on main thread again
-            #warning("Creating a proxy should happen via the ValetInteractor")
-            await Shell.quiet("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)")
-            await Actions.restartNginx()
+            try! await ValetInteractor.shared.proxy(
+                domain: domain,
+                proxy: proxyName,
+                secure: secure
+            )
 
             Task { @MainActor in
                 // TODO: Check if this can be removed

@@ -29,7 +29,7 @@ class FakeDomainScanner: DomainScanner {
     ]
 
     var proxies: [ValetProxy] = [
-        // TODO: Add new proxy here
+        FakeValetProxy(domain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
     ]
 
     // MARK: - Sites

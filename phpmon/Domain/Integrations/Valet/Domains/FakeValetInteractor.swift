@@ -11,14 +11,22 @@ import Foundation
 class FakeValetInteractor: ValetInteractor {
     var delayTime: TimeInterval = 1.0
 
-    override func toggleSecure(proxy: ValetProxy) async throws {
-        await delay(seconds: delayTime)
-        proxy.secured = !proxy.secured
-    }
+    // MARK: - Managing Domains
 
-    override func toggleSecure(site: ValetSite) async throws {
+    override func link(path: String, domain: String) async throws {
         await delay(seconds: delayTime)
-        site.secured = !site.secured
+
+        if let scanner = ValetScanner.active as? FakeDomainScanner {
+            scanner.sites.append(
+                FakeValetSite(
+                    fakeWithName: domain,
+                    tld: Valet.shared.config.tld,
+                    secure: false,
+                    path: path,
+                    linked: true
+                )
+            )
+        }
     }
 
     override func unlink(site: ValetSite) async throws {
@@ -27,6 +35,41 @@ class FakeValetInteractor: ValetInteractor {
         if let scanner = ValetScanner.active as? FakeDomainScanner {
             scanner.sites.removeAll { $0 === site }
         }
+    }
+
+    override func proxy(domain: String, proxy: String, secure: Bool) async throws {
+        await delay(seconds: delayTime)
+
+        if let scanner = ValetScanner.active as? FakeDomainScanner {
+            scanner.proxies.append(
+                FakeValetProxy(
+                    domain: domain,
+                    target: proxy,
+                    secure: secure,
+                    tld: Valet.shared.config.tld
+                )
+            )
+        }
+    }
+
+    override func remove(proxy: ValetProxy) async throws {
+        await delay(seconds: delayTime)
+
+        if let scanner = ValetScanner.active as? FakeDomainScanner {
+            scanner.proxies.removeAll { $0.domain == proxy.domain }
+        }
+    }
+
+    // MARK: - Modifying Domains
+
+    override func toggleSecure(proxy: ValetProxy) async throws {
+        await delay(seconds: delayTime)
+        proxy.secured = !proxy.secured
+    }
+
+    override func toggleSecure(site: ValetSite) async throws {
+        await delay(seconds: delayTime)
+        site.secured = !site.secured
     }
 
     override func isolate(site: ValetSite, version: String) async throws {
@@ -41,13 +84,5 @@ class FakeValetInteractor: ValetInteractor {
 
         site.isolatedPhpVersion = nil
         site.evaluateCompatibility()
-    }
-
-    override func remove(proxy: ValetProxy) async throws {
-        await delay(seconds: delayTime)
-
-        if let scanner = ValetScanner.active as? FakeDomainScanner {
-            scanner.proxies.removeAll { $0 === proxy }
-        }
     }
 }

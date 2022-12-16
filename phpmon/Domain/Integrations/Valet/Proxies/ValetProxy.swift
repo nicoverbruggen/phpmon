@@ -14,10 +14,20 @@ class ValetProxy: ValetListable {
     var target: String
     var secured: Bool = false
 
-    init(_ configuration: NginxConfigurationFile) {
-        self.domain = configuration.domain
-        self.tld = configuration.tld
-        self.target = configuration.proxy!
+    init(domain: String, target: String, secure: Bool, tld: String) {
+        self.domain = domain
+        self.tld = tld
+        self.target = target
+        self.secured = false
+    }
+
+    convenience init(_ configuration: NginxConfigurationFile) {
+        self.init(
+            domain: configuration.domain,
+            target: configuration.proxy!,
+            secure: false,
+            tld: configuration.tld
+        )
         self.determineSecured()
     }
 

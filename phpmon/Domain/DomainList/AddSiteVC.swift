@@ -70,24 +70,24 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         }
 
         // Adding `valet links` is a workaround for Valet malforming the config.json file
-        // TODO: I will have to investigate and report this behaviour if possible
-        #warning("Linking a site should happen via the ValetInteractor")
-        Task { await Shell.quiet("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links") }
+        Task {
+            try! await ValetInteractor.shared.link(path: path, domain: name)
 
-        dismissView(outcome: .OK)
+            dismissView(outcome: .OK)
 
-        // Reset search
-        App.shared.domainListWindowController?
-            .searchToolbarItem
-            .searchField.stringValue = ""
+            // Reset search
+            App.shared.domainListWindowController?
+                .searchToolbarItem
+                .searchField.stringValue = ""
 
-        // Add the new item and scrolls to it
-        await App.shared.domainListWindowController?
-            .contentVC
-            .addedNewSite(
-                name: name,
-                secure: buttonSecure.state == .on
-            )
+            // Add the new item and scrolls to it
+            await App.shared.domainListWindowController?
+                .contentVC
+                .addedNewSite(
+                    name: name,
+                    secureAfterLinking: buttonSecure.state == .on
+                )
+        }
     }
 
     @IBAction func pressedCreateLink(_ sender: Any) {

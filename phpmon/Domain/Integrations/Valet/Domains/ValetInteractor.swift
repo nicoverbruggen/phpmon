@@ -20,6 +20,31 @@ class ValetInteractor {
         ValetInteractor.shared = FakeValetInteractor()
     }
 
+    // MARK: - Managing Domains
+
+    public func link(path: String, domain: String) async throws {
+        await Shell.quiet("cd '\(path)' && \(Paths.valet) link '\(domain)' && valet links")
+    }
+
+    public func unlink(site: ValetSite) async throws {
+        await Shell.quiet("valet unlink '\(site.name)'")
+    }
+
+    public func proxy(domain: String, proxy: String, secure: Bool) async throws {
+        let command = secure
+            ? "\(Paths.valet) proxy \(domain) \(proxy) --secure"
+            : "\(Paths.valet) proxy \(domain) \(proxy)"
+
+        await Shell.quiet(command)
+        await Actions.restartNginx()
+    }
+
+    public func remove(proxy: ValetProxy) async throws {
+        await Shell.quiet("valet unproxy '\(proxy.domain)'")
+    }
+
+    // MARK: - Modifying Domains
+
     public func toggleSecure(site: ValetSite) async throws {
         // Keep track of the original status (secure or not?)
         let originalSecureStatus = site.secured
@@ -99,13 +124,5 @@ class ValetInteractor {
         if site.isolatedPhpVersion != nil {
             throw ValetInteractionError(command: command)
         }
-    }
-
-    public func unlink(site: ValetSite) async throws {
-        await Shell.quiet("valet unlink '\(site.name)'")
-    }
-
-    public func remove(proxy: ValetProxy) async throws {
-        await Shell.quiet("valet unproxy '\(proxy.domain)'")
     }
 }

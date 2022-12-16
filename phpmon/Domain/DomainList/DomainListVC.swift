@@ -162,6 +162,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         }
     }
 
+    func reloadDomainsWithoutUI() async {
+        await Valet.shared.reloadSites()
+        domains = Valet.shared.sites
+        searchedFor(text: lastSearchedFor)
+    }
+
     func applySortDescriptor(_ descriptor: NSSortDescriptor) {
         sortDescriptor = descriptor
 
@@ -179,22 +185,22 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         self.domains = descriptor.ascending ? sorted.reversed() : sorted
     }
 
-    func addedNewSite(name: String, secure: Bool) async {
+    func addedNewSite(name: String, secureAfterLinking: Bool) async {
         waitAndExecute {
             await Valet.shared.reloadSites()
         } completion: { [self] in
-            find(name, secure)
+            find(name, secureAfterLinking)
         }
     }
 
-    private func find(_ name: String, _ secure: Bool = false) {
+    private func find(_ name: String, _ shouldSecure: Bool = false) {
         domains = Valet.getDomainListable()
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
             Task { @MainActor in
                 self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
                 self.tableView.scrollRowToVisible(site.offset)
-                if secure && !site.element.getListableSecured() {
+                if shouldSecure && !site.element.getListableSecured() {
                     self.toggleSecure()
                 }
             }

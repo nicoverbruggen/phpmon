@@ -166,9 +166,8 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Task { await site.unlink() }
-                } completion: {
-                    Task { await self.reloadDomains() }
+                    await site.unlink()
+                    await self.reloadDomainsWithoutUI()
                 }
             }
         )
@@ -188,9 +187,8 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    Task { await proxy.remove() }
-                } completion: {
-                    Task { await self.reloadDomains() }
+                    await proxy.remove()
+                    await self.reloadDomainsWithoutUI()
                 }
             }
         )
