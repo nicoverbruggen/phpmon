@@ -16,7 +16,7 @@ final class DomainsListTest: UITestCase {
 
     override func tearDownWithError() throws {}
 
-    private func getApp() -> XCPMApplication {
+    private func openMenu() -> XCPMApplication {
         let app = XCPMApplication()
         app.withConfiguration(TestableConfigurations.working)
         app.launch()
@@ -29,13 +29,13 @@ final class DomainsListTest: UITestCase {
     }
 
     final func test_can_always_open_domains_list() throws {
-        let app = getApp()
+        let app = openMenu()
 
         app.menuItems["mi_domain_list".localized].click()
     }
 
     final func test_can_filter_domains_list() throws {
-        let app = getApp()
+        let app = openMenu()
 
         app.menuItems["mi_domain_list".localized].click()
 
@@ -57,5 +57,22 @@ final class DomainsListTest: UITestCase {
         sleep(2)
     }
 
+    final func test_can_tap_add_domain_button() throws {
+        let app = openMenu()
 
+        app.menuItems["mi_domain_list".localized].click()
+
+        let window = app.windows.allElementsBoundByIndex.first { element in
+            element.title == "domain_list.title".localized
+        }!
+
+        window.buttons["Add Link"].click()
+
+        assertExists(app.staticTexts["selection.title".localized])
+        assertExists(app.buttons["selection.create_link".localized])
+        assertExists(app.buttons["selection.create_proxy".localized])
+        assertExists(app.buttons["selection.cancel".localized])
+
+        sleep(2)
+    }
 }
