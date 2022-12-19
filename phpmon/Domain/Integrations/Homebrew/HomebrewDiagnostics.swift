@@ -52,11 +52,9 @@ class HomebrewDiagnostics {
 
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public static func checkForCaskConflict() {
-        Task { // Check if there's a conflict
-            if await hasAliasConflict() {
-                presentAlertAboutConflict()
-            }
+    public static func checkForCaskConflict() async {
+        if await hasAliasConflict() {
+            presentAlertAboutConflict()
         }
     }
 

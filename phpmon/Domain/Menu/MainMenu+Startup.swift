@@ -60,7 +60,7 @@ extension MainMenu {
         await PhpEnv.detectPhpVersions()
 
         // Check for an alias conflict
-        HomebrewDiagnostics.checkForCaskConflict()
+        await HomebrewDiagnostics.checkForCaskConflict()
 
         // Update the icon
         updatePhpVersionInStatusBar()
