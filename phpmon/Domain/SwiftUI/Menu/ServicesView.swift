@@ -17,9 +17,9 @@ struct ServicesView: View {
     static func asMenuItem(perRow: Int = 3) -> NSMenuItem {
         let item = NSMenuItem()
 
-        let services = ServicesManager.shared.services.keys.map({ item in
-            return item
-        })
+        let services = ServicesManager.shared.formulae.map { formula in
+            return formula.name
+        }
 
         let view = NSHostingView(
             rootView: Self(

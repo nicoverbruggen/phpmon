@@ -13,9 +13,11 @@ class ServicesManager: ObservableObject {
 
     static var shared = ServicesManager()
 
-    private var formulae: [HomebrewFormula]
+    #warning("Only publish the status")
 
-    @Published var services: [String: ServiceWrapper] = [:]
+    private(set) var formulae: [HomebrewFormula]
+
+    private(set) var services: [String: ServiceWrapper] = [:]
 
     init() {
         Log.info("Initializing ServicesManager...")
@@ -35,7 +37,27 @@ class ServicesManager: ObservableObject {
         services = Dictionary(uniqueKeysWithValues: formulae.map { ($0.name, ServiceWrapper(formula: $0)) })
     }
 
+    public func updateServicesList() async {
+        Task { @MainActor in
+            formulae = [
+                Homebrew.Formulae.php,
+                Homebrew.Formulae.nginx,
+                Homebrew.Formulae.dnsmasq
+            ]
+
+            let additionalFormulae = (Preferences.custom.services ?? []).map({ item in
+                return HomebrewFormula(item, elevated: false)
+            })
+
+            formulae.append(contentsOf: additionalFormulae)
+
+            services = Dictionary(uniqueKeysWithValues: formulae.map { ($0.name, ServiceWrapper(formula: $0)) })
+        }
+    }
+
     public static func loadHomebrewServices() async {
+        await Self.shared.updateServicesList()
+
         Task {
             let rootServiceNames = Self.shared.formulae
                 .filter { $0.elevated }
