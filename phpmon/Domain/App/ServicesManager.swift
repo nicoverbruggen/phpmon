@@ -13,11 +13,9 @@ class ServicesManager: ObservableObject {
 
     static var shared = ServicesManager()
 
-    #warning("Only publish the status")
+    @Published private(set) var formulae: [HomebrewFormula]
 
-    private(set) var formulae: [HomebrewFormula]
-
-    private(set) var services: [String: ServiceWrapper] = [:]
+    @Published private(set) var services: [String: ServiceWrapper] = [:]
 
     init() {
         Log.info("Initializing ServicesManager...")
