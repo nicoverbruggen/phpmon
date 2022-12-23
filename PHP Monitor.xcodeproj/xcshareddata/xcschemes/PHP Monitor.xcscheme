@@ -109,7 +109,7 @@
          <EnvironmentVariable
             key = "PAINT_PHPMON_SWIFTUI_VIEWS"
             value = ""
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

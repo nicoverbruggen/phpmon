@@ -143,6 +143,18 @@
 		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
+		C45B9149295607F400F4EC78 /* ServiceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* ServiceWrapper.swift */; };
+		C45B914A295607F400F4EC78 /* ServiceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* ServiceWrapper.swift */; };
+		C45B914B295607F400F4EC78 /* ServiceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* ServiceWrapper.swift */; };
+		C45B914C295607F400F4EC78 /* ServiceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* ServiceWrapper.swift */; };
+		C45B914E295608E300F4EC78 /* ValetServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B914D295608E300F4EC78 /* ValetServicesManager.swift */; };
+		C45B914F295608E300F4EC78 /* ValetServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B914D295608E300F4EC78 /* ValetServicesManager.swift */; };
+		C45B9150295608E300F4EC78 /* ValetServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B914D295608E300F4EC78 /* ValetServicesManager.swift */; };
+		C45B9151295608E300F4EC78 /* ValetServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B914D295608E300F4EC78 /* ValetServicesManager.swift */; };
+		C45B91532956123A00F4EC78 /* FakeServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B91522956123A00F4EC78 /* FakeServicesManager.swift */; };
+		C45B91542956123A00F4EC78 /* FakeServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B91522956123A00F4EC78 /* FakeServicesManager.swift */; };
+		C45B91552956123A00F4EC78 /* FakeServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B91522956123A00F4EC78 /* FakeServicesManager.swift */; };
+		C45B91562956123A00F4EC78 /* FakeServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B91522956123A00F4EC78 /* FakeServicesManager.swift */; };
 		C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */; };
 		C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */; };
 		C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
@@ -786,6 +798,9 @@
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
+		C45B9148295607F400F4EC78 /* ServiceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceWrapper.swift; sourceTree = "<group>"; };
+		C45B914D295608E300F4EC78 /* ValetServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetServicesManager.swift; sourceTree = "<group>"; };
+		C45B91522956123A00F4EC78 /* FakeServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeServicesManager.swift; sourceTree = "<group>"; };
 		C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTestCase.swift; sourceTree = "<group>"; };
 		C45E76132854A65300B4FE0C /* ServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesManager.swift; sourceTree = "<group>"; };
 		C463E37F284930EE00422731 /* PresetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetHelper.swift; sourceTree = "<group>"; };
@@ -1275,6 +1290,17 @@
 			path = php;
 			sourceTree = "<group>";
 		};
+		C45B9147295607E200F4EC78 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C45E76132854A65300B4FE0C /* ServicesManager.swift */,
+				C45B914D295608E300F4EC78 /* ValetServicesManager.swift */,
+				C45B9148295607F400F4EC78 /* ServiceWrapper.swift */,
+				C45B91522956123A00F4EC78 /* FakeServicesManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		C464ADAA275A7A25003FCD53 /* DomainList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1423,6 +1449,7 @@
 		C4B13B1D25C4915000548C3A /* App */ = {
 			isa = PBXGroup;
 			children = (
+				C45B9147295607E200F4EC78 /* Services */,
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
 				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
@@ -1436,7 +1463,6 @@
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
-				C45E76132854A65300B4FE0C /* ServicesManager.swift */,
 				C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */,
 			);
 			path = App;
@@ -1954,8 +1980,10 @@
 				5420395926135DC100FB00FA /* PrefsVC.swift in Sources */,
 				C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				C45B9149295607F400F4EC78 /* ServiceWrapper.swift in Sources */,
 				5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
+				C45B91532956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C41C708D28AA7F7900E8D498 /* NoWarningsView.swift in Sources */,
 				C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
 				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
@@ -1967,6 +1995,7 @@
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
+				C45B914E295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C4A6957628D23EE300A14CF8 /* EnvironmentManager.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
@@ -2155,6 +2184,7 @@
 				C471E86328F9BB650021E251 /* PMTableView.swift in Sources */,
 				C471E86428F9BB650021E251 /* Warning.swift in Sources */,
 				C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */,
+				C45B9150295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C471E86528F9BB650021E251 /* WarningManager.swift in Sources */,
 				C471E86628F9BB650021E251 /* WarningsWindowController.swift in Sources */,
 				C471E86728F9BB650021E251 /* OnboardingWindowController.swift in Sources */,
@@ -2196,6 +2226,7 @@
 				C471E88E28F9BB650021E251 /* KeyCombo.swift in Sources */,
 				C471E88F28F9BB650021E251 /* ModifierFlagsExtension.swift in Sources */,
 				C471E7E928F9BAC20021E251 /* Paths.swift in Sources */,
+				C45B91552956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C471E7FE28F9BACE0021E251 /* HomebrewPackage.swift in Sources */,
 				C471E7D828F9BA8F0021E251 /* FileSystemProtocol.swift in Sources */,
 				C471E7F328F9BAC70021E251 /* PhpHelper.swift in Sources */,
@@ -2225,6 +2256,7 @@
 				C471E7F228F9BAC70021E251 /* PhpEnv.swift in Sources */,
 				C471E7E628F9BAC20021E251 /* Process.swift in Sources */,
 				C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
+				C45B914B295607F400F4EC78 /* ServiceWrapper.swift in Sources */,
 				C471E7D928F9BA8F0021E251 /* TestableShell.swift in Sources */,
 				C471E81428F9BAE80021E251 /* NSWindowExtension.swift in Sources */,
 				C471E7D328F9BA8F0021E251 /* ActiveShell.swift in Sources */,
@@ -2277,6 +2309,7 @@
 				C471E8A528F9BB8F0021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E8A628F9BB8F0021E251 /* App.swift in Sources */,
 				C471E8A728F9BB8F0021E251 /* App+ActivationPolicy.swift in Sources */,
+				C45B914C295607F400F4EC78 /* ServiceWrapper.swift in Sources */,
 				C471E8A828F9BB8F0021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
 				C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */,
@@ -2309,6 +2342,7 @@
 				C4D36618291160A1006BD146 /* WIP.swift in Sources */,
 				C471E8C328F9BB8F0021E251 /* SelectionVC.swift in Sources */,
 				C471E8C428F9BB8F0021E251 /* AddSiteVC.swift in Sources */,
+				C45B91562956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C471E8C528F9BB8F0021E251 /* AddProxyVC.swift in Sources */,
 				C471E8C628F9BB8F0021E251 /* PMTableView.swift in Sources */,
 				C471E8C728F9BB8F0021E251 /* Warning.swift in Sources */,
@@ -2347,6 +2381,7 @@
 				C471E8EA28F9BB8F0021E251 /* SectionHeaderView.swift in Sources */,
 				C4D36604291132B7006BD146 /* ValetScanners.swift in Sources */,
 				C471E8EB28F9BB8F0021E251 /* HeaderView.swift in Sources */,
+				C45B9151295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C471E8EC28F9BB8F0021E251 /* SwiftUIHelper.swift in Sources */,
 				C471E8EE28F9BB8F0021E251 /* HotKey.swift in Sources */,
 				C471E8EF28F9BB8F0021E251 /* HotKeysController.swift in Sources */,
@@ -2465,6 +2500,7 @@
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
+				C45B914A295607F400F4EC78 /* ServiceWrapper.swift in Sources */,
 				C4C0E8E327F88B13002D32A9 /* ValetDomainScanner.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
@@ -2530,6 +2566,7 @@
 				C4D3660C29113F20006BD146 /* System.swift in Sources */,
 				C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */,
 				C4D36611291140BE006BD146 /* TestableFileSystemTest.swift in Sources */,
+				C45B91542956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C4E2E84B28FC1E70003B070C /* DataExtension.swift in Sources */,
 				C449B4F127EE7FC200C47E8A /* DomainListNameCell.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
@@ -2559,6 +2596,7 @@
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
+				C45B914F295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C485707628BF455100539B36 /* SectionHeaderView.swift in Sources */,
 				C46EBC4828DB9644007ACC74 /* RealShell.swift in Sources */,

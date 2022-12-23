@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HomebrewService: Decodable, Equatable {
+struct HomebrewService: Decodable, Equatable, Hashable {
     let name: String
     let service_name: String
     let running: Bool
@@ -34,5 +34,11 @@ struct HomebrewService: Decodable, Equatable {
             log_path: nil,
             error_log_path: nil
         )
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(service_name)
+        hasher.combine(pid)
     }
 }

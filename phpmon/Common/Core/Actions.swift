@@ -69,7 +69,7 @@ class Actions {
     public static func stopService(name: String) async {
         await brew(
             "services stop \(name)",
-            sudo: ServicesManager.shared.services[name]?.formula.elevated ?? false
+            sudo: ServicesManager.shared[name]?.formula.elevated ?? false
         )
         await ServicesManager.loadHomebrewServices()
     }
@@ -77,7 +77,7 @@ class Actions {
     public static func startService(name: String) async {
         await brew(
             "services start \(name)",
-            sudo: ServicesManager.shared.services[name]?.formula.elevated ?? false
+            sudo: ServicesManager.shared[name]?.formula.elevated ?? false
         )
         await ServicesManager.loadHomebrewServices()
     }
