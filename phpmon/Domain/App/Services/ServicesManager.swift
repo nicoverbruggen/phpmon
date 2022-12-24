@@ -21,6 +21,36 @@ class ServicesManager: ObservableObject {
         }
     }
 
+    public var statusMessage: String {
+        let statuses = self.services[0...2].map { $0.status }
+        if statuses.contains(.loading) {
+            return "Determining Valet status..."
+        }
+        if statuses.contains(.missing) {
+            return "A key service is not installed."
+        }
+        if statuses.contains(.inactive) {
+            return "A key service is not running."
+        }
+
+        return "All Valet services are OK."
+    }
+
+    public var statusColor: Color {
+        let statuses = self.services[0...2].map { $0.status }
+        if statuses.contains(.loading) {
+            return .orange
+        }
+        if statuses.contains(.missing) {
+            return .red
+        }
+        if statuses.contains(.inactive) {
+            return .red
+        }
+
+        return .green
+    }
+
     @available(*, deprecated, message: "Use a more specific method instead")
     static func loadHomebrewServices() {
         print(self.shared)

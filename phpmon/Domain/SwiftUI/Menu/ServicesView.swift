@@ -65,8 +65,8 @@ struct ServicesView: View {
                 HStack {
                     Circle()
                         .frame(width: 12, height: 12)
-                        .foregroundColor(.yellow)
-                    Text("Determining services status...")
+                        .foregroundColor(self.manager.statusColor)
+                    Text(self.manager.statusMessage)
                         .font(.system(size: 12))
                 }
             }
