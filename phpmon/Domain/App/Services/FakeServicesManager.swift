@@ -9,25 +9,23 @@
 import Foundation
 
 class FakeServicesManager: ServicesManager {
-    override init() {
+    var fixedFormulae: [String] = []
+    var fixedStatus: ServiceStatus = .loading
+
+    init(
+        formulae: [String] = ["php", "nginx", "dnsmasq"],
+        status: ServiceStatus = .loading
+    ) {
         Log.warn("A fake services manager is being used, so Homebrew formula resolver is set to act in fake mode.")
         Log.warn("If you do not want this behaviour, never instantiate FakeServicesManager!")
-        Homebrew.fake = true
+
+        self.fixedFormulae = formulae
+        self.fixedStatus = status
     }
 
     override var formulae: [HomebrewFormula] {
-        var formulae = [
-            Homebrew.Formulae.php,
-            Homebrew.Formulae.nginx,
-            Homebrew.Formulae.dnsmasq
-        ]
-
-        let additionalFormulae = ["mailhog", "coolio"].map({ name in
-            return HomebrewFormula(name, elevated: false)
-        })
-
-        formulae.append(contentsOf: additionalFormulae)
-
-        return formulae
+        return fixedFormulae.map { formula in
+            return HomebrewFormula.init(formula, elevated: false)
+        }
     }
 }

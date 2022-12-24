@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 struct ServicesView: View {
+
     static func asMenuItem(perRow: Int = 4) -> NSMenuItem {
         let item = NSMenuItem()
 
@@ -23,8 +24,9 @@ struct ServicesView: View {
         let view = NSHostingView(rootView: rootView)
         view.autoresizingMask = [.width, .height]
         view.setFrameSize(
-            CGSize(width: view.frame.width, height: rootView.height)
+            CGSize(width: view.frame.width, height: rootView.height + 30)
         )
+        view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 0)
         view.focusRingType = .none
 
         item.view = view
@@ -44,21 +46,33 @@ struct ServicesView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
+        VStack {
+            VStack(alignment: .leading) {
                 ForEach(manager.services.chunked(by: perRow), id: \.self) { chunk in
                     HStack {
                         ForEach(chunk) { service in
-                            ServiceView(service: service)
-                                .frame(width: abs((geometry.size.width - 15) / CGFloat(perRow)))
+                            ServiceView(service: service).frame(minWidth: 70)
                         }
                     }
                 }
+
             }
-            .padding(.top, 10)
+            .frame(height: self.height)
+            .frame(maxWidth: .infinity, alignment: .center)
+            // .background(Color.red)
+
+            VStack(alignment: .center) {
+                HStack {
+                    Circle()
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(.yellow)
+                    Text("Determining services status...")
+                        .font(.system(size: 12))
+                }
+            }
+            .frame(height: 25)
+            .frame(maxWidth: .infinity, alignment: .center)
         }
-        .frame(height: self.height)
-        .background(Color.debug)
     }
 }
 
@@ -66,22 +80,34 @@ struct ServiceView: View {
     @ObservedObject var service: ServiceWrapper
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             Text(service.name.uppercased())
                 .font(.system(size: 10))
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(.bottom, 4)
-                .background(Color.debug)
+                .frame(minWidth: 70, alignment: .center)
+                .padding(.top, 4)
+                .padding(.bottom, 2)
             if service.status == .loading {
                 ProgressView()
                     .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
-                    .frame(width: 16.0, height: 20.0)
+                    .frame(minWidth: 70, alignment: .center)
             }
             if service.status == .missing {
-                Button { print("we pressed da button ")} label: {
+                Button {
+                    Task { @MainActor in
+                        BetterAlert().withInformation(
+                            title: "alert.warnings.service_missing.title".localized,
+                            subtitle: "alert.warnings.service_missing.subtitle".localized,
+                            description: "alert.warnings.service_missing.description".localized
+                        )
+                        .withPrimary(text: "OK")
+                        .show()
+                    }
+                } label: {
                     Text("?")
                 }
+                .focusable(false)
                 .buttonStyle(BlueButton())
+                .frame(minWidth: 70, alignment: .center)
             }
             if service.status == .active {
                 Button {
@@ -103,18 +129,18 @@ struct ServiceView: View {
                         .foregroundColor(Color("IconColorRed"))
                 }
             }
-        }
+        }.frame(minWidth: 70)
     }
 }
 
 public struct BlueButton: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.bottom, 5)
-            .padding(.top, 5)
-            .padding(.leading, 10)
-            .padding(.trailing, 10)
-            .background(Color(red: 0, green: 0, blue: 0.5))
+            .frame(width: 30, height: 30)
+            .background(configuration.isPressed
+                ? Color(red: 0, green: 0, blue: 0.9)
+                : Color(red: 0, green: 0, blue: 0.5)
+            )
             .foregroundColor(.white)
             .clipShape(Capsule())
     }
@@ -122,17 +148,8 @@ public struct BlueButton: ButtonStyle {
 
 struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
-        ServicesView(manager: FakeServicesManager(), perRow: 3)
+        ServicesView(manager: FakeServicesManager(), perRow: 4)
             .frame(width: 330.0)
             .previewDisplayName("Loading")
-
-        ServicesView(manager: FakeServicesManager(), perRow: 3)
-            .frame(width: 330.0)
-            .previewDisplayName("Light Mode")
-
-        ServicesView(manager: FakeServicesManager(), perRow: 3)
-            .frame(width: 330.0)
-            .previewDisplayName("Dark Mode")
-            .preferredColorScheme(.dark)
     }
 }

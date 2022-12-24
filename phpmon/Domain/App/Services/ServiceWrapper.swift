@@ -46,6 +46,7 @@ public class ServiceWrapper: ObservableObject, Identifiable, Hashable {
 
     init(formula: HomebrewFormula) {
         self.formula = formula
+        self.isBusy = true
     }
 
     public static func == (lhs: ServiceWrapper, rhs: ServiceWrapper) -> Bool {
