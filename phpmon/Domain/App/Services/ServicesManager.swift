@@ -13,7 +13,7 @@ class ServicesManager: ObservableObject {
 
     @ObservedObject static var shared: ServicesManager = ValetServicesManager()
 
-    @Published private(set) var services = [ServiceWrapper]()
+    @Published var services = [ServiceWrapper]()
 
     subscript(name: String) -> ServiceWrapper? {
         return self.services.first { wrapper in
@@ -22,6 +22,10 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusMessage: String {
+        if self.services.isEmpty {
+            return "Loading..."
+        }
+
         let statuses = self.services[0...2].map { $0.status }
         if statuses.contains(.loading) {
             return "Determining Valet status..."
@@ -37,6 +41,10 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusColor: Color {
+        if self.services.isEmpty {
+            return .yellow
+        }
+
         let statuses = self.services[0...2].map { $0.status }
         if statuses.contains(.loading) {
             return .orange

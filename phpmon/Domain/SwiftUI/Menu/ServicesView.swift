@@ -148,8 +148,11 @@ public struct BlueButton: ButtonStyle {
 
 struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
-        ServicesView(manager: FakeServicesManager(), perRow: 4)
-            .frame(width: 330.0)
-            .previewDisplayName("Loading")
+        ServicesView(manager: FakeServicesManager(
+            formulae: ["php", "nginx", "dnsmasq"],
+            status: .active
+        ), perRow: 4)
+        .frame(width: 330.0)
+        .previewDisplayName("Loading")
     }
 }
