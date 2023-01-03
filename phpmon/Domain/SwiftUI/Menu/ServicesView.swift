@@ -26,7 +26,7 @@ struct ServicesView: View {
         view.setFrameSize(
             CGSize(width: view.frame.width, height: rootView.height + 30)
         )
-        view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 1)
+        // view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 1)
         view.focusRingType = .none
 
         item.view = view
@@ -36,8 +36,8 @@ struct ServicesView: View {
     @ObservedObject var manager: ServicesManager
     var perRow: Int
     var rowCount: Int
-    var rowSpacing: Int = 2
-    var rowHeight: Int = 40
+    var rowSpacing: Int = 5
+    var rowHeight: Int = 30
     var statusHeight: Int = 30
     var height: CGFloat
 
@@ -97,8 +97,9 @@ struct ServiceView: View {
                 .padding(.bottom, 2)
             if service.status == .loading {
                 ProgressView()
-                    .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                    .scaleEffect(x: 0.4, y: 0.4, anchor: .center)
                     .frame(minWidth: 70, alignment: .center)
+                    .frame(width: 25, height: 25)
             }
             if service.status == .missing {
                 Button {
@@ -115,18 +116,20 @@ struct ServiceView: View {
                     Text("?")
                 }
                 .focusable(false)
-                .buttonStyle(BlueButton())
+                // .buttonStyle(BlueButton())
                 .frame(minWidth: 70, alignment: .center)
             }
             if service.status == .active {
                 Button {
                     // TODO
+                    print("you pressed the button")
                 } label: {
                     Image(systemName: "checkmark")
                         .resizable()
                         .frame(width: 12.0, height: 12.0)
                         .foregroundColor(Color("IconColorGreen"))
                 }
+                .frame(width: 25, height: 25)
             }
             if service.status == .inactive {
                 Button {
@@ -145,13 +148,14 @@ struct ServiceView: View {
 public struct BlueButton: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: 30, height: 30)
+            .frame(width: 25, height: 25)
             .background(configuration.isPressed
-                ? Color(red: 0, green: 0, blue: 0.9)
+                ? Color(red: 0, green: 0.5, blue: 0.9)
                 : Color(red: 0, green: 0, blue: 0.5)
             )
             .foregroundColor(.white)
             .clipShape(Capsule())
+            .contentShape(Rectangle())
     }
 }
 
@@ -165,14 +169,20 @@ struct ServicesView_Previews: PreviewProvider {
         .previewDisplayName("Loading")
 
         ServicesView(manager: FakeServicesManager(
+            formulae: ["php", "nginx", "dnsmasq"],
+            status: .active
+        ), perRow: 4)
+        .frame(width: 330.0)
+        .previewDisplayName("Active 1")
+
+        ServicesView(manager: FakeServicesManager(
             formulae: [
                 "php", "nginx", "dnsmasq", "thing1",
-                "thing2", "thing3", "thing4", "thing5",
-                "thing6", "thing7", "thing8"
+                "thing2", "thing3", "thing4", "thing5"
             ],
             status: .active
         ), perRow: 4)
         .frame(width: 330.0)
-        .previewDisplayName("Active")
+        .previewDisplayName("Active 2")
     }
 }
