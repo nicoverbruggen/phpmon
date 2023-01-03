@@ -22,11 +22,11 @@ struct ServicesView: View {
         )
 
         let view = NSHostingView(rootView: rootView)
-        view.autoresizingMask = [.width, .height]
+        view.autoresizingMask = [.width]
         view.setFrameSize(
             CGSize(width: view.frame.width, height: rootView.height + 30)
         )
-        view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 0)
+        view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 1)
         view.focusRingType = .none
 
         item.view = view
@@ -35,27 +35,36 @@ struct ServicesView: View {
 
     @ObservedObject var manager: ServicesManager
     var perRow: Int
+    var rowCount: Int
+    var rowSpacing: Int = 2
+    var rowHeight: Int = 40
+    var statusHeight: Int = 30
     var height: CGFloat
-    var chunkCount: Int
 
-    init(manager: ServicesManager, perRow: Int, height: CGFloat? = nil) {
+    init(manager: ServicesManager, perRow: Int) {
         self.manager = manager
         self.perRow = perRow
-        self.chunkCount = manager.serviceWrappers.chunked(by: perRow).count
-        self.height = CGFloat(40 * chunkCount + 25)
+        self.rowCount = manager.serviceWrappers.chunked(by: perRow).count
+        self.height = CGFloat(
+            (rowHeight * rowCount)
+            + ((rowCount - 1) * rowSpacing)
+            + statusHeight
+        )
     }
 
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: CGFloat(self.rowSpacing)) {
                 ForEach(manager.serviceWrappers.chunked(by: perRow), id: \.self) { chunk in
                     HStack {
                         ForEach(chunk) { service in
-                            ServiceView(service: service).frame(minWidth: 70)
+                            ServiceView(service: service)
+                                .frame(minWidth: 70)
                         }
                     }
+                    .frame(height: CGFloat(self.rowHeight))
+                    .padding(CGFloat(self.rowSpacing))
                 }
-
             }
             .frame(height: self.height)
             .frame(maxWidth: .infinity, alignment: .center)
@@ -70,7 +79,7 @@ struct ServicesView: View {
                         .font(.system(size: 12))
                 }
             }
-            .frame(height: 25)
+            .frame(height: CGFloat(self.statusHeight))
             .frame(maxWidth: .infinity, alignment: .center)
         }
     }
