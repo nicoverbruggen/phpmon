@@ -96,7 +96,7 @@ extension MainMenu {
         Valet.notifyAboutUnsupportedTLD()
 
         // Find out which services are active
-        Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
+        Log.info("The services manager knows about \(ServicesManager.shared.serviceWrappers.count) services.")
 
         // Start the background refresh timer
         startSharedTimer()

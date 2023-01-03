@@ -41,14 +41,14 @@ struct ServicesView: View {
     init(manager: ServicesManager, perRow: Int, height: CGFloat? = nil) {
         self.manager = manager
         self.perRow = perRow
-        self.chunkCount = manager.services.chunked(by: perRow).count
+        self.chunkCount = manager.serviceWrappers.chunked(by: perRow).count
         self.height = CGFloat((50 * chunkCount) + (5 * perRow))
     }
 
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                ForEach(manager.services.chunked(by: perRow), id: \.self) { chunk in
+                ForEach(manager.serviceWrappers.chunked(by: perRow), id: \.self) { chunk in
                     HStack {
                         ForEach(chunk) { service in
                             ServiceView(service: service).frame(minWidth: 70)
@@ -150,9 +150,16 @@ struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
         ServicesView(manager: FakeServicesManager(
             formulae: ["php", "nginx", "dnsmasq"],
-            status: .active
+            status: .loading
         ), perRow: 4)
         .frame(width: 330.0)
         .previewDisplayName("Loading")
+
+        ServicesView(manager: FakeServicesManager(
+            formulae: ["php", "nginx", "dnsmasq"],
+            status: .active
+        ), perRow: 4)
+        .frame(width: 330.0)
+        .previewDisplayName("Active")
     }
 }

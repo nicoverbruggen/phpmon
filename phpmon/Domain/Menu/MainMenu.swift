@@ -94,7 +94,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             self.refreshActiveInstallation()
             self.refreshIcon()
             self.rebuild()
-            await ServicesManager.loadHomebrewServices()
+            await ServicesManager.shared.updateServices()
             Log.perf("The menu has been reloaded!")
         }
     }
@@ -184,7 +184,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
         Task { // Reload Homebrew services information asynchronously
-            await ServicesManager.loadHomebrewServices()
+            await ServicesManager.shared.updateServices()
         }
     }
 

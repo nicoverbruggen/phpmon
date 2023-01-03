@@ -8,21 +8,43 @@
 
 import Foundation
 
-struct HomebrewService: Decodable, Equatable, Hashable {
+class HomebrewService: Decodable, Equatable, Hashable {
     let name: String
     let service_name: String
-    let running: Bool
-    let loaded: Bool
-    let pid: Int?
-    let user: String?
-    let status: String?
-    let log_path: String?
-    let error_log_path: String?
+    var running: Bool
+    var loaded: Bool
+    var pid: Int?
+    var user: String?
+    var status: String?
+    var log_path: String?
+    var error_log_path: String?
+
+    init(
+        name: String,
+        service_name: String,
+        running: Bool,
+        loaded: Bool,
+        pid: Int? = nil,
+        user: String? = nil,
+        status: String? = nil,
+        log_path: String? = nil,
+        error_log_path: String? = nil
+    ) {
+        self.name = name
+        self.service_name = service_name
+        self.running = running
+        self.loaded = loaded
+        self.pid = pid
+        self.user = user
+        self.status = status
+        self.log_path = log_path
+        self.error_log_path = error_log_path
+    }
 
     /**
      Dummy data for preview purposes.
      */
-    public static func dummy(named service: String, enabled: Bool) -> Self {
+    public static func dummy(named service: String, enabled: Bool) -> HomebrewService {
         return HomebrewService(
             name: service,
             service_name: service,
@@ -40,5 +62,11 @@ struct HomebrewService: Decodable, Equatable, Hashable {
         hasher.combine(name)
         hasher.combine(service_name)
         hasher.combine(pid)
+    }
+
+    static func == (lhs: HomebrewService, rhs: HomebrewService) -> Bool {
+        return lhs.name == rhs.name
+        && lhs.pid == rhs.pid
+        && lhs.status == rhs.status
     }
 }

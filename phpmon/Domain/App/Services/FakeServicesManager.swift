@@ -21,13 +21,14 @@ class FakeServicesManager: ServicesManager {
         super.init()
 
         Log.warn("A fake services manager is being used, so Homebrew formula resolver is set to act in fake mode.")
-        Log.warn("If you do not want this behaviour, never instantiate FakeServicesManager!")
+        Log.warn("If you do not want this behaviour, do not make use of a `FakeServicesManager`!")
 
         self.fixedFormulae = formulae
         self.fixedStatus = status
 
-        self.services = self.formulae.map {
+        self.serviceWrappers = self.formulae.map {
             let wrapper = ServiceWrapper(formula: $0)
+            wrapper.isBusy = (status == .loading)
             wrapper.service = HomebrewService.dummy(named: $0.name, enabled: true)
             return wrapper
         }
@@ -37,5 +38,17 @@ class FakeServicesManager: ServicesManager {
         return fixedFormulae.map { formula in
             return HomebrewFormula.init(formula, elevated: false)
         }
+    }
+
+    override func updateServices() async {
+        await delay(seconds: 0.3)
+
+        for formula in self.serviceWrappers {
+            formula.service?.running = true
+            formula.isBusy = false
+        }
+
+        print("Sending the update!")
+        broadcastServicesUpdated()
     }
 }
