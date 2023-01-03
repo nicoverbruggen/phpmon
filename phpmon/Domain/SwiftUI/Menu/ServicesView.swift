@@ -42,7 +42,7 @@ struct ServicesView: View {
         self.manager = manager
         self.perRow = perRow
         self.chunkCount = manager.serviceWrappers.chunked(by: perRow).count
-        self.height = CGFloat((50 * chunkCount) + (5 * perRow))
+        self.height = CGFloat((30 * chunkCount) + (5 * perRow))
     }
 
     var body: some View {
@@ -80,7 +80,7 @@ struct ServiceView: View {
     @ObservedObject var service: ServiceWrapper
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             Text(service.name.uppercased())
                 .font(.system(size: 10))
                 .frame(minWidth: 70, alignment: .center)
