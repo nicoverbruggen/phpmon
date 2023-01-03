@@ -42,7 +42,7 @@ struct ServicesView: View {
         self.manager = manager
         self.perRow = perRow
         self.chunkCount = manager.serviceWrappers.chunked(by: perRow).count
-        self.height = CGFloat((30 * chunkCount) + (5 * perRow))
+        self.height = CGFloat(40 * chunkCount + 25)
     }
 
     var body: some View {
@@ -156,7 +156,7 @@ struct ServicesView_Previews: PreviewProvider {
         .previewDisplayName("Loading")
 
         ServicesView(manager: FakeServicesManager(
-            formulae: ["php", "nginx", "dnsmasq"],
+            formulae: ["php", "nginx", "dnsmasq", "thing1", "thing2", "thing3", "thing4", "thing5", "thing6", "thing7", "thing8"],
             status: .active
         ), perRow: 4)
         .frame(width: 330.0)
