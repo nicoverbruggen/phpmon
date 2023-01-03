@@ -156,7 +156,11 @@ struct ServicesView_Previews: PreviewProvider {
         .previewDisplayName("Loading")
 
         ServicesView(manager: FakeServicesManager(
-            formulae: ["php", "nginx", "dnsmasq", "thing1", "thing2", "thing3", "thing4", "thing5", "thing6", "thing7", "thing8"],
+            formulae: [
+                "php", "nginx", "dnsmasq", "thing1",
+                "thing2", "thing3", "thing4", "thing5",
+                "thing6", "thing7", "thing8"
+            ],
             status: .active
         ), perRow: 4)
         .frame(width: 330.0)

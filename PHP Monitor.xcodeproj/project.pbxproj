@@ -1320,7 +1320,6 @@
 		C471E6D928F9AFC20021E251 /* Testables */ = {
 			isa = PBXGroup;
 			children = (
-				C471E6DB28F9AFD10021E251 /* Command */,
 				C471E6DA28F9AFCB0021E251 /* Filesystem */,
 				C413E43328DA3E8F00AE33C7 /* Shell */,
 				C4E2E84628FC1D8C003B070C /* TestableConfigurationTest.swift */,
@@ -1335,13 +1334,6 @@
 				C44AD3F62912EF7100997FF4 /* RealFileSystemTest.swift */,
 			);
 			path = Filesystem;
-			sourceTree = "<group>";
-		};
-		C471E6DB28F9AFD10021E251 /* Command */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Command;
 			sourceTree = "<group>";
 		};
 		C471E79628F9B4260021E251 /* tests */ = {

@@ -87,6 +87,10 @@ class Stats {
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
 
+        if Homebrew.fake {
+            return Log.info("A fake environment is in use, skipping sponsor alert.")
+        }
+
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
             return Log.info("Sponsor messages never apply to beta builds.")
         }

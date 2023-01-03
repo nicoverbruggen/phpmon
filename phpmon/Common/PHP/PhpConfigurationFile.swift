@@ -35,6 +35,7 @@ class PhpConfigurationFile: CreatedFromFile {
         let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
 
         do {
+            // TODO: Use FileSystem abstraction
             let fileContents = try String(contentsOfFile: path)
             return Self.init(path: path, contents: fileContents)
         } catch {

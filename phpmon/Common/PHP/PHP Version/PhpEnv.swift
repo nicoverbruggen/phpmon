@@ -57,6 +57,8 @@ class PhpEnv {
      As such, we take that information from Homebrew.
      */
     static var brewPhpAlias: String {
+        if Homebrew.fake { return "8.2" }
+
         return Self.shared.homebrewPackage.version
     }
 
