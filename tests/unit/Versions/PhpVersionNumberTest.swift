@@ -13,33 +13,33 @@ class PhpVersionNumberTest: XCTestCase {
 
     func test_can_deconstruct_php_version() throws {
         XCTAssertEqual(
-            try! PhpVersionNumber.parse("PHP 8.2.0-dev"),
-            PhpVersionNumber(major: 8, minor: 2, patch: 0)
+            try! VersionNumber.parse("PHP 8.2.0-dev"),
+            VersionNumber(major: 8, minor: 2, patch: 0)
         )
         XCTAssertEqual(
-            try! PhpVersionNumber.parse("PHP 8.1.0RC5-dev"),
-            PhpVersionNumber(major: 8, minor: 1, patch: 0)
+            try! VersionNumber.parse("PHP 8.1.0RC5-dev"),
+            VersionNumber(major: 8, minor: 1, patch: 0)
         )
         XCTAssertEqual(
-            try! PhpVersionNumber.parse("8.0.11"),
-            PhpVersionNumber(major: 8, minor: 0, patch: 11)
+            try! VersionNumber.parse("8.0.11"),
+            VersionNumber(major: 8, minor: 0, patch: 11)
         )
         XCTAssertEqual(
-            try! PhpVersionNumber.parse("7.4.2"),
-            PhpVersionNumber(major: 7, minor: 4, patch: 2)
+            try! VersionNumber.parse("7.4.2"),
+            VersionNumber(major: 7, minor: 4, patch: 2)
         )
         XCTAssertEqual(
-            try! PhpVersionNumber.parse("7.4"),
-            PhpVersionNumber(major: 7, minor: 4, patch: nil)
+            try! VersionNumber.parse("7.4"),
+            VersionNumber(major: 7, minor: 4, patch: nil)
         )
         XCTAssertEqual(
-            PhpVersionNumber.make(from: "7"),
+            VersionNumber.make(from: "7"),
             nil
         )
     }
 
     func test_php_version_number_parse() throws {
-        XCTAssertThrowsError(try PhpVersionNumber.parse("OOF")) { error in
+        XCTAssertThrowsError(try VersionNumber.parse("OOF")) { error in
             XCTAssertTrue(error is VersionParseError)
         }
     }

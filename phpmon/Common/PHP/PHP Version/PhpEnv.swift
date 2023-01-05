@@ -90,7 +90,10 @@ class PhpEnv {
     public func detectPhpVersions() async -> [String] {
         let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
 
-        var versionsOnly = await extractPhpVersions(from: files.components(separatedBy: "\n"))
+        var versionsOnly = await extractPhpVersions(
+            from: files.components(separatedBy: "\n"),
+            supported: Constants.ValetSupportedPhpVersionMatrix[Valet.shared.version.major]!
+        )
 
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
@@ -126,16 +129,11 @@ class PhpEnv {
      */
     public func extractPhpVersions(
         from versions: [String],
+        supported: [String],
         checkBinaries: Bool = true,
         generateHelpers: Bool = true
     ) async -> [String] {
         var output: [String] = []
-
-        let valetMajor = Valet.shared.version.major
-        let supported = Constants.ValetSupportedPhpVersionMatrix[valetMajor] ?? []
-
-        print(supported)
-
         versions.filter { (version) -> Bool in
             // Omit everything that doesn't start with php@
             // (e.g. something-php@8.0 won't be detected)
