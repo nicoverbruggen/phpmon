@@ -71,7 +71,7 @@ class Actions {
             "services stop \(name)",
             sudo: ServicesManager.shared[name]?.formula.elevated ?? false
         )
-        await ServicesManager.shared.updateServices()
+        await ServicesManager.shared.reloadServicesStatus()
     }
 
     public static func startService(name: String) async {
@@ -79,7 +79,7 @@ class Actions {
             "services start \(name)",
             sudo: ServicesManager.shared[name]?.formula.elevated ?? false
         )
-        await ServicesManager.shared.updateServices()
+        await ServicesManager.shared.reloadServicesStatus()
     }
 
     // MARK: - Finding Config Files

@@ -119,27 +119,19 @@ struct ServiceView: View {
                 // .buttonStyle(BlueButton())
                 .frame(minWidth: 70, alignment: .center)
             }
-            if service.status == .active {
+            if service.status == .active || service.status == .inactive {
                 Button {
-                    // TODO
-                    print("you pressed the button")
+                    Task { await ServicesManager.shared.toggleService(named: service.name) }
                 } label: {
-                    Image(systemName: "checkmark")
-                        .resizable()
-                        .frame(width: 12.0, height: 12.0)
-                        .foregroundColor(Color("IconColorGreen"))
-                }
-                .frame(width: 25, height: 25)
-            }
-            if service.status == .inactive {
-                Button {
-                    // TODO
-                } label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .frame(width: 12.0, height: 12.0)
-                        .foregroundColor(Color("IconColorRed"))
-                }
+                    Image(
+                        systemName: service.status == .active ? "checkmark" : "xmark"
+                    )
+                    .resizable()
+                    .frame(width: 12.0, height: 12.0)
+                    .foregroundColor(
+                        service.status == .active ? Color("IconColorGreen") : Color("IconColorRed")
+                    )
+                }.frame(width: 25, height: 25)
             }
         }.frame(minWidth: 70)
     }

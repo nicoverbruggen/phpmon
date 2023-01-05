@@ -13,10 +13,10 @@ class ValetServicesManager: ServicesManager {
         super.init()
 
         // Load the initial services state
-        Task { await self.updateServices() }
+        Task { await self.reloadServicesStatus() }
     }
 
-    override func updateServices() async {
+    override func reloadServicesStatus() async {
         // TODO
     }
 }

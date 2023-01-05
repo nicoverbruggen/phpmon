@@ -17,7 +17,7 @@ class ServicesManager: ObservableObject {
 
     public static func useFake() {
         ServicesManager.shared = FakeServicesManager.init(
-            formulae: ["php", "nginx", "dnsmasq"],
+            formulae: ["php", "nginx", "dnsmasq", "mysql"],
             status: .loading
         )
     }
@@ -38,6 +38,7 @@ class ServicesManager: ObservableObject {
         }
 
         let statuses = self.serviceWrappers[0...2].map { $0.status }
+
         if statuses.contains(.loading) {
             return "Determining Valet status..."
         }
@@ -70,16 +71,25 @@ class ServicesManager: ObservableObject {
         return .green
     }
 
-    @available(*, deprecated, message: "Use a more specific method instead")
-    static func loadHomebrewServices() {
-        // print(self.shared)
-        print("This method must be updated")
+    /**
+     This method is called when the system configuration has changed
+     and all the status of one or more services may need to be determined.
+     */
+    public func reloadServicesStatus() async {
+        fatalError("This method `\(#function)` has not been implemented")
     }
 
-    public func updateServices() async {
-        fatalError("Must be implemented in child class")
+    /**
+     This method is called when a service needs to be toggled (on/off).
+     */
+    public func toggleService(named: String) async {
+        fatalError("This method `\(#function)` has not been implemented")
     }
 
+    /**
+     This method will notify all publishers that subscribe to notifiable objects.
+     The notified objects include this very ServicesManager as well as any individual service instances.
+     */
     public func broadcastServicesUpdated() {
         Task { @MainActor in
             self.serviceWrappers.forEach { wrapper in

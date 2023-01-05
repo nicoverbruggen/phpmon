@@ -74,7 +74,7 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {
-                    Task { await ServicesManager.shared.updateServices() }
+                    Task { await ServicesManager.shared.reloadServicesStatus() }
                 }
 
                 if error != nil {

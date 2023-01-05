@@ -40,7 +40,7 @@ class FakeServicesManager: ServicesManager {
         }
     }
 
-    override func updateServices() async {
+    override func reloadServicesStatus() async {
         await delay(seconds: 0.3)
 
         for formula in self.serviceWrappers {
@@ -48,7 +48,29 @@ class FakeServicesManager: ServicesManager {
             formula.isBusy = false
         }
 
-        print("Sending the update!")
         broadcastServicesUpdated()
+    }
+
+    override func toggleService(named: String) async {
+        guard let wrapper = self[named] else {
+            return Log.err("The wrapper for service \(named) does not exist.")
+        }
+
+        wrapper.isBusy = true
+        Task { @MainActor in
+            wrapper.objectWillChange.send()
+        }
+
+        guard let service = wrapper.service else {
+            return Log.err("The actual service for wrapper \(named) is nil.")
+        }
+
+        await delay(seconds: 2)
+        service.running = !service.running
+        wrapper.isBusy = false
+        Task { @MainActor in
+            wrapper.objectWillChange.send()
+            self.objectWillChange.send()
+        }
     }
 }
