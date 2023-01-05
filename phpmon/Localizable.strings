@@ -427,12 +427,12 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.php_alias_conflict.title" = "Homebrew `php` formula alias conflict detected";
 "alert.php_alias_conflict.info" = "PHP Monitor has detected conflicting `php` aliases in your Homebrew setup, both of which have been detected as installed.\n\nThis will likely result in failed linking when switching PHP versions, and will break PHP Monitor functionality.\n\nFor more information, please visit: https://github.com/nicoverbruggen/phpmon/issues/54";
 
-"alert.min_valet_version.title" = "Your version of Valet is outdated, please upgrade!";
+"alert.min_valet_version.title" = "The installed version of Valet does not meet the minimum version requirement. PHP Monitor may not function as expected!";
 "alert.min_valet_version.info" = "You are currently running Valet %@.
 
-For optimal support of the latest versions of PHP and proper version switching, it is recommended that you update to version %@.
+For optimal support of the latest versions of PHP and proper version switching, it is recommended that you update to version %@, which is the minimum requirement for this version of PHP Monitor.
 
-You can do this by running `composer global update` in your terminal. After that, run `valet install` again. For best results, restart PHP Monitor after that.";
+You can do this by running `composer global update` in your terminal. After that, run `valet install` again. For best results, restart PHP Monitor after that. Until this is resolved, PHP Monitor may not behave as expected.";
 
 // Preset text description
 "alert.preset_description.switcher_version" = "Switches to PHP %@.\n\n";

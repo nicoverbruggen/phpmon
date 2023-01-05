@@ -20,29 +20,25 @@ struct Constants {
 
     /**
      * The PHP versions supported by this application.
-     * Versions that do not appear in this array are omitted from the list.
+     * Depends on what version of Valet is installed.
      */
-    static let SupportedPhpVersions = [
-        // ====================
-        // STABLE RELEASES
-        // ====================
-        // Versions of PHP that are stable and are supported.
-        "5.6", // only supported when Valet 2.x is active
-        "7.0",
-        "7.1",
-        "7.2",
-        "7.3",
-        "7.4",
-        "8.0",
-        "8.1",
-        "8.2",
-
-        // ====================
-        // EXPERIMENTAL SUPPORT
-        // ====================
-        // Every release that supports the next release will always support the next
-        // dev release. In this case, that means that the version below is detected.
-        "8.3"
+    static let ValetSupportedPhpVersionMatrix = [
+        2: // Valet v2 has the broadest legacy support
+        [
+            "5.6",
+            "7.0", "7.1", "7.2", "7.3", "7.4",
+            "8.0", "8.1", "8.2"
+        ],
+        3: // Valet v3 dropped support for v5.6
+        [
+            "7.0", "7.1", "7.2", "7.3", "7.4",
+            "8.0", "8.1", "8.2", "8.3"
+        ],
+        4: // Valet v4 dropped support for <v7.4
+        [
+            "7.4",
+            "8.0", "8.1", "8.2", "8.3"
+        ]
     ]
 
     struct Urls {

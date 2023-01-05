@@ -53,7 +53,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
     @IBAction func pressedPhpVersion(_ sender: Any) {
         guard let site = self.site else { return }
 
-        var validPhpSuggestions: [PhpVersionNumber] {
+        var validPhpSuggestions: [VersionNumber] {
             if site.isolatedPhpVersion != nil {
                 return []
             }

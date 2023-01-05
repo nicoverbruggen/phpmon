@@ -56,7 +56,7 @@ extension StatusMenu {
             let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.versionNumber
 
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-            let versionString = long ? longVersion.toString() : shortVersion
+            let versionString = long ? longVersion.text : shortVersion
 
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnv.brewPhpAlias) ? "php" : "php@\(shortVersion)"

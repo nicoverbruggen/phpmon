@@ -131,11 +131,10 @@ class PhpEnv {
     ) async -> [String] {
         var output: [String] = []
 
-        var supported = Constants.SupportedPhpVersions
+        let valetMajor = Valet.shared.version.major
+        let supported = Constants.ValetSupportedPhpVersionMatrix[valetMajor] ?? []
 
-        if !Valet.enabled(feature: .supportForPhp56) {
-            supported.removeAll { $0 == "5.6" }
-        }
+        print(supported)
 
         versions.filter { (version) -> Bool in
             // Omit everything that doesn't start with php@
@@ -161,7 +160,7 @@ class PhpEnv {
         return output
     }
 
-    public func validVersions(for constraint: String) -> [PhpVersionNumber] {
+    public func validVersions(for constraint: String) -> [VersionNumber] {
         constraint.split(separator: "|").flatMap {
             return PhpVersionNumberCollection
                 .make(from: self.availablePhpVersions)

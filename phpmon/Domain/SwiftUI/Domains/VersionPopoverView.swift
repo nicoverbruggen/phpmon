@@ -12,7 +12,7 @@ struct VersionPopoverView: View {
 
     @State var site: ValetSite
 
-    @State var validPhpVersions: [PhpVersionNumber]
+    @State var validPhpVersions: [VersionNumber]
 
     @State var parent: NSPopover!
 
@@ -185,8 +185,8 @@ struct VersionPopoverView_Previews: PreviewProvider {
                 constraint: "^8.0"
             ),
             validPhpVersions: [
-                PhpVersionNumber(major: 8, minor: 0, patch: 0),
-                PhpVersionNumber(major: 8, minor: 1, patch: 0)
+                VersionNumber(major: 8, minor: 0, patch: 0),
+                VersionNumber(major: 8, minor: 1, patch: 0)
             ],
             parent: nil
         )

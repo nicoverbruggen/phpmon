@@ -50,7 +50,7 @@ extension MainMenu {
 
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
-            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
+            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!.text)")
         }
 
         // Validate the version (this will enforce which versions of PHP are supported)

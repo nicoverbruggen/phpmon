@@ -21,7 +21,7 @@ public class EnvironmentManager {
             }
 
             // Extract the version number
-            Valet.shared.version = VersionExtractor.from(output)
+            Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(output)!)
 
             // Get the actual version
             return Valet.shared.version == nil

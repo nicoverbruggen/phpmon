@@ -17,7 +17,7 @@ import Foundation
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
 class ActivePhpInstallation {
-    var version: PhpVersionNumber!
+    var version: VersionNumber!
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
 
@@ -96,7 +96,7 @@ class ActivePhpInstallation {
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
-        self.version = try? PhpVersionNumber.parse(output)
+        self.version = try? VersionNumber.parse(output)
     }
 
     /**

@@ -11,14 +11,13 @@ import Foundation
 class Valet {
 
     enum FeatureFlag {
-        case isolatedSites,
-             supportForPhp56
+        case isolatedSites
     }
 
     static let shared = Valet()
 
     /// The version of Valet that was detected.
-    var version: String! = nil
+    var version: VersionNumber! = nil
 
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -138,13 +137,18 @@ class Valet {
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
     public func evaluateFeatureSupport() {
-        let isOlderThanVersionThree = version.versionCompare("3.0") == .orderedAscending
+        let isVersion2 = version.isSameMajorVersionAs(try! VersionNumber.parse("2.0"))
+        let isVersion3 = version.isSameMajorVersionAs(try! VersionNumber.parse("3.0"))
+        let isVersion4 = version.isSameMajorVersionAs(try! VersionNumber.parse("4.0"))
 
-        if isOlderThanVersionThree {
-            self.features.append(.supportForPhp56)
-        } else {
-            Log.info("This version of Valet supports isolation.")
+        if isVersion2 {
+            Log.info("You are running Valet v2. Support for site isolation is disabled.")
+        } else if isVersion3 || isVersion4 {
+            Log.info("You are running Valet v3 or v4. Support for site isolation is available.")
             self.features.append(.isolatedSites)
+        } else {
+            // TODO: Show an alert and notify that some features might not work
+            Log.err("This version of Valet is not supported.")
         }
     }
 
@@ -158,15 +162,16 @@ class Valet {
         Valet.shared.evaluateFeatureSupport()
 
         // 2. Notify user if the version is too old
-        if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
-            let version = version
-            Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
+        if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
+            let version = version!
+            let recommended = Constants.MinimumRecommendedValetVersion
+            Log.warn("Valet version \(version.text) is too old! (recommended: \(recommended))")
             Task { @MainActor in
                 BetterAlert()
                     .withInformation(
                         title: "alert.min_valet_version.title".localized,
                         subtitle: "alert.min_valet_version.info".localized(
-                            version!,
+                            version.text,
                             Constants.MinimumRecommendedValetVersion
                         )
                     )
@@ -174,8 +179,13 @@ class Valet {
                     .show()
             }
         } else {
-            Log.info("Valet version \(version!) is recent enough, OK " +
+            Log.info("Valet version \(version.text) is recent enough, OK " +
                      "(recommended: \(Constants.MinimumRecommendedValetVersion))")
+        }
+
+        // 3. Notify user if the version is too high
+        if version.major > 4 {
+            // TODO:
         }
     }
 
