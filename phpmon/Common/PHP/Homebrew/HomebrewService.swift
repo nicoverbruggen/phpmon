@@ -62,10 +62,12 @@ class HomebrewService: Decodable, Equatable, Hashable {
         hasher.combine(name)
         hasher.combine(service_name)
         hasher.combine(pid)
+        hasher.combine(status)
     }
 
     static func == (lhs: HomebrewService, rhs: HomebrewService) -> Bool {
         return lhs.name == rhs.name
+        && lhs.service_name == rhs.service_name
         && lhs.pid == rhs.pid
         && lhs.status == rhs.status
     }

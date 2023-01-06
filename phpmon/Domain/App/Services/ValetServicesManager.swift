@@ -16,6 +16,11 @@ class ValetServicesManager: ServicesManager {
         Task { await self.reloadServicesStatus() }
     }
 
+    /**
+     This method allows us to reload the Homebrew services, but we run this command
+     twice (once for user services, and once for root services). Please note that
+     these two commands are executed concurrently.
+     */
     override func reloadServicesStatus() async {
         await withTaskGroup(of: [HomebrewService].self, body: { group in
             group.addTask {
@@ -46,21 +51,25 @@ class ValetServicesManager: ServicesManager {
                     .filter({ return userServiceNames.contains($0.name) })
             }
 
+            // Ensure both commands complete (but run concurrently)
             for await services in group {
+                // For both groups (user and root services), set the service to the wrapper object
                 for service in services {
-                    guard let wrapper = self[service.name] else {
-                        break
-                    }
-
-                    wrapper.service = service
+                    self[service.name]?.service = service
                 }
             }
 
+            // Ensure that every wrapper is considered no longer busy
             for wrapper in serviceWrappers {
                 wrapper.isBusy = false
             }
 
+            // Broadcast that all services have been updated
             self.broadcastServicesUpdated()
         })
+    }
+
+    override func toggleService(named: String) async {
+        // TODO
     }
 }

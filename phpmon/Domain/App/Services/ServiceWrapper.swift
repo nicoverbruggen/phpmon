@@ -50,7 +50,8 @@ public class ServiceWrapper: ObservableObject, Identifiable, Hashable {
     }
 
     public static func == (lhs: ServiceWrapper, rhs: ServiceWrapper) -> Bool {
-        return lhs.service == rhs.service && lhs.formula == rhs.formula
+        return lhs.service == rhs.service
+            && lhs.formula == rhs.formula
     }
 
     public func hash(into hasher: inout Hasher) {
