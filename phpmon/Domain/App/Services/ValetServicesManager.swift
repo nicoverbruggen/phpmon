@@ -59,6 +59,10 @@ class ValetServicesManager: ServicesManager {
                 for service in services {
                     self[service.name]?.service = service
                 }
+
+                for wrapper in serviceWrappers {
+                    wrapper.isBusy = false
+                }
             }
 
             // Broadcast that all services have been updated

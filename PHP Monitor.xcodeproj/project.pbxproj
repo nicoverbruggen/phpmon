@@ -1298,9 +1298,9 @@
 		C45B9147295607E200F4EC78 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C45B9148295607F400F4EC78 /* ServiceWrapper.swift */,
 				C45E76132854A65300B4FE0C /* ServicesManager.swift */,
 				C45B914D295608E300F4EC78 /* ValetServicesManager.swift */,
-				C45B9148295607F400F4EC78 /* ServiceWrapper.swift */,
 				C45B91522956123A00F4EC78 /* FakeServicesManager.swift */,
 			);
 			path = Services;

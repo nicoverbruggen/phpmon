@@ -93,11 +93,6 @@ class ServicesManager: ObservableObject {
     public func broadcastServicesUpdated() {
         Task { @MainActor in
             self.serviceWrappers.forEach { wrapper in
-                guard let service = wrapper.service else {
-                    return
-                }
-
-                Log.perf("\(service.name): \(wrapper.status)")
                 wrapper.objectWillChange.send()
             }
 
