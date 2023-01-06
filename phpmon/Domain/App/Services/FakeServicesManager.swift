@@ -10,13 +10,13 @@ import Foundation
 
 class FakeServicesManager: ServicesManager {
     var fixedFormulae: [String] = []
-    var fixedStatus: ServiceStatus = .active
+    var fixedStatus: Service.Status = .active
 
     override init() {}
 
     init(
         formulae: [String] = ["php", "nginx", "dnsmasq"],
-        status: ServiceStatus = .active
+        status: Service.Status = .active
     ) {
         super.init()
 
@@ -26,15 +26,24 @@ class FakeServicesManager: ServicesManager {
         self.fixedFormulae = formulae
         self.fixedStatus = status
 
-        self.services = self.formulae.map {
+        self.services = []
+        self.reapplyServices()
+
+        self.firstRunComplete = true
+    }
+
+    private func reapplyServices() {
+        let services = self.formulae.map {
             let wrapper = Service(
                 formula: $0,
-                service: HomebrewService.dummy(named: $0.name, enabled: true)
+                service: HomebrewService.dummy(named: $0.name, enabled: self.fixedStatus == .active)
             )
             return wrapper
         }
 
-        self.firstRunComplete = true
+        Task { @MainActor in
+            self.services = services
+        }
     }
 
     override var formulae: [HomebrewFormula] {
@@ -45,9 +54,29 @@ class FakeServicesManager: ServicesManager {
 
     override func reloadServicesStatus() async {
         await delay(seconds: 0.3)
+
+        self.reapplyServices()
     }
 
     override func toggleService(named: String) async {
         await delay(seconds: 0.3)
+
+        let services = services.map({ service in
+            let newServiceEnabled = service.name == named
+            ? service.status != .active // inverse (i.e. if active -> becomes inactive)
+            : service.status == .active // service remains unmodified if it's not the named one we change
+
+            return Service(
+                formula: service.formula,
+                service: HomebrewService.dummy(
+                    named: service.name,
+                    enabled: newServiceEnabled
+                )
+            )
+        })
+
+        Task { @MainActor in
+            self.services = services
+        }
     }
 }

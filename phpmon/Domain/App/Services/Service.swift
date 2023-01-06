@@ -8,18 +8,10 @@
 
 import Foundation
 
-/**
- Whether a given service is active, inactive or PHP Monitor is still busy determining the status.
- */
-public enum ServiceStatus: String {
-    case active
-    case inactive
-    case missing
-}
-
+/** Service linked to a Homebrew formula and whether it is currently (in)active or missing. */
 public struct Service: Hashable {
     var formula: HomebrewFormula
-    var status: ServiceStatus = .missing
+    var status: Status = .missing
 
     public var name: String {
         return formula.name
@@ -33,6 +25,8 @@ public struct Service: Hashable {
         }
     }
 
+    // MARK: - Protocols
+
     public static func == (lhs: Service, rhs: Service) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
@@ -40,5 +34,13 @@ public struct Service: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(formula)
         hasher.combine(status)
+    }
+
+    // MARK: - Status
+
+    public enum Status: String {
+        case active
+        case inactive
+        case missing
     }
 }
