@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ This class is responsible for handling the state of Valet throughout PHP Monitor. A singleton instance is created
+ and accessible throughout the lifecycle of the app, unless the user has decided to not use Valet. In that case,
+ only a restricted subset of functionality is available in the app.
+ */
 class Valet {
 
     enum FeatureFlag {
@@ -189,6 +194,9 @@ class Valet {
         }
     }
 
+    /**
+     Determine if any platform issues are detected when running `valet --version`.
+     */
     public func hasPlatformIssues() async -> Bool {
         return await Shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
