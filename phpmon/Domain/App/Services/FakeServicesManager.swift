@@ -26,13 +26,15 @@ class FakeServicesManager: ServicesManager {
         self.fixedFormulae = formulae
         self.fixedStatus = status
 
-        self.serviceWrappers = self.formulae.map {
-            let wrapper = ServiceWrapper(
+        self.services = self.formulae.map {
+            let wrapper = Service(
                 formula: $0,
                 service: HomebrewService.dummy(named: $0.name, enabled: true)
             )
             return wrapper
         }
+
+        self.firstRunComplete = true
     }
 
     override var formulae: [HomebrewFormula] {

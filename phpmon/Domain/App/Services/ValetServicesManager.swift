@@ -13,7 +13,10 @@ class ValetServicesManager: ServicesManager {
         super.init()
 
         // Load the initial services state
-        Task { await self.reloadServicesStatus() }
+        Task {
+            await self.reloadServicesStatus()
+            firstRunComplete = true
+        }
     }
 
     /**
@@ -58,18 +61,22 @@ class ValetServicesManager: ServicesManager {
                     .filter({ return userServiceNames.contains($0.name) })
             }
 
+            // Ensure that Homebrew services' output is stored
             self.homebrewServices = []
-
             for await services in group {
                 homebrewServices.append(contentsOf: services)
             }
 
+            // Dispatch the update of the new service wrappers
             Task { @MainActor in
                 // Ensure both commands complete (but run concurrently)
-                serviceWrappers = formulae.map { formula in
-                    ServiceWrapper(formula: formula, service: homebrewServices.first(where: { service in
-                        service.name == formula.name
-                    }))
+                services = formulae.map { formula in
+                    Service(
+                        formula: formula,
+                        service: homebrewServices.first(where: { service in
+                            service.name == formula.name
+                        })
+                    )
                 }
 
                 // Broadcast that all services have been updated

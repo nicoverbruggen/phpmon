@@ -8,16 +8,16 @@
 
 import Foundation
 
-class HomebrewService: Decodable, Equatable, Hashable {
+final class HomebrewService: Sendable, Decodable {
     let name: String
     let service_name: String
-    var running: Bool
-    var loaded: Bool
-    var pid: Int?
-    var user: String?
-    var status: String?
-    var log_path: String?
-    var error_log_path: String?
+    let running: Bool
+    let loaded: Bool
+    let pid: Int?
+    let user: String?
+    let status: String?
+    let log_path: String?
+    let error_log_path: String?
 
     init(
         name: String,
@@ -56,18 +56,5 @@ class HomebrewService: Decodable, Equatable, Hashable {
             log_path: nil,
             error_log_path: nil
         )
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-        hasher.combine(service_name)
-        hasher.combine(pid)
-        hasher.combine(status)
-        hasher.combine(running)
-        hasher.combine(user)
-    }
-
-    static func == (lhs: HomebrewService, rhs: HomebrewService) -> Bool {
-        return lhs.hashValue == rhs.hashValue
     }
 }

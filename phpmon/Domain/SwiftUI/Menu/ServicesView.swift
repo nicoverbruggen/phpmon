@@ -44,7 +44,7 @@ struct ServicesView: View {
     init(manager: ServicesManager, perRow: Int) {
         self.manager = manager
         self.perRow = perRow
-        self.rowCount = manager.serviceWrappers.chunked(by: perRow).count
+        self.rowCount = manager.services.chunked(by: perRow).count
         self.height = CGFloat(
             (rowHeight * rowCount)
             + ((rowCount - 1) * rowSpacing)
@@ -55,7 +55,7 @@ struct ServicesView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: CGFloat(self.rowSpacing)) {
-                ForEach(manager.serviceWrappers.chunked(by: perRow), id: \.self) { chunk in
+                ForEach(manager.services.chunked(by: perRow), id: \.self) { chunk in
                     HStack {
                         ForEach(chunk, id: \.self) { service in
                             ServiceView(service: service)
@@ -86,7 +86,7 @@ struct ServicesView: View {
 }
 
 struct ServiceView: View {
-    var service: ServiceWrapper
+    var service: Service
     @State var isBusy: Bool = false
 
     var body: some View {
@@ -117,7 +117,6 @@ struct ServiceView: View {
                         Text("?")
                     }
                     .focusable(false)
-                    // .buttonStyle(BlueButton())
                     .frame(minWidth: 70, alignment: .center)
                 }
                 if service.status == .active || service.status == .inactive {
@@ -134,7 +133,9 @@ struct ServiceView: View {
                         .resizable()
                         .frame(width: 12.0, height: 12.0)
                         .foregroundColor(
-                            service.status == .active ? Color("IconColorGreen") : Color("IconColorRed")
+                            service.status == .active
+                                ? Color("IconColorGreen")
+                                : Color("IconColorRed")
                         )
                     }.frame(width: 25, height: 25)
                 }

@@ -17,11 +17,7 @@ public enum ServiceStatus: String {
     case missing
 }
 
-/**
- Service wrapper, that contains the Homebrew JSON output (if determined) and the formula.
- This helps the app determine whether a service should run as an administrator or not.
- */
-public struct ServiceWrapper: Hashable {
+public struct Service: Hashable {
     var formula: HomebrewFormula
     var status: ServiceStatus = .missing
 
@@ -37,7 +33,7 @@ public struct ServiceWrapper: Hashable {
         }
     }
 
-    public static func == (lhs: ServiceWrapper, rhs: ServiceWrapper) -> Bool {
+    public static func == (lhs: Service, rhs: Service) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 

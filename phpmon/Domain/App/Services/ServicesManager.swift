@@ -13,7 +13,9 @@ class ServicesManager: ObservableObject {
 
     @ObservedObject static var shared: ServicesManager = ValetServicesManager()
 
-    @Published var serviceWrappers = [ServiceWrapper]()
+    @Published var services = [Service]()
+
+    @Published var firstRunComplete: Bool = false
 
     public static func useFake() {
         ServicesManager.shared = FakeServicesManager.init(
@@ -26,18 +28,18 @@ class ServicesManager: ObservableObject {
      The order of services is important, so easy access is accomplished
      without much fanfare through subscripting.
      */
-    subscript(name: String) -> ServiceWrapper? {
-        return self.serviceWrappers.first { wrapper in
+    subscript(name: String) -> Service? {
+        return self.services.first { wrapper in
             wrapper.name == name
         }
     }
 
     public var statusMessage: String {
-        if self.serviceWrappers.isEmpty {
+        if self.services.isEmpty {
             return "Loading..."
         }
 
-        let statuses = self.serviceWrappers[0...2].map { $0.status }
+        let statuses = self.services[0...2].map { $0.status }
 
         if statuses.contains(.missing) {
             return "A key service is not installed."
@@ -50,11 +52,11 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusColor: Color {
-        if self.serviceWrappers.isEmpty {
+        if self.services.isEmpty {
             return .yellow
         }
 
-        let statuses = self.serviceWrappers[0...2].map { $0.status }
+        let statuses = self.services[0...2].map { $0.status }
         if statuses.contains(.missing) {
             return .red
         }
@@ -109,8 +111,8 @@ class ServicesManager: ObservableObject {
     init() {
         Log.info("The services manager will determine which Valet services exist on this system.")
 
-        serviceWrappers = formulae.map {
-            ServiceWrapper(formula: $0)
+        services = formulae.map {
+            Service(formula: $0)
         }
     }
 }
