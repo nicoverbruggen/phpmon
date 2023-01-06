@@ -57,7 +57,7 @@ struct ServicesView: View {
             VStack(alignment: .leading, spacing: CGFloat(self.rowSpacing)) {
                 ForEach(manager.serviceWrappers.chunked(by: perRow), id: \.self) { chunk in
                     HStack {
-                        ForEach(chunk) { service in
+                        ForEach(chunk, id: \.self) { service in
                             ServiceView(service: service)
                                 .frame(minWidth: 70)
                         }
@@ -86,7 +86,8 @@ struct ServicesView: View {
 }
 
 struct ServiceView: View {
-    @ObservedObject var service: ServiceWrapper
+    var service: ServiceWrapper
+    @State var isBusy: Bool = false
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -95,59 +96,50 @@ struct ServiceView: View {
                 .frame(minWidth: 70, alignment: .center)
                 .padding(.top, 4)
                 .padding(.bottom, 2)
-            if service.status == .loading {
+            if isBusy {
                 ProgressView()
                     .scaleEffect(x: 0.4, y: 0.4, anchor: .center)
                     .frame(minWidth: 70, alignment: .center)
                     .frame(width: 25, height: 25)
-            }
-            if service.status == .missing {
-                Button {
-                    Task { @MainActor in
-                        BetterAlert().withInformation(
-                            title: "alert.warnings.service_missing.title".localized,
-                            subtitle: "alert.warnings.service_missing.subtitle".localized,
-                            description: "alert.warnings.service_missing.description".localized
-                        )
-                        .withPrimary(text: "OK")
-                        .show()
+            } else {
+                if service.status == .missing {
+                    Button {
+                        Task { @MainActor in
+                            BetterAlert().withInformation(
+                                title: "alert.warnings.service_missing.title".localized,
+                                subtitle: "alert.warnings.service_missing.subtitle".localized,
+                                description: "alert.warnings.service_missing.description".localized
+                            )
+                            .withPrimary(text: "OK")
+                            .show()
+                        }
+                    } label: {
+                        Text("?")
                     }
-                } label: {
-                    Text("?")
+                    .focusable(false)
+                    // .buttonStyle(BlueButton())
+                    .frame(minWidth: 70, alignment: .center)
                 }
-                .focusable(false)
-                // .buttonStyle(BlueButton())
-                .frame(minWidth: 70, alignment: .center)
-            }
-            if service.status == .active || service.status == .inactive {
-                Button {
-                    Task { await ServicesManager.shared.toggleService(named: service.name) }
-                } label: {
-                    Image(
-                        systemName: service.status == .active ? "checkmark" : "xmark"
-                    )
-                    .resizable()
-                    .frame(width: 12.0, height: 12.0)
-                    .foregroundColor(
-                        service.status == .active ? Color("IconColorGreen") : Color("IconColorRed")
-                    )
-                }.frame(width: 25, height: 25)
+                if service.status == .active || service.status == .inactive {
+                    Button {
+                        Task {
+                            isBusy = true
+                            await ServicesManager.shared.toggleService(named: service.name)
+                            isBusy = false
+                        }
+                    } label: {
+                        Image(
+                            systemName: service.status == .active ? "checkmark" : "xmark"
+                        )
+                        .resizable()
+                        .frame(width: 12.0, height: 12.0)
+                        .foregroundColor(
+                            service.status == .active ? Color("IconColorGreen") : Color("IconColorRed")
+                        )
+                    }.frame(width: 25, height: 25)
+                }
             }
         }.frame(minWidth: 70)
-    }
-}
-
-public struct BlueButton: ButtonStyle {
-    public func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .frame(width: 25, height: 25)
-            .background(configuration.isPressed
-                ? Color(red: 0, green: 0.5, blue: 0.9)
-                : Color(red: 0, green: 0, blue: 0.5)
-            )
-            .foregroundColor(.white)
-            .clipShape(Capsule())
-            .contentShape(Rectangle())
     }
 }
 
@@ -155,7 +147,7 @@ struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
         ServicesView(manager: FakeServicesManager(
             formulae: ["php", "nginx", "dnsmasq"],
-            status: .loading
+            status: .active
         ), perRow: 4)
         .frame(width: 330.0)
         .previewDisplayName("Loading")

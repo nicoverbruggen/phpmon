@@ -17,6 +17,11 @@ class ValetServicesManager: ServicesManager {
     }
 
     /**
+     The last known state of all Homebrew services.
+     */
+    var homebrewServices: [HomebrewService] = []
+
+    /**
      This method allows us to reload the Homebrew services, but we run this command
      twice (once for user services, and once for root services). Please note that
      these two commands are executed concurrently.
@@ -53,20 +58,23 @@ class ValetServicesManager: ServicesManager {
                     .filter({ return userServiceNames.contains($0.name) })
             }
 
-            // Ensure both commands complete (but run concurrently)
-            for await services in group {
-                // For both groups (user and root services), set the service to the wrapper object
-                for service in services {
-                    self[service.name]?.service = service
-                }
+            self.homebrewServices = []
 
-                for wrapper in serviceWrappers {
-                    wrapper.isBusy = false
-                }
+            for await services in group {
+                homebrewServices.append(contentsOf: services)
             }
 
-            // Broadcast that all services have been updated
-            self.broadcastServicesUpdated()
+            Task { @MainActor in
+                // Ensure both commands complete (but run concurrently)
+                serviceWrappers = formulae.map { formula in
+                    ServiceWrapper(formula: formula, service: homebrewServices.first(where: { service in
+                        service.name == formula.name
+                    }))
+                }
+
+                // Broadcast that all services have been updated
+                self.broadcastServicesUpdated()
+            }
         })
     }
 
@@ -75,12 +83,8 @@ class ValetServicesManager: ServicesManager {
             return Log.err("The wrapper for '\(named)' is missing.")
         }
 
-        if wrapper.service == nil {
-            return Log.err("The Homebrew service for \(named) is missing.")
-        }
-
         // Prepare the appropriate command to stop or start a service
-        let action = wrapper.service!.running ? "stop" : "start"
+        let action = wrapper.status == .active ? "stop" : "start"
         let command = "services \(action) \(wrapper.formula.name)"
 
         // Run the command

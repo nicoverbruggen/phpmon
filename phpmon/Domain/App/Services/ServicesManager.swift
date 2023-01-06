@@ -18,7 +18,7 @@ class ServicesManager: ObservableObject {
     public static func useFake() {
         ServicesManager.shared = FakeServicesManager.init(
             formulae: ["php", "nginx", "dnsmasq", "mysql"],
-            status: .loading
+            status: .active
         )
     }
 
@@ -39,9 +39,6 @@ class ServicesManager: ObservableObject {
 
         let statuses = self.serviceWrappers[0...2].map { $0.status }
 
-        if statuses.contains(.loading) {
-            return "Determining Valet status..."
-        }
         if statuses.contains(.missing) {
             return "A key service is not installed."
         }
@@ -58,9 +55,6 @@ class ServicesManager: ObservableObject {
         }
 
         let statuses = self.serviceWrappers[0...2].map { $0.status }
-        if statuses.contains(.loading) {
-            return .orange
-        }
         if statuses.contains(.missing) {
             return .red
         }
@@ -92,10 +86,6 @@ class ServicesManager: ObservableObject {
      */
     public func broadcastServicesUpdated() {
         Task { @MainActor in
-            self.serviceWrappers.forEach { wrapper in
-                wrapper.objectWillChange.send()
-            }
-
             self.objectWillChange.send()
         }
     }

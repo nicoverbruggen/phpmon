@@ -14,7 +14,6 @@ import Foundation
 public enum ServiceStatus: String {
     case active
     case inactive
-    case loading
     case missing
 }
 
@@ -22,40 +21,28 @@ public enum ServiceStatus: String {
  Service wrapper, that contains the Homebrew JSON output (if determined) and the formula.
  This helps the app determine whether a service should run as an administrator or not.
  */
-public class ServiceWrapper: ObservableObject, Identifiable, Hashable {
+public struct ServiceWrapper: Hashable {
     var formula: HomebrewFormula
-    var service: HomebrewService?
-
-    var isBusy: Bool = false
+    var status: ServiceStatus = .missing
 
     public var name: String {
         return formula.name
     }
 
-    public var status: ServiceStatus {
-        if isBusy {
-            return .loading
-        }
-
-        guard let service = self.service else {
-            return .missing
-        }
-
-        return service.running ? .active : .inactive
-    }
-
-    init(formula: HomebrewFormula) {
+    init(formula: HomebrewFormula, service: HomebrewService? = nil) {
         self.formula = formula
-        self.isBusy = true
+
+        if service != nil {
+            self.status = service!.running ? .active : .inactive
+        }
     }
 
     public static func == (lhs: ServiceWrapper, rhs: ServiceWrapper) -> Bool {
-        return lhs.service == rhs.service
-            && lhs.formula == rhs.formula
+        return lhs.hashValue == rhs.hashValue
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(formula)
-        hasher.combine(service)
+        hasher.combine(status)
     }
 }
