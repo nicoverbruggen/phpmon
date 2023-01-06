@@ -23,6 +23,7 @@ class ValetServicesManager: ServicesManager {
      */
     override func reloadServicesStatus() async {
         await withTaskGroup(of: [HomebrewService].self, body: { group in
+            // First, retrieve the status of the formulae that run as root
             group.addTask {
                 let rootServiceNames = self.formulae
                     .filter { $0.elevated }
@@ -37,6 +38,7 @@ class ValetServicesManager: ServicesManager {
                     .filter({ return rootServiceNames.contains($0.name) })
             }
 
+            // At the same time, retrieve the status of the formulae that run as user
             group.addTask {
                 let userServiceNames = self.formulae
                     .filter { !$0.elevated }
@@ -59,17 +61,28 @@ class ValetServicesManager: ServicesManager {
                 }
             }
 
-            // Ensure that every wrapper is considered no longer busy
-            for wrapper in serviceWrappers {
-                wrapper.isBusy = false
-            }
-
             // Broadcast that all services have been updated
             self.broadcastServicesUpdated()
         })
     }
 
     override func toggleService(named: String) async {
-        // TODO
+        guard let wrapper = self[named] else {
+            return Log.err("The wrapper for '\(named)' is missing.")
+        }
+
+        if wrapper.service == nil {
+            return Log.err("The Homebrew service for \(named) is missing.")
+        }
+
+        // Prepare the appropriate command to stop or start a service
+        let action = wrapper.service!.running ? "stop" : "start"
+        let command = "services \(action) \(wrapper.formula.name)"
+
+        // Run the command
+        await brew(command, sudo: wrapper.formula.elevated)
+
+        // Reload the services status to confirm this worked
+        await ServicesManager.shared.reloadServicesStatus()
     }
 }

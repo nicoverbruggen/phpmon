@@ -65,23 +65,6 @@ class Actions {
         }
     }
 
-    // MARK: - Third Party Services
-    public static func stopService(name: String) async {
-        await brew(
-            "services stop \(name)",
-            sudo: ServicesManager.shared[name]?.formula.elevated ?? false
-        )
-        await ServicesManager.shared.reloadServicesStatus()
-    }
-
-    public static func startService(name: String) async {
-        await brew(
-            "services start \(name)",
-            sudo: ServicesManager.shared[name]?.formula.elevated ?? false
-        )
-        await ServicesManager.shared.reloadServicesStatus()
-    }
-
     // MARK: - Finding Config Files
 
     public static func openGenericPhpConfigFolder() {

@@ -14,7 +14,6 @@ import Foundation
 public enum ServiceStatus: String {
     case active
     case inactive
-    case loading
     case missing
 }
 
@@ -26,17 +25,11 @@ public class ServiceWrapper: ObservableObject, Identifiable, Hashable {
     var formula: HomebrewFormula
     var service: HomebrewService?
 
-    var isBusy: Bool = false
-
     public var name: String {
         return formula.name
     }
 
     public var status: ServiceStatus {
-        if isBusy {
-            return .loading
-        }
-
         guard let service = self.service else {
             return .missing
         }
@@ -46,16 +39,20 @@ public class ServiceWrapper: ObservableObject, Identifiable, Hashable {
 
     init(formula: HomebrewFormula) {
         self.formula = formula
-        self.isBusy = true
     }
 
     public static func == (lhs: ServiceWrapper, rhs: ServiceWrapper) -> Bool {
-        return lhs.service == rhs.service
-            && lhs.formula == rhs.formula
+        return lhs.hashValue == rhs.hashValue
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(formula)
         hasher.combine(service)
+    }
+
+    public func broadcastChanged() {
+        Task { @MainActor in
+            self.objectWillChange.send()
+        }
     }
 }
