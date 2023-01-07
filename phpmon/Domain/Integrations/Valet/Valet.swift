@@ -149,7 +149,6 @@ class Valet {
             Log.info("You are running Valet v\(version.major). Support for site isolation is available.")
             self.features.append(.isolatedSites)
         default:
-            #warning("An alert should be presented here")
             Log.err("This version of Valet is not supported.")
         }
     }

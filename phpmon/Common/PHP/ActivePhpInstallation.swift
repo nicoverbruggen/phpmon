@@ -42,7 +42,7 @@ class ActivePhpInstallation {
         do {
             try determineVersion()
         } catch {
-            #warning("In future versions of PHP Monitor, this should not crash")
+            // TODO: In future versions of PHP Monitor, this should not crash
             fatalError("Could not determine or parse PHP version; aborting")
         }
 

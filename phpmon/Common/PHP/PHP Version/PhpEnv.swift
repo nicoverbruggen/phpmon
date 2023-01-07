@@ -92,7 +92,7 @@ class PhpEnv {
 
         var versionsOnly = await extractPhpVersions(
             from: files.components(separatedBy: "\n"),
-            supported: Constants.ValetSupportedPhpVersionMatrix[Valet.shared.version.major]!
+            supported: Constants.ValetSupportedPhpVersionMatrix[Valet.shared.version.major] ?? []
         )
 
         // Make sure the aliased version is detected

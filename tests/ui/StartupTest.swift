@@ -60,6 +60,18 @@ final class StartupTest: UITestCase {
         click(app.buttons["generic.ok".localized])
     }
 
+    final func test_get_warning_about_unsupported_valet_version() throws {
+        var configuration = TestableConfigurations.working
+        configuration.shellOutput["valet --version"] = .instant("Laravel Valet 5.0")
+
+        let app = XCPMApplication()
+        app.withConfiguration(configuration)
+        app.launch()
+
+        assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
+        click(app.buttons["generic.ok".localized])
+    }
+
     final func test_can_open_status_menu_item() throws {
         let app = XCPMApplication()
         app.withConfiguration(TestableConfigurations.working)

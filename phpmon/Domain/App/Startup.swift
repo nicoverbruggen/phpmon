@@ -250,6 +250,20 @@ class Startup {
             titleText: "startup.errors.valet_version_unknown.title".localized,
             subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
+        ),
+        // =================================================================================
+        // Ensure the Valet version is supported.
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                // We currently support Valet 2, 3 or 4. Any other version should get an alert.
+                return ![2, 3, 4].contains(Valet.shared.version.major)
+            },
+            name: "valet version is supported",
+            titleText: "startup.errors.valet_version_not_supported.title".localized,
+            subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized(Valet.shared.version.text),
+            descriptionText: "startup.errors.valet_version_not_supported.desc".localized
         )
+
     ]
 }
