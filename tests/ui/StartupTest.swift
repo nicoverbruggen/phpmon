@@ -50,7 +50,7 @@ final class StartupTest: UITestCase {
 
     final func test_get_warning_about_missing_fpm_symlink() throws {
         var configuration = TestableConfigurations.working
-        configuration.filesystem["/opt/homebrew/etc/php/8.1/php-fpm.d/valet-fpm.conf"] = nil
+        configuration.filesystem["/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"] = nil
 
         let app = XCPMApplication()
         app.withConfiguration(configuration)
@@ -71,7 +71,7 @@ final class StartupTest: UITestCase {
         
         assertAllExist([
             // "Switch to PHP 8.1 (php)" should be visible since it is aliased to `php`
-            app.menuItems["\("mi_php_switch".localized) 8.1 (php)"],
+            app.menuItems["\("mi_php_switch".localized) 8.2 (php)"],
             // We should see the about and quit items
             app.menuItems["mi_about".localized],
             app.menuItems["mi_quit".localized]
