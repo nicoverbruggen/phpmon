@@ -47,6 +47,10 @@ class TestableConfigurations {
                     """),
                 "/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"
                     : .fake(.text),
+                "/opt/homebrew/etc/php/8.2/php.ini"
+                    : .fake(.text),
+                "/opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini"
+                    : .fake(.text)
             ],
             shellOutput: [
                 "sysctl -n sysctl.proc_translated"
@@ -164,10 +168,7 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
                 "/opt/homebrew/bin/php -r echo php_ini_scanned_files();"
                 : """
-                /opt/homebrew/etc/php/8.2/conf.d/error_log.ini,
-                /opt/homebrew/etc/php/8.2/conf.d/ext-opcache.ini,
                 /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
-                /opt/homebrew/etc/php/8.2/conf.d/xdebug.ini
                 """
             ]
         )

@@ -546,6 +546,16 @@ If you are seeing this message but are confused why this folder has gone missing
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
 
+"alert.key_service_not_running.title" = "Due to issues with the Homebrew services required, Valet is currently not working correctly";
+"alert.key_service_not_running.subtitle" = "For Valet to work properly, at least three key services need to be running correctly.
+
+PHP Monitor is reporting that this isn't the case. You can try to fix this by pressing the button with the 'X' in the menu below the affected service to (re)start the service that is currently inactive.";
+"alert.key_service_not_running.desc" = "If clicking on the button below the service doesn't work (i.e. the spinner appears but remains an 'X' after some time), you may need to run Fix My Valet. You can do this via the menu First Aid > Fix My Valet.
+
+Alternatively, you can use `valet stop` and `valet start` in the terminal, which may also fix the issue (as an alternative to Fix My Valet).
+
+For further debugging, you may wish to check the GitHub issue tracker, where others may have had similar issues. As the developer, I attempt to make sure every question gets answered :)";
+
 // CHECK FOR UPDATES
 
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";

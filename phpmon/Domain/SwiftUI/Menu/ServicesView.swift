@@ -34,6 +34,7 @@ struct ServicesView: View {
     }
 
     @ObservedObject var manager: ServicesManager
+
     var perRow: Int
     var rowCount: Int
     var rowSpacing: Int = 0
@@ -79,7 +80,14 @@ struct ServicesView: View {
                         .font(.system(size: 12))
                     if self.manager.statusColor == .red {
                         HelpButton {
-                            print("oof")
+                            // Show an alert with more information
+                            BetterAlert().withInformation(
+                                title: "alert.key_service_not_running.title".localized,
+                                subtitle: "alert.key_service_not_running.subtitle".localized,
+                                description: "alert.key_service_not_running.desc".localized
+                            )
+                            .withPrimary(text: "generic.ok".localized)
+                            .show()
                         }
                     }
                 }
