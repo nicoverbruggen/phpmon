@@ -24,7 +24,7 @@ struct ServicesView: View {
         let view = NSHostingView(rootView: rootView)
         view.autoresizingMask = [.width]
         view.setFrameSize(
-            CGSize(width: view.frame.width, height: rootView.height + 30)
+            CGSize(width: view.frame.width, height: rootView.height)
         )
         // view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 1)
         view.focusRingType = .none
@@ -153,13 +153,6 @@ struct ServiceView: View {
 
 struct ServicesView_Previews: PreviewProvider {
     static var previews: some View {
-        ServicesView(manager: FakeServicesManager(
-            formulae: ["php", "nginx", "dnsmasq"],
-            status: .active
-        ), perRow: 4)
-        .frame(width: 330.0)
-        .previewDisplayName("Loading")
-
         ServicesView(manager: FakeServicesManager(
             formulae: ["php", "nginx", "dnsmasq"],
             status: .active

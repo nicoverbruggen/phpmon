@@ -77,8 +77,17 @@ struct VersionPopoverView: View {
             return "alert.composer_php_requirement.unable_to_determine".localized
         }
 
+
+        let suffix = {
+            if isRunningTests || isRunningSwiftUIPreview {
+                return "test"
+            }
+
+            return Valet.shared.config.tld
+        }()
+
         return "alert.composer_php_requirement.title".localized(
-            "\(site.name).\(Valet.shared.config.tld)",
+            "\(site.name).\(suffix)",
             site.composerPhp
         )
     }

@@ -16,7 +16,8 @@ class FakeServicesManager: ServicesManager {
 
     init(
         formulae: [String] = ["php", "nginx", "dnsmasq"],
-        status: Service.Status = .active
+        status: Service.Status = .active,
+        loading: Bool = false
     ) {
         super.init()
 
@@ -28,6 +29,10 @@ class FakeServicesManager: ServicesManager {
 
         self.services = []
         self.reapplyServices()
+
+        if loading {
+            return
+        }
 
         Task { @MainActor in
             self.firstRunComplete = true
