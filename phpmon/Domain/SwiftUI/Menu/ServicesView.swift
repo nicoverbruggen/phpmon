@@ -77,6 +77,11 @@ struct ServicesView: View {
                         .foregroundColor(self.manager.statusColor)
                     Text(self.manager.statusMessage)
                         .font(.system(size: 12))
+                    Button {
+
+                    } label: {
+                        Text("Learn more").font(.system(size: 12))
+                    }
                 }
             }
             .frame(height: CGFloat(self.statusHeight))
@@ -152,7 +157,7 @@ struct ServicesView_Previews: PreviewProvider {
             formulae: ["php", "nginx", "dnsmasq"],
             status: .active
         ), perRow: 4)
-        .frame(width: 330.0)
+        .frame(width: 330.0, height: 150)
         .previewDisplayName("Loading")
 
         ServicesView(manager: FakeServicesManager(

@@ -87,8 +87,6 @@ class PhpExtension {
         enabled.toggle()
 
         if !isRunningTests {
-            // When running unit tests, the MainMenu will not be available
-            // TODO: Investigate an alternate approach w/ notification or publishable
             Task { @MainActor in
                 MainMenu.shared.rebuild()
             }

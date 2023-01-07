@@ -47,9 +47,9 @@ class HomebrewPackageTest: XCTestCase {
         XCTAssertEqual(services.first?.service_name, "homebrew.mxcl.dnsmasq")
     }
 
+    /*
     // - MARK: LIVE TESTS
 
-    /// TODO: Use fake data or make this an integration test
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the Valet services to be installed: php, nginx and dnsmasq.
     /// If this test fails, there is an issue with your Homebrew installation
@@ -72,7 +72,6 @@ class HomebrewPackageTest: XCTestCase {
         XCTAssertEqual(services.count, 3)
     }
 
-    /// TODO: Use fake data or make this an integration test
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the `php` formula to be installed.
     /// If this test fails, there is an issue with your Homebrew installation
@@ -87,4 +86,5 @@ class HomebrewPackageTest: XCTestCase {
 
         XCTAssertTrue(package.name == "php")
     }
+     */
 }

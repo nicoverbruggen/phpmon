@@ -162,7 +162,7 @@ class Valet {
         // 1. Evaluate feature support
         Valet.shared.evaluateFeatureSupport()
 
-        // 2. Notify user if the version is too old
+        // 2. Notify user if the version is too old (but major version is OK)
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let version = version!
             let recommended = Constants.MinimumRecommendedValetVersion
@@ -182,11 +182,6 @@ class Valet {
         } else {
             Log.info("Valet version \(version.text) is recent enough, OK " +
                      "(recommended: \(Constants.MinimumRecommendedValetVersion))")
-        }
-
-        // 3. Notify user if the version is too high
-        if version.major > 4 {
-            // TODO: Notify user if the version is too high
         }
     }
 
