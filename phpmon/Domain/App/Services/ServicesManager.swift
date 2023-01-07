@@ -15,7 +15,7 @@ class ServicesManager: ObservableObject {
 
     @Published var services = [Service]()
 
-    @Published @MainActor var firstRunComplete: Bool = false
+    @Published var firstRunComplete: Bool = false
 
     public static func useFake() {
         ServicesManager.shared = FakeServicesManager.init(
@@ -35,7 +35,7 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusMessage: String {
-        if self.services.isEmpty {
+        if self.services.isEmpty || !self.firstRunComplete {
             return "Loading..."
         }
 
@@ -52,7 +52,7 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusColor: Color {
-        if self.services.isEmpty {
+        if self.services.isEmpty || !self.firstRunComplete {
             return .yellow
         }
 
