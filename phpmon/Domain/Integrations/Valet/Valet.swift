@@ -187,7 +187,7 @@ class Valet {
 
         // 3. Notify user if the version is too high
         if version.major > 4 {
-            // TODO:
+            // TODO: Notify user if the version is too high
         }
     }
 
