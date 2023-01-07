@@ -95,9 +95,7 @@ class Actions {
     // MARK: - Other Actions
 
     public static func createTempPhpInfoFile() async -> URL {
-        // Write a file called `phpmon_phpinfo.php` to /tmp
-        // TODO: Use FileSystem abstraction
-        try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
+        try! FileSystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
         await Shell.quiet("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
