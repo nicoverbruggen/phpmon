@@ -36,20 +36,20 @@ struct ServicesView: View {
     @ObservedObject var manager: ServicesManager
     var perRow: Int
     var rowCount: Int
-    var rowSpacing: Int = 5
-    var rowHeight: Int = 30
+    var rowSpacing: Int = 0
+    var rowHeight: Int = 50
     var statusHeight: Int = 30
+    var allRowHeight: CGFloat
     var height: CGFloat
 
     init(manager: ServicesManager, perRow: Int) {
         self.manager = manager
         self.perRow = perRow
-        self.rowCount = manager.services.chunked(by: perRow).count
-        self.height = CGFloat(
-            (rowHeight * rowCount)
-            + ((rowCount - 1) * rowSpacing)
-            + statusHeight
+        self.rowCount = manager.formulae.chunked(by: perRow).count
+        self.allRowHeight = CGFloat(
+            (rowHeight * rowCount) + ((rowCount - 1) * rowSpacing)
         )
+        self.height = allRowHeight + CGFloat(statusHeight)
     }
 
     var body: some View {
@@ -66,7 +66,7 @@ struct ServicesView: View {
                     .padding(CGFloat(self.rowSpacing))
                 }
             }
-            .frame(height: self.height)
+            .frame(height: CGFloat(self.height - CGFloat(self.statusHeight)))
             .frame(maxWidth: .infinity, alignment: .center)
             // .background(Color.red)
 
@@ -77,10 +77,10 @@ struct ServicesView: View {
                         .foregroundColor(self.manager.statusColor)
                     Text(self.manager.statusMessage)
                         .font(.system(size: 12))
-                    Button {
-
-                    } label: {
-                        Text("Learn more").font(.system(size: 12))
+                    if self.manager.statusColor == .red {
+                        HelpButton {
+                            print("oof")
+                        }
                     }
                 }
             }
@@ -157,7 +157,7 @@ struct ServicesView_Previews: PreviewProvider {
             formulae: ["php", "nginx", "dnsmasq"],
             status: .active
         ), perRow: 4)
-        .frame(width: 330.0, height: 150)
+        .frame(width: 330.0)
         .previewDisplayName("Loading")
 
         ServicesView(manager: FakeServicesManager(
@@ -172,7 +172,7 @@ struct ServicesView_Previews: PreviewProvider {
                 "php", "nginx", "dnsmasq", "thing1",
                 "thing2", "thing3", "thing4", "thing5"
             ],
-            status: .active
+            status: .inactive
         ), perRow: 4)
         .frame(width: 330.0)
         .previewDisplayName("Active 2")

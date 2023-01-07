@@ -139,6 +139,10 @@
 		C44F868E2835BD8D005C353A /* phpmon-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C44F868D2835BD8D005C353A /* phpmon-config.json */; };
 		C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450C8C528C919EC002A2B4B /* PreferenceName.swift */; };
 		C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450C8C528C919EC002A2B4B /* PreferenceName.swift */; };
+		C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
+		C451AFF72969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
+		C451AFF82969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
+		C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
 		C4570C3A28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
@@ -801,6 +805,7 @@
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
+		C451AFF52969E40F0078E617 /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
 		C45B9148295607F400F4EC78 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		C45B914D295608E300F4EC78 /* ValetServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetServicesManager.swift; sourceTree = "<group>"; };
@@ -1487,6 +1492,7 @@
 			isa = PBXGroup;
 			children = (
 				C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */,
+				C451AFF52969E40F0078E617 /* HelpButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2097,6 +2103,7 @@
 				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
+				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
 				54D9E0B627E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
@@ -2217,6 +2224,7 @@
 				C471E88428F9BB650021E251 /* NoDomainResultsView.swift in Sources */,
 				C471E88528F9BB650021E251 /* ServicesView.swift in Sources */,
 				C471E88628F9BB650021E251 /* StatsView.swift in Sources */,
+				C451AFF82969E40F0078E617 /* HelpButton.swift in Sources */,
 				C471E88728F9BB650021E251 /* SectionHeaderView.swift in Sources */,
 				C471E88828F9BB650021E251 /* HeaderView.swift in Sources */,
 				C471E88928F9BB650021E251 /* SwiftUIHelper.swift in Sources */,
@@ -2304,6 +2312,7 @@
 				C471E89F28F9BB8F0021E251 /* ValetDomainScanner.swift in Sources */,
 				C471E8A028F9BB8F0021E251 /* FakeDomainScanner.swift in Sources */,
 				C471E8A228F9BB8F0021E251 /* AppDelegate.swift in Sources */,
+				C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */,
 				C471E8A328F9BB8F0021E251 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C471E8A428F9BB8F0021E251 /* AppDelegate+Notifications.swift in Sources */,
 				C471E8A528F9BB8F0021E251 /* AppDelegate+InterApp.swift in Sources */,
@@ -2500,6 +2509,7 @@
 				54D9E0B527E4F51E003B9AD9 /* Key.swift in Sources */,
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */,
+				C451AFF72969E40F0078E617 /* HelpButton.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
 				C45B914A295607F400F4EC78 /* Service.swift in Sources */,
 				C4C0E8E327F88B13002D32A9 /* ValetDomainScanner.swift in Sources */,
