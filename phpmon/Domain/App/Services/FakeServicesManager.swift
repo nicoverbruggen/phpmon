@@ -29,7 +29,9 @@ class FakeServicesManager: ServicesManager {
         self.services = []
         self.reapplyServices()
 
-        self.firstRunComplete = true
+        Task { @MainActor in
+            self.firstRunComplete = true
+        }
     }
 
     private func reapplyServices() {

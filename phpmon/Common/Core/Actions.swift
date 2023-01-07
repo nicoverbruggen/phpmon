@@ -117,14 +117,10 @@ class Actions {
      If this does not solve the issue, the user may need to install additional
      extensions and/or run `composer global update`.
      */
-    public static func fixMyValet(completed: @escaping () -> Void) {
-        InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias, completion: {
-            Task { // Restart all services asynchronously and fire callback upon completion
-                await brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
-                await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
-                await brew("services restart \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
-                completed()
-            }
-        })
+    public static func fixMyValet() async {
+        await InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias)
+        await brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
+        await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services restart \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
     }
 }

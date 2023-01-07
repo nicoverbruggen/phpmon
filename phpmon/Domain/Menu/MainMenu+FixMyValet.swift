@@ -31,13 +31,13 @@ extension MainMenu {
             return
         }
 
-        Actions.fixMyValet {
-            Task { @MainActor in
-                if previousVersion == PhpEnv.brewPhpAlias {
-                    self.presentAlertForSameVersion()
-                } else {
-                    self.presentAlertForDifferentVersion(version: previousVersion)
-                }
+        Task { @MainActor in
+            await Actions.fixMyValet()
+
+            if previousVersion == PhpEnv.brewPhpAlias {
+                self.presentAlertForSameVersion()
+            } else {
+                self.presentAlertForDifferentVersion(version: previousVersion)
             }
         }
     }

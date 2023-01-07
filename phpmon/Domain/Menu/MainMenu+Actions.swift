@@ -240,14 +240,11 @@ extension MainMenu {
         Task(priority: .userInitiated) { [unowned self] in
             updatePhpVersionInStatusBar()
             rebuild()
-            PhpEnv.switcher.performSwitch(
-                to: version,
-                completion: {
-                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
-                    App.shared.handlePhpConfigWatcher()
-                    PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
-                }
-            )
+            await PhpEnv.switcher.performSwitch(to: version)
+
+            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            App.shared.handlePhpConfigWatcher()
+            PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
         }
     }
 
@@ -259,8 +256,6 @@ extension MainMenu {
     await MainMenu.shared.switchToPhp("8.1")
     // thing to do after the switch
      ```
-     Since this async function uses `withCheckedContinuation`
-     any code after will run only after the switcher is done.
      */
     func switchToPhp(_ version: String) async {
         Task { @MainActor [self] in
@@ -270,19 +265,13 @@ extension MainMenu {
             PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
         }
 
-        return await withCheckedContinuation({ continuation in
-            updatePhpVersionInStatusBar()
-            rebuild()
-            PhpEnv.switcher.performSwitch(
-                to: version,
-                completion: {
-                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
-                    App.shared.handlePhpConfigWatcher()
-                    PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
-                    continuation.resume()
-                }
-            )
-        })
+        updatePhpVersionInStatusBar()
+        rebuild()
+        await PhpEnv.switcher.performSwitch(to: version)
+
+        PhpEnv.shared.currentInstall = ActivePhpInstallation()
+        App.shared.handlePhpConfigWatcher()
+        PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
 }

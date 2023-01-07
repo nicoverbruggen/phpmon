@@ -42,8 +42,8 @@ class ActivePhpInstallation {
         do {
             try determineVersion()
         } catch {
-            // TODO: Throw up an alert if the PHP version cannot be parsed
-            fatalError("Could not determine or parse PHP version")
+            #warning("In future versions of PHP Monitor, this should not crash")
+            fatalError("Could not determine or parse PHP version; aborting")
         }
 
         // Initialize the list of ini files that are loaded

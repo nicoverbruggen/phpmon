@@ -18,6 +18,6 @@ protocol PhpSwitcherDelegate: AnyObject {
 
 protocol PhpSwitcher {
 
-    func performSwitch(to version: String, completion: @escaping () -> Void)
+    func performSwitch(to version: String) async
 
 }

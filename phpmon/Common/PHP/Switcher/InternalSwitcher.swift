@@ -15,45 +15,43 @@ class InternalSwitcher: PhpSwitcher {
      - unlinking the current version
      - stopping the active services
      - linking the new desired version
-     
+
      Please note that depending on which version is installed,
      the version that is switched to may or may not be identical to `php`
      (without @version).
-
-     TODO: Use `async` and use structured concurrency: https://www.hackingwithswift.com/swift/5.5/structured-concurrency
      */
-    func performSwitch(to version: String, completion: @escaping () -> Void) {
+    func performSwitch(to version: String) async {
         Log.info("Switching to \(version), unlinking all versions...")
 
         let versions = getVersionsToBeHandled(version)
-        let group = DispatchGroup()
 
-        PhpEnv.shared.availablePhpVersions.forEach { (available) in
-            group.enter()
-
-            Task {
-                await self.disableDefaultPhpFpmPool(available)
-                await self.stopPhpVersion(available)
-                group.leave()
-            }
-        }
-
-        group.notify(queue: .global(qos: .userInitiated)) {
-            Task {
-                Log.info("All versions have been unlinked!")
-                Log.info("Linking the new version!")
-
-                for formula in versions {
-                    await self.startPhpVersion(formula, primary: (version == formula))
+        await withTaskGroup(of: String.self, body: { group in
+            for available in PhpEnv.shared.availablePhpVersions {
+                group.addTask {
+                    await self.disableDefaultPhpFpmPool(available)
+                    await self.stopPhpVersion(available)
+                    return available
                 }
-
-                Log.info("Restarting nginx, just to be sure!")
-                await brew("services restart nginx", sudo: true)
-
-                Log.info("The new version(s) have been linked!")
-                completion()
             }
-        }
+
+            var unlinked: [String] = []
+            for await version in group {
+                unlinked.append(version)
+            }
+
+            Log.info("These versions have been unlinked: \(unlinked)")
+            Log.info("Linking the new version \(version)!")
+
+            for formula in versions {
+                Log.info("Will start PHP \(version)... (primary: \(version == formula))")
+                await self.startPhpVersion(formula, primary: (version == formula))
+            }
+
+            Log.info("Restarting nginx, just to be sure!")
+            await brew("services restart nginx", sudo: true)
+
+            Log.info("The new version(s) have been linked!")
+        })
     }
 
     func getVersionsToBeHandled(_ primary: String) -> Set<String> {

@@ -137,7 +137,9 @@ struct ServiceView: View {
                                 ? Color("IconColorGreen")
                                 : Color("IconColorRed")
                         )
-                    }.frame(width: 25, height: 25)
+                    }
+                    .focusable(false)
+                    .frame(width: 25, height: 25)
                 }
             }
         }.frame(minWidth: 70)

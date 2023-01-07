@@ -15,7 +15,10 @@ class ValetServicesManager: ServicesManager {
         // Load the initial services state
         Task {
             await self.reloadServicesStatus()
-            firstRunComplete = true
+
+            Task { @MainActor in
+                firstRunComplete = true
+            }
         }
     }
 

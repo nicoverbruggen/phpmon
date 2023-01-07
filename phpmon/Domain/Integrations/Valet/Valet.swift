@@ -142,17 +142,14 @@ class Valet {
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
     public func evaluateFeatureSupport() {
-        let isVersion2 = version.isSameMajorVersionAs(try! VersionNumber.parse("2.0"))
-        let isVersion3 = version.isSameMajorVersionAs(try! VersionNumber.parse("3.0"))
-        let isVersion4 = version.isSameMajorVersionAs(try! VersionNumber.parse("4.0"))
-
-        if isVersion2 {
+        switch version.major {
+        case 2:
             Log.info("You are running Valet v2. Support for site isolation is disabled.")
-        } else if isVersion3 || isVersion4 {
-            Log.info("You are running Valet v3 or v4. Support for site isolation is available.")
+        case 3, 4:
+            Log.info("You are running Valet v\(version.major). Support for site isolation is available.")
             self.features.append(.isolatedSites)
-        } else {
-            // TODO: Show an alert and notify that some features might not work
+        default:
+            #warning("An alert should be presented here")
             Log.err("This version of Valet is not supported.")
         }
     }

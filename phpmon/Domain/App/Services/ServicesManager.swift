@@ -15,7 +15,7 @@ class ServicesManager: ObservableObject {
 
     @Published var services = [Service]()
 
-    @Published var firstRunComplete: Bool = false
+    @Published @MainActor var firstRunComplete: Bool = false
 
     public static func useFake() {
         ServicesManager.shared = FakeServicesManager.init(

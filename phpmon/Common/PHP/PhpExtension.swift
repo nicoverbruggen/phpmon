@@ -88,7 +88,7 @@ class PhpExtension {
 
         if !isRunningTests {
             // When running unit tests, the MainMenu will not be available
-            // TODO: Fix this dependency issue, set up a notification mechanism
+            // TODO: Investigate an alternate approach w/ notification or publishable
             Task { @MainActor in
                 MainMenu.shared.rebuild()
             }
