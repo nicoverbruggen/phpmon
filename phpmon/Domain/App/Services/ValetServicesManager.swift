@@ -94,6 +94,10 @@ class ValetServicesManager: ServicesManager {
         }
 
         // Prepare the appropriate command to stop or start a service
+        let before = self.homebrewServices.first { service in
+            return service.name == named
+        }
+
         let action = wrapper.status == .active ? "stop" : "start"
         let command = "services \(action) \(wrapper.formula.name)"
 
@@ -102,5 +106,21 @@ class ValetServicesManager: ServicesManager {
 
         // Reload the services status to confirm this worked
         await ServicesManager.shared.reloadServicesStatus()
+
+        Task { @MainActor in
+            let after = self.homebrewServices.first { service in
+                return service.name == named
+            }
+
+            guard let before else { return }
+            guard let after else { return }
+
+            if before.running == after.running {
+                // The status has not changed, report this to the user
+                Log.err("The service '\(named)' status has not changed. Its status is: \(after.status ?? "empty")")
+            } else {
+                Log.info("The service '\(named)' has been successfully toggled.")
+            }
+        }
     }
 }

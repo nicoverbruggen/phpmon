@@ -34,6 +34,16 @@ class ServicesManager: ObservableObject {
         }
     }
 
+    public var hasError: Bool {
+        if self.services.isEmpty || !self.firstRunComplete {
+            return false
+        }
+
+        return self.services[0...2]
+            .map { $0.status }
+            .contains(.error)
+    }
+
     public var statusMessage: String {
         if self.services.isEmpty || !self.firstRunComplete {
             return "Loading..."
@@ -43,6 +53,9 @@ class ServicesManager: ObservableObject {
 
         if statuses.contains(.missing) {
             return "A key service is not installed."
+        }
+        if statuses.contains(.error) {
+            return "A key service is reporting an error state."
         }
         if statuses.contains(.inactive) {
             return "A key service is not running."
@@ -57,10 +70,10 @@ class ServicesManager: ObservableObject {
         }
 
         let statuses = self.services[0...2].map { $0.status }
-        if statuses.contains(.missing) {
-            return .red
-        }
-        if statuses.contains(.inactive) {
+
+        if statuses.contains(.missing)
+            || statuses.contains(.inactive)
+            || statuses.contains(.error) {
             return .red
         }
 

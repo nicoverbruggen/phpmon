@@ -14,9 +14,7 @@ struct HelpButton: View {
 
     var body: some View {
         Button(action: action, label: {
-            ZStack {
-                Text("?").font(.system(size: 15, weight: .medium))
-            }
+            Text("?").font(.system(size: 12, weight: .medium))
         })
     }
 

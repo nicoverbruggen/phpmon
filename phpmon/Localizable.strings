@@ -10,7 +10,7 @@
 
 "mi_busy" = "PHP Monitor is busy...";
 "mi_unsure" = "We are not sure what version of PHP you are running.";
-"mi_php_version" = "You are running PHP";
+"mi_php_version" = "Global PHP version: PHP";
 "mi_php_switch" = "Switch to PHP";
 "mi_php_broken_1" = "Oof! It appears your PHP installation is broken...";
 "mi_php_broken_2" = "Try running `php -v` in your terminal.";
@@ -555,6 +555,24 @@ PHP Monitor is reporting that this isn't the case. You can try to fix this by pr
 Alternatively, you can use `valet stop` and `valet start` in the terminal, which may also fix the issue (as an alternative to Fix My Valet).
 
 For further debugging, you may wish to check the GitHub issue tracker, where others may have had similar issues. As the developer, I attempt to make sure every question gets answered :)";
+
+"alert.key_service_has_error.title" = "Due to issues with the Homebrew services required, Valet is currently not working correctly";
+"alert.key_service_has_error.subtitle" = "For Valet to work properly, at least three key services need to be running correctly.
+
+PHP Monitor is reporting that this isn't the case. It appears that one of the affected services is reporting an error state, so I recommend clicking on the 'E'.
+
+PHP Monitor will attempt to restart the service, and should it fail (which is likely) it will offer to locate the log file if it exists, which may contain additional information that might help you debug the issue.";
+"alert.key_service_has_error.desc" = "Unfortunately, if a service reports an error, this is often due to an invalid configuration state, which may be difficult to debug.
+
+COMMON TROUBLESHOOTING TIPS
+
+• Try restarting the service and checking the log file (if it exists) first. You can have PHP Monitor do this by clicking on the 'E' button.
+
+• PHP: If you are seeing an error status, there may be an issue with PHP's configuration. Make sure the .ini files in the Homebrew installation are OK, and there are no socket conflicts.
+
+• nginx: If you are seeing an error status, a site is likely misconfigured (usually noted in the error log). You will likely want to check Valet's nginx folder.
+
+• dnsmasq: If you are seeing an error status, the dnsmasq configuration file is likely broken (usually located at ~/.config/valet/dnsmasq.d).";
 
 // CHECK FOR UPDATES
 

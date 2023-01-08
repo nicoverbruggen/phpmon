@@ -20,8 +20,12 @@ public struct Service: Hashable {
     init(formula: HomebrewFormula, service: HomebrewService? = nil) {
         self.formula = formula
 
-        if service != nil {
-            self.status = service!.running ? .active : .inactive
+        guard let service else { return }
+
+        self.status = service.running ? .active : .inactive
+
+        if service.status == "error" {
+            self.status = .error
         }
     }
 
@@ -41,6 +45,11 @@ public struct Service: Hashable {
     public enum Status: String {
         case active
         case inactive
+        case error
         case missing
+
+        var asBool: Bool {
+            return self == .active
+        }
     }
 }

@@ -80,11 +80,15 @@ struct ServicesView: View {
                         .font(.system(size: 12))
                     if self.manager.statusColor == .red {
                         HelpButton {
+                            let type = manager.hasError
+                                ? "key_service_has_error"
+                                : "key_service_not_running"
+
                             // Show an alert with more information
                             BetterAlert().withInformation(
-                                title: "alert.key_service_not_running.title".localized,
-                                subtitle: "alert.key_service_not_running.subtitle".localized,
-                                description: "alert.key_service_not_running.desc".localized
+                                title: "alert.\(type).title".localized,
+                                subtitle: "alert.\(type).subtitle".localized,
+                                description: "alert.\(type).desc".localized
                             )
                             .withPrimary(text: "generic.ok".localized)
                             .show()
@@ -131,6 +135,21 @@ struct ServiceView: View {
                     }
                     .focusable(false)
                     .frame(minWidth: 70, alignment: .center)
+                }
+                if service.status == .error {
+                    Button {
+                        Task {
+                            isBusy = true
+                            await ServicesManager.shared.toggleService(named: service.name)
+                            isBusy = false
+                        }
+                    } label: {
+                        Text("E")
+                            .frame(width: 12.0, height: 12.0)
+                            .foregroundColor(Color("IconColorRed"))
+                    }
+                    .focusable(false)
+                    .frame(width: 25, height: 25)
                 }
                 if service.status == .active || service.status == .inactive {
                     Button {
