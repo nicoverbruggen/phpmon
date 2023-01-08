@@ -16,6 +16,7 @@ struct HelpButton: View {
         Button(action: action, label: {
             Text("?").font(.system(size: 12, weight: .medium))
         })
+        .focusable(false)
     }
 
     struct HelpButton_Previews: PreviewProvider {

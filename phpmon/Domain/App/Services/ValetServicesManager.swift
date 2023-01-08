@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 class ValetServicesManager: ServicesManager {
     override init() {
@@ -98,7 +99,14 @@ class ValetServicesManager: ServicesManager {
             return service.name == named
         }
 
-        let action = wrapper.status == .active ? "stop" : "start"
+        // Normally, we allow starting and stopping
+        var action = wrapper.status == .active ? "stop" : "start"
+
+        // However, if we've encountered an error, attempt to restart
+        if wrapper.status == .error {
+            action = "restart"
+        }
+
         let command = "services \(action) \(wrapper.formula.name)"
 
         // Run the command
@@ -107,19 +115,46 @@ class ValetServicesManager: ServicesManager {
         // Reload the services status to confirm this worked
         await ServicesManager.shared.reloadServicesStatus()
 
+        Task {
+
+        }
+    }
+
+    func presentTroubleshootingForService(named: String) {
         Task { @MainActor in
             let after = self.homebrewServices.first { service in
                 return service.name == named
             }
 
-            guard let before else { return }
             guard let after else { return }
 
-            if before.running == after.running {
-                // The status has not changed, report this to the user
-                Log.err("The service '\(named)' status has not changed. Its status is: \(after.status ?? "empty")")
-            } else {
-                Log.info("The service '\(named)' has been successfully toggled.")
+            if after.status == "error" {
+                Log.err("The service '\(named)' is now reporting an error.")
+
+                let hasErrorPath = after.error_log_path != nil
+
+                if hasErrorPath {
+                    BetterAlert().withInformation(
+                        title: "alert.service_error.title".localized(named),
+                        subtitle: "alert.service_error.subtitle.error_log".localized(named),
+                        description: "alert.service_error.extra".localized
+                    )
+                    .withPrimary(text: "alert.service_error.button.close".localized)
+                    .withSecondary(text: "alert.service_error.button.show_log", action: { alert in
+                        let url = URL(fileURLWithPath: after.error_log_path!)
+                        NSWorkspace.shared.activateFileViewerSelecting([url])
+                        alert.close(with: .OK)
+                    })
+                    .show()
+                } else {
+                    BetterAlert().withInformation(
+                        title: "alert.service_error.title".localized(named),
+                        subtitle: "alert.service_error.subtitle.no_error_log".localized(named),
+                        description: "alert.service_error.extra".localized
+                    )
+                    .withPrimary(text: "alert.service_error.button.close".localized)
+                    .show()
+                }
             }
         }
     }

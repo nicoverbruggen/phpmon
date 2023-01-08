@@ -12,25 +12,22 @@ import SwiftUI
 struct ServicesView: View {
 
     static func asMenuItem(perRow: Int = 4) -> NSMenuItem {
-        let item = NSMenuItem()
+        let view = {
+            let rootView = Self(manager: ServicesManager.shared, perRow: perRow)
+            let view = NSHostingView(rootView: rootView)
+            view.autoresizingMask = [.width]
+            view.setFrameSize(CGSize(width: view.frame.width, height: rootView.height))
+            view.focusRingType = .none
+            return view
+        }()
 
-        let manager = ServicesManager.shared
+        let menuItem = {
+            let item = NSMenuItem()
+            item.view = view
+            return item
+        }()
 
-        let rootView = Self(
-            manager: manager,
-            perRow: perRow
-        )
-
-        let view = NSHostingView(rootView: rootView)
-        view.autoresizingMask = [.width]
-        view.setFrameSize(
-            CGSize(width: view.frame.width, height: rootView.height)
-        )
-        // view.layer?.backgroundColor = CGColor.init(red: 255, green: 0, blue: 0, alpha: 1)
-        view.focusRingType = .none
-
-        item.view = view
-        return item
+        return menuItem
     }
 
     @ObservedObject var manager: ServicesManager
