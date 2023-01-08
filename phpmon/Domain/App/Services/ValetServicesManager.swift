@@ -116,46 +116,46 @@ class ValetServicesManager: ServicesManager {
         await ServicesManager.shared.reloadServicesStatus()
 
         Task {
-
+            await presentTroubleshootingForService(named: named)
         }
     }
 
-    func presentTroubleshootingForService(named: String) {
-        Task { @MainActor in
-            let after = self.homebrewServices.first { service in
-                return service.name == named
+    @MainActor func presentTroubleshootingForService(named: String) {
+        let after = self.homebrewServices.first { service in
+            return service.name == named
+        }
+
+        guard let after else { return }
+
+        if after.status == "error" {
+            Log.err("The service '\(named)' is now reporting an error.")
+
+            guard let errorLogPath = after.error_log_path else {
+                return BetterAlert().withInformation(
+                    title: "alert.service_error.title".localized(named),
+                    subtitle: "alert.service_error.subtitle.no_error_log".localized(named),
+                    description: "alert.service_error.extra".localized
+                )
+                .withPrimary(text: "alert.service_error.button.close".localized)
+                .show()
             }
 
-            guard let after else { return }
-
-            if after.status == "error" {
-                Log.err("The service '\(named)' is now reporting an error.")
-
-                let hasErrorPath = after.error_log_path != nil
-
-                if hasErrorPath {
-                    BetterAlert().withInformation(
-                        title: "alert.service_error.title".localized(named),
-                        subtitle: "alert.service_error.subtitle.error_log".localized(named),
-                        description: "alert.service_error.extra".localized
-                    )
-                    .withPrimary(text: "alert.service_error.button.close".localized)
-                    .withSecondary(text: "alert.service_error.button.show_log", action: { alert in
-                        let url = URL(fileURLWithPath: after.error_log_path!)
-                        NSWorkspace.shared.activateFileViewerSelecting([url])
-                        alert.close(with: .OK)
-                    })
-                    .show()
+            BetterAlert().withInformation(
+                title: "alert.service_error.title".localized(named),
+                subtitle: "alert.service_error.subtitle.error_log".localized(named),
+                description: "alert.service_error.extra".localized
+            )
+            .withPrimary(text: "alert.service_error.button.close".localized)
+            .withTertiary(text: "alert.service_error.button.show_log".localized, action: { alert in
+                let url = URL(fileURLWithPath: errorLogPath)
+                if errorLogPath.hasSuffix(".log") {
+                    NSWorkspace.shared.open(url)
                 } else {
-                    BetterAlert().withInformation(
-                        title: "alert.service_error.title".localized(named),
-                        subtitle: "alert.service_error.subtitle.no_error_log".localized(named),
-                        description: "alert.service_error.extra".localized
-                    )
-                    .withPrimary(text: "alert.service_error.button.close".localized)
-                    .show()
+                    NSWorkspace.shared.activateFileViewerSelecting([url])
                 }
-            }
+                alert.close(with: .OK)
+            })
+            .show()
         }
     }
 }
