@@ -94,11 +94,6 @@ class ValetServicesManager: ServicesManager {
             return Log.err("The wrapper for '\(named)' is missing.")
         }
 
-        // Prepare the appropriate command to stop or start a service
-        let before = self.homebrewServices.first { service in
-            return service.name == named
-        }
-
         // Normally, we allow starting and stopping
         var action = wrapper.status == .active ? "stop" : "start"
 
@@ -107,10 +102,11 @@ class ValetServicesManager: ServicesManager {
             action = "restart"
         }
 
-        let command = "services \(action) \(wrapper.formula.name)"
-
         // Run the command
-        await brew(command, sudo: wrapper.formula.elevated)
+        await brew(
+            "services \(action) \(wrapper.formula.name)",
+            sudo: wrapper.formula.elevated
+        )
 
         // Reload the services status to confirm this worked
         await ServicesManager.shared.reloadServicesStatus()

@@ -77,7 +77,6 @@ struct VersionPopoverView: View {
             return "alert.composer_php_requirement.unable_to_determine".localized
         }
 
-
         let suffix = {
             if isRunningTests || isRunningSwiftUIPreview {
                 return "test"
