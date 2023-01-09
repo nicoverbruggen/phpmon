@@ -107,4 +107,5 @@ enum InternalStats: String {
     case launchCount = "times_launched"
     case switchCount = "times_switched_versions"
     case didSeeSponsorEncouragement = "did_see_sponsor_encouragement"
+    case lastGlobalPhpVersion = "last_global_php_version"
 }

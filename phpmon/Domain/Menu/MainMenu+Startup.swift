@@ -121,6 +121,9 @@ extension MainMenu {
         // Check for updates
         await AppUpdateChecker.checkIfNewerVersionIsAvailable()
 
+        // Check if the linked version has changed between launches of phpmon
+        Stats.evaluateLastLinkedPhpVersion()
+
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
     }

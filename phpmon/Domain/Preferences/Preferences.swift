@@ -80,7 +80,8 @@ class Preferences {
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
-            InternalStats.didSeeSponsorEncouragement.rawValue: false
+            InternalStats.didSeeSponsorEncouragement.rawValue: false,
+            InternalStats.lastGlobalPhpVersion.rawValue: ""
         ])
 
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {

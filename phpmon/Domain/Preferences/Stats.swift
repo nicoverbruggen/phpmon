@@ -48,6 +48,10 @@ class Stats {
         )
     }
 
+    public static var lastGlobalPhpVersion: String {
+        UserDefaults.standard.string(forKey: InternalStats.lastGlobalPhpVersion.rawValue) ?? ""
+    }
+
     /**
      Increment the successful launch count. This should only be
      called when the user has not encountered ANY issues starting
@@ -67,6 +71,16 @@ class Stats {
         UserDefaults.standard.set(
             Stats.successfulSwitchCount + 1,
             forKey: InternalStats.switchCount.rawValue
+        )
+    }
+
+    /**
+     Persist which PHP version was active when you last used the app.
+     */
+    public static func persistCurrentGlobalPhpVersion(version: String) {
+        UserDefaults.standard.set(
+            version,
+            forKey: InternalStats.lastGlobalPhpVersion.rawValue
         )
     }
 
@@ -124,6 +138,35 @@ class Stats {
             }
 
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
+        }
+    }
+
+    public static func evaluateLastLinkedPhpVersion() {
+        let currentVersion = PhpEnv.phpInstall.version.short
+        let previousVersion = Stats.lastGlobalPhpVersion
+
+        // TODO: Add a preference to disable this
+
+        // Save the PHP version that is currently in use (only if unknown)
+        if Stats.lastGlobalPhpVersion == "" {
+            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
+            Log.info("Persisting the currently linked PHP version (first time only).")
+        } else {
+            Log.info("Previously, the globally linked PHP version was: \(previousVersion).")
+            if previousVersion != currentVersion {
+                Log.info("Currently, that version is: \(currentVersion). This is a mismatch.")
+                Task { @MainActor in
+                    BetterAlert()
+                        .withInformation(
+                            title: "startup.version_mismatch.title".localized,
+                            subtitle: "startup.version_mismatch.subtitle".localized,
+                            description: "startup.version_mismatch.desc".localized
+                        )
+                        .withPrimary(text: "OK")
+                        // TODO: Add secondary button to switch to that version (if possible)
+                        .show()
+                }
+            }
         }
     }
 

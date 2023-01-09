@@ -51,6 +51,9 @@ class InternalSwitcher: PhpSwitcher {
             await brew("services restart nginx", sudo: true)
 
             Log.info("The new version(s) have been linked!")
+
+            // Persist which formula is linked so we can check at launch
+            Stats.persistCurrentGlobalPhpVersion(version: PhpEnv.phpInstall.formula)
         })
     }
 
