@@ -145,8 +145,6 @@ class Stats {
         let currentVersion = PhpEnv.phpInstall.version.short
         let previousVersion = Stats.lastGlobalPhpVersion
 
-        // TODO: Add a preference to disable this
-
         // Save the PHP version that is currently in use (only if unknown)
         if Stats.lastGlobalPhpVersion == "" {
             Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
@@ -159,15 +157,27 @@ class Stats {
                     BetterAlert()
                         .withInformation(
                             title: "startup.version_mismatch.title".localized,
-                            subtitle: "startup.version_mismatch.subtitle".localized,
-                            description: "startup.version_mismatch.desc".localized
+                            subtitle: "startup.version_mismatch.subtitle".localized(
+                                currentVersion,
+                                previousVersion
+                            ),
+                            description: "startup.version_mismatch.desc".localized()
                         )
-                        .withPrimary(text: "OK")
-                        // TODO: Add secondary button to switch to that version (if possible)
+                        .withPrimary(text: "startup.version_mismatch.button_switch_back".localized(
+                            previousVersion
+                        ), action: { alert in
+                            alert.close(with: .OK)
+                            Task { MainMenu.shared.switchToAnyPhpVersion(previousVersion) }
+                        })
+                        .withTertiary(text: "startup.version_mismatch.button_stay".localized(
+                            currentVersion
+                        ), action: { alert in
+                            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
+                            alert.close(with: .OK)
+                        })
                         .show()
                 }
             }
         }
     }
-
 }

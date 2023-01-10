@@ -53,19 +53,7 @@ class InterApp {
             Task { MainMenu.shared.openPhpInfo() }
         }),
         InterApp.Action(command: "switch/php/", action: { version in
-            if PhpEnv.shared.availablePhpVersions.contains(version) {
-                Task { MainMenu.shared.switchToPhpVersion(version) }
-            } else {
-                Task {
-                    BetterAlert().withInformation(
-                        title: "alert.php_switch_unavailable.title".localized,
-                        subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
-                    ).withPrimary(
-                        text: "alert.php_switch_unavailable.ok".localized
-                    ).show()
-                }
-            }
+            Task { MainMenu.shared.switchToAnyPhpVersion(version) }
         })
     ]}
-
 }
