@@ -525,7 +525,7 @@ If you are seeing this message but are confused why this folder has gone missing
 
 // Valet version too new or old
 "startup.errors.valet_version_not_supported.title" = "This version of Valet is not supported";
-"startup.errors.valet_version_not_supported.subtitle" = "You are running a version of Valet that is currently not supported (%@). PHP Monitor currently works with Valet v2, v3 and v4. In order to avoid causing issues on your system, PHP Monitor cannot start.";
+"startup.errors.valet_version_not_supported.subtitle" = "You are running a version of Valet that is currently not supported. PHP Monitor currently works with Valet v2, v3 and v4. In order to avoid causing issues on your system, PHP Monitor cannot start.";
 "startup.errors.valet_version_not_supported.desc" = "You must install a version of Valet that is compatible with PHP Monitor, or you may need to upgrade to a newer version of PHP Monitor which may include compatibility for this version of Valet (consult the latest release notes for more info).";
 
 /// Brew & sudoers
