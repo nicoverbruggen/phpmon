@@ -82,7 +82,7 @@ class Valet {
                     subtitle: "alert.warnings.tld_issue.subtitle".localized,
                     description: "alert.warnings.tld_issue.description".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .withTertiary(text: "alert.do_not_tell_again".localized, action: { alert in
                     Preferences.update(.warnAboutNonStandardTLD, value: false)
                     alert.close(with: .alertThirdButtonReturn)
@@ -176,7 +176,7 @@ class Valet {
                             Constants.MinimumRecommendedValetVersion
                         )
                     )
-                    .withPrimary(text: "OK")
+                    .withPrimary(text: "generic.ok".localized)
                     .show()
             }
         } else {

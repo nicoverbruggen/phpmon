@@ -22,7 +22,7 @@ extension DomainListVC {
                     title: "domain_list.alert.invalid_folder_name".localized,
                     subtitle: "domain_list.alert.invalid_folder_name_desc".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .show()
             return
         }
@@ -194,6 +194,18 @@ extension DomainListVC {
         )
     }
 
+    @objc func useInTerminal() {
+        guard let site = selectedSite else {
+            return
+        }
+
+        guard let version = site.isolatedPhpVersion?.versionNumber else {
+            return
+        }
+
+        self.notifyAboutUsingIsolatedPhpVersionInTerminal(version: version)
+    }
+
     // MARK: - Alerts & Modals
 
     private func notifyAboutModifiedSecureStatus(domain: String, secured: Bool) {
@@ -212,13 +224,27 @@ extension DomainListVC {
         )
     }
 
+    private func notifyAboutUsingIsolatedPhpVersionInTerminal(version: VersionNumber) {
+        BetterAlert()
+            .withInformation(
+                title: "domain_list.alerts_isolated_php_terminal.title".localized(version.short),
+                subtitle: "domain_list.alerts_isolated_php_terminal.subtitle".localized(
+                    "\(version.major)\(version.minor)",
+                    version.short
+                ),
+                description: "domain_list.alerts_isolated_php_terminal.desc".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
+    }
+
     private func notifyAboutFailedSecureStatus(command: String) {
         BetterAlert()
             .withInformation(
                 title: "domain_list.alerts_status_not_changed.title".localized,
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 
@@ -229,7 +255,7 @@ extension DomainListVC {
                 subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,
                 description: "domain_list.alerts_isolation_failed.desc".localized(command)
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 }

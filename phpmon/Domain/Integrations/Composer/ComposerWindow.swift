@@ -120,7 +120,7 @@ import Foundation
                 subtitle: "alert.composer_missing.subtitle".localized,
                 description: "alert.composer_missing.desc".localized
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 

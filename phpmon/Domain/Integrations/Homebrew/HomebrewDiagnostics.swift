@@ -140,7 +140,7 @@ class HomebrewDiagnostics {
                     title: "alert.php_alias_conflict.title".localized,
                     subtitle: "alert.php_alias_conflict.info".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .show()
         }
     }

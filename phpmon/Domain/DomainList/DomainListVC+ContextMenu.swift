@@ -130,6 +130,13 @@ extension DomainListVC {
 
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.site_isolation".localized))
         menu.addItem(NSMenuItem(title: "domain_list.isolate".localized, submenu: items))
+
+        if site.isolatedPhpVersion != nil {
+            menu.addItem(NSMenuItem(
+                title: "domain_list.use_in_terminal".localized(site.servingPhpVersion),
+                action: #selector(self.useInTerminal)
+            ))
+        }
         menu.addItem(NSMenuItem.separator())
     }
 

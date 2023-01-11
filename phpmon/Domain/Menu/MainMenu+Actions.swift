@@ -34,7 +34,7 @@ extension MainMenu {
                     subtitle: "alert.fix_homebrew_permissions_done.subtitle".localized,
                     description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .show()
         } failure: { error in
             BetterAlert.show(for: error as! HomebrewPermissionError)
@@ -182,7 +182,7 @@ extension MainMenu {
             subtitle: "preset_help_info".localized,
             description: "preset_help_desc".localized
         )
-        .withPrimary(text: "OK")
+        .withPrimary(text: "generic.ok".localized)
         .withTertiary(text: "", action: { alert in
             NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             alert.close(with: .OK)

@@ -33,7 +33,7 @@ extension ActivePhpInstallation {
                         subtitle: "alert.php_fpm_broken.info".localized,
                         description: "alert.php_fpm_broken.description".localized
                     )
-                    .withPrimary(text: "OK")
+                    .withPrimary(text: "generic.ok".localized)
                     .show()
             }
         }

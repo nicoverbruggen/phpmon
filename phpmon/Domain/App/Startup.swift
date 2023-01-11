@@ -64,7 +64,7 @@ class Startup {
                 subtitle: check.subtitleText,
                 description: check.descriptionText
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 

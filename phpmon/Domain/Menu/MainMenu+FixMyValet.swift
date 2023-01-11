@@ -48,7 +48,7 @@ extension MainMenu {
                 title: "alert.php_formula_missing.title".localized,
                 subtitle: "alert.php_formula_missing.info".localized
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 
@@ -59,7 +59,7 @@ extension MainMenu {
                 subtitle: "alert.fix_my_valet_done.subtitle".localized,
                 description: "alert.fix_my_valet_done.desc".localized
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 

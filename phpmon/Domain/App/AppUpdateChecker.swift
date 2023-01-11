@@ -125,7 +125,7 @@ class AppUpdateChecker {
                 subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
                 description: ""
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
         }
     }
@@ -174,7 +174,7 @@ class AppUpdateChecker {
                     NSWorkspace.shared.open(Constants.Urls.GitHubReleases)
                 }
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
         }
     }

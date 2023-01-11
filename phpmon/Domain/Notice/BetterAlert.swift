@@ -115,6 +115,6 @@ class BetterAlert {
         return BetterAlert().withInformation(
             title: "\(key).title".localized,
             subtitle: "\(key).description".localized
-        ).withPrimary(text: "OK").show()
+        ).withPrimary(text: "generic.ok".localized).show()
     }
 }

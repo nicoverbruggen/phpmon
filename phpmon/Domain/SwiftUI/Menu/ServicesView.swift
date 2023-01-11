@@ -124,7 +124,7 @@ struct ServiceView: View {
                                 subtitle: "alert.warnings.service_missing.subtitle".localized,
                                 description: "alert.warnings.service_missing.description".localized
                             )
-                            .withPrimary(text: "OK")
+                            .withPrimary(text: "generic.ok".localized)
                             .show()
                         }
                     } label: {
