@@ -71,7 +71,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /** Reloads which PHP versions is currently active. */
     @objc func refreshActiveInstallation() {
         if !PhpEnv.shared.isBusy {
-            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            PhpEnv.shared.currentInstall = ActivePhpInstallation.load()
             updatePhpVersionInStatusBar()
         } else {
             Log.perf("Skipping version refresh due to busy status!")

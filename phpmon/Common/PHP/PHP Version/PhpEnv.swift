@@ -13,7 +13,7 @@ class PhpEnv {
     // MARK: - Initializer
 
     init() {
-        self.currentInstall = ActivePhpInstallation()
+        self.currentInstall = ActivePhpInstallation.load()
     }
 
     func determinePhpAlias() async {
@@ -90,9 +90,17 @@ class PhpEnv {
     public func detectPhpVersions() async -> [String] {
         let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
 
+        let supported: [String] = {
+            guard let version = Valet.shared.version else {
+                return []
+            }
+
+            return Constants.ValetSupportedPhpVersionMatrix[version.major] ?? []
+        }()
+
         var versionsOnly = await extractPhpVersions(
             from: files.components(separatedBy: "\n"),
-            supported: Constants.ValetSupportedPhpVersionMatrix[Valet.shared.version.major] ?? []
+            supported: supported
         )
 
         // Make sure the aliased version is detected

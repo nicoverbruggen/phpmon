@@ -37,13 +37,20 @@ class ActivePhpInstallation {
 
     // MARK: - Initializer
 
+    public static func load() -> ActivePhpInstallation? {
+        if !FileSystem.fileExists(Paths.phpConfig) {
+            return nil
+        }
+
+        return ActivePhpInstallation()
+    }
+
     init() {
         // Show information about the current version
         do {
             try determineVersion()
         } catch {
-            // TODO: In future versions of PHP Monitor, this should not crash
-            fatalError("Could not determine or parse PHP version; aborting")
+            fatalError("Could not determine or parse PHP version; aborting!")
         }
 
         // Initialize the list of ini files that are loaded

@@ -99,6 +99,7 @@ class Startup {
             buttonText: "alert.homebrew_missing.quit".localized,
             requiresAppRestart: true
         ),
+        /*
         // =================================================================================
         // The PHP binary must exist.
         // =================================================================================
@@ -109,6 +110,7 @@ class Startup {
             subtitleText: "startup.errors.php_binary.subtitle".localized,
             descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
         ),
+        */
         // =================================================================================
         // Make sure we can detect one or more PHP installations.
         // =================================================================================
@@ -216,6 +218,7 @@ class Startup {
         // =================================================================================
         // Determine that Valet works correctly (no issues in platform detected)
         // =================================================================================
+        /*
         EnvironmentCheck(
             command: {
                 return await Shell.pipe("valet --version").out
@@ -264,5 +267,6 @@ class Startup {
             subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized,
             descriptionText: "startup.errors.valet_version_not_supported.desc".localized
         )
+        */
     ]
 }

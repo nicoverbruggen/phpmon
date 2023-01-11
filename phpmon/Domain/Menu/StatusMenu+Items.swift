@@ -13,7 +13,18 @@ import Cocoa
 extension StatusMenu {
 
     func addPhpVersionMenuItems() {
-        if PhpEnv.phpInstall == nil || PhpEnv.phpInstall!.hasErrorState {
+        if PhpEnv.phpInstall == nil {
+            addItem(HeaderView.asMenuItem(text: "⚠️ " + "mi_no_php_linked".localized, minimumWidth: 280))
+            addItems([
+                // TODO: Make sure these buttons do something
+                NSMenuItem.separator(),
+                NSMenuItem(title: "mi_fix_php_link".localized),
+                NSMenuItem(title: "mi_no_php_linked_explain".localized)
+            ])
+            return
+        }
+
+        if PhpEnv.phpInstall!.hasErrorState {
             let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
             return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
         }
@@ -30,7 +41,13 @@ extension StatusMenu {
             return
         }
 
-        if PhpEnv.shared.availablePhpVersions.isEmpty { return }
+        if PhpEnv.shared.availablePhpVersions.isEmpty {
+            return
+        }
+
+        if PhpEnv.shared.currentInstall == nil {
+            return
+        }
 
         addSwitchToPhpMenuItems()
         self.addItem(NSMenuItem.separator())

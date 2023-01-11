@@ -16,7 +16,6 @@ class Homebrew {
             }
 
             guard let install = PhpEnv.phpInstall else {
-                Log.info("Assuming the formula is `php` since none seems to be linked.")
                 return HomebrewFormula("php", elevated: true)
             }
 

@@ -12,27 +12,27 @@ class StatusMenu: NSMenu {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        if Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
             addPhpActionMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayServicesManager) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayValetIntegration) {
+        if Valet.shared.version != nil && Preferences.isEnabled(.displayValetIntegration) {
             addValetMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayPhpConfigFinder) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
             addConfigurationMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayComposerToolkit) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
             addComposerMenuItems()
             addItem(NSMenuItem.separator())
         }
@@ -41,12 +41,12 @@ class StatusMenu: NSMenu {
             return
         }
 
-        if Preferences.isEnabled(.displayLimitsWidget) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
             addStatsMenuItem()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayExtensions) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
             addExtensionsMenuItems()
             NSMenuItem.separator()
 
@@ -55,11 +55,11 @@ class StatusMenu: NSMenu {
 
         addPhpDoctorMenuItem()
 
-        if Preferences.isEnabled(.displayPresets) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
             addPresetsMenuItem()
         }
 
-        if Preferences.isEnabled(.displayMisc) {
+        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
             addFirstAidAndServicesMenuItems()
         }
 

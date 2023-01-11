@@ -16,6 +16,9 @@
 "mi_php_broken_2" = "Try running `php -v` in your terminal.";
 "mi_php_broken_3" = "You could also try switching to another version.";
 "mi_php_broken_4" = "Running `brew reinstall php` (or for the equivalent version) might help.";
+"mi_no_php_linked" = "No PHP version linked!";
+"mi_fix_php_link" = "Fix Automatically...";
+"mi_no_php_linked_explain" = "What's This?";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";

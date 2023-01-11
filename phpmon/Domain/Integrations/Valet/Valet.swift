@@ -22,7 +22,7 @@ class Valet {
     static let shared = Valet()
 
     /// The version of Valet that was detected.
-    var version: VersionNumber! = nil
+    var version: VersionNumber? = nil
 
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -142,6 +142,11 @@ class Valet {
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
     public func evaluateFeatureSupport() {
+        guard let version = self.version else {
+            Log.err("Cannot determine features, as the version was not determined.")
+            return
+        }
+
         switch version.major {
         case 2:
             Log.info("You are running Valet v2. Support for site isolation is disabled.")
@@ -159,12 +164,21 @@ class Valet {
      installed is not recent enough.
      */
     public func validateVersion() {
+        guard let version = self.version else {
+            Log.err("Cannot validate Valet version if no Valet version was determined.")
+            return
+        }
+
+        if PhpEnv.phpInstall == nil {
+            Log.info("Cannot validate Valet version if no PHP version is linked.")
+            return
+        }
+
         // 1. Evaluate feature support
         Valet.shared.evaluateFeatureSupport()
 
         // 2. Notify user if the version is too old (but major version is OK)
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
-            let version = version!
             let recommended = Constants.MinimumRecommendedValetVersion
             Log.warn("Valet version \(version.text) is too old! (recommended: \(recommended))")
             Task { @MainActor in
