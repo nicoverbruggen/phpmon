@@ -17,7 +17,6 @@ public struct TestableConfiguration: Codable {
     func apply() {
         Log.separator()
         Log.info("USING TESTABLE CONFIGURATION...")
-        Homebrew.fake = true
         Log.separator()
         Log.info("Applying fake shell...")
         ActiveShell.useTestable(shellOutput)

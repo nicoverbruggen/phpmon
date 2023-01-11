@@ -45,7 +45,7 @@ class PhpEnv {
     var cachedPhpInstallations: [String: PhpInstallation] = [:]
 
     /** Information about the currently linked PHP installation. */
-    var currentInstall: ActivePhpInstallation!
+    var currentInstall: ActivePhpInstallation?
 
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
@@ -57,15 +57,15 @@ class PhpEnv {
      As such, we take that information from Homebrew.
      */
     static var brewPhpAlias: String {
-        if Homebrew.fake { return "8.2" }
+        if PhpEnv.shared.homebrewPackage == nil { return "8.2" }
 
-        return Self.shared.homebrewPackage.version
+        return PhpEnv.shared.homebrewPackage.version
     }
 
     /**
      The currently linked and active PHP installation.
      */
-    static var phpInstall: ActivePhpInstallation {
+    static var phpInstall: ActivePhpInstallation? {
         return Self.shared.currentInstall
     }
 
@@ -170,7 +170,12 @@ class PhpEnv {
      Validates whether the currently running version matches the provided version.
      */
     public func validate(_ version: String) -> Bool {
-        if self.currentInstall.version.short == version {
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("It appears as if no PHP installation is currently active.")
+            return false
+        }
+
+        if install.version.short == version {
             Log.info("Switching to version \(version) seems to have succeeded. Validation passed.")
             Log.info("Keeping track that this is the new version!")
             Stats.persistCurrentGlobalPhpVersion(version: version)
@@ -186,7 +191,11 @@ class PhpEnv {
      You can then use the configuration file instance to change values.
      */
     public func getConfigFile(forKey key: String) -> PhpConfigurationFile? {
-        return PhpEnv.phpInstall.iniFiles
+        guard let install = PhpEnv.phpInstall else {
+            return nil
+        }
+
+        return install.iniFiles
             .reversed()
             .first(where: { $0.has(key: key) })
     }

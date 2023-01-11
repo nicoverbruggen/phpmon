@@ -12,7 +12,7 @@ import AppKit
 extension MainMenu {
 
     @MainActor @objc func fixMyValet() {
-        let previousVersion = PhpEnv.phpInstall.version.short
+        let previousVersion = PhpEnv.phpInstall?.version.short
 
         if !PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpAlias) {
             presentAlertForMissingFormula()
@@ -34,10 +34,10 @@ extension MainMenu {
         Task { @MainActor in
             await Actions.fixMyValet()
 
-            if previousVersion == PhpEnv.brewPhpAlias {
+            if previousVersion == PhpEnv.brewPhpAlias || previousVersion == nil {
                 self.presentAlertForSameVersion()
             } else {
-                self.presentAlertForDifferentVersion(version: previousVersion)
+                self.presentAlertForDifferentVersion(version: previousVersion!)
             }
         }
     }

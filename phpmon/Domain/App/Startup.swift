@@ -261,7 +261,7 @@ class Startup {
             },
             name: "valet version is supported",
             titleText: "startup.errors.valet_version_not_supported.title".localized,
-            subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized(Valet.shared.version.text),
+            subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized,
             descriptionText: "startup.errors.valet_version_not_supported.desc".localized
         )
     ]

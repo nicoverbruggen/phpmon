@@ -33,7 +33,13 @@ extension App {
             return
         }
 
-        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpEnv.phpInstall.version.short)")
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("It appears as if no PHP installation is currently active.")
+            Log.info("The FS watcher will be disabled until a PHP install is active.")
+            return
+        }
+
+        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(install.version.short)")
 
         // Check whether the watcher exists and schedule on the main thread
         // if we don't consistently do this, the app will create duplicate watchers

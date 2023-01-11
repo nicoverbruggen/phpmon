@@ -68,7 +68,7 @@ extension MainMenu {
         // Attempt to find out if PHP-FPM is broken
         Log.info("Determining broken PHP-FPM...")
         let installation = PhpEnv.phpInstall
-        installation.notifyAboutBrokenPhpFpm()
+        installation?.notifyAboutBrokenPhpFpm()
 
         // Check for other problems
         WarningManager.shared.evaluateWarnings()

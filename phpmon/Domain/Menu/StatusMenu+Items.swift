@@ -13,13 +13,13 @@ import Cocoa
 extension StatusMenu {
 
     func addPhpVersionMenuItems() {
-        if PhpEnv.phpInstall.hasErrorState {
+        if PhpEnv.phpInstall == nil || PhpEnv.phpInstall!.hasErrorState {
             let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
             return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
         }
 
         addItem(HeaderView.asMenuItem(
-            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall.version.long)",
+            text: "\("mi_php_version".localized) \(PhpEnv.phpInstall!.version.long)",
             minimumWidth: 280 // this ensures the menu is at least wide enough not to cause clipping
         ))
     }
@@ -60,9 +60,10 @@ extension StatusMenu {
 
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnv.brewPhpAlias) ? "php" : "php@\(shortVersion)"
+
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
-                action: (shortVersion == PhpEnv.phpInstall.version.short)
+                action: (shortVersion == PhpEnv.phpInstall?.version.short)
                 ? nil
                 : action, keyEquivalent: "\(shortcutKey)"
             )
@@ -145,7 +146,12 @@ extension StatusMenu {
     // MARK: - Stats
 
     func addStatsMenuItem() {
-        guard let stats = PhpEnv.phpInstall.limits else { return }
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("Not showing stats menu item if no PHP version is linked.")
+            return
+        }
+
+        guard let stats = install.limits else { return }
 
         addItem(StatsView.asMenuItem(
             memory: stats.memory_limit,
@@ -157,14 +163,19 @@ extension StatusMenu {
     // MARK: - Extensions
 
     func addExtensionsMenuItems() {
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("Not showing extensions menu items if no PHP version is linked.")
+            return
+        }
+
         addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
 
-        if PhpEnv.phpInstall.extensions.isEmpty {
+        if install.extensions.isEmpty {
             addItem(NSMenuItem(title: "mi_no_extensions_detected".localized, action: nil, keyEquivalent: ""))
         }
 
         var shortcutKey = 1
-        for phpExtension in PhpEnv.phpInstall.extensions {
+        for phpExtension in install.extensions {
             addExtensionItem(phpExtension, shortcutKey)
             shortcutKey += 1
         }

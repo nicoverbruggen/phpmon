@@ -118,6 +118,11 @@ extension MainMenu {
             preference: .notifyAboutVersionChange
         )
 
-        Task { PhpEnv.phpInstall.notifyAboutBrokenPhpFpm() }
+        guard let install = PhpEnv.phpInstall else {
+            Log.err("Cannot notify about version change if PHP is unlinked")
+            return
+        }
+
+        Task { install.notifyAboutBrokenPhpFpm() }
     }
 }

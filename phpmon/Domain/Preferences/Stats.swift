@@ -101,8 +101,8 @@ class Stats {
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
 
-        if Homebrew.fake {
-            return Log.info("A fake environment is in use, skipping sponsor alert.")
+        if Shell is TestableShell {
+            return Log.info("A fake shell is in use, skipping sponsor alert.")
         }
 
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
@@ -142,7 +142,13 @@ class Stats {
     }
 
     public static func evaluateLastLinkedPhpVersion() {
-        let currentVersion = PhpEnv.phpInstall.version.short
+        guard let linked = PhpEnv.phpInstall else {
+            // TODO: Actually notify the user that no version is linked.
+            Log.info("No version is currently linked.")
+            return
+        }
+
+        let currentVersion = linked.version.short
         let previousVersion = Stats.lastGlobalPhpVersion
 
         // Save the PHP version that is currently in use (only if unknown)

@@ -88,10 +88,14 @@ struct Preset: Codable, Equatable {
             applyConfigurationValue(key: conf.key, value: conf.value ?? "")
         }
 
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("Cannot toggle extensions if no PHP version is linked.")
+            return
+        }
+
         // Apply the extension changes in-place afterward
         for ext in extensions {
-            for foundExt in PhpEnv.phpInstall.extensions
-            where foundExt.name == ext.key && foundExt.enabled != ext.value {
+            for foundExt in install.extensions where foundExt.name == ext.key && foundExt.enabled != ext.value {
                 Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
                 await foundExt.toggle()
                 break
@@ -125,7 +129,7 @@ struct Preset: Codable, Equatable {
     // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async -> Bool {
-        if PhpEnv.shared.currentInstall.version.short == self.version! {
+        if PhpEnv.shared.currentInstall?.version.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
             return true
         }
@@ -213,8 +217,12 @@ struct Preset: Codable, Equatable {
             return nil
         }
 
-        if PhpEnv.shared.currentInstall.version.short != version {
-            return PhpEnv.shared.currentInstall.version.short
+        guard let install = PhpEnv.phpInstall else {
+            return nil
+        }
+
+        if install.version.short != version {
+            return install.version.short
         } else {
             return nil
         }
@@ -226,8 +234,12 @@ struct Preset: Codable, Equatable {
     private func diffExtensions() -> [String: Bool] {
         var items: [String: Bool] = [:]
 
+        guard let install = PhpEnv.phpInstall else {
+            fatalError("If no PHP version is linked, diffing extensions is not possible.")
+        }
+
         for (key, value) in self.extensions {
-            for foundExt in PhpEnv.phpInstall.extensions
+            for foundExt in install.extensions
             where foundExt.name == key && foundExt.enabled != value {
                 // Save the original value of the extension
                 items[foundExt.name] = foundExt.enabled

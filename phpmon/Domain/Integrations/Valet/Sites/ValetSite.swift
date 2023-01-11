@@ -56,7 +56,8 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? PhpEnv.phpInstall.version.short
+            ?? PhpEnv.phpInstall?.version.short
+            ?? "???"
     }
 
     enum VersionSource: String {
@@ -143,11 +144,16 @@ class ValetSite: ValetListable {
             return
         }
 
+        guard let linked = PhpEnv.phpInstall else {
+            self.composerPhpCompatibleWithLinked = false
+            return
+        }
+
         // Split the composer list (on "|") to evaluate multiple constraints
         // For example, for Laravel 8 projects the value is "^7.3|^8.0"
         self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
             .map { string in
-                let origin = self.isolatedPhpVersion?.versionNumber.short ?? PhpEnv.phpInstall.version.long
+                let origin = self.isolatedPhpVersion?.versionNumber.short ?? linked.version.long
                 return !PhpVersionNumberCollection.make(from: [origin])
                     .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
                     .isEmpty
@@ -251,7 +257,7 @@ class ValetSite: ValetListable {
     }
 
     func getListablePhpVersion() -> String {
-        return self.servingPhpVersion
+        return self.servingPhpVersion ?? "—"
     }
 
     func getListableKind() -> String {

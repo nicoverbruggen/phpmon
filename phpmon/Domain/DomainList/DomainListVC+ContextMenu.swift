@@ -133,7 +133,7 @@ extension DomainListVC {
 
         if site.isolatedPhpVersion != nil {
             menu.addItem(NSMenuItem(
-                title: "domain_list.use_in_terminal".localized(site.servingPhpVersion),
+                title: "domain_list.use_in_terminal".localized(site.isolatedPhpVersion!.versionNumber.text),
                 action: #selector(self.useInTerminal)
             ))
         }

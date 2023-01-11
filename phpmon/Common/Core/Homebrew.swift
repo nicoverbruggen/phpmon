@@ -9,19 +9,18 @@
 import Foundation
 
 class Homebrew {
-    static var fake: Bool = false
-
     struct Formulae {
         static var php: HomebrewFormula {
-            if Homebrew.fake {
-                return HomebrewFormula("php", elevated: true)
-            }
-
             if PhpEnv.shared.homebrewPackage == nil {
                 fatalError("You must either load the HomebrewPackage object or call `fake` on the Homebrew class.")
             }
 
-            return HomebrewFormula(PhpEnv.phpInstall.formula, elevated: true)
+            guard let install = PhpEnv.phpInstall else {
+                Log.info("Assuming the formula is `php` since none seems to be linked.")
+                return HomebrewFormula("php", elevated: true)
+            }
+
+            return HomebrewFormula(install.formula, elevated: true)
         }
 
         static var nginx: HomebrewFormula {

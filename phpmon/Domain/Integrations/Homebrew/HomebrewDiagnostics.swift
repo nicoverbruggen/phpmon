@@ -65,8 +65,13 @@ class HomebrewDiagnostics {
     public static func checkForPhpFpmPoolConflicts() {
         Log.info("Checking for PHP-FPM pool conflicts...")
 
+        guard let install = PhpEnv.phpInstall else {
+            Log.info("Will skip check for conflicts if no PHP version is linked.")
+            return
+        }
+
         // We'll need to know what the primary PHP version is
-        let primary = PhpEnv.shared.currentInstall.version.short
+        let primary = install.version.short
 
         // Versions to be handled
         let switcher = InternalSwitcher()

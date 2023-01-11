@@ -207,12 +207,17 @@ extension MainMenu {
     }
 
     @objc func openActiveConfigFolder() {
-        if PhpEnv.phpInstall.hasErrorState {
+        guard let install = PhpEnv.phpInstall else {
+            // TODO: Can't open the config if no PHP version is active
+            return
+        }
+
+        if install.hasErrorState {
             Actions.openGenericPhpConfigFolder()
             return
         }
 
-        Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
+        Actions.openPhpConfigFolder(version: install.version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {
