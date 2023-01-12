@@ -79,6 +79,10 @@
 		C417DC74277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C417DC75277614690015E6EE /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4181F1028FAF9330042EA28 /* UITestCase.swift */; };
+		C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41ADCE72970CCC700120423 /* FSNotifier.swift */; };
+		C41ADCE92970CCC700120423 /* FSNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41ADCE72970CCC700120423 /* FSNotifier.swift */; };
+		C41ADCEA2970CCC700120423 /* FSNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41ADCE72970CCC700120423 /* FSNotifier.swift */; };
+		C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41ADCE72970CCC700120423 /* FSNotifier.swift */; };
 		C41C02A927E61A65009F26CB /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
 		C41C02AB27E61CB3009F26CB /* FakeValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C02A827E61A65009F26CB /* FakeValetSite.swift */; };
 		C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */; };
@@ -760,6 +764,7 @@
 		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
 		C417DC73277614690015E6EE /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C4181F1028FAF9330042EA28 /* UITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestCase.swift; sourceTree = "<group>"; };
+		C41ADCE72970CCC700120423 /* FSNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSNotifier.swift; sourceTree = "<group>"; };
 		C41C02A827E61A65009F26CB /* FakeValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetSite.swift; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1403,6 +1408,7 @@
 				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
 				C4D3660A29113F20006BD146 /* System.swift */,
 				C4D36614291160A1006BD146 /* WIP.swift */,
+				C41ADCE72970CCC700120423 /* FSNotifier.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1969,6 +1975,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */,
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
@@ -2230,6 +2237,7 @@
 				C471E88928F9BB650021E251 /* SwiftUIHelper.swift in Sources */,
 				C471E88B28F9BB650021E251 /* HotKey.swift in Sources */,
 				C471E88C28F9BB650021E251 /* HotKeysController.swift in Sources */,
+				C41ADCEA2970CCC700120423 /* FSNotifier.swift in Sources */,
 				C471E88D28F9BB650021E251 /* Key.swift in Sources */,
 				C471E88E28F9BB650021E251 /* KeyCombo.swift in Sources */,
 				C471E88F28F9BB650021E251 /* ModifierFlagsExtension.swift in Sources */,
@@ -2357,6 +2365,7 @@
 				C471E8C728F9BB8F0021E251 /* Warning.swift in Sources */,
 				C471E8C828F9BB8F0021E251 /* WarningManager.swift in Sources */,
 				C471E8C928F9BB8F0021E251 /* WarningsWindowController.swift in Sources */,
+				C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */,
 				C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */,
 				C471E8CB28F9BB8F0021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E8CC28F9BB8F0021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
@@ -2495,6 +2504,7 @@
 				C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
 				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
+				C41ADCE92970CCC700120423 /* FSNotifier.swift in Sources */,
 				C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C485707A28BF457800539B36 /* WarningListView.swift in Sources */,
 				C4C0E8E827F88B41002D32A9 /* DomainScanner.swift in Sources */,

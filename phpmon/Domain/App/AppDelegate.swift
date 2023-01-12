@@ -50,6 +50,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     var logger = Log.shared
 
+    /**
+
+     */
+    var watchers: [FSNotifier.Kind: FSNotifier] = [:]
+
     // MARK: - Initializer
 
     /**
@@ -99,96 +104,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        self.watchHomebrewBinFolder()
-        /*
         // Make sure notifications will work
         setupNotifications()
+        // Make sure the watchers are set up
+        // TODO: Move to after startup
+        self.watchHomebrewBinFolder()
+
         Task { // Make sure the menu performs its initial checks
             await paths.loadUser()
             await menu.startup()
         }
-        */
     }
 
     func watchHomebrewBinFolder() {
-        Log.info("Watching Homebrew's bin folder")
-        FSWatch2.shared = FSWatch2(
+        self.watchers[.homebrewLocks] = FSNotifier(
             for: URL(fileURLWithPath: Paths.binPath),
             eventMask: .all,
             onChange: {
-                print("Something has changed")
+                // Removing requires termination and then removing reference
+                // self.watchers[.homebrewLocks]?.terminate()
+                // self.watchers[.homebrewLocks] = nil
             }
         )
-    }
-}
-
-class FSWatch2 {
-    public static var shared: FSWatch2! = nil
-
-    let queue = DispatchQueue(label: "FSWatch2Queue", attributes: .concurrent)
-
-    var lastUpdate: TimeInterval?
-    var linked: Bool
-
-    private var fileDescriptor: CInt = -1
-    private var dispatchSource: DispatchSourceFileSystemObject?
-
-    internal let url: URL
-
-    init(for url: URL, eventMask: DispatchSource.FileSystemEvent, onChange: () -> Void) {
-        self.url = url
-
-        self.linked = FileSystem.fileExists(Paths.php)
-        print("Initial PHP linked state: \(linked)")
-
-        fileDescriptor = open(url.path, O_EVTONLY)
-
-        dispatchSource = DispatchSource.makeFileSystemObjectSource(
-            fileDescriptor: fileDescriptor,
-            eventMask: eventMask,
-            queue: self.queue
-        )
-
-        dispatchSource?.setEventHandler(handler: {
-            let distance = self.lastUpdate?.distance(to: Date().timeIntervalSince1970)
-
-            if distance == nil || distance != nil && distance! > 1.00 {
-                print("FS event fired, checking in 1s, no duplicate FS events will be acted upon")
-
-                self.lastUpdate = Date().timeIntervalSince1970
-
-                Task {
-                    await delay(seconds: 1)
-
-                    let newLinked = FileSystem.fileExists(Paths.php)
-
-                    if newLinked != self.linked {
-                        self.linked = newLinked
-
-                        Log.info("The status of the PHP binary has changed!")
-
-                        if newLinked {
-                            Log.info("php is linked")
-                        } else {
-                            Log.info("php is not linked")
-                        }
-                    }
-                }
-            }
-        })
-
-        dispatchSource?.setCancelHandler(handler: { [weak self] in
-            guard let self = self else { return }
-
-            close(self.fileDescriptor)
-            self.fileDescriptor = -1
-            self.dispatchSource = nil
-        })
-
-        dispatchSource?.resume()
-    }
-
-    deinit {
-        print("deallocing watcher")
     }
 }
