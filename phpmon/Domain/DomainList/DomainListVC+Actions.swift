@@ -30,17 +30,17 @@ extension DomainListVC {
         NSWorkspace.shared.open(url)
     }
 
-    @objc func openInFinder() async {
-        await Shell.quiet("open '\(selectedSite!.absolutePath)'")
+    @objc func openInFinder() {
+        Task { return await Shell.quiet("open '\(selectedSite!.absolutePath)'") }
     }
 
-    @objc func openInTerminal() async {
-        await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'")
+    @objc func openInTerminal() {
+        Task { await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'") }
     }
 
-    @objc func openWithEditor(sender: EditorMenuItem) async {
+    @objc func openWithEditor(sender: EditorMenuItem) {
         guard let editor = sender.editor else { return }
-        await editor.openDirectory(file: selectedSite!.absolutePath)
+        editor.openDirectory(file: selectedSite!.absolutePath)
     }
 
     // MARK: - UI interaction

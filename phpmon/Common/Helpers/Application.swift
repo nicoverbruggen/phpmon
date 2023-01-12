@@ -33,8 +33,8 @@ class Application {
      Attempt to open a specific directory in the app of choice.
      (This will open the app if it isn't open yet.)
      */
-    @objc public func openDirectory(file: String) async {
-        return await Shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"")
+    @objc public func openDirectory(file: String) {
+        Task { await Shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
     }
 
     /** Checks if the app is installed. */
