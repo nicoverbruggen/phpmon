@@ -38,8 +38,11 @@ class PhpEnv {
     /** Whether the switcher is busy performing any actions. */
     var isBusy: Bool = false
 
-    /** All available versions of PHP. */
+    /** All versions of PHP that are currently supported. */
     var availablePhpVersions: [String] = []
+
+    /** All versions of PHP that are currently installed but not compatible. */
+    var incompatiblePhpVersions: [String] = []
 
     /** Cached information about the PHP installations. */
     var cachedPhpInstallations: [String: PhpInstallation] = [:]
@@ -87,10 +90,12 @@ class PhpEnv {
     /**
      Detects which versions of PHP are installed.
      */
-    public func detectPhpVersions() async -> [String] {
+    public func detectPhpVersions() async -> Set<String> {
         let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
 
-        let supported: [String] = {
+        let versions = await extractPhpVersions(from: files.components(separatedBy: "\n"))
+
+        let supportedByValet: Set<String> = {
             guard let version = Valet.shared.version else {
                 return []
             }
@@ -98,10 +103,7 @@ class PhpEnv {
             return Constants.ValetSupportedPhpVersionMatrix[version.major] ?? []
         }()
 
-        var versionsOnly = await extractPhpVersions(
-            from: files.components(separatedBy: "\n"),
-            supported: supported
-        )
+        var supportedVersions = versions.intersection(supportedByValet)
 
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
@@ -109,13 +111,15 @@ class PhpEnv {
         let phpAlias = homebrewPackage.version
 
         // Avoid inserting a duplicate
-        if !versionsOnly.contains(phpAlias) && FileSystem.fileExists("\(Paths.optPath)/php/bin/php") {
-            versionsOnly.append(phpAlias)
+        if !supportedVersions.contains(phpAlias) && FileSystem.fileExists("\(Paths.optPath)/php/bin/php") {
+            supportedVersions.insert(phpAlias)
         }
 
-        Log.info("The PHP versions that were detected are: \(versionsOnly)")
+        availablePhpVersions = Array(supportedVersions)
+        incompatiblePhpVersions = Array(versions.subtracting(supportedByValet))
 
-        availablePhpVersions = versionsOnly
+        Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
+        Log.info("The PHP versions that were unsupported are: \(incompatiblePhpVersions)")
 
         var mappedVersions: [String: PhpInstallation] = [:]
 
@@ -125,7 +129,7 @@ class PhpEnv {
 
         cachedPhpInstallations = mappedVersions
 
-        return versionsOnly
+        return supportedVersions
     }
 
     /**
@@ -137,11 +141,11 @@ class PhpEnv {
      */
     public func extractPhpVersions(
         from versions: [String],
-        supported: [String],
         checkBinaries: Bool = true,
         generateHelpers: Bool = true
-    ) async -> [String] {
-        var output: [String] = []
+    ) async -> Set<String> {
+        let supported = Constants.DetectedPhpVersions
+        var output: Set<String> = []
         versions.filter { (version) -> Bool in
             // Omit everything that doesn't start with php@
             // (e.g. something-php@8.0 won't be detected)
@@ -153,7 +157,7 @@ class PhpEnv {
             if !output.contains(version)
                 && supported.contains(version)
                 && (checkBinaries ? FileSystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true) {
-                output.append(version)
+                output.insert(version)
             }
         }
 
