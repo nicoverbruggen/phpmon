@@ -12,6 +12,7 @@
 "mi_unsure" = "We are not sure what version of PHP you are running.";
 "mi_php_version" = "Global PHP version: PHP";
 "mi_php_switch" = "Switch to PHP";
+"mi_php_unsupported" = "Some installed PHP versions are not displayed.";
 "mi_php_broken_1" = "Oof! It appears your PHP installation is broken...";
 "mi_php_broken_2" = "Try running `php -v` in your terminal.";
 "mi_php_broken_3" = "You could also try switching to another version.";
@@ -563,8 +564,16 @@ If you are seeing this message but are confused why this folder has gone missing
 "startup.version_mismatch.button_switch_back" = "Switch back to PHP %@";
 "startup.version_mismatch.button_stay" = "Keep using PHP %@";
 
-// SPONSOR ENCOURAGEMENT
+// Warning about unsupported PHP versions
+"startup.unsupported_versions_explanation.title" = "One or more PHP installed versions are not supported.";
+"startup.unsupported_versions_explanation.subtitle" = "The following versions of PHP are installed on your system but are not supported by this version of Valet.
 
+%@
+
+Valet might break if you link these PHP versions so PHP Monitor won't let you switch to them.";
+"startup.unsupported_versions_explanation.desc" = "If you need support for older versions of PHP, you may need to downgrade to an older versions of Valet. Otherwise, it might be a good idea to uninstall any outdated versions that are not in use.";
+
+// Sponsor encouragement
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
 "startup.sponsor_encouragement.subtitle" = "To be 100% transparent: I plan to keep PHP Monitor open source and free. Your support makes this decision very easy.\n\n(You will only see this prompt once.)";
 "startup.sponsor_encouragement.desc" = "If you have already donated, then YOU are the reason why the app was able to get all these updates. In that case, this is a THANK YOU message to you. I appreciate the support.";

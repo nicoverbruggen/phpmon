@@ -41,7 +41,7 @@ extension StatusMenu {
             return
         }
 
-        if PhpEnv.shared.availablePhpVersions.isEmpty {
+        if PhpEnv.shared.availablePhpVersions.isEmpty && PhpEnv.shared.incompatiblePhpVersions.isEmpty {
             return
         }
 
@@ -67,7 +67,6 @@ extension StatusMenu {
     func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<PhpEnv.shared.availablePhpVersions.count).reversed() {
-
             // Get the short and long version
             let shortVersion = PhpEnv.shared.availablePhpVersions[index]
             let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.versionNumber
@@ -89,6 +88,16 @@ extension StatusMenu {
             shortcutKey += 1
 
             addItem(menuItem)
+        }
+
+        if !PhpEnv.shared.incompatiblePhpVersions.isEmpty {
+            addItem(NSMenuItem.separator())
+            addItem(NSMenuItem(
+                title: "⚠️ " + "mi_php_unsupported".localized(
+                    "\(PhpEnv.shared.incompatiblePhpVersions.count)"
+                ),
+                action: #selector(MainMenu.showIncompatiblePhpVersionsAlert)
+            ))
         }
     }
 

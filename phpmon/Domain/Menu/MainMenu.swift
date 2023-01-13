@@ -109,6 +109,24 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    @objc func showIncompatiblePhpVersionsAlert() {
+        Task { @MainActor in
+            BetterAlert().withInformation(
+                title: "startup.unsupported_versions_explanation.title".localized,
+                subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
+                    PhpEnv.shared.incompatiblePhpVersions
+                        .map({ version in
+                            return "• PHP \(version)"
+                        })
+                        .joined(separator: "\n")
+                ),
+                description: "startup.unsupported_versions_explanation.desc".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
+        }
+    }
+
     /** Reloads the menu in the background, using `asyncExecution`. */
     @objc func reloadPhpMonitorMenuInBackground() {
         asyncExecution({
