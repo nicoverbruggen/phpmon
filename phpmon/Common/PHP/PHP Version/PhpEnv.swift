@@ -110,7 +110,10 @@ class PhpEnv {
         }
 
         availablePhpVersions = Array(supportedVersions)
+            .sorted(by: { $0.versionCompare($1) == .orderedDescending })
+
         incompatiblePhpVersions = Array(versions.subtracting(supportedByValet))
+            .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
         Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
         Log.info("The PHP versions that were unsupported are: \(incompatiblePhpVersions)")

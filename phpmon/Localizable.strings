@@ -568,7 +568,7 @@ If you are seeing this message but are confused why this folder has gone missing
 %@
 
 Valet might break if you link these PHP versions so PHP Monitor won't let you switch to them.";
-"startup.unsupported_versions_explanation.desc" = "If you need support for older versions of PHP, you may need to downgrade to an older versions of Valet. Otherwise, it might be a good idea to uninstall any outdated versions that are not in use.";
+"startup.unsupported_versions_explanation.desc" = "If you need support for older versions of PHP, you may need to downgrade to an older versions of Valet. Otherwise, it might be a good idea to uninstall any outdated versions that are not in use. This message will only be removed after restarting PHP Monitor.";
 
 // Sponsor encouragement
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
