@@ -66,7 +66,7 @@ extension StatusMenu {
 
     func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
-        for index in (0..<PhpEnv.shared.availablePhpVersions.count).reversed() {
+        for index in (0..<PhpEnv.shared.availablePhpVersions.count) {
             // Get the short and long version
             let shortVersion = PhpEnv.shared.availablePhpVersions[index]
             let longVersion = PhpEnv.shared.cachedPhpInstallations[shortVersion]!.versionNumber
