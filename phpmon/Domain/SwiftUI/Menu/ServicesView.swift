@@ -143,7 +143,7 @@ struct ServiceView: View {
                     } label: {
                         Text("E")
                             .frame(width: 12.0, height: 12.0)
-                            .foregroundColor(Color("IconColorRed"))
+                            .foregroundColor(Color("StatusColorRed"))
                     }
                     .focusable(false)
                     .frame(width: 25, height: 25)
@@ -163,8 +163,8 @@ struct ServiceView: View {
                         .frame(width: 12.0, height: 12.0)
                         .foregroundColor(
                             service.status == .active
-                                ? Color("IconColorGreen")
-                                : Color("IconColorRed")
+                                ? Color("StatusColorGreen")
+                                : Color("StatusColorRed")
                         )
                     }
                     .focusable(false)
