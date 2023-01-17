@@ -43,3 +43,9 @@ struct EnvironmentCheck {
         return await !self.command()
     }
 }
+
+struct EnvironmentCheckGroup {
+    let name: String
+    let condition: () -> Bool
+    let checks: [EnvironmentCheck]
+}

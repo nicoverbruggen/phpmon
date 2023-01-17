@@ -22,7 +22,7 @@ class Valet {
     static let shared = Valet()
 
     /// The version of Valet that was detected.
-    var version: VersionNumber? = nil
+    var version: VersionNumber?
 
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -55,6 +55,10 @@ class Valet {
             Log.info("Using a fake list of sites for Marketing Mode!")
             ValetScanner.useFake()
         }
+    }
+
+    public static func installed() -> Bool {
+        return FileSystem.fileExists(Paths.binPath.appending("/valet"))
     }
 
     /**

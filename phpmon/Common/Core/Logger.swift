@@ -55,4 +55,10 @@ class Log {
         }
     }
 
+    static func line(as verbosity: Verbosity = .info) {
+        if verbosity.isApplicable() {
+            print("----------------------------------")
+        }
+    }
+
 }

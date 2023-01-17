@@ -29,7 +29,7 @@ class FSNotifier {
         self.url = url
 
         self.linked = FileSystem.fileExists(Paths.php)
-        print("Initial PHP linked state: \(linked)")
+        Log.info("[FSN] Initial PHP linked state: \(linked ? "linked" : "unlinked")")
 
         fileDescriptor = open(url.path, O_EVTONLY)
 
