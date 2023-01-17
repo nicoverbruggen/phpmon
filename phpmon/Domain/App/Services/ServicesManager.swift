@@ -66,7 +66,7 @@ class ServicesManager: ObservableObject {
 
     public var statusColor: Color {
         if self.services.isEmpty || !self.firstRunComplete {
-            return .yellow
+            return Color("StatusColorYellow")
         }
 
         let statuses = self.services[0...2].map { $0.status }
@@ -74,10 +74,10 @@ class ServicesManager: ObservableObject {
         if statuses.contains(.missing)
             || statuses.contains(.inactive)
             || statuses.contains(.error) {
-            return .red
+            return Color("StatusColorRed")
         }
 
-        return .green
+        return Color("StatusColorGreen")
     }
 
     /**
