@@ -24,12 +24,15 @@ public struct TestableConfiguration: Codable {
         ActiveFileSystem.useTestable(filesystem)
         Log.info("Applying fake commands...")
         ActiveCommand.useTestable(commandOutput)
-        Log.info("Applying fake scanner...")
-        ValetScanner.useFake()
-        Log.info("Applying fake services manager...")
-        ServicesManager.useFake()
-        Log.info("Applying fake Valet domain interactor...")
-        ValetInteractor.useFake()
+
+        if Valet.shared.installed {
+            Log.info("Applying fake scanner...")
+            ValetScanner.useFake()
+            Log.info("Applying fake services manager...")
+            ServicesManager.useFake()
+            Log.info("Applying fake Valet domain interactor...")
+            ValetInteractor.useFake()
+        }
     }
 
     func toJson(pretty: Bool = false) -> String {

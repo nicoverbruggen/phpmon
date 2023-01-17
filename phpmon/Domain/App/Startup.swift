@@ -136,7 +136,7 @@ class Startup {
                 descriptionText: "startup.errors.php_opt.desc".localized
             ),
         ]),
-        EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed() }, checks: [
+        EnvironmentCheckGroup(name: "valet", condition: { return Valet.shared.installed }, checks: [
             // =================================================================================
             // The Valet binary must exist.
             // =================================================================================

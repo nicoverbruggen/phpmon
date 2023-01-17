@@ -97,13 +97,13 @@ class PhpEnv {
 
         let supportedByValet: Set<String> = {
             guard let version = Valet.shared.version else {
-                return []
+                return Constants.DetectedPhpVersions
             }
 
             return Constants.ValetSupportedPhpVersionMatrix[version.major] ?? []
         }()
 
-        var supportedVersions = versions.intersection(supportedByValet)
+        var supportedVersions = Valet.installed ? versions.intersection(supportedByValet) : versions
 
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`

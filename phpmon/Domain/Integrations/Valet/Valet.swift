@@ -57,9 +57,16 @@ class Valet {
         }
     }
 
-    public static func installed() -> Bool {
-        return FileSystem.fileExists(Paths.binPath.appending("/valet"))
+    static var installed: Bool {
+        return self.shared.installed
     }
+
+    lazy var installed: Bool = {
+        return false
+
+        // TODO: Make this lazy
+        // return FileSystem.fileExists(Paths.binPath.appending("/valet"))
+    }()
 
     /**
      Check if a particular feature is enabled.
@@ -79,6 +86,10 @@ class Valet {
      Notify the user about a non-default TLD being set.
      */
     public static func notifyAboutUnsupportedTLD() {
+        if !Valet.shared.installed {
+            return
+        }
+
         if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
             Task { @MainActor in
                 BetterAlert().withInformation(
@@ -121,7 +132,9 @@ class Valet {
      handle all PHP versions including isolation, it needs to know about all sites.
      */
     public func startPreloadingSites() async {
-        await self.reloadSites()
+        if Valet.shared.installed {
+            await self.reloadSites()
+        }
     }
 
     /**

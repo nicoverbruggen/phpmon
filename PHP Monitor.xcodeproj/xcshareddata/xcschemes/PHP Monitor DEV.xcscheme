@@ -94,6 +94,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--configuration:~/.phpmon_fconf_working_no_valet.json"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--configuration:~/.phpmon_fconf_broken.json"
             isEnabled = "NO">
          </CommandLineArgument>

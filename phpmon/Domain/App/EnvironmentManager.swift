@@ -9,24 +9,10 @@
 import Foundation
 
 public class EnvironmentManager {
-    var values: [EnvironmentProperty: Bool] = [:]
+    static var values: [EnvironmentProperty: Bool] = [:]
 
     public func process() async {
-        self.values[.hasValetInstalled] = await !{
-            let output = await Shell.pipe("valet --version").out
-
-            // Failure condition #1: does not contain Laravel Valet
-            if !output.contains("Laravel Valet") {
-                return true
-            }
-
-            // Extract the version number
-            Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(output)!)
-
-            // Get the actual version
-            return Valet.shared.version == nil
-
-        }() // returns true if none of the failure conditions are met
+        Self.values[.hasValetInstalled] = Valet.shared.installed
     }
 }
 
