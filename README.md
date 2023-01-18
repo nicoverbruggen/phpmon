@@ -93,36 +93,14 @@ If you're still having issues, here's a few common questions & answers, as well 
 <details>
 <summary><strong>Which versions of PHP are supported?</strong></summary>
 
-The following versions of PHP are officially supported:
+All stable and supported PHP versions are also supported by PHP Monitor. However, depending on which version of Valet you have installed, which versions of PHP that are made available for switching purposes may differ.
 
-<ul>
-<li>PHP 7.4</li>
-<li>PHP 8.0</li>
-<li>PHP 8.1</li>
-<li>PHP 8.2</li>
-</ul>
-
-The following versions have some support via backport and/or dev version:
-
-<ul>
-<li>PHP 5.6 (Valet 2 only)</li>
-<li>PHP 7.0 (Valet 2 and 3 only)</li>
-<li>PHP 7.1 (Valet 2 and 3 only)</li>
-<li>PHP 7.2 (Valet 2 and 3 only)</li>
-<li>PHP 7.3 (Valet 2 and 3 only)</li>
-</ul>
-
-Additionally, the following dev version is also available:
-
-<ul>
-<li>PHP 8.3-dev (experimental)</li>
-</ul>
-
-For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
+> **Note**
+> If you have versions of PHP installed that can be detected by PHP Monitor but is *not* supported by the currently active version of Valet, you will be alerted by an item in the menu with an exclamation mark emoji. (⚠️)
 
 Backports are available via [this tap](https://github.com/shivammathur/homebrew-php). For more information about those backports, please see the next FAQ entry.
 
-For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3.
+For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
 
 </details>
 
