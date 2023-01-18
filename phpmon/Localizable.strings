@@ -10,7 +10,7 @@
 
 "mi_busy" = "PHP Monitor is busy...";
 "mi_unsure" = "We are not sure what version of PHP you are running.";
-"mi_php_version" = "Global PHP version: PHP";
+"mi_php_version" = "Global version: PHP";
 "mi_php_switch" = "Switch to PHP";
 "mi_php_unsupported" = "Some installed PHP versions are not displayed.";
 "mi_php_broken_1" = "Oof! It appears your PHP installation is broken...";
@@ -565,13 +565,13 @@ If you are seeing this message but are confused why this folder has gone missing
 "startup.version_mismatch.button_stay" = "Keep using PHP %@";
 
 // Warning about unsupported PHP versions
-"startup.unsupported_versions_explanation.title" = "One or more PHP installed versions are not supported.";
-"startup.unsupported_versions_explanation.subtitle" = "The following versions of PHP are installed on your system but are not supported by this version of Valet.
+"startup.unsupported_versions_explanation.title" = "PHP installation(s) not supported by Valet detected!";
+"startup.unsupported_versions_explanation.subtitle" = "The following PHP versions are installed on your system but are not supported by this version of Valet.
 
 %@
 
 Valet might break if you link these PHP versions so PHP Monitor won't let you switch to them.";
-"startup.unsupported_versions_explanation.desc" = "If you need support for older versions of PHP, you may need to downgrade to an older versions of Valet. Otherwise, it might be a good idea to uninstall any outdated versions that are not in use. This message will only be removed after restarting PHP Monitor.";
+"startup.unsupported_versions_explanation.desc" = "If you need support for older versions of PHP, you may need to downgrade to an older versions of Valet. Otherwise, it might be a good idea to uninstall any outdated versions that are not in use. It can also be that this version of Valet is too old. This message will only be removed after restarting PHP Monitor.";
 
 // Sponsor encouragement
 "startup.sponsor_encouragement.title" = "If PHP Monitor has been useful to you or your company, please consider leaving a tip.";
