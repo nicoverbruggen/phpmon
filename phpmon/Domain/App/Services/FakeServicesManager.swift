@@ -41,9 +41,14 @@ class FakeServicesManager: ServicesManager {
 
     private func reapplyServices() {
         let services = self.formulae.map {
+            let dummy = HomebrewService.dummy(
+                named: $0.name,
+                enabled: self.fixedStatus == .active,
+                status: self.fixedStatus == .error ? "error" : nil
+            )
             let wrapper = Service(
                 formula: $0,
-                service: HomebrewService.dummy(named: $0.name, enabled: self.fixedStatus == .active)
+                service: dummy
             )
             return wrapper
         }

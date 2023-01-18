@@ -44,7 +44,7 @@ final class HomebrewService: Sendable, Decodable {
     /**
      Dummy data for preview purposes.
      */
-    public static func dummy(named service: String, enabled: Bool) -> HomebrewService {
+    public static func dummy(named service: String, enabled: Bool, status: String? = nil) -> HomebrewService {
         return HomebrewService(
             name: service,
             service_name: service,
@@ -52,7 +52,7 @@ final class HomebrewService: Sendable, Decodable {
             loaded: enabled,
             pid: nil,
             user: nil,
-            status: nil,
+            status: status,
             log_path: nil,
             error_log_path: nil
         )
