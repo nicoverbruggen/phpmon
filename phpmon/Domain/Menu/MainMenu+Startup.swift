@@ -101,25 +101,19 @@ extension MainMenu {
         // Start the background refresh timer
         startSharedTimer()
 
-        // Update the stats
-        Stats.incrementSuccessfulLaunchCount()
-
-        #if SPONSOR
-            Log.info("Sponsor encouragement messages are omitted in SE builds.")
-        #else
+        if !isRunningSwiftUIPreview {
+            Stats.incrementSuccessfulLaunchCount()
             Stats.evaluateSponsorMessageShouldBeDisplayed()
-        #endif
 
-        // Present first launch screen if needed
-        if Stats.successfulLaunchCount == 1 && !isRunningSwiftUIPreview {
-            Log.info("Should present the first launch screen!")
-            Task { @MainActor in
-                OnboardingWindowController.show()
+            if Stats.successfulLaunchCount == 1 {
+                Log.info("Should present the first launch screen!")
+                Task { @MainActor in
+                    OnboardingWindowController.show()
+                }
             }
-        }
 
-        // Check for updates
-        await AppUpdateChecker.checkIfNewerVersionIsAvailable()
+            await AppUpdateChecker.checkIfNewerVersionIsAvailable()
+        }
 
         // Check if the linked version has changed between launches of phpmon
         Stats.evaluateLastLinkedPhpVersion()
