@@ -101,11 +101,13 @@ struct OnboardingView: View {
                 }
                 VStack {
                     Text("onboarding.tour.once".localized)
+                        .fixedSize(horizontal: false, vertical: true)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .padding(.top, 5)
                         .padding(.bottom, 5)
-                        .lineLimit(5)
+                        .lineLimit(3)
+                        .frame(height: 35)
                     Button("onboarding.tour.close".localized) {
                         App.shared.onboardingWindowController?.close()
                     }
