@@ -14,9 +14,9 @@ struct Constants {
      If the installed version is older, a notification will be shown
      every time the app launches (with a recommendation to upgrade).
 
-     See also: https://github.com/laravel/valet/releases/tag/v3.1.10
+     See also: https://github.com/laravel/valet/releases/tag/v2.16.2
      */
-    static let MinimumRecommendedValetVersion = "3.1.10"
+    static let MinimumRecommendedValetVersion = "2.16.2"
 
     /**
      * The PHP versions supported by this application.
