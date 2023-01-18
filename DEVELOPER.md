@@ -14,6 +14,16 @@ It also automatically runs when you try to build the project. You'll get a warni
 swiftlint --fix
 ```
 
+## ⚙️ Preferences
+
+You can find the persisted configuration file in `~/Library/Preferences/com.nicoverbruggen.phpmon.plist`
+
+These values are cached by the OS. You can clear this cache by running:
+
+```
+defaults delete com.nicoverbruggen.phpmon && killall cfprefsd
+```
+
 ## 🔧 Build instructions
 
 <img src="./docs/build.png" width="404px" alt="build button in Xcode"/>

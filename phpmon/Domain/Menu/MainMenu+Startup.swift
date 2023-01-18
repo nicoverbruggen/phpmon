@@ -111,7 +111,7 @@ extension MainMenu {
         #endif
 
         // Present first launch screen if needed
-        if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
+        if Stats.successfulLaunchCount == 1 && !isRunningSwiftUIPreview {
             Log.info("Should present the first launch screen!")
             Task { @MainActor in
                 OnboardingWindowController.show()
