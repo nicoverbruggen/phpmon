@@ -35,8 +35,8 @@ struct ServicesView: View {
     var perRow: Int
     var rowCount: Int
     var rowSpacing: Int = 0
-    var rowHeight: Int = 50
-    var statusHeight: Int = 30
+    var rowHeight: Int = 48
+    var statusHeight: Int = 20
     var allRowHeight: CGFloat
     var height: CGFloat
 
@@ -66,15 +66,14 @@ struct ServicesView: View {
             }
             .frame(height: CGFloat(self.height - CGFloat(self.statusHeight)))
             .frame(maxWidth: .infinity, alignment: .center)
-            // .background(Color.red)
 
             VStack(alignment: .center) {
                 HStack {
                     Circle()
-                        .frame(width: 12, height: 12)
+                        .frame(width: 10, height: 10)
                         .foregroundColor(self.manager.statusColor)
                     Text(self.manager.statusMessage)
-                        .font(.system(size: 12))
+                        .font(.system(size: 11))
                     if self.manager.statusColor == .red {
                         HelpButton {
                             let type = manager.hasError
@@ -108,8 +107,6 @@ struct ServiceView: View {
             Text(service.name.uppercased())
                 .font(.system(size: 10))
                 .frame(minWidth: 70, alignment: .center)
-                .padding(.top, 4)
-                .padding(.bottom, 2)
             if isBusy {
                 ProgressView()
                     .scaleEffect(x: 0.4, y: 0.4, anchor: .center)
@@ -163,7 +160,7 @@ struct ServiceView: View {
                         .frame(width: 12.0, height: 12.0)
                         .foregroundColor(
                             service.status == .active
-                                ? Color("StatusColorGreen")
+                                ? Color.primary
                                 : Color("StatusColorRed")
                         )
                     }
