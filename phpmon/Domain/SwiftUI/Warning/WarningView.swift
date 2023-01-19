@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 31/07/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
