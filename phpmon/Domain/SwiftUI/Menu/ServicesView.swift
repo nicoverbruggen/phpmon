@@ -74,7 +74,7 @@ struct ServicesView: View {
                         .foregroundColor(self.manager.statusColor)
                     Text(self.manager.statusMessage)
                         .font(.system(size: 11))
-                    if self.manager.statusColor == .red {
+                    if self.manager.statusColor == Color("StatusColorRed") {
                         HelpButton {
                             let type = manager.hasError
                                 ? "key_service_has_error"

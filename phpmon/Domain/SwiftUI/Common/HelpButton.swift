@@ -14,8 +14,17 @@ struct HelpButton: View {
 
     var body: some View {
         Button(action: action, label: {
-            Text("?").font(.system(size: 12, weight: .medium))
+            ZStack {
+                Circle()
+                    .strokeBorder(Color(NSColor.separatorColor), lineWidth: 0.5)
+                    .background(Circle().foregroundColor(Color(NSColor.controlColor)).opacity(0.7))
+                    .shadow(color: Color(NSColor.separatorColor).opacity(0.3), radius: 1)
+                    .frame(width: 14, height: 14)
+                Text("?").font(.system(size: 12, weight: .medium))
+                    .foregroundColor(Color(NSColor.labelColor))
+            }
         })
+        .buttonStyle(BorderlessButtonStyle())
         .focusable(false)
     }
 
