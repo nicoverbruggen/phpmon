@@ -2,7 +2,7 @@
 //  Paths.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation

@@ -3,7 +3,7 @@
 //  UI Tests
 //
 //  Created by Nico Verbruggen on 14/10/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import XCTest
