@@ -65,6 +65,7 @@ class ValetSite: ValetListable {
         case require
         case platform
         case valetphprc
+        case valetrc
     }
 
     init(
@@ -215,19 +216,47 @@ class ValetSite: ValetListable {
      Checks the contents of the .valetphprc file and determine the version, if possible.
      */
     private func determineValetPhpFileInfo() {
-        let path = "\(absolutePath)/.valetphprc"
+        let files = [
+            (".valetphprc", VersionSource.valetphprc),
+            (".valetrc", VersionSource.valetrc)
+        ]
 
-        do {
-            if FileSystem.fileExists(path) {
-                let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-                if let version = VersionExtractor.from(contents) {
-                    self.composerPhp = version
-                    self.composerPhpSource = .valetphprc
+        for (suffix, source) in files {
+            do {
+                let path = "\(absolutePath)/\(suffix)"
+                if FileSystem.fileExists(path) {
+                    try self.handleValetFile(path, source)
                 }
+            } catch {
+                Log.err("Something went wrong parsing the '\(suffix)' file")
             }
-        } catch {
-            Log.err("Something went wrong parsing the .valetphprc file")
         }
+    }
+
+    /**
+     Parse a Valet file (either .valetphprc or .valetrc).
+     */
+    private func handleValetFile(_ path: String, _ source: VersionSource) throws {
+        let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        switch source {
+        case .valetphprc:
+            if let version = VersionExtractor.from(contents) {
+                self.composerPhp = version
+                self.composerPhpSource = source
+            }
+        case .valetrc:
+            self.parseValetRcFile(contents)
+        default:
+            return
+        }
+    }
+
+    /**
+     Specifically extract PHP information from a .valetrc file.
+     */
+    private func parseValetRcFile(_ text: String) {
+        // TODO: Implement this
+        fatalError("A .valetrc file was found, needs to be parsed!")
     }
 
     // MARK: - File Parsing
