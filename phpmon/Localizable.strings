@@ -385,6 +385,7 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.composer_php_requirement.type.require" = "This required PHP version was determined by checking the `require` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.platform" = "This required PHP version was determined by checking the `platform` field in the `composer.json` file when the site list was last refreshed.";
 "alert.composer_php_requirement.type.valetphprc" = "This required PHP version was determined by checking the .valetphprc file in your project's directory.";
+"alert.composer_php_requirement.type.valetrc" = "This required PHP version was determined by checking the .valetrc file in your project's directory.";
 "alert.unable_to_determine_is_fine" = "If you have a simple project, there may not be a specified PHP version set as a requirement. In that case, you are free to ignore this warning.";
 "alert.php_version_ideal" = "The currently active PHP version is ideal for this site.";
 "alert.php_version_incorrect" = "The currently active PHP version does not match the required constraint set for this site.";
