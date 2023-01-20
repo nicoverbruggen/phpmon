@@ -143,6 +143,9 @@
 		C451AFF72969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
 		C451AFF82969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
 		C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
+		C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4551656297AED18009B8466 /* ValetRcTest.swift */; };
+		C4551659297AED7D009B8466 /* valetrc.rc in Resources */ = {isa = PBXBuildFile; fileRef = C4551658297AED7D009B8466 /* valetrc.rc */; };
+		C455165B297AEDB5009B8466 /* valetrc_broken.rc in Resources */ = {isa = PBXBuildFile; fileRef = C455165A297AEDB5009B8466 /* valetrc_broken.rc */; };
 		C4570C3A28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
@@ -806,6 +809,9 @@
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C451AFF52969E40F0078E617 /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
+		C4551656297AED18009B8466 /* ValetRcTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetRcTest.swift; sourceTree = "<group>"; };
+		C4551658297AED7D009B8466 /* valetrc.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.rc; sourceTree = "<group>"; };
+		C455165A297AEDB5009B8466 /* valetrc_broken.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc_broken.rc; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
 		C45B9148295607F400F4EC78 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		C45B914D295608E300F4EC78 /* ValetServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetServicesManager.swift; sourceTree = "<group>"; };
@@ -1287,6 +1293,8 @@
 		C459B4C027F6096300E9B4B4 /* valet */ = {
 			isa = PBXGroup;
 			children = (
+				C455165A297AEDB5009B8466 /* valetrc_broken.rc */,
+				C4551658297AED7D009B8466 /* valetrc.rc */,
 				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 			);
 			path = valet;
@@ -1559,6 +1567,7 @@
 				C46FA98A2822F08F00D78807 /* PhpConfigurationTest.swift */,
 				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
 				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
+				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1920,6 +1929,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4551659297AED7D009B8466 /* valetrc.rc in Resources */,
 				C4570C3C28FC355400D18420 /* Localizable.strings in Resources */,
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
@@ -1933,6 +1943,7 @@
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
+				C455165B297AEDB5009B8466 /* valetrc_broken.rc in Resources */,
 				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
@@ -2628,6 +2639,7 @@
 				C4A81CA528C67101008DD9D1 /* PMTableView.swift in Sources */,
 				C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4D36602291132B7006BD146 /* ValetScanners.swift in Sources */,
+				C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
