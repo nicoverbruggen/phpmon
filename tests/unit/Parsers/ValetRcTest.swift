@@ -12,19 +12,39 @@ class ValetRcTest: XCTestCase {
 
     // MARK: - Test Files
 
-    static var path: URL {
+    static var validPath: URL {
         return Bundle(for: Self.self)
-            .url(forResource: "valetrc", withExtension: "rc")!
+            .url(forResource: "valetrc", withExtension: "valid")!
     }
+
+    static var brokenPath: URL {
+        return Bundle(for: Self.self)
+            .url(forResource: "valetrc", withExtension: "broken")!
+    }
+
 
     // MARK: - Tests
 
     func test_can_extract_fields_from_valetrc_file() throws {
-        // TODO: Load the path and get the fields
-    }
+        let fakeFile = RCFile.fromPath("/Users/fake/file.rc")
+        XCTAssertNil(fakeFile)
 
-    func test_skip_invalid_fields_valetrc_file() throws {
-        // TODO: Load the path and throw error
-    }
+        // Can parse the file
+        let validFile = RCFile.fromPath(ValetRcTest.validPath.path)
+        XCTAssertNotNil(validFile)
 
+        let fields = validFile!.fields
+
+        // Correctly parses and trims (and omits double quotes) per line
+        XCTAssertEqual(fields["PHP"], "php@8.2")
+        XCTAssertEqual(fields["OTHER"], "thing")
+        XCTAssertEqual(fields["PHPMON_WATCH"], "true")
+        XCTAssertEqual(fields["SYNTAX"], "variable")
+
+        // Ignores entries prefixed with #
+        XCTAssertTrue(!fields.keys.contains("#PHP"))
+
+        // Ignores invalid lines
+        XCTAssertTrue(!fields.keys.contains("OOF"))
+    }
 }

@@ -118,6 +118,10 @@
 		C44067FB27E25FD70045BD4E /* DomainListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */; };
 		C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */; };
 		C44264C02850BD2A007400F1 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
+		C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463FCB29804BCB007B93D5 /* RCFile.swift */; };
+		C4463FCD29804BCB007B93D5 /* RCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463FCB29804BCB007B93D5 /* RCFile.swift */; };
+		C4463FCE29804BCB007B93D5 /* RCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463FCB29804BCB007B93D5 /* RCFile.swift */; };
+		C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4463FCB29804BCB007B93D5 /* RCFile.swift */; };
 		C449B4F027EE7FB800C47E8A /* DomainListTLSCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */; };
 		C449B4F127EE7FC200C47E8A /* DomainListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* DomainListNameCell.swift */; };
 		C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
@@ -144,8 +148,8 @@
 		C451AFF82969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
 		C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451AFF52969E40F0078E617 /* HelpButton.swift */; };
 		C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4551656297AED18009B8466 /* ValetRcTest.swift */; };
-		C4551659297AED7D009B8466 /* valetrc.rc in Resources */ = {isa = PBXBuildFile; fileRef = C4551658297AED7D009B8466 /* valetrc.rc */; };
-		C455165B297AEDB5009B8466 /* valetrc_broken.rc in Resources */ = {isa = PBXBuildFile; fileRef = C455165A297AEDB5009B8466 /* valetrc_broken.rc */; };
+		C4551659297AED7D009B8466 /* valetrc.valid in Resources */ = {isa = PBXBuildFile; fileRef = C4551658297AED7D009B8466 /* valetrc.valid */; };
+		C455165B297AEDB5009B8466 /* valetrc.broken in Resources */ = {isa = PBXBuildFile; fileRef = C455165A297AEDB5009B8466 /* valetrc.broken */; };
 		C4570C3A28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
@@ -799,6 +803,7 @@
 		C44067FA27E25FD70045BD4E /* DomainListTLSCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListTLSCell.swift; sourceTree = "<group>"; };
 		C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIHelper.swift; sourceTree = "<group>"; };
 		C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionPopoverView.swift; sourceTree = "<group>"; };
+		C4463FCB29804BCB007B93D5 /* RCFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCFile.swift; sourceTree = "<group>"; };
 		C44A874728905BB000498BC4 /* ProgressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVC.swift; sourceTree = "<group>"; };
 		C44AD3F62912EF7100997FF4 /* RealFileSystemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealFileSystemTest.swift; sourceTree = "<group>"; };
 		C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
@@ -810,8 +815,8 @@
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C451AFF52969E40F0078E617 /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
 		C4551656297AED18009B8466 /* ValetRcTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetRcTest.swift; sourceTree = "<group>"; };
-		C4551658297AED7D009B8466 /* valetrc.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.rc; sourceTree = "<group>"; };
-		C455165A297AEDB5009B8466 /* valetrc_broken.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc_broken.rc; sourceTree = "<group>"; };
+		C4551658297AED7D009B8466 /* valetrc.valid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.valid; sourceTree = "<group>"; };
+		C455165A297AEDB5009B8466 /* valetrc.broken */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.broken; sourceTree = "<group>"; };
 		C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-proxy.test"; sourceTree = "<group>"; };
 		C45B9148295607F400F4EC78 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		C45B914D295608E300F4EC78 /* ValetServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetServicesManager.swift; sourceTree = "<group>"; };
@@ -1232,6 +1237,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C4463FD029804C13007B93D5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C4463FCB29804BCB007B93D5 /* RCFile.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		C44A874628905B8500498BC4 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1293,8 +1306,8 @@
 		C459B4C027F6096300E9B4B4 /* valet */ = {
 			isa = PBXGroup;
 			children = (
-				C455165A297AEDB5009B8466 /* valetrc_broken.rc */,
-				C4551658297AED7D009B8466 /* valetrc.rc */,
+				C455165A297AEDB5009B8466 /* valetrc.broken */,
+				C4551658297AED7D009B8466 /* valetrc.valid */,
 				C4AF9F70275445FF00D44ED0 /* valet-config.json */,
 			);
 			path = valet;
@@ -1441,6 +1454,7 @@
 		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
+				C4463FD029804C13007B93D5 /* Common */,
 				C4C0E8DA27F887CC002D32A9 /* Nginx */,
 				C4D89BC42783C98800A02B68 /* Composer */,
 				C4AF9F6C275445D900D44ED0 /* Homebrew */,
@@ -1929,7 +1943,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4551659297AED7D009B8466 /* valetrc.rc in Resources */,
+				C4551659297AED7D009B8466 /* valetrc.valid in Resources */,
 				C4570C3C28FC355400D18420 /* Localizable.strings in Resources */,
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
@@ -1943,7 +1957,7 @@
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
-				C455165B297AEDB5009B8466 /* valetrc_broken.rc in Resources */,
+				C455165B297AEDB5009B8466 /* valetrc.broken in Resources */,
 				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
@@ -2020,6 +2034,7 @@
 				C4E2E85C28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
+				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
 				C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */,
 				C4F2E4372752F0870020E974 /* HomebrewDiagnostics.swift in Sources */,
@@ -2201,6 +2216,7 @@
 				C471E86328F9BB650021E251 /* PMTableView.swift in Sources */,
 				C471E86428F9BB650021E251 /* Warning.swift in Sources */,
 				C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */,
+				C4463FCE29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C45B9150295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C471E86528F9BB650021E251 /* WarningManager.swift in Sources */,
 				C471E86628F9BB650021E251 /* WarningsWindowController.swift in Sources */,
@@ -2433,6 +2449,7 @@
 				C4D3660E29113F20006BD146 /* System.swift in Sources */,
 				C471E80428F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
+				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */,
 				C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */,
@@ -2614,6 +2631,7 @@
 				C44AD3F72912EF7100997FF4 /* RealFileSystemTest.swift in Sources */,
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
 				C4C0E8E027F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
+				C4463FCD29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,

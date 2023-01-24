@@ -207,19 +207,20 @@ class ValetSite: ValetListable {
     }
 
     /**
-     Checks the contents of the .valetphprc file and determine the version, if possible.
+     Checks the contents of the .valetphprc file and determine the version.
+     The first file found takes precendence over all others.
      */
     private func determineValetPhpFileInfo() {
         let files = [
-            (".valetphprc", VersionSource.valetphprc),
-            (".valetrc", VersionSource.valetrc)
+            (".valetrc", VersionSource.valetrc),
+            (".valetphprc", VersionSource.valetphprc)
         ]
 
         for (suffix, source) in files {
             do {
                 let path = "\(absolutePath)/\(suffix)"
                 if FileSystem.fileExists(path) {
-                    try self.handleValetFile(path, source)
+                    return try self.handleValetFile(path, source)
                 }
             } catch {
                 Log.err("Something went wrong parsing the '\(suffix)' file")
@@ -239,7 +240,7 @@ class ValetSite: ValetListable {
                 self.composerPhpSource = source
             }
         case .valetrc:
-            self.parseValetRcFile(contents)
+            self.parseValetRcFile(path, contents)
         default:
             return
         }
@@ -248,9 +249,20 @@ class ValetSite: ValetListable {
     /**
      Specifically extract PHP information from a .valetrc file.
      */
-    private func parseValetRcFile(_ text: String) {
-        // TODO: Implement this
-        fatalError("A .valetrc file was found, needs to be parsed!")
+    private func parseValetRcFile(_ path: String, _ text: String) {
+        let valetRc = RCFile(path: path, contents: text)
+
+        guard let versionString = valetRc.fields["PHP"] else {
+            if valetRc.path != nil {
+                Log.perf("\(self.name)'s .valetrc file at '\(valetRc.path!)' lacks a 'PHP' entry.")
+            }
+            return
+        }
+
+        if let version = VersionExtractor.from(versionString) {
+            self.composerPhp = version
+            self.composerPhpSource = .valetrc
+        }
     }
 
     // MARK: - File Parsing
