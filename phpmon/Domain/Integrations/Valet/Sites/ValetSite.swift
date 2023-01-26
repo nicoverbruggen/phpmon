@@ -44,28 +44,21 @@ class ValetSite: ValetListable {
     /// A list of notable Composer dependencies.
     var notableComposerDependencies: [String: String] = [:]
 
-    /// The PHP version as discovered in `composer.json` or in .valetphprc.
-    var composerPhp: String = "???"
+    /// The PHP version as discovered in `composer.json` or in .valetphprc/.valetrc.
+    /// This is the preferred version needed to correctly run the domain or site.
+    var preferredPhpVersion: String = "???"
 
     /// Check whether the PHP version is valid for the currently linked version.
-    var composerPhpCompatibleWithLinked: Bool = false
+    var isCompatibleWithPreferredPhpVersion: Bool = false
 
     /// How the PHP version was determined.
-    var composerPhpSource: VersionSource = .unknown
+    var preferredPhpVersionSource: PhpVersionSource = .unknown
 
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
             ?? PhpEnv.phpInstall?.version.short
             ?? "???"
-    }
-
-    enum VersionSource: String {
-        case unknown
-        case require
-        case platform
-        case valetphprc
-        case valetrc
     }
 
     init(
@@ -140,27 +133,6 @@ class ValetSite: ValetListable {
         self.evaluateCompatibility()
     }
 
-    public func evaluateCompatibility() {
-        if self.composerPhp == "???" {
-            return
-        }
-
-        guard let linked = PhpEnv.phpInstall else {
-            self.composerPhpCompatibleWithLinked = false
-            return
-        }
-
-        // Split the composer list (on "|") to evaluate multiple constraints
-        // For example, for Laravel 8 projects the value is "^7.3|^8.0"
-        self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
-            .map { string in
-                let origin = self.isolatedPhpVersion?.versionNumber.short ?? linked.version.long
-                return !PhpVersionNumberCollection.make(from: [origin])
-                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .isEmpty
-            }.contains(true)
-    }
-
     /**
      Determine the driver to be displayed in the list of sites. In v5.0, this has been changed
      to load the "framework" or "project type" instead.
@@ -201,10 +173,14 @@ class ValetSite: ValetListable {
             if FileSystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
-                    from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
+                    from: String(
+                        contentsOf: URL(fileURLWithPath: path),
+                        encoding: .utf8
+                    ).data(using: .utf8)!
                 )
 
-                (self.composerPhp, self.composerPhpSource) = decoded.getPhpVersion()
+                (self.preferredPhpVersion,
+                 self.preferredPhpVersionSource) = decoded.getPhpVersion()
                 self.notableComposerDependencies = decoded.getNotableDependencies()
             }
         } catch {
@@ -218,8 +194,8 @@ class ValetSite: ValetListable {
      */
     private func determineValetPhpFileInfo() {
         let files = [
-            (".valetrc", VersionSource.valetrc),
-            (".valetphprc", VersionSource.valetphprc)
+            (".valetrc", PhpVersionSource.valetrc),
+            (".valetphprc", PhpVersionSource.valetphprc)
         ]
 
         for (suffix, source) in files {
@@ -237,38 +213,48 @@ class ValetSite: ValetListable {
     /**
      Parse a Valet file (either .valetphprc or .valetrc).
      */
-    private func handleValetFile(_ path: String, _ source: VersionSource) throws {
-        let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+    private func handleValetFile(_ path: String, _ source: PhpVersionSource) throws {
+        var versionString = ""
+
         switch source {
         case .valetphprc:
-            if let version = VersionExtractor.from(contents) {
-                self.composerPhp = version
-                self.composerPhpSource = source
-            }
+            versionString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         case .valetrc:
-            self.parseValetRcFile(path, contents)
+            guard let valetRc = RCFile.fromPath(path) else { return }
+            guard let phpField = valetRc.fields["PHP"] else { return }
+            versionString = phpField
         default:
-            return
-        }
-    }
-
-    /**
-     Specifically extract PHP information from a .valetrc file.
-     */
-    private func parseValetRcFile(_ path: String, _ text: String) {
-        let valetRc = RCFile(path: path, contents: text)
-
-        guard let versionString = valetRc.fields["PHP"] else {
-            if valetRc.path != nil {
-                Log.perf("\(self.name)'s .valetrc file at '\(valetRc.path!)' lacks a 'PHP' entry.")
-            }
             return
         }
 
         if let version = VersionExtractor.from(versionString) {
-            self.composerPhp = version
-            self.composerPhpSource = .valetrc
+            self.preferredPhpVersion = version
+            self.preferredPhpVersionSource = source
         }
+    }
+
+    public func evaluateCompatibility() {
+        if self.preferredPhpVersion == "???" {
+            return
+        }
+
+        guard let linked = PhpEnv.phpInstall else {
+            self.isCompatibleWithPreferredPhpVersion = false
+            return
+        }
+
+        // Split the composer list (on "|") to evaluate multiple constraints
+        // For example, for Laravel 8 projects the value is "^7.3|^8.0"
+        self.isCompatibleWithPreferredPhpVersion = self.preferredPhpVersion.split(separator: "|").map { string in
+            let origin = self.isolatedPhpVersion?.versionNumber.short
+                ?? linked.version.long
+
+            let normalizedPhpVersion = string.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            return !PhpVersionNumberCollection.make(from: [origin])
+                .matching(constraint: normalizedPhpVersion)
+                .isEmpty
+        }.contains(true)
     }
 
     // MARK: - File Parsing
