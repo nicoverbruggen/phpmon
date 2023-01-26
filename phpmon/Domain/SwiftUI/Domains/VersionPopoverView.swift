@@ -42,14 +42,14 @@ struct VersionPopoverView: View {
                     }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                 }
             } else {
-                if site.composerPhpSource == .unknown {
+                if site.preferredPhpVersionSource == .unknown {
                     // We don't know which PHP version is required
                     DisclaimerView(
                         iconName: "questionmark.circle.fill",
                         message: "alert.unable_to_determine_is_fine".localized
                     )
                 } else {
-                    if site.composerPhpCompatibleWithLinked {
+                    if site.isCompatibleWithPreferredPhpVersion {
                         DisclaimerView(
                             iconName: "checkmark.circle.fill",
                             message: "alert.php_version_ideal".localized,
@@ -73,7 +73,7 @@ struct VersionPopoverView: View {
     }
 
     func getTitleText() -> String {
-        if site.composerPhpSource == .unknown {
+        if site.preferredPhpVersionSource == .unknown {
             return "alert.composer_php_requirement.unable_to_determine".localized
         }
 
@@ -87,7 +87,7 @@ struct VersionPopoverView: View {
 
         return "alert.composer_php_requirement.title".localized(
             "\(site.name).\(suffix)",
-            site.composerPhp
+            site.preferredPhpVersion
         )
     }
 
@@ -102,7 +102,7 @@ struct VersionPopoverView: View {
             information += "\n\n"
         }
 
-        information += "alert.composer_php_requirement.type.\(site.composerPhpSource.rawValue)"
+        information += "alert.composer_php_requirement.type.\(site.preferredPhpVersionSource.rawValue)"
             .localized
 
         return information

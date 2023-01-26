@@ -28,7 +28,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         imageViewPhpVersionOK.toolTip = nil
 
-        imageViewPhpVersionOK.contentTintColor = site.composerPhpCompatibleWithLinked
+        imageViewPhpVersionOK.contentTintColor = site.isCompatibleWithPreferredPhpVersion
             ? NSColor(named: "IconColorGreen")
             : NSColor(named: "IconColorRed")
 
@@ -37,9 +37,9 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             imageViewPhpVersionOK.image = NSImage(named: "Isolated")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
         } else {
-            imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
+            imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???" || !site.isCompatibleWithPreferredPhpVersion)
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
-            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
+            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.preferredPhpVersion)
 
         }
     }
@@ -58,7 +58,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
                 return []
             }
 
-            return PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
+            return PhpEnv.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
                 version.short != PhpEnv.phpInstall.version.short
             })
         }

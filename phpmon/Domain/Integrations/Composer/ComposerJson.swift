@@ -40,7 +40,7 @@ struct ComposerJson: Decodable {
      Checks what the PHP version constraint is.
      Returns a tuple (constraint, location of constraint).
      */
-    public func getPhpVersion() -> (String, ValetSite.VersionSource) {
+    public func getPhpVersion() -> (String, PhpVersionSource) {
         // Check if in platform
         if configuration?.platform?.php != nil {
             return (configuration!.platform!.php!, .platform)

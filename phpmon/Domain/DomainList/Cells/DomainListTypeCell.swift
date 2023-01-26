@@ -25,7 +25,7 @@ class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
         }
 
         // PHP version
-        labelPhpVersion.stringValue = site.composerPhp == "???" ? "Any PHP" : "PHP \(site.composerPhp)"
+        labelPhpVersion.stringValue = site.preferredPhpVersion == "???" ? "Any PHP" : "PHP \(site.preferredPhpVersion)"
     }
 
     func populateCell(with proxy: ValetProxy) {
