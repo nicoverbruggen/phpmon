@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -12,13 +12,6 @@ import UserNotifications
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
 
     // MARK: - Variables
-
-    /**
-     The Shell singleton that keeps track of the history of all
-     (invoked by PHP Monitor) shell commands. It is used to
-     invoke all commands in this application.
-     */
-    let sharedShell: Shell
 
     /**
      The App singleton contains information about the state of
@@ -64,18 +57,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     override init() {
         logger.verbosity = .info
+
         #if DEBUG
-            logger.verbosity = .performance
+        logger.verbosity = .performance
+        if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
+            Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
+        }
         #endif
+
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance
             Log.info("Extra verbose mode has been activated.")
         }
+
         Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")
         Log.separator(as: .info)
-        self.sharedShell = Shell.user
+
         self.state = App.shared
         self.menu = MainMenu.shared
         self.paths = Paths.shared
@@ -85,6 +84,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     func initializeSwitcher() {
         self.phpEnvironment = PhpEnv.shared
+    }
+
+    static func initializeTestingProfile(_ path: String) {
+        Log.info("The configuration with path `\(path)` is being requested...")
+        TestableConfiguration.loadFrom(path: path).apply()
     }
 
     // MARK: - Lifecycle
@@ -97,8 +101,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Make sure notifications will work
         setupNotifications()
-        // Make sure the menu performs its initial checks
-        Task { await menu.startup() }
+        Task { // Make sure the menu performs its initial checks
+            await paths.loadUser()
+            await menu.startup()
+        }
     }
 
 }

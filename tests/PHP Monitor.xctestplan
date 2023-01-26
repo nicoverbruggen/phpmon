@@ -1,0 +1,67 @@
+{
+  "configurations" : [
+    {
+      "id" : "98F42C11-E6D2-4AD9-A5CA-40EFE44F384A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "--v",
+        "enabled" : false
+      }
+    ],
+    "environmentVariableEntries" : [
+      {
+        "enabled" : false,
+        "key" : "EXTREME_DOCTOR_MODE",
+        "value" : ""
+      },
+      {
+        "enabled" : false,
+        "key" : "SLOW_SHELL_MODE",
+        "value" : ""
+      },
+      {
+        "enabled" : false,
+        "key" : "PAINT_PHPMON_SWIFTUI_VIEWS",
+        "value" : ""
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PHP Monitor.xcodeproj",
+      "identifier" : "C41C1B3222B0097F00E7CF16",
+      "name" : "PHP Monitor"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C4F7807825D7F84B000DBC97",
+        "name" : "Unit Tests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7AC28F9B4940021E251",
+        "name" : "Feature Tests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7BB28F9B90F0021E251",
+        "name" : "UI Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

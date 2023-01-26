@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -25,7 +25,7 @@ class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
         }
 
         // PHP version
-        labelPhpVersion.stringValue = site.composerPhp == "???" ? "Any PHP" : "PHP \(site.composerPhp)"
+        labelPhpVersion.stringValue = site.preferredPhpVersion == "???" ? "Any PHP" : "PHP \(site.preferredPhpVersion)"
     }
 
     func populateCell(with proxy: ValetProxy) {

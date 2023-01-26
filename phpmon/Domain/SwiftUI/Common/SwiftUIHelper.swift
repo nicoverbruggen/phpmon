@@ -3,11 +3,17 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/06/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 import SwiftUI
+
+var isRunningTests: Bool {
+    let environment = ProcessInfo.processInfo.environment
+    return environment["TEST_MODE"] != nil
+        || environment["XCTestConfigurationFilePath"] != nil
+}
 
 var isRunningSwiftUIPreview: Bool {
     #if DEBUG

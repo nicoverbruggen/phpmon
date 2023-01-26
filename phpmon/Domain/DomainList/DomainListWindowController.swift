@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -51,7 +51,7 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     // MARK: - Reload functionality
 
     @IBAction func pressedReload(_ sender: Any?) {
-        contentVC.reloadDomains()
+        Task { await contentVC.reloadDomains() }
     }
 
     @IBAction func pressedAddLink(_ sender: Any?) {

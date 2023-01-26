@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -21,19 +21,24 @@ extension App {
             let distance = self.watcher.lastUpdate?.distance(to: Date().timeIntervalSince1970)
             if distance == nil || distance != nil && distance! > 0.75 {
                 Log.perf("Refreshing menu...")
-                MainMenu.shared.reloadPhpMonitorMenuInBackground()
+                Task { @MainActor in MainMenu.shared.reloadPhpMonitorMenuInBackground() }
                 self.watcher.lastUpdate = Date().timeIntervalSince1970
             }
         }
     }
 
     func handlePhpConfigWatcher(forceReload: Bool = false) {
+        if ActiveFileSystem.shared is TestableFileSystem {
+            Log.warn("FS watcher is disabled when using testable filesystem.")
+            return
+        }
+
         let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(PhpEnv.phpInstall.version.short)")
 
         // Check whether the watcher exists and schedule on the main thread
         // if we don't consistently do this, the app will create duplicate watchers
         // due to timing issues, which creates retain cycles.
-        DispatchQueue.main.async {
+        Task { @MainActor in
             // Watcher needs to be created
             if self.watcher == nil {
                 self.startWatcher(url)

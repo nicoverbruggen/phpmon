@@ -2,7 +2,7 @@
 //  ActivePhpInstallation.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -17,10 +17,11 @@ import Foundation
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
 class ActivePhpInstallation {
-
-    var version: Version!
+    var version: VersionNumber!
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
+
+    var hasErrorState: Bool = false
 
     var extensions: [PhpExtension] {
         return iniFiles.flatMap { initFile in
@@ -31,20 +32,25 @@ class ActivePhpInstallation {
     // MARK: - Computed
 
     var formula: String {
-        return (version.short == PhpEnv.brewPhpVersion) ? "php" : "php@\(version.short)"
+        return (version.short == PhpEnv.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Initializer
 
     init() {
         // Show information about the current version
-        getVersion()
+        do {
+            try determineVersion()
+        } catch {
+            // TODO: In future versions of PHP Monitor, this should not crash
+            fatalError("Could not determine or parse PHP version; aborting")
+        }
 
         // Initialize the list of ini files that are loaded
         iniFiles = []
 
         // If an error occurred, exit early
-        if version.error {
+        if self.hasErrorState {
             limits = Limits()
             return
         }
@@ -64,10 +70,14 @@ class ActivePhpInstallation {
         )
 
         // Return a list of .ini files parsed after php.ini
-        let paths = Command.execute(path: Paths.php, arguments: ["-r", "echo php_ini_scanned_files();"])
-            .replacingOccurrences(of: "\n", with: "")
-            .split(separator: ",")
-            .map { String($0) }
+        let paths = Command.execute(
+            path: Paths.php,
+            arguments: ["-r", "echo php_ini_scanned_files();"],
+            trimNewlines: false
+        )
+        .replacingOccurrences(of: "\n", with: "")
+        .split(separator: ",")
+        .map { String($0) }
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
@@ -81,26 +91,12 @@ class ActivePhpInstallation {
      When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
-    private func getVersion() {
-        self.version = Version()
+    private func determineVersion() throws {
+        let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
 
-        let version = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
+        self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
-        if version == "" || version.contains("Warning") || version.contains("Error") {
-            self.version.short = "💩 BROKEN"
-            self.version.long = ""
-            self.version.error = true
-            return
-        }
-
-        // That's the long version
-        self.version.long = version
-
-        // Next up, let's strip away the minor version number
-        let segments = self.version.long.components(separatedBy: ".")
-
-        // Get the first two elements
-        self.version.short = segments[0...1].joined(separator: ".")
+        self.version = try? VersionNumber.parse(output)
     }
 
     /**
@@ -119,7 +115,7 @@ class ActivePhpInstallation {
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
     private func getByteCount(key: String) -> String {
-        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"])
+        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
 
         // Check if the value is unlimited
         if value == "-1" {
@@ -139,30 +135,19 @@ class ActivePhpInstallation {
      versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
      that means that Valet won't work properly.
      */
-    func checkPhpFpmStatus() -> Bool {
+    func checkPhpFpmStatus() async -> Bool {
         if self.version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return Shell.pipe("cat \(fileName)").contains("valet.sock")
+            return await Shell.pipe("cat \(fileName)").out
+                .contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return Filesystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
+        return FileSystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     // MARK: - Structs
-
-    /**
-     Struct containing information about the version number of the current PHP installation.
-     Also includes information about whether the install is considered "broken" or not.
-     If an error was found in the terminal output, `error` is set to `true` and the installation
-     can be considered broken. (The app will display this as well.)
-     */
-    struct Version {
-        var short = "???"
-        var long = "???"
-        var error = false
-    }
 
     /**
      Struct containing information about the limits of the current PHP installation.

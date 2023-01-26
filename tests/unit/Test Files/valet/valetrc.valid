@@ -1,0 +1,6 @@
+PHP=php@8.2
+#PHP=php
+OTHER=thing
+PHPMON_WATCH=true
+SYNTAX = "variable"
+OOF:NICE

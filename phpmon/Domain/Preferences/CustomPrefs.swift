@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -13,6 +13,14 @@ struct CustomPrefs: Decodable {
     let presets: [Preset]?
     let services: [String]?
     let environmentVariables: [String: String]?
+
+    var exportAsString: String {
+        return self.environmentVariables!
+            .map { (key, value) in
+                return "export \(key)=\(value)"
+            }
+            .joined(separator: "&&")
+    }
 
     public func hasPresets() -> Bool {
         return self.presets != nil && !self.presets!.isEmpty
@@ -26,12 +34,6 @@ struct CustomPrefs: Decodable {
         return self.environmentVariables != nil && !self.environmentVariables!.keys.isEmpty
     }
 
-    public func getEnvironmentVariables() -> String {
-        return self.environmentVariables!.map { (key, value) in
-            return "export \(key)=\(value)"
-        }.joined(separator: "&&")
-    }
-
     private enum CodingKeys: String, CodingKey {
         case scanApps = "scan_apps"
         case presets = "presets"
@@ -41,16 +43,16 @@ struct CustomPrefs: Decodable {
 }
 
 extension Preferences {
-    func loadCustomPreferences() {
+    func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        Shell.run("mkdir -p ~/.config/phpmon")
+        await Shell.quiet("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
-        moveOutdatedConfigurationFile()
+        await moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
         let url = URL(fileURLWithPath: "\(Paths.homePath)/.config/phpmon/config.json")
-        if Filesystem.fileExists(url.path) {
+        if FileSystem.fileExists(url.path) {
 
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
@@ -59,10 +61,10 @@ extension Preferences {
         }
     }
 
-    func moveOutdatedConfigurationFile() {
-        if Filesystem.fileExists("~/.phpmon.conf.json") && !Filesystem.fileExists("~/.config/phpmon/config.json") {
+    func moveOutdatedConfigurationFile() async {
+        if FileSystem.fileExists("~/.phpmon.conf.json") && !FileSystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            Shell.run("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await Shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }
@@ -86,7 +88,9 @@ extension Preferences {
 
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
-                Shell.user.exports = customPreferences.getEnvironmentVariables()
+                if let shell = Shell as? RealShell {
+                    shell.exports = customPreferences.exportAsString
+                }
             }
         } catch {
             Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")

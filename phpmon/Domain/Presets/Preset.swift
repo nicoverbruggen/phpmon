@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 31/05/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -67,53 +67,53 @@ struct Preset: Codable, Equatable {
     /**
      Applies a given preset.
      */
-    public func apply() {
-        Task {
-            // Was this a rollback?
-            let wasRollback = (self.name == "AutomaticRevertSnapshot")
+    public func apply() async {
+        // Was this a rollback?
+        let wasRollback = (self.name == "AutomaticRevertSnapshot")
 
-            // Save the preset that would revert this preset
-            self.persistRevert()
+        // Save the preset that would revert this preset
+        await self.persistRevert()
 
-            // Apply the PHP version if is considered a valid version
-            if self.version != nil {
-                if await !switchToPhpVersionIfValid() {
-                    PresetHelper.rollbackPreset = nil
-                    Actions.restartPhpFpm()
-                    return
-                }
+        // Apply the PHP version if is considered a valid version
+        if self.version != nil {
+            if await !switchToPhpVersionIfValid() {
+                PresetHelper.rollbackPreset = nil
+                await Actions.restartPhpFpm()
+                return
             }
+        }
 
-            // Apply the configuration changes first
-            for conf in configuration {
-                applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+        // Apply the configuration changes first
+        for conf in configuration {
+            applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+        }
+
+        // Apply the extension changes in-place afterward
+        for ext in extensions {
+            for foundExt in PhpEnv.phpInstall.extensions
+            where foundExt.name == ext.key && foundExt.enabled != ext.value {
+                Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
+                await foundExt.toggle()
+                break
             }
+        }
 
-            // Apply the extension changes in-place afterward
-            for ext in extensions {
-                for foundExt in PhpEnv.phpInstall.extensions
-                where foundExt.name == ext.key && foundExt.enabled != ext.value {
-                    Log.info("Toggling extension \(foundExt.name) in \(foundExt.file)")
-                    foundExt.toggle()
-                    break
-                }
-            }
+        // Reload what rollback file exists
+        PresetHelper.loadRollbackPresetFromFile()
 
-            // Reload what rollback file exists
-            PresetHelper.loadRollbackPresetFromFile()
+        // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
+        await Actions.restartPhpFpm()
 
-            // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-            Actions.restartPhpFpm()
-
+        Task { @MainActor in
             // Show the correct notification
             if wasRollback {
-                await LocalNotification.send(
+                LocalNotification.send(
                     title: "notification.preset_reverted_title".localized,
                     subtitle: "notification.preset_reverted_desc".localized,
                     preference: .notifyAboutPresets
                 )
             } else {
-                await LocalNotification.send(
+                LocalNotification.send(
                     title: "notification.preset_applied_title".localized,
                     subtitle: "notification.preset_applied_desc".localized(self.name),
                     preference: .notifyAboutPresets
@@ -134,7 +134,7 @@ struct Preset: Codable, Equatable {
             await MainMenu.shared.switchToPhp(self.version!)
             return true
         } else {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
@@ -257,10 +257,10 @@ struct Preset: Codable, Equatable {
     /**
      Persists the revert as a JSON file, so it can be read from a file after restarting PHP Monitor.
      */
-    private func persistRevert() {
+    private func persistRevert() async {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        Shell.run("mkdir -p ~/.config/phpmon")
+        await Shell.quiet("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(

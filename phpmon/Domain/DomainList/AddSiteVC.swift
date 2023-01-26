@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 24/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -51,11 +51,11 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
     // MARK: - Outlet Interactions
 
-    @IBAction func pressedCreateLink(_ sender: Any) {
+    func createLink() async {
         let path = pathControl.url!.path
         let name = inputDomainName.stringValue
 
-        if !Filesystem.exists(path) {
+        if !FileSystem.anyExists(path) {
             Alert.confirm(
                 onWindow: view.window!,
                 messageText: "domain_list.alert.folder_missing.title".localized,
@@ -70,23 +70,28 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         }
 
         // Adding `valet links` is a workaround for Valet malforming the config.json file
-        // TODO: I will have to investigate and report this behaviour if possible
-        Shell.run("cd '\(path)' && \(Paths.valet) link '\(name)' && valet links", requiresPath: true)
+        Task {
+            try! await ValetInteractor.shared.link(path: path, domain: name)
 
-        dismissView(outcome: .OK)
+            dismissView(outcome: .OK)
 
-        // Reset search
-        App.shared.domainListWindowController?
-            .searchToolbarItem
-            .searchField.stringValue = ""
+            // Reset search
+            App.shared.domainListWindowController?
+                .searchToolbarItem
+                .searchField.stringValue = ""
 
-        // Add the new item and scrolls to it
-        App.shared.domainListWindowController?
-            .contentVC
-            .addedNewSite(
-                name: name,
-                secure: buttonSecure.state == .on
-            )
+            // Add the new item and scrolls to it
+            await App.shared.domainListWindowController?
+                .contentVC
+                .addedNewSite(
+                    name: name,
+                    secureAfterLinking: buttonSecure.state == .on
+                )
+        }
+    }
+
+    @IBAction func pressedCreateLink(_ sender: Any) {
+        Task { await createLink() }
     }
 
     @IBAction func pressedCancel(_ sender: Any) {

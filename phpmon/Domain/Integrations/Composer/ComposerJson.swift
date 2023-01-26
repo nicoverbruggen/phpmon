@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -40,7 +40,7 @@ struct ComposerJson: Decodable {
      Checks what the PHP version constraint is.
      Returns a tuple (constraint, location of constraint).
      */
-    public func getPhpVersion() -> (String, ValetSite.VersionSource) {
+    public func getPhpVersion() -> (String, PhpVersionSource) {
         // Check if in platform
         if configuration?.platform?.php != nil {
             return (configuration!.platform!.php!, .platform)

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -21,6 +21,13 @@ class PhpConfigWatcher {
     var watchers: [FSWatcher] = []
 
     init(for url: URL) {
+        if FileSystem is TestableFileSystem {
+            fatalError("""
+                PhpConfigWatcher is not compatible with testable FS! "
+                You are not allowed to instantiate these while using a testable FS.
+            """)
+        }
+
         self.url = url
 
         // Add a watcher for php.ini
@@ -51,7 +58,7 @@ class PhpConfigWatcher {
         eventMask: DispatchSource.FileSystemEvent,
         behaviour: FSWatcherBehaviour = .reloadsMenu
     ) {
-        if !Filesystem.exists(url.path) {
+        if !FileSystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }

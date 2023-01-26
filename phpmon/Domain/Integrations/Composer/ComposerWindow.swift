@@ -3,14 +3,12 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/02/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-class ComposerWindow {
-
-    private var menu: MainMenu?
+@MainActor class ComposerWindow {
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
@@ -19,21 +17,19 @@ class ComposerWindow {
      Updates the global dependencies and runs the completion callback when done.
      */
     func updateGlobalDependencies(notify: Bool, completion: @escaping (Bool) -> Void) {
-        self.menu = MainMenu.shared
         self.shouldNotify = notify
         self.completion = completion
 
         Paths.shared.detectBinaryPaths()
+
         if Paths.composer == nil {
-            DispatchQueue.main.async {
-                self.presentMissingAlert()
-            }
+            self.presentMissingAlert()
             return
         }
 
         PhpEnv.shared.isBusy = true
-        menu?.setBusyImage()
-        menu?.rebuild()
+        MainMenu.shared.setBusyImage()
+        MainMenu.shared.rebuild()
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -42,45 +38,44 @@ class ComposerWindow {
 
         window?.setType(info: true)
 
-        DispatchQueue.global(qos: .userInitiated).async { [self] in
-            let task = Shell.user.createTask(
-                for: "\(Paths.composer!) global update", requiresPath: true
-            )
+        Task { // Start the Composer global update as a separate task
+            await performComposerUpdate()
+        }
+    }
 
-            DispatchQueue.main.async {
-                self.window?.addToConsole("\(Paths.composer!) global update\n")
-            }
+    private func performComposerUpdate() async {
+        do {
+            try await runComposerUpdateShellCommand()
+        } catch {
+            composerUpdateFailed()
+        }
+    }
 
-            task.listen(
-                didReceiveStandardOutputData: { [weak self] string in
-                    DispatchQueue.main.async {
-                        self?.window?.addToConsole(string)
-                    }
-                    // Log.perf("\(string.trimmingCharacters(in: .newlines))")
-                },
-                didReceiveStandardErrorData: { [weak self] string in
-                    DispatchQueue.main.async {
-                        self?.window?.addToConsole(string)
-                    }
-                    // Log.perf("\(string.trimmingCharacters(in: .newlines))")
-                }
-            )
+    private func runComposerUpdateShellCommand() async throws {
+        let command = "\(Paths.composer!) global update"
 
-            task.launch()
-            task.waitUntilExit()
-            task.haltListening()
+        self.window?.addToConsole("\(command)\n")
 
-            if task.terminationStatus <= 0 {
-                composerUpdateSucceeded()
-            } else {
-                composerUpdateFailed()
-            }
+        let (process, _) = try await Shell.attach(
+            command,
+            didReceiveOutput: { [weak self] (incoming, _) in
+                guard let window = self?.window else { return }
+                window.addToConsole(incoming)
+            },
+            withTimeout: .minutes(5)
+        )
+
+        if process.terminationStatus <= 0 {
+            composerUpdateSucceeded()
+        } else {
+            composerUpdateFailed()
         }
     }
 
     private func composerUpdateSucceeded() {
         // Closing the window should happen after a slight delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+        Task { @MainActor in
+            await delay(seconds: 1.0)
             window?.close()
             if shouldNotify {
                 LocalNotification.send(
@@ -91,20 +86,18 @@ class ComposerWindow {
             }
             window = nil
             removeBusyStatus()
-            menu = nil
             completion(true)
         }
     }
 
     private func composerUpdateFailed() {
         // Showing that something failed should be shown immediately
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             window?.setType(info: false)
             window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
             window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
             window = nil
             removeBusyStatus()
-            menu = nil
             completion(false)
         }
     }
@@ -113,7 +106,9 @@ class ComposerWindow {
 
     private func removeBusyStatus() {
         PhpEnv.shared.isBusy = false
-        menu?.updatePhpVersionInStatusBar()
+        Task { @MainActor in
+            MainMenu.shared.updatePhpVersionInStatusBar()
+        }
     }
 
     // MARK: Alert
@@ -125,7 +120,7 @@ class ComposerWindow {
                 subtitle: "alert.composer_missing.subtitle".localized,
                 description: "alert.composer_missing.desc".localized
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
     }
 

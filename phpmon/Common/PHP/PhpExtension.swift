@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 31/01/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -75,16 +75,23 @@ class PhpExtension {
      This simply toggles the extension in the .ini file.
      You may need to restart the other services in order for this change to apply.
      */
-    func toggle() {
+    func toggle() async {
         let newLine = enabled
             // DISABLED: Commented out line
             ? "; \(line)"
             // ENABLED: Line where the comment delimiter (;) is removed
             : line.replacingOccurrences(of: "; ", with: "")
 
-        sed(file: file, original: line, replacement: newLine)
+        await sed(file: file, original: line, replacement: newLine)
 
         enabled.toggle()
+
+        if !isRunningTests {
+            Task { @MainActor in
+                MainMenu.shared.rebuild()
+            }
+        }
+
     }
 
     // MARK: - Static Methods

@@ -3,14 +3,14 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/11/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 class PhpInstallation {
 
-    var versionNumber: PhpVersionNumber
+    var versionNumber: VersionNumber
 
     /**
      In order to determine details about a PHP installation, we’ll simply run `php-config --version`
@@ -19,17 +19,18 @@ class PhpInstallation {
     init(_ version: String) {
 
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
-        self.versionNumber = PhpVersionNumber.make(from: version)!
+        self.versionNumber = VersionNumber.make(from: version)!
 
-        if Filesystem.fileExists(phpConfigExecutablePath) {
+        if FileSystem.fileExists(phpConfigExecutablePath) {
             let longVersionString = Command.execute(
                 path: phpConfigExecutablePath,
-                arguments: ["--version"]
+                arguments: ["--version"],
+                trimNewlines: false
             ).trimmingCharacters(in: .whitespacesAndNewlines)
 
             // The parser should always work, or the string has to be very unusual.
             // If so, the app SHOULD crash, so that the users report what's up.
-            self.versionNumber = try! PhpVersionNumber.parse(longVersionString)
+            self.versionNumber = try! VersionNumber.parse(longVersionString)
         }
     }
 

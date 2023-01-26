@@ -27,22 +27,36 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 * macOS 11 Big Sur or later
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
-* Laravel Valet 3 recommended (but compatible with Valet 2)
+* Laravel Valet (works with Valet v2, v3 and v4)
 
 _You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
 
+For more information, please see [SECURITY.md](./SECURITY.md) to find out which version of the app is currently supported.
+
 ## 🚀 How to install
 
-Again, make sure you have **Laravel Valet** installed first. Once that's done, you can install via Homebrew (recommended), or may download the latest release on GitHub.
+Again, make sure you have **[Laravel Valet](https://laravel.com/docs/master/valet)** installed first:
+
+```sh
+composer global require laravel/valet
+valet install
+valet trust
+```
+
+Once that's done, you can install PHP Monitor via Homebrew (recommended), or (alternatively) you may download the latest release on GitHub.
 
 To install via Homebrew, run:
 
-	brew tap nicoverbruggen/homebrew-cask
-	brew install --cask phpmon
+```sh
+brew tap nicoverbruggen/homebrew-cask
+brew install --cask phpmon
+```
 
 To upgrade your existing installation, run:
 
-	brew upgrade phpmon
+```sh
+brew upgrade phpmon
+```
 
 (You may need to run `brew update` or `brew update-reset` first in order to update the cask file if you ran a Homebrew operation recently.)
 
@@ -79,22 +93,14 @@ If you're still having issues, here's a few common questions & answers, as well 
 <details>
 <summary><strong>Which versions of PHP are supported?</strong></summary>
 
-<ul>
-<li>PHP 5.6 (backport + only if you are running Valet 2)</li>
-<li>PHP 7.0 (backport)</li>
-<li>PHP 7.1 (backport)</li>
-<li>PHP 7.2 (backport)</li>
-<li>PHP 7.3 (backport)</li>
-<li>PHP 7.4 (backport)</li>
-<li>PHP 8.0 (official support)</li>
-<li>PHP 8.1 (official support)</li>
-<li>PHP 8.2 (latest version)</li>
-<li>PHP 8.3-dev (experimental)</li>
-</ul>
+All stable and supported PHP versions are also supported by PHP Monitor. However, depending on which version of Valet you have installed, which versions of PHP that are made available for switching purposes may differ.
 
-For more details, consult the [constants file](https://github.com/nicoverbruggen/phpmon/blob/main/phpmon/Common/Core/Constants.swift#L16) file to see which versions are supported.
+> **Note**
+> If you have versions of PHP installed that can be detected by PHP Monitor but is *not* supported by the currently active version of Valet, you will be alerted by an item in the menu with an exclamation mark emoji. (⚠️)
 
 Backports are available via [this tap](https://github.com/shivammathur/homebrew-php). For more information about those backports, please see the next FAQ entry.
+
+For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
 
 </details>
 
@@ -113,12 +119,12 @@ brew tap shivammathur/php
 
 You may find that this tap is already in use: if you've used Valet before, it automatically uses this tap for legacy versions of PHP.
 
-You can then install those older versions:
-
 ```sh
-brew install php@7.0
-brew install php@7.1
-...
+brew install shivammathur/php/php@7.4
+brew install shivammathur/php/php@7.3
+brew install shivammathur/php/php@7.2
+brew install shivammathur/php/php@7.1
+brew install shivammathur/php/php@7.0
 ```
 
 **Always make sure to restart PHP Monitor after installing or upgrading PHP versions!**
@@ -129,9 +135,7 @@ brew install php@7.1
 <details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
 
-On macOS Ventura, you can accomplish this by going to **System Settings > General > Login Items** and adding PHP Monitor.app to the list **Open at Login**. You can do this with any application, by the way.
-
-On older versions of macOS, you can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
 
 Super convenient!
 </details>

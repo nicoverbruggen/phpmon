@@ -2,7 +2,7 @@
 //  StateManager.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -31,10 +31,18 @@ class App {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
 
+    /** Just the bundle name. */
+    static var identifier: String {
+        Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
+    }
+
+    /** The system architecture. Paths differ based on this value. */
     static var architecture: String {
+        if fakeArchitecture != nil { return fakeArchitecture! }
+
         var systeminfo = utsname()
         uname(&systeminfo)
-        let machine = withUnsafeBytes(of: &systeminfo.machine) {bufPtr->String in
+        let machine = withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
             let data = Data(bufPtr)
             if let lastIndex = data.lastIndex(where: {$0 != 0}) {
                 return String(data: data[0...lastIndex], encoding: .isoLatin1)!
@@ -45,7 +53,17 @@ class App {
         return machine
     }
 
+    /**
+     A fake architecture.
+     When set, the real machine's system architecture is not used,
+     but this fixed value is used instead.
+     */
+    static var fakeArchitecture: String?
+
     // MARK: Variables
+
+    /** Technical information about the current environment. */
+    var environment = EnvironmentManager()
 
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
@@ -64,9 +82,6 @@ class App {
 
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
-
-    /** The services manager, responsible for figuring out what services are active/inactive. */
-    var services = ServicesManager.shared
 
     /** The warning manager, responsible for keeping track of warnings. */
     var warnings = WarningManager.shared

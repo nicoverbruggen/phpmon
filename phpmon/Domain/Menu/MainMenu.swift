@@ -2,11 +2,12 @@
 //  MainMenu.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
 
+@MainActor
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
 
     static let shared = MainMenu()
@@ -21,7 +22,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /**
      The status bar item with variable length.
      */
-    @MainActor let statusItem = NSStatusBar.system.statusItem(
+    let statusItem = NSStatusBar.system.statusItem(
         withLength: NSStatusItem.variableLength
     )
 
@@ -31,38 +32,22 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Rebuilds the menu (either asynchronously or synchronously).
      Defaults to rebuilding the menu asynchronously.
      */
-    func rebuild(async: Bool = true) {
-        if !async {
-            self.rebuildMenu()
-            return
+    func rebuild() {
+        Task { @MainActor [self] in
+            let menu = StatusMenu()
+            menu.addMenuItems()
+            menu.items.forEach({ (item) in
+                item.target = self
+            })
+            statusItem.menu = menu
+            statusItem.menu?.delegate = self
         }
-
-        // Update the menu item on the main thread
-        DispatchQueue.main.async { [self] in
-            self.rebuildMenu()
-        }
-    }
-
-    /**
-     Update the menu's contents, based on what's going on.
-     This will rebuild the entire menu, so this can take a few moments.
-     
-     Use `rebuild(async:)` to ensure the rebuilding happens in the background.
-     */
-    private func rebuildMenu() {
-        let menu = StatusMenu()
-        menu.addMenuItems()
-        menu.items.forEach({ (item) in
-            item.target = self
-        })
-        statusItem.menu = menu
-        statusItem.menu?.delegate = self
     }
 
     /**
      Sets the status bar image based on a version string.
      */
-    @MainActor func setStatusBarImage(version: String) {
+    func setStatusBarImage(version: String) {
         setStatusBar(
             image: (Preferences.preferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
                 ? MenuBarImageGenerator.textToImageWithIcon(text: version)
@@ -74,7 +59,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Sets the status bar image, based on the provided NSImage.
      The image will be used as a template image.
      */
-    @MainActor func setStatusBar(image: NSImage) {
+    func setStatusBar(image: NSImage) {
         if let button = statusItem.button {
             image.isTemplate = true
             button.image = image
@@ -89,7 +74,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             PhpEnv.shared.currentInstall = ActivePhpInstallation()
             updatePhpVersionInStatusBar()
         } else {
-            Log.perf("Skipping version refresh due to busy status")
+            Log.perf("Skipping version refresh due to busy status!")
         }
     }
 
@@ -104,10 +89,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      This mimics the exact behaviours of `asyncExecution` as set in the method below.
      */
     @objc func reloadPhpMonitorMenuInForeground() {
-        refreshActiveInstallation()
-        refreshIcon()
-        rebuild(async: false)
-        ServicesManager.shared.loadData()
+        Log.perf("The menu will be reloaded...")
+        Task { [self] in
+            self.refreshActiveInstallation()
+            self.refreshIcon()
+            self.rebuild()
+            await ServicesManager.shared.reloadServicesStatus()
+            Log.perf("The menu has been reloaded!")
+        }
     }
 
     /**
@@ -115,8 +104,26 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      Did this need a comment? No, probably not.
      */
     @objc func showWelcomeTour() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             OnboardingWindowController.show()
+        }
+    }
+
+    @objc func showIncompatiblePhpVersionsAlert() {
+        Task { @MainActor in
+            BetterAlert().withInformation(
+                title: "startup.unsupported_versions_explanation.title".localized,
+                subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
+                    PhpEnv.shared.incompatiblePhpVersions
+                        .map({ version in
+                            return "• PHP \(version)"
+                        })
+                        .joined(separator: "\n")
+                ),
+                description: "startup.unsupported_versions_explanation.desc".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
         }
     }
 
@@ -135,7 +142,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             if PhpEnv.shared.isBusy {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
@@ -153,7 +160,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Updates the icon to be displayed as busy. */
     @objc func setBusyImage() {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
     }
@@ -186,9 +193,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func checkForUpdates() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false)
-        }
+        Task { await AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false) }
     }
 
     // MARK: - Menu Delegate
@@ -196,7 +201,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
-        ServicesManager.shared.loadData()
+        Task { // Reload Homebrew services information asynchronously
+            await ServicesManager.shared.reloadServicesStatus()
+        }
     }
 
     func menuDidClose(_ menu: NSMenu) {

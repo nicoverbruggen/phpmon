@@ -3,22 +3,26 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/11/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
+/**
+ This class is responsible for handling the state of Valet throughout PHP Monitor. A singleton instance is created
+ and accessible throughout the lifecycle of the app, unless the user has decided to not use Valet. In that case,
+ only a restricted subset of functionality is available in the app.
+ */
 class Valet {
 
     enum FeatureFlag {
-        case isolatedSites,
-             supportForPhp56
+        case isolatedSites
     }
 
     static let shared = Valet()
 
     /// The version of Valet that was detected.
-    var version: String! = nil
+    var version: VersionNumber! = nil
 
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -41,23 +45,16 @@ class Valet {
         self.version = nil
         self.sites = []
         self.proxies = []
+        self.checkForMarketingMode()
     }
 
-    /**
-     If marketing mode is enabled, show a list of sites that are used for promotional screenshots.
-     This can be done by swapping out the real Valet scanner with one that always returns a fixed
-     list of fake sites. You should not interact with these sites!
-     */
-    static var siteScanner: SiteScanner {
+    /// If marketing mode is enabled, you can tinker around with the site list
+    /// without actually modifying items on your local system.
+    public func checkForMarketingMode() {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
-            return FakeSiteScanner()
+            Log.info("Using a fake list of sites for Marketing Mode!")
+            ValetScanner.useFake()
         }
-
-        return ValetSiteScanner()
-    }
-
-    static var proxyScanner: ProxyScanner {
-        return ValetProxyScanner()
     }
 
     /**
@@ -70,7 +67,7 @@ class Valet {
     /**
      Retrieve a list of all domains, including sites & proxies.
      */
-    public static func getDomainListable() -> [DomainListable] {
+    public static func getDomainListable() -> [ValetListable] {
         return self.shared.sites + self.shared.proxies
     }
 
@@ -79,13 +76,13 @@ class Valet {
      */
     public static func notifyAboutUnsupportedTLD() {
         if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 BetterAlert().withInformation(
                     title: "alert.warnings.tld_issue.title".localized,
                     subtitle: "alert.warnings.tld_issue.subtitle".localized,
                     description: "alert.warnings.tld_issue.description".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .withTertiary(text: "alert.do_not_tell_again".localized, action: { alert in
                     Preferences.update(.warnAboutNonStandardTLD, value: false)
                     alert.close(with: .alertThirdButtonReturn)
@@ -105,13 +102,10 @@ class Valet {
      If the JSON is invalid when the app launches, an alert will be presented, however.
      */
     public func loadConfiguration() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/valet/config.json")
-
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
-                from: try String(contentsOf: file, encoding: .utf8).data(using: .utf8)!
+                from: FileSystem.getStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
             )
         } catch {
             Log.err(error)
@@ -122,15 +116,15 @@ class Valet {
      Starts the preload of sites. In order to make sure PHP Monitor can correctly
      handle all PHP versions including isolation, it needs to know about all sites.
      */
-    public func startPreloadingSites() {
-        self.reloadSites()
+    public func startPreloadingSites() async {
+        await self.reloadSites()
     }
 
     /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
      (We don't want to do duplicate or parallel work!)
      */
-    public func reloadSites() {
+    public func reloadSites() async {
         loadConfiguration()
 
         if isBusy {
@@ -148,13 +142,14 @@ class Valet {
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
     public func evaluateFeatureSupport() {
-        let isOlderThanVersionThree = version.versionCompare("3.0") == .orderedAscending
-
-        if isOlderThanVersionThree {
-            self.features.append(.supportForPhp56)
-        } else {
-            Log.info("This version of Valet supports isolation.")
+        switch version.major {
+        case 2:
+            Log.info("You are running Valet v2. Support for site isolation is disabled.")
+        case 3, 4:
+            Log.info("You are running Valet v\(version.major). Support for site isolation is available.")
             self.features.append(.isolatedSites)
+        default:
+            Log.err("This version of Valet is not supported.")
         }
     }
 
@@ -167,39 +162,42 @@ class Valet {
         // 1. Evaluate feature support
         Valet.shared.evaluateFeatureSupport()
 
-        // 2. Notify user if the version is too old
-        if version.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
-            let version = version
-            Log.warn("Valet version \(version!) is too old! (recommended: \(Constants.MinimumRecommendedValetVersion))")
-            DispatchQueue.main.async {
+        // 2. Notify user if the version is too old (but major version is OK)
+        if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
+            let version = version!
+            let recommended = Constants.MinimumRecommendedValetVersion
+            Log.warn("Valet version \(version.text) is too old! (recommended: \(recommended))")
+            Task { @MainActor in
                 BetterAlert()
                     .withInformation(
                         title: "alert.min_valet_version.title".localized,
                         subtitle: "alert.min_valet_version.info".localized(
-                            version!,
+                            version.text,
                             Constants.MinimumRecommendedValetVersion
                         )
                     )
-                    .withPrimary(text: "OK")
+                    .withPrimary(text: "generic.ok".localized)
                     .show()
             }
         } else {
-            Log.info("Valet version \(version!) is recent enough, OK " +
+            Log.info("Valet version \(version.text) is recent enough, OK " +
                      "(recommended: \(Constants.MinimumRecommendedValetVersion))")
         }
     }
 
-    public func hasPlatformIssues() -> Bool {
-        return valet("--version", sudo: false)
-            .contains("Composer detected issues in your platform")
+    /**
+     Determine if any platform issues are detected when running `valet --version`.
+     */
+    public func hasPlatformIssues() async -> Bool {
+        return await Shell.pipe("valet --version")
+            .out.contains("Composer detected issues in your platform")
     }
 
     /**
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() -> Int {
-        return Self.siteScanner
-            .resolveSiteCount(paths: config.paths)
+        return ValetScanner.active.resolveSiteCount(paths: config.paths)
     }
 
     /**
@@ -208,22 +206,19 @@ class Valet {
     private func resolvePaths() {
         isBusy = true
 
-        sites = Self.siteScanner
+        sites = ValetScanner.active
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        proxies = Self.proxyScanner
+        proxies = ValetScanner.active
             .resolveProxies(
-                directoryPath: FileManager.default
-                    .homeDirectoryForCurrentUser
-                    .appendingPathComponent(".config/valet/Nginx")
-                    .path
+                directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
         if let defaultPath = Valet.shared.config.defaultSite,
-            let site = ValetSiteScanner().resolveSite(path: defaultPath) {
+           let site = ValetScanner.active.resolveSite(path: defaultPath) {
             sites.insert(site, at: 0)
         }
 

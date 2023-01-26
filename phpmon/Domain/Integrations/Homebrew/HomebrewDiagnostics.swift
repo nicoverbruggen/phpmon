@@ -3,24 +3,29 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/11/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
 class HomebrewDiagnostics {
-
     /**
      Determines the Homebrew taps the user has installed.
      */
-    public static var installedTaps: [String] = {
-        return Shell
+    public static var installedTaps: [String] = []
+
+    /**
+     Load which taps are installed.
+     */
+    public static func loadInstalledTaps() async {
+        installedTaps = await Shell
             .pipe("\(Paths.brew) tap")
+            .out
             .split(separator: "\n")
             .map { string in
                 return String(string)
             }
-    }()
+    }
 
     /**
      Determines whether the PHP Monitor Cask is installed.
@@ -36,12 +41,8 @@ class HomebrewDiagnostics {
         guard let destination = try? FileManager.default
             .destinationOfSymbolicLink(atPath: "\(Paths.binPath)/nginx") else { return false }
 
-        return
-            // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
-            destination.contains("/nginx-full/")
-            // Verify that the formula exists.
-            && !Shell.pipe("\(Paths.brew) info nginx-full --json")
-                .contains("Error: No available formula")
+        // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
+        return destination.contains("/nginx-full/")
     }()
 
     /**
@@ -51,8 +52,8 @@ class HomebrewDiagnostics {
 
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public static func checkForCaskConflict() {
-        if hasAliasConflict() {
+    public static func checkForCaskConflict() async {
+        if await hasAliasConflict() {
             presentAlertAboutConflict()
         }
     }
@@ -80,17 +81,19 @@ class HomebrewDiagnostics {
         }
 
         versions.forEach { version in
-            switcher.disableDefaultPhpFpmPool(version)
-            switcher.stopPhpVersion(version)
-            switcher.startPhpVersion(version, primary: version == primary)
+            Task { // Fix each pool concurrently (but perform the tasks sequentially)
+                await switcher.disableDefaultPhpFpmPool(version)
+                await switcher.stopPhpVersion(version)
+                await switcher.startPhpVersion(version, primary: version == primary)
+            }
         }
     }
 
     /**
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
-    private static func hasAliasConflict() -> Bool {
-        let tapAlias = Shell.pipe("\(Paths.brew) info shivammathur/php/php --json")
+    private static func hasAliasConflict() async -> Bool {
+        let tapAlias = await Shell.pipe("brew info shivammathur/php/php --json").out
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") || tapAlias.isEmpty {
             Log.info("The user does not appear to have tapped: shivammathur/php")
@@ -104,13 +107,13 @@ class HomebrewDiagnostics {
                 from: tapAlias.data(using: .utf8)!
             ).first!
 
-            if tapPhp.version != PhpEnv.brewPhpVersion {
+            if tapPhp.version != PhpEnv.brewPhpAlias {
                 Log.warn("The `php` formula alias seems to be the different between the tap and core. "
                          + "This could be a problem!")
                 Log.info("Determining whether both of these versions are installed...")
 
                 let bothInstalled = PhpEnv.shared.availablePhpVersions.contains(tapPhp.version)
-                    && PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpVersion)
+                    && PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpAlias)
 
                 if bothInstalled {
                     Log.warn("Both conflicting aliases seem to be installed, warning the user!")
@@ -131,28 +134,29 @@ class HomebrewDiagnostics {
      Show this alert in case the tapped Cask does cause issues because of the conflict.
      */
     private static func presentAlertAboutConflict() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert()
                 .withInformation(
                     title: "alert.php_alias_conflict.title".localized,
                     subtitle: "alert.php_alias_conflict.info".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .show()
         }
     }
 
     /**
-     In order to see if we support the --json syntax, we'll query dnsmasq.
+     In order to see if we support the --json syntax, we'll query nginx.
      If the JSON response cannot be parsed, Homebrew is probably out of date.
      */
-    public static func cannotLoadService(_ name: String) -> Bool {
+    public static func cannotLoadService(_ name: String) async -> Bool {
+        let nginxJson = await Shell
+            .pipe("sudo \(Paths.brew) services info \(name) --json")
+            .out
+
         let serviceInfo = try? JSONDecoder().decode(
             [HomebrewService].self,
-            from: Shell.pipe(
-                "sudo \(Paths.brew) services info \(name) --json",
-                requiresPath: true
-            ).data(using: .utf8)!
+            from: nginxJson.data(using: .utf8)!
         )
 
         return serviceInfo == nil

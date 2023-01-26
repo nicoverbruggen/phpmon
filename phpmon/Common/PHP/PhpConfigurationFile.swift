@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/05/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -35,7 +35,7 @@ class PhpConfigurationFile: CreatedFromFile {
         let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
 
         do {
-            let fileContents = try String(contentsOfFile: path)
+            let fileContents = try FileSystem.getStringFromFile(path)
             return Self.init(path: path, contents: fileContents)
         } catch {
             Log.warn("Could not read the PHP configuration file at: `\(filePath)`")

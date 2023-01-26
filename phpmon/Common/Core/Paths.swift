@@ -2,7 +2,7 @@
 //  Paths.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -17,11 +17,15 @@ public class Paths {
 
     internal var baseDir: Paths.HomebrewDir
 
-    private var userName: String
+    private var userName: String! = nil
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
-        userName = String(Shell.pipe("id -un").split(separator: "\n")[0])
+    }
+
+    public func loadUser() async {
+        let output = await Shell.pipe("id -un").out
+        userName = String(output.split(separator: "\n")[0])
     }
 
     public func detectBinaryPaths() {
@@ -58,7 +62,16 @@ public class Paths {
     }
 
     public static var homePath: String {
-        return NSHomeDirectory()
+        if FileSystem is RealFileSystem {
+            return NSHomeDirectory()
+        }
+
+        if FileSystem is TestableFileSystem {
+            let fs = FileSystem as! TestableFileSystem
+            return fs.homeDirectory
+        }
+
+        fatalError("A valid FileSystem must be allowed to return the home path")
     }
 
     public static var cellarPath: String {
@@ -82,9 +95,9 @@ public class Paths {
     // (PHP Monitor will not use the user's own PATH)
 
     private func detectComposerBinary() {
-        if Filesystem.fileExists("/usr/local/bin/composer") {
+        if FileSystem.fileExists("/usr/local/bin/composer") {
             Paths.composer = "/usr/local/bin/composer"
-        } else if Filesystem.fileExists("/opt/homebrew/bin/composer") {
+        } else if FileSystem.fileExists("/opt/homebrew/bin/composer") {
             Paths.composer = "/opt/homebrew/bin/composer"
         } else {
             Paths.composer = nil

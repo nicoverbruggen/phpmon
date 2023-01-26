@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/05/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +21,7 @@ class AppUpdateChecker {
 
     public static func retrieveVersionFromCask(
         _ initiatedFromBackground: Bool = true
-    ) -> String {
+    ) async -> String {
         let caskFile = App.version.contains("-dev")
         ? Constants.Urls.DevBuildCaskFile.absoluteString
         : Constants.Urls.StableBuildCaskFile.absoluteString
@@ -32,14 +32,14 @@ class AppUpdateChecker {
             command = "curl -s --max-time 5"
         }
 
-        return Shell.pipe(
+        return await Shell.pipe(
             "\(command) '\(caskFile)' | grep version"
-        )
+        ).out
     }
 
     public static func checkIfNewerVersionIsAvailable(
         initiatedFromBackground: Bool = true
-    ) {
+    ) async {
         if initiatedFromBackground {
             if !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
                 Log.info("Automatic updates are disabled. No check will be performed.")
@@ -49,7 +49,7 @@ class AppUpdateChecker {
             Log.info("Automatic updates are enabled, a check will be performed.")
         }
 
-        let versionString = retrieveVersionFromCask(initiatedFromBackground)
+        let versionString = await retrieveVersionFromCask(initiatedFromBackground)
 
         guard let onlineVersion = AppVersion.from(versionString) else {
             Log.err("We couldn't check for updates!")
@@ -119,13 +119,13 @@ class AppUpdateChecker {
     }
 
     private static func notifyVersionDoesNotNeedUpgrade() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.is_latest_version.title".localized,
                 subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
                 description: ""
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
         }
     }
@@ -134,7 +134,7 @@ class AppUpdateChecker {
         let devSuffix = isDev ? "-dev" : ""
         let command = isDev ? "brew upgrade phpmon-dev" : "brew upgrade phpmon"
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title".localized(version.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle".localized,
@@ -160,7 +160,7 @@ class AppUpdateChecker {
     }
 
     private static func notifyAboutConnectionIssue() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             BetterAlert().withInformation(
                 title: "updater.alerts.cannot_check_for_update.title".localized,
                 subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,
@@ -174,7 +174,7 @@ class AppUpdateChecker {
                     NSWorkspace.shared.open(Constants.Urls.GitHubReleases)
                 }
             )
-            .withPrimary(text: "OK")
+            .withPrimary(text: "generic.ok".localized)
             .show()
         }
     }

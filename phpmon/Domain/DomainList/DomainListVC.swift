@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -19,7 +19,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Variables
 
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
-    var domains: [DomainListable] = []
+    var domains: [ValetListable] = []
 
     /// Array that contains various apps that might open a particular site directory.
     var applications: [Application] {
@@ -48,7 +48,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         return domains[tableView.selectedRow] as? ValetProxy
     }
 
-    var selected: DomainListable? {
+    var selected: ValetListable? {
         if tableView.selectedRow == -1 {
             return nil
         }
@@ -97,7 +97,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             domains = Valet.getDomainListable()
             searchedFor(text: lastSearchedFor)
         } else {
-            reloadDomains()
+            Task { await reloadDomains() }
         }
     }
 
@@ -107,10 +107,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      Disables the UI so the user cannot interact with it.
      Also shows a spinner to indicate that we're busy.
      */
-    public func setUIBusy() {
+    @MainActor public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            self.progressIndicator.startAnimation(true)
+            Task {
+                @MainActor in self.progressIndicator.startAnimation(true)
+            }
         })
 
         tableView.alphaValue = 0.3
@@ -121,7 +123,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     /**
      Re-enables the UI so the user can interact with it.
      */
-    public func setUINotBusy() {
+    @MainActor public func setUINotBusy() {
         timer?.invalidate()
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
@@ -136,13 +138,13 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      - Parameter execute: Callback of the work that needs to happen.
      - Parameter completion: Callback that is fired when the work is done.
      */
-    internal func waitAndExecute(_ execute: @escaping () -> Void, completion: @escaping () -> Void = {}) {
-        setUIBusy()
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            execute()
+    internal func waitAndExecute(_ execute: @escaping () async -> Void, completion: @escaping () -> Void = {}) {
+        Task { // Legacy `waitAndExecute` with UI
+            setUIBusy()
+            await execute()
 
-            // For a smoother animation, expect at least a 0.2 second delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            Task { @MainActor in
+                await delay(seconds: 0.2)
                 completion()
                 setUINotBusy()
             }
@@ -151,13 +153,19 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     // MARK: - Site Data Loading
 
-    func reloadDomains() {
+    func reloadDomains() async {
         waitAndExecute {
-            Valet.shared.reloadSites()
+            await Valet.shared.reloadSites()
         } completion: { [self] in
             domains = Valet.shared.sites
             searchedFor(text: lastSearchedFor)
         }
+    }
+
+    func reloadDomainsWithoutUI() async {
+        await Valet.shared.reloadSites()
+        domains = Valet.shared.sites
+        searchedFor(text: lastSearchedFor)
     }
 
     func applySortDescriptor(_ descriptor: NSSortDescriptor) {
@@ -177,22 +185,22 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         self.domains = descriptor.ascending ? sorted.reversed() : sorted
     }
 
-    func addedNewSite(name: String, secure: Bool) {
+    func addedNewSite(name: String, secureAfterLinking: Bool) async {
         waitAndExecute {
-            Valet.shared.reloadSites()
+            await Valet.shared.reloadSites()
         } completion: { [self] in
-            find(name, secure)
+            find(name, secureAfterLinking)
         }
     }
 
-    private func find(_ name: String, _ secure: Bool = false) {
+    private func find(_ name: String, _ shouldSecure: Bool = false) {
         domains = Valet.getDomainListable()
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.tableView.selectRowIndexes([site.offset], byExtendingSelection: false)
                 self.tableView.scrollRowToVisible(site.offset)
-                if secure && !site.element.getListableSecured() {
+                if shouldSecure && !site.element.getListableSecured() {
                     self.toggleSecure()
                 }
             }
@@ -258,7 +266,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             self.applySortDescriptor(sortDescriptor)
         }
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.tableView.reloadData()
         }
     }

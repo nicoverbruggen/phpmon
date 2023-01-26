@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -48,6 +48,10 @@ class Stats {
         )
     }
 
+    public static var lastGlobalPhpVersion: String {
+        UserDefaults.standard.string(forKey: InternalStats.lastGlobalPhpVersion.rawValue) ?? ""
+    }
+
     /**
      Increment the successful launch count. This should only be
      called when the user has not encountered ANY issues starting
@@ -71,6 +75,16 @@ class Stats {
     }
 
     /**
+     Persist which PHP version was active when you last used the app.
+     */
+    public static func persistCurrentGlobalPhpVersion(version: String) {
+        UserDefaults.standard.set(
+            version,
+            forKey: InternalStats.lastGlobalPhpVersion.rawValue
+        )
+    }
+
+    /**
      Determine if the sponsor message should be displayed.
      
      The rationale behind this is simple, some of the stats
@@ -87,6 +101,10 @@ class Stats {
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
 
+        if Homebrew.fake {
+            return Log.info("A fake environment is in use, skipping sponsor alert.")
+        }
+
         if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
             return Log.info("Sponsor messages never apply to beta builds.")
         }
@@ -100,7 +118,7 @@ class Stats {
                             "times, switched \(Stats.successfulSwitchCount) times).")
         }
 
-        DispatchQueue.main.async {
+        Task { @MainActor in
             let donate = BetterAlert()
                 .withInformation(
                     title: "startup.sponsor_encouragement.title".localized,
@@ -123,4 +141,43 @@ class Stats {
         }
     }
 
+    public static func evaluateLastLinkedPhpVersion() {
+        let currentVersion = PhpEnv.phpInstall.version.short
+        let previousVersion = Stats.lastGlobalPhpVersion
+
+        // Save the PHP version that is currently in use (only if unknown)
+        if Stats.lastGlobalPhpVersion == "" {
+            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
+            Log.info("Persisting the currently linked PHP version (first time only).")
+        } else {
+            Log.info("Previously, the globally linked PHP version was: \(previousVersion).")
+            if previousVersion != currentVersion {
+                Log.info("Currently, that version is: \(currentVersion). This is a mismatch.")
+                Task { @MainActor in
+                    BetterAlert()
+                        .withInformation(
+                            title: "startup.version_mismatch.title".localized,
+                            subtitle: "startup.version_mismatch.subtitle".localized(
+                                currentVersion,
+                                previousVersion
+                            ),
+                            description: "startup.version_mismatch.desc".localized()
+                        )
+                        .withPrimary(text: "startup.version_mismatch.button_switch_back".localized(
+                            previousVersion
+                        ), action: { alert in
+                            alert.close(with: .OK)
+                            Task { MainMenu.shared.switchToAnyPhpVersion(previousVersion) }
+                        })
+                        .withTertiary(text: "startup.version_mismatch.button_stay".localized(
+                            currentVersion
+                        ), action: { alert in
+                            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
+                            alert.close(with: .OK)
+                        })
+                        .show()
+                }
+            }
+        }
+    }
 }

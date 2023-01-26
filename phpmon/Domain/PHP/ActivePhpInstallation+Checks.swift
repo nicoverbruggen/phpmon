@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -19,15 +19,21 @@ extension ActivePhpInstallation {
      This method actively presents a modal if said checks fails, so don't call this method too many times.
      */
     public func notifyAboutBrokenPhpFpm() {
-        if !self.checkPhpFpmStatus() {
-            DispatchQueue.main.async {
+        Task { // Determine whether FPM status is configured correctly in the background
+            let fpmStatusConfiguredCorrectly =  await self.checkPhpFpmStatus()
+
+            if fpmStatusConfiguredCorrectly {
+                return
+            }
+
+            Task { @MainActor in
                 BetterAlert()
                     .withInformation(
                         title: "alert.php_fpm_broken.title".localized,
                         subtitle: "alert.php_fpm_broken.info".localized,
                         description: "alert.php_fpm_broken.description".localized
                     )
-                    .withPrimary(text: "OK")
+                    .withPrimary(text: "generic.ok".localized)
                     .show()
             }
         }

@@ -1,0 +1,395 @@
+[
+    {
+        "name": "php",
+        "full_name": "php",
+        "tap": "homebrew/core",
+        "oldname": null,
+        "aliases": [
+            "php@8.1"
+        ],
+        "versioned_formulae": [
+            "php@8.0",
+            "php@7.4",
+            "php@7.3",
+            "php@7.2"
+        ],
+        "desc": "General-purpose scripting language",
+        "license": "PHP-3.01",
+        "homepage": "https://www.php.net/",
+        "versions": {
+            "stable": "8.1.10",
+            "head": "HEAD",
+            "bottle": true
+        },
+        "urls": {
+            "stable": {
+                "url": "https://www.php.net/distributions/php-8.1.10.tar.xz",
+                "tag": null,
+                "revision": null
+            }
+        },
+        "revision": 1,
+        "version_scheme": 0,
+        "bottle": {
+            "stable": {
+                "rebuild": 0,
+                "root_url": "https://ghcr.io/v2/homebrew/core",
+                "files": {
+                    "arm64_monterey": {
+                        "cellar": "/opt/homebrew/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:dcee33c9f445db3026a7e867805eb8f6d82e9e5599599b8c6cd8645475f7961c",
+                        "sha256": "dcee33c9f445db3026a7e867805eb8f6d82e9e5599599b8c6cd8645475f7961c"
+                    },
+                    "arm64_big_sur": {
+                        "cellar": "/opt/homebrew/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:e0590064cd32f2baa4102fa49c80056f3886a0a89aec0589d0134ecbf0e7923e",
+                        "sha256": "e0590064cd32f2baa4102fa49c80056f3886a0a89aec0589d0134ecbf0e7923e"
+                    },
+                    "monterey": {
+                        "cellar": "/usr/local/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:62481320613b19c6ff310bf6ed50c7d2a2253cdbf403af12ec97bccd8a97a84c",
+                        "sha256": "62481320613b19c6ff310bf6ed50c7d2a2253cdbf403af12ec97bccd8a97a84c"
+                    },
+                    "big_sur": {
+                        "cellar": "/usr/local/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:b34d96f7aad3c580a7cbdaadb8054fb9b6872111a5eec8e1bcb4a529970c8e03",
+                        "sha256": "b34d96f7aad3c580a7cbdaadb8054fb9b6872111a5eec8e1bcb4a529970c8e03"
+                    },
+                    "catalina": {
+                        "cellar": "/usr/local/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:cc0b85dcfdd60e1d8d7fa74c9f53be5d249d068835dbc7a81edacb7a076b6c76",
+                        "sha256": "cc0b85dcfdd60e1d8d7fa74c9f53be5d249d068835dbc7a81edacb7a076b6c76"
+                    },
+                    "x86_64_linux": {
+                        "cellar": "/home/linuxbrew/.linuxbrew/Cellar",
+                        "url": "https://ghcr.io/v2/homebrew/core/php/blobs/sha256:b934a5a4ad2d29b629f83962b57f638a654801d1ba21ba659a42da2e5afe3fae",
+                        "sha256": "b934a5a4ad2d29b629f83962b57f638a654801d1ba21ba659a42da2e5afe3fae"
+                    }
+                }
+            }
+        },
+        "keg_only": false,
+        "keg_only_reason": null,
+        "options": [
+
+        ],
+        "build_dependencies": [
+            "httpd",
+            "pkg-config"
+        ],
+        "dependencies": [
+            "apr",
+            "apr-util",
+            "argon2",
+            "aspell",
+            "autoconf",
+            "curl",
+            "freetds",
+            "gd",
+            "gettext",
+            "gmp",
+            "icu4c",
+            "krb5",
+            "libpq",
+            "libsodium",
+            "libzip",
+            "oniguruma",
+            "openldap",
+            "openssl@1.1",
+            "pcre2",
+            "sqlite",
+            "tidy-html5",
+            "unixodbc"
+        ],
+        "test_dependencies": [
+            "httpd"
+        ],
+        "recommended_dependencies": [
+
+        ],
+        "optional_dependencies": [
+
+        ],
+        "uses_from_macos": [
+            {
+                "xz": "build"
+            },
+            "bzip2",
+            "libedit",
+            "libffi",
+            "libxml2",
+            "libxslt",
+            "zlib"
+        ],
+        "requirements": [
+
+        ],
+        "conflicts_with": [
+
+        ],
+        "caveats": "To enable PHP in Apache add the following to httpd.conf and restart Apache:\n    LoadModule php_module $(brew --prefix)/opt/php/lib/httpd/modules/libphp.so\n\n    <FilesMatch \\.php$>\n        SetHandler application/x-httpd-php\n    </FilesMatch>\n\nFinally, check DirectoryIndex includes index.php\n    DirectoryIndex index.php index.html\n\nThe php.ini and php-fpm.ini file can be found in:\n    $(brew --prefix)/etc/php/8.1/\n",
+        "installed": [
+            {
+                "version": "8.1.10_1",
+                "used_options": [
+
+                ],
+                "built_as_bottle": true,
+                "poured_from_bottle": true,
+                "runtime_dependencies": [
+                    {
+                        "full_name": "apr",
+                        "version": "1.7.0",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "ca-certificates",
+                        "version": "2022-07-19",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "openssl@1.1",
+                        "version": "1.1.1q",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "apr-util",
+                        "version": "1.6.1",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "argon2",
+                        "version": "20190702",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "aspell",
+                        "version": "0.60.8",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "m4",
+                        "version": "1.4.19",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "autoconf",
+                        "version": "2.71",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "brotli",
+                        "version": "1.0.9",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "gettext",
+                        "version": "0.21",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libunistring",
+                        "version": "1.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libidn2",
+                        "version": "2.3.3",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libnghttp2",
+                        "version": "1.49.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libssh2",
+                        "version": "1.10.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "openldap",
+                        "version": "2.6.3",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "rtmpdump",
+                        "version": "2.4+20151223",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "lz4",
+                        "version": "1.9.4",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "xz",
+                        "version": "5.2.6",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "zstd",
+                        "version": "1.5.2",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "curl",
+                        "version": "7.85.0",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libtool",
+                        "version": "2.4.7",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "unixodbc",
+                        "version": "2.3.11",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "freetds",
+                        "version": "1.3.13",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libpng",
+                        "version": "1.6.37",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "freetype",
+                        "version": "2.12.1",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "fontconfig",
+                        "version": "2.14.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "jpeg-turbo",
+                        "version": "2.1.4",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "giflib",
+                        "version": "5.2.1",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "imath",
+                        "version": "3.1.5",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "openexr",
+                        "version": "3.1.5",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libtiff",
+                        "version": "4.4.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "webp",
+                        "version": "1.2.4",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "jpeg-xl",
+                        "version": "0.6.1",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libvmaf",
+                        "version": "2.3.1",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "aom",
+                        "version": "3.4.0",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "libavif",
+                        "version": "0.10.1",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "gd",
+                        "version": "2.3.3",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "gmp",
+                        "version": "6.2.1",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "icu4c",
+                        "version": "71.1",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "krb5",
+                        "version": "1.20",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libpq",
+                        "version": "14.5",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libsodium",
+                        "version": "1.0.18",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "libzip",
+                        "version": "1.9.2",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "oniguruma",
+                        "version": "6.9.8",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "pcre2",
+                        "version": "10.40",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "readline",
+                        "version": "8.1.2",
+                        "declared_directly": false
+                    },
+                    {
+                        "full_name": "sqlite",
+                        "version": "3.39.2",
+                        "declared_directly": true
+                    },
+                    {
+                        "full_name": "tidy-html5",
+                        "version": "5.8.0",
+                        "declared_directly": true
+                    }
+                ],
+                "installed_as_dependency": false,
+                "installed_on_request": true
+            }
+        ],
+        "linked_keg": "8.1.10_1",
+        "pinned": false,
+        "outdated": false,
+        "deprecated": false,
+        "deprecation_date": null,
+        "deprecation_reason": null,
+        "disabled": false,
+        "disable_date": null,
+        "disable_reason": null
+    }
+    ]

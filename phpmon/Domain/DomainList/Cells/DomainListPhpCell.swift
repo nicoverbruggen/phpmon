@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/03/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -28,7 +28,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         imageViewPhpVersionOK.toolTip = nil
 
-        imageViewPhpVersionOK.contentTintColor = site.composerPhpCompatibleWithLinked
+        imageViewPhpVersionOK.contentTintColor = site.isCompatibleWithPreferredPhpVersion
             ? NSColor(named: "IconColorGreen")
             : NSColor(named: "IconColorRed")
 
@@ -37,9 +37,9 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             imageViewPhpVersionOK.image = NSImage(named: "Isolated")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
         } else {
-            imageViewPhpVersionOK.isHidden = (site.composerPhp == "???" || !site.composerPhpCompatibleWithLinked)
+            imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???" || !site.isCompatibleWithPreferredPhpVersion)
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
-            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.composerPhp)
+            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.preferredPhpVersion)
 
         }
     }
@@ -53,13 +53,13 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
     @IBAction func pressedPhpVersion(_ sender: Any) {
         guard let site = self.site else { return }
 
-        var validPhpSuggestions: [PhpVersionNumber] {
+        var validPhpSuggestions: [VersionNumber] {
             if site.isolatedPhpVersion != nil {
                 return []
             }
 
-            return PhpEnv.shared.validVersions(for: site.composerPhp).filter({ version in
-                version.homebrewVersion != PhpEnv.phpInstall.version.short
+            return PhpEnv.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
+                version.short != PhpEnv.phpInstall.version.short
             })
         }
 

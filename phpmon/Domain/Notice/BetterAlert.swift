@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 16/02/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -31,7 +31,7 @@ class BetterAlert {
 
     public func withPrimary(
         text: String,
-        action: @escaping (BetterAlertVC) -> Void = { vc in
+        action: @MainActor @escaping (BetterAlertVC) -> Void = { vc in
             vc.close(with: .alertFirstButtonReturn)
         }
     ) -> Self {
@@ -42,7 +42,7 @@ class BetterAlert {
 
     public func withSecondary(
         text: String,
-        action: ((BetterAlertVC) -> Void)? = { vc in
+        action: (@MainActor (BetterAlertVC) -> Void)? = { vc in
             vc.close(with: .alertSecondButtonReturn)
         }
     ) -> Self {
@@ -53,7 +53,7 @@ class BetterAlert {
 
     public func withTertiary(
         text: String = "",
-        action: ((BetterAlertVC) -> Void)? = nil
+        action: (@MainActor (BetterAlertVC) -> Void)? = nil
     ) -> Self {
         if text == "" {
             self.noticeVC.buttonTertiary.bezelStyle = .helpButton
@@ -84,7 +84,7 @@ class BetterAlert {
      Shows the modal and returns a ModalResponse.
      If you wish to simply show the alert and disregard the outcome, use `show`.
      */
-    public func runModal() -> NSApplication.ModalResponse {
+    @MainActor public func runModal() -> NSApplication.ModalResponse {
         if !Thread.isMainThread {
             fatalError("You should always present alerts on the main thread!")
         }
@@ -96,7 +96,7 @@ class BetterAlert {
     }
 
     /** Shows the modal and returns true if the user pressed the primary button. */
-    public func didSelectPrimary() -> Bool {
+    @MainActor public func didSelectPrimary() -> Bool {
         return self.runModal() == .alertFirstButtonReturn
     }
 
@@ -115,6 +115,6 @@ class BetterAlert {
         return BetterAlert().withInformation(
             title: "\(key).title".localized,
             subtitle: "\(key).description".localized
-        ).withPrimary(text: "OK").show()
+        ).withPrimary(text: "generic.ok".localized).show()
     }
 }

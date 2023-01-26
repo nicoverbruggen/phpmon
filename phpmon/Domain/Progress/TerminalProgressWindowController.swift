@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 18/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -35,12 +35,14 @@ class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
     }
 
     public func addToConsole(_ string: String) {
-        guard let textView = self.progressView?.textView else {
-            return
-        }
+        Task { @MainActor in
+            guard let textView = self.progressView?.textView else {
+                return
+            }
 
-        textView.string += string
-        textView.scrollToEndOfDocument(nil)
+            textView.string += string
+            textView.scrollToEndOfDocument(nil)
+        }
     }
 
     public func setType(info: Bool = true) {

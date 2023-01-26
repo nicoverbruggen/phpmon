@@ -6,7 +6,9 @@ Generally speaking, only the latest version of **PHP Monitor** is supported, exc
 
 | Version | Apple Silicon | Supported          | Supported macOS | Deployment Target | Detected PHP Versions | Recommended Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
-| 5.x       | ✅ Universal binary | ✅ Yes | Big Sur (11.0)<br/>Monterey (12.0)<br/>Ventura (13.0) | macOS 11+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.2 (w/ Valet 3.x) | 3.0 recommended<br/> 2.16.2 minimum |
+| 5.7       | ✅ Universal binary | ✅ Yes | Big Sur (11.0)<br/>Monterey (12.0)<br/>Ventura (13.0) | macOS 11+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.2 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.2 (w/ Valet 4.x*) | 3.0 or higher recommended<br/> 2.16.2 minimum |
+
+(*) Preliminary listing. Valet 4 hasn't been released yet and the versions of PHP Valet can work with might still change.
 
 ## Legacy versions
 
@@ -14,6 +16,7 @@ These versions of PHP Monitor are no longer supported, but if you’re using an 
 
 | Version | Apple Silicon | Supported          | Supported macOS | Deployment Target | Detected PHP Versions | Minimum Required Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
+| 5.6       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0)<br/>Ventura (13.0)* | macOS 11+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.2 (w/ Valet 3.x) | 3.0 recommended<br/> 2.16.2 minimum |
 | 4.1       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 11+ | PHP 5.6—PHP 8.2 | 2.16.2 |
 | 4.0       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |
 | 3.5       | ✅ Universal binary | ❌ | Big Sur (11.0)<br/>Monterey (12.0) | macOS 10.14+ | PHP 5.6—PHP 8.2 | 2.13 |

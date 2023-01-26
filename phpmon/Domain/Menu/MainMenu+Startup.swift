@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 03/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -14,44 +14,53 @@ extension MainMenu {
      */
     func startup() async {
         // Start with the icon
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
 
+        await App.shared.environment.process()
+
         if await Startup().checkEnvironment() {
-            self.onEnvironmentPass()
+            await self.onEnvironmentPass()
         } else {
-            self.onEnvironmentFail()
+            await self.onEnvironmentFail()
         }
     }
 
     /**
      When the environment is all clear and the app can run, let's go.
      */
-    private func onEnvironmentPass() {
+    private func onEnvironmentPass() async {
+        // Determine what the `php` formula is aliased to
+        await PhpEnv.shared.determinePhpAlias()
+
+        // Initialize preferences
+        _ = Preferences.shared
+
+        // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
-            ? "The app has probably been installed via Homebrew Cask."
-            : "The app has probably been installed directly."
+            ? "[BREW] The app has probably been installed via Homebrew Cask."
+            : "[BREW] The app has probably been installed directly."
         )
 
         Log.info(HomebrewDiagnostics.usesNginxFullFormula
-            ? "The app will be using the `nginx-full` formula."
-            : "The app will be using the `nginx` formula."
+             ? "[BREW] The app will be using the `nginx-full` formula."
+             : "[BREW] The app will be using the `nginx` formula."
         )
 
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
-            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!)")
+            Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!.text)")
         }
 
         // Validate the version (this will enforce which versions of PHP are supported)
         Valet.shared.validateVersion()
 
         // Actually detect the PHP versions
-        PhpEnv.detectPhpVersions()
+        await PhpEnv.detectPhpVersions()
 
         // Check for an alias conflict
-        HomebrewDiagnostics.checkForCaskConflict()
+        await HomebrewDiagnostics.checkForCaskConflict()
 
         // Update the icon
         updatePhpVersionInStatusBar()
@@ -69,7 +78,7 @@ extension MainMenu {
         App.shared.handlePhpConfigWatcher()
 
         // Detect built-in and custom applications
-        detectApplications()
+        await detectApplications()
 
         // Load the rollback preset
         PresetHelper.loadRollbackPresetFromFile()
@@ -78,7 +87,7 @@ extension MainMenu {
         App.shared.loadGlobalHotkey()
 
         // Preload sites
-        Valet.shared.startPreloadingSites()
+        await Valet.shared.startPreloadingSites()
 
         // After preloading sites, check for PHP-FPM pool conflicts
         HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
@@ -87,27 +96,27 @@ extension MainMenu {
         Valet.notifyAboutUnsupportedTLD()
 
         // Find out which services are active
-        ServicesManager.shared.loadData()
+        Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
         // Start the background refresh timer
         startSharedTimer()
 
-        // Update the stats
-        Stats.incrementSuccessfulLaunchCount()
-        Stats.evaluateSponsorMessageShouldBeDisplayed()
+        if !isRunningSwiftUIPreview {
+            Stats.incrementSuccessfulLaunchCount()
+            Stats.evaluateSponsorMessageShouldBeDisplayed()
 
-        // Present first launch screen if needed
-        if Stats.successfulLaunchCount == 0 && !isRunningSwiftUIPreview {
-            Log.info("Should present the first launch screen!")
-            DispatchQueue.main.async {
-                OnboardingWindowController.show()
+            if Stats.successfulLaunchCount == 1 {
+                Log.info("Should present the first launch screen!")
+                Task { @MainActor in
+                    OnboardingWindowController.show()
+                }
             }
+
+            await AppUpdateChecker.checkIfNewerVersionIsAvailable()
         }
 
-        // Check for updates
-        DispatchQueue.global(qos: .utility).async {
-            AppUpdateChecker.checkIfNewerVersionIsAvailable()
-        }
+        // Check if the linked version has changed between launches of phpmon
+        Stats.evaluateLastLinkedPhpVersion()
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
@@ -116,9 +125,8 @@ extension MainMenu {
     /**
      When the environment is not OK, present an alert to inform the user.
      */
-    private func onEnvironmentFail() {
-        DispatchQueue.main.async { [self] in
-
+    private func onEnvironmentFail() async {
+        Task { @MainActor [self] in
             BetterAlert()
                 .withInformation(
                     title: "alert.cannot_start.title".localized,
@@ -132,7 +140,9 @@ extension MainMenu {
                 })
                 .show()
 
-            Task { await startup() }
+            Task { // An issue occurred, fire startup checks again after dismissal
+                await startup()
+            }
         }
     }
 
@@ -154,18 +164,23 @@ extension MainMenu {
     /**
      Detect which applications are installed that can be used to open a domain's source directory.
      */
-    private func detectApplications() {
+    private func detectApplications() async {
         Log.info("Detecting applications...")
 
-        App.shared.detectedApplications = Application.detectPresetApplications()
+        App.shared.detectedApplications = await Application.detectPresetApplications()
 
         let customApps = Preferences.custom.scanApps?.map { appName in
             return Application(appName, .user_supplied)
-        }.filter { app in
-            return app.isInstalled()
         } ?? []
 
-        App.shared.detectedApplications.append(contentsOf: customApps)
+        var detectedCustomApps: [Application] = []
+
+        for app in customApps where await app.isInstalled() {
+            detectedCustomApps.append(app)
+        }
+
+        App.shared.detectedApplications
+            .append(contentsOf: detectedCustomApps)
 
         let appNames = App.shared.detectedApplications.map { app in
             return app.name

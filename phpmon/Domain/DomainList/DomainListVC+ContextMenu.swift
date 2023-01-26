@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 10/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -130,6 +130,13 @@ extension DomainListVC {
 
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.site_isolation".localized))
         menu.addItem(NSMenuItem(title: "domain_list.isolate".localized, submenu: items))
+
+        if site.isolatedPhpVersion != nil {
+            menu.addItem(NSMenuItem(
+                title: "domain_list.use_in_terminal".localized(site.servingPhpVersion),
+                action: #selector(self.useInTerminal)
+            ))
+        }
         menu.addItem(NSMenuItem.separator())
     }
 

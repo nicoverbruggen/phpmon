@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/07/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
@@ -101,11 +101,13 @@ struct OnboardingView: View {
                 }
                 VStack {
                     Text("onboarding.tour.once".localized)
+                        .fixedSize(horizontal: false, vertical: true)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .padding(.top, 5)
                         .padding(.bottom, 5)
-                        .lineLimit(5)
+                        .lineLimit(3)
+                        .frame(height: 35)
                     Button("onboarding.tour.close".localized) {
                         App.shared.onboardingWindowController?.close()
                     }

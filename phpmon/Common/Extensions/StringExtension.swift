@@ -2,20 +2,43 @@
 //  StringExtension.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 import Foundation
 import SwiftUI
+
+struct Localization {
+    static var bundle: Bundle = {
+        if !isRunningTests {
+            return Bundle.main
+        }
+
+        let foundBundle = Bundle(identifier: "com.nicoverbruggen.phpmon.dev")
+            ?? Bundle(identifier: "com.nicoverbruggen.phpmon")
+            ?? Bundle(identifier: "com.nicoverbruggen.phpmon.ui-tests")
+
+        if foundBundle == nil {
+            let bundles = Bundle.allBundles
+                .map { $0.bundleIdentifier }
+                .filter { $0 != nil }
+                .map { $0! }
+
+            fatalError("The following bundles were found: \(bundles)")
+        }
+
+        return foundBundle!
+    }()
+}
 
 extension String {
     var localized: String {
         if #available(macOS 13, *) {
             return NSLocalizedString(
-                self, tableName: nil, bundle: Bundle.main, value: "", comment: ""
+                self, tableName: nil, bundle: Localization.bundle, value: "", comment: ""
             ).replacingOccurrences(of: "Preferences", with: "Settings")
         }
 
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        return NSLocalizedString(self, tableName: nil, bundle: Localization.bundle, value: "", comment: "")
     }
 
     var localizedForSwiftUI: LocalizedStringKey {
@@ -40,6 +63,16 @@ extension String {
         }
 
         return count
+    }
+
+    func matches(pattern: String) -> Bool {
+        let pred = NSPredicate(format: "self LIKE %@", pattern)
+        return !NSArray(object: self).filtered(using: pred).isEmpty
+    }
+
+    static func random(_ length: Int) -> String {
+        let characters = "0123456789abcdefghijklmnopqrstuvwxyz"
+        return String((0..<length).map { _ in characters.randomElement()! })
     }
 
     subscript(r: Range<String.Index>) -> String {
@@ -98,5 +131,4 @@ extension String {
             return ""
         }
     }
-
 }

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 26/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -71,7 +71,7 @@ struct PhpFrameworks {
     public static func detectFallbackDependency(_ basePath: String) -> String? {
         for entry in Self.FileMapping {
             let found = entry.value
-                .map { path in return Filesystem.exists(basePath + path) }
+                .map { path in return FileSystem.anyExists(basePath + path) }
                 .contains(true)
 
             if found {

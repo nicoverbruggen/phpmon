@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/08/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
@@ -38,7 +38,7 @@ struct WarningListView: View {
 
             HStack(alignment: .center, spacing: 15) {
                 Button("warnings.refresh.button".localizedForSwiftUI) {
-                    Task {
+                    Task { // Reload warnings
                         await WarningManager.shared.checkEnvironment()
                         self.warnings = WarningManager.shared.warnings
                     }
@@ -80,12 +80,10 @@ struct WarningListView_Previews: PreviewProvider {
     static var previews: some View {
         WarningListView(empty: true)
             .frame(width: 600, height: 480)
+            .previewDisplayName("Empty List")
 
-        /*
-        WarningListView()
-            // TODO: Figure out how the empty() only applies to this single instance
-            // .empty()
+        WarningListView(empty: false)
             .frame(width: 600, height: 480)
-         */
+            .previewDisplayName("List With All Warnings")
     }
 }

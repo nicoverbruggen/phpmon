@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/08/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -22,7 +22,7 @@ class WarningManager {
     public let evaluations: [Warning] = [
         Warning(
             command: {
-                return Shell.pipe("sysctl -n sysctl.proc_translated")
+                return await Shell.pipe("sysctl -n sysctl.proc_translated").out
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
@@ -32,8 +32,8 @@ class WarningManager {
         ),
         Warning(
             command: {
-                return !Shell.user.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
-                    !FileManager.default.isWritableFile(atPath: "/usr/local/bin/")
+                return !Shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
+                    !FileSystem.isWriteableFile("/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
             title: "warnings.helper_permissions.title",
@@ -70,7 +70,7 @@ class WarningManager {
             await loopOverEvaluations()
         }
 
-        MainMenu.shared.rebuild()
+        await MainMenu.shared.rebuild()
     }
 
     private func loopOverEvaluations() async {

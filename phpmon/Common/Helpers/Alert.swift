@@ -2,7 +2,7 @@
 //  Alert.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -13,8 +13,8 @@ class Alert {
         onWindow window: NSWindow,
         messageText: String,
         informativeText: String,
-        buttonTitle: String = "OK",
-        secondButtonTitle: String = "Cancel",
+        buttonTitle: String = "generic.ok".localized,
+        secondButtonTitle: String = "generic.cancel".localized,
         style: NSAlert.Style = .warning,
         onFirstButtonPressed: @escaping (() -> Void)
     ) {

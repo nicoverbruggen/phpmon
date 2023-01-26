@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 19/05/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -12,7 +12,7 @@ extension MainMenu {
 
     // MARK: - Actions
 
-    @objc func fixHomebrewPermissions() {
+    @MainActor @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(
                 title: "alert.fix_homebrew_permissions.title".localized,
@@ -34,7 +34,7 @@ extension MainMenu {
                     subtitle: "alert.fix_homebrew_permissions_done.subtitle".localized,
                     description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
-                .withPrimary(text: "OK")
+                .withPrimary(text: "generic.ok".localized)
                 .show()
         } failure: { error in
             BetterAlert.show(for: error as! HomebrewPermissionError)
@@ -42,17 +42,29 @@ extension MainMenu {
     }
 
     @objc func restartPhpFpm() {
-        asyncExecution {
-            Actions.restartPhpFpm()
+        Task { // Simple restart service
+            await Actions.restartPhpFpm()
         }
     }
 
-    @objc func restartValetServices() {
-        asyncExecution {
-            Actions.restartDnsMasq()
-            Actions.restartPhpFpm()
-            Actions.restartNginx()
-        } success: {
+    @objc func restartNginx() {
+        Task { // Simple restart service
+            await Actions.restartNginx()
+        }
+    }
+
+    @objc func restartDnsMasq() {
+        Task { // Simple restart service
+            await Actions.restartDnsMasq()
+        }
+    }
+
+    @MainActor @objc func restartValetServices() {
+        Task { // Restart services and show notification
+            await Actions.restartDnsMasq()
+            await Actions.restartPhpFpm()
+            await Actions.restartNginx()
+
             LocalNotification.send(
                 title: "notification.services_restarted".localized,
                 subtitle: "notification.services_restarted_desc".localized,
@@ -61,27 +73,15 @@ extension MainMenu {
         }
     }
 
-    @objc func stopValetServices() {
-        asyncExecution {
-            Actions.stopValetServices()
-        } success: {
+    @MainActor @objc func stopValetServices() {
+        Task { // Stop services and show notification
+            await Actions.stopValetServices()
+
             LocalNotification.send(
                 title: "notification.services_stopped".localized,
                 subtitle: "notification.services_stopped_desc".localized,
                 preference: .notifyAboutServices
             )
-        }
-    }
-
-    @objc func restartNginx() {
-        asyncExecution {
-            Actions.restartNginx()
-        }
-    }
-
-    @objc func restartDnsMasq() {
-        asyncExecution {
-            Actions.restartDnsMasq()
         }
     }
 
@@ -134,18 +134,18 @@ extension MainMenu {
     }
 
     @objc func toggleExtension(sender: ExtensionMenuItem) {
-        asyncExecution {
-            sender.phpExtension?.toggle()
+        Task { // Toggle extension async
+            await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
-                Actions.restartPhpFpm()
+                await Actions.restartPhpFpm()
             }
         }
     }
 
     private func performRollback() {
-        asyncExecution {
-            PresetHelper.rollbackPreset?.apply()
+        Task { // Rollback preset async
+            await PresetHelper.rollbackPreset?.apply()
             PresetHelper.rollbackPreset = nil
             MainMenu.shared.rebuild()
         }
@@ -171,8 +171,8 @@ extension MainMenu {
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {
-        asyncExecution {
-            sender.preset?.apply()
+        Task { // Apply preset async
+            await sender.preset?.apply()
         }
     }
 
@@ -182,7 +182,7 @@ extension MainMenu {
             subtitle: "preset_help_info".localized,
             description: "preset_help_desc".localized
         )
-        .withPrimary(text: "OK")
+        .withPrimary(text: "generic.ok".localized)
         .withTertiary(text: "", action: { alert in
             NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             alert.close(with: .OK)
@@ -191,16 +191,15 @@ extension MainMenu {
     }
 
     @objc func openPhpInfo() {
-        var url: URL?
-
         asyncWithBusyUI {
-            url = Actions.createTempPhpInfoFile()
-        } completion: {
-            if url != nil { NSWorkspace.shared.open(url!) }
+            Task { // Create temporary file and open the URL
+                let url = await Actions.createTempPhpInfoFile()
+                NSWorkspace.shared.open(url)
+            }
         }
     }
 
-    @objc func updateGlobalComposerDependencies() {
+    @MainActor @objc func updateGlobalComposerDependencies() {
         ComposerWindow().updateGlobalDependencies(
             notify: true,
             completion: { _ in }
@@ -208,7 +207,7 @@ extension MainMenu {
     }
 
     @objc func openActiveConfigFolder() {
-        if PhpEnv.phpInstall.version.error {
+        if PhpEnv.phpInstall.hasErrorState {
             Actions.openGenericPhpConfigFolder()
             return
         }
@@ -232,23 +231,35 @@ extension MainMenu {
         self.switchToPhpVersion(sender.version)
     }
 
+    public func switchToAnyPhpVersion(_ version: String) {
+        if PhpEnv.shared.availablePhpVersions.contains(version) {
+            Task { MainMenu.shared.switchToPhpVersion(version) }
+        } else {
+            Task {
+                BetterAlert().withInformation(
+                    title: "alert.php_switch_unavailable.title".localized,
+                    subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
+                ).withPrimary(
+                    text: "alert.php_switch_unavailable.ok".localized
+                ).show()
+            }
+        }
+    }
+
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnv.shared.isBusy = true
         PhpEnv.shared.delegate = self
         PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
 
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+        Task(priority: .userInitiated) { [unowned self] in
             updatePhpVersionInStatusBar()
             rebuild()
-            PhpEnv.switcher.performSwitch(
-                to: version,
-                completion: {
-                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
-                    App.shared.handlePhpConfigWatcher()
-                    PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
-                }
-            )
+            await PhpEnv.switcher.performSwitch(to: version)
+
+            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            App.shared.handlePhpConfigWatcher()
+            PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
         }
     }
 
@@ -257,35 +268,25 @@ extension MainMenu {
     /**
      This async-friendly version of the switcher can be invoked elsewhere in the app:
      ```
-     Task {
-        await MainMenu.shared.switchToPhp("8.1")
-        // thing to do after the switch
-     }
+    await MainMenu.shared.switchToPhp("8.1")
+    // thing to do after the switch
      ```
-     Since this async function uses `withCheckedContinuation`
-     any code after will run only after the switcher is done.
      */
     func switchToPhp(_ version: String) async {
-        DispatchQueue.main.async { [self] in
+        Task { @MainActor [self] in
             setBusyImage()
             PhpEnv.shared.isBusy = true
             PhpEnv.shared.delegate = self
             PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
         }
 
-        return await withCheckedContinuation({ continuation in
-            updatePhpVersionInStatusBar()
-            rebuild()
-            PhpEnv.switcher.performSwitch(
-                to: version,
-                completion: {
-                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
-                    App.shared.handlePhpConfigWatcher()
-                    PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
-                    continuation.resume()
-                }
-            )
-        })
+        updatePhpVersionInStatusBar()
+        rebuild()
+        await PhpEnv.switcher.performSwitch(to: version)
+
+        PhpEnv.shared.currentInstall = ActivePhpInstallation()
+        App.shared.handlePhpConfigWatcher()
+        PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
 }

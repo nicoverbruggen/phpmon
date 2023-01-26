@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 24/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -65,17 +65,20 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
     @IBAction func pressedCreateProxy(_ sender: Any) {
         let domain = self.inputDomainName.stringValue
         let proxyName = self.inputProxySubject.stringValue
-        let secure = self.buttonSecure.state == .on ? " --secure" : ""
+        let secure = (self.buttonSecure.state == .on)
 
         dismissView(outcome: .OK)
 
         App.shared.domainListWindowController?.contentVC.setUIBusy()
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            Shell.run("\(Paths.valet) proxy \(domain) \(proxyName)\(secure)", requiresPath: true)
-            Actions.restartNginx()
+        Task { // Ensure we proxy the site asynchronously and reload UI on main thread again
+            try! await ValetInteractor.shared.proxy(
+                domain: domain,
+                proxy: proxyName,
+                secure: secure
+            )
 
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 App.shared.domainListWindowController?.contentVC.setUINotBusy()
                 App.shared.domainListWindowController?.pressedReload(nil)
             }

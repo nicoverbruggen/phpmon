@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 07/09/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 /**
@@ -107,4 +107,5 @@ enum InternalStats: String {
     case launchCount = "times_launched"
     case switchCount = "times_switched_versions"
     case didSeeSponsorEncouragement = "did_see_sponsor_encouragement"
+    case lastGlobalPhpVersion = "last_global_php_version"
 }

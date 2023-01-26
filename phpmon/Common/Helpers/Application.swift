@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 07/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -34,30 +34,45 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        return Shell.run("/usr/bin/open -a \"\(name)\" \"\(file)\"")
+        Task { await Shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
     }
 
     /** Checks if the app is installed. */
-    func isInstalled() -> Bool {
-        // If this script does not complain, the app exists!
-        return Shell.user.executeSynchronously(
+    func isInstalled() async -> Bool {
+
+        let (process, output) = try! await Shell.attach(
             "/usr/bin/open -Ra \"\(name)\"",
-            requiresPath: false
-        ).task.terminationStatus == 0
+            didReceiveOutput: { _, _ in },
+            withTimeout: 2.0
+        )
+
+        if Shell is TestableShell {
+            // When testing, check the error output (must not be empty)
+            return !output.hasError
+        } else {
+            // If this script does not complain, the app exists!
+            return process.terminationStatus == 0
+        }
     }
 
     /**
      Detect which apps are available to open a specific directory.
      */
-    static public func detectPresetApplications() -> [Application] {
-        return [
+    static public func detectPresetApplications() async -> [Application] {
+        var detected: [Application] = []
+
+        let detectable = [
             Application("PhpStorm", .editor),
             Application("Visual Studio Code", .editor),
             Application("Sublime Text", .editor),
             Application("Sublime Merge", .git_gui),
             Application("iTerm", .terminal)
-        ].filter {
-            return $0.isInstalled()
+        ]
+
+        for app in detectable where await app.isInstalled() {
+            detected.append(app)
         }
+
+        return detected
     }
 }

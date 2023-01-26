@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/02/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -12,50 +12,53 @@ extension MainMenu {
 
     // MARK: - PhpSwitcherDelegate
 
-    func switcherDidStartSwitching(to version: String) {}
+    nonisolated func switcherDidStartSwitching(to version: String) {}
 
-    func switcherDidCompleteSwitch(to version: String) {
+    nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
         PhpEnv.shared.isBusy = false
 
-        // Reload the site list
-        self.reloadDomainListData()
+        Task { // Things to do after reloading domain list data
+            await self.reloadDomainListData()
 
-        // Perform UI updates on main thread
-        DispatchQueue.main.async { [self] in
-            updatePhpVersionInStatusBar()
-            rebuild()
+            // Perform UI updates on main thread
+            Task { @MainActor [self] in
+                updatePhpVersionInStatusBar()
+                rebuild()
 
-            if !PhpEnv.shared.validate(version) {
-                self.suggestFixMyValet(failed: version)
-                return
+                if !PhpEnv.shared.validate(version) {
+                    self.suggestFixMyValet(failed: version)
+                    return
+                }
+
+                // Run composer updates
+                if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
+                    ComposerWindow().updateGlobalDependencies(
+                        notify: false,
+                        completion: { _ in
+                            self.notifyAboutVersionChange(to: version)
+                        }
+                    )
+                } else {
+                    self.notifyAboutVersionChange(to: version)
+                }
+
+                // Check if Valet still works correctly
+                self.checkForPlatformIssues()
+
+                // Update stats
+                Stats.incrementSuccessfulSwitchCount()
+                Stats.evaluateSponsorMessageShouldBeDisplayed()
             }
-
-            // Run composer updates
-            if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
-                ComposerWindow().updateGlobalDependencies(
-                    notify: false,
-                    completion: { _ in
-                        self.notifyAboutVersionChange(to: version)
-                    }
-                )
-            } else {
-                self.notifyAboutVersionChange(to: version)
-            }
-
-            // Check if Valet still works correctly
-            self.checkForPlatformIssues()
-
-            // Update stats
-            Stats.incrementSuccessfulSwitchCount()
-            Stats.evaluateSponsorMessageShouldBeDisplayed()
         }
     }
 
     @MainActor private func checkForPlatformIssues() {
-        if Valet.shared.hasPlatformIssues() {
-            Log.info("Composer platform issue(s) detected.")
-            self.suggestFixMyComposer()
+        Task { // Asynchronously check for platform issues
+            if await Valet.shared.hasPlatformIssues() {
+                Log.info("Composer platform issue(s) detected.")
+                self.suggestFixMyComposer()
+            }
         }
     }
 
@@ -100,25 +103,21 @@ extension MainMenu {
         .show()
     }
 
-    private func reloadDomainListData() {
+    private func reloadDomainListData() async {
         if let window = App.shared.domainListWindowController {
-            DispatchQueue.main.async {
-                window.contentVC.reloadDomains()
-            }
+            await window.contentVC.reloadDomains()
         } else {
-            Valet.shared.reloadSites()
+            await Valet.shared.reloadSites()
         }
     }
 
-    private func notifyAboutVersionChange(to version: String) {
-        DispatchQueue.main.async {
-            LocalNotification.send(
-                title: String(format: "notification.version_changed_title".localized, version),
-                subtitle: String(format: "notification.version_changed_desc".localized, version),
-                preference: .notifyAboutVersionChange
-            )
+    @MainActor private func notifyAboutVersionChange(to version: String) {
+        LocalNotification.send(
+            title: String(format: "notification.version_changed_title".localized, version),
+            subtitle: String(format: "notification.version_changed_desc".localized, version),
+            preference: .notifyAboutVersionChange
+        )
 
-            PhpEnv.phpInstall.notifyAboutBrokenPhpFpm()
-        }
+        Task { PhpEnv.phpInstall.notifyAboutBrokenPhpFpm() }
     }
 }

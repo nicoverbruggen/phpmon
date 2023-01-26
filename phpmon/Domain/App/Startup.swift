@@ -2,7 +2,7 @@
 //  Environment.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -29,7 +29,7 @@ class Startup {
 
             // If we get here, something's gone wrong and the check has failed...
             Log.info("[FAIL] \(check.name)")
-            showAlert(for: check)
+            await showAlert(for: check)
             return false
         }
 
@@ -45,29 +45,27 @@ class Startup {
      - ones that require an app restart, which prompt the user to exit the app
      - ones that allow the app to continue, which allow the user to retry
      */
-    private func showAlert(for check: EnvironmentCheck) {
-        DispatchQueue.main.async {
-            if check.requiresAppRestart {
-                BetterAlert()
-                    .withInformation(
-                        title: check.titleText,
-                        subtitle: check.subtitleText,
-                        description: check.descriptionText
-                    )
-                    .withPrimary(text: check.buttonText, action: { _ in
-                        exit(1)
-                    }).show()
-            }
-
+    @MainActor private func showAlert(for check: EnvironmentCheck) {
+        if check.requiresAppRestart {
             BetterAlert()
                 .withInformation(
                     title: check.titleText,
                     subtitle: check.subtitleText,
                     description: check.descriptionText
                 )
-                .withPrimary(text: "OK")
-                .show()
+                .withPrimary(text: check.buttonText, action: { _ in
+                    exit(1)
+                }).show()
         }
+
+        BetterAlert()
+            .withInformation(
+                title: check.titleText,
+                subtitle: check.subtitleText,
+                description: check.descriptionText
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
     }
 
     /**
@@ -75,7 +73,7 @@ class Startup {
      initialized when it is done working. The switcher must be initialized on the main thread.
      */
     private func initializeSwitcher() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             let appDelegate = NSApplication.shared.delegate as! AppDelegate
             appDelegate.initializeSwitcher()
         }
@@ -88,7 +86,7 @@ class Startup {
         // The Homebrew binary must exist.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !FileManager.default.fileExists(atPath: Paths.brew) },
+            command: { return !FileSystem.fileExists(Paths.brew) },
             name: "`\(Paths.brew)` exists",
             titleText: "alert.homebrew_missing.title".localized,
             subtitleText: "alert.homebrew_missing.subtitle".localized,
@@ -105,7 +103,7 @@ class Startup {
         // The PHP binary must exist.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Filesystem.fileExists(Paths.php) },
+            command: { return !FileSystem.fileExists(Paths.php) },
             name: "`\(Paths.php)` exists",
             titleText: "startup.errors.php_binary.title".localized,
             subtitleText: "startup.errors.php_binary.subtitle".localized,
@@ -115,7 +113,9 @@ class Startup {
         // Make sure we can detect one or more PHP installations.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Shell.pipe("ls \(Paths.optPath) | grep php").contains("php") },
+            command: {
+                return await !Shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php")
+            },
             name: "`ls \(Paths.optPath) | grep php` returned php result",
             titleText: "startup.errors.php_opt.title".localized,
             subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -128,7 +128,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return !(Filesystem.fileExists(Paths.valet) || Filesystem.fileExists("~/.composer/vendor/bin/valet"))
+                return !(FileSystem.fileExists(Paths.valet) || FileSystem.fileExists("~/.composer/vendor/bin/valet"))
             },
             name: "`valet` binary exists",
             titleText: "startup.errors.valet_executable.title".localized,
@@ -143,14 +143,14 @@ class Startup {
         // functioning correctly. Let the user know that they need to run `valet trust`.
         // =================================================================================
         EnvironmentCheck(
-            command: { return !Shell.pipe("cat /private/etc/sudoers.d/brew").contains(Paths.brew) },
+            command: { return await !Shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(Paths.brew) },
             name: "`/private/etc/sudoers.d/brew` contains brew",
             titleText: "startup.errors.sudoers_brew.title".localized,
             subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
             descriptionText: "startup.errors.sudoers_brew.desc".localized
         ),
         EnvironmentCheck(
-            command: { return !Shell.pipe("cat /private/etc/sudoers.d/valet").contains(Paths.valet) },
+            command: { return await !Shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(Paths.valet) },
             name: "`/private/etc/sudoers.d/valet` contains valet",
             titleText: "startup.errors.sudoers_valet.title".localized,
             subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
@@ -160,7 +160,10 @@ class Startup {
         // Verify if the Homebrew services are running (as root).
         // =================================================================================
         EnvironmentCheck(
-            command: { return HomebrewDiagnostics.cannotLoadService("dnsmasq") },
+            command: {
+                await HomebrewDiagnostics.loadInstalledTaps()
+                return await HomebrewDiagnostics.cannotLoadService("dnsmasq")
+            },
             name: "`sudo \(Paths.brew) services info` JSON loaded",
             titleText: "startup.errors.services_json_error.title".localized,
             subtitleText: "startup.errors.services_json_error.subtitle".localized,
@@ -171,7 +174,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return !Filesystem.directoryExists("~/.config/valet")
+                return !FileSystem.directoryExists("~/.config/valet")
             },
             name: "`.config/valet` not empty (Valet installed)",
             titleText: "startup.errors.valet_not_installed.title".localized,
@@ -200,10 +203,10 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
+                let nodePath = await Shell.pipe("which node").out
                 return App.architecture == "x86_64"
-                    && FileManager.default.fileExists(atPath: "/usr/local/bin/which")
-                    && Shell.pipe("which node", requiresPath: false)
-                        .contains("env: node: No such file or directory")
+                    && FileSystem.fileExists("/usr/local/bin/which")
+                    && nodePath.contains("env: node: No such file or directory")
             },
             name: "`env: node` issue does not apply",
             titleText: "startup.errors.which_alias_issue.title".localized,
@@ -215,7 +218,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                return valet("--version", sudo: false)
+                return await Shell.pipe("valet --version").out
                     .contains("Composer detected issues in your platform")
             },
             name: "`no global composer issues",
@@ -228,7 +231,7 @@ class Startup {
         // =================================================================================
         EnvironmentCheck(
             command: {
-                let output = valet("--version", sudo: false)
+                let output = await Shell.pipe("valet --version").out
                 // Failure condition #1: does not contain Laravel Valet
                 if !output.contains("Laravel Valet") {
                     return true
@@ -239,7 +242,7 @@ class Startup {
                     .components(separatedBy: "Laravel Valet")[1]
                     .trimmingCharacters(in: .whitespaces)
                 // Extract the version number
-                Valet.shared.version = VersionExtractor.from(output)
+                Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(output)!)
                 // Get the actual version
                 return Valet.shared.version == nil
             },
@@ -247,6 +250,19 @@ class Startup {
             titleText: "startup.errors.valet_version_unknown.title".localized,
             subtitleText: "startup.errors.valet_version_unknown.subtitle".localized,
             descriptionText: "startup.errors.valet_version_unknown.desc".localized
+        ),
+        // =================================================================================
+        // Ensure the Valet version is supported.
+        // =================================================================================
+        EnvironmentCheck(
+            command: {
+                // We currently support Valet 2, 3 or 4. Any other version should get an alert.
+                return ![2, 3, 4].contains(Valet.shared.version.major)
+            },
+            name: "valet version is supported",
+            titleText: "startup.errors.valet_version_not_supported.title".localized,
+            subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized,
+            descriptionText: "startup.errors.valet_version_not_supported.desc".localized
         )
     ]
 }

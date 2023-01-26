@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,8 @@ class Preferences {
             services: [],
             environmentVariables: [:]
         )
-        loadCustomPreferences()
+
+        Task { await loadCustomPreferences() }
     }
 
     // MARK: - First Time Run
@@ -79,7 +80,8 @@ class Preferences {
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
-            InternalStats.didSeeSponsorEncouragement.rawValue: false
+            InternalStats.didSeeSponsorEncouragement.rawValue: false,
+            InternalStats.lastGlobalPhpVersion.rawValue: ""
         ])
 
         if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {

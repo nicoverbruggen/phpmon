@@ -3,12 +3,12 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 22/02/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-class ValetSite: DomainListable {
+class ValetSite: ValetListable {
 
     /// Name of the site. Does not include the TLD.
     var name: String
@@ -44,26 +44,20 @@ class ValetSite: DomainListable {
     /// A list of notable Composer dependencies.
     var notableComposerDependencies: [String: String] = [:]
 
-    /// The PHP version as discovered in `composer.json` or in .valetphprc.
-    var composerPhp: String = "???"
+    /// The PHP version as discovered in `composer.json` or in .valetphprc/.valetrc.
+    /// This is the preferred version needed to correctly run the domain or site.
+    var preferredPhpVersion: String = "???"
 
     /// Check whether the PHP version is valid for the currently linked version.
-    var composerPhpCompatibleWithLinked: Bool = false
+    var isCompatibleWithPreferredPhpVersion: Bool = false
 
     /// How the PHP version was determined.
-    var composerPhpSource: VersionSource = .unknown
+    var preferredPhpVersionSource: PhpVersionSource = .unknown
 
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
-        return self.isolatedPhpVersion?.versionNumber.homebrewVersion
+        return self.isolatedPhpVersion?.versionNumber.short
             ?? PhpEnv.phpInstall.version.short
-    }
-
-    enum VersionSource: String {
-        case unknown
-        case require
-        case platform
-        case valetphprc
     }
 
     init(
@@ -94,7 +88,7 @@ class ValetSite: DomainListable {
 
     convenience init(aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! FileManager.default.destinationOfSymbolicLink(atPath: aliasPath)
+        let absolutePath = try! FileSystem.getDestinationOfSymlink(aliasPath)
         self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 
@@ -119,7 +113,7 @@ class ValetSite: DomainListable {
      - Note: The file is not validated, only its presence is checked.
      */
     public func determineSecured() {
-        secured = Filesystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
     }
 
     /**
@@ -135,20 +129,7 @@ class ValetSite: DomainListable {
     public func determineComposerPhpVersion() {
         self.determineComposerInformation()
         self.determineValetPhpFileInfo()
-
-        if self.composerPhp == "???" {
-            return
-        }
-
-        // Split the composer list (on "|") to evaluate multiple constraints
-        // For example, for Laravel 8 projects the value is "^7.3|^8.0"
-        self.composerPhpCompatibleWithLinked = self.composerPhp.split(separator: "|")
-            .map { string in
-                let origin = self.isolatedPhpVersion?.versionNumber.homebrewVersion ?? PhpEnv.phpInstall.version.long
-                return !PhpVersionNumberCollection.make(from: [origin])
-                    .matching(constraint: string.trimmingCharacters(in: .whitespacesAndNewlines))
-                    .isEmpty
-            }.contains(true)
+        self.evaluateCompatibility()
     }
 
     /**
@@ -188,13 +169,17 @@ class ValetSite: DomainListable {
         let path = "\(absolutePath)/composer.json"
 
         do {
-            if Filesystem.fileExists(path) {
+            if FileSystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
-                    from: String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8).data(using: .utf8)!
+                    from: String(
+                        contentsOf: URL(fileURLWithPath: path),
+                        encoding: .utf8
+                    ).data(using: .utf8)!
                 )
 
-                (self.composerPhp, self.composerPhpSource) = decoded.getPhpVersion()
+                (self.preferredPhpVersion,
+                 self.preferredPhpVersionSource) = decoded.getPhpVersion()
                 self.notableComposerDependencies = decoded.getNotableDependencies()
             }
         } catch {
@@ -203,28 +188,73 @@ class ValetSite: DomainListable {
     }
 
     /**
-     Checks the contents of the .valetphprc file and determine the version, if possible.
+     Checks the contents of the .valetphprc file and determine the version.
+     The first file found takes precendence over all others.
      */
     private func determineValetPhpFileInfo() {
-        let path = "\(absolutePath)/.valetphprc"
+        let files = [
+            (".valetrc", PhpVersionSource.valetrc),
+            (".valetphprc", PhpVersionSource.valetphprc)
+        ]
 
-        do {
-            if Filesystem.fileExists(path) {
-                let contents = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-                if let version = VersionExtractor.from(contents) {
-                    self.composerPhp = version
-                    self.composerPhpSource = .valetphprc
+        for (suffix, source) in files {
+            do {
+                let path = "\(absolutePath)/\(suffix)"
+                if FileSystem.fileExists(path) {
+                    return try self.handleValetFile(path, source)
                 }
+            } catch {
+                Log.err("Something went wrong parsing the '\(suffix)' file")
             }
-        } catch {
-            Log.err("Something went wrong parsing the .valetphprc file")
         }
+    }
+
+    /**
+     Parse a Valet file (either .valetphprc or .valetrc).
+     */
+    private func handleValetFile(_ path: String, _ source: PhpVersionSource) throws {
+        var versionString = ""
+
+        switch source {
+        case .valetphprc:
+            versionString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        case .valetrc:
+            guard let valetRc = RCFile.fromPath(path) else { return }
+            guard let phpField = valetRc.fields["PHP"] else { return }
+            versionString = phpField
+        default:
+            return
+        }
+
+        if let version = VersionExtractor.from(versionString) {
+            self.preferredPhpVersion = version
+            self.preferredPhpVersionSource = source
+        }
+    }
+
+    public func evaluateCompatibility() {
+        if self.preferredPhpVersion == "???" {
+            return
+        }
+
+        // Split the composer list (on "|") to evaluate multiple constraints
+        // For example, for Laravel 8 projects the value is "^7.3|^8.0"
+        self.isCompatibleWithPreferredPhpVersion = self.preferredPhpVersion.split(separator: "|").map { string in
+            let origin = self.isolatedPhpVersion?.versionNumber.short
+                ?? PhpEnv.phpInstall.version.long
+
+            let normalizedPhpVersion = string.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            return !PhpVersionNumberCollection.make(from: [origin])
+                .matching(constraint: normalizedPhpVersion)
+                .isEmpty
+        }.contains(true)
     }
 
     // MARK: - File Parsing
 
     public static func isolatedVersion(_ filePath: String) -> String? {
-        if Filesystem.fileExists(filePath) {
+        if FileSystem.fileExists(filePath) {
             return NginxConfigurationFile
                 .from(filePath: filePath)?
                 .isolatedVersion ?? nil
@@ -233,7 +263,7 @@ class ValetSite: DomainListable {
         return nil
     }
 
-    // MARK: - DomainListable Protocol
+    // MARK: ValetListable
 
     func getListableName() -> String {
         return self.name
@@ -261,5 +291,23 @@ class ValetSite: DomainListable {
 
     func getListableUrl() -> URL? {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
+    }
+
+    // MARK: - Interactions
+
+    func toggleSecure() async throws {
+        try await ValetInteractor.shared.toggleSecure(site: self)
+    }
+
+    func isolate(version: String) async throws {
+        try await ValetInteractor.shared.isolate(site: self, version: version)
+    }
+
+    func unisolate() async throws {
+        try await ValetInteractor.shared.unisolate(site: self)
+    }
+
+    func unlink() async {
+        try! await ValetInteractor.shared.unlink(site: self)
     }
 }

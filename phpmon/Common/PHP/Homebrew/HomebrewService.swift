@@ -3,12 +3,12 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 11/01/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-struct HomebrewService: Decodable, Equatable {
+final class HomebrewService: Sendable, Decodable {
     let name: String
     let service_name: String
     let running: Bool
@@ -19,10 +19,32 @@ struct HomebrewService: Decodable, Equatable {
     let log_path: String?
     let error_log_path: String?
 
+    init(
+        name: String,
+        service_name: String,
+        running: Bool,
+        loaded: Bool,
+        pid: Int? = nil,
+        user: String? = nil,
+        status: String? = nil,
+        log_path: String? = nil,
+        error_log_path: String? = nil
+    ) {
+        self.name = name
+        self.service_name = service_name
+        self.running = running
+        self.loaded = loaded
+        self.pid = pid
+        self.user = user
+        self.status = status
+        self.log_path = log_path
+        self.error_log_path = error_log_path
+    }
+
     /**
      Dummy data for preview purposes.
      */
-    public static func dummy(named service: String, enabled: Bool) -> Self {
+    public static func dummy(named service: String, enabled: Bool, status: String? = nil) -> HomebrewService {
         return HomebrewService(
             name: service,
             service_name: service,
@@ -30,7 +52,7 @@ struct HomebrewService: Decodable, Equatable {
             loaded: enabled,
             pid: nil,
             user: nil,
-            status: nil,
+            status: status,
             log_path: nil,
             error_log_path: nil
         )

@@ -2,7 +2,7 @@
 //  Services.swift
 //  PHP Monitor
 //
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -12,22 +12,22 @@ class Actions {
 
     // MARK: - Services
 
-    public static func restartPhpFpm() {
-        brew("services restart \(Homebrew.Formulae.php)", sudo: true)
+    public static func restartPhpFpm() async {
+        await brew("services restart \(Homebrew.Formulae.php.name)", sudo: Homebrew.Formulae.php.elevated)
     }
 
-    public static func restartNginx() {
-        brew("services restart \(Homebrew.Formulae.nginx)", sudo: true)
+    public static func restartNginx() async {
+        await brew("services restart \(Homebrew.Formulae.nginx.name)", sudo: Homebrew.Formulae.nginx.elevated)
     }
 
-    public static func restartDnsMasq() {
-        brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: true)
+    public static func restartDnsMasq() async {
+        await brew("services restart \(Homebrew.Formulae.dnsmasq.name)", sudo: Homebrew.Formulae.dnsmasq.elevated)
     }
 
-    public static func stopValetServices() {
-        brew("services stop \(Homebrew.Formulae.php)", sudo: true)
-        brew("services stop \(Homebrew.Formulae.nginx)", sudo: true)
-        brew("services stop \(Homebrew.Formulae.dnsmasq)", sudo: true)
+    public static func stopValetServices() async {
+        await brew("services stop \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services stop \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
+        await brew("services stop \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
     }
 
     public static func fixHomebrewPermissions() throws {
@@ -35,13 +35,16 @@ class Actions {
             "\(Paths.brew) services stop \(Homebrew.Formulae.nginx)",
             "\(Paths.brew) services stop \(Homebrew.Formulae.dnsmasq)"
         ]
+
         var cellarCommands = [
             "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(Homebrew.Formulae.nginx)",
             "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(Homebrew.Formulae.dnsmasq)"
         ]
 
         PhpEnv.shared.availablePhpVersions.forEach { version in
-            let formula = version == PhpEnv.brewPhpVersion ? "php" : "php@\(version)"
+            let formula = version == PhpEnv.brewPhpAlias
+                ? "php"
+                : "php@\(version)"
             servicesCommands.append("\(Paths.brew) services stop \(formula)")
             cellarCommands.append("chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(formula)")
         }
@@ -62,29 +65,6 @@ class Actions {
         }
     }
 
-    // MARK: - Third Party Services
-    public static func stopService(name: String, completion: @escaping () -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            brew("services stop \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
-            ServicesManager.loadHomebrewServices(completed: {
-                DispatchQueue.main.async {
-                    completion()
-                }
-            })
-        }
-    }
-
-    public static func startService(name: String, completion: @escaping () -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            brew("services start \(name)", sudo: ServicesManager.shared.rootServices.contains { $0.value.name == name })
-            ServicesManager.loadHomebrewServices(completed: {
-                DispatchQueue.main.async {
-                    completion()
-                }
-            })
-        }
-    }
-
     // MARK: - Finding Config Files
 
     public static func openGenericPhpConfigFolder() {
@@ -92,37 +72,33 @@ class Actions {
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
 
-    public static func openGlobalComposerFolder() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".composer/composer.json")
-        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
-    }
-
     public static func openPhpConfigFolder(version: String) {
         let files = [NSURL(fileURLWithPath: "\(Paths.etcPath)/php/\(version)/php.ini")]
         NSWorkspace.shared.activateFileViewerSelecting(files as [URL])
     }
 
+    public static func openGlobalComposerFolder() {
+        let file = URL(string: "file://~/.composer/composer.json".replacingTildeWithHomeDirectory)!
+        NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+    }
+
     public static func openValetConfigFolder() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/valet")
+        let file = URL(string: "file://~/.config/valet".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
     public static func openPhpMonitorConfigFile() {
-        let file = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent(".config/phpmon")
+        let file = URL(string: "file://~/.config/phpmon".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
 
     // MARK: - Other Actions
 
-    public static func createTempPhpInfoFile() -> URL {
-        // Write a file called `phpmon_phpinfo.php` to /tmp
-        try! "<?php phpinfo();".write(toFile: "/tmp/phpmon_phpinfo.php", atomically: true, encoding: .utf8)
+    public static func createTempPhpInfoFile() async -> URL {
+        try! FileSystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
-        Shell.run("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+        await Shell.quiet("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
 
         return URL(string: "file:///private/tmp/phpmon_phpinfo.html")!
     }
@@ -141,12 +117,10 @@ class Actions {
      If this does not solve the issue, the user may need to install additional
      extensions and/or run `composer global update`.
      */
-    public static func fixMyValet(completed: @escaping () -> Void) {
-        InternalSwitcher().performSwitch(to: PhpEnv.brewPhpVersion, completion: {
-            brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: true)
-            brew("services restart \(Homebrew.Formulae.php)", sudo: true)
-            brew("services restart \(Homebrew.Formulae.nginx)", sudo: true)
-            completed()
-        })
+    public static func fixMyValet() async {
+        await InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias)
+        await brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
+        await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services restart \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
     }
 }

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 06/02/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -53,7 +53,7 @@ extension MainMenu {
             setBusyImage()
         }
 
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+        Task(priority: .userInitiated) { [unowned self] in
             var error: Error?
 
             do { try execute() } catch let e { error = e }
@@ -62,7 +62,7 @@ extension MainMenu {
                 PhpEnv.shared.isBusy = false
             }
 
-            DispatchQueue.main.async { [self] in
+            Task { @MainActor [self, error] in
                 if behaviours.contains(.reloadsPhpInstallation) {
                     PhpEnv.shared.currentInstall = ActivePhpInstallation()
                 }
@@ -74,7 +74,7 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {
-                    ServicesManager.shared.loadData()
+                    Task { await ServicesManager.shared.reloadServicesStatus() }
                 }
 
                 if error != nil {

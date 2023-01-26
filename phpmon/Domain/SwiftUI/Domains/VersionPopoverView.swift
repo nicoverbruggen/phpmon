@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/06/2022.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ struct VersionPopoverView: View {
 
     @State var site: ValetSite
 
-    @State var validPhpVersions: [PhpVersionNumber]
+    @State var validPhpVersions: [VersionNumber]
 
     @State var parent: NSPopover!
 
@@ -34,22 +34,22 @@ struct VersionPopoverView: View {
                     )
                     HStack {
                         ForEach(validPhpVersions, id: \.self) { version in
-                            Button("site_link.switch_to_php".localized(version.homebrewVersion), action: {
-                                MainMenu.shared.switchToPhpVersion(version.homebrewVersion)
+                            Button("site_link.switch_to_php".localized(version.short), action: {
+                                MainMenu.shared.switchToPhpVersion(version.short)
                                 parent?.close()
                             })
                         }
                     }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                 }
             } else {
-                if site.composerPhpSource == .unknown {
+                if site.preferredPhpVersionSource == .unknown {
                     // We don't know which PHP version is required
                     DisclaimerView(
                         iconName: "questionmark.circle.fill",
                         message: "alert.unable_to_determine_is_fine".localized
                     )
                 } else {
-                    if site.composerPhpCompatibleWithLinked {
+                    if site.isCompatibleWithPreferredPhpVersion {
                         DisclaimerView(
                             iconName: "checkmark.circle.fill",
                             message: "alert.php_version_ideal".localized,
@@ -73,13 +73,21 @@ struct VersionPopoverView: View {
     }
 
     func getTitleText() -> String {
-        if site.composerPhpSource == .unknown {
+        if site.preferredPhpVersionSource == .unknown {
             return "alert.composer_php_requirement.unable_to_determine".localized
         }
 
+        let suffix = {
+            if isRunningTests || isRunningSwiftUIPreview {
+                return "test"
+            }
+
+            return Valet.shared.config.tld
+        }()
+
         return "alert.composer_php_requirement.title".localized(
-            "\(site.name).\(Valet.shared.config.tld)",
-            site.composerPhp
+            "\(site.name).\(suffix)",
+            site.preferredPhpVersion
         )
     }
 
@@ -88,13 +96,13 @@ struct VersionPopoverView: View {
 
         if site.isolatedPhpVersion != nil {
             information += "alert.composer_php_isolated.desc".localized(
-                site.isolatedPhpVersion!.versionNumber.homebrewVersion,
+                site.isolatedPhpVersion!.versionNumber.short,
                 PhpEnv.phpInstall.version.short
             )
             information += "\n\n"
         }
 
-        information += "alert.composer_php_requirement.type.\(site.composerPhpSource.rawValue)"
+        information += "alert.composer_php_requirement.type.\(site.preferredPhpVersionSource.rawValue)"
             .localized
 
         return information
@@ -121,7 +129,7 @@ struct DisclaimerView: View {
 struct VersionPopoverView_Previews: PreviewProvider {
     static var previews: some View {
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "amazingwebsite",
                 tld: "test",
                 secure: true,
@@ -135,7 +143,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         .previewDisplayName("Unknown Requirement")
 
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "amazingwebsite",
                 tld: "test",
                 secure: true,
@@ -148,7 +156,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Requirement Matches")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,
@@ -162,7 +170,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Isolated")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,
@@ -176,7 +184,7 @@ struct VersionPopoverView_Previews: PreviewProvider {
         )
         .previewDisplayName("Isolated Mismatch")
         VersionPopoverView(
-            site: ValetSite(
+            site: FakeValetSite(
                 fakeWithName: "anothersite",
                 tld: "test",
                 secure: true,
@@ -185,8 +193,8 @@ struct VersionPopoverView_Previews: PreviewProvider {
                 constraint: "^8.0"
             ),
             validPhpVersions: [
-                PhpVersionNumber(major: 8, minor: 0, patch: 0),
-                PhpVersionNumber(major: 8, minor: 1, patch: 0)
+                VersionNumber(major: 8, minor: 0, patch: 0),
+                VersionNumber(major: 8, minor: 1, patch: 0)
             ],
             parent: nil
         )

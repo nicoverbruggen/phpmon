@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 24/12/2021.
-//  Copyright © 2022 Nico Verbruggen. All rights reserved.
+//  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -18,6 +18,6 @@ protocol PhpSwitcherDelegate: AnyObject {
 
 protocol PhpSwitcher {
 
-    func performSwitch(to version: String, completion: @escaping () -> Void)
+    func performSwitch(to version: String) async
 
 }
