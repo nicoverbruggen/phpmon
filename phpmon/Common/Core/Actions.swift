@@ -25,9 +25,9 @@ class Actions {
     }
 
     public static func stopValetServices() async {
-        await brew("services stop \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
-        await brew("services stop \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
-        await brew("services stop \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
+        await brew("services stop \(Homebrew.Formulae.php.name)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services stop \(Homebrew.Formulae.nginx.name)", sudo: Homebrew.Formulae.nginx.elevated)
+        await brew("services stop \(Homebrew.Formulae.dnsmasq.name)", sudo: Homebrew.Formulae.dnsmasq.elevated)
     }
 
     public static func fixHomebrewPermissions() throws {
