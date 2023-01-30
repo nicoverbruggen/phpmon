@@ -33,8 +33,6 @@ class ValetVersionExtractorTest: XCTestCase {
             .components(separatedBy: "Laravel Valet")[1]
             .trimmingCharacters(in: .whitespaces)
 
-        print(versionString)
-
         let version = try! VersionNumber.parse(VersionExtractor.from(versionString)!)
 
         XCTAssertEqual(version.major, 3)
