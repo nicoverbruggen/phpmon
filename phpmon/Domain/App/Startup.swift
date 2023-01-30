@@ -256,7 +256,7 @@ class Startup {
                         .components(separatedBy: "Laravel Valet")[1]
                         .trimmingCharacters(in: .whitespaces)
                     // Extract the version number
-                    Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(output)!)
+                    Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(versionString)!)
                     // Get the actual version
                     return Valet.shared.version == nil
                 },
