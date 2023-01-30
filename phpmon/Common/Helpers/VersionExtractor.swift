@@ -40,5 +40,4 @@ class VersionExtractor {
             return nil
         }
     }
-
 }
