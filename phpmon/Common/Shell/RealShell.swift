@@ -68,6 +68,7 @@ class RealShell: ShellProtocol {
         let task = Process()
         task.launchPath = self.launchPath
         task.arguments = ["--noprofile", "-norc", "--login", "-c", completeCommand]
+
         return task
     }
 
@@ -112,6 +113,35 @@ class RealShell: ShellProtocol {
             data: errorPipe.fileHandleForReading.readDataToEndOfFile(),
             encoding: .utf8
         )!
+
+        if Log.shared.verbosity == .cli {
+            var args = task.arguments
+            let last: String = "\"" + (args?.popLast() ?? "") + "\""
+            let concat = [self.launchPath] + task.arguments! + [last]
+            let command = concat.joined(separator: " ")
+            var log = """
+
+            <~~~~~~~~~~~~~~~~~~~~~~~
+            $ \(command)
+
+            [OUT]:
+            \(stdOut)
+            """
+
+            if !stdErr.isEmpty {
+                log.append("""
+                [ERR]:
+                \(stdErr)
+                """)
+            }
+
+            log.append("""
+            ~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            """)
+
+            print(log)
+        }
 
         return .out(stdOut, stdErr)
     }

@@ -90,6 +90,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--cli"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--configuration:~/.phpmon_fconf_working.json"
             isEnabled = "NO">
          </CommandLineArgument>
