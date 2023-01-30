@@ -75,6 +75,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("Extra verbose mode has been activated.")
         }
 
+        if CommandLine.arguments.contains("--cli") {
+            logger.verbosity = .cli
+            Log.info("Extra CLI mode has been activated.")
+        }
+
         Log.separator(as: .info)
         Log.info("PHP MONITOR by Nico Verbruggen")
         Log.info("Version \(App.version)")

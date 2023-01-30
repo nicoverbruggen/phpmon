@@ -16,7 +16,8 @@ class Log {
         case error = 1,
              warning = 2,
              info = 3,
-             performance = 4
+             performance = 4,
+             cli = 5
 
         public func isApplicable() -> Bool {
             return Log.shared.verbosity.rawValue >= self.rawValue
