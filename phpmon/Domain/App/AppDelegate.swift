@@ -61,10 +61,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      When the application initializes, create all singletons.
      */
     override init() {
-        logger.verbosity = .info
-
         #if DEBUG
         logger.verbosity = .performance
+
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
         }
@@ -77,7 +76,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         if CommandLine.arguments.contains("--cli") {
             logger.verbosity = .cli
-            Log.info("Extra CLI mode has been activated.")
+            Log.info("Extra CLI mode has been activated via --cli flag.")
+        }
+
+        if FileSystem.fileExists("~/.config/phpmon/verbose") {
+            logger.verbosity = .cli
+            Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
 
         Log.separator(as: .info)
