@@ -12,47 +12,76 @@ class Log {
 
     static var shared = Log()
 
+    var logFilePath = "~/.config/phpmon/last_session.log"
+    var logExists = false
+
     enum Verbosity: Int {
         case error = 1,
              warning = 2,
              info = 3,
-             performance = 4
+             performance = 4,
+             cli = 5
 
         public func isApplicable() -> Bool {
             return Log.shared.verbosity.rawValue >= self.rawValue
         }
     }
 
-    var verbosity: Verbosity = .warning
+    public func prepareLogFile() {
+        if !isRunningTests && Verbosity.cli.isApplicable() {
+            _ = system("mkdir -p ~/.config/phpmon 2> /dev/null")
+            _ = system("rm ~/.config/phpmon/last_session.log 2> /dev/null")
+            _ = system("touch ~/.config/phpmon/last_session.log 2> /dev/null")
+            self.logExists = FileSystem.fileExists(self.logFilePath)
+        }
+    }
+
+    var verbosity: Verbosity = .warning {
+        didSet {
+            self.prepareLogFile()
+        }
+    }
 
     static func err(_ item: Any) {
         if Verbosity.error.isApplicable() {
-            print("[E] \(item)")
+            Log.shared.log("[E] \(item)")
         }
     }
 
     static func warn(_ item: Any) {
         if Verbosity.warning.isApplicable() {
-            print("[W] \(item)")
+            Log.shared.log("[W] \(item)")
         }
     }
 
     static func info(_ item: Any) {
         if Verbosity.info.isApplicable() {
-            print("\(item)")
+            Log.shared.log("\(item)")
         }
     }
 
     static func perf(_ item: Any) {
         if Verbosity.performance.isApplicable() {
-            print("[P] \(item)")
+            Log.shared.log("[P] \(item)")
         }
     }
 
     static func separator(as verbosity: Verbosity = .info) {
         if verbosity.isApplicable() {
-            print("==================================")
+            Log.shared.log("==================================")
         }
     }
 
+    private func log(_ text: String) {
+        print(text)
+
+        if logExists && Verbosity.cli.isApplicable() {
+            let logFile = URL(string: self.logFilePath.replacingTildeWithHomeDirectory)!
+            if let fileHandle = try? FileHandle(forWritingTo: logFile) {
+                fileHandle.seekToEndOfFile()
+                fileHandle.write(text.appending("\n").data(using: .utf8).unsafelyUnwrapped)
+                fileHandle.closeFile()
+            }
+        }
+    }
 }

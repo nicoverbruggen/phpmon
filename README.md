@@ -553,6 +553,10 @@ If you would like to report a crash, please include the associated **log files**
 
 To find the logs, take a look in `~/Library/Logs/DiagnosticReports` (in Finder) and see if there's any (log) files that start with "PHP Monitor".
 
+Additionally, you can help me figure out even more information by sending me your verbose log for your latest session of PHP Monitor. Logging is disabled by default. 
+
+You can start extra verbose logging by running: `touch ~/.config/phpmon/verbose` and restarting PHP Monitor. You can find the latest log in: `~/.config/phpmon/last_session.log`. Please attach it to the relevant bug report.
+
 </details>
 
 ## 📝 Having another issue?
