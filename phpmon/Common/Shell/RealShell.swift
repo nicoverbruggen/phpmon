@@ -140,7 +140,7 @@ class RealShell: ShellProtocol {
 
             """)
 
-            print(log)
+            Log.info(log)
         }
 
         return .out(stdOut, stdErr)
