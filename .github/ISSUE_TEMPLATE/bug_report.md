@@ -29,5 +29,10 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. macOS Monterey]
  - PHP Monitor version [e.g. v5.0.1]
 
+**Additional log**
+You can help me figure out even more information by sending me your verbose log for your latest session of PHP Monitor. Logging is disabled by default. 
+
+You can start extra verbose logging by running: `touch ~/.config/phpmon/verbose` and restarting PHP Monitor. You can find the latest log in: `~/.config/phpmon/last_session.log`. Please attach it here!
+
 **Additional context**
 Add any other context about the problem here.
