@@ -115,14 +115,12 @@ class RealShell: ShellProtocol {
         )!
 
         if Log.shared.verbosity == .cli {
-            var args = task.arguments
-            let last: String = "\"" + (args?.popLast() ?? "") + "\""
-            let concat = [self.launchPath] + task.arguments! + [last]
-            let command = concat.joined(separator: " ")
+            var args = task.arguments ?? []
+            let last = "\"" + (args.popLast() ?? "") + "\""
             var log = """
 
             <~~~~~~~~~~~~~~~~~~~~~~~
-            $ \(command)
+            $ \(([self.launchPath] + args + [last]).joined(separator: " "))
 
             [OUT]:
             \(stdOut)
