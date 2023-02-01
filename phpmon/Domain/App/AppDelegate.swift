@@ -69,6 +69,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
         #endif
 
+        // swiftlint:disable line_length
+        let url = NSURL(fileURLWithPath: "/Users/nicoverbruggen/Library/Developer/Xcode/DerivedData/PHP_Monitor-fqtxcemylaleoneoclkzipwmyxxw/Build/Products/Debug/PHP Monitor Self-Updater", isDirectory: true) as URL
+        let configuration = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.openApplication(at: url,
+                                           configuration: configuration)
+        
+        // exit(1)
+
         if CommandLine.arguments.contains("--v") {
             logger.verbosity = .performance
             Log.info("Extra verbose mode has been activated.")

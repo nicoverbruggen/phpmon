@@ -49,6 +49,9 @@
 		C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */; };
 		C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
 		C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
+		C406A5F3298AD2CE00B5B85A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A5F2298AD2CE00B5B85A /* main.swift */; };
+		C406A5F7298AD2CF00B5B85A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F6298AD2CF00B5B85A /* Assets.xcassets */; };
+		C406A602298AD50D00B5B85A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A601298AD50D00B5B85A /* AppDelegate.swift */; };
 		C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
@@ -757,6 +760,11 @@
 		C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
 		C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPreferenceView.swift; sourceTree = "<group>"; };
 		C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcons.swift; sourceTree = "<group>"; };
+		C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C406A5F2298AD2CE00B5B85A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		C406A5F6298AD2CF00B5B85A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "phpmon-updater.entitlements"; sourceTree = "<group>"; };
+		C406A601298AD50D00B5B85A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlert.swift; sourceTree = "<group>"; };
 		C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlertVC.swift; sourceTree = "<group>"; };
 		C40C5C9B2846A40600E28255 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
@@ -956,6 +964,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C406A5ED298AD2CE00B5B85A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C41C1B3022B0097F00E7CF16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1081,6 +1096,17 @@
 			path = IAP;
 			sourceTree = "<group>";
 		};
+		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
+			isa = PBXGroup;
+			children = (
+				C406A601298AD50D00B5B85A /* AppDelegate.swift */,
+				C406A5F2298AD2CE00B5B85A /* main.swift */,
+				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
+				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
+			);
+			path = "phpmon-updater";
+			sourceTree = "<group>";
+		};
 		C4080FF827BD955900BF2C6B /* Notice */ = {
 			isa = PBXGroup;
 			children = (
@@ -1145,6 +1171,7 @@
 				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
+				C406A5F1298AD2CE00B5B85A /* phpmon-updater */,
 				C471E79628F9B4260021E251 /* tests */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 				C4D309E72770EF2F00958BCF /* Frameworks */,
@@ -1158,6 +1185,7 @@
 				C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */,
 				C471E7AD28F9B4940021E251 /* Feature Tests.xctest */,
 				C471E7BC28F9B90F0021E251 /* UI Tests.xctest */,
+				C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1777,6 +1805,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C406A5EF298AD2CE00B5B85A /* PHP Monitor Updater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Updater" */;
+			buildPhases = (
+				C406A5EC298AD2CE00B5B85A /* Sources */,
+				C406A5ED298AD2CE00B5B85A /* Frameworks */,
+				C406A5EE298AD2CE00B5B85A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PHP Monitor Updater";
+			productName = "PHP Monitor Updater";
+			productReference = C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */;
+			productType = "com.apple.product-type.application";
+		};
 		C41C1B3222B0097F00E7CF16 /* PHP Monitor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */;
@@ -1859,10 +1904,13 @@
 		C41C1B2B22B0097F00E7CF16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
+					C406A5EF298AD2CE00B5B85A = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					C41C1B3222B0097F00E7CF16 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -1894,6 +1942,7 @@
 			projectRoot = "";
 			targets = (
 				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
+				C406A5EF298AD2CE00B5B85A /* PHP Monitor Updater */,
 				C4F7807825D7F84B000DBC97 /* Unit Tests */,
 				C471E7AC28F9B4940021E251 /* Feature Tests */,
 				C471E7BB28F9B90F0021E251 /* UI Tests */,
@@ -1902,6 +1951,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C406A5EE298AD2CE00B5B85A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C406A5F7298AD2CF00B5B85A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C41C1B3122B0097F00E7CF16 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1994,6 +2051,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C406A5EC298AD2CE00B5B85A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C406A602298AD50D00B5B85A /* AppDelegate.swift in Sources */,
+				C406A5F3298AD2CE00B5B85A /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C41C1B2F22B0097F00E7CF16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2713,6 +2779,134 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C406A5FD298AD2CF00B5B85A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "phpmon-updater/phpmon-updater.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C406A5FE298AD2CF00B5B85A /* Debug.Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "phpmon-updater/phpmon-updater.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug.Dev;
+		};
+		C406A5FF298AD2CF00B5B85A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "phpmon-updater/phpmon-updater.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C406A600298AD2CF00B5B85A /* Release.Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "phpmon-updater/phpmon-updater.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8M54J5J787;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release.Dev;
+		};
 		C41C1B4122B0098000E7CF16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3292,6 +3486,17 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Updater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C406A5FD298AD2CF00B5B85A /* Debug */,
+				C406A5FE298AD2CF00B5B85A /* Debug.Dev */,
+				C406A5FF298AD2CF00B5B85A /* Release */,
+				C406A600298AD2CF00B5B85A /* Release.Dev */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
