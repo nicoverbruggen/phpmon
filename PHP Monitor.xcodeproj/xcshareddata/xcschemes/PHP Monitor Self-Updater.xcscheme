@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C406A5EF298AD2CE00B5B85A"
-               BuildableName = "PHP Monitor Updater.app"
-               BlueprintName = "PHP Monitor Updater"
+               BuildableName = "PHP Monitor Self-Updater.app"
+               BlueprintName = "PHP Monitor Self-Updater"
                ReferencedContainer = "container:PHP Monitor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C406A5EF298AD2CE00B5B85A"
-            BuildableName = "PHP Monitor Updater.app"
-            BlueprintName = "PHP Monitor Updater"
+            BuildableName = "PHP Monitor Self-Updater.app"
+            BlueprintName = "PHP Monitor Self-Updater"
             ReferencedContainer = "container:PHP Monitor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C406A5EF298AD2CE00B5B85A"
-            BuildableName = "PHP Monitor Updater.app"
-            BlueprintName = "PHP Monitor Updater"
+            BuildableName = "PHP Monitor Self-Updater.app"
+            BlueprintName = "PHP Monitor Self-Updater"
             ReferencedContainer = "container:PHP Monitor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

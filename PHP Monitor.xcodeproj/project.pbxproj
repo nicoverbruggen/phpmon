@@ -760,7 +760,7 @@
 		C4068CA327B0780A00544CD5 /* CheckboxPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckboxPreferenceView.xib; sourceTree = "<group>"; };
 		C4068CA627B07A1300544CD5 /* SelectPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPreferenceView.swift; sourceTree = "<group>"; };
 		C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcons.swift; sourceTree = "<group>"; };
-		C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor Self-Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C406A5F2298AD2CE00B5B85A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C406A5F6298AD2CF00B5B85A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "phpmon-updater.entitlements"; sourceTree = "<group>"; };
@@ -1185,7 +1185,7 @@
 				C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */,
 				C471E7AD28F9B4940021E251 /* Feature Tests.xctest */,
 				C471E7BC28F9B90F0021E251 /* UI Tests.xctest */,
-				C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */,
+				C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1805,9 +1805,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C406A5EF298AD2CE00B5B85A /* PHP Monitor Updater */ = {
+		C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Updater" */;
+			buildConfigurationList = C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Self-Updater" */;
 			buildPhases = (
 				C406A5EC298AD2CE00B5B85A /* Sources */,
 				C406A5ED298AD2CE00B5B85A /* Frameworks */,
@@ -1817,9 +1817,9 @@
 			);
 			dependencies = (
 			);
-			name = "PHP Monitor Updater";
+			name = "PHP Monitor Self-Updater";
 			productName = "PHP Monitor Updater";
-			productReference = C406A5F0298AD2CE00B5B85A /* PHP Monitor Updater.app */;
+			productReference = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C41C1B3222B0097F00E7CF16 /* PHP Monitor */ = {
@@ -1942,7 +1942,7 @@
 			projectRoot = "";
 			targets = (
 				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
-				C406A5EF298AD2CE00B5B85A /* PHP Monitor Updater */,
+				C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */,
 				C4F7807825D7F84B000DBC97 /* Unit Tests */,
 				C471E7AC28F9B4940021E251 /* Feature Tests */,
 				C471E7BB28F9B90F0021E251 /* UI Tests */,
@@ -2794,7 +2794,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -2826,7 +2826,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -2858,7 +2858,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -2890,7 +2890,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Updater";
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -3486,7 +3486,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Updater" */ = {
+		C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Self-Updater" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C406A5FD298AD2CF00B5B85A /* Debug */,
