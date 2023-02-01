@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("PHP MONITOR SELF-UPDATER by Nico Verbruggen")
 
         // Figure out where the updater would like to find the
-        let path = "~/config/phpmon/updater/phpmon.zip"
+        let path = "~/.config/phpmon/updater/phpmon.zip"
             .replacingOccurrences(of: "~", with: NSHomeDirectory())
 
         // Terminating all instances of PHP Monitor first
@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // If the file does not exist, exit gracefully
         if !FileManager.default.fileExists(atPath: path) {
-            print("The update has not been downloaded. Sadly, that means we will not update!")
+            print("The update has not been downloaded. Sadly, that means that PHP Monitor cannot not updated!")
 
             showAlert(title: "The archive containing the zip appears to be missing.",
                       description: "PHP Monitor will not be updated, but we will restart the app for you.")
@@ -40,6 +40,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 exit(1)
             }
         }
+
+        // We made it!
+        install(zipPath: path)
+
+        // Restart PHP Monitor, this will also close the updater
+        restartPhpMon(dev: false)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -48,6 +54,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+
+    private func install(zipPath: String) {
+        _ = system("rm -rf ~/.config/phpmon/updater/output")
+        _ = system("mkdir -p ~/.config/phpmon/updater/output")
+        _ = system("unzip \(zipPath) -d ~/.config/phpmon/updater/output")
+        _ = system("rm -rf \"/Applications/PHP Monitor.app\"")
+        let command = "mv \"~/.config/phpmon/updater/output/PHP Monitor.app\" \"/Applications/PHP Monitor.app\""
+            .replacingOccurrences(of: "~", with: NSHomeDirectory())
+        _ = system(command)
     }
 
     private func terminatePhpMon() {

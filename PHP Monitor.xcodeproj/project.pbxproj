@@ -99,6 +99,7 @@
 		C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41CD0282628D8EE0065BBED /* GlobalKeybindPreference.swift */; };
 		C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */; };
 		C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */; };
+		C41F3D08298AED0D0042ACBF /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660A29113F20006BD146 /* System.swift */; };
 		C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
 		C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4205A7D27F4D21800191A39 /* ValetProxy.swift */; };
 		C422DDAA28A2C49900CEAC97 /* WarningListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDA928A2C49900CEAC97 /* WarningListView.swift */; };
@@ -2056,6 +2057,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C406A602298AD50D00B5B85A /* AppDelegate.swift in Sources */,
+				C41F3D08298AED0D0042ACBF /* System.swift in Sources */,
 				C406A5F3298AD2CE00B5B85A /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
