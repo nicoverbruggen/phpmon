@@ -79,7 +79,7 @@ class Updater: NSObject, NSApplicationDelegate {
         system_quiet("rm -rf \(updaterDirectory)/*.zip")
 
         // Download the file (and follow redirects + no output on failure)
-        system_quiet("cd \(updaterDirectory) && curl \(manifest.url) -fLO")
+        system_quiet("cd \(updaterDirectory) && curl \(manifest.url) -fLO --max-time 20")
 
         // Identify the downloaded file
         let filename = system("cd \(updaterDirectory) && ls | grep .zip")
@@ -88,7 +88,7 @@ class Updater: NSObject, NSApplicationDelegate {
         // Ensure the zip exists
         if filename.isEmpty {
             print("The update has not been downloaded. Sadly, that means that PHP Monitor cannot not updated!")
-            await Alert.show(description: "PHP Monitor has not been updated. The update was not downloaded, or the file could not be written to disk. Please try again.")
+            await Alert.show(description: "The update could not be downloaded, or the file was not correctly written to disk. \n\nPlease try again. \n\n(Note that the download will time-out after 20 seconds, so for slow connections it is recommended to manually download the update.)")
         }
 
         // Calculate the checksum for the downloaded file
