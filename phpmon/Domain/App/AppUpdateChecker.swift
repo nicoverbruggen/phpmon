@@ -11,6 +11,8 @@ import AppKit
 
 class AppUpdateChecker {
 
+    public static var latestCaskFileContents: String = ""
+
     public static var enabled: Bool = {
         return Preferences.isEnabled(.automaticBackgroundUpdateCheck)
     }()
@@ -32,9 +34,8 @@ class AppUpdateChecker {
             command = "curl -s --max-time 5"
         }
 
-        return await Shell.pipe(
-            "\(command) '\(caskFile)' | grep version"
-        ).out
+        AppUpdateChecker.latestCaskFileContents = await Shell.pipe("\(command) '\(caskFile)'").out
+        return await Shell.pipe("echo \"\(Self.latestCaskFileContents)\" | grep version").out
     }
 
     public static func checkIfNewerVersionIsAvailable(
@@ -143,6 +144,23 @@ class AppUpdateChecker {
                     : "updater.installation_source.direct".localized
             )
             .withPrimary(
+                text: "updater.alerts.buttons.install".localized,
+                action: { vc in
+                    print(Self.latestCaskFileContents)
+                    let sha256 = system("echo \"\(Self.latestCaskFileContents)\" | grep sha256")
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .replacingOccurrences(of: "'", with: "")
+                        .split(separator: " ").last ?? ""
+                    let url = system("echo \"\(Self.latestCaskFileContents)\" | grep url")
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .replacingOccurrences(of: "'", with: "")
+                        .split(separator: " ").last ?? ""
+
+                    print(sha256)
+                    print(url)
+                }
+            )
+            .withSecondary(
                 text: "updater.alerts.buttons.release_notes".localized,
                 action: { vc in
                     vc.close(with: .OK)

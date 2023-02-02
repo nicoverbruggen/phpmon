@@ -620,9 +620,8 @@ COMMON TROUBLESHOOTING TIPS
 
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
 "updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
-"updater.alerts.newer_version_available.description" = "PHP Monitor is supposed to be updated via Homebrew, so there is no built-in updater. This check is only meant to inform you of the existence of a new version, you do not need to upgrade.";
-"updater.installation_source.brew" = "You appear to have installed PHP Monitor via Homebrew (or have at least tapped the required Caskfile) so it is recommended that you upgrade via the terminal by running `%@`.";
-"updater.installation_source.direct" = "You do not appear to have installed PHP Monitor via Homebrew, so you will need to visit GitHub to download the latest update.";
+"updater.installation_source.brew" = "The recommended method of installing updates to PHP Monitor is to simply press 'Install Update'. This will launch the separate PHP Monitor Self-Updater, which will update the app. You may also upgrade via the terminal by running `%@`.";
+"updater.installation_source.direct" = "The recommended method of installing updates to PHP Monitor is to simply press 'Install Update'. This will launch the separate PHP Monitor Self-Updater, which will update the app.";
 "updater.alerts.buttons.release_notes" = "View Release Notes";
 
 "updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
@@ -632,6 +631,7 @@ COMMON TROUBLESHOOTING TIPS
 "updater.alerts.cannot_check_for_update.subtitle" = "You might not be connected to the internet, are blocking traffic or GitHub is down and won't allow you to check for updates. If you keep seeing this message, you may want to manually check the releases page.";
 "updater.alerts.cannot_check_for_update.description" = "The currently installed version is: %@. You can go to the list of the latest releases (on GitHub) by clicking on the button on the left.";
 "updater.alerts.buttons.releases_on_github" = "View Releases";
+"updater.alerts.buttons.install" = "Install Update";
 
 // WARNINGS ABOUT NON-DEFAULT TLD
 
