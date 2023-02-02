@@ -147,6 +147,12 @@ class AppUpdateChecker {
                 text: "updater.alerts.buttons.install".localized,
                 action: { vc in
                     print(Self.latestCaskFileContents)
+
+                    // TODO: Find the bundle asset named 'PHP Monitor Self-Updater.app'
+                    // TODO: Move the self-updater to ~/.config/phpmon
+                    // TODO: Write the manifest file to disk (~/.config/phpmon/updater/update.json)
+                    // TODO: Launch the updater app
+
                     let sha256 = system("echo \"\(Self.latestCaskFileContents)\" | grep sha256")
                         .trimmingCharacters(in: .whitespacesAndNewlines)
                         .replacingOccurrences(of: "'", with: "")
