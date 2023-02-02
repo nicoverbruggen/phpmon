@@ -77,6 +77,10 @@ class AppUpdateChecker {
         _ onlineVersion: AppVersion,
         _ background: Bool
     ) {
+        // TODO: Restore original behaviour
+        notifyAboutNewerVersion(version: onlineVersion)
+        return
+
         switch onlineVersion.version.versionCompare(currentVersion.version) {
         case .orderedAscending:
             Log.info("You are running a newer version of PHP Monitor "
@@ -146,36 +150,8 @@ class AppUpdateChecker {
             .withPrimary(
                 text: "updater.alerts.buttons.install".localized,
                 action: { vc in
-                    let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
-
-                    let updaterDirectory = "~/.config/phpmon/updater"
-                        .replacingOccurrences(of: "~", with: NSHomeDirectory())
-
-                    system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
-
-                    let sha256 = system("echo \"\(Self.latestCaskFileContents)\" | grep sha256")
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .replacingOccurrences(of: "'", with: "")
-                        .split(separator: " ").last ?? ""
-                    let url = system("echo \"\(Self.latestCaskFileContents)\" | grep url")
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .replacingOccurrences(of: "'", with: "")
-                        .split(separator: " ").last ?? ""
-
-                    try! FileSystem.writeAtomicallyToFile("\(updaterDirectory)/update.json", content: """
-                    {
-                    "url": "\(url)",
-                    "sha256": "\(sha256)"
-                    }
-                    """)
-
+                    Self.installUpdate()
                     vc.close(with: .OK)
-
-                    let updaterUrl = NSURL(fileURLWithPath: updater, isDirectory: true) as URL
-                    let configuration = NSWorkspace.OpenConfiguration()
-                    NSWorkspace.shared.openApplication(at: updaterUrl, configuration: configuration) { _, _ in
-                        print("The updater has been launched successfully")
-                    }
                 }
             )
             .withSecondary(
@@ -192,6 +168,38 @@ class AppUpdateChecker {
                 vc.close(with: .OK)
             })
             .show()
+        }
+    }
+
+    private static func installUpdate() {
+        let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
+
+        let updaterDirectory = "~/.config/phpmon/updater"
+            .replacingOccurrences(of: "~", with: NSHomeDirectory())
+
+        system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
+
+        let sha256 = system("echo \"\(Self.latestCaskFileContents)\" | grep sha256")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "'", with: "")
+            .split(separator: " ").last ?? ""
+
+        let url = system("echo \"\(Self.latestCaskFileContents)\" | grep url")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "'", with: "")
+            .split(separator: " ").last ?? ""
+
+        try! FileSystem.writeAtomicallyToFile(
+            "\(updaterDirectory)/update.json",
+            content: """
+            { "url": "\(url)", "sha256": "\(sha256)" }
+            """
+        )
+
+        let updaterUrl = NSURL(fileURLWithPath: updater, isDirectory: true) as URL
+        let configuration = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.openApplication(at: updaterUrl, configuration: configuration) { _, _ in
+            print("The updater has been launched successfully!")
         }
     }
 
