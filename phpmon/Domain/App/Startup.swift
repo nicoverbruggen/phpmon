@@ -134,7 +134,7 @@ class Startup {
                     Paths.optPath
                 ),
                 descriptionText: "startup.errors.php_opt.desc".localized
-            ),
+            )
         ]),
         EnvironmentCheckGroup(name: "valet", condition: { return Valet.shared.installed }, checks: [
             // =================================================================================
@@ -142,7 +142,8 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    return !(FileSystem.fileExists(Paths.valet) || FileSystem.fileExists("~/.composer/vendor/bin/valet"))
+                    return !(FileSystem.fileExists(Paths.valet)
+                             || FileSystem.fileExists("~/.composer/vendor/bin/valet"))
                 },
                 name: "`valet` binary exists",
                 titleText: "startup.errors.valet_executable.title".localized,

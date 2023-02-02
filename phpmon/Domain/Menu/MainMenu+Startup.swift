@@ -122,7 +122,7 @@ extension MainMenu {
         Log.info("PHP Monitor is ready to serve!")
 
         // Check if we upgraded just now
-        self.checkIfUpgradeWasPerformed()
+        // self.checkIfUpgradeWasPerformed()
     }
 
     /**
