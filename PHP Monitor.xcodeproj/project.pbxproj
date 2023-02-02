@@ -192,6 +192,7 @@
 		C469E706294CFDF700A82AB2 /* DomainsListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E702294CFDF700A82AB2 /* DomainsListTest.swift */; };
 		C46B2648298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
 		C46B2649298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
+		C46B2650298B3C2100084651 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */; };
 		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
@@ -850,6 +851,7 @@
 		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
 		C46B2647298B324100084651 /* ReleaseManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseManifest.swift; sourceTree = "<group>"; };
+		C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
 		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
 		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
@@ -1108,6 +1110,7 @@
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
 				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
+				C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */,
 			);
 			path = "phpmon-updater";
 			sourceTree = "<group>";
@@ -1971,6 +1974,7 @@
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
+				C46B2650298B3C2100084651 /* PHP Monitor Self-Updater.app in Resources */,
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
 				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
