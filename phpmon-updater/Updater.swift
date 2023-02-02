@@ -8,9 +8,10 @@
 
 import Cocoa
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class Updater: NSObject, NSApplicationDelegate {
 
     var updaterDirectory: String = ""
+    var manifest: ReleaseManifest! = nil
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
@@ -19,16 +20,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.updaterDirectory = "~/.config/phpmon/updater"
             .replacingOccurrences(of: "~", with: NSHomeDirectory())
 
+        let manifestPath = "\(updaterDirectory)/update.json"
+
+        // Read out the correct information from the manifest JSON
+        do {
+            let manifestText = try String(contentsOfFile: manifestPath)
+            manifest = try JSONDecoder().decode(ReleaseManifest.self, from: manifestText.data(using: .utf8)!)
+        } catch {
+            print("Parsing the manifest failed (or the manifest file doesn't exist)")
+            showAlert(
+                title: "Key information about the update is missing",
+                description: "The self-updater only works in combination with PHP Monitor. Please try searching for updates again in PHP Monitor. The app has not been updated."
+            )
+            exit(0)
+        }
+
         print("Updater directory set to: \(self.updaterDirectory)")
 
         // Download the latest file
-        let zipPath = self.download(
-            // zipUrl: "https://github.com/nicoverbruggen/phpmon/releases/download/v5.7.2/phpmon.zip",
-            // sha256: "654dd1df64ae32b1e3b9ebed7f6d89d04ed374b0b4d6732704e6df190169214f"
-            
-            zipUrl: "https://github.com/nicoverbruggen/phpmon/releases/download/v5.7.2/phpmon-dev.zip",
-            sha256: "1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a"
-        )
+        let zipPath = self.download(manifest)
 
         // Terminating all instances of PHP Monitor first
         terminatePhpMon()
@@ -48,12 +58,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
-    private func download(zipUrl: String, sha256: String) -> String {
+    private func download(_ manifest: ReleaseManifest) -> String {
         // Remove all zips
         system_quiet("rm -rf \(updaterDirectory)/*.zip")
 
         // Download the file (and follow redirects + no output on failure)
-        system_quiet("cd \(updaterDirectory) && curl \(zipUrl) -fLO")
+        system_quiet("cd \(updaterDirectory) && curl \(manifest.url) -fLO")
 
         // Identify the downloaded file
         let filename = system("cd \(updaterDirectory) && ls | grep .zip")
@@ -61,19 +71,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if filename.isEmpty {
             print("The update has not been downloaded. Sadly, that means that PHP Monitor cannot not updated!")
-
             showAlert(title: "The update was not downloaded.",
-                      description: "PHP Monitor will not be updated, but we will restart the app for you. You may not be connected to the internet or the server may be encountering issues. Please try again later!")
-
-            if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor.app") {
-                restartPhpMon(dev: false)
-            }
-            else if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor DEV.app") {
-                restartPhpMon(dev: true)
-            }
-            else {
-                exit(1)
-            }
+                      description: "PHP Monitor has not been updated. You may not be connected to the internet or the server may be encountering issues, or the file could not be written to disk. Please try again later!")
+            exit(1)
         }
 
         // Calculate the checksum for the downloaded file
@@ -82,12 +82,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         print("""
         Comparing checksums...
-        Expected SHA256: \(sha256)
+        Expected SHA256: \(manifest.sha256)
         Actual SHA256: \(checksum)
         """)
 
         // Make sure the checksum matches before we do anything with the file
-        if checksum != sha256 {
+        if checksum != manifest.sha256 {
             print("The checksums failed to match. Cancelling!")
             showAlert(
                 title: "The downloaded update failed checksum validation",
@@ -100,11 +100,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func install(zipPath: String) {
-        system_quiet("rm -rf \(updaterDirectory)/output")
-        system_quiet("mkdir -p \(updaterDirectory)/output")
+        system_quiet("rm -rf \(updaterDirectory)/extracted")
+        system_quiet("mkdir -p \(updaterDirectory)/extracted")
 
         var isDirectory: ObjCBool = true
-        if !FileManager.default.fileExists(atPath: "\(updaterDirectory)/output", isDirectory: &isDirectory) {
+        if !FileManager.default.fileExists(atPath: "\(updaterDirectory)/extracted", isDirectory: &isDirectory) {
             showAlert(
                 title: "The updater directory is missing",
                 description: "The automatic updater will quit. Make sure that ` ~/.config/phpmon/updater` is writeable."
@@ -112,7 +112,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             exit(0)
         }
 
-        system_quiet("unzip \(zipPath) -d \(updaterDirectory)/output")
+        system_quiet("unzip \(zipPath) -d \(updaterDirectory)/extracted")
 
         let expectedAppName = zipPath.contains("dev")
             ? "PHP Monitor DEV.app"
@@ -121,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("Removing \(expectedAppName) before replacing...")
 
         system_quiet("rm -rf \"/Applications/\(expectedAppName)\"")
-        system_quiet("mv \"\(updaterDirectory)/output/\(expectedAppName)\" \"/Applications/\(expectedAppName)\"")
+        system_quiet("mv \"\(updaterDirectory)/extracted/\(expectedAppName)\" \"/Applications/\(expectedAppName)\"")
     }
 
     private func terminatePhpMon() {
@@ -137,6 +137,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 .first(where: { (application) in return application.bundleIdentifier == id }) {
                 phpmon.terminate()
             }
+        }
+    }
+
+    private func smartRestartPhpMon() {
+        if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor.app") {
+            restartPhpMon(dev: false)
+        }
+        else if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor DEV.app") {
+            restartPhpMon(dev: true)
         }
     }
 

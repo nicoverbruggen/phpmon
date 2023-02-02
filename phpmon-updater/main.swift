@@ -8,10 +8,7 @@
 
 import Cocoa
 
-// 1
 let app = NSApplication.shared
-let delegate = AppDelegate()
+let delegate = Updater()
 app.delegate = delegate
-
-// 2
 _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)

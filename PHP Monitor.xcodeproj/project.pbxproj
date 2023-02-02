@@ -51,7 +51,7 @@
 		C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
 		C406A5F3298AD2CE00B5B85A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A5F2298AD2CE00B5B85A /* main.swift */; };
 		C406A5F7298AD2CF00B5B85A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F6298AD2CF00B5B85A /* Assets.xcassets */; };
-		C406A602298AD50D00B5B85A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A601298AD50D00B5B85A /* AppDelegate.swift */; };
+		C406A602298AD50D00B5B85A /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A601298AD50D00B5B85A /* Updater.swift */; };
 		C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
@@ -190,6 +190,8 @@
 		C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E706294CFDF700A82AB2 /* DomainsListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E702294CFDF700A82AB2 /* DomainsListTest.swift */; };
+		C46B2648298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
+		C46B2649298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
 		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
@@ -765,7 +767,7 @@
 		C406A5F2298AD2CE00B5B85A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C406A5F6298AD2CF00B5B85A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "phpmon-updater.entitlements"; sourceTree = "<group>"; };
-		C406A601298AD50D00B5B85A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C406A601298AD50D00B5B85A /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlert.swift; sourceTree = "<group>"; };
 		C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlertVC.swift; sourceTree = "<group>"; };
 		C40C5C9B2846A40600E28255 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
 		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
+		C46B2647298B324100084651 /* ReleaseManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseManifest.swift; sourceTree = "<group>"; };
 		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
 		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
@@ -1100,7 +1103,8 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
-				C406A601298AD50D00B5B85A /* AppDelegate.swift */,
+				C406A601298AD50D00B5B85A /* Updater.swift */,
+				C46B2647298B324100084651 /* ReleaseManifest.swift */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
 				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
@@ -2056,7 +2060,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C406A602298AD50D00B5B85A /* AppDelegate.swift in Sources */,
+				C406A602298AD50D00B5B85A /* Updater.swift in Sources */,
+				C46B2649298B324100084651 /* ReleaseManifest.swift in Sources */,
 				C41F3D08298AED0D0042ACBF /* System.swift in Sources */,
 				C406A5F3298AD2CE00B5B85A /* main.swift in Sources */,
 			);
@@ -2201,6 +2206,7 @@
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */,
 				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
+				C46B2648298B324100084651 /* ReleaseManifest.swift in Sources */,
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
