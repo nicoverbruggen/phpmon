@@ -579,6 +579,8 @@
 		C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
+		C4C75F5A298C2D5700DFD82E /* LaunchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C75F59298C2D5700DFD82E /* LaunchControl.swift */; };
+		C4C75F5C298C31C000DFD82E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C75F5B298C31C000DFD82E /* Alert.swift */; };
 		C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C4C8900528F0E3D100CE5E97 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
 		C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
@@ -908,6 +910,8 @@
 		C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
 		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
 		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
+		C4C75F59298C2D5700DFD82E /* LaunchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchControl.swift; sourceTree = "<group>"; };
+		C4C75F5B298C31C000DFD82E /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProtocol.swift; sourceTree = "<group>"; };
 		C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealFileSystem.swift; sourceTree = "<group>"; };
 		C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveFileSystem.swift; sourceTree = "<group>"; };
@@ -1105,9 +1109,11 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
-				C406A601298AD50D00B5B85A /* Updater.swift */,
-				C46B2647298B324100084651 /* ReleaseManifest.swift */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
+				C4C75F5B298C31C000DFD82E /* Alert.swift */,
+				C4C75F59298C2D5700DFD82E /* LaunchControl.swift */,
+				C46B2647298B324100084651 /* ReleaseManifest.swift */,
+				C406A601298AD50D00B5B85A /* Updater.swift */,
 				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
 				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
 				C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */,
@@ -2064,7 +2070,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4C75F5C298C31C000DFD82E /* Alert.swift in Sources */,
 				C406A602298AD50D00B5B85A /* Updater.swift in Sources */,
+				C4C75F5A298C2D5700DFD82E /* LaunchControl.swift in Sources */,
 				C46B2649298B324100084651 /* ReleaseManifest.swift in Sources */,
 				C41F3D08298AED0D0042ACBF /* System.swift in Sources */,
 				C406A5F3298AD2CE00B5B85A /* main.swift in Sources */,
@@ -2802,7 +2810,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2834,7 +2842,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2866,7 +2874,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2898,7 +2906,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -15,7 +15,12 @@ class Updater: NSObject, NSApplicationDelegate {
     var manifest: ReleaseManifest! = nil
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        Task { await self.installUpdate() }
+    }
+
+    func installUpdate() async {
         print("PHP MONITOR SELF-UPDATER by Nico Verbruggen")
+        print("===========================================")
 
         self.updaterDirectory = "~/.config/phpmon/updater"
             .replacingOccurrences(of: "~", with: NSHomeDirectory())
@@ -24,32 +29,25 @@ class Updater: NSObject, NSApplicationDelegate {
 
         self.manifestPath = "\(updaterDirectory)/update.json"
 
-        print("Checking manifest file at \(manifestPath)")
-
-        // Read out the correct information from the manifest JSON
-        do {
-            let manifestText = try String(contentsOfFile: manifestPath)
-            manifest = try JSONDecoder().decode(ReleaseManifest.self, from: manifestText.data(using: .utf8)!)
-        } catch {
-            print("Parsing the manifest failed (or the manifest file doesn't exist)")
-            showAlert(
-                title: "Key information about the update is missing",
-                description: "The app has not been updated. The self-updater only works in combination with PHP Monitor. Please try searching for updates again in PHP Monitor."
-            )
-            exit(0)
-        }
+        // Fetch the manifest on the local filesystem
+        let manifest = await parseManifest()!
 
         // Download the latest file
-        let zipPath = download(manifest)
+        let zipPath = await download(manifest)
 
         // Terminate all instances of PHP Monitor first
-        terminatePhpMon()
+        await LaunchControl.terminateApplications(bundleIds: [
+            "com.nicoverbruggen.phpmon.dev",
+            "com.nicoverbruggen.phpmon"
+        ])
 
         // Install the app based on the zip
-        let appPath = extractAndInstall(zipPath: zipPath)
+        let appPath = await extractAndInstall(zipPath: zipPath)
 
         // Restart PHP Monitor, this will also close the updater
-        restartPhpMon(at: appPath)
+        _ = await LaunchControl.startApplication(at: appPath)
+
+        exit(1)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -60,7 +58,23 @@ class Updater: NSObject, NSApplicationDelegate {
         return false
     }
 
-    private func download(_ manifest: ReleaseManifest) -> String {
+    private func parseManifest() async -> ReleaseManifest? {
+        // Read out the correct information from the manifest JSON
+        print("Checking manifest file at \(manifestPath)...")
+
+        do {
+            let manifestText = try String(contentsOfFile: manifestPath)
+            manifest = try JSONDecoder().decode(ReleaseManifest.self, from: manifestText.data(using: .utf8)!)
+            return manifest
+        } catch {
+            print("Parsing the manifest failed (or the manifest file doesn't exist)!")
+            await Alert.show(description: "The manifest file for a potential update was not found. Please try searching for updates again in PHP Monitor.")
+        }
+
+        return nil
+    }
+
+    private func download(_ manifest: ReleaseManifest) async -> String {
         // Remove all zips
         system_quiet("rm -rf \(updaterDirectory)/*.zip")
 
@@ -74,9 +88,7 @@ class Updater: NSObject, NSApplicationDelegate {
         // Ensure the zip exists
         if filename.isEmpty {
             print("The update has not been downloaded. Sadly, that means that PHP Monitor cannot not updated!")
-            showAlert(title: "The update was not downloaded.",
-                      description: "PHP Monitor has not been updated. You may not be connected to the internet or the server may be encountering issues, or the file could not be written to disk. Please try again later!")
-            exit(1)
+            await Alert.show(description: "PHP Monitor has not been updated. The update was not downloaded, or the file could not be written to disk. Please try again.")
         }
 
         // Calculate the checksum for the downloaded file
@@ -93,18 +105,14 @@ class Updater: NSObject, NSApplicationDelegate {
         // Make sure the checksum matches before we do anything with the file
         if checksum != manifest.sha256 {
             print("The checksums failed to match. Cancelling!")
-            showAlert(
-                title: "The downloaded update failed checksum validation",
-                description: "Please try again! If this issue persists, there may be an issue with the server and I do not recommend upgrading."
-            )
-            exit(0)
+            await Alert.show(description: "The downloaded update failed checksum validation. Please try again. If this issue persists, there may be an issue with the server and I do not recommend upgrading.")
         }
 
         // Return the path to the zip
         return "\(updaterDirectory)/\(filename)"
     }
 
-    private func extractAndInstall(zipPath: String) -> String {
+    private func extractAndInstall(zipPath: String) async -> String {
         // Remove the directory that will contain the extracted update
         system_quiet("rm -rf \(updaterDirectory)/extracted")
 
@@ -114,11 +122,7 @@ class Updater: NSObject, NSApplicationDelegate {
         // Make sure the updater directory exists
         var isDirectory: ObjCBool = true
         if !FileManager.default.fileExists(atPath: "\(updaterDirectory)/extracted", isDirectory: &isDirectory) {
-            showAlert(
-                title: "The updater directory is missing",
-                description: "The automatic updater will quit. Make sure that ` ~/.config/phpmon/updater` is writeable."
-            )
-            exit(0)
+            await Alert.show(description: "The updater directory is missing. The automatic updater will quit. Make sure that ` ~/.config/phpmon/updater` is writeable.")
         }
 
         // Unzip the file
@@ -132,11 +136,7 @@ class Updater: NSObject, NSApplicationDelegate {
 
         // Make sure the file was extracted
         if app.isEmpty {
-            showAlert(
-                title: "The downloaded file could not be extracted",
-                description: "The automatic updater will quit. Make sure that ` ~/.config/phpmon/updater` is writeable."
-            )
-            exit(0)
+            await Alert.show(description: "The downloaded file could not be extracted. The automatic updater will quit. Make sure that ` ~/.config/phpmon/updater` is writeable.")
         }
 
         // Remove the original app
@@ -152,52 +152,10 @@ class Updater: NSObject, NSApplicationDelegate {
         // Remove the manifest
         system_quiet("rm \(manifestPath)")
 
+        // Write a file that is only written when we upgraded successfully
+        system_quiet("touch \(updaterDirectory)/upgrade.success")
+
         // Return the new location of the app
         return "/Applications/\(app)"
-    }
-
-    private func terminatePhpMon() {
-        let runningApplications = NSWorkspace.shared.runningApplications
-
-        // Look for these instances
-        let ids = [
-            "com.nicoverbruggen.phpmon.dev",
-            "com.nicoverbruggen.phpmon"
-        ]
-
-        // Terminate all instances found
-        for id in ids {
-            if let phpmon = runningApplications.first(where: {
-                (application) in return application.bundleIdentifier == id
-            }) {
-                phpmon.terminate()
-            }
-        }
-    }
-
-    private func smartRestartPhpMon() {
-        if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor.app") {
-            restartPhpMon(at: "/Applications/PHP Monitor.app")
-        }
-        else if FileManager.default.fileExists(atPath: "/Applications/PHP Monitor DEV.app") {
-            restartPhpMon(at: "/Applications/PHP Monitor DEV.app")
-        }
-    }
-
-    private func restartPhpMon(at path: String) {
-        let url = NSURL(fileURLWithPath: path, isDirectory: true) as URL
-        let configuration = NSWorkspace.OpenConfiguration()
-        NSWorkspace.shared.openApplication(at: url, configuration: configuration) { phpmon, error in
-            exit(0)
-        }
-    }
-
-    private func showAlert(title: String, description: String) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = description
-        alert.addButton(withTitle: "OK")
-        alert.alertStyle = .critical
-        alert.runModal()
     }
 }
