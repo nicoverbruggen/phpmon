@@ -11,6 +11,7 @@ import Cocoa
 class Updater: NSObject, NSApplicationDelegate {
 
     var updaterDirectory: String = ""
+    var manifestPath: String = ""
     var manifest: ReleaseManifest! = nil
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -21,7 +22,7 @@ class Updater: NSObject, NSApplicationDelegate {
 
         print("Updater directory set to: \(self.updaterDirectory)")
 
-        let manifestPath = "\(updaterDirectory)/update.json"
+        self.manifestPath = "\(updaterDirectory)/update.json"
 
         print("Checking manifest file at \(manifestPath)")
 
@@ -39,7 +40,7 @@ class Updater: NSObject, NSApplicationDelegate {
         }
 
         // Download the latest file
-        let zipPath = self.download(manifest)
+        let zipPath = download(manifest)
 
         // Terminate all instances of PHP Monitor first
         terminatePhpMon()
@@ -70,6 +71,7 @@ class Updater: NSObject, NSApplicationDelegate {
         let filename = system("cd \(updaterDirectory) && ls | grep .zip")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
+        // Ensure the zip exists
         if filename.isEmpty {
             print("The update has not been downloaded. Sadly, that means that PHP Monitor cannot not updated!")
             showAlert(title: "The update was not downloaded.",
@@ -81,6 +83,7 @@ class Updater: NSObject, NSApplicationDelegate {
         let checksum = system("openssl dgst -sha256 \(updaterDirectory)/\(filename) | awk '{print $NF}'")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
+        // Compare the checksums
         print("""
         Comparing checksums...
         Expected SHA256: \(manifest.sha256)
@@ -97,6 +100,7 @@ class Updater: NSObject, NSApplicationDelegate {
             exit(0)
         }
 
+        // Return the path to the zip
         return "\(updaterDirectory)/\(filename)"
     }
 
@@ -135,11 +139,20 @@ class Updater: NSObject, NSApplicationDelegate {
             exit(0)
         }
 
+        // Remove the original app
         print("Removing \(app) before replacing...")
-
         system_quiet("rm -rf \"/Applications/\(app)\"")
+
+        // Move the new app in place
         system_quiet("mv \"\(updaterDirectory)/extracted/\(app)\" \"/Applications/\(app)\"")
 
+        // Remove the zip
+        system_quiet("rm \(zipPath)")
+
+        // Remove the manifest
+        system_quiet("rm \(manifestPath)")
+
+        // Return the new location of the app
         return "/Applications/\(app)"
     }
 
