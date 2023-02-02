@@ -63,7 +63,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         #if DEBUG
         logger.verbosity = .performance
-
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
         }

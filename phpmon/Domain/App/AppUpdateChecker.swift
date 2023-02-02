@@ -146,12 +146,12 @@ class AppUpdateChecker {
             .withPrimary(
                 text: "updater.alerts.buttons.install".localized,
                 action: { vc in
-                    print(Self.latestCaskFileContents)
+                    let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
 
-                    // TODO: Find the bundle asset named 'PHP Monitor Self-Updater.app'
-                    // TODO: Move the self-updater to ~/.config/phpmon
-                    // TODO: Write the manifest file to disk (~/.config/phpmon/updater/update.json)
-                    // TODO: Launch the updater app
+                    let updaterDirectory = "~/.config/phpmon/updater"
+                        .replacingOccurrences(of: "~", with: NSHomeDirectory())
+
+                    system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
 
                     let sha256 = system("echo \"\(Self.latestCaskFileContents)\" | grep sha256")
                         .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -162,8 +162,20 @@ class AppUpdateChecker {
                         .replacingOccurrences(of: "'", with: "")
                         .split(separator: " ").last ?? ""
 
-                    print(sha256)
-                    print(url)
+                    try! FileSystem.writeAtomicallyToFile("\(updaterDirectory)/update.json", content: """
+                    {
+                    "url": "\(url)",
+                    "sha256": "\(sha256)"
+                    }
+                    """)
+
+                    vc.close(with: .OK)
+
+                    let updaterUrl = NSURL(fileURLWithPath: updater, isDirectory: true) as URL
+                    let configuration = NSWorkspace.OpenConfiguration()
+                    NSWorkspace.shared.openApplication(at: updaterUrl, configuration: configuration) { _, _ in
+                        print("The updater has been launched successfully")
+                    }
                 }
             )
             .withSecondary(
