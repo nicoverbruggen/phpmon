@@ -120,6 +120,9 @@ extension MainMenu {
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
+
+        // Check if we upgraded just now
+        self.checkIfUpgradeWasPerformed()
     }
 
     /**
@@ -187,5 +190,19 @@ extension MainMenu {
         }
 
         Log.info("Detected applications: \(appNames)")
+    }
+
+    private func checkIfUpgradeWasPerformed() {
+        if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
+            // Send a notification about the update
+            Task { @MainActor in
+                LocalNotification.send(
+                    title: "notification.phpmon_updated.title".localized,
+                    subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
+                    preference: nil
+                )
+                try! FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
+            }
+        }
     }
 }
