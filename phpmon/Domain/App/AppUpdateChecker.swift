@@ -174,6 +174,8 @@ class AppUpdateChecker {
     private static func installUpdate() {
         let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
 
+        system_quiet("mkdir -p ~/.config/phpmon/updater 2> /dev/null")
+
         let updaterDirectory = "~/.config/phpmon/updater"
             .replacingOccurrences(of: "~", with: NSHomeDirectory())
 
