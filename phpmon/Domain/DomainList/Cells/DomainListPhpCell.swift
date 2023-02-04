@@ -57,7 +57,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             if site.isolatedPhpVersion != nil {
                 return []
             }
-            
+
             guard let install = PhpEnv.phpInstall else {
                 return []
             }

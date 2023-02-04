@@ -56,6 +56,18 @@
 		C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
 		C4080FFB27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
+		C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
+		C409349E298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
+		C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
+		C40934A0298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
+		C40934A2298EEB2C00D25014 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40934A1298EEB2C00D25014 /* CaskFile.swift */; };
+		C40934A3298EEB2C00D25014 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40934A1298EEB2C00D25014 /* CaskFile.swift */; };
+		C40934A4298EEB2C00D25014 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40934A1298EEB2C00D25014 /* CaskFile.swift */; };
+		C40934A5298EEB2C00D25014 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40934A1298EEB2C00D25014 /* CaskFile.swift */; };
+		C40934A7298EEB8700D25014 /* phpmon-dev.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40934A6298EEB8700D25014 /* phpmon-dev.rb */; };
+		C40934A8298EEB8700D25014 /* phpmon-dev.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40934A6298EEB8700D25014 /* phpmon-dev.rb */; };
+		C40934A9298EEB8700D25014 /* phpmon-dev.rb in Resources */ = {isa = PBXBuildFile; fileRef = C40934A6298EEB8700D25014 /* phpmon-dev.rb */; };
+		C40934AB298EEDA900D25014 /* CaskFileParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */; };
 		C40B24F227A310770018C7D2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
 		C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C40C5C9C2846A40600E28255 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C5C9B2846A40600E28255 /* Preset.swift */; };
@@ -773,6 +785,10 @@
 		C406A601298AD50D00B5B85A /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlert.swift; sourceTree = "<group>"; };
 		C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlertVC.swift; sourceTree = "<group>"; };
+		C409349C298EE8E900D25014 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		C40934A1298EEB2C00D25014 /* CaskFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaskFile.swift; sourceTree = "<group>"; };
+		C40934A6298EEB8700D25014 /* phpmon-dev.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = "phpmon-dev.rb"; sourceTree = "<group>"; };
+		C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaskFileParserTest.swift; sourceTree = "<group>"; };
 		C40C5C9B2846A40600E28255 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
 		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* ActivePhpInstallation+Checks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivePhpInstallation+Checks.swift"; sourceTree = "<group>"; };
@@ -1347,6 +1363,7 @@
 		C459B4BF27F6094100E9B4B4 /* brew */ = {
 			isa = PBXGroup;
 			children = (
+				C40934A6298EEB8700D25014 /* phpmon-dev.rb */,
 				C4E2E85228FC256B003B070C /* brew-services-normal.json */,
 				C4E2E85128FC256B003B070C /* brew-services-sudo.json */,
 				C43A8A1F25D9D1D700591B77 /* brew-formula.json */,
@@ -1520,6 +1537,7 @@
 			isa = PBXGroup;
 			children = (
 				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
+				C40934A1298EEB2C00D25014 /* CaskFile.swift */,
 			);
 			path = Homebrew;
 			sourceTree = "<group>";
@@ -1542,6 +1560,7 @@
 				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */,
+				C409349C298EE8E900D25014 /* AppUpdater.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1628,6 +1647,7 @@
 				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
 				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
+				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1998,6 +2018,7 @@
 				C4570C3B28FC355300D18420 /* Localizable.strings in Resources */,
 				C4E2E85528FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85928FC256B003B070C /* brew-services-normal.json in Resources */,
+				C40934A8298EEB8700D25014 /* phpmon-dev.rb in Resources */,
 				C4E2E84F28FC22E4003B070C /* brew-formula.json in Resources */,
 				C4E2E86228FC28A6003B070C /* brew-services.json in Resources */,
 			);
@@ -2010,6 +2031,7 @@
 				C4570C3A28FC355300D18420 /* Localizable.strings in Resources */,
 				C4E2E85628FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85A28FC256B003B070C /* brew-services-normal.json in Resources */,
+				C40934A9298EEB8700D25014 /* phpmon-dev.rb in Resources */,
 				C4E2E85028FC22E4003B070C /* brew-formula.json in Resources */,
 				C4E2E86128FC28A6003B070C /* brew-services.json in Resources */,
 			);
@@ -2036,6 +2058,7 @@
 				C455165B297AEDB5009B8466 /* valetrc.broken in Resources */,
 				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
+				C40934A7298EEB8700D25014 /* phpmon-dev.rb in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
 				C4E2E85428FC256B003B070C /* brew-services-sudo.json in Resources */,
 			);
@@ -2088,6 +2111,7 @@
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */,
+				C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
 				C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */,
@@ -2157,6 +2181,7 @@
 				C4CE3BB827B31F2E0086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
+				C40934A2298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				C495F5AF28A42E080087F70A /* EnvironmentCheck.swift in Sources */,
 				C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
@@ -2283,6 +2308,7 @@
 				C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */,
 				C471E84D28F9BB650021E251 /* ActivePhpInstallation+Checks.swift in Sources */,
 				C471E84E28F9BB650021E251 /* MainMenu.swift in Sources */,
+				C40934A4298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				C471E84F28F9BB650021E251 /* MainMenu+Startup.swift in Sources */,
 				C471E85028F9BB650021E251 /* MainMenu+Async.swift in Sources */,
 				C471E85128F9BB650021E251 /* MainMenu+Switcher.swift in Sources */,
@@ -2382,6 +2408,7 @@
 				C471E81C28F9BB250021E251 /* BetterAlert.swift in Sources */,
 				C471E7DB28F9BA8F0021E251 /* RealShell.swift in Sources */,
 				C471E7FF28F9BAD10021E251 /* Xdebug.swift in Sources */,
+				C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C471E7F228F9BAC70021E251 /* PhpEnv.swift in Sources */,
 				C471E7E628F9BAC20021E251 /* Process.swift in Sources */,
 				C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
@@ -2422,6 +2449,7 @@
 				C471E89228F9BB8F0021E251 /* Alert.swift in Sources */,
 				C471E89328F9BB8F0021E251 /* Application.swift in Sources */,
 				C471E89428F9BB8F0021E251 /* LocalNotification.swift in Sources */,
+				C40934A5298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				C471E89528F9BB8F0021E251 /* MenuBarImageGenerator.swift in Sources */,
 				C471E89628F9BB8F0021E251 /* PMWindowController.swift in Sources */,
 				C471E89728F9BB8F0021E251 /* VersionExtractor.swift in Sources */,
@@ -2526,6 +2554,7 @@
 				C4BB393C2981AFC700F8E797 /* PhpVersionSource.swift in Sources */,
 				C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */,
 				C471E7EE28F9BAC30021E251 /* Constants.swift in Sources */,
+				C40934A0298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C471E80E28F9BAE80021E251 /* DateExtension.swift in Sources */,
 				C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */,
 				C471E81228F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
@@ -2592,6 +2621,7 @@
 				C485707128BF452E00539B36 /* WarningManager.swift in Sources */,
 				C41CA5EE2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C4FACE81288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift in Sources */,
+				C40934A3298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				54D9E0B727E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C413E43528DA3EB100AE33C7 /* TestableShellTest.swift in Sources */,
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
@@ -2730,6 +2760,7 @@
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
 				C4C0E8E027F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C4463FCD29804BCB007B93D5 /* RCFile.swift in Sources */,
+				C409349E298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
@@ -2755,6 +2786,7 @@
 				C4A81CA528C67101008DD9D1 /* PMTableView.swift in Sources */,
 				C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4D36602291132B7006BD146 /* ValetScanners.swift in Sources */,
+				C40934AB298EEDA900D25014 /* CaskFileParserTest.swift in Sources */,
 				C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,

@@ -13,7 +13,7 @@ class Log {
     static var shared = Log()
 
     var logFilePath = "~/.config/phpmon/last_session.log"
-    
+
     var logExists = false
 
     enum Verbosity: Int {
