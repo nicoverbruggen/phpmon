@@ -17,32 +17,36 @@ class CaskFileParserTest: XCTestCase {
     }
 
     func test_can_extract_fields_from_cask_file() throws {
-        let caskFile = CaskFile.from(url: CaskFileParserTest.exampleFilePath)
+        guard let caskFile = CaskFile.from(url: CaskFileParserTest.exampleFilePath) else {
+            return XCTFail("The CaskFile could not be parsed, check the log for more info")
+        }
 
         XCTAssertEqual(
-            caskFile!.properties["version"],
+            caskFile.version,
             "5.7.2_1035"
         )
         XCTAssertEqual(
-            caskFile!.properties["homepage"],
-            "https://phpmon.app"
+            caskFile.sha256,
+            "1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a"
         )
         XCTAssertEqual(
-            caskFile!.properties["appcast"],
-            "https://github.com/nicoverbruggen/phpmon/releases.atom"
+            caskFile.name,
+            "PHP Monitor DEV"
         )
         XCTAssertEqual(
-            caskFile!.properties["url"],
+            caskFile.url,
             "https://github.com/nicoverbruggen/phpmon/releases/download/v5.7.2/phpmon-dev.zip"
         )
     }
 
     func test_can_extract_fields_from_remote_cask_file() throws {
-        let caskFile = CaskFile.from(url: Constants.Urls.StableBuildCaskFile)
+        guard let caskFile = CaskFile.from(url: Constants.Urls.StableBuildCaskFile) else {
+            return XCTFail("The remote CaskFile could not be parsed, check the log for more info")
+        }
 
-        XCTAssertTrue(caskFile!.properties.keys.contains("version"))
-        XCTAssertTrue(caskFile!.properties.keys.contains("homepage"))
-        XCTAssertTrue(caskFile!.properties.keys.contains("url"))
-        XCTAssertTrue(caskFile!.properties.keys.contains("appcast"))
+        XCTAssertTrue(caskFile.properties.keys.contains("version"))
+        XCTAssertTrue(caskFile.properties.keys.contains("homepage"))
+        XCTAssertTrue(caskFile.properties.keys.contains("url"))
+        XCTAssertTrue(caskFile.properties.keys.contains("appcast"))
     }
 }

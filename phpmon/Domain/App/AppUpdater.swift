@@ -48,4 +48,8 @@ class AppUpdater {
     public func presentCouldNotRetrieveUpdate() {
 
     }
+
+    private func prepareForDownload() {
+
+    }
 }

@@ -11,10 +11,24 @@ import Foundation
 struct CaskFile {
     var properties: [String: String]
 
+    var name: String {
+        return self.properties["name"]!
+    }
+    var url: String {
+        return self.properties["url"]!
+    }
+    var sha256: String {
+        return self.properties["sha256"]!
+    }
+    var version: String {
+        return self.properties["version"]!
+    }
+
     public static func from(url: URL) -> CaskFile? {
         let string = try? String(contentsOf: url)
 
         guard let string else {
+            Log.err("The content of the URL for the CaskFile could not be retrieved")
             return nil
         }
 
@@ -22,23 +36,35 @@ struct CaskFile {
             .filter { $0 != "" }
 
         if lines.count < 4 {
+            Log.err("The CaskFile is <4 lines long, which is too short")
             return nil
         }
 
         if !lines.first!.starts(with: "cask") || !lines.last!.starts(with: "end") {
+            Log.err("The CaskFile does not start with 'cask' or does not end with 'end'")
             return nil
         }
 
         var props: [String: String] = [:]
 
-        lines.forEach { line in
-            let text = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            let parts = text.split(separator: " ")
+        let regex = try! NSRegularExpression(pattern: "(\\w+)\\s+'([^']+)'")
 
-            if parts.count == 2 {
-                props[String(parts[0])] = String(parts[1])
-                    .replacingOccurrences(of: "\'", with: "")
+        for line in lines {
+            if let match = regex.firstMatch(
+                in: String(line),
+                range: NSRange(location: 0, length: line.utf16.count)
+            ) {
+                let keyRange = match.range(at: 1)
+                let valueRange = match.range(at: 2)
+                let key = (line as NSString).substring(with: keyRange)
+                let value = (line as NSString).substring(with: valueRange)
+                props[key] = value
             }
+        }
+
+        for required in ["version", "sha256", "url", "name"] where !props.keys.contains(required) {
+            Log.err("Property '\(required)' expected on CaskFile, assuming CaskFile is invalid")
+            return nil
         }
 
         return CaskFile(properties: props)
