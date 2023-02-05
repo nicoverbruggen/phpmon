@@ -75,5 +75,4 @@ struct CaskFile {
 
         return CaskFile(properties: props)
     }
-
 }

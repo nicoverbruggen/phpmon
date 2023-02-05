@@ -87,7 +87,7 @@ class AppVersion: Comparable {
     static func < (lhs: AppVersion, rhs: AppVersion) -> Bool {
         let comparisonResult = lhs.version.versionCompare(rhs.version)
 
-        if comparisonResult == .orderedDescending {
+        if comparisonResult == .orderedAscending {
             return true
         }
 

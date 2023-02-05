@@ -205,8 +205,6 @@
 		C46B2648298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
 		C46B2649298B324100084651 /* ReleaseManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46B2647298B324100084651 /* ReleaseManifest.swift */; };
 		C46B2650298B3C2100084651 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */; };
-		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
-		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
 		C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
@@ -347,7 +345,6 @@
 		C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
 		C471E84728F9BB650021E251 /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */; };
-		C471E84928F9BB650021E251 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */; };
@@ -437,7 +434,6 @@
 		C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
 		C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C471E8AB28F9BB8F0021E251 /* EnvironmentCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */; };
-		C471E8AC28F9BB8F0021E251 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C471E8AD28F9BB8F0021E251 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E8AF28F9BB8F0021E251 /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */; };
@@ -870,7 +866,6 @@
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
 		C46B2647298B324100084651 /* ReleaseManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseManifest.swift; sourceTree = "<group>"; };
 		C46B264F298B3C2100084651 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
-		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
 		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
 		C46EBC4628DB9644007ACC74 /* RealShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShell.swift; sourceTree = "<group>"; };
@@ -1557,7 +1552,6 @@
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
-				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */,
 				C409349C298EE8E900D25014 /* AppUpdater.swift */,
@@ -2198,7 +2192,6 @@
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
-				C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
@@ -2302,7 +2295,6 @@
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
-				C471E84928F9BB650021E251 /* AppUpdateChecker.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
 				C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */,
@@ -2472,7 +2464,6 @@
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
 				C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */,
 				C471E8AB28F9BB8F0021E251 /* EnvironmentCheck.swift in Sources */,
-				C471E8AC28F9BB8F0021E251 /* AppUpdateChecker.swift in Sources */,
 				C471E8AD28F9BB8F0021E251 /* AppVersion.swift in Sources */,
 				C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */,
 				C471E8AF28F9BB8F0021E251 /* EnvironmentManager.swift in Sources */,
@@ -2795,7 +2786,6 @@
 				C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */,
 				C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
-				C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
