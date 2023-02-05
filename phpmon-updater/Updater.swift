@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  Updater.swift
 //  PHP Monitor Updater
 //
 //  Created by Nico Verbruggen on 01/02/2023.
@@ -79,10 +79,10 @@ class Updater: NSObject, NSApplicationDelegate {
         system_quiet("rm -rf \(updaterDirectory)/*.zip")
 
         // Download the file (and follow redirects + no output on failure)
-        system_quiet("cd \(updaterDirectory) && curl \(manifest.url) -fLO --max-time 20")
+        system_quiet("cd \"\(updaterDirectory)\" && curl \(manifest.url) -fLO --max-time 20")
 
         // Identify the downloaded file
-        let filename = system("cd \(updaterDirectory) && ls | grep .zip")
+        let filename = system("cd \"\(updaterDirectory)\" && ls | grep .zip")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Ensure the zip exists
@@ -92,7 +92,7 @@ class Updater: NSObject, NSApplicationDelegate {
         }
 
         // Calculate the checksum for the downloaded file
-        let checksum = system("openssl dgst -sha256 \(updaterDirectory)/\(filename) | awk '{print $NF}'")
+        let checksum = system("openssl dgst -sha256 \"\(updaterDirectory)/\(filename)\" | awk '{print $NF}'")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Compare the checksums
@@ -114,10 +114,10 @@ class Updater: NSObject, NSApplicationDelegate {
 
     private func extractAndInstall(zipPath: String) async -> String {
         // Remove the directory that will contain the extracted update
-        system_quiet("rm -rf \(updaterDirectory)/extracted")
+        system_quiet("rm -rf \"\(updaterDirectory)/extracted\"")
 
         // Recreate the directory where we will unzip the .app file
-        system_quiet("mkdir -p \(updaterDirectory)/extracted")
+        system_quiet("mkdir -p \"\(updaterDirectory)/extracted\"")
 
         // Make sure the updater directory exists
         var isDirectory: ObjCBool = true
@@ -126,10 +126,10 @@ class Updater: NSObject, NSApplicationDelegate {
         }
 
         // Unzip the file
-        system_quiet("unzip \(zipPath) -d \(updaterDirectory)/extracted")
+        system_quiet("unzip \"\(zipPath)\" -d \"\(updaterDirectory)/extracted\"")
 
         // Find the .app file
-        let app = system("ls \(updaterDirectory)/extracted | grep .app")
+        let app = system("ls \"\(updaterDirectory)/extracted\" | grep .app")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         print("Finished extracting: \(updaterDirectory)/extracted/\(app)")
@@ -147,13 +147,13 @@ class Updater: NSObject, NSApplicationDelegate {
         system_quiet("mv \"\(updaterDirectory)/extracted/\(app)\" \"/Applications/\(app)\"")
 
         // Remove the zip
-        system_quiet("rm \(zipPath)")
+        system_quiet("rm \"\(zipPath)\"")
 
         // Remove the manifest
-        system_quiet("rm \(manifestPath)")
+        system_quiet("rm \"\(manifestPath)\"")
 
         // Write a file that is only written when we upgraded successfully
-        system_quiet("touch \(updaterDirectory)/upgrade.success")
+        system_quiet("touch \"\(updaterDirectory)/upgrade.success\"")
 
         // Return the new location of the app
         return "/Applications/\(app)"

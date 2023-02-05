@@ -1,5 +1,5 @@
 //
-//  Alert.swift
+//  Utility.swift
 //  PHP Monitor Self-Updater
 //
 //  Created by Nico Verbruggen on 02/02/2023.
@@ -26,4 +26,9 @@ class Alert {
             }
         }
     }
+}
+
+public struct ReleaseManifest: Codable {
+    let url: String
+    let sha256: String
 }
