@@ -43,22 +43,24 @@ valet install
 valet trust
 ```
 
-Once that's done, you can install PHP Monitor via Homebrew (recommended), or (alternatively) you may download the latest release on GitHub.
+#### Manual installation (first time only)
 
-To install via Homebrew, run:
+Once that's done, you can [download the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest), unzip it and place it in `/Applications`.
+
+#### Installation via Homebrew
+
+If you prefer to install the app via Homebrew, you can also do this:
 
 ```sh
 brew tap nicoverbruggen/homebrew-cask
 brew install --cask phpmon
 ```
 
-To upgrade your existing installation, run:
+## ⬆️ How to update
 
-```sh
-brew upgrade phpmon
-```
+The recommended method of updating your app to the latest version is to use **the built-in updater**.
 
-(You may need to run `brew update` or `brew update-reset` first in order to update the cask file if you ran a Homebrew operation recently.)
+If that doesn't work or you prefer Homebrew, you can also upgrade via those methods.
 
 ## ⚡️ Launchers (Alfred, Raycast)
 
