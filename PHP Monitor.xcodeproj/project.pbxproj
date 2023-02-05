@@ -182,9 +182,6 @@
 		C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E706294CFDF700A82AB2 /* DomainsListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E702294CFDF700A82AB2 /* DomainsListTest.swift */; };
-		C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
-		C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
-		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
 		C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
@@ -324,7 +321,6 @@
 		C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
 		C471E84728F9BB650021E251 /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */; };
-		C471E84928F9BB650021E251 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */; };
@@ -414,7 +410,6 @@
 		C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EED88827A48778006D7272 /* InterAppHandler.swift */; };
 		C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
 		C471E8AB28F9BB8F0021E251 /* EnvironmentCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */; };
-		C471E8AC28F9BB8F0021E251 /* AppUpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */; };
 		C471E8AD28F9BB8F0021E251 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE736282ABA4F00A302C2 /* AppVersion.swift */; };
 		C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E8AF28F9BB8F0021E251 /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */; };
@@ -511,6 +506,17 @@
 		C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
 		C48D6C71279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
 		C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */; };
+		C491997729901DD6001F3A21 /* CaskFileParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997629901DD6001F3A21 /* CaskFileParserTest.swift */; };
+		C491997929901DE2001F3A21 /* phpmon-dev.rb in Resources */ = {isa = PBXBuildFile; fileRef = C491997829901DE2001F3A21 /* phpmon-dev.rb */; };
+		C491997B29901DF7001F3A21 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997A29901DF7001F3A21 /* CaskFile.swift */; };
+		C491997C29901DF7001F3A21 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997A29901DF7001F3A21 /* CaskFile.swift */; };
+		C491997D29901DF7001F3A21 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997A29901DF7001F3A21 /* CaskFile.swift */; };
+		C491997E29901DF7001F3A21 /* CaskFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997A29901DF7001F3A21 /* CaskFile.swift */; };
+		C491998029901E0F001F3A21 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997F29901E0F001F3A21 /* AppUpdater.swift */; };
+		C491998129901E0F001F3A21 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997F29901E0F001F3A21 /* AppUpdater.swift */; };
+		C491998229901E0F001F3A21 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997F29901E0F001F3A21 /* AppUpdater.swift */; };
+		C491998329901E0F001F3A21 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C491997F29901E0F001F3A21 /* AppUpdater.swift */; };
+		C491998A29902089001F3A21 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C491998929902089001F3A21 /* PHP Monitor Self-Updater.app */; };
 		C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4927F0A27B2DFC200C55AFD /* Errors.swift */; };
 		C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4927F0A27B2DFC200C55AFD /* Errors.swift */; };
 		C493084A279F331F009C240B /* AddSiteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4930849279F331F009C240B /* AddSiteVC.swift */; };
@@ -833,8 +839,6 @@
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
 		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
-		C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateChecker.swift; sourceTree = "<group>"; };
-		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
 		C46EBC4628DB9644007ACC74 /* RealShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShell.swift; sourceTree = "<group>"; };
 		C46EBC4928DB966A007ACC74 /* TestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableShell.swift; sourceTree = "<group>"; };
@@ -858,6 +862,11 @@
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
 		C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionNumberTest.swift; sourceTree = "<group>"; };
+		C491997629901DD6001F3A21 /* CaskFileParserTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaskFileParserTest.swift; sourceTree = "<group>"; };
+		C491997829901DE2001F3A21 /* phpmon-dev.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = "phpmon-dev.rb"; sourceTree = "<group>"; };
+		C491997A29901DF7001F3A21 /* CaskFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaskFile.swift; sourceTree = "<group>"; };
+		C491997F29901E0F001F3A21 /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		C491998929902089001F3A21 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
 		C4927F0A27B2DFC200C55AFD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentCheck.swift; sourceTree = "<group>"; };
@@ -1140,6 +1149,7 @@
 				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
 				C4E713572570151400007428 /* docs */,
 				C41C1B3522B0097F00E7CF16 /* phpmon */,
+				C491998829902061001F3A21 /* phpmon-updater */,
 				C471E79628F9B4260021E251 /* tests */,
 				C41C1B3422B0097F00E7CF16 /* Products */,
 				C4D309E72770EF2F00958BCF /* Frameworks */,
@@ -1300,6 +1310,7 @@
 		C459B4BF27F6094100E9B4B4 /* brew */ = {
 			isa = PBXGroup;
 			children = (
+				C491997829901DE2001F3A21 /* phpmon-dev.rb */,
 				C4E2E85228FC256B003B070C /* brew-services-normal.json */,
 				C4E2E85128FC256B003B070C /* brew-services-sudo.json */,
 				C43A8A1F25D9D1D700591B77 /* brew-formula.json */,
@@ -1444,6 +1455,14 @@
 			path = "PHP Version";
 			sourceTree = "<group>";
 		};
+		C491998829902061001F3A21 /* phpmon-updater */ = {
+			isa = PBXGroup;
+			children = (
+				C491998929902089001F3A21 /* PHP Monitor Self-Updater.app */,
+			);
+			path = "phpmon-updater";
+			sourceTree = "<group>";
+		};
 		C4AF9F6A275445C900D44ED0 /* Valet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1471,6 +1490,7 @@
 		C4AF9F6C275445D900D44ED0 /* Homebrew */ = {
 			isa = PBXGroup;
 			children = (
+				C491997A29901DF7001F3A21 /* CaskFile.swift */,
 				C4F2E4362752F0870020E974 /* HomebrewDiagnostics.swift */,
 			);
 			path = Homebrew;
@@ -1491,8 +1511,8 @@
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
-				C46E206C28299B3800D909D6 /* AppUpdateChecker.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
+				C491997F29901E0F001F3A21 /* AppUpdater.swift */,
 				C4A6957528D23EE300A14CF8 /* EnvironmentManager.swift */,
 			);
 			path = App;
@@ -1580,6 +1600,7 @@
 				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
 				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
+				C491997629901DD6001F3A21 /* CaskFileParserTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1592,7 +1613,6 @@
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
 				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
-				C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */,
 			);
 			path = Versions;
 			sourceTree = "<group>";
@@ -1903,6 +1923,7 @@
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
+				C491998A29902089001F3A21 /* PHP Monitor Self-Updater.app in Resources */,
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
 				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
@@ -1958,6 +1979,7 @@
 				C455165B297AEDB5009B8466 /* valetrc.broken in Resources */,
 				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
 				C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */,
+				C491997929901DE2001F3A21 /* phpmon-dev.rb in Resources */,
 				C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */,
 				C4E2E85428FC256B003B070C /* brew-services-sudo.json in Resources */,
 			);
@@ -2070,6 +2092,7 @@
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				54D9E0B427E4F51E003B9AD9 /* Key.swift in Sources */,
+				C491997B29901DF7001F3A21 /* CaskFile.swift in Sources */,
 				C4297F7A28970D59004C4630 /* WarningView.swift in Sources */,
 				C4C0E8E227F88B13002D32A9 /* ValetDomainScanner.swift in Sources */,
 				C42F26732805B4B400938AC7 /* ValetListable.swift in Sources */,
@@ -2081,7 +2104,6 @@
 				C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
-				C46E206D28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewPackage.swift in Sources */,
 				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
@@ -2147,6 +2169,7 @@
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 				C493084A279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */,
+				C491998029901E0F001F3A21 /* AppUpdater.swift in Sources */,
 				C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2178,13 +2201,13 @@
 				C471E84228F9BB650021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E84328F9BB650021E251 /* App.swift in Sources */,
 				C4E2E85E28FC282B003B070C /* TestableConfiguration.swift in Sources */,
+				C491997D29901DF7001F3A21 /* CaskFile.swift in Sources */,
 				C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */,
 				C471E84428F9BB650021E251 /* App+ActivationPolicy.swift in Sources */,
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
-				C471E84928F9BB650021E251 /* AppUpdateChecker.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
 				C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */,
@@ -2226,6 +2249,7 @@
 				C471E86A28F9BB650021E251 /* PrefsVC.swift in Sources */,
 				C471E86B28F9BB650021E251 /* PreferenceName.swift in Sources */,
 				C471E86C28F9BB650021E251 /* Preferences.swift in Sources */,
+				C491998229901E0F001F3A21 /* AppUpdater.swift in Sources */,
 				C4D3660D29113F20006BD146 /* System.swift in Sources */,
 				C471E86D28F9BB650021E251 /* CustomPrefs.swift in Sources */,
 				C4E2E84C28FC1E70003B070C /* DataExtension.swift in Sources */,
@@ -2350,7 +2374,6 @@
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
 				C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */,
 				C471E8AB28F9BB8F0021E251 /* EnvironmentCheck.swift in Sources */,
-				C471E8AC28F9BB8F0021E251 /* AppUpdateChecker.swift in Sources */,
 				C471E8AD28F9BB8F0021E251 /* AppVersion.swift in Sources */,
 				C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */,
 				C471E8AF28F9BB8F0021E251 /* EnvironmentManager.swift in Sources */,
@@ -2444,6 +2467,7 @@
 				C471E81028F9BAE80021E251 /* StringExtension.swift in Sources */,
 				C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */,
+				C491997E29901DF7001F3A21 /* CaskFile.swift in Sources */,
 				C471E82128F9BB2E0021E251 /* PhpFrameworks.swift in Sources */,
 				C471E7EF28F9BAC30021E251 /* Actions.swift in Sources */,
 				C471E82228F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
@@ -2457,6 +2481,7 @@
 				C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */,
 				C471E80028F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C471E7F528F9BAC80021E251 /* PhpEnv.swift in Sources */,
+				C491998329901E0F001F3A21 /* AppUpdater.swift in Sources */,
 				C471E7ED28F9BAC30021E251 /* Process.swift in Sources */,
 				C471E81128F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
 				C471E7CC28F9BA5B0021E251 /* TestableShell.swift in Sources */,
@@ -2524,6 +2549,7 @@
 				C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
 				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C4F780CE25D80B75000DBC97 /* LocalNotification.swift in Sources */,
+				C491997C29901DF7001F3A21 /* CaskFile.swift in Sources */,
 				C40C7F2927721FF600DDDCDC /* ActivePhpInstallation+Checks.swift in Sources */,
 				C485707A28BF457800539B36 /* WarningListView.swift in Sources */,
 				C4C0E8E827F88B41002D32A9 /* DomainScanner.swift in Sources */,
@@ -2574,6 +2600,7 @@
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C495F5B028A42E080087F70A /* EnvironmentCheck.swift in Sources */,
 				C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
+				C491998129901E0F001F3A21 /* AppUpdater.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4AD38B328ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
@@ -2600,7 +2627,6 @@
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
-				C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */,
 				C485707D28BF45A200539B36 /* WarningView.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
 				C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */,
@@ -2623,6 +2649,7 @@
 				C40F505628ECA64E004AD45B /* TestableConfigurations.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
+				C491997729901DD6001F3A21 /* CaskFileParserTest.swift in Sources */,
 				C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */,
 				C4BF56AC2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */,
@@ -2667,7 +2694,6 @@
 				C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */,
 				C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,
-				C46E206E28299B3800D909D6 /* AppUpdateChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2831,7 +2857,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1060;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -2843,7 +2869,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.7.2;
+				MARKETING_VERSION = 5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2860,7 +2886,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1060;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -2872,7 +2898,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.7.2;
+				MARKETING_VERSION = 5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3088,7 +3114,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1060;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3099,7 +3125,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.7.2;
+				MARKETING_VERSION = 5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3198,7 +3224,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1060;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3209,7 +3235,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 5.7.2;
+				MARKETING_VERSION = 5.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -10,8 +10,8 @@ import UserNotifications
 
 class LocalNotification {
 
-    @MainActor public static func send(title: String, subtitle: String, preference: PreferenceName) {
-        if !Preferences.isEnabled(preference) {
+    @MainActor public static func send(title: String, subtitle: String, preference: PreferenceName?) {
+        if preference != nil && !Preferences.isEnabled(preference!) {
             return
         }
 

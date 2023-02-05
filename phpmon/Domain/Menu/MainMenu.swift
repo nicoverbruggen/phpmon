@@ -193,7 +193,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func checkForUpdates() {
-        Task { await AppUpdateChecker.checkIfNewerVersionIsAvailable(initiatedFromBackground: false) }
+        Task { await AppUpdater().checkForUpdates(interactive: true) }
     }
 
     // MARK: - Menu Delegate

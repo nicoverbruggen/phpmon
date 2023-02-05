@@ -26,3 +26,7 @@ public func system(_ command: String) -> String {
 
     return output
 }
+
+public func system_quiet(_ command: String) {
+    _ = system(command)
+}
