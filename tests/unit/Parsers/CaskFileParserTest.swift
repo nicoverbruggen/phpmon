@@ -16,8 +16,8 @@ class CaskFileParserTest: XCTestCase {
             .url(forResource: "phpmon-dev", withExtension: "rb")!
     }
 
-    func test_can_extract_fields_from_cask_file() throws {
-        guard let caskFile = CaskFile.from(url: CaskFileParserTest.exampleFilePath) else {
+    func test_can_extract_fields_from_cask_file() async throws {
+        guard let caskFile = await CaskFile.from(url: CaskFileParserTest.exampleFilePath) else {
             return XCTFail("The CaskFile could not be parsed, check the log for more info")
         }
 
@@ -39,8 +39,8 @@ class CaskFileParserTest: XCTestCase {
         )
     }
 
-    func test_can_extract_fields_from_remote_cask_file() throws {
-        guard let caskFile = CaskFile.from(url: Constants.Urls.StableBuildCaskFile) else {
+    func test_can_extract_fields_from_remote_cask_file() async throws {
+        guard let caskFile = await CaskFile.from(url: Constants.Urls.StableBuildCaskFile) else {
             return XCTFail("The remote CaskFile could not be parsed, check the log for more info")
         }
 

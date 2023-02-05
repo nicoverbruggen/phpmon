@@ -116,7 +116,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         setupNotifications()
         // Make sure the watchers are set up
         // TODO: Move to after startup
-        self.watchHomebrewBinFolder()
+        // self.watchHomebrewBinFolder()
 
         Task { // Make sure the menu performs its initial checks
             await paths.loadUser()

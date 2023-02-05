@@ -24,8 +24,14 @@ struct CaskFile {
         return self.properties["version"]!
     }
 
-    public static func from(url: URL) -> CaskFile? {
-        let string = try? String(contentsOf: url)
+    public static func from(url: URL) async -> CaskFile? {
+        var string: String?
+
+        if url.scheme == "file" {
+            string = try? String(contentsOf: url)
+        } else {
+            string = await Shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
+        }
 
         guard let string else {
             Log.err("The content of the URL for the CaskFile could not be retrieved")

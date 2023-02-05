@@ -108,12 +108,12 @@ class AppUpdateChecker {
         _ onlineVersion: AppVersion,
         _ background: Bool
     ) -> Bool {
-        if Int(onlineVersion.build!)! > Int(currentVersion.build!)! {
+        if onlineVersion.build! > currentVersion.build! {
             Log.info("There is a newer build of PHP Monitor available! "
                      + "(\(onlineVersion.computerReadable) > \(currentVersion.computerReadable))")
             notifyAboutNewerVersion(version: onlineVersion)
             return true
-        } else if Int(onlineVersion.build!)! < Int(currentVersion.build!)! {
+        } else if onlineVersion.build! < currentVersion.build! {
             Log.info("You are running a newer build of PHP Monitor "
                      + "(\(currentVersion.computerReadable) > \(onlineVersion.computerReadable)).")
             if !background { notifyVersionDoesNotNeedUpgrade() }

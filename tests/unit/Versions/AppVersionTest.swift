@@ -28,7 +28,7 @@ class AppVersionTest: XCTestCase {
 
         XCTAssertNotNil(version)
         XCTAssertEqual("1.0.0", version?.version)
-        XCTAssertEqual("600", version?.build)
+        XCTAssertEqual(600, version?.build)
         XCTAssertEqual(nil, version?.suffix)
     }
 
@@ -46,7 +46,7 @@ class AppVersionTest: XCTestCase {
 
         XCTAssertNotNil(version)
         XCTAssertEqual("1.0.0", version?.version)
-        XCTAssertEqual("870", version?.build)
+        XCTAssertEqual(870, version?.build)
         XCTAssertEqual("dev", version?.suffix)
     }
 
@@ -55,8 +55,26 @@ class AppVersionTest: XCTestCase {
 
         XCTAssertNotNil(version)
         XCTAssertEqual("1.0.0", version?.version)
-        XCTAssertEqual("870", version?.build)
+        XCTAssertEqual(870, version?.build)
         XCTAssertEqual("dev", version?.suffix)
+    }
+
+    func test_can_compare_version_numbers() {
+        var first = AppVersion.from("5.0_100")!
+        var second = AppVersion.from("5.0_101")!
+        XCTAssertTrue(second > first)
+
+        first = AppVersion.from("5.0_100")!
+        second = AppVersion.from("5.0_100")!
+        XCTAssertFalse(second > first)
+
+        first = AppVersion.from("5.0_100")!
+        second = AppVersion.from("5.0.1_100")!
+        XCTAssertFalse(second > first)
+
+        first = AppVersion.from("5.0_102")!
+        second = AppVersion.from("5.0_101")!
+        XCTAssertFalse(second > first)
     }
 
 }
