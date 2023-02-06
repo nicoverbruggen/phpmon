@@ -34,9 +34,13 @@ class Homebrew {
     }
 }
 
-class HomebrewFormula: Equatable, Hashable {
+class HomebrewFormula: Equatable, Hashable, CustomStringConvertible {
     let name: String
     let elevated: Bool
+
+    var description: String {
+        return name
+    }
 
     init(_ name: String, elevated: Bool = true) {
         self.name = name
