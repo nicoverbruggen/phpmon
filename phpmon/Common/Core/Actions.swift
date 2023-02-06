@@ -13,21 +13,21 @@ class Actions {
     // MARK: - Services
 
     public static func restartPhpFpm() async {
-        await brew("services restart \(Homebrew.Formulae.php.name)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
     }
 
     public static func restartNginx() async {
-        await brew("services restart \(Homebrew.Formulae.nginx.name)", sudo: Homebrew.Formulae.nginx.elevated)
+        await brew("services restart \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
     }
 
     public static func restartDnsMasq() async {
-        await brew("services restart \(Homebrew.Formulae.dnsmasq.name)", sudo: Homebrew.Formulae.dnsmasq.elevated)
+        await brew("services restart \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
     }
 
     public static func stopValetServices() async {
-        await brew("services stop \(Homebrew.Formulae.php.name)", sudo: Homebrew.Formulae.php.elevated)
-        await brew("services stop \(Homebrew.Formulae.nginx.name)", sudo: Homebrew.Formulae.nginx.elevated)
-        await brew("services stop \(Homebrew.Formulae.dnsmasq.name)", sudo: Homebrew.Formulae.dnsmasq.elevated)
+        await brew("services stop \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
+        await brew("services stop \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
+        await brew("services stop \(Homebrew.Formulae.dnsmasq)", sudo: Homebrew.Formulae.dnsmasq.elevated)
     }
 
     public static func fixHomebrewPermissions() throws {
@@ -54,9 +54,10 @@ class Actions {
             + " && "
             + cellarCommands.joined(separator: " && ")
 
-        let appleScript = NSAppleScript(
-            source: "do shell script \"\(script)\" with administrator privileges"
-        )
+        let source = "do shell script \"\(script)\" with administrator privileges"
+
+        Log.perf(source)
+        let appleScript = NSAppleScript(source: source)
 
         let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
 
