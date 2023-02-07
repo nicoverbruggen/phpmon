@@ -42,4 +42,13 @@ class OnboardingWindowController: PMWindowController {
 
         NSApp.activate(ignoringOtherApps: true)
     }
+
+    override func close() {
+        super.close()
+
+        // Search for updates after closing the window
+        if Stats.successfulLaunchCount == 1 {
+            Task { await AppUpdater().checkForUpdates(interactive: false) }
+        }
+    }
 }
