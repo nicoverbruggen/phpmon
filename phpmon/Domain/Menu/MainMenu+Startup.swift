@@ -110,9 +110,9 @@ extension MainMenu {
                 Task { @MainActor in
                     OnboardingWindowController.show()
                 }
+            } else {
+                await AppUpdater().checkForUpdates(interactive: false)
             }
-
-            await AppUpdater().checkForUpdates(interactive: false)
         }
 
         // Check if the linked version has changed between launches of phpmon
