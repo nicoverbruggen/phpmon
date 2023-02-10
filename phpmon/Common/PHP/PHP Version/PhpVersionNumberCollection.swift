@@ -35,6 +35,7 @@ public struct PhpVersionNumberCollection: Equatable {
      - Parameter strict: Whether the patch version check is strict. See more below.
 
      The strict mode does not matter if a patch version is provided for all versions in the collection.
+     It also does not matter for certain comparisons (e.g. when dealing with wildcards).
 
      Strict mode assumes that any PHP version lacking precise patch information, e.g. inferred
      from Homebrew corresponds to the .0 patch version of that version. The default, which is imprecise,
@@ -45,6 +46,7 @@ public struct PhpVersionNumberCollection: Equatable {
 
      Given versions 8.0.? and 8.1.?, but the requirement is ^8.0.1, in strict mode only 8.1.? will
      be considered valid (8.0 translates to 8.0.0 and as such is older than 8.0.1, 8.1.0 is OK).
+
      When checking against actual PHP versions installed by the user (with patch precision), use
      strict mode.
 
@@ -52,11 +54,26 @@ public struct PhpVersionNumberCollection: Equatable {
 
      Given versions 8.0.? and 8.1.?, but the requirement is ^8.0.1, in non-strict mode version 8.0
      is assumed to be equal to version 8.0.999, which is actually fine if 8.0.1 is the required version.
+
      In non-strict mode, the patch version is ignored for regular version checks (no caret / tilde).
      If checking compatibility with general Homebrew versions of PHP, do NOT use strict mode, since
      the patch version there is not used. (The formula php@8.0 suffices for ^8.0.1.)
      */
     public func matching(constraint: String, strict: Bool = false) -> [VersionNumber] {
+        if constraint == "*" {
+            return self.versions
+        }
+
+        if let version = VersionNumber.make(from: constraint, type: .wildCardPatch) {
+            // Wildcard for patch (e.g. "7.4.*") must match major and minor (any patch)
+            return self.versions.filter { $0.hasSameMajorAndMinor(version) }
+        }
+
+        if let version = VersionNumber.make(from: constraint, type: .wildCardMinor) {
+            // Strict constraint (e.g. "7.*") -> must only match major (any patch, minor)
+            return self.versions.filter { $0.isSameMajorVersionAs(version) }
+        }
+
         if let version = VersionNumber.make(from: constraint, type: .versionOnly) {
             // Strict constraint (e.g. "7.0") -> returns specific version
             return self.versions.filter { $0.isSameAs(version, strict) }

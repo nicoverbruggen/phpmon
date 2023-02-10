@@ -39,6 +39,8 @@ public struct VersionNumber: Equatable, Hashable {
 
     public enum MatchType: String {
         case versionOnly = #"^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
+        case wildCardPatch =  #"^(?<major>\d+).(?<minor>\d+).?(?<patch>\*)?\z"#
+        case wildCardMinor =  #"^(?<major>\d+).(?<minor>\*)?\z"#
         case caretVersionRange = #"^\^(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case tildeVersionRange = #"^~(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
         case greaterThanOrEqual = #"^>=(?<major>\d+).(?<minor>\d+).?(?<patch>\d+)?\z"#
@@ -64,21 +66,25 @@ public struct VersionNumber: Equatable, Hashable {
             range: NSRange(location: 0, length: versionString.count)
         ).first
 
-        if match != nil {
-            let major = Int(
-                versionString[Range(match!.range(withName: "major"), in: versionString)!]
-            )!
-            let minor = Int(
-                versionString[Range(match!.range(withName: "minor"), in: versionString)!]
-            )!
-            var patch: Int?
-            if let minorRange = Range(match!.range(withName: "patch"), in: versionString) {
-                patch = Int(versionString[minorRange])
-            }
-            return Self(major: major, minor: minor, patch: patch)
+        guard let match else { return nil }
+
+        let major = Int(versionString[Range(match.range(withName: "major"), in: versionString)!])!
+        var minor: Int = 0
+        var patch: Int?
+
+        if let minorRange = Range(match.range(withName: "minor"), in: versionString) {
+            let value = versionString[minorRange] as String
+            // Zero is the fallback if a wildcard was used
+            minor = Int(value) ?? 0
         }
 
-        return nil
+        if let patchRange = Range(match.range(withName: "patch"), in: versionString) {
+            let value = versionString[patchRange] as String
+            // nil is the fallback if a wildcard was used
+            patch = Int(value) ?? nil
+        }
+
+        return Self(major: major, minor: minor, patch: patch)
     }
 
     // MARK: Comparison Logic
@@ -91,6 +97,10 @@ public struct VersionNumber: Equatable, Hashable {
         return self.major == version.major
             && self.minor == version.minor
             && (strict ? self.patch(strict, version) == version.patch(strict) : true)
+    }
+
+    internal func hasSameMajorAndMinor(_ version: VersionNumber) -> Bool {
+        return self.major == version.major && self.minor == version.minor
     }
 
     internal func isNewerThan(_ version: VersionNumber, _ strict: Bool) -> Bool {

@@ -44,6 +44,53 @@ class PhpVersionNumberTest: XCTestCase {
         }
     }
 
+    func test_can_parse_wildcard() throws {
+        let version = VersionNumber.make(from: "7.*", type: .wildCardMinor)
+        XCTAssertNotNil(version)
+        XCTAssertEqual(version!.major, 7)
+        XCTAssertEqual(version!.minor, 0)
+    }
+
+
+    func test_can_check_wildcard_version_constraint() throws {
+        // Wildcard for patch only
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.3.9"])
+                .matching(constraint: "7.3.*", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.3.10", "7.3.9"]).all
+        )
+
+        // Wildcard for minor
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["8.0.0", "7.4.10", "7.3.10", "7.3.9"])
+                .matching(constraint: "7.*", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.3.9"]).all
+        )
+
+        // Full wildcard
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.2.10", "7.1.10", "7.0.10"])
+                .matching(constraint: "*", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.2.10", "7.1.10", "7.0.10"]).all
+        )
+    }
+
+    func test_can_check_any_version_constraint() throws {
+        XCTAssertEqual(
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.2.10", "7.1.10", "7.0.10"])
+                .matching(constraint: "*", strict: false),
+            PhpVersionNumberCollection
+                .make(from: ["7.4.10", "7.3.10", "7.2.10", "7.1.10", "7.0.10"]).all
+        )
+    }
+
     func test_can_check_fixed_constraints() throws {
         XCTAssertEqual(
             PhpVersionNumberCollection
