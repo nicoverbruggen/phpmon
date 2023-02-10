@@ -22,7 +22,6 @@ class InternalSwitcher: PhpSwitcher {
      */
     func performSwitch(to version: String) async {
         Log.info("Switching to \(version), unlinking all versions...")
-
         let versions = getVersionsToBeHandled(version)
 
         await withTaskGroup(of: String.self, body: { group in
