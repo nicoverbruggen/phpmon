@@ -284,7 +284,7 @@ class ValetSite: ValetListable {
     }
 
     func getListablePhpVersion() -> String {
-        return self.servingPhpVersion ?? "—"
+        return self.servingPhpVersion
     }
 
     func getListableKind() -> String {
