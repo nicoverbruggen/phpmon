@@ -119,7 +119,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // self.watchHomebrewBinFolder()
 
         Task { // Make sure the menu performs its initial checks
-            await paths.loadUser()
             await menu.startup()
         }
     }

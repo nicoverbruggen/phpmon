@@ -28,9 +28,7 @@ public func system(_ command: String) -> String {
 }
 
 /**
- Run a simple blocking Shell command on the user's own system.
- This variation does not return the output.
- Avoid using this method in favor of the fakeable Shell class unless needed for express system operations.
+ Same as the `system` command, but does not return the output.
  */
 public func system_quiet(_ command: String) {
     let task = Process()
@@ -43,4 +41,27 @@ public func system_quiet(_ command: String) {
 
     _ = pipe.fileHandleForReading.readDataToEndOfFile()
     return
+}
+
+/**
+ Retrieves the username for the currently signed in user via `/usr/bin/id`.
+ This cannot fail or the application will crash.
+ */
+public func identity() -> String {
+    let task = Process()
+    task.launchPath = "/usr/bin/id"
+    task.arguments = ["-un"]
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    guard let output = String(
+        data: pipe.fileHandleForReading.readDataToEndOfFile(),
+        encoding: String.Encoding.utf8
+    ) else {
+        fatalError("Could not retrieve username via `id -un`!")
+    }
+
+    return output.trimmingCharacters(in: .whitespacesAndNewlines)
 }

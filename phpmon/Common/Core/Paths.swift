@@ -16,16 +16,12 @@ public class Paths {
     public static let shared = Paths()
 
     internal var baseDir: Paths.HomebrewDir
-
-    private var userName: String! = nil
+    private var userName: String
 
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
-    }
-
-    public func loadUser() async {
-        let output = await Shell.pipe("id -un").out
-        userName = String(output.split(separator: "\n")[0])
+        userName = identity()
+        Log.info("[ID] The current username is `\(userName)`.")
     }
 
     public func detectBinaryPaths() {
