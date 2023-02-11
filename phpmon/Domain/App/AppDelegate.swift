@@ -111,7 +111,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Make sure notifications will work
         setupNotifications()
         Task { // Make sure the menu performs its initial checks
-            await paths.loadUser()
             await menu.startup()
         }
     }
