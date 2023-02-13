@@ -17,7 +17,7 @@ public class EnvironmentManager {
 
             // Failure condition #1: does not contain Laravel Valet
             if !output.contains("Laravel Valet") {
-                return true
+                return false
             }
 
             // Extract the version number
@@ -25,7 +25,6 @@ public class EnvironmentManager {
 
             // Get the actual version
             return Valet.shared.version == nil
-
         }() // returns true if none of the failure conditions are met
     }
 }

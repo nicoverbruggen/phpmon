@@ -8,8 +8,6 @@
 import Foundation
 
 struct HomebrewPackage: Decodable {
-
-    let name: String
     let full_name: String
     let aliases: [String]
     let installed: [HomebrewInstalled]
