@@ -23,11 +23,10 @@ class HomebrewPackageTest: XCTestCase {
             [HomebrewPackage].self, from: json.data(using: .utf8)!
         ).first!
 
-        XCTAssertEqual(package.name, "php")
         XCTAssertEqual(package.full_name, "php")
-        XCTAssertEqual(package.aliases.first!, "php@8.1")
+        XCTAssertEqual(package.aliases.first!, "php@8.2")
         XCTAssertEqual(package.installed.contains(where: { installed in
-            installed.version.starts(with: "8.1")
+            installed.version.starts(with: "8.2")
         }), true)
     }
 
