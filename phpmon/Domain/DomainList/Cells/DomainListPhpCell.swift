@@ -37,7 +37,8 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             imageViewPhpVersionOK.image = NSImage(named: "Isolated")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
         } else {
-            imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???" || !site.isCompatibleWithPreferredPhpVersion)
+            imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???"
+                                              || !site.isCompatibleWithPreferredPhpVersion)
             imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.preferredPhpVersion)
 
