@@ -231,7 +231,7 @@ class GeneralPreferencesVC: GenericPreferenceVC {
     // MARK: - Lifecycle
 
     public static func fromStoryboard() -> GenericPreferenceVC {
-        let vc = NSStoryboard(name: "Main", bundle: nil)
+        var vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
         vc.views = [
@@ -242,6 +242,10 @@ class GeneralPreferencesVC: GenericPreferenceVC {
             vc.getIntegrationsPV(),
             vc.getAutomaticUpdateCheckPV()
         ]
+
+        if #available(macOS 13, *) {
+            vc.views.append(CheckboxPreferenceView.makeLoginItemView())
+        }
 
         return vc
     }

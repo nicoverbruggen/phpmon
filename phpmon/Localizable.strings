@@ -254,6 +254,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.notifications" = "Notifications:";
 "prefs.warnings" = "Warnings:";
 "prefs.menu_contents" = "Features in Menu:";
+"prefs.startup" = "Startup:";
+
+"prefs.auto_start_desc" = "Automatically starts PHP Monitor when you log into your Mac.";
+"prefs.auto_start_title" = "Start PHP Monitor at login";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
