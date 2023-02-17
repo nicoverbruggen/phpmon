@@ -59,15 +59,12 @@ protocol CheckboxPreferenceViewBehavior {
 
 class CheckboxPreferenceBehavior: CheckboxPreferenceViewBehavior {
     var button: NSButton
-    var preference: PreferenceName {
-        didSet {
-            button.state = Preferences.isEnabled(self.preference) ? .on : .off
-        }
-    }
+    var preference: PreferenceName
 
     init(button: NSButton, preference: PreferenceName) {
-        self.button = button
         self.preference = preference
+        self.button = button
+        self.button.state = Preferences.isEnabled(self.preference) ? .on : .off
     }
 
     public func toggled(checked: Bool) {

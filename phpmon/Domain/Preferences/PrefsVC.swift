@@ -231,7 +231,7 @@ class GeneralPreferencesVC: GenericPreferenceVC {
     // MARK: - Lifecycle
 
     public static func fromStoryboard() -> GenericPreferenceVC {
-        var vc = NSStoryboard(name: "Main", bundle: nil)
+        let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
         vc.views = [
