@@ -143,47 +143,50 @@ class Stats {
 
     public static func evaluateLastLinkedPhpVersion() {
         guard let linked = PhpEnv.phpInstall else {
-            // TODO: Actually notify the user that no version is linked.
-            Log.info("No version is currently linked.")
-            return
+            return Log.warn("<PG> PHP Guard is unable to determine the current PHP version!")
         }
 
         let currentVersion = linked.version.short
         let previousVersion = Stats.lastGlobalPhpVersion
 
-        // Save the PHP version that is currently in use (only if unknown)
-        if Stats.lastGlobalPhpVersion == "" {
+        Log.info("<PG> The currently linked version of PHP is: \(currentVersion).")
+
+        if previousVersion == "" {
             Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
-            Log.info("Persisting the currently linked PHP version (first time only).")
-        } else {
-            Log.info("Previously, the globally linked PHP version was: \(previousVersion).")
-            if previousVersion != currentVersion {
-                Log.info("Currently, that version is: \(currentVersion). This is a mismatch.")
-                Task { @MainActor in
-                    BetterAlert()
-                        .withInformation(
-                            title: "startup.version_mismatch.title".localized,
-                            subtitle: "startup.version_mismatch.subtitle".localized(
-                                currentVersion,
-                                previousVersion
-                            ),
-                            description: "startup.version_mismatch.desc".localized()
-                        )
-                        .withPrimary(text: "startup.version_mismatch.button_switch_back".localized(
-                            previousVersion
-                        ), action: { alert in
-                            alert.close(with: .OK)
-                            Task { MainMenu.shared.switchToAnyPhpVersion(previousVersion) }
-                        })
-                        .withTertiary(text: "startup.version_mismatch.button_stay".localized(
-                            currentVersion
-                        ), action: { alert in
-                            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
-                            alert.close(with: .OK)
-                        })
-                        .show()
-                }
-            }
+            return Log.warn("<PG> PHP Guard is saving the currently linked PHP version (first time only).")
+        }
+        Log.info("<PG> Previously, the globally linked PHP version was: \(previousVersion).")
+
+        if previousVersion == currentVersion {
+            return Log.info("<PG> PHP Guard did not notice any changes in the linked PHP version.")
+        }
+
+        // At this point, the version is *not* a match
+        Log.info("<PG> PHP Guard noticed a different PHP version. An alert will be displayed!")
+
+        Task { @MainActor in
+            BetterAlert()
+                .withInformation(
+                    title: "startup.version_mismatch.title".localized,
+                    subtitle: "startup.version_mismatch.subtitle".localized(
+                        currentVersion,
+                        previousVersion
+                    ),
+                    description: "startup.version_mismatch.desc".localized()
+                )
+                .withPrimary(text: "startup.version_mismatch.button_switch_back".localized(
+                    previousVersion
+                ), action: { alert in
+                    alert.close(with: .OK)
+                    Task { MainMenu.shared.switchToAnyPhpVersion(previousVersion) }
+                })
+                .withTertiary(text: "startup.version_mismatch.button_stay".localized(
+                    currentVersion
+                ), action: { alert in
+                    Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
+                    alert.close(with: .OK)
+                })
+                .show()
         }
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import Cocoa
 
+@MainActor
 class BetterAlert {
 
     var windowController: NSWindowController!
