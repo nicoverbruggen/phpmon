@@ -24,7 +24,7 @@ You can also add new domains as links, isolate sites, manage various services, a
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
-* macOS 11 Big Sur or later
+* macOS 12.4 or later (Monterey and Ventura are supported)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
 * Laravel Valet (works with Valet v2, v3 and v4)
