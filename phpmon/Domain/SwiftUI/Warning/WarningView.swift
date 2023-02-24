@@ -26,7 +26,7 @@ struct WarningView: View {
                         Text(title.localizedForSwiftUI)
                             .fontWeight(.bold)
                         ForEach(paragraphs, id: \.self) { paragraph in
-                            Text(paragraph.localizedForSwiftUI)
+                            Text(paragraph)
                                 .font(.system(size: 13))
                         }
                     }

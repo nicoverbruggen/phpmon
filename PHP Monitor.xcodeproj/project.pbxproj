@@ -132,6 +132,7 @@
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
 		C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */; };
+		C43FDBE929A932B0003D85EC /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C44067F527E2582B0045BD4E /* DomainListNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F427E2582B0045BD4E /* DomainListNameCell.swift */; };
 		C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F627E258410045BD4E /* DomainListPhpCell.swift */; };
 		C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */; };
@@ -834,6 +835,7 @@
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackageTest.swift; sourceTree = "<group>"; };
+		C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigChecker.swift; sourceTree = "<group>"; };
 		C44067F427E2582B0045BD4E /* DomainListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListNameCell.swift; sourceTree = "<group>"; };
 		C44067F627E258410045BD4E /* DomainListPhpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListPhpCell.swift; sourceTree = "<group>"; };
 		C44067F827E2585E0045BD4E /* DomainListTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListTypeCell.swift; sourceTree = "<group>"; };
@@ -1263,6 +1265,7 @@
 		C422DDAB28A2DAA100CEAC97 /* Warnings */ = {
 			isa = PBXGroup;
 			children = (
+				C43FDBE729A9329A003D85EC /* Services */,
 				C47699F028A2F3150060FEB8 /* Warning.swift */,
 				C47699EE28A2F2A30060FEB8 /* WarningManager.swift */,
 				C422DDAC28A2DAC600CEAC97 /* WarningsWindowController.swift */,
@@ -1286,6 +1289,14 @@
 				C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */,
 			);
 			path = Warning;
+			sourceTree = "<group>";
+		};
+		C43FDBE729A9329A003D85EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C44067F327E256560045BD4E /* Cells */ = {
@@ -2238,6 +2249,7 @@
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */,
 				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
+				C43FDBE929A932B0003D85EC /* PhpConfigChecker.swift in Sources */,
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
