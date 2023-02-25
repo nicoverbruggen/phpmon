@@ -664,8 +664,8 @@ COMMON TROUBLESHOOTING TIPS
 "warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta on Apple Silicon, which means your PHP environment is also running via Rosetta.";
 "warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
 
-"warnings.files_missing.title" = "Your PHP installation is lacking required configuration files";
-"warnings.files_missing.description" = "The following files normally exist on a functional system:
+"warnings.files_missing.title" = "Your PHP installation is missing important required configuration files.";
+"warnings.files_missing.description" = "The following key configuration files should exist after installing PHP:
 
 • %@
 

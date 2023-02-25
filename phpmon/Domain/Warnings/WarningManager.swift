@@ -10,7 +10,6 @@ import Foundation
 import Cocoa
 
 class WarningManager: ObservableObject {
-
     static var shared: WarningManager = WarningManager()
 
     /// These warnings are the ones that are ready to be displayed.
@@ -23,6 +22,7 @@ class WarningManager: ObservableObject {
 
     init() {
         if isRunningSwiftUIPreview {
+            /// SwiftUI previews will always list all possible evaluations.
             self.warnings = self.evaluations
         }
     }
@@ -98,6 +98,10 @@ class WarningManager: ObservableObject {
         await MainMenu.shared.rebuild()
     }
 
+    /**
+     Runs through all evaluations and appends any applicable warning results.
+     Will automatically broadcast these warnings.
+     */
     private func evaluate() async {
         self.temporaryWarnings = []
 
