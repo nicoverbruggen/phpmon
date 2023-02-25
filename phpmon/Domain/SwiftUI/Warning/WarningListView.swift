@@ -13,7 +13,7 @@ struct WarningListView: View {
 
     init(empty: Bool = false) {
         if empty {
-            WarningManager.shared.warnings = []
+            WarningManager.shared.clearWarnings()
         }
 
         warningManager = WarningManager.shared
@@ -54,7 +54,7 @@ struct WarningListView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    if warningManager.warnings.isEmpty {
+                    if !warningManager.hasWarnings() {
                         NoWarningsView()
                     } else {
                         ForEach(warningManager.warnings) { warning in
