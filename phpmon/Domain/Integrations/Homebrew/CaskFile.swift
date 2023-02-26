@@ -40,11 +40,16 @@ struct CaskFile {
 
         let lines = string.split(separator: "\n")
             .filter { $0 != "" }
+            .map { line in
+                return line.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
 
         if lines.count < 4 {
             Log.err("The CaskFile is <4 lines long, which is too short")
             return nil
         }
+
+        print(lines)
 
         if !lines.first!.starts(with: "cask") || !lines.last!.starts(with: "end") {
             Log.err("The CaskFile does not start with 'cask' or does not end with 'end'")
