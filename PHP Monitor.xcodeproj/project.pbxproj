@@ -203,7 +203,6 @@
 		C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E706294CFDF700A82AB2 /* DomainsListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E702294CFDF700A82AB2 /* DomainsListTest.swift */; };
-		C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */; };
 		C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
@@ -871,7 +870,6 @@
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
 		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
-		C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdaterCheckTest.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
 		C46EBC4628DB9644007ACC74 /* RealShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShell.swift; sourceTree = "<group>"; };
 		C46EBC4928DB966A007ACC74 /* TestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableShell.swift; sourceTree = "<group>"; };
@@ -1670,7 +1668,6 @@
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
 				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
 				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
-				C46E206F2829D27F00D909D6 /* AppUpdaterCheckTest.swift */,
 			);
 			path = Versions;
 			sourceTree = "<group>";
@@ -2738,7 +2735,6 @@
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
-				C46E20702829D27F00D909D6 /* AppUpdaterCheckTest.swift in Sources */,
 				C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,
 				C485707D28BF45A200539B36 /* WarningView.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
