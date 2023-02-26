@@ -21,7 +21,7 @@ public class Paths {
     init() {
         baseDir = App.architecture != "x86_64" ? .opt : .usr
         userName = identity()
-        Log.info("[ID] The current username is `\(userName)`.")
+        Log.info("The current username is `\(userName)`.")
     }
 
     public func detectBinaryPaths() {

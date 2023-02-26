@@ -19,16 +19,14 @@ class Startup {
      */
     func checkEnvironment() async -> Bool {
         // Do the important system setup checks
-        Log.info("[ARCH] The user is running PHP Monitor with the architecture: \(App.architecture)")
+        Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
 
         for group in self.groups {
             if group.condition() {
-                Log.line()
-                Log.info("Running \(group.name) checks!")
-                Log.line()
+                Log.info("Now running \(group.checks.count) \(group.name) checks!")
                 for check in group.checks {
                     if await check.succeeds() {
-                        Log.info("[OK] \(check.name)")
+                        Log.info("[PASS] \(check.name)")
                         continue
                     }
 
@@ -46,8 +44,8 @@ class Startup {
 
         // If we get here, nothing has gone wrong. That's what we want!
         initializeSwitcher()
-        Log.separator(as: .info)
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
+        Log.separator(as: .info)
         return true
     }
 
