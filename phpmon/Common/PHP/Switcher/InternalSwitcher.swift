@@ -126,12 +126,12 @@ class InternalSwitcher: PhpSwitcher {
 
         if Valet.installed {
             await brew("services start \(formula)", sudo: true)
-        }
 
-        if Valet.enabled(feature: .isolatedSites) && primary {
-            let socketVersion = version.replacingOccurrences(of: ".", with: "")
-            await Shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
-            Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
+            if Valet.enabled(feature: .isolatedSites) && primary {
+                let socketVersion = version.replacingOccurrences(of: ".", with: "")
+                await Shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+                Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
+            }
         }
     }
 }
