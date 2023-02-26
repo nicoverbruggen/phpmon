@@ -19,7 +19,9 @@ extension MainMenu {
         PhpEnv.shared.isBusy = false
 
         Task { // Things to do after reloading domain list data
-            await self.reloadDomainListData()
+            if Valet.installed {
+                await self.reloadDomainListData()
+            }
 
             // Perform UI updates on main thread
             Task { @MainActor [self] in

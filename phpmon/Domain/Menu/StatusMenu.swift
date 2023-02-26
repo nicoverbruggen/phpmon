@@ -17,7 +17,7 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayServicesManager) {
+        if PhpEnv.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }

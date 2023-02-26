@@ -88,8 +88,8 @@ class HomebrewDiagnostics {
         versions.forEach { version in
             Task { // Fix each pool concurrently (but perform the tasks sequentially)
                 await switcher.disableDefaultPhpFpmPool(version)
-                await switcher.stopPhpVersion(version)
-                await switcher.startPhpVersion(version, primary: version == primary)
+                await switcher.unlinkAndStopPhpVersion(version)
+                await switcher.linkAndStartPhpVersion(version, primary: version == primary)
             }
         }
     }

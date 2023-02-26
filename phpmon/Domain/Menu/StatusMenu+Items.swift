@@ -286,42 +286,54 @@ extension StatusMenu {
     func addFirstAidAndServicesMenuItems() {
         let services = NSMenuItem(title: "mi_other".localized)
 
-        let servicesMenu = NSMenu()
-        servicesMenu.addItems([
+        var items: [NSMenuItem] = [
             // FIRST AID
             HeaderView.asMenuItem(text: "mi_first_aid".localized),
             NSMenuItem(title: "mi_view_onboarding".localized, action: #selector(MainMenu.showWelcomeTour)),
-            NSMenuItem(title: "mi_fa_php_doctor".localized, action: #selector(MainMenu.openWarnings)),
-            NSMenuItem.separator(),
-            NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpAlias),
-                       action: #selector(MainMenu.fixMyValet),
-                       toolTip: "mi_fix_my_valet_tooltip".localized),
-            NSMenuItem(title: "mi_fix_brew_permissions".localized(), action: #selector(MainMenu.fixHomebrewPermissions),
-                       toolTip: "mi_fix_brew_permissions_tooltip".localized),
-            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_fa_php_doctor".localized, action: #selector(MainMenu.openWarnings))
+        ]
 
-            // SERVICES
-            HeaderView.asMenuItem(text: "mi_services".localized),
-            NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq),
-                       keyEquivalent: "d"),
-            NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm),
-                       keyEquivalent: "p"),
-            NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx),
-                       keyEquivalent: "n"),
-            NSMenuItem(title: "mi_restart_valet_services".localized, action: #selector(MainMenu.restartValetServices),
-                       keyEquivalent: "s"),
-            NSMenuItem(title: "mi_stop_valet_services".localized, action: #selector(MainMenu.stopValetServices),
-                       keyEquivalent: "s",
-                       keyModifier: [.command, .shift]),
-            NSMenuItem.separator(),
+        if Valet.installed {
+            items.append(contentsOf: [
+                NSMenuItem.separator(),
+                NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnv.brewPhpAlias),
+                           action: #selector(MainMenu.fixMyValet),
+                           toolTip: "mi_fix_my_valet_tooltip".localized),
+                NSMenuItem(title: "mi_fix_brew_permissions".localized(),
+                           action: #selector(MainMenu.fixHomebrewPermissions),
+                           toolTip: "mi_fix_brew_permissions_tooltip".localized),
+                NSMenuItem.separator(),
 
+                // SERVICES
+                HeaderView.asMenuItem(text: "mi_services".localized),
+                NSMenuItem(title: "mi_restart_dnsmasq".localized, action: #selector(MainMenu.restartDnsMasq),
+                           keyEquivalent: "d"),
+                NSMenuItem(title: "mi_restart_php_fpm".localized, action: #selector(MainMenu.restartPhpFpm),
+                           keyEquivalent: "p"),
+                NSMenuItem(title: "mi_restart_nginx".localized, action: #selector(MainMenu.restartNginx),
+                           keyEquivalent: "n"),
+                NSMenuItem(title: "mi_restart_valet_services".localized,
+                           action: #selector(MainMenu.restartValetServices),
+                           keyEquivalent: "s"),
+                NSMenuItem(title: "mi_stop_valet_services".localized, action: #selector(MainMenu.stopValetServices),
+                           keyEquivalent: "s",
+                           keyModifier: [.command, .shift]),
+                NSMenuItem.separator()
+            ])
+        } else {
+            items.append(NSMenuItem.separator())
+        }
+
+        items.append(contentsOf: [
             // MANUAL ACTIONS
             HeaderView.asMenuItem(text: "mi_manual_actions".localized),
             NSMenuItem(title: "mi_php_refresh".localized,
                        action: #selector(MainMenu.reloadPhpMonitorMenuInForeground),
                        keyEquivalent: "r")
-        ], target: MainMenu.shared)
+        ])
 
+        let servicesMenu = NSMenu()
+        servicesMenu.addItems(items, target: MainMenu.shared)
         setSubmenu(servicesMenu, for: services)
         addItem(services)
     }

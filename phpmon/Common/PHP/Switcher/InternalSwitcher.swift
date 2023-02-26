@@ -28,7 +28,7 @@ class InternalSwitcher: PhpSwitcher {
             for available in PhpEnv.shared.availablePhpVersions {
                 group.addTask {
                     await self.disableDefaultPhpFpmPool(available)
-                    await self.stopPhpVersion(available)
+                    await self.unlinkAndStopPhpVersion(available)
                     return available
                 }
             }
@@ -43,11 +43,13 @@ class InternalSwitcher: PhpSwitcher {
 
             for formula in versions {
                 Log.info("Will start PHP \(version)... (primary: \(version == formula))")
-                await self.startPhpVersion(formula, primary: (version == formula))
+                await self.linkAndStartPhpVersion(formula, primary: (version == formula))
             }
 
-            Log.info("Restarting nginx, just to be sure!")
-            await brew("services restart nginx", sudo: true)
+            if Valet.installed {
+                Log.info("Restarting nginx, just to be sure!")
+                await brew("services restart nginx", sudo: true)
+            }
 
             Log.info("The new version(s) have been linked!")
         })
@@ -75,6 +77,12 @@ class InternalSwitcher: PhpSwitcher {
     }
 
     func disableDefaultPhpFpmPool(_ version: String) async {
+        if Valet.installed {
+            Log.info("Skipping adjustment of php-fpm.d pools, because Valet is disabled or not installed.")
+            Log.info("This behaviour may not be desirable with this system configuration.")
+            return
+        }
+
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
         if FileSystem.fileExists(pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
@@ -94,31 +102,36 @@ class InternalSwitcher: PhpSwitcher {
         }
     }
 
-    func stopPhpVersion(_ version: String) async {
+    func unlinkAndStopPhpVersion(_ version: String) async {
         let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
         await brew("unlink \(formula)")
-        await brew("services stop \(formula)", sudo: true)
-        Log.info("Unlinked and stopped services for \(formula)")
+
+        if Valet.installed {
+            await brew("services stop \(formula)", sudo: true)
+            Log.info("Unlinked and stopped services for \(formula)")
+        } else {
+            Log.info("Unlinked \(formula)")
+        }
     }
 
-    func startPhpVersion(_ version: String, primary: Bool) async {
+    func linkAndStartPhpVersion(_ version: String, primary: Bool) async {
         let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
 
         if primary {
-            Log.info("\(formula) is the primary formula, linking and starting services...")
+            Log.info("\(formula) is the primary formula, linking...")
             await brew("link \(formula) --overwrite --force")
         } else {
-            Log.info("\(formula) is an isolated PHP version, starting services only...")
+            Log.info("\(formula) is an isolated PHP version, not linking!")
         }
 
-        await brew("services start \(formula)", sudo: true)
+        if Valet.installed {
+            await brew("services start \(formula)", sudo: true)
+        }
 
         if Valet.enabled(feature: .isolatedSites) && primary {
             let socketVersion = version.replacingOccurrences(of: ".", with: "")
             await Shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
             Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
         }
-
     }
-
 }
