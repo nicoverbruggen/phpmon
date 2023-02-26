@@ -710,6 +710,9 @@
 		C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
 		C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */; };
 		C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F361602836BFD9003598CC /* MainMenu+Actions.swift */; };
+		C4FD87A529AB98720002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
+		C4FD87A629AB98730002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
+		C4FD87A729AB98730002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C4FE011128084FC200D1DE6D /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE011028084FC200D1DE6D /* SelectionVC.swift */; };
 		C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE011028084FC200D1DE6D /* SelectionVC.swift */; };
 /* End PBXBuildFile section */
@@ -2221,6 +2224,7 @@
 				C471E84328F9BB650021E251 /* App.swift in Sources */,
 				C4E2E85E28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C491997D29901DF7001F3A21 /* CaskFile.swift in Sources */,
+				C4FD87A629AB98730002D701 /* PhpConfigChecker.swift in Sources */,
 				C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */,
 				C471E84428F9BB650021E251 /* App+ActivationPolicy.swift in Sources */,
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
@@ -2370,6 +2374,7 @@
 				C471E89028F9BB8F0021E251 /* AlertableError.swift in Sources */,
 				C471E89128F9BB8F0021E251 /* Errors.swift in Sources */,
 				C471E89228F9BB8F0021E251 /* Alert.swift in Sources */,
+				C4FD87A529AB98720002D701 /* PhpConfigChecker.swift in Sources */,
 				C471E89328F9BB8F0021E251 /* Application.swift in Sources */,
 				C471E89428F9BB8F0021E251 /* LocalNotification.swift in Sources */,
 				C471E89528F9BB8F0021E251 /* MenuBarImageGenerator.swift in Sources */,
@@ -2618,6 +2623,7 @@
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
+				C4FD87A729AB98730002D701 /* PhpConfigChecker.swift in Sources */,
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,
 				C495F5B028A42E080087F70A /* EnvironmentCheck.swift in Sources */,

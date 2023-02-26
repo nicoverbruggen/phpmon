@@ -15,7 +15,7 @@ class AppVersion: Comparable {
 
     init(version: String, build: String?, suffix: String? = nil) {
         self.version = version
-        self.build = Int(build ?? "0")
+        self.build = build == nil ? nil : Int(build!)
         self.suffix = suffix
     }
 

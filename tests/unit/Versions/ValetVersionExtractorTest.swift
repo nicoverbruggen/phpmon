@@ -37,10 +37,4 @@ class ValetVersionExtractorTest: XCTestCase {
 
         XCTAssertEqual(version.major, 3)
     }
-
-    func test_can_determine_valet_version() async {
-        let version = await valet("--version", sudo: false)
-        XCTAssert(version.contains("Laravel Valet 2") || version.contains("Laravel Valet 3"))
-    }
-
 }

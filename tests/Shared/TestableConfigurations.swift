@@ -138,7 +138,7 @@ class TestableConfigurations {
                     : .instant(ShellStrings.shared.brewServicesAsRoot),
                 "/opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsUser),
-                "curl -s --max-time 5 '\(Constants.Urls.StableBuildCaskFile.absoluteString)' | grep version"
+                "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
                     : .instant("version '5.6.2_976'"),
                 "/opt/homebrew/bin/brew unlink php"
                     : .delayed(0.2, "OK"),

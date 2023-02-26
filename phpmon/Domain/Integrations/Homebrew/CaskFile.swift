@@ -40,6 +40,9 @@ struct CaskFile {
 
         let lines = string.split(separator: "\n")
             .filter { $0 != "" }
+            .map { line in
+                return line.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
 
         if lines.count < 4 {
             Log.err("The CaskFile is <4 lines long, which is too short")
