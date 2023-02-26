@@ -49,8 +49,6 @@ struct CaskFile {
             return nil
         }
 
-        print(lines)
-
         if !lines.first!.starts(with: "cask") || !lines.last!.starts(with: "end") {
             Log.err("The CaskFile does not start with 'cask' or does not end with 'end'")
             return nil

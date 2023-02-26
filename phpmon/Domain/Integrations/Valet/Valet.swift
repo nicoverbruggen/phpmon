@@ -62,8 +62,7 @@ class Valet {
     }
 
     lazy var installed: Bool = {
-        // TODO: Make this properly lazy
-        return FileSystem.fileExists(Paths.binPath.appending("/valet"))
+        return FileSystem.fileExists(Paths.binPath.appending("/valet")) && FileSystem.anyExists("~/.config/valet")
     }()
 
     /**
