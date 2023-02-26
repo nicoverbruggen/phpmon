@@ -677,12 +677,12 @@ When files like these are missing, it's recommended to reinstall the appropriate
 
 "onboarding.title" = "Welcome Tour";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
-"onboarding.explore" = "Congrats, you now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
-"onboarding.explore.lite" = "Congrats, you now have access to a subset of PHP Monitor's features. Please note that some features are currently disabled because Laravel Valet is not installed (or disabled.)";
+"onboarding.explore" = "You now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
+"onboarding.explore.lite" = "You now have access to PHP Monitor's most important features.
+Please note that some features (greyed out below) are currently unavailable because Laravel Valet is not active.";
 "onboarding.tour.menu_bar.title" = "Power In Your Menu Bar";
 "onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, and much more.";
-"onboarding.tour.faq_hint" = "**Questions? Unsure why features are unavailable?**
-I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
+"onboarding.tour.faq_hint" = "**Questions?** I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
 "onboarding.tour.services.title" = "Manage Homebrew Services";
 "onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
 "onboarding.tour.domains.title" = "Manage Domains";

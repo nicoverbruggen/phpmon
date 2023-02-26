@@ -59,10 +59,12 @@ struct OnboardingView: View {
                         .font(.title)
                         .bold()
                         .padding(.bottom, 5)
+                        .padding(.top, 8)
+                        .foregroundColor(Color.appPrimary)
                     Text(
                         Valet.installed
-                         ? "onboarding.explore".localized
-                         : "onboarding.explore.lite".localized
+                         ? "onboarding.explore".localizedForSwiftUI
+                         : "onboarding.explore.lite".localizedForSwiftUI
                     )
                     .padding(.bottom)
                     .padding(.trailing)
