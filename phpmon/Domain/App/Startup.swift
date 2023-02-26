@@ -36,9 +36,7 @@ class Startup {
                     return false
                 }
             } else {
-                Log.line()
                 Log.info("Skipping \(group.name) checks!")
-                Log.line()
             }
         }
 
@@ -134,7 +132,7 @@ class Startup {
                 descriptionText: "startup.errors.php_opt.desc".localized
             )
         ]),
-        EnvironmentCheckGroup(name: "valet", condition: { return Valet.shared.installed }, checks: [
+        EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed }, checks: [
             // =================================================================================
             // The Valet binary must exist.
             // =================================================================================

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ActivePhpInstallation {
+extension Valet {
 
     /**
      It is always possible that the system configuration for PHP-FPM has not been set up for Valet.
@@ -18,24 +18,20 @@ extension ActivePhpInstallation {
      - Important: The underlying check is `checkPhpFpmStatus`, which can be run multiple times.
      This method actively presents a modal if said checks fails, so don't call this method too many times.
      */
-    public func notifyAboutBrokenPhpFpm() {
-        Task { // Determine whether FPM status is configured correctly in the background
-            let fpmStatusConfiguredCorrectly =  await self.checkPhpFpmStatus()
+    public func notifyAboutBrokenPhpFpm() async {
+        if await Valet.shared.phpFpmConfigurationValid() {
+            return
+        }
 
-            if fpmStatusConfiguredCorrectly {
-                return
-            }
-
-            Task { @MainActor in
-                BetterAlert()
-                    .withInformation(
-                        title: "alert.php_fpm_broken.title".localized,
-                        subtitle: "alert.php_fpm_broken.info".localized,
-                        description: "alert.php_fpm_broken.description".localized
-                    )
-                    .withPrimary(text: "generic.ok".localized)
-                    .show()
-            }
+        Task { @MainActor in
+            BetterAlert()
+                .withInformation(
+                    title: "alert.php_fpm_broken.title".localized,
+                    subtitle: "alert.php_fpm_broken.info".localized,
+                    description: "alert.php_fpm_broken.description".localized
+                )
+                .withPrimary(text: "generic.ok".localized)
+                .show()
         }
     }
 

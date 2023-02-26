@@ -83,10 +83,6 @@ class Valet {
      Notify the user about a non-default TLD being set.
      */
     public static func notifyAboutUnsupportedTLD() {
-        if !Valet.shared.installed {
-            return
-        }
-
         if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
             Task { @MainActor in
                 BetterAlert().withInformation(
@@ -129,9 +125,7 @@ class Valet {
      handle all PHP versions including isolation, it needs to know about all sites.
      */
     public func startPreloadingSites() async {
-        if Valet.shared.installed {
-            await self.reloadSites()
-        }
+        await self.reloadSites()
     }
 
     /**
@@ -219,6 +213,30 @@ class Valet {
     public func hasPlatformIssues() async -> Bool {
         return await Shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
+    }
+
+    /**
+     Determine if PHP-FPM is configured correctly.
+
+     For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
+     versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
+     that means that Valet won't work properly.
+     */
+    func phpFpmConfigurationValid() async -> Bool {
+        guard let version = PhpEnv.shared.currentInstall?.version else {
+            Log.info("Cannot check PHP-FPM status: no version of PHP is active")
+            return true
+        }
+
+        if version.short == "5.6" {
+            // The main PHP config file should contain `valet.sock` and then we're probably fine?
+            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
+            return await Shell.pipe("cat \(fileName)").out
+                .contains("valet.sock")
+        }
+
+        // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
+        return FileSystem.fileExists("\(Paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     /**

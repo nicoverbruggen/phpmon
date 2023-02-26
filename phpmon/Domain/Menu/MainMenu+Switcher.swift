@@ -125,6 +125,6 @@ extension MainMenu {
             return
         }
 
-        Task { install.notifyAboutBrokenPhpFpm() }
+        Task { await Valet.shared.notifyAboutBrokenPhpFpm() }
     }
 }

@@ -66,9 +66,7 @@ extension MainMenu {
         updatePhpVersionInStatusBar()
 
         // Attempt to find out if PHP-FPM is broken
-        Log.info("Determining broken PHP-FPM...")
         let installation = PhpEnv.phpInstall
-        installation?.notifyAboutBrokenPhpFpm()
 
         // Check for other problems
         WarningManager.shared.evaluateWarnings()
@@ -86,14 +84,19 @@ extension MainMenu {
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
 
-        // Preload sites
-        await Valet.shared.startPreloadingSites()
+        if Valet.installed {
+            // Preload all sites
+            await Valet.shared.startPreloadingSites()
 
-        // After preloading sites, check for PHP-FPM pool conflicts
-        HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
+            // Check if PHP-FPM is broken
+            await Valet.shared.notifyAboutBrokenPhpFpm()
 
-        // A non-default TLD is not officially supported since Valet 3.2.x
-        Valet.notifyAboutUnsupportedTLD()
+            // After preloading sites, check for PHP-FPM pool conflicts
+            HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
+
+            // A non-default TLD is not officially supported since Valet 3.2.x
+            Valet.notifyAboutUnsupportedTLD()
+        }
 
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")

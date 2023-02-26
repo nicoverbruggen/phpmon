@@ -135,25 +135,6 @@ class ActivePhpInstallation {
         return (match == nil) ? "⚠️" : "\(value)B"
     }
 
-    /**
-     Determine if PHP-FPM is configured correctly.
-     
-     For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
-     versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
-     that means that Valet won't work properly.
-     */
-    func checkPhpFpmStatus() async -> Bool {
-        if self.version.short == "5.6" {
-            // The main PHP config file should contain `valet.sock` and then we're probably fine?
-            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return await Shell.pipe("cat \(fileName)").out
-                .contains("valet.sock")
-        }
-
-        // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return FileSystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
-    }
-
     // MARK: - Structs
 
     /**
