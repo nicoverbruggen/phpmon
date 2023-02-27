@@ -14,6 +14,22 @@
 			<key>IsIncoming</key>
 			<false/>
 			<key>Host</key>
+			<string>github.com, api.github.com</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>443</string>
+			<key>Relevance</key>
+			<string>Essential</string>
+			<key>Purpose</key>
+			<string>PHP Monitor directly invokes Homebrew which contacts GitHub. This happens when PHP Monitor asks for more information about the PHP formula to determine which version of PHP you&apos;ve got running.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny these connections, PHP Monitor might not be able to complete its preset set of instructions, causing version switching to fail.</string>
+		</dict>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
 			<string>raw.githubusercontent.com</string>
 			<key>NetworkProtocol</key>
 			<string>TCP</string>
@@ -46,15 +62,15 @@
 			<key>IsIncoming</key>
 			<false/>
 			<key>Host</key>
-			<string>github.com, api.github.com</string>
+			<string>formulae.brew.sh</string>
 			<key>NetworkProtocol</key>
 			<string>TCP</string>
 			<key>Port</key>
-			<string>443</string>
+			<string>80, 443</string>
 			<key>Relevance</key>
 			<string>Essential</string>
 			<key>Purpose</key>
-			<string>PHP Monitor directly invokes Homebrew which contacts GitHub. This happens when PHP Monitor asks for more information about the PHP formula to determine which version of PHP you&apos;ve got running.</string>
+			<string>PHP Monitor directly invokes Homebrew which contacts the Homebrew API. This happens when PHP Monitor asks for more information about the PHP formula to determine which version of PHP you&apos;ve got running.</string>
 			<key>DenyConsequences</key>
 			<string>If you deny these connections, PHP Monitor might not be able to complete its preset set of instructions, causing version switching to fail.</string>
 		</dict>
