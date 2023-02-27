@@ -121,6 +121,9 @@ extension MainMenu {
         // Check if the linked version has changed between launches of phpmon
         Stats.evaluateLastLinkedPhpVersion()
 
+        // Check if an update was performed earlier
+        AppUpdater.checkIfUpdateWasPerformed()
+
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
 

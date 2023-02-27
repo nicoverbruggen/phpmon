@@ -72,5 +72,4 @@ class AppVersionTest: XCTestCase {
         // Build is older
         XCTAssertFalse(AppVersion.from("5.0_101")! > AppVersion.from("5.0_102")!)
     }
-
 }

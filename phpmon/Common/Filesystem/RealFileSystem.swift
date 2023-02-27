@@ -41,15 +41,11 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
-        return try FileManager.default.contentsOfDirectory(
-            atPath: path.replacingTildeWithHomeDirectory
-        )
+        return try FileManager.default.contentsOfDirectory(atPath: path.replacingTildeWithHomeDirectory)
     }
 
     func getDestinationOfSymlink(_ path: String) throws -> String {
-        return try FileManager.default.destinationOfSymbolicLink(
-            atPath: path.replacingTildeWithHomeDirectory
-        )
+        return try FileManager.default.destinationOfSymbolicLink(atPath: path.replacingTildeWithHomeDirectory)
     }
 
     // MARK: - Move & Delete Files
@@ -62,9 +58,7 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func remove(_ path: String) throws {
-        try FileManager.default.removeItem(
-            atPath: path.replacingTildeWithHomeDirectory
-        )
+        try FileManager.default.removeItem(atPath: path.replacingTildeWithHomeDirectory)
     }
 
     // MARK: — FS Attributes

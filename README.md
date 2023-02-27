@@ -275,6 +275,8 @@ This problem is usually resolved by upgrading Valet and running `valet install` 
 
 	composer global update
 	valet install
+ 
+If you are seeing a 502 (Bad Gateway) error after about 30 seconds or so, your request is likely timing out. You may need to solve a performance issue with your own code.
 
 </details>
 
