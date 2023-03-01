@@ -176,16 +176,24 @@ class AppUpdater {
     // MARK: - Checking if Self-Updater Worked
 
     public static func checkIfUpdateWasPerformed() {
+        // Cleanup the upgrade.success file
         if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
-            // Send a notification about the update
             Task { @MainActor in
                 LocalNotification.send(
                     title: "notification.phpmon_updated.title".localized,
                     subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
                     preference: nil
                 )
-                try! FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
             }
+
+            Log.info("The `upgrade.success` file was found! An update was installed. Cleaning up...")
+            try? FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
+        }
+
+        // Cleanup the previous updater
+        if FileSystem.anyExists("~/.config/phpmon/updater/PHP Monitor Self-Updater.app") {
+            Log.info("A remnant of the self-updater must still be removed...")
+            try? FileSystem.remove("~/.config/phpmon/updater/PHP Monitor Self-Updater.app")
         }
     }
 }
