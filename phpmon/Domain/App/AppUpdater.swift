@@ -187,7 +187,7 @@ class AppUpdater {
             }
 
             Log.info("The `upgrade.success` file was found! An update was installed. Cleaning up...")
-            try! FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
+            try? FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
         }
 
         // Cleanup the previous updater
