@@ -80,6 +80,7 @@ class AppUpdater {
             .withPrimary(
                 text: "updater.alerts.buttons.install".localized,
                 action: { vc in
+                    self.cleanupCaskroom()
                     self.prepareForDownload()
                     vc.close(with: .OK)
                 }
@@ -155,6 +156,20 @@ class AppUpdater {
 
         NSWorkspace.shared.openApplication(at: updaterUrl, configuration: configuration) { _, _ in
             Log.info("The updater has been launched successfully!")
+        }
+    }
+
+    private func cleanupCaskroom() {
+        let path = Paths.caskroomPath
+
+        if FileSystem.directoryExists(path) {
+            Log.info("Removing the Caskroom directory for PHP Monitor...")
+            do {
+                try FileSystem.remove(path)
+                Log.info("Removed the Caskroom directory at `\(path)`.")
+            } catch {
+                Log.err("Automatically removing the Caskroom directory at `\(path)` failed.")
+            }
         }
     }
 

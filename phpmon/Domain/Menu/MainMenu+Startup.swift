@@ -39,8 +39,8 @@ extension MainMenu {
 
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
-            ? "[BREW] The app has probably been installed via Homebrew Cask."
-            : "[BREW] The app has probably been installed directly."
+            ? "[BREW] The app has been installed via Homebrew Cask."
+            : "[BREW] The app has been installed directly (optimal)."
         )
 
         Log.info(HomebrewDiagnostics.usesNginxFullFormula
