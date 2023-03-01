@@ -86,6 +86,11 @@ public class Paths {
         return "\(shared.baseDir.rawValue)/etc"
     }
 
+    public static var caskroomPath: String {
+        return "\(shared.baseDir.rawValue)/Caskroom/"
+            + (App.identifier.contains(".dev") ? "phpmon-dev" : "phpmon")
+    }
+
     // MARK: - Flexible Binaries
     // (these can be in multiple locations, so we scan common places because)
     // (PHP Monitor will not use the user's own PATH)

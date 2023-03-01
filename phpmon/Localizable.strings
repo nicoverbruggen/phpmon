@@ -627,8 +627,8 @@ COMMON TROUBLESHOOTING TIPS
 
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
 "updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
-"updater.installation_source.brew" = "The recommended method of installing updates to PHP Monitor is to simply press 'Install Update'.\n\n(You may also upgrade via the terminal by running `%@`, but this is not recommended.)";
-"updater.installation_source.direct" = "The recommended method of installing updates to PHP Monitor is to simply press 'Install Update'.";
+"updater.installation_source.brew" = "The recommended method of installing updates to PHP Monitor is to simply press “Install Update”.\n\nSince you used Homebrew to install the app, you can also upgrade via the terminal by running `%@`, but this is not recommended.\n\n(Please note that installing via this built-in updater will remove PHP Monitor from Homebrew's Caskroom directory, to prevent duplicate updates from being downloaded and causing potential issues later.)";
+"updater.installation_source.direct" = "The recommended method of installing updates to PHP Monitor is to simply press “Install Update”.";
 "updater.alerts.buttons.release_notes" = "View Release Notes";
 
 "updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
