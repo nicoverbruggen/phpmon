@@ -39,8 +39,8 @@ extension MainMenu {
 
         // Determine install method
         Log.info(HomebrewDiagnostics.customCaskInstalled
-            ? "[BREW] The app has probably been installed via Homebrew Cask."
-            : "[BREW] The app has probably been installed directly."
+            ? "[BREW] The app has been installed via Homebrew Cask."
+            : "[BREW] The app has been installed directly (optimal)."
         )
 
         Log.info(HomebrewDiagnostics.usesNginxFullFormula
@@ -110,13 +110,16 @@ extension MainMenu {
                 Task { @MainActor in
                     OnboardingWindowController.show()
                 }
+            } else {
+                await AppUpdater().checkForUpdates(userInitiated: false)
             }
-
-            await AppUpdateChecker.checkIfNewerVersionIsAvailable()
         }
 
         // Check if the linked version has changed between launches of phpmon
         Stats.evaluateLastLinkedPhpVersion()
+
+        // Check if an update was performed earlier
+        AppUpdater.checkIfUpdateWasPerformed()
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")

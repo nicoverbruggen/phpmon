@@ -9,10 +9,14 @@
 import SwiftUI
 
 struct WarningListView: View {
-    @State var warnings: [Warning]
+    @ObservedObject var warningManager: WarningManager
 
     init(empty: Bool = false) {
-        self.warnings = empty ? [] : WarningManager.shared.warnings
+        if empty {
+            WarningManager.shared.warnings = []
+        }
+
+        warningManager = WarningManager.shared
     }
 
     var body: some View {
@@ -40,7 +44,6 @@ struct WarningListView: View {
                 Button("warnings.refresh.button".localizedForSwiftUI) {
                     Task { // Reload warnings
                         await WarningManager.shared.checkEnvironment()
-                        self.warnings = WarningManager.shared.warnings
                     }
                 }
                 Text("warnings.refresh.button.description".localizedForSwiftUI)
@@ -51,14 +54,14 @@ struct WarningListView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    if warnings.isEmpty {
+                    if warningManager.warnings.isEmpty {
                         NoWarningsView()
                     } else {
-                        ForEach(warnings) { warning in
+                        ForEach(warningManager.warnings) { warning in
                             Group {
                                 WarningView(
                                     title: warning.title,
-                                    paragraphs: warning.paragraphs,
+                                    paragraphs: warning.paragraphs(),
                                     documentationUrl: warning.url
                                 )
                                 .fixedSize(horizontal: false, vertical: true)
@@ -67,7 +70,8 @@ struct WarningListView: View {
                             }.padding(5)
                         }
                     }
-                }.frame(minHeight: 0, maxHeight: .infinity).padding(5)
+                }
+                .frame(minHeight: 0, maxHeight: .infinity).padding(5)
             }
             .listRowInsets(EdgeInsets())
             .listStyle(.plain)

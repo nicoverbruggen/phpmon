@@ -2,4 +2,5 @@ phpmon.xcodeproj/project.xcworkspace
 phpmon.xcodeproj/xcuserdata
 PHP Monitor.xcodeproj/project.xcworkspace
 PHP Monitor.xcodeproj/xcuserdata
+phpmon-updater/PHP Monitor Self-Updater.app
 .DS_Store

@@ -10,18 +10,12 @@ import Foundation
 import Cocoa
 
 class CheckboxPreferenceView: NSView, XibLoadable {
-
     @IBOutlet weak var labelSection: NSTextField!
     @IBOutlet weak var labelDescription: NSTextField!
     @IBOutlet weak var buttonCheckbox: NSButton!
 
     var action: (() -> Void)!
-
-    var preference: PreferenceName! {
-        didSet {
-            self.buttonCheckbox.state = Preferences.isEnabled(self.preference) ? .on : .off
-        }
-    }
+    var behavior: CheckboxPreferenceViewBehavior!
 
     static func make(
         sectionText: String,
@@ -31,17 +25,75 @@ class CheckboxPreferenceView: NSView, XibLoadable {
         action: @escaping () -> Void
     ) -> NSView {
         let view = Self.createFromXib()!
+        view.behavior = CheckboxPreferenceBehavior(
+            button: view.buttonCheckbox,
+            preference: preference
+        )
         view.labelSection.stringValue = sectionText
         view.labelDescription.stringValue = descriptionText
         view.buttonCheckbox.title = checkboxText
-        view.preference = preference
         view.action = action
         return view
     }
 
-    @IBAction func toggled(_ sender: Any) {
-        Preferences.update(self.preference, value: buttonCheckbox.state == .on)
-        self.action()
+    @available(macOS 13.0, *)
+    static func makeLoginItemView() -> NSView {
+        let view = Self.createFromXib()!
+        view.behavior = CheckboxLaunchItemBehavior(button: view.buttonCheckbox)
+        view.labelSection.stringValue = "prefs.startup".localized
+        view.labelDescription.stringValue = "prefs.auto_start_desc".localized
+        view.buttonCheckbox.title = "prefs.auto_start_title".localized
+        view.action = {}
+        return view
     }
 
+    @IBAction func toggled(_ sender: Any) {
+        self.behavior.toggled(checked: buttonCheckbox.state == .on)
+        self.action()
+    }
+}
+
+protocol CheckboxPreferenceViewBehavior {
+    func toggled(checked: Bool)
+}
+
+class CheckboxPreferenceBehavior: CheckboxPreferenceViewBehavior {
+    var button: NSButton
+    var preference: PreferenceName
+
+    init(button: NSButton, preference: PreferenceName) {
+        self.preference = preference
+        self.button = button
+        self.button.state = Preferences.isEnabled(self.preference) ? .on : .off
+    }
+
+    public func toggled(checked: Bool) {
+        Preferences.update(self.preference, value: checked)
+    }
+}
+
+@available(macOS 13.0, *)
+class CheckboxLaunchItemBehavior: CheckboxPreferenceViewBehavior {
+    var manager = LoginItemManager()
+    var button: NSButton
+
+    init(button: NSButton) {
+        self.button = button
+
+        if manager.loginItemIsEnabled() {
+            self.button.state = .on
+        } else {
+            self.button.state = .off
+        }
+    }
+
+    public func toggled(checked: Bool) {
+        if checked {
+            self.manager.enableLoginItem()
+        } else {
+            self.manager.disableLoginItem()
+        }
+
+        self.button.state = self.manager.loginItemIsEnabled() ? .on : .off
+    }
 }

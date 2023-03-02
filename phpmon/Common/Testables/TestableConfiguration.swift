@@ -13,6 +13,7 @@ public struct TestableConfiguration: Codable {
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
+    var preferenceOverrides: [PreferenceName: Bool]
 
     func apply() {
         Log.separator()
@@ -31,6 +32,10 @@ public struct TestableConfiguration: Codable {
         ServicesManager.useFake()
         Log.info("Applying fake Valet domain interactor...")
         ValetInteractor.useFake()
+        Log.info("Applying temporary preference overrides...")
+        preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
+            Preferences.shared.cachedPreferences[key] = value
+        }
     }
 
     func toJson(pretty: Bool = false) -> String {

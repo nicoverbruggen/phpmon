@@ -243,6 +243,10 @@ class GeneralPreferencesVC: GenericPreferenceVC {
             vc.getAutomaticUpdateCheckPV()
         ]
 
+        if #available(macOS 13, *) {
+            vc.views.append(CheckboxPreferenceView.makeLoginItemView())
+        }
+
         return vc
     }
 }

@@ -5,15 +5,13 @@
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
-<img src="./docs/screenshot.jpg#gh-light-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
-<img src="./docs/screenshot-dark.jpg#gh-dark-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.jpg" width="1280px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
-<img src="./docs/notification.png#gh-light-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
-<img src="./docs/notification-dark.png#gh-dark-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
+<img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
@@ -24,7 +22,7 @@ You can also add new domains as links, isolate sites, manage various services, a
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
-* macOS Monterey 12.4 or later (Ventura supported)
+* macOS 12.4 or later (Monterey and Ventura are supported)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
 * Laravel Valet (works with Valet v2, v3 and v4)
@@ -43,22 +41,28 @@ valet install
 valet trust
 ```
 
-Once that's done, you can install PHP Monitor via Homebrew (recommended), or (alternatively) you may download the latest release on GitHub.
+#### Manual installation (recommended, first time only)
 
-To install via Homebrew, run:
+Once that's done, you can [download the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest), unzip it and place it in `/Applications`.
+
+#### Installation via Homebrew
+
+*Prior to version 5.8, this was the recommended way of installing PHP Monitor.*
+
+If you prefer to install the app via Homebrew, you can also run the following:
 
 ```sh
 brew tap nicoverbruggen/homebrew-cask
 brew install --cask phpmon
 ```
 
-To upgrade your existing installation, run:
+## ⬆️ How to update
 
-```sh
-brew upgrade phpmon
-```
+The recommended method of updating the app to the latest version is to use **the built-in updater**.
 
-(You may need to run `brew update` or `brew update-reset` first in order to update the cask file if you ran a Homebrew operation recently.)
+If you have a very slow internet connection, the updater may report that the download has timed out. In that case, you may wish to manually update by [downloading the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest) and placing the app in `/Applications`.
+
+(You may also use Homebrew to update PHP Monitor, but this will require you to approve the app every time an update is installed. If you use the built-in updater, this won't be necessary.)
 
 ## ⚡️ Launchers (Alfred, Raycast)
 
@@ -273,6 +277,8 @@ This problem is usually resolved by upgrading Valet and running `valet install` 
 
 	composer global update
 	valet install
+ 
+If you are seeing a 502 (Bad Gateway) error after about 30 seconds or so, your request is likely timing out. You may need to solve a performance issue with your own code.
 
 </details>
 

@@ -16,26 +16,14 @@ final class DomainsListTest: UITestCase {
 
     override func tearDownWithError() throws {}
 
-    private func openMenu() -> XCPMApplication {
-        let app = XCPMApplication()
-        app.withConfiguration(TestableConfigurations.working)
-        app.launch()
-
-        // Note: If this fails here, make sure the menu bar item can be displayed
-        // If you use Bartender or something like this, this item may be hidden and tests will fail
-        app.statusItems.firstMatch.click()
-
-        return app
-    }
-
     final func test_can_always_open_domains_list() throws {
-        let app = openMenu()
+        let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
     }
 
     final func test_can_filter_domains_list() throws {
-        let app = openMenu()
+        let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
 
@@ -58,7 +46,7 @@ final class DomainsListTest: UITestCase {
     }
 
     final func test_can_tap_add_domain_button() throws {
-        let app = openMenu()
+        let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
 

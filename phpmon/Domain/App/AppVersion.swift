@@ -8,14 +8,14 @@
 
 import Foundation
 
-class AppVersion {
+class AppVersion: Comparable {
     var version: String
-    var build: String?
+    var build: Int?
     var suffix: String?
 
     init(version: String, build: String?, suffix: String? = nil) {
         self.version = version
-        self.build = build
+        self.build = build == nil ? nil : Int(build!)
         self.suffix = suffix
     }
 
@@ -75,11 +75,27 @@ class AppVersion {
     }
 
     var computerReadable: String {
-        return "\(version)_\(build ?? "0")"
+        return "\(version)_\(build ?? 0)"
     }
 
     var humanReadable: String {
-        return "\(version) (\(build ?? "???"))"
+        return "\(version) (\(build ?? 0))"
     }
 
+    // MARK: - Comparable Protocol
+
+    static func < (lhs: AppVersion, rhs: AppVersion) -> Bool {
+        let comparisonResult = lhs.version.versionCompare(rhs.version)
+
+        if comparisonResult == .orderedAscending {
+            return true
+        }
+
+        return lhs.build ?? 0 < rhs.build ?? 0
+    }
+
+    static func == (lhs: AppVersion, rhs: AppVersion) -> Bool {
+        lhs.version.versionCompare(rhs.version) == .orderedSame
+        && lhs.build == rhs.build
+    }
 }

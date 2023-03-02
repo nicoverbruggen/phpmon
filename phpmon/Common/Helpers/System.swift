@@ -26,3 +26,31 @@ public func system(_ command: String) -> String {
 
     return output
 }
+
+/** Same as the `system` command, but does not return the output. */
+public func system_quiet(_ command: String) {
+    _ = system(command)
+}
+
+/**
+ Retrieves the username for the currently signed in user via `/usr/bin/id`.
+ This cannot fail or the application will crash.
+ */
+public func identity() -> String {
+    let task = Process()
+    task.launchPath = "/usr/bin/id"
+    task.arguments = ["-un"]
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    guard let output = String(
+        data: pipe.fileHandleForReading.readDataToEndOfFile(),
+        encoding: String.Encoding.utf8
+    ) else {
+        fatalError("Could not retrieve username via `id -un`!")
+    }
+
+    return output.trimmingCharacters(in: .whitespacesAndNewlines)
+}

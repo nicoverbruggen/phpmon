@@ -9,9 +9,9 @@
 import Foundation
 import Cocoa
 
-class WarningManager {
+class WarningManager: ObservableObject {
 
-    static var shared = WarningManager()
+    static var shared: WarningManager = WarningManager()
 
     init() {
         if isRunningSwiftUIPreview {
@@ -26,8 +26,8 @@ class WarningManager {
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
-            title: "warnings.arm_compatibility.title",
-            paragraphs: ["warnings.arm_compatibility.description"],
+            title: "warnings.arm_compatibility.title".localized,
+            paragraphs: { return ["warnings.arm_compatibility.description".localized] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
         ),
         Warning(
@@ -36,13 +36,27 @@ class WarningManager {
                     !FileSystem.isWriteableFile("/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
-            title: "warnings.helper_permissions.title",
-            paragraphs: [
-                "warnings.helper_permissions.description",
-                "warnings.helper_permissions.unavailable",
-                "warnings.helper_permissions.symlink"
-            ],
+            title: "warnings.helper_permissions.title".localized,
+            paragraphs: { return [
+                "warnings.helper_permissions.description".localized,
+                "warnings.helper_permissions.unavailable".localized,
+                "warnings.helper_permissions.symlink".localized
+            ] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
+        ),
+        Warning(
+            command: {
+                PhpConfigChecker.shared.check()
+                return !PhpConfigChecker.shared.missing.isEmpty
+            },
+            name: "Your PHP installation is missing configuration files",
+            title: "warnings.files_missing.title".localized,
+            paragraphs: { return [
+                "warnings.files_missing.description".localized(
+                    PhpConfigChecker.shared.missing.joined(separator: "\n• ")
+                )
+            ] },
+            url: nil
         )
     ]
 
@@ -60,11 +74,11 @@ class WarningManager {
      Checks the user's environment and checks if any special warnings apply.
      */
     func checkEnvironment() async {
-        self.warnings = []
-
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             // For debugging purposes, we may wish to see all possible evaluations listed
-            self.warnings = self.evaluations
+            Task { @MainActor in
+                self.warnings = self.evaluations
+            }
         } else {
             // Otherwise, loop over the actual evaluations and list the warnings
             await loopOverEvaluations()
@@ -74,9 +88,14 @@ class WarningManager {
     }
 
     private func loopOverEvaluations() async {
+        Task { @MainActor in
+            self.warnings = []
+        }
         for check in self.evaluations where await check.applies() {
             Log.info("[DOCTOR] \(check.name) (!)")
-            self.warnings.append(check)
+            Task { @MainActor in
+                self.warnings.append(check)
+            }
             continue
         }
     }

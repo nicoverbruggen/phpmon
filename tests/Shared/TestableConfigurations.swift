@@ -138,8 +138,22 @@ class TestableConfigurations {
                     : .instant(ShellStrings.shared.brewServicesAsRoot),
                 "/opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsUser),
-                "curl -s --max-time 5 '\(Constants.Urls.StableBuildCaskFile.absoluteString)' | grep version"
-                    : .instant("version '5.6.2_976'"),
+                "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
+                    : .delayed(0.5, """
+                cask 'phpmon-dev' do
+                    depends_on formula: 'gnu-sed'
+
+                    version '\(App.shortVersion)_\(App.bundleVersion)'
+                    sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
+
+                    url 'https://github.com/nicoverbruggen/phpmon/releases/download/v\(App.shortVersion)/phpmon-dev.zip'
+                    appcast 'https://github.com/nicoverbruggen/phpmon/releases.atom'
+                    name 'PHP Monitor DEV'
+                    homepage 'https://phpmon.app'
+
+                    app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
+                end
+                """),
                 "/opt/homebrew/bin/brew unlink php"
                     : .delayed(0.2, "OK"),
                 "/opt/homebrew/bin/brew unlink php@8.2"
@@ -170,7 +184,8 @@ class TestableConfigurations {
                 : """
                 /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
                 """
-            ]
+            ],
+            preferenceOverrides: [:]
         )
     }
 }

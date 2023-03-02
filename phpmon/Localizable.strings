@@ -254,6 +254,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.notifications" = "Notifications:";
 "prefs.warnings" = "Warnings:";
 "prefs.menu_contents" = "Features in Menu:";
+"prefs.startup" = "Startup:";
+
+"prefs.auto_start_desc" = "Automatically starts PHP Monitor when you log into your Mac.";
+"prefs.auto_start_title" = "Start PHP Monitor at login";
 
 "prefs.icon_options.php" = "Display PHP Icon";
 "prefs.icon_options.elephant" = "Display Elephant Icon";
@@ -354,6 +358,9 @@ This has no effect on other terminals, only for the particular terminal session 
 
 "notification.preset_reverted_title" = "Preset reverted";
 "notification.preset_reverted_desc" = "The last preset you applied has been undone. Your previous configuration is now active.";
+
+"notification.phpmon_updated.title" = "PHP Monitor has been updated!";
+"notification.phpmon_updated.desc" = "You are now running PHP Monitor v%@.";
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
@@ -617,9 +624,8 @@ COMMON TROUBLESHOOTING TIPS
 
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ is now available!";
 "updater.alerts.newer_version_available.subtitle" = "Keeping PHP Monitor up-to-date is highly recommended, since newer versions usually fix bugs and include fixes to support the latest versions of Valet and PHP.";
-"updater.alerts.newer_version_available.description" = "PHP Monitor is supposed to be updated via Homebrew, so there is no built-in updater. This check is only meant to inform you of the existence of a new version, you do not need to upgrade.";
-"updater.installation_source.brew" = "You appear to have installed PHP Monitor via Homebrew (or have at least tapped the required Caskfile) so it is recommended that you upgrade via the terminal by running `%@`.";
-"updater.installation_source.direct" = "You do not appear to have installed PHP Monitor via Homebrew, so you will need to visit GitHub to download the latest update.";
+"updater.installation_source.brew" = "The recommended method of installing updates to PHP Monitor is to simply press “Install Update”.\n\nSince you used Homebrew to install the app, you can also upgrade via the terminal by running `%@`, but this is not recommended.\n\n(Please note that installing via this built-in updater will remove PHP Monitor from Homebrew's Caskroom directory, to prevent duplicate updates from being downloaded and causing potential issues later.)";
+"updater.installation_source.direct" = "The recommended method of installing updates to PHP Monitor is to simply press “Install Update”.";
 "updater.alerts.buttons.release_notes" = "View Release Notes";
 
 "updater.alerts.is_latest_version.title" = "PHP Monitor is up-to-date!";
@@ -629,6 +635,8 @@ COMMON TROUBLESHOOTING TIPS
 "updater.alerts.cannot_check_for_update.subtitle" = "You might not be connected to the internet, are blocking traffic or GitHub is down and won't allow you to check for updates. If you keep seeing this message, you may want to manually check the releases page.";
 "updater.alerts.cannot_check_for_update.description" = "The currently installed version is: %@. You can go to the list of the latest releases (on GitHub) by clicking on the button on the left.";
 "updater.alerts.buttons.releases_on_github" = "View Releases";
+"updater.alerts.buttons.install" = "Install Update";
+"updater.alerts.buttons.dismiss" = "Dismiss";
 
 // WARNINGS ABOUT NON-DEFAULT TLD
 
@@ -652,6 +660,13 @@ COMMON TROUBLESHOOTING TIPS
 
 "warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta on Apple Silicon, which means your PHP environment is also running via Rosetta.";
 "warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
+
+"warnings.files_missing.title" = "Your PHP installation is missing important required configuration files.";
+"warnings.files_missing.description" = "The following key configuration files should exist after installing PHP:
+
+• %@
+
+When files like these are missing, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet.";
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 

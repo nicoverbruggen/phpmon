@@ -32,6 +32,7 @@ class HomebrewDiagnostics {
      */
     public static var customCaskInstalled: Bool = {
         return installedTaps.contains("nicoverbruggen/cask")
+            && FileSystem.directoryExists(Paths.caskroomPath)
     }()
 
     /**
