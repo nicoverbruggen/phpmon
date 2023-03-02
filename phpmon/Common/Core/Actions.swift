@@ -12,6 +12,12 @@ class Actions {
 
     // MARK: - Services
 
+    public static func linkPhp() async {
+        await brew("link php --overwrite --force")
+
+        // TODO: Verify that this worked, if not, notify the user
+    }
+
     public static func restartPhpFpm() async {
         await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
     }

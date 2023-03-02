@@ -18,7 +18,7 @@ extension StatusMenu {
             addItems([
                 // TODO: Make sure these buttons do something
                 NSMenuItem.separator(),
-                NSMenuItem(title: "mi_fix_php_link".localized),
+                NSMenuItem(title: "mi_fix_php_link".localized, action: #selector(MainMenu.linkPhpBinary)),
                 NSMenuItem(title: "mi_no_php_linked_explain".localized)
             ])
             return

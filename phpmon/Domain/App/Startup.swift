@@ -109,16 +109,6 @@ class Startup {
                 requiresAppRestart: true
             ),
             // =================================================================================
-            // The PHP binary must exist.
-            // =================================================================================
-            EnvironmentCheck(
-                command: { return !FileSystem.fileExists(Paths.php) },
-                name: "`\(Paths.php)` exists",
-                titleText: "startup.errors.php_binary.title".localized,
-                subtitleText: "startup.errors.php_binary.subtitle".localized,
-                descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
-            ),
-            // =================================================================================
             // Make sure we can detect one or more PHP installations.
             // =================================================================================
             EnvironmentCheck(
@@ -134,6 +124,16 @@ class Startup {
             )
         ]),
         EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed }, checks: [
+            // =================================================================================
+            // The PHP binary must exist.
+            // =================================================================================
+            EnvironmentCheck(
+                command: { return !FileSystem.fileExists(Paths.php) },
+                name: "`\(Paths.php)` exists",
+                titleText: "startup.errors.php_binary.title".localized,
+                subtitleText: "startup.errors.php_binary.subtitle".localized,
+                descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
+            ),
             // =================================================================================
             // The Valet binary must exist.
             // =================================================================================

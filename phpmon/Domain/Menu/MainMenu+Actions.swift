@@ -12,6 +12,12 @@ extension MainMenu {
 
     // MARK: - Actions
 
+    @MainActor @objc func linkPhpBinary() {
+        Task {
+            await Actions.linkPhp()
+        }
+    }
+
     @MainActor @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(
