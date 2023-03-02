@@ -50,11 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      */
     var logger = Log.shared
 
-    /**
-
-     */
-    var watchers: [FSNotifier.Kind: FSNotifier] = [:]
-
     // MARK: - Initializer
 
     /**
@@ -114,24 +109,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Make sure notifications will work
         setupNotifications()
-        // Make sure the watchers are set up
-        // TODO: Move to after startup
-        // self.watchHomebrewBinFolder()
 
         Task { // Make sure the menu performs its initial checks
             await menu.startup()
         }
-    }
-
-    func watchHomebrewBinFolder() {
-        self.watchers[.homebrewLocks] = FSNotifier(
-            for: URL(fileURLWithPath: Paths.binPath),
-            eventMask: .all,
-            onChange: {
-                // Removing requires termination and then removing reference
-                // self.watchers[.homebrewLocks]?.terminate()
-                // self.watchers[.homebrewLocks] = nil
-            }
-        )
     }
 }

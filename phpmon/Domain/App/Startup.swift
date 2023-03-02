@@ -25,13 +25,14 @@ class Startup {
             if group.condition() {
                 Log.info("Now running \(group.checks.count) \(group.name) checks!")
                 for check in group.checks {
+                    let start = Measurement()
                     if await check.succeeds() {
-                        Log.info("[PASS] \(check.name)")
+                        Log.info("[PASS] \(check.name) (\(start.milliseconds) ms)")
                         continue
                     }
 
                     // If we get here, something's gone wrong and the check has failed...
-                    Log.info("[FAIL] \(check.name)")
+                    Log.info("[FAIL] \(check.name) (\(start.milliseconds) ms)")
                     await showAlert(for: check)
                     return false
                 }
@@ -232,7 +233,7 @@ class Startup {
                     return await Shell.pipe("valet --version").out
                         .contains("Composer detected issues in your platform")
                 },
-                name: "`no global composer issues",
+                name: "no global composer issues",
                 titleText: "startup.errors.global_composer_platform_issues.title".localized,
                 subtitleText: "startup.errors.global_composer_platform_issues.subtitle".localized,
                 descriptionText: "startup.errors.global_composer_platform_issues.desc".localized

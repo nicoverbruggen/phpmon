@@ -86,6 +86,9 @@ class App {
     /** The warning manager, responsible for keeping track of warnings. */
     var warnings = WarningManager.shared
 
+    /** The filesystem watchers, responsible for keeping track of changes to the PHP installation. */
+    var watchers: [FSNotifier.Kind: FSNotifier] = [:]
+
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
 

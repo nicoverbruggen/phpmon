@@ -66,7 +66,22 @@ extension MainMenu {
         updatePhpVersionInStatusBar()
 
         // Attempt to find out if PHP-FPM is broken
-        let installation = PhpEnv.phpInstall
+        PhpEnv.prepare()
+
+        // Set up the filesystem watcher for the Homebrew binaries
+        App.shared.watchers[.homebrewBinaries] = FSNotifier(
+            for: URL(fileURLWithPath: Paths.binPath),
+            eventMask: .all,
+            onChange: {
+                Task {
+                    await PhpEnv.detectPhpVersions()
+                    MainMenu.shared.refreshActiveInstallation()
+                }
+                // Removing requires termination and then removing reference
+                // self.watchers[.homebrewBinaries]?.terminate()
+                // self.watchers[.homebrewBinaries] = nil
+            }
+        )
 
         // Check for other problems
         WarningManager.shared.evaluateWarnings()

@@ -16,6 +16,10 @@ class PhpEnv {
         self.currentInstall = ActivePhpInstallation.load()
     }
 
+    static func prepare() {
+        _ = Self.shared
+    }
+
     func determinePhpAlias() async {
         let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
