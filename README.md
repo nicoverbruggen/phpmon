@@ -5,15 +5,13 @@
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up before you can use this app</u> (consult the FAQ below with info about how to set up your environment).
 
-<img src="./docs/screenshot.jpg#gh-light-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
-<img src="./docs/screenshot-dark.jpg#gh-dark-mode-only" width="1280px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot.jpg" width="1280px" alt="phpmon screenshot (menu bar app)"/>
 
 <small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
 
 It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
 
-<img src="./docs/notification.png#gh-light-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
-<img src="./docs/notification-dark.png#gh-dark-mode-only" width="370px" alt="phpmon screenshot (notification)"/>
+<img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
@@ -43,13 +41,15 @@ valet install
 valet trust
 ```
 
-#### Manual installation (first time only)
+#### Manual installation (recommended, first time only)
 
 Once that's done, you can [download the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest), unzip it and place it in `/Applications`.
 
 #### Installation via Homebrew
 
-If you prefer to install the app via Homebrew, you can also do this:
+*Prior to version 5.8, this was the recommended way of installing PHP Monitor.*
+
+If you prefer to install the app via Homebrew, you can also run the following:
 
 ```sh
 brew tap nicoverbruggen/homebrew-cask
@@ -58,9 +58,11 @@ brew install --cask phpmon
 
 ## ⬆️ How to update
 
-The recommended method of updating your app to the latest version is to use **the built-in updater**.
+The recommended method of updating the app to the latest version is to use **the built-in updater**.
 
-If that doesn't work or you prefer Homebrew, you can also upgrade via those methods.
+If you have a very slow internet connection, the updater may report that the download has timed out. In that case, you may wish to manually update by [downloading the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest) and placing the app in `/Applications`.
+
+(You may also use Homebrew to update PHP Monitor, but this will require you to approve the app every time an update is installed. If you use the built-in updater, this won't be necessary.)
 
 ## ⚡️ Launchers (Alfred, Raycast)
 
