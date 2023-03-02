@@ -74,8 +74,31 @@ extension MainMenu {
             eventMask: .all,
             onChange: {
                 Task {
+                    #warning("This functionality working means that switcher code needs to change")
+                    let previous = PhpEnv.shared.currentInstall?.version.text
+                    Log.info("Something changed in the Homebrew binary directory...")
                     await PhpEnv.detectPhpVersions()
                     MainMenu.shared.refreshActiveInstallation()
+                    let new = PhpEnv.shared.currentInstall?.version.text
+                    if previous != new {
+                        Log.info("The PHP version has changed, new version is now: \(new ?? "unlinked")")
+                        /*
+                        // These notifications will cause duplicate notifications if using the switcher
+                        if new != nil {
+                            LocalNotification.send(
+                                title: "Globally linked PHP version has changed!",
+                                subtitle: "PHP \(new!) is now active.",
+                                preference: nil
+                            )
+                        } else {
+                            LocalNotification.send(
+                                title: "Globally linked PHP version has changed!",
+                                subtitle: "PHP is now unlinked.",
+                                preference: nil
+                            )
+                        }
+                        */
+                    }
                 }
                 // Removing requires termination and then removing reference
                 // self.watchers[.homebrewBinaries]?.terminate()
@@ -115,9 +138,6 @@ extension MainMenu {
 
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
-
-        // Start the background refresh timer
-        startSharedTimer()
 
         if !isRunningSwiftUIPreview {
             Stats.incrementSuccessfulLaunchCount()
@@ -167,21 +187,6 @@ extension MainMenu {
             Task { // An issue occurred, fire startup checks again after dismissal
                 await startup()
             }
-        }
-    }
-
-    /**
-     Schedule a request to fetch the PHP version every 60 seconds.
-     */
-    private func startSharedTimer() {
-        DispatchQueue.main.async { [self] in
-            App.shared.timer = Timer.scheduledTimer(
-                timeInterval: 60,
-                target: self,
-                selector: #selector(refreshActiveInstallation),
-                userInfo: nil,
-                repeats: true
-            )
         }
     }
 
