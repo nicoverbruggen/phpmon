@@ -10,9 +10,33 @@ import XCTest
 
 class UITestCase: XCTestCase {
 
+    /** Launches the app and opens the menu. */
+    public func launch(
+        openMenu: Bool = false,
+        with configuration: TestableConfiguration? = nil
+    ) -> XCPMApplication {
+        let app = XCPMApplication()
+        let config = configuration ?? TestableConfigurations.working
+        app.withConfiguration(config)
+        app.launch()
+
+        // Note: If this fails here, make sure the menu bar item can be displayed
+        // If you use Bartender or something like this, this item may be hidden and tests will fail
+        if openMenu {
+            app.statusItems.firstMatch.click()
+        }
+
+        return app
+    }
+
     /** Checks if a single element exists. */
     public func assertExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
-        XCTAssert(element.waitForExistence(timeout: timeout))
+        XCTAssertTrue(element.waitForExistence(timeout: timeout))
+    }
+
+    /** Checks if a single element fails to exist. */
+    public func assertNotExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
+        XCTAssertFalse(element.waitForExistence(timeout: timeout))
     }
 
     /** Checks if all elements exist. */

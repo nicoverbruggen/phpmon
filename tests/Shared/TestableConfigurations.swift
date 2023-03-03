@@ -22,6 +22,8 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/bin/php"
                     : .fake(.binary),
+                "/opt/homebrew/bin/php-config"
+                    : .fake(.binary),
                 "/opt/homebrew/bin/valet"
                     : .fake(.binary),
                 "/opt/homebrew/opt/php"
@@ -139,7 +141,21 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsUser),
                 "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
-                    : .instant("version '5.6.2_976'"),
+                    : .delayed(0.5, """
+                cask 'phpmon-dev' do
+                    depends_on formula: 'gnu-sed'
+
+                    version '\(App.shortVersion)_\(App.bundleVersion)'
+                    sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
+
+                    url 'https://github.com/nicoverbruggen/phpmon/releases/download/v\(App.shortVersion)/phpmon-dev.zip'
+                    appcast 'https://github.com/nicoverbruggen/phpmon/releases.atom'
+                    name 'PHP Monitor DEV'
+                    homepage 'https://phpmon.app'
+
+                    app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
+                end
+                """),
                 "/opt/homebrew/bin/brew unlink php"
                     : .delayed(0.2, "OK"),
                 "/opt/homebrew/bin/brew unlink php@8.2"
@@ -170,7 +186,8 @@ class TestableConfigurations {
                 : """
                 /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
                 """
-            ]
+            ],
+            preferenceOverrides: [:]
         )
     }
 
@@ -180,27 +197,29 @@ class TestableConfigurations {
             architecture: "arm64",
             filesystem: [
                 "/usr/local/bin/"
-                : .fake(.directory, readOnly: true),
+                    : .fake(.directory, readOnly: true),
                 "/usr/local/bin/composer"
-                : .fake(.binary),
+                    : .fake(.binary),
                 "/opt/homebrew/bin/brew"
-                : .fake(.binary),
+                    : .fake(.binary),
                 "/opt/homebrew/bin/php"
-                : .fake(.binary),
+                    : .fake(.binary),
+                "/opt/homebrew/bin/php-config"
+                    : .fake(.binary),
                 "/opt/homebrew/opt/php"
-                : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0"),
+                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0"),
                 "/opt/homebrew/opt/php@8.2/bin/php"
-                : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0/bin/php"),
+                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0/bin/php"),
                 "/opt/homebrew/Cellar/php/8.2.0/bin/php"
-                : .fake(.binary),
+                    : .fake(.binary),
                 "/opt/homebrew/Cellar/php/8.2.0/bin/php-config"
-                : .fake(.binary),
+                    : .fake(.binary),
                 "/opt/homebrew/etc/php/8.2/php-fpm.d/www.conf"
-                : .fake(.text),
+                    : .fake(.text),
                 "/opt/homebrew/etc/php/8.2/php.ini"
-                : .fake(.text),
+                    : .fake(.text),
                 "/opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini"
-                : .fake(.text)
+                    : .fake(.text)
             ],
             shellOutput: [
                 "sysctl -n sysctl.proc_translated"
@@ -306,6 +325,9 @@ class TestableConfigurations {
                 : """
                 /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
                 """
+            ],
+            preferenceOverrides: [
+                : // TODO: Add default preferences that are relevant for tests
             ]
         )
     }

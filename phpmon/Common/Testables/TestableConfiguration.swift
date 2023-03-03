@@ -13,6 +13,7 @@ public struct TestableConfiguration: Codable {
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
+    var preferenceOverrides: [PreferenceName: Bool]
 
     func apply() {
         Log.separator()
@@ -24,6 +25,10 @@ public struct TestableConfiguration: Codable {
         ActiveFileSystem.useTestable(filesystem)
         Log.info("Applying fake commands...")
         ActiveCommand.useTestable(commandOutput)
+        Log.info("Applying temporary preference overrides...")
+        preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
+            Preferences.shared.cachedPreferences[key] = value
+        }
 
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")

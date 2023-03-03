@@ -9,7 +9,7 @@
 /**
  These are the keys used for every preference in the app.
  */
-enum PreferenceName: String {
+enum PreferenceName: String, Codable {
     // FIRST-TIME LAUNCH
     case wasLaunchedBefore = "launched_before"
 

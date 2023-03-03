@@ -12,7 +12,7 @@ class Homebrew {
     struct Formulae {
         static var php: HomebrewFormula {
             if PhpEnv.shared.homebrewPackage == nil {
-                fatalError("You must either load the HomebrewPackage object or call `fake` on the Homebrew class.")
+                return HomebrewFormula("php", elevated: true)
             }
 
             guard let install = PhpEnv.phpInstall else {

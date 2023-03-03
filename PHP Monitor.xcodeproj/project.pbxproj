@@ -161,6 +161,7 @@
 		C44CCD4127AFE2FC00CE40E5 /* AlertableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */; };
 		C44CCD4927AFF3B700CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
+		C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */; };
 		C44F868E2835BD8D005C353A /* phpmon-config.json in Resources */ = {isa = PBXBuildFile; fileRef = C44F868D2835BD8D005C353A /* phpmon-config.json */; };
 		C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450C8C528C919EC002A2B4B /* PreferenceName.swift */; };
 		C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C450C8C528C919EC002A2B4B /* PreferenceName.swift */; };
@@ -860,6 +861,7 @@
 		C44C1990276E44CB0072762D /* ProgressWindow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProgressWindow.storyboard; sourceTree = "<group>"; };
 		C44CCD3F27AFE2FC00CE40E5 /* AlertableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertableError.swift; sourceTree = "<group>"; };
 		C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Async.swift"; sourceTree = "<group>"; };
+		C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCheckTest.swift; sourceTree = "<group>"; };
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C451AFF52969E40F0078E617 /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
@@ -1480,6 +1482,7 @@
 			children = (
 				C471E7BE28F9B90F0021E251 /* StartupTest.swift */,
 				C469E702294CFDF700A82AB2 /* DomainsListTest.swift */,
+				C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */,
 				C4181F1028FAF9330042EA28 /* UITestCase.swift */,
 			);
 			path = ui;
@@ -2603,6 +2606,7 @@
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* HomebrewDiagnostics.swift in Sources */,
 				C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */,
+				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */,
 				C471E80028F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C471E7F528F9BAC80021E251 /* PhpEnv.swift in Sources */,
