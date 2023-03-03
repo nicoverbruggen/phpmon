@@ -24,16 +24,6 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/bin/valet"
                     : .fake(.binary),
-                "/opt/homebrew/opt/php"
-                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0"),
-                "/opt/homebrew/opt/php@8.2/bin/php"
-                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0/bin/php"),
-                "/opt/homebrew/Cellar/php/8.2.0/bin/php"
-                    : .fake(.binary),
-                "/opt/homebrew/Cellar/php/8.2.0/bin/php-config"
-                    : .fake(.binary),
-                "/opt/homebrew/etc/php/8.2/php-fpm.d/www.conf"
-                    : .fake(.text),
                 "~/.config/valet/config.json"
                     : .fake(.text, """
                     {
@@ -45,12 +35,6 @@ class TestableConfigurations {
                         "loopback": "127.0.0.1"
                     }
                     """),
-                "/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"
-                    : .fake(.text),
-                "/opt/homebrew/etc/php/8.2/php.ini"
-                    : .fake(.text),
-                "/opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini"
-                    : .fake(.text)
             ],
             shellOutput: [
                 "sysctl -n sysctl.proc_translated"
@@ -59,17 +43,6 @@ class TestableConfigurations {
                     : .instant("user"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
-                "php -v"
-                : .instant("""
-                       PHP 8.2.0 (cli) (built: Dec XX 20XX XX:XX:XX) (NTS)
-                       Copyright (c) The PHP Group
-                       Zend Engine vX.X, Copyright (c) Zend Technologies
-                       with Zend OPcache vX.X, Copyright (c), by Zend Technologies
-                    """),
-                "ls /opt/homebrew/opt | grep php"
-                    : .instant("php"),
-                "ls /opt/homebrew/opt | grep php@"
-                    : .instant("php@8.2"),
                 "sudo /opt/homebrew/bin/brew services info dnsmasq --json"
                     : .delayed(0.2, """
                         [
@@ -176,16 +149,16 @@ class TestableConfigurations {
                     : .instant("OK"),
             ],
             commandOutput: [
-                "/opt/homebrew/bin/php-config --version": "8.2.0",
                 "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
-                "/opt/homebrew/bin/php -r echo php_ini_scanned_files();"
-                : """
-                /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
-                """
             ],
-            preferenceOverrides: [:]
+            preferenceOverrides: [:],
+            phpVersions: [
+                VersionNumber(major: 8, minor: 2, patch: 0),
+                VersionNumber(major: 8, minor: 1, patch: 0),
+                VersionNumber(major: 8, minor: 0, patch: 0)
+            ]
         )
     }
 }

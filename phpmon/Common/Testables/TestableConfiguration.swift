@@ -15,6 +15,88 @@ public struct TestableConfiguration: Codable {
     var commandOutput: [String: String]
     var preferenceOverrides: [PreferenceName: Bool]
 
+    init(
+        architecture: String,
+        filesystem: [String: FakeFile],
+        shellOutput: [String: BatchFakeShellOutput],
+        commandOutput: [String: String],
+        preferenceOverrides: [PreferenceName: Bool],
+        phpVersions: [VersionNumber]
+    ) {
+        self.architecture = architecture
+        self.filesystem = filesystem
+        self.shellOutput = shellOutput
+        self.commandOutput = commandOutput
+        self.preferenceOverrides = preferenceOverrides
+
+        phpVersions.enumerated().forEach { (index, version) in
+            self.addPhpVersion(version, primary: index == 0)
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case architecture, filesystem, shellOutput, commandOutput, preferenceOverrides
+    }
+
+    // MARK: Add PHP versions
+
+    private var primaryPhpVersion: VersionNumber?
+    private var secondaryPhpVersions: [VersionNumber] = []
+
+    mutating func addPhpVersion(_ version: VersionNumber, primary: Bool) {
+        if primary {
+            if primaryPhpVersion != nil {
+                fatalError("You cannot add multiple primary PHP versions to a testable configuration!")
+            }
+            primaryPhpVersion = version
+        } else {
+            self.secondaryPhpVersions.append(version)
+        }
+
+        self.filesystem = self.filesystem.merging([
+            "/opt/homebrew/opt/php@\(version.short)/bin/php"
+                : .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php"),
+            "/opt/homebrew/Cellar/php/\(version.long)/bin/php"
+                : .fake(.binary),
+            "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config"
+                : .fake(.binary),
+            "/opt/homebrew/etc/php/\(version.short)/php-fpm.d/www.conf"
+                : .fake(.text),
+            "/opt/homebrew/etc/php/\(version.short)/php-fpm.d/valet-fpm.conf"
+                : .fake(.text),
+            "/opt/homebrew/etc/php/\(version.short)/php.ini"
+                : .fake(.text),
+            "/opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini"
+                : .fake(.text)
+        ]) { (_, new) in new }
+
+        if primary {
+            self.shellOutput["ls /opt/homebrew/opt | grep php"]
+                = .instant("php")
+            self.filesystem["/opt/homebrew/opt/php"]
+                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)")
+            self.filesystem["/opt/homebrew/opt/php/bin/php"]
+            = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
+            self.filesystem["/opt/homebrew/bin/php"]
+                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
+            self.commandOutput["/opt/homebrew/bin/php-config --version"]
+                = version.long
+            self.commandOutput["/opt/homebrew/bin/php -r echo php_ini_scanned_files();"] =
+                """
+                /opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini,
+                """
+        } else {
+            self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
+            BatchFakeShellOutput.instant(
+                self.secondaryPhpVersions
+                    .map { "php@\($0.short)" }
+                    .joined(separator: "\n")
+            )
+        }
+    }
+
+    // MARK: Interactions
+
     func apply() {
         Log.separator()
         Log.info("USING TESTABLE CONFIGURATION...")
@@ -37,6 +119,8 @@ public struct TestableConfiguration: Codable {
             Preferences.shared.cachedPreferences[key] = value
         }
     }
+
+    // MARK: Persist and load
 
     func toJson(pretty: Bool = false) -> String {
         let data = try! JSONEncoder().encode(self)
