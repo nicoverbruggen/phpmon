@@ -14,10 +14,10 @@ class AppUpdater {
     var latestVersionOnline: AppVersion!
     var interactive: Bool = false
 
-    public func checkForUpdates(interactive: Bool) async {
-        self.interactive = interactive
+    public func checkForUpdates(userInitiated: Bool) async {
+        self.interactive = userInitiated
 
-        if interactive && !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
+        if !interactive && !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
             Log.info("Skipping automatic update check due to user preference.")
             return
         }

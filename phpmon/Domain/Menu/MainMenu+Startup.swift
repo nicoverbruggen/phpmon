@@ -114,7 +114,7 @@ extension MainMenu {
                     OnboardingWindowController.show()
                 }
             } else {
-                await AppUpdater().checkForUpdates(interactive: false)
+                await AppUpdater().checkForUpdates(userInitiated: false)
             }
         }
 

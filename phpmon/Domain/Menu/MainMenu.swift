@@ -199,7 +199,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func checkForUpdates() {
-        Task { await AppUpdater().checkForUpdates(interactive: true) }
+        Task { await AppUpdater().checkForUpdates(userInitiated: true) }
     }
 
     // MARK: - Menu Delegate
