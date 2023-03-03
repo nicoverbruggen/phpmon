@@ -11,3 +11,4 @@ cask 'phpmon-dev' do
 
   app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
 end
+
