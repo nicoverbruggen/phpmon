@@ -76,9 +76,11 @@ public struct TestableConfiguration: Codable {
             self.filesystem["/opt/homebrew/opt/php"]
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)")
             self.filesystem["/opt/homebrew/opt/php/bin/php"]
-            = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
+                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
             self.filesystem["/opt/homebrew/bin/php"]
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
+            self.filesystem["/opt/homebrew/bin/php-config"]
+                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config")
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
             self.commandOutput["/opt/homebrew/bin/php -r echo php_ini_scanned_files();"] =
