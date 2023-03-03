@@ -28,10 +28,12 @@ class PhpHelper {
         Task { // Create the appropriate folders and check if the files exist
             do {
                 if !FileSystem.directoryExists("~/.config/phpmon/bin") {
-                    try FileSystem.createDirectory(
-                        "~/.config/phpmon/bin",
-                        withIntermediateDirectories: true
-                    )
+                    Task { @MainActor in
+                        try FileSystem.createDirectory(
+                            "~/.config/phpmon/bin",
+                            withIntermediateDirectories: true
+                        )
+                    }
                 }
 
                 if FileSystem.fileExists(destination) {
@@ -59,10 +61,12 @@ class PhpHelper {
                     export PATH=\(path):$PATH
                     """
 
-                try FileSystem.writeAtomicallyToFile(destination, content: script)
+                Task { @MainActor in
+                    try FileSystem.writeAtomicallyToFile(destination, content: script)
 
-                if !FileSystem.isExecutableFile(destination) {
-                   try FileSystem.makeExecutable(destination)
+                    if !FileSystem.isExecutableFile(destination) {
+                        try FileSystem.makeExecutable(destination)
+                    }
                 }
 
                 // Create a symlink if the folder is not in the PATH

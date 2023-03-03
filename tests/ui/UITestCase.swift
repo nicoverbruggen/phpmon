@@ -9,7 +9,6 @@
 import XCTest
 
 class UITestCase: XCTestCase {
-
     /** Launches the app and opens the menu. */
     public func launch(
         openMenu: Bool = false,
@@ -50,7 +49,15 @@ class UITestCase: XCTestCase {
     public func click(_ element: XCUIElement) {
         element.click()
     }
+}
 
+extension XCPMApplication {
+    /**
+     Opens a given menu item found in the menu bar's status item.
+     */
+    public func mainMenuItem(withText text: String) -> XCUIElement {
+        self.statusItems.firstMatch.menuItems[text].firstMatch
+    }
 }
 
 extension XCUIElement {
