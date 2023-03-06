@@ -40,6 +40,18 @@ final class MainMenuTest: UITestCase {
     final func test_can_open_settings() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()
+
+        assertExists(app.buttons["General"])
+        click(app.buttons["General"])
+
+        assertExists(app.buttons["Appearance"])
+        click(app.buttons["Appearance"])
+
+        assertExists(app.buttons["Visibility"])
+        click(app.buttons["Visibility"])
+
+        assertExists(app.buttons["Notifications"])
+        click(app.buttons["Notifications"])
     }
 
     final func test_can_quit_app() throws {
