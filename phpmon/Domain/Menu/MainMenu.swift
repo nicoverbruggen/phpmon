@@ -202,6 +202,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { await AppUpdater().checkForUpdates(userInitiated: true) }
     }
 
+    @objc func installPhp74() {
+        Task { await Actions.installPhpVersion(version: "7.4") }
+    }
+
     // MARK: - Menu Delegate
 
     func menuWillOpen(_ menu: NSMenu) {

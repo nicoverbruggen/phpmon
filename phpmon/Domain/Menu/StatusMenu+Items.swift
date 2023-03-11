@@ -50,6 +50,7 @@ extension StatusMenu {
         }
 
         addSwitchToPhpMenuItems()
+
         self.addItem(NSMenuItem.separator())
     }
 

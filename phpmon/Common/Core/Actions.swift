@@ -130,4 +130,36 @@ class Actions {
         await brew("services restart \(Homebrew.Formulae.php)", sudo: Homebrew.Formulae.php.elevated)
         await brew("services restart \(Homebrew.Formulae.nginx)", sudo: Homebrew.Formulae.nginx.elevated)
     }
+
+    public static func installPhpVersion(version: String) async {
+        let subject = ProgressViewSubject(
+            title: "Installing PHP \(version)",
+            description: "Please wait while Homebrew installs PHP \(version)..."
+        )
+
+        let installables = [
+            "8.2": "php",
+            "8.1": "php@8.1",
+            "8.0": "php@8.0",
+            "7.4": "shivammathur/php/php@7.4",
+            "7.3": "shivammathur/php/php@7.3",
+            "7.2": "shivammathur/php/php@7.2",
+            "7.1": "shivammathur/php/php@7.1",
+            "7.0": "shivammathur/php/php@7.0"
+        ]
+
+        if installables.keys.contains(version) {
+            let window = await ProgressWindowView.display(subject)
+            let formula = installables[version]!
+            if formula.contains("shivammathur") && !HomebrewDiagnostics.installedTaps.contains("shivammathur/php") {
+                await Shell.quiet("brew tap shivammathur/php")
+            }
+            // TODO: Attempt to read the progress of this
+            // Use the same way the composer progress is read
+            await brew("install \(formula)", sudo: false)
+            await PhpEnv.detectPhpVersions()
+            await MainMenu.shared.refreshActiveInstallation()
+            await window.close()
+        }
+    }
 }
