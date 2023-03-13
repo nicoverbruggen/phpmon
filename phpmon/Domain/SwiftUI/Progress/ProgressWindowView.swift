@@ -15,16 +15,19 @@ struct ProgressWindowView: View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
                 Text(subject.title)
-                    .font(.system(size: 15))
+                    .font(.system(size: 14))
                     .bold()
                 if subject.description != nil {
                     Text(subject.description!)
-                        .font(.system(size: 14))
+                        .font(.system(size: 13))
                 }
             }
             .padding(.leading, 20)
-            .padding(.top, 20)
-            ProgressView(value: subject.progress).padding()
+            .padding(.top, 12)
+            ProgressView(value: subject.progress)
+                .padding(.top, 0)
+                .padding(.bottom, 12)
+                .padding(.horizontal, 20)
         }
     }
 

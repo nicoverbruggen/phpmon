@@ -84,9 +84,10 @@ public class PhpVersionInstaller {
                 didReceiveOutput: { text, _ in
                     if action == .install {
                         // Check if we can recognize any of the typical progress steps
-                        if let number = Self.reportInstallationProgress(text) {
+                        if let (number, text) = Self.reportInstallationProgress(text) {
                             Task { @MainActor in
                                 subject.progress = number
+                                subject.description = text
                             }
                         }
                     }
@@ -127,24 +128,24 @@ public class PhpVersionInstaller {
         await self.modifyPhpVersion(version: version, action: .remove)
     }
 
-    private static func reportInstallationProgress(_ text: String) -> Double? {
+    private static func reportInstallationProgress(_ text: String) -> (Double, String)? {
         if text.contains("Fetching") {
-            return 0.1
+            return (0.1, "Fetching...")
         }
         if text.contains("Downloading") {
-            return 0.25
+            return (0.25, "Downloading...")
         }
         if text.contains("Already downloaded") || text.contains("Downloaded") {
-            return 0.50
+            return (0.50, "Downloaded!")
         }
         if text.contains("Installing") {
-            return 0.60
+            return (0.60, "Installing...")
         }
         if text.contains("Pouring") {
-            return 0.80
+            return (0.80, "Pouring... this can take a while!")
         }
         if text.contains("Summary") {
-            return 1
+            return (1, "The installation is done!")
         }
         return nil
     }
