@@ -94,7 +94,7 @@ public class PhpVersionInstaller {
 
             if process.terminationStatus <= 0 {
                 Task { @MainActor in
-                    subject.progress = 100
+                    subject.progress = 1
                 }
 
                 await PhpEnv.detectPhpVersions()
@@ -109,6 +109,8 @@ public class PhpVersionInstaller {
                     subject.description = "The operation failed."
                 }
             }
+        } else {
+            Log.err("\(version) is not contained within installable list")
         }
     }
 
@@ -122,22 +124,22 @@ public class PhpVersionInstaller {
 
     private static func reportInstallationProgress(_ text: String) -> Double? {
         if text.contains("Fetching") {
-            return 10
+            return 0.1
         }
         if text.contains("Downloading") {
-            return 25
+            return 0.25
         }
         if text.contains("Already downloaded") || text.contains("Downloaded") {
-            return 50
+            return 0.50
         }
         if text.contains("Installing") {
-            return 60
+            return 0.60
         }
         if text.contains("Pouring") {
-            return 80
+            return 0.80
         }
         if text.contains("Summary") {
-            return 100
+            return 1
         }
         return nil
     }

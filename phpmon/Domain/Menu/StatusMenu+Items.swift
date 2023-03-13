@@ -100,7 +100,7 @@ extension StatusMenu {
             ? "Install PHP \(result.version)..."
             : "Remove PHP \(result.version)..."
 
-            var action: Selector? = result.action == .install
+            let action: Selector? = result.action == .install
             ? #selector(MainMenu.installPhpVersion(sender:))
             : #selector(MainMenu.removePhpVersion(sender:))
 
@@ -108,11 +108,14 @@ extension StatusMenu {
                 continue
             }
 
-            addItem(PhpMenuItem(
+            let menuItem = PhpMenuItem(
                 title: title,
                 action: action,
                 keyEquivalent: ""
-            ))
+            )
+
+            menuItem.version = result.version
+            addItem(menuItem)
         }
 
         if !PhpEnv.shared.incompatiblePhpVersions.isEmpty {
