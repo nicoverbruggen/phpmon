@@ -154,11 +154,15 @@ public class PhpVersionInstaller {
         var operations: [(version: String, action: PhpInstallAction)] = []
 
         let installed = PhpEnv.shared.cachedPhpInstallations.keys
+        let unsupported = PhpEnv.shared.incompatiblePhpVersions
 
         for installable in installables.keys {
             // While technically possible to uninstall the main formula (`php`)
             // this should be disabled in the UI... this data should be correct though
-            operations.append((installable, installed.contains(installable) ? .remove : .install))
+            let availableOperation: PhpInstallAction =
+                installed.contains(installable) || unsupported.contains(installable) ? .remove : .install
+
+            operations.append((version: installable, action: availableOperation))
         }
 
         operations.sort { $1.version < $0.version }
