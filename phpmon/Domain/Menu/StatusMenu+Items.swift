@@ -91,6 +91,30 @@ extension StatusMenu {
             addItem(menuItem)
         }
 
+        // TODO: This is a fixed list...
+
+        addItem(NSMenuItem.separator())
+        addItem(HeaderView.asMenuItem(text: "Experimental"))
+        for result in PhpVersionInstaller.availableActions {
+            let title = result.action == .install
+            ? "Install PHP \(result.version)..."
+            : "Remove PHP \(result.version)..."
+
+            var action: Selector? = result.action == .install
+            ? #selector(MainMenu.installPhpVersion(sender:))
+            : #selector(MainMenu.removePhpVersion(sender:))
+
+            if result.version == PhpEnv.brewPhpAlias {
+                break
+            }
+
+            addItem(PhpMenuItem(
+                title: title,
+                action: action,
+                keyEquivalent: ""
+            ))
+        }
+
         if !PhpEnv.shared.incompatiblePhpVersions.isEmpty {
             addItem(NSMenuItem.separator())
             addItem(NSMenuItem(

@@ -65,12 +65,6 @@ class StatusMenu: NSMenu {
 
         addItem(NSMenuItem.separator())
 
-        addItem(withTitle: "EXPERIMENTAL: Install PHP 7.4...",
-                action: #selector(MainMenu.installPhp74),
-                keyEquivalent: "")
-
-        addItem(NSMenuItem.separator())
-
         addCoreMenuItems()
     }
 }
