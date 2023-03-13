@@ -105,7 +105,7 @@ extension StatusMenu {
             : #selector(MainMenu.removePhpVersion(sender:))
 
             if result.version == PhpEnv.brewPhpAlias {
-                break
+                continue
             }
 
             addItem(PhpMenuItem(
