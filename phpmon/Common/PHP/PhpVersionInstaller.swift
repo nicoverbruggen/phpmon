@@ -101,6 +101,9 @@ public class PhpVersionInstaller {
 
                 await PhpEnv.detectPhpVersions()
                 await MainMenu.shared.refreshActiveInstallation()
+
+                // TODO: Link the configuration file if it does not exist yet
+
                 Task { @MainActor in
                     subject.description = "The operation succeeded. This window will close in 5 seconds."
                 }
