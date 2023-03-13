@@ -67,6 +67,8 @@ public class PhpVersionInstaller {
                 if formula.contains("shivammathur") && !HomebrewDiagnostics.installedTaps.contains("shivammathur/php") {
                     await Shell.quiet("brew tap shivammathur/php")
                 }
+
+                command = "brew install \(formula) --force"
             }
 
             if action == .purge || action == .remove {
