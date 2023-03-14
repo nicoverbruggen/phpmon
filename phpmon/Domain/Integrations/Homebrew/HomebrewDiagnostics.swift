@@ -63,11 +63,11 @@ class HomebrewDiagnostics {
      It is possible to upgrade PHP, but forget running `valet install`.
      This results in a scenario where a rogue www.conf file exists.
      */
-    public static func checkForPhpFpmPoolConflicts() {
-        Log.info("Checking for PHP-FPM pool conflicts...")
+    public static func checkForValetMisconfiguration() async {
+        Log.info("Checking for PHP-FPM issues with Valet...")
 
         guard let install = PhpEnv.phpInstall else {
-            Log.info("Will skip check for conflicts if no PHP version is linked.")
+            Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
 
@@ -76,22 +76,12 @@ class HomebrewDiagnostics {
 
         // Versions to be handled
         let switcher = InternalSwitcher()
-        var versions = switcher.getVersionsToBeHandled(primary)
 
-        versions = versions.filter { version in
-            return switcher.requiresDisablingOfDefaultPhpFpmPool(version)
-        }
-
-        if versions.isEmpty {
-            Log.info("No PHP-FPM pools need to be fixed. All OK.")
-        }
-
-        versions.forEach { version in
-            Task { // Fix each pool concurrently (but perform the tasks sequentially)
-                await switcher.disableDefaultPhpFpmPool(version)
-                await switcher.unlinkAndStopPhpVersion(version)
-                await switcher.linkAndStartPhpVersion(version, primary: version == primary)
-            }
+        for version in switcher.getVersionsToBeHandled(primary)
+        where await switcher.ensureValetConfigurationIsValidForPhpVersion(version) {
+            Log.info("One or more fixes were applied for PHP \(version)!")
+            await switcher.unlinkAndStopPhpVersion(version)
+            await switcher.linkAndStartPhpVersion(version, primary: version == primary)
         }
     }
 

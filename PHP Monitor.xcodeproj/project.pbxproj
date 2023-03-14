@@ -650,6 +650,10 @@
 		C4D3661B291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
 		C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
 		C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
+		C4D4CB3729C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
+		C4D4CB3829C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
+		C4D4CB3929C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
+		C4D4CB3A29C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
 		C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
@@ -972,6 +976,7 @@
 		C4D3660F291140BE006BD146 /* TestableFileSystemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableFileSystemTest.swift; sourceTree = "<group>"; };
 		C4D36614291160A1006BD146 /* WIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIP.swift; sourceTree = "<group>"; };
 		C4D36619291173EA006BD146 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
+		C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InternalSwitcher+Valet.swift"; sourceTree = "<group>"; };
 		C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationFile.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
@@ -1771,6 +1776,7 @@
 			children = (
 				C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */,
 				C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */,
+				C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */,
 			);
 			path = Switcher;
 			sourceTree = "<group>";
@@ -2256,6 +2262,7 @@
 				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
+				C4D4CB3729C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C44264C02850BD2A007400F1 /* VersionPopoverView.swift in Sources */,
@@ -2361,6 +2368,7 @@
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
+				C4D4CB3929C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C471E84C28F9BB650021E251 /* EnvironmentManager.swift in Sources */,
 				C471E84D28F9BB650021E251 /* ActivePhpInstallation+Checks.swift in Sources */,
 				C471E84E28F9BB650021E251 /* MainMenu.swift in Sources */,
@@ -2571,6 +2579,7 @@
 				C471E8C928F9BB8F0021E251 /* WarningsWindowController.swift in Sources */,
 				C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */,
 				C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */,
+				C4D4CB3A29C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C471E8CB28F9BB8F0021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E8CC28F9BB8F0021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
 				C471E8CD28F9BB8F0021E251 /* PrefsVC.swift in Sources */,
@@ -2853,6 +2862,7 @@
 				C41C02AB27E61CB3009F26CB /* FakeValetSite.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */,
+				C4D4CB3829C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C4B5853F2770FE3900DA4FBE /* Paths.swift in Sources */,
 				C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */,
 				C4A6957728D23EE300A14CF8 /* EnvironmentManager.swift in Sources */,

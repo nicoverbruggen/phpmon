@@ -91,11 +91,11 @@ extension MainMenu {
             // Preload all sites
             await Valet.shared.startPreloadingSites()
 
-            // Check if PHP-FPM is broken
-            await Valet.shared.notifyAboutBrokenPhpFpm()
-
             // After preloading sites, check for PHP-FPM pool conflicts
-            HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
+            await HomebrewDiagnostics.checkForValetMisconfiguration()
+
+            // Check if PHP-FPM is broken (should be fixed automatically if phpmon >= 6.0)
+            await Valet.shared.notifyAboutBrokenPhpFpm()
 
             // A non-default TLD is not officially supported since Valet 3.2.x
             Valet.notifyAboutUnsupportedTLD()

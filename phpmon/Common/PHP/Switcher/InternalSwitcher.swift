@@ -27,7 +27,6 @@ class InternalSwitcher: PhpSwitcher {
         await withTaskGroup(of: String.self, body: { group in
             for available in PhpEnv.shared.availablePhpVersions {
                 group.addTask {
-                    await self.disableDefaultPhpFpmPool(available)
                     await self.unlinkAndStopPhpVersion(available)
                     return available
                 }
@@ -42,6 +41,11 @@ class InternalSwitcher: PhpSwitcher {
             Log.info("Linking the new version \(version)!")
 
             for formula in versions {
+                if Valet.installed {
+                    Log.info("Ensuring that the Valet configuration is valid...")
+                    _ = await self.ensureValetConfigurationIsValidForPhpVersion(formula)
+                }
+
                 Log.info("Will start PHP \(version)... (primary: \(version == formula))")
                 await self.linkAndStartPhpVersion(formula, primary: (version == formula))
             }
@@ -69,37 +73,6 @@ class InternalSwitcher: PhpSwitcher {
         }
 
         return versions
-    }
-
-    func requiresDisablingOfDefaultPhpFpmPool(_ version: String) -> Bool {
-        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-        return FileSystem.fileExists(pool)
-    }
-
-    func disableDefaultPhpFpmPool(_ version: String) async {
-        if Valet.installed {
-            Log.info("Skipping adjustment of php-fpm.d pools, because Valet is disabled or not installed.")
-            Log.info("This behaviour may not be desirable with this system configuration.")
-            return
-        }
-
-        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-        if FileSystem.fileExists(pool) {
-            Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
-            let existing = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-            let new = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
-            do {
-                if FileSystem.fileExists(new) {
-                    Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
-                             + "cleaning up so the newer `www.conf` can be moved again.")
-                    try FileSystem.remove(new)
-                }
-                try FileSystem.move(from: existing, to: new)
-                Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
-            } catch {
-                Log.err(error)
-            }
-        }
     }
 
     func unlinkAndStopPhpVersion(_ version: String) async {
