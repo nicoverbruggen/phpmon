@@ -79,6 +79,15 @@ public class PhpVersionInstaller {
                 }
             }
 
+            // TODO: If this process fails, ensure that PHP Monitor can remove manually
+            //
+            // We can check for something like this:
+            //
+            // Error: Could not remove php@7.4 keg! Do so manually:
+            // sudo rm -rf /opt/homebrew/Cellar/php@7.4/7.4.33_1
+            //
+            // To invoke the manual removal
+
             let (process, _) = try! await Shell.attach(
                 command,
                 didReceiveOutput: { text, _ in
@@ -102,8 +111,6 @@ public class PhpVersionInstaller {
 
                 await PhpEnv.detectPhpVersions()
                 await MainMenu.shared.refreshActiveInstallation()
-
-                // TODO: Link the configuration file if it does not exist yet
 
                 Task { @MainActor in
                     subject.description = "The operation succeeded. This window will close in 5 seconds."
