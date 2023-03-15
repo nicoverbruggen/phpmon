@@ -32,6 +32,23 @@ final class MainMenuTest: UITestCase {
         sleep(2)
     }
 
+    final func test_can_open_domains_list() throws {
+        let app = launch(openMenu: true)
+        app.mainMenuItem(withText: "mi_domain_list".localized).click()
+    }
+
+    final func test_can_open_php_doctor() throws {
+        let app = launch(openMenu: true)
+        app.mainMenuItem(withText: "mi_other".localized).click()
+        app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
+    }
+
+    final func test_can_view_onboarding_flow() throws {
+        let app = launch(openMenu: true)
+        app.mainMenuItem(withText: "mi_other".localized).click()
+        app.mainMenuItem(withText: "mi_view_onboarding".localized).click()
+    }
+
     final func test_can_open_about() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_about".localized).click()
@@ -40,6 +57,18 @@ final class MainMenuTest: UITestCase {
     final func test_can_open_settings() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()
+
+        assertExists(app.buttons["General"])
+        click(app.buttons["General"])
+
+        assertExists(app.buttons["Appearance"])
+        click(app.buttons["Appearance"])
+
+        assertExists(app.buttons["Visibility"])
+        click(app.buttons["Visibility"])
+
+        assertExists(app.buttons["Notifications"])
+        click(app.buttons["Notifications"])
     }
 
     final func test_can_quit_app() throws {
