@@ -8,8 +8,6 @@ Generally speaking, only the latest version of **PHP Monitor** is supported, exc
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
 | 6.0      | ✅ Universal binary | ✅ Yes | Monterey (12.4+)<br/>Ventura (13.0+) | macOS 12.4 | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.2 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.2 (w/ Valet 4.x*) | 3.0 or higher recommended<br/> 2.16.2 minimum |
 
-(*) Preliminary listing. Valet 4 hasn't been released yet and the versions of PHP Valet can work with might still change.
-
 ## Legacy versions
 
 These versions of PHP Monitor are no longer supported, but if you’re using an older computer with an older version of Homebrew, Valet or macOS, you might want to use one of these versions.
