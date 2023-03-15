@@ -102,7 +102,7 @@ All stable and supported PHP versions are also supported by PHP Monitor. However
 > **Note**
 > If you have versions of PHP installed that can be detected by PHP Monitor but is *not* supported by the currently active version of Valet, you will be alerted by an item in the menu with an exclamation mark emoji. (⚠️)
 
-Backports are available via [this tap](https://github.com/shivammathur/homebrew-php). For more information about those backports, please see the next FAQ entry.
+Backports that are installable via PHP Monitor's **PHP Manager** functionality are subject to availability via [this tap](https://github.com/shivammathur/homebrew-php).
 
 For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
 
@@ -113,27 +113,9 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 
 Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
 
-You can install other supported versions of PHP out of the box, so `php@8.0` and `php@8.1` at the time of writing.
+You can install other supported versions of PHP via PHP Monitor's **PHP Manager**. You can manually install or upgrade PHP versions too, but this is not recommended.
 
-If you wish to install older (officially unsupported) versions of PHP for local use, you can do so by using [Shivam Mathur's tap](https://github.com/shivammathur/homebrew-php):
-
-```sh
-brew tap shivammathur/php
-```
-
-You may find that this tap is already in use: if you've used Valet before, it automatically uses this tap for legacy versions of PHP.
-
-```sh
-brew install shivammathur/php/php@7.4
-brew install shivammathur/php/php@7.3
-brew install shivammathur/php/php@7.2
-brew install shivammathur/php/php@7.1
-brew install shivammathur/php/php@7.0
-```
-
-**Always make sure to restart PHP Monitor after installing or upgrading PHP versions!**
-
-> *Note*: Using this tap may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
+> *Note*: Using PHP Monitor when managing PHP versions may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
 </details>
 
 <details>
