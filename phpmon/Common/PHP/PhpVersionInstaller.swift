@@ -10,7 +10,7 @@ import Foundation
 
 public class PhpVersionInstaller {
     public static var installables = [
-        "8.2": "php",
+        // "8.2": "php",
         "8.1": "php@8.1",
         "8.0": "php@8.0",
         "7.4": "shivammathur/php/php@7.4",
@@ -26,7 +26,12 @@ public class PhpVersionInstaller {
         case purge
     }
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
+
+    /**
+     Performs the desired action on the provided PHP version.
+
+     swiftlint:disable cyclomatic_complexity function_body_length
+     */
     public static func modifyPhpVersion(version: String, action: PhpInstallAction) async {
         let title = {
             switch action {
@@ -70,6 +75,13 @@ public class PhpVersionInstaller {
 
                 command = "brew install \(formula) --force"
             }
+
+            // TODO: Ensure that a PHP version can also be updated
+            /*
+            if action == .update {
+
+            }
+            */
 
             if action == .purge || action == .remove {
                 // Removal always requires permission
@@ -134,9 +146,35 @@ public class PhpVersionInstaller {
         }
     }
 
+    /** Installs a given PHP version. Never requires administrative privileges. */
+    public static func installPhpVersion(version: String) async {
+        await self.modifyPhpVersion(version: version, action: .install)
+    }
+
+    /** Uninstalls a given PHP version. Might require administrative privileges. */
+    public static func removePhpVersion(version: String) async {
+        await self.modifyPhpVersion(version: version, action: .remove)
+    }
+
+    /**
+     Takes ownership of the /BREW_PATH/Cellar/php/x.y.z/bin folder (if required).
+
+     This might not be required if the user has only used that version of PHP
+     with site isolation, so this method checks if it's required first.
+     */
     public static func fixPermissions(for formula: String) async throws {
         // Omit the prefix
         let path = formula.replacingOccurrences(of: "shivammathur/php/", with: "")
+
+        // Binary path needs to be checked for ownership
+        let binaryPath = "\(Paths.optPath)/\(path)/bin"
+
+        // Check if it's even necessary to perform the fix
+        if !isOwnedByRoot(path: binaryPath) {
+            return
+        }
+
+        Log.info("The ownership of the folder is currently not correct.")
 
         let script = """
             \(Paths.brew) services stop \(formula) \
@@ -154,12 +192,20 @@ public class PhpVersionInstaller {
         }
     }
 
-    public static func installPhpVersion(version: String) async {
-        await self.modifyPhpVersion(version: version, action: .install)
-    }
+    /**
+     Checks if a given path is owned by root. If so, ownership might need to be taken.
+     */
+    private static func isOwnedByRoot(path: String) -> Bool {
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: path)
+            if let owner = attributes[.ownerAccountName] as? String {
+                return owner == "root"
+            }
+        } catch {
+            return true
+        }
 
-    public static func removePhpVersion(version: String) async {
-        await self.modifyPhpVersion(version: version, action: .remove)
+        return true
     }
 
     private static func reportInstallationProgress(_ text: String) -> (Double, String)? {
