@@ -72,21 +72,26 @@ public class PhpVersionInstaller {
             }
 
             if action == .purge || action == .remove {
+                // Removal always requires permission
+                do {
+                    try await PhpVersionInstaller.fixPermissions(for: formula)
+                } catch {
+                    Task { @MainActor in
+                        subject.progress = 1
+                        subject.title = "Could not take permission of required folder"
+                        subject.description = "Please try again!"
+                    }
+                    return
+                }
+
+                // Actually do the removal
                 command = "brew remove \(formula) --force --ignore-dependencies"
 
+                // Check if the permissions are correct; if not, fix permissions
                 if action == .purge {
                     command += " --zap"
                 }
             }
-
-            // TODO: If this process fails, ensure that PHP Monitor can remove manually
-            //
-            // We can check for something like this:
-            //
-            // Error: Could not remove php@7.4 keg! Do so manually:
-            // sudo rm -rf /opt/homebrew/Cellar/php@7.4/7.4.33_1
-            //
-            // To invoke the manual removal
 
             let (process, _) = try! await Shell.attach(
                 command,
@@ -119,11 +124,33 @@ public class PhpVersionInstaller {
             } else {
                 // Do not close the window and notify about failure
                 Task { @MainActor in
-                    subject.description = "The operation failed."
+                    subject.title = "Operation failed."
+                    subject.progress = 1
+                    subject.description = "Something went wrong."
                 }
             }
         } else {
             Log.err("\(version) is not contained within installable list")
+        }
+    }
+
+    public static func fixPermissions(for formula: String) async throws {
+        // Omit the prefix
+        let path = formula.replacingOccurrences(of: "shivammathur/php/", with: "")
+
+        let script = """
+            \(Paths.brew) services stop \(formula) \
+            && chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(path)
+            """
+
+        let appleScript = NSAppleScript(source:
+            "do shell script \"\(script)\" with administrator privileges"
+        )
+
+        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
+
+        if eventResult == nil {
+            throw HomebrewPermissionError(kind: .applescriptNilError)
         }
     }
 
