@@ -26,7 +26,6 @@ public class PhpVersionInstaller {
         case purge
     }
 
-
     /**
      Performs the desired action on the provided PHP version.
 
@@ -73,7 +72,8 @@ public class PhpVersionInstaller {
                     await Shell.quiet("brew tap shivammathur/php")
                 }
 
-                command = "brew install \(formula) --force"
+                // Set HOMEBREW_NO_INSTALL_UPGRADE when installing or upgrading
+                command = "export HOMEBREW_NO_INSTALL_UPGRADE=1 && brew install \(formula) --force"
             }
 
             // TODO: Ensure that a PHP version can also be updated
@@ -109,6 +109,10 @@ public class PhpVersionInstaller {
                 command,
                 didReceiveOutput: { text, _ in
                     if action == .install {
+                        if !text.isEmpty {
+                            Log.perf(text)
+                        }
+
                         // Check if we can recognize any of the typical progress steps
                         if let (number, text) = Self.reportInstallationProgress(text) {
                             Task { @MainActor in
@@ -136,9 +140,9 @@ public class PhpVersionInstaller {
             } else {
                 // Do not close the window and notify about failure
                 Task { @MainActor in
-                    subject.title = "Operation failed."
+                    subject.title = "Operation failed: something went wrong"
                     subject.progress = 1
-                    subject.description = "Something went wrong."
+                    subject.description = "Oops. You may close this window."
                 }
             }
         } else {
@@ -174,7 +178,7 @@ public class PhpVersionInstaller {
             return
         }
 
-        Log.info("The ownership of the folder is currently not correct.")
+        Log.info("The ownership of the folder at `\(binaryPath)` is currently not correct. Will prompt to take ownership!")
 
         let script = """
             \(Paths.brew) services stop \(formula) \
@@ -190,6 +194,8 @@ public class PhpVersionInstaller {
         if eventResult == nil {
             throw HomebrewPermissionError(kind: .applescriptNilError)
         }
+
+        Log.info("Ownership was taken of the folder at `\(binaryPath)`.")
     }
 
     /**
