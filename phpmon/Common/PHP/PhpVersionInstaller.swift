@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 
 public class PhpVersionInstaller {
     public static var installables = [
@@ -26,10 +27,9 @@ public class PhpVersionInstaller {
         case purge
     }
 
+    // swiftlint:disable cyclomatic_complexity function_body_length
     /**
      Performs the desired action on the provided PHP version.
-
-     swiftlint:disable cyclomatic_complexity function_body_length
      */
     public static func modifyPhpVersion(version: String, action: PhpInstallAction) async {
         let title = {
@@ -62,18 +62,24 @@ public class PhpVersionInstaller {
         let installables = Self.installables
 
         if installables.keys.contains(version) {
-            let window = await ProgressWindowView.display(subject)
+            let windowController = await ProgressWindowView.display(subject)
+            await NSApp.activate(ignoringOtherApps: true)
+            await windowController.window?.makeKeyAndOrderFront(nil)
+
             let formula = installables[version]!
 
-            var command = ""
+            var command: String!
 
             if action == .install {
                 if formula.contains("shivammathur") && !HomebrewDiagnostics.installedTaps.contains("shivammathur/php") {
                     await Shell.quiet("brew tap shivammathur/php")
                 }
 
-                // Set HOMEBREW_NO_INSTALL_UPGRADE when installing or upgrading
-                command = "export HOMEBREW_NO_INSTALL_UPGRADE=1 && brew install \(formula) --force"
+                command = """
+                export HOMEBREW_NO_INSTALL_UPGRADE=1 \
+                && export HOMEBREW_NO_INSTALL_CLEANUP=1 \
+                && brew install \(formula) --force
+                """
             }
 
             // TODO: Ensure that a PHP version can also be updated
@@ -134,9 +140,8 @@ public class PhpVersionInstaller {
                 await MainMenu.shared.refreshActiveInstallation()
 
                 Task { @MainActor in
-                    subject.description = "The operation succeeded. This window will close in 5 seconds."
+                    windowController.close()
                 }
-                await window.close()
             } else {
                 // Do not close the window and notify about failure
                 Task { @MainActor in
