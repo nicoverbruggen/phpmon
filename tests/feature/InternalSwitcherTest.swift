@@ -10,21 +10,13 @@ import XCTest
 
 final class InternalSwitcherTest: FeatureTestCase {
 
-    public func testDefaultPhpFpmPoolRequiresDisabling() async {
-        ActiveFileSystem.useTestable([
-            "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf": .fake(.text)
-        ])
-
-        assertFileSystemHas("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf")
-        XCTAssertTrue(InternalSwitcher().requiresDisablingOfDefaultPhpFpmPool("8.1"))
-    }
-
     public func testDefaultPhpFpmPoolIsMoved() async {
         ActiveFileSystem.useTestable([
             "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf": .fake(.text)
         ])
 
-        await InternalSwitcher().disableDefaultPhpFpmPool("8.1")
+        let outcome = await InternalSwitcher().disableDefaultPhpFpmPool("8.1")
+        XCTAssertTrue(outcome)
 
         assertFileSystemHas("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon")
         assertFileSystemDoesNotHave("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf")
@@ -41,7 +33,8 @@ final class InternalSwitcherTest: FeatureTestCase {
             contents: "phpmon generated"
         )
 
-        await InternalSwitcher().disableDefaultPhpFpmPool("8.1")
+        let outcome = await InternalSwitcher().disableDefaultPhpFpmPool("8.1")
+        XCTAssertTrue(outcome)
 
         assertFileSystemHas("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon")
         assertFileSystemDoesNotHave("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf")

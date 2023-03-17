@@ -579,6 +579,12 @@
 		C4AF9F7A2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F792754499000D44ED0 /* Valet.swift */; };
 		C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */; };
+		C4AFC4AE29C4F32F00BF4E0D /* BrewFormula.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */; };
+		C4AFC4AF29C4F32F00BF4E0D /* BrewFormula.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */; };
+		C4AFC4B029C4F32F00BF4E0D /* BrewFormula.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */; };
+		C4AFC4B129C4F32F00BF4E0D /* BrewFormula.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */; };
+		C4AFC4B429C4F43300BF4E0D /* HomebrewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AFC4B229C4F43300BF4E0D /* HomebrewTest.swift */; };
+		C4AFC4B829C4F6DC00BF4E0D /* brew-outdated.json in Resources */ = {isa = PBXBuildFile; fileRef = C4AFC4B729C4F57B00BF4E0D /* brew-outdated.json */; };
 		C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
 		C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5635D276AB09000F12CCB /* VersionExtractor.swift */; };
 		C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */; };
@@ -949,6 +955,9 @@
 		C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetConfigurationTest.swift; sourceTree = "<group>"; };
 		C4AF9F792754499000D44ED0 /* Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet.swift; sourceTree = "<group>"; };
 		C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetVersionExtractorTest.swift; sourceTree = "<group>"; };
+		C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewFormula.swift; sourceTree = "<group>"; };
+		C4AFC4B229C4F43300BF4E0D /* HomebrewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewTest.swift; sourceTree = "<group>"; };
+		C4AFC4B729C4F57B00BF4E0D /* brew-outdated.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-outdated.json"; sourceTree = "<group>"; };
 		C4B5635D276AB09000F12CCB /* VersionExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionExtractor.swift; sourceTree = "<group>"; };
 		C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionExtractorTest.swift; sourceTree = "<group>"; };
 		C4B5853B2770FE3900DA4FBE /* Paths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
@@ -1424,6 +1433,7 @@
 			isa = PBXGroup;
 			children = (
 				C40934A6298EEB8700D25014 /* phpmon-dev.rb */,
+				C4AFC4B729C4F57B00BF4E0D /* brew-outdated.json */,
 				C4E2E85228FC256B003B070C /* brew-services-normal.json */,
 				C4E2E85128FC256B003B070C /* brew-services-sudo.json */,
 				C43A8A1F25D9D1D700591B77 /* brew-formula.json */,
@@ -1610,6 +1620,7 @@
 			isa = PBXGroup;
 			children = (
 				C43931C929C4C03F0069165B /* Brew.swift */,
+				C4AFC4AD29C4F32F00BF4E0D /* BrewFormula.swift */,
 				C4F2E4362752F0870020E974 /* BrewDiagnostics.swift */,
 				C40934A1298EEB2C00D25014 /* CaskFile.swift */,
 			);
@@ -1721,6 +1732,7 @@
 				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
+				C4AFC4B229C4F43300BF4E0D /* HomebrewTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -2129,6 +2141,7 @@
 				C4E2E85828FC256B003B070C /* brew-services-normal.json in Resources */,
 				C44C1992276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C42F26762805FEE200938AC7 /* nginx-secure-proxy.test in Resources */,
+				C4AFC4B829C4F6DC00BF4E0D /* brew-outdated.json in Resources */,
 				C4F30B08278E195800755FCE /* brew-services.json in Resources */,
 				C455165B297AEDB5009B8466 /* valetrc.broken in Resources */,
 				54A18D40282A566E000A0D81 /* nginx-secure-proxy-custom-tld.test in Resources */,
@@ -2332,6 +2345,7 @@
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
 				54D9E0B627E4F51E003B9AD9 /* HotKey.swift in Sources */,
+				C4AFC4AE29C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
@@ -2431,6 +2445,7 @@
 				C471E86728F9BB650021E251 /* OnboardingWindowController.swift in Sources */,
 				C471E86828F9BB650021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E86928F9BB650021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
+				C4AFC4B029C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C471E86A28F9BB650021E251 /* PrefsVC.swift in Sources */,
 				C471E86B28F9BB650021E251 /* PreferenceName.swift in Sources */,
 				C471E86C28F9BB650021E251 /* Preferences.swift in Sources */,
@@ -2701,6 +2716,7 @@
 				C471E7EB28F9BAC30021E251 /* Helpers.swift in Sources */,
 				C4CB6E68292C362C002E9027 /* Homebrew.swift in Sources */,
 				C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */,
+				C4AFC4B129C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */,
 				C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */,
@@ -2800,9 +2816,11 @@
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
+				C4AFC4B429C4F43300BF4E0D /* HomebrewTest.swift in Sources */,
 				C4E2E84828FC1D93003B070C /* TestableConfigurationTest.swift in Sources */,
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
+				C4AFC4AF29C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,
 				C481F79726164A78004FBCFF /* PrefsVC.swift in Sources */,

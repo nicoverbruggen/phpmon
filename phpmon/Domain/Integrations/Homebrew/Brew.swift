@@ -28,4 +28,22 @@ class Brew {
             Log.warn("The Homebrew version could not be determined.")
         }
     }
+
+    public func getPhpVersions() async -> [BrewFormula] {
+        let command = """
+        \(Paths.brew) update >/dev/null && \
+        \(Paths.brew) outdated --json --formulae
+        """
+
+        let raw = await Shell.pipe(command).out
+        print(raw)
+
+        // We can now figure out what updates there are
+
+        // We also know what's installed
+        let items = PhpEnv.shared.cachedPhpInstallations.keys
+        print(items)
+
+        return []
+    }
 }
