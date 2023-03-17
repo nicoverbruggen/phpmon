@@ -202,8 +202,8 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    await HomebrewDiagnostics.loadInstalledTaps()
-                    return await HomebrewDiagnostics.cannotLoadService("dnsmasq")
+                    await BrewDiagnostics.loadInstalledTaps()
+                    return await BrewDiagnostics.cannotLoadService("dnsmasq")
                 },
                 name: "`sudo \(Paths.brew) services info` JSON loaded",
                 titleText: "startup.errors.services_json_error.title".localized,

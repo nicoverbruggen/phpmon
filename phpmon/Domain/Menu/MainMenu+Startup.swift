@@ -38,12 +38,12 @@ extension MainMenu {
         _ = Preferences.shared
 
         // Determine install method
-        Log.info(HomebrewDiagnostics.customCaskInstalled
+        Log.info(BrewDiagnostics.customCaskInstalled
             ? "[BREW] The app has been installed via Homebrew Cask."
             : "[BREW] The app has been installed directly (optimal)."
         )
 
-        Log.info(HomebrewDiagnostics.usesNginxFullFormula
+        Log.info(BrewDiagnostics.usesNginxFullFormula
              ? "[BREW] The app will be using the `nginx-full` formula."
              : "[BREW] The app will be using the `nginx` formula."
         )
@@ -56,11 +56,14 @@ extension MainMenu {
         // Validate the version (this will enforce which versions of PHP are supported)
         Valet.shared.validateVersion()
 
+        // Validate the Homebrew version (determines install/upgrade functionality)
+        await Brew.shared.determineVersion()
+
         // Actually detect the PHP versions
         await PhpEnv.detectPhpVersions()
 
         // Check for an alias conflict
-        await HomebrewDiagnostics.checkForCaskConflict()
+        await BrewDiagnostics.checkForCaskConflict()
 
         // Update the icon
         updatePhpVersionInStatusBar()
@@ -92,7 +95,7 @@ extension MainMenu {
             await Valet.shared.startPreloadingSites()
 
             // After preloading sites, check for PHP-FPM pool conflicts
-            await HomebrewDiagnostics.checkForValetMisconfiguration()
+            await BrewDiagnostics.checkForValetMisconfiguration()
 
             // Check if PHP-FPM is broken (should be fixed automatically if phpmon >= 6.0)
             await Valet.shared.notifyAboutBrokenPhpFpm()

@@ -8,29 +8,27 @@
 
 import Foundation
 
-class Homebrew {
-    struct Formulae {
-        static var php: HomebrewFormula {
-            if PhpEnv.shared.homebrewPackage == nil {
-                return HomebrewFormula("php", elevated: true)
-            }
-
-            guard let install = PhpEnv.phpInstall else {
-                return HomebrewFormula("php", elevated: true)
-            }
-
-            return HomebrewFormula(install.formula, elevated: true)
+struct HomebrewFormulae {
+    static var php: HomebrewFormula {
+        if PhpEnv.shared.homebrewPackage == nil {
+            return HomebrewFormula("php", elevated: true)
         }
 
-        static var nginx: HomebrewFormula {
-            return HomebrewDiagnostics.usesNginxFullFormula
-                ? HomebrewFormula("nginx-full", elevated: true)
-                : HomebrewFormula("nginx", elevated: true)
+        guard let install = PhpEnv.phpInstall else {
+            return HomebrewFormula("php", elevated: true)
         }
 
-        static var dnsmasq: HomebrewFormula {
-            return HomebrewFormula("dnsmasq", elevated: true)
-        }
+        return HomebrewFormula(install.formula, elevated: true)
+    }
+
+    static var nginx: HomebrewFormula {
+        return BrewDiagnostics.usesNginxFullFormula
+        ? HomebrewFormula("nginx-full", elevated: true)
+        : HomebrewFormula("nginx", elevated: true)
+    }
+
+    static var dnsmasq: HomebrewFormula {
+        return HomebrewFormula("dnsmasq", elevated: true)
     }
 }
 

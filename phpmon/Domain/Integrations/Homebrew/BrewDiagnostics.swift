@@ -1,5 +1,5 @@
 //
-//  AliasConflict.swift
+//  BrewDiagnostics.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 28/11/2021.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HomebrewDiagnostics {
+class BrewDiagnostics {
     /**
      Determines the Homebrew taps the user has installed.
      */

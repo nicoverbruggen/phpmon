@@ -73,7 +73,7 @@ class AppUpdater {
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
                     .localized,
-                description: HomebrewDiagnostics.customCaskInstalled
+                description: BrewDiagnostics.customCaskInstalled
                 ? "updater.installation_source.brew".localized(command)
                 : "updater.installation_source.direct".localized
             )

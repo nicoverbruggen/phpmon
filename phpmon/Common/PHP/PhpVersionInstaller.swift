@@ -9,6 +9,13 @@
 import Foundation
 import Cocoa
 
+public enum PhpInstallAction {
+    case install
+    case remove
+    case upgrade
+    case purge
+}
+
 public class PhpVersionInstaller {
     public static var installables = [
         // "8.2": "php",
@@ -21,12 +28,6 @@ public class PhpVersionInstaller {
         "7.0": "shivammathur/php/php@7.0"
     ]
 
-    public enum PhpInstallAction {
-        case install
-        case remove
-        case purge
-    }
-
     // swiftlint:disable cyclomatic_complexity function_body_length
     /**
      Performs the desired action on the provided PHP version.
@@ -36,6 +37,8 @@ public class PhpVersionInstaller {
             switch action {
             case .install:
                 return "Installing PHP \(version)"
+            case .upgrade:
+                return "Upgrading to PHP \(version)"
             case .remove:
                 return "Removing PHP \(version)"
             case .purge:
@@ -47,6 +50,8 @@ public class PhpVersionInstaller {
             switch action {
             case .install:
                 return "Please wait while Homebrew installs PHP \(version)..."
+            case .upgrade:
+                return "Please wait while Homebrew upgrades PHP \(version)..."
             case .remove:
                 return "Please wait while Homebrew uninstalls PHP \(version)..."
             case .purge:
@@ -71,7 +76,7 @@ public class PhpVersionInstaller {
             var command: String!
 
             if action == .install {
-                if formula.contains("shivammathur") && !HomebrewDiagnostics.installedTaps.contains("shivammathur/php") {
+                if formula.contains("shivammathur") && !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
                     await Shell.quiet("brew tap shivammathur/php")
                 }
 
@@ -82,12 +87,9 @@ public class PhpVersionInstaller {
                 """
             }
 
-            // TODO: Ensure that a PHP version can also be updated
-            /*
-            if action == .update {
-
+            if action == .upgrade {
+                fatalError("This is not supported yet.")
             }
-            */
 
             if action == .purge || action == .remove {
                 // Removal always requires permission

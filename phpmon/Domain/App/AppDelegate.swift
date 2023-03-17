@@ -38,6 +38,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let valet: Valet
 
     /**
+     The Brew singleton that contains all information about Homebrew
+     and its configuration on your system.
+     */
+    let brew: Brew
+
+    /**
      The PhpEnv singleton that handles PHP version
      detection, as well as switching. It is initialized
      when the app is ready and passed all checks.
@@ -87,6 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.menu = MainMenu.shared
         self.paths = Paths.shared
         self.valet = Valet.shared
+        self.brew = Brew.shared
         super.init()
     }
 
