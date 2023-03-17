@@ -39,7 +39,7 @@ struct ContentView: View {
     @State var phpVersions: [PhpInstallable]
 
     var body: some View {
-        List(phpVersions, id: \.name) { version in
+        List(Array(phpVersions.enumerated()), id: \.1.name) { (index, version) in
             HStack {
                 Image(systemName: version.icon)
                     .resizable()
@@ -86,10 +86,15 @@ struct ContentView: View {
                         // handle uninstall action here
                     }.disabled(true)
                 }
-            }.padding(.vertical, 10)
+
+            }
+            .listRowBackground(index % 2 == 0
+                ? Color.gray.opacity(0)
+                : Color.gray.opacity(0.08)
+            )
+            .padding(.vertical, 10)
         }
-        .listStyle(.bordered(alternatesRowBackgrounds: true))
-        .frame(width: 400, height: 300)
+        .frame(width: 500, height: 500)
     }
 }
 
@@ -100,7 +105,9 @@ struct ContentView_Previews: PreviewProvider {
             PhpInstallable(name: "PHP 8.1", installed: "8.1.0", latest: "8.1.5", actions: [.upgrade, .remove]),
             PhpInstallable(name: "PHP 8.0", installed: "8.0.14", latest: "8.0.14", actions: [.remove]),
             PhpInstallable(name: "PHP 7.4", installed: nil, latest: "", actions: [.install]),
-            PhpInstallable(name: "PHP 7.3", installed: nil, latest: "", actions: [.install])
-        ])
+            PhpInstallable(name: "PHP 7.3", installed: nil, latest: "", actions: [.install]),
+            PhpInstallable(name: "PHP 7.2", installed: nil, latest: "", actions: [.install]),
+            PhpInstallable(name: "PHP 7.1", installed: nil, latest: "", actions: [.install])
+        ]).frame(width: 600, height: 500)
     }
 }
