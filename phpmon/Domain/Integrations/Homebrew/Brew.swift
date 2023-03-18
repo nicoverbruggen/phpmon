@@ -35,15 +35,31 @@ class Brew {
         \(Paths.brew) outdated --json --formulae
         """
 
-        let raw = await Shell.pipe(command).out
-        print(raw)
+        let rawJsonText = await Shell.pipe(command).out
+            .data(using: .utf8)!
 
-        // We can now figure out what updates there are
+        let installed = PhpEnv.shared.cachedPhpInstallations.map { key, value in
+            return (key, value.versionNumber.text)
+        }
 
-        // We also know what's installed
-        let items = PhpEnv.shared.cachedPhpInstallations.keys
-        print(items)
+        let phpAlias = PhpEnv.brewPhpAlias
 
-        return []
+        let outdated = try? JSONDecoder().decode(
+            OutdatedFormulae.self,
+            from: rawJsonText
+        ).formulae.filter({ formula in
+            formula.name.starts(with: "php")
+        })
+
+        return installed.map { (version, fullVersion) in
+            return BrewFormula(
+                name: version != phpAlias ? "php@\(version)" : "php",
+                displayName: version,
+                installedVersion: fullVersion,
+                upgradeVersion: outdated?.first(where: { formula in
+                    return formula.installed_versions.contains(fullVersion)
+                })?.current_version
+            )
+        }
     }
 }

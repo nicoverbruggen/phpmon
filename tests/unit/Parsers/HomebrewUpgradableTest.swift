@@ -8,7 +8,7 @@
 
 import XCTest
 
-class HomebrewTest: XCTestCase {
+class HomebrewUpgradableTest: XCTestCase {
     static var outdatedFileUrl: URL {
         return Bundle(for: Self.self)
             .url(forResource: "brew-outdated", withExtension: "json")!
@@ -21,13 +21,20 @@ class HomebrewTest: XCTestCase {
 
         let env = PhpEnv.shared
         env.cachedPhpInstallations = [
-            "8.1": PhpInstallation("8.1.3"),
-            "8.2": PhpInstallation("8.2.4"),
+            "8.1": PhpInstallation("8.1.16"),
+            "8.2": PhpInstallation("8.2.3"),
             "7.4": PhpInstallation("7.4.11")
         ]
 
         let brew = Brew.shared
         let data = await brew.getPhpVersions()
-        print(data)
+
+        XCTAssertTrue(data.contains(where: { formula in
+            formula.installedVersion == "8.1.16" && formula.upgradeVersion == "8.1.17"
+        }))
+
+        XCTAssertTrue(data.contains(where: { formula in
+            formula.installedVersion == "8.2.3" && formula.upgradeVersion == "8.2.4"
+        }))
     }
 }

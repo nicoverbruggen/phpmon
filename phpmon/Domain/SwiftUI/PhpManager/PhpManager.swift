@@ -35,7 +35,7 @@ struct PhpInstallable {
     }
 }
 
-struct ContentView: View {
+struct PhpInstallationList: View {
     @State var phpVersions: [PhpInstallable]
 
     var body: some View {
@@ -98,16 +98,18 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct PhpInstallationList_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(phpVersions: [
-            PhpInstallable(name: "PHP 8.2", installed: "8.2.3", latest: "8.2.3", actions: []),
-            PhpInstallable(name: "PHP 8.1", installed: "8.1.0", latest: "8.1.5", actions: [.upgrade, .remove]),
+        PhpInstallationList(phpVersions: [
+            PhpInstallable(name: "PHP 8.2", installed: "8.2.3", latest: "8.2.4", actions: [.upgrade]),
+            PhpInstallable(name: "PHP 8.1", installed: "8.1.15", latest: "8.1.16", actions: [.upgrade, .remove]),
             PhpInstallable(name: "PHP 8.0", installed: "8.0.14", latest: "8.0.14", actions: [.remove]),
             PhpInstallable(name: "PHP 7.4", installed: nil, latest: "", actions: [.install]),
             PhpInstallable(name: "PHP 7.3", installed: nil, latest: "", actions: [.install]),
             PhpInstallable(name: "PHP 7.2", installed: nil, latest: "", actions: [.install]),
-            PhpInstallable(name: "PHP 7.1", installed: nil, latest: "", actions: [.install])
+            PhpInstallable(name: "PHP 7.1", installed: nil, latest: "", actions: [.install]),
+            PhpInstallable(name: "PHP 7.0", installed: nil, latest: "", actions: [.install]),
+            PhpInstallable(name: "PHP 5.6", installed: nil, latest: "", actions: [.install])
         ]).frame(width: 600, height: 500)
     }
 }
