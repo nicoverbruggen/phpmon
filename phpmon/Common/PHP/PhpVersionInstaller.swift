@@ -17,6 +17,7 @@ public enum PhpInstallAction {
 }
 
 public class PhpVersionInstaller {
+    // TODO: Remove
     public static var installables = [
         // "8.2": "php",
         "8.1": "php@8.1",

@@ -1,5 +1,5 @@
 //
-//  PhpFormulaeManager.swift
+//  PhpFormulaeView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 17/03/2023.
@@ -9,67 +9,81 @@
 import Foundation
 import SwiftUI
 
-struct PhpFormulaeManager: View {
+struct PhpFormulaeView: View {
     @State var formulae: [BrewFormula]
     @State var busy: Bool = true
     @State var title: String = "Doing a thing"
     @State var description: String = "Preparing..."
 
+    init(formulae: [BrewFormula], busy: Bool = true, title: String = "", description: String = "") {
+        self.formulae = formulae
+        self.busy = busy
+        self.title = title
+        self.description = description
+
+        Task { @MainActor in
+            let items = await Brew.shared.getPhpVersions()
+            print(items)
+        }
+    }
+
     var body: some View {
         BlockingOverlayView(busy: busy, title: title, text: description) {
-            List(Array(formulae.enumerated()), id: \.1.name) { (index, formula) in
-                HStack {
-                    Image(systemName: formula.icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(formula.iconColor)
-                        .padding(.horizontal, 5)
-                    VStack(alignment: .leading) {
-                        Text(formula.displayName).bold()
+            VStack {
+                List(Array(formulae.enumerated()), id: \.1.name) { (index, formula) in
+                    HStack {
+                        Image(systemName: formula.icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(formula.iconColor)
+                            .padding(.horizontal, 5)
+                        VStack(alignment: .leading) {
+                            Text(formula.displayName).bold()
 
-                        if formula.isInstalled && formula.hasUpgrade {
-                            Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
-                                .font(.system(size: 11))
-                                .foregroundColor(.gray)
-                        } else if formula.isInstalled && formula.installedVersion != nil {
-                            Text("Latest version is currently installed.").font(.system(size: 11))
-                                .foregroundColor(.gray)
+                            if formula.isInstalled && formula.hasUpgrade {
+                                Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.gray)
+                            } else if formula.isInstalled && formula.installedVersion != nil {
+                                Text("Latest version is currently installed.").font(.system(size: 11))
+                                    .foregroundColor(.gray)
+                            } else {
+                                Text("This version can be installed.")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        if formula.isInstalled {
+                            Button("Uninstall") {
+                                // handle uninstall action here
+                            }
                         } else {
-                            Text("This version can be installed.")
-                                .font(.system(size: 11))
-                                .foregroundColor(.gray)
+                            Button("Install") {
+                                // handle install action here
+                            }
+                        }
+                        if formula.hasUpgrade {
+                            Button("Update") {
+                                // handle uninstall action here
+                            }
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    if formula.isInstalled {
-                        Button("Uninstall") {
-                            // handle uninstall action here
-                        }
-                    } else {
-                        Button("Install") {
-                            // handle install action here
-                        }
-                    }
-                    if formula.hasUpgrade {
-                        Button("Update") {
-                            // handle uninstall action here
-                        }
-                    }
+                    .listRowBackground(index % 2 == 0
+                                       ? Color.gray.opacity(0)
+                                       : Color.gray.opacity(0.08)
+                    )
+                    .padding(.vertical, 10)
                 }
-                .listRowBackground(index % 2 == 0
-                                   ? Color.gray.opacity(0)
-                                   : Color.gray.opacity(0.08)
-                )
-                .padding(.vertical, 10)
             }
         }.frame(width: 500, height: 500)
     }
 }
 
-struct PhpFormulaeManager_Previews: PreviewProvider {
+struct PhpFormulaeView_Previews: PreviewProvider {
     static var previews: some View {
-        PhpFormulaeManager(formulae: [
+        PhpFormulaeView(formulae: [
             BrewFormula(
                 name: "php",
                 displayName: "PHP 8.2",

@@ -20,6 +20,7 @@
 "mi_no_php_linked" = "No PHP version linked!";
 "mi_fix_php_link" = "Fix Automatically...";
 "mi_no_php_linked_explain" = "What's This?";
+"mi_php_version_manager" = "Install & Upgrade PHP Versions...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";

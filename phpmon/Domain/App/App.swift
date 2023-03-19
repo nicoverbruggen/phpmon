@@ -80,6 +80,9 @@ class App {
     /** The window controller of the warnings window. */
     var warningsWindowController: WarningsWindowController?
 
+    /** The window controller of the warnings window. */
+    var versionManagerWindowController: PhpVersionManagerWindowController?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 

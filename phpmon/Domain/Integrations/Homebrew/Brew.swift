@@ -29,6 +29,18 @@ class Brew {
         }
     }
 
+    public static var phpVersionFormulae = [
+        "8.2": "php@8.2",
+        "8.1": "php@8.1",
+        "8.0": "php@8.0",
+        "7.4": "shivammathur/php/php@7.4",
+        "7.3": "shivammathur/php/php@7.3",
+        "7.2": "shivammathur/php/php@7.2",
+        "7.1": "shivammathur/php/php@7.1",
+        "7.0": "shivammathur/php/php@7.0",
+        "5.6": "shivammathur/php/php@5.6",
+    ]
+
     public func getPhpVersions() async -> [BrewFormula] {
         let command = """
         \(Paths.brew) update >/dev/null && \
@@ -38,12 +50,6 @@ class Brew {
         let rawJsonText = await Shell.pipe(command).out
             .data(using: .utf8)!
 
-        let installed = PhpEnv.shared.cachedPhpInstallations.map { key, value in
-            return (key, value.versionNumber.text)
-        }
-
-        let phpAlias = PhpEnv.brewPhpAlias
-
         let outdated = try? JSONDecoder().decode(
             OutdatedFormulae.self,
             from: rawJsonText
@@ -51,15 +57,24 @@ class Brew {
             formula.name.starts(with: "php")
         })
 
-        return installed.map { (version, fullVersion) in
-            return BrewFormula(
-                name: version != phpAlias ? "php@\(version)" : "php",
-                displayName: version,
-                installedVersion: fullVersion,
-                upgradeVersion: outdated?.first(where: { formula in
-                    return formula.installed_versions.contains(fullVersion)
+        return Self.phpVersionFormulae.map { (version, formula) in
+            let fullVersion = PhpEnv.shared.cachedPhpInstallations[version]?.versionNumber.text
+            var upgradeVersion: String? = nil
+
+            if let version = fullVersion {
+                upgradeVersion = outdated?.first(where: { formula in
+                    return formula.installed_versions.contains(version)
                 })?.current_version
+            }
+
+            return BrewFormula(
+                name: formula,
+                displayName: "PHP \(version)",
+                installedVersion: fullVersion,
+                upgradeVersion: upgradeVersion
             )
+        }.sorted { a, b in
+            a.displayName > b.displayName
         }
     }
 }

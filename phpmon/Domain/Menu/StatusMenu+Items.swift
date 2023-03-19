@@ -91,33 +91,6 @@ extension StatusMenu {
             addItem(menuItem)
         }
 
-        // TODO: This is a fixed list...
-
-        addItem(NSMenuItem.separator())
-        addItem(HeaderView.asMenuItem(text: "Experimental"))
-        for result in PhpVersionInstaller.availableActions {
-            let title = result.action == .install
-            ? "Install PHP \(result.version)..."
-            : "Remove PHP \(result.version)..."
-
-            let action: Selector? = result.action == .install
-            ? #selector(MainMenu.installPhpVersion(sender:))
-            : #selector(MainMenu.removePhpVersion(sender:))
-
-            if result.version == PhpEnv.brewPhpAlias {
-                continue
-            }
-
-            let menuItem = PhpMenuItem(
-                title: title,
-                action: action,
-                keyEquivalent: ""
-            )
-
-            menuItem.version = result.version
-            addItem(menuItem)
-        }
-
         if !PhpEnv.shared.incompatiblePhpVersions.isEmpty {
             addItem(NSMenuItem.separator())
             addItem(NSMenuItem(
@@ -164,6 +137,9 @@ extension StatusMenu {
     func addConfigurationMenuItems() {
         addItems([
             HeaderView.asMenuItem(text: "mi_configuration".localized),
+            NSMenuItem(title: "mi_php_version_manager".localized,
+                       action: #selector(MainMenu.openPhpVersionManager),
+                       keyEquivalent: "m"),
             NSMenuItem(title: "mi_php_config".localized,
                        action: #selector(MainMenu.openActiveConfigFolder),
                        keyEquivalent: "c"),

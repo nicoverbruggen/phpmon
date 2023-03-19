@@ -672,6 +672,10 @@
 		C4D4CB3829C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
 		C4D4CB3929C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
 		C4D4CB3A29C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */; };
+		C4D5576429C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
+		C4D5576529C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
+		C4D5576629C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
+		C4D5576729C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
 		C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
@@ -1001,6 +1005,7 @@
 		C4D36614291160A1006BD146 /* WIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIP.swift; sourceTree = "<group>"; };
 		C4D36619291173EA006BD146 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InternalSwitcher+Valet.swift"; sourceTree = "<group>"; };
+		C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersionManagerWindowController.swift; sourceTree = "<group>"; };
 		C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationFile.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
@@ -1355,6 +1360,7 @@
 			children = (
 				C43931C429C4BD610069165B /* PhpFormulaeManager.swift */,
 				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
+				C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */,
 			);
 			path = PhpManager;
 			sourceTree = "<group>";
@@ -2240,6 +2246,7 @@
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
 				C45B914E295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
+				C4D5576429C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C4A6957628D23EE300A14CF8 /* EnvironmentManager.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
@@ -2438,6 +2445,7 @@
 				C4E2E86628FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C471E85F28F9BB650021E251 /* DomainListVC+Actions.swift in Sources */,
 				C490E3B429BC9FEA006D2DE6 /* ProgressWindowView.swift in Sources */,
+				C4D5576629C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C471E86028F9BB650021E251 /* SelectionVC.swift in Sources */,
 				C471E86128F9BB650021E251 /* AddSiteVC.swift in Sources */,
 				C471E86228F9BB650021E251 /* AddProxyVC.swift in Sources */,
@@ -2613,6 +2621,7 @@
 				C4E2E86A28FC3002003B070C /* Utility.swift in Sources */,
 				C471E8BF28F9BB8F0021E251 /* DomainListWindowController.swift in Sources */,
 				C471E8C028F9BB8F0021E251 /* DomainListVC.swift in Sources */,
+				C4D5576729C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C471E8C128F9BB8F0021E251 /* DomainListVC+ContextMenu.swift in Sources */,
 				C4BF56AE2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E8C228F9BB8F0021E251 /* DomainListVC+Actions.swift in Sources */,
@@ -2805,6 +2814,7 @@
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C463E381284930EE00422731 /* PresetHelper.swift in Sources */,
 				C46FA98C2822F08F00D78807 /* PhpConfigurationTest.swift in Sources */,
+				C4D5576529C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
 				C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* BrewDiagnostics.swift in Sources */,
