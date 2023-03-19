@@ -540,6 +540,10 @@
 		C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
 		C48D6C71279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
 		C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */; };
+		C48DDD0D29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */; };
+		C48DDD0E29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */; };
+		C48DDD0F29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */; };
+		C48DDD1029C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */; };
 		C490E3A729BC940D006D2DE6 /* ProgressWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490E3A629BC940D006D2DE6 /* ProgressWindowView.swift */; };
 		C490E3AA29BC9B3E006D2DE6 /* ProgressViewSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490E3A929BC9B3E006D2DE6 /* ProgressViewSubject.swift */; };
 		C490E3B029BC9FE8006D2DE6 /* ProgressViewSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490E3A929BC9B3E006D2DE6 /* ProgressViewSubject.swift */; };
@@ -938,6 +942,7 @@
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
 		C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionNumberTest.swift; sourceTree = "<group>"; };
+		C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingOverlayView.swift; sourceTree = "<group>"; };
 		C490E3A629BC940D006D2DE6 /* ProgressWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressWindowView.swift; sourceTree = "<group>"; };
 		C490E3A929BC9B3E006D2DE6 /* ProgressViewSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewSubject.swift; sourceTree = "<group>"; };
 		C4927F0A27B2DFC200C55AFD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -1349,6 +1354,7 @@
 			isa = PBXGroup;
 			children = (
 				C43931C429C4BD610069165B /* PhpFormulaeManager.swift */,
+				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
 			);
 			path = PhpManager;
 			sourceTree = "<group>";
@@ -2219,6 +2225,7 @@
 				C45B9149295607F400F4EC78 /* Service.swift in Sources */,
 				5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
+				C48DDD0D29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C45B91532956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C41C708D28AA7F7900E8D498 /* NoWarningsView.swift in Sources */,
 				C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
@@ -2445,6 +2452,7 @@
 				C471E86728F9BB650021E251 /* OnboardingWindowController.swift in Sources */,
 				C471E86828F9BB650021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E86928F9BB650021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
+				C48DDD0F29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C4AFC4B029C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C471E86A28F9BB650021E251 /* PrefsVC.swift in Sources */,
 				C471E86B28F9BB650021E251 /* PreferenceName.swift in Sources */,
@@ -2682,6 +2690,7 @@
 				C471E80128F9BAD40021E251 /* ActivePhpInstallation.swift in Sources */,
 				C471E80228F9BAD40021E251 /* PhpInstallation.swift in Sources */,
 				C471E81028F9BAE80021E251 /* StringExtension.swift in Sources */,
+				C48DDD1029C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */,
 				C471E82128F9BB2E0021E251 /* PhpFrameworks.swift in Sources */,
@@ -2898,6 +2907,7 @@
 				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C485707628BF455100539B36 /* SectionHeaderView.swift in Sources */,
 				C46EBC4828DB9644007ACC74 /* RealShell.swift in Sources */,
+				C48DDD0E29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */,
 				C449B4F327EE7FC600C47E8A /* DomainListTypeCell.swift in Sources */,
