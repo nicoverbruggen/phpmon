@@ -10,27 +10,21 @@ import Foundation
 import SwiftUI
 
 struct PhpFormulaeView: View {
-    @State var formulae: [BrewFormula]
+    @ObservedObject var brew: Brew = Brew.shared
     @State var busy: Bool = true
     @State var title: String = "Doing a thing"
     @State var description: String = "Preparing..."
 
-    init(formulae: [BrewFormula], busy: Bool = true, title: String = "", description: String = "") {
-        self.formulae = formulae
+    init(busy: Bool = true, title: String = "", description: String = "") {
         self.busy = busy
         self.title = title
         self.description = description
-
-        Task { @MainActor in
-            let items = await Brew.shared.getPhpVersions()
-            print(items)
-        }
     }
 
     var body: some View {
         BlockingOverlayView(busy: busy, title: title, text: description) {
             VStack {
-                List(Array(formulae.enumerated()), id: \.1.name) { (index, formula) in
+                List(Array(brew.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
                     HStack {
                         Image(systemName: formula.icon)
                             .resizable()
@@ -81,6 +75,7 @@ struct PhpFormulaeView: View {
     }
 }
 
+/*
 struct PhpFormulaeView_Previews: PreviewProvider {
     static var previews: some View {
         PhpFormulaeView(formulae: [
@@ -129,6 +124,7 @@ struct PhpFormulaeView_Previews: PreviewProvider {
         ]).frame(width: 600, height: 500)
     }
 }
+*/
 
 extension BrewFormula {
     var icon: String {
