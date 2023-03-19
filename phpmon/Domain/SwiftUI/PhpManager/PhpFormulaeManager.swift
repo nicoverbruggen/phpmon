@@ -9,22 +9,47 @@
 import Foundation
 import SwiftUI
 
-struct PhpFormulaeView: View {
-    @ObservedObject var brew: Brew = Brew.shared
-    @State var busy: Bool = true
-    @State var title: String = "Doing a thing"
-    @State var description: String = "Preparing..."
+class PhpFormulaeStatus: ObservableObject {
+    @Published var busy: Bool
+    @Published var title: String
+    @Published var description: String
 
-    init(busy: Bool = true, title: String = "", description: String = "") {
+    init(busy: Bool, title: String, description: String) {
         self.busy = busy
         self.title = title
         self.description = description
     }
+}
+
+struct PhpFormulaeView: View {
+    @ObservedObject var formulae: BrewFormulaeObservable
+    @ObservedObject var status: PhpFormulaeStatus
+    var handler: HandlesBrewFormulae
+
+    init(
+        formulae: BrewFormulaeObservable,
+        handler: HandlesBrewFormulae
+    ) {
+        self.formulae = formulae
+        self.handler = handler
+
+        self.status = PhpFormulaeStatus(
+            busy: true,
+            title: "Checking for updates",
+            description: "Checking if any PHP version is outdated..."
+        )
+
+        Task { [self] in
+            await self.handler.refreshPhpVersions(loadOutdated: false)
+            await self.handler.refreshPhpVersions(loadOutdated: true)
+            self.status.busy = false
+        }
+    }
 
     var body: some View {
-        BlockingOverlayView(busy: busy, title: title, text: description) {
+        BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
             VStack {
-                List(Array(brew.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
+                List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
                     HStack {
                         Image(systemName: formula.icon)
                             .resizable()
@@ -75,10 +100,18 @@ struct PhpFormulaeView: View {
     }
 }
 
-/*
 struct PhpFormulaeView_Previews: PreviewProvider {
     static var previews: some View {
-        PhpFormulaeView(formulae: [
+        PhpFormulaeView(
+            formulae: Brew.shared.formulae,
+            handler: FakeBrewFormulaeHandler()
+        ).frame(width: 600, height: 500)
+    }
+}
+
+class FakeBrewFormulaeHandler: HandlesBrewFormulae {
+    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
+        return [
             BrewFormula(
                 name: "php",
                 displayName: "PHP 8.2",
@@ -121,10 +154,9 @@ struct PhpFormulaeView_Previews: PreviewProvider {
                 installedVersion: nil,
                 upgradeVersion: nil
             )
-        ]).frame(width: 600, height: 500)
+        ]
     }
 }
-*/
 
 extension BrewFormula {
     var icon: String {

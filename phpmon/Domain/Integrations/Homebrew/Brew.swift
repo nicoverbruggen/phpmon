@@ -8,20 +8,15 @@
 
 import Foundation
 
-class Brew: ObservableObject {
+class BrewFormulaeObservable: ObservableObject {
+    @Published var phpVersions: [BrewFormula] = []
+}
+
+class Brew {
     static let shared = Brew()
 
-    init() {
-        Task {
-            // Asynchronously load available updates
-            let items = await loadPhpVersions(loadOutdated: false)
-            Task { @MainActor in
-                self.phpVersions = items
-            }
-        }
-    }
-
-    @Published var phpVersions: [BrewFormula] = []
+    /// Formulae that can be observed.
+    var formulae = BrewFormulaeObservable()
 
     /// The version of Homebrew that was detected.
     var version: VersionNumber?
@@ -54,7 +49,23 @@ class Brew: ObservableObject {
         "7.0": "shivammathur/php/php@7.0",
         "5.6": "shivammathur/php/php@5.6"
     ]
+}
 
+protocol HandlesBrewFormulae {
+    func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula]
+    func refreshPhpVersions(loadOutdated: Bool) async
+}
+
+extension HandlesBrewFormulae {
+    public func refreshPhpVersions(loadOutdated: Bool) async {
+        let items = await loadPhpVersions(loadOutdated: loadOutdated)
+        Task { @MainActor in
+            Brew.shared.formulae.phpVersions = items
+        }
+    }
+}
+
+class BrewFormulaeHandler: HandlesBrewFormulae {
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
         var outdated: [OutdatedFormula]?
 
@@ -74,9 +85,7 @@ class Brew: ObservableObject {
             })
         }
 
-        print(PhpEnv.shared.cachedPhpInstallations)
-
-        return Self.phpVersionFormulae.map { (version, formula) in
+        return Brew.phpVersionFormulae.map { (version, formula) in
             let fullVersion = PhpEnv.shared.cachedPhpInstallations[version]?.versionNumber.text
             var upgradeVersion: String?
 

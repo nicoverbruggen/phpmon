@@ -24,9 +24,8 @@ class PhpVersionManagerWindowController: PMWindowController {
         let windowController = Self()
         windowController.window = NSWindow()
         windowController.view = PhpFormulaeView(
-            busy: true,
-            title: "Loading PHP versions",
-            description: "Loading available PHP versions..."
+            formulae: Brew.shared.formulae,
+            handler: BrewFormulaeHandler()
         )
 
         guard let window = windowController.window else { return }
