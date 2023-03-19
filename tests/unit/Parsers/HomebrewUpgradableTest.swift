@@ -16,7 +16,8 @@ class HomebrewUpgradableTest: XCTestCase {
 
     func test_upgradable_php_versions_can_be_parsed() async throws {
         ActiveShell.useTestable([
-            "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae": .instant(try! String(contentsOf: Self.outdatedFileUrl))
+            "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae"
+                : .instant(try! String(contentsOf: Self.outdatedFileUrl))
         ])
 
         let env = PhpEnv.shared
