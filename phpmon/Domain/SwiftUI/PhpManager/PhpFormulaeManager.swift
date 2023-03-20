@@ -35,7 +35,7 @@ struct PhpFormulaeView: View {
 
         self.status = PhpFormulaeStatus(
             busy: true,
-            title: "Checking for updates",
+            title: "Checking for updates!",
             description: "Checking if any PHP version is outdated..."
         )
 
@@ -47,8 +47,53 @@ struct PhpFormulaeView: View {
     }
 
     var body: some View {
-        BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
-            VStack {
+        VStack {
+            HStack(alignment: .center, spacing: 15) {
+                Image(systemName: "arrow.down.to.line.circle.fill")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(Color.blue)
+                    .padding(12)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("phpman.description".localizedForSwiftUI)
+                        .font(.system(size: 12))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("phpman.disclaimer".localizedForSwiftUI)
+                        .font(.system(size: 12))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(10)
+
+            Divider()
+
+            HStack(alignment: .center, spacing: 15) {
+                Button {
+                    Task { // Reload warnings
+                        Task { @MainActor in
+                            self.status.busy = true
+                            self.status.title = "Checking for updates!"
+                            self.status.description = "Checking if any PHP version is outdated..."
+                        }
+                        await self.handler.refreshPhpVersions(loadOutdated: true)
+                        Task { @MainActor in
+                            self.status.busy = false
+                        }
+                    }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .buttonStyle(.automatic)
+                        .controlSize(.large)
+                }
+                .focusable(false)
+
+                Text("phpman.refresh.button.description".localizedForSwiftUI)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 11))
+            }
+            .padding(10)
+
+            BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
                 List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
                     HStack {
                         Image(systemName: formula.icon)
@@ -96,7 +141,7 @@ struct PhpFormulaeView: View {
                     .padding(.vertical, 10)
                 }
             }
-        }.frame(width: 500, height: 500)
+        }.frame(width: 600, height: 600)
     }
 }
 
@@ -105,7 +150,7 @@ struct PhpFormulaeView_Previews: PreviewProvider {
         PhpFormulaeView(
             formulae: Brew.shared.formulae,
             handler: FakeBrewFormulaeHandler()
-        ).frame(width: 600, height: 500)
+        ).frame(width: 600, height: 600)
     }
 }
 

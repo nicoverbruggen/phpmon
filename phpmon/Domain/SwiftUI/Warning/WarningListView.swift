@@ -51,10 +51,14 @@ struct WarningListView: View {
             Divider()
 
             HStack(alignment: .center, spacing: 15) {
-                Button("warnings.refresh.button".localizedForSwiftUI) {
+                Button {
                     Task { // Reload warnings
                         await self.warningManager.checkEnvironment()
                     }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .buttonStyle(.automatic)
+                        .controlSize(.large)
                 }
                 Text("warnings.refresh.button.description".localizedForSwiftUI)
                     .foregroundColor(.gray)

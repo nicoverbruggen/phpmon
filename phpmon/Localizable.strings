@@ -20,7 +20,7 @@
 "mi_no_php_linked" = "No PHP version linked!";
 "mi_fix_php_link" = "Fix Automatically...";
 "mi_no_php_linked_explain" = "What's This?";
-"mi_php_version_manager" = "Install & Upgrade PHP Versions...";
+"mi_php_version_manager" = "PHP Version Manager...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";
@@ -87,6 +87,14 @@
 "mi_xdebug_available_modes" = "Available Modes";
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
+
+// PHPMAN
+
+"phpman.title" = "PHP Manager";
+"phpman.description" = "**PHP Manager** lets you install different PHP versions via Homebrew.";
+"phpman.disclaimer" = "PHP Manager may ask for administrative privileges to take ownership of certain folders during certain operations. If you prefer it, you can also manually install PHP versions via the terminal.";
+"phpman.refresh.button" = "Search for Updates";
+"phpman.refresh.button.description" = "You can press this button to check (again) if any updates are available to installed PHP versions. When you first open this window, PHP Monitor already does this check.";
 
 // GENERIC
 

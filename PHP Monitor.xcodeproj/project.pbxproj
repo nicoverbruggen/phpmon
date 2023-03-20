@@ -1358,9 +1358,9 @@
 		C43931C329C4BD510069165B /* PhpManager */ = {
 			isa = PBXGroup;
 			children = (
+				C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */,
 				C43931C429C4BD610069165B /* PhpFormulaeManager.swift */,
 				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
-				C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */,
 			);
 			path = PhpManager;
 			sourceTree = "<group>";

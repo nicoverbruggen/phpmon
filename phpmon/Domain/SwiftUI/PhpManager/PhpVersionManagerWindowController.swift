@@ -34,7 +34,7 @@ class PhpVersionManagerWindowController: PMWindowController {
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: windowController.view)
-        window.setContentSize(NSSize(width: 600, height: 480))
+        window.setContentSize(NSSize(width: 600, height: 800))
 
         App.shared.versionManagerWindowController = windowController
     }
@@ -45,7 +45,7 @@ class PhpVersionManagerWindowController: PMWindowController {
         }
 
         App.shared.versionManagerWindowController?.showWindow(self)
-        App.shared.versionManagerWindowController?.window?.setCenterPosition(offsetY: 70)
+        App.shared.versionManagerWindowController?.positionWindowInTopLeftCorner()
 
         NSApp.activate(ignoringOtherApps: true)
     }
