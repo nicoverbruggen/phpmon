@@ -8,6 +8,14 @@
 
 import Foundation
 
+protocol BrewCommand {
+    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws
+}
+
+extension BrewCommand {
+
+}
+
 struct BrewCommandProgress {
     let value: Double
     let title: String
@@ -16,14 +24,6 @@ struct BrewCommandProgress {
     public static func create(value: Double, title: String, description: String) -> BrewCommandProgress {
         return BrewCommandProgress(value: value, title: title, description: description)
     }
-}
-
-protocol BrewCommand {
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws
-}
-
-extension BrewCommand {
-
 }
 
 struct BrewCommandError: Error {

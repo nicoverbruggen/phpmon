@@ -206,14 +206,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { await AppUpdater().checkForUpdates(userInitiated: true) }
     }
 
-    @objc func installPhpVersion(sender: PhpMenuItem) {
-        Task { await PhpVersionInstaller.installPhpVersion(version: sender.version) }
-    }
-
-    @objc func removePhpVersion(sender: PhpMenuItem) {
-        Task { await PhpVersionInstaller.removePhpVersion(version: sender.version) }
-    }
-
     // MARK: - Menu Delegate
 
     func menuWillOpen(_ menu: NSMenu) {

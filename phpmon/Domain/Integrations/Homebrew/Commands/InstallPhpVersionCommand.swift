@@ -35,7 +35,7 @@ class InstallPhpVersionCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            brew install \(formula) --force
+            \(Paths.brew) install \(formula) --force
             """
 
         let (process, _) = try! await Shell.attach(
@@ -45,7 +45,6 @@ class InstallPhpVersionCommand: BrewCommand {
                     Log.perf(text)
                 }
 
-                // Check if we can recognize any of the typical progress steps
                 if let (number, text) = self.reportInstallationProgress(text) {
                     onProgress(.create(value: number, title: progressTitle, description: text))
                 }
@@ -65,10 +64,10 @@ class InstallPhpVersionCommand: BrewCommand {
 
     private func reportInstallationProgress(_ text: String) -> (Double, String)? {
         if text.contains("Fetching") {
-            return (0.1, text)
+            return (0.1, "Fetching...")
         }
         if text.contains("Downloading") {
-            return (0.25, text)
+            return (0.25, "Downloading package data...")
         }
         if text.contains("Already downloaded") || text.contains("Downloaded") {
             return (0.50, "Downloaded!")

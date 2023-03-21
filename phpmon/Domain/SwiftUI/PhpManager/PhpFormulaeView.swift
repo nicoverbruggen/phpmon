@@ -61,6 +61,7 @@ struct PhpFormulaeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Text("phpman.disclaimer".localizedForSwiftUI)
                         .font(.system(size: 12))
+                        .foregroundColor(.gray)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
@@ -122,17 +123,16 @@ struct PhpFormulaeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         if formula.isInstalled {
                             Button("Uninstall") {
-                                // handle uninstall action here
+                                Task { await self.uninstall(formula) }
                             }
                         } else {
                             Button("Install") {
-                                // handle install action here
                                 Task { await self.install(formula) }
                             }
                         }
                         if formula.hasUpgrade {
                             Button("Update") {
-                                // handle uninstall action here
+                                Task { await self.install(formula) }
                             }
                         }
                     }
@@ -148,6 +148,21 @@ struct PhpFormulaeView: View {
 
     public func install(_ formula: BrewFormula) async {
         let command = InstallPhpVersionCommand(formula: formula.name)
+        try! await command.execute { progress in
+            Task { @MainActor in
+                self.status.title = progress.title
+                self.status.description = progress.description
+                self.status.busy = progress.value != 1
+
+                if progress.value == 1 {
+                    await self.handler.refreshPhpVersions(loadOutdated: false)
+                }
+            }
+        }
+    }
+
+    public func uninstall(_ formula: BrewFormula) async {
+        let command = RemovePhpVersionCommand(formula: formula.name)
         try! await command.execute { progress in
             Task { @MainActor in
                 self.status.title = progress.title

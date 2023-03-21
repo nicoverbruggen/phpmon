@@ -92,7 +92,7 @@
 
 "phpman.title" = "PHP Manager";
 "phpman.description" = "**PHP Manager** lets you install different PHP versions via Homebrew.";
-"phpman.disclaimer" = "PHP Manager may ask for administrative privileges to take ownership of certain folders during certain operations. If you prefer it, you can also manually install PHP versions via the terminal.";
+"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well, but only if Homebrew would otherwise have broken those other packages via a shared dependency. (More in the FAQ!)";
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press this button to check (again) if any updates are available to installed PHP versions. When you first open this window, PHP Monitor already does this check.";
 
