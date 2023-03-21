@@ -40,6 +40,7 @@ struct PhpFormulaeView: View {
         )
 
         Task { [self] in
+            await PhpEnv.detectPhpVersions()
             await self.handler.refreshPhpVersions(loadOutdated: false)
             await self.handler.refreshPhpVersions(loadOutdated: true)
             self.status.busy = false
@@ -126,6 +127,7 @@ struct PhpFormulaeView: View {
                         } else {
                             Button("Install") {
                                 // handle install action here
+                                Task { await self.install(formula) }
                             }
                         }
                         if formula.hasUpgrade {
@@ -142,6 +144,21 @@ struct PhpFormulaeView: View {
                 }
             }
         }.frame(width: 600, height: 600)
+    }
+
+    public func install(_ formula: BrewFormula) async {
+        let command = InstallPhpVersionCommand(formula: formula.name)
+        try! await command.execute { progress in
+            Task { @MainActor in
+                self.status.title = progress.title
+                self.status.description = progress.description
+                self.status.busy = progress.value != 1
+
+                if progress.value == 1 {
+                    await self.handler.refreshPhpVersions(loadOutdated: false)
+                }
+            }
+        }
     }
 }
 

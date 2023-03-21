@@ -38,7 +38,7 @@ class Brew {
     }
 
     /// Each formula for each PHP version that can be installed.
-    public static var phpVersionFormulae = [
+    public static let phpVersionFormulae = [
         "8.2": "php@8.2",
         "8.1": "php@8.1",
         "8.0": "php@8.0",
@@ -49,58 +49,4 @@ class Brew {
         "7.0": "shivammathur/php/php@7.0",
         "5.6": "shivammathur/php/php@5.6"
     ]
-}
-
-protocol HandlesBrewFormulae {
-    func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula]
-    func refreshPhpVersions(loadOutdated: Bool) async
-}
-
-extension HandlesBrewFormulae {
-    public func refreshPhpVersions(loadOutdated: Bool) async {
-        let items = await loadPhpVersions(loadOutdated: loadOutdated)
-        Task { @MainActor in
-            Brew.shared.formulae.phpVersions = items
-        }
-    }
-}
-
-class BrewFormulaeHandler: HandlesBrewFormulae {
-    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
-        var outdated: [OutdatedFormula]?
-
-        if loadOutdated {
-            let command = """
-            \(Paths.brew) update >/dev/null && \
-            \(Paths.brew) outdated --json --formulae
-            """
-
-            let rawJsonText = await Shell.pipe(command).out
-                .data(using: .utf8)!
-            outdated = try? JSONDecoder().decode(
-                OutdatedFormulae.self,
-                from: rawJsonText
-            ).formulae.filter({ formula in
-                formula.name.starts(with: "php")
-            })
-        }
-
-        return Brew.phpVersionFormulae.map { (version, formula) in
-            let fullVersion = PhpEnv.shared.cachedPhpInstallations[version]?.versionNumber.text
-            var upgradeVersion: String?
-
-            if let version = fullVersion {
-                upgradeVersion = outdated?.first(where: { formula in
-                    return formula.installed_versions.contains(version)
-                })?.current_version
-            }
-
-            return BrewFormula(
-                name: formula,
-                displayName: "PHP \(version)",
-                installedVersion: fullVersion,
-                upgradeVersion: upgradeVersion
-            )
-        }.sorted { $0.displayName > $1.displayName }
-    }
 }
