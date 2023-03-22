@@ -148,32 +148,72 @@ struct PhpFormulaeView: View {
 
     public func install(_ formula: BrewFormula) async {
         let command = InstallPhpVersionCommand(formula: formula.name)
-        try! await command.execute { progress in
-            Task { @MainActor in
-                self.status.title = progress.title
-                self.status.description = progress.description
-                self.status.busy = progress.value != 1
 
-                if progress.value == 1 {
-                    await self.handler.refreshPhpVersions(loadOutdated: false)
+        do {
+            try await command.execute { progress in
+                Task { @MainActor in
+                    self.status.title = progress.title
+                    self.status.description = progress.description
+                    self.status.busy = progress.value != 1
+
+                    if progress.value == 1 {
+                        await self.handler.refreshPhpVersions(loadOutdated: false)
+                    }
                 }
             }
+        } catch {
+            Task { @MainActor in
+                self.status.busy = false
+            }
+            self.presentErrorAlert(
+                title: "phpman.failures.install.title".localized,
+                description: "phpman.failures.install.desc".localized(
+                    "brew install \(formula)"
+                ),
+                button: "generic.ok"
+            )
         }
     }
 
     public func uninstall(_ formula: BrewFormula) async {
         let command = RemovePhpVersionCommand(formula: formula.name)
-        try! await command.execute { progress in
-            Task { @MainActor in
-                self.status.title = progress.title
-                self.status.description = progress.description
-                self.status.busy = progress.value != 1
 
-                if progress.value == 1 {
-                    await self.handler.refreshPhpVersions(loadOutdated: false)
+        do {
+            try await command.execute { progress in
+                Task { @MainActor in
+                    self.status.title = progress.title
+                    self.status.description = progress.description
+                    self.status.busy = progress.value != 1
+
+                    if progress.value == 1 {
+                        await self.handler.refreshPhpVersions(loadOutdated: false)
+                    }
                 }
             }
+        } catch {
+            Task { @MainActor in
+                self.status.busy = false
+            }
+            self.presentErrorAlert(
+                title: "phpman.failures.uninstall.title".localized,
+                description: "phpman.failures.uninstall.desc".localized(
+                    "brew uninstall \(formula) --force"
+                ),
+                button: "generic.ok"
+            )
         }
+    }
+
+    public func presentErrorAlert(title: String, description: String, button: String) {
+        Alert.confirm(
+            onWindow: App.shared.versionManagerWindowController!.window!,
+            messageText: title,
+            informativeText: description,
+            buttonTitle: button,
+            secondButtonTitle: "",
+            style: .critical,
+            onFirstButtonPressed: {}
+        )
     }
 }
 

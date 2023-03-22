@@ -33,6 +33,7 @@ class InstallPhpVersionCommand: BrewCommand {
         }
 
         let command = """
+            sdfdsfsjhfs &&
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) install \(formula) --force

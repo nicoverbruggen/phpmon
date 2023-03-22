@@ -96,6 +96,12 @@
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press this button to check (again) if any updates are available to installed PHP versions. When you first open this window, PHP Monitor already does this check.";
 
+"phpman.failures.install.title" = "Install failed!";
+"phpman.failures.install.desc" = "Unfortunately, the automatic installation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
+
+"phpman.failures.uninstall.title" = "Uninstall failed!";
+"phpman.failures.uninstall.desc" = "Unfortunately, the automatic uninstallation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
+
 // GENERIC
 
 "generic.ok" = "OK";

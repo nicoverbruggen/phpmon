@@ -37,6 +37,7 @@ class Updater: NSObject, NSApplicationDelegate {
 
         // Terminate all instances of PHP Monitor first
         await LaunchControl.terminateApplications(bundleIds: [
+            "com.nicoverbruggen.phpmon.eap",
             "com.nicoverbruggen.phpmon.dev",
             "com.nicoverbruggen.phpmon"
         ])
