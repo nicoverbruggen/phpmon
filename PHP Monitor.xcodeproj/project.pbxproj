@@ -744,6 +744,7 @@
 		C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
 		C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
 		C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
+		C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */; };
 		C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EB53E428551F9B006F9937 /* HeaderView.swift */; };
 		C4EB53E728553117006F9937 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EB53E628553117006F9937 /* ArrayExtension.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
@@ -1048,6 +1049,7 @@
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
 		C4EB53E428551F9B006F9937 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4EB53E628553117006F9937 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		C4EC1E72279DFCF40010F296 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
@@ -1207,6 +1209,7 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
+				C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A601298AD50D00B5B85A /* Updater.swift */,
 				C4C75F5B298C31C000DFD82E /* Utility.swift */,
@@ -2136,6 +2139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */,
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
