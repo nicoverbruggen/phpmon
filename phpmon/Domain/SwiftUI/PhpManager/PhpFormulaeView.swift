@@ -150,6 +150,7 @@ struct PhpFormulaeView: View {
         let command = InstallPhpVersionCommand(formula: formula.name)
 
         do {
+            PhpEnv.shared.isBusy = true
             try await command.execute { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
@@ -157,11 +158,13 @@ struct PhpFormulaeView: View {
                     self.status.busy = progress.value != 1
 
                     if progress.value == 1 {
+                        PhpEnv.shared.isBusy = false
                         await self.handler.refreshPhpVersions(loadOutdated: false)
                     }
                 }
             }
         } catch {
+            PhpEnv.shared.isBusy = false
             Task { @MainActor in
                 self.status.busy = false
             }
@@ -179,6 +182,7 @@ struct PhpFormulaeView: View {
         let command = RemovePhpVersionCommand(formula: formula.name)
 
         do {
+            PhpEnv.shared.isBusy = true
             try await command.execute { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
@@ -187,10 +191,12 @@ struct PhpFormulaeView: View {
 
                     if progress.value == 1 {
                         await self.handler.refreshPhpVersions(loadOutdated: false)
+                        PhpEnv.shared.isBusy = false
                     }
                 }
             }
         } catch {
+            PhpEnv.shared.isBusy = false
             Task { @MainActor in
                 self.status.busy = false
             }
