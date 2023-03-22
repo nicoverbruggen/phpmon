@@ -150,7 +150,7 @@ struct PhpFormulaeView: View {
         let command = InstallPhpVersionCommand(formula: formula.name)
 
         do {
-            PhpEnv.shared.isBusy = true
+            self.setBusyStatus(true)
             try await command.execute { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
@@ -158,16 +158,13 @@ struct PhpFormulaeView: View {
                     self.status.busy = progress.value != 1
 
                     if progress.value == 1 {
-                        PhpEnv.shared.isBusy = false
+                        self.setBusyStatus(false)
                         await self.handler.refreshPhpVersions(loadOutdated: false)
                     }
                 }
             }
         } catch {
-            PhpEnv.shared.isBusy = false
-            Task { @MainActor in
-                self.status.busy = false
-            }
+            self.setBusyStatus(false)
             self.presentErrorAlert(
                 title: "phpman.failures.install.title".localized,
                 description: "phpman.failures.install.desc".localized(
@@ -182,7 +179,7 @@ struct PhpFormulaeView: View {
         let command = RemovePhpVersionCommand(formula: formula.name)
 
         do {
-            PhpEnv.shared.isBusy = true
+            self.setBusyStatus(true)
             try await command.execute { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
@@ -191,15 +188,12 @@ struct PhpFormulaeView: View {
 
                     if progress.value == 1 {
                         await self.handler.refreshPhpVersions(loadOutdated: false)
-                        PhpEnv.shared.isBusy = false
+                        self.setBusyStatus(false)
                     }
                 }
             }
         } catch {
-            PhpEnv.shared.isBusy = false
-            Task { @MainActor in
-                self.status.busy = false
-            }
+            self.setBusyStatus(false)
             self.presentErrorAlert(
                 title: "phpman.failures.uninstall.title".localized,
                 description: "phpman.failures.uninstall.desc".localized(
@@ -207,6 +201,22 @@ struct PhpFormulaeView: View {
                 ),
                 button: "generic.ok"
             )
+        }
+    }
+
+    public func setBusyStatus(_ busy: Bool) {
+        PhpEnv.shared.isBusy = busy
+        if busy {
+            Task { @MainActor in
+                MainMenu.shared.setBusyImage()
+                MainMenu.shared.rebuild()
+                self.status.busy = busy
+            }
+        } else {
+            Task { @MainActor in
+                MainMenu.shared.updatePhpVersionInStatusBar()
+                self.status.busy = busy
+            }
         }
     }
 

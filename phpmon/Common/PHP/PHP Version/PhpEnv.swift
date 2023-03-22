@@ -40,7 +40,14 @@ class PhpEnv {
     static let shared = PhpEnv()
 
     /** Whether the switcher is busy performing any actions. */
-    var isBusy: Bool = false
+    var isBusy: Bool = false {
+        didSet {
+            Task { @MainActor in
+                MainMenu.shared.setBusyImage()
+                MainMenu.shared.rebuild()
+            }
+        }
+    }
 
     /** All versions of PHP that are currently supported. */
     var availablePhpVersions: [String] = []
