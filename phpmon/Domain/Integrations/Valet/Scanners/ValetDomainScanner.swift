@@ -30,13 +30,17 @@ class ValetDomainScanner: DomainScanner {
         var sites: [ValetSite] = []
 
         paths.forEach { path in
-            let entries = try! FileSystem
-                .getShallowContentsOfDirectory(path)
+            do {
+                let entries = try FileSystem
+                    .getShallowContentsOfDirectory(path)
 
-            return entries.forEach {
-                if let site = self.resolveSite(path: "\(path)/\($0)") {
-                    sites.append(site)
+                return entries.forEach {
+                    if let site = self.resolveSite(path: "\(path)/\($0)") {
+                        sites.append(site)
+                    }
                 }
+            } catch {
+                Log.err("Unexpected error getting contents of \(path): \(error).")
             }
         }
 
