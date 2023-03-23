@@ -105,7 +105,7 @@ class Stats {
             return Log.info("A fake shell is in use, skipping sponsor alert.")
         }
 
-        if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
+        if App.identifier.contains(".dev") || App.identifier.contains(".eap") {
             return Log.info("Sponsor messages never apply to beta builds.")
         }
 
