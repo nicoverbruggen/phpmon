@@ -313,9 +313,9 @@ extension BrewFormula {
 
     var iconColor: Color {
         if self.hasUpgrade {
-            return .blue
+            return Color("StatusColorBlue")
         } else if self.isInstalled {
-            return .green
+            return Color("StatusColorGreen")
         }
         return Color.gray.opacity(0.3)
     }
