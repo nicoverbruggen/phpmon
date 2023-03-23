@@ -3769,7 +3769,7 @@
 		C4E9D8F029CB9A6400BD28D4 /* Debug.EA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconEAP;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AppColor;
 				CODE_SIGN_ENTITLEMENTS = phpmon/phpmon.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -3941,7 +3941,7 @@
 		C4E9D8F629CB9A7200BD28D4 /* Release.EA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconEAP;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AppColor;
 				CODE_SIGN_ENTITLEMENTS = phpmon/phpmon.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
