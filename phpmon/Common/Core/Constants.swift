@@ -83,7 +83,7 @@ struct Constants {
         )!
 
         static let EarlyAccessCaskFile = URL(
-            string: "https://phpmon.app/releases/early-access/sponsors/phpmon-eap.rb"
+            string: "https://phpmon.app/builds/early-access/sponsors/phpmon-eap.rb"
         )!
 
     }
