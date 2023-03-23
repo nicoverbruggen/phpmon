@@ -14,14 +14,18 @@ class ValetDomainScanner: DomainScanner {
 
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
+            do {
+                let entries = try FileSystem
+                    .getShallowContentsOfDirectory(path)
 
-            let entries = try! FileSystem
-                .getShallowContentsOfDirectory(path)
-
-            return entries
-                .map { self.isSite($0, forPath: path) }
-                .filter { $0 == true}
-                .count
+                return entries
+                    .map { self.isSite($0, forPath: path) }
+                    .filter { $0 == true}
+                    .count
+            } catch {
+                Log.err("Unexpected error getting contents of \(path): \(error).")
+                return 0
+            }
 
         }.reduce(0, +)
     }
