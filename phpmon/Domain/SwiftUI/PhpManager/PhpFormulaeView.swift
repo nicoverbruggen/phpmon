@@ -170,12 +170,22 @@ struct PhpFormulaeView: View {
                 description: "phpman.failures.install.desc".localized(
                     "brew install \(formula)"
                 ),
-                button: "generic.ok"
+                button: "generic.ok".localized
             )
         }
     }
 
     public func uninstall(_ formula: BrewFormula) async {
+        // Disallow removal of the currently active versipn
+        if formula.installedVersion == PhpEnv.shared.currentInstall?.version.text {
+            self.presentErrorAlert(
+                title: "phpman.uninstall_prevented.title".localized,
+                description: "phpman.uninstall_prevented.desc".localized,
+                button: "generic.ok".localized
+            )
+            return
+        }
+
         let command = RemovePhpVersionCommand(formula: formula.name)
 
         do {
@@ -199,7 +209,7 @@ struct PhpFormulaeView: View {
                 description: "phpman.failures.uninstall.desc".localized(
                     "brew uninstall \(formula) --force"
                 ),
-                button: "generic.ok"
+                button: "generic.ok".localized
             )
         }
     }

@@ -99,6 +99,9 @@
 "phpman.failures.install.title" = "Install failed!";
 "phpman.failures.install.desc" = "Unfortunately, the automatic installation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
 
+"phpman.uninstall_prevented.title" = "You cannot uninstall the currently active version of PHP via PHP Monitor.";
+"phpman.uninstall_prevented.desc" = "In order to prevent issues with PHP Monitor and further crashes, it isn't possible to uninstall the currently linked version of PHP via this UI. You can switch versions and try again, or uninstall this version manually via the terminal.\n\nPlease note that PHP Monitor may crash if you uninstall the currently linked PHP version.";
+
 "phpman.failures.uninstall.title" = "Uninstall failed!";
 "phpman.failures.uninstall.desc" = "Unfortunately, the automatic uninstallation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
 
