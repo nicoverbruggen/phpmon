@@ -3304,6 +3304,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3333,6 +3334,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3560,6 +3562,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3670,6 +3673,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3678,7 +3682,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME) DEV";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -3780,6 +3784,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3788,7 +3793,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME) EAP";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -3952,6 +3957,7 @@
 				DEVELOPMENT_TEAM = 8M54J5J787;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = phpmon/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3960,7 +3966,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
 				MARKETING_VERSION = 6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
-				PRODUCT_NAME = "$(TARGET_NAME) DEV";
+				PRODUCT_NAME = "$(TARGET_NAME) EAP";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};

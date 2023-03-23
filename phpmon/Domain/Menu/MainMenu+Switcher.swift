@@ -120,11 +120,18 @@ extension MainMenu {
             preference: .notifyAboutVersionChange
         )
 
-        guard let install = PhpEnv.phpInstall else {
+        guard PhpEnv.phpInstall != nil else {
             Log.err("Cannot notify about version change if PHP is unlinked")
             return
         }
 
-        Task { await Valet.shared.notifyAboutBrokenPhpFpm() }
+        guard Valet.installed == true else {
+            Log.info("Skipping check for broken PHP-FPM version, Valet is not installed")
+            return
+        }
+
+        Task {
+            await Valet.shared.notifyAboutBrokenPhpFpm()
+        }
     }
 }
