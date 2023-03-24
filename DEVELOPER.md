@@ -28,15 +28,21 @@ defaults delete com.nicoverbruggen.phpmon && killall cfprefsd
 
 <img src="./docs/build.png" width="404px" alt="build button in Xcode"/>
 
+### PHP Monitor
+
 If you'd like to build PHP Monitor yourself, you need:
 
 * Xcode (usually the latest version)
-* *PHP Monitor Self-Updater.app* in the `phpmon-updater` directory. You can build it yourself, it is included as a target) or copy the signed app so it is included w/ PHP Monitor
+* *PHP Monitor Self-Updater.app* in the `phpmon-updater` directory (You can build it yourself, it is included as a target OR copy the signed app so it is included w/ PHP Monitor)
 * The contents of this repository
 
 Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you should be able to build the app for your system by pressing Cmd-R. This will create a debug build. (If Xcode complains about code signing, you can turn it off.)
 
 If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
+
+### PHP Monitor Updater
+
+Select the separate target and build. You can then copy the product to the `phpmon-updater` directory. The binary will be re-signed when distributing the main build.
 
 ## 🚀 Release procedure
 
