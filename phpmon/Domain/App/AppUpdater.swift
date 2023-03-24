@@ -26,7 +26,7 @@ class AppUpdater {
 
         var caskUrl = Constants.Urls.StableBuildCaskFile
 
-        if App.identifier.contains("phpmon.eap") {
+        if App.identifier.contains(".phpmon.eap") {
             caskUrl = Constants.Urls.EarlyAccessCaskFile
         } else if App.identifier.contains(".phpmon.dev") {
             caskUrl = Constants.Urls.DevBuildCaskFile
@@ -72,7 +72,7 @@ class AppUpdater {
             : "brew upgrade phpmon"
 
         Task { @MainActor in
-            BetterAlert().withInformation(
+            var alert = BetterAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title"
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
@@ -89,17 +89,21 @@ class AppUpdater {
                     vc.close(with: .OK)
                 }
             )
-            .withSecondary(
-                text: "updater.alerts.buttons.release_notes".localized,
-                action: { _ in
-                    let urlSegments = self.caskFile.url.split(separator: "/")
-                    let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
-                    NSWorkspace.shared.open(
-                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
-                    )
-                }
-            )
-            .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
+
+            if !App.identifier.contains(".phpmon.eap") {
+                alert = alert.withSecondary(
+                    text: "updater.alerts.buttons.release_notes".localized,
+                    action: { _ in
+                        let urlSegments = self.caskFile.url.split(separator: "/")
+                        let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
+                        NSWorkspace.shared.open(
+                            Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
+                        )
+                    }
+                )
+            }
+
+            alert.withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
                 vc.close(with: .OK)
             })
             .show()

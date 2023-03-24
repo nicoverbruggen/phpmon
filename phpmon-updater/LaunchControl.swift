@@ -24,14 +24,8 @@ class LaunchControl {
     public static func terminateApplications(bundleIds: [String]) async {
         let runningApplications = NSWorkspace.shared.runningApplications
 
-        // Look for these instances
-        let ids = [
-            "com.nicoverbruggen.phpmon.dev",
-            "com.nicoverbruggen.phpmon"
-        ]
-
         // Terminate all instances found
-        for id in ids {
+        for id in bundleIds {
             if let phpmon = runningApplications.first(where: {
                 (application) in return application.bundleIdentifier == id
             }) {
