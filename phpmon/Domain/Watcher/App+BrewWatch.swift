@@ -26,13 +26,13 @@ extension App {
     }
 
     public func onHomebrewPhpModification() async {
-        #warning("This functionality working means that switcher code needs to change")
         let previous = PhpEnv.shared.currentInstall?.version.text
         Log.info("Something changed in the Homebrew binary directory...")
         await PhpEnv.detectPhpVersions()
         await MainMenu.shared.refreshActiveInstallation()
         let new = PhpEnv.shared.currentInstall?.version.text
         if previous != new {
+            #warning("Notifications should be opt-in and are currently disabled")
             Log.info("The PHP version has changed, new version is now: \(new ?? "unlinked")")
             /*
              // These notifications will cause duplicate notifications if using the switcher
