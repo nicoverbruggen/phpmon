@@ -72,7 +72,7 @@ class AppUpdater {
             : "brew upgrade phpmon"
 
         Task { @MainActor in
-            var alert = BetterAlert().withInformation(
+            BetterAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title"
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
@@ -89,21 +89,21 @@ class AppUpdater {
                     vc.close(with: .OK)
                 }
             )
-
-            if !App.identifier.contains(".phpmon.eap") {
-                alert = alert.withSecondary(
-                    text: "updater.alerts.buttons.release_notes".localized,
-                    action: { _ in
-                        let urlSegments = self.caskFile.url.split(separator: "/")
-                        let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
-                        NSWorkspace.shared.open(
-                            Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
-                        )
-                    }
-                )
-            }
-
-            alert.withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
+            .withSecondary(
+                text: "updater.alerts.buttons.release_notes".localized,
+                action: { _ in
+                    NSWorkspace.shared.open({
+                        if App.identifier.contains(".eap") {
+                            return Constants.Urls.EarlyAccessChangelog
+                        } else {
+                            let urlSegments = self.caskFile.url.split(separator: "/")
+                            let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
+                            return Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
+                        }
+                    }())
+                }
+            )
+            .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
                 vc.close(with: .OK)
             })
             .show()

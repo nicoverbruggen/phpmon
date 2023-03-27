@@ -86,6 +86,10 @@ struct Constants {
             string: "https://phpmon.app/builds/early-access/sponsors/phpmon-eap.rb"
         )!
 
+        static let EarlyAccessChangelog = URL(
+            string: "https://phpmon.app/early-access/release-notes"
+        )!
+
     }
 
 }
