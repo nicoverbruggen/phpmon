@@ -16,10 +16,9 @@ extension StatusMenu {
         if PhpEnv.phpInstall == nil {
             addItem(HeaderView.asMenuItem(text: "⚠️ " + "mi_no_php_linked".localized, minimumWidth: 280))
             addItems([
-                // TODO: Make sure these buttons do something
                 NSMenuItem.separator(),
                 NSMenuItem(title: "mi_fix_php_link".localized, action: #selector(MainMenu.linkPhpBinary)),
-                NSMenuItem(title: "mi_no_php_linked_explain".localized)
+                NSMenuItem(title: "mi_no_php_linked_explain".localized, action: #selector(MainMenu.displayUnlinkedInfo))
             ])
             return
         }

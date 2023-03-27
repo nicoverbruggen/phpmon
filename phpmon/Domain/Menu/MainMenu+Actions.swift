@@ -18,6 +18,19 @@ extension MainMenu {
         }
     }
 
+    @MainActor @objc func displayUnlinkedInfo() {
+        Task { @MainActor in
+            BetterAlert()
+                .withInformation(
+                    title: "phpman.unlinked.title".localized,
+                    subtitle: "phpman.unlinked.desc".localized,
+                    description: "phpman.unlinked.detail".localized
+                )
+                .withPrimary(text: "generic.ok".localized)
+                .show()
+        }
+    }
+
     @MainActor @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(

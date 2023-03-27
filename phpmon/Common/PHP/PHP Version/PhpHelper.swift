@@ -50,16 +50,7 @@ class PhpHelper {
                     .resolvingSymlinksInPath().path
 
                 // The contents of the script!
-                let script = """
-                    #!/bin/zsh
-                    # \(keyPhrase)
-                    # It reflects the location of PHP \(version)'s binaries on your system.
-                    # Usage: . pm\(dotless)
-                    [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
-                        && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
-                        || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
-                    export PATH=\(path):$PATH
-                    """
+                let script = script(path, keyPhrase, version, dotless)
 
                 Task { @MainActor in
                     try FileSystem.writeAtomicallyToFile(destination, content: script)
@@ -85,6 +76,24 @@ class PhpHelper {
                 Log.err("Could not write PHP Monitor helper for PHP \(version) to \(destination))")
             }
         }
+    }
+
+    private static func script(
+        _ path: String,
+        _ keyPhrase: String,
+        _ version: String,
+        _ dotless: String
+    ) -> String {
+        return """
+            #!/bin/zsh
+            # \(keyPhrase)
+            # It reflects the location of PHP \(version)'s binaries on your system.
+            # Usage: . pm\(dotless)
+            [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
+                && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
+                || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
+            export PATH=\(path):$PATH
+            """
     }
 
     private static func createSymlink(_ dotless: String) async {
