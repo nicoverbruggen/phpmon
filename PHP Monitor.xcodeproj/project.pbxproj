@@ -511,6 +511,10 @@
 		C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
 		C47699F128A2F3150060FEB8 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699F028A2F3150060FEB8 /* Warning.swift */; };
 		C476FF9822B0DD830098105B /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476FF9722B0DD830098105B /* Alert.swift */; };
+		C4777E0C29D71AFB007F0C67 /* UpgradePhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */; };
+		C4777E0D29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */; };
+		C4777E0E29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */; };
+		C4777E0F29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */; };
 		C47DF1AF299D5A3B0007055D /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */; };
 		C47DF1B0299D5A3B0007055D /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */; };
 		C47DF1B1299D5A3B0007055D /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */; };
@@ -956,6 +960,7 @@
 		C47699EE28A2F2A30060FEB8 /* WarningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManager.swift; sourceTree = "<group>"; };
 		C47699F028A2F3150060FEB8 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
 		C476FF9722B0DD830098105B /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradePhpVersionCommand.swift; sourceTree = "<group>"; };
 		C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -1744,6 +1749,7 @@
 				C4B79EBB29CA38DB00A483EE /* BrewCommand.swift */,
 				C4B79EC529CA474200A483EE /* FakeCommand.swift */,
 				C4B79EC029CA473000A483EE /* InstallPhpVersionCommand.swift */,
+				C4777E0A29D71AF0007F0C67 /* UpgradePhpVersionCommand.swift */,
 				C4B79ECA29CA475900A483EE /* RemovePhpVersionCommand.swift */,
 			);
 			path = Commands;
@@ -2263,6 +2269,7 @@
 				C43931CA29C4C03F0069165B /* Brew.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
 				C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */,
+				C4777E0C29D71AFB007F0C67 /* UpgradePhpVersionCommand.swift in Sources */,
 				C4998F0A2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
 				C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */,
@@ -2510,6 +2517,7 @@
 				C471E86828F9BB650021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E86928F9BB650021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
 				C48DDD0F29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
+				C4777E0E29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */,
 				C4AFC4B029C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C471E86A28F9BB650021E251 /* PrefsVC.swift in Sources */,
 				C471E86B28F9BB650021E251 /* PreferenceName.swift in Sources */,
@@ -2744,6 +2752,7 @@
 				C471E80E28F9BAE80021E251 /* DateExtension.swift in Sources */,
 				C490E3BA29BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
 				C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */,
+				C4777E0F29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */,
 				C471E81228F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7DF28F9BAAB0021E251 /* RealCommand.swift in Sources */,
 				C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
@@ -2974,6 +2983,7 @@
 				C4927F0C27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C485707628BF455100539B36 /* SectionHeaderView.swift in Sources */,
 				C46EBC4828DB9644007ACC74 /* RealShell.swift in Sources */,
+				C4777E0D29D71AFD007F0C67 /* UpgradePhpVersionCommand.swift in Sources */,
 				C48DDD0E29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C44CCD4A27AFF3BC00CE40E5 /* MainMenu+Async.swift in Sources */,
