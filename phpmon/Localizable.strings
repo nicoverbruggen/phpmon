@@ -90,13 +90,32 @@
 
 // PHPMAN
 
+"phpman.busy.title" = "Checking for updates!";
+"phpman.busy.description.outdated" = "Checking if any PHP version is outdated...";
+
+"phpman.version.available_for_installation" = "This version can be installed";
+"phpman.buttons.uninstall" = "Uninstall";
+"phpman.buttons.install" = "Install";
+"phpman.buttons.update" = "Update";
+
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** lets you install different PHP versions via Homebrew.";
-"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well, but only if Homebrew would otherwise have broken those other packages via a shared dependency. (More in the FAQ!)";
+"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. For more information, please consult the FAQ.";
 "phpman.refresh.button" = "Search for Updates";
-"phpman.refresh.button.description" = "You can press this button to check (again) if any updates are available to installed PHP versions. When you first open this window, PHP Monitor already does this check.";
+"phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 
-"phpman.failures.install.title" = "Install failed!";
+"phpman.warnings.unsupported.title" = "Your version of Homebrew may cause issues";
+"phpman.warnings.unsupported.desc" = "No functionality is disabled, but some commands may not work as expected. You are currently running Homebrew %@.
+
+Currently, Homebrew 4 is the only supported version for the PHP Version Manager. If you are running a newer version of Homebrew, you may wish to check if a newer version of PHP Monitor is available.";
+
+"phpman.warnings.removal.title" = "Are you sure you want to uninstall %@?";
+"phpman.warnings.removal.desc" = "Please note that configuration files will not be removed, so it should be easy to reinstall later if needed.
+
+You may be asked for your password during the uninstallation process if file permissions don't allow a simple removal.";
+"phpman.warnings.removal.button" = "Uninstall";
+
+"phpman.failures.install.title" = "Installation failed!";
 "phpman.failures.install.desc" = "Unfortunately, the automatic installation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
 
 "phpman.uninstall_prevented.title" = "You cannot uninstall the currently active version of PHP via PHP Monitor.";

@@ -14,6 +14,7 @@ class Alert {
         messageText: String,
         informativeText: String,
         buttonTitle: String = "generic.ok".localized,
+        buttonIsDestructive: Bool = false,
         secondButtonTitle: String = "generic.cancel".localized,
         style: NSAlert.Style = .warning,
         onFirstButtonPressed: @escaping (() -> Void)
@@ -27,6 +28,7 @@ class Alert {
         alert.messageText = messageText
         alert.informativeText = informativeText
         alert.addButton(withTitle: buttonTitle)
+        alert.buttons.first?.hasDestructiveAction = buttonIsDestructive
         if !secondButtonTitle.isEmpty {
             alert.addButton(withTitle: secondButtonTitle)
         }

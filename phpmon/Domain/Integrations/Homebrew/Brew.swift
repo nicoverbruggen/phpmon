@@ -30,7 +30,7 @@ class Brew {
             Log.info("The user has Homebrew \(version.text) installed.")
 
             if version.major < 4 {
-                Log.warn("Managing PHP versions is only supported with Homebrew 4 or newer!")
+                Log.warn("Managing PHP versions is only officially supported with Homebrew 4 or newer!")
             }
         } else {
             Log.warn("The Homebrew version could not be determined.")

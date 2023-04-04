@@ -35,11 +35,28 @@ struct PhpFormulaeView: View {
 
         self.status = PhpFormulaeStatus(
             busy: true,
-            title: "Checking for updates!",
-            description: "Checking if any PHP version is outdated..."
+            title: "phpman.busy.title".localized,
+            description: "phpman.busy.description.outdated".localized
         )
 
         Task { [self] in
+            guard let version = Brew.shared.version else {
+                return
+            }
+
+            await delay(seconds: 1)
+
+            if version.major != 4 {
+                Task { @MainActor in
+                    self.presentErrorAlert(
+                        title: "phpman.warnings.unsupported.title".localized,
+                        description: "phpman.warnings.unsupported.desc".localized(version.text),
+                        button: "generic.ok".localized,
+                        style: .warning
+                    )
+                }
+            }
+
             await PhpEnv.detectPhpVersions()
             await self.handler.refreshPhpVersions(loadOutdated: false)
             await self.handler.refreshPhpVersions(loadOutdated: true)
@@ -74,8 +91,8 @@ struct PhpFormulaeView: View {
                     Task { // Reload warnings
                         Task { @MainActor in
                             self.status.busy = true
-                            self.status.title = "Checking for updates!"
-                            self.status.description = "Checking if any PHP version is outdated..."
+                            self.status.title = "phpman.busy.title".localized
+                            self.status.description = "phpman.busy.description.outdated".localized
                         }
                         await self.handler.refreshPhpVersions(loadOutdated: true)
                         Task { @MainActor in
@@ -88,6 +105,7 @@ struct PhpFormulaeView: View {
                         .controlSize(.large)
                 }
                 .focusable(false)
+                .disabled(self.status.busy)
 
                 Text("phpman.refresh.button.description".localizedForSwiftUI)
                     .foregroundColor(.gray)
@@ -112,26 +130,26 @@ struct PhpFormulaeView: View {
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
                             } else if formula.isInstalled && formula.installedVersion != nil {
-                                Text("Latest version is currently installed.").font(.system(size: 11))
+                                Text("\(formula.installedVersion!) is currently installed.").font(.system(size: 11))
                                     .foregroundColor(.gray)
                             } else {
-                                Text("This version can be installed.")
+                                Text("phpman.version.available_for_installation".localizedForSwiftUI)
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         if formula.isInstalled {
-                            Button("Uninstall") {
-                                Task { await self.uninstall(formula) }
+                            Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
+                                Task { await self.confirmUninstall(formula) }
                             }
                         } else {
-                            Button("Install") {
+                            Button("phpman.buttons.install".localizedForSwiftUI) {
                                 Task { await self.install(formula) }
                             }
                         }
                         if formula.hasUpgrade {
-                            Button("Update") {
+                            Button("phpman.buttons.update".localizedForSwiftUI) {
                                 Task { await self.install(formula) }
                             }
                         }
@@ -175,7 +193,7 @@ struct PhpFormulaeView: View {
         }
     }
 
-    public func uninstall(_ formula: BrewFormula) async {
+    public func confirmUninstall(_ formula: BrewFormula) async {
         // Disallow removal of the currently active versipn
         if formula.installedVersion == PhpEnv.shared.currentInstall?.version.text {
             self.presentErrorAlert(
@@ -186,6 +204,21 @@ struct PhpFormulaeView: View {
             return
         }
 
+        Alert.confirm(
+            onWindow: App.shared.versionManagerWindowController!.window!,
+            messageText: "phpman.warnings.removal.title".localized(formula.displayName),
+            informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
+            buttonTitle: "phpman.warnings.removal.button".localized,
+            buttonIsDestructive: true,
+            secondButtonTitle: "generic.cancel".localized,
+            style: .warning,
+            onFirstButtonPressed: {
+                Task { await self.uninstall(formula) }
+            }
+        )
+    }
+
+    public func uninstall(_ formula: BrewFormula) async {
         let command = RemovePhpVersionCommand(formula: formula.name)
 
         do {
@@ -230,14 +263,19 @@ struct PhpFormulaeView: View {
         }
     }
 
-    public func presentErrorAlert(title: String, description: String, button: String) {
+    public func presentErrorAlert(
+        title: String,
+        description: String,
+        button: String,
+        style: NSAlert.Style = .critical
+    ) {
         Alert.confirm(
             onWindow: App.shared.versionManagerWindowController!.window!,
             messageText: title,
             informativeText: description,
             buttonTitle: button,
             secondButtonTitle: "",
-            style: .critical,
+            style: style,
             onFirstButtonPressed: {}
         )
     }
