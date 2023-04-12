@@ -1,0 +1,31 @@
+name: 😎 Feature request
+description: Do you have a great idea for an enhancement that could improve PHP Monitor?
+title: "[Feature] <title>"
+labels: [enhancement]
+assignees: nicoverbruggen
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered. Please make sure you've checked the discussions tab as well. Enhancement requests that are not immediately approved will be moved to a discussion instead, so you will find some there.
+    options:
+    - label: I have searched the existing issues and discussions
+      required: true
+- type: textarea
+  attributes:
+    label: Is this feature request related to a problem?
+    description: "A clear and concise description of what the problem is. For example: 'I am always frustrated when...'"
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Describe the solution you'd like to see
+    description: What would be a user-friendly way of resolving this particular issue?
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional information or context
+    description: Add any other context or screenshots about the feature request here.
+  validations:
+    required: false
