@@ -1,0 +1,62 @@
+name: 🐞 Bug report
+description: Something going wrong? File a bug report!
+title: "[Bug] <title>"
+labels: [bug]
+assignees: nicoverbruggen
+body:
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered.
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: textarea
+  attributes:
+    label: Current Behavior
+    description: A concise description of what you're experiencing.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: A concise description of what you expected to happen.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Steps To Reproduce
+    description: Steps to reproduce the behavior.
+    placeholder: |
+      1. Open this menu...
+      2. Click here...
+      3. Scroll to...
+      4. See error...
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Environment
+    description: |
+      examples:
+        - **macOS**: (e.g. Ventura 13.3)
+        - **Valet**: (e.g. 4.0)
+        - **PHP Monitor**: (e.g. 5.8)
+    value: |
+        - macOS:
+        - Valet:
+        - PHP Monitor:
+    render: markdown
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Do you have a log file (or a screenshot) or any additional information?
+    description: |
+      You can start extra verbose logging by running: `touch ~/.config/phpmon/verbose` and restarting PHP Monitor. 
+
+      You can find the latest log in: `~/.config/phpmon/last_session.log`. Please attach it here!
+
+      (You can attach images or log files by clicking this area to highlight it and then dragging files in.)
+  validations:
+    required: false
