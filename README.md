@@ -105,7 +105,6 @@ All stable and supported PHP versions are also supported by PHP Monitor. However
 Backports that are installable via PHP Monitor's **PHP Manager** functionality are subject to availability via [this tap](https://github.com/shivammathur/homebrew-php).
 
 For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
-
 </details>
 
 <details>
@@ -113,7 +112,13 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 
 Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
 
-You can install other supported versions of PHP via PHP Monitor's **PHP Manager**. You can manually install or upgrade PHP versions too, but this is not recommended.
+You can install other supported versions of PHP via PHP Monitor's **PHP Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
+
+Please keep in mind that installing or updating PHP versions, even when done via PHP Monitor's **PHP Manager**, may cause other required formula dependencies (required software needed to keep those PHP versions functional) to be upgraded. It might not be very transparent when this happens, but this is likely the cause if installing a PHP version takes longer than expected: usually other dependencies are also being installed.
+
+Additionally, upgrading one specific version of PHP may also cause other installed versions of PHP to *also* be updated in one go, if the dependencies for that one version also apply to the other (newer) version(s) of PHP. It's a bit tricky to manage PHP versions via Homebrew, and even PHP Monitor may encounter some difficulties. 
+
+If you encounter a strange scenario or a malfunction, please open an issue on the issue tracker and get in touch. I'd like to keep enhancing this process to make it as foolproof as possible.
 
 > *Note*: Using PHP Monitor when managing PHP versions may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
 </details>
