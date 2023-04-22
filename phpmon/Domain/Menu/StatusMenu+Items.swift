@@ -101,6 +101,10 @@ extension StatusMenu {
         }
     }
 
+    func addLiteModeMenuItem() {
+        addItem(NSMenuItem(title: "mi_lite_mode".localized, action: #selector(MainMenu.openLiteModeInfo)))
+    }
+
     func addCoreMenuItems() {
         addItems([
             NSMenuItem.separator(),

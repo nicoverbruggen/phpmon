@@ -1,5 +1,5 @@
 //
-//  PrefsVC.swift
+//  PreferencesVC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
@@ -26,6 +26,14 @@ class GenericPreferenceVC: NSViewController {
 
     deinit {
         Log.perf("deinit: \(String(describing: self)).\(#function)")
+    }
+
+    func addView(when condition: Bool, _ view: NSView) -> GenericPreferenceVC {
+        if condition {
+            self.views.append(view)
+        }
+
+        return self
     }
 
     func getDynamicIconPV() -> NSView {
@@ -66,7 +74,7 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
-    func getAutoRestartPV() -> NSView {
+    func getAutoRestartServicesPV() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.services".localized,
             descriptionText: "prefs.auto_restart_services_desc".localized,
@@ -188,7 +196,7 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
-    func getWarnAboutNonStandardTLD() -> NSView {
+    func getWarnAboutNonStandardTldPV() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.warnings".localized,
             descriptionText: "prefs.warn_about_non_standard_tld_desc".localized,
@@ -198,7 +206,7 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
-    func getDisplayMenuSectionPV(
+    func displayFeature(
         _ localizationKey: String,
         _ preference: PreferenceName,
         _ first: Bool = false
@@ -223,90 +231,5 @@ class GenericPreferenceVC: NSViewController {
         if listeningForHotkeyView !== nil {
             listeningForHotkeyView = nil
         }
-    }
-}
-
-class GeneralPreferencesVC: GenericPreferenceVC {
-
-    // MARK: - Lifecycle
-
-    public static func fromStoryboard() -> GenericPreferenceVC {
-        let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
-
-        vc.views = [
-            vc.getShowPhpDoctorSuggestionsPV(),
-            vc.getAutoRestartPV(),
-            vc.getAutomaticComposerUpdatePV(),
-            vc.getShortcutPV(),
-            vc.getIntegrationsPV(),
-            vc.getAutomaticUpdateCheckPV()
-        ]
-
-        if #available(macOS 13, *) {
-            vc.views.append(CheckboxPreferenceView.makeLoginItemView())
-        }
-
-        return vc
-    }
-}
-
-class NotificationPreferencesVC: GenericPreferenceVC {
-
-    public static func fromStoryboard() -> GenericPreferenceVC {
-        let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
-
-        vc.views = [
-            vc.getNotifyAboutVersionChangePV(),
-            vc.getNotifyAboutPresetsPV(),
-            vc.getNotifyAboutSecureTogglePV(),
-            vc.getNotifyAboutGlobalComposerStatusPV(),
-            vc.getNotifyAboutServicesPV(),
-            vc.getNotifyAboutPhpFpmChangePV(),
-            vc.getWarnAboutNonStandardTLD()
-        ]
-
-        return vc
-    }
-
-}
-
-class MenuStructurePreferencesVC: GenericPreferenceVC {
-
-    public static func fromStoryboard() -> GenericPreferenceVC {
-        let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
-
-        vc.views = [
-            vc.getDisplayMenuSectionPV("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true),
-            vc.getDisplayMenuSectionPV("prefs.display_services_manager", .displayServicesManager),
-            vc.getDisplayMenuSectionPV("prefs.display_valet_integration", .displayValetIntegration),
-            vc.getDisplayMenuSectionPV("prefs.display_php_config_finder", .displayPhpConfigFinder),
-            vc.getDisplayMenuSectionPV("prefs.display_composer_toolkit", .displayComposerToolkit),
-            vc.getDisplayMenuSectionPV("prefs.display_limits_widget", .displayLimitsWidget),
-            vc.getDisplayMenuSectionPV("prefs.display_extensions", .displayExtensions),
-            vc.getDisplayMenuSectionPV("prefs.display_presets", .displayPresets),
-            vc.getDisplayMenuSectionPV("prefs.display_misc", .displayMisc)
-
-        ]
-
-        return vc
-    }
-}
-
-class AppearancePreferencesVC: GenericPreferenceVC {
-
-    public static func fromStoryboard() -> GenericPreferenceVC {
-        let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
-
-        vc.views = [
-            vc.getDynamicIconPV(),
-            vc.getIconOptionsPV(),
-            vc.getIconDensityPV()
-        ]
-
-        return vc
     }
 }

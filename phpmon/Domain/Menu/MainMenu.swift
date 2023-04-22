@@ -178,6 +178,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
 
+    @objc func openLiteModeInfo() {
+        Task { @MainActor in
+            BetterAlert().withInformation(
+                title: "lite_mode_explanation.title".localized,
+                subtitle: "lite_mode_explanation.subtitle".localized,
+                description: "lite_mode_explanation.description".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
+        }
+    }
+
     @objc func openPrefs() {
         PreferencesWindowController.show()
     }

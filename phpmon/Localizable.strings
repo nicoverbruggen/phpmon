@@ -71,6 +71,7 @@
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
 "mi_check_for_updates" = "Check for Updates...";
+"mi_lite_mode" = "About Standalone Mode...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
@@ -127,6 +128,12 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.unlinked.title" = "None of the versions of PHP installed on your system are currently linked.";
 "phpman.unlinked.desc" = "You likely still have some version of PHP that is currently installed, but currently no version of PHP is linked.";
 "phpman.unlinked.detail" = "Without any PHP version linked, the `php` binary is not accessible on your system and you cannot run any PHP scripts without explicitly being part of the PATH. You can have PHP Monitor automatically resolve this problem (choose Fix Automatically in the main menu), or fix it yourself by running `brew link php --force`.";
+
+// LITE MODE
+
+"lite_mode_explanation.title" = "You are currently running PHP Monitor in Standalone Mode.";
+"lite_mode_explanation.subtitle" = "PHP Monitor has additional features that are available for use if you happen to be a user of Laravel Valet. Right now, PHP Monitor could not detect an active installation of Valet on your system, so those features are unavailable.";
+"lite_mode_explanation.description" = "For more information, I'd recommend checking out the README (accessible on GitHub) which will explain what steps you need to take to install Valet and make PHP Monitor run correctly with it installed. You will need to restart PHP Monitor after installing Laravel Valet before it will leave Standalone Mode.";
 
 // GENERIC
 
