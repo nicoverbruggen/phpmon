@@ -65,6 +65,8 @@ class StatusMenu: NSMenu {
 
         addItem(NSMenuItem.separator())
 
+        addPreferencesMenuItems()
+
         if !Valet.installed {
             addLiteModeMenuItem()
         }

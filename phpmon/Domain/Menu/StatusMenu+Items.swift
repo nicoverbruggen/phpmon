@@ -102,16 +102,24 @@ extension StatusMenu {
     }
 
     func addLiteModeMenuItem() {
-        addItem(NSMenuItem(title: "mi_lite_mode".localized, action: #selector(MainMenu.openLiteModeInfo)))
+        addItems([
+            NSMenuItem.separator(),
+            NSMenuItem(title: "mi_lite_mode".localized, action: #selector(MainMenu.openLiteModeInfo))
+        ])
     }
 
-    func addCoreMenuItems() {
+    func addPreferencesMenuItems() {
         addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_preferences".localized,
                        action: #selector(MainMenu.openPrefs), keyEquivalent: ","),
             NSMenuItem(title: "mi_check_for_updates".localized,
-                       action: #selector(MainMenu.checkForUpdates)),
+                       action: #selector(MainMenu.checkForUpdates))
+        ])
+    }
+
+    func addCoreMenuItems() {
+        addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_about".localized,
                        action: #selector(MainMenu.openAbout)),
