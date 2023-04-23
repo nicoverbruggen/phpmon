@@ -35,7 +35,7 @@ class RemovePhpVersionCommand: BrewCommand {
             """
 
         do {
-            try await self.fixPermissions(for: formula)
+            try await BrewPermissionFixer().fixPermissions()
         } catch {
             return
         }
@@ -58,59 +58,5 @@ class RemovePhpVersionCommand: BrewCommand {
         } else {
             throw BrewCommandError(error: "The command failed to run correctly.")
         }
-    }
-
-    /**
-     Takes ownership of the /BREW_PATH/Cellar/php/x.y.z/bin folder (if required).
-
-     This might not be required if the user has only used that version of PHP
-     with site isolation, so this method checks if it's required first.
-     */
-    private func fixPermissions(for formula: String) async throws {
-        // Omit the prefix
-        let path = formula.replacingOccurrences(of: "shivammathur/php/", with: "")
-
-        // Binary path needs to be checked for ownership
-        let binaryPath = "\(Paths.optPath)/\(path)/bin"
-
-        // Check if it's even necessary to perform the fix
-        if !isOwnedByRoot(path: binaryPath) {
-            return
-        }
-
-        Log.info("Need to take ownership of `\(binaryPath)`...")
-
-        let script = """
-            \(Paths.brew) services stop \(formula) \
-            && chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(path)
-            """
-
-        let appleScript = NSAppleScript(
-            source: "do shell script \"\(script)\" with administrator privileges"
-        )
-
-        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
-
-        if eventResult == nil {
-            throw HomebrewPermissionError(kind: .applescriptNilError)
-        }
-
-        Log.info("Ownership was taken of the folder at `\(binaryPath)`.")
-    }
-
-    /**
-     Checks if a given path is owned by root. If so, ownership might need to be taken.
-     */
-    private func isOwnedByRoot(path: String) -> Bool {
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: path)
-            if let owner = attributes[.ownerAccountName] as? String {
-                return owner == "root"
-            }
-        } catch {
-            return true
-        }
-
-        return true
     }
 }

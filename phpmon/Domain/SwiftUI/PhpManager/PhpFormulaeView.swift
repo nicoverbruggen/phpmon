@@ -148,11 +148,14 @@ struct PhpFormulaeView: View {
                                 Task { await self.install(formula) }
                             }
                         }
+                        /*
+                        // TODO: Remove this and add a "upgrade all" button instead?
                         if formula.hasUpgrade {
                             Button("phpman.buttons.update".localizedForSwiftUI) {
                                 Task { await self.install(formula) }
                             }
                         }
+                        */
                     }
                     .listRowBackground(index % 2 == 0
                                        ? Color.gray.opacity(0)

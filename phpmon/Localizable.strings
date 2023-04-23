@@ -94,10 +94,10 @@
 "phpman.busy.title" = "Checking for updates!";
 "phpman.busy.description.outdated" = "Checking if any PHP version is outdated...";
 
-"phpman.version.available_for_installation" = "This version can be installed";
+"phpman.version.available_for_installation" = "This version can be installed.";
 "phpman.buttons.uninstall" = "Uninstall";
 "phpman.buttons.install" = "Install";
-"phpman.buttons.update" = "Update";
+"phpman.buttons.update_all" = "Update All";
 
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** lets you install different PHP versions via Homebrew.";
