@@ -80,27 +80,6 @@ class Valet {
     }
 
     /**
-     Notify the user about a non-default TLD being set.
-     */
-    public static func notifyAboutUnsupportedTLD() {
-        if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
-            Task { @MainActor in
-                BetterAlert().withInformation(
-                    title: "alert.warnings.tld_issue.title".localized,
-                    subtitle: "alert.warnings.tld_issue.subtitle".localized,
-                    description: "alert.warnings.tld_issue.description".localized
-                )
-                .withPrimary(text: "generic.ok".localized)
-                .withTertiary(text: "alert.do_not_tell_again".localized, action: { alert in
-                    Preferences.update(.warnAboutNonStandardTLD, value: false)
-                    alert.close(with: .alertThirdButtonReturn)
-                })
-                .show()
-            }
-        }
-    }
-
-    /**
      We don't want to load the initial config.json file as soon as the class is initialised.
      
      Instead, we'll defer the loading of the configuration file once the initial app checks
@@ -189,18 +168,7 @@ class Valet {
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
             let recommended = Constants.MinimumRecommendedValetVersion
             Log.warn("Valet version \(version.text) is too old! (recommended: \(recommended))")
-            Task { @MainActor in
-                BetterAlert()
-                    .withInformation(
-                        title: "alert.min_valet_version.title".localized,
-                        subtitle: "alert.min_valet_version.info".localized(
-                            version.text,
-                            Constants.MinimumRecommendedValetVersion
-                        )
-                    )
-                    .withPrimary(text: "generic.ok".localized)
-                    .show()
-            }
+            self.notifyAboutOutdatedValetVersion(version)
         } else {
             Log.info("Valet version \(version.text) is recent enough, OK " +
                      "(recommended: \(Constants.MinimumRecommendedValetVersion))")

@@ -101,7 +101,7 @@ extension MainMenu {
             await Valet.shared.notifyAboutBrokenPhpFpm()
 
             // A non-default TLD is not officially supported since Valet 3.2.x
-            Valet.notifyAboutUnsupportedTLD()
+            Valet.shared.notifyAboutUnsupportedTLD()
         }
 
         // Find out which services are active
@@ -122,7 +122,7 @@ extension MainMenu {
         }
 
         // Check if the linked version has changed between launches of phpmon
-        Stats.evaluateLastLinkedPhpVersion()
+        PhpGuard().compareToLastGlobalVersion()
 
         // Check if an update was performed earlier
         AppUpdater.checkIfUpdateWasPerformed()

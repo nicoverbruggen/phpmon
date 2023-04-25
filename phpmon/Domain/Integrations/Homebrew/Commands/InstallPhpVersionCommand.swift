@@ -38,7 +38,7 @@ class InstallPhpVersionCommand: BrewCommand {
             \(Paths.brew) install \(formula) --force
             """
 
-        #error("Must keep track of the active PHP version (if applicable)")
+        // #error("Must keep track of the active PHP version (if applicable)")
 
         do {
             try await BrewPermissionFixer().fixPermissions()
@@ -64,7 +64,7 @@ class InstallPhpVersionCommand: BrewCommand {
             onProgress(.create(value: 0.95, title: progressTitle, description: "Reloading PHP versions..."))
             await PhpEnv.detectPhpVersions()
             await MainMenu.shared.refreshActiveInstallation()
-            #error("Must restore active PHP installation (if applicable)")
+            // #error("Must restore active PHP installation (if applicable)")
             onProgress(.create(value: 1, title: progressTitle, description: "The installation has succeeded."))
         } else {
             throw BrewCommandError(error: "The command failed to run correctly.")
