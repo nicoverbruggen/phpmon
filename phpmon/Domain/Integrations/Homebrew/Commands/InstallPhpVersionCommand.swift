@@ -38,12 +38,14 @@ class InstallPhpVersionCommand: BrewCommand {
             \(Paths.brew) install \(formula) --force
             """
 
-        // #error("Must keep track of the active PHP version (if applicable)")
+        // Keep track of the current PHP version prior to executing any operations
+        let phpGuard = PhpGuard()
 
+        // Try to fix permissions
         do {
             try await BrewPermissionFixer().fixPermissions()
         } catch {
-            return
+            throw BrewCommandError(error: "There was an issue fixing permissions.")
         }
 
         let (process, _) = try! await Shell.attach(
@@ -61,10 +63,21 @@ class InstallPhpVersionCommand: BrewCommand {
         )
 
         if process.terminationStatus <= 0 {
+            // Reload and restart PHP versions
             onProgress(.create(value: 0.95, title: progressTitle, description: "Reloading PHP versions..."))
+
+            // Check which version of PHP are now installed
             await PhpEnv.detectPhpVersions()
+
+            // Keep track of the currently installed version
             await MainMenu.shared.refreshActiveInstallation()
-            // #error("Must restore active PHP installation (if applicable)")
+
+            // If a PHP version was active prior to running the operations, attempt to restore it
+            if let version = phpGuard.currentVersion {
+                await MainMenu.shared.switchToAnyPhpVersion(version)
+            }
+
+            // Let the UI know that the installation has been completed
             onProgress(.create(value: 1, title: progressTitle, description: "The installation has succeeded."))
         } else {
             throw BrewCommandError(error: "The command failed to run correctly.")
