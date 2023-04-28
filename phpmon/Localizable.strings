@@ -101,7 +101,7 @@
 
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** lets you install different PHP versions via Homebrew.";
-"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. If you haven't updated Homebrew in a bit, operations here may take a couple of minutes to complete as it is likely multiple dependencies and other (unrelated) packages will also be upgraded. (Partial upgrades aren't done to avoid breaking packages in general.)";
+"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. Installing or updating PHP versions may take some time, so please be patient.";
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 

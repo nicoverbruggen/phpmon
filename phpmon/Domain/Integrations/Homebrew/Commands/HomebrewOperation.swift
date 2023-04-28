@@ -10,8 +10,8 @@ import Foundation
 
 class HomebrewOperation {
 
-    let installing: [String]
-    let upgrading: [String]
+    let installing: [BrewFormula]
+    let upgrading: [BrewFormula]
 
     /**
      You can pass in which PHP versions need to be upgraded and which ones need to be installed.
@@ -20,8 +20,8 @@ class HomebrewOperation {
      Each version that is installed will need to be checked afterwards (if it is OK).
      */
     public init(
-        upgrading: [String],
-        installing: [String]
+        upgrading: [BrewFormula],
+        installing: [BrewFormula]
     ) {
         self.installing = installing
         self.upgrading = upgrading
@@ -36,7 +36,7 @@ class HomebrewOperation {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) upgrade \(self.upgrading.joined(separator: " "))
+            \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
 
         print(command)
@@ -46,13 +46,13 @@ class HomebrewOperation {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) install \(self.upgrading.joined(separator: " ")) --force
+            \(Paths.brew) install \(self.upgrading.map { $0.name }.joined(separator: " ")) --force
             """
 
         print(command)
     }
 
-    private func determineHealth(formula: String) -> Bool {
+    private func determineHealth(formula: BrewFormula) -> Bool {
         #warning("Should return proper health")
         return false
 

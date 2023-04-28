@@ -124,6 +124,7 @@ struct PhpFormulaeView: View {
                             .padding(.horizontal, 5)
                         VStack(alignment: .leading) {
                             Text(formula.displayName).bold()
+                            Text(formula.homebrewFolder)
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
@@ -139,6 +140,8 @@ struct PhpFormulaeView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+
+                        /*
                         if formula.isInstalled {
                             Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
                                 Task { await self.confirmUninstall(formula) }
@@ -148,7 +151,6 @@ struct PhpFormulaeView: View {
                                 Task { await self.install(formula) }
                             }
                         }
-                        /*
                         if formula.hasUpgrade {
                             Button("phpman.buttons.update".localizedForSwiftUI) {
                                 Task { await self.install(formula, upgrade: true) }

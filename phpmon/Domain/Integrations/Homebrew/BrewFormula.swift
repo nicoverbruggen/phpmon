@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BrewFormula {
+struct BrewFormula {
     /// Name of the formula.
     let name: String
 
@@ -31,11 +31,16 @@ class BrewFormula {
         return upgradeVersion != nil
     }
 
-    public func getHomebrewFolder() -> String {
-        #error("This must return the path to the Homebrew folder")
+    var homebrewFolder: String {
+        let resolved = name
+            .replacingOccurrences(of: "shivammathur/php/", with: "")
+            .replacingOccurrences(of: "php@" + PhpEnv.brewPhpAlias, with: "php")
+
+        return "\(Paths.optPath)/\(resolved)/bin"
     }
 
     public func isHealthy() -> Bool {
-        #error("This must check if the PHP version works")
+        return true
+        // #error("This must check if the PHP version works")
     }
 }
