@@ -42,7 +42,7 @@ struct BlockingOverlayView<Content: View>: View {
                         .font(.system(size: 11))
                         .foregroundColor(.primary)
                         .padding(.top, -4)
-                }
+                }.padding(60)
             }
         }.background(Color.white)
         .disabled(isBlocking)

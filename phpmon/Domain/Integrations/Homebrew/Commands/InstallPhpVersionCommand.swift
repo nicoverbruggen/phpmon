@@ -20,7 +20,7 @@ class InstallPhpVersionCommand: BrewCommand {
     }
 
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        let progressTitle = "Installing PHP \(version)..."
+        let progressTitle = "Running Homebrew operations..."
 
         onProgress(.create(
             value: 0.2,
@@ -82,27 +82,5 @@ class InstallPhpVersionCommand: BrewCommand {
         } else {
             throw BrewCommandError(error: "The command failed to run correctly.")
         }
-    }
-
-    private func reportInstallationProgress(_ text: String) -> (Double, String)? {
-        if text.contains("Fetching") {
-            return (0.1, "Fetching...")
-        }
-        if text.contains("Downloading") {
-            return (0.25, "Downloading package data...")
-        }
-        if text.contains("Already downloaded") || text.contains("Downloaded") {
-            return (0.50, "Downloaded!")
-        }
-        if text.contains("Installing") {
-            return (0.60, "Installing...")
-        }
-        if text.contains("Pouring") {
-            return (0.80, "Pouring...")
-        }
-        if text.contains("Summary") {
-            return (0.90, "The installation is done!")
-        }
-        return nil
     }
 }
