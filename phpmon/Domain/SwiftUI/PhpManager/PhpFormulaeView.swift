@@ -84,34 +84,48 @@ struct PhpFormulaeView: View {
             }
             .padding(10)
 
-            Divider()
+            if self.hasUpdates {
+                Divider()
+                HStack(alignment: .center, spacing: 15) {
+                    Text("One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 11))
 
-            HStack(alignment: .center, spacing: 15) {
-                Button {
-                    Task { // Reload warnings
-                        Task { @MainActor in
-                            self.status.busy = true
-                            self.status.title = "phpman.busy.title".localized
-                            self.status.description = "phpman.busy.description.outdated".localized
-                        }
-                        await self.handler.refreshPhpVersions(loadOutdated: true)
-                        Task { @MainActor in
-                            self.status.busy = false
-                        }
-                    }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                        .buttonStyle(.automatic)
-                        .controlSize(.large)
+                    Button("Update All", action: {})
+                        .focusable(false)
+                        .disabled(self.status.busy)
                 }
-                .focusable(false)
-                .disabled(self.status.busy)
+                .padding(10)
+            } else {
+                Divider()
 
-                Text("phpman.refresh.button.description".localizedForSwiftUI)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 11))
+                HStack(alignment: .center, spacing: 15) {
+                    Button {
+                        Task { // Reload warnings
+                            Task { @MainActor in
+                                self.status.busy = true
+                                self.status.title = "phpman.busy.title".localized
+                                self.status.description = "phpman.busy.description.outdated".localized
+                            }
+                            await self.handler.refreshPhpVersions(loadOutdated: true)
+                            Task { @MainActor in
+                                self.status.busy = false
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .buttonStyle(.automatic)
+                            .controlSize(.large)
+                    }
+                    .focusable(false)
+                    .disabled(self.status.busy)
+
+                    Text("phpman.refresh.button.description".localizedForSwiftUI)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 11))
+                }
+                .padding(10)
             }
-            .padding(10)
 
             BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
                 List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
@@ -141,7 +155,6 @@ struct PhpFormulaeView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                        /*
                         if formula.isInstalled {
                             Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
                                 Task { await self.confirmUninstall(formula) }
@@ -151,12 +164,6 @@ struct PhpFormulaeView: View {
                                 Task { await self.install(formula) }
                             }
                         }
-                        if formula.hasUpgrade {
-                            Button("phpman.buttons.update".localizedForSwiftUI) {
-                                Task { await self.install(formula, upgrade: true) }
-                            }
-                        }
-                        */
                     }
                     .listRowBackground(index % 2 == 0
                                        ? Color.gray.opacity(0)
@@ -282,6 +289,12 @@ struct PhpFormulaeView: View {
             style: style,
             onFirstButtonPressed: {}
         )
+    }
+
+    var hasUpdates: Bool {
+        return self.formulae.phpVersions.contains { formula in
+            return formula.hasUpgrade
+        }
     }
 }
 
