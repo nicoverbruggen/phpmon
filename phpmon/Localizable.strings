@@ -105,6 +105,9 @@
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 
+"phpman.has_updates.description" = "One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)";
+"phpman.has_updates.button" = "Update All";
+
 "phpman.warnings.unsupported.title" = "Your version of Homebrew may cause issues";
 "phpman.warnings.unsupported.desc" = "No functionality is disabled, but some commands may not work as expected. You are currently running Homebrew %@.
 

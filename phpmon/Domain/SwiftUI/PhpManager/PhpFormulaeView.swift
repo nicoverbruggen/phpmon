@@ -9,18 +9,7 @@
 import Foundation
 import SwiftUI
 
-class PhpFormulaeStatus: ObservableObject {
-    @Published var busy: Bool
-    @Published var title: String
-    @Published var description: String
-
-    init(busy: Bool, title: String, description: String) {
-        self.busy = busy
-        self.title = title
-        self.description = description
-    }
-}
-
+// swiftlint:disable type_body_length
 struct PhpFormulaeView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: PhpFormulaeStatus
@@ -40,26 +29,42 @@ struct PhpFormulaeView: View {
         )
 
         Task { [self] in
-            guard let version = Brew.shared.version else {
-                return
+            await self.initialLoad()
+        }
+    }
+
+    private func initialLoad() async {
+        guard let version = Brew.shared.version else {
+            return
+        }
+
+        await delay(seconds: 1)
+
+        if version.major != 4 {
+            Task { @MainActor in
+                self.presentErrorAlert(
+                    title: "phpman.warnings.unsupported.title".localized,
+                    description: "phpman.warnings.unsupported.desc".localized(version.text),
+                    button: "generic.ok".localized,
+                    style: .warning
+                )
             }
+        }
 
-            await delay(seconds: 1)
+        await PhpEnv.detectPhpVersions()
+        await self.handler.refreshPhpVersions(loadOutdated: false)
+        await self.handler.refreshPhpVersions(loadOutdated: true)
+        self.status.busy = false
+    }
 
-            if version.major != 4 {
-                Task { @MainActor in
-                    self.presentErrorAlert(
-                        title: "phpman.warnings.unsupported.title".localized,
-                        description: "phpman.warnings.unsupported.desc".localized(version.text),
-                        button: "generic.ok".localized,
-                        style: .warning
-                    )
-                }
-            }
-
-            await PhpEnv.detectPhpVersions()
-            await self.handler.refreshPhpVersions(loadOutdated: false)
-            await self.handler.refreshPhpVersions(loadOutdated: true)
+    private func reload() async {
+        Task { @MainActor in
+            self.status.busy = true
+            self.status.title = "phpman.busy.title".localized
+            self.status.description = "phpman.busy.description.outdated".localized
+        }
+        await self.handler.refreshPhpVersions(loadOutdated: true)
+        Task { @MainActor in
             self.status.busy = false
         }
     }
@@ -87,11 +92,11 @@ struct PhpFormulaeView: View {
             if self.hasUpdates {
                 Divider()
                 HStack(alignment: .center, spacing: 15) {
-                    Text("One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)")
+                    Text("phpman.has_updates.description".localizedForSwiftUI)
                         .foregroundColor(.gray)
                         .font(.system(size: 11))
 
-                    Button("Update All", action: {})
+                    Button("phpman.has_updates.button".localizedForSwiftUI, action: {})
                         .focusable(false)
                         .disabled(self.status.busy)
                 }
@@ -101,17 +106,7 @@ struct PhpFormulaeView: View {
 
                 HStack(alignment: .center, spacing: 15) {
                     Button {
-                        Task { // Reload warnings
-                            Task { @MainActor in
-                                self.status.busy = true
-                                self.status.title = "phpman.busy.title".localized
-                                self.status.description = "phpman.busy.description.outdated".localized
-                            }
-                            await self.handler.refreshPhpVersions(loadOutdated: true)
-                            Task { @MainActor in
-                                self.status.busy = false
-                            }
-                        }
+                        Task { await self.reload() }
                     } label: {
                         Image(systemName: "arrow.clockwise")
                             .buttonStyle(.automatic)
@@ -356,22 +351,4 @@ class FakeBrewFormulaeHandler: HandlesBrewFormulae {
     }
 }
 
-extension BrewFormula {
-    var icon: String {
-        if self.hasUpgrade {
-            return "arrow.up.square.fill"
-        } else if self.isInstalled {
-            return "checkmark.square.fill"
-        }
-        return "square.dashed"
-    }
 
-    var iconColor: Color {
-        if self.hasUpgrade {
-            return Color("StatusColorBlue")
-        } else if self.isInstalled {
-            return Color("StatusColorGreen")
-        }
-        return Color.gray.opacity(0.3)
-    }
-}
