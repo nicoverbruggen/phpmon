@@ -45,7 +45,9 @@ class PhpInstallation {
                 withStandardError: true
             ).trimmingCharacters(in: .whitespacesAndNewlines)
 
-            if testCommand.contains("Library not loaded") {
+            // If the "dyld: Library not loaded" issue pops up, we have an unhealthy PHP installation
+            // and we will need to reinstall this version of PHP via Homebrew.
+            if testCommand.contains("Library not loaded") && testCommand.contains("dyld") {
                 self.isHealthy = false
                 Log.err("The PHP installation of \(self.versionNumber.short) is not healthy!")
             }

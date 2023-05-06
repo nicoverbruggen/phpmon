@@ -133,7 +133,14 @@ struct PhpFormulaeView: View {
                             .padding(.horizontal, 5)
                         VStack(alignment: .leading) {
                             Text(formula.displayName).bold()
-                            // Text(formula.homebrewFolder)
+
+                            if formula.isHealthy() == nil {
+                                Text("Unknown health")
+                            } else {
+                                Text(formula.isHealthy()! ? "Health OK" : "Broken!")
+                            }
+
+                            Text(formula.homebrewFolder)
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")

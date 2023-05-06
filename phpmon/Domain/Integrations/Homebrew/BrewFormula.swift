@@ -39,8 +39,19 @@ struct BrewFormula {
         return "\(Paths.optPath)/\(resolved)/bin"
     }
 
-    public func isHealthy() -> Bool {
-        return true
-        // #error("This must check if the PHP version works")
+    var shortVersion: String? {
+        guard let version = self.installedVersion else {
+            return nil
+        }
+
+        return VersionNumber.make(from: version)?.short ?? nil
+    }
+
+    public func isHealthy() -> Bool? {
+        guard let shortVersion = self.shortVersion else {
+            return nil
+        }
+
+        return PhpEnv.shared.cachedPhpInstallations[shortVersion]?.isHealthy ?? nil
     }
 }
