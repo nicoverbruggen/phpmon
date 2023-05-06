@@ -9,13 +9,23 @@ import Cocoa
 
 public class RealCommand: CommandProtocol {
 
-    public func execute(path: String, arguments: [String], trimNewlines: Bool = false) -> String {
+    public func execute(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool,
+        withStandardError: Bool
+    ) -> String {
         let task = Process()
         task.launchPath = path
         task.arguments = arguments
 
         let pipe = Pipe()
         task.standardOutput = pipe
+
+        if withStandardError {
+            task.standardError = pipe
+        }
+
         task.launch()
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
@@ -28,6 +38,19 @@ public class RealCommand: CommandProtocol {
         }
 
         return output
+    }
+
+    public func execute(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool = false
+    ) -> String {
+        self.execute(
+            path: path,
+            arguments: arguments,
+            trimNewlines: trimNewlines,
+            withStandardError: false
+        )
     }
 
 }

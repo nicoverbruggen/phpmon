@@ -133,7 +133,7 @@ struct PhpFormulaeView: View {
                             .padding(.horizontal, 5)
                         VStack(alignment: .leading) {
                             Text(formula.displayName).bold()
-                            Text(formula.homebrewFolder)
+                            // Text(formula.homebrewFolder)
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
@@ -350,5 +350,3 @@ class FakeBrewFormulaeHandler: HandlesBrewFormulae {
         ]
     }
 }
-
-

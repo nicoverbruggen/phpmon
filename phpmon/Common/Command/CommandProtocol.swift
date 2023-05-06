@@ -16,7 +16,26 @@ protocol CommandProtocol {
      - Parameter path: The path of the command or program to invoke.
      - Parameter arguments: A list of arguments that are passed on.
      - Parameter trimNewlines: Removes empty new line output.
+     - Parameter withStandardError: Outputs standard error output to the same string output as well.
      */
-    func execute(path: String, arguments: [String], trimNewlines: Bool) -> String
+    func execute(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool,
+        withStandardError: Bool
+    ) -> String
+
+    /**
+     Immediately executes a command.
+
+     - Parameter path: The path of the command or program to invoke.
+     - Parameter arguments: A list of arguments that are passed on.
+     - Parameter trimNewlines: Removes empty new line output.
+     */
+    func execute(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool
+    ) -> String
 
 }

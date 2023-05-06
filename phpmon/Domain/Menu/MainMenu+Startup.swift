@@ -51,10 +51,10 @@ extension MainMenu {
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
             Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!.text)")
-        }
 
-        // Validate the version (this will enforce which versions of PHP are supported)
-        Valet.shared.validateVersion()
+            // Validate the version (this will enforce which versions of PHP are supported)
+            Valet.shared.validateVersion()
+        }
 
         // Validate the Homebrew version (determines install/upgrade functionality)
         await Brew.shared.determineVersion()
