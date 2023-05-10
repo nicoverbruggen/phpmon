@@ -8,10 +8,11 @@
 
 import Foundation
 
-class HomebrewOperation {
+class HomebrewOperation: BrewCommand {
 
     let installing: [BrewFormula]
     let upgrading: [BrewFormula]
+    let phpGuard: PhpGuard
 
     /**
      You can pass in which PHP versions need to be upgraded and which ones need to be installed.
@@ -23,17 +24,26 @@ class HomebrewOperation {
         upgrading: [BrewFormula],
         installing: [BrewFormula]
     ) {
+
         self.installing = installing
         self.upgrading = upgrading
+        self.phpGuard = PhpGuard()
     }
 
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        try await self.upgradePackages()
-        try await self.installPackages()
-        try await self.repairBrokenPackages()
+        // Try to run all upgrade and installation operations
+        try await self.upgradePackages(onProgress)
+        try await self.installPackages(onProgress)
+
+        // After performing operations, attempt to run repairs if needed
+        try await self.repairBrokenPackages(onProgress)
+
+        // Finally, complete all operations
+        await self.completedOperations(onProgress)
     }
 
-    private func upgradePackages() async throws {
+    private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        // If no upgrades are needed, early exit
         if self.upgrading.isEmpty {
             return
         }
@@ -43,9 +53,12 @@ class HomebrewOperation {
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
+
+        try await run(command, onProgress)
     }
 
-    private func installPackages() async throws {
+    private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        // If no installations are needed, early exit
         if self.installing.isEmpty {
             return
         }
@@ -55,10 +68,15 @@ class HomebrewOperation {
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) install \(self.upgrading.map { $0.name }.joined(separator: " ")) --force
             """
+
+        try await run(command, onProgress)
     }
 
-    private func repairBrokenPackages() async throws {
-        let requiringRepair = PhpEnv.shared.cachedPhpInstallations.values
+    private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        // Determine which PHP installations are considered unhealthy
+        // Build a list of formulae to reinstall
+        let requiringRepair = PhpEnv.shared
+            .cachedPhpInstallations.values
             .filter({ !$0.isHealthy })
             .map { installation in
                 let formula = "php@\(installation.versionNumber.short)"
@@ -70,6 +88,7 @@ class HomebrewOperation {
                 return formula
             }
 
+        // If no repairs are needed, early exit
         if requiringRepair.isEmpty {
             return
         }
@@ -80,6 +99,54 @@ class HomebrewOperation {
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
+
+        try await run(command, onProgress)
+    }
+
+    private func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        let (process, _) = try! await Shell.attach(
+            command,
+            didReceiveOutput: { text, _ in
+                if !text.isEmpty {
+                    Log.perf(text)
+                }
+
+                if let (number, text) = self.reportInstallationProgress(text) {
+                    onProgress(.create(value: number, title: "Running operations", description: text))
+                }
+            },
+            withTimeout: .minutes(15)
+        )
+
+        if process.terminationStatus <= 0 {
+            return
+        } else {
+            throw BrewCommandError(error: "The command failed to run correctly.")
+        }
+    }
+
+    private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
+        // Reload and restart PHP versions
+        onProgress(.create(value: 0.95, title: "Running operations", description: "Reloading PHP versions..."))
+
+        // Check which version of PHP are now installed
+        await PhpEnv.detectPhpVersions()
+
+        // Keep track of the currently installed version
+        await MainMenu.shared.refreshActiveInstallation()
+
+         // If a PHP version was active prior to running the operations, attempt to restore it
+         if let version = phpGuard.currentVersion {
+             #warning("This should be happening silently")
+             await MainMenu.shared.switchToAnyPhpVersion(version)
+         }
+
+        // Let the UI know that the installation has been completed
+        onProgress(.create(
+            value: 1,
+            title: "Operation completed",
+            description: "The installation has succeeded."
+        ))
     }
 
 }
