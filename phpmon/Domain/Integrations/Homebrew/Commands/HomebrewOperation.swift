@@ -30,37 +30,55 @@ class HomebrewOperation {
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         try await self.upgradePackages()
         try await self.installPackages()
+        try await self.repairBrokenPackages()
     }
 
     private func upgradePackages() async throws {
+        if self.upgrading.isEmpty {
+            return
+        }
+
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
-
-        print(command)
     }
 
     private func installPackages() async throws {
+        if self.installing.isEmpty {
+            return
+        }
+
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) install \(self.upgrading.map { $0.name }.joined(separator: " ")) --force
             """
-
-        print(command)
     }
 
-    private func determineHealth(formula: BrewFormula) -> Bool {
-        #warning("Should return proper health")
-        return false
+    private func repairBrokenPackages() async throws {
+        let requiringRepair = PhpEnv.shared.cachedPhpInstallations.values
+            .filter({ !$0.isHealthy })
+            .map { installation in
+                let formula = "php@\(installation.versionNumber.short)"
+
+                if installation.versionNumber.short == PhpEnv.brewPhpAlias {
+                    return "php"
+                }
+
+                return formula
+            }
+
+        if requiringRepair.isEmpty {
+            return
+        }
 
         // If the health comes back as negative, attempt to reinstall
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) reinstall \(formula) --force
+            \(Paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
     }
 
