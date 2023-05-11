@@ -10,6 +10,7 @@ import Foundation
 
 class HomebrewOperation: BrewCommand {
 
+    let title: String
     let installing: [BrewFormula]
     let upgrading: [BrewFormula]
     let phpGuard: PhpGuard
@@ -21,10 +22,11 @@ class HomebrewOperation: BrewCommand {
      Each version that is installed will need to be checked afterwards (if it is OK).
      */
     public init(
+        title: String,
         upgrading: [BrewFormula],
         installing: [BrewFormula]
     ) {
-
+        self.title = title
         self.installing = installing
         self.upgrading = upgrading
         self.phpGuard = PhpGuard()
@@ -112,7 +114,7 @@ class HomebrewOperation: BrewCommand {
                 }
 
                 if let (number, text) = self.reportInstallationProgress(text) {
-                    onProgress(.create(value: number, title: "Running operations", description: text))
+                    onProgress(.create(value: number, title: self.title, description: text))
                 }
             },
             withTimeout: .minutes(15)
@@ -127,7 +129,7 @@ class HomebrewOperation: BrewCommand {
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
-        onProgress(.create(value: 0.95, title: "Running operations", description: "Reloading PHP versions..."))
+        onProgress(.create(value: 0.95, title: self.title, description: "Reloading PHP versions..."))
 
         // Check which version of PHP are now installed
         await PhpEnv.detectPhpVersions()
@@ -137,14 +139,13 @@ class HomebrewOperation: BrewCommand {
 
          // If a PHP version was active prior to running the operations, attempt to restore it
          if let version = phpGuard.currentVersion {
-             #warning("This should be happening silently")
-             await MainMenu.shared.switchToAnyPhpVersion(version)
+             await MainMenu.shared.switchToAnyPhpVersion(version, silently: true)
          }
 
         // Let the UI know that the installation has been completed
         onProgress(.create(
             value: 1,
-            title: "Operation completed",
+            title: "Operation completed!",
             description: "The installation has succeeded."
         ))
     }

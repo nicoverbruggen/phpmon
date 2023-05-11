@@ -255,7 +255,10 @@ extension MainMenu {
         self.switchToPhpVersion(sender.version)
     }
 
-    public func switchToAnyPhpVersion(_ version: String) {
+    public func switchToAnyPhpVersion(_ version: String, silently: Bool = false) {
+        if silently {
+            MainMenu.shared.shouldSwitchSilently = true
+        }
         if PhpEnv.shared.availablePhpVersions.contains(version) {
             Task { MainMenu.shared.switchToPhpVersion(version) }
         } else {

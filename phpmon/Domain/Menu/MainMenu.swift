@@ -26,6 +26,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         withLength: NSStatusItem.variableLength
     )
 
+    // MARK: - State Variables
+
+    /**
+     You can instruct the app to switch to a given PHP version silently.
+     That will toggle this flag to true. Upon switching, this flag will be reset.
+     */
+    var shouldSwitchSilently: Bool = false
+
     // MARK: - UI related
 
     /**

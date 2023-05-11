@@ -114,6 +114,11 @@ extension MainMenu {
     }
 
     @MainActor private func notifyAboutVersionChange(to version: String) {
+        if shouldSwitchSilently {
+            shouldSwitchSilently = false
+            return
+        }
+
         LocalNotification.send(
             title: String(format: "notification.version_changed_title".localized, version),
             subtitle: String(format: "notification.version_changed_desc".localized, version),
