@@ -40,11 +40,14 @@ class RemovePhpVersionCommand: BrewCommand {
             return
         }
 
+        var loggedMessages: [String] = []
+
         let (process, _) = try! await Shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
                     Log.perf(text)
+                    loggedMessages.append(text)
                 }
             },
             withTimeout: .minutes(5)
@@ -56,7 +59,7 @@ class RemovePhpVersionCommand: BrewCommand {
             await MainMenu.shared.refreshActiveInstallation()
             onProgress(.create(value: 1, title: progressTitle, description: "The operation has succeeded."))
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.")
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
         }
     }
 }

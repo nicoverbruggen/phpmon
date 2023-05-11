@@ -45,4 +45,5 @@ struct BrewCommandProgress {
 
 struct BrewCommandError: Error {
     let error: String
+    let log: [String]
 }

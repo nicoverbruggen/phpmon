@@ -109,11 +109,14 @@ class InstallAndUpgradeCommand: BrewCommand {
     }
 
     private func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        var loggedMessages: [String] = []
+
         let (process, _) = try! await Shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
                     Log.perf(text)
+                    loggedMessages.append(text)
                 }
 
                 if let (number, text) = self.reportInstallationProgress(text) {
@@ -124,9 +127,10 @@ class InstallAndUpgradeCommand: BrewCommand {
         )
 
         if process.terminationStatus <= 0 {
+            loggedMessages = []
             return
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.")
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
         }
     }
 

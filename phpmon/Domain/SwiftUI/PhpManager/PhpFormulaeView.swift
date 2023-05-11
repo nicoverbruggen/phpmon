@@ -197,11 +197,14 @@ struct PhpFormulaeView: View {
                     }
                 }
             }
-        } catch {
+        } catch let error {
+            let error = error as! BrewCommandError
+            let messages = error.log.suffix(5).joined(separator: "\n")
+
             self.setBusyStatus(false)
             self.presentErrorAlert(
                 title: "phpman.failures.install.title".localized,
-                description: "phpman.failures.install.desc".localized,
+                description: "phpman.failures.install.desc".localized(messages),
                 button: "generic.ok".localized
             )
         }
