@@ -145,6 +145,9 @@ class InstallAndUpgradeCommand: BrewCommand {
              await MainMenu.shared.switchToAnyPhpVersion(version, silently: true)
          }
 
+        // Also rebuild the content of the main menu
+        await MainMenu.shared.rebuild()
+
         // Let the UI know that the installation has been completed
         onProgress(.create(
             value: 1,

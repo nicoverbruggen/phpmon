@@ -14,42 +14,27 @@ extension App {
         let notifier = FSNotifier(
             for: URL(fileURLWithPath: Paths.binPath),
             eventMask: .all,
-            onChange: {
-                Task { await self.onHomebrewPhpModification() }
-                // Removing requires termination and then removing reference
-                // self.watchers[.homebrewBinaries]?.terminate()
-                // self.watchers[.homebrewBinaries] = nil
-            }
+            onChange: { Task { await self.onHomebrewPhpModification() } }
         )
 
         App.shared.watchers[.homebrewBinaries] = notifier
     }
 
+    public func destroyHomebrewWatchers() {
+        // Removing requires termination and then removing reference
+        self.watchers[.homebrewBinaries]?.terminate()
+        self.watchers[.homebrewBinaries] = nil
+    }
+
     public func onHomebrewPhpModification() async {
-        let previous = PhpEnv.shared.currentInstall?.version.text
+        // let previous = PhpEnv.shared.currentInstall?.version.text
         Log.info("Something changed in the Homebrew binary directory...")
         await PhpEnv.detectPhpVersions()
         await MainMenu.shared.refreshActiveInstallation()
-        let new = PhpEnv.shared.currentInstall?.version.text
-        if previous != new {
-            #warning("Notifications should be opt-in and are currently disabled")
-            Log.info("The PHP version has changed, new version is now: \(new ?? "unlinked")")
-            /*
-             // These notifications will cause duplicate notifications if using the switcher
-             if new != nil {
-             LocalNotification.send(
-             title: "Globally linked PHP version has changed!",
-             subtitle: "PHP \(new!) is now active.",
-             preference: nil
-             )
-             } else {
-             LocalNotification.send(
-             title: "Globally linked PHP version has changed!",
-             subtitle: "PHP is now unlinked.",
-             preference: nil
-             )
-             }
-             */
-        }
+        // let new = PhpEnv.shared.currentInstall?.version.text
+
+        // TODO:
+        // Check if the new and previous version are different
+        // if so, we can show a notification if needed
     }
 }
