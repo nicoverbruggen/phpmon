@@ -37,6 +37,9 @@ class InstallAndUpgradeCommand: BrewCommand {
         try await self.upgradePackages(onProgress)
         try await self.installPackages(onProgress)
 
+        // Re-check the installed versions
+        await PhpEnv.detectPhpVersions()
+
         // After performing operations, attempt to run repairs if needed
         try await self.repairBrokenPackages(onProgress)
 
@@ -68,7 +71,7 @@ class InstallAndUpgradeCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) install \(self.upgrading.map { $0.name }.joined(separator: " ")) --force
+            \(Paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
             """
 
         try await run(command, onProgress)
