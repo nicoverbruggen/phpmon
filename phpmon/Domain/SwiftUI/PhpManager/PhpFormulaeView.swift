@@ -96,9 +96,12 @@ struct PhpFormulaeView: View {
                         .foregroundColor(.gray)
                         .font(.system(size: 11))
 
-                    Button("phpman.has_updates.button".localizedForSwiftUI, action: {})
-                        .focusable(false)
-                        .disabled(self.status.busy)
+                    Button("phpman.has_updates.button".localizedForSwiftUI, action: {
+                        Task { await self.upgradeAll(self.formulae.upgradeable) }
+
+                    })
+                    .focusable(false)
+                    .disabled(self.status.busy)
                 }
                 .padding(10)
             } else {
@@ -134,6 +137,7 @@ struct PhpFormulaeView: View {
                         VStack(alignment: .leading) {
                             Text(formula.displayName).bold()
 
+                            /*
                             if formula.isHealthy() == nil {
                                 Text("Unknown health")
                             } else {
@@ -141,6 +145,7 @@ struct PhpFormulaeView: View {
                             }
 
                             Text(formula.homebrewFolder)
+                            */
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
@@ -177,9 +182,7 @@ struct PhpFormulaeView: View {
         }.frame(width: 600, height: 600)
     }
 
-    public func install(_ formula: BrewFormula) async {
-        let command = InstallPhpVersionCommand(formula: formula.name)
-
+    public func runCommand(_ command: InstallAndUpgradeCommand) async {
         do {
             self.setBusyStatus(true)
             try await command.execute { progress in
@@ -198,12 +201,26 @@ struct PhpFormulaeView: View {
             self.setBusyStatus(false)
             self.presentErrorAlert(
                 title: "phpman.failures.install.title".localized,
-                description: "phpman.failures.install.desc".localized(
-                    "brew install \(formula)"
-                ),
+                description: "phpman.failures.install.desc".localized,
                 button: "generic.ok".localized
             )
         }
+    }
+
+    public func upgradeAll(_ formulae: [BrewFormula]) async {
+        await self.runCommand(InstallAndUpgradeCommand(
+            title: "Installing updates...",
+            upgrading: formulae,
+            installing: []
+        ))
+    }
+
+    public func install(_ formula: BrewFormula) async {
+        await self.runCommand(InstallAndUpgradeCommand(
+            title: "Installing \(formula.displayName)",
+            upgrading: [],
+            installing: [formula]
+        ))
     }
 
     public func confirmUninstall(_ formula: BrewFormula) async {

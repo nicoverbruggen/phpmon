@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HomebrewOperation: BrewCommand {
+class InstallAndUpgradeCommand: BrewCommand {
 
     let title: String
     let installing: [BrewFormula]

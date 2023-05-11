@@ -120,7 +120,7 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.warnings.removal.button" = "Uninstall";
 
 "phpman.failures.install.title" = "Installation failed!";
-"phpman.failures.install.desc" = "Unfortunately, the automatic installation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
+"phpman.failures.install.desc" = "Unfortunately, the automatic installation failed. PHP Monitor can only do so much and it's always possible that installations can fail for some unknown reason. At this point I'd recommend checking out the README to find out how to manually install a given PHP version via the Terminal. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
 
 "phpman.uninstall_prevented.title" = "You cannot uninstall the currently active version of PHP via PHP Monitor.";
 "phpman.uninstall_prevented.desc" = "In order to prevent issues with PHP Monitor and further crashes, it isn't possible to uninstall the currently linked version of PHP via this UI. You can switch versions and try again, or uninstall this version manually via the terminal.\n\nPlease note that PHP Monitor may crash if you uninstall the currently linked PHP version.";
