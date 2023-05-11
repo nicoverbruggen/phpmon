@@ -102,6 +102,7 @@ class InstallAndUpgradeCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
+            export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true; \
             \(Paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
 

@@ -199,9 +199,11 @@ struct PhpFormulaeView: View {
             }
         } catch let error {
             let error = error as! BrewCommandError
-            let messages = error.log.suffix(5).joined(separator: "\n")
+            let messages = error.log.suffix(2).joined(separator: "\n")
 
             self.setBusyStatus(false)
+            await self.handler.refreshPhpVersions(loadOutdated: false)
+
             self.presentErrorAlert(
                 title: "phpman.failures.install.title".localized,
                 description: "phpman.failures.install.desc".localized(messages),
