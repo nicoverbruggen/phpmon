@@ -38,30 +38,28 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.shared.isBusy {
-            return
-        }
+        if !PhpEnv.shared.isBusy {
+            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
+                addStatsMenuItem()
+                addItem(NSMenuItem.separator())
+            }
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
-            addStatsMenuItem()
-            addItem(NSMenuItem.separator())
-        }
+            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
+                addExtensionsMenuItems()
+                NSMenuItem.separator()
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
-            addExtensionsMenuItems()
-            NSMenuItem.separator()
+                addXdebugMenuItem()
+            }
 
-            addXdebugMenuItem()
-        }
+            addPhpDoctorMenuItem()
 
-        addPhpDoctorMenuItem()
+            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
+                addPresetsMenuItem()
+            }
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
-            addPresetsMenuItem()
-        }
-
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
-            addFirstAidAndServicesMenuItems()
+            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
+                addFirstAidAndServicesMenuItems()
+            }
         }
 
         addItem(NSMenuItem.separator())
