@@ -100,8 +100,8 @@
 "phpman.buttons.update" = "Update";
 
 "phpman.title" = "PHP Version Manager";
-"phpman.description" = "**PHP Version Manager** lets you install different PHP versions via Homebrew.";
-"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. Installing or updating PHP versions may take some time, so please be patient.";
+"phpman.description" = "**PHP Version Manager** lets you install, upgrade and delete different PHP versions via Homebrew without needing to run the commands in the terminal yourself.";
+"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. Most installation steps usually take some time, so please be patient while Homebrew does its job.";
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 
@@ -120,7 +120,7 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.warnings.removal.button" = "Uninstall";
 
 "phpman.failures.install.title" = "Installation failed!";
-"phpman.failures.install.desc" = "Unfortunately, the installation or upgrade failed for some reason. I can't do much about this, but I will show you the last messages that were returned by Homebrew:
+"phpman.failures.install.desc" = "Unfortunately, the operation returned an error code for some reason. You may find that the formulae have been correctly installed or upgraded. Unfortunately, I can't do much about this. Please check out the last few messages from Homebrew here for more information on what happened:
 
 %@";
 
