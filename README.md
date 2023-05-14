@@ -25,21 +25,22 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 * macOS 12.4 or later (Monterey and Ventura are supported)
 * Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
 * Homebrew `php` formula is installed
-* Laravel Valet (works with Valet v2, v3 and v4)
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
+_Starting with PHP Monitor 6.0, you do not need to have Laravel Valet installed for PHP Monitor to work. To get access to all features of PHP Monitor however, installing Valet is **recommended**._
 
 For more information, please see [SECURITY.md](./SECURITY.md) to find out which version of the app is currently supported.
 
 ## 🚀 How to install
 
-Again, make sure you have **[Laravel Valet](https://laravel.com/docs/master/valet)** installed first:
+Again, if you want to have access to *all features* of PHP Monitor, I recommend installing **[Laravel Valet](https://laravel.com/docs/master/valet)** first:
 
 ```sh
 composer global require laravel/valet
 valet install
 valet trust
 ```
+
+Currently, PHP Monitor is compatible with Laravel Valet v2, v3 and v4. Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
 
 #### Manual installation (recommended, first time only)
 
@@ -126,7 +127,9 @@ If you encounter a strange scenario or a malfunction, please open an issue on th
 <details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
 
-You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+If you are running macOS Ventura or newer, there's an option in the Settings menu that you can select: "Start PHP Monitor at login".
+
+If you are on an older version of macOS, you can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
 
 Super convenient!
 </details>

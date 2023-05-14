@@ -196,6 +196,7 @@ struct Preset: Codable, Equatable {
         + info + "</i>"
         + "</span>"
     }
+    // swiftlint:enable void_function_in_ternary
 
     // MARK: - Reverting
 

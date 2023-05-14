@@ -65,6 +65,7 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
 
         return vc
     }
+    // swiftlint:enable line_length
 }
 
 class NotificationPreferencesVC: GenericPreferenceVC {

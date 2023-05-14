@@ -49,6 +49,12 @@ struct BrewFormula {
         return VersionNumber.make(from: version)?.short ?? nil
     }
 
+    /// A quick variable that you can check to see if the install is unhealthy.
+    /// Will report true if no health information is available.
+    var healthy: Bool {
+        return isHealthy() ?? true
+    }
+
     /**
      * Determines if this PHP installation is healthy.
      * Uses the cached installation health check as basis.

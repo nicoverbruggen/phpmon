@@ -72,4 +72,5 @@ class StatusMenu: NSMenu {
 
         addCoreMenuItems()
     }
+    // swiftlint:enable cyclomatic_complexity
 }

@@ -574,6 +574,12 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_opt.desc" = "If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
+/// PHP binary is broken
+"startup.errors.dyld_library.title" = "PHP is installed, but appears to be broken";
+"startup.errors.dyld_library.subtitle" = "When PHP Monitor is attempting to run commands, it is failing to do so correctly. This is usually an indicator of a broken PHP installation.";
+"startup.errors.dyld_library.desc" = "Running `brew reinstall php && brew link php` in your Terminal may resolve this issue, so please give that a try.";
+
+/// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
 "startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
 "startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";

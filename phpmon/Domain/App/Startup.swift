@@ -135,6 +135,21 @@ class Startup {
                 descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
             ),
             // =================================================================================
+            // Ensure that the main PHP installation is not broken.
+            // =================================================================================
+            EnvironmentCheck(
+                command: {
+                    return await Shell.pipe("\(Paths.binPath)/php -v").err
+                        .contains("Library not loaded")
+                },
+                name: "`no dyld issue detected",
+                titleText: "startup.errors.dyld_library.title".localized,
+                subtitleText: "startup.errors.dyld_library.subtitle".localized(
+                    Paths.optPath
+                ),
+                descriptionText: "startup.errors.dyld_library.desc".localized
+            ),
+            // =================================================================================
             // The Valet binary must exist.
             // =================================================================================
             EnvironmentCheck(

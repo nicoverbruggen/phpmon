@@ -137,16 +137,6 @@ struct PhpFormulaeView: View {
                         VStack(alignment: .leading) {
                             Text(formula.displayName).bold()
 
-                            /*
-                            if formula.isHealthy() == nil {
-                                Text("Unknown health")
-                            } else {
-                                Text(formula.isHealthy()! ? "Health OK" : "Broken!")
-                            }
-
-                            Text(formula.homebrewFolder)
-                            */
-
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
                                     .font(.system(size: 11))
@@ -158,6 +148,12 @@ struct PhpFormulaeView: View {
                                 Text("phpman.version.available_for_installation".localizedForSwiftUI)
                                     .font(.system(size: 11))
                                     .foregroundColor(.gray)
+                            }
+
+                            if !formula.healthy {
+                                Text("This PHP installation is broken.")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.red)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -210,6 +206,14 @@ struct PhpFormulaeView: View {
                 button: "generic.ok".localized
             )
         }
+    }
+
+    public func repairAll() async {
+        await self.runCommand(InstallAndUpgradeCommand(
+            title: "Repairing installations...",
+            upgrading: [],
+            installing: []
+        ))
     }
 
     public func upgradeAll(_ formulae: [BrewFormula]) async {
@@ -321,6 +325,7 @@ struct PhpFormulaeView: View {
         }
     }
 }
+// swiftlint:enable type_body_length
 
 struct PhpFormulaeView_Previews: PreviewProvider {
     static var previews: some View {
