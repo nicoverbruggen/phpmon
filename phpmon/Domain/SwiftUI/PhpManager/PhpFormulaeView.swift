@@ -134,15 +134,19 @@ struct PhpFormulaeView: View {
                             .frame(width: 16, height: 16)
                             .foregroundColor(formula.iconColor)
                             .padding(.horizontal, 5)
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 2) {
                             Text(formula.displayName).bold()
 
                             if formula.isInstalled && formula.hasUpgrade {
-                                Text("\(formula.installedVersion!) installed, \(formula.upgradeVersion!) available.")
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.gray)
+                                Text("phpman.version.has_update".localized(
+                                    formula.installedVersion!,
+                                    formula.upgradeVersion!
+                                ))
+                                .font(.system(size: 11))
+                                .foregroundColor(.gray)
                             } else if formula.isInstalled && formula.installedVersion != nil {
-                                Text("\(formula.installedVersion!) is currently installed.").font(.system(size: 11))
+                                Text("phpman.version.installed".localized(formula.installedVersion!))
+                                    .font(.system(size: 11))
                                     .foregroundColor(.gray)
                             } else {
                                 Text("phpman.version.available_for_installation".localizedForSwiftUI)
@@ -151,12 +155,18 @@ struct PhpFormulaeView: View {
                             }
 
                             if !formula.healthy {
-                                Text("This PHP installation is broken.")
+                                Text("phpman.version.broken".localizedForSwiftUI)
                                     .font(.system(size: 11))
                                     .foregroundColor(.red)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
+
+                        if !formula.healthy {
+                            Button("phpman.buttons.repair".localizedForSwiftUI, role: .destructive) {
+                                Task { await self.repairAll() }
+                            }
+                        }
 
                         if formula.isInstalled {
                             Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
