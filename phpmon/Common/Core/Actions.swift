@@ -47,8 +47,8 @@ class Actions {
             "chown -R \(Paths.whoami):admin \(Paths.cellarPath)/\(HomebrewFormulae.dnsmasq)"
         ]
 
-        PhpEnv.shared.availablePhpVersions.forEach { version in
-            let formula = version == PhpEnv.brewPhpAlias
+        PhpEnvironments.shared.availablePhpVersions.forEach { version in
+            let formula = version == PhpEnvironments.brewPhpAlias
                 ? "php"
                 : "php@\(version)"
             servicesCommands.append("\(Paths.brew) services stop \(formula)")
@@ -125,7 +125,7 @@ class Actions {
      extensions and/or run `composer global update`.
      */
     public static func fixMyValet() async {
-        await InternalSwitcher().performSwitch(to: PhpEnv.brewPhpAlias)
+        await InternalSwitcher().performSwitch(to: PhpEnvironments.brewPhpAlias)
         await brew("services restart \(HomebrewFormulae.dnsmasq)", sudo: HomebrewFormulae.dnsmasq.elevated)
         await brew("services restart \(HomebrewFormulae.php)", sudo: HomebrewFormulae.php.elevated)
         await brew("services restart \(HomebrewFormulae.nginx)", sudo: HomebrewFormulae.nginx.elevated)

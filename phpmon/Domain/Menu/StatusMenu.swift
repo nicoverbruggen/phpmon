@@ -13,12 +13,12 @@ class StatusMenu: NSMenu {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
             addPhpActionMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
+        if PhpEnvironments.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }
@@ -28,23 +28,23 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
             addConfigurationMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
             addComposerMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if !PhpEnv.shared.isBusy {
-            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
+        if !PhpEnvironments.shared.isBusy {
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
                 addStatsMenuItem()
                 addItem(NSMenuItem.separator())
             }
 
-            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
                 addExtensionsMenuItems()
                 NSMenuItem.separator()
 
@@ -53,11 +53,11 @@ class StatusMenu: NSMenu {
 
             addPhpDoctorMenuItem()
 
-            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
                 addPresetsMenuItem()
             }
 
-            if PhpEnv.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
                 addFirstAidAndServicesMenuItems()
             }
         }

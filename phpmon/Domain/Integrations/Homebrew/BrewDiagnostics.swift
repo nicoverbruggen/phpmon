@@ -66,7 +66,7 @@ class BrewDiagnostics {
     public static func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
@@ -103,13 +103,13 @@ class BrewDiagnostics {
                 from: tapAlias.data(using: .utf8)!
             ).first!
 
-            if tapPhp.version != PhpEnv.brewPhpAlias {
+            if tapPhp.version != PhpEnvironments.brewPhpAlias {
                 Log.warn("The `php` formula alias seems to be the different between the tap and core. "
                          + "This could be a problem!")
                 Log.info("Determining whether both of these versions are installed...")
 
-                let bothInstalled = PhpEnv.shared.availablePhpVersions.contains(tapPhp.version)
-                    && PhpEnv.shared.availablePhpVersions.contains(PhpEnv.brewPhpAlias)
+                let bothInstalled = PhpEnvironments.shared.availablePhpVersions.contains(tapPhp.version)
+                    && PhpEnvironments.shared.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
 
                 if bothInstalled {
                     Log.warn("Both conflicting aliases seem to be installed, warning the user!")

@@ -78,8 +78,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Reloads which PHP versions is currently active. */
     @objc func refreshActiveInstallation() {
-        if !PhpEnv.shared.isBusy {
-            PhpEnv.shared.currentInstall = ActivePhpInstallation.load()
+        if !PhpEnvironments.shared.isBusy {
+            PhpEnvironments.shared.currentInstall = ActivePhpInstallation.load()
             updatePhpVersionInStatusBar()
         } else {
             Log.perf("Skipping version refresh due to busy status!")
@@ -122,7 +122,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             BetterAlert().withInformation(
                 title: "startup.unsupported_versions_explanation.title".localized,
                 subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
-                    PhpEnv.shared.incompatiblePhpVersions
+                    PhpEnvironments.shared.incompatiblePhpVersions
                         .map({ version in
                             return "• PHP \(version)"
                         })
@@ -151,7 +151,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
         Task { @MainActor [self] in
-            if PhpEnv.shared.isBusy {
+            if PhpEnvironments.shared.isBusy {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
@@ -161,7 +161,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
 
-                    guard let install = PhpEnv.phpInstall else {
+                    guard let install = PhpEnvironments.phpInstall else {
                         setStatusBarImage(version: "???")
                         return
                     }

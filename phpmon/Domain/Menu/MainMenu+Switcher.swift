@@ -16,7 +16,7 @@ extension MainMenu {
 
     nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
-        PhpEnv.shared.isBusy = false
+        PhpEnvironments.shared.isBusy = false
 
         Task { // Things to do after reloading domain list data
             if Valet.installed {
@@ -28,7 +28,7 @@ extension MainMenu {
                 updatePhpVersionInStatusBar()
                 rebuild()
 
-                if !PhpEnv.shared.validate(version) {
+                if !PhpEnvironments.shared.validate(version) {
                     self.suggestFixMyValet(failed: version)
                     return
                 }
@@ -125,7 +125,7 @@ extension MainMenu {
             preference: .notifyAboutVersionChange
         )
 
-        guard PhpEnv.phpInstall != nil else {
+        guard PhpEnvironments.phpInstall != nil else {
             Log.err("Cannot notify about version change if PHP is unlinked")
             return
         }

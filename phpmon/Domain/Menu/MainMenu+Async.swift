@@ -46,7 +46,7 @@ extension MainMenu {
         ]
     ) {
         if behaviours.contains(.reloadsPhpInstallation) {
-            PhpEnv.shared.isBusy = true
+            PhpEnvironments.shared.isBusy = true
         }
 
         if behaviours.contains(.setsBusyUI) {
@@ -59,12 +59,12 @@ extension MainMenu {
             do { try execute() } catch let e { error = e }
 
             if behaviours.contains(.setsBusyUI) {
-                PhpEnv.shared.isBusy = false
+                PhpEnvironments.shared.isBusy = false
             }
 
             Task { @MainActor [self, error] in
                 if behaviours.contains(.reloadsPhpInstallation) {
-                    PhpEnv.shared.currentInstall = ActivePhpInstallation()
+                    PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
                 }
 
                 if behaviours.contains(.updatesMenuBarContents) {

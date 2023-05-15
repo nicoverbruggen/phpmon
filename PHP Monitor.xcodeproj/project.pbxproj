@@ -72,8 +72,8 @@
 		C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C40C5C9C2846A40600E28255 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C5C9B2846A40600E28255 /* Preset.swift */; };
 		C40C5C9D2846A40600E28255 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C5C9B2846A40600E28255 /* Preset.swift */; };
-		C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
-		C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
+		C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */; };
+		C40C7F1F2772136000DDDCDC /* PhpEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */; };
 		C40C7F2827721FF600DDDCDC /* Valet+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* Valet+Alerts.swift */; };
 		C40C7F2927721FF600DDDCDC /* Valet+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* Valet+Alerts.swift */; };
 		C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
@@ -288,10 +288,10 @@
 		C471E7EF28F9BAC30021E251 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C471E7F028F9BAC30021E251 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853B2770FE3900DA4FBE /* Paths.swift */; };
 		C471E7F128F9BAC70021E251 /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
-		C471E7F228F9BAC70021E251 /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
+		C471E7F228F9BAC70021E251 /* PhpEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */; };
 		C471E7F328F9BAC70021E251 /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
 		C471E7F428F9BAC80021E251 /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
-		C471E7F528F9BAC80021E251 /* PhpEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnv.swift */; };
+		C471E7F528F9BAC80021E251 /* PhpEnvironments.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */; };
 		C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
 		C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
@@ -876,7 +876,7 @@
 		C40934A6298EEB8700D25014 /* phpmon-dev.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = "phpmon-dev.rb"; sourceTree = "<group>"; };
 		C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaskFileParserTest.swift; sourceTree = "<group>"; };
 		C40C5C9B2846A40600E28255 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
-		C40C7F1D2772136000DDDCDC /* PhpEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnv.swift; sourceTree = "<group>"; };
+		C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpEnvironments.swift; sourceTree = "<group>"; };
 		C40C7F2727721FF600DDDCDC /* Valet+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valet+Alerts.swift"; sourceTree = "<group>"; };
 		C40C7F2F27722E8D00DDDCDC /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		C40D72592A018ACC0054A067 /* PhpFormulaeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFormulaeStatus.swift; sourceTree = "<group>"; };
@@ -1654,7 +1654,7 @@
 			children = (
 				C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */,
 				C4CE7F9529683B43000102CF /* PhpVersionNumberCollection.swift */,
-				C40C7F1D2772136000DDDCDC /* PhpEnv.swift */,
+				C40C7F1D2772136000DDDCDC /* PhpEnvironments.swift */,
 				C4D936C827E3EB6100BD69FE /* PhpHelper.swift */,
 			);
 			path = "PHP Version";
@@ -2427,7 +2427,7 @@
 				C4D3660B29113F20006BD146 /* System.swift in Sources */,
 				C4D36601291132B7006BD146 /* ValetScanners.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
-				C40C7F1E2772136000DDDCDC /* PhpEnv.swift in Sources */,
+				C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C4B79EB629CA387F00A483EE /* BrewFormulaeHandler.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
@@ -2626,7 +2626,7 @@
 				C490E3B929BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
 				C471E7FF28F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */,
-				C471E7F228F9BAC70021E251 /* PhpEnv.swift in Sources */,
+				C471E7F228F9BAC70021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7E628F9BAC20021E251 /* Process.swift in Sources */,
 				C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
 				C45B914B295607F400F4EC78 /* Service.swift in Sources */,
@@ -2824,7 +2824,7 @@
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */,
 				C471E80028F9BAD10021E251 /* Xdebug.swift in Sources */,
-				C471E7F528F9BAC80021E251 /* PhpEnv.swift in Sources */,
+				C471E7F528F9BAC80021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7ED28F9BAC30021E251 /* Process.swift in Sources */,
 				C471E81128F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
 				C471E7CC28F9BA5B0021E251 /* TestableShell.swift in Sources */,
@@ -3055,7 +3055,7 @@
 				C43BCD4529FBEF40001547BC /* InstallAndUpgradeCommand.swift in Sources */,
 				C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
-				C40C7F1F2772136000DDDCDC /* PhpEnv.swift in Sources */,
+				C40C7F1F2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
 				C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */,

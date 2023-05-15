@@ -35,7 +35,7 @@ struct BrewFormula {
     var homebrewFolder: String {
         let resolved = name
             .replacingOccurrences(of: "shivammathur/php/", with: "")
-            .replacingOccurrences(of: "php@" + PhpEnv.brewPhpAlias, with: "php")
+            .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
 
         return "\(Paths.optPath)/\(resolved)/bin"
     }
@@ -64,6 +64,6 @@ struct BrewFormula {
             return nil
         }
 
-        return PhpEnv.shared.cachedPhpInstallations[shortVersion]?.isHealthy ?? nil
+        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?.isHealthy ?? nil
     }
 }

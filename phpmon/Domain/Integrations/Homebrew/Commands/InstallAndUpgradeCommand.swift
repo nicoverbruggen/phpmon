@@ -38,7 +38,7 @@ class InstallAndUpgradeCommand: BrewCommand {
         try await self.installPackages(onProgress)
 
         // Re-check the installed versions
-        await PhpEnv.detectPhpVersions()
+        await PhpEnvironments.detectPhpVersions()
 
         // After performing operations, attempt to run repairs if needed
         try await self.repairBrokenPackages(onProgress)
@@ -80,13 +80,13 @@ class InstallAndUpgradeCommand: BrewCommand {
     private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // Determine which PHP installations are considered unhealthy
         // Build a list of formulae to reinstall
-        let requiringRepair = PhpEnv.shared
+        let requiringRepair = PhpEnvironments.shared
             .cachedPhpInstallations.values
             .filter({ !$0.isHealthy })
             .map { installation in
                 let formula = "php@\(installation.versionNumber.short)"
 
-                if installation.versionNumber.short == PhpEnv.brewPhpAlias {
+                if installation.versionNumber.short == PhpEnvironments.brewPhpAlias {
                     return "php"
                 }
 
@@ -140,7 +140,7 @@ class InstallAndUpgradeCommand: BrewCommand {
         onProgress(.create(value: 0.95, title: self.title, description: "Reloading PHP versions..."))
 
         // Check which version of PHP are now installed
-        await PhpEnv.detectPhpVersions()
+        await PhpEnvironments.detectPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

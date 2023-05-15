@@ -88,7 +88,7 @@ struct Preset: Codable, Equatable {
             applyConfigurationValue(key: conf.key, value: conf.value ?? "")
         }
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             Log.info("Cannot toggle extensions if no PHP version is linked.")
             return
         }
@@ -129,12 +129,12 @@ struct Preset: Codable, Equatable {
     // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async -> Bool {
-        if PhpEnv.shared.currentInstall?.version.short == self.version! {
+        if PhpEnvironments.shared.currentInstall?.version.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
             return true
         }
 
-        if PhpEnv.shared.availablePhpVersions.first(where: { $0 == self.version }) != nil {
+        if PhpEnvironments.shared.availablePhpVersions.first(where: { $0 == self.version }) != nil {
             await MainMenu.shared.switchToPhp(self.version!)
             return true
         } else {
@@ -144,7 +144,7 @@ struct Preset: Codable, Equatable {
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
                     description: "alert.php_switch_unavailable.info".localized(
                         version!,
-                        PhpEnv.shared.availablePhpVersions.joined(separator: ", ")
+                        PhpEnvironments.shared.availablePhpVersions.joined(separator: ", ")
                     )
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
@@ -155,7 +155,7 @@ struct Preset: Codable, Equatable {
     }
 
     private func applyConfigurationValue(key: String, value: String) {
-        guard let file = PhpEnv.shared.getConfigFile(forKey: key) else {
+        guard let file = PhpEnvironments.shared.getConfigFile(forKey: key) else {
             return
         }
 
@@ -218,7 +218,7 @@ struct Preset: Codable, Equatable {
             return nil
         }
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             return nil
         }
 
@@ -235,7 +235,7 @@ struct Preset: Codable, Equatable {
     private func diffExtensions() -> [String: Bool] {
         var items: [String: Bool] = [:]
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             fatalError("If no PHP version is linked, diffing extensions is not possible.")
         }
 
@@ -257,7 +257,7 @@ struct Preset: Codable, Equatable {
         var items: [String: String?] = [:]
 
         for (key, _) in self.configuration {
-            guard let file = PhpEnv.shared.getConfigFile(forKey: key) else {
+            guard let file = PhpEnvironments.shared.getConfigFile(forKey: key) else {
                 break
             }
 

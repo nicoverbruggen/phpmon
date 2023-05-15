@@ -105,7 +105,7 @@ extension DomainListVC {
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
         var items: [NSMenuItem] = []
 
-        for version in PhpEnv.shared.availablePhpVersions.reversed() {
+        for version in PhpEnvironments.shared.availablePhpVersions.reversed() {
             let item = PhpMenuItem(
                 title: "domain_list.always_use_php".localized(version),
                 action: #selector(self.isolateSite),

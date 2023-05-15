@@ -51,7 +51,7 @@ struct PhpFormulaeView: View {
             }
         }
 
-        await PhpEnv.detectPhpVersions()
+        await PhpEnvironments.detectPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
         self.status.busy = false
@@ -244,7 +244,7 @@ struct PhpFormulaeView: View {
 
     public func confirmUninstall(_ formula: BrewFormula) async {
         // Disallow removal of the currently active versipn
-        if formula.installedVersion == PhpEnv.shared.currentInstall?.version.text {
+        if formula.installedVersion == PhpEnvironments.shared.currentInstall?.version.text {
             self.presentErrorAlert(
                 title: "phpman.uninstall_prevented.title".localized,
                 description: "phpman.uninstall_prevented.desc".localized,
@@ -297,7 +297,7 @@ struct PhpFormulaeView: View {
     }
 
     public func setBusyStatus(_ busy: Bool) {
-        PhpEnv.shared.isBusy = busy
+        PhpEnvironments.shared.isBusy = busy
         if busy {
             Task { @MainActor in
                 MainMenu.shared.setBusyImage()

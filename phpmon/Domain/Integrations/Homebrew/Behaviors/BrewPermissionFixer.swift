@@ -54,10 +54,10 @@ class BrewPermissionFixer {
      whether the Homebrew binary directory for the given PHP version is owned by root.
      */
     private func determineBrokenFormulae() async {
-        let formulae = PhpEnv.shared.cachedPhpInstallations.keys
+        let formulae = PhpEnvironments.shared.cachedPhpInstallations.keys
 
         for formula in formulae {
-            let realFormula = formula == PhpEnv.brewPhpAlias
+            let realFormula = formula == PhpEnvironments.brewPhpAlias
                 ? "php"
                 : "php@\(formula)"
 

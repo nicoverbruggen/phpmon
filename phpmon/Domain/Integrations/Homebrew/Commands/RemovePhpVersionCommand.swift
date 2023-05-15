@@ -55,7 +55,7 @@ class RemovePhpVersionCommand: BrewCommand {
 
         if process.terminationStatus <= 0 {
             onProgress(.create(value: 0.95, title: progressTitle, description: "Reloading PHP versions..."))
-            await PhpEnv.detectPhpVersions()
+            await PhpEnvironments.detectPhpVersions()
             await MainMenu.shared.refreshActiveInstallation()
             onProgress(.create(value: 1, title: progressTitle, description: "The operation has succeeded."))
         } else {

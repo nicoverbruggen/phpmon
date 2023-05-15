@@ -32,7 +32,7 @@ extension MainMenu {
      */
     private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        await PhpEnv.shared.determinePhpAlias()
+        await PhpEnvironments.shared.determinePhpAlias()
 
         // Initialize preferences
         _ = Preferences.shared
@@ -60,7 +60,7 @@ extension MainMenu {
         await Brew.shared.determineVersion()
 
         // Actually detect the PHP versions
-        await PhpEnv.detectPhpVersions()
+        await PhpEnvironments.detectPhpVersions()
 
         // Check for an alias conflict
         await BrewDiagnostics.checkForCaskConflict()
@@ -69,7 +69,7 @@ extension MainMenu {
         updatePhpVersionInStatusBar()
 
         // Attempt to find out if PHP-FPM is broken
-        PhpEnv.prepare()
+        PhpEnvironments.prepare()
 
         // Set up the filesystem watcher for the Homebrew binaries
         App.shared.prepareHomebrewWatchers()

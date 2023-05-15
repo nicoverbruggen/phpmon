@@ -33,7 +33,7 @@ extension App {
             return
         }
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             Log.info("The FS watcher will be disabled until a PHP install is active.")
             return

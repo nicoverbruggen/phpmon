@@ -10,11 +10,11 @@ import Foundation
 
 struct HomebrewFormulae {
     static var php: HomebrewFormula {
-        if PhpEnv.shared.homebrewPackage == nil {
+        if PhpEnvironments.shared.homebrewPackage == nil {
             return HomebrewFormula("php", elevated: true)
         }
 
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             return HomebrewFormula("php", elevated: true)
         }
 

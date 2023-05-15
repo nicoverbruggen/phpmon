@@ -13,7 +13,7 @@ class PhpGuard {
     var currentVersion: String?
 
     init() {
-        guard let linked = PhpEnv.phpInstall else {
+        guard let linked = PhpEnvironments.phpInstall else {
             Log.warn("PHP Guard is unable to determine the current PHP version!")
             return
         }

@@ -28,7 +28,7 @@ class PhpConfigChecker {
             FileExistenceCheck(condition: { Valet.installed }, path: "php-fpm.d/valet-fpm.conf")
         ]
 
-        for version in PhpEnv.shared.availablePhpVersions {
+        for version in PhpEnvironments.shared.availablePhpVersions {
             for file in shouldExist {
                 // Early exit in case our condition is not met
                 if file.condition != nil && file.condition!() == false {

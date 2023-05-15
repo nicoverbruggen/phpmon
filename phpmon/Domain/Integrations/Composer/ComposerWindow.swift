@@ -27,7 +27,7 @@ import Foundation
             return
         }
 
-        PhpEnv.shared.isBusy = true
+        PhpEnvironments.shared.isBusy = true
         MainMenu.shared.setBusyImage()
         MainMenu.shared.rebuild()
 
@@ -105,7 +105,7 @@ import Foundation
     // MARK: Main Menu Update
 
     private func removeBusyStatus() {
-        PhpEnv.shared.isBusy = false
+        PhpEnvironments.shared.isBusy = false
         Task { @MainActor in
             MainMenu.shared.updatePhpVersionInStatusBar()
         }

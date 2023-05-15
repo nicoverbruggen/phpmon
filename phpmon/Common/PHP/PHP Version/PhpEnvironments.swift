@@ -1,5 +1,5 @@
 //
-//  PhpSwitcher.swift
+//  PhpEnvironments.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/12/2021.
@@ -8,18 +8,27 @@
 
 import Foundation
 
-class PhpEnv {
+class PhpEnvironments {
 
     // MARK: - Initializer
 
+    /**
+
+     */
     init() {
         self.currentInstall = ActivePhpInstallation.load()
     }
 
+    /**
+     Creates the shared instance. Called when starting the app.
+     */
     static func prepare() {
         _ = Self.shared
     }
 
+    /**
+     Determine which PHP version the `php` formula is aliased to.
+     */
     func determinePhpAlias() async {
         let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
@@ -36,8 +45,8 @@ class PhpEnv {
     /** The delegate that is informed of updates. */
     weak var delegate: PhpSwitcherDelegate?
 
-    /** The static app instance. Accessible at any time. */
-    static let shared = PhpEnv()
+    /** The static instance. Accessible at any time. */
+    static let shared = PhpEnvironments()
 
     /** Whether the switcher is busy performing any actions. */
     var isBusy: Bool = false {
@@ -71,9 +80,9 @@ class PhpEnv {
      As such, we take that information from Homebrew.
      */
     static var brewPhpAlias: String {
-        if PhpEnv.shared.homebrewPackage == nil { return "8.2" }
+        if PhpEnvironments.shared.homebrewPackage == nil { return "8.2" }
 
-        return PhpEnv.shared.homebrewPackage.version
+        return PhpEnvironments.shared.homebrewPackage.version
     }
 
     /**
@@ -90,16 +99,30 @@ class PhpEnv {
 
     // MARK: - Methods
 
+    /**
+     The switcher that is currently in use.
+     This was originally added so the Internal and Valet switcher could be swapped out,
+     but currently this is no longer needed.
+     */
     public static var switcher: PhpSwitcher {
         return InternalSwitcher()
     }
 
+    /**
+     Alias that detects which versions of PHP are installed.
+     See also: `detectPhpVersions()`. Please note that this method
+     does *not* return the set of PHP versions that are supported.
+     */
     public static func detectPhpVersions() async {
         _ = await Self.shared.detectPhpVersions()
     }
 
     /**
      Detects which versions of PHP are installed.
+     This step also detects which versions of PHP are incompatible with the current version of Valet.
+     If a PHP installation is currently broken, that will also be reflected.
+
+     Returns a `Set<String>` of installations that are considered valid.
      */
     public func detectPhpVersions() async -> Set<String> {
         let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
@@ -184,6 +207,10 @@ class PhpEnv {
         return output
     }
 
+    /**
+     Returns a list of `VersionNumber` instances based on the available PHP versions
+     that are valid to switch to for a given constraint.
+     */
     public func validVersions(for constraint: String) -> [VersionNumber] {
         constraint.split(separator: "|").flatMap {
             return PhpVersionNumberCollection
@@ -196,7 +223,7 @@ class PhpEnv {
      Validates whether the currently running version matches the provided version.
      */
     public func validate(_ version: String) -> Bool {
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             return false
         }
@@ -217,7 +244,7 @@ class PhpEnv {
      You can then use the configuration file instance to change values.
      */
     public func getConfigFile(forKey key: String) -> PhpConfigurationFile? {
-        guard let install = PhpEnv.phpInstall else {
+        guard let install = PhpEnvironments.phpInstall else {
             return nil
         }
 

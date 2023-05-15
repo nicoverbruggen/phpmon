@@ -25,7 +25,7 @@ class InternalSwitcher: PhpSwitcher {
         let versions = getVersionsToBeHandled(version)
 
         await withTaskGroup(of: String.self, body: { group in
-            for available in PhpEnv.shared.availablePhpVersions {
+            for available in PhpEnvironments.shared.availablePhpVersions {
                 group.addTask {
                     await self.unlinkAndStopPhpVersion(available)
                     return available
@@ -76,7 +76,7 @@ class InternalSwitcher: PhpSwitcher {
     }
 
     func unlinkAndStopPhpVersion(_ version: String) async {
-        let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
+        let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
         await brew("unlink \(formula)")
 
         if Valet.installed {
@@ -88,7 +88,7 @@ class InternalSwitcher: PhpSwitcher {
     }
 
     func linkAndStartPhpVersion(_ version: String, primary: Bool) async {
-        let formula = (version == PhpEnv.brewPhpAlias) ? "php" : "php@\(version)"
+        let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
 
         if primary {
             Log.info("\(formula) is the primary formula, linking...")

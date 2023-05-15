@@ -42,7 +42,7 @@ class FakeValetSite: ValetSite {
             self.isolatedPhpVersion = PhpInstallation(isolated)
         }
 
-        if PhpEnv.shared.currentInstall != nil {
+        if PhpEnvironments.shared.currentInstall != nil {
             self.evaluateCompatibility()
         }
     }

@@ -32,7 +32,7 @@ class ActivePhpInstallation {
     // MARK: - Computed
 
     var formula: String {
-        return (version.short == PhpEnv.brewPhpAlias) ? "php" : "php@\(version.short)"
+        return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Initializer
