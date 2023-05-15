@@ -20,15 +20,14 @@ class HomebrewUpgradableTest: XCTestCase {
                 : .instant(try! String(contentsOf: Self.outdatedFileUrl))
         ])
 
-        let env = PhpEnv.shared
+        let env = PhpEnvironments.shared
         env.cachedPhpInstallations = [
             "8.1": PhpInstallation("8.1.16"),
             "8.2": PhpInstallation("8.2.3"),
             "7.4": PhpInstallation("7.4.11")
         ]
 
-        let brew = Brew.shared
-        let data = await brew.getPhpVersions()
+        let data = await BrewFormulaeHandler().loadPhpVersions(loadOutdated: true)
 
         XCTAssertTrue(data.contains(where: { formula in
             formula.installedVersion == "8.1.16" && formula.upgradeVersion == "8.1.17"
