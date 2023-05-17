@@ -187,11 +187,19 @@ class AppUpdater {
         // Cleanup the upgrade.success file
         if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
-                LocalNotification.send(
-                    title: "notification.phpmon_updated.title".localized,
-                    subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
-                    preference: nil
-                )
+                if App.identifier.contains(".phpmon.eap") || App.identifier.contains(".phpmon.dev") {
+                    LocalNotification.send(
+                        title: "notification.phpmon_updated.title".localized,
+                        subtitle: "notification.phpmon_updated_dev.desc".localized(App.shortVersion, App.bundleVersion),
+                        preference: nil
+                    )
+                } else {
+                    LocalNotification.send(
+                        title: "notification.phpmon_updated.title".localized,
+                        subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
+                        preference: nil
+                    )
+                }
             }
 
             Log.info("The `upgrade.success` file was found! An update was installed. Cleaning up...")

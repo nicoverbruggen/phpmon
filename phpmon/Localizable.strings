@@ -426,7 +426,8 @@ This has no effect on other terminals, only for the particular terminal session 
 "notification.preset_reverted_desc" = "The last preset you applied has been undone. Your previous configuration is now active.";
 
 "notification.phpmon_updated.title" = "PHP Monitor has been updated!";
-"notification.phpmon_updated.desc" = "You are now running PHP Monitor v%@.";
+"notification.phpmon_updated.desc" = "You are now running PHP Monitor v%@. Thanks for staying up-to-date!";
+"notification.phpmon_updated_dev.desc" = "PHP Monitor v%@ (build %@) is now installed and active.";
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
