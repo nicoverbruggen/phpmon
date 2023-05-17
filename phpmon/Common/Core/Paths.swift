@@ -19,7 +19,17 @@ public class Paths {
     private var userName: String
 
     init() {
+        // Assume the default directory is correct
         baseDir = App.architecture != "x86_64" ? .opt : .usr
+
+        // Ensure that if a different location is used, it takes precendence
+        if baseDir == .usr
+            && FileSystem.directoryExists("/usr/local/homebrew")
+            && !FileSystem.directoryExists("/usr/local/Cellar") {
+            Log.warn("Using /usr/local/homebrew as base directory!")
+            baseDir = .usr_hb
+        }
+
         userName = identity()
         Log.info("The current username is `\(userName)`.")
     }
@@ -100,6 +110,8 @@ public class Paths {
             Paths.composer = "/usr/local/bin/composer"
         } else if FileSystem.fileExists("/opt/homebrew/bin/composer") {
             Paths.composer = "/opt/homebrew/bin/composer"
+        } else if FileSystem.fileExists("/usr/local/homebrew/bin/composer") {
+            Paths.composer = "/usr/local/homebrew/bin/composer"
         } else {
             Paths.composer = nil
             Log.warn("Composer was not found.")
@@ -111,6 +123,7 @@ public class Paths {
     public enum HomebrewDir: String {
         case opt = "/opt/homebrew"
         case usr = "/usr/local"
+        case usr_hb = "/usr/local/homebrew"
     }
 
 }
