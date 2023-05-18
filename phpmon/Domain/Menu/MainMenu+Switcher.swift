@@ -28,7 +28,7 @@ extension MainMenu {
                 updatePhpVersionInStatusBar()
                 rebuild()
 
-                if !PhpEnvironments.shared.validate(version) {
+                if Valet.installed && !PhpEnvironments.shared.validate(version) {
                     self.suggestFixMyValet(failed: version)
                     return
                 }
@@ -46,7 +46,15 @@ extension MainMenu {
                 }
 
                 // Check if Valet still works correctly
-                self.checkForPlatformIssues()
+                if Valet.installed {
+                    self.checkForPlatformIssues()
+                }
+
+                // Check if the silent switch occurred and reset it
+                if shouldSwitchSilently {
+                    shouldSwitchSilently = false
+                    return
+                }
 
                 // Update stats
                 Stats.incrementSuccessfulSwitchCount()
@@ -115,7 +123,6 @@ extension MainMenu {
 
     @MainActor private func notifyAboutVersionChange(to version: String) {
         if shouldSwitchSilently {
-            shouldSwitchSilently = false
             return
         }
 

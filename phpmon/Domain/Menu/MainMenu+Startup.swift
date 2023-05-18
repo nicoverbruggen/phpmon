@@ -18,8 +18,6 @@ extension MainMenu {
             self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
 
-        await App.shared.environment.process()
-
         if await Startup().checkEnvironment() {
             await self.onEnvironmentPass()
         } else {

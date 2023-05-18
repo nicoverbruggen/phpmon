@@ -9,13 +9,6 @@
 // MARK: Common Shell Commands
 
 /**
- Runs a `valet` command. Defaults to running as superuser.
- */
-func valet(_ command: String, sudo: Bool = true) async -> String {
-    return await Shell.pipe("\(sudo ? "sudo " : "")" + "\(Paths.valet) \(command)").out
-}
-
-/**
  Runs a `brew` command. Can run as superuser.
  */
 func brew(_ command: String, sudo: Bool = false) async {
