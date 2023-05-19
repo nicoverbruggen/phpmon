@@ -129,9 +129,18 @@ class ActivePhpInstallation {
             return "∞"
         }
 
+        if value.isEmpty {
+            return "⚠️"
+        }
+
         // Check if the syntax is valid otherwise
         let regex = try! NSRegularExpression(pattern: #"^([0-9]*)(K|M|G|)$"#, options: [])
-        let match = regex.matches(in: value, options: [], range: NSRange(location: 0, length: value.count)).first
+
+        let match = regex.matches(
+            in: value, options: [],
+            range: NSRange(location: 0, length: value.count)
+        ).first
+
         return (match == nil) ? "⚠️" : "\(value)B"
     }
 
