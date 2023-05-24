@@ -61,16 +61,25 @@ class BrewPermissionFixer {
                 ? "php"
                 : "php@\(formula)"
 
-            if isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/bin")
-                || isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/sbin") {
-                let borked = DueOwnershipFormula(
-                    formula: realFormula,
-                    path: "\(Paths.optPath)/\(realFormula)"
-                )
+            let binFolderOwned = isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/bin")
+            let sbinFolderOwned = isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/sbin")
 
+            if binFolderOwned || sbinFolderOwned {
                 Log.warn("\(formula) is owned by root")
 
-                broken.append(borked)
+                if binFolderOwned {
+                    broken.append(DueOwnershipFormula(
+                        formula: realFormula,
+                        path: "\(Paths.optPath)/\(realFormula)/bin"
+                    ))
+                }
+
+                if sbinFolderOwned {
+                    broken.append(DueOwnershipFormula(
+                        formula: realFormula,
+                        path: "\(Paths.optPath)/\(realFormula)/sbin"
+                    ))
+                }
             }
         }
     }
