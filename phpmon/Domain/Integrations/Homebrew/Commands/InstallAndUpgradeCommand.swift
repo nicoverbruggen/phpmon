@@ -33,6 +33,14 @@ class InstallAndUpgradeCommand: BrewCommand {
     }
 
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        let progressTitle = "Please wait..."
+
+        onProgress(.create(
+            value: 0.2,
+            title: progressTitle,
+            description: "PHP Monitor is preparing Homebrew..."
+        ))
+
         // Try to run all upgrade and installation operations
         try await self.upgradePackages(onProgress)
         try await self.installPackages(onProgress)
