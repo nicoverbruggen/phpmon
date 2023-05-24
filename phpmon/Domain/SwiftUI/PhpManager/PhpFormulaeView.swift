@@ -197,12 +197,16 @@ struct PhpFormulaeView: View {
                     self.status.description = progress.description
                     self.status.busy = progress.value != 1
 
+                    // Whenever a key step is finished, refresh the PHP versions
                     if progress.value == 1 {
-                        self.setBusyStatus(false)
                         await self.handler.refreshPhpVersions(loadOutdated: false)
                     }
                 }
             }
+            // Finally, after completing the command, also refresh PHP versions
+            await self.handler.refreshPhpVersions(loadOutdated: false)
+            // and mark the app as no longer busy
+            self.setBusyStatus(false)
         } catch let error {
             let error = error as! BrewCommandError
             let messages = error.log.suffix(2).joined(separator: "\n")

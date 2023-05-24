@@ -147,7 +147,7 @@ class InstallAndUpgradeCommand: BrewCommand {
 
          // If a PHP version was active prior to running the operations, attempt to restore it
          if let version = phpGuard.currentVersion {
-             await MainMenu.shared.switchToAnyPhpVersion(version, silently: true)
+             await MainMenu.shared.switchToPhpVersionAndWait(version, silently: true)
          }
 
         // Also rebuild the content of the main menu

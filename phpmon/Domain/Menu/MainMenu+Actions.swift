@@ -273,6 +273,30 @@ extension MainMenu {
         }
     }
 
+    func switchToPhpVersionAndWait(_ version: String, silently: Bool = false) async {
+        if silently {
+            MainMenu.shared.shouldSwitchSilently = true
+        }
+
+        if !PhpEnvironments.shared.availablePhpVersions.contains(version) {
+            Log.warn("This PHP version is currently unavailable, not switching!")
+            return
+        }
+
+        setBusyImage()
+        PhpEnvironments.shared.isBusy = true
+        PhpEnvironments.shared.delegate = self
+        PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
+
+        updatePhpVersionInStatusBar()
+        rebuild()
+        await PhpEnvironments.switcher.performSwitch(to: version)
+
+        PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+        App.shared.handlePhpConfigWatcher()
+        PhpEnvironments.shared.delegate?.switcherDidCompleteSwitch(to: version)
+    }
+
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
         PhpEnvironments.shared.isBusy = true
