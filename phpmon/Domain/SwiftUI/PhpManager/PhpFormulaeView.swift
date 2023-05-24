@@ -293,7 +293,7 @@ struct PhpFormulaeView: View {
             self.presentErrorAlert(
                 title: "phpman.failures.uninstall.title".localized,
                 description: "phpman.failures.uninstall.desc".localized(
-                    "brew uninstall \(formula) --force"
+                    "brew uninstall \(formula.name) --force"
                 ),
                 button: "generic.ok".localized
             )

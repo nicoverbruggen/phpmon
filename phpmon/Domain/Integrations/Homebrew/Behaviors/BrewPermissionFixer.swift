@@ -69,7 +69,20 @@ class BrewPermissionFixer {
                     path: binaryPath
                 )
 
-                Log.warn("\(formula) is owned by root")
+                Log.warn("\(formula) is owned by root (bin folder)")
+
+                broken.append(borked)
+            }
+
+            let serverBinaryPath = "\(Paths.optPath)/\(realFormula)/sbin"
+
+            if isOwnedByRoot(path: serverBinaryPath) {
+                let borked = DueOwnershipFormula(
+                    formula: realFormula,
+                    path: serverBinaryPath
+                )
+
+                Log.warn("\(formula) is owned by root (sbin folder)")
 
                 broken.append(borked)
             }
