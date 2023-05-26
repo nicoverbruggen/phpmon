@@ -739,7 +739,7 @@ COMMON TROUBLESHOOTING TIPS
 
 • %@
 
-When files like these are missing, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet.";
+When files like these are missing, you should switch to the PHP version associated with those files: that may resolve the problem. If this doesn't fix the issue, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet (if you are using Valet).";
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
@@ -751,14 +751,14 @@ When files like these are missing, it's recommended to reinstall the appropriate
 "onboarding.explore.lite" = "You now have access to PHP Monitor's most important features.
 Please note that some features (greyed out below) are currently unavailable because Laravel Valet is not active.";
 "onboarding.tour.menu_bar.title" = "Power In Your Menu Bar";
-"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, and much more.";
+"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, installing different PHP versions, and more.";
 "onboarding.tour.faq_hint" = "**Questions?** I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
 "onboarding.tour.services.title" = "Manage Homebrew Services";
 "onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
 "onboarding.tour.domains.title" = "Manage Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the menu bar item, you can view which domains are linked and parked, as well as active nginx proxies.";
 "onboarding.tour.isolation.title" = "Isolate Domains";
-"onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
+"onboarding.tour.isolation" = "If you have Valet 3 or newer installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
 "onboarding.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
 "onboarding.tour.close" = "Close Tour";
