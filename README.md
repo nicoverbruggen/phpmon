@@ -23,8 +23,9 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
 * macOS 12.4 or later (Monterey and Ventura are supported)
-* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
+* Homebrew is installed in the default location (`/usr/local/homebrew` or `/opt/homebrew`)
 * Homebrew `php` formula is installed
+* Optional but recommended: Laravel Valet
 
 _Starting with PHP Monitor 6.0, you do not need to have Laravel Valet installed for PHP Monitor to work. To get access to all features of PHP Monitor however, installing Valet is **recommended**._
 
@@ -135,6 +136,14 @@ Super convenient!
 </details>
 
 <details>
+<summary><strong>What features are unavailable in Standalone Mode?</strong></summary>
+
+The services manager is disabled, and all other obvious Laravel Valet integrations (configuration finder, domains list, Fix My Valet) are also disabled.
+
+(Most other features remain available.)
+</details>
+
+<details>
 <summary><strong>I want to set up PHP Monitor from scratch! I don't have Homebrew installed either, where do I begin?</strong></summary>
 
 If you want to set up your computer for the very first time with PHP Monitor, here's how I do it.
@@ -160,7 +169,7 @@ If you're on an Apple Silicon-based Mac, you'll need to add:
 and add the following to your `.zshrc` file, but add this BEFORE the homebrew PATH additions:
 
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
-    
+
 If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
 
     export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -179,8 +188,12 @@ Make sure PHP is linked correctly:
 
 should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
+**If you don't need Laravel Valet, you can stop here. PHP Monitor will work like this in Standalone Mode.**
+
+If you'd like to have Valet as well, continue and install Valet with Composer, like this.
+
     composer global require laravel/valet
-    
+
 For optimal results, you should lock your PHP platform for global dependencies to the oldest version of PHP you intend to run. If that version is PHP 7.0, your `~/.composer/composer.json` file could look like this (please adjust the version accordingly!):
 
 ```
@@ -199,17 +212,12 @@ For optimal results, you should lock your PHP platform for global dependencies t
 Run `composer global update` again. This ensures that when you switch to a different global PHP version, [Valet won't break](https://github.com/nicoverbruggen/phpmon/issues/178). If it does, PHP Monitor will let you know what you can do about this.
 
 Then, install Valet:
-    
+
     valet install
 
 This should install `dnsmasq` and set up Valet. Great, almost there!
 
     valet trust
-
-You can now install PHP Monitor, if you haven't already:
-
-    brew tap nicoverbruggen/homebrew-cask
-	brew install --cask phpmon
 
 Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work. You will need to approve the initial launch of the app, but you should be ready to go now.
 </details>
@@ -219,12 +227,16 @@ Finally, run PHP Monitor. Since the app is notarized and signed with a developer
 
 PHP Monitor will check if an update is available every time you start the app.
 
-You can disable this behaviour by going to Preferences (via the PHP Monitor icon in the menu bar) and unchecking "Automatically check for updates". You can always check for updates manually.
+You can disable this behaviour by going to Preferences (via the PHP Monitor icon in the menu bar) and unchecking "Automatically check for updates". (You can always check for updates manually.)
 
 </details>
 
 <details>
 <summary><strong>I have PHP Monitor installed, and it works. I want to upgrade my PHP installations to the latest version, what's the best way to do this?</strong></summary>
+
+The easiest way is to simply use the built-in **PHP Version Manager**, which will allow you to upgrade your PHP versions with one click.
+
+If you want to do this manually, you can follow the instructions below.
 
 It's easy to make a mistake here, and end up with an unlinked version of PHP or have versions missing from PHP Monitor.
 
@@ -255,7 +267,7 @@ This should resolve the issue! If that does not fix the issue, run `brew link ph
 
 	brew install php
 	brew link php --force
-	
+
 </details>
 
 <details>
@@ -310,11 +322,13 @@ Make sure you have at least **Valet 3.0** installed, since support for isolation
 <details>
 <summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark!</strong></summary>
 
-The value you provided in your INI file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
+The value you provided in your `.ini` file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
 
 You must a provide a value like so: `1024K`, `256M`, `1G`. Alternatively, `-1` is also allowed, or just an integer (which will result in N amount of bytes being the limit).
 
 **Example**: Trying to use `1GB` as the memory limit, for example, will result in this exclamation mark. The correct way to set a 1GB limit is by using `1G` as the value. (Note: The displayed value will append `B` for clarity, so if you set `1G`, the value reported by PHP Monitor will be 1 GB.)
+
+(If you are using Valet, you can adjust these limits in the `.conf.d/php-memory-limits.ini` file. Otherwise, you may need to adjust `php.ini`.)
 
 </details>
 
@@ -403,6 +417,9 @@ You can omit the `php` key in the preset if you do not wish for the preset to sw
 
 <details>
 <summary><strong>How do I ensure additional Homebrew services are shown in the app?</strong></summary>
+
+> **Info**
+> Homebrew services aren't displayed if you are using Valet in Standalone Mode.
 
 You must set these services up in a JSON file, located in `~/.config/phpmon/config.json`. 
 
@@ -594,7 +611,7 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be a bit faster than Valet’s switcher.
 
-If you're using Valet 3, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
+If you're using Valet 3 or newer, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
 
 ### Config change detection
 
