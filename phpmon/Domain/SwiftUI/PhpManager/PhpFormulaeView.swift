@@ -191,8 +191,8 @@ struct PhpFormulaeView: View {
     public func runCommand(_ command: InstallAndUpgradeCommand) async {
         if PhpEnvironments.shared.isBusy {
             self.presentErrorAlert(
-                title: "phpman.busy.title".localized,
-                description: "phpman.busy.desc".localized,
+                title: "phpman.action_prevented_busy.title".localized,
+                description: "phpman.action_prevented_busy.desc".localized,
                 button: "generic.ok".localized
             )
             return

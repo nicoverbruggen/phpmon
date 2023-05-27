@@ -128,6 +128,9 @@ You may be asked for your password during the uninstallation process if file per
 
 %@";
 
+"phpman.action_prevented_busy.title" = "PHP Monitor is currently busy.";
+"phpman.action_prevented_busy.desc" = "PHP Monitor is currently doing something like switching between PHP versions. To ensure your system does not break, you will need to wait until PHP Monitor is ready in order before you try this again.";
+
 "phpman.uninstall_prevented.title" = "You cannot uninstall the currently active version of PHP via PHP Monitor.";
 "phpman.uninstall_prevented.desc" = "In order to prevent issues with PHP Monitor and further crashes, it isn't possible to uninstall the currently linked version of PHP via this UI. You can switch versions and try again, or uninstall this version manually via the terminal.\n\nPlease note that PHP Monitor may crash if you uninstall the currently linked PHP version.";
 
