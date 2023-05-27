@@ -17,6 +17,10 @@
 "mi_php_broken_2" = "Try running `php -v` in your terminal.";
 "mi_php_broken_3" = "You could also try switching to another version.";
 "mi_php_broken_4" = "Running `brew reinstall php` (or for the equivalent version) might help.";
+"mi_no_php_linked" = "No PHP version linked!";
+"mi_fix_php_link" = "Fix Automatically...";
+"mi_no_php_linked_explain" = "What's This?";
+"mi_php_version_manager" = "PHP Version Manager...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";
@@ -67,6 +71,7 @@
 "mi_preferences" = "Preferences...";
 "mi_donate" = "Donate...";
 "mi_check_for_updates" = "Check for Updates...";
+"mi_lite_mode" = "About Standalone Mode...";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
@@ -83,6 +88,74 @@
 "mi_xdebug_available_modes" = "Available Modes";
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
+
+// PHPMAN
+
+"phpman.busy.title" = "Checking for updates!";
+"phpman.busy.description.outdated" = "Checking if any PHP version is outdated...";
+
+"phpman.version.broken" = "This version appears to be broken, you can attempt repair.";
+"phpman.version.has_update" = "Version %@ installed, %@ available.";
+"phpman.version.installed" = "Version %@ is currently installed.";
+"phpman.version.available_for_installation" = "This version can be installed.";
+"phpman.buttons.uninstall" = "Uninstall";
+"phpman.buttons.install" = "Install";
+"phpman.buttons.update" = "Update";
+"phpman.buttons.repair" = "Repair";
+
+"phpman.title" = "PHP Version Manager";
+"phpman.description" = "**PHP Version Manager** lets you install, upgrade and delete different PHP versions via Homebrew without needing to run the commands in the terminal yourself.";
+"phpman.disclaimer" = "Please note that installing or upgrading PHP versions may cause other Homebrew packages to be upgraded as well. Most installation steps usually take some time, so please be patient while Homebrew does its job.";
+"phpman.refresh.button" = "Search for Updates";
+"phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
+
+"phpman.has_updates.description" = "One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)";
+"phpman.has_updates.button" = "Upgrade All";
+
+"phpman.warnings.unsupported.title" = "Your version of Homebrew may cause issues";
+"phpman.warnings.unsupported.desc" = "No functionality is disabled, but some commands may not work as expected. You are currently running Homebrew %@.
+
+Currently, Homebrew 4 is the only supported version for the PHP Version Manager. If you are running a newer version of Homebrew, you may wish to check if a newer version of PHP Monitor is available.";
+
+"phpman.warnings.removal.title" = "Are you sure you want to uninstall %@?";
+"phpman.warnings.removal.desc" = "Please note that configuration files will not be removed, so it should be easy to reinstall later if needed.
+
+You may be asked for your password during the uninstallation process if file permissions don't allow a simple removal.";
+"phpman.warnings.removal.button" = "Uninstall";
+
+"phpman.failures.install.title" = "Installation failed!";
+"phpman.failures.install.desc" = "Unfortunately, the operation returned an error code for some reason. You may find that the formulae have been correctly installed or upgraded. Unfortunately, I can't do much about this. Please check out the last few messages from Homebrew here for more information on what happened:
+
+%@";
+
+"phpman.action_prevented_busy.title" = "PHP Monitor is currently busy.";
+"phpman.action_prevented_busy.desc" = "PHP Monitor is currently doing something like switching between PHP versions. To ensure your system does not break, you will need to wait until PHP Monitor is ready in order before you try this again.";
+
+"phpman.uninstall_prevented.title" = "You cannot uninstall the currently active version of PHP via PHP Monitor.";
+"phpman.uninstall_prevented.desc" = "In order to prevent issues with PHP Monitor and further crashes, it isn't possible to uninstall the currently linked version of PHP via this UI. You can switch versions and try again, or uninstall this version manually via the terminal.\n\nPlease note that PHP Monitor may crash if you uninstall the currently linked PHP version.";
+
+"phpman.failures.uninstall.title" = "Uninstall failed!";
+"phpman.failures.uninstall.desc" = "Unfortunately, the automatic uninstallation failed. You can manually try to run this command: `%@` and find out what goes wrong. Remember to restart PHP Monitor (or press the refresh button) when this is done.";
+
+"phpman.unlinked.title" = "None of the versions of PHP installed on your system are currently linked.";
+"phpman.unlinked.desc" = "You likely still have some version of PHP that is currently installed, but currently no version of PHP is linked.";
+"phpman.unlinked.detail" = "Without any PHP version linked, the `php` binary is not accessible on your system and you cannot run any PHP scripts without explicitly being part of the PATH. You can have PHP Monitor automatically resolve this problem (choose Fix Automatically in the main menu), or fix it yourself by running `brew link php --force`.";
+
+"phpman.operations.repairing" = "Repairing installations...";
+"phpman.operations.updating" = "Installing updates...";
+"phpman.operations.installing" = "Installing %@...";
+
+"phpman.steps.fetching" = "Fetching...";
+"phpman.steps.downloading" = "Downloading package data...";
+"phpman.steps.installing" = "Installing some package data...";
+"phpman.steps.pouring" = "Pouring... This can take a while...";
+"phpman.steps.summary" = "Some package has finished installing...";
+
+// LITE MODE
+
+"lite_mode_explanation.title" = "You are currently running PHP Monitor in Standalone Mode.";
+"lite_mode_explanation.subtitle" = "PHP Monitor has additional features that are available for use if you happen to be a user of Laravel Valet. Right now, PHP Monitor could not detect an active installation of Valet on your system, so those features are unavailable.";
+"lite_mode_explanation.description" = "For more information, I'd recommend checking out the README (accessible on GitHub) which will explain what steps you need to take to install Valet and make PHP Monitor run correctly with it installed. You will need to restart PHP Monitor after installing Laravel Valet before it will leave Standalone Mode.";
 
 // GENERIC
 
@@ -360,7 +433,8 @@ This has no effect on other terminals, only for the particular terminal session 
 "notification.preset_reverted_desc" = "The last preset you applied has been undone. Your previous configuration is now active.";
 
 "notification.phpmon_updated.title" = "PHP Monitor has been updated!";
-"notification.phpmon_updated.desc" = "You are now running PHP Monitor v%@.";
+"notification.phpmon_updated.desc" = "You are now running PHP Monitor v%@. Thanks for staying up-to-date!";
+"notification.phpmon_updated_dev.desc" = "PHP Monitor v%@ (build %@) is now installed and active.";
 
 // Composer Update
 "alert.composer_missing.title" = "Composer not found!";
@@ -512,6 +586,12 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_opt.desc" = "If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
+/// PHP binary is broken
+"startup.errors.dyld_library.title" = "PHP is installed, but appears to be broken";
+"startup.errors.dyld_library.subtitle" = "When PHP Monitor is attempting to run commands, it is failing to do so correctly. This is usually an indicator of a broken PHP installation.";
+"startup.errors.dyld_library.desc" = "Running `brew reinstall php && brew link php` in your Terminal may resolve this issue, so please give that a try.";
+
+/// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
 "startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
 "startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
@@ -666,7 +746,7 @@ COMMON TROUBLESHOOTING TIPS
 
 • %@
 
-When files like these are missing, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet.";
+When files like these are missing, you should switch to the PHP version associated with those files: that may resolve the problem. If this doesn't fix the issue, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet (if you are using Valet).";
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
@@ -674,15 +754,18 @@ When files like these are missing, it's recommended to reinstall the appropriate
 
 "onboarding.title" = "Welcome Tour";
 "onboarding.welcome" = "Welcome to PHP Monitor!";
-"onboarding.explore" = "Congrats, you now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
+"onboarding.explore" = "You now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
+"onboarding.explore.lite" = "You now have access to PHP Monitor's most important features.
+Please note that some features (greyed out below) are currently unavailable because Laravel Valet is not active.";
 "onboarding.tour.menu_bar.title" = "Power In Your Menu Bar";
-"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, and much more.";
-"onboarding.tour.faq_hint" = "I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
+"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, installing different PHP versions, and more.";
+"onboarding.tour.faq_hint" = "**Questions?** I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
 "onboarding.tour.services.title" = "Manage Homebrew Services";
 "onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
 "onboarding.tour.domains.title" = "Manage Domains";
 "onboarding.tour.domains" = "By opening the Domains window via the menu bar item, you can view which domains are linked and parked, as well as active nginx proxies.";
 "onboarding.tour.isolation.title" = "Isolate Domains";
-"onboarding.tour.isolation" = "If you have Valet 3 installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
+"onboarding.tour.isolation" = "If you have Valet 3 or newer installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
+"onboarding.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
 "onboarding.tour.close" = "Close Tour";

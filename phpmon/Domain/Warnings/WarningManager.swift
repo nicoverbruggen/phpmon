@@ -10,11 +10,19 @@ import Foundation
 import Cocoa
 
 class WarningManager: ObservableObject {
-
     static var shared: WarningManager = WarningManager()
+
+    /// These warnings are the ones that are ready to be displayed.
+    @Published public var warnings: [Warning] = []
+
+    /// This variable is thread-safe and may be modified at any time.
+    /// When all temporary warnings are set, you may broadcast these changes
+    /// and they will be sent to the @Published variable via the main thread.
+    private var temporaryWarnings: [Warning] = []
 
     init() {
         if isRunningSwiftUIPreview {
+            /// SwiftUI previews will always list all possible evaluations.
             self.warnings = self.evaluations
         }
     }
@@ -60,8 +68,6 @@ class WarningManager: ObservableObject {
         )
     ]
 
-    @Published public var warnings: [Warning] = []
-
     public func hasWarnings() -> Bool {
         return !warnings.isEmpty
     }
@@ -70,33 +76,41 @@ class WarningManager: ObservableObject {
         Task { await WarningManager.shared.checkEnvironment() }
     }
 
+    @MainActor func clearWarnings() {
+        self.warnings = []
+    }
+
+    @MainActor func broadcastWarnings() {
+        self.warnings = temporaryWarnings
+    }
+
     /**
      Checks the user's environment and checks if any special warnings apply.
      */
     func checkEnvironment() async {
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
-            // For debugging purposes, we may wish to see all possible evaluations listed
-            Task { @MainActor in
-                self.warnings = self.evaluations
-            }
-        } else {
-            // Otherwise, loop over the actual evaluations and list the warnings
-            await loopOverEvaluations()
+            self.temporaryWarnings = self.evaluations
+            await self.broadcastWarnings()
+            return
         }
 
+        await evaluate()
         await MainMenu.shared.rebuild()
     }
 
-    private func loopOverEvaluations() async {
-        Task { @MainActor in
-            self.warnings = []
-        }
+    /**
+     Runs through all evaluations and appends any applicable warning results.
+     Will automatically broadcast these warnings.
+     */
+    private func evaluate() async {
+        self.temporaryWarnings = []
+
         for check in self.evaluations where await check.applies() {
             Log.info("[DOCTOR] \(check.name) (!)")
-            Task { @MainActor in
-                self.warnings.append(check)
-            }
+            self.temporaryWarnings.append(check)
             continue
         }
+
+        await self.broadcastWarnings()
     }
 }

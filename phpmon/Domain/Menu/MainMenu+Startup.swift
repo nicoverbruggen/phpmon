@@ -18,8 +18,6 @@ extension MainMenu {
             self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
 
-        await App.shared.environment.process()
-
         if await Startup().checkEnvironment() {
             await self.onEnvironmentPass()
         } else {
@@ -32,18 +30,18 @@ extension MainMenu {
      */
     private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        await PhpEnv.shared.determinePhpAlias()
+        await PhpEnvironments.shared.determinePhpAlias()
 
         // Initialize preferences
         _ = Preferences.shared
 
         // Determine install method
-        Log.info(HomebrewDiagnostics.customCaskInstalled
+        Log.info(BrewDiagnostics.customCaskInstalled
             ? "[BREW] The app has been installed via Homebrew Cask."
             : "[BREW] The app has been installed directly (optimal)."
         )
 
-        Log.info(HomebrewDiagnostics.usesNginxFullFormula
+        Log.info(BrewDiagnostics.usesNginxFullFormula
              ? "[BREW] The app will be using the `nginx-full` formula."
              : "[BREW] The app will be using the `nginx` formula."
         )
@@ -51,24 +49,28 @@ extension MainMenu {
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
             Log.info("PHP Monitor has extracted the version number of Valet: \(Valet.shared.version!.text)")
+
+            // Validate the version (this will enforce which versions of PHP are supported)
+            Valet.shared.validateVersion()
         }
 
-        // Validate the version (this will enforce which versions of PHP are supported)
-        Valet.shared.validateVersion()
+        // Validate the Homebrew version (determines install/upgrade functionality)
+        await Brew.shared.determineVersion()
 
         // Actually detect the PHP versions
-        await PhpEnv.detectPhpVersions()
+        await PhpEnvironments.detectPhpVersions()
 
         // Check for an alias conflict
-        await HomebrewDiagnostics.checkForCaskConflict()
+        await BrewDiagnostics.checkForCaskConflict()
 
         // Update the icon
         updatePhpVersionInStatusBar()
 
         // Attempt to find out if PHP-FPM is broken
-        Log.info("Determining broken PHP-FPM...")
-        let installation = PhpEnv.phpInstall
-        installation.notifyAboutBrokenPhpFpm()
+        PhpEnvironments.prepare()
+
+        // Set up the filesystem watcher for the Homebrew binaries
+        App.shared.prepareHomebrewWatchers()
 
         // Check for other problems
         WarningManager.shared.evaluateWarnings()
@@ -86,20 +88,25 @@ extension MainMenu {
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
 
-        // Preload sites
-        await Valet.shared.startPreloadingSites()
+        // Set up menu items
+        AppDelegate.instance.configureMenuItems(standalone: !Valet.installed)
 
-        // After preloading sites, check for PHP-FPM pool conflicts
-        HomebrewDiagnostics.checkForPhpFpmPoolConflicts()
+        if Valet.installed {
+            // Preload all sites
+            await Valet.shared.startPreloadingSites()
 
-        // A non-default TLD is not officially supported since Valet 3.2.x
-        Valet.notifyAboutUnsupportedTLD()
+            // After preloading sites, check for PHP-FPM pool conflicts
+            await BrewDiagnostics.checkForValetMisconfiguration()
+
+            // Check if PHP-FPM is broken (should be fixed automatically if phpmon >= 6.0)
+            await Valet.shared.notifyAboutBrokenPhpFpm()
+
+            // A non-default TLD is not officially supported since Valet 3.2.x
+            Valet.shared.notifyAboutUnsupportedTLD()
+        }
 
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
-
-        // Start the background refresh timer
-        startSharedTimer()
 
         if !isRunningSwiftUIPreview {
             Stats.incrementSuccessfulLaunchCount()
@@ -116,13 +123,13 @@ extension MainMenu {
         }
 
         // Check if the linked version has changed between launches of phpmon
-        Stats.evaluateLastLinkedPhpVersion()
-
-        // Check if an update was performed earlier
-        AppUpdater.checkIfUpdateWasPerformed()
+        PhpGuard().compareToLastGlobalVersion()
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
+
+        // Check if we upgraded just now
+        AppUpdater.checkIfUpdateWasPerformed()
     }
 
     /**
@@ -146,21 +153,6 @@ extension MainMenu {
             Task { // An issue occurred, fire startup checks again after dismissal
                 await startup()
             }
-        }
-    }
-
-    /**
-     Schedule a request to fetch the PHP version every 60 seconds.
-     */
-    private func startSharedTimer() {
-        DispatchQueue.main.async { [self] in
-            App.shared.timer = Timer.scheduledTimer(
-                timeInterval: 60,
-                target: self,
-                selector: #selector(refreshActiveInstallation),
-                userInfo: nil,
-                repeats: true
-            )
         }
     }
 

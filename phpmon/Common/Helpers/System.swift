@@ -27,9 +27,20 @@ public func system(_ command: String) -> String {
     return output
 }
 
-/** Same as the `system` command, but does not return the output. */
+/**
+ Same as the `system` command, but does not return the output.
+ */
 public func system_quiet(_ command: String) {
-    _ = system(command)
+    let task = Process()
+    task.launchPath = "/bin/sh"
+    task.arguments = ["-c", command]
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    _ = pipe.fileHandleForReading.readDataToEndOfFile()
+    return
 }
 
 /**

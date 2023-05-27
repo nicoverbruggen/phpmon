@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1320"
+   LastUpgradeVersion = "1430"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -95,6 +95,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--configuration:~/.phpmon_fconf_working.json"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--configuration:~/.phpmon_fconf_working_no_valet.json"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument

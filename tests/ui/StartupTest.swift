@@ -20,9 +20,7 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
 
-        let app = XCPMApplication()
-        app.withConfiguration(configuration)
-        app.launch()
+        let app = launch(with: configuration)
 
         // Dialog 1: "PHP is not correctly installed"
         assertAllExist([
@@ -52,9 +50,7 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"] = nil
 
-        let app = XCPMApplication()
-        app.withConfiguration(configuration)
-        app.launch()
+        let app = launch(with: configuration)
 
         assertExists(app.staticTexts["alert.php_fpm_broken.title".localized], 3.0)
         click(app.buttons["generic.ok".localized])
@@ -64,30 +60,9 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.shellOutput["valet --version"] = .instant("Laravel Valet 5.0")
 
-        let app = XCPMApplication()
-        app.withConfiguration(configuration)
-        app.launch()
+        let app = launch(with: configuration)
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
         click(app.buttons["generic.ok".localized])
-    }
-
-    final func test_can_open_status_menu_item() throws {
-        let app = XCPMApplication()
-        app.withConfiguration(TestableConfigurations.working)
-        app.launch()
-
-        // Note: If this fails here, make sure the menu bar item can be displayed
-        // If you use Bartender or something like this, this item may be hidden and tests will fail
-        app.statusItems.firstMatch.click()
-        
-        assertAllExist([
-            // "Switch to PHP 8.1 (php)" should be visible since it is aliased to `php`
-            app.menuItems["\("mi_php_switch".localized) 8.2 (php)"],
-            // We should see the about and quit items
-            app.menuItems["mi_about".localized],
-            app.menuItems["mi_quit".localized]
-        ])
-        sleep(2)
     }
 }

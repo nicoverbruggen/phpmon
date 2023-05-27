@@ -10,6 +10,7 @@ import XCTest
 
 class TestableConfigurationTest: XCTestCase {
     func test_configuration_can_be_saved_as_json() async {
+        // WORKING
         var configuration = TestableConfigurations.working
         
         try! configuration.toJson().write(
@@ -18,6 +19,16 @@ class TestableConfigurationTest: XCTestCase {
             encoding: .utf8
         )
 
+        // WORKING (WITHOUT VALET)
+        let valetFreeConfiguration = TestableConfigurations.workingWithoutValet
+
+        try! valetFreeConfiguration.toJson().write(
+            toFile: NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json",
+            atomically: true,
+            encoding: .utf8
+        )
+
+        // NOT WORKING
         configuration.filesystem["/opt/homebrew/bin/php"] = nil
 
         try! configuration.toJson().write(

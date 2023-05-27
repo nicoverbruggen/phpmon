@@ -62,9 +62,6 @@ class App {
 
     // MARK: Variables
 
-    /** Technical information about the current environment. */
-    var environment = EnvironmentManager()
-
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
 
@@ -80,11 +77,17 @@ class App {
     /** The window controller of the warnings window. */
     var warningsWindowController: WarningsWindowController?
 
+    /** The window controller of the warnings window. */
+    var versionManagerWindowController: PhpVersionManagerWindowController?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 
     /** The warning manager, responsible for keeping track of warnings. */
     var warnings = WarningManager.shared
+
+    /** The filesystem watchers, responsible for keeping track of changes to the PHP installation. */
+    var watchers: [FSNotifier.Kind: FSNotifier] = [:]
 
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?

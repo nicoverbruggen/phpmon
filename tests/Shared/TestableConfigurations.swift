@@ -24,16 +24,6 @@ class TestableConfigurations {
                     : .fake(.binary),
                 "/opt/homebrew/bin/valet"
                     : .fake(.binary),
-                "/opt/homebrew/opt/php"
-                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0"),
-                "/opt/homebrew/opt/php@8.2/bin/php"
-                    : .fake(.symlink, "/opt/homebrew/Cellar/php/8.2.0/bin/php"),
-                "/opt/homebrew/Cellar/php/8.2.0/bin/php"
-                    : .fake(.binary),
-                "/opt/homebrew/Cellar/php/8.2.0/bin/php-config"
-                    : .fake(.binary),
-                "/opt/homebrew/etc/php/8.2/php-fpm.d/www.conf"
-                    : .fake(.text),
                 "~/.config/valet/config.json"
                     : .fake(.text, """
                     {
@@ -45,31 +35,28 @@ class TestableConfigurations {
                         "loopback": "127.0.0.1"
                     }
                     """),
-                "/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"
-                    : .fake(.text),
-                "/opt/homebrew/etc/php/8.2/php.ini"
-                    : .fake(.text),
-                "/opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini"
-                    : .fake(.text)
             ],
             shellOutput: [
+                "/opt/homebrew/bin/brew --version"
+                    : .instant("""
+                    Homebrew 4.0.17-93-gb0dc84b
+                    Homebrew/homebrew-core (git revision 4113c35d80d; last commit 2023-04-06)
+                    Homebrew/homebrew-cask (git revision bcd8ecb74c; last commit 2023-04-06)
+                    """),
+                "/opt/homebrew/bin/php -v"
+                    : .instant("""
+                    PHP 8.2.6 (cli) (built: May 11 2023 12:51:38) (NTS)
+                    Copyright (c) The PHP Group
+                    Zend Engine v4.2.6, Copyright (c) Zend Technologies
+                    with Zend OPcache v8.2.6, Copyright (c), by Zend Technologies
+                    with Xdebug v3.2.0, Copyright (c) 2002-2022, by Derick Rethans
+                    """),
                 "sysctl -n sysctl.proc_translated"
                     : .instant("0"),
                 "id -un"
                     : .instant("user"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
-                "php -v"
-                : .instant("""
-                       PHP 8.2.0 (cli) (built: Dec XX 20XX XX:XX:XX) (NTS)
-                       Copyright (c) The PHP Group
-                       Zend Engine vX.X, Copyright (c) Zend Technologies
-                       with Zend OPcache vX.X, Copyright (c), by Zend Technologies
-                    """),
-                "ls /opt/homebrew/opt | grep php"
-                    : .instant("php"),
-                "ls /opt/homebrew/opt | grep php@"
-                    : .instant("php@8.2"),
                 "sudo /opt/homebrew/bin/brew services info dnsmasq --json"
                     : .delayed(0.2, """
                         [
@@ -143,10 +130,10 @@ class TestableConfigurations {
                 cask 'phpmon-dev' do
                     depends_on formula: 'gnu-sed'
 
-                    version '\(App.shortVersion)_\(App.bundleVersion)'
+                    version '6.0.0_1000'
                     sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
 
-                    url 'https://github.com/nicoverbruggen/phpmon/releases/download/v\(App.shortVersion)/phpmon-dev.zip'
+                    url 'https://github.com/nicoverbruggen/phpmon/releases/download/v6.0/phpmon-dev.zip'
                     appcast 'https://github.com/nicoverbruggen/phpmon/releases.atom'
                     name 'PHP Monitor DEV'
                     homepage 'https://phpmon.app'
@@ -176,17 +163,30 @@ class TestableConfigurations {
                     : .instant("OK"),
             ],
             commandOutput: [
-                "/opt/homebrew/bin/php-config --version": "8.2.0",
                 "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
-                "/opt/homebrew/bin/php -r echo php_ini_scanned_files();"
-                : """
-                /opt/homebrew/etc/php/8.2/conf.d/php-memory-limits.ini,
-                """
+                "/opt/homebrew/opt/php@8.2/bin/php -v": "OK (no full output needed for testing)",
+                "/opt/homebrew/opt/php@8.1/bin/php -v": "OK (no full output needed for testing)",
+                "/opt/homebrew/opt/php@8.0/bin/php -v": "OK (no full output needed for testing)"
             ],
-            preferenceOverrides: [:]
+            preferenceOverrides: [
+                .automaticBackgroundUpdateCheck: false
+            ],
+            phpVersions: [
+                VersionNumber(major: 8, minor: 2, patch: 0),
+                VersionNumber(major: 8, minor: 1, patch: 0),
+                VersionNumber(major: 8, minor: 0, patch: 0)
+            ]
         )
+    }
+
+    /** A functional, working system setup (but without Valet). */
+    static var workingWithoutValet: TestableConfiguration {
+        var configuration = TestableConfigurations.working
+        configuration.filesystem["/opt/homebrew/bin/valet"] = nil
+        configuration.filesystem["~/.config/valet/config.json"] = nil
+        return configuration
     }
 }
 

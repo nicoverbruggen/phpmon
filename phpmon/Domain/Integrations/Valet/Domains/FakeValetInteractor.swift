@@ -75,7 +75,7 @@ class FakeValetInteractor: ValetInteractor {
     override func isolate(site: ValetSite, version: String) async throws {
         await delay(seconds: delayTime)
 
-        site.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+        site.isolatedPhpVersion = PhpEnvironments.shared.cachedPhpInstallations[version]
         site.evaluateCompatibility()
     }
 

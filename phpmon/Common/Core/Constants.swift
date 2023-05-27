@@ -82,6 +82,14 @@ struct Constants {
             string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon-dev.rb"
         )!
 
+        static let EarlyAccessCaskFile = URL(
+            string: "https://phpmon.app/builds/early-access/sponsors/phpmon-eap.rb"
+        )!
+
+        static let EarlyAccessChangelog = URL(
+            string: "https://phpmon.app/early-access/release-notes"
+        )!
+
     }
 
 }

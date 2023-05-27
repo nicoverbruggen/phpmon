@@ -32,18 +32,25 @@ class ActivePhpInstallation {
     // MARK: - Computed
 
     var formula: String {
-        return (version.short == PhpEnv.brewPhpAlias) ? "php" : "php@\(version.short)"
+        return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Initializer
+
+    public static func load() -> ActivePhpInstallation? {
+        if !FileSystem.fileExists(Paths.phpConfig) {
+            return nil
+        }
+
+        return ActivePhpInstallation()
+    }
 
     init() {
         // Show information about the current version
         do {
             try determineVersion()
         } catch {
-            // TODO: In future versions of PHP Monitor, this should not crash
-            fatalError("Could not determine or parse PHP version; aborting")
+            fatalError("Could not determine or parse PHP version; aborting!")
         }
 
         // Initialize the list of ini files that are loaded
@@ -122,29 +129,19 @@ class ActivePhpInstallation {
             return "∞"
         }
 
-        // Check if the syntax is valid otherwise
-        let regex = try! NSRegularExpression(pattern: #"^([0-9]*)(K|M|G|)$"#, options: [])
-        let match = regex.matches(in: value, options: [], range: NSRange(location: 0, length: value.count)).first
-        return (match == nil) ? "⚠️" : "\(value)B"
-    }
-
-    /**
-     Determine if PHP-FPM is configured correctly.
-     
-     For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
-     versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
-     that means that Valet won't work properly.
-     */
-    func checkPhpFpmStatus() async -> Bool {
-        if self.version.short == "5.6" {
-            // The main PHP config file should contain `valet.sock` and then we're probably fine?
-            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return await Shell.pipe("cat \(fileName)").out
-                .contains("valet.sock")
+        if value.isEmpty {
+            return "⚠️"
         }
 
-        // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return FileSystem.fileExists("\(Paths.etcPath)/php/\(self.version.short)/php-fpm.d/valet-fpm.conf")
+        // Check if the syntax is valid otherwise
+        let regex = try! NSRegularExpression(pattern: #"^([0-9]*)(K|M|G|)$"#, options: [])
+
+        let match = regex.matches(
+            in: value, options: [],
+            range: NSRange(location: 0, length: value.count)
+        ).first
+
+        return (match == nil) ? "⚠️" : "\(value)B"
     }
 
     // MARK: - Structs

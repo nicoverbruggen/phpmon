@@ -59,8 +59,12 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
                 return []
             }
 
-            return PhpEnv.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
-                version.short != PhpEnv.phpInstall.version.short
+            guard let install = PhpEnvironments.phpInstall else {
+                return []
+            }
+
+            return PhpEnvironments.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
+                version.short != install.version.short
             })
         }
 

@@ -12,13 +12,17 @@ class PhpInstallation {
 
     var versionNumber: VersionNumber
 
+    var isHealthy: Bool = true
+
     /**
-     In order to determine details about a PHP installation, we’ll simply run `php-config --version`
-     in the relevant directory.
+     In order to determine details about a PHP installation,
+     we’ll simply run `php-config --version` in the relevant directory.
      */
     init(_ version: String) {
-
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config"
+
+        let phpExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php"
+
         self.versionNumber = VersionNumber.make(from: version)!
 
         if FileSystem.fileExists(phpConfigExecutablePath) {
@@ -32,6 +36,21 @@ class PhpInstallation {
             // If so, the app SHOULD crash, so that the users report what's up.
             self.versionNumber = try! VersionNumber.parse(longVersionString)
         }
-    }
 
+        if FileSystem.fileExists(phpExecutablePath) {
+            let testCommand = Command.execute(
+                path: phpExecutablePath,
+                arguments: ["-v"],
+                trimNewlines: false,
+                withStandardError: true
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
+
+            // If the "dyld: Library not loaded" issue pops up, we have an unhealthy PHP installation
+            // and we will need to reinstall this version of PHP via Homebrew.
+            if testCommand.contains("Library not loaded") && testCommand.contains("dyld") {
+                self.isHealthy = false
+                Log.err("The PHP installation of \(self.versionNumber.short) is not healthy!")
+            }
+        }
+    }
 }

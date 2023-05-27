@@ -107,9 +107,9 @@ class ServicesManager: ObservableObject {
 
     var formulae: [HomebrewFormula] {
         var formulae = [
-            Homebrew.Formulae.php,
-            Homebrew.Formulae.nginx,
-            Homebrew.Formulae.dnsmasq
+            HomebrewFormulae.php,
+            HomebrewFormulae.nginx,
+            HomebrewFormulae.dnsmasq
         ]
 
         let additionalFormulae = (Preferences.custom.services ?? []).map({ item in

@@ -22,7 +22,7 @@ class Valet {
     static let shared = Valet()
 
     /// The version of Valet that was detected.
-    var version: VersionNumber! = nil
+    var version: VersionNumber?
 
     /// The Valet configuration file.
     var config: Valet.Configuration!
@@ -57,6 +57,15 @@ class Valet {
         }
     }
 
+    static var installed: Bool {
+        return self.shared.installed
+    }
+
+    lazy var installed: Bool = {
+        return FileSystem.fileExists(Paths.binPath.appending("/valet"))
+            && FileSystem.anyExists("~/.config/valet")
+    }()
+
     /**
      Check if a particular feature is enabled.
      */
@@ -69,27 +78,6 @@ class Valet {
      */
     public static func getDomainListable() -> [ValetListable] {
         return self.shared.sites + self.shared.proxies
-    }
-
-    /**
-     Notify the user about a non-default TLD being set.
-     */
-    public static func notifyAboutUnsupportedTLD() {
-        if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
-            Task { @MainActor in
-                BetterAlert().withInformation(
-                    title: "alert.warnings.tld_issue.title".localized,
-                    subtitle: "alert.warnings.tld_issue.subtitle".localized,
-                    description: "alert.warnings.tld_issue.description".localized
-                )
-                .withPrimary(text: "generic.ok".localized)
-                .withTertiary(text: "alert.do_not_tell_again".localized, action: { alert in
-                    Preferences.update(.warnAboutNonStandardTLD, value: false)
-                    alert.close(with: .alertThirdButtonReturn)
-                })
-                .show()
-            }
-        }
     }
 
     /**
@@ -142,6 +130,11 @@ class Valet {
      in use. This allows PHP Monitor to do different things when Valet 3.0 is enabled.
      */
     public func evaluateFeatureSupport() {
+        guard let version = self.version else {
+            Log.err("Cannot determine features, as the version was not determined.")
+            return
+        }
+
         switch version.major {
         case 2:
             Log.info("You are running Valet v2. Support for site isolation is disabled.")
@@ -159,26 +152,24 @@ class Valet {
      installed is not recent enough.
      */
     public func validateVersion() {
+        guard let version = self.version else {
+            Log.err("Cannot validate Valet version if no Valet version was determined.")
+            return
+        }
+
+        if PhpEnvironments.phpInstall == nil {
+            Log.info("Cannot validate Valet version if no PHP version is linked.")
+            return
+        }
+
         // 1. Evaluate feature support
         Valet.shared.evaluateFeatureSupport()
 
         // 2. Notify user if the version is too old (but major version is OK)
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
-            let version = version!
             let recommended = Constants.MinimumRecommendedValetVersion
             Log.warn("Valet version \(version.text) is too old! (recommended: \(recommended))")
-            Task { @MainActor in
-                BetterAlert()
-                    .withInformation(
-                        title: "alert.min_valet_version.title".localized,
-                        subtitle: "alert.min_valet_version.info".localized(
-                            version.text,
-                            Constants.MinimumRecommendedValetVersion
-                        )
-                    )
-                    .withPrimary(text: "generic.ok".localized)
-                    .show()
-            }
+            self.notifyAboutOutdatedValetVersion(version)
         } else {
             Log.info("Valet version \(version.text) is recent enough, OK " +
                      "(recommended: \(Constants.MinimumRecommendedValetVersion))")
@@ -191,6 +182,30 @@ class Valet {
     public func hasPlatformIssues() async -> Bool {
         return await Shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
+    }
+
+    /**
+     Determine if PHP-FPM is configured correctly.
+
+     For PHP 5.6, we'll check if `valet.sock` is included in the main `php-fpm.conf` file, but for more recent
+     versions of PHP, we can just check for the existence of the `valet-fpm.conf` file. If the check here fails,
+     that means that Valet won't work properly.
+     */
+    func phpFpmConfigurationValid() async -> Bool {
+        guard let version = PhpEnvironments.shared.currentInstall?.version else {
+            Log.info("Cannot check PHP-FPM status: no version of PHP is active")
+            return true
+        }
+
+        if version.short == "5.6" {
+            // The main PHP config file should contain `valet.sock` and then we're probably fine?
+            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
+            return await Shell.pipe("cat \(fileName)").out
+                .contains("valet.sock")
+        }
+
+        // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
+        return FileSystem.fileExists("\(Paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     /**

@@ -24,9 +24,13 @@ class AppUpdater {
 
         Log.info("The app will search for updates...")
 
-        let caskUrl = App.identifier.contains(".dev")
-            ? Constants.Urls.DevBuildCaskFile
-            : Constants.Urls.StableBuildCaskFile
+        var caskUrl = Constants.Urls.StableBuildCaskFile
+
+        if App.identifier.contains(".phpmon.eap") {
+            caskUrl = Constants.Urls.EarlyAccessCaskFile
+        } else if App.identifier.contains(".phpmon.dev") {
+            caskUrl = Constants.Urls.DevBuildCaskFile
+        }
 
         guard let caskFile = await CaskFile.from(url: caskUrl) else {
             Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
@@ -73,7 +77,7 @@ class AppUpdater {
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
                     .localized,
-                description: HomebrewDiagnostics.customCaskInstalled
+                description: BrewDiagnostics.customCaskInstalled
                 ? "updater.installation_source.brew".localized(command)
                 : "updater.installation_source.direct".localized
             )
@@ -88,11 +92,15 @@ class AppUpdater {
             .withSecondary(
                 text: "updater.alerts.buttons.release_notes".localized,
                 action: { _ in
-                    let urlSegments = self.caskFile.url.split(separator: "/")
-                    let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
-                    NSWorkspace.shared.open(
-                        Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
-                    )
+                    NSWorkspace.shared.open({
+                        if App.identifier.contains(".eap") {
+                            return Constants.Urls.EarlyAccessChangelog
+                        } else {
+                            let urlSegments = self.caskFile.url.split(separator: "/")
+                            let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
+                            return Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
+                        }
+                    }())
                 }
             )
             .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
@@ -179,11 +187,19 @@ class AppUpdater {
         // Cleanup the upgrade.success file
         if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
-                LocalNotification.send(
-                    title: "notification.phpmon_updated.title".localized,
-                    subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
-                    preference: nil
-                )
+                if App.identifier.contains(".phpmon.eap") || App.identifier.contains(".phpmon.dev") {
+                    LocalNotification.send(
+                        title: "notification.phpmon_updated.title".localized,
+                        subtitle: "notification.phpmon_updated_dev.desc".localized(App.shortVersion, App.bundleVersion),
+                        preference: nil
+                    )
+                } else {
+                    LocalNotification.send(
+                        title: "notification.phpmon_updated.title".localized,
+                        subtitle: "notification.phpmon_updated.desc".localized(App.shortVersion),
+                        preference: nil
+                    )
+                }
             }
 
             Log.info("The `upgrade.success` file was found! An update was installed. Cleaning up...")

@@ -57,7 +57,8 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? PhpEnv.phpInstall.version.short
+            ?? PhpEnvironments.phpInstall?.version.short
+            ?? "???"
     }
 
     init(
@@ -97,12 +98,12 @@ class ValetSite: ValetListable {
      */
     public func determineIsolated() {
         if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
-            if !PhpEnv.shared.cachedPhpInstallations.keys.contains(version) {
+            if !PhpEnvironments.shared.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
                 return
             }
-            self.isolatedPhpVersion = PhpEnv.shared.cachedPhpInstallations[version]
+            self.isolatedPhpVersion = PhpEnvironments.shared.cachedPhpInstallations[version]
         } else {
             self.isolatedPhpVersion = nil
         }
@@ -237,11 +238,16 @@ class ValetSite: ValetListable {
             return
         }
 
+        guard let linked = PhpEnvironments.phpInstall else {
+            self.isCompatibleWithPreferredPhpVersion = false
+            return
+        }
+
         // Split the composer list (on "|") to evaluate multiple constraints
         // For example, for Laravel 8 projects the value is "^7.3|^8.0"
         self.isCompatibleWithPreferredPhpVersion = self.preferredPhpVersion.split(separator: "|").map { string in
             let origin = self.isolatedPhpVersion?.versionNumber.short
-                ?? PhpEnv.phpInstall.version.long
+                ?? linked.version.long
 
             let normalizedPhpVersion = string.trimmingCharacters(in: .whitespacesAndNewlines)
 

@@ -12,11 +12,11 @@ import Cocoa
 class Xdebug {
 
     public static var enabled: Bool {
-        return PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") != nil
+        return PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") != nil
     }
 
     public static var activeModes: [String] {
-        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+        guard let file = PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") else {
             return []
         }
 

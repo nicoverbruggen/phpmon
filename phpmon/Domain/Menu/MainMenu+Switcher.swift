@@ -16,17 +16,19 @@ extension MainMenu {
 
     nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
-        PhpEnv.shared.isBusy = false
+        PhpEnvironments.shared.isBusy = false
 
         Task { // Things to do after reloading domain list data
-            await self.reloadDomainListData()
+            if Valet.installed {
+                await self.reloadDomainListData()
+            }
 
             // Perform UI updates on main thread
             Task { @MainActor [self] in
                 updatePhpVersionInStatusBar()
                 rebuild()
 
-                if !PhpEnv.shared.validate(version) {
+                if Valet.installed && !PhpEnvironments.shared.validate(version) {
                     self.suggestFixMyValet(failed: version)
                     return
                 }
@@ -44,7 +46,15 @@ extension MainMenu {
                 }
 
                 // Check if Valet still works correctly
-                self.checkForPlatformIssues()
+                if Valet.installed {
+                    self.checkForPlatformIssues()
+                }
+
+                // Check if the silent switch occurred and reset it
+                if shouldSwitchSilently {
+                    shouldSwitchSilently = false
+                    return
+                }
 
                 // Update stats
                 Stats.incrementSuccessfulSwitchCount()
@@ -112,12 +122,28 @@ extension MainMenu {
     }
 
     @MainActor private func notifyAboutVersionChange(to version: String) {
+        if shouldSwitchSilently {
+            return
+        }
+
         LocalNotification.send(
             title: String(format: "notification.version_changed_title".localized, version),
             subtitle: String(format: "notification.version_changed_desc".localized, version),
             preference: .notifyAboutVersionChange
         )
 
-        Task { PhpEnv.phpInstall.notifyAboutBrokenPhpFpm() }
+        guard PhpEnvironments.phpInstall != nil else {
+            Log.err("Cannot notify about version change if PHP is unlinked")
+            return
+        }
+
+        guard Valet.installed == true else {
+            Log.info("Skipping check for broken PHP-FPM version, Valet is not installed")
+            return
+        }
+
+        Task {
+            await Valet.shared.notifyAboutBrokenPhpFpm()
+        }
     }
 }

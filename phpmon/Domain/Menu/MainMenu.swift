@@ -26,6 +26,14 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         withLength: NSStatusItem.variableLength
     )
 
+    // MARK: - State Variables
+
+    /**
+     You can instruct the app to switch to a given PHP version silently.
+     That will toggle this flag to true. Upon switching, this flag will be reset.
+     */
+    var shouldSwitchSilently: Bool = false
+
     // MARK: - UI related
 
     /**
@@ -70,8 +78,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Reloads which PHP versions is currently active. */
     @objc func refreshActiveInstallation() {
-        if !PhpEnv.shared.isBusy {
-            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+        if !PhpEnvironments.shared.isBusy {
+            PhpEnvironments.shared.currentInstall = ActivePhpInstallation.load()
             updatePhpVersionInStatusBar()
         } else {
             Log.perf("Skipping version refresh due to busy status!")
@@ -114,7 +122,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             BetterAlert().withInformation(
                 title: "startup.unsupported_versions_explanation.title".localized,
                 subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
-                    PhpEnv.shared.incompatiblePhpVersions
+                    PhpEnvironments.shared.incompatiblePhpVersions
                         .map({ version in
                             return "• PHP \(version)"
                         })
@@ -143,7 +151,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
         Task { @MainActor [self] in
-            if PhpEnv.shared.isBusy {
+            if PhpEnvironments.shared.isBusy {
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
@@ -152,7 +160,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-                    setStatusBarImage(version: long ? PhpEnv.phpInstall.version.long  : PhpEnv.phpInstall.version.short)
+
+                    guard let install = PhpEnvironments.phpInstall else {
+                        setStatusBarImage(version: "???")
+                        return
+                    }
+
+                    setStatusBarImage(version: long ? install.version.long : install.version.short)
                 }
             }
         }
@@ -172,6 +186,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         NSApplication.shared.orderFrontStandardAboutPanel()
     }
 
+    @objc func openLiteModeInfo() {
+        Task { @MainActor in
+            BetterAlert().withInformation(
+                title: "lite_mode_explanation.title".localized,
+                subtitle: "lite_mode_explanation.subtitle".localized,
+                description: "lite_mode_explanation.description".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .show()
+        }
+    }
+
     @objc func openPrefs() {
         PreferencesWindowController.show()
     }
@@ -182,6 +208,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func openDomainList() {
         DomainListVC.show()
+    }
+
+    @objc func openPhpVersionManager() {
+        PhpVersionManagerWindowController.show()
     }
 
     @objc func openDonate() {

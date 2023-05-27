@@ -11,12 +11,22 @@ import SwiftUI
 struct WarningListView: View {
     @ObservedObject var warningManager: WarningManager
 
-    init(empty: Bool = false) {
-        if empty {
-            WarningManager.shared.warnings = []
+    init(empty: Bool = false, fake: Bool = false, manager: WarningManager? = nil) {
+        if manager == nil {
+            // Use the singleton by default
+            warningManager = WarningManager.shared
+        } else {
+            // Use a provided instance (for e.g. preview purposes)
+            warningManager = manager!
         }
 
-        warningManager = WarningManager.shared
+        if fake {
+            warningManager.warnings = warningManager.evaluations
+        }
+
+        if empty {
+            warningManager.clearWarnings()
+        }
     }
 
     var body: some View {
@@ -41,10 +51,14 @@ struct WarningListView: View {
             Divider()
 
             HStack(alignment: .center, spacing: 15) {
-                Button("warnings.refresh.button".localizedForSwiftUI) {
+                Button {
                     Task { // Reload warnings
-                        await WarningManager.shared.checkEnvironment()
+                        await self.warningManager.checkEnvironment()
                     }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .buttonStyle(.automatic)
+                        .controlSize(.large)
                 }
                 Text("warnings.refresh.button.description".localizedForSwiftUI)
                     .foregroundColor(.gray)
@@ -54,7 +68,7 @@ struct WarningListView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    if warningManager.warnings.isEmpty {
+                    if !warningManager.hasWarnings() {
                         NoWarningsView()
                     } else {
                         ForEach(warningManager.warnings) { warning in
@@ -82,11 +96,11 @@ struct WarningListView: View {
 
 struct WarningListView_Previews: PreviewProvider {
     static var previews: some View {
-        WarningListView(empty: true)
+        WarningListView(empty: true, fake: true, manager: WarningManager())
             .frame(width: 600, height: 480)
             .previewDisplayName("Empty List")
 
-        WarningListView(empty: false)
+        WarningListView(empty: false, fake: true, manager: WarningManager())
             .frame(width: 600, height: 480)
             .previewDisplayName("List With All Warnings")
     }

@@ -12,6 +12,25 @@ extension MainMenu {
 
     // MARK: - Actions
 
+    @MainActor @objc func linkPhpBinary() {
+        Task {
+            await Actions.linkPhp()
+        }
+    }
+
+    @MainActor @objc func displayUnlinkedInfo() {
+        Task { @MainActor in
+            BetterAlert()
+                .withInformation(
+                    title: "phpman.unlinked.title".localized,
+                    subtitle: "phpman.unlinked.desc".localized,
+                    description: "phpman.unlinked.detail".localized
+                )
+                .withPrimary(text: "generic.ok".localized)
+                .show()
+        }
+    }
+
     @MainActor @objc func fixHomebrewPermissions() {
         if !BetterAlert()
             .withInformation(
@@ -86,7 +105,7 @@ extension MainMenu {
     }
 
     @objc func disableAllXdebugModes() {
-        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+        guard let file = PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") else {
             Log.info("xdebug.mode could not be found in any .ini file, aborting.")
             return
         }
@@ -105,7 +124,7 @@ extension MainMenu {
     @objc func toggleXdebugMode(sender: XdebugMenuItem) {
         Log.info("Switching Xdebug to mode: \(sender.mode)")
 
-        guard let file = PhpEnv.shared.getConfigFile(forKey: "xdebug.mode") else {
+        guard let file = PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") else {
             return Log.info("xdebug.mode could not be found in any .ini file, aborting.")
         }
 
@@ -207,12 +226,17 @@ extension MainMenu {
     }
 
     @objc func openActiveConfigFolder() {
-        if PhpEnv.phpInstall.hasErrorState {
+        guard let install = PhpEnvironments.phpInstall else {
+            // TODO: Can't open the config if no PHP version is active
+            return
+        }
+
+        if install.hasErrorState {
             Actions.openGenericPhpConfigFolder()
             return
         }
 
-        Actions.openPhpConfigFolder(version: PhpEnv.phpInstall.version.short)
+        Actions.openPhpConfigFolder(version: install.version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {
@@ -231,8 +255,11 @@ extension MainMenu {
         self.switchToPhpVersion(sender.version)
     }
 
-    public func switchToAnyPhpVersion(_ version: String) {
-        if PhpEnv.shared.availablePhpVersions.contains(version) {
+    public func switchToAnyPhpVersion(_ version: String, silently: Bool = false) {
+        if silently {
+            MainMenu.shared.shouldSwitchSilently = true
+        }
+        if PhpEnvironments.shared.availablePhpVersions.contains(version) {
             Task { MainMenu.shared.switchToPhpVersion(version) }
         } else {
             Task {
@@ -246,20 +273,44 @@ extension MainMenu {
         }
     }
 
+    func switchToPhpVersionAndWait(_ version: String, silently: Bool = false) async {
+        if silently {
+            MainMenu.shared.shouldSwitchSilently = true
+        }
+
+        if !PhpEnvironments.shared.availablePhpVersions.contains(version) {
+            Log.warn("This PHP version is currently unavailable, not switching!")
+            return
+        }
+
+        setBusyImage()
+        PhpEnvironments.shared.isBusy = true
+        PhpEnvironments.shared.delegate = self
+        PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
+
+        updatePhpVersionInStatusBar()
+        rebuild()
+        await PhpEnvironments.switcher.performSwitch(to: version)
+
+        PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+        App.shared.handlePhpConfigWatcher()
+        PhpEnvironments.shared.delegate?.switcherDidCompleteSwitch(to: version)
+    }
+
     @objc func switchToPhpVersion(_ version: String) {
         setBusyImage()
-        PhpEnv.shared.isBusy = true
-        PhpEnv.shared.delegate = self
-        PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
+        PhpEnvironments.shared.isBusy = true
+        PhpEnvironments.shared.delegate = self
+        PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
 
         Task(priority: .userInitiated) { [unowned self] in
             updatePhpVersionInStatusBar()
             rebuild()
-            await PhpEnv.switcher.performSwitch(to: version)
+            await PhpEnvironments.switcher.performSwitch(to: version)
 
-            PhpEnv.shared.currentInstall = ActivePhpInstallation()
+            PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
             App.shared.handlePhpConfigWatcher()
-            PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
+            PhpEnvironments.shared.delegate?.switcherDidCompleteSwitch(to: version)
         }
     }
 
@@ -275,18 +326,18 @@ extension MainMenu {
     func switchToPhp(_ version: String) async {
         Task { @MainActor [self] in
             setBusyImage()
-            PhpEnv.shared.isBusy = true
-            PhpEnv.shared.delegate = self
-            PhpEnv.shared.delegate?.switcherDidStartSwitching(to: version)
+            PhpEnvironments.shared.isBusy = true
+            PhpEnvironments.shared.delegate = self
+            PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
         }
 
         updatePhpVersionInStatusBar()
         rebuild()
-        await PhpEnv.switcher.performSwitch(to: version)
+        await PhpEnvironments.switcher.performSwitch(to: version)
 
-        PhpEnv.shared.currentInstall = ActivePhpInstallation()
+        PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
         App.shared.handlePhpConfigWatcher()
-        PhpEnv.shared.delegate?.switcherDidCompleteSwitch(to: version)
+        PhpEnvironments.shared.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
 }

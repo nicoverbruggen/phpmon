@@ -23,23 +23,25 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
 * macOS 12.4 or later (Monterey and Ventura are supported)
-* Homebrew is installed in `/usr/local/homebrew` or `/opt/homebrew`
+* Homebrew is installed in the default location (`/usr/local/homebrew` or `/opt/homebrew`)
 * Homebrew `php` formula is installed
-* Laravel Valet (works with Valet v2, v3 and v4)
+* Optional but recommended: Laravel Valet
 
-_You may need to update your Valet installation to keep everything working if a major version update of PHP has been released. You can do this by running `composer global update && valet install`. Some features are not supported when running Valet 2._
+_Starting with PHP Monitor 6.0, you do not need to have Laravel Valet installed for PHP Monitor to work. To get access to all features of PHP Monitor however, installing Valet is **recommended**._
 
 For more information, please see [SECURITY.md](./SECURITY.md) to find out which version of the app is currently supported.
 
 ## 🚀 How to install
 
-Again, make sure you have **[Laravel Valet](https://laravel.com/docs/master/valet)** installed first:
+Again, if you want to have access to *all features* of PHP Monitor, I recommend installing **[Laravel Valet](https://laravel.com/docs/master/valet)** first:
 
 ```sh
 composer global require laravel/valet
 valet install
 valet trust
 ```
+
+Currently, PHP Monitor is compatible with Laravel Valet v2, v3 and v4. Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
 
 #### Manual installation (recommended, first time only)
 
@@ -102,10 +104,9 @@ All stable and supported PHP versions are also supported by PHP Monitor. However
 > **Note**
 > If you have versions of PHP installed that can be detected by PHP Monitor but is *not* supported by the currently active version of Valet, you will be alerted by an item in the menu with an exclamation mark emoji. (⚠️)
 
-Backports are available via [this tap](https://github.com/shivammathur/homebrew-php). For more information about those backports, please see the next FAQ entry.
+Backports that are installable via PHP Monitor's **PHP Manager** functionality are subject to availability via [this tap](https://github.com/shivammathur/homebrew-php).
 
 For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
-
 </details>
 
 <details>
@@ -113,35 +114,33 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 
 Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
 
-You can install other supported versions of PHP out of the box, so `php@8.0` and `php@8.1` at the time of writing.
+You can install other supported versions of PHP via PHP Monitor's **PHP Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
 
-If you wish to install older (officially unsupported) versions of PHP for local use, you can do so by using [Shivam Mathur's tap](https://github.com/shivammathur/homebrew-php):
+Please keep in mind that installing or updating PHP versions, even when done via PHP Monitor's **PHP Manager**, may cause other required formula dependencies (required software needed to keep those PHP versions functional) to be upgraded. It might not be very transparent when this happens, but this is likely the cause if installing a PHP version takes longer than expected: usually other dependencies are also being installed.
 
-```sh
-brew tap shivammathur/php
-```
+Additionally, upgrading one specific version of PHP may also cause other installed versions of PHP to *also* be updated in one go, if the dependencies for that one version also apply to the other (newer) version(s) of PHP. It's a bit tricky to manage PHP versions via Homebrew, and even PHP Monitor may encounter some difficulties. 
 
-You may find that this tap is already in use: if you've used Valet before, it automatically uses this tap for legacy versions of PHP.
+If you encounter a strange scenario or a malfunction, please open an issue on the issue tracker and get in touch. I'd like to keep enhancing this process to make it as foolproof as possible.
 
-```sh
-brew install shivammathur/php/php@7.4
-brew install shivammathur/php/php@7.3
-brew install shivammathur/php/php@7.2
-brew install shivammathur/php/php@7.1
-brew install shivammathur/php/php@7.0
-```
-
-**Always make sure to restart PHP Monitor after installing or upgrading PHP versions!**
-
-> *Note*: Using this tap may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
+> *Note*: Using PHP Monitor when managing PHP versions may cause [temporary alias conflicts](https://github.com/nicoverbruggen/phpmon/issues/54#issuecomment-979789724) while the core tap alias and the tap's alias refer to a different version of PHP, but this is generally speaking a minor inconvenience, since this normally only applies when a new PHP version releases.
 </details>
 
 <details>
 <summary><strong>I want PHP Monitor to start up when I boot my Mac!</strong></summary>
 
-You can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
+If you are running macOS Ventura or newer, there's an option in the Settings menu that you can select: "Start PHP Monitor at login".
+
+If you are on an older version of macOS, you can do this by dragging *PHP Monitor.app* into the **Login Items** section in **System Preferences > Users & Groups** for your account.
 
 Super convenient!
+</details>
+
+<details>
+<summary><strong>What features are unavailable in Standalone Mode?</strong></summary>
+
+The services manager is disabled, and all other obvious Laravel Valet integrations (configuration finder, domains list, Fix My Valet) are also disabled.
+
+(Most other features remain available.)
 </details>
 
 <details>
@@ -170,7 +169,7 @@ If you're on an Apple Silicon-based Mac, you'll need to add:
 and add the following to your `.zshrc` file, but add this BEFORE the homebrew PATH additions:
 
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
-    
+
 If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
 
     export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -189,8 +188,12 @@ Make sure PHP is linked correctly:
 
 should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
+**If you don't need Laravel Valet, you can stop here. PHP Monitor will work like this in Standalone Mode.**
+
+If you'd like to have Valet as well, continue and install Valet with Composer, like this.
+
     composer global require laravel/valet
-    
+
 For optimal results, you should lock your PHP platform for global dependencies to the oldest version of PHP you intend to run. If that version is PHP 7.0, your `~/.composer/composer.json` file could look like this (please adjust the version accordingly!):
 
 ```
@@ -209,17 +212,12 @@ For optimal results, you should lock your PHP platform for global dependencies t
 Run `composer global update` again. This ensures that when you switch to a different global PHP version, [Valet won't break](https://github.com/nicoverbruggen/phpmon/issues/178). If it does, PHP Monitor will let you know what you can do about this.
 
 Then, install Valet:
-    
+
     valet install
 
 This should install `dnsmasq` and set up Valet. Great, almost there!
 
     valet trust
-
-You can now install PHP Monitor, if you haven't already:
-
-    brew tap nicoverbruggen/homebrew-cask
-	brew install --cask phpmon
 
 Finally, run PHP Monitor. Since the app is notarized and signed with a developer ID, it should work. You will need to approve the initial launch of the app, but you should be ready to go now.
 </details>
@@ -229,12 +227,16 @@ Finally, run PHP Monitor. Since the app is notarized and signed with a developer
 
 PHP Monitor will check if an update is available every time you start the app.
 
-You can disable this behaviour by going to Preferences (via the PHP Monitor icon in the menu bar) and unchecking "Automatically check for updates". You can always check for updates manually.
+You can disable this behaviour by going to Preferences (via the PHP Monitor icon in the menu bar) and unchecking "Automatically check for updates". (You can always check for updates manually.)
 
 </details>
 
 <details>
 <summary><strong>I have PHP Monitor installed, and it works. I want to upgrade my PHP installations to the latest version, what's the best way to do this?</strong></summary>
+
+The easiest way is to simply use the built-in **PHP Version Manager**, which will allow you to upgrade your PHP versions with one click.
+
+If you want to do this manually, you can follow the instructions below.
 
 It's easy to make a mistake here, and end up with an unlinked version of PHP or have versions missing from PHP Monitor.
 
@@ -265,7 +267,7 @@ This should resolve the issue! If that does not fix the issue, run `brew link ph
 
 	brew install php
 	brew link php --force
-	
+
 </details>
 
 <details>
@@ -320,11 +322,13 @@ Make sure you have at least **Valet 3.0** installed, since support for isolation
 <details>
 <summary><strong>One of the limits (memory limit, max POST size, max upload size) shows an exclamation mark!</strong></summary>
 
-The value you provided in your INI file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
+The value you provided in your `.ini` file is invalid. If that is the case, PHP will attempt to parse your value as bytes, which is usually unintended. (`1GB` will resolve to merely a few bytes, and all of your applications will run out of memory!)
 
 You must a provide a value like so: `1024K`, `256M`, `1G`. Alternatively, `-1` is also allowed, or just an integer (which will result in N amount of bytes being the limit).
 
 **Example**: Trying to use `1GB` as the memory limit, for example, will result in this exclamation mark. The correct way to set a 1GB limit is by using `1G` as the value. (Note: The displayed value will append `B` for clarity, so if you set `1G`, the value reported by PHP Monitor will be 1 GB.)
+
+(If you are using Valet, you can adjust these limits in the `.conf.d/php-memory-limits.ini` file. Otherwise, you may need to adjust `php.ini`.)
 
 </details>
 
@@ -413,6 +417,9 @@ You can omit the `php` key in the preset if you do not wish for the preset to sw
 
 <details>
 <summary><strong>How do I ensure additional Homebrew services are shown in the app?</strong></summary>
+
+> **Info**
+> Homebrew services aren't displayed if you are using Valet in Standalone Mode.
 
 You must set these services up in a JSON file, located in `~/.config/phpmon/config.json`. 
 
@@ -594,9 +601,9 @@ Thank you very much for your contributions, kind words and support.
 
 ### Loading info about PHP in the background
 
-This utility runs `php-config --version` in the background periodically. It also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). 
+This app runs `php-config --version` in the background periodically, usually whenever your Homebrew configuration is modified. A filesystem watcher is used to determine if anything changes in your Homebrew's `bin` directory. 
 
-In order to save power, this only happens once every 60 seconds.
+PHP Monitor also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). See also the section on *Config change detection* below.
 
 ### Switching PHP versions
 
@@ -604,7 +611,7 @@ This utility will detect which PHP versions you have installed via Homebrew, and
 
 The switcher will disable all PHP-FPM services not belonging to the version you wish to use, and link the desired version of PHP. Then, it'll restart your desired PHP version's FPM process. This all happens in parallel, so this should be a bit faster than Valet’s switcher.
 
-If you're using Valet 3, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
+If you're using Valet 3 or newer, versions of PHP-FPM required to keep isolated sites up and running will also be started or stopped as needed.
 
 ### Config change detection
 

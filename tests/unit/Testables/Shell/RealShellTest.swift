@@ -60,7 +60,7 @@ class RealShellTest: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 5.0)
+        await fulfillment(of: [expectation], timeout: 5.0)
     }
 
     func test_system_processes_run_in_parallel() async {
@@ -74,6 +74,6 @@ class RealShellTest: XCTestCase {
         }
 
         await thing()
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 5.0)
     }
 }

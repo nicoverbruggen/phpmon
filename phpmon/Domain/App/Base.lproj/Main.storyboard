@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -29,18 +29,6 @@
                                         <menuItem title="Quit PHP Monitor" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="File" id="XRy-v5-KNb">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="File" id="zA7-mh-f1x">
-                                    <items>
-                                        <menuItem title="Close" keyEquivalent="w" id="2FI-pQ-tuO">
-                                            <connections>
-                                                <action selector="performClose:" target="Ady-hI-5gd" id="ZHq-so-Sba"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -82,12 +70,12 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Edit" id="8Pm-83-BlM">
                                     <items>
-                                        <menuItem title="Undo" keyEquivalent="z" id="jCt-Yf-FSE">
+                                        <menuItem title="Undo" enabled="NO" keyEquivalent="z" id="jCt-Yf-FSE">
                                             <connections>
                                                 <action selector="undo:" target="Ady-hI-5gd" id="O3z-27-Ug0"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Redo" keyEquivalent="Z" id="fCh-1M-Qyg">
+                                        <menuItem title="Redo" enabled="NO" keyEquivalent="Z" id="fCh-1M-Qyg">
                                             <connections>
                                                 <action selector="redo:" target="Ady-hI-5gd" id="utE-Bv-fdY"/>
                                             </connections>
@@ -297,6 +285,18 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Window" id="XRy-v5-KNb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" id="zA7-mh-f1x">
+                                    <items>
+                                        <menuItem title="Close" keyEquivalent="w" id="2FI-pQ-tuO">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="ZHq-so-Sba"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Help" id="wpr-3q-Mcd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
@@ -317,7 +317,11 @@
                 </application>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="PHP_Monitor" customModuleProvider="target">
+                    <connections>
+                        <outlet property="menuItemSites" destination="9gy-d3-Pos" id="nul-IL-YuR"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-360" y="-94"/>
         </scene>

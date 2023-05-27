@@ -11,6 +11,10 @@ import UserNotifications
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
 
+    static var instance: AppDelegate {
+        return NSApplication.shared.delegate as! AppDelegate
+    }
+
     // MARK: - Variables
 
     /**
@@ -38,11 +42,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let valet: Valet
 
     /**
-     The PhpEnv singleton that handles PHP version
+     The Brew singleton that contains all information about Homebrew
+     and its configuration on your system.
+     */
+    let brew: Brew
+
+    /**
+     The PhpEnvironments singleton that handles PHP version
      detection, as well as switching. It is initialized
      when the app is ready and passed all checks.
      */
-    var phpEnvironment: PhpEnv! = nil
+    var phpEnvironments: PhpEnvironments! = nil
 
     /**
      The logger is responsible for different levels of logging.
@@ -58,7 +68,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         #if DEBUG
         logger.verbosity = .performance
-
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
         }
@@ -88,11 +97,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.menu = MainMenu.shared
         self.paths = Paths.shared
         self.valet = Valet.shared
+        self.brew = Brew.shared
         super.init()
     }
 
     func initializeSwitcher() {
-        self.phpEnvironment = PhpEnv.shared
+        self.phpEnvironments = PhpEnvironments.shared
     }
 
     static func initializeTestingProfile(_ path: String) {
@@ -110,9 +120,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Make sure notifications will work
         setupNotifications()
+
         Task { // Make sure the menu performs its initial checks
             await menu.startup()
         }
     }
 
+    // MARK: - Menu Items
+
+    @IBOutlet weak var menuItemSites: NSMenuItem!
+
+    /**
+     Ensure relevant menu items in the main menu bar (not the pop-up menu)
+     are disabled or hidden when needed.
+     */
+    public func configureMenuItems(standalone: Bool) {
+        if standalone {
+            menuItemSites.isHidden = true
+        }
+    }
 }

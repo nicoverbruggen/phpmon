@@ -59,32 +59,6 @@ class AppVersionTest: XCTestCase {
         XCTAssertEqual("dev", version?.suffix)
     }
 
-    func test_tagged_release_omits_zero_patch() {
-        let version = AppVersion.from("3.5.0_333")!
-
-        XCTAssertEqual(version.tagged, "3.5")
-        XCTAssertEqual(version.version, "3.5.0")
-    }
-
-    func test_tagged_release_doesnt_omit_non_zero_patch() {
-        let version = AppVersion.from("3.5.1_333")!
-
-        XCTAssertEqual(version.tagged, "3.5.1")
-        XCTAssertEqual(version.version, "3.5.1")
-    }
-
-    func test_tag_truncation_does_not_affect_major_versions() {
-        var version = AppVersion.from("5.0_333")!
-
-        XCTAssertEqual(version.tagged, "5.0")
-        XCTAssertEqual(version.version, "5.0")
-
-        version = AppVersion.from("5.0.0_333")!
-
-        XCTAssertEqual(version.tagged, "5.0")
-        XCTAssertEqual(version.version, "5.0.0")
-    }
-
     func test_can_compare_version_numbers() {
         // Build is newer
         XCTAssertTrue(AppVersion.from("5.0_101")! > AppVersion.from("5.0_100")!)
@@ -98,5 +72,4 @@ class AppVersionTest: XCTestCase {
         // Build is older
         XCTAssertFalse(AppVersion.from("5.0_101")! > AppVersion.from("5.0_102")!)
     }
-
 }

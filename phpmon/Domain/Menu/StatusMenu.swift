@@ -8,63 +8,69 @@
 import Cocoa
 
 class StatusMenu: NSMenu {
+    // swiftlint:disable cyclomatic_complexity
     func addMenuItems() {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        if Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
             addPhpActionMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayServicesManager) {
+        if PhpEnvironments.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayValetIntegration) {
+        if Valet.shared.version != nil && Preferences.isEnabled(.displayValetIntegration) {
             addValetMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayPhpConfigFinder) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
             addConfigurationMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if Preferences.isEnabled(.displayComposerToolkit) {
+        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
             addComposerMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnv.shared.isBusy {
-            return
-        }
+        if !PhpEnvironments.shared.isBusy {
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
+                addStatsMenuItem()
+                addItem(NSMenuItem.separator())
+            }
 
-        if Preferences.isEnabled(.displayLimitsWidget) {
-            addStatsMenuItem()
-            addItem(NSMenuItem.separator())
-        }
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
+                addExtensionsMenuItems()
+                NSMenuItem.separator()
 
-        if Preferences.isEnabled(.displayExtensions) {
-            addExtensionsMenuItems()
-            NSMenuItem.separator()
+                addXdebugMenuItem()
+            }
 
-            addXdebugMenuItem()
-        }
+            addPhpDoctorMenuItem()
 
-        addPhpDoctorMenuItem()
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
+                addPresetsMenuItem()
+            }
 
-        if Preferences.isEnabled(.displayPresets) {
-            addPresetsMenuItem()
-        }
-
-        if Preferences.isEnabled(.displayMisc) {
-            addFirstAidAndServicesMenuItems()
+            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
+                addFirstAidAndServicesMenuItems()
+            }
         }
 
         addItem(NSMenuItem.separator())
 
+        addPreferencesMenuItems()
+
+        if !Valet.installed {
+            addLiteModeMenuItem()
+        }
+
         addCoreMenuItems()
     }
+    // swiftlint:enable cyclomatic_complexity
 }

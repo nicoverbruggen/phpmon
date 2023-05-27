@@ -13,6 +13,7 @@ class Log {
     static var shared = Log()
 
     var logFilePath = "~/.config/phpmon/last_session.log"
+
     var logExists = false
 
     enum Verbosity: Int {
@@ -29,9 +30,9 @@ class Log {
 
     public func prepareLogFile() {
         if !isRunningTests && Verbosity.cli.isApplicable() {
-            _ = system("mkdir -p ~/.config/phpmon 2> /dev/null")
-            _ = system("rm ~/.config/phpmon/last_session.log 2> /dev/null")
-            _ = system("touch ~/.config/phpmon/last_session.log 2> /dev/null")
+            system_quiet("mkdir -p ~/.config/phpmon 2> /dev/null")
+            system_quiet("rm ~/.config/phpmon/last_session.log 2> /dev/null")
+            system_quiet("touch ~/.config/phpmon/last_session.log 2> /dev/null")
             self.logExists = FileSystem.fileExists(self.logFilePath)
         }
     }
@@ -69,6 +70,12 @@ class Log {
     static func separator(as verbosity: Verbosity = .info) {
         if verbosity.isApplicable() {
             Log.shared.log("==================================")
+        }
+    }
+
+    static func line(as verbosity: Verbosity = .info) {
+        if verbosity.isApplicable() {
+            Log.shared.log("----------------------------------")
         }
     }
 

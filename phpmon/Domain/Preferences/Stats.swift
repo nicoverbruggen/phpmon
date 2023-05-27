@@ -101,11 +101,11 @@ class Stats {
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
 
-        if Homebrew.fake {
-            return Log.info("A fake environment is in use, skipping sponsor alert.")
+        if Shell is TestableShell {
+            return Log.info("A fake shell is in use, skipping sponsor alert.")
         }
 
-        if Bundle.main.bundleIdentifier?.contains("beta") ?? false {
+        if App.identifier.contains(".dev") || App.identifier.contains(".eap") {
             return Log.info("Sponsor messages never apply to beta builds.")
         }
 
@@ -138,54 +138,6 @@ class Stats {
             }
 
             UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
-        }
-    }
-
-    public static func evaluateLastLinkedPhpVersion() {
-        let currentVersion = PhpEnv.phpInstall.version?.short ?? ""
-        let previousVersion = Stats.lastGlobalPhpVersion
-
-        if currentVersion == "" {
-            return Log.warn("<PG> PHP Guard is unable to determine the current PHP version!")
-        }
-        Log.info("<PG> The currently linked version of PHP is: \(currentVersion).")
-
-        if previousVersion == "" {
-            Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
-            return Log.warn("<PG> PHP Guard is saving the currently linked PHP version (first time only).")
-        }
-        Log.info("<PG> Previously, the globally linked PHP version was: \(previousVersion).")
-
-        if previousVersion == currentVersion {
-            return Log.info("<PG> PHP Guard did not notice any changes in the linked PHP version.")
-        }
-
-        // At this point, the version is *not* a match
-        Log.info("<PG> PHP Guard noticed a different PHP version. An alert will be displayed!")
-
-        Task { @MainActor in
-            BetterAlert()
-                .withInformation(
-                    title: "startup.version_mismatch.title".localized,
-                    subtitle: "startup.version_mismatch.subtitle".localized(
-                        currentVersion,
-                        previousVersion
-                    ),
-                    description: "startup.version_mismatch.desc".localized()
-                )
-                .withPrimary(text: "startup.version_mismatch.button_switch_back".localized(
-                    previousVersion
-                ), action: { alert in
-                    alert.close(with: .OK)
-                    Task { MainMenu.shared.switchToAnyPhpVersion(previousVersion) }
-                })
-                .withTertiary(text: "startup.version_mismatch.button_stay".localized(
-                    currentVersion
-                ), action: { alert in
-                    Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
-                    alert.close(with: .OK)
-                })
-                .show()
         }
     }
 }

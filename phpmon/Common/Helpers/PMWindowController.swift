@@ -37,13 +37,13 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
 
 extension NSWindowController {
 
-    public func positionWindowInTopLeftCorner() {
+    public func positionWindowInTopLeftCorner(offsetY: CGFloat = 0, offsetX: CGFloat = 0) {
         guard let frame = NSScreen.main?.frame else { return }
         guard let window = self.window else { return }
 
         window.setFrame(NSRect(
-            x: frame.size.width - window.frame.size.width - 20,
-            y: frame.size.height - window.frame.size.height - 40,
+            x: frame.size.width - window.frame.size.width - 20 + offsetX,
+            y: frame.size.height - window.frame.size.height - 40 + offsetY,
             width: window.frame.width,
             height: window.frame.height
         ), display: true)
