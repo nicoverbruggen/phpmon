@@ -141,6 +141,10 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.unlinked.desc" = "You likely still have some version of PHP that is currently installed, but currently no version of PHP is linked.";
 "phpman.unlinked.detail" = "Without any PHP version linked, the `php` binary is not accessible on your system and you cannot run any PHP scripts without explicitly being part of the PATH. You can have PHP Monitor automatically resolve this problem (choose Fix Automatically in the main menu), or fix it yourself by running `brew link php --force`.";
 
+"phpman.operations.repairing" = "Repairing installations...";
+"phpman.operations.updating" = "Installing updates...";
+"phpman.operations.installing" = "Installing %@...";
+
 "phpman.steps.fetching" = "Fetching...";
 "phpman.steps.downloading" = "Downloading package data...";
 "phpman.steps.installing" = "Installing some package data...";

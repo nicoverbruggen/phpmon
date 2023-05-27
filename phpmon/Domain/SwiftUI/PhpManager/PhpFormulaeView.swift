@@ -233,7 +233,7 @@ struct PhpFormulaeView: View {
 
     public func repairAll() async {
         await self.runCommand(InstallAndUpgradeCommand(
-            title: "Repairing installations...",
+            title: "phpman.operations.repairing".localized,
             upgrading: [],
             installing: []
         ))
@@ -241,7 +241,7 @@ struct PhpFormulaeView: View {
 
     public func upgradeAll(_ formulae: [BrewFormula]) async {
         await self.runCommand(InstallAndUpgradeCommand(
-            title: "Installing updates...",
+            title: "phpman.operations.updating".localized,
             upgrading: formulae,
             installing: []
         ))
@@ -249,7 +249,7 @@ struct PhpFormulaeView: View {
 
     public func install(_ formula: BrewFormula) async {
         await self.runCommand(InstallAndUpgradeCommand(
-            title: "Installing \(formula.displayName)",
+            title: "phpman.operations.installing".localized(formula.displayName),
             upgrading: [],
             installing: [formula]
         ))
