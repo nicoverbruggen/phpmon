@@ -189,6 +189,15 @@ struct PhpFormulaeView: View {
     }
 
     public func runCommand(_ command: InstallAndUpgradeCommand) async {
+        if PhpEnvironments.shared.isBusy {
+            self.presentErrorAlert(
+                title: "phpman.busy.title".localized,
+                description: "phpman.busy.desc".localized,
+                button: "generic.ok".localized
+            )
+            return
+        }
+
         do {
             self.setBusyStatus(true)
             try await command.execute { progress in
@@ -347,54 +356,5 @@ struct PhpFormulaeView_Previews: PreviewProvider {
             formulae: Brew.shared.formulae,
             handler: FakeBrewFormulaeHandler()
         ).frame(width: 600, height: 600)
-    }
-}
-
-class FakeBrewFormulaeHandler: HandlesBrewFormulae {
-    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
-        return [
-            BrewFormula(
-                name: "php",
-                displayName: "PHP 8.2",
-                installedVersion: "8.2.3",
-                upgradeVersion: "8.2.4"
-            ),
-            BrewFormula(
-                name: "php@8.1",
-                displayName: "PHP 8.1",
-                installedVersion: "8.1.17",
-                upgradeVersion: nil
-            ),
-            BrewFormula(
-                name: "php@8.0",
-                displayName: "PHP 8.0",
-                installedVersion: nil,
-                upgradeVersion: nil
-            ),
-            BrewFormula(
-                name: "php@7.4",
-                displayName: "PHP 7.4",
-                installedVersion: nil,
-                upgradeVersion: nil
-            ),
-            BrewFormula(
-                name: "php@7.3",
-                displayName: "PHP 7.3",
-                installedVersion: nil,
-                upgradeVersion: nil
-            ),
-            BrewFormula(
-                name: "php@7.2",
-                displayName: "PHP 7.2",
-                installedVersion: nil,
-                upgradeVersion: nil
-            ),
-            BrewFormula(
-                name: "php@7.1",
-                displayName: "PHP 7.1",
-                installedVersion: nil,
-                upgradeVersion: nil
-            )
-        ]
     }
 }

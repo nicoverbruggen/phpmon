@@ -554,6 +554,10 @@
 		C485707B28BF458900539B36 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
 		C485707C28BF459500539B36 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
 		C485707D28BF45A200539B36 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
+		C489E0BB2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */; };
+		C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */; };
+		C489E0BD2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */; };
+		C489E0BE2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */; };
 		C48D0C9325CC804200CC7490 /* XibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D0C9225CC804200CC7490 /* XibLoadable.swift */; };
 		C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
 		C48D6C71279CD2AC00F26D7E /* VersionNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */; };
@@ -980,6 +984,7 @@
 		C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBrewFormulaeHandler.swift; sourceTree = "<group>"; };
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
 		C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionNumberTest.swift; sourceTree = "<group>"; };
@@ -1405,6 +1410,7 @@
 				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
 				C40D72592A018ACC0054A067 /* PhpFormulaeStatus.swift */,
 				C40D725E2A018AE30054A067 /* BrewFormulaUI.swift */,
+				C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */,
 			);
 			path = PhpManager;
 			sourceTree = "<group>";
@@ -2282,6 +2288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C489E0BB2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */,
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				C490E3BB29BCA375006D2DE6 /* Measurements.swift in Sources */,
@@ -2638,6 +2645,7 @@
 				C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */,
 				C4CB6E67292C362C002E9027 /* Homebrew.swift in Sources */,
+				C489E0BD2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */,
@@ -2687,6 +2695,7 @@
 				C4B79EB929CA387F00A483EE /* BrewFormulaeHandler.swift in Sources */,
 				C471E8A428F9BB8F0021E251 /* AppDelegate+Notifications.swift in Sources */,
 				C490E3B329BC9FEA006D2DE6 /* ProgressWindowView.swift in Sources */,
+				C489E0BE2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C490E3B229BC9FE8006D2DE6 /* ProgressViewSubject.swift in Sources */,
 				C471E8A528F9BB8F0021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E8A628F9BB8F0021E251 /* App.swift in Sources */,
@@ -2973,6 +2982,7 @@
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */,
+				C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C4B79ECC29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,

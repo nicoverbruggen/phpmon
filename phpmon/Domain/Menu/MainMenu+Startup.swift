@@ -88,6 +88,9 @@ extension MainMenu {
         // Load the global hotkey
         App.shared.loadGlobalHotkey()
 
+        // Set up menu items
+        AppDelegate.instance.configureMenuItems(standalone: !Valet.installed)
+
         if Valet.installed {
             // Preload all sites
             await Valet.shared.startPreloadingSites()

@@ -11,6 +11,10 @@ import UserNotifications
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
 
+    static var instance: AppDelegate {
+        return NSApplication.shared.delegate as! AppDelegate
+    }
+
     // MARK: - Variables
 
     /**
@@ -119,6 +123,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         Task { // Make sure the menu performs its initial checks
             await menu.startup()
+        }
+    }
+
+    // MARK: - Menu Items
+
+    @IBOutlet weak var menuItemSites: NSMenuItem!
+
+    /**
+     Ensure relevant menu items in the main menu bar (not the pop-up menu)
+     are disabled or hidden when needed.
+     */
+    public func configureMenuItems(standalone: Bool) {
+        if standalone {
+            menuItemSites.isHidden = true
         }
     }
 }
