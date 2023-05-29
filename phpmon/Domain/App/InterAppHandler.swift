@@ -23,13 +23,13 @@ class InterApp {
 
     @MainActor static func getCommands() -> [InterApp.Action] { return [
         InterApp.Action(command: "list", action: { _ in
-            DomainListVC.show()
+            if Valet.installed { DomainListVC.show() }
         }),
         InterApp.Action(command: "services/stop", action: { _ in
-            Task { MainMenu.shared.stopValetServices() }
+            if Valet.installed { Task { MainMenu.shared.stopValetServices() } }
         }),
         InterApp.Action(command: "services/restart/all", action: { _ in
-            Task { MainMenu.shared.restartValetServices() }
+            if Valet.installed { Task { MainMenu.shared.restartValetServices() } }
         }),
         InterApp.Action(command: "services/restart/nginx", action: { _ in
             Task { MainMenu.shared.restartNginx() }
@@ -47,7 +47,7 @@ class InterApp {
             Task { MainMenu.shared.openGlobalComposerFolder() }
         }),
         InterApp.Action(command: "locate/valet", action: { _ in
-            Task { MainMenu.shared.openValetConfigFolder() }
+            if Valet.installed { Task { MainMenu.shared.openValetConfigFolder() } }
         }),
         InterApp.Action(command: "phpinfo", action: { _ in
             Task { MainMenu.shared.openPhpInfo() }
