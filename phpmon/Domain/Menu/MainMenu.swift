@@ -231,7 +231,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     func menuWillOpen(_ menu: NSMenu) {
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
-        Task { // Reload Homebrew services information asynchronously
+
+        // Exit early if Valet is not detected (i.e. standalone mode)
+        if !Valet.installed {
+            return
+        }
+
+        Task { // Reload Homebrew services information asynchronously, but only if Valet is enabled
             await ServicesManager.shared.reloadServicesStatus()
         }
     }

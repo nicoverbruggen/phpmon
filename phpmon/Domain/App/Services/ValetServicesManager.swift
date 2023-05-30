@@ -34,6 +34,10 @@ class ValetServicesManager: ServicesManager {
      these two commands are executed concurrently.
      */
     override func reloadServicesStatus() async {
+        if !Valet.installed {
+            return Log.info("Not reloading services because running in Standalone Mode.")
+        }
+
         await withTaskGroup(of: [HomebrewService].self, body: { group in
             // First, retrieve the status of the formulae that run as root
             group.addTask {
