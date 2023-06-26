@@ -92,6 +92,19 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
 
+        let mapping = [
+            "SECURE": "domain_list.columns.secure",
+            "DOMAIN": "domain_list.columns.domain",
+            "ENVIRONMENT": "domain_list.columns.php",
+            "KIND": "domain_list.columns.kind",
+            "TYPE": "domain_list.columns.project_type"
+        ]
+
+        for (id, key) in mapping {
+            let column = tableView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: id))
+            column?.title = key.localized
+        }
+
         if !Valet.shared.sites.isEmpty {
             // Preloaded list
             domains = Valet.getDomainListable()

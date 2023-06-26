@@ -284,11 +284,11 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "domain_list.alert.invalid_folder_name" = "Tên thư mục không hợp lệ";
 "domain_list.alert.invalid_folder_name_desc" = "Thư mục này không thể giải quyết thành URL hợp lệ. Thông thường điều này xảy ra khi có một dấu cách trong tên thư mục. Vui lòng đổi tên thư mục, tải lại danh sách các trang web và thử lại.";
 
-"domain_list.columns.tls" = "TLS";
+"domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Tên miền";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "Kiểu";
+"domain_list.columns.active" = "Hoạt động";
 "domain_list.columns.kind" = "Loại";
+"domain_list.columns.project_type" = "Loại dự án";
 
 // DRIVERS
 

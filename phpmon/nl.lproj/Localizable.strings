@@ -206,7 +206,7 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 "domain_list.confirm_unproxy" = "Weet je zeker dat je de proxy '%@' wilt verwijderen?";
 "domain_list.confirm_unproxy_desc" = "Je kunt de proxy altijd opnieuw maken door op de + knop te klikken.";
 
-"domain_list.columns.tls" = "TLS";
+"domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domein";
 "domain_list.columns.active" = "Actief";
 "domain_list.columns.kind" = "Type";
@@ -291,7 +291,7 @@ Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie 
 "domain_list.alert.invalid_folder_name" = "Ongeldige mapnaam";
 "domain_list.alert.invalid_folder_name_desc" = "Deze mapnaam kan niet worden omgezet naar een geldige URL. Dit komt meestal doordat er een spatie in de mapnaam staat. Hernoem de map alstublieft, vernieuw de lijst met websites en probeer het opnieuw.";
 
-"domain_list.columns.tls" = "TLS";
+"domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domein";
 "domain_list.columns.php" = "PHP";
 "domain_list.columns.type" = "Type";
