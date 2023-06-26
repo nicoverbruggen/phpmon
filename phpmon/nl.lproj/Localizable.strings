@@ -319,10 +319,15 @@ Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie 
 "prefs.subtitle" = "Voorkeuren";
 "prefs.close" = "Sluiten";
 
+"prefs.tabs.general" = "Algemeen";
+"prefs.tabs.appearance" = "Weergave";
+"prefs.tabs.visibility" = "Zichtbaarheid";
+"prefs.tabs.notifications" = "Notificaties";
+
 "prefs.global_shortcut" = "Globale sneltoets:";
 "prefs.dynamic_icon" = "Dynamisch pictogram:";
 "prefs.icon_type" = "Pictogramtype:";
-"prefs.info_density" = "Hoeveelheid informatie:";
+"prefs.info_density" = "Informatie:";
 "prefs.services" = "Services:";
 "prefs.switcher" = "Switcher:";
 "prefs.php_doctor" = "PHP Doctor:";

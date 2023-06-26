@@ -319,6 +319,11 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.subtitle" = "Preferences";
 "prefs.close" = "Close";
 
+"prefs.tabs.general" = "General";
+"prefs.tabs.appearance" = "Appearance";
+"prefs.tabs.visibility" = "Visibility";
+"prefs.tabs.notifications" = "Notifications";
+
 "prefs.global_shortcut" = "Global Shortcut:";
 "prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";

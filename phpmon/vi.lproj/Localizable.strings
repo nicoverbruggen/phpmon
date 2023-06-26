@@ -312,6 +312,11 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "prefs.subtitle" = "Tùy chọn";
 "prefs.close" = "Đóng";
 
+"prefs.tabs.general" = "Chung";
+"prefs.tabs.appearance" = "Giao diện";
+"prefs.tabs.visibility" = "Hiển thị";
+"prefs.tabs.notifications" = "Thông báo";
+
 "prefs.global_shortcut" = "Phím tắt toàn cục:";
 "prefs.dynamic_icon" = "Biểu tượng động:";
 "prefs.dynamic_icon" = "Loại biểu tượng:";
