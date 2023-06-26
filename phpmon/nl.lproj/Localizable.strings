@@ -59,7 +59,7 @@
 "mi_view_recommendations" = "Bekijk aanbevelingen...";
 
 "mi_valet" = "Laravel Valet";
-"mi_domain_list" = "Open lijst met domeinen...";
+"mi_domain_list" = "Open domeinenlijst...";
 
 "mi_preferences" = "Voorkeuren...";
 "mi_donate" = "Doneer...";
@@ -68,8 +68,8 @@
 "mi_quit" = "PHP Monitor afsluiten";
 "mi_about" = "Over PHP Monitor";
 
-"mi_presets_title" = "Configuratie Presets";
-"mi_apply_presets_title" = "Apply Configuratie Presets";
+"mi_presets_title" = "Configuratie presets";
+"mi_apply_presets_title" = "Apply Configuratie presets";
 "mi_revert_to_prev_config" = "Terug naar vorige configuratie...";
 "mi_profiles_loaded" = "%i profielen ingeladen via configuratiebestand";
 
