@@ -898,7 +898,6 @@
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C41C1B3A22B0098000E7CF16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C41C1B3D22B0098000E7CF16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C41C1B3F22B0098000E7CF16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C41C1B4022B0098000E7CF16 /* phpmon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = phpmon.entitlements; sourceTree = "<group>"; };
 		C41C1B4822B00A9800E7CF16 /* MenuBarImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarImageGenerator.swift; sourceTree = "<group>"; };
@@ -1059,6 +1058,7 @@
 		C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcher.swift; sourceTree = "<group>"; };
 		C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProxyVC.swift; sourceTree = "<group>"; };
 		C4DD662A2A4A1B4E00D6A731 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C4DD662B2A4A1E5B00D6A731 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C4DEB7D327A5D60B00834718 /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		C4E0F7EC27BEBDA9007475F2 /* NSWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindowExtension.swift; sourceTree = "<group>"; };
 		C4E2E84628FC1D8C003B070C /* TestableConfigurationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableConfigurationTest.swift; sourceTree = "<group>"; };
@@ -2150,7 +2150,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				vi,
 				nl,
 				de,
@@ -3096,7 +3095,7 @@
 		C41C1B3C22B0098000E7CF16 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C41C1B3D22B0098000E7CF16 /* Base */,
+				C4DD662B2A4A1E5B00D6A731 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
