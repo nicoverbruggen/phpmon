@@ -205,6 +205,12 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";
 
+"domain_list.columns.tls" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.active" = "Active";
+"domain_list.columns.kind" = "Kind";
+"domain_list.columns.project_type" = "Project Type";
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "What kind of domain would you like to set up?";
