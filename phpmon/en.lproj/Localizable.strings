@@ -1,11 +1,3 @@
-/* 
-  Strings.strings
-  PHP Monitor
-
-  Created by Nico Verbruggen on 16/05/2020.
-  Copyright © 2023 Nico Verbruggen. All rights reserved.
-*/
-
 // MENU ITEMS (MI)
 
 "mi_busy" = "PHP Monitor is busy...";
@@ -150,6 +142,12 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.steps.installing" = "Installing some package data...";
 "phpman.steps.pouring" = "Pouring... This can take a while...";
 "phpman.steps.summary" = "Some package has finished installing...";
+
+"phpman.services.loading" = "Loading...";
+"phpman.services.not_installed" = "A key service is not installed.";
+"phpman.services.error" = "A key service is reporting an error state.";
+"phpman.services.inactive" = "A key service is not running.";
+"phpman.services.all_ok" = "All Valet services are OK.";
 
 // LITE MODE
 

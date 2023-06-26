@@ -196,9 +196,6 @@
 		C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4551656297AED18009B8466 /* ValetRcTest.swift */; };
 		C4551659297AED7D009B8466 /* valetrc.valid in Resources */ = {isa = PBXBuildFile; fileRef = C4551658297AED7D009B8466 /* valetrc.valid */; };
 		C455165B297AEDB5009B8466 /* valetrc.broken in Resources */ = {isa = PBXBuildFile; fileRef = C455165A297AEDB5009B8466 /* valetrc.broken */; };
-		C4570C3A28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
-		C4570C3B28FC355300D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
-		C4570C3C28FC355400D18420 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C459B4BD27F6093700E9B4B4 /* nginx-proxy.test in Resources */ = {isa = PBXBuildFile; fileRef = C459B4BC27F6093700E9B4B4 /* nginx-proxy.test */; };
 		C45B9149295607F400F4EC78 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* Service.swift */; };
 		C45B914A295607F400F4EC78 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45B9148295607F400F4EC78 /* Service.swift */; };
@@ -523,7 +520,6 @@
 		C471E8F028F9BB8F0021E251 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9E0AD27E4F51E003B9AD9 /* Key.swift */; };
 		C471E8F128F9BB8F0021E251 /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9E0AF27E4F51E003B9AD9 /* KeyCombo.swift */; };
 		C471E8F228F9BB8F0021E251 /* ModifierFlagsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9E0B027E4F51E003B9AD9 /* ModifierFlagsExtension.swift */; };
-		C473319F2470923A009A0597 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C473319E2470923A009A0597 /* Localizable.strings */; };
 		C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47331A1247093B7009A0597 /* StatusMenu.swift */; };
 		C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C474B00524C0E98C00066A22 /* LocalNotification.swift */; };
 		C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
@@ -807,6 +803,10 @@
 		C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
 		C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */; };
 		C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F361602836BFD9003598CC /* MainMenu+Actions.swift */; };
+		C4FC8D3D2A49816300FBBD16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4FC8D422A49816300FBBD16 /* Localizable.strings */; };
+		C4FC8D3E2A49816300FBBD16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4FC8D422A49816300FBBD16 /* Localizable.strings */; };
+		C4FC8D3F2A49816300FBBD16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4FC8D422A49816300FBBD16 /* Localizable.strings */; };
+		C4FC8D402A49816300FBBD16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4FC8D422A49816300FBBD16 /* Localizable.strings */; };
 		C4FD87A829AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C4FD87A929AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
@@ -975,7 +975,6 @@
 		C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcherTest.swift; sourceTree = "<group>"; };
 		C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C471E7BE28F9B90F0021E251 /* StartupTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupTest.swift; sourceTree = "<group>"; };
-		C473319E2470923A009A0597 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C47331A1247093B7009A0597 /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		C474B00524C0E98C00066A22 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		C47699EE28A2F2A30060FEB8 /* WarningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManager.swift; sourceTree = "<group>"; };
@@ -1095,6 +1094,9 @@
 		C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreferencesWindowController+Hotkey.swift"; sourceTree = "<group>"; };
 		C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindowController.swift; sourceTree = "<group>"; };
 		C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionDetectionTest.swift; sourceTree = "<group>"; };
+		C4FC8D412A49816300FBBD16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C4FC8D432A49816C00FBBD16 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C4FC8D442A4981BC00FBBD16 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C4FE011028084FC200D1DE6D /* SelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1339,7 +1341,7 @@
 				C4232EE42612526500158FC6 /* Credits.html */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
-				C473319E2470923A009A0597 /* Localizable.strings */,
+				C4FC8D422A49816300FBBD16 /* Localizable.strings */,
 				C405A4CD24B9B9070062FAFA /* IAP */,
 			);
 			path = phpmon;
@@ -2148,6 +2150,8 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
+				nl,
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
@@ -2185,7 +2189,7 @@
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
 				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
-				C473319F2470923A009A0597 /* Localizable.strings in Resources */,
+				C4FC8D3D2A49816300FBBD16 /* Localizable.strings in Resources */,
 				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */,
@@ -2196,7 +2200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4570C3B28FC355300D18420 /* Localizable.strings in Resources */,
+				C4FC8D3F2A49816300FBBD16 /* Localizable.strings in Resources */,
 				C4E2E85528FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85928FC256B003B070C /* brew-services-normal.json in Resources */,
 				C40934A8298EEB8700D25014 /* phpmon-dev.rb in Resources */,
@@ -2209,7 +2213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4570C3A28FC355300D18420 /* Localizable.strings in Resources */,
+				C4FC8D402A49816300FBBD16 /* Localizable.strings in Resources */,
 				C4E2E85628FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85A28FC256B003B070C /* brew-services-normal.json in Resources */,
 				C40934A9298EEB8700D25014 /* phpmon-dev.rb in Resources */,
@@ -2223,7 +2227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4551659297AED7D009B8466 /* valetrc.valid in Resources */,
-				C4570C3C28FC355400D18420 /* Localizable.strings in Resources */,
+				C4FC8D3E2A49816300FBBD16 /* Localizable.strings in Resources */,
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */,
@@ -3095,6 +3099,16 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		C4FC8D422A49816300FBBD16 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4FC8D412A49816300FBBD16 /* en */,
+				C4FC8D432A49816C00FBBD16 /* vi */,
+				C4FC8D442A4981BC00FBBD16 /* nl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -3238,6 +3252,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3301,6 +3316,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3569,6 +3585,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3676,6 +3693,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3790,6 +3808,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3976,6 +3995,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

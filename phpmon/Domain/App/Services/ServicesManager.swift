@@ -46,22 +46,22 @@ class ServicesManager: ObservableObject {
 
     public var statusMessage: String {
         if self.services.isEmpty || !self.firstRunComplete {
-            return "Loading..."
+            return "phpman.services.loading".localized
         }
 
         let statuses = self.services[0...2].map { $0.status }
 
         if statuses.contains(.missing) {
-            return "A key service is not installed."
+            return "phpman.services.not_installed".localized
         }
         if statuses.contains(.error) {
-            return "A key service is reporting an error state."
+            return "phpman.services.error".localized
         }
         if statuses.contains(.inactive) {
-            return "A key service is not running."
+            return "phpman.services.inactive".localized
         }
 
-        return "All Valet services are OK."
+        return "phpman.services.all_ok".localized
     }
 
     public var statusColor: Color {
