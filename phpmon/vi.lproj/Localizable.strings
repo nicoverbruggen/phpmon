@@ -144,10 +144,10 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "phpman.steps.summary" = "Một số gói đã hoàn thành cài đặt...";
 
 "phpman.services.loading" = "Đang tải...";
-"phpman.services.not_installed" = "Một dịch vụ chính không được cài đặt.";
-"phpman.services.error" = "Một dịch vụ chính đang báo cáo trạng thái lỗi.";
-"phpman.services.inactive" = "Một dịch vụ chính không hoạt động.";
-"phpman.services.all_ok" = "Tất cả các dịch vụ Valet đều OK.";
+"phpman.services.not_installed" = "Một dịch vụ chính chưa được cài đặt.";
+"phpman.services.error" = "Một dịch vụ chính báo cáo trạng thái lỗi.";
+"phpman.services.inactive" = "Một dịch vụ chính không chạy.";
+"phpman.services.all_ok" = "Tất cả các dịch vụ Valet OK.";
 
 // LITE MODE
 
@@ -286,7 +286,7 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Tên miền";
-"domain_list.columns.active" = "Hoạt động";
+"domain_list.columns.active" = "Kích hoạt";
 "domain_list.columns.kind" = "Loại";
 "domain_list.columns.project_type" = "Loại dự án";
 

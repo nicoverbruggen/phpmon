@@ -1,0 +1,780 @@
+// MENU ITEMS (MI)
+
+"mi_busy" = "PHP Monitor ist beschäftigt...";
+"mi_unsure" = "Wir sind uns nicht sicher, welche PHP-Version Sie ausführen.";
+"mi_php_version" = "Globale Version: PHP";
+"mi_php_switch" = "Zu PHP wechseln";
+"mi_php_unsupported" = "Einige installierte PHP-Versionen werden nicht angezeigt.";
+"mi_php_broken_1" = "Oh! Es scheint, dass Ihre PHP-Installation beschädigt ist...";
+"mi_php_broken_2" = "Versuchen Sie `php -v` in Ihrem Terminal auszuführen.";
+"mi_php_broken_3" = "Sie können auch versuchen zu einer anderen Version zu wechseln.";
+"mi_php_broken_4" = "Eventuell hilft es, `brew reinstall php` (oder für die entsprechende Version) auszuführen.";
+"mi_no_php_linked" = "Keine PHP-Version verknüpft!";
+"mi_fix_php_link" = "Automatisch beheben...";
+"mi_no_php_linked_explain" = "Was ist das?";
+"mi_php_version_manager" = "PHP Versionen Manager...";
+
+"mi_diagnostics" = "Diagnosen";
+"mi_active_services" = "Aktive Dienste";
+"mi_restart_php_fpm" = "Dienst neu starten: php";
+"mi_restart_nginx" = "Dienst neu starten: nginx";
+"mi_restart_dnsmasq" = "Dienst neu starten: dnsmasq";
+"mi_manage_services" = "Dienste verwalten";
+"mi_restart_valet_services" = "Valet Dienste neu starten";
+"mi_stop_valet_services" = "Valet Dienste stoppen";
+
+"mi_fix_my_valet" = "Fix My Valet...";
+"mi_fix_my_valet_tooltip" = "Stimmt etwas mit der Valet-Installation nicht? Jetzt die automatischen Korrekturen von PHP Monitor ausprobieren, die alles in kürzester Zeit wieder zum Laufen bringen!";
+"mi_fix_brew_permissions" = "Homebrew-Berechtigungen wiederherstellen...";
+"mi_fix_brew_permissions_tooltip" = "Gibt es Probleme mit Berechtigungen, wenn Sie `brew upgrade` ausführen? PHP Monitor ist die Rettung!";
+
+"mi_php_refresh" = "Informationen aktualisieren";
+
+"mi_configuration" = "PHP-Konfiguration";
+"mi_limits" = "Grenzwerte Konfiguration";
+"mi_memory_limit" = "Speichergrenze";
+"mi_post_max_size" = "Max POST";
+"mi_upload_max_filesize" = "Max Upload";
+"mi_manual_actions" = "Manuelle Aktionen";
+"mi_services" = "Dienste";
+"mi_other" = "Erste Hilfe & Dienste";
+"mi_first_aid" = "Erste Hilfe";
+
+"mi_xdebug_mode" = "Xdebug verwalten";
+
+"mi_composer" = "Composer";
+"mi_valet_config" = "Valet-Ordner suchen (.config/valet)";
+"mi_php_config" = "PHP-Konfigurationsdatei suchen (php.ini)";
+"mi_phpmon_config" = "PHP Monitor Ordner suchen (.config/phpmon)";
+"mi_global_composer" = "Globale Composer-Datei suchen (.composer)";
+"mi_phpinfo" = "Aktuelle Konfiguration anzeigen (phpinfo)";
+"mi_update_global_composer" = "Globale Composer-Abhängigkeiten aktualisieren...";
+"mi_detected_extensions" = "Erkannte Erweiterungen";
+"mi_no_extensions_detected" = "Es wurden keine zusätzlichen Erweiterungen entdeckt.";
+
+"mi_php_doctor" = "PHP Doktor";
+"mi_fa_php_doctor" = "PHP Doktor öffnen...";
+"mi_recommendations_count" = "%i Problem(e) erkannt!";
+"mi_view_recommendations" = "Empfehlungen ansehen...";
+
+"mi_valet" = "Laravel Valet";
+"mi_domain_list" = "Domains Liste ansehen...";
+
+"mi_preferences" = "Einstellungen...";
+"mi_donate" = "Spenden...";
+"mi_check_for_updates" = "Nach Updates suchen...";
+"mi_lite_mode" = "Über den Standalone-Modus...";
+"mi_quit" = "PHP Monitor beenden";
+"mi_about" = "Über PHP Monitor";
+
+"mi_presets_title" = "Konfigurationsvoreinstellungen";
+"mi_apply_presets_title" = "Voreinstellung anwenden";
+"mi_revert_to_prev_config" = "Zur vorherigen Konfiguration zurückkehren...";
+"mi_profiles_loaded" = "%i Profile aus Konfigurationsdatei geladen";
+
+"mi_no_presets" = "Keine Voreinstellungen verfügbar.";
+"mi_set_up_presets" = "Erfahren Sie mehr über Voreinstellungen...";
+
+"mi_view_onboarding" = "Willkommenstour starten...";
+
+"mi_xdebug_available_modes" = "Verfügbare Modi";
+"mi_xdebug_actions" = "Aktionen";
+"mi_xdebug_disable_all" = "Alle Modi deaktivieren";
+
+// PHPMAN
+
+"phpman.busy.title" = "Suche nach Aktualisierungen...";
+"phpman.busy.description.outdated" = "Prüfe, ob eine PHP-Version veraltet ist...";
+
+"phpman.version.broken" = "Diese Version scheint defekt zu sein, Sie können versuchen, sie zu reparieren.";
+"phpman.version.has_update" = "Version %@ installiert, %@ verfügbar.";
+"phpman.version.installed" = "Version %@ ist derzeit installiert.";
+"phpman.version.available_for_installation" = "Diese Version kann installiert werden.";
+"phpman.buttons.uninstall" = "Deinstallieren";
+"phpman.buttons.install" = "Installieren";
+"phpman.buttons.update" = "Aktualisieren";
+"phpman.buttons.repair" = "Reparieren";
+
+"phpman.title" = "PHP-Versionen Manager";
+"phpman.description" = "Mit dem **PHP-Versionen Manager** können Sie verschiedene PHP-Versionen über Homebrew installieren, aktualisieren und löschen, ohne die Befehle im Terminal selbst ausführen zu müssen.";
+"phpman.disclaimer" = "Bitte beachten Sie, dass die Installation oder Aktualisierung von PHP-Versionen dazu führen kann, dass auch andere Homebrew-Pakete aktualisiert werden müssen. Die meisten Installationsschritte nehmen einige Zeit in Anspruch, daher haben Sie bitte etwas Geduld, während Homebrew seine Arbeit erledigt.";
+"phpman.refresh.button" = "Aktualisierungen suchen";
+"phpman.refresh.button.description" = "Sie können auf die Schaltfläche Aktualisieren klicken, um zu prüfen, ob Aktualisierungen für die installierten PHP-Versionen verfügbar sind.";
+
+"phpman.has_updates.description" = "Ein oder mehrere Aktualisierungen sind verfügbar. (Bitte beachten Sie, dass PHP Monitor PHP-Versionen immer im Ganzen installiert oder aktualisiert, so dass Sie immer alle Installationen auf einmal aktualisieren).";
+"phpman.has_updates.button" = "Alle aktualisieren";
+
+"phpman.warnings.unsupported.title" = "Ihre Version von Homebrew kann Probleme verursachen";
+"phpman.warnings.unsupported.desc" = "Keine Funktion ist deaktiviert, aber einige Befehle funktionieren möglicherweise nicht wie erwartet. Sie führen derzeit Homebrew %@ aus.
+
+Derzeit ist Homebrew 4 die einzige unterstützte Version für den PHP Version Manager. Wenn Sie eine neuere Version von Homebrew verwenden, sollten Sie prüfen, ob eine neuere Version von PHP Monitor verfügbar ist.";
+
+"phpman.warnings.removal.title" = "Sind Sie sicher, dass Sie %@ deinstallieren wollen?";
+"phpman.warnings.removal.desc" = "Bitte beachten Sie, dass die Konfigurationsdateien nicht entfernt werden, so dass eine spätere Neuinstallation problemlos möglich sein sollte.
+
+Möglicherweise werden Sie während des Deinstallationsvorgangs nach Ihrem Passwort gefragt, wenn die Dateiberechtigungen eine einfache Entfernung nicht zulassen.";
+"phpman.warnings.removal.button" = "Deinstallieren";
+
+"phpman.failures.install.title" = "Installation fehlgeschlagen!";
+"phpman.failures.install.desc" = "Leider hat der Vorgang aus irgendeinem Grund einen Fehlercode zurückgegeben. Möglicherweise wurden die Formeln korrekt installiert oder aktualisiert. Leider kann ich hier nicht viel tun. Bitte sehen Sie sich die letzten Meldungen von Homebrew hier an, um mehr über den Vorfall zu erfahren:
+
+%@";
+
+"phpman.action_prevented_busy.title" = "PHP Monitor ist derzeit beschäftigt.";
+"phpman.action_prevented_busy.desc" = "PHP Monitor führt derzeit eine Art Wechsel zwischen PHP-Versionen durch. Um sicherzustellen, dass Ihr System nicht zusammenbricht, müssen Sie warten, bis PHP Monitor wieder einsatzbereit ist, bevor Sie dies erneut versuchen.";
+
+"phpman.uninstall_prevented.title" = "Sie können die derzeit aktive Version von PHP nicht über PHP Monitor deinstallieren.";
+"phpman.uninstall_prevented.desc" = "Um Probleme mit PHP Monitor und weitere Abstürze zu vermeiden, ist es nicht möglich, die aktuell verlinkte Version von PHP über diese Benutzeroberfläche zu deinstallieren. Sie können die Version wechseln und es erneut versuchen, oder diese Version manuell über das Terminal deinstallieren.\n\nBitte beachten Sie, dass PHP Monitor abstürzen kann, wenn Sie die aktuell verknüpfte PHP-Version deinstallieren.";
+
+"phpman.failures.uninstall.title" = "Deinstallation fehlgeschlagen!";
+"phpman.failures.uninstall.desc" = "Leider ist die automatische Deinstallation fehlgeschlagen. Sie können versuchen, diesen Befehl manuell auszuführen: `%@` und finden Sie heraus, was schief gelaufen ist. Denken Sie daran, PHP Monitor neu zu starten (oder drücken Sie die Schaltfläche \"Aktualisieren\"), wenn dies geschehen ist.";
+
+"phpman.unlinked.title" = "Keine der auf Ihrem System installierten PHP-Versionen ist derzeit verlinkt.";
+"phpman.unlinked.desc" = "Wahrscheinlich haben Sie noch irgendeine Version von PHP installiert, aber derzeit ist keine Version von PHP verlinkt.";
+"phpman.unlinked.detail" = "Wenn keine PHP-Version verlinkt ist, ist die `php`-Binärdatei auf Ihrem System nicht zugänglich und Sie können keine PHP-Skripte ausführen, ohne explizit Teil des PATH zu sein. Sie können dieses Problem automatisch von PHP Monitor beheben lassen (wählen Sie \"Automatisch beheben\" im Hauptmenü) oder es selbst beheben, indem Sie \"brew link php --force\" ausführen.";
+
+"phpman.operations.repairing" = "Installationen werden repariert...";
+"phpman.operations.updating" = "Aktualisierungen werden installiert...";
+"phpman.operations.installing" = "%@ wird installiert...";
+
+"phpman.steps.fetching" = "Abrufen...";
+"phpman.steps.downloading" = "Herunterladen von Paketdaten...";
+"phpman.steps.installing" = "Installieren einiger Paketdaten...";
+"phpman.steps.pouring" = "Einschenken... Das kann eine Weile dauern...";
+"phpman.steps.summary" = "Die Installation eines Pakets ist abgeschlossen...";
+
+"phpman.services.loading" = "Laden...";
+"phpman.services.not_installed" = "Ein wichtiger Dienst ist nicht installiert.";
+"phpman.services.error" = "Ein wichtiger Dienst meldet einen Fehlerzustand.";
+"phpman.services.inactive" = "Ein wichtiger Dienst wird nicht ausgeführt.";
+"phpman.services.all_ok" = "Alle Valet-Dienste sind in Ordnung.";
+
+// LITE MODE
+
+"lite_mode_explanation.title" = "Sie führen PHP Monitor derzeit im Standalone-Modus aus.";
+"lite_mode_explanation.subtitle" = "PHP Monitor verfügt über zusätzliche Funktionen, die Sie nutzen können, wenn Sie Laravel Valet verwenden. Im Moment konnte PHP Monitor keine aktive Installation von Valet auf Ihrem System erkennen, daher sind diese Funktionen nicht verfügbar.";
+"lite_mode_explanation.description" = "Für weitere Informationen empfehle ich einen Blick in die README-Datei (auf GitHub verfügbar), in der erklärt wird, welche Schritte Sie unternehmen müssen, um Valet zu installieren und PHP Monitor korrekt laufen zu lassen. Sie müssen PHP Monitor nach der Installation von Laravel Valet neu starten, bevor es den Standalone-Modus verlässt.";
+
+// GENERIC
+
+"generic.ok" = "OK";
+"generic.cancel" = "Abbrechen";
+"generic.retry" = "Wiederholen";
+"generic.notice" = "Hinweis";
+
+// PRESET LOADING
+
+"preset_help_title" = "Arbeiten mit Konfigurationsvoreinstellungen";
+"preset_help_info" = "Sie können in der Datei config.json, die sich in ~/.config/phpmon/config.json befindet, Konfigurationsvoreinstellungen festlegen. Diese Voreinstellungen können eine Auswahl von Konfigurationswerten auf einmal anwenden. Dies ist eine leistungsstarke Funktion, die derzeit jedoch manuell eingerichtet werden muss.";
+"preset_help_desc" = "Nach einem Neustart von PHP Monitor werden alle in der Datei gefundenen Voreinstellungen geladen. Wenn keine Voreinstellungen angezeigt werden, konnte die Datei wahrscheinlich nicht korrekt geparst werden.\n\nSie können auf das Fragezeichen in dieser Meldung klicken, um zu den FAQ auf GitHub zu gelangen, wo Sie weitere Informationen über diese Funktion finden, einschließlich einer Beispieldatei.";
+
+// MENU ITEMS (if window is open)
+
+"mm_add_folder_as_link" = "Ordner als Link hinzufügen...";
+"mm_reload_domain_list" = "Domain-Liste neu laden";
+"mm_find_in_domain_list" = "In Domain-Liste suchen...";
+
+// SITE LIST
+
+"domain_list.title" = "Domains";
+"domain_list.subtitle" = "";
+
+"domain_list.no_domains" = "Sie haben noch keine Domain oder Proxy eingerichtet.";
+"domain_list.no_domains_for_search_query" = "Es gibt keine Ergebnisse für Ihre Suchanfrage.";
+
+"domain_list.tooltips.isolated" = "Diese Domain ist isoliert und verwendet PHP %@ anstelle des global verlinkten PHP.";
+"domain_list.tooltips.checkmark" = "Diese Domain verwendet eine PHP-Version, die mit dieser Anforderung kompatibel ist (PHP %@). Klicken Sie auf die PHP-Version neben diesem Häkchen, um weitere Informationen darüber zu erhalten, wie diese Anforderung ermittelt wurde.";
+
+"domain_list.alerts_isolation_failed.title" = "Ups! Seiten-Isolierung nicht angewendet";
+"domain_list.alerts_isolation_failed.subtitle" = "Beim Versuch, den Isolationsstatus für diese Website zu ändern, ist etwas schief gegangen. Wenn dies Ihre Standardsite ist, die nicht verlinkt ist, empfehle ich, die Site manuell zu verlinken, bevor Sie die Isolierung einrichten.";
+"domain_list.alerts_isolation_failed.desc" = "Um herauszufinden, was schief läuft, können Sie versuchen, den Befehl manuell in Ihrem Terminal auszuführen: %@";
+
+"domain_list.alerts_status_not_changed.title" = "Ups! SSL Status nicht geändert";
+"domain_list.alerts_status_not_changed.desc" = "Etwas ist schief gelaufen. Versuchen Sie, den Befehl manuell in Ihrem Terminal auszuführen: %@";
+
+"domain_list.alerts_status_changed.title" = "SSL Status geändert";
+"domain_list.alerts_status_changed.desc" = "Die Domain '%@' ist jetzt %@.";
+"domain_list.alerts_status_secure" = "sicher";
+"domain_list.alerts_status_unsecure" = "unsicher";
+
+"domain_list.confirm_unlink" = "Sind Sie sicher, dass Sie den Link '%@' aufheben wollen?";
+"domain_list.confirm_unlink_desc" = "Es werden keine Dateien entfernt. Sie können den Ordner jederzeit erneut verknüpfen, indem Sie auf die Schaltfläche + klicken und den ursprünglichen Ordner auswählen.";
+"site_link.close" = "Schließen";
+"site_link.switch_to_php" = "Zu PHP %@ wechseln";
+
+"domain_list.confirm_unproxy" = "Sind Sie sicher, dass Sie den Proxy '%@' entfernen wollen?";
+"domain_list.confirm_unproxy_desc" = "Sie können den Proxy jederzeit neu erstellen, indem Sie auf die Schaltfläche + klicken.";
+
+"domain_list.columns.secure" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.active" = "Aktiv";
+"domain_list.columns.kind" = "Art";
+"domain_list.columns.project_type" = "Projekttyp";
+
+// CHOOSE WHAT TO ADD
+
+"selection.title" = "Welche Art von Domain möchten Sie einrichten?";
+"selection.description" = "Links werden verwendet, um Projekte direkt zu auszuspielen. Wenn Sie einen Laravel-, Symfony-, WordPress-Ordner usw. mit Code haben, sollten Sie einen Link erstellen und den Ordner auswählen, in dem sich Ihr Code befindet.\n\nWenn Sie einen Proxy benötigen, können Sie z. B. einen Container auf einen bestimmten Domainnamen projizieren. Dies kann z. B. in Kombination mit Docker nützlich sein.";
+"selection.create_link" = "Einen Link erstellen";
+"selection.create_proxy" = "Einen Proxy erstellen";
+"selection.cancel" = "Abbrechen";
+
+// ADD PROXY TO DOMAINS LIST
+
+"domain_list.add.set_up_proxy" = "Einrichten eines Proxys";
+"domain_list.add.proxy_subject" = "Proxy-Subjekt (muss Protokoll und Port enthalten)";
+"domain_list.add.domain_name" = "Domain";
+"domain_list.add.create_proxy" = "Proxy erstellen";
+"domain_list.add.proxy_available" = "%@ wird durch einen Proxy ersetzt und ist verfügbar über: %@://%@.%@";
+"domain_list.add.proxy_https_warning" = "%@ wird durch einen Proxy ersetzt und ist verfügbar über: %@://%@.%@.
+
+(!) WICHTIG: Dieser Proxy funktioniert möglicherweise erst, wenn Sie manuell `proxy_ssl_verify off;` in die nginx-Konfigurationsdatei für diese Domain eintragen. Es wird empfohlen, eine ungesicherte Domäne als Proxysubjekt zu verwenden.";
+
+// ADD SITE TO DOMAINS LIST
+
+"domain_list.add.link_folder" = "Verknüpfen eines Ordners";
+"domain_list.add.domain_name_placeholder" = "Geben Sie hier eine Domain ein";
+"domain_list.add.secure_after_creation" = "%@.%@ nach Erstellung absichern";
+"domain_list.add.secure_description" = "Das Sichern einer Domain erfordert Administratorrechte.\n Möglicherweise werden Sie zur Eingabe Ihres Passworts oder Ihrer Touch ID aufgefordert.";
+"domain_list.add.create_link" = "Link erstellen";
+"domain_list.add.cancel" = "Abbrechen";
+"domain_list.add.folder_available" = "Diese Seite wird über die folgende URL erreichbar sein: %@://%@.%@";
+
+"domain_list.add.empty_fields" = "Ein oder mehrere Felder sind leer. Bitte füllen Sie alle erforderlichen Felder aus.";
+"domain_list.add.errors.empty" = "Sie müssen einen Domain angeben.";
+"domain_list.add.errors.empty_proxy" = "Sie müssen angeben, welche Daten vermittelt werden sollen.";
+"domain_list.add.errors.subject_invalid" = "Das von Ihnen eingegebene Subjekt ist ungültig.\nSie müssen das Protokoll und den Port angeben.";
+"domain_list.add.errors.already_exists" = "Ein Link mit diesem Namen existiert bereits.";
+
+// ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
+
+"domain_list.alert.folder_missing.desc" = "Der von Ihnen gewählte Ordner scheint nicht mehr zu existieren. Möchten Sie das Hinzufügen dieses Ordners abbrechen? Wenn Sie den Ordner verschoben haben, können Sie ihn jederzeit zurücklegen und es erneut versuchen.";
+"domain_list.alert.folder_missing.title" = "Ordner fehlt!";
+"domain_list.alert.folder_missing.cancel" = "Link Erstellung abbrechen";
+"domain_list.alert.folder_missing.return" = "OK";
+
+"domain_list.add.modal_description" = "Wählen Sie zunächst den Ordner aus, den Sie verknüpfen möchten.";
+
+// SITE LIST ACTIONS
+
+"domain_list.isolate" = "PHP-Version wechseln";
+"domain_list.site_isolation" = "Seiten Isolierung";
+"domain_list.remove_isolation" = "Isolierung entfernen";
+"domain_list.always_use_php" = "Immer PHP %@ verwenden";
+"domain_list.isolation_unavailable" = "Isolierung wird nicht unterstützt (in Valet 2)";
+
+"domain_list.actions" = "Aktionen";
+"domain_list.unlink" = "Ordner-Link aufheben";
+"domain_list.secure" = "Domain sichern";
+"domain_list.unsecure" = "Domain nicht mehr sichern";
+"domain_list.open_in_finder" = "In Finder öffnen";
+"domain_list.open_in_browser" = "Im Browser öffnen";
+"domain_list.open_in_terminal" = "Im Terminal öffnen";
+"domain_list.detected_apps" = "Erkannte Anwendungen";
+"domain_list.system_apps" = "System-Anwendungen";
+"domain_list.unproxy" = "Proxy entfernen";
+"domain_list.use_in_terminal" = "PHP %@ in Terminal öffnen";
+
+"domain_list.alerts_isolated_php_terminal.title" = "Sie können PHP %@ in einem gesonderten Terminal verwenden!";
+"domain_list.alerts_isolated_php_terminal.subtitle" = "Leider kann PHP Monitor kein Terminal für Sie öffnen (und die entsprechenden Befehle eintippen). Sie müssen das Hilfsskript manuell aufrufen, um diese spezielle Version von PHP zu verwenden. Dazu können Sie das Folgende in ein Terminal Ihrer Wahl eingeben:
+
+. pm%@
+
+Dadurch wird das von PHP Monitor generierte Hilfsskript bezogen und die Verwendung von PHP %@ für dieses gesonderten Terminal aktiviert.
+
+Dies hat keine Auswirkung auf andere Terminals, sondern nur auf diese gesonderte Terminalsitzung, in der Sie es verwenden (d.h. wenn Sie mehrere Tabs in Ihrer Terminalanwendung haben, sind andere Tabs und Fenster davon nicht betroffen).";
+"domain_list.alerts_isolated_php_terminal.desc" = "Wenn dies nicht funktioniert, können Sie den PHP Doktor über das Erste-Hilfe-Menü hier in PHP Monitor aufrufen. Weitere Informationen zu dieser Funktion finden Sie auch auf GitHub (im Wiki des PHP Monitor-Repositorys). Diese Warnung wurde aufgenommen, um die Sichtbarkeit dieser Funktion zu verbessern.";
+
+
+"domain_list.warning.spaces" = "Warnung! Diese Website hat ein Leerzeichen im Ordnernamen.\nDie Website ist über den Browser nicht zu erreichen.";
+
+"domain_list.alert.invalid_folder_name" = "Ungültiger Ordnername";
+"domain_list.alert.invalid_folder_name_desc" = "Dieser Ordner konnte nicht in eine gültige URL aufgelöst werden. Das liegt in der Regel daran, dass der Ordnername ein Leerzeichen enthält. Bitte benennen Sie den Ordner um, laden Sie die Liste der Sites neu und versuchen Sie es erneut.";
+
+"domain_list.columns.tls" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.php" = "PHP";
+"domain_list.columns.type" = "Typ";
+"domain_list.columns.kind" = "Art";
+
+// DRIVERS
+
+"driver.not_detected" = "Andere";
+
+// PRESET
+
+"preset.extension" = "%i Erweiterung";
+"preset.extensions" = "%i Erweiterungen";
+"preset.preference" = "%i Einstellung";
+"preset.preferences" = "%i Einstellungen";
+
+// EDITORS
+
+"editors.alert.try_again" = "Erneut versuchen";
+"editors.alert.cancel" = "Abbrechen";
+
+// PREFERENCES
+
+"prefs.title" = "PHP Monitor";
+"prefs.subtitle" = "Einstellungen";
+"prefs.close" = "Schließen";
+
+"prefs.tabs.general" = "Allgemein";
+"prefs.tabs.appearance" = "Darstellung";
+"prefs.tabs.visibility" = "Sichtbarkeit";
+"prefs.tabs.notifications" = "Benachrichtigungen";
+
+"prefs.global_shortcut" = "Globaler Tastenkombination:";
+"prefs.dynamic_icon" = "Dynamisches Icon:";
+"prefs.dynamic_icon" = "Icon Typ:";
+"prefs.info_density" = "Info-Genauigkeit:";
+"prefs.services" = "Dienste:";
+"prefs.switcher" = "Wechseln:";
+"prefs.php_doctor" = "PHP Doktor:";
+"prefs.integrations" = "Integrationen:";
+"prefs.updates" = "Aktualisierungen:";
+"prefs.notifications" = "Benachrichtigungen:";
+"prefs.warnings" = "Warnungen:";
+"prefs.menu_contents" = "Funktionen im Menü:";
+"prefs.startup" = "Starten:";
+
+"prefs.auto_start_desc" = "Startet PHP Monitor automatisch, wenn Sie sich bei Ihrem Mac anmelden.";
+"prefs.auto_start_title" = "PHP Monitor bei der Anmeldung starten";
+
+"prefs.icon_options.php" = "PHP-Icon anzeigen";
+"prefs.icon_options.elephant" = "Elefanten-Icon anzeigen";
+"prefs.icon_options.none" = "Kein Icon anzeigen";
+
+"prefs.icon_options_desc" = "Diese Option bestimmt, welches Symbol neben der Versionsnummer der aktuell verlinkten PHP-Version angezeigt wird. Wenn die Option \"Dynamisches Icon\" deaktiviert wurde, hat dies keine Auswirkungen.";
+
+"prefs.auto_restart_services_title" = "PHP-FPM automatisch neu starten";
+"prefs.auto_restart_services_desc" = "Wenn diese Option aktiviert ist, wird PHP-FPM automatisch neu gestartet, wenn Sie eine Erweiterung aktivieren oder deaktivieren. Etwas langsamer, wenn aktiviert, aber die Änderung der Erweiterung wird sofort für alle von Ihnen bedienten Seiten übernommen, ohne dass PHP-FPM manuell neu gestartet werden muss.";
+
+"prefs.dynamic_icon_title" = "Dynamisches Icon in der Menüleiste anzeigen";
+"prefs.dynamic_icon_desc" = "Wenn Sie diese Option nicht ausgewählt ist, wird immer das LKW-Icon angezeigt. Andernfalls wird die Hauptversionsnummer der aktuell verknüpften PHP-Version angezeigt.";
+
+"prefs.display_full_php_version" = "Vollständige PHP-Version überall anzeigen";
+"prefs.display_full_php_version_desc" = "Anzeige der vollständigen Version anstelle der Hauptversion in der Menüleiste und im Dropdown-Menü. (Dies kann auf kleineren Bildschirmen unerwünscht sein, daher ist dies standardmäßig deaktiviert).";
+
+"prefs.auto_composer_update_title" = "Globale Abhängigkeiten automatisch aktualisieren";
+"prefs.auto_composer_update_desc" = "Wenn diese Option aktiviert ist, wird Composer automatisch aufgefordert, `composer global update` auszuführen, wenn Sie zwischen verschiedenen PHP-Versionen wechseln. Es wird angezeigt welche Änderungen vorgenommen werden oder was fehlgeschlagen ist.";
+
+"prefs.open_protocol_title" = "Integration von Drittanbietern zulassen";
+"prefs.open_protocol_desc" = "Wenn diese Option aktiviert ist, funktioniert die Interaktion mit Dienstprogrammen von Drittanbietern (z. B. Alfred, Raycast). Wenn Sie diese Option deaktivieren, empfängt PHP Monitor zwar die Befehle, reagiert aber nicht auf sie.";
+
+"prefs.automatic_update_check_title" = "Automatisch nach Updates suchen";
+"prefs.automatic_update_check_desc" = "Wenn diese Option aktiviert ist, prüft PHP Monitor automatisch, ob eine neuere Version verfügbar ist, und benachrichtigt Sie, wenn dies der Fall ist.";
+
+"prefs.php_doctor_suggestions_title" = "Vorschläge immer anzeigen";
+"prefs.php_doctor_suggestions_desc" = "Wenn Sie dieses Kontrollkästchen deaktivieren, werden im Menü von PHP Monitor keine Vorschläge für PHP Doktor angezeigt. Denken Sie daran, dass PHP Doktor nicht angezeigt wird, wenn keine Empfehlungen vorhanden sind.";
+
+"prefs.shortcut_set" = "Globale Tastenkombination festlegen";
+"prefs.shortcut_listening" = "<warte auf Eingabe>";
+"prefs.shortcut_clear" = "Leeren";
+"prefs.shortcut_desc" = "Wenn Sie eine Tastenkombination eingerichtet haben, können Sie PHP-Monitor von jedem beliebigen Ort aus durch Drücken der gewählten Tastenkombination umschalten. (Brechen Sie die Auswahl einer Tastenkombination ab, indem Sie die Leertaste drücken).";
+
+"prefs.notify_about_version_change_desc" = "Zeigt eine Benachrichtigung an, wenn sich die aktive PHP-Version ändert.";
+"prefs.notify_about_version_change" = "Benachrichtigung über PHP-Versionswechsel";
+
+"prefs.notify_about_php_fpm_change_desc" = "Zeigt eine Benachrichtigung an, wenn der aktive PHP-FPM-Prozess aufgrund einer Konfigurationsänderung neu gestartet wurde.";
+"prefs.notify_about_php_fpm_change" = "Benachrichtigung über PHP-FPM-Neustart";
+
+"prefs.notify_about_services_desc" = "Zeigt eine Benachrichtigung an, wenn einer der (von Valet installierten und konfigurierten) Homebrew-Dienste neu gestartet oder beendet wurde.";
+"prefs.notify_about_services" = "Benachrichtigung über den Status der Dienste";
+
+"prefs.notify_about_presets_desc" = "Zeigt eine Benachrichtigung an, wenn eine Voreinstellung erfolgreich angewendet oder rückgängig gemacht wurde.";
+"prefs.notify_about_presets" = "Benachrichtigung über angewandte Voreinstellungen";
+
+"prefs.notify_about_secure_status_desc" = "Zeigt eine Benachrichtigung an, wenn eine Domain abgesichert wurde oder nicht mehr abgesichert ist.";
+"prefs.notify_about_secure_status" = "Benachrichtigung über sicheren/unsicheren Status";
+
+"prefs.notify_about_composer_success_desc" = "Zeigt eine Benachrichtigung an, wenn die globale Composer-Konfiguration erfolgreich aktualisiert wurde.";
+"prefs.notify_about_composer_success" = "Benachrichtigung über globale Composer-Aktualisierung";
+
+"prefs.warn_about_non_standard_tld_desc" = "Wenn Sie eine nicht standardisierte TLD verwenden, möchten Sie vielleicht keine wiederholten Benachrichtigungen darüber erhalten.";
+"prefs.warn_about_non_standard_tld" = "Warnung vor Nicht-Standard-TLD";
+
+"prefs.display_global_version_switcher_desc" = "Wenn diese Funktion deaktiviert ist, können Sie die global verknüpfte PHP-Version nicht über das Hauptmenü ändern.";
+"prefs.display_global_version_switcher" = "PHP-Wechselschalter";
+
+"prefs.display_services_manager_desc" = "Wenn diese Funktion deaktiviert ist, können Sie einzelne Dienste weder sehen noch starten oder stoppen. (Wenn ein Dienst deaktiviert ist, können Sie dies nicht ohne weiteres erkennen).";
+"prefs.display_services_manager" = "Dienste-Manager";
+
+"prefs.display_valet_integration_desc" = "Wenn diese Funktion deaktiviert ist, können Sie den Hauptordner von Valet nicht finden und die Liste der Domains nicht öffnen.";
+"prefs.display_valet_integration" = "Valet Integration";
+
+"prefs.display_php_config_finder_desc" = "Wenn diese Funktion deaktiviert ist, können Sie Ihre PHP-Konfigurationsdateien nicht leicht finden und/oder keinen phpinfo()-Dump erzeugen.";
+"prefs.display_php_config_finder" = "PHP Konfigurationsfinder";
+
+"prefs.display_composer_toolkit_desc" = "Wenn diese Funktion deaktiviert ist, können Sie den Composer nicht über das Hauptmenü aufrufen. Die automatische Aktualisierung des Composers nach dem Wechsel der Präferenz ist von dieser Änderung nicht betroffen.";
+"prefs.display_composer_toolkit" = "Composer Werkzeugkasten";
+
+"prefs.display_limits_widget_desc" = "Wenn diese Funktion deaktiviert ist, wird das Grenzwert-Widget (Speicher, POST, Upload) im Hauptmenü nicht angezeigt.";
+"prefs.display_limits_widget" = "Grenzwerte Widget";
+
+"prefs.display_extensions_desc" = "Wenn diese Funktion deaktiviert ist, können Sie die Erweiterungen nicht einfach über das Hauptmenü umschalten.";
+"prefs.display_extensions" = "Erweiterungen";
+
+"prefs.display_presets_desc" = "Wenn diese Funktion deaktiviert ist, können Sie die Voreinstellungen der PHP-Konfiguration nicht anwenden oder rückgängig machen.";
+"prefs.display_presets" = "Voreinstellungen";
+
+"prefs.display_misc_desc" = "Wenn diese Funktion deaktiviert ist, können Sie nicht auf das Menü Erste Hilfe & Dienste zugreifen.";
+"prefs.display_misc" = "Erste Hilfe & Dienstleistungen Menü";
+
+// NOTIFICATIONS
+
+"notification.version_changed_title" = "PHP %@ ist jetzt aktiv";
+"notification.version_changed_desc" = "PHP Monitor hat auf PHP %@ umgeschaltet.";
+
+"notification.php_fpm_restarted" = "PHP-FPM automatisch neu gestartet";
+"notification.php_fpm_restarted_desc" = "Sie haben eine Erweiterung umgeschaltet, so dass PHP-FPM automatisch neu gestartet wurde.";
+
+"notification.services_stopped" = "Valet Dienste gestoppt";
+"notification.services_stopped_desc" = "Alle Dienste wurden erfolgreich gestoppt.";
+
+"notification.services_restarted" = "Valet-Dienste neu gestartet";
+"notification.services_restarted_desc" = "Alle Dienste wurden erfolgreich neu gestartet.";
+
+"notification.preset_applied_title" = "Voreinstellung angewendet";
+"notification.preset_applied_desc" = "Die Voreinstellung \"%@\" wurde erfolgreich angewendet.";
+
+"notification.preset_reverted_title" = "Voreinstellung rückgängig gemacht";
+"notification.preset_reverted_desc" = "Die letzte Voreinstellung, die Sie vorgenommen haben, wurde rückgängig gemacht. Ihre vorherige Konfiguration ist nun aktiv.";
+
+"notification.phpmon_updated.title" = "PHP Monitor wurde aktualisiert!";
+"notification.phpmon_updated.desc" = "Sie verwenden jetzt PHP Monitor v%@. Danke, dass Sie auf dem Laufenden bleiben!";
+"notification.phpmon_updated_dev.desc" = "PHP Monitor v%@ (Build %@) ist jetzt installiert und aktiv.";
+
+// Composer Update
+"alert.composer_missing.title" = "Composer nicht gefunden!";
+"alert.composer_missing.subtitle" = "PHP Monitor konnte Composer nicht finden. Stellen Sie sicher, dass Composer installiert ist und versuchen Sie es erneut.";
+"alert.composer_missing.desc" = "PHP Monitor geht davon aus, dass sich der Composer entweder in:
+
+- `/usr/local/bin/composer`
+- `/opt/homebrew/bin/composer`
+
+Vergewissern Sie sich, dass er an einem dieser Orte installiert ist, oder erstellen Sie einen Symlink, wenn Sie Composer an einem anderen Ort installiert haben.";
+
+"alert.composer_progress.title" = "Globale Abhängigkeiten aktualisieren...";
+"alert.composer_progress.info" = "Sie können den Fortschritt in der Terminalausgabe unten sehen.";
+
+"alert.composer_failure.title" = "Etwas ist schief gelaufen!";
+"alert.composer_failure.info" = "Ihre globalen Composer-Abhängigkeiten konnten nicht aktualisiert werden.
+Weitere Informationen finden Sie in der Terminalausgabe unten. Sie müssen dieses Problem
+Problem manuell beheben, indem Sie Ihr eigenes Terminal-Programm verwenden (hier sehen Sie nur die Ausgabe).";
+
+"alert.composer_success.title" = "Composer erfolgreich aktualisiert!";
+"alert.composer_success.info" = "Ihre globalen Composer-Abhängigkeiten wurden erfolgreich aktualisiert.";
+
+// Composer Version
+
+"alert.composer_php_isolated.desc" = "Diese Seite wurde isoliert, was bedeutet, dass Valet PHP %@ speziell für diese Website bereitstellt. Die globale Version ist derzeit PHP %@.";
+"alert.composer_php_requirement.title" = "'%@' erfordert PHP %@.";
+"alert.composer_php_requirement.unable_to_determine" = "PHP-Anforderung kann nicht ermittelt werden";
+"alert.composer_php_requirement.type.unknown" = "PHP Monitor konnte nicht feststellen, welche Version von PHP für diese Domain erforderlich ist. Die Einschränkung kann ermittelt werden, wenn Sie eine `composer.json` oder eine `.valetphprc` Datei in Ihrem Projektverzeichnis haben.";
+"alert.composer_php_requirement.type.require" = "Die erforderliche PHP-Version wurde durch Überprüfung des Feldes `require` in der Datei `composer.json` ermittelt, als die Seiten-Liste zuletzt aktualisiert wurde.";
+"alert.composer_php_requirement.type.platform" = "Die erforderliche PHP-Version wurde durch Überprüfung des Feldes `platform` in der Datei `composer.json` ermittelt, als die Seiten-Liste zuletzt aktualisiert wurde.";
+"alert.composer_php_requirement.type.valetphprc" = "Die erforderliche PHP-Version wurde durch Überprüfung der .valetphprc-Datei im Verzeichnis des Projekts ermittelt.";
+"alert.composer_php_requirement.type.valetrc" = "Die erforderliche PHP-Version wurde durch Überprüfung der .valetrc-Datei im Verzeichnis des Projekts ermittelt.";
+"alert.unable_to_determine_is_fine" = "Wenn Sie ein einfaches Projekt haben, kann es sein, dass es keine bestimmte PHP-Version als Voraussetzung gibt. In diesem Fall können Sie diese Warnung ignorieren.";
+"alert.php_version_ideal" = "Die derzeit aktive PHP-Version ist ideal für diese Website.";
+"alert.php_version_incorrect" = "Die derzeit aktive PHP-Version stimmt nicht mit den für diese Website erforderlichen Einschränkungen überein.";
+"alert.php_suggestions" = "Möglicherweise gibt es eine andere PHP-Version, die der Vorgabe näher kommt.";
+
+// Suggest Fix My Valet
+"alert.php_switch_failed.title" = "Die Umstellung auf PHP %@ scheint fehlgeschlagen zu sein.";
+"alert.php_switch_failed.info" = "PHP Monitor hat festgestellt, dass PHP %@ nach dem Wechsel nicht aktiv ist. Sie können versuchen, Fix My Valet auszuführen und danach erneut umzuschalten. Möchten Sie diese Lösung ausprobieren?";
+"alert.php_switch_failed.desc" = "Als erstes sollten Sie \"Fix My Valet\" ausprobieren, falls Sie es noch nicht getan haben. Wenn PHP Monitor auch danach nicht in der Lage ist, die aktive PHP-Version zu ändern, müssen Sie möglicherweise Valet und die Homebrew-Pakete auf Ihrem System aktualisieren. Sie können dies tun, indem Sie `brew update && brew upgrade` ausführen, sowie Valet aktualisieren, indem Sie `composer global update && valet install` ausführen.";
+"alert.php_switch_failed.confirm" = "Ja, führen Sie \"Fix My Valet\" aus.";
+"alert.php_switch_failed.cancel" = "Nicht ausführen.";
+
+// PHP Formula Missing
+"alert.php_formula_missing.title" = "Ups! Die `php`-Formel muss für Fix My Valet installiert sein...";
+"alert.php_formula_missing.info" = "Es scheint, dass Sie die `php`-Formel nicht installiert haben, was PHP Monitor daran hindert, \"Fix My Valet\" auszuführen. Bitte installieren Sie es mit \"brew install php\", starten Sie PHP Monitor neu und versuchen Sie es erneut.";
+
+// Fix My Valet Started
+"alert.fix_my_valet.title" = "Haben Sie Probleme? Fix My Valet ist bereit, zu helfen!";
+"alert.fix_my_valet.info" = "Dies kann eine Weile dauern. Bitte haben Sie etwas Geduld.\n\nWenn dieser Vorgang abgeschlossen ist, werden alle anderen Dienste angehalten und PHP %@ wird verknüpft. Sobald dieser Vorgang abgeschlossen ist, können Sie zu der von Ihnen gewünschten PHP-Version wechseln.\n\n(Sie erhalten eine weitere Benachrichtigung, sobald Fix My Valet fertig ist.)";
+"alert.fix_my_valet.ok" = "Weiter";
+"alert.fix_my_valet.cancel" = "Abbrechen";
+
+// Fix My Valet Done
+"alert.fix_my_valet_done.title" = "Fix My Valet hat seine Tätigkeit beendet.";
+"alert.fix_my_valet_done.subtitle" = "Alle entsprechenden Dienste wurden gestoppt und die richtigen neu gestartet, und die neueste Version von PHP sollte jetzt aktiv sein. Sie können nun versuchen, zu einer anderen PHP-Version zu wechseln.";
+"alert.fix_my_valet_done.stay" = "Bei PHP %@ bleiben";
+"alert.fix_my_valet_done.switch_back" = "Zurück zu PHP wechseln %@";
+"alert.fix_my_valet_done.desc" = "Wenn der Aufruf von Websites immer noch nicht funktioniert, können Sie versuchen, `valet install` erneut auszuführen. Dies kann ein 502-Problem (Bad Gateway) beheben.\n\nWenn Valet defekt ist und Sie `valet install` nicht ausführen können, müssen Sie möglicherweise `composer global update` ausführen. Bitte konsultieren Sie die FAQ auf GitHub, wenn Sie weitere Probleme haben.";
+
+// Restore Homebrew Permissions
+"alert.fix_homebrew_permissions.title" = "Über \"Homebrew-Berechtigungen wiederherstellen\"";
+"alert.fix_homebrew_permissions.subtitle" = "Diese Funktion wurde geschaffen, damit Sie `brew upgrade` oder `brew cleanup` ohne Probleme mit der Berechtigung ausführen können. (Sie werden benachrichtigt, wenn dieser Fix angewendet wurde.)";
+"alert.fix_homebrew_permissions.desc" = "Dazu sind administrative Rechte erforderlich, da PHP Monitor Ihren Besitz an den Dateien und Ordnern wiederherstellt, die derzeit dem Benutzer `root` gehören, da die Valet-Dienste als root laufen.";
+"alert.fix_homebrew_permissions.ok" = "Berechtigungen wiederherstellen";
+"alert.fix_homebrew_permissions.cancel" = "Abbrechen";
+
+"alert.fix_homebrew_permissions_done.title" = "Alle Datei- und Ordnerberechtigungen für die Abhängigkeiten von Valet wurden wiederhergestellt.";
+"alert.fix_homebrew_permissions_done.subtitle" = "Aus diesem Grund laufen alle Valet-Dienste derzeit nicht mehr. Sie können nun mit Homebrew interagieren, aber Ihre Valet-Seiten werden nicht verfügbar sein, da alle Dienste deaktiviert sind.";
+"alert.fix_homebrew_permissions_done.desc" = "Wenn Sie mit Homebrew fertig sind (z.B. nachdem Sie `brew upgrade` ausgeführt haben), sollten Sie PHP Monitor neu starten und \"Restart Valet Services\" wählen, wenn Sie wollen, dass Valet wieder funktioniert. Es wird immer empfohlen, PHP Monitor neu zu starten, wenn Sie PHP-Versionen mit `brew upgrade` aktualisieren, da sonst Dinge kaputt gehen könnten.";
+
+// PHP FPM Broken
+"alert.php_fpm_broken.title" = "Ihre PHP-FPM-Konfiguration verweist nicht auf den Valet-Socket!";
+"alert.php_fpm_broken.info" = "PHP Monitor hat festgestellt, dass es Probleme mit Ihrer PHP-FPM-Konfiguration gibt. Dies führt zu \"502 Bad Gateway\"-Antworten, wenn Sie Websites besuchen, die über Valet verlinkt sind.";
+"alert.php_fpm_broken.description" = "Wenn es schon eine Weile her ist, können Sie dies normalerweise beheben, indem Sie `valet install` ausführen, was Ihre PHP-FPM-Konfiguration aktualisiert.\n\nWenn Sie diese Meldung sehen und versuchen, eine Vorabversion von PHP auszuführen, ist es möglich, dass Valet diese Vorabversion von PHP noch nicht unterstützt.\n\nSie müssen Ihre Installation von Laravel Valet mindestens auf Version 3.1.11 aktualisieren, danach sollten Sie `valet install` ausführen. Weitere Informationen finden Sie hier: https://phpmon.app/prerelease-php";
+
+// PHP Monitor Cannot Start
+"alert.cannot_start.title" = "PHP Monitor kann aufgrund eines Problems mit Ihrer Systemkonfiguration nicht starten";
+"alert.cannot_start.subtitle" = "Das Problem, über das Sie gerade informiert wurden, führt dazu, dass PHP Monitor nicht richtig funktioniert.";
+"alert.cannot_start.description" = "Möglicherweise müssen Sie PHP Monitor nicht beenden und neu starten. Wenn Sie das Problem behoben haben (oder sich nicht mehr an das genaue Problem erinnern können), können Sie auf Wiederholen klicken, damit PHP Monitor die Startprüfungen erneut durchführt.";
+"alert.cannot_start.close" = "Beenden";
+"alert.cannot_start.retry" = "Erneut versuchen";
+
+// PHP alias issue
+"alert.php_alias_conflict.title" = "Homebrew `php` Formel-Alias-Konflikt entdeckt";
+"alert.php_alias_conflict.info" = "PHP Monitor hat in Ihrem Homebrew-Setup widersprüchliche `php`-Aliase entdeckt, die beide als installiert erkannt wurden.\n\nDies wird wahrscheinlich zu einem fehlgeschlagenen Linking führen, wenn Sie die PHP-Version wechseln, und die Funktionalität von PHP Monitor unterbrechen.\n\nFür weitere Informationen besuchen Sie bitte: https://github.com/nicoverbruggen/phpmon/issues/54";
+
+"alert.min_valet_version.title" = "Die installierte Version von Valet erfüllt nicht die Mindestanforderungen. PHP Monitor funktioniert möglicherweise nicht wie erwartet!";
+"alert.min_valet_version.info" = "Sie führen gerade Valet %@ aus.
+
+Für eine optimale Unterstützung der neuesten PHP-Versionen und einen korrekten Versionswechsel wird empfohlen, auf die Version %@ zu aktualisieren, die die Mindestanforderung für diese Version von PHP Monitor ist.
+
+Sie können dies tun, indem Sie `composer global update` in Ihrem Terminal ausführen. Danach führen Sie erneut `valet install` aus. Die besten Ergebnisse erzielen Sie, wenn Sie PHP Monitor danach neu starten. Bis das Problem behoben ist, verhält sich PHP Monitor möglicherweise nicht wie erwartet.";
+
+// Preset text description
+"alert.preset_description.switcher_version" = "Wechselt zu PHP %@.\n\n";
+"alert.preset_description.applying_extensions" = "Wendet die folgenden Erweiterungen an: \n";
+"alert.preset_description.applying_config" = "Wendet die folgenden Konfigurationswerte an: \n";
+"alert.preset_description.enabled" = "aktiviert";
+"alert.preset_description.disabled" = "deaktiviert";
+"alert.preset_description.empty" = "(leer)";
+
+// PHP version unavailable
+"alert.php_switch_unavailable.title" = "Nicht unterstützte PHP-Version";
+"alert.php_switch_unavailable.subtitle" = "PHP Monitor kann nicht auf PHP %@ umschalten, da es möglicherweise nicht installiert oder verfügbar ist. Das Anwenden dieser Voreinstellung wurde abgebrochen.";
+"alert.php_switch_unavailable.info" = "Bitte vergewissern Sie sich, dass PHP %@ installiert ist und Sie es in der Dropdown-Liste auswählen können. Derzeit unterstützte Versionen sind PHP: %@.";
+"alert.php_switch_unavailable.ok" = "OK";
+
+// Service error
+"alert.service_error.title" = "Der Dienst '%@' hat einen Fehler gemeldet!";
+"alert.service_error.subtitle.error_log" = "Dies bedeutet, dass der Dienst '%@' nicht ausgeführt wird. Dies kann dazu führen, dass Valet nicht richtig funktioniert. Dieser Dienst hat eine zugehörige Protokolldatei, die Sie überprüfen sollten.";
+"alert.service_error.subtitle.no_error_log" = "Dies bedeutet, dass der Dienst '%@' nicht ausgeführt wird. Dies kann dazu führen, dass Valet nicht richtig funktioniert. Leider gibt es keine zugehörige Protokolldatei für diesen Dienst.";
+"alert.service_error.extra" = "Vielleicht möchten Sie auch die üblichen Schritte zur Fehlerbehebung befolgen. Um mehr darüber zu erfahren, klicken Sie auf die Schaltfläche '?' im Bereich Dienste in PHP Monitor.";
+
+"alert.service_error.button.show_log" = "Fehlerprotokoll anzeigen";
+"alert.service_error.button.close" = "Schließen";
+
+// Composer issues
+"alert.global_composer_platform_issues.title" = "Composer hat Probleme in Ihrer Plattform entdeckt";
+"alert.global_composer_platform_issues.subtitle" = "Die PHP-Version, zu der Sie gewechselt haben, ist zu alt für die globalen Composer-Abhängigkeiten, die Sie installiert haben. Diese Abhängigkeiten müssen aktualisiert werden.";
+"alert.global_composer_platform_issues.desc" = "Die einfachste Möglichkeit, dieses Problem in Zukunft zu vermeiden, ist, zur ältesten installierten PHP-Version zu wechseln und \"Composer Global Update\" erneut auszuführen. \n\nAlternativ können Sie die Option 'Globale Abhängigkeiten automatisch aktualisieren' in den Einstellungen wählen, um dieses Problem ebenfalls zu vermeiden.\n\nWenn Sie diese Meldung weiterhin sehen, nachdem Sie versucht haben, die globalen Abhängigkeiten zu aktualisieren, sollten Sie sich Ihre globale Composer-Konfigurationsdatei ansehen, die sich in `~/.composer/composer.json` befindet.";
+"alert.global_composer_platform_issues.buttons.update" = "Globale Abhängigkeiten aktualisieren";
+"alert.global_composer_platform_issues.buttons.quit" = "PHP Monitor beenden";
+
+// Revert
+"alert.revert_description.title" = "Konfiguration rückgängig machen?";
+"alert.revert_description.subtitle" = "PHP Monitor kann zur vorherigen Konfiguration zurückkehren, die aktiv war. Die folgenden Einstellungen werden übernommen: \n\n%@";
+"alert.revert_description.ok" = "Rückgängig machen";
+"alert.revert_description.cancel" = "Abbrechen";
+
+// STARTUP
+
+/// 0. Architecture mismatch
+
+"alert.homebrew_missing.title" = "PHP Monitor kann nicht starten!";
+"alert.homebrew_missing.subtitle" = "Eine funktionierende Homebrew-Binärdatei konnte nicht am üblichen Ort gefunden werden. Bitte starten Sie die Anwendung neu, nachdem Sie dieses Problem behoben haben.";
+"alert.homebrew_missing.info" = "Sie verwenden PHP Monitor mit der folgenden Architektur: %@. Daher wird eine funktionierende Homebrew-Binärdatei in `%@` erwartet, die aber nicht gefunden wurde. Das ist der Grund, warum PHP Monitor nicht funktioniert.\n\nWenn Sie Homebrew noch nicht installiert haben, tun Sie dies bitte. Wenn Sie mit Apple Silicon arbeiten, stellen Sie sicher, dass Homebrew und PHP Monitor die gleiche Architektur verwenden, indem Sie Rosetta aktivieren oder deaktivieren, falls erforderlich.";
+
+"alert.homebrew_missing.quit" = "Schließen";
+
+/// PHP binary not found
+"startup.errors.php_binary.title" = "PHP ist nicht korrekt installiert";
+"startup.errors.php_binary.subtitle" = "Sie müssen PHP über Homebrew installieren. Die App wird nicht richtig funktionieren, bis Sie dieses Problem behoben haben.";
+"startup.errors.php_binary.desc" = "Normalerweise wird dieses Problem durch das Ausführen von `brew link php` in Ihrem Terminal gelöst.\n\n Um herauszufinden, was falsch ist, können Sie versuchen, `which php` in Ihrem Terminal auszuführen, es sollte `%@` zurückgeben.";
+
+/// PHP not found in /usr/local/opt or /opt/homebrew/opt
+"startup.errors.php_opt.title" = "PHP ist nicht korrekt installiert";
+"startup.errors.php_opt.subtitle" = "Der PHP-Alias wurde in `%@` nicht gefunden. Die Anwendung wird nicht korrekt funktionieren, bis Sie dieses Problem behoben haben.";
+"startup.errors.php_opt.desc" = "Wenn Sie bereits die `php` Formel installiert haben, müssen Sie eventuell `brew install php` ausführen, damit PHP Monitor diese Installation erkennt.";
+
+/// PHP binary is broken
+"startup.errors.dyld_library.title" = "PHP ist installiert, scheint aber defekt zu sein";
+"startup.errors.dyld_library.subtitle" = "Wenn PHP Monitor versucht, Befehle auszuführen, gelingt es ihm nicht richtig. Dies ist normalerweise ein Hinweis auf eine fehlerhafte PHP-Installation.";
+"startup.errors.dyld_library.desc" = "Das Ausführen von `brew reinstall php && brew link php` in Ihrem Terminal kann dieses Problem lösen, also versuchen Sie es bitte.";
+
+/// Valet is not installed
+"startup.errors.valet_executable.title" = "Laravel Valet ist nicht korrekt installiert";
+"startup.errors.valet_executable.subtitle" = "Sie müssen Valet mit Composer installieren. Die App wird nicht richtig funktionieren, bis Sie dieses Problem behoben haben.";
+"startup.errors.valet_executable.desc" = "Wenn Sie Laravel Valet noch nicht installiert haben, tun Sie dies bitte zuerst. Wenn Sie es installiert haben, aber trotzdem diese Meldung sehen, dann versuchen Sie, `which valet` im Terminal auszuführen, es sollte zurückgegeben werden: `%@`.";
+
+/// Valet configuration file missing or broken
+"startup.errors.valet_json_invalid.title" = "Laravel Valet-Konfigurationsdatei ungültig oder fehlt";
+"startup.errors.valet_json_invalid.subtitle" = "PHP Monitor muss in der Lage sein, die Konfigurationsdatei zu lesen. Es scheint, dass die Datei falsch formatiert ist oder fehlt. Bitte überprüfen Sie, ob sie existiert und korrekt formatiert ist.";
+"startup.errors.valet_json_invalid.desc" = "Sie finden die Datei unter `~/.config/valet/config.json`. Wenn Laravel Valet die Konfigurationsdatei nicht parsen kann, wird die JSON-Datei durch die Ausführung eines beliebigen `valet`-Befehls normalerweise automatisch korrigiert. Versuchen Sie, `valet --version` auszuführen, um die Datei automatisch zu korrigieren.";
+
+/// Valet version not readable
+"startup.errors.valet_version_unknown.title" = "Ihre Valet-Version konnte nicht gelesen werden";
+"startup.errors.valet_version_unknown.subtitle" = "Das Auslesen der Ausgabe von `valet --version` ist fehlgeschlagen. Stellen Sie sicher, dass Ihre Valet-Installation funktioniert und aktuell ist.";
+"startup.errors.valet_version_unknown.desc" = "Versuchen Sie, `valet --version` in einem Terminal auszuführen, um herauszufinden, was los ist.";
+
+"startup.errors.valet_not_installed.title" = "Ihr Valet-Konfigurationsverzeichnis ist nicht vorhanden";
+"startup.errors.valet_not_installed.subtitle" = "Das erforderliche Verzeichnis `~/.config/valet` fehlt. Dies bedeutet normalerweise, dass Sie vergessen haben, `valet install` auszuführen.";
+"startup.errors.valet_not_installed.desc" = "Wenn Sie Valet bereits über Composer installiert haben, führen Sie bitte `valet install` aus, um die Einrichtung von Laravel Valet abzuschließen.
+
+Wenn Sie diese Meldung sehen, aber nicht wissen, warum dieser Ordner verschwunden ist, sollten Sie untersuchen, warum er verschwunden ist - er sollte nicht einfach verschwinden und es bedeutet, dass Ihre Valet-Installation fehlerhaft ist.";
+
+// Valet version too new or old
+"startup.errors.valet_version_not_supported.title" = "Diese Version von Valet wird nicht unterstützt";
+"startup.errors.valet_version_not_supported.subtitle" = "Sie verwenden eine Version von Valet, die derzeit nicht unterstützt wird. PHP Monitor funktioniert derzeit mit Valet v2, v3 und v4. Um Probleme auf Ihrem System zu vermeiden, kann PHP Monitor nicht gestartet werden.";
+"startup.errors.valet_version_not_supported.desc" = "Sie müssen eine Version von Valet installieren, die mit PHP Monitor kompatibel ist, oder Sie müssen ein Upgrade auf eine neuere Version von PHP Monitor durchführen, die möglicherweise die Kompatibilität mit dieser Version von Valet beinhaltet (weitere Informationen finden Sie in den aktuellen Release Notes).";
+
+/// Brew & sudoers
+"startup.errors.sudoers_brew.title" = "Brew wurde nicht zu sudoers.d hinzugefügt";
+"startup.errors.sudoers_brew.subtitle" = "Sie müssen `sudo valet trust` ausführen, um sicherzustellen, dass Valet Dienste starten und stoppen kann, ohne jedes Mal sudo verwenden zu müssen. Die Anwendung wird nicht richtig funktionieren, bis Sie dieses Problem behoben haben.";
+"startup.errors.sudoers_brew.desc" = "Wenn Sie diesen Fehler immer wieder sehen, kann es sein, dass PHP Monitor die Datei nicht validieren kann. Dies lässt sich in der Regel wie folgt beheben: `sudo chmod +r /private/etc/sudoers.d/brew`.";
+
+/// Valet & sudoers
+"startup.errors.sudoers_valet.title" = "Valet wurde nicht zu sudoers.d hinzugefügt";
+"startup.errors.sudoers_valet.subtitle" = "Sie müssen `sudo valet trust` ausführen, um sicherzustellen, dass Valet Dienste starten und stoppen kann, ohne jedes Mal sudo verwenden zu müssen. Die Anwendung wird nicht richtig funktionieren, bis Sie dieses Problem behoben haben. Wenn Sie dies bereits getan haben, führen Sie bitte `sudo valet trust` erneut aus.";
+"startup.errors.sudoers_valet.desc" = "Wenn Sie diesen Fehler immer wieder sehen, kann es sein, dass PHP Monitor die Datei nicht validieren kann. Dies lässt sich in der Regel wie folgt beheben: `sudo chmod +r /private/etc/sudoers.d/valet`.";
+
+/// Platform issue detected
+"startup.errors.global_composer_platform_issues.title" = "PHP Monitor und Valet funktionieren nicht richtig: Composer meldet ein Problem mit Ihrer Plattform";
+"startup.errors.global_composer_platform_issues.subtitle" = "Bitte befolgen Sie die folgenden empfohlenen Schritte, um dieses Problem in Zukunft zu vermeiden:\n\n1. Führen Sie `composer global update` aus.\n2. Starten Sie PHP Monitor neu. (Es sollte wieder funktionieren.)\n3. Wechseln Sie zur ältesten PHP-Version, die Sie installiert haben.\n4. Führen Sie `composer global update` erneut aus.";
+"startup.errors.global_composer_platform_issues.desc" = "Sie können in den Einstellungen die Option \"Globale Abhängigkeiten automatisch aktualisieren\" aktivieren. Dadurch werden Ihre globalen Composer-Abhängigkeiten bei jeder Änderung der PHP-Version aktualisiert, was nicht ideal ist, wenn Sie nicht ständig Zugang zum Internet haben. Valet funktioniert derzeit nicht mit den installierten Abhängigkeiten. Normalerweise wird dies durch eine Versionsabweichung verursacht: d.h. installierte Abhängigkeiten für eine neuere Version von PHP als die derzeit aktive Version.";
+
+/// Cannot retrieve services
+"startup.errors.services_json_error.title" = "Status der Dienste kann nicht ermittelt werden";
+"startup.errors.services_json_error.subtitle" = "PHP Monitor fragt normalerweise `brew` mit dem folgenden Befehl ab, um zu testen, ob die Dienste abgerufen werden können: `sudo brew services info nginx --json`.\nPHP Monitor konnte diese Antwort nicht interpretieren.";
+"startup.errors.services_json_error.desc" = "Dies kann passieren, wenn Ihre Homebrew-Installation veraltet ist. In diesem Fall gibt Homebrew noch kein JSON zurück. Sie können dies normalerweise beheben, indem Sie `brew update` oder `brew tap homebrew/services` ausführen. Sie können auch versuchen, `sudo brew services info nginx --json` in einem Terminal Ihrer Wahl auszuführen.";
+
+/// Issue with `which` alias
+"startup.errors.which_alias_issue.title" = "Es wurde ein Konfigurationsproblem festgestellt";
+"startup.errors.which_alias_issue.subtitle" = "Es scheint, dass es eine Datei in `/usr/local/bin/which` gibt. Diese wird normalerweise von NodeJS eingerichtet, aber `node` ist nicht im PATH in `/usr/local/bin`. Um dies zu beheben, lesen Sie weiter.";
+"startup.errors.which_alias_issue.desc" = "Sie müssen einen Symlink von `node` in das Verzeichnis `/usr/local/bin` setzen, um sicherzustellen, dass PHP Monitor erfolgreich starten kann. Für weitere Informationen siehe: https://github.com/nicoverbruggen/phpmon/issues/174";
+
+// Warning about a different PHP version linked than last time
+"startup.version_mismatch.title" = "Die aktive PHP-Version hat sich geändert.";
+"startup.version_mismatch.subtitle" = "Seitdem PHP Monitor das letzte Mal aktiv war, wurde Ihre verlinkte PHP-Version auf PHP %@ geändert. Möchten Sie zurück zu PHP %@ wechseln oder möchten Sie die aktuelle Version weiter verwenden?";
+"startup.version_mismatch.desc" = "PHP Monitor überwacht, welche Version von PHP global verlinkt ist. Die globale Version kann durch ein anderes Programm geändert worden sein oder Homebrew kann nach Upgrades eine andere Formel verlinkt haben.";
+"startup.version_mismatch.button_switch_back" = "Zurück zu PHP wechseln %@";
+"startup.version_mismatch.button_stay" = "Weiterhin PHP %@ verwenden";
+
+// Warning about unsupported PHP versions
+"startup.unsupported_versions_explanation.title" = "Von Valet nicht unterstützte PHP-Installation(en) entdeckt!";
+"startup.unsupported_versions_explanation.subtitle" = "Die folgenden PHP-Versionen sind auf Ihrem System installiert, werden aber von dieser Version von Valet nicht unterstützt.
+
+%@
+
+Valet könnte kaputt gehen, wenn Sie diese PHP-Versionen verknüpfen, so dass PHP Monitor Sie nicht zu diesen Versionen wechseln lässt.";
+"startup.unsupported_versions_explanation.desc" = "Wenn Sie Unterstützung für ältere PHP-Versionen benötigen, müssen Sie möglicherweise ein Downgrade auf eine ältere Version von Valet durchführen. Andernfalls wäre es eine gute Idee, alle veralteten Versionen zu deinstallieren, die nicht mehr verwendet werden. Es kann auch sein, dass diese Version von Valet zu alt ist. Diese Meldung wird erst nach einem Neustart von PHP Monitor entfernt.";
+
+// Sponsor encouragement
+"startup.sponsor_encouragement.title" = "Wenn PHP Monitor für Sie oder Ihr Unternehmen nützlich war, hinterlassen Sie bitte eine Spende.";
+"startup.sponsor_encouragement.subtitle" = "Um 100 % transparent zu sein: Ich habe vor, PHP Monitor quelloffen und frei zu halten. Ihre Unterstützung macht diese Entscheidung sehr einfach.\n\n(Sie werden diese Aufforderung nur einmal sehen.)";
+"startup.sponsor_encouragement.desc" = "Wenn Sie bereits gespendet haben, dann sind SIE der Grund, warum die App all diese Aktualisierungen erhalten konnte. In diesem Fall ist dies eine DANKE-Nachricht an Sie. Ich weiß die Unterstützung zu schätzen.";
+
+"startup.sponsor_encouragement.accept" = "Jetzt spenden";
+"startup.sponsor_encouragement.learn_more" = "Mehr erfahren";
+"startup.sponsor_encouragement.skip" = "Nein, danke";
+
+// ERROR MESSAGES (based on AlertableError)
+
+"alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Wiederherstellung der Homebrew-Berechtigungen fehlgeschlagen";
+"alert.errors.homebrew_permissions.applescript_returned_nil.description" = "Das Ergebnis des Skripts, das ausgeführt wird, um die Berechtigungen anzupassen, ist gleich Null, was normalerweise bedeutet, dass Sie PHP Monitor keine administrativen Berechtigungen erteilt haben.\n\n Wenn Sie während der Authentifizierungsaufforderung auf Abbrechen geklickt haben, ist das normal. Wenn Sie sich tatsächlich authentifiziert haben und diese Meldung immer noch angezeigt wird, ist wahrscheinlich etwas schief gelaufen.";
+
+"alert.key_service_not_running.title" = "Aufgrund von Problemen mit den erforderlichen Homebrew-Diensten funktioniert Valet derzeit nicht korrekt";
+"alert.key_service_not_running.subtitle" = "Damit Valet ordnungsgemäß funktioniert, müssen mindestens drei wichtige Dienste korrekt laufen.
+
+PHP Monitor meldet, dass dies nicht der Fall ist. Sie können versuchen, dies zu beheben, indem Sie auf die Schaltfläche mit dem \"X\" im Menü unter dem betroffenen Dienst drücken, um den derzeit inaktiven Dienst (wieder) zu starten.";
+"alert.key_service_not_running.desc" = "Wenn das Anklicken der Schaltfläche unterhalb des Dienstes nicht funktioniert (d.h. es erscheint diee Ladeanimation, aber nach einiger Zeit bleibt ein 'X'), müssen Sie möglicherweise Fix My Valet ausführen. Sie können dies über das Menü Erste Hilfe > Fix My Valet tun.
+
+Alternativ können Sie auch `valet stop` und `valet start` im Terminal verwenden, was das Problem ebenfalls beheben kann (als Alternative zu Fix My Valet).
+
+Zur weiteren Fehlersuche können Sie den GitHub-Problem-Tracker einsehen, wo andere möglicherweise ähnliche Probleme hatten. Als Entwickler versuche ich, sicherzustellen, dass jede Frage beantwortet wird :)";
+
+"alert.key_service_has_error.title" = "Aufgrund von Problemen mit den erforderlichen Homebrew-Diensten funktioniert Valet derzeit nicht korrekt";
+"alert.key_service_has_error.subtitle" = "Damit Valet ordnungsgemäß funktioniert, müssen mindestens drei wichtige Dienste korrekt laufen.
+
+PHP Monitor meldet, dass dies nicht der Fall ist. Es scheint, dass einer der betroffenen Dienste einen Fehlerstatus meldet, daher empfehle ich, auf das \"E\" zu klicken.
+
+PHP Monitor wird versuchen, den Dienst neu zu starten, und sollte dies nicht gelingen (was wahrscheinlich ist), wird es Ihnen anbieten, die Protokolldatei zu suchen, falls sie existiert, die möglicherweise zusätzliche Informationen enthält, die Ihnen bei der Fehlersuche helfen können.";
+"alert.key_service_has_error.desc" = "Wenn ein Dienst einen Fehler meldet, ist dies leider oft auf einen ungültigen Konfigurationsstatus zurückzuführen, der schwer zu beheben sein kann.
+
+ALLGEMEINE TIPPS ZUR FEHLERSUCHE
+
+- Versuchen Sie zunächst, den Dienst neu zu starten und die Protokolldatei (falls vorhanden) zu überprüfen. Sie können dies von PHP Monitor durchführen lassen, indem Sie auf die Schaltfläche 'E' klicken.
+
+- PHP: Wenn Sie eine Fehlermeldung erhalten, liegt möglicherweise ein Problem mit der PHP-Konfiguration vor. Stellen Sie sicher, dass die .ini-Dateien in der Homebrew-Installation in Ordnung sind und keine Socket-Konflikte bestehen.
+
+- nginx: Wenn Sie einen Fehlerstatus sehen, ist eine Site wahrscheinlich falsch konfiguriert (normalerweise im Fehlerprotokoll vermerkt). Sie sollten den nginx-Ordner von Valet überprüfen.
+
+- dnsmasq: Wenn Sie einen Fehlerstatus sehen, ist die dnsmasq-Konfigurationsdatei wahrscheinlich fehlerhaft (normalerweise unter ~/.config/valet/dnsmasq.d).";
+
+// CHECK FOR UPDATES
+
+"updater.alerts.newer_version_available.title" = "PHP Monitor v%@ ist jetzt verfügbar!";
+"updater.alerts.newer_version_available.subtitle" = "Es wird dringend empfohlen, PHP Monitor auf dem neuesten Stand zu halten, da neuere Versionen in der Regel Fehler beheben und Korrekturen zur Unterstützung der neuesten Versionen von Valet und PHP enthalten.";
+"updater.installation_source.brew" = "Die empfohlene Methode, um Updates für PHP Monitor zu installieren, besteht darin, einfach auf \"Update installieren\" zu drücken.\n\nDa Sie Homebrew zur Installation der Anwendung verwendet haben, können Sie das Upgrade auch über das Terminal durchführen, indem Sie `%@` ausführen, was jedoch nicht empfohlen wird.\n\n(Bitte beachten Sie, dass bei der Installation über diesen eingebauten Updater PHP Monitor aus dem Caskroom-Verzeichnis von Homebrew entfernt wird, um zu verhindern, dass doppelte Updates heruntergeladen werden und später Probleme verursachen).";
+"updater.installation_source.direct" = "Die empfohlene Methode zur Installation von Updates für PHP Monitor ist, einfach auf \"Update installieren\" zu klicken.";
+"updater.alerts.buttons.release_notes" = "Änderungsprotokoll anzeigen";
+
+"updater.alerts.is_latest_version.title" = "PHP Monitor ist auf dem neuesten Stand!";
+"updater.alerts.is_latest_version.subtitle" = "Die derzeit installierte Version (v%@) ist aktuell.\nEs ist keine neuere Version verfügbar.";
+
+"updater.alerts.cannot_check_for_update.title" = "PHP Monitor konnte nicht feststellen, ob eine neuere Version verfügbar ist.";
+"updater.alerts.cannot_check_for_update.subtitle" = "Möglicherweise sind Sie nicht mit dem Internet verbunden, blockieren den Datenverkehr oder GitHub ist nicht verfügbar und erlaubt es Ihnen nicht, nach Updates zu suchen. Wenn Sie diese Meldung immer wieder sehen, sollten Sie die Seite mit den Veröffentlichungen manuell überprüfen.";
+"updater.alerts.cannot_check_for_update.description" = "Die aktuell installierte Version ist: %@. Sie können die Liste der neuesten Versionen (auf GitHub) aufrufen, indem Sie auf die Schaltfläche auf der linken Seite klicken.";
+"updater.alerts.buttons.releases_on_github" = "Versionen anzeigen";
+"updater.alerts.buttons.install" = "Update installieren";
+"updater.alerts.buttons.dismiss" = "Ablehnen";
+
+// WARNINGS ABOUT NON-DEFAULT TLD
+
+"alert.warnings.tld_issue.title" = "Sie verwenden nicht `.test` als TLD für Valet.";
+"alert.warnings.tld_issue.subtitle" = "Die Verwendung einer nicht standardmäßigen TLD funktioniert möglicherweise nicht korrekt und wird offiziell nicht unterstützt.";
+"alert.warnings.tld_issue.description" = "PHP Monitor bleibt funktionsfähig, aber es kann zu Problemen kommen: Die App zeigt möglicherweise nicht korrekt an, welche Domains gesichert wurden. Um optimale Ergebnisse zu erzielen, gehen Sie zu Ihrer Valet-Konfigurationsdatei (config.json im Valet-Verzeichnis) und ändern Sie die TLD zurück in \"test\".";
+"alert.do_not_tell_again" = "Sag's mir nicht noch einmal";
+
+// WARNINGS
+
+"warnings.title" = "PHP Doktor";
+"warnings.description" = "Der **PHP Doktor** schlägt Verbesserungen an Ihrer aktiven Systemkonfiguration vor.";
+"warnings.disclaimer" = "Sie können alle Empfehlungen aus dem PHP-Monitor-Menü in den Einstellungen ausblenden, aber es wird empfohlen, dass Sie sich mit allen umsetzbaren Punkten befassen.";
+"warnings.refresh.button" = "Erneut auswerten";
+"warnings.refresh.button.description" = "Drücken Sie diesen Button, wenn Sie ein Problem behoben haben. Dies veranlasst PHP Monitor, Ihre Umgebung neu zu bewerten. Wenn das Problem wirklich behoben ist, sollte die Empfehlung verschwinden.";
+
+"warnings.helper_permissions.title" = "Die Helfer von PHP Monitor sind derzeit nicht verfügbar.";
+"warnings.helper_permissions.description" = "PHP Monitor wird mit verschiedenen Hilfsskripten geliefert. Mit diesen Skripten können Sie ganz einfach eine bestimmte PHP-Version aufrufen, ohne die verknüpfte PHP-Version zu wechseln.";
+"warnings.helper_permissions.unavailable" = "Diese Helfer sind jedoch potentiell *nicht verfügbar*, da PHP Monitor derzeit die erforderlichen Symlinks nicht erstellen oder aktualisieren kann.";
+"warnings.helper_permissions.symlink" = "Wenn Sie `/usr/local/bin` nicht beschreibbar machen wollen, können Sie das Hilfsverzeichnis von PHP Monitor zu Ihrer `PATH`-Variablen hinzufügen, um diese Warnung zu beseitigen. (Klicken Sie auf \"Mehr erfahren\", um herauszufinden, wie Sie dieses Problem beheben können).";
+
+"warnings.arm_compatibility.title" = "Sie führen PHP Monitor mit Rosetta auf Apple Silicon aus, was bedeutet, dass Ihre PHP-Umgebung ebenfalls über Rosetta läuft.";
+"warnings.arm_compatibility.description" = "Sie scheinen eine ARM-kompatible Version von macOS zu verwenden, aber Sie führen derzeit PHP Monitor mit Rosetta aus. Obwohl dies korrekt funktioniert, wird empfohlen, dass Sie die native Version von Homebrew verwenden.";
+
+"warnings.files_missing.title" = "Ihrer PHP-Installation fehlen wichtige erforderliche Konfigurationsdateien.";
+"warnings.files_missing.description" = "Die folgenden wichtigen Konfigurationsdateien sollten nach der Installation von PHP vorhanden sein:
+
+- %@
+
+Wenn diese Dateien fehlen, sollten Sie zu der PHP-Version wechseln, die mit diesen Dateien verknüpft ist: Das kann das Problem beheben. Wenn dies das Problem nicht behebt, wird empfohlen, die entsprechende(n) PHP-Version(en) über Homebrew erneut zu installieren, wodurch die fehlenden Konfigurationsdateien wiederhergestellt werden sollten. Fehlende Konfigurationsdateien können der Grund dafür sein, dass Sie die Fehlermeldung '502 Bad Gateway' erhalten, auch wenn Sie Fix My Valet ausgeführt haben (wenn Sie Valet verwenden).";
+
+"warnings.none" = "Im Moment sind keine Empfehlungen für Sie verfügbar. Es ist alles in Ordnung!";
+
+// ONBOARDING
+
+"onboarding.title" = "Willkommenstour";
+"onboarding.welcome" = "Willkommen bei PHP Monitor!";
+"onboarding.explore" = "Sie haben nun Zugriff auf die gesamte Funktionspalette von PHP Monitor. Auf diesem Bildschirm erfahren Sie mehr über einige der Funktionen, die PHP Monitor zu bieten hat.";
+"onboarding.explore.lite" = "Sie haben nun Zugriff auf die wichtigsten Funktionen von PHP Monitor.
+Bitte beachten Sie, dass einige Funktionen (unten ausgegraut) derzeit nicht verfügbar sind, da Laravel Valet nicht aktiv ist.";
+"onboarding.tour.menu_bar.title" = "Maximale Leistung direkt in Ihrer Menüleiste";
+"onboarding.tour.menu_bar" = "PHP Monitor lebt in Ihrer Menüleiste. Von diesem Menü aus können Sie auf die meisten wichtigen Funktionen von PHP Monitor zugreifen, einschließlich der Umschaltung der global verknüpften PHP-Version, dem Auffinden von Konfigurationsdateien, der Installation verschiedener PHP-Versionen und mehr.";
+"onboarding.tour.faq_hint" = "**Fragen?** Ich empfehle, dass Sie sich die [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) auf GitHub ansehen: Sie enthält eine umfassende FAQ mit verschiedenen Tipps und allgemeinen Fragen und Antworten.";
+"onboarding.tour.services.title" = "Verwalten Sie Homebrew-Dienste";
+"onboarding.tour.services" = "Sobald Sie auf den Menüleisteneintrag klicken, können Sie anhand der Häkchen oder Kreuze auf einen Blick sehen, ob alle Homebrew-Dienste aktiv sind und laufen. Sie können auch auf einen Dienst klicken, um ihn schnell umzuschalten.";
+"onboarding.tour.domains.title" = "Verwalten Sie Domains";
+"onboarding.tour.domains" = "Wenn Sie die Domain-Liste über den Menüleisteneintrag öffnen, können Sie sehen, welche Domains verlinkt und geparkt sind, sowie aktive nginx-Proxys einsehen.";
+"onboarding.tour.isolation.title" = "Isolieren Sie Domains";
+"onboarding.tour.isolation" = "Wenn Sie Valet 3 oder eine neuere Version installiert haben, können Sie sogar die Domainnisolierung nutzen, indem Sie mit der rechten Maustaste auf eine bestimmte Domäne im Domänenfenster klicken. Dadurch können Sie eine bestimmte PHP-Version auswählen, die nur für diese Domain verwendet werden soll.";
+"onboarding.tour.feature_unavailable" = "Diese Funktion ist derzeit nicht verfügbar und erfordert die Installation von Laravel Valet.";
+"onboarding.tour.once" = "Sie sehen die Willkommenstour nur einmal. Sie können die Willkommenstour später über das Symbol in der Menüleiste (im Menü unter Erste Hilfe & Dienste) erneut öffnen.";
+"onboarding.tour.close" = "Tour beenden";
