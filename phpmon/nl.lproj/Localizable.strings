@@ -735,6 +735,9 @@ VEELVOORKOMENDE PROBLEEMOPLOSSINGSTIPS
 
 // WARNINGS
 
+"warnings.limits_error.title" = "PHP Monitor kon de limieten niet ophalen.";
+"warnings.limits_error.steps" = "Run ‘php -v’ in jouw terminal om te testen.";
+
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** geeft suggesties voor verbeteringen aan uw actieve systeemconfiguratie.";
 "warnings.disclaimer" = "U kunt ervoor kiezen om alle aanbevelingen te verbergen in het PHP Monitor-menu in de Voorkeuren, maar het wordt aanbevolen om alle actiepunten aan te pakken.";

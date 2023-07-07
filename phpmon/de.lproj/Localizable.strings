@@ -736,6 +736,9 @@ ALLGEMEINE TIPPS ZUR FEHLERSUCHE
 
 // WARNINGS
 
+"warnings.limits_error.title" = "PHP Monitor konnte die Grenzwerte nicht abrufen.";
+"warnings.limits_error.steps" = "Versuchen Sie, 'php -v' in Ihrem Terminal auszuführen.";
+
 "warnings.title" = "PHP Doktor";
 "warnings.description" = "Der **PHP Doktor** schlägt Verbesserungen an Ihrer aktiven Systemkonfiguration vor.";
 "warnings.disclaimer" = "Sie können alle Empfehlungen aus dem PHP-Monitor-Menü in den Einstellungen ausblenden, aber es wird empfohlen, dass Sie sich mit allen umsetzbaren Punkten befassen.";

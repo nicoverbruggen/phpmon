@@ -729,6 +729,9 @@ MỘT SỐ MẸO KHẮC PHỤC THƯỜNG GẶP
 
 // WARNINGS
 
+"warnings.limits_error.title" = "PHP Monitor không thể lấy giới hạn.";
+"warnings.limits_error.steps" = "Thử chạy 'php -v' trong cửa sổ terminal của bạn.";
+
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** sẽ đề xuất cải tiến cho cấu hình hệ thống hoạt động của bạn.";
 "warnings.disclaimer" = "Bạn có thể ẩn tất cả các đề xuất từ menu PHP Monitor trong Tùy chọn, nhưng khuyến nghị là bạn nên xử lý tất cả các mục hành động được đề xuất.";
