@@ -134,7 +134,6 @@ class TestableConfigurations {
                     sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
 
                     url 'https://github.com/nicoverbruggen/phpmon/releases/download/v6.0/phpmon-dev.zip'
-                    appcast 'https://github.com/nicoverbruggen/phpmon/releases.atom'
                     name 'PHP Monitor DEV'
                     homepage 'https://phpmon.app'
 
