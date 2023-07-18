@@ -203,7 +203,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func openWarnings() {
-        WarningsWindowController.show()
+        PhpDoctorWindowController.show()
     }
 
     @objc func openDomainList() {

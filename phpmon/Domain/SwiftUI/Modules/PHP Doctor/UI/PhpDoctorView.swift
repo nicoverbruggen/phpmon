@@ -1,5 +1,5 @@
 //
-//  WarningListView.swift
+//  PhpDoctorView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/08/2022.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct WarningListView: View {
+struct PhpDoctorView: View {
     @ObservedObject var warningManager: WarningManager
 
     init(empty: Bool = false, fake: Bool = false, manager: WarningManager? = nil) {
@@ -96,11 +96,11 @@ struct WarningListView: View {
 
 struct WarningListView_Previews: PreviewProvider {
     static var previews: some View {
-        WarningListView(empty: true, fake: true, manager: WarningManager())
+        PhpDoctorView(empty: true, fake: true, manager: WarningManager())
             .frame(width: 600, height: 480)
             .previewDisplayName("Empty List")
 
-        WarningListView(empty: false, fake: true, manager: WarningManager())
+        PhpDoctorView(empty: false, fake: true, manager: WarningManager())
             .frame(width: 600, height: 480)
             .previewDisplayName("List With All Warnings")
     }

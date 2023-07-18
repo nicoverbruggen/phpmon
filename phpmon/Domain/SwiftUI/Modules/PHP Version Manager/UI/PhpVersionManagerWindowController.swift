@@ -14,16 +14,16 @@ class PhpVersionManagerWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
-    var view: PhpFormulaeView!
+    var view: PhpVersionManagerView!
 
     override var windowName: String {
-        return "PhpFormulaeView"
+        return "PhpVersionManager"
     }
 
     public static func create(delegate: NSWindowDelegate?) {
         let windowController = Self()
         windowController.window = NSWindow()
-        windowController.view = PhpFormulaeView(
+        windowController.view = PhpVersionManagerView(
             formulae: Brew.shared.formulae,
             handler: BrewFormulaeHandler()
         )
@@ -36,16 +36,16 @@ class PhpVersionManagerWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: windowController.view)
         window.setContentSize(NSSize(width: 600, height: 800))
 
-        App.shared.versionManagerWindowController = windowController
+        App.shared.phpVersionManagerWindowController = windowController
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.versionManagerWindowController == nil {
+        if App.shared.phpVersionManagerWindowController == nil {
             Self.create(delegate: delegate)
         }
 
-        App.shared.versionManagerWindowController?.showWindow(self)
-        App.shared.versionManagerWindowController?.positionWindowInTopLeftCorner()
+        App.shared.phpVersionManagerWindowController?.showWindow(self)
+        App.shared.phpVersionManagerWindowController?.positionWindowInTopLeftCorner()
 
         NSApp.activate(ignoringOtherApps: true)
     }

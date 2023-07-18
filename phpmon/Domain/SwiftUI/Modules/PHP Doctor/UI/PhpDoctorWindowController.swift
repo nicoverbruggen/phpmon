@@ -1,5 +1,5 @@
 //
-//  WarningsWindowController.swift
+//  PhpDoctorWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/08/2022.
@@ -9,7 +9,7 @@
 import Cocoa
 import SwiftUI
 
-class WarningsWindowController: PMWindowController {
+class PhpDoctorWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
@@ -26,19 +26,19 @@ class WarningsWindowController: PMWindowController {
         window.styleMask = [.titled, .closable, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
-        window.contentView = NSHostingView(rootView: WarningListView())
+        window.contentView = NSHostingView(rootView: PhpDoctorView())
         window.setContentSize(NSSize(width: 600, height: 480))
 
-        App.shared.warningsWindowController = windowController
+        App.shared.phpDoctorWindowController = windowController
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.warningsWindowController == nil {
+        if App.shared.phpDoctorWindowController == nil {
             Self.create(delegate: delegate)
         }
 
-        App.shared.warningsWindowController?.showWindow(self)
-        App.shared.warningsWindowController?.window?.setCenterPosition(offsetY: 70)
+        App.shared.phpDoctorWindowController?.showWindow(self)
+        App.shared.phpDoctorWindowController?.window?.setCenterPosition(offsetY: 70)
 
         NSApp.activate(ignoringOtherApps: true)
     }

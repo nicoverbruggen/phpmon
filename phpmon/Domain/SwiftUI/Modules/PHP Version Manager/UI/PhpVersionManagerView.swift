@@ -1,5 +1,5 @@
 //
-//  PhpFormulaeView.swift
+//  PhpVersionManagerView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 17/03/2023.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 // swiftlint:disable type_body_length
-struct PhpFormulaeView: View {
+struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: PhpFormulaeStatus
     var handler: HandlesBrewFormulae
@@ -267,7 +267,7 @@ struct PhpFormulaeView: View {
         }
 
         Alert.confirm(
-            onWindow: App.shared.versionManagerWindowController!.window!,
+            onWindow: App.shared.phpVersionManagerWindowController!.window!,
             messageText: "phpman.warnings.removal.title".localized(formula.displayName),
             informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
             buttonTitle: "phpman.warnings.removal.button".localized,
@@ -332,7 +332,7 @@ struct PhpFormulaeView: View {
         style: NSAlert.Style = .critical
     ) {
         Alert.confirm(
-            onWindow: App.shared.versionManagerWindowController!.window!,
+            onWindow: App.shared.phpVersionManagerWindowController!.window!,
             messageText: title,
             informativeText: description,
             buttonTitle: button,
@@ -350,9 +350,9 @@ struct PhpFormulaeView: View {
 }
 // swiftlint:enable type_body_length
 
-struct PhpFormulaeView_Previews: PreviewProvider {
+struct PhpVersionManagerView_Previews: PreviewProvider {
     static var previews: some View {
-        PhpFormulaeView(
+        PhpVersionManagerView(
             formulae: Brew.shared.formulae,
             handler: FakeBrewFormulaeHandler()
         ).frame(width: 600, height: 600)

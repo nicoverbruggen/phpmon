@@ -14,7 +14,6 @@ struct FileExistenceCheck {
 }
 
 class PhpConfigChecker {
-
     public static var shared = PhpConfigChecker()
 
     var missing: [String] = []
