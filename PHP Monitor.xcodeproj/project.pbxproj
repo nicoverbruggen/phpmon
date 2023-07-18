@@ -1340,6 +1340,7 @@
 				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
 				54D9E0BE27E4F5C0003B9AD9 /* Vendor */,
+				C44DFA832A6706A200B98ED5 /* Modules */,
 				C41C1B3F22B0098000E7CF16 /* Info.plist */,
 				C4232EE42612526500158FC6 /* Credits.html */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
@@ -1366,10 +1367,8 @@
 				C4B13B1D25C4915000548C3A /* App */,
 				C4D9ADBD27761084007277F4 /* PHP */,
 				C47331A0247093AC009A0597 /* Menu */,
-				C464ADAA275A7A25003FCD53 /* DomainList */,
-				C44A874628905B8500498BC4 /* Onboarding */,
 				5420395726135DB800FB00FA /* Preferences */,
-				C44C198F276E3A380072762D /* Progress */,
+				C44C198F276E3A380072762D /* Terminal Alert */,
 				C4C8E81D276F5686003AC782 /* Watcher */,
 				C40C5C9E2846A42D00E28255 /* Presets */,
 				C4EE55B027708BB2001DF387 /* SwiftUI */,
@@ -1424,22 +1423,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		C44A874628905B8500498BC4 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		C44C198F276E3A380072762D /* Progress */ = {
+		C44C198F276E3A380072762D /* Terminal Alert */ = {
 			isa = PBXGroup;
 			children = (
 				C44C198C276E3A1C0072762D /* TerminalProgressWindowController.swift */,
 				C44A874728905BB000498BC4 /* ProgressVC.swift */,
 				C44C1990276E44CB0072762D /* ProgressWindow.storyboard */,
 			);
-			path = Progress;
+			path = "Terminal Alert";
 			sourceTree = "<group>";
 		};
 		C44CCD4327AFE93300CE40E5 /* Errors */ = {
@@ -1520,6 +1511,8 @@
 		C44DFA832A6706A200B98ED5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C4E9D2BE2878B32D008FFDAD /* Onboarding */,
+				C464ADAA275A7A25003FCD53 /* Domain List */,
 				C44DFA7A2A6703FD00B98ED5 /* PHP Config Editor */,
 				C4297F7828970D4E004C4630 /* PHP Doctor */,
 				C43931C329C4BD510069165B /* PHP Version Manager */,
@@ -1532,6 +1525,30 @@
 			children = (
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		C44DFA852A67090A00B98ED5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */,
+				C464ADAE275A7A69003FCD53 /* DomainListVC.swift */,
+				C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */,
+				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
+				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
+				C4930849279F331F009C240B /* AddSiteVC.swift */,
+				C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */,
+				C44067F327E256560045BD4E /* Cells */,
+				C44DFA872A67092300B98ED5 /* Subclass */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C44DFA872A67092300B98ED5 /* Subclass */ = {
+			isa = PBXGroup;
+			children = (
+				C4A81CA328C67101008DD9D1 /* PMTableView.swift */,
+			);
+			path = Subclass;
 			sourceTree = "<group>";
 		};
 		C44F868C2835BD60005C353A /* phpmon */ = {
@@ -1612,20 +1629,12 @@
 			path = Behaviors;
 			sourceTree = "<group>";
 		};
-		C464ADAA275A7A25003FCD53 /* DomainList */ = {
+		C464ADAA275A7A25003FCD53 /* Domain List */ = {
 			isa = PBXGroup;
 			children = (
-				C44067F327E256560045BD4E /* Cells */,
-				C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */,
-				C464ADAE275A7A69003FCD53 /* DomainListVC.swift */,
-				C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */,
-				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
-				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
-				C4930849279F331F009C240B /* AddSiteVC.swift */,
-				C4D9F24A280B69E100DCD39A /* AddProxyVC.swift */,
-				C4A81CA328C67101008DD9D1 /* PMTableView.swift */,
+				C44DFA852A67090A00B98ED5 /* UI */,
 			);
-			path = DomainList;
+			path = "Domain List";
 			sourceTree = "<group>";
 		};
 		C471E6D928F9AFC20021E251 /* Testables */ = {
@@ -1823,10 +1832,10 @@
 		C4B609172853AA9E00C95265 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				C4EB53E428551F9B006F9937 /* HeaderView.swift */,
+				C4B609192853AAD300C95265 /* SectionHeaderView.swift */,
 				C4B6091C2853AB9700C95265 /* ServicesView.swift */,
 				C4709CA128524B3400088BB8 /* StatsView.swift */,
-				C4B609192853AAD300C95265 /* SectionHeaderView.swift */,
-				C4EB53E428551F9B006F9937 /* HeaderView.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1990,6 +1999,7 @@
 		C4E9D2BE2878B32D008FFDAD /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */,
 				C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */,
 			);
 			path = Onboarding;
@@ -1998,8 +2008,6 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				C44DFA832A6706A200B98ED5 /* Modules */,
-				C4E9D2BE2878B32D008FFDAD /* Onboarding */,
 				C4B609182853AAA700C95265 /* Domains */,
 				C4B609172853AA9E00C95265 /* Menu */,
 				C490E3A329BC92E6006D2DE6 /* Progress */,
