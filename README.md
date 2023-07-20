@@ -82,6 +82,12 @@ I wanted to be able to **see at a glance** which version of PHP was linked, and 
 
 Initially, I had an Alfred workflow for this — but it has now been replaced with this utility, which also does a good job at displaying additional information at a glance, like the current PHP version, memory limits, and more.
 
+## 🐘 Why not use Laravel Herd?
+
+If you don't need to customize your local PHP setup and just want an easy and ready-to-go environment to start coding, [Laravel Herd](https://herd.laravel.com) is probably more than sufficient for many use cases. 
+
+If you need more customization and flexibility I encourage you to consider PHP Monitor in combination with Laravel Valet or some other solution like Docker (with Laravel Sail, for example).
+
 ## 🤬 The app won't start?!
 
 PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios.
