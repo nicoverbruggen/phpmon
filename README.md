@@ -110,7 +110,7 @@ All stable and supported PHP versions are also supported by PHP Monitor. However
 > **Note**
 > If you have versions of PHP installed that can be detected by PHP Monitor but is *not* supported by the currently active version of Valet, you will be alerted by an item in the menu with an exclamation mark emoji. (⚠️)
 
-Backports that are installable via PHP Monitor's **PHP Manager** functionality are subject to availability via [this tap](https://github.com/shivammathur/homebrew-php).
+Backports that are installable via PHP Monitor's **PHP Version Manager** functionality are subject to availability via [this tap](https://github.com/shivammathur/homebrew-php).
 
 For maximum compatibility with older PHP versions, you may wish to keep using Valet 2 or 3. For more information, please see [SECURITY.md](./SECURITY.md) to find out which versions of PHP are supported with different versions of Valet.
 </details>
@@ -120,9 +120,9 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 
 Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
 
-You can install other supported versions of PHP via PHP Monitor's **PHP Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
+You can install other supported versions of PHP via PHP Monitor's **PHP Version Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
 
-Please keep in mind that installing or updating PHP versions, even when done via PHP Monitor's **PHP Manager**, may cause other required formula dependencies (required software needed to keep those PHP versions functional) to be upgraded. It might not be very transparent when this happens, but this is likely the cause if installing a PHP version takes longer than expected: usually other dependencies are also being installed.
+Please keep in mind that installing or updating PHP versions, even when done via PHP Monitor's **PHP Version Manager**, may cause other required formula dependencies (required software needed to keep those PHP versions functional) to be upgraded. It might not be very transparent when this happens, but this is likely the cause if installing a PHP version takes longer than expected: usually other dependencies are also being installed.
 
 Additionally, upgrading one specific version of PHP may also cause other installed versions of PHP to *also* be updated in one go, if the dependencies for that one version also apply to the other (newer) version(s) of PHP. It's a bit tricky to manage PHP versions via Homebrew, and even PHP Monitor may encounter some difficulties. 
 
