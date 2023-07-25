@@ -1,5 +1,5 @@
 //
-//  LimitManager.swift
+//  ConfigManagerView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 18/07/2023.
