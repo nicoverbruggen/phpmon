@@ -712,6 +712,7 @@
 		C4D5576529C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
 		C4D5576629C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
 		C4D5576729C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */; };
+		C4D5857C2A7038DB00DDBB63 /* ByteLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */; };
 		C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C4D8016622B1584700C6DA1B /* Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D8016522B1584700C6DA1B /* Startup.swift */; };
@@ -1052,6 +1053,7 @@
 		C4D36619291173EA006BD146 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InternalSwitcher+Valet.swift"; sourceTree = "<group>"; };
 		C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersionManagerWindowController.swift; sourceTree = "<group>"; };
+		C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteLimitView.swift; sourceTree = "<group>"; };
 		C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NginxConfigurationFile.swift; sourceTree = "<group>"; };
 		C4D8016522B1584700C6DA1B /* Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Startup.swift; sourceTree = "<group>"; };
 		C4D89BC52783C99400A02B68 /* ComposerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerJson.swift; sourceTree = "<group>"; };
@@ -1483,6 +1485,7 @@
 			isa = PBXGroup;
 			children = (
 				C44DFA7B2A67043000B98ED5 /* ConfigManagerView.swift */,
+				C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2468,6 +2471,7 @@
 				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
+				C4D5857C2A7038DB00DDBB63 /* ByteLimitView.swift in Sources */,
 				C4D4CB3729C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
