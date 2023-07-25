@@ -81,6 +81,11 @@
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
 
+// CONFMAN
+
+"confman.title" = "PHP Config Editor";
+"confman.description" = "This utility lets you customize your PHP installation with ease. Changes are automatically applied as you change your configuration values.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";

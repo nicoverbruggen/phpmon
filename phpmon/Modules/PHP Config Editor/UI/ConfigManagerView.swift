@@ -19,17 +19,42 @@ struct ConfigManagerView: View {
                     .foregroundColor(Color.blue)
                     .padding(12)
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("config_manager.description".localizedForSwiftUI)
+                    Text("confman.title".localizedForSwiftUI)
+                        .bold()
                         .font(.system(size: 12))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("config_manager.disclaimer".localizedForSwiftUI)
+                    Text("confman.description".localizedForSwiftUI)
                         .font(.system(size: 12))
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .scaledToFit()
+                        .lineLimit(4)
                 }
             }
             .padding(10)
 
             Divider()
+
+            VStack(spacing: 5) {
+                PreferenceContainer()
+                // PreferenceContainer()
+                // PreferenceContainer()
+                Divider()
+                HStack() {
+                    Button("Close", action: {
+
+                    })
+                    Spacer()
+                    Button("Restart PHP-FPM", action: {
+
+                    })
+                }
+                .padding(10)
+                .frame(
+                    minWidth: 0,
+                    maxWidth: .infinity,
+                    alignment: .topLeading
+                )
+            }
         }
     }
 }
@@ -37,7 +62,7 @@ struct ConfigManagerView: View {
 struct ConfigManagerView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigManagerView()
-            .frame(width: 600, height: 480)
+            // .frame(width: 600, height: 480)
             .previewDisplayName("Config Manager")
     }
 }

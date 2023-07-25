@@ -15,12 +15,13 @@ struct PreferenceContainer: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 50) {
+            HStack(alignment: .top, spacing: 50) {
                 Text(self.name).bold()
-                controlView
+                VStack(alignment: .leading) {
+                    controlView
+                    Text(self.description).font(.subheadline)
+                }
             }
-            .frame(width: 300)
-            Text(self.description).font(.subheadline)
         }
         .padding(10)
     }
