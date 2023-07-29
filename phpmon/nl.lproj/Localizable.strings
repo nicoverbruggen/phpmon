@@ -368,8 +368,8 @@ Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie 
 "prefs.php_doctor_suggestions_title" = "Altijd suggesties tonen";
 "prefs.php_doctor_suggestions_desc" = "Als je dit item uitvinkt, worden er geen suggesties van PHP Doctor weergegeven in het menu van PHP Monitor. Houd er rekening mee dat PHP Doctor niet wordt weergegeven als er geen aanbevelingen zijn.";
 
-"prefs.shortcut_set" = "Stel een globale sneltoets in";
-"prefs.shortcut_listening" = "<luistert naar toetsaanslag>";
+"prefs.shortcut_set" = "Globale sneltoets instellen";
+"prefs.shortcut_listening" = "<wachten op toetsaanslag>";
 "prefs.shortcut_clear" = "Wissen";
 "prefs.shortcut_desc" = "Als er een sneltoetscombinatie is ingesteld, kun je PHP Monitor overal in- of uitschakelen door de toetscombinatie in te drukken die je hebt gekozen. (Annuleer het kiezen van een sneltoets door op de spatiebalk te drukken.)";
 

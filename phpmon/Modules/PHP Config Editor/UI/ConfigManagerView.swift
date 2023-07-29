@@ -39,7 +39,7 @@ struct ConfigManagerView: View {
                 // PreferenceContainer()
                 // PreferenceContainer()
                 Divider()
-                HStack() {
+                HStack {
                     Button("Close", action: {
 
                     })
