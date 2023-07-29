@@ -959,6 +959,7 @@
 		C45D654B29F52F74004C28F9 /* BrewPermissionFixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewPermissionFixer.swift; sourceTree = "<group>"; };
 		C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTestCase.swift; sourceTree = "<group>"; };
 		C45E76132854A65300B4FE0C /* ServicesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesManager.swift; sourceTree = "<group>"; };
+		C4622F572A7593CB0016F8FB /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C463E37F284930EE00422731 /* PresetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetHelper.swift; sourceTree = "<group>"; };
 		C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListWindowController.swift; sourceTree = "<group>"; };
 		C464ADAE275A7A69003FCD53 /* DomainListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListVC.swift; sourceTree = "<group>"; };
@@ -2223,6 +2224,7 @@
 				vi,
 				nl,
 				de,
+				"pt-PT",
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
@@ -3179,6 +3181,7 @@
 				C4FC8D432A49816C00FBBD16 /* vi */,
 				C4FC8D442A4981BC00FBBD16 /* nl */,
 				C4DD662A2A4A1B4E00D6A731 /* de */,
+				C4622F572A7593CB0016F8FB /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
