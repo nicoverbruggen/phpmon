@@ -27,7 +27,7 @@ struct PreferenceContainer<ControlView: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top, spacing: 50) {
                 VStack(alignment: .leading) {
-                    Text(self.name)
+                    Text(self.name.localizedForSwiftUI)
                         .bold()
                         .multilineTextAlignment(.leading)
                         .frame(minWidth: 150, maxWidth: 150, alignment: .leading)
@@ -35,7 +35,7 @@ struct PreferenceContainer<ControlView: View>: View {
 
                 VStack(alignment: .leading) {
                     controlView
-                    Text(self.description).font(.subheadline)
+                    Text(self.description.localizedForSwiftUI).font(.subheadline)
                 }.frame(maxWidth: .infinity, alignment: .leading)
             }
         }

@@ -9,9 +9,24 @@
 import Foundation
 import SwiftUI
 
-struct PhpPreference {
+class PhpPreference {
     let key: String
-    let type: PhpPreferenceType
+
+    init(key: String) {
+        self.key = key
+    }
+}
+
+class BoolPhpPreference: PhpPreference {
+    @State var value: Bool = false
+}
+
+class StringPhpPreference: PhpPreference {
+    @State var value: String = ""
+}
+
+class BytePhpPreference: PhpPreference {
+    @State var value: String = ""
 }
 
 enum PhpPreferenceType {
@@ -22,10 +37,10 @@ enum PhpPreferenceType {
 
 struct ConfigManagerView: View {
     var preferences: [PhpPreference] = [
-        PhpPreference(key: "memory_limit", type: .byteLimit),
-        PhpPreference(key: "post_max_size", type: .byteLimit),
-        PhpPreference(key: "file_uploads", type: .boolean),
-        PhpPreference(key: "upload_max_filesize", type: .byteLimit)
+        BytePhpPreference(key: "memory_limit"),
+        BytePhpPreference(key: "post_max_size"),
+        BoolPhpPreference(key: "file_uploads"),
+        BytePhpPreference(key: "upload_max_filesize")
     ]
 
     var body: some View {
@@ -55,26 +70,28 @@ struct ConfigManagerView: View {
             VStack(spacing: 5) {
                 ForEach(preferences, id: \.key) { preference in
                     PreferenceContainer(
-                        name: "php_ini." + preference.key + ".title",
-                        description: "php_ini." + preference.key + ".description"
+                        name: "php_ini.\(preference.key).title",
+                        description: "php_ini.\(preference.key).description"
                     ) {
-                        if preference.type == .byteLimit {
+                        if let preference = preference as? BytePhpPreference {
                             ByteLimitView()
                         }
-                        if preference.type == .boolean {
-                            Text("Boolean value here")
-                            // Toggle(isOn: preference.)
+                        if let preference = preference as? BoolPhpPreference {
+                            Toggle("", isOn: preference.$value)
+                        }
+                        if let preference = preference as? StringPhpPreference {
+                            TextField("Placeholder", text: preference.$value)
                         }
                     }.frame(maxWidth: .infinity)
                 }
 
                 Divider()
                 HStack {
-                    Button("Close", action: {
+                    Button("Cancel", action: {
 
                     })
                     Spacer()
-                    Button("Restart PHP-FPM", action: {
+                    Button("Apply", action: {
 
                     })
                 }

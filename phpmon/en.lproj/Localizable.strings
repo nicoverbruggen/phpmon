@@ -786,3 +786,13 @@ Please note that some features (greyed out below) are currently unavailable beca
 "onboarding.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
 "onboarding.tour.close" = "Close Tour";
+
+// CONFIGURATION MANAGER
+
+"confman.title" = "Configuration Manager";
+"confman.description" = "You can update configuration values for the currently active PHP version.";
+
+"php_ini.memory_limit.title" = "Memory Limit";
+"php_ini.post_max_size.title" = "POST Max Size";
+"php_ini.file_uploads.title" = "File Uploads";
+"php_ini.upload_max_filesize.title" = "Upload Max Size";
