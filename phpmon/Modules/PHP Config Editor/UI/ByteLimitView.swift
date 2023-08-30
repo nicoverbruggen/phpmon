@@ -8,19 +8,35 @@
 
 import SwiftUI
 
-struct PreferenceContainer: View {
-    private var name: String = "Memory Limit"
-    private var description: String = "This is the maximum memory a given PHP script may consume."
-    private var controlView: some View = ByteLimitView()
+struct PreferenceContainer<ControlView: View>: View {
+    private var name: String
+    private var description: String
+    private var controlView: ControlView
+
+    init(
+        name: String,
+        description: String,
+        @ViewBuilder _ controlView: () -> ControlView
+    ) {
+        self.name = name
+        self.description = description
+        self.controlView = controlView()
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top, spacing: 50) {
-                Text(self.name).bold()
+                VStack(alignment: .leading) {
+                    Text(self.name)
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .frame(minWidth: 150, maxWidth: 150, alignment: .leading)
+                }
+
                 VStack(alignment: .leading) {
                     controlView
                     Text(self.description).font(.subheadline)
-                }
+                }.frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .padding(10)
@@ -49,10 +65,20 @@ struct ByteLimitView: View {
         .labelsHidden()
         .pickerStyle(.menu)
     }
+
+    func setValue(value: String) {
+        return
+    }
+
+    func getValue() -> String {
+        return "ok"
+    }
 }
 
 struct ByteLimitView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferenceContainer()
+        PreferenceContainer(name: "Something\nStupid", description: "Description") {
+            ByteLimitView()
+        }
     }
 }

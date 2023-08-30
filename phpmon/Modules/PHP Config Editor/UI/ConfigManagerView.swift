@@ -9,7 +9,25 @@
 import Foundation
 import SwiftUI
 
+struct PhpPreference {
+    let key: String
+    let type: PhpPreferenceType
+}
+
+enum PhpPreferenceType {
+    case byteLimit
+    case string
+    case boolean
+}
+
 struct ConfigManagerView: View {
+    var preferences: [PhpPreference] = [
+        PhpPreference(key: "memory_limit", type: .byteLimit),
+        PhpPreference(key: "post_max_size", type: .byteLimit),
+        PhpPreference(key: "file_uploads", type: .boolean),
+        PhpPreference(key: "upload_max_filesize", type: .byteLimit)
+    ]
+
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 15) {
@@ -35,9 +53,21 @@ struct ConfigManagerView: View {
             Divider()
 
             VStack(spacing: 5) {
-                PreferenceContainer()
-                // PreferenceContainer()
-                // PreferenceContainer()
+                ForEach(preferences, id: \.key) { preference in
+                    PreferenceContainer(
+                        name: "php_ini." + preference.key + ".title",
+                        description: "php_ini." + preference.key + ".description"
+                    ) {
+                        if preference.type == .byteLimit {
+                            ByteLimitView()
+                        }
+                        if preference.type == .boolean {
+                            Text("Boolean value here")
+                            // Toggle(isOn: preference.)
+                        }
+                    }.frame(maxWidth: .infinity)
+                }
+
                 Divider()
                 HStack {
                     Button("Close", action: {
