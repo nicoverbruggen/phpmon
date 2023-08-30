@@ -25,9 +25,9 @@ struct PreferenceContainer<ControlView: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .top, spacing: 50) {
+            HStack(alignment: .top, spacing: 10) {
                 VStack(alignment: .leading) {
-                    Text(self.name.localizedForSwiftUI)
+                    Text(LocalizedStringKey(self.name))
                         .bold()
                         .multilineTextAlignment(.leading)
                         .frame(minWidth: 150, maxWidth: 150, alignment: .leading)
@@ -35,11 +35,15 @@ struct PreferenceContainer<ControlView: View>: View {
 
                 VStack(alignment: .leading) {
                     controlView
-                    Text(self.description.localizedForSwiftUI).font(.subheadline)
-                }.frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text(self.description.localizedForSwiftUI)
+                        .font(.subheadline)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
         }
-        .padding(10)
+        .padding(5)
     }
 }
 
@@ -80,5 +84,9 @@ struct ByteLimitView_Previews: PreviewProvider {
         PreferenceContainer(name: "Something\nStupid", description: "Description") {
             ByteLimitView()
         }
+
+        ConfigManagerView()
+            .frame(width: 600, height: .infinity)
+            .previewDisplayName("Config Manager")
     }
 }

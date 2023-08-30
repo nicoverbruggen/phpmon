@@ -18,7 +18,7 @@ class PhpPreference {
 }
 
 class BoolPhpPreference: PhpPreference {
-    @State var value: Bool = false
+    @State var value: Bool = true
 }
 
 class StringPhpPreference: PhpPreference {
@@ -68,38 +68,40 @@ struct ConfigManagerView: View {
             Divider()
 
             VStack(spacing: 5) {
-                ForEach(preferences, id: \.key) { preference in
-                    PreferenceContainer(
-                        name: "php_ini.\(preference.key).title",
-                        description: "php_ini.\(preference.key).description"
-                    ) {
-                        if let preference = preference as? BytePhpPreference {
-                            ByteLimitView()
-                        }
-                        if let preference = preference as? BoolPhpPreference {
-                            Toggle("", isOn: preference.$value)
-                        }
-                        if let preference = preference as? StringPhpPreference {
-                            TextField("Placeholder", text: preference.$value)
-                        }
-                    }.frame(maxWidth: .infinity)
-                }
+                VStack {
+                    ForEach(preferences, id: \.key) { preference in
+                        PreferenceContainer(
+                            name: "php_ini.\(preference.key).title",
+                            description: "php_ini.\(preference.key).description"
+                        ) {
+                            if let preference = preference as? BytePhpPreference {
+                                ByteLimitView()
+                            }
+                            if let preference = preference as? BoolPhpPreference {
+                                Toggle("", isOn: preference.$value)
+                                    .toggleStyle(.switch)
+                                    .padding(.leading, -10)
+                            }
+                            if let preference = preference as? StringPhpPreference {
+                                TextField("Placeholder", text: preference.$value)
+                            }
+                        }.frame(maxWidth: .infinity)
+                    }
+                }.padding(10)
 
                 Divider()
-                HStack {
-                    Button("Cancel", action: {
 
-                    })
-                    Spacer()
-                    Button("Apply", action: {
+                VStack(alignment: .trailing) {
+                    Button("Close", action: {
 
                     })
                 }
-                .padding(10)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
                 .frame(
                     minWidth: 0,
                     maxWidth: .infinity,
-                    alignment: .topLeading
+                    alignment: .topTrailing
                 )
             }
         }
@@ -109,7 +111,7 @@ struct ConfigManagerView: View {
 struct ConfigManagerView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigManagerView()
-            // .frame(width: 600, height: 480)
-            .previewDisplayName("Config Manager")
+            .frame(width: 600)
+            .previewDisplayName("Live Preview")
     }
 }
