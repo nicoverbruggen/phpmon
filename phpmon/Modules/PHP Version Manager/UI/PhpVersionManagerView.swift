@@ -150,7 +150,7 @@ struct PhpVersionManagerView: View {
                                         .font(.system(size: 9))
                                         .padding(.horizontal, 5)
                                         .padding(.vertical, 1)
-                                        .background(Color.orange)
+                                        .background(Color.appPrimary)
                                         .foregroundColor(Color.white)
                                         .clipShape(Capsule())
                                         .fixedSize(horizontal: true, vertical: true)
