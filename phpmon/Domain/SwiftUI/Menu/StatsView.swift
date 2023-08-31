@@ -37,8 +37,8 @@ struct StatsView: View {
 
     public func hasErrorState() -> Bool {
         return self.memoryLimit == "⚠️"
-            || self.maxPostSize == "⚠️"
-            || self.maxUploadSize == "⚠️"
+            && self.maxPostSize == "⚠️"
+            && self.maxUploadSize == "⚠️"
     }
 
     var body: some View {
