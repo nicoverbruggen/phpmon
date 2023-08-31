@@ -45,6 +45,7 @@ class Brew {
 
     /// Each formula for each PHP version that can be installed.
     public static let phpVersionFormulae = [
+        "8.3": "shivammathur/php/php@8.3",
         "8.2": "php@8.2",
         "8.1": "php@8.1",
         "8.0": "php@8.0",

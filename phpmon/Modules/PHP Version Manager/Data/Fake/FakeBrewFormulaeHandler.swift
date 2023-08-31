@@ -13,6 +13,13 @@ class FakeBrewFormulaeHandler: HandlesBrewFormulae {
         return [
             BrewFormula(
                 name: "php",
+                displayName: "PHP 8.3",
+                installedVersion: nil,
+                upgradeVersion: "8.3.0",
+                prerelease: true
+            ),
+            BrewFormula(
+                name: "php",
                 displayName: "PHP 8.2",
                 installedVersion: "8.2.3",
                 upgradeVersion: "8.2.4"

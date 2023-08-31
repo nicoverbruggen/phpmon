@@ -108,6 +108,7 @@
 "phpman.buttons.install" = "Install";
 "phpman.buttons.update" = "Update";
 "phpman.buttons.repair" = "Repair";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** lets you install, upgrade and delete different PHP versions via Homebrew without needing to run the commands in the terminal yourself.";

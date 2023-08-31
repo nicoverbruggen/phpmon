@@ -56,7 +56,8 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,
-                upgradeVersion: upgradeVersion
+                upgradeVersion: upgradeVersion,
+                prerelease: Constants.ExperimentalPhpVersions.contains(version)
             )
         }.sorted { $0.displayName > $1.displayName }
     }

@@ -135,7 +135,21 @@ struct PhpVersionManagerView: View {
                             .foregroundColor(formula.iconColor)
                             .padding(.horizontal, 5)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(formula.displayName).bold()
+                            HStack {
+                                Text(formula.displayName).bold()
+
+                                if formula.prerelease {
+                                    Text("phpman.version.prerelease".localized.uppercased())
+                                        .font(.system(size: 9))
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(Color.appPrimary)
+                                        .foregroundColor(Color.white)
+                                        .clipShape(Capsule())
+                                        .fixedSize(horizontal: true, vertical: true)
+                                        .frame(maxHeight: 7)
+                                }
+                            }
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("phpman.version.has_update".localized(

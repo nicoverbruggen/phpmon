@@ -19,13 +19,22 @@ struct Constants {
     static let MinimumRecommendedValetVersion = "2.16.2"
 
     /**
+     * The PHP versions that are considered pre-release versions.
+     */
+    static let ExperimentalPhpVersions: Set = [
+        "8.3", "8.4"
+    ]
+
+    /**
      * The PHP versions supported by this application.
      * Any other PHP versions are considered invalid.
      */
     static let DetectedPhpVersions: Set = [
         "5.6",
         "7.0", "7.1", "7.2", "7.3", "7.4",
-        "8.0", "8.1", "8.2", "8.3"
+        "8.0", "8.1", "8.2",
+        "8.3",
+        "8.4"
     ]
 
     /**
@@ -42,13 +51,13 @@ struct Constants {
         [
             "7.0", "7.1", "7.2", "7.3", "7.4",
             "8.0", "8.1", "8.2",
-            "8.3" // dev
+            "8.3", "8.4" // dev
         ],
         4: // Valet v4 dropped support for v7.0
         [
             "7.1", "7.2", "7.3", "7.4",
             "8.0", "8.1", "8.2",
-            "8.3" // dev
+            "8.3", "8.4" // dev
         ]
     ]
 
