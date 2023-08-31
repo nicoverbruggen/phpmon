@@ -9,10 +9,18 @@
 import Foundation
 
 class FakeBrewFormulaeHandler: HandlesBrewFormulae {
+    // swiftlint:disable function_body_length
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
         return [
             BrewFormula(
-                name: "php",
+                name: "php@9.9",
+                displayName: "PHP 9.9",
+                installedVersion: nil,
+                upgradeVersion: "9.9.0",
+                prerelease: true
+            ),
+            BrewFormula(
+                name: "php@8.3",
                 displayName: "PHP 8.3",
                 installedVersion: nil,
                 upgradeVersion: "8.3.0",

@@ -31,7 +31,10 @@ public class Paths {
         }
 
         userName = identity()
-        Log.info("The current username is `\(userName)`.")
+
+        if !isRunningSwiftUIPreview {
+            Log.info("The current username is `\(userName)`.")
+        }
     }
 
     public func detectBinaryPaths() {

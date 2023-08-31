@@ -28,8 +28,15 @@ struct PhpVersionManagerView: View {
             description: "phpman.busy.description.outdated".localized
         )
 
-        Task { [self] in
-            await self.initialLoad()
+        if handler is FakeBrewFormulaeHandler {
+            Task { [self] in
+                await self.handler.refreshPhpVersions(loadOutdated: false)
+                self.status.busy = false
+            }
+        } else {
+            Task { [self] in
+                await self.initialLoad()
+            }
         }
     }
 
@@ -127,7 +134,7 @@ struct PhpVersionManagerView: View {
 
             BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
                 List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
-                    HStack {
+                    HStack(alignment: .center, spacing: 7.0) {
                         Image(systemName: formula.icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -143,11 +150,10 @@ struct PhpVersionManagerView: View {
                                         .font(.system(size: 9))
                                         .padding(.horizontal, 5)
                                         .padding(.vertical, 1)
-                                        .background(Color.appPrimary)
+                                        .background(Color.orange)
                                         .foregroundColor(Color.white)
                                         .clipShape(Capsule())
                                         .fixedSize(horizontal: true, vertical: true)
-                                        .frame(maxHeight: 7)
                                 }
                             }
 
@@ -192,12 +198,12 @@ struct PhpVersionManagerView: View {
                             }
                         }
                     }
-                    .listRowBackground(index % 2 == 0
-                                       ? Color.gray.opacity(0)
-                                       : Color.gray.opacity(0.08)
-                    )
-                    .padding(.vertical, 10)
+                    .listRowBackground(index % 2 == 0 ? Color.gray.opacity(0): Color.gray.opacity(0.08))
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 8)
                 }
+                .edgesIgnoringSafeArea(.top)
+                .listStyle(PlainListStyle())
             }
         }.frame(width: 600, height: 600)
     }
