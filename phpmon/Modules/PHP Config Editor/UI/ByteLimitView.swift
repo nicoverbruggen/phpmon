@@ -48,41 +48,52 @@ struct PreferenceContainer<ControlView: View>: View {
 }
 
 struct ByteLimitView: View {
-    @State private var selection = "256 MB"
+    @State private var unit: BytePhpPreference.UnitOption
+    @State private var numberText: String
+    @State private var unlimited: Bool
 
-    let colors = [
-        "128 MB",
-        "256 MB",
-        "512 MB",
-        "1 GB",
-        "2 GB",
-        "Unlimited",
-        "Other"
-    ]
+    private var preference: BytePhpPreference
+
+    init(preference: BytePhpPreference) {
+        self.preference = preference
+        self.numberText = String(preference.value)
+        self.unit = preference.unit
+        self.unlimited = (preference.value == -1)
+    }
 
     var body: some View {
-        Picker("Limit Name", selection: $selection) {
-            ForEach(colors, id: \.self) {
-                Text($0)
+        if !unlimited {
+            HStack {
+                TextField("", text: $numberText)
+                    .onChange(of: numberText) { newText in
+                        self.preference.value = Int(newText) ?? 256
+                        print(self.preference.internalValue)
+                    }
+                Picker("Limit Name", selection: $unit) {
+                    ForEach(BytePhpPreference.UnitOption.allCases, id: \.self) {
+                        Text($0.displayValue)
+                    }
+                }
+                .frame(maxWidth: 100)
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .onChange(of: unit) { newValue in
+                    self.preference.unit = newValue
+                    print(self.preference.internalValue)
+                }
             }
         }
-        .labelsHidden()
-        .pickerStyle(.menu)
-    }
 
-    func setValue(value: String) {
-        return
-    }
-
-    func getValue() -> String {
-        return "ok"
+        Toggle(isOn: $unlimited) {
+            Label("Allow unlimited usage", systemImage: "heart").labelStyle(.titleOnly)
+        }
     }
 }
 
 struct ByteLimitView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferenceContainer(name: "Something\nStupid", description: "Description") {
-            ByteLimitView()
+        PreferenceContainer(name: "Max Size", description: "Some maximum size") {
+            ByteLimitView(preference: BytePhpPreference(key: "max_memory"))
         }
 
         ConfigManagerView()

@@ -131,4 +131,10 @@ extension String {
             return ""
         }
     }
+
+    var isNumber: Bool {
+        return self.range(
+            of: "^[0-9]*$", // 1
+            options: .regularExpression) != nil
+    }
 }

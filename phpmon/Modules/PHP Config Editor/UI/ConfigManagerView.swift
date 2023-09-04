@@ -9,32 +9,6 @@
 import Foundation
 import SwiftUI
 
-class PhpPreference {
-    let key: String
-
-    init(key: String) {
-        self.key = key
-    }
-}
-
-class BoolPhpPreference: PhpPreference {
-    @State var value: Bool = true
-}
-
-class StringPhpPreference: PhpPreference {
-    @State var value: String = ""
-}
-
-class BytePhpPreference: PhpPreference {
-    @State var value: String = ""
-}
-
-enum PhpPreferenceType {
-    case byteLimit
-    case string
-    case boolean
-}
-
 struct ConfigManagerView: View {
     var preferences: [PhpPreference] = [
         BytePhpPreference(key: "memory_limit"),
@@ -75,7 +49,7 @@ struct ConfigManagerView: View {
                             description: "php_ini.\(preference.key).description"
                         ) {
                             if let preference = preference as? BytePhpPreference {
-                                ByteLimitView()
+                                ByteLimitView(preference: preference)
                             }
                             if let preference = preference as? BoolPhpPreference {
                                 Toggle("", isOn: preference.$value)

@@ -1,5 +1,5 @@
 //
-//  PhpConfigurationTest.swift
+//  PhpConfigurationFileTest.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/05/2022.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class PhpConfigurationTest: XCTestCase {
+class PhpConfigurationFileTest: XCTestCase {
 
     static var phpIniFileUrl: URL {
         return Bundle(for: Self.self).url(forResource: "php", withExtension: "ini")!
