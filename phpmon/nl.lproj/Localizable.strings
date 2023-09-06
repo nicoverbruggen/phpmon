@@ -27,7 +27,7 @@
 "mi_fix_my_valet" = "Fix My Valet...";
 "mi_fix_my_valet_tooltip" = "Iets mis met jouw installatie van Valet? Gebruik de automatische fixes van PHP Monitor en hopelijk zijn jouw problemen snel opgelost!";
 "mi_fix_brew_permissions" = "Herstel Homebrew Permissions...";
-"mi_fix_brew_permissions_tooltip" = "Heb je problemen met permissions wanneer je `brew upgrade` gebruikt? PHP Monitor kan je helpen!";
+"mi_fix_brew_permissions_tooltip" = "Heeft u problemen met permissions wanneer u `brew upgrade` gebruikt? PHP Monitor kan u helpen!";
 
 "mi_php_refresh" = "Vernieuwen";
 
@@ -87,7 +87,7 @@
 "phpman.busy.title" = "Bezig met zoeken naar updates!";
 "phpman.busy.description.outdated" = "Aan het controleren of er een PHP versie is die outdated is...";
 
-"phpman.version.broken" = "Deze versie lijkt kapot te zijn, je kunt proberen te herstellen.";
+"phpman.version.broken" = "Deze versie lijkt kapot te zijn, u kan proberen herstellen.";
 "phpman.version.has_update" = "Versie %@ geïnstalleerd, %@ beschikbaar.";
 "phpman.version.installed" = "Versie %@ is momenteel geïnstalleerd.";
 "phpman.version.available_for_installation" = "Deze versie kan worden geïnstalleerd.";
@@ -98,23 +98,23 @@
 "phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP Versiebeheerder";
-"phpman.description" = "**PHP Versiebeheerder** stelt je in staat om verschillende PHP-versies te installeren, upgraden en verwijderen via Homebrew, zonder dat je de commando's zelf in de terminal hoeft uit te voeren.";
+"phpman.description" = "**PHP Versiebeheerder** stelt u in staat om verschillende PHP-versies te installeren, upgraden en verwijderen via Homebrew, zonder dat u de commando's zelf in de terminal hoeft uit te voeren.";
 "phpman.disclaimer" = "Houd er rekening mee dat het installeren of upgraden van PHP-versies mogelijk andere Homebrew-pakketten kan upgraden. De meeste installatiestappen duren meestal enige tijd, dus even geduld terwijl Homebrew zijn werk doet.";
 "phpman.refresh.button" = "Zoek naar updates";
 "phpman.refresh.button.description" = "Je kunt op de vernieuwen-knop drukken om te controleren of er updates beschikbaar zijn voor geïnstalleerde PHP-versies.";
 
-"phpman.has_updates.description" = "Er zijn één of meer updates beschikbaar. (Houd er rekening mee dat PHP Monitor altijd PHP-versies in bulk installeert of bijwerkt, dus je zult altijd alle installaties tegelijk upgraden.)";
+"phpman.has_updates.description" = "Er zijn één of meer updates beschikbaar. (Houd er rekening mee dat PHP Monitor altijd PHP-versies in bulk installeert of bijwerkt, dus u zult altijd alle installaties tegelijk upgraden.)";
 "phpman.has_updates.button" = "Alles bijwerken";
 
-"phpman.warnings.unsupported.title" = "Je versie van Homebrew kan problemen veroorzaken";
-"phpman.warnings.unsupported.desc" = "Geen functionaliteit is uitgeschakeld, maar sommige opdrachten werken mogelijk niet zoals verwacht. Je gebruikt momenteel Homebrew %@.
+"phpman.warnings.unsupported.title" = "Uw versie van Homebrew kan problemen veroorzaken";
+"phpman.warnings.unsupported.desc" = "Geen functionaliteit is uitgeschakeld, maar sommige opdrachten werken mogelijk niet zoals verwacht. U gebruikt momenteel Homebrew %@.
 
-Op dit ogenblik is Homebrew 4 de enige ondersteunde versie voor de PHP Version Manager. Als je een nieuwere versie van Homebrew gebruikt, kun je controleren of er een nieuwere versie van PHP Monitor beschikbaar is.";
+Op dit ogenblik is Homebrew 4 de enige ondersteunde versie voor de PHP Version Manager. Als u een nieuwere versie van Homebrew gebruikt, kunt u controleren of er een nieuwere versie van PHP Monitor beschikbaar is.";
 
-"phpman.warnings.removal.title" = "Weet je zeker dat je %@ wilt verwijderen?";
+"phpman.warnings.removal.title" = "Weet u zeker dat u %@ wilt verwijderen?";
 "phpman.warnings.removal.desc" = "Hou er rekening mee dat configuratiebestanden niet worden verwijderd, dus het zou eenvoudig moeten zijn om later opnieuw te installeren als dat nodig is.
 
-Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien de bestandsmachtigingen een eenvoudige verwijdering niet toestaan.";
+Tijdens het verwijderingsproces kan u worden gevraagd om uw wachtwoord indien de bestandsmachtigingen een eenvoudige verwijdering niet toestaan.";
 "phpman.warnings.removal.button" = "Verwijderen";
 
 "phpman.failures.install.title" = "Installatie mislukt!";
@@ -123,17 +123,17 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 %@";
 
 "phpman.action_prevented_busy.title" = "PHP Monitor is momenteel bezig.";
-"phpman.action_prevented_busy.desc" = "PHP Monitor is momenteel bezig met bijvoorbeeld het wisselen tussen PHP-versies. Om ervoor te zorgen dat je systeem niet vastloopt, moet je wachten totdat PHP Monitor klaar is voordat je dit opnieuw probeert.";
+"phpman.action_prevented_busy.desc" = "PHP Monitor is momenteel bezig met bijvoorbeeld het wisselen tussen PHP-versies. Om ervoor te zorgen dat uw computer niet vastloopt, moet u wachten totdat PHP Monitor klaar is voordat u dit opnieuw probeert.";
 
 "phpman.uninstall_prevented.title" = "Je kunt de momenteel actieve versie van PHP niet verwijderen via PHP Monitor.";
-"phpman.uninstall_prevented.desc" = "Om problemen met PHP Monitor en verdere crashes te voorkomen, is het niet mogelijk om de momenteel gekoppelde versie van PHP te verwijderen via deze gebruikersinterface. Je kunt versies wisselen en het opnieuw proberen, of deze versie handmatig verwijderen via de terminal.\n\nHoud er rekening mee dat PHP Monitor kan crashen als je de momenteel gekoppelde PHP-versie verwijdert.";
+"phpman.uninstall_prevented.desc" = "Om problemen met PHP Monitor en verdere crashes te voorkomen, is het niet mogelijk om de momenteel gekoppelde versie van PHP te verwijderen via deze gebruikersinterface. U kan versies wisselen en het opnieuw proberen, of deze versie handmatig verwijderen via de terminal.\n\nHoud er rekening mee dat PHP Monitor kan crashen als u de momenteel gekoppelde PHP-versie verwijdert.";
 
 "phpman.failures.uninstall.title" = "Verwijderen mislukt!";
-"phpman.failures.uninstall.desc" = "Helaas is de automatische verwijdering mislukt. Je kunt proberen deze opdracht handmatig uit te voeren: `%@` en erachter komen wat er misgaat. Vergeet niet om PHP Monitor opnieuw te starten (of op de vernieuwingsknop te drukken) wanneer dit is voltooid.";
+"phpman.failures.uninstall.desc" = "Helaas is de automatische verwijdering mislukt. U kan proberen deze opdracht handmatig uit te voeren: `%@` en erachter komen wat er misgaat. Vergeet niet om PHP Monitor opnieuw te starten (of op de vernieuwingsknop te drukken) wanneer dit is voltooid.";
 
-"phpman.unlinked.title" = "Geen van de geïnstalleerde PHP-versies op je systeem is momenteel gelinkt.";
-"phpman.unlinked.desc" = "Waarschijnlijk heb je nog steeds een versie van PHP geïnstalleerd, maar momenteel is er geen versie van PHP gelinkt.";
-"phpman.unlinked.detail" = "Zonder enige gekoppelde PHP-versie is het `php`-binairbestand niet toegankelijk op je systeem en kun je geen PHP-scripts uitvoeren zonder expliciet onderdeel te zijn van het PATH. Je kunt PHP Monitor automatisch dit probleem laten oplossen (kies 'Automatisch herstellen' in het hoofdmenu) of het zelf oplossen door `brew link php --force` uit te voeren.";
+"phpman.unlinked.title" = "Geen van de geïnstalleerde PHP-versies op uw systeem is momenteel gelinkt.";
+"phpman.unlinked.desc" = "Waarschijnlijk heeft u nog steeds een versie van PHP geïnstalleerd, maar momenteel is er geen versie van PHP gelinkt.";
+"phpman.unlinked.detail" = "Zonder enige gekoppelde PHP-versie is het uitvoerbaar bestand van `php` niet toegankelijk op uw systeem en kunt u geen PHP-scripts uitvoeren zonder expliciet het PATH correct in te stellen. U kan PHP Monitor automatisch dit probleem laten oplossen (kies 'Automatisch herstellen' in het hoofdmenu) of het zelf oplossen door `brew link php --force` uit te voeren.";
 
 "phpman.operations.repairing" = "Herstel installaties...";
 "phpman.operations.updating" = "Updates installeren...";
@@ -153,9 +153,9 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 
 // LITE MODE
 
-"lite_mode_explanation.title" = "Je bent momenteel PHP Monitor in Standalone Mode aan het gebruiken.";
-"lite_mode_explanation.subtitle" = "PHP Monitor heeft verschillende functies die beschikbaar zijn als je ook gebruik maakt van Laravel Valet. Momenteel kon PHP Monitor geen actieve installatie van Valet op jouw computer vinden, dus deze functionaliteit is momenteel niet beschikbaar.";
-"lite_mode_explanation.description" = "Voor meer informatie raad ik aan om de README te bekijken (toegankelijk op GitHub), waarin wordt uitgelegd welke stappen je moet nemen om Valet te installeren en PHP Monitor correct te laten werken met de geïnstalleerde versie van Valet. Je moet PHP Monitor opnieuw starten nadat je Laravel Valet hebt geïnstalleerd voordat het de Standalone-modus verlaat.";
+"lite_mode_explanation.title" = "U bent momenteel PHP Monitor in Standalone Mode aan het gebruiken.";
+"lite_mode_explanation.subtitle" = "PHP Monitor heeft verschillende functies die beschikbaar zijn als u ook gebruik maakt van Laravel Valet. Momenteel kon PHP Monitor geen actieve installatie van Valet op jouw computer vinden, dus deze functionaliteit is momenteel niet beschikbaar.";
+"lite_mode_explanation.description" = "Voor meer informatie raad ik aan om de README te bekijken (toegankelijk op GitHub), waarin wordt uitgelegd welke stappen u moet nemen om Valet te installeren en PHP Monitor correct te laten werken met de geïnstalleerde versie van Valet. U moet PHP Monitor opnieuw starten nadat u Laravel Valet heeft geïnstalleerd voordat de Standalone-modus verlaten wordt.";
 
 // GENERIC
 
@@ -168,7 +168,7 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 
 "preset_help_title" = "Werken met presets";
 "preset_help_info" = "Je kunt presets instellen in het config.json-bestand, dat zich bevindt in `~/.config/phpmon/config.json`. Deze presets kunnen een selectie van configuratiewaarden in één keer toepassen. Dit is een krachtige functie, maar moet momenteel handmatig worden ingesteld.";
-"preset_help_desc" = "Na het opnieuw opstarten van PHP Monitor worden alle gevonden presets ingeladen. Als er geen presets worden weergegeven, kon het bestand waarschijnlijk niet correct worden verwerkt.\n\nJe kunt op het vraagteken in deze melding klikken om naar de FAQ op GitHub te gaan, waar je meer informatie over deze functie kunt vinden, inclusief een voorbeeld.";
+"preset_help_desc" = "Na het opnieuw opstarten van PHP Monitor worden alle gevonden presets ingeladen. Als er geen presets worden weergegeven, kon het bestand waarschijnlijk niet correct worden verwerkt.\n\nJe kunt op het vraagteken in deze melding klikken om naar de FAQ op GitHub te gaan, waar u meer informatie over deze functie kunt vinden, inclusief een voorbeeld.";
 
 // MENU ITEMS (if window is open)
 
@@ -182,30 +182,30 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 "domain_list.subtitle" = "";
 
 "domain_list.no_domains" = "Je hebt nog geen domeinen of proxies ingesteld.";
-"domain_list.no_domains_for_search_query" = "Er zijn geen resultaten voor je zoekopdracht.";
+"domain_list.no_domains_for_search_query" = "Er zijn geen resultaten voor uw zoekopdracht.";
 
 "domain_list.tooltips.isolated" = "Dit domein is geïsoleerd en gebruikt PHP %@ in plaats van de globaal gekoppelde PHP.";
 "domain_list.tooltips.checkmark" = "Dit domein wordt geserveerd met een versie van PHP die compatibel is met deze vereiste (PHP %@). Klik op de PHP-versie naast dit vinkje om meer informatie te vinden over hoe deze vereiste is bepaald.";
 
 "domain_list.alerts_isolation_failed.title" = "Oeps! Site-isolatie niet toegepast";
-"domain_list.alerts_isolation_failed.subtitle" = "Er is iets misgegaan bij het wijzigen van de isolatiestatus voor deze site. Als dit je standaardsite is maar niet is gekoppeld, raad ik aan om de site handmatig te koppelen voordat je isolatie instelt.";
-"domain_list.alerts_isolation_failed.desc" = "Om erachter te komen wat er misgaat, kun je proberen dit commando handmatig in je terminal uit te voeren: %@";
+"domain_list.alerts_isolation_failed.subtitle" = "Er is iets misgegaan bij het wijzigen van de isolatiestatus voor deze site. Als dit uw standaardsite is maar niet is gekoppeld, raad ik aan om de site handmatig te koppelen voordat u isolatie instelt.";
+"domain_list.alerts_isolation_failed.desc" = "Om erachter te komen wat er misgaat, kan u proberen dit commando handmatig in uw terminal uit te voeren: %@";
 
 "domain_list.alerts_status_not_changed.title" = "Oeps! SSL-status niet gewijzigd";
-"domain_list.alerts_status_not_changed.desc" = "Er is iets misgegaan. Probeer dit commando handmatig in je terminal uit te voeren: %@";
+"domain_list.alerts_status_not_changed.desc" = "Er is iets misgegaan. Probeer dit commando handmatig in uw terminal uit te voeren: %@";
 
 "domain_list.alerts_status_changed.title" = "SSL-status gewijzigd";
 "domain_list.alerts_status_changed.desc" = "Het domein '%@' is nu %@.";
 "domain_list.alerts_status_secure" = "veilig";
 "domain_list.alerts_status_unsecure" = "onveilig";
 
-"domain_list.confirm_unlink" = "Weet je zeker dat je '%@' wilt loskoppelen?";
-"domain_list.confirm_unlink_desc" = "Er worden geen bestanden verwijderd. Je kunt de map altijd opnieuw koppelen door op de + knop te klikken en de oorspronkelijke map te selecteren.";
+"domain_list.confirm_unlink" = "Weet u zeker dat u '%@' wilt loskoppelen?";
+"domain_list.confirm_unlink_desc" = "Er worden geen bestanden verwijderd. U kan de map altijd opnieuw koppelen door op de + knop te klikken en de oorspronkelijke map te selecteren.";
 "site_link.close" = "Sluiten";
 "site_link.switch_to_php" = "Overschakelen naar PHP %@";
 
-"domain_list.confirm_unproxy" = "Weet je zeker dat je de proxy '%@' wilt verwijderen?";
-"domain_list.confirm_unproxy_desc" = "Je kunt de proxy altijd opnieuw maken door op de + knop te klikken.";
+"domain_list.confirm_unproxy" = "Weet u zeker dat u de proxy '%@' wilt verwijderen?";
+"domain_list.confirm_unproxy_desc" = "U kan de proxy altijd opnieuw maken door op de + knop te klikken.";
 
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domein";
@@ -215,8 +215,8 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 
 // CHOOSE WHAT TO ADD
 
-"selection.title" = "Wat voor soort domein wil je instellen?";
-"selection.description" = "Koppelingen (links) worden gebruikt om projecten rechtstreeks te gebruiken. Als je een Laravel, Symfony, WordPress, etc. map met code hebt, wil je een koppeling maken en de map kiezen waar je code zich bevindt.\n\nAls je een proxy nodig hebt, kun je bijvoorbeeld een container doorsturen naar een bepaalde domeinnaam. Dit kan handig zijn in combinatie met Docker, bijvoorbeeld.";
+"selection.title" = "Wat voor soort domein wilt u instellen?";
+"selection.description" = "Koppelingen (links) worden gebruikt om projecten rechtstreeks te gebruiken. Als u een Laravel, Symfony, WordPress, etc. map met code heeft, wilt u wellicht een koppeling maken en de map kiezen waar uw code zich bevindt.\n\nAls u een proxy nodig heeft, kan u bijvoorbeeld een container doorsturen naar een bepaalde domeinnaam. Dit kan handig zijn in combinatie met Docker, bijvoorbeeld.";
 "selection.create_link" = "Link aanmaken";
 "selection.create_proxy" = "Proxy aanmaken";
 "selection.cancel" = "Annuleren";
@@ -230,14 +230,14 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 "domain_list.add.proxy_available" = "%@ wordt geproxyd en is beschikbaar via: %@://%@.%@";
 "domain_list.add.proxy_https_warning" = "%@ wordt geproxyd en is beschikbaar via: %@://%@.%@.
 
-(!) BELANGRIJK: Deze proxy werkt mogelijk niet totdat je handmatig `proxy_ssl_verify off;` toevoegt aan het nginx-configuratiebestand voor dit domein. Het wordt aanbevolen om een onbeveiligd domein als proxy-onderwerp te gebruiken.";
+(!) BELANGRIJK: Deze proxy werkt mogelijk niet totdat u handmatig `proxy_ssl_verify off;` toevoegt aan het nginx-configuratiebestand voor dit domein. Het wordt aanbevolen om een onbeveiligd domein als proxy-onderwerp te gebruiken.";
 
 // ADD SITE TO DOMAINS LIST
 
 "domain_list.add.link_folder" = "Map linken";
 "domain_list.add.domain_name_placeholder" = "Voer hier een domeinnaam in";
 "domain_list.add.secure_after_creation" = "Beveilig %@.%@ na het maken";
-"domain_list.add.secure_description" = "Het beveiligen van een domein vereist beheerdersrechten.\nJe wordt mogelijk gevraagd om je wachtwoord of Touch ID.";
+"domain_list.add.secure_description" = "Het beveiligen van een domein vereist beheerdersrechten.\nU wordt mogelijk gevraagd om uw wachtwoord (of Touch ID).";
 "domain_list.add.create_link" = "Link maken";
 "domain_list.add.cancel" = "Annuleren";
 "domain_list.add.folder_available" = "Deze site is beschikbaar via de volgende URL: %@://%@.%@";
@@ -250,12 +250,12 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 
 // ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
 
-"domain_list.alert.folder_missing.desc" = "De gekozen map lijkt niet meer te bestaan. Wil je het toevoegen van deze map annuleren? Als je de map hebt verplaatst, kun je deze altijd terugzetten en het opnieuw proberen.";
+"domain_list.alert.folder_missing.desc" = "De gekozen map lijkt niet meer te bestaan. Wilt u het toevoegen van deze map annuleren? Als u de map heeft verplaatst, kan u deze altijd terugzetten en het opnieuw proberen.";
 "domain_list.alert.folder_missing.title" = "Map ontbreekt!";
 "domain_list.alert.folder_missing.cancel" = "Link annuleren";
 "domain_list.alert.folder_missing.return" = "OK";
 
-"domain_list.add.modal_description" = "Selecteer eerst welke map je wilt koppelen.";
+"domain_list.add.modal_description" = "Selecteer eerst welke map u wilt koppelen.";
 
 // SITE LIST ACTIONS
 
@@ -279,14 +279,14 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 "domain_list.use_in_terminal" = "PHP %@ openen in Terminal";
 
 "domain_list.alerts_isolated_php_terminal.title" = "Je kunt PHP %@ gebruiken in een specifieke terminal!";
-"domain_list.alerts_isolated_php_terminal.subtitle" = "Helaas kan PHP Monitor geen terminal voor je openen (en de juiste commando's typen). Je moet handmatig het hulpscript laden om deze specifieke versie van PHP te gebruiken. Typ hiervoor het volgende in een terminal naar keuze:
+"domain_list.alerts_isolated_php_terminal.subtitle" = "Helaas kan PHP Monitor geen terminal voor u openen (en de juiste commando's typen). U moet handmatig het hulpscript laden om deze specifieke versie van PHP te gebruiken. Typ hiervoor het volgende in een terminal naar keuze:
 
 . pm%@
 
 Dit zal het hulpscript laden zoals gegenereerd door PHP Monitor en het gebruik van PHP %@ mogelijk maken voor die specifieke terminal.
 
-Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie waarin je het gebruikt. (bijvoorbeeld als je meerdere tabbladen hebt in je terminal-app, worden andere tabbladen en vensters niet beïnvloed).";
-"domain_list.alerts_isolated_php_terminal.desc" = "Als dit niet werkt, kun je PHP Doctor controleren via het First Aid-menu hier in PHP Monitor. Meer informatie over deze functie is ook te vinden op GitHub (in de wiki van de PHP Monitor-repository). Deze waarschuwing is toegevoegd om de zichtbaarheid van deze functie te verbeteren.";
+Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie waarin u PHP gebruikt. (bijvoorbeeld als u meerdere tabbladen heeft in uw terminal-app, worden andere tabbladen en vensters niet beïnvloed).";
+"domain_list.alerts_isolated_php_terminal.desc" = "Als dit niet werkt, kan u PHP Doctor controleren via het First Aid-menu hier in PHP Monitor. Meer informatie over deze functie is ook te vinden op GitHub (in de wiki van de PHP Monitor-repository). Deze waarschuwing is toegevoegd om de zichtbaarheid van deze functie te verbeteren.";
 
 "domain_list.warning.spaces" = "Waarschuwing! Deze website heeft een spatie in de mapnaam.\nDe website is niet bereikbaar via de browser.";
 
@@ -340,60 +340,60 @@ Dit heeft geen invloed op andere terminals, alleen op de huidige terminalsessie 
 "prefs.menu_contents" = "Functies in menu:";
 "prefs.startup" = "Opstarten:";
 
-"prefs.auto_start_desc" = "Start PHP Monitor automatisch wanneer je inlogt op je Mac.";
+"prefs.auto_start_desc" = "Start PHP Monitor automatisch bij het aanmelden op uw Mac.";
 "prefs.auto_start_title" = "PHP Monitor starten bij het inloggen";
 
 "prefs.icon_options.php" = "PHP-pictogram weergeven";
 "prefs.icon_options.elephant" = "Olifant-pictogram weergeven";
 "prefs.icon_options.none" = "Geen pictogram weergeven";
 
-"prefs.icon_options_desc" = "Met deze optie kun je bepalen welk pictogram naast het versienummer van de momenteel gekoppelde PHP-versie wordt weergegeven. Als de optie voor dynamisch pictogram is uitgeschakeld, heeft dit geen invloed.";
+"prefs.icon_options_desc" = "Met deze optie kan u bepalen welk pictogram naast het versienummer van de momenteel gekoppelde PHP-versie wordt weergegeven. Als de optie voor dynamisch pictogram is uitgeschakeld, doet dit niets.";
 
 "prefs.auto_restart_services_title" = "PHP-FPM automatisch herstarten";
-"prefs.auto_restart_services_desc" = "Als deze optie is ingeschakeld, wordt PHP-FPM automatisch herstart wanneer je een extensie in- of uitschakelt. Dit is iets langzamer wanneer het is ingeschakeld, maar de extensiewijziging wordt onmiddellijk toegepast voor alle sites die je bedient, zonder dat je PHP-FPM handmatig hoeft te herstarten.";
+"prefs.auto_restart_services_desc" = "Als deze optie is ingeschakeld, wordt PHP-FPM automatisch herstart wanneer u een extensie in- of uitschakelt. Dit is iets trager wanneer deze functie is ingeschakeld, maar de extensiewijziging wordt onmiddellijk toegepast voor alle sites die u bedient, zonder dat u PHP-FPM handmatig hoeft te herstarten.";
 
 "prefs.dynamic_icon_title" = "Dynamisch pictogram weergeven in de menubalk";
-"prefs.dynamic_icon_desc" = "Als je dit vakje niet aanvinkt, is het truckpictogram altijd zichtbaar. Als je het aanvinkt, wordt het belangrijkste versienummer van de momenteel gekoppelde PHP-versie weergegeven.";
+"prefs.dynamic_icon_desc" = "Als u dit vakje niet aanvinkt, is het truckpictogram altijd zichtbaar. Als u het aanvinkt, wordt het belangrijkste versienummer van de momenteel gekoppelde PHP-versie weergegeven.";
 
 "prefs.display_full_php_version" = "Overal de volledige PHP-versie weergeven";
 "prefs.display_full_php_version_desc" = "Toon de volledige versie in plaats van alleen het belangrijkste versienummer in de menubalk en het vervolgkeuzemenu. (Dit kan ongewenst zijn op kleinere schermen, daarom is dit standaard uitgeschakeld.)";
 
 "prefs.auto_composer_update_title" = "Automatisch Composer dependencies bijwerken";
-"prefs.auto_composer_update_desc" = "Als deze optie is ingeschakeld, wordt Composer automatisch gevraagd om `composer global update` uit te voeren wanneer je tussen verschillende PHP-versies schakelt. Je kunt zien welke wijzigingen worden aangebracht, of dit mislukt.";
+"prefs.auto_composer_update_desc" = "Als deze optie is ingeschakeld, wordt Composer automatisch gevraagd om `composer global update` uit te voeren wanneer u tussen verschillende PHP-versies schakelt. U kan zien welke wijzigingen worden aangebracht, of dit mislukt.";
 
 "prefs.open_protocol_title" = "Toestaan van third-party integraties";
-"prefs.open_protocol_desc" = "Als deze optie is ingeschakeld, kan de interactie met externe hulpprogramma's werken (zoals Alfred, Raycast). Als je dit uitschakelt, ontvangt PHP Monitor nog steeds de opdrachten, maar voert deze niet uit.";
+"prefs.open_protocol_desc" = "Als deze optie is ingeschakeld, kan de interactie met externe hulpprogramma's werken (zoals Alfred, Raycast). Als u dit uitschakelt, ontvangt PHP Monitor nog steeds de opdrachten, maar voert deze niet uit.";
 
 "prefs.automatic_update_check_title" = "Automatisch controleren op updates";
-"prefs.automatic_update_check_desc" = "Als deze optie is ingeschakeld, controleert PHP Monitor automatisch of er een nieuwere versie beschikbaar is en geeft je een melding als dat het geval is.";
+"prefs.automatic_update_check_desc" = "Als deze optie is ingeschakeld, controleert PHP Monitor automatisch of er een nieuwere versie beschikbaar is en geeft u een melding als dat het geval is.";
 
 "prefs.php_doctor_suggestions_title" = "Altijd suggesties tonen";
-"prefs.php_doctor_suggestions_desc" = "Als je dit item uitvinkt, worden er geen suggesties van PHP Doctor weergegeven in het menu van PHP Monitor. Houd er rekening mee dat PHP Doctor niet wordt weergegeven als er geen aanbevelingen zijn.";
+"prefs.php_doctor_suggestions_desc" = "Als u dit item uitvinkt, worden er geen suggesties van PHP Doctor weergegeven in het menu van PHP Monitor. Hou er rekening mee dat PHP Doctor niet wordt weergegeven als er geen aanbevelingen zijn.";
 
 "prefs.shortcut_set" = "Globale sneltoets instellen";
 "prefs.shortcut_listening" = "<wachten op toetsaanslag>";
 "prefs.shortcut_clear" = "Wissen";
-"prefs.shortcut_desc" = "Als er een sneltoetscombinatie is ingesteld, kun je PHP Monitor overal in- of uitschakelen door de toetscombinatie in te drukken die je hebt gekozen. (Annuleer het kiezen van een sneltoets door op de spatiebalk te drukken.)";
+"prefs.shortcut_desc" = "Als er een sneltoetscombinatie is ingesteld, kan u PHP Monitor overal in- of uitschakelen door de toetscombinatie in te drukken die u heeft gekozen. (Annuleer het kiezen van een sneltoets door op de spatiebalk te drukken.)";
 
-"prefs.notify_about_version_change_desc" = "Toont een melding telkens wanneer de actieve PHP-versie verandert.";
+"prefs.notify_about_version_change_desc" = "Toon een melding telkens wanneer de actieve PHP-versie verandert.";
 "prefs.notify_about_version_change" = "Melding bij overschakelen PHP-versie";
 
-"prefs.notify_about_php_fpm_change_desc" = "Toont een melding telkens wanneer het actieve PHP-FPM-proces opnieuw is gestart vanwege een configuratiewijziging.";
+"prefs.notify_about_php_fpm_change_desc" = "Toon een melding telkens wanneer het actieve PHP-FPM-proces opnieuw is gestart vanwege een configuratiewijziging.";
 "prefs.notify_about_php_fpm_change" = "Melding bij herstart PHP-FPM";
 
-"prefs.notify_about_services_desc" = "Toont een melding telkens wanneer een van de Homebrew-services (geïnstalleerd en geconfigureerd door Valet) opnieuw is gestart of gestopt.";
+"prefs.notify_about_services_desc" = "Toon een melding telkens wanneer een van de Homebrew-services (geïnstalleerd en geconfigureerd door Valet) opnieuw is gestart of gestopt.";
 "prefs.notify_about_services" = "Melding over status van services";
 
-"prefs.notify_about_presets_desc" = "Toont een melding telkens wanneer een preset succesvol is toegepast of ongedaan gemaakt.";
+"prefs.notify_about_presets_desc" = "Toon een melding telkens wanneer een preset succesvol is toegepast of ongedaan is gemaakt.";
 "prefs.notify_about_presets" = "Melding over toegepaste presets";
 
-"prefs.notify_about_secure_status_desc" = "Toont een melding wanneer een domein is beveiligd of niet beveiligd.";
+"prefs.notify_about_secure_status_desc" = "Toon een melding wanneer een domein is beveiligd of niet beveiligd.";
 "prefs.notify_about_secure_status" = "Melding over beveiligingsstatus";
 
-"prefs.notify_about_composer_success_desc" = "Toont een melding wanneer de globale Composer-configuratie met succes is bijgewerkt.";
+"prefs.notify_about_composer_success_desc" = "Toon een melding wanneer de globale Composer-configuratie met succes is bijgewerkt.";
 "prefs.notify_about_composer_success" = "Melding over update van Composer";
 
-"prefs.warn_about_non_standard_tld_desc" = "Als je een niet-standaard TLD gebruikt, wil je mogelijk geen herhaalde meldingen hierover ontvangen.";
+"prefs.warn_about_non_standard_tld_desc" = "Als u een niet-standaard TLD gebruikt, wilt u mogelijk geen herhaalde meldingen hierover ontvangen.";
 "prefs.warn_about_non_standard_tld" = "Waarschuwen bij niet-standaard TLD";
 
 "prefs.display_global_version_switcher_desc" = "Indien uitgeschakeld, kunt u de globaal gekoppelde PHP-versie niet wijzigen via het hoofdmenu.";
