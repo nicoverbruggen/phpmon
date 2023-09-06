@@ -282,6 +282,7 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
 "domain_list.unsecure" = "Unsecure Domain";
+"domain_list.open_in" = "Open with %@";
 "domain_list.open_in_finder" = "Open in Finder";
 "domain_list.open_in_browser" = "Open in Browser";
 "domain_list.open_in_terminal" = "Open in Terminal";
@@ -382,7 +383,7 @@ This has no effect on other terminals, only for the particular terminal session 
 
 "prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";
- 
+
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
 "prefs.shortcut_clear" = "Clear";

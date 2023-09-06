@@ -1,6 +1,6 @@
 // MENU ITEMS (MI)
 
-"mi_busy" = "PHP Monitor is bezig...";
+"mi_busy" = "PHP Monitor is even bezig...";
 
 "mi_unsure" = "We zijn niet zeker welke versie van PHP er actief is.";
 "mi_php_version" = "Globale versie: PHP";
@@ -33,7 +33,7 @@
 
 "mi_configuration" = "PHP configuratie";
 "mi_limits" = "Configureer limieten";
-"mi_memory_limit" = "Geheugen limiet";
+"mi_memory_limit" = "Geheugenlimiet";
 "mi_post_max_size" = "Max POST";
 "mi_upload_max_filesize" = "Max Upload";
 "mi_manual_actions" = "Manuele Acties";
@@ -49,7 +49,7 @@
 "mi_phpmon_config" = "Vind PHP Monitor folder (.config/phpmon)";
 "mi_global_composer" = "Vind globale Composer folder (.composer)";
 "mi_phpinfo" = "Toon huidige configuratie (phpinfo)";
-"mi_update_global_composer" = "Update globale Composer packages...";
+"mi_update_global_composer" = "Globale Composer update...";
 "mi_detected_extensions" = "Gedetecteerde extensies";
 "mi_no_extensions_detected" = "Geen extra extensies gedetecteerd.";
 
@@ -59,7 +59,7 @@
 "mi_view_recommendations" = "Bekijk aanbevelingen...";
 
 "mi_valet" = "Laravel Valet";
-"mi_domain_list" = "Open domeinenlijst...";
+"mi_domain_list" = "Open Domeinen...";
 
 "mi_preferences" = "Voorkeuren...";
 "mi_donate" = "Doneer...";
@@ -91,10 +91,11 @@
 "phpman.version.has_update" = "Versie %@ geïnstalleerd, %@ beschikbaar.";
 "phpman.version.installed" = "Versie %@ is momenteel geïnstalleerd.";
 "phpman.version.available_for_installation" = "Deze versie kan worden geïnstalleerd.";
-"phpman.buttons.uninstall" = "Deïnstalleren";
+"phpman.buttons.uninstall" = "Verwijderen";
 "phpman.buttons.install" = "Installeren";
 "phpman.buttons.update" = "Bijwerken";
 "phpman.buttons.repair" = "Herstellen";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP Versiebeheerder";
 "phpman.description" = "**PHP Versiebeheerder** stelt je in staat om verschillende PHP-versies te installeren, upgraden en verwijderen via Homebrew, zonder dat je de commando's zelf in de terminal hoeft uit te voeren.";
@@ -216,8 +217,8 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 
 "selection.title" = "Wat voor soort domein wil je instellen?";
 "selection.description" = "Koppelingen (links) worden gebruikt om projecten rechtstreeks te gebruiken. Als je een Laravel, Symfony, WordPress, etc. map met code hebt, wil je een koppeling maken en de map kiezen waar je code zich bevindt.\n\nAls je een proxy nodig hebt, kun je bijvoorbeeld een container doorsturen naar een bepaalde domeinnaam. Dit kan handig zijn in combinatie met Docker, bijvoorbeeld.";
-"selection.create_link" = "Maak een link";
-"selection.create_proxy" = "Maak een proxy";
+"selection.create_link" = "Link aanmaken";
+"selection.create_proxy" = "Proxy aanmaken";
 "selection.cancel" = "Annuleren";
 
 // ADD PROXY TO DOMAINS LIST
@@ -268,6 +269,7 @@ Tijdens het verwijderingsproces kan je worden gevraagd om je wachtwoord indien d
 "domain_list.unlink" = "Link verwijderen";
 "domain_list.secure" = "Domein beveiligen";
 "domain_list.unsecure" = "Domein niet beveiligen";
+"domain_list.open_in" = "Openen met %@";
 "domain_list.open_in_finder" = "Openen in Finder";
 "domain_list.open_in_browser" = "Openen in browser";
 "domain_list.open_in_terminal" = "Openen in Terminal";

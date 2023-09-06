@@ -94,6 +94,7 @@
 "phpman.buttons.install" = "Instalar";
 "phpman.buttons.update" = "Atualizar";
 "phpman.buttons.repair" = "Reparar";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** permite instalar, atualizar e excluir diferentes versões do PHP via Homebrew sem precisar executar manualmente os comandos no seu terminal.";
@@ -267,6 +268,7 @@ Poderá ser-lhe solicitada a sua palavra-passe durante o processo de desinstala�
 "domain_list.unlink" = "Desvincular diretoria";
 "domain_list.secure" = "Domínio seguro";
 "domain_list.unsecure" = "Domínio não seguro";
+"domain_list.open_in" = "Abrir no %@";
 "domain_list.open_in_finder" = "Abrir no Finder";
 "domain_list.open_in_browser" = "Abrir no navegador";
 "domain_list.open_in_terminal" = "Abrir no terminal";

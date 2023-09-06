@@ -94,6 +94,7 @@
 "phpman.buttons.install" = "Installieren";
 "phpman.buttons.update" = "Aktualisieren";
 "phpman.buttons.repair" = "Reparieren";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP-Versionen Manager";
 "phpman.description" = "Mit dem **PHP-Versionen Manager** können Sie verschiedene PHP-Versionen über Homebrew installieren, aktualisieren und löschen, ohne die Befehle im Terminal selbst ausführen zu müssen.";
@@ -267,6 +268,7 @@ Möglicherweise werden Sie während des Deinstallationsvorgangs nach Ihrem Passw
 "domain_list.unlink" = "Ordner-Link aufheben";
 "domain_list.secure" = "Domain sichern";
 "domain_list.unsecure" = "Domain nicht mehr sichern";
+"domain_list.open_in" = "Mit %@ öffnen";
 "domain_list.open_in_finder" = "In Finder öffnen";
 "domain_list.open_in_browser" = "Im Browser öffnen";
 "domain_list.open_in_terminal" = "Im Terminal öffnen";

@@ -32,13 +32,22 @@ struct Localization {
 
 extension String {
     var localized: String {
-        if #available(macOS 13, *) {
-            return NSLocalizedString(
-                self, tableName: nil, bundle: Localization.bundle, value: "", comment: ""
-            ).replacingOccurrences(of: "Preferences", with: "Settings")
+        let string = NSLocalizedString(self, tableName: nil, bundle: Localization.bundle, value: "", comment: "")
+
+        // Fallback to English translation if the localized value is equal to the key (should not happen)
+        if string == self {
+            guard let path = Localization.bundle.path(forResource: "en", ofType: "lproj"),
+                let bundle = Bundle(path: path)
+            else { return self }
+            return NSLocalizedString(self, bundle: bundle, comment: "")
         }
 
-        return NSLocalizedString(self, tableName: nil, bundle: Localization.bundle, value: "", comment: "")
+        // Ensure that on more recent versions of macOS, "Preferences" is replaced with "Settings"
+        if #available(macOS 13, *) {
+            return string.replacingOccurrences(of: "Preferences", with: "Settings")
+        }
+
+        return string
     }
 
     var localizedForSwiftUI: LocalizedStringKey {

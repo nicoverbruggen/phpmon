@@ -94,6 +94,7 @@
 "phpman.buttons.install" = "Cài đặt";
 "phpman.buttons.update" = "Cập nhật";
 "phpman.buttons.repair" = "Sửa chữa";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "Quản lý Phiên bản PHP";
 "phpman.description" = "**Quản lý Phiên bản PHP** cho phép bạn cài đặt, nâng cấp và xóa các phiên bản PHP khác nhau thông qua Homebrew mà không cần phải chạy các lệnh trong terminal.";
@@ -261,6 +262,7 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "domain_list.unlink" = "Hủy liên kết Thư mục";
 "domain_list.secure" = "Bảo mật Tên miền";
 "domain_list.unsecure" = "Không bảo mật Tên miền";
+"domain_list.open_in" = "Mở trong %@";
 "domain_list.open_in_finder" = "Mở trong Finder";
 "domain_list.open_in_browser" = "Mở trong Trình duyệt";
 "domain_list.open_in_terminal" = "Mở trong Terminal";
