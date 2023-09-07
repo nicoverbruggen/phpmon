@@ -233,8 +233,14 @@ class Valet {
             )
 
         if let defaultPath = Valet.shared.config.defaultSite,
-           let site = ValetScanner.active.resolveSite(path: defaultPath) {
-            sites.insert(site, at: 0)
+           let defaultSite = ValetScanner.active.resolveSite(path: defaultPath) {
+            // Only insert the default site if it isn't already included in the list
+            if !sites.contains(where: { site in
+                site.absolutePath == defaultSite.absolutePath
+                && site.name == defaultSite.name
+            }) {
+                sites.insert(defaultSite, at: 0)
+            }
         }
 
         Log.info("\(sites.count) sites & \(proxies.count) proxies have been scanned.")
