@@ -71,6 +71,31 @@ final class MainMenuTest: UITestCase {
         click(app.buttons["Notifications"])
     }
 
+    final func test_can_open_php_version_manager() throws {
+        let app = launch(openMenu: true)
+        app.mainMenuItem(withText: "mi_php_version_manager".localized).click()
+
+        // Should display loader
+        assertExists(app.staticTexts["phpman.busy.title".localized], 1)
+
+        // After loading, should display PHP 8.2
+        assertExists(app.staticTexts["PHP 8.2"], 5)
+
+        // Should also display pre-release version
+        assertExists(app.staticTexts["PHP 8.3"])
+        assertExists(app.staticTexts["phpman.version.prerelease".localized.uppercased()])
+        assertExists(app.staticTexts["phpman.version.available_for_installation".localized])
+
+        // But not PHP 8.4 (yet)
+        assertNotExists(app.staticTexts["PHP 8.4"])
+
+        // Also, PHP 8.2 should have an update available
+        assertExists(app.staticTexts["phpman.version.has_update".localized(
+            "8.2.6",
+            "8.2.11"
+        )], 5)
+    }
+
     final func test_can_quit_app() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_quit".localized).click()

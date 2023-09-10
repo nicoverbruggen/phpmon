@@ -160,6 +160,22 @@ class TestableConfigurations {
                     : .delayed(0.2, "OK"),
                 "ln -sF ~/.config/valet/valet82.sock ~/.config/valet/valet.sock"
                     : .instant("OK"),
+                "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae": .delayed(2.0, """
+                {
+                "formulae": [
+                    {
+                        "name": "php",
+                        "installed_versions": [
+                            "8.2.6"
+                        ],
+                        "current_version": "8.2.11",
+                        "pinned": false,
+                        "pinned_version": null
+                    }
+                ],
+                "casks": []
+                }
+                """)
             ],
             commandOutput: [
                 "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
@@ -173,7 +189,7 @@ class TestableConfigurations {
                 .automaticBackgroundUpdateCheck: false
             ],
             phpVersions: [
-                VersionNumber(major: 8, minor: 2, patch: 0),
+                VersionNumber(major: 8, minor: 2, patch: 6),
                 VersionNumber(major: 8, minor: 1, patch: 0),
                 VersionNumber(major: 8, minor: 0, patch: 0)
             ]
