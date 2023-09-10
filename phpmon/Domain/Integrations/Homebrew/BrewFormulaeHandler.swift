@@ -44,6 +44,7 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
 
         return Brew.phpVersionFormulae.map { (version, formula) in
             let fullVersion = PhpEnvironments.shared.cachedPhpInstallations[version]?.versionNumber.text
+
             var upgradeVersion: String?
 
             if let version = fullVersion {
@@ -56,7 +57,8 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,
-                upgradeVersion: upgradeVersion
+                upgradeVersion: upgradeVersion,
+                prerelease: Constants.ExperimentalPhpVersions.contains(version)
             )
         }.sorted { $0.displayName > $1.displayName }
     }

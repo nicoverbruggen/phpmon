@@ -75,7 +75,7 @@ extension DomainListVC {
 
             for editor in applications {
                 let editorMenuItem = EditorMenuItem(
-                    title: "Open with \(editor.name)",
+                    title: "domain_list.open_in".localized(editor.name),
                     action: #selector(self.openWithEditor(sender:)),
                     keyEquivalent: ""
                 )

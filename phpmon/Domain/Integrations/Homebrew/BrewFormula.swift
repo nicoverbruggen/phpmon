@@ -21,9 +21,26 @@ struct BrewFormula {
     /// The upgrade that is currently available, if it exists.
     let upgradeVersion: String?
 
+    /// Whether this formula is a stable version of PHP.
+    let prerelease: Bool
+
     /// Whether the formula is currently installed.
     var isInstalled: Bool {
         return installedVersion != nil
+    }
+
+    init(
+        name: String,
+        displayName: String,
+        installedVersion: String?,
+        upgradeVersion: String?,
+        prerelease: Bool = false
+    ) {
+        self.name = name
+        self.displayName = displayName
+        self.installedVersion = installedVersion
+        self.upgradeVersion = upgradeVersion
+        self.prerelease = prerelease
     }
 
     /// Whether the formula can be upgraded.

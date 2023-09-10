@@ -29,29 +29,60 @@ struct StatsView: View {
     @State var maxPostSize: String
     @State var maxUploadSize: String
 
+    init(memoryLimit: String, maxPostSize: String, maxUploadSize: String) {
+        self.memoryLimit = memoryLimit
+        self.maxPostSize = maxPostSize
+        self.maxUploadSize = maxUploadSize
+    }
+
+    public func hasErrorState() -> Bool {
+        return self.memoryLimit == "⚠️"
+            && self.maxPostSize == "⚠️"
+            && self.maxUploadSize == "⚠️"
+    }
+
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 30) {
-            VStack(alignment: .center, spacing: 3) {
-                SectionHeaderView(text: "mi_memory_limit".localized.uppercased())
-                Text(memoryLimit)
-                    .fontWeight(.medium)
+        if self.hasErrorState() {
+            HStack {
+                Text("⚠️")
+                    .frame(maxWidth: 20, alignment: .center)
                     .font(.system(size: 16))
+                VStack {
+                    Text("warnings.limits_error.title".localizedForSwiftUI)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.system(size: 11))
+                    Text("warnings.limits_error.steps".localizedForSwiftUI)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.system(size: 11))
+                }
             }
-            VStack(alignment: .center, spacing: 3) {
-                SectionHeaderView(text: "mi_post_max_size".localized.uppercased())
-                Text(maxPostSize)
-                    .fontWeight(.medium)
-                    .font(.system(size: 16))
+            .padding(10)
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
+        } else {
+            HStack(alignment: .firstTextBaseline, spacing: 30) {
+                VStack(alignment: .center, spacing: 3) {
+                    SectionHeaderView(text: "mi_memory_limit".localized.uppercased())
+                    Text(memoryLimit)
+                        .fontWeight(.medium)
+                        .font(.system(size: 16))
+                }
+                VStack(alignment: .center, spacing: 3) {
+                    SectionHeaderView(text: "mi_post_max_size".localized.uppercased())
+                    Text(maxPostSize)
+                        .fontWeight(.medium)
+                        .font(.system(size: 16))
+                }
+                VStack(alignment: .center, spacing: 3) {
+                    SectionHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
+                    Text(maxUploadSize)
+                        .fontWeight(.medium)
+                        .font(.system(size: 16))
+                }
             }
-            VStack(alignment: .center, spacing: 3) {
-                SectionHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
-                Text(maxUploadSize)
-                    .fontWeight(.medium)
-                    .font(.system(size: 16))
-            }
+            .padding(10)
+            .background(Color.debug)
         }
-        .padding(10)
-        .background(Color.debug)
     }
 }
 

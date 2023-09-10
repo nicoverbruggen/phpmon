@@ -47,6 +47,5 @@ class CaskFileParserTest: XCTestCase {
         XCTAssertTrue(caskFile.properties.keys.contains("version"))
         XCTAssertTrue(caskFile.properties.keys.contains("homepage"))
         XCTAssertTrue(caskFile.properties.keys.contains("url"))
-        XCTAssertTrue(caskFile.properties.keys.contains("appcast"))
     }
 }

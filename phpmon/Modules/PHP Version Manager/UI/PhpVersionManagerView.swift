@@ -1,5 +1,5 @@
 //
-//  PhpFormulaeView.swift
+//  PhpVersionManagerView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 17/03/2023.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 // swiftlint:disable type_body_length
-struct PhpFormulaeView: View {
+struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: PhpFormulaeStatus
     var handler: HandlesBrewFormulae
@@ -28,8 +28,15 @@ struct PhpFormulaeView: View {
             description: "phpman.busy.description.outdated".localized
         )
 
-        Task { [self] in
-            await self.initialLoad()
+        if handler is FakeBrewFormulaeHandler {
+            Task { [self] in
+                await self.handler.refreshPhpVersions(loadOutdated: false)
+                self.status.busy = false
+            }
+        } else {
+            Task { [self] in
+                await self.initialLoad()
+            }
         }
     }
 
@@ -127,7 +134,7 @@ struct PhpFormulaeView: View {
 
             BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
                 List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
-                    HStack {
+                    HStack(alignment: .center, spacing: 7.0) {
                         Image(systemName: formula.icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -135,7 +142,20 @@ struct PhpFormulaeView: View {
                             .foregroundColor(formula.iconColor)
                             .padding(.horizontal, 5)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(formula.displayName).bold()
+                            HStack {
+                                Text(formula.displayName).bold()
+
+                                if formula.prerelease {
+                                    Text("phpman.version.prerelease".localized.uppercased())
+                                        .font(.system(size: 9))
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(Color.appPrimary)
+                                        .foregroundColor(Color.white)
+                                        .clipShape(Capsule())
+                                        .fixedSize(horizontal: true, vertical: true)
+                                }
+                            }
 
                             if formula.isInstalled && formula.hasUpgrade {
                                 Text("phpman.version.has_update".localized(
@@ -178,12 +198,12 @@ struct PhpFormulaeView: View {
                             }
                         }
                     }
-                    .listRowBackground(index % 2 == 0
-                                       ? Color.gray.opacity(0)
-                                       : Color.gray.opacity(0.08)
-                    )
-                    .padding(.vertical, 10)
+                    .listRowBackground(index % 2 == 0 ? Color.gray.opacity(0): Color.gray.opacity(0.08))
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 8)
                 }
+                .edgesIgnoringSafeArea(.top)
+                .listStyle(PlainListStyle())
             }
         }.frame(width: 600, height: 600)
     }
@@ -267,7 +287,7 @@ struct PhpFormulaeView: View {
         }
 
         Alert.confirm(
-            onWindow: App.shared.versionManagerWindowController!.window!,
+            onWindow: App.shared.phpVersionManagerWindowController!.window!,
             messageText: "phpman.warnings.removal.title".localized(formula.displayName),
             informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
             buttonTitle: "phpman.warnings.removal.button".localized,
@@ -332,7 +352,7 @@ struct PhpFormulaeView: View {
         style: NSAlert.Style = .critical
     ) {
         Alert.confirm(
-            onWindow: App.shared.versionManagerWindowController!.window!,
+            onWindow: App.shared.phpVersionManagerWindowController!.window!,
             messageText: title,
             informativeText: description,
             buttonTitle: button,
@@ -350,9 +370,9 @@ struct PhpFormulaeView: View {
 }
 // swiftlint:enable type_body_length
 
-struct PhpFormulaeView_Previews: PreviewProvider {
+struct PhpVersionManagerView_Previews: PreviewProvider {
     static var previews: some View {
-        PhpFormulaeView(
+        PhpVersionManagerView(
             formulae: Brew.shared.formulae,
             handler: FakeBrewFormulaeHandler()
         ).frame(width: 600, height: 600)

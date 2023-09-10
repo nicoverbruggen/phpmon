@@ -88,10 +88,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
 
-        Log.separator(as: .info)
-        Log.info("PHP MONITOR by Nico Verbruggen")
-        Log.info("Version \(App.version)")
-        Log.separator(as: .info)
+        if !isRunningSwiftUIPreview {
+            Log.separator(as: .info)
+            Log.info("PHP MONITOR by Nico Verbruggen")
+            Log.info("Version \(App.version)")
+            Log.separator(as: .info)
+        }
 
         self.state = App.shared
         self.menu = MainMenu.shared
@@ -118,6 +120,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      startup procedure.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Prevent previews from kicking off a costly boot
+        if isRunningSwiftUIPreview {
+            return
+        }
+
         // Make sure notifications will work
         setupNotifications()
 

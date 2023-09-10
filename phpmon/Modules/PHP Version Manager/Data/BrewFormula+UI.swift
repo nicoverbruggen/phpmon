@@ -1,5 +1,5 @@
 //
-//  BrewFormulaUI.swift
+//  BrewFormula+UI.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 02/05/2023.

@@ -83,22 +83,22 @@ class PreferencesWindowController: PMWindowController {
         return [
             PrefTabView(
                 viewController: GeneralPreferencesVC.fromStoryboard(),
-                label: "General",
+                label: "prefs.tabs.general".localized,
                 icon: "gearshape"
             ),
             PrefTabView(
                 viewController: AppearancePreferencesVC.fromStoryboard(),
-                label: "Appearance",
+                label: "prefs.tabs.appearance".localized,
                 icon: "paintbrush"
             ),
             PrefTabView(
                 viewController: MenuStructurePreferencesVC.fromStoryboard(),
-                label: "Visibility",
+                label: "prefs.tabs.visibility".localized,
                 icon: "eye"
             ),
             PrefTabView(
                 viewController: NotificationPreferencesVC.fromStoryboard(),
-                label: "Notifications",
+                label: "prefs.tabs.notifications".localized,
                 icon: "bell.badge"
             )
         ]

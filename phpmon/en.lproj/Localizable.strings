@@ -1,11 +1,3 @@
-/* 
-  Strings.strings
-  PHP Monitor
-
-  Created by Nico Verbruggen on 16/05/2020.
-  Copyright © 2023 Nico Verbruggen. All rights reserved.
-*/
-
 // MENU ITEMS (MI)
 
 "mi_busy" = "PHP Monitor is busy...";
@@ -89,6 +81,20 @@
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
 
+// CONFMAN
+
+"confman.title" = "PHP Configuration Editor";
+"confman.description" = "This feature lets you customize your PHP installation with ease. Changes are automatically applied.";
+
+"php_ini.memory_limit.title" = "Memory Limit";
+"php_ini.memory_limit.description" = "This sets the maximum amount of memory in bytes that a script is allowed to allocate. This helps prevent poorly written scripts for eating up all available memory on a server.";
+"php_ini.post_max_size.title" = "POST Max Size";
+"php_ini.post_max_size.description" = "Sets max size of post data allowed. This setting also affects file upload. To upload large files, this value must be larger than Upload Max Size. Generally speaking, Memory Limit should be larger than POST Max Size.";
+"php_ini.file_uploads.title" = "File Uploads";
+"php_ini.file_uploads.description" = "Enable or disable file uploads entirely. It is recommended to keep this on.";
+"php_ini.upload_max_filesize.title" = "Upload Max Size";
+"php_ini.upload_max_filesize.description" = "The maximum size of an uploaded file. POST Max Size must be larger than this value.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";
@@ -102,6 +108,7 @@
 "phpman.buttons.install" = "Install";
 "phpman.buttons.update" = "Update";
 "phpman.buttons.repair" = "Repair";
+"phpman.version.prerelease" = "Pre-release";
 
 "phpman.title" = "PHP Version Manager";
 "phpman.description" = "**PHP Version Manager** lets you install, upgrade and delete different PHP versions via Homebrew without needing to run the commands in the terminal yourself.";
@@ -150,6 +157,12 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.steps.installing" = "Installing some package data...";
 "phpman.steps.pouring" = "Pouring... This can take a while...";
 "phpman.steps.summary" = "Some package has finished installing...";
+
+"phpman.services.loading" = "Loading...";
+"phpman.services.not_installed" = "A key service is not installed.";
+"phpman.services.error" = "A key service is reporting an error state.";
+"phpman.services.inactive" = "A key service is not running.";
+"phpman.services.all_ok" = "All Valet services are OK.";
 
 // LITE MODE
 
@@ -207,6 +220,12 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";
 
+"domain_list.columns.secure" = "TLS";
+"domain_list.columns.domain" = "Domain";
+"domain_list.columns.active" = "Active";
+"domain_list.columns.kind" = "Kind";
+"domain_list.columns.project_type" = "Project Type";
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "What kind of domain would you like to set up?";
@@ -263,6 +282,7 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
 "domain_list.unsecure" = "Unsecure Domain";
+"domain_list.open_in" = "Open with %@";
 "domain_list.open_in_finder" = "Open in Finder";
 "domain_list.open_in_browser" = "Open in Browser";
 "domain_list.open_in_terminal" = "Open in Terminal";
@@ -315,6 +335,11 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.subtitle" = "Preferences";
 "prefs.close" = "Close";
 
+"prefs.tabs.general" = "General";
+"prefs.tabs.appearance" = "Appearance";
+"prefs.tabs.visibility" = "Visibility";
+"prefs.tabs.notifications" = "Notifications";
+
 "prefs.global_shortcut" = "Global Shortcut:";
 "prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";
@@ -358,7 +383,7 @@ This has no effect on other terminals, only for the particular terminal session 
 
 "prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";
- 
+
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<listening for keypress>";
 "prefs.shortcut_clear" = "Clear";
@@ -726,6 +751,9 @@ COMMON TROUBLESHOOTING TIPS
 "alert.do_not_tell_again" = "Don't Tell Me Again";
 
 // WARNINGS
+
+"warnings.limits_error.title" = "PHP Monitor could not retrieve limits.";
+"warnings.limits_error.steps" = "Try running ‘php -v’ in your terminal.";
 
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";

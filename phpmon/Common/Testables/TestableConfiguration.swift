@@ -56,6 +56,8 @@ public struct TestableConfiguration: Codable {
         self.filesystem = self.filesystem.merging([
             "/opt/homebrew/opt/php@\(version.short)/bin/php"
                 : .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php"),
+            "/opt/homebrew/opt/php@\(version.short)/bin/php-config"
+                : .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config"),
             "/opt/homebrew/Cellar/php/\(version.long)/bin/php"
                 : .fake(.binary),
             "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config"
@@ -70,6 +72,9 @@ public struct TestableConfiguration: Codable {
                 : .fake(.text)
         ]) { (_, new) in new }
 
+        self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php-config --version"]
+            = version.long
+
         if primary {
             self.shellOutput["ls /opt/homebrew/opt | grep php"]
                 = .instant("php")
@@ -80,7 +85,7 @@ public struct TestableConfiguration: Codable {
             self.filesystem["/opt/homebrew/bin/php"]
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php")
             self.filesystem["/opt/homebrew/bin/php-config"]
-                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config")
+                = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.short)/bin/php-config")
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
             self.commandOutput["/opt/homebrew/bin/php -r echo php_ini_scanned_files();"] =
@@ -88,12 +93,13 @@ public struct TestableConfiguration: Codable {
                 /opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini,
                 """
         } else {
+
             self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
-            BatchFakeShellOutput.instant(
-                self.secondaryPhpVersions
-                    .map { "php@\($0.short)" }
-                    .joined(separator: "\n")
-            )
+                BatchFakeShellOutput.instant(
+                    self.secondaryPhpVersions
+                        .map { "php@\($0.short)" }
+                        .joined(separator: "\n")
+                )
         }
     }
 
