@@ -13,6 +13,7 @@
 "mi_fix_php_link" = "Fix Automatically...";
 "mi_no_php_linked_explain" = "What's This?";
 "mi_php_version_manager" = "PHP Version Manager...";
+"mi_php_config_manager" = "PHP Configuration Editor...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";

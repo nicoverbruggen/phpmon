@@ -15,6 +15,14 @@ class PhpPreference {
     init(key: String) {
         self.key = key
     }
+
+    internal static func persistToIniFile(key: String, value: String) throws {
+        if let file = PhpEnvironments.shared.getConfigFile(forKey: key) {
+            try file.replace(key: key, value: value)
+        }
+
+        throw PhpConfigurationFile.ReplacementErrors.missingFile
+    }
 }
 
 class BoolPhpPreference: PhpPreference {

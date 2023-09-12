@@ -206,6 +206,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         PhpDoctorWindowController.show()
     }
 
+    @objc func openConfigGUI() {
+        PhpConfigManagerWindowController.show()
+    }
+
     @objc func openDomainList() {
         DomainListVC.show()
     }

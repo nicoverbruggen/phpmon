@@ -74,10 +74,13 @@ class App {
     /** The window controller of the onboarding window. */
     var onboardingWindowController: OnboardingWindowController?
 
+    /** The window controller of the config manager window. */
+    var phpConfigManagerWindowController: PhpConfigManagerWindowController?
+
     /** The window controller of the warnings window. */
     var phpDoctorWindowController: PhpDoctorWindowController?
 
-    /** The window controller of the warnings window. */
+    /** The window controller of the PHP version manager window. */
     var phpVersionManagerWindowController: PhpVersionManagerWindowController?
 
     /** List of detected (installed) applications that PHP Monitor can work with. */

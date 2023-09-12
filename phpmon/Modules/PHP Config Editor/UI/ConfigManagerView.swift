@@ -13,7 +13,7 @@ struct ConfigManagerView: View {
     var preferences: [PhpPreference] = [
         BytePhpPreference(key: "memory_limit"),
         BytePhpPreference(key: "post_max_size"),
-        BoolPhpPreference(key: "file_uploads"),
+        // BoolPhpPreference(key: "file_uploads"),
         BytePhpPreference(key: "upload_max_filesize")
     ]
 
@@ -51,6 +51,7 @@ struct ConfigManagerView: View {
                             if let preference = preference as? BytePhpPreference {
                                 ByteLimitView(preference: preference)
                             }
+                            /*
                             if let preference = preference as? BoolPhpPreference {
                                 Toggle("", isOn: preference.$value)
                                     .toggleStyle(.switch)
@@ -59,6 +60,7 @@ struct ConfigManagerView: View {
                             if let preference = preference as? StringPhpPreference {
                                 TextField("Placeholder", text: preference.$value)
                             }
+                            */
                         }.frame(maxWidth: .infinity)
                     }
                 }.padding(10)

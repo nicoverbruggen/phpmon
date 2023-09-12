@@ -40,7 +40,7 @@ struct PreferenceContainer<ControlView: View>: View {
                         .font(.subheadline)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .frame(maxWidth: .infinity, maxHeight: 150, alignment: .topLeading)
             }
         }
         .padding(5)
@@ -79,7 +79,6 @@ struct ByteLimitView: View {
                 .pickerStyle(.menu)
                 .onChange(of: unit) { newValue in
                     self.preference.unit = newValue
-                    print(self.preference.internalValue)
                 }
             }
         }

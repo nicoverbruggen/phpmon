@@ -69,8 +69,9 @@ class PhpConfigurationFile: CreatedFromFile {
         return nil
     }
 
-    enum ReplacementErrors: Error {
+    public enum ReplacementErrors: Error {
         case missingKey
+        case missingFile
     }
 
     /**
