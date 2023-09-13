@@ -20,7 +20,7 @@ struct ConfigManagerView: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 15) {
-                Image(systemName: "square.and.pencil.circle.fill")
+                Image(systemName: "gearshape.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color.blue)
@@ -69,7 +69,7 @@ struct ConfigManagerView: View {
 
                 VStack(alignment: .trailing) {
                     Button("Close", action: {
-
+                        App.shared.phpConfigManagerWindowController?.close()
                     })
                 }
                 .padding(.vertical, 10)
@@ -80,7 +80,7 @@ struct ConfigManagerView: View {
                     alignment: .topTrailing
                 )
             }
-        }
+        }.frame(maxHeight: 485)
     }
 }
 

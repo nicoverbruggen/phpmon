@@ -65,7 +65,7 @@ class PreferencesWindowController: PMWindowController {
         App.shared.preferencesWindowController?.showWindow(self)
 
         if justCreated {
-            App.shared.preferencesWindowController?.positionWindowInTopLeftCorner()
+            App.shared.preferencesWindowController?.positionWindowInTopRightCorner()
         }
 
         NSApp.activate(ignoringOtherApps: true)

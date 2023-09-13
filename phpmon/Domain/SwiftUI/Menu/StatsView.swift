@@ -60,27 +60,39 @@ struct StatsView: View {
             .padding(.leading, 30)
             .padding(.trailing, 30)
         } else {
-            HStack(alignment: .firstTextBaseline, spacing: 30) {
+            HStack(alignment: .center, spacing: 10) {
                 VStack(alignment: .center, spacing: 3) {
                     SectionHeaderView(text: "mi_memory_limit".localized.uppercased())
                     Text(memoryLimit)
                         .fontWeight(.medium)
                         .font(.system(size: 16))
                 }
+                Divider()
                 VStack(alignment: .center, spacing: 3) {
                     SectionHeaderView(text: "mi_post_max_size".localized.uppercased())
                     Text(maxPostSize)
                         .fontWeight(.medium)
                         .font(.system(size: 16))
                 }
+                Divider()
                 VStack(alignment: .center, spacing: 3) {
                     SectionHeaderView(text: "mi_upload_max_filesize".localized.uppercased())
                     Text(maxUploadSize)
                         .fontWeight(.medium)
                         .font(.system(size: 16))
                 }
+                Divider().hidden()
+                Button {
+                    Task { @MainActor in
+                        MainMenu.shared.openConfigGUI()
+                    }
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                }
+                .focusable(false)
+                .frame(minWidth: 30, alignment: .center)
             }
-            .padding(10)
+            .padding(5)
             .background(Color.debug)
         }
     }
@@ -92,6 +104,6 @@ struct StatsView_Previews: PreviewProvider {
             memoryLimit: "1024 MB",
             maxPostSize: "1024 MB",
             maxUploadSize: "1024 MB"
-        )
+        ).frame(height: 100)
     }
 }

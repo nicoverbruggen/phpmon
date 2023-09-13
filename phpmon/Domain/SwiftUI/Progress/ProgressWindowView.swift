@@ -46,7 +46,7 @@ struct ProgressWindowView: View {
         window.contentView = NSHostingView(rootView: view)
         let controller = NSWindowController(window: window)
         controller.showWindow(nil)
-        controller.positionWindowInTopLeftCorner()
+        controller.positionWindowInTopRightCorner()
         controller.window?.makeKeyAndOrderFront(self)
         // NSApp.activate(ignoringOtherApps: true)
         return controller

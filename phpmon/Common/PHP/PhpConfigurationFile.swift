@@ -96,9 +96,15 @@ class PhpConfigurationFile: CreatedFromFile {
         // Replace the specific line
         self.lines[item.lineIndex] = components.joined(separator: "=")
 
+        // Ensure the watchers aren't tripped up by config changes
+        PhpConfigWatcher.ignoresModificationsToConfigValues = true
+
         // Finally, join the string and save the file atomatically again
         try self.lines.joined(separator: "\n")
             .write(toFile: self.filePath, atomically: true, encoding: .utf8)
+
+        // Ensure watcher behaviour is reverted
+        PhpConfigWatcher.ignoresModificationsToConfigValues = false
 
         // Reload the original file
         self.reload()

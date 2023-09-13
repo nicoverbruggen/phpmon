@@ -10,6 +10,8 @@ import Foundation
 
 class PhpConfigWatcher {
 
+    static var ignoresModificationsToConfigValues: Bool = false
+
     let folderMonitorQueue = DispatchQueue(label: "FolderMonitorQueue", attributes: .concurrent)
 
     let url: URL
@@ -23,7 +25,7 @@ class PhpConfigWatcher {
     init(for url: URL) {
         if FileSystem is TestableFileSystem {
             fatalError("""
-                PhpConfigWatcher is not compatible with testable FS! "
+                PhpConfigWatcher is not compatible with testable FS!"
                 You are not allowed to instantiate these while using a testable FS.
             """)
         }
@@ -124,15 +126,14 @@ class FSWatcher {
 
         // Define the block to call when a file change is detected.
         folderMonitorSource?.setEventHandler { [weak self] in
-            // The default behaviour is to reload the menu
-            switch behaviour {
-            case .reloadsMenu:
-                // Default behaviour: reload the menu items
-                self?.parent.didChange?(self!.url)
-            case .reloadsWatchers:
-                // Alternative behaviour: reload all watchers
-                App.shared.handlePhpConfigWatcher(forceReload: true)
+            if behaviour == .reloadsWatchers
+                && !PhpConfigWatcher.ignoresModificationsToConfigValues {
+                // Reload all configuration watchers
+                return App.shared.handlePhpConfigWatcher(forceReload: true)
             }
+
+            // The default behaviour is to reload the menu
+            self?.parent.didChange?(self!.url)
         }
 
         // Define a cancel handler to ensure the directory is closed when the source is cancelled.

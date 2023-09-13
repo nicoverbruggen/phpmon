@@ -45,7 +45,7 @@ class PhpVersionManagerWindowController: PMWindowController {
         }
 
         App.shared.phpVersionManagerWindowController?.showWindow(self)
-        App.shared.phpVersionManagerWindowController?.positionWindowInTopLeftCorner()
+        App.shared.phpVersionManagerWindowController?.positionWindowInTopRightCorner()
 
         NSApp.activate(ignoringOtherApps: true)
     }

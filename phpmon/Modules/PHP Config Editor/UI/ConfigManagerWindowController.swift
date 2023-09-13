@@ -38,8 +38,9 @@ class PhpConfigManagerWindowController: PMWindowController {
         }
 
         App.shared.phpConfigManagerWindowController?.showWindow(self)
-        App.shared.phpConfigManagerWindowController?.window?.setCenterPosition(offsetY: 70)
+        App.shared.phpConfigManagerWindowController?.positionWindowInTopRightCorner()
 
         NSApp.activate(ignoringOtherApps: true)
+        App.shared.phpConfigManagerWindowController?.window?.makeKeyAndOrderFront(nil)
     }
 }

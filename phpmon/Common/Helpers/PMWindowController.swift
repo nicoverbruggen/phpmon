@@ -37,7 +37,7 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
 
 extension NSWindowController {
 
-    public func positionWindowInTopLeftCorner(offsetY: CGFloat = 0, offsetX: CGFloat = 0) {
+    public func positionWindowInTopRightCorner(offsetY: CGFloat = 0, offsetX: CGFloat = 0) {
         guard let frame = NSScreen.main?.frame else { return }
         guard let window = self.window else { return }
 

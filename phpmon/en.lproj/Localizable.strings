@@ -14,6 +14,7 @@
 "mi_no_php_linked_explain" = "What's This?";
 "mi_php_version_manager" = "PHP Version Manager...";
 "mi_php_config_manager" = "PHP Configuration Editor...";
+"mi_manage_limits" = "Manage Limits...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";
@@ -85,7 +86,8 @@
 // CONFMAN
 
 "confman.title" = "PHP Configuration Editor";
-"confman.description" = "This feature lets you customize your PHP installation with ease. Changes are automatically applied.";
+"confman.description" = "This feature lets you customize your PHP installation's configuration with ease.\nPlease note that any changes you make are immediately and automatically applied.";
+"confman.byte_limit.unlimited" = "Allow unlimited usage";
 
 "php_ini.memory_limit.title" = "Memory Limit";
 "php_ini.memory_limit.description" = "This sets the maximum amount of memory in bytes that a script is allowed to allocate. This helps prevent poorly written scripts for eating up all available memory on a server.";
