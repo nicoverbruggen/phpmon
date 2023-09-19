@@ -46,8 +46,10 @@ extension App {
         }
 
         hotkey.keyDownHandler = {
-            MainMenu.shared.statusItem.button?.performClick(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
+            Task { @MainActor in
+                MainMenu.shared.statusItem.button?.performClick(nil)
+                NSApplication.shared.activate(ignoringOtherApps: true)
+            }
         }
     }
 
