@@ -92,8 +92,8 @@
 		C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */; };
 		C412E5FC25700D5300A1FB67 /* HomebrewDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewDecodable.swift */; };
 		C413E43528DA3EB100AE33C7 /* TestableShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C413E43428DA3EB100AE33C7 /* TestableShellTest.swift */; };
-		C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
-		C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
+		C415937F27A1B54F00D2E1B7 /* ProjectTypeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */; };
+		C415938027A1B54F00D2E1B7 /* ProjectTypeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */; };
 		C4159AF728E4D40400545349 /* RealShellTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4159AF628E4D40400545349 /* RealShellTest.swift */; };
 		C415D3B72770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
 		C415D3B82770F294005EF286 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415D3B62770F294005EF286 /* Actions.swift */; };
@@ -343,10 +343,10 @@
 		C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
-		C471E82128F9BB2E0021E251 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
+		C471E82128F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */; };
 		C471E82228F9BB2E0021E251 /* ComposerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */; };
 		C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
-		C471E82428F9BB2E0021E251 /* PhpFrameworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */; };
+		C471E82428F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */; };
 		C471E82528F9BB2E0021E251 /* ComposerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */; };
 		C471E82628F9BB2E0021E251 /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
 		C471E82728F9BB310021E251 /* BrewDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F2E4362752F0870020E974 /* BrewDiagnostics.swift */; };
@@ -898,7 +898,7 @@
 		C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionTest.swift; sourceTree = "<group>"; };
 		C412E5FB25700D5300A1FB67 /* HomebrewDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewDecodable.swift; sourceTree = "<group>"; };
 		C413E43428DA3EB100AE33C7 /* TestableShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableShellTest.swift; sourceTree = "<group>"; };
-		C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpFrameworks.swift; sourceTree = "<group>"; };
+		C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTypeDetection.swift; sourceTree = "<group>"; };
 		C4159AF628E4D40400545349 /* RealShellTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShellTest.swift; sourceTree = "<group>"; };
 		C415D3B62770F294005EF286 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+InterApp.swift"; sourceTree = "<group>"; };
@@ -1983,7 +1983,7 @@
 			children = (
 				C4CE3BB927B31F670086CA49 /* ComposerWindow.swift */,
 				C4D89BC52783C99400A02B68 /* ComposerJson.swift */,
-				C415937E27A1B54F00D2E1B7 /* PhpFrameworks.swift */,
+				C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */,
 			);
 			path = Composer;
 			sourceTree = "<group>";
@@ -2478,7 +2478,7 @@
 				C4B97B78275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4CE3BB827B31F2E0086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C456A0CB2AA6166F0080144F /* BytePhpPreference.swift in Sources */,
-				C415937F27A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
+				C415937F27A1B54F00D2E1B7 /* ProjectTypeDetection.swift in Sources */,
 				C4811D2422D70A4700B5F6B3 /* App.swift in Sources */,
 				C44DFA7C2A67043000B98ED5 /* ConfigManagerView.swift in Sources */,
 				C40934A2298EEB2C00D25014 /* CaskFile.swift in Sources */,
@@ -2724,7 +2724,7 @@
 				C471E81828F9BAE80021E251 /* StringExtension.swift in Sources */,
 				C471E7FA28F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82628F9BB2E0021E251 /* ComposerJson.swift in Sources */,
-				C471E82428F9BB2E0021E251 /* PhpFrameworks.swift in Sources */,
+				C471E82428F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */,
 				C471E7E828F9BAC20021E251 /* Actions.swift in Sources */,
 				C40D72612A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C471E82528F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
@@ -2923,7 +2923,7 @@
 				C48DDD1029C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */,
-				C471E82128F9BB2E0021E251 /* PhpFrameworks.swift in Sources */,
+				C471E82128F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */,
 				C471E7EF28F9BAC30021E251 /* Actions.swift in Sources */,
 				C471E82228F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
 				C4D3660E29113F20006BD146 /* System.swift in Sources */,
@@ -3121,7 +3121,7 @@
 				C44C198E276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */,
 				C4B79EBD29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C485707828BF456300539B36 /* Warning.swift in Sources */,
-				C415938027A1B54F00D2E1B7 /* PhpFrameworks.swift in Sources */,
+				C415938027A1B54F00D2E1B7 /* ProjectTypeDetection.swift in Sources */,
 				C40F505628ECA64E004AD45B /* TestableConfigurations.swift in Sources */,
 				C4D9ADC9277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C449B4F227EE7FC400C47E8A /* DomainListPhpCell.swift in Sources */,
@@ -3492,7 +3492,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3523,7 +3523,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3763,7 +3763,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3879,7 +3879,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3995,7 +3995,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4176,7 +4176,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1320;
+				CURRENT_PROJECT_VERSION = 1325;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;

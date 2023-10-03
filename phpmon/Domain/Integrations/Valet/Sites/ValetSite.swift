@@ -141,7 +141,7 @@ class ValetSite: ValetListable {
         self.determineDriverViaComposer()
 
         if self.driver == nil {
-            self.driver = PhpFrameworks.detectFallbackDependency(self.absolutePath)
+            self.driver = ProjectTypeDetection.detectFallbackDependency(self.absolutePath)
         }
     }
 
@@ -155,10 +155,18 @@ class ValetSite: ValetListable {
     private func determineDriverViaComposer() {
         self.driverDeterminedByComposer = true
 
-        PhpFrameworks.DependencyList.reversed().forEach { (key: String, value: String) in
-            if self.notableComposerDependencies.keys.contains(key) {
-                self.driver = value
-            }
+        // First, check specific dependencies
+        for (key, value) in ProjectTypeDetection.SpecificDependencyList.reversed()
+        where self.notableComposerDependencies.keys.contains(key) {
+            self.driver = value
+            return
+        }
+
+        // After that, check for generic frameworks if no match was made
+        for (key, value) in ProjectTypeDetection.CommonDependencyList.reversed()
+            where self.notableComposerDependencies.keys.contains(key) {
+            self.driver = value
+            return
         }
     }
 
