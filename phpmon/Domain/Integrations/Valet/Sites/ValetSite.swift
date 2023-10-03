@@ -155,16 +155,14 @@ class ValetSite: ValetListable {
     private func determineDriverViaComposer() {
         self.driverDeterminedByComposer = true
 
-        // First, check specific dependencies
-        for (key, value) in ProjectTypeDetection.SpecificDependencyList.reversed()
-        where self.notableComposerDependencies.keys.contains(key) {
+        for (key, value) in ProjectTypeDetection.SpecificDependencyList
+        where notableComposerDependencies.keys.contains(key) {
             self.driver = value
             return
         }
 
-        // After that, check for generic frameworks if no match was made
-        for (key, value) in ProjectTypeDetection.CommonDependencyList.reversed()
-            where self.notableComposerDependencies.keys.contains(key) {
+        for (key, value) in ProjectTypeDetection.CommonDependencyList
+        where notableComposerDependencies.keys.contains(key) {
             self.driver = value
             return
         }
