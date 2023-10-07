@@ -241,6 +241,20 @@ class Startup {
                 descriptionText: "startup.errors.which_alias_issue.desc".localized
             ),
             // =================================================================================
+            // Determine that Laravel Herd is not running (may cause conflicts)
+            // =================================================================================
+            EnvironmentCheck(
+                command: {
+                    return NSWorkspace.shared.runningApplications.contains(where: { app in
+                        return app.bundleIdentifier == "de.beyondco.herd"
+                    })
+                },
+                name: "Herd is not running",
+                titleText: "startup.errors.herd_running.title".localized,
+                subtitleText: "startup.errors.herd_running.subtitle".localized,
+                descriptionText: "startup.errors.herd_running.desc".localized
+            ),
+            // =================================================================================
             // Determine that Valet works correctly (no issues in platform detected)
             // =================================================================================
             EnvironmentCheck(

@@ -646,6 +646,11 @@ Nếu bạn nhìn thấy thông báo này nhưng bối rối vì thư mục này
 "startup.errors.which_alias_issue.subtitle" = "Dường như có một tệp trong `/usr/local/bin/which`. Điều này thường được thiết lập bởi NodeJS, nhưng `node` không có trong PATH trong `/usr/local/bin`. Để khắc phục điều này, hãy đọc tiếp.";
 "startup.errors.which_alias_issue.desc" = "Bạn sẽ cần tạo liên kết tượng trưng cho `node` vào thư mục `/usr/local/bin` để đảm bảo PHP Monitor có thể khởi động thành công. Để biết thêm thông tin, xem: https://github.com/nicoverbruggen/phpmon/issues/174";
 
+/// Laravel Herd conflicts
+"startup.errors.herd_running.title" = "Có vẻ như Laravel Herd đang chạy";
+"startup.errors.herd_running.subtitle" = "Có vẻ như Laravel Herd hiện đang chạy. Cài đặt Valet tích hợp của Herd có thể xung đột với cài đặt Valet thông thường của bạn, vì vậy hãy thoát Herd trước khi tiếp tục. (Bạn có thể hoàn toàn kết hợp sử dụng Herd và Valet thông thường nhưng bạn không nên chạy cả hai cùng một lúc.)";
+"startup.errors.herd_running.desc" = "Bạn cũng có thể thấy rằng bí danh `php` mà Herd thêm vào $PATH của bạn có thể ngăn chặn việc đặt bí danh `php` cho PHP Monitor hoạt động, vì vậy hãy lưu ý điều đó. Bạn có thể kiểm tra tệp `~/.zshrc` và xem Herd đã thêm gì vào $PATH của bạn.";
+
 // Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "Phiên bản PHP đang hoạt động của bạn đã thay đổi.";
 "startup.version_mismatch.subtitle" = "Kể từ khi PHP Monitor hoạt động lần cuối, phiên bản PHP được liên kết của bạn đã được thay đổi thành PHP %@. Bạn có muốn chuyển lại sang PHP %@ không, hay bạn muốn tiếp tục sử dụng phiên bản hiện tại?";
