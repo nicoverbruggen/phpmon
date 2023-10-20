@@ -49,8 +49,10 @@ class PhpHelper {
                 let path = URL(fileURLWithPath: "\(Paths.optPath)/php@\(version)/bin")
                     .resolvingSymlinksInPath().path
 
-                // The contents of the script!
-                let script = script(path, keyPhrase, version, dotless)
+                // Check if the user uses Fish
+                let script = Paths.shell.contains("/fish")
+                    ? fishScript(path, keyPhrase, version, dotless)
+                    : zshScript(path, keyPhrase, version, dotless)
 
                 Task { @MainActor in
                     try FileSystem.writeAtomicallyToFile(destination, content: script)
@@ -78,7 +80,7 @@ class PhpHelper {
         }
     }
 
-    private static func script(
+    private static func zshScript(
         _ path: String,
         _ keyPhrase: String,
         _ version: String,
@@ -93,6 +95,22 @@ class PhpHelper {
                 && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
                 || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
             export PATH=\(path):$PATH
+            """
+    }
+
+    private static func fishScript(
+        _ path: String,
+        _ keyPhrase: String,
+        _ version: String,
+        _ dotless: String
+    ) -> String {
+        return """
+            #!\(Paths.binPath)/fish
+            # \(keyPhrase)
+            # It reflects the location of PHP \(version)'s binaries on your system.
+            # Usage: . pm\(dotless)
+            echo "PHP Monitor has enabled this terminal to use PHP \(version)."; \\
+            set -x PATH \(path) $PATH
             """
     }
 
