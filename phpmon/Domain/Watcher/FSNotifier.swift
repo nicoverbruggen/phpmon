@@ -6,12 +6,9 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 class FSNotifier {
-    enum Kind {
-        case homebrewLocks, homebrewBinaries
-    }
 
     public static var shared: FSNotifier! = nil
 
@@ -66,4 +63,5 @@ class FSNotifier {
     deinit {
         Log.perf("FSNotifier for \(self.url) will be deinitialized.")
     }
+
 }

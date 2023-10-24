@@ -89,9 +89,6 @@ class App {
     /** The warning manager, responsible for keeping track of warnings. */
     var warnings = WarningManager.shared
 
-    /** The filesystem watchers, responsible for keeping track of changes to the PHP installation. */
-    var watchers: [FSNotifier.Kind: FSNotifier] = [:]
-
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?
 
@@ -120,8 +117,12 @@ class App {
 
     // MARK: - App Watchers
 
-    /**
-     The `PhpConfigWatcher` is responsible for watching the `.ini` files and the `.conf.d` folder.
+    /** Individual filesystem watchers, which are, i.e. responsible for watching the Homebrew folders. */
+    var watchers: [String: FSNotifier] = [:]
+
+    /** 
+     The `ConfigWatchManager` is responsible for watching the `.ini` files and the `.conf.d` folder.
+     This manager object can immediately start or stop all watchers (or pause them) all at once.
      */
-    var watcher: PhpConfigWatcher!
+    var watchManager: ConfigWatchManager!
 }
