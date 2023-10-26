@@ -27,22 +27,23 @@ final class DomainsListTest: UITestCase {
 
         app.menuItems["mi_domain_list".localized].click()
 
-        let window = app.windows.allElementsBoundByIndex.first { element in
-            element.title == "domain_list.title".localized
-        }!
+        let window = app.windows.element(boundBy: 0)
+        XCTAssertEqual(window.title, "domain_list.title".localized)
 
-        let searchField = window.searchFields.firstMatch
+        let searchField = window.searchFields.element(boundBy: 0)
 
         searchField.click()
         searchField.typeText("non-existent thing")
+        Thread.sleep(forTimeInterval: 0.2)
         XCTAssertTrue(window.tables.tableRows.count == 0)
 
         searchField.clearText()
         searchField.click()
         searchField.typeText("concord")
+        Thread.sleep(forTimeInterval: 0.2)
         XCTAssertTrue(window.tables.tableRows.count == 1)
 
-        sleep(2)
+        sleep(1)
     }
 
     final func test_can_tap_add_domain_button() throws {
@@ -50,9 +51,8 @@ final class DomainsListTest: UITestCase {
 
         app.menuItems["mi_domain_list".localized].click()
 
-        let window = app.windows.allElementsBoundByIndex.first { element in
-            element.title == "domain_list.title".localized
-        }!
+        let window = app.windows.element(boundBy: 0)
+        XCTAssertEqual(window.title, "domain_list.title".localized)
 
         window.buttons["Add Link"].click()
 
@@ -61,6 +61,6 @@ final class DomainsListTest: UITestCase {
         assertExists(app.buttons["selection.create_proxy".localized])
         assertExists(app.buttons["selection.cancel".localized])
 
-        sleep(2)
+        sleep(1)
     }
 }

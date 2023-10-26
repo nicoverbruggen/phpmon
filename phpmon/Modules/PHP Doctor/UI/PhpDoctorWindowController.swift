@@ -41,5 +41,6 @@ class PhpDoctorWindowController: PMWindowController {
         App.shared.phpDoctorWindowController?.window?.setCenterPosition(offsetY: 70)
 
         NSApp.activate(ignoringOtherApps: true)
+        App.shared.phpDoctorWindowController?.window?.orderFrontRegardless()
     }
 }

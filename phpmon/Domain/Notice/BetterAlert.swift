@@ -91,6 +91,7 @@ class BetterAlert {
         }
 
         NSApp.activate(ignoringOtherApps: true)
+        
         windowController.window?.makeKeyAndOrderFront(nil)
         windowController.window?.setCenterPosition(offsetY: 70)
         return NSApplication.shared.runModal(for: windowController.window!)

@@ -41,6 +41,6 @@ class PhpConfigManagerWindowController: PMWindowController {
         App.shared.phpConfigManagerWindowController?.positionWindowInTopRightCorner()
 
         NSApp.activate(ignoringOtherApps: true)
-        App.shared.phpConfigManagerWindowController?.window?.makeKeyAndOrderFront(nil)
+        App.shared.phpConfigManagerWindowController?.window?.orderFrontRegardless()
     }
 }

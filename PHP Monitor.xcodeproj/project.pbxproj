@@ -232,6 +232,15 @@
 		C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E2A76291992DA005C7CFD /* FeatureTestCase.swift */; };
 		C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C45E76152854A65300B4FE0C /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
+		C4611E5A2AEAD2E20010BE24 /* ConfigManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E3F762AB0D2880096DFC2 /* ConfigManagerWindowController.swift */; };
+		C4611E5B2AEAD2E30010BE24 /* ConfigManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E3F762AB0D2880096DFC2 /* ConfigManagerWindowController.swift */; };
+		C4611E5C2AEAD2E30010BE24 /* ConfigManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42E3F762AB0D2880096DFC2 /* ConfigManagerWindowController.swift */; };
+		C4611E5D2AEAD2FA0010BE24 /* ConfigManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFA7B2A67043000B98ED5 /* ConfigManagerView.swift */; };
+		C4611E5E2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFA7B2A67043000B98ED5 /* ConfigManagerView.swift */; };
+		C4611E5F2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFA7B2A67043000B98ED5 /* ConfigManagerView.swift */; };
+		C4611E602AEAD3100010BE24 /* ByteLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */; };
+		C4611E612AEAD3110010BE24 /* ByteLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */; };
+		C4611E622AEAD3110010BE24 /* ByteLimitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5857B2A7038DB00DDBB63 /* ByteLimitView.swift */; };
 		C463E380284930EE00422731 /* PresetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463E37F284930EE00422731 /* PresetHelper.swift */; };
 		C463E381284930EE00422731 /* PresetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463E37F284930EE00422731 /* PresetHelper.swift */; };
 		C464ADAC275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */; };
@@ -2644,8 +2653,10 @@
 				C4B79EBE29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C47DF1B1299D5A3B0007055D /* LoginItemManager.swift in Sources */,
 				C471E85928F9BB650021E251 /* DomainListPhpCell.swift in Sources */,
+				C4611E5B2AEAD2E30010BE24 /* ConfigManagerWindowController.swift in Sources */,
 				C471E85A28F9BB650021E251 /* DomainListTypeCell.swift in Sources */,
 				C471E85B28F9BB650021E251 /* DomainListKindCell.swift in Sources */,
+				C4611E5E2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
 				C4BF56AD2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E85C28F9BB650021E251 /* DomainListWindowController.swift in Sources */,
 				C471E85D28F9BB650021E251 /* DomainListVC.swift in Sources */,
@@ -2764,6 +2775,7 @@
 				C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */,
 				C4CB6E67292C362C002E9027 /* Homebrew.swift in Sources */,
+				C4611E602AEAD3100010BE24 /* ByteLimitView.swift in Sources */,
 				C489E0BD2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
@@ -2875,6 +2887,7 @@
 				C471E8D528F9BB8F0021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E8D728F9BB8F0021E251 /* SelectPreferenceView.swift in Sources */,
 				C471E8D928F9BB8F0021E251 /* HotkeyPreferenceView.swift in Sources */,
+				C4611E5D2AEAD2FA0010BE24 /* ConfigManagerView.swift in Sources */,
 				C471E8DA28F9BB8F0021E251 /* Keys.swift in Sources */,
 				C471E8DB28F9BB8F0021E251 /* TerminalProgressWindowController.swift in Sources */,
 				C471E8DC28F9BB8F0021E251 /* ProgressVC.swift in Sources */,
@@ -2917,6 +2930,7 @@
 				C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */,
 				C471E7EE28F9BAC30021E251 /* Constants.swift in Sources */,
 				C40934A0298EE8E900D25014 /* AppUpdater.swift in Sources */,
+				C4611E5A2AEAD2E20010BE24 /* ConfigManagerWindowController.swift in Sources */,
 				C471E80E28F9BAE80021E251 /* DateExtension.swift in Sources */,
 				C490E3BA29BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
 				C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */,
@@ -2964,6 +2978,7 @@
 				C471E7EB28F9BAC30021E251 /* Helpers.swift in Sources */,
 				C4CB6E68292C362C002E9027 /* Homebrew.swift in Sources */,
 				C4181F1128FAF9330042EA28 /* UITestCase.swift in Sources */,
+				C4611E622AEAD3110010BE24 /* ByteLimitView.swift in Sources */,
 				C4AFC4B129C4F32F00BF4E0D /* BrewFormula.swift in Sources */,
 				C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */,
@@ -3051,6 +3066,7 @@
 				C4F2E4382752F08D0020E974 /* BrewDiagnostics.swift in Sources */,
 				C485707428BF454E00539B36 /* ServicesView.swift in Sources */,
 				C4B79EC729CA474200A483EE /* FakeCommand.swift in Sources */,
+				C4611E5F2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */,
 				C456A0C72AA614BD0080144F /* PhpPreference.swift in Sources */,
 				C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
@@ -3091,6 +3107,7 @@
 				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C4AF9F78275447F100D44ED0 /* ValetConfigurationTest.swift in Sources */,
 				C490E3B529BC9FEA006D2DE6 /* ProgressWindowView.swift in Sources */,
+				C4611E612AEAD3110010BE24 /* ByteLimitView.swift in Sources */,
 				C40175B92903108900763A68 /* ValetInteractor.swift in Sources */,
 				C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
@@ -3119,6 +3136,7 @@
 				C4D936CA27E3EB6100BD69FE /* PhpHelper.swift in Sources */,
 				C4D36611291140BE006BD146 /* TestableFileSystemTest.swift in Sources */,
 				C45B91542956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
+				C4611E5C2AEAD2E30010BE24 /* ConfigManagerWindowController.swift in Sources */,
 				C4E2E84B28FC1E70003B070C /* DataExtension.swift in Sources */,
 				C449B4F127EE7FC200C47E8A /* DomainListNameCell.swift in Sources */,
 				C4F780BA25D80B62000DBC97 /* AppDelegate.swift in Sources */,
