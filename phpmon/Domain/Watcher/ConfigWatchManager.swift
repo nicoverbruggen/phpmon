@@ -23,8 +23,8 @@ class ConfigWatchManager {
     init(for url: URL) {
         if FileSystem is TestableFileSystem {
             fatalError("""
-                PhpConfigWatcher is not compatible with testable FS!"
-                You are not allowed to instantiate these while using a testable FS.
+                ConfigWatchManager is currently incompatible with a testable filesystem!"
+                You are not allowed to instantiate these while using a testable filesystem.
             """)
         }
 
