@@ -20,7 +20,7 @@ class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
 
         windowController.showWindow(windowController)
         windowController.window?.makeKeyAndOrderFront(nil)
-        windowController.positionWindowInTopLeftCorner()
+        windowController.positionWindowInTopRightCorner()
 
         windowController.progressView?.labelTitle.stringValue = title
         windowController.progressView?.labelDescription.stringValue = description

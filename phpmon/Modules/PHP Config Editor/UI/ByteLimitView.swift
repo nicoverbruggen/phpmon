@@ -35,12 +35,12 @@ struct PreferenceContainer<ControlView: View>: View {
 
                 VStack(alignment: .leading) {
                     controlView
-
                     Text(self.description.localizedForSwiftUI)
+                        .lineLimit(nil)
                         .font(.subheadline)
+                        .foregroundColor(Color.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
         }
         .padding(5)
@@ -51,6 +51,7 @@ struct ByteLimitView: View {
     @State private var unit: BytePhpPreference.UnitOption
     @State private var numberText: String
     @State private var unlimited: Bool
+    @State private var timer: Timer?
 
     private var preference: BytePhpPreference
 
@@ -65,9 +66,11 @@ struct ByteLimitView: View {
         if !unlimited {
             HStack {
                 TextField("", text: $numberText)
-                    .onChange(of: numberText) { newText in
-                        self.preference.value = Int(newText) ?? 256
-                        print(self.preference.internalValue)
+                    .onChange(of: numberText) { [weak preference] newText in
+                        timer?.invalidate()
+                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
+                            preference?.value = Int(newText) ?? 256
+                        }
                     }
                 Picker("Limit Name", selection: $unit) {
                     ForEach(BytePhpPreference.UnitOption.allCases, id: \.self) {
@@ -79,22 +82,32 @@ struct ByteLimitView: View {
                 .pickerStyle(.menu)
                 .onChange(of: unit) { newValue in
                     self.preference.unit = newValue
-                    print(self.preference.internalValue)
                 }
             }
         }
 
         Toggle(isOn: $unlimited) {
-            Label("Allow unlimited usage", systemImage: "heart").labelStyle(.titleOnly)
-        }
+            Text("confman.byte_limit.unlimited".localizedForSwiftUI)
+        }.onChange(of: unlimited, perform: { [weak preference] unlimited in
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
+                preference?.value = unlimited ? -1 : 512
+                preference?.unit = .megabyte
+            }
+        })
     }
 }
 
 struct ByteLimitView_Previews: PreviewProvider {
     static var previews: some View {
-        PreferenceContainer(name: "Max Size", description: "Some maximum size") {
+        PreferenceContainer(
+            name: "Max Size",
+            description:
+                "Here's an extensive description that is obviously way too long but it should wrap." +
+                "The point of the wrapping text is that is allows us to see what's going on with the layout here."
+        ) {
             ByteLimitView(preference: BytePhpPreference(key: "max_memory"))
-        }
+        }.frame(width: 600, height: 200)
 
         ConfigManagerView()
             .frame(width: 600, height: .infinity)

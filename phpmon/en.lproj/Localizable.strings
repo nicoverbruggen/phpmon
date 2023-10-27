@@ -13,6 +13,8 @@
 "mi_fix_php_link" = "Fix Automatically...";
 "mi_no_php_linked_explain" = "What's This?";
 "mi_php_version_manager" = "PHP Version Manager...";
+"mi_php_config_manager" = "PHP Configuration Editor...";
+"mi_manage_limits" = "Manage Limits...";
 
 "mi_diagnostics" = "Diagnostics";
 "mi_active_services" = "Active Services";
@@ -84,7 +86,8 @@
 // CONFMAN
 
 "confman.title" = "PHP Configuration Editor";
-"confman.description" = "This feature lets you customize your PHP installation with ease. Changes are automatically applied.";
+"confman.description" = "This feature lets you customize your PHP installation's configuration with ease.\nPlease note that any changes you make are immediately and automatically applied.";
+"confman.byte_limit.unlimited" = "Allow unlimited usage";
 
 "php_ini.memory_limit.title" = "Memory Limit";
 "php_ini.memory_limit.description" = "This sets the maximum amount of memory in bytes that a script is allowed to allocate. This helps prevent poorly written scripts for eating up all available memory on a server.";
@@ -666,6 +669,11 @@ If you are seeing this message but are confused why this folder has gone missing
 "startup.errors.which_alias_issue.title" = "A configuration issue was detected";
 "startup.errors.which_alias_issue.subtitle" = "It appears that there's a file in `/usr/local/bin/which`. This is usually set up by NodeJS, but `node` isn't in the PATH in `/usr/local/bin`. To fix this, keep reading.";
 "startup.errors.which_alias_issue.desc" = "You will need to symlink `node` into the `/usr/local/bin` directory to make sure PHP Monitor can start successfully. For more info, see: https://github.com/nicoverbruggen/phpmon/issues/174";
+
+/// Laravel Herd conflicts
+"startup.errors.herd_running.title" = "Laravel Herd appears to be running";
+"startup.errors.herd_running.subtitle" = "It seems that Laravel Herd is currently running. Herd's built-in Valet setup may conflict with your regular Valet installation, so please quit Herd before continuing. (You can perfectly mix usage of Herd and regular Valet but you shouldn't run both at the same time.)";
+"startup.errors.herd_running.desc" = "You may also find that the `php` alias by Herd added to your $PATH may prevent `php` aliasing of PHP Monitor from working, so keep that in mind. You can check out `~/.zshrc` and see what Herd has added to your $PATH.";
 
 // Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "Your active PHP version has changed.";

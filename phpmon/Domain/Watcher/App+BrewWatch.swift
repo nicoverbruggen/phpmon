@@ -17,13 +17,13 @@ extension App {
             onChange: { Task { await self.onHomebrewPhpModification() } }
         )
 
-        App.shared.watchers[.homebrewBinaries] = notifier
+        App.shared.watchers["homebrewBinaries"] = notifier
     }
 
     public func destroyHomebrewWatchers() {
         // Removing requires termination and then removing reference
-        self.watchers[.homebrewBinaries]?.terminate()
-        self.watchers[.homebrewBinaries] = nil
+        self.watchers["homebrewBinaries"]?.terminate()
+        self.watchers["homebrewBinaries"] = nil
     }
 
     public func onHomebrewPhpModification() async {
@@ -31,10 +31,13 @@ extension App {
         Log.info("Something changed in the Homebrew binary directory...")
         await PhpEnvironments.detectPhpVersions()
         await MainMenu.shared.refreshActiveInstallation()
-        // let new = PhpEnvironments.shared.currentInstall?.version.text
 
-        // TODO:
-        // Check if the new and previous version are different
-        // if so, we can show a notification if needed
+        //
+        // TODO: PHP Guard 2.0
+        // Check if the new and previous version of PHP are different
+        // if so, we can show a notification if needed or alert the user
+        //
+        // let new = PhpEnvironments.shared.currentInstall?.version.text
+        //
     }
 }

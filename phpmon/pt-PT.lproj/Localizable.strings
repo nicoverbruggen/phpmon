@@ -652,6 +652,11 @@ Se ainda vê esta mensagem, e não percebe porque a diretoria desapareceu, conv�
 "startup.errors.which_alias_issue.subtitle" = "Parece que há um ficheiro em `/usr/local/bin/which`. Isto geralmente é configurado pelo NodeJS, mas `node` não está no PATH em `/usr/local/bin`. Para corrigir isto, continue a ler.";
 "startup.errors.which_alias_issue.desc" = "Precisará vincular `node` à diretoria `/usr/local/bin` para garantir que o PHP Monitor possa iniciar com sucesso. Para mais informações, consulte: https://github.com/nicoverbruggen/phpmon/issues/174";
 
+// Laravel Herd conflicts
+"startup.errors.herd_running.title" = "O Laravel Herd parece estar em execução";
+"startup.errors.herd_running.subtitle" = "Parece que o Laravel Herd está atualmente em execução. A configuração integrada do Valet do Herd pode entrar em conflito com a sua instalação regular do Valet. Por favor, encerre o Herd antes de continuar. (Você pode combinar perfeitamente o uso do Herd e do Valet regular, mas não deve executar ambos ao mesmo tempo.)";
+"startup.errors.herd_running.desc" = "Você também pode perceber que o alias `php` adicionado pelo Herd ao seu $PATH pode impedir o aliasing do PHP Monitor como `php`, então tenha isso em mente. Você pode verificar o arquivo `~/.zshrc` para ver o que o Herd adicionou ao seu $PATH.";
+
 // Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "A sua versão vinculada do PHP mudou.";
 "startup.version_mismatch.subtitle" = "Desde que o PHP Monitor esteve ativo a última vez, a sua versão do PHP vinculada foi alterada para PHP %@. Gostaria de voltar para o PHP %@ ou deseja continuar a usar a versão atual?";

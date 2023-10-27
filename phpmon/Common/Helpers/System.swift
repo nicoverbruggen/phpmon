@@ -65,3 +65,11 @@ public func identity() -> String {
 
     return output.trimmingCharacters(in: .whitespacesAndNewlines)
 }
+
+/**
+ Retrieves the user's preferred shell.
+ */
+public func preferred_shell() -> String {
+    return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+}

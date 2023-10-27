@@ -200,6 +200,16 @@ extension StatusMenu {
             post: stats.post_max_size,
             upload: stats.upload_max_filesize)
         )
+
+        // TODO: As soon as this does more than just edit memory limits, move this
+        /*
+        addItem(NSMenuItem.separator())
+        addItem(NSMenuItem(
+            title: "mi_manage_limits".localized,
+            action: #selector(MainMenu.openConfigGUI),
+            keyEquivalent: "l")
+        )
+        */
     }
 
     // MARK: - Extensions

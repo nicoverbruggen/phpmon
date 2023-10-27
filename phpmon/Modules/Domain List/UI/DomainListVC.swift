@@ -85,6 +85,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         App.shared.domainListWindowController!.showWindow(self)
         NSApp.activate(ignoringOtherApps: true)
+        App.shared.domainListWindowController?.window?.orderFrontRegardless()
     }
 
     // MARK: - Lifecycle

@@ -652,6 +652,11 @@ Als u dit bericht ziet, maar verward bent waarom deze map ontbreekt, wilt u moge
 "startup.errors.which_alias_issue.subtitle" = "Het lijkt erop dat er een bestand is in `/usr/local/bin/which`. Dit wordt meestal ingesteld door NodeJS, maar `node` staat niet in de PATH in `/usr/local/bin`. Om dit op te lossen, gaat u verder met lezen.";
 "startup.errors.which_alias_issue.desc" = "U moet `node` symbolisch koppelen aan de `/usr/local/bin`-directory om ervoor te zorgen dat PHP Monitor succesvol kan starten. Voor meer informatie, zie: https://github.com/nicoverbruggen/phpmon/issues/174";
 
+/// Laravel Herd conflicts
+"startup.errors.herd_running.title" = "Laravel Herd lijkt actief te zijn";
+"startup.errors.herd_running.subtitle" = "Het lijkt erop dat Laravel Herd momenteel actief is. De ingebouwde Valet-configuratie van Herd kan conflicteren met je reguliere Valet-installatie, dus sluit Herd af voordat je verdergaat. (Je kunt perfect gebruik maken van zowel Herd als reguliere Valet, maar je moet ze niet tegelijkertijd uitvoeren.)";
+"startup.errors.herd_running.desc" = "Je kan ook merken dat de `php`-alias die Herd aan je $PATH heeft toegevoegd, niet werkt met de aliases van PHP Monitor, dus hou daar rekening mee. Je kunt `~/.zshrc` bekijken om te zien wat Herd aan je $PATH heeft toegevoegd.";
+
 // Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "Uw actieve PHP-versie is gewijzigd.";
 "startup.version_mismatch.subtitle" = "Sinds PHP Monitor voor het laatst actief was, is uw gekoppelde PHP-versie gewijzigd naar PHP %@. Wilt u terugschakelen naar PHP %@, of wilt u de huidige versie blijven gebruiken?";

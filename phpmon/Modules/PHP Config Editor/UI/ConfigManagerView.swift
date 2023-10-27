@@ -13,14 +13,14 @@ struct ConfigManagerView: View {
     var preferences: [PhpPreference] = [
         BytePhpPreference(key: "memory_limit"),
         BytePhpPreference(key: "post_max_size"),
-        BoolPhpPreference(key: "file_uploads"),
+        // BoolPhpPreference(key: "file_uploads"),
         BytePhpPreference(key: "upload_max_filesize")
     ]
 
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 15) {
-                Image(systemName: "square.and.pencil.circle.fill")
+                Image(systemName: "gearshape.fill")
                     .resizable()
                     .frame(width: 40, height: 40)
                     .foregroundColor(Color.blue)
@@ -51,6 +51,7 @@ struct ConfigManagerView: View {
                             if let preference = preference as? BytePhpPreference {
                                 ByteLimitView(preference: preference)
                             }
+                            /*
                             if let preference = preference as? BoolPhpPreference {
                                 Toggle("", isOn: preference.$value)
                                     .toggleStyle(.switch)
@@ -59,6 +60,7 @@ struct ConfigManagerView: View {
                             if let preference = preference as? StringPhpPreference {
                                 TextField("Placeholder", text: preference.$value)
                             }
+                            */
                         }.frame(maxWidth: .infinity)
                     }
                 }.padding(10)
@@ -67,7 +69,7 @@ struct ConfigManagerView: View {
 
                 VStack(alignment: .trailing) {
                     Button("Close", action: {
-
+                        App.shared.phpConfigManagerWindowController?.close()
                     })
                 }
                 .padding(.vertical, 10)
@@ -78,7 +80,7 @@ struct ConfigManagerView: View {
                     alignment: .topTrailing
                 )
             }
-        }
+        }.frame(maxHeight: 485)
     }
 }
 

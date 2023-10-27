@@ -52,7 +52,20 @@ class BytePhpPreference: PhpPreference {
     // MARK: Save Value
 
     private func updatedFieldValue() {
-        internalValue = "\(value)\(unit.rawValue)"
+        if value == -1 {
+            // In case we're dealing with unlimited value, we don't need a unit
+            internalValue = "-1"
+        } else {
+            // We need to append the unit otherwise
+            internalValue = "\(value)\(unit.rawValue)"
+        }
+
+        do {
+            try PhpPreference.persistToIniFile(key: self.key, value: self.internalValue)
+            Log.info("The preference \(key) was updated to: \(value)")
+        } catch {
+            Log.info("The preference \(key) could not be updated")
+        }
     }
 
     public static func readFrom(internalValue: String) -> (UnitOption, Int)? {

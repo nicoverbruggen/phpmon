@@ -17,6 +17,7 @@ public class Paths {
 
     internal var baseDir: Paths.HomebrewDir
     private var userName: String
+    private var preferredShell: String
 
     init() {
         // Assume the default directory is correct
@@ -31,9 +32,11 @@ public class Paths {
         }
 
         userName = identity()
+        preferredShell = preferred_shell()
 
         if !isRunningSwiftUIPreview {
             Log.info("The current username is `\(userName)`.")
+            Log.info("The user's shell is `\(preferredShell)`.")
         }
     }
 
@@ -102,6 +105,10 @@ public class Paths {
     public static var caskroomPath: String {
         return "\(shared.baseDir.rawValue)/Caskroom/"
             + (App.identifier.contains(".dev") ? "phpmon-dev" : "phpmon")
+    }
+
+    public static var shell: String {
+        return shared.preferredShell
     }
 
     // MARK: - Flexible Binaries

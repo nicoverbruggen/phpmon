@@ -62,12 +62,13 @@ struct ComposerJson: Decodable {
     public func getNotableDependencies() -> [String: String] {
         var notable: [String: String] = [:]
 
-        var scan = Array(PhpFrameworks.DependencyList.keys)
-        scan.append("php")
+        let scan = Array(ProjectTypeDetection.CommonDependencyList.keys) +
+            Array(ProjectTypeDetection.SpecificDependencyList.keys) +
+            ["php"]
 
         scan.forEach { dependency in
-            if dependencies?[dependency] != nil {
-                notable[dependency] = dependencies![dependency]
+            if let resolvedDependency = dependencies?[dependency] {
+                notable[dependency] = resolvedDependency
             }
         }
 

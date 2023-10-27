@@ -653,6 +653,11 @@ Wenn Sie diese Meldung sehen, aber nicht wissen, warum dieser Ordner verschwunde
 "startup.errors.which_alias_issue.subtitle" = "Es scheint, dass es eine Datei in `/usr/local/bin/which` gibt. Diese wird normalerweise von NodeJS eingerichtet, aber `node` ist nicht im PATH in `/usr/local/bin`. Um dies zu beheben, lesen Sie weiter.";
 "startup.errors.which_alias_issue.desc" = "Sie müssen einen Symlink von `node` in das Verzeichnis `/usr/local/bin` setzen, um sicherzustellen, dass PHP Monitor erfolgreich starten kann. Für weitere Informationen siehe: https://github.com/nicoverbruggen/phpmon/issues/174";
 
+// Laravel Herd conflicts
+"startup.errors.herd_running.title" = "Laravel Herd scheint aktiv zu sein";
+"startup.errors.herd_running.subtitle" = "Es scheint, dass Laravel Herd derzeit aktiv ist. Die integrierte Valet-Konfiguration von Herd kann mit Ihrer regulären Valet-Installation kollidieren. Beenden Sie daher Herd, bevor Sie fortfahren. (Sie können Herd und reguläres Valet problemlos kombinieren, sollten sie jedoch nicht gleichzeitig ausführen.)";
+"startup.errors.herd_running.desc" = "Möglicherweise stellt der von Herd zu Ihrem $PATH hinzugefügte `php`-Alias eine Behinderung für das Aliasen von PHP Monitor als `php` dar. Beachten Sie dies bitte. Schauen Sie in die Datei `~/.zshrc`, um zu sehen, was Herd zu Ihrem $PATH hinzugefügt hat.";
+
 // Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "Die aktive PHP-Version hat sich geändert.";
 "startup.version_mismatch.subtitle" = "Seitdem PHP Monitor das letzte Mal aktiv war, wurde Ihre verlinkte PHP-Version auf PHP %@ geändert. Möchten Sie zurück zu PHP %@ wechseln oder möchten Sie die aktuelle Version weiter verwenden?";

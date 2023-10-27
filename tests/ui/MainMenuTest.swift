@@ -58,6 +58,8 @@ final class MainMenuTest: UITestCase {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()
 
+        Thread.sleep(forTimeInterval: 0.5)
+
         assertExists(app.buttons["General"])
         click(app.buttons["General"])
 
