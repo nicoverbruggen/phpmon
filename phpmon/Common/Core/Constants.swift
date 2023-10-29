@@ -22,7 +22,7 @@ struct Constants {
      * The PHP versions that are considered pre-release versions.
      */
     static let ExperimentalPhpVersions: Set = [
-        "8.3", "8.4"
+        "8.4"
     ]
 
     /**
