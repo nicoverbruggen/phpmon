@@ -28,8 +28,6 @@ import Foundation
         }
 
         PhpEnvironments.shared.isBusy = true
-        MainMenu.shared.setBusyImage()
-        MainMenu.shared.rebuild()
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -106,14 +104,11 @@ import Foundation
 
     private func removeBusyStatus() {
         PhpEnvironments.shared.isBusy = false
-        Task { @MainActor in
-            MainMenu.shared.updatePhpVersionInStatusBar()
-        }
     }
 
     // MARK: Alert
 
-    @MainActor private func presentMissingAlert() {
+    private func presentMissingAlert() {
         BetterAlert()
             .withInformation(
                 title: "alert.composer_missing.title".localized,

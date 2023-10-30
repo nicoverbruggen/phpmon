@@ -87,6 +87,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     /** Updates the icon (refresh icon) and rebuilds the menu. */
+    @available(*, deprecated, message: "Use the busy status instead")
     @objc func updatePhpVersionInStatusBar() {
         refreshIcon()
         rebuild()
@@ -139,7 +140,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func reloadPhpMonitorMenuInBackground() {
         asyncExecution({
             // This automatically reloads the menu
-            Log.info("Reloading information about the PHP installation (in the background)...")
+            Log.perf("Reloading information about the PHP installation (in the background)...")
         }, behaviours: [
             .setsBusyUI,
             .reloadsPhpInstallation,
@@ -150,10 +151,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
+
         Task { @MainActor [self] in
             if PhpEnvironments.shared.isBusy {
+                Log.perf("Refreshing icon: currently busy")
                 setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
             } else {
+                Log.perf("Refreshing icon: no longer busy")
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
                     setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
@@ -169,13 +173,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                     setStatusBarImage(version: long ? install.version.long : install.version.short)
                 }
             }
-        }
-    }
-
-    /** Updates the icon to be displayed as busy. */
-    @objc func setBusyImage() {
-        Task { @MainActor [self] in
-            setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
         }
     }
 
