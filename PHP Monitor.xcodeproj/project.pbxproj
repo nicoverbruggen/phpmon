@@ -804,6 +804,7 @@
 		C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4F319C927B034A500AFF46F /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F361602836BFD9003598CC /* MainMenu+Actions.swift */; };
+		C4F520672AF03791006787F2 /* ExtensionEnumeratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */; };
 		C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7809B25D80344000DBC97 /* CommandTest.swift */; };
 		C4F780A825D80AE8000DBC97 /* php.ini in Resources */ = {isa = PBXBuildFile; fileRef = C4F780A725D80AE8000DBC97 /* php.ini */; };
@@ -1118,6 +1119,7 @@
 		C4F30B02278E16BA00755FCE /* HomebrewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewService.swift; sourceTree = "<group>"; };
 		C4F30B06278E195800755FCE /* brew-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brew-services.json"; sourceTree = "<group>"; };
 		C4F361602836BFD9003598CC /* MainMenu+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Actions.swift"; sourceTree = "<group>"; };
+		C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionEnumeratorTest.swift; sourceTree = "<group>"; };
 		C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F7809B25D80344000DBC97 /* CommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTest.swift; sourceTree = "<group>"; };
@@ -1940,6 +1942,7 @@
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
 				C4AFC4B229C4F43300BF4E0D /* HomebrewUpgradableTest.swift */,
+				C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -3059,6 +3062,7 @@
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C463E381284930EE00422731 /* PresetHelper.swift in Sources */,
 				C441CC572AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
+				C4F520672AF03791006787F2 /* ExtensionEnumeratorTest.swift in Sources */,
 				C46FA98C2822F08F00D78807 /* PhpConfigurationFileTest.swift in Sources */,
 				C4D5576529C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
