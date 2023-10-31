@@ -30,9 +30,33 @@ final class ExtensionEnumeratorTest: XCTestCase {
     }
 
     func testCanParseFormulaeBasedOnSyntax() throws {
-        // TODO: Write a class that can figure out which PHP version can get which extensions
-        // A regular expression can be used (format: <extension>@<version>.rb )
-        // Perhaps it is also needed to write a whitelist to figure out which extensions are allowed?
-    }
+        let directory = "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula"
+        let files = try FileSystem.getShallowContentsOfDirectory(directory)
 
+        // TODO: Put this in a separate class
+        var versionExtensionsMap = [String: Set<String>]()
+        let regex = try! NSRegularExpression(pattern: "(\\w+)@(\\d+\\.\\d+)\\.rb")
+        for file in files {
+            let matches = regex.matches(in: file, range: NSRange(file.startIndex..., in: file))
+            if let match = matches.first {
+                if let phpExtensionRange = Range(match.range(at: 1), in: file),
+                   let versionRange = Range(match.range(at: 2), in: file) {
+                    let phpExtension = String(file[phpExtensionRange])
+                    let version = String(file[versionRange])
+
+                    if var extensions = versionExtensionsMap[version] {
+                        extensions.insert(phpExtension)
+                        versionExtensionsMap[version] = extensions
+                    } else {
+                        versionExtensionsMap[version] = [phpExtension]
+                    }
+                }
+            }
+        }
+
+        XCTAssertEqual(versionExtensionsMap["8.1"], Set(["xdebug"]))
+        XCTAssertEqual(versionExtensionsMap["8.2"], Set(["xdebug"]))
+        XCTAssertEqual(versionExtensionsMap["8.3"], Set(["xdebug"]))
+        XCTAssertEqual(versionExtensionsMap["8.4"], Set(["xdebug"]))
+    }
 }
