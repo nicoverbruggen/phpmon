@@ -106,7 +106,7 @@ extension MainMenu {
         }
 
         // Keep track of which PHP versions are currently about to release
-        Log.info("Experimental PHP versions: \(Constants.ExperimentalPhpVersions)")
+        Log.info("Experimental PHP versions are: \(Constants.ExperimentalPhpVersions)")
 
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
@@ -127,6 +127,11 @@ extension MainMenu {
 
         // Check if the linked version has changed between launches of phpmon
         PhpGuard().compareToLastGlobalVersion()
+
+        // TODO: Move to a new dedicated module
+        // Scan which PHP extensions can be installed
+        let extensions = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")["8.2"]!
+        print("The following extensions can be installed for this version of PHP: \(extensions)")
 
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")

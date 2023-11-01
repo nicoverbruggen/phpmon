@@ -1,5 +1,5 @@
 //
-//  BrewFormula.swift
+//  BrewPhpFormula.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 17/03/2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewFormula {
+struct BrewPhpFormula {
     /// Name of the formula.
     let name: String
 

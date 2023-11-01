@@ -9,9 +9,9 @@
 import Foundation
 
 class BrewFormulaeObservable: ObservableObject {
-    @Published var phpVersions: [BrewFormula] = []
+    @Published var phpVersions: [BrewPhpFormula] = []
 
-    var upgradeable: [BrewFormula] {
+    var upgradeable: [BrewPhpFormula] {
         return phpVersions.filter { formula in
             formula.hasUpgrade
         }

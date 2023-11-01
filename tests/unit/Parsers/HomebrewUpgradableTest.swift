@@ -27,7 +27,7 @@ class HomebrewUpgradableTest: XCTestCase {
             "7.4": PhpInstallation("7.4.11")
         ]
 
-        let data = await BrewFormulaeHandler().loadPhpVersions(loadOutdated: true)
+        let data = await BrewPhpFormulaeHandler().loadPhpVersions(loadOutdated: true)
 
         XCTAssertTrue(data.contains(where: { formula in
             formula.installedVersion == "8.1.16" && formula.upgradeVersion == "8.1.17"

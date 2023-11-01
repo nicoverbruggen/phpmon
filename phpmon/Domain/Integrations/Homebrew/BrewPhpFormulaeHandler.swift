@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol HandlesBrewFormulae {
-    func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula]
+protocol HandlesBrewPhpFormulae {
+    func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula]
     func refreshPhpVersions(loadOutdated: Bool) async
 }
 
-extension HandlesBrewFormulae {
+extension HandlesBrewPhpFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
         Task { @MainActor in
@@ -22,8 +22,8 @@ extension HandlesBrewFormulae {
     }
 }
 
-class BrewFormulaeHandler: HandlesBrewFormulae {
-    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewFormula] {
+class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
+    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         var outdated: [OutdatedFormula]?
 
         if loadOutdated {
@@ -53,7 +53,7 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
                 })?.current_version
             }
 
-            return BrewFormula(
+            return BrewPhpFormula(
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,

@@ -11,8 +11,8 @@ import Foundation
 class InstallAndUpgradeCommand: BrewCommand {
 
     let title: String
-    let installing: [BrewFormula]
-    let upgrading: [BrewFormula]
+    let installing: [BrewPhpFormula]
+    let upgrading: [BrewPhpFormula]
     let phpGuard: PhpGuard
 
     /**
@@ -23,8 +23,8 @@ class InstallAndUpgradeCommand: BrewCommand {
      */
     public init(
         title: String,
-        upgrading: [BrewFormula],
-        installing: [BrewFormula]
+        upgrading: [BrewPhpFormula],
+        installing: [BrewPhpFormula]
     ) {
         self.title = title
         self.installing = installing

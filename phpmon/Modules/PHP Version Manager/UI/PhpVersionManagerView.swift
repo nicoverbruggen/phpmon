@@ -13,11 +13,11 @@ import SwiftUI
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: PhpFormulaeStatus
-    var handler: HandlesBrewFormulae
+    var handler: HandlesBrewPhpFormulae
 
     init(
         formulae: BrewFormulaeObservable,
-        handler: HandlesBrewFormulae
+        handler: HandlesBrewPhpFormulae
     ) {
         self.formulae = formulae
         self.handler = handler
@@ -259,7 +259,7 @@ struct PhpVersionManagerView: View {
         ))
     }
 
-    public func upgradeAll(_ formulae: [BrewFormula]) async {
+    public func upgradeAll(_ formulae: [BrewPhpFormula]) async {
         await self.runCommand(InstallAndUpgradeCommand(
             title: "phpman.operations.updating".localized,
             upgrading: formulae,
@@ -267,7 +267,7 @@ struct PhpVersionManagerView: View {
         ))
     }
 
-    public func install(_ formula: BrewFormula) async {
+    public func install(_ formula: BrewPhpFormula) async {
         await self.runCommand(InstallAndUpgradeCommand(
             title: "phpman.operations.installing".localized(formula.displayName),
             upgrading: [],
@@ -275,7 +275,7 @@ struct PhpVersionManagerView: View {
         ))
     }
 
-    public func confirmUninstall(_ formula: BrewFormula) async {
+    public func confirmUninstall(_ formula: BrewPhpFormula) async {
         // Disallow removal of the currently active versipn
         if formula.installedVersion == PhpEnvironments.shared.currentInstall?.version.text {
             self.presentErrorAlert(
@@ -300,7 +300,7 @@ struct PhpVersionManagerView: View {
         )
     }
 
-    public func uninstall(_ formula: BrewFormula) async {
+    public func uninstall(_ formula: BrewPhpFormula) async {
         let command = RemovePhpVersionCommand(formula: formula.name)
 
         do {

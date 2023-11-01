@@ -25,7 +25,7 @@ class PhpVersionManagerWindowController: PMWindowController {
         windowController.window = NSWindow()
         windowController.view = PhpVersionManagerView(
             formulae: Brew.shared.formulae,
-            handler: BrewFormulaeHandler()
+            handler: BrewPhpFormulaeHandler()
         )
 
         guard let window = windowController.window else { return }
