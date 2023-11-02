@@ -67,7 +67,7 @@ class PhpExtension {
 
         self.name = String(fullPath.split(separator: "/").last!) // take last segment
 
-        self.enabled = !line.contains(";")
+        self.enabled = !line.starts(with: ";")
         self.file = file
     }
 
@@ -76,7 +76,7 @@ class PhpExtension {
      You may need to restart the other services in order for this change to apply.
      */
     func toggle() async {
-        let newLine = enabled
+        let newLine = !line.starts(with: ";")
             // DISABLED: Commented out line
             ? "; \(line)"
             // ENABLED: Line where the comment delimiter (;) is removed
@@ -84,14 +84,14 @@ class PhpExtension {
 
         await sed(file: file, original: line, replacement: newLine)
 
-        enabled.toggle()
+        self.enabled = !newLine.starts(with: ";")
+        self.line = newLine
 
         if !isRunningTests {
             Task { @MainActor in
                 MainMenu.shared.rebuild()
             }
         }
-
     }
 
     // MARK: - Static Methods
