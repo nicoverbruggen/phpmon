@@ -105,6 +105,9 @@ extension MainMenu {
             Valet.shared.notifyAboutUnsupportedTLD()
         }
 
+        // Keep track of which PHP versions are currently about to release
+        Log.info("Experimental PHP versions: \(Constants.ExperimentalPhpVersions)")
+
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 

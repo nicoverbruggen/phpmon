@@ -9,7 +9,7 @@ import Cocoa
 
 class StatusMenu: NSMenu {
     // swiftlint:disable cyclomatic_complexity
-    func addMenuItems() {
+    @MainActor func addMenuItems() {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 

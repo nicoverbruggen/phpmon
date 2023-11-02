@@ -45,21 +45,16 @@ extension MainMenu {
             .broadcastServicesUpdate
         ]
     ) {
-        if behaviours.contains(.reloadsPhpInstallation) {
+        if behaviours.contains(.reloadsPhpInstallation) || behaviours.contains(.setsBusyUI) {
             PhpEnvironments.shared.isBusy = true
-        }
-
-        if behaviours.contains(.setsBusyUI) {
-            setBusyImage()
         }
 
         Task(priority: .userInitiated) { [unowned self] in
             var error: Error?
 
-            do { try execute() } catch let e { error = e }
-
-            if behaviours.contains(.setsBusyUI) {
-                PhpEnvironments.shared.isBusy = false
+            do { try execute() } catch let e {
+                error = e
+                Log.err(e)
             }
 
             Task { @MainActor [self, error] in
@@ -69,12 +64,14 @@ extension MainMenu {
 
                 if behaviours.contains(.updatesMenuBarContents) {
                     updatePhpVersionInStatusBar()
-                } else if behaviours.contains(.setsBusyUI) {
-                    refreshIcon()
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {
                     Task { await ServicesManager.shared.reloadServicesStatus() }
+                }
+
+                if behaviours.contains(.setsBusyUI) {
+                    PhpEnvironments.shared.isBusy = false
                 }
 
                 if error != nil {

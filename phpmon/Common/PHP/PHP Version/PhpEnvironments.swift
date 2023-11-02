@@ -13,7 +13,7 @@ class PhpEnvironments {
     // MARK: - Initializer
 
     /**
-
+     Loads the currently active PHP installation upon startup. May be empty.
      */
     init() {
         self.currentInstall = ActivePhpInstallation.load()
@@ -49,12 +49,10 @@ class PhpEnvironments {
     static let shared = PhpEnvironments()
 
     /** Whether the switcher is busy performing any actions. */
-    var isBusy: Bool = false {
+    @MainActor var isBusy: Bool = false {
         didSet {
-            Task { @MainActor in
-                MainMenu.shared.setBusyImage()
-                MainMenu.shared.rebuild()
-            }
+            MainMenu.shared.refreshIcon()
+            MainMenu.shared.rebuild()
         }
     }
 

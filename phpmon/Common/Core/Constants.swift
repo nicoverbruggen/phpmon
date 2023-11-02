@@ -20,10 +20,26 @@ struct Constants {
 
     /**
      * The PHP versions that are considered pre-release versions.
+     * Past a certain date, an experimental version "graduates"
+     * to a release version and is no longer marked as experimental.
      */
-    static let ExperimentalPhpVersions: Set = [
-        "8.3", "8.4"
-    ]
+    static var ExperimentalPhpVersions: Set<String> {
+        let releaseDates = [
+            "8.4": Date.fromString("2024-12-01"), // PLACEHOLDER DATE
+            "8.3": Date.fromString("2023-11-23") // OFFICIAL RELEASE
+        ]
+
+        return Set(releaseDates
+            .filter { (_: String, date: Date?) in
+                guard let date else {
+                    return false
+                }
+
+                return date > Date.now
+            }.map { (version: String, _: Date?) in
+                return version
+            })
+    }
 
     /**
      * The PHP versions supported by this application.
@@ -90,6 +106,8 @@ struct Constants {
         static let DevBuildCaskFile = URL(
             string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon-dev.rb"
         )!
+
+        // EAP URLs
 
         static let EarlyAccessCaskFile = URL(
             string: "https://phpmon.app/builds/early-access/sponsors/phpmon-eap.rb"

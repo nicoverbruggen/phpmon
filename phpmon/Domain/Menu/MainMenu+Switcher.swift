@@ -16,7 +16,9 @@ extension MainMenu {
 
     nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
-        PhpEnvironments.shared.isBusy = false
+        Task { @MainActor in
+            PhpEnvironments.shared.isBusy = false
+        }
 
         Task { // Things to do after reloading domain list data
             if Valet.installed {

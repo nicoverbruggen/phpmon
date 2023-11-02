@@ -283,7 +283,6 @@ extension MainMenu {
             return
         }
 
-        setBusyImage()
         PhpEnvironments.shared.isBusy = true
         PhpEnvironments.shared.delegate = self
         PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
@@ -298,7 +297,6 @@ extension MainMenu {
     }
 
     @objc func switchToPhpVersion(_ version: String) {
-        setBusyImage()
         PhpEnvironments.shared.isBusy = true
         PhpEnvironments.shared.delegate = self
         PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
@@ -325,7 +323,6 @@ extension MainMenu {
      */
     func switchToPhp(_ version: String) async {
         Task { @MainActor [self] in
-            setBusyImage()
             PhpEnvironments.shared.isBusy = true
             PhpEnvironments.shared.delegate = self
             PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)

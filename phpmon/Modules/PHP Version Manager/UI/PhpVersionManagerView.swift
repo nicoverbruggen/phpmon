@@ -330,18 +330,9 @@ struct PhpVersionManagerView: View {
     }
 
     public func setBusyStatus(_ busy: Bool) {
-        PhpEnvironments.shared.isBusy = busy
-        if busy {
-            Task { @MainActor in
-                MainMenu.shared.setBusyImage()
-                MainMenu.shared.rebuild()
-                self.status.busy = busy
-            }
-        } else {
-            Task { @MainActor in
-                MainMenu.shared.updatePhpVersionInStatusBar()
-                self.status.busy = busy
-            }
+        Task { @MainActor in
+            PhpEnvironments.shared.isBusy = busy
+            self.status.busy = busy
         }
     }
 

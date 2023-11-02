@@ -12,7 +12,7 @@ import Cocoa
 
 extension StatusMenu {
 
-    func addPhpVersionMenuItems() {
+    @MainActor func addPhpVersionMenuItems() {
         if PhpEnvironments.phpInstall == nil {
             addItem(HeaderView.asMenuItem(text: "⚠️ " + "mi_no_php_linked".localized, minimumWidth: 280))
             addItems([
@@ -34,7 +34,7 @@ extension StatusMenu {
         ))
     }
 
-    func addPhpActionMenuItems() {
+    @MainActor func addPhpActionMenuItems() {
         if PhpEnvironments.shared.isBusy {
             addItem(NSMenuItem(title: "mi_busy".localized))
             return
@@ -54,7 +54,7 @@ extension StatusMenu {
         self.addItem(NSMenuItem.separator())
     }
 
-    func addServicesManagerMenuItem() {
+    @MainActor func addServicesManagerMenuItem() {
         if PhpEnvironments.shared.isBusy {
             return
         }
@@ -65,7 +65,7 @@ extension StatusMenu {
         ])
     }
 
-    func addSwitchToPhpMenuItems() {
+    @MainActor func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<PhpEnvironments.shared.availablePhpVersions.count) {
             // Get the short and long version
@@ -102,14 +102,14 @@ extension StatusMenu {
         }
     }
 
-    func addLiteModeMenuItem() {
+    @MainActor func addLiteModeMenuItem() {
         addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_lite_mode".localized, action: #selector(MainMenu.openLiteModeInfo))
         ])
     }
 
-    func addPreferencesMenuItems() {
+    @MainActor func addPreferencesMenuItems() {
         addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_preferences".localized,
@@ -119,7 +119,7 @@ extension StatusMenu {
         ])
     }
 
-    func addCoreMenuItems() {
+    @MainActor func addCoreMenuItems() {
         addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_about".localized,
@@ -131,7 +131,7 @@ extension StatusMenu {
 
     // MARK: - Valet
 
-    func addValetMenuItems() {
+    @MainActor func addValetMenuItems() {
         addItems([
             HeaderView.asMenuItem(text: "mi_valet".localized),
             NSMenuItem(title: "mi_valet_config".localized,
@@ -146,7 +146,7 @@ extension StatusMenu {
 
     // MARK: - PHP Configuration
 
-    func addConfigurationMenuItems() {
+    @MainActor func addConfigurationMenuItems() {
         addItems([
             HeaderView.asMenuItem(text: "mi_configuration".localized),
             NSMenuItem(title: "mi_php_version_manager".localized,
@@ -166,7 +166,7 @@ extension StatusMenu {
 
     // MARK: - Composer
 
-    func addComposerMenuItems() {
+    @MainActor func addComposerMenuItems() {
         addItems([
             HeaderView.asMenuItem(text: "mi_composer".localized),
             NSMenuItem(
@@ -187,7 +187,7 @@ extension StatusMenu {
 
     // MARK: - Stats
 
-    func addStatsMenuItem() {
+    @MainActor func addStatsMenuItem() {
         guard let install = PhpEnvironments.phpInstall else {
             Log.info("Not showing stats menu item if no PHP version is linked.")
             return
@@ -214,7 +214,7 @@ extension StatusMenu {
 
     // MARK: - Extensions
 
-    func addExtensionsMenuItems() {
+    @MainActor func addExtensionsMenuItems() {
         guard let install = PhpEnvironments.phpInstall else {
             Log.info("Not showing extensions menu items if no PHP version is linked.")
             return
@@ -235,7 +235,7 @@ extension StatusMenu {
 
     // MARK: - Presets
 
-    func addPresetsMenuItem() {
+    @MainActor func addPresetsMenuItem() {
         guard let presets = Preferences.custom.presets else {
             addEmptyPresetHelp()
             return
