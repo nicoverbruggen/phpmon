@@ -77,58 +77,12 @@ struct PhpVersionManagerView: View {
 
     var body: some View {
         VStack {
-            HStack(alignment: .center, spacing: 15) {
-                Image(systemName: "arrow.down.to.line.circle.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(Color.blue)
-                    .padding(12)
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("phpman.description".localizedForSwiftUI)
-                        .font(.system(size: 12))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("phpman.disclaimer".localizedForSwiftUI)
-                        .font(.system(size: 12))
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
-            .padding(10)
+            header.padding(10)
 
             if self.hasUpdates {
-                Divider()
-                HStack(alignment: .center, spacing: 15) {
-                    Text("phpman.has_updates.description".localizedForSwiftUI)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 11))
-
-                    Button("phpman.has_updates.button".localizedForSwiftUI, action: {
-                        Task { await self.upgradeAll(self.formulae.upgradeable) }
-
-                    })
-                    .focusable(false)
-                    .disabled(self.status.busy)
-                }
-                .padding(10)
+                hasUpdatesView
             } else {
-                Divider()
-
-                HStack(alignment: .center, spacing: 15) {
-                    Button {
-                        Task { await self.reload() }
-                    } label: {
-                        Image(systemName: "arrow.clockwise")
-                            .buttonStyle(.automatic)
-                            .controlSize(.large)
-                    }
-                    .focusable(false)
-                    .disabled(self.status.busy)
-
-                    Text("phpman.refresh.button.description".localizedForSwiftUI)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 11))
-                }
-                .padding(10)
+                noUpdatesView
             }
 
             BlockingOverlayView(
@@ -168,7 +122,68 @@ struct PhpVersionManagerView: View {
         }.frame(width: 600, height: 600)
     }
 
-    // MARK: View Functions
+    // MARK: View Variables
+
+    private var header: some View {
+        HStack(alignment: .center, spacing: 15) {
+            Image(systemName: "arrow.down.to.line.circle.fill")
+                .resizable()
+                .frame(width: 40, height: 40)
+                .foregroundColor(Color.blue)
+                .padding(12)
+            VStack(alignment: .leading, spacing: 5) {
+                Text("phpman.description".localizedForSwiftUI)
+                    .font(.system(size: 12))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("phpman.disclaimer".localizedForSwiftUI)
+                    .font(.system(size: 12))
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+    }
+
+    private var hasUpdatesView: some View {
+        Group {
+            Divider()
+            HStack(alignment: .center, spacing: 15) {
+                Text("phpman.has_updates.description".localizedForSwiftUI)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 11))
+
+                Button("phpman.has_updates.button".localizedForSwiftUI, action: {
+                    Task { await self.upgradeAll(self.formulae.upgradeable) }
+
+                })
+                .focusable(false)
+                .disabled(self.status.busy)
+            }
+            .padding(10)
+        }
+    }
+
+    private var noUpdatesView: some View {
+        Group {
+            Divider()
+
+            HStack(alignment: .center, spacing: 15) {
+                Button {
+                    Task { await self.reload() }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .buttonStyle(.automatic)
+                        .controlSize(.large)
+                }
+                .focusable(false)
+                .disabled(self.status.busy)
+
+                Text("phpman.refresh.button.description".localizedForSwiftUI)
+                    .foregroundColor(.gray)
+                    .font(.system(size: 11))
+            }
+            .padding(10)
+        }
+    }
 
     private var prereleaseBadge: some View {
         Text("phpman.version.prerelease".localized.uppercased())
@@ -179,6 +194,16 @@ struct PhpVersionManagerView: View {
             .foregroundColor(Color.white)
             .clipShape(Capsule())
             .fixedSize(horizontal: true, vertical: true)
+    }
+
+    // MARK: View Builders
+
+    private func listContent(for formula: BrewPhpFormula) -> some View {
+        HStack(alignment: .center, spacing: 7.0) {
+            formulaIcon(for: formula)
+            formulaDescription(for: formula)
+            formulaButtons(for: formula)
+        }
     }
 
     private func formulaButtons(for formula: BrewPhpFormula) -> some View {
@@ -244,14 +269,6 @@ struct PhpVersionManagerView: View {
             .frame(width: 16, height: 16)
             .foregroundColor(formula.iconColor)
             .padding(.horizontal, 5)
-    }
-
-    private func listContent(for formula: BrewPhpFormula) -> some View {
-        HStack(alignment: .center, spacing: 7.0) {
-            formulaIcon(for: formula)
-            formulaDescription(for: formula)
-            formulaButtons(for: formula)
-        }
     }
 }
 
