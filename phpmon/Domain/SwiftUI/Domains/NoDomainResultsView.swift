@@ -30,8 +30,6 @@ struct NoDomainResults: View {
     }
 }
 
-struct NoDomainResults_Previews: PreviewProvider {
-    static var previews: some View {
-        NoDomainResults()
-    }
+#Preview {
+    NoDomainResults()
 }

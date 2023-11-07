@@ -126,78 +126,82 @@ struct DisclaimerView: View {
     }
 }
 
-struct VersionPopoverView_Previews: PreviewProvider {
-    static var previews: some View {
-        VersionPopoverView(
-            site: FakeValetSite(
-                fakeWithName: "amazingwebsite",
-                tld: "test",
-                secure: true,
-                path: "/path/to/site",
-                linked: true,
-                constraint: ""
-            ),
-            validPhpVersions: [],
-            parent: nil
-        )
-        .previewDisplayName("Unknown Requirement")
+#Preview("Unknown Requirement") {
+    VersionPopoverView(
+        site: FakeValetSite(
+            fakeWithName: "amazingwebsite",
+            tld: "test",
+            secure: true,
+            path: "/path/to/site",
+            linked: true,
+            constraint: ""
+        ),
+        validPhpVersions: [],
+        parent: nil
+    )
+}
 
-        VersionPopoverView(
-            site: FakeValetSite(
-                fakeWithName: "amazingwebsite",
-                tld: "test",
-                secure: true,
-                path: "/path/to/site",
-                linked: true,
-                constraint: "^8.1"
-            ),
-            validPhpVersions: [],
-            parent: nil
-        )
-        .previewDisplayName("Requirement Matches")
-        VersionPopoverView(
-            site: FakeValetSite(
-                fakeWithName: "anothersite",
-                tld: "test",
-                secure: true,
-                path: "/path/to/site",
-                linked: true,
-                constraint: "^8.0",
-                isolated: "8.0"
-            ),
-            validPhpVersions: [],
-            parent: nil
-        )
-        .previewDisplayName("Isolated")
-        VersionPopoverView(
-            site: FakeValetSite(
-                fakeWithName: "anothersite",
-                tld: "test",
-                secure: true,
-                path: "/path/to/site",
-                linked: true,
-                constraint: "^8.0",
-                isolated: "7.4"
-            ),
-            validPhpVersions: [],
-            parent: nil
-        )
-        .previewDisplayName("Isolated Mismatch")
-        VersionPopoverView(
-            site: FakeValetSite(
-                fakeWithName: "anothersite",
-                tld: "test",
-                secure: true,
-                path: "/path/to/site",
-                linked: true,
-                constraint: "^8.0"
-            ),
-            validPhpVersions: [
-                VersionNumber(major: 8, minor: 0, patch: 0),
-                VersionNumber(major: 8, minor: 1, patch: 0)
-            ],
-            parent: nil
-        )
-        .previewDisplayName("Recommend Alternatives")
-    }
+#Preview("Requirement Matches") {
+    VersionPopoverView(
+        site: FakeValetSite(
+            fakeWithName: "amazingwebsite",
+            tld: "test",
+            secure: true,
+            path: "/path/to/site",
+            linked: true,
+            constraint: "^8.1"
+        ),
+        validPhpVersions: [],
+        parent: nil
+    )
+}
+
+#Preview("Isolated") {
+    VersionPopoverView(
+        site: FakeValetSite(
+            fakeWithName: "anothersite",
+            tld: "test",
+            secure: true,
+            path: "/path/to/site",
+            linked: true,
+            constraint: "^8.0",
+            isolated: "8.0"
+        ),
+        validPhpVersions: [],
+        parent: nil
+    )
+}
+
+#Preview("Isolated Mismatch") {
+    VersionPopoverView(
+        site: FakeValetSite(
+            fakeWithName: "anothersite",
+            tld: "test",
+            secure: true,
+            path: "/path/to/site",
+            linked: true,
+            constraint: "^8.0",
+            isolated: "7.4"
+        ),
+        validPhpVersions: [],
+        parent: nil
+    )
+}
+
+#Preview("Recommend Alternatives") {
+    VersionPopoverView(
+        site: FakeValetSite(
+            fakeWithName: "anothersite",
+            tld: "test",
+            secure: true,
+            path: "/path/to/site",
+            linked: true,
+            constraint: "^8.0"
+        ),
+        validPhpVersions: [
+            VersionNumber(major: 8, minor: 0, patch: 0),
+            VersionNumber(major: 8, minor: 1, patch: 0)
+        ],
+        parent: nil
+    )
 }

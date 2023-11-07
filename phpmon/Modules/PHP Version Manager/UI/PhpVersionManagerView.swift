@@ -9,7 +9,6 @@
 import Foundation
 import SwiftUI
 
-// swiftlint:disable type_body_length
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: PhpFormulaeStatus
@@ -132,240 +131,133 @@ struct PhpVersionManagerView: View {
                 .padding(10)
             }
 
-            BlockingOverlayView(busy: self.status.busy, title: self.status.title, text: self.status.description) {
-                List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
-                    HStack(alignment: .center, spacing: 7.0) {
-                        Image(systemName: formula.icon)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(formula.iconColor)
-                            .padding(.horizontal, 5)
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack {
-                                Text(formula.displayName).bold()
-
-                                if formula.prerelease {
-                                    Text("phpman.version.prerelease".localized.uppercased())
-                                        .font(.system(size: 9))
-                                        .padding(.horizontal, 5)
-                                        .padding(.vertical, 1)
-                                        .background(Color.appPrimary)
-                                        .foregroundColor(Color.white)
-                                        .clipShape(Capsule())
-                                        .fixedSize(horizontal: true, vertical: true)
-                                }
-                            }
-
-                            if formula.isInstalled && formula.hasUpgrade {
-                                Text("phpman.version.has_update".localized(
-                                    formula.installedVersion!,
-                                    formula.upgradeVersion!
-                                ))
-                                .font(.system(size: 11))
-                                .foregroundColor(.gray)
-                            } else if formula.isInstalled && formula.installedVersion != nil {
-                                Text("phpman.version.installed".localized(formula.installedVersion!))
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.gray)
-                            } else {
-                                Text("phpman.version.available_for_installation".localizedForSwiftUI)
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.gray)
-                            }
-
-                            if !formula.healthy {
-                                Text("phpman.version.broken".localizedForSwiftUI)
-                                    .font(.system(size: 11))
-                                    .foregroundColor(.red)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                        if !formula.healthy {
-                            Button("phpman.buttons.repair".localizedForSwiftUI, role: .destructive) {
-                                Task { await self.repairAll() }
-                            }
-                        }
-
-                        if formula.isInstalled {
-                            Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                                Task { await self.confirmUninstall(formula) }
-                            }
-                        } else {
-                            Button("phpman.buttons.install".localizedForSwiftUI) {
-                                Task { await self.install(formula) }
-                            }
-                        }
+            BlockingOverlayView(
+                busy: self.status.busy,
+                title: self.status.title,
+                text: self.status.description
+            ) {
+                if #available(macOS 13, *) {
+                    List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
+                        listContent(for: formula)
+                            .listRowBackground(
+                                index % 2 == 0
+                                ? Color.gray.opacity(0)
+                                : Color.gray.opacity(0.08)
+                            )
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 8)
+                            .listRowSeparator(.hidden)
                     }
-                    .listRowBackground(index % 2 == 0 ? Color.gray.opacity(0): Color.gray.opacity(0.08))
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 8)
+                    .edgesIgnoringSafeArea(.top)
+                    .listStyle(PlainListStyle())
+                } else {
+                    List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
+                        listContent(for: formula)
+                            .listRowBackground(
+                                index % 2 == 0
+                                ? Color.gray.opacity(0)
+                                : Color.gray.opacity(0.08)
+                            )
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 8)
+                    }
+                    .edgesIgnoringSafeArea(.top)
+                    .listStyle(PlainListStyle())
                 }
-                .edgesIgnoringSafeArea(.top)
-                .listStyle(PlainListStyle())
             }
         }.frame(width: 600, height: 600)
     }
 
-    public func runCommand(_ command: InstallAndUpgradeCommand) async {
-        if PhpEnvironments.shared.isBusy {
-            self.presentErrorAlert(
-                title: "phpman.action_prevented_busy.title".localized,
-                description: "phpman.action_prevented_busy.desc".localized,
-                button: "generic.ok".localized
-            )
-            return
-        }
+    // MARK: View Functions
 
-        do {
-            self.setBusyStatus(true)
-            try await command.execute { progress in
-                Task { @MainActor in
-                    self.status.title = progress.title
-                    self.status.description = progress.description
-                    self.status.busy = progress.value != 1
+    private var prereleaseBadge: some View {
+        Text("phpman.version.prerelease".localized.uppercased())
+            .font(.system(size: 9))
+            .padding(.horizontal, 5)
+            .padding(.vertical, 1)
+            .background(Color.appPrimary)
+            .foregroundColor(Color.white)
+            .clipShape(Capsule())
+            .fixedSize(horizontal: true, vertical: true)
+    }
 
-                    // Whenever a key step is finished, refresh the PHP versions
-                    if progress.value == 1 {
-                        await self.handler.refreshPhpVersions(loadOutdated: false)
-                    }
+    private func formulaButtons(for formula: BrewPhpFormula) -> some View {
+        HStack {
+            if !formula.healthy {
+                Button("phpman.buttons.repair".localizedForSwiftUI, role: .destructive) {
+                    Task { await self.repairAll() }
                 }
             }
-            // Finally, after completing the command, also refresh PHP versions
-            await self.handler.refreshPhpVersions(loadOutdated: false)
-            // and mark the app as no longer busy
-            self.setBusyStatus(false)
-        } catch let error {
-            let error = error as! BrewCommandError
-            let messages = error.log.suffix(2).joined(separator: "\n")
 
-            self.setBusyStatus(false)
-            await self.handler.refreshPhpVersions(loadOutdated: false)
-
-            self.presentErrorAlert(
-                title: "phpman.failures.install.title".localized,
-                description: "phpman.failures.install.desc".localized(messages),
-                button: "generic.ok".localized
-            )
-        }
-    }
-
-    public func repairAll() async {
-        await self.runCommand(InstallAndUpgradeCommand(
-            title: "phpman.operations.repairing".localized,
-            upgrading: [],
-            installing: []
-        ))
-    }
-
-    public func upgradeAll(_ formulae: [BrewPhpFormula]) async {
-        await self.runCommand(InstallAndUpgradeCommand(
-            title: "phpman.operations.updating".localized,
-            upgrading: formulae,
-            installing: []
-        ))
-    }
-
-    public func install(_ formula: BrewPhpFormula) async {
-        await self.runCommand(InstallAndUpgradeCommand(
-            title: "phpman.operations.installing".localized(formula.displayName),
-            upgrading: [],
-            installing: [formula]
-        ))
-    }
-
-    public func confirmUninstall(_ formula: BrewPhpFormula) async {
-        // Disallow removal of the currently active versipn
-        if formula.installedVersion == PhpEnvironments.shared.currentInstall?.version.text {
-            self.presentErrorAlert(
-                title: "phpman.uninstall_prevented.title".localized,
-                description: "phpman.uninstall_prevented.desc".localized,
-                button: "generic.ok".localized
-            )
-            return
-        }
-
-        Alert.confirm(
-            onWindow: App.shared.phpVersionManagerWindowController!.window!,
-            messageText: "phpman.warnings.removal.title".localized(formula.displayName),
-            informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
-            buttonTitle: "phpman.warnings.removal.button".localized,
-            buttonIsDestructive: true,
-            secondButtonTitle: "generic.cancel".localized,
-            style: .warning,
-            onFirstButtonPressed: {
-                Task { await self.uninstall(formula) }
-            }
-        )
-    }
-
-    public func uninstall(_ formula: BrewPhpFormula) async {
-        let command = RemovePhpVersionCommand(formula: formula.name)
-
-        do {
-            self.setBusyStatus(true)
-            try await command.execute { progress in
-                Task { @MainActor in
-                    self.status.title = progress.title
-                    self.status.description = progress.description
-                    self.status.busy = progress.value != 1
-
-                    if progress.value == 1 {
-                        await self.handler.refreshPhpVersions(loadOutdated: false)
-                        self.setBusyStatus(false)
-                    }
+            if formula.isInstalled {
+                Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
+                    Task { await self.confirmUninstall(formula) }
+                }
+            } else {
+                Button("phpman.buttons.install".localizedForSwiftUI) {
+                    Task { await self.install(formula) }
                 }
             }
-        } catch {
-            self.setBusyStatus(false)
-            self.presentErrorAlert(
-                title: "phpman.failures.uninstall.title".localized,
-                description: "phpman.failures.uninstall.desc".localized(
-                    "brew uninstall \(formula.name) --force"
-                ),
-                button: "generic.ok".localized
-            )
         }
     }
 
-    public func setBusyStatus(_ busy: Bool) {
-        Task { @MainActor in
-            PhpEnvironments.shared.isBusy = busy
-            self.status.busy = busy
+    private func formulaDescription(for formula: BrewPhpFormula) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                Text(formula.displayName).bold()
+
+                if formula.prerelease {
+                    prereleaseBadge
+                }
+            }
+
+            if formula.isInstalled && formula.hasUpgrade {
+                Text("phpman.version.has_update".localized(
+                    formula.installedVersion!,
+                    formula.upgradeVersion!
+                ))
+                .font(.system(size: 11))
+                .foregroundColor(.gray)
+            } else if formula.isInstalled && formula.installedVersion != nil {
+                Text("phpman.version.installed".localized(formula.installedVersion!))
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+            } else {
+                Text("phpman.version.available_for_installation".localizedForSwiftUI)
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+            }
+
+            if !formula.healthy {
+                Text("phpman.version.broken".localizedForSwiftUI)
+                    .font(.system(size: 11))
+                    .foregroundColor(.red)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    public func presentErrorAlert(
-        title: String,
-        description: String,
-        button: String,
-        style: NSAlert.Style = .critical
-    ) {
-        Alert.confirm(
-            onWindow: App.shared.phpVersionManagerWindowController!.window!,
-            messageText: title,
-            informativeText: description,
-            buttonTitle: button,
-            secondButtonTitle: "",
-            style: style,
-            onFirstButtonPressed: {}
-        )
+    private func formulaIcon(for formula: BrewPhpFormula) -> some View {
+        Image(systemName: formula.icon)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 16, height: 16)
+            .foregroundColor(formula.iconColor)
+            .padding(.horizontal, 5)
     }
 
-    var hasUpdates: Bool {
-        return self.formulae.phpVersions.contains { formula in
-            return formula.hasUpgrade
+    private func listContent(for formula: BrewPhpFormula) -> some View {
+        HStack(alignment: .center, spacing: 7.0) {
+            formulaIcon(for: formula)
+            formulaDescription(for: formula)
+            formulaButtons(for: formula)
         }
     }
 }
-// swiftlint:enable type_body_length
 
-struct PhpVersionManagerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhpVersionManagerView(
-            formulae: Brew.shared.formulae,
-            handler: FakeBrewFormulaeHandler()
-        ).frame(width: 600, height: 600)
-    }
+#Preview {
+    PhpVersionManagerView(
+        formulae: Brew.shared.formulae,
+        handler: FakeBrewFormulaeHandler()
+    ).frame(width: 600, height: 600)
 }

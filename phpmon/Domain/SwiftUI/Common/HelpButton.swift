@@ -27,15 +27,15 @@ struct HelpButton: View {
         .buttonStyle(BorderlessButtonStyle())
         .focusable(false)
     }
+}
 
-    struct HelpButton_Previews: PreviewProvider {
-        static var previews: some View {
-            Group {
-                HelpButton(action: {}).padding()
-                    .previewDisplayName("Light Mode")
-                HelpButton(action: {}).padding().preferredColorScheme(.dark)
-                    .previewDisplayName("Dark Mode")
-            }
-        }
-    }
+#Preview("Light Mode") {
+    HelpButton(action: {})
+        .padding(100)
+}
+
+#Preview("Dark Mode") {
+    HelpButton(action: {})
+        .padding(100)
+        .preferredColorScheme(.dark)
 }

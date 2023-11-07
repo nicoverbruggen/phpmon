@@ -20,14 +20,21 @@ class FakeBrewFormulaeHandler: HandlesBrewPhpFormulae {
                 prerelease: true
             ),
             BrewPhpFormula(
-                name: "php@8.3",
+                name: "php@8.4",
+                displayName: "PHP 8.4",
+                installedVersion: nil,
+                upgradeVersion: "8.4.0",
+                prerelease: true
+            ),
+            BrewPhpFormula(
+                name: "php",
                 displayName: "PHP 8.3",
                 installedVersion: nil,
                 upgradeVersion: "8.3.0",
                 prerelease: true
             ),
             BrewPhpFormula(
-                name: "php",
+                name: "php@8.2",
                 displayName: "PHP 8.2",
                 installedVersion: "8.2.3",
                 upgradeVersion: "8.2.4"

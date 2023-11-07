@@ -45,9 +45,7 @@ struct HeaderView: View {
     }
 }
 
-struct HeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeaderView(text: "Hello world")
-            .frame(width: 330.0)
-    }
+#Preview {
+    HeaderView(text: "Hello world")
+        .frame(width: 330.0)
 }

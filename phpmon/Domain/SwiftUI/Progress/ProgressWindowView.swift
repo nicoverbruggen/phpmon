@@ -53,13 +53,11 @@ struct ProgressWindowView: View {
     }
 }
 
-struct ProgressWindowView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProgressWindowView(
-            subject: ProgressViewSubject(
-                title: "Long running task",
-                description: "Please be patient"
-            )
+#Preview {
+    ProgressWindowView(
+        subject: ProgressViewSubject(
+            title: "Long running task",
+            description: "Please be patient"
         )
-    }
+    )
 }

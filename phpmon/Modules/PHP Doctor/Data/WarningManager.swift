@@ -34,8 +34,8 @@ class WarningManager: ObservableObject {
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
             name: "Running PHP Monitor with Rosetta on M1",
-            title: "warnings.arm_compatibility.title".localized,
-            paragraphs: { return ["warnings.arm_compatibility.description".localized] },
+            title: "warnings.arm_compatibility.title",
+            paragraphs: { return ["warnings.arm_compatibility.description"] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
         ),
         Warning(
@@ -44,11 +44,11 @@ class WarningManager: ObservableObject {
                     !FileSystem.isWriteableFile("/usr/local/bin/")
             },
             name: "Helpers cannot be symlinked and not in PATH",
-            title: "warnings.helper_permissions.title".localized,
+            title: "warnings.helper_permissions.title",
             paragraphs: { return [
-                "warnings.helper_permissions.description".localized,
-                "warnings.helper_permissions.unavailable".localized,
-                "warnings.helper_permissions.symlink".localized
+                "warnings.helper_permissions.description",
+                "warnings.helper_permissions.unavailable",
+                "warnings.helper_permissions.symlink"
             ] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
         ),
@@ -58,7 +58,7 @@ class WarningManager: ObservableObject {
                 return !PhpConfigChecker.shared.missing.isEmpty
             },
             name: "Your PHP installation is missing configuration files",
-            title: "warnings.files_missing.title".localized,
+            title: "warnings.files_missing.title",
             paragraphs: { return [
                 "warnings.files_missing.description".localized(
                     PhpConfigChecker.shared.missing.joined(separator: "\n• ")

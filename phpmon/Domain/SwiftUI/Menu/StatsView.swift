@@ -98,12 +98,10 @@ struct StatsView: View {
     }
 }
 
-struct StatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatsView(
-            memoryLimit: "1024 MB",
-            maxPostSize: "1024 MB",
-            maxUploadSize: "1024 MB"
-        ).frame(height: 100)
-    }
+#Preview {
+    StatsView(
+        memoryLimit: "1024 MB",
+        maxPostSize: "1024 MB",
+        maxUploadSize: "1024 MB"
+    ).frame(height: 100)
 }
