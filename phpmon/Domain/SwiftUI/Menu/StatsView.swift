@@ -89,6 +89,7 @@ struct StatsView: View {
                 } label: {
                     Image(systemName: "gearshape.fill")
                 }
+                .accessibility(identifier: "phpConfigButton")
                 .focusable(false)
                 .frame(minWidth: 30, alignment: .center)
             }
