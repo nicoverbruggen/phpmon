@@ -131,6 +131,8 @@
 		C42337A3281F19F000459A48 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
+		C4292D542B023F61004F0D2A /* PhpExtensionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4292D532B023F61004F0D2A /* PhpExtensionManagerWindowController.swift */; };
+		C4292D562B024006004F0D2A /* PhpExtensionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4292D552B024006004F0D2A /* PhpExtensionManagerView.swift */; };
 		C4297F7A28970D59004C4630 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
 		C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
 		C42CFB1627DFDE7900862737 /* nginx-site.test in Resources */ = {isa = PBXBuildFile; fileRef = C42CFB1527DFDE7900862737 /* nginx-site.test */; };
@@ -940,6 +942,8 @@
 		C4232EE42612526500158FC6 /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		C42337A2281F19F000459A48 /* Xdebug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xdebug.swift; sourceTree = "<group>"; };
 		C42759662627662800093CAE /* NSMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuExtension.swift; sourceTree = "<group>"; };
+		C4292D532B023F61004F0D2A /* PhpExtensionManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtensionManagerWindowController.swift; sourceTree = "<group>"; };
+		C4292D552B024006004F0D2A /* PhpExtensionManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpExtensionManagerView.swift; sourceTree = "<group>"; };
 		C4297F7928970D59004C4630 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
 		C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+FixMyValet.swift"; sourceTree = "<group>"; };
 		C42CFB1527DFDE7900862737 /* nginx-site.test */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nginx-site.test"; sourceTree = "<group>"; };
@@ -1417,6 +1421,23 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C4292D512B023F37004F0D2A /* PHP Extension Manager */ = {
+			isa = PBXGroup;
+			children = (
+				C4292D522B023F52004F0D2A /* UI */,
+			);
+			path = "PHP Extension Manager";
+			sourceTree = "<group>";
+		};
+		C4292D522B023F52004F0D2A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C4292D532B023F61004F0D2A /* PhpExtensionManagerWindowController.swift */,
+				C4292D552B024006004F0D2A /* PhpExtensionManagerView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		C4297F7828970D4E004C4630 /* PHP Doctor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1552,6 +1573,7 @@
 				C44DFA7A2A6703FD00B98ED5 /* PHP Config Editor */,
 				C4297F7828970D4E004C4630 /* PHP Doctor */,
 				C43931C329C4BD510069165B /* PHP Version Manager */,
+				C4292D512B023F37004F0D2A /* PHP Extension Manager */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -2410,12 +2432,14 @@
 				C4B79EC629CA474200A483EE /* FakeCommand.swift in Sources */,
 				C4ACA38F25C754C100060C66 /* PhpExtension.swift in Sources */,
 				C47DF1AF299D5A3B0007055D /* LoginItemManager.swift in Sources */,
+				C4292D542B023F61004F0D2A /* PhpExtensionManagerWindowController.swift in Sources */,
 				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */,
 				C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C43931CA29C4C03F0069165B /* Brew.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
+				C4292D562B024006004F0D2A /* PhpExtensionManagerView.swift in Sources */,
 				C48D6C70279CD2AC00F26D7E /* VersionNumber.swift in Sources */,
 				C4998F0A2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,

@@ -98,6 +98,11 @@
 "php_ini.upload_max_filesize.title" = "Upload Max Size";
 "php_ini.upload_max_filesize.description" = "The maximum size of an uploaded file. POST Max Size must be larger than this value.";
 
+// PHPEXTMAN
+
+"phpextman.description" = "**PHP Extension Manager** lets you manage different PHP extensions with a simple click of the button. Because Homebrew is used, extensions won't need to be compiled on the fly using `pecl`.";
+"phpextman.disclaimer" = "Certain extensions may require other dependencies to be installed, but generally speaking installing extensions should be much faster than installing PHP versions.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";

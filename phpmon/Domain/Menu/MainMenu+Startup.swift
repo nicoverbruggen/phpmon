@@ -128,10 +128,6 @@ extension MainMenu {
         // Check if the linked version has changed between launches of phpmon
         PhpGuard().compareToLastGlobalVersion()
 
-        #warning("Move to a dedicated module and check if tap is installed first!")
-        // let extensions = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")["8.2"]!
-        // print("The following extensions can be installed for this version of PHP: \(extensions)")
-
         // We are ready!
         Log.info("PHP Monitor is ready to serve!")
 
