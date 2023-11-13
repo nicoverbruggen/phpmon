@@ -8,16 +8,6 @@
 
 import Foundation
 
-class BrewFormulaeObservable: ObservableObject {
-    @Published var phpVersions: [BrewPhpFormula] = []
-
-    var upgradeable: [BrewPhpFormula] {
-        return phpVersions.filter { formula in
-            formula.hasUpgrade
-        }
-    }
-}
-
 class Brew {
     static let shared = Brew()
 

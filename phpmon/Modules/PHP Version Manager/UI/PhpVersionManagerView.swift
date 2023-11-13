@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
-    @ObservedObject var status: PhpFormulaeStatus
+    @ObservedObject var status: BusyStatus
     var handler: HandlesBrewPhpFormulae
 
     init(
@@ -21,22 +21,24 @@ struct PhpVersionManagerView: View {
         self.formulae = formulae
         self.handler = handler
 
-        self.status = PhpFormulaeStatus(
+        self.status = BusyStatus(
             busy: true,
             title: "phpman.busy.title".localized,
             description: "phpman.busy.description.outdated".localized
         )
 
-        if handler is FakeBrewFormulaeHandler {
-            Task { [self] in
-                await self.handler.refreshPhpVersions(loadOutdated: false)
-                self.status.busy = false
-            }
-        } else {
-            Task { [self] in
+        Task { [self] in
+            if handler is FakeBrewFormulaeHandler {
+                await self.fakeInitialLoad()
+            } else {
                 await self.initialLoad()
             }
         }
+    }
+
+    private func fakeInitialLoad() async {
+        await self.handler.refreshPhpVersions(loadOutdated: false)
+        self.status.busy = false
     }
 
     private func initialLoad() async {
@@ -69,7 +71,9 @@ struct PhpVersionManagerView: View {
             self.status.title = "phpman.busy.title".localized
             self.status.description = "phpman.busy.description.outdated".localized
         }
+
         await self.handler.refreshPhpVersions(loadOutdated: true)
+
         Task { @MainActor in
             self.status.busy = false
         }
