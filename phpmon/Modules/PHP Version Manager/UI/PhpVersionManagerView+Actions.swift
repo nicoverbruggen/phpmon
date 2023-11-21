@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 extension PhpVersionManagerView {
-    public func runCommand(_ command: InstallAndUpgradeCommand) async {
+    public func runCommand(_ command: ModifyPhpVersionCommand) async {
         if PhpEnvironments.shared.isBusy {
             self.presentErrorAlert(
                 title: "phpman.action_prevented_busy.title".localized,
@@ -54,7 +54,7 @@ extension PhpVersionManagerView {
     }
 
     public func repairAll() async {
-        await self.runCommand(InstallAndUpgradeCommand(
+        await self.runCommand(ModifyPhpVersionCommand(
             title: "phpman.operations.repairing".localized,
             upgrading: [],
             installing: []
@@ -62,7 +62,7 @@ extension PhpVersionManagerView {
     }
 
     public func upgradeAll(_ formulae: [BrewPhpFormula]) async {
-        await self.runCommand(InstallAndUpgradeCommand(
+        await self.runCommand(ModifyPhpVersionCommand(
             title: "phpman.operations.updating".localized,
             upgrading: formulae,
             installing: []
@@ -70,7 +70,7 @@ extension PhpVersionManagerView {
     }
 
     public func install(_ formula: BrewPhpFormula) async {
-        await self.runCommand(InstallAndUpgradeCommand(
+        await self.runCommand(ModifyPhpVersionCommand(
             title: "phpman.operations.installing".localized(formula.displayName),
             upgrading: [],
             installing: [formula]

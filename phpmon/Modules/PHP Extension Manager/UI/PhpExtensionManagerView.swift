@@ -9,43 +9,23 @@
 import Foundation
 import SwiftUI
 
-class BrewExtensionsObservable: ObservableObject {
-    @Published var extensions: [BrewPhpExtension] = [] {
-        didSet {
-            print(self.extensions)
-        }
-    }
-
-    public func loadExtensionData(for version: String) {
-        let tapFormulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
-        if let filteredTapFormulae = tapFormulae[version] {
-            self.extensions = filteredTapFormulae.sorted().map({ name in
-                return BrewPhpExtension(name: name, isInstalled: false)
-            })
-        }
-    }
-}
-
-// Temp model for UI purposes
-struct BrewPhpExtension {
-    let name: String
-    let isInstalled: Bool
-}
-
 struct PhpExtensionManagerView: View {
-    init() {
-        self.searchText = ""
-        self.phpVersion = PhpEnvironments.shared.currentInstall!.version.short
-        self.manager.loadExtensionData(for: self.phpVersion)
-    }
-
     @ObservedObject var manager = BrewExtensionsObservable()
+    @ObservedObject var status: BusyStatus
     @State var searchText: String
     @State var phpVersion: String {
         didSet {
             self.manager.loadExtensionData(for: self.phpVersion)
-            print(self.manager.extensions)
         }
+    }
+
+    init() {
+        self.searchText = ""
+        self.status = BusyStatus.busy()
+        self.phpVersion = PhpEnvironments.shared.currentInstall!.version.short
+        self.manager.loadExtensionData(for: self.phpVersion)
+        self.status.busy = false
+        #warning("PHP extension manager does not react to PHP version changes!")
     }
 
     var filteredExtensions: [BrewPhpExtension] {
@@ -59,14 +39,20 @@ struct PhpExtensionManagerView: View {
         VStack {
             header.padding(20)
 
-            List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, pExtension) in
-                listContent(for: pExtension)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 8)
+            BlockingOverlayView(
+                busy: self.status.busy,
+                title: self.status.title,
+                text: self.status.description
+            ) {
+                List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, pExtension) in
+                    listContent(for: pExtension)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                }
+                .edgesIgnoringSafeArea(.top)
+                .listStyle(PlainListStyle())
+                .searchable(text: $searchText)
             }
-            .edgesIgnoringSafeArea(.top)
-            .listStyle(PlainListStyle())
-            .searchable(text: $searchText)
         }.frame(width: 600, height: 600)
     }
 
@@ -107,11 +93,11 @@ struct PhpExtensionManagerView: View {
             HStack {
                 if bExtension.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-
+                        Task { await self.runCommand(RemovePhpExtensionCommand(remove: bExtension)) }
                     }
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
-
+                        Task { await self.runCommand(InstallPhpExtensionCommand(install: [bExtension])) }
                     }
                 }
             }

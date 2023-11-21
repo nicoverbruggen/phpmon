@@ -18,4 +18,12 @@ class BusyStatus: ObservableObject {
         self.title = title
         self.description = description
     }
+
+    public static func notBusy() -> BusyStatus {
+        return BusyStatus(busy: false, title: "", description: "")
+    }
+
+    public static func busy() -> BusyStatus {
+        return BusyStatus(busy: false, title: "", description: "")
+    }
 }

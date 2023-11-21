@@ -8,15 +8,45 @@
 
 import Foundation
 
+struct BrewPhpExtension: Hashable, Comparable {
+    let name: String
+    let phpVersion: String
+    let isInstalled: Bool
+
+    var formulaName: String {
+        return "\(name)@\(phpVersion)"
+    }
+
+    init(name: String, phpVersion: String) {
+        self.name = name
+        self.phpVersion = phpVersion
+        self.isInstalled = BrewPhpExtension.hasInstallationReceipt(
+            for: "\(name)@\(phpVersion)"
+        )
+    }
+
+    static func hasInstallationReceipt(for formulaName: String) -> Bool {
+        return FileSystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
+    }
+
+    static func < (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
+        return lhs.name < rhs.name
+    }
+
+    static func == (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
+        return lhs.name == rhs.name
+    }
+}
+
 class BrewTapFormulae {
-    public static func from(tap: String) -> [String: Set<String>] {
+    public static func from(tap: String) -> [String: [BrewPhpExtension]] {
         let directory = "\(Paths.tapPath)/\(tap)/Formula"
 
         let files = try? FileSystem.getShallowContentsOfDirectory(directory)
 
-        var availableExtensions = [String: Set<String>]()
+        var availableExtensions = [String: [BrewPhpExtension]]()
 
-        guard let files else {
+        guard let files = files else {
             return availableExtensions
         }
 
@@ -27,15 +57,22 @@ class BrewTapFormulae {
             if let match = matches.first {
                 if let phpExtensionRange = Range(match.range(at: 1), in: file),
                    let versionRange = Range(match.range(at: 2), in: file) {
-                    let phpExtension = String(file[phpExtensionRange])
+                    // Determine what the extension's name is
+                    let phpExtensionName = String(file[phpExtensionRange])
+                    // Determine what PHP version this is for
                     let phpVersion = String(file[versionRange])
 
-                    if var existingExtensions = availableExtensions[phpVersion] {
-                        existingExtensions.insert(phpExtension)
-                        availableExtensions[phpVersion] = existingExtensions
-                    } else {
-                        availableExtensions[phpVersion] = [phpExtension]
-                    }
+                    // Create a new BrewPhpExtension object, which will determine
+                    // whether this extension is installed or not
+                    let phpExtension = BrewPhpExtension(
+                        name: phpExtensionName,
+                        phpVersion: phpVersion
+                    )
+
+                    // Append the extension to the list
+                    var extensions = availableExtensions[phpVersion, default: []]
+                    extensions.append(phpExtension)
+                    availableExtensions[phpVersion] = extensions.sorted()
                 }
             }
         }

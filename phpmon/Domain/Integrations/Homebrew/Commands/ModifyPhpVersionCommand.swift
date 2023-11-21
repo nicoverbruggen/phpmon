@@ -8,12 +8,15 @@
 
 import Foundation
 
-class InstallAndUpgradeCommand: BrewCommand {
-
+class ModifyPhpVersionCommand: BrewCommand {
     let title: String
     let installing: [BrewPhpFormula]
     let upgrading: [BrewPhpFormula]
     let phpGuard: PhpGuard
+
+    func getCommandTitle() -> String {
+        return title
+    }
 
     /**
      You can pass in which PHP versions need to be upgraded and which ones need to be installed.
@@ -56,18 +59,6 @@ class InstallAndUpgradeCommand: BrewCommand {
 
         // Finally, complete all operations
         await self.completedOperations(onProgress)
-    }
-
-    private func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
-            let command = "brew tap shivammathur/php"
-            try await run(command, onProgress)
-        }
-
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
-            let command = "brew tap shivammathur/extensions"
-            try await run(command, onProgress)
-        }
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -132,32 +123,6 @@ class InstallAndUpgradeCommand: BrewCommand {
         try await run(command, onProgress)
     }
 
-    private func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        var loggedMessages: [String] = []
-
-        let (process, _) = try! await Shell.attach(
-            command,
-            didReceiveOutput: { text, _ in
-                if !text.isEmpty {
-                    Log.perf(text)
-                    loggedMessages.append(text)
-                }
-
-                if let (number, text) = self.reportInstallationProgress(text) {
-                    onProgress(.create(value: number, title: self.title, description: text))
-                }
-            },
-            withTimeout: .minutes(15)
-        )
-
-        if process.terminationStatus <= 0 {
-            loggedMessages = []
-            return
-        } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
-        }
-    }
-
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
         onProgress(.create(value: 0.95, title: self.title, description: "Reloading PHP versions..."))
@@ -183,5 +148,4 @@ class InstallAndUpgradeCommand: BrewCommand {
             description: "The installation has succeeded."
         ))
     }
-
 }
