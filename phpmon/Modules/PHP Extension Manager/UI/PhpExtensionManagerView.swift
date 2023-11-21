@@ -17,24 +17,26 @@ struct BrewPhpExtension {
 
 struct PhpExtensionManagerView: View {
     init() {
-        let available = BrewTapFormulae
-            .from(tap: "shivammathur/homebrew-extensions")["8.2"]!.sorted()
+        let formulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
 
-        print(available)
+        if formulae.keys.contains(self.phpVersion) {
+            let extensions = formulae[self.phpVersion]!
+                .sorted()
+                .map({ name in
+                    return BrewPhpExtension(name: name, isInstalled: false)
+                })
 
-        let extensions = available.map({ name in
-            return BrewPhpExtension(name: name, isInstalled: false)
-        })
-
-        self.extensions = extensions
+            self.extensions = extensions
+        }
     }
 
     @State var searchText: String = ""
-    @State var extensions: [BrewPhpExtension]
+    @State var extensions: [BrewPhpExtension] = []
+    @State var phpVersion: String = ""
 
     var body: some View {
         VStack {
-            header.padding(20)
+            // header.padding(20)
 
             List(Array(extensions.enumerated()), id: \.1.name) { (index, pExtension) in
                 listContent(for: pExtension)

@@ -11,6 +11,7 @@ import Foundation
 class BrewTapFormulae {
     public static func from(tap: String) -> [String: Set<String>] {
         let directory = "\(Paths.tapPath)/\(tap)/Formula"
+        
         let files = try? FileSystem.getShallowContentsOfDirectory(directory)
 
         var availableExtensions = [String: Set<String>]()
