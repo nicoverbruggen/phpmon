@@ -79,13 +79,19 @@ struct PhpExtensionManagerView: View {
 
     private func listContent(for bExtension: BrewPhpExtension) -> some View {
         HStack(alignment: .center, spacing: 7.0) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 HStack {
-                    Image(systemName: "puzzlepiece.extension")
+                    Image(systemName: bExtension.isInstalled 
+                          ? "puzzlepiece.extension.fill"
+                          : "puzzlepiece.extension")
                         .resizable()
-                        .frame(width: 12, height: 12)
+                        .frame(width: 16, height: 16)
                         .foregroundColor(Color.blue)
                     Text(bExtension.name).bold()
+                    Text("for PHP \(bExtension.phpVersion)")
+                        .font(.system(size: 9))
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 2)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -93,11 +99,15 @@ struct PhpExtensionManagerView: View {
             HStack {
                 if bExtension.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                        Task { await self.runCommand(RemovePhpExtensionCommand(remove: bExtension)) }
+                        Task { await self.runCommand(
+                            RemovePhpExtensionCommand(remove: bExtension)
+                        ) }
                     }
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
-                        Task { await self.runCommand(InstallPhpExtensionCommand(install: [bExtension])) }
+                        Task { await self.runCommand(
+                            InstallPhpExtensionCommand(install: [bExtension])
+                        ) }
                     }
                 }
             }
