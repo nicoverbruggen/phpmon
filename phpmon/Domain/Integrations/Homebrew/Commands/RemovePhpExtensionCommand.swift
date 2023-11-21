@@ -52,6 +52,8 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             await MainMenu.shared.refreshActiveInstallation()
 
+            #warning("Remaining config files should be cleaned up")
+
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
             throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages)

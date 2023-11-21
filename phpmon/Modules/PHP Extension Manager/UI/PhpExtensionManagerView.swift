@@ -81,7 +81,7 @@ struct PhpExtensionManagerView: View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
                 HStack {
-                    Image(systemName: bExtension.isInstalled 
+                    Image(systemName: bExtension.isInstalled
                           ? "puzzlepiece.extension.fill"
                           : "puzzlepiece.extension")
                         .resizable()
@@ -99,6 +99,7 @@ struct PhpExtensionManagerView: View {
             HStack {
                 if bExtension.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
+                        #warning("Removal should ask for confirmation")
                         Task { await self.runCommand(
                             RemovePhpExtensionCommand(remove: bExtension)
                         ) }
