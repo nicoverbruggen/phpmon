@@ -37,8 +37,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - UI related
 
     /**
-     Rebuilds the menu (either asynchronously or synchronously).
-     Defaults to rebuilding the menu asynchronously.
+     Rebuilds the menu on the main thread.
      */
     func rebuild() {
         Task { @MainActor [self] in
@@ -80,7 +79,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func refreshActiveInstallation() {
         if !PhpEnvironments.shared.isBusy {
             PhpEnvironments.shared.currentInstall = ActivePhpInstallation.load()
-            updatePhpVersionInStatusBar()
+            refreshIcon()
+            rebuild()
         } else {
             Log.perf("Skipping version refresh due to busy status!")
         }

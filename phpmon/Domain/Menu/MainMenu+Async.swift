@@ -63,7 +63,8 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.updatesMenuBarContents) {
-                    updatePhpVersionInStatusBar()
+                    refreshIcon()
+                    rebuild()
                 }
 
                 if behaviours.contains(.broadcastServicesUpdate) {

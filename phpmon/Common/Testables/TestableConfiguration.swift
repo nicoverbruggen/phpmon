@@ -103,6 +103,7 @@ public struct TestableConfiguration: Codable {
                 )
         }
     }
+    // swiftlint:enable function_body_length
 
     // MARK: Interactions
 

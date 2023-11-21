@@ -56,7 +56,6 @@ class ConfigFSNotifier {
                 return App.shared.handlePhpConfigWatcher(forceReload: true)
             }
 
-
             self?.parent.didChange?(self!.url)
         }
 

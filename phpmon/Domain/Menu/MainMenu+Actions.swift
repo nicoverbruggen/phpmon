@@ -287,7 +287,7 @@ extension MainMenu {
         PhpEnvironments.shared.delegate = self
         PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
 
-        updatePhpVersionInStatusBar()
+        refreshIcon()
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 
@@ -302,7 +302,7 @@ extension MainMenu {
         PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
 
         Task(priority: .userInitiated) { [unowned self] in
-            updatePhpVersionInStatusBar()
+            refreshIcon()
             rebuild()
             await PhpEnvironments.switcher.performSwitch(to: version)
 
@@ -328,7 +328,7 @@ extension MainMenu {
             PhpEnvironments.shared.delegate?.switcherDidStartSwitching(to: version)
         }
 
-        updatePhpVersionInStatusBar()
+        refreshIcon()
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 

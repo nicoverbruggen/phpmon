@@ -63,9 +63,6 @@ extension MainMenu {
         // Check for an alias conflict
         await BrewDiagnostics.checkForCaskConflict()
 
-        // Update the icon
-        updatePhpVersionInStatusBar()
-
         // Attempt to find out if PHP-FPM is broken
         PhpEnvironments.prepare()
 
@@ -129,6 +126,7 @@ extension MainMenu {
         PhpGuard().compareToLastGlobalVersion()
 
         // We are ready!
+        PhpEnvironments.shared.isBusy = false
         Log.info("PHP Monitor is ready to serve!")
 
         // Check if we upgraded just now

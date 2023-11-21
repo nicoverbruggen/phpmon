@@ -8,8 +8,8 @@
 
 import Foundation
 
+// swiftlint:disable function_body_length
 class FakeBrewFormulaeHandler: HandlesBrewPhpFormulae {
-    // swiftlint:disable function_body_length
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         return [
             BrewPhpFormula(
@@ -78,3 +78,4 @@ class FakeBrewFormulaeHandler: HandlesBrewPhpFormulae {
         ]
     }
 }
+// swiftlint:enable function_body_length
