@@ -41,6 +41,9 @@ class InstallAndUpgradeCommand: BrewCommand {
             description: "PHP Monitor is preparing Homebrew..."
         ))
 
+        // Make sure the tap is installed
+        try await self.checkPhpTap(onProgress)
+
         // Try to run all upgrade and installation operations
         try await self.upgradePackages(onProgress)
         try await self.installPackages(onProgress)
@@ -53,6 +56,18 @@ class InstallAndUpgradeCommand: BrewCommand {
 
         // Finally, complete all operations
         await self.completedOperations(onProgress)
+    }
+
+    private func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
+            let command = "brew tap shivammathur/php"
+            try await run(command, onProgress)
+        }
+
+        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
+            let command = "brew tap shivammathur/extensions"
+            try await run(command, onProgress)
+        }
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
