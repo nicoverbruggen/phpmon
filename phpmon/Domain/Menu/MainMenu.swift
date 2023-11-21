@@ -214,6 +214,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func openPhpVersionManager() {
         PhpVersionManagerWindowController.show()
     }
+    
+    @objc func openPhpExtensionManager() {
+        PhpExtensionManagerWindowController.show()
+    }
 
     @objc func openDonate() {
         NSWorkspace.shared.open(Constants.Urls.DonationPage)

@@ -12,7 +12,9 @@
 "mi_no_php_linked" = "No PHP version linked!";
 "mi_fix_php_link" = "Fix Automatically...";
 "mi_no_php_linked_explain" = "What's This?";
-"mi_php_version_manager" = "PHP Version Manager...";
+
+"mi_php_version_manager" = "Manage PHP Installations...";
+"mi_php_ext_manager" = "Manage PHP Extensions...";
 "mi_php_config_manager" = "PHP Configuration Editor...";
 "mi_manage_limits" = "Manage Limits...";
 
@@ -100,6 +102,7 @@
 
 // PHPEXTMAN
 
+"phpextman.window.title" = "Extensions";
 "phpextman.description" = "**PHP Extension Manager** lets you manage different PHP extensions with a simple click of the button. Because Homebrew is used, extensions won't need to be compiled on the fly using `pecl`.";
 "phpextman.disclaimer" = "Certain extensions may require other dependencies to be installed, but generally speaking installing extensions should be much faster than installing PHP versions.";
 

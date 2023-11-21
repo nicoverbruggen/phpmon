@@ -9,6 +9,23 @@
 import Foundation
 import SwiftUI
 
+class BrewExtensionsObservable: ObservableObject {
+    @Published var extensions: [BrewPhpExtension] = [] {
+        didSet {
+            print(self.extensions)
+        }
+    }
+
+    public func loadExtensionData(for version: String) {
+        let tapFormulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
+        if let filteredTapFormulae = tapFormulae[version] {
+            self.extensions = filteredTapFormulae.sorted().map({ name in
+                return BrewPhpExtension(name: name, isInstalled: false)
+            })
+        }
+    }
+}
+
 // Temp model for UI purposes
 struct BrewPhpExtension {
     let name: String
@@ -17,34 +34,33 @@ struct BrewPhpExtension {
 
 struct PhpExtensionManagerView: View {
     init() {
-        let formulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
+        self.searchText = ""
+        self.phpVersion = PhpEnvironments.shared.currentInstall!.version.short
+        self.manager.loadExtensionData(for: self.phpVersion)
+    }
 
-        if formulae.keys.contains(self.phpVersion) {
-            let extensions = formulae[self.phpVersion]!
-                .sorted()
-                .map({ name in
-                    return BrewPhpExtension(name: name, isInstalled: false)
-                })
-
-            self.extensions = extensions
+    @ObservedObject var manager = BrewExtensionsObservable()
+    @State var searchText: String
+    @State var phpVersion: String {
+        didSet {
+            self.manager.loadExtensionData(for: self.phpVersion)
+            print(self.manager.extensions)
         }
     }
 
-    @State var searchText: String = ""
-    @State var extensions: [BrewPhpExtension] = []
-    @State var phpVersion: String = ""
+    var filteredExtensions: [BrewPhpExtension] {
+        guard !searchText.isEmpty else {
+            return manager.extensions
+        }
+        return manager.extensions.filter { $0.name.contains(searchText) }
+    }
 
     var body: some View {
         VStack {
-            // header.padding(20)
+            header.padding(20)
 
-            List(Array(extensions.enumerated()), id: \.1.name) { (index, pExtension) in
+            List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, pExtension) in
                 listContent(for: pExtension)
-                    .listRowBackground(
-                        index % 2 == 0
-                        ? Color.gray.opacity(0)
-                        : Color.gray.opacity(0.08)
-                    )
                     .padding(.vertical, 8)
                     .padding(.horizontal, 8)
             }
@@ -79,6 +95,10 @@ struct PhpExtensionManagerView: View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
+                    Image(systemName: "puzzlepiece.extension")
+                        .resizable()
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(Color.blue)
                     Text(bExtension.name).bold()
                 }
             }

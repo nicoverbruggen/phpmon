@@ -14,7 +14,7 @@ class PhpExtensionManagerWindowController: PMWindowController {
 
     // MARK: - Window Identifier
 
-    var view: PhpVersionManagerView!
+    var view: PhpExtensionManagerView!
 
     override var windowName: String {
         return "PhpExtensionManager"
@@ -24,15 +24,12 @@ class PhpExtensionManagerWindowController: PMWindowController {
         let windowController = Self()
 
         windowController.window = NSWindow()
-        windowController.view = PhpVersionManagerView(
-            formulae: Brew.shared.formulae,
-            handler: BrewPhpFormulaeHandler()
-        )
+        windowController.view = PhpExtensionManagerView()
 
         guard let window = windowController.window else { return }
-        window.title = ""
+        window.title = "phpextman.window.title".localized
         window.styleMask = [.titled, .closable, .miniaturizable]
-        window.titlebarAppearsTransparent = true
+        window.titlebarAppearsTransparent = false
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: windowController.view)
         window.setContentSize(NSSize(width: 600, height: 800))
