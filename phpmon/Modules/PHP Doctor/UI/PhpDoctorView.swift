@@ -89,8 +89,10 @@ struct PhpDoctorView: View {
             }
             .listRowInsets(EdgeInsets())
             .listStyle(.plain)
-            .frame(maxHeight: .infinity, alignment: .top)
+            .frame(minHeight: 350, maxHeight: .infinity, alignment: .top)
         }
+        .frame(width: 600)
+        .fixedSize(horizontal: true, vertical: false)
     }
 }
 

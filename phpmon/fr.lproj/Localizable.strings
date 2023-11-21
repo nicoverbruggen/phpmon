@@ -30,7 +30,7 @@
 "mi_fix_brew_permissions" = "Restaurer les permissions Homebrew";
 "mi_fix_brew_permissions_tooltip" = "Des problèmes de permission lors de l'exécution de `brew upgrade` ? PHP Monitor vient à votre rescousse !";
 
-"mi_php_refresh" = "Actualiser les informations.";
+"mi_php_refresh" = "Actualiser les informations";
 
 "mi_configuration" = "Configuration PHP";
 "mi_limits" = "Configuration des limites";
@@ -48,8 +48,8 @@
 "mi_valet_config" = "Localiser le dossier Valet (.config/valet)";
 "mi_php_config" = "Localiser le fichier de configuration de PHP (php.ini)";
 "mi_phpmon_config" = "Localiser le dossier de PHP Monitor (.config/phpmon)";
-"mi_global_composer" = "Localiser le fichier Composer global (.composer).";
-"mi_phpinfo" = "Afficher la configuration actuelle (phpinfo).";
+"mi_global_composer" = "Localiser le fichier Composer global (.composer)";
+"mi_phpinfo" = "Afficher la configuration actuelle (phpinfo)";
 "mi_update_global_composer" = "Mettre à jour les dépendances globales de Composer...";
 "mi_detected_extensions" = "Extensions détectées";
 "mi_no_extensions_detected" = "Aucune extension supplémentaire détectée.";
@@ -337,22 +337,22 @@ Cela n'a pas d'effet sur les autres terminaux, mais uniquement sur la session de
 "prefs.close" = "Fermer";
 
 "prefs.tabs.general" = "Général";
-"prefs.tabs.appearance" = "apparence";
+"prefs.tabs.appearance" = "Apparence";
 "prefs.tabs.visibility" = "Visibilité";
 "prefs.tabs.notifications" = "Notifications";
 
-"prefs.global_shortcut" = "Raccourci Clavier Global :";
+"prefs.global_shortcut" = "Raccourci Clavier :";
 "prefs.dynamic_icon" = "Type d'Icône :";
 "prefs.info_density" = "Densité d'Informations :";
 "prefs.services" = "Services :";
 "prefs.switcher" = "Sélecteur :";
-"prefs.php_doctor" = "PHP Doctor:";
-"prefs.integrations" = "Intégrations:";
-"prefs.updates" = "Mises-à-jour:";
-"prefs.notifications" = "Notifications:";
-"prefs.warnings" = "Avertissements:";
-"prefs.menu_contents" = "Fonctionnalités dans le menu:";
-"prefs.startup" = "Démarrage:";
+"prefs.php_doctor" = "PHP Doctor :";
+"prefs.integrations" = "Intégrations :";
+"prefs.updates" = "Mises-à-jour :";
+"prefs.notifications" = "Notifications :";
+"prefs.warnings" = "Avertissements :";
+"prefs.menu_contents" = "Le menu contient :";
+"prefs.startup" = "Démarrage :";
 
 "prefs.auto_start_desc" = "Lancer automatiquement PHP Monitor lorsque vous vous connectez à votre Mac.";
 "prefs.auto_start_title" = "Démarrer PHP Monitor à la connexion";
