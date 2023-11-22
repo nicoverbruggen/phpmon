@@ -25,6 +25,14 @@ struct BrewPhpExtension: Hashable, Comparable {
         )
     }
 
+    var hasAlternativeInstall: Bool {
+        // Extension must be active
+        let isActive = PhpEnvironments.shared.currentInstall?.extensions
+            .contains(where: { $0.name == self.name }) ?? false
+
+        return isActive && !isInstalled
+    }
+
     static func hasInstallationReceipt(for formulaName: String) -> Bool {
         return FileSystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
     }

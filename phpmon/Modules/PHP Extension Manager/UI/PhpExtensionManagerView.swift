@@ -81,17 +81,40 @@ struct PhpExtensionManagerView: View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
                 HStack {
-                    Image(systemName: bExtension.isInstalled
-                          ? "puzzlepiece.extension.fill"
-                          : "puzzlepiece.extension")
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(Color.blue)
-                    Text(bExtension.name).bold()
-                    Text("for PHP \(bExtension.phpVersion)")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 2)
+                    HStack {
+                        Image(systemName: bExtension.isInstalled || bExtension.hasAlternativeInstall
+                              ? "puzzlepiece.extension.fill"
+                              : "puzzlepiece.extension")
+                            .resizable()
+                            .frame(width: 24, height: 20)
+                            .foregroundColor(bExtension.hasAlternativeInstall ? Color.gray : Color.blue)
+                    }.frame(width: 48, height: 24)
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack {
+                            Text(bExtension.name).bold()
+                            Text("for PHP \(bExtension.phpVersion)")
+                                .font(.system(size: 9))
+                                .foregroundStyle(.secondary)
+                                .padding(.top, 2)
+                        }
+                        if bExtension.isInstalled {
+                            Text("This extension is installed and can be managed by PHP Monitor.")
+                                .font(.system(size: 11))
+                                .foregroundStyle(.secondary)
+                        } else {
+                            if bExtension.hasAlternativeInstall {
+                                Text("This external extension cannot be managed by PHP Monitor.")
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(.orange)
+                            } else {
+                                Text("This extension can be installed.")
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -109,7 +132,7 @@ struct PhpExtensionManagerView: View {
                         Task { await self.runCommand(
                             InstallPhpExtensionCommand(install: [bExtension])
                         ) }
-                    }
+                    }.disabled(bExtension.hasAlternativeInstall)
                 }
             }
         }
