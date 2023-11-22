@@ -88,7 +88,7 @@ struct PhpExtensionManagerView: View {
                             .resizable()
                             .frame(width: 24, height: 20)
                             .foregroundColor(bExtension.hasAlternativeInstall ? Color.gray : Color.blue)
-                    }.frame(width: 48, height: 24)
+                    }.frame(width: 36, height: 24)
 
                     VStack(alignment: .leading, spacing: 3) {
                         HStack {
@@ -104,7 +104,7 @@ struct PhpExtensionManagerView: View {
                                 .foregroundStyle(.secondary)
                         } else {
                             if bExtension.hasAlternativeInstall {
-                                Text("This external extension cannot be managed by PHP Monitor.")
+                                Text("This extension is already installed via another source, and cannot be managed.")
                                     .font(.system(size: 11))
                                     .foregroundStyle(.orange)
                             } else {
