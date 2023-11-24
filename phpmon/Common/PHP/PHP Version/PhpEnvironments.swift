@@ -29,7 +29,7 @@ class PhpEnvironments {
     /**
      Determine which PHP version the `php` formula is aliased to.
      */
-    func determinePhpAlias() async {
+    @MainActor func determinePhpAlias() async {
         let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
         self.homebrewPackage = try! JSONDecoder().decode(

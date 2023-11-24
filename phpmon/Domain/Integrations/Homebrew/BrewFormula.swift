@@ -54,6 +54,19 @@ struct BrewFormula: Equatable {
             && PhpEnvironments.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
     }
 
+    var unavailableAfterUpgrade: Bool {
+        if (installedVersion == nil || upgradeVersion == nil) {
+            return false
+        }
+
+        if let installed = try? VersionNumber.parse(self.installedVersion!),
+           let upgrade = try? VersionNumber.parse(self.upgradeVersion!) {
+            return upgrade.short != installed.short
+        }
+
+        return false
+    }
+
     /// The associated Homebrew folder with this PHP formula.
     var homebrewFolder: String {
         let resolved = name
