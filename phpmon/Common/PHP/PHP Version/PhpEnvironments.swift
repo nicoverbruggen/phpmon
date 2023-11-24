@@ -37,6 +37,7 @@ class PhpEnvironments {
             from: brewPhpAlias.data(using: .utf8)!
         ).first!
 
+        PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
         Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
 
         // Check if that version actually corresponds to an older version

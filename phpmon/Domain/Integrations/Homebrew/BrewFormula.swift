@@ -55,7 +55,7 @@ struct BrewFormula: Equatable {
     }
 
     var unavailableAfterUpgrade: Bool {
-        if (installedVersion == nil || upgradeVersion == nil) {
+        if installedVersion == nil || upgradeVersion == nil {
             return false
         }
 
