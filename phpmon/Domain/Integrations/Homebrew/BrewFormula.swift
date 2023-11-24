@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewFormula {
+struct BrewFormula: Equatable {
     /// Name of the formula.
     let name: String
 
@@ -48,6 +48,12 @@ struct BrewFormula {
         return upgradeVersion != nil
     }
 
+    /// Whether this formula alias is different.
+    var hasUpgradedFormulaAlias: Bool {
+        return self.shortVersion == PhpEnvironments.homebrewBrewPhpAlias
+            && PhpEnvironments.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
+    }
+
     /// The associated Homebrew folder with this PHP formula.
     var homebrewFolder: String {
         let resolved = name
@@ -60,7 +66,7 @@ struct BrewFormula {
     /// The short version associated with this formula, if installed.
     var shortVersion: String? {
         guard let version = self.installedVersion else {
-            return nil
+            return self.displayName.replacingOccurrences(of: "PHP ", with: "")
         }
 
         return VersionNumber.make(from: version)?.short ?? nil

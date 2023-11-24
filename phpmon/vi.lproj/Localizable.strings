@@ -90,6 +90,7 @@
 "phpman.version.has_update" = "Phiên bản %@ được cài đặt, Phiên bản %@ có sẵn.";
 "phpman.version.installed" = "Phiên bản %@ hiện đã được cài đặt.";
 "phpman.version.available_for_installation" = "Phiên bản này có thể được cài đặt.";
+"phpman.version.automatic_upgrade" = "Phiên bản này sẽ được cài đặt tự động bằng cách nâng cấp từ một phiên bản cũ hơn.";
 "phpman.buttons.uninstall" = "Gỡ cài đặt";
 "phpman.buttons.install" = "Cài đặt";
 "phpman.buttons.update" = "Cập nhật";

@@ -12,6 +12,8 @@ class PhpInstallation {
 
     var versionNumber: VersionNumber
 
+    var missingBinary: Bool = false
+
     var isHealthy: Bool = true
 
     /**
@@ -35,6 +37,10 @@ class PhpInstallation {
             // The parser should always work, or the string has to be very unusual.
             // If so, the app SHOULD crash, so that the users report what's up.
             self.versionNumber = try! VersionNumber.parse(longVersionString)
+        } else {
+            // Keep track that the `php-config` binary is missing; this often means there's a mismatch between
+            // the `php` version alias and the actual installed version (e.g. you haven't upgraded `php`) 
+            missingBinary = true
         }
 
         if FileSystem.fileExists(phpExecutablePath) {
