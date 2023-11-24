@@ -27,7 +27,7 @@ class OnboardingWindowController: PMWindowController {
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: OnboardingView())
-        window.setContentSize(NSSize(width: 600, height: 600))
+        window.setContentSize(window.contentView!.fittingSize)
 
         App.shared.onboardingWindowController = windowController
     }

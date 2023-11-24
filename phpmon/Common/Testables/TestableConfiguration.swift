@@ -63,8 +63,8 @@ public struct TestableConfiguration: Codable {
                 : .fake(.binary),
             "/opt/homebrew/Cellar/php/\(version.long)/bin/php-config"
                 : .fake(.binary),
-            "/opt/homebrew/etc/php/\(version.short)/php-fpm.d/www.conf"
-                : .fake(.text),
+            // "/opt/homebrew/etc/php/\(version.short)/php-fpm.d/www.conf"
+                // : .fake(.text),
             "/opt/homebrew/etc/php/\(version.short)/php-fpm.d/valet-fpm.conf"
                 : .fake(.text),
             "/opt/homebrew/etc/php/\(version.short)/php.ini"
@@ -94,7 +94,7 @@ public struct TestableConfiguration: Codable {
                 /opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini,
                 """
         } else {
-
+            self.shellOutput["sudo /opt/homebrew/bin/brew services stop php@\(version.short)"] = .instant("")
             self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
                 BatchFakeShellOutput.instant(
                     self.secondaryPhpVersions

@@ -91,6 +91,7 @@
 "phpman.version.has_update" = "Versie %@ geïnstalleerd, %@ beschikbaar.";
 "phpman.version.installed" = "Versie %@ is momenteel geïnstalleerd.";
 "phpman.version.available_for_installation" = "Deze versie kan worden geïnstalleerd.";
+"phpman.version.automatic_upgrade" = "Deze versie zal automatisch geïnstalleerd worden door een upgrade.";
 "phpman.buttons.uninstall" = "Verwijderen";
 "phpman.buttons.install" = "Installeren";
 "phpman.buttons.update" = "Bijwerken";

@@ -27,7 +27,7 @@ class PhpDoctorWindowController: PMWindowController {
         window.titlebarAppearsTransparent = true
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: PhpDoctorView())
-        window.setContentSize(NSSize(width: 600, height: 480))
+        window.setContentSize(window.contentView!.fittingSize)
 
         App.shared.phpDoctorWindowController = windowController
     }

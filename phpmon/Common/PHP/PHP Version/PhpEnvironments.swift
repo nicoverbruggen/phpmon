@@ -29,7 +29,7 @@ class PhpEnvironments {
     /**
      Determine which PHP version the `php` formula is aliased to.
      */
-    func determinePhpAlias() async {
+    @MainActor func determinePhpAlias() async {
         let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
 
         self.homebrewPackage = try! JSONDecoder().decode(
@@ -37,7 +37,28 @@ class PhpEnvironments {
             from: brewPhpAlias.data(using: .utf8)!
         ).first!
 
-        Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version)!")
+        PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
+        Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
+
+        // Check if that version actually corresponds to an older version
+        let phpConfigExecutablePath = "\(Paths.optPath)/php/bin/php-config"
+        if FileSystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = Command.execute(
+                path: phpConfigExecutablePath,
+                arguments: ["--version"],
+                trimNewlines: false
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
+
+            if let version = try? VersionNumber.parse(longVersionString) {
+                PhpEnvironments.brewPhpAlias = version.short
+                if version.short != homebrewPackage.version {
+                    Log.info("[BREW] An older version of `php` is actually installed (\(version.short)).")
+                }
+            } else {
+                Log.warn("Could not determine the actual version of the php binary; assuming Homebrew is correct.")
+                PhpEnvironments.brewPhpAlias = homebrewPackage.version
+            }
+        }
     }
 
     // MARK: - Properties
@@ -77,7 +98,12 @@ class PhpEnvironments {
      
      As such, we take that information from Homebrew.
      */
-    static var brewPhpAlias: String {
+    static var brewPhpAlias: String = ""
+
+    /**
+     It's possible for the alias to be newer than the actual installed version of PHP.
+     */
+    static var homebrewBrewPhpAlias: String {
         if PhpEnvironments.shared.homebrewPackage == nil { return "8.2" }
 
         return PhpEnvironments.shared.homebrewPackage.version
@@ -144,7 +170,12 @@ class PhpEnvironments {
 
         // Avoid inserting a duplicate
         if !supportedVersions.contains(phpAlias) && FileSystem.fileExists("\(Paths.optPath)/php/bin/php") {
-            supportedVersions.insert(phpAlias)
+            let phpAliasInstall = PhpInstallation(phpAlias)
+            // Before inserting, ensure that the actual output matches the alias
+            // if that isn't the case, our formula remains out-of-date
+            if !phpAliasInstall.missingBinary {
+                supportedVersions.insert(phpAlias)
+            }
         }
 
         availablePhpVersions = Array(supportedVersions)

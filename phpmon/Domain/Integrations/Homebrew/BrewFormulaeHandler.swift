@@ -17,6 +17,7 @@ extension HandlesBrewFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
         Task { @MainActor in
+            await PhpEnvironments.shared.determinePhpAlias()
             Brew.shared.formulae.phpVersions = items
         }
     }
@@ -43,7 +44,8 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
         }
 
         return Brew.phpVersionFormulae.map { (version, formula) in
-            let fullVersion = PhpEnvironments.shared.cachedPhpInstallations[version]?.versionNumber.text
+            let fullVersion = PhpEnvironments.shared.cachedPhpInstallations[version]?
+                .versionNumber.text
 
             var upgradeVersion: String?
 
@@ -53,13 +55,15 @@ class BrewFormulaeHandler: HandlesBrewFormulae {
                 })?.current_version
             }
 
-            return BrewFormula(
+            let formula = BrewFormula(
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,
                 upgradeVersion: upgradeVersion,
                 prerelease: Constants.ExperimentalPhpVersions.contains(version)
             )
+
+            return formula
         }.sorted { $0.displayName > $1.displayName }
     }
 }

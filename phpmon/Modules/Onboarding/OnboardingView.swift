@@ -31,7 +31,7 @@ struct OnboardingTextItem: View {
                         .opacity(self.unavailable ? 0.5 : 1)
                     Text(description.localizedForSwiftUI)
                         .foregroundColor(Color.secondary)
-                        .font(.system(size: 13))
+                        .font(.system(size: 12))
                         .lineLimit(4)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(minWidth: 0, maxWidth: 800, alignment: .leading)
@@ -51,7 +51,7 @@ struct OnboardingView: View {
             HStack {
                 Image(nsImage: NSApp.applicationIconImage)
                     .resizable()
-                    .frame(width: 80, height: 80)
+                    .frame(width: 100, height: 100)
                     .padding(.bottom, 5)
                     .padding(.trailing, 25)
                 VStack(alignment: .leading, spacing: 0) {
@@ -126,13 +126,16 @@ struct OnboardingView: View {
                     Button("onboarding.tour.close".localized) {
                         App.shared.onboardingWindowController?.close()
                     }
-                    .padding(.bottom, 5)
+                    .padding(.bottom, 15)
                     .padding(.top, 10)
                 }
             }
             .padding(.leading)
             .padding(.trailing)
+            .padding(.bottom, 0)
         }
+        .frame(width: 600)
+        .fixedSize(horizontal: true, vertical: false)
     }
 }
 
