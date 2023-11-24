@@ -17,6 +17,7 @@ extension HandlesBrewFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
         Task { @MainActor in
+            await PhpEnvironments.shared.determinePhpAlias()
             Brew.shared.formulae.phpVersions = items
         }
     }
