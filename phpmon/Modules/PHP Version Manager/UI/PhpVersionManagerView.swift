@@ -225,7 +225,7 @@ struct PhpVersionManagerView: View {
             } else {
                 Button("phpman.buttons.install".localizedForSwiftUI) {
                     Task { await self.install(formula) }
-                }
+                }.disabled(formula.hasUpgradedFormulaAlias)
             }
         }
     }
@@ -240,7 +240,11 @@ struct PhpVersionManagerView: View {
                 }
             }
 
-            if formula.isInstalled && formula.hasUpgrade {
+            if formula.hasUpgradedFormulaAlias {
+                Text("phpman.version.automatic_upgrade".localized(formula.shortVersion!))
+                    .font(.system(size: 11))
+                    .foregroundColor(.gray)
+            } else if formula.isInstalled && formula.hasUpgrade {
                 Text("phpman.version.has_update".localized(
                     formula.installedVersion!,
                     formula.upgradeVersion!

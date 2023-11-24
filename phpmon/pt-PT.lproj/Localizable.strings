@@ -90,6 +90,7 @@
 "phpman.version.has_update" = "Versão %@ instalada, %@ disponível.";
 "phpman.version.installed" = "Versão %@ atualmente instalada.";
 "phpman.version.available_for_installation" = "Esta versão pode ser instalada.";
+"phpman.version.automatic_upgrade" = "Esta versão será instalada automaticamente ao atualizar uma versão mais antiga.";
 "phpman.buttons.uninstall" = "Desinstalar";
 "phpman.buttons.install" = "Instalar";
 "phpman.buttons.update" = "Atualizar";
