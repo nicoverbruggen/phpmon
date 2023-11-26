@@ -70,7 +70,7 @@ extension PhpExtensionManagerView {
                 }
             }
 
-            self.manager.loadExtensionData(for: self.phpVersion)
+            self.manager.loadExtensionData(for: self.manager.phpVersion)
             self.status.busy = false
         } catch let error {
             let error = error as! BrewCommandError

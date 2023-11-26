@@ -10,22 +10,16 @@ import Foundation
 import SwiftUI
 
 struct PhpExtensionManagerView: View {
-    @ObservedObject var manager = BrewExtensionsObservable()
+    @ObservedObject var manager: BrewExtensionsObservable
     @ObservedObject var status: BusyStatus
     @State var searchText: String
-    @State var phpVersion: String {
-        didSet {
-            self.manager.loadExtensionData(for: self.phpVersion)
-        }
-    }
 
     init() {
         self.searchText = ""
         self.status = BusyStatus.busy()
-        self.phpVersion = PhpEnvironments.shared.currentInstall!.version.short
-        self.manager.loadExtensionData(for: self.phpVersion)
+        let version = PhpEnvironments.shared.currentInstall!.version.short
+        self.manager = BrewExtensionsObservable(phpVersion: version)
         self.status.busy = false
-        #warning("PHP extension manager does not react to PHP version changes!")
     }
 
     var filteredExtensions: [BrewPhpExtension] {

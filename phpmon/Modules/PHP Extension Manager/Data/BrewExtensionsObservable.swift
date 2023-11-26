@@ -9,7 +9,18 @@
 import Foundation
 
 class BrewExtensionsObservable: ObservableObject {
+    @Published var phpVersion: String {
+        didSet {
+            self.loadExtensionData(for: phpVersion)
+        }
+    }
+
     @Published var extensions: [BrewPhpExtension] = []
+
+    init(phpVersion: String) {
+        self.phpVersion = phpVersion
+        self.loadExtensionData(for: phpVersion)
+    }
 
     public func loadExtensionData(for version: String) {
         let tapFormulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
