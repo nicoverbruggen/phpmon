@@ -32,10 +32,10 @@ final class ExtensionEnumeratorTest: XCTestCase {
     func testCanParseFormulaeBasedOnSyntax() throws {
         let formulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
 
-        XCTAssertEqual(formulae["8.1"], Set(["xdebug"]))
-        XCTAssertEqual(formulae["8.2"], Set(["xdebug"]))
-        XCTAssertEqual(formulae["8.3"], Set(["xdebug"]))
-        XCTAssertEqual(formulae["8.4"], Set(["xdebug"]))
+        XCTAssertEqual(formulae["8.1"], [BrewPhpExtension(name: "xdebug", phpVersion: "8.1")])
+        XCTAssertEqual(formulae["8.2"], [BrewPhpExtension(name: "xdebug", phpVersion: "8.2")])
+        XCTAssertEqual(formulae["8.3"], [BrewPhpExtension(name: "xdebug", phpVersion: "8.3")])
+        XCTAssertEqual(formulae["8.4"], [BrewPhpExtension(name: "xdebug", phpVersion: "8.4")])
     }
     
 }

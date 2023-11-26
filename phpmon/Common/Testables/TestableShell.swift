@@ -133,7 +133,7 @@ struct BatchFakeShellOutput: Codable {
 
         for item in items {
             if !ignoreDelay {
-                sleep(UInt32(item.delay))
+                Thread.sleep(forTimeInterval: item.delay)
             }
 
             if item.stream == .stdErr {
