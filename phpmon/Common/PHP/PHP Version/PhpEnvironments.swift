@@ -172,7 +172,7 @@ class PhpEnvironments {
             let phpAliasInstall = PhpInstallation(phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
-            if !phpAliasInstall.missingBinary {
+            if !phpAliasInstall.isMissingBinary {
                 supportedVersions.insert(phpAlias)
             }
         }

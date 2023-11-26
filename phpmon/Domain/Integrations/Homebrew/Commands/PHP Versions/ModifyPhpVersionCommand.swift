@@ -21,8 +21,15 @@ class ModifyPhpVersionCommand: BrewCommand {
     /**
      You can pass in which PHP versions need to be upgraded and which ones need to be installed.
      The process will be executed in two steps: first upgrades, then installations.
+     
      Upgrades come first because... well, otherwise installations may very well break.
-     Each version that is installed will need to be checked afterwards (if it is OK).
+     Each version that is installed will need to be checked afterwards. Installing a
+     newer formula may break other PHP installations, which in turn need to be fixed.
+
+     - Important: If any PHP formula is a major upgrade that causes a PHP "version" to be
+       uninstalled, this is remedied by running `upgradeMainPhpFormula()`. This process
+       will ensure that the upgrade is applied, but the also that old version is
+       re-installed and linked again.
      */
     public init(
         title: String,
@@ -44,6 +51,8 @@ class ModifyPhpVersionCommand: BrewCommand {
             description: "PHP Monitor is preparing Homebrew..."
         ))
 
+        // Determine if a formula will become unavailable
+        // This is the case when `php` will be bumped to a new version
         let unavailable = upgrading.first(where: { formula in
             formula.unavailableAfterUpgrade
         })
@@ -71,10 +80,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         await self.completedOperations(onProgress)
     }
 
-    private func upgradeMainPhpFormula(
-        _ unavailable: BrewPhpFormula,
-        _ onProgress: @escaping (BrewCommandProgress) -> Void
-    ) async throws {
+    private func upgradeMainPhpFormula(_ unavailable: BrewPhpFormula, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // Determine which version was previously available (that will become unavailable)
         guard let short = try? VersionNumber
             .parse(unavailable.installedVersion!).short else {
@@ -90,18 +96,6 @@ class ModifyPhpVersionCommand: BrewCommand {
 
         // Run the upgrade command
         try await run(command, onProgress)
-    }
-
-    private func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
-            let command = "brew tap shivammathur/php"
-            try await run(command, onProgress)
-        }
-
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
-            let command = "brew tap shivammathur/extensions"
-            try await run(command, onProgress)
-        }
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {

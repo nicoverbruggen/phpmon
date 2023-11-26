@@ -19,6 +19,17 @@ public class TestableShell: ShellProtocol {
 
     var expectations: [String: BatchFakeShellOutput] = [:]
 
+    func sync(_ command: String) -> ShellOutput {
+        // This assertion will only fire during test builds
+        assert(expectations.keys.contains(command), "No response declared for command: \(command)")
+
+        guard let expectation = expectations[command] else {
+            return .err("No Expected Output")
+        }
+
+        return expectation.syncOutput()
+    }
+
     func quiet(_ command: String) async {
         _ = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
     }
@@ -100,6 +111,29 @@ struct BatchFakeShellOutput: Codable {
         for item in items {
             if !ignoreDelay {
                 await delay(seconds: item.delay)
+            }
+
+            if item.stream == .stdErr {
+                output.err += item.output
+            } else if item.stream == .stdOut {
+                output.out += item.output
+            }
+        }
+
+        return output
+    }
+
+    /**
+     Outputs the fake shell output as expected, but does this synchronously.
+     */
+    public func syncOutput(
+        ignoreDelay: Bool = false
+    ) -> ShellOutput {
+        let output = ShellOutput.empty()
+
+        for item in items {
+            if !ignoreDelay {
+                sleep(UInt32(item.delay))
             }
 
             if item.stream == .stdErr {

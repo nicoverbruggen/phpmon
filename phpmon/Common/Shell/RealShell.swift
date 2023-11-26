@@ -86,14 +86,37 @@ class RealShell: ShellProtocol {
 
     // MARK: - Shellable Protocol
 
+    func sync(_ command: String) -> ShellOutput {
+        let task = getShellProcess(for: command)
+
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
+
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            sleep(3)
+        }
+
+        task.standardOutput = outputPipe
+        task.standardError = errorPipe
+        task.launch()
+        task.waitUntilExit()
+
+        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+
+        if Log.shared.verbosity == .cli {
+            log(task: task, stdOut: stdOut, stdErr: stdErr)
+        }
+
+        return .out(stdOut, stdErr)
+    }
+
     func pipe(_ command: String) async -> ShellOutput {
         let task = getShellProcess(for: command)
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
 
-        // Seriously slow down how long it takes for the shell to return output
-        // (in order to debug or identify async issues)
         if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
             Log.info("[SLOW SHELL] \(command)")
             await delay(seconds: 3.0)
@@ -104,20 +127,20 @@ class RealShell: ShellProtocol {
         task.launch()
         task.waitUntilExit()
 
-        let stdOut = String(
-            data: outputPipe.fileHandleForReading.readDataToEndOfFile(),
-            encoding: .utf8
-        )!
-
-        let stdErr = String(
-            data: errorPipe.fileHandleForReading.readDataToEndOfFile(),
-            encoding: .utf8
-        )!
+        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
 
         if Log.shared.verbosity == .cli {
-            var args = task.arguments ?? []
-            let last = "\"" + (args.popLast() ?? "") + "\""
-            var log = """
+            log(task: task, stdOut: stdOut, stdErr: stdErr)
+        }
+
+        return .out(stdOut, stdErr)
+    }
+
+    private func log(task: Process, stdOut: String, stdErr: String) {
+        var args = task.arguments ?? []
+        let last = "\"" + (args.popLast() ?? "") + "\""
+        var log = """
 
             <~~~~~~~~~~~~~~~~~~~~~~~
             $ \(([self.launchPath] + args + [last]).joined(separator: " "))
@@ -126,22 +149,19 @@ class RealShell: ShellProtocol {
             \(stdOut)
             """
 
-            if !stdErr.isEmpty {
-                log.append("""
+        if !stdErr.isEmpty {
+            log.append("""
                 [ERR]:
                 \(stdErr)
                 """)
-            }
+        }
 
-            log.append("""
+        log.append("""
             ~~~~~~~~~~~~~~~~~~~~~~~~>
 
             """)
 
-            Log.info(log)
-        }
-
-        return .out(stdOut, stdErr)
+        Log.info(log)
     }
 
     func quiet(_ command: String) async {

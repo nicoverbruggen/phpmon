@@ -1213,6 +1213,8 @@
 		033D459C2B0D506B00070080 /* PHP Versions */ = {
 			isa = PBXGroup;
 			children = (
+				C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */,
+				C4B79ECA29CA475900A483EE /* RemovePhpVersionCommand.swift */,
 			);
 			path = "PHP Versions";
 			sourceTree = "<group>";
@@ -1667,6 +1669,15 @@
 			path = phpmon;
 			sourceTree = "<group>";
 		};
+		C4513F8D2B13CD08001AD760 /* PHP Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */,
+				033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */,
+			);
+			path = "PHP Extensions";
+			sourceTree = "<group>";
+		};
 		C456A0D02AA6175D0080144F /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -1961,12 +1972,9 @@
 		C4B79EBA29CA38D100A483EE /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				C4513F8D2B13CD08001AD760 /* PHP Extensions */,
 				033D459C2B0D506B00070080 /* PHP Versions */,
 				C4B79EBB29CA38DB00A483EE /* BrewCommand.swift */,
-				C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */,
-				C4B79ECA29CA475900A483EE /* RemovePhpVersionCommand.swift */,
-				033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */,
-				033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";

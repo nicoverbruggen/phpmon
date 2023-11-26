@@ -62,13 +62,6 @@ class ActivePhpInstallation {
             return
         }
 
-        // Load extension information
-        let mainConfigurationFileUrl = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(version.short)/php.ini")
-
-        if let file = PhpConfigurationFile.from(filePath: mainConfigurationFileUrl.path) {
-            iniFiles.append(file)
-        }
-
         // Get configuration values
         limits = Limits(
             memory_limit: getByteCount(key: "memory_limit"),
@@ -76,15 +69,10 @@ class ActivePhpInstallation {
             post_max_size: getByteCount(key: "post_max_size")
         )
 
-        // Return a list of .ini files parsed after php.ini
-        let paths = Command.execute(
-            path: Paths.php,
-            arguments: ["-r", "echo php_ini_scanned_files();"],
-            trimNewlines: false
-        )
-        .replacingOccurrences(of: "\n", with: "")
-        .split(separator: ",")
-        .map { String($0) }
+        let paths = ActiveShell.shared
+            .sync("\(Paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
+            .split(separator: "\n")
+            .map { String($0) }
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
