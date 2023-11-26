@@ -122,16 +122,11 @@ struct PhpExtensionManagerView: View {
             HStack {
                 if bExtension.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                        #warning("Removal should ask for confirmation")
-                        Task { await self.runCommand(
-                            RemovePhpExtensionCommand(remove: bExtension)
-                        ) }
+                        Task { await self.confirmUninstall(bExtension) }
                     }
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
-                        Task { await self.runCommand(
-                            InstallPhpExtensionCommand(install: [bExtension])
-                        ) }
+                        Task { await self.runCommand(InstallPhpExtensionCommand(install: [bExtension])) }
                     }.disabled(bExtension.hasAlternativeInstall)
                 }
             }

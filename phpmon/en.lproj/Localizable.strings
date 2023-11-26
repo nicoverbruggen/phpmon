@@ -106,6 +106,12 @@
 "phpextman.description" = "**PHP Extension Manager** lets you manage different PHP extensions with a simple click of the button. Because Homebrew is used, extensions won't need to be compiled on the fly using `pecl`.";
 "phpextman.disclaimer" = "Certain extensions may require other dependencies to be installed, but generally speaking installing extensions should be much faster than installing PHP versions.";
 
+"phpextman.warnings.removal.title" = "Uninstall the extension `%@`?";
+"phpextman.warnings.removal.desc" = "The extension and its unique configuration file will be removed. The extension's functionality will no longer be available for this PHP installation. Are you sure?
+
+(If the extension is enabled using a non-standard filename, it will not be removed. So if you don't want the .ini file to be removed, it's best to simply rename it to something else. In that case, the extension will only be disabled as part of the clean-up process.)";
+"phpextman.warnings.removal.button" = "Uninstall";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";
