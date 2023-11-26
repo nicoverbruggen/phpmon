@@ -30,16 +30,49 @@ struct PhpExtensionManagerView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             header.padding(20)
+
+            if PhpEnvironments.shared.availablePhpVersions.count <= 4 {
+                Picker("Show extensions for: ",
+                       selection: $manager.phpVersion) {
+                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+                        Text("PHP \($0)")
+                            .tag($0)
+                            .font(.system(size: 12))
+                    }
+                }
+               .pickerStyle(SegmentedPickerStyle()).padding(15)
+               .font(.system(size: 12))
+            } else {
+                Picker("Show extensions for: ",
+                       selection: $manager.phpVersion) {
+                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+                        Text("PHP \($0)")
+                            .tag($0)
+                            .font(.system(size: 12))
+                    }
+                }
+               .pickerStyle(MenuPickerStyle()).padding(15)
+               .font(.system(size: 12))
+            }
+
+            VStack {
+                Text("Currently showing \(manager.extensions.count) extensions for **PHP \(manager.phpVersion)**.")
+                    .padding(10)
+                    .font(.system(size: 12))
+            }
+            .frame(maxWidth: .infinity, maxHeight: 30)
+            .background(Color.blue.opacity(0.3))
+            .padding(.bottom, 0)
 
             BlockingOverlayView(
                 busy: self.status.busy,
                 title: self.status.title,
                 text: self.status.description
             ) {
-                List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, pExtension) in
-                    listContent(for: pExtension)
+                List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, ext) in
+                    listContent(for: ext)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 8)
                 }
@@ -47,7 +80,8 @@ struct PhpExtensionManagerView: View {
                 .listStyle(PlainListStyle())
                 .searchable(text: $searchText)
             }
-        }.frame(width: 600, height: 600)
+        }
+        .frame(width: 600, height: 600)
     }
 
     // MARK: View Variables
