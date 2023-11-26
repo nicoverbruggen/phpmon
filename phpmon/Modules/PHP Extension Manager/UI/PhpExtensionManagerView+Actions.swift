@@ -27,7 +27,13 @@ extension PhpExtensionManagerView {
         )
     }
 
-    public func confirmUninstall(_ ext: BrewPhpExtension) async {
+    public func install(_ ext: BrewPhpExtension) {
+        Task {
+            await self.runCommand(InstallPhpExtensionCommand(install: [ext]))
+        }
+    }
+
+    public func confirmUninstall(_ ext: BrewPhpExtension) {
         Alert.confirm(
             onWindow: App.shared.phpExtensionManagerWindowController!.window!,
             messageText: "phpextman.warnings.removal.title".localized(ext.name),
@@ -37,7 +43,9 @@ extension PhpExtensionManagerView {
             secondButtonTitle: "generic.cancel".localized,
             style: .warning,
             onFirstButtonPressed: {
-                Task { await self.runCommand(RemovePhpExtensionCommand(remove: ext)) }
+                Task {
+                    await self.runCommand(RemovePhpExtensionCommand(remove: ext))
+                }
             }
         )
     }
@@ -62,7 +70,6 @@ extension PhpExtensionManagerView {
                 }
             }
 
-            // TODO: Reload extensions
             self.manager.loadExtensionData(for: self.phpVersion)
             self.status.busy = false
         } catch let error {

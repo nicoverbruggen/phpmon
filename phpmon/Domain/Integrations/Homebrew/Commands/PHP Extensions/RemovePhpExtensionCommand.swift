@@ -27,11 +27,11 @@ class RemovePhpExtensionCommand: BrewCommand {
         ))
 
         // Keep track of the file that contains the information about the extension
-        let existing = PhpEnvironments.shared.cachedPhpInstallations[phpExtension.phpVersion]?.extensions.first(where: { ext in
+        let existing = PhpEnvironments.shared
+            .cachedPhpInstallations[phpExtension.phpVersion]?
+            .extensions.first(where: { ext in
             ext.name == phpExtension.name
         })
-
-        onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
 
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \

@@ -77,33 +77,33 @@ struct PhpExtensionManagerView: View {
         }
     }
 
-    private func listContent(for bExtension: BrewPhpExtension) -> some View {
+    private func listContent(for ext: BrewPhpExtension) -> some View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
                 HStack {
                     HStack {
-                        Image(systemName: bExtension.isInstalled || bExtension.hasAlternativeInstall
+                        Image(systemName: ext.isInstalled || ext.hasAlternativeInstall
                               ? "puzzlepiece.extension.fill"
                               : "puzzlepiece.extension")
                             .resizable()
                             .frame(width: 24, height: 20)
-                            .foregroundColor(bExtension.hasAlternativeInstall ? Color.gray : Color.blue)
+                            .foregroundColor(ext.hasAlternativeInstall ? Color.gray : Color.blue)
                     }.frame(width: 36, height: 24)
 
                     VStack(alignment: .leading, spacing: 3) {
                         HStack {
-                            Text(bExtension.name).bold()
-                            Text("for PHP \(bExtension.phpVersion)")
+                            Text(ext.name).bold()
+                            Text("for PHP \(ext.phpVersion)")
                                 .font(.system(size: 9))
                                 .foregroundStyle(.secondary)
                                 .padding(.top, 2)
                         }
-                        if bExtension.isInstalled {
+                        if ext.isInstalled {
                             Text("This extension is installed and can be managed by PHP Monitor.")
                                 .font(.system(size: 11))
                                 .foregroundStyle(.secondary)
                         } else {
-                            if bExtension.hasAlternativeInstall {
+                            if ext.hasAlternativeInstall {
                                 Text("This extension is already installed via another source, and cannot be managed.")
                                     .font(.system(size: 11))
                                     .foregroundStyle(.orange)
@@ -120,14 +120,14 @@ struct PhpExtensionManagerView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             HStack {
-                if bExtension.isInstalled {
+                if ext.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                        Task { await self.confirmUninstall(bExtension) }
+                        self.confirmUninstall(ext)
                     }
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
-                        Task { await self.runCommand(InstallPhpExtensionCommand(install: [bExtension])) }
-                    }.disabled(bExtension.hasAlternativeInstall)
+                        self.install(ext)
+                    }.disabled(ext.hasAlternativeInstall)
                 }
             }
         }

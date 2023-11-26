@@ -80,7 +80,10 @@ class ModifyPhpVersionCommand: BrewCommand {
         await self.completedOperations(onProgress)
     }
 
-    private func upgradeMainPhpFormula(_ unavailable: BrewPhpFormula, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    private func upgradeMainPhpFormula(
+        _ unavailable: BrewPhpFormula,
+        _ onProgress: @escaping (BrewCommandProgress) -> Void
+    ) async throws {
         // Determine which version was previously available (that will become unavailable)
         guard let short = try? VersionNumber
             .parse(unavailable.installedVersion!).short else {
