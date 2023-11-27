@@ -8,44 +8,6 @@
 
 import Foundation
 
-struct BrewPhpExtension: Hashable, Comparable {
-    let name: String
-    let phpVersion: String
-    let isInstalled: Bool
-
-    var formulaName: String {
-        return "\(name)@\(phpVersion)"
-    }
-
-    init(name: String, phpVersion: String) {
-        self.name = name
-        self.phpVersion = phpVersion
-        self.isInstalled = BrewPhpExtension.hasInstallationReceipt(
-            for: "\(name)@\(phpVersion)"
-        )
-    }
-
-    var hasAlternativeInstall: Bool {
-        // Extension must be active
-        let isActive = PhpEnvironments.shared.currentInstall?.extensions
-            .contains(where: { $0.name == self.name }) ?? false
-
-        return isActive && !isInstalled
-    }
-
-    static func hasInstallationReceipt(for formulaName: String) -> Bool {
-        return FileSystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
-    }
-
-    static func < (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
-        return lhs.name < rhs.name
-    }
-
-    static func == (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
-        return lhs.name == rhs.name
-    }
-}
-
 class BrewTapFormulae {
     public static func from(tap: String) -> [String: [BrewPhpExtension]] {
         let directory = "\(Paths.tapPath)/\(tap)/Formula"
@@ -70,9 +32,9 @@ class BrewTapFormulae {
                     // Determine what PHP version this is for
                     let phpVersion = String(file[versionRange])
 
-                    // Create a new BrewPhpExtension object, which will determine
-                    // whether this extension is installed or not
+                    // Create a new BrewPhpExtension object, which will determine whether this extension is installed or not
                     let phpExtension = BrewPhpExtension(
+                        path: "\(Paths.tapPath)/\(tap)/Formula/\(file)",
                         name: phpExtensionName,
                         phpVersion: phpVersion
                     )

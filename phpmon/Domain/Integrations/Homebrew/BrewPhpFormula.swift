@@ -100,6 +100,7 @@ struct BrewPhpFormula: Equatable {
             return nil
         }
 
-        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?.isHealthy ?? nil
+        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?
+            .isHealthy ?? nil
     }
 }

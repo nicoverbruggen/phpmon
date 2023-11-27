@@ -118,14 +118,28 @@ struct PhpExtensionManagerView: View {
                             .foregroundColor(ext.hasAlternativeInstall ? Color.gray : Color.blue)
                     }.frame(width: 36, height: 24)
 
-                    VStack(alignment: .leading, spacing: 3) {
+                    VStack(alignment: .leading, spacing: 5) {
                         HStack {
                             Text(ext.name).bold()
-                            Text("for PHP \(ext.phpVersion)")
-                                .font(.system(size: 9))
-                                .foregroundStyle(.secondary)
-                                .padding(.top, 2)
                         }
+
+                        if !ext.dependencies.isEmpty {
+                            HStack(spacing: 3) {
+                                Text("Depends on:")
+                                    .font(.system(size: 10))
+                                ForEach(ext.dependencies, id: \.self) {
+                                    Text($0)
+                                        .font(.system(size: 9))
+                                        .padding(.horizontal, 5)
+                                        .padding(.vertical, 1)
+                                        .background(Color.gray)
+                                        .foregroundColor(Color.white)
+                                        .clipShape(Capsule())
+                                        .fixedSize(horizontal: true, vertical: true)
+                                }
+                            }
+                        }
+
                         if ext.isInstalled {
                             Text("This extension is installed and can be managed by PHP Monitor.")
                                 .font(.system(size: 11))
@@ -141,7 +155,6 @@ struct PhpExtensionManagerView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-
                     }
                 }
             }
