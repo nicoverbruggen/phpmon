@@ -33,28 +33,8 @@ struct PhpExtensionManagerView: View {
         VStack(spacing: 0) {
             header.padding(20)
 
-            if PhpEnvironments.shared.availablePhpVersions.count <= 4 {
-                Picker("Show extensions for: ",
-                       selection: $manager.phpVersion) {
-                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
-                        Text("PHP \($0)")
-                            .tag($0)
-                            .font(.system(size: 12))
-                    }
-                }
-               .pickerStyle(SegmentedPickerStyle()).padding(15)
-               .font(.system(size: 12))
-            } else {
-                Picker("Show extensions for: ",
-                       selection: $manager.phpVersion) {
-                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
-                        Text("PHP \($0)")
-                            .tag($0)
-                            .font(.system(size: 12))
-                    }
-                }
-               .pickerStyle(MenuPickerStyle()).padding(15)
-               .font(.system(size: 12))
+            if PhpEnvironments.shared.availablePhpVersions.count > 1 {
+                phpVersionPicker.disabled(self.status.busy)
             }
 
             VStack {
@@ -85,6 +65,35 @@ struct PhpExtensionManagerView: View {
     }
 
     // MARK: View Variables
+
+    private var phpVersionPicker: some View {
+        Group {
+            if PhpEnvironments.shared.availablePhpVersions.count <= 4 {
+                Picker("Show extensions for: ",
+                       selection: $manager.phpVersion) {
+                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+                        Text("PHP \($0)")
+                            .tag($0)
+                            .font(.system(size: 12))
+                    }
+                }
+               .pickerStyle(SegmentedPickerStyle()).padding(15)
+               .font(.system(size: 12))
+            } else {
+                Picker("Show extensions for: ",
+                       selection: $manager.phpVersion) {
+                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+                        Text("PHP \($0)")
+                            .tag($0)
+                            .font(.system(size: 12))
+                    }
+                }
+               .pickerStyle(MenuPickerStyle()).padding(15)
+               .font(.system(size: 12))
+            }
+        }
+
+    }
 
     private var header: some View {
         HStack(alignment: .center, spacing: 15) {

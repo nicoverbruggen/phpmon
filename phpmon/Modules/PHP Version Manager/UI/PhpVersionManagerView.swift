@@ -48,6 +48,7 @@ struct PhpVersionManagerView: View {
 
         await delay(seconds: 1)
 
+        // PHP formulae may not be installable with older Homebrew version
         if version.major != 4 {
             Task { @MainActor in
                 self.presentErrorAlert(
@@ -57,6 +58,16 @@ struct PhpVersionManagerView: View {
                     style: .warning
                 )
             }
+        }
+
+        // PHP formulae may be out of date past the cutoff date
+        if Date.fromString(Constants.PhpFormulaeCutoffDate)! < Date.now {
+            self.presentErrorAlert(
+                title: "phpman.warnings.outdated.title".localized,
+                description: "phpman.warnings.outdated.desc".localized(version.text),
+                button: "generic.ok".localized,
+                style: .warning
+            )
         }
 
         await PhpEnvironments.detectPhpVersions()
