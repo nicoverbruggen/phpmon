@@ -15,6 +15,17 @@ struct BrewPhpExtension: Hashable, Comparable {
     let path: String
     let dependencies: [String]
 
+    var extensionDependencies: [String] {
+        return dependencies
+            .filter {
+                $0.contains("shivammathur/extensions/") && $0.contains("@\(phpVersion)")
+            }
+            .map {
+                $0.replacingOccurrences(of: "shivammathur/extensions/", with: "")
+                    .replacingOccurrences(of: "@\(phpVersion)", with: "")
+            }
+    }
+
     var formulaName: String {
         return "\(name)@\(phpVersion)"
     }
@@ -37,6 +48,12 @@ struct BrewPhpExtension: Hashable, Comparable {
             .contains(where: { $0.name == self.name }) ?? false
 
         return isActive && !isInstalled
+    }
+
+    internal func firstDependent(in exts: [BrewPhpExtension]) -> BrewPhpExtension? {
+        return exts
+            .filter({ $0.isInstalled })
+            .first { $0.dependencies.contains("shivammathur/extensions/\(self.formulaName)") }
     }
 
     static func hasInstallationReceipt(for formulaName: String) -> Bool {
@@ -73,8 +90,6 @@ struct BrewPhpExtension: Hashable, Comparable {
         } catch {
             return []
         }
-
-        print(dependencies)
 
         return dependencies
     }

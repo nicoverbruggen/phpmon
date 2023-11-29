@@ -33,16 +33,13 @@ struct PhpExtensionManagerView: View {
         VStack(spacing: 0) {
             header.padding(20)
 
-            if PhpEnvironments.shared.availablePhpVersions.count > 1 {
-                phpVersionPicker.disabled(self.status.busy)
-            }
-
-            VStack {
-                Text("Currently showing \(manager.extensions.count) extensions for **PHP \(manager.phpVersion)**.")
+            HStack(spacing: 0) {
+                Text("Currently showing \(filteredExtensions.count) extensions for:")
                     .padding(10)
                     .font(.system(size: 12))
+                phpVersionPicker.disabled(self.status.busy)
             }
-            .frame(maxWidth: .infinity, maxHeight: 30)
+            .frame(maxWidth: .infinity, maxHeight: 35)
             .background(Color.blue.opacity(0.3))
             .padding(.bottom, 0)
 
@@ -67,32 +64,19 @@ struct PhpExtensionManagerView: View {
     // MARK: View Variables
 
     private var phpVersionPicker: some View {
-        Group {
-            if PhpEnvironments.shared.availablePhpVersions.count <= 4 {
-                Picker("Show extensions for: ",
-                       selection: $manager.phpVersion) {
-                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
-                        Text("PHP \($0)")
-                            .tag($0)
-                            .font(.system(size: 12))
-                    }
-                }
-               .pickerStyle(SegmentedPickerStyle()).padding(15)
-               .font(.system(size: 12))
-            } else {
-                Picker("Show extensions for: ",
-                       selection: $manager.phpVersion) {
-                    ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
-                        Text("PHP \($0)")
-                            .tag($0)
-                            .font(.system(size: 12))
-                    }
-                }
-               .pickerStyle(MenuPickerStyle()).padding(15)
-               .font(.system(size: 12))
+        Picker("",
+               selection: $manager.phpVersion) {
+            ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+                Text("PHP \($0)")
+                    .tag($0)
+                    .font(.system(size: 12))
             }
         }
-
+       .focusable(false)
+       .labelsHidden()
+       .pickerStyle(MenuPickerStyle())
+       .font(.system(size: 12))
+       .frame(width: 100)
     }
 
     private var header: some View {
@@ -132,16 +116,16 @@ struct PhpExtensionManagerView: View {
                             Text(ext.name).bold()
                         }
 
-                        if !ext.dependencies.isEmpty {
+                        if !ext.extensionDependencies.isEmpty {
                             HStack(spacing: 3) {
                                 Text("Depends on:")
                                     .font(.system(size: 10))
-                                ForEach(ext.dependencies, id: \.self) {
+                                ForEach(ext.extensionDependencies, id: \.self) {
                                     Text($0)
                                         .font(.system(size: 9))
                                         .padding(.horizontal, 5)
                                         .padding(.vertical, 1)
-                                        .background(Color.gray)
+                                        .background(Color.appPrimary)
                                         .foregroundColor(Color.white)
                                         .clipShape(Capsule())
                                         .fixedSize(horizontal: true, vertical: true)
@@ -150,9 +134,16 @@ struct PhpExtensionManagerView: View {
                         }
 
                         if ext.isInstalled {
-                            Text("This extension is installed and can be managed by PHP Monitor.")
-                                .font(.system(size: 11))
-                                .foregroundStyle(.secondary)
+                            if let dependent = ext.firstDependent(in: self.manager.extensions) {
+                                Text("You cannot uninstall this before uninstalling **\(dependent.name)**.")
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text("This extension is installed and can be managed by PHP Monitor.")
+                                    .font(.system(size: 11))
+                                    .foregroundStyle(.secondary)
+                            }
+
                         } else {
                             if ext.hasAlternativeInstall {
                                 Text("This extension is already installed via another source, and cannot be managed.")
@@ -173,7 +164,7 @@ struct PhpExtensionManagerView: View {
                 if ext.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
                         self.confirmUninstall(ext)
-                    }
+                    }.disabled(ext.firstDependent(in: self.manager.extensions) != nil)
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
                         self.install(ext)
