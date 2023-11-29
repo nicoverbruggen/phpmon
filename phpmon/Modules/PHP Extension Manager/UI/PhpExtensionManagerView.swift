@@ -98,6 +98,44 @@ struct PhpExtensionManagerView: View {
         }
     }
 
+    private func dependency(named name: String) -> some View {
+        return Text(name)
+            .font(.system(size: 9))
+            .padding(.horizontal, 5)
+            .padding(.vertical, 1)
+            .background(Color.appPrimary)
+            .foregroundColor(Color.white)
+            .clipShape(Capsule())
+            .fixedSize(horizontal: true, vertical: true)
+    }
+
+    private func extensionLabel(for ext: BrewPhpExtension) -> some View {
+        return Group {
+            if ext.isInstalled {
+                if let dependent = ext.firstDependent(in: self.manager.extensions) {
+                    Text("You cannot uninstall this before uninstalling **\(dependent.name)**.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("This extension is installed and can be managed by PHP Monitor.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                }
+
+            } else {
+                if ext.hasAlternativeInstall {
+                    Text("This extension is already installed via another source, and cannot be managed.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.orange)
+                } else {
+                    Text("This extension can be installed.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
     private func listContent(for ext: BrewPhpExtension) -> some View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
@@ -121,40 +159,12 @@ struct PhpExtensionManagerView: View {
                                 Text("Depends on:")
                                     .font(.system(size: 10))
                                 ForEach(ext.extensionDependencies, id: \.self) {
-                                    Text($0)
-                                        .font(.system(size: 9))
-                                        .padding(.horizontal, 5)
-                                        .padding(.vertical, 1)
-                                        .background(Color.appPrimary)
-                                        .foregroundColor(Color.white)
-                                        .clipShape(Capsule())
-                                        .fixedSize(horizontal: true, vertical: true)
+                                    dependency(named: $0)
                                 }
                             }
                         }
 
-                        if ext.isInstalled {
-                            if let dependent = ext.firstDependent(in: self.manager.extensions) {
-                                Text("You cannot uninstall this before uninstalling **\(dependent.name)**.")
-                                    .font(.system(size: 11))
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text("This extension is installed and can be managed by PHP Monitor.")
-                                    .font(.system(size: 11))
-                                    .foregroundStyle(.secondary)
-                            }
-
-                        } else {
-                            if ext.hasAlternativeInstall {
-                                Text("This extension is already installed via another source, and cannot be managed.")
-                                    .font(.system(size: 11))
-                                    .foregroundStyle(.orange)
-                            } else {
-                                Text("This extension can be installed.")
-                                    .font(.system(size: 11))
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
+                        extensionLabel(for: ext)
                     }
                 }
             }

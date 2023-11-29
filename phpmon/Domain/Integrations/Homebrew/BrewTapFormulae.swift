@@ -29,10 +29,11 @@ class BrewTapFormulae {
                    let versionRange = Range(match.range(at: 2), in: file) {
                     // Determine what the extension's name is
                     let phpExtensionName = String(file[phpExtensionRange])
+
                     // Determine what PHP version this is for
                     let phpVersion = String(file[versionRange])
 
-                    // Create a new BrewPhpExtension object, which will determine whether this extension is installed or not
+                    // Create a new BrewPhpExtension object (determines if installed)
                     let phpExtension = BrewPhpExtension(
                         path: "\(Paths.tapPath)/\(tap)/Formula/\(file)",
                         name: phpExtensionName,

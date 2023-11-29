@@ -21,9 +21,7 @@ struct BrewPhpFormula: Equatable {
     /// The upgrade that is currently available, if it exists.
     let upgradeVersion: String?
 
-    #warning("The rebuild attribute should be checked, it can be used to check if a Tap update exists for a pre-release version.")
-    /// A rebuild version, if applicable.
-    // let rebuild: String?
+    // TODO: A rebuild attribute could be checked, to check if a Tap update exists for a pre-release version
 
     /// Whether this formula is a stable version of PHP.
     let prerelease: Bool
