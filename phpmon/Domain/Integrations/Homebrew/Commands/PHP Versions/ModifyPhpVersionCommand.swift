@@ -43,12 +43,12 @@ class ModifyPhpVersionCommand: BrewCommand {
     }
 
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        let progressTitle = "Please wait..."
+        let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
             value: 0.2,
             title: progressTitle,
-            description: "PHP Monitor is preparing Homebrew..."
+            description: "phpman.steps.preparing".localized
         ))
 
         // Determine if a formula will become unavailable
@@ -165,7 +165,7 @@ class ModifyPhpVersionCommand: BrewCommand {
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
-        onProgress(.create(value: 0.95, title: self.title, description: "Reloading PHP versions..."))
+        onProgress(.create(value: 0.95, title: self.title, description: "phpman.steps.reloading".localized))
 
         // Check which version of PHP are now installed
         await PhpEnvironments.detectPhpVersions()
@@ -184,8 +184,8 @@ class ModifyPhpVersionCommand: BrewCommand {
         // Let the UI know that the installation has been completed
         onProgress(.create(
             value: 1,
-            title: "Operation completed!",
-            description: "The installation has succeeded."
+            title: "phpman.steps.completed".localized,
+            description: "phpman.steps.success".localized
         ))
     }
 }
