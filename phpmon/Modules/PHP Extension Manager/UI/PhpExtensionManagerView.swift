@@ -34,7 +34,7 @@ struct PhpExtensionManagerView: View {
             header.padding(20)
 
             HStack(spacing: 0) {
-                Text("Currently showing \(filteredExtensions.count) extensions for:")
+                Text("phpextman.list.showing_count".localized("\(filteredExtensions.count)"))
                     .padding(10)
                     .font(.system(size: 12))
                 phpVersionPicker.disabled(self.status.busy)
@@ -113,22 +113,21 @@ struct PhpExtensionManagerView: View {
         return Group {
             if ext.isInstalled {
                 if let dependent = ext.firstDependent(in: self.manager.extensions) {
-                    Text("You cannot uninstall this before uninstalling **\(dependent.name)**.")
+                    Text("phpextman.list.status.dependent".localized(dependent.name))
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("This extension is installed and can be managed by PHP Monitor.")
+                    Text("phpextman.list.status.can_manage".localizedForSwiftUI)
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 }
-
             } else {
                 if ext.hasAlternativeInstall {
-                    Text("This extension is already installed via another source, and cannot be managed.")
+                    Text("phpextman.list.status.external".localizedForSwiftUI)
                         .font(.system(size: 11))
                         .foregroundStyle(.orange)
                 } else {
-                    Text("This extension can be installed.")
+                    Text("phpextman.list.status.installable".localizedForSwiftUI)
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 }
@@ -156,7 +155,7 @@ struct PhpExtensionManagerView: View {
 
                         if !ext.extensionDependencies.isEmpty {
                             HStack(spacing: 3) {
-                                Text("Depends on:")
+                                Text("phpextman.list.depends_on".localizedForSwiftUI)
                                     .font(.system(size: 10))
                                 ForEach(ext.extensionDependencies, id: \.self) {
                                     dependency(named: $0)

@@ -112,6 +112,14 @@
 (If the extension is enabled using a non-standard filename, it will not be removed. So if you don't want the .ini file to be removed, it's best to simply rename it to something else. In that case, the extension will only be disabled as part of the clean-up process.)";
 "phpextman.warnings.removal.button" = "Uninstall";
 
+"phpextman.list.showing_count" = "Currently showing %@ extensions for:";
+"phpextman.list.depends_on" = "Depends on:";
+
+"phpextman.list.status.external" = "This extension is already installed via another source, and cannot be managed.";
+"phpextman.list.status.installable" = "This extension can be installed.";
+"phpextman.list.status.dependent" = "You cannot uninstall this before uninstalling **%@**.";
+"phpextman.list.status.can_manage" = "This extension is installed and can be managed by PHP Monitor.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";
