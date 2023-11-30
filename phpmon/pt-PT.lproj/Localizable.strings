@@ -12,7 +12,11 @@
 "mi_no_php_linked" = "Nenhuma versão PHP associada!";
 "mi_fix_php_link" = "Corrigir automáticamente...";
 "mi_no_php_linked_explain" = "O que é isto?";
-"mi_php_version_manager" = "Gestor de versões PHP...";
+
+"mi_php_version_manager" = "Gerenciar instalações PHP...";
+"mi_php_ext_manager" = "Gerenciar extensões PHP...";
+"mi_php_config_manager" = "Editor de configuração PHP...";
+"mi_manage_limits" = "Gerenciar limites...";
 
 "mi_diagnostics" = "Diagnóstico";
 "mi_active_services" = "Serviços ativos";
@@ -80,6 +84,26 @@
 "mi_xdebug_available_modes" = "Modos disponíveis";
 "mi_xdebug_actions" = "Ações";
 "mi_xdebug_disable_all" = "Desativar todos os modos";
+
+// PHPEXTMAN
+
+"phpextman.window.title" = "Extensões";
+"phpextman.description" = "**PHP Extension Manager** permite que você gerencie diferentes extensões PHP com um simples clique no botão. Como o Homebrew é usado, as extensões não precisam ser compiladas em tempo real usando `pecl`.";
+"phpextman.disclaimer" = "Algumas extensões podem exigir que outras dependências sejam instaladas, mas, em geral, a instalação de extensões deve ser muito mais rápida do que a instalação de versões do PHP.";
+
+"phpextman.warnings.removal.title" = "Desinstalar a extensão `%@`?";
+"phpextman.warnings.removal.desc" = "A extensão e seu arquivo de configuração único serão removidos. A funcionalidade da extensão não estará mais disponível para esta instalação PHP. Você tem certeza?
+
+(Se a extensão estiver ativada usando um nome de arquivo não padrão, ela não será removida. Então, se você não quer que o arquivo .ini seja removido, é melhor simplesmente renomeá-lo. Nesse caso, a extensão será apenas desativada como parte do processo de limpeza.)";
+"phpextman.warnings.removal.button" = "Desinstalar";
+
+"phpextman.list.showing_count" = "Atualmente mostrando %@ extensões para:";
+"phpextman.list.depends_on" = "Depende de:";
+
+"phpextman.list.status.external" = "Esta extensão já está instalada por outra fonte e não pode ser gerenciada.";
+"phpextman.list.status.installable" = "Esta extensão pode ser instalada.";
+"phpextman.list.status.dependent" = "Você não pode desinstalar isso antes de desinstalar **%@**.";
+"phpextman.list.status.can_manage" = "Esta extensão está instalada e pode ser gerenciada pelo PHP Monitor.";
 
 // PHPMAN
 
