@@ -28,6 +28,21 @@ class BrewDiagnostics {
     }
 
     /**
+     Logs a bunch of useful information during startup.
+     */
+    public static func logBootInformation() {
+        Log.info(BrewDiagnostics.customCaskInstalled
+             ? "[BREW] The app has been installed via Homebrew Cask."
+             : "[BREW] The app has been installed directly (optimal)."
+        )
+
+        Log.info(BrewDiagnostics.usesNginxFullFormula
+             ? "[BREW] The app will be using the `nginx-full` formula."
+             : "[BREW] The app will be using the `nginx` formula."
+        )
+    }
+
+    /**
      Determines whether the PHP Monitor Cask is installed.
      */
     public static var customCaskInstalled: Bool = {
@@ -68,9 +83,10 @@ class BrewDiagnostics {
                 if let destination = try? FileSystem.getDestinationOfSymlink("\(Paths.optPath)/\(symlink)") {
                     if !destination.contains("Cellar/php/\(version)")
                         && !destination.contains("Cellar/php@\(version)") {
-                        Log.err("Symlink for \(symlink) is incorrect and was likely not purged correctly after upgrading. Removing...")
+                        Log.err("Symlink for \(symlink) is incorrect. Removing...")
                         do {
                             try FileSystem.remove("\(Paths.optPath)/\(symlink)")
+                            Log.info("Incorrect symlink for \(symlink) has been successfully removed.")
                         } catch {
                             Log.err("Symlink for \(symlink) was incorrect but could not be removed!")
                         }
