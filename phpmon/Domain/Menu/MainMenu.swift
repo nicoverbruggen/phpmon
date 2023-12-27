@@ -155,12 +155,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { @MainActor [self] in
             if PhpEnvironments.shared.isBusy {
                 Log.perf("Refreshing icon: currently busy")
-                setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+                setStatusBar(image: NSImage.statusBarIcon)
             } else {
                 Log.perf("Refreshing icon: no longer busy")
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
-                    setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
+                    setStatusBar(image: NSImage.statusBarIconStatic)
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool

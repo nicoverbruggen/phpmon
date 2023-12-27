@@ -34,14 +34,13 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         if site.isolatedPhpVersion != nil {
             imageViewPhpVersionOK.isHidden = false
-            imageViewPhpVersionOK.image = NSImage(named: "Isolated")
+            imageViewPhpVersionOK.image = NSImage.isolated
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
         } else {
             imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???"
                                               || !site.isCompatibleWithPreferredPhpVersion)
-            imageViewPhpVersionOK.image = NSImage(named: "Checkmark")
+            imageViewPhpVersionOK.image = NSImage.checkmark
             imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.preferredPhpVersion)
-
         }
     }
 

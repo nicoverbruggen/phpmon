@@ -15,7 +15,7 @@ extension MainMenu {
     func startup() async {
         // Start with the icon
         Task { @MainActor in
-            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            self.setStatusBar(image: NSImage.statusBarIcon)
         }
 
         if await Startup().checkEnvironment() {
