@@ -167,6 +167,9 @@ class ModifyPhpVersionCommand: BrewCommand {
         // Reload and restart PHP versions
         onProgress(.create(value: 0.95, title: self.title, description: "phpman.steps.reloading".localized))
 
+        // Ensure all symlinks are correctly linked
+        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+
         // Check which version of PHP are now installed
         await PhpEnvironments.detectPhpVersions()
 
