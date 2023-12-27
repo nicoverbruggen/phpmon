@@ -27,7 +27,7 @@ extension InternalSwitcher {
         return corrections.contains(true)
     }
 
-    // MARK: - PHP FPM pool
+    // MARK: - Corrections
 
     public func disableDefaultPhpFpmPool(_ version: String) async -> FixApplied {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
@@ -54,37 +54,7 @@ extension InternalSwitcher {
         return false
     }
 
-    func getExpectedConfigurationFiles(for version: String) -> [ExpectedConfigurationFile] {
-        return [
-            ExpectedConfigurationFile(
-                destination: "/php-fpm.d/valet-fpm.conf",
-                source: "/cli/stubs/etc-phpfpm-valet.conf",
-                replacements: [
-                    "VALET_USER": Paths.whoami,
-                    "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
-                    "valet.sock": "valet\(version.replacingOccurrences(of: ".", with: "")).sock"
-                ],
-                applies: { Valet.shared.version!.major > 2 }
-            ),
-            ExpectedConfigurationFile(
-                destination: "/conf.d/error_log.ini",
-                source: "/cli/stubs/etc-phpfpm-error_log.ini",
-                replacements: [
-                    "VALET_USER": Paths.whoami,
-                    "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory
-                ],
-                applies: { return true }
-            ),
-            ExpectedConfigurationFile(
-                destination: "/conf.d/php-memory-limits.ini",
-                source: "/cli/stubs/php-memory-limits.ini",
-                replacements: [:],
-                applies: { return true }
-            )
-        ]
-    }
-
-    func ensureConfigurationFilesExist(_ version: String) async -> FixApplied {
+    public func ensureConfigurationFilesExist(_ version: String) async -> FixApplied {
         let files = self.getExpectedConfigurationFiles(for: version)
 
         // For each of the files, attempt to fix anything that is wrong
@@ -122,6 +92,38 @@ extension InternalSwitcher {
 
         // If any fixes were applied, return true
         return outcomes.contains(true)
+    }
+
+    // MARK: - Internals
+
+    private func getExpectedConfigurationFiles(for version: String) -> [ExpectedConfigurationFile] {
+        return [
+            ExpectedConfigurationFile(
+                destination: "/php-fpm.d/valet-fpm.conf",
+                source: "/cli/stubs/etc-phpfpm-valet.conf",
+                replacements: [
+                    "VALET_USER": Paths.whoami,
+                    "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
+                    "valet.sock": "valet\(version.replacingOccurrences(of: ".", with: "")).sock"
+                ],
+                applies: { Valet.shared.version!.major > 2 }
+            ),
+            ExpectedConfigurationFile(
+                destination: "/conf.d/error_log.ini",
+                source: "/cli/stubs/etc-phpfpm-error_log.ini",
+                replacements: [
+                    "VALET_USER": Paths.whoami,
+                    "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory
+                ],
+                applies: { return true }
+            ),
+            ExpectedConfigurationFile(
+                destination: "/conf.d/php-memory-limits.ini",
+                source: "/cli/stubs/php-memory-limits.ini",
+                replacements: [:],
+                applies: { return true }
+            )
+        ]
     }
 
 }

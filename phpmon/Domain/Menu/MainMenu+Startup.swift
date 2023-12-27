@@ -32,6 +32,9 @@ extension MainMenu {
         // Determine what the `php` formula is aliased to
         await PhpEnvironments.shared.determinePhpAlias()
 
+        // Make sure that broken symlinks are removed ASAP
+        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+
         // Initialize preferences
         _ = Preferences.shared
 
