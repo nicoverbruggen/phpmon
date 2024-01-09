@@ -120,7 +120,7 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 <details>
 <summary><strong>How do I install additional versions of PHP, including legacy versions?</strong></summary>
 
-Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.2.
+Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.3.
 
 You can install other supported versions of PHP via PHP Monitor's **PHP Version Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
 
