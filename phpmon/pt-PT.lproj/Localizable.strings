@@ -809,3 +809,11 @@ Tenha em conta que algumas funcionalidades (esmaecidos abaixo) estão indisponí
 "onboarding.tour.feature_unavailable" = "Esta funcionalidade não está disponível de momento e requer a instalação do Laravel Valet.";
 "onboarding.tour.once" = "Apenas irá ver este 'Boas-vindas' uma vez. Pode visualiza-lo mais tarde através da barra de menum em 'Primeiros Socorros e Serviços'.";
 "onboarding.tour.close" = "Fechar";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Idioma:";
+"prefs.language_options_desc" = "Escolha um idioma diferente para usar com o PHP Monitor. Para aplicar completamente esta mudança, deve reiniciar a aplicação.";
+
+"alert.language_changed.title" = "Deve reiniciar o PHP Monitor!";
+"alert.language_changed.subtitle" = "Acabou de mudar o idioma de exibição do PHP Monitor. O menu usará imediatamente a língua correta, mas pode ser necessário reiniciar a aplicação para que todo o texto na aplicação reflita a sua nova escolha de idioma.";

@@ -846,5 +846,5 @@ Please note that some features (greyed out below) are currently unavailable beca
 "prefs.language" = "Language:";
 "prefs.language_options_desc" = "Choose a different language to use with PHP Monitor. To fully apply this change, you must restart the app.";
 
-"alert.language_changed.title" = "You should restart PHP Monitor!";
+"alert.language_changed.title" = "You must restart PHP Monitor!";
 "alert.language_changed.subtitle" = "You just changed the display language of PHP Monitor. The menu will immediately use the correct language, but you may need to restart the app for all text throughout the app to reflect your new language choice.";

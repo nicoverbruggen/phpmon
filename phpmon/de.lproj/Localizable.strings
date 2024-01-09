@@ -814,3 +814,11 @@ Bitte beachten Sie, dass einige Funktionen (unten ausgegraut) derzeit nicht verf
 "onboarding.tour.feature_unavailable" = "Diese Funktion ist derzeit nicht verfügbar und erfordert die Installation von Laravel Valet.";
 "onboarding.tour.once" = "Sie sehen die Willkommenstour nur einmal. Sie können die Willkommenstour später über das Symbol in der Menüleiste (im Menü unter Erste Hilfe & Dienste) erneut öffnen.";
 "onboarding.tour.close" = "Tour beenden";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Sprache:";
+"prefs.language_options_desc" = "Wählen Sie eine andere Sprache für die Verwendung mit PHP Monitor. Um diese Änderung vollständig anzuwenden, müssen Sie die App neu starten.";
+
+"alert.language_changed.title" = "Sie sollten PHP Monitor neu starten!";
+"alert.language_changed.subtitle" = "Sie haben soeben die Anzeigesprache von PHP Monitor geändert. Das Menü wird sofort die korrekte Sprache verwenden, aber Sie müssen die App möglicherweise neu starten, damit alle Texte in der App Ihre neue Sprachwahl widerspiegeln.";

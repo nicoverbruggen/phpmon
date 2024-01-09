@@ -812,3 +812,11 @@ Houd er rekening mee dat sommige functies (hieronder grijs weergegeven) momentee
 "onboarding.tour.feature_unavailable" = "Deze functie is momenteel niet beschikbaar en vereist de installatie van Laravel Valet.";
 "onboarding.tour.once" = "U zult de Welkomsttour slechts één keer zien. U kunt de Welkomsttour later opnieuw openen via het menubalkpictogram (beschikbaar in het menu onder First Aid & Services).";
 "onboarding.tour.close" = "Tour sluiten";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Taal:";
+"prefs.language_options_desc" = "Kies een andere taal om te gebruiken met PHP Monitor. Om deze wijziging volledig toe te passen, moet u de app herstarten.";
+
+"alert.language_changed.title" = "U moet PHP Monitor herstarten!";
+"alert.language_changed.subtitle" = "U heeft zojuist de weergavetaal van PHP Monitor gewijzigd. Het menu zal onmiddellijk de juiste taal gebruiken, maar u moet mogelijk de app herstarten om overal de nieuwe taal te zien.";

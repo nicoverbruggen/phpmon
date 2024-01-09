@@ -806,3 +806,11 @@ Vui lòng lưu ý rằng một số tính năng (xám bên dưới) hiện khôn
 "onboarding.tour.feature_unavailable" = "Tính năng này hiện không khả dụng và yêu cầu Laravel Valet được cài đặt.";
 "onboarding.tour.once" = "Bạn chỉ sẽ thấy Hướng Dẫn Chào Mừng một lần. Bạn có thể mở lại Hướng Dẫn Chào Mừng sau này qua biểu tượng thanh menu (có sẵn trong menu, ở dưới Cứu hộ và Các dịch vụ).";
 "onboarding.tour.close" = "Đóng Tour";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Ngôn ngữ:";
+"prefs.language_options_desc" = "Chọn một ngôn ngữ khác để sử dụng với PHP Monitor. Để áp dụng hoàn toàn thay đổi này, bạn phải khởi động lại ứng dụng.";
+
+"alert.language_changed.title" = "Bạn nên khởi động lại PHP Monitor!";
+"alert.language_changed.subtitle" = "Bạn vừa thay đổi ngôn ngữ hiển thị của PHP Monitor. Menu sẽ ngay lập tức sử dụng ngôn ngữ đúng, nhưng bạn có thể cần phải khởi động lại ứng dụng để toàn bộ văn bản trong ứng dụng phản ánh sự lựa chọn ngôn ngữ mới của bạn.";

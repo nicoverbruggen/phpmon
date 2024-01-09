@@ -825,3 +825,11 @@ Veuillez noter que certaines fonctionnalités (grisées ci-dessous) sont actuell
 "onboarding.tour.feature_unavailable" = "Cette fonctionnalité n'est actuellement pas disponible et nécessite l'installation de Laravel Valet.";
 "onboarding.tour.once" = "Vous ne verrez la visite de bienvenue qu'une seule fois. Vous pouvez rouvrir la visite de bienvenue ultérieurement via l'icône de la barre de menu (disponible dans le menu, sous Premiers Secours et Services).";
 "onboarding.tour.close" = "Fermer la Visite d'Accueil";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Langue :";
+"prefs.language_options_desc" = "Choisissez une autre langue à utiliser avec PHP Monitor. Pour appliquer pleinement ce changement, vous devez redémarrer l'application.";
+
+"alert.language_changed.title" = "Vous devriez redémarrer PHP Monitor !";
+"alert.language_changed.subtitle" = "Vous venez de changer la langue d'affichage de PHP Monitor. Le menu utilisera immédiatement la bonne langue, mais vous devrez peut-être redémarrer l'application pour que tout le texte dans l'application reflète votre nouveau choix de langue.";
