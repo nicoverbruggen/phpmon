@@ -238,6 +238,9 @@ Tijdens het verwijderingsproces kan u worden gevraagd om uw wachtwoord indien de
 "domain_list.columns.kind" = "Type";
 "domain_list.columns.project_type" = "Projecttype";
 
+"domain_list.extensions" = "Extensies in-/uitschakelen";
+"domain_list.applies_to" = "Van toepassing op PHP %@";
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "Wat voor soort domein wilt u instellen?";

@@ -238,6 +238,9 @@ Möglicherweise werden Sie während des Deinstallationsvorgangs nach Ihrem Passw
 "domain_list.columns.kind" = "Art";
 "domain_list.columns.project_type" = "Projekttyp";
 
+"domain_list.extensions" = "Erweiterungen umschalten";
+"domain_list.applies_to" = "Gilt für PHP %@";
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "Welche Art von Domain möchten Sie einrichten?";

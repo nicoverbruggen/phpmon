@@ -252,6 +252,9 @@ Il se peut que vous deviez saisir votre mot de passe pendant le processus de dé
 "domain_list.columns.kind" = "Sorte";
 "domain_list.columns.project_type" = "Type de Projet";
 
+"domain_list.extensions" = "Activer/désactiver les extensions";
+"domain_list.applies_to" = "S'applique à PHP %@";
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "Quel type de domaine souhaitez-vous configurer ?";

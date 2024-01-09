@@ -237,6 +237,10 @@ Poderá ser-lhe solicitada a sua palavra-passe durante o processo de desinstala�
 "domain_list.columns.kind" = "Tipo";
 "domain_list.columns.project_type" = "Tipo de projeto";
 
+"domain_list.extensions" = "Alternar Extensões";
+"domain_list.applies_to" = "Aplica-se ao PHP %@";
+
+
 // CHOOSE WHAT TO ADD
 
 "selection.title" = "Que tipo de domínio pretende configurar?";

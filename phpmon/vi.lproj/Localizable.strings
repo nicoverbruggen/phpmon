@@ -317,6 +317,9 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "domain_list.columns.kind" = "Loại";
 "domain_list.columns.project_type" = "Loại dự án";
 
+"domain_list.extensions" = "Bật/tắt Tiện ích mở rộng";
+"domain_list.applies_to" = "Áp dụng cho PHP %@";
+
 // DRIVERS
 
 "driver.not_detected" = "Khác";
