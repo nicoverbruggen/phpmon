@@ -378,7 +378,6 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.tabs.visibility" = "Visibility";
 "prefs.tabs.notifications" = "Notifications";
 
-"prefs.language" = "Language:";
 "prefs.global_shortcut" = "Global Shortcut:";
 "prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";
@@ -392,8 +391,6 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.warnings" = "Warnings:";
 "prefs.menu_contents" = "Features in Menu:";
 "prefs.startup" = "Startup:";
-
-"prefs.language_options_desc" = "Choose a different language to use with PHP Monitor.";
 
 "prefs.auto_start_desc" = "Automatically starts PHP Monitor when you log into your Mac.";
 "prefs.auto_start_title" = "Start PHP Monitor at login";
@@ -843,3 +840,11 @@ Please note that some features (greyed out below) are currently unavailable beca
 "onboarding.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
 "onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
 "onboarding.tour.close" = "Close Tour";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Language:";
+"prefs.language_options_desc" = "Choose a different language to use with PHP Monitor. To fully apply this change, you must restart the app.";
+
+"alert.language_changed.title" = "You should restart PHP Monitor!";
+"alert.language_changed.subtitle" = "You just changed the display language of PHP Monitor. The menu will immediately use the correct language, but you may need to restart the app for all text throughout the app to reflect your new language choice.";
