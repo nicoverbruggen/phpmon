@@ -76,7 +76,7 @@ class SelectPreferenceView: NSView, XibLoadable {
 
     @IBAction func valueChanged(_ sender: Any) {
         let index = self.popupButton.indexOfSelectedItem
-        Preferences.update(.iconTypeToDisplay, value: self.options[index])
+        Preferences.update(self.preference, value: self.options[index])
         self.action()
     }
 

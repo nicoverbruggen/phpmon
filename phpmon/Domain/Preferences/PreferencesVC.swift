@@ -48,6 +48,20 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getLanguageOptionsPV() -> NSView {
+        return SelectPreferenceView.make(
+            sectionText: "",
+            descriptionText: "prefs.language_options_desc".localized,
+            options: Bundle.main.localizations
+                .filter({ $0 != "Base"}),
+            localizationPrefix: "lang",
+            preference: .languageOverride,
+            action: {
+                MainMenu.shared.refreshIcon()
+            }
+        )
+    }
+
     func getIconOptionsPV() -> NSView {
         return SelectPreferenceView.make(
             sectionText: "",

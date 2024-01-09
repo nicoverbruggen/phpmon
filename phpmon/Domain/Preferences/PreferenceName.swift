@@ -20,6 +20,7 @@ enum PreferenceName: String, Codable {
     case globalHotkey = "global_hotkey"
     case automaticBackgroundUpdateCheck = "backgroundUpdateCheck"
     case showPhpDoctorSuggestions = "show_php_doctor_suggestions"
+    case languageOverride = "language_override"
 
     // APPEARANCE
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
@@ -84,7 +85,8 @@ enum PreferenceName: String, Codable {
         ],
         .string: [
             .globalHotkey,
-            .iconTypeToDisplay
+            .iconTypeToDisplay,
+            .languageOverride
         ]
     ]
 }
