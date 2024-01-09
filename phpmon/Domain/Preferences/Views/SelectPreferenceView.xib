@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,16 +13,16 @@
             <rect key="frame" x="0.0" y="0.0" width="596" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-X1-qca">
-                    <rect key="frame" x="183" y="5" width="395" height="14"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-X1-qca">
+                    <rect key="frame" x="168" y="5" width="410" height="14"/>
                     <textFieldCell key="cell" title="DESCRIPTION" id="9fH-up-Sob">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B8f-nb-Y0A">
-                    <rect key="frame" x="13" y="29" width="154" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B8f-nb-Y0A">
+                    <rect key="frame" x="-2" y="29" width="154" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="euj-t0-xv4"/>
                     </constraints>
@@ -33,7 +33,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YaB-Tg-Ir3">
-                    <rect key="frame" x="182" y="23" width="110" height="25"/>
+                    <rect key="frame" x="167" y="23" width="110" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Icon Option" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="SaA-mm-HBo" id="Su6-C4-aGo">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -58,7 +58,7 @@
                 <constraint firstItem="Bcg-X1-qca" firstAttribute="top" secondItem="YaB-Tg-Ir3" secondAttribute="bottom" constant="8" symbolic="YES" id="Mji-pe-CNl"/>
                 <constraint firstAttribute="trailing" secondItem="Bcg-X1-qca" secondAttribute="trailing" constant="20" symbolic="YES" id="UPo-Il-l81"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YaB-Tg-Ir3" secondAttribute="trailing" constant="20" symbolic="YES" id="Zlg-jj-uKY"/>
-                <constraint firstItem="B8f-nb-Y0A" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="Ztd-uk-4aw"/>
+                <constraint firstItem="B8f-nb-Y0A" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="aBU-J8-gRK"/>
                 <constraint firstAttribute="bottom" secondItem="Bcg-X1-qca" secondAttribute="bottom" constant="5" id="hNE-mU-jcu"/>
             </constraints>
             <connections>

@@ -378,6 +378,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.tabs.visibility" = "Visibility";
 "prefs.tabs.notifications" = "Notifications";
 
+"prefs.language" = "Language:";
 "prefs.global_shortcut" = "Global Shortcut:";
 "prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";
@@ -391,6 +392,8 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.warnings" = "Warnings:";
 "prefs.menu_contents" = "Features in Menu:";
 "prefs.startup" = "Startup:";
+
+"prefs.language_options_desc" = "Choose a different language to use with PHP Monitor.";
 
 "prefs.auto_start_desc" = "Automatically starts PHP Monitor when you log into your Mac.";
 "prefs.auto_start_title" = "Start PHP Monitor at login";
