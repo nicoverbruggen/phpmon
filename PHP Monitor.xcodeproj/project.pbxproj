@@ -145,6 +145,9 @@
 		C42337A3281F19F000459A48 /* Xdebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42337A2281F19F000459A48 /* Xdebug.swift */; };
 		C42759672627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
 		C42759682627662800093CAE /* NSMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42759662627662800093CAE /* NSMenuExtension.swift */; };
+		C428311E2B52AD6F0009F9F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
+		C428311F2B52AD6F0009F9F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
+		C42831202B52AD700009F9F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C41C1B3A22B0098000E7CF16 /* Assets.xcassets */; };
 		C4292D542B023F61004F0D2A /* PhpExtensionManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4292D532B023F61004F0D2A /* PhpExtensionManagerWindowController.swift */; };
 		C4292D562B024006004F0D2A /* PhpExtensionManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4292D552B024006004F0D2A /* PhpExtensionManagerView.swift */; };
 		C4297F7A28970D59004C4630 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
@@ -2412,6 +2415,7 @@
 				C4E2E85528FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85928FC256B003B070C /* brew-services-normal.json in Resources */,
 				C40934A8298EEB8700D25014 /* phpmon-dev.rb in Resources */,
+				C428311F2B52AD6F0009F9F1 /* Assets.xcassets in Resources */,
 				C4E2E84F28FC22E4003B070C /* brew-formula.json in Resources */,
 				C4E2E86228FC28A6003B070C /* brew-services.json in Resources */,
 			);
@@ -2425,6 +2429,7 @@
 				C4E2E85628FC256B003B070C /* brew-services-sudo.json in Resources */,
 				C4E2E85A28FC256B003B070C /* brew-services-normal.json in Resources */,
 				C40934A9298EEB8700D25014 /* phpmon-dev.rb in Resources */,
+				C42831202B52AD700009F9F1 /* Assets.xcassets in Resources */,
 				C4E2E85028FC22E4003B070C /* brew-formula.json in Resources */,
 				C4E2E86128FC28A6003B070C /* brew-services.json in Resources */,
 			);
@@ -2436,6 +2441,7 @@
 			files = (
 				C4551659297AED7D009B8466 /* valetrc.valid in Resources */,
 				C4FC8D3E2A49816300FBBD16 /* Localizable.strings in Resources */,
+				C428311E2B52AD6F0009F9F1 /* Assets.xcassets in Resources */,
 				54FCFD27276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
 				54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
 				C42CFB1827DFDFDC00862737 /* nginx-site-isolated.test in Resources */,

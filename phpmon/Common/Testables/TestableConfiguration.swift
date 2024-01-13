@@ -89,12 +89,11 @@ public struct TestableConfiguration: Codable {
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.short)/bin/php-config")
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
-            self.commandOutput["/opt/homebrew/bin/php -r echo php_ini_scanned_files();"] =
+            self.commandOutput["/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
                 """
                 /opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini,
                 """
         } else {
-
             self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
                 BatchFakeShellOutput.instant(
                     self.secondaryPhpVersions
