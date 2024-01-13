@@ -181,9 +181,6 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
-                "/opt/homebrew/opt/php@8.2/bin/php -v": "OK (no full output needed for testing)",
-                "/opt/homebrew/opt/php@8.1/bin/php -v": "OK (no full output needed for testing)",
-                "/opt/homebrew/opt/php@8.0/bin/php -v": "OK (no full output needed for testing)"
             ],
             preferenceOverrides: [
                 .automaticBackgroundUpdateCheck: false
@@ -191,7 +188,8 @@ class TestableConfigurations {
             phpVersions: [
                 VersionNumber(major: 8, minor: 2, patch: 6),
                 VersionNumber(major: 8, minor: 1, patch: 0),
-                VersionNumber(major: 8, minor: 0, patch: 0)
+                VersionNumber(major: 8, minor: 0, patch: 0),
+                VersionNumber(major: 7, minor: 4, patch: 33)
             ]
         )
     }

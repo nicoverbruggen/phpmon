@@ -109,6 +109,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     static func initializeTestingProfile(_ path: String) {
         Log.info("The configuration with path `\(path)` is being requested...")
+        // Clear for PHP Guard
+        Stats.clearCurrentGlobalPhpVersion()
+        // Load the configuration file
         TestableConfiguration.loadFrom(path: path).apply()
     }
 

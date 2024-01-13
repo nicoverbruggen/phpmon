@@ -73,12 +73,22 @@ public struct TestableConfiguration: Codable {
                 : .fake(.text)
         ]) { (_, new) in new }
 
-        self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php-config --version"]
-            = version.long
+        self.shellOutput["/opt/homebrew/opt/php@\(version.short)/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
+            .instant("/opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini")
+
+        self.shellOutput["/opt/homebrew/bin/brew unlink php@\(version.short)"] = .delayed(0.2, "OK")
+        self.shellOutput["sudo /opt/homebrew/bin/brew services stop php@\(version.short)"] = .delayed(0.2, "OK")
+        self.shellOutput["sudo /opt/homebrew/bin/brew services start php@\(version.short)"] = .delayed(0.2, "OK")
+        self.shellOutput["/opt/homebrew/bin/brew link php@\(version.short) --overwrite --force"] = .delayed(0.2, "OK")
+
+        self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php-config --version"] = version.long
+        self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php -v"] = "OK"
 
         if primary {
-            self.shellOutput["ls /opt/homebrew/opt | grep php"]
-                = .instant("php")
+            self.shellOutput["ls /opt/homebrew/opt | grep php"] =
+                .instant("php")
+            self.shellOutput["/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
+                .instant("/opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini")
             self.filesystem["/opt/homebrew/opt/php"]
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)")
             self.filesystem["/opt/homebrew/opt/php/bin/php"]
@@ -89,10 +99,6 @@ public struct TestableConfiguration: Codable {
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.short)/bin/php-config")
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
-            self.commandOutput["/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
-                """
-                /opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini,
-                """
         } else {
             self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
                 BatchFakeShellOutput.instant(
