@@ -73,18 +73,22 @@ public struct TestableConfiguration: Codable {
                 : .fake(.text)
         ]) { (_, new) in new }
 
+        // PHP configuration files
         self.shellOutput["/opt/homebrew/opt/php@\(version.short)/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
             .instant("/opt/homebrew/etc/php/\(version.short)/conf.d/php-memory-limits.ini")
 
+        // PHP Homebrew operations
         self.shellOutput["/opt/homebrew/bin/brew unlink php@\(version.short)"] = .delayed(0.2, "OK")
         self.shellOutput["sudo /opt/homebrew/bin/brew services stop php@\(version.short)"] = .delayed(0.2, "OK")
         self.shellOutput["sudo /opt/homebrew/bin/brew services start php@\(version.short)"] = .delayed(0.2, "OK")
         self.shellOutput["/opt/homebrew/bin/brew link php@\(version.short) --overwrite --force"] = .delayed(0.2, "OK")
 
+        // PHP version output
         self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php-config --version"] = version.long
         self.commandOutput["/opt/homebrew/opt/php@\(version.short)/bin/php -v"] = "OK"
 
         if primary {
+            // Files expected to be present for currently linked PHP version
             self.shellOutput["ls /opt/homebrew/opt | grep php"] =
                 .instant("php")
             self.shellOutput["/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"] =
@@ -100,6 +104,7 @@ public struct TestableConfiguration: Codable {
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
         } else {
+            // Output expected to be present for non-linked PHP versions
             self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
                 BatchFakeShellOutput.instant(
                     self.secondaryPhpVersions
