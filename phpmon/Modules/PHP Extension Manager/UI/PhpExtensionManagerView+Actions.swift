@@ -60,6 +60,8 @@ extension PhpExtensionManagerView {
             return
         }
 
+        let phpVersionManaged = self.manager.phpVersion
+
         do {
             self.status.busy = true
             try await command.execute { progress in
@@ -70,7 +72,7 @@ extension PhpExtensionManagerView {
                 }
             }
 
-            self.manager.loadExtensionData(for: self.manager.phpVersion)
+            self.manager.phpVersion = phpVersionManaged
             self.status.busy = false
         } catch let error {
             let error = error as! BrewCommandError
