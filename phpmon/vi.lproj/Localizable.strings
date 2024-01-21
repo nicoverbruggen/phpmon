@@ -102,7 +102,7 @@
 
 "phpextman.list.status.external" = "Tiện ích mở rộng này đã được cài đặt thông qua một nguồn khác và không thể được quản lý.";
 "phpextman.list.status.installable" = "Tiện ích mở rộng này có thể được cài đặt.";
-"phpextman.list.status.dependent" = "Bạn không thể gỡ cài đặt điều này trước khi gỡ cài đặt **%@**.";
+"phpextman.list.status.dependent" = "Bạn không thể gỡ cài đặt điều này trước khi gỡ cài đặt %@.";
 "phpextman.list.status.can_manage" = "Tiện ích mở rộng này đã được cài đặt và có thể được quản lý bởi PHP Monitor.";
 
 // PHPMAN

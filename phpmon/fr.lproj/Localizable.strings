@@ -117,7 +117,7 @@
 
 "phpextman.list.status.external" = "Cette extension est déjà installée via une autre source et ne peut pas être gérée.";
 "phpextman.list.status.installable" = "Cette extension peut être installée.";
-"phpextman.list.status.dependent" = "Vous ne pouvez pas désinstaller ceci avant de désinstaller **%@**.";
+"phpextman.list.status.dependent" = "Vous ne pouvez pas désinstaller ceci avant de désinstaller %@.";
 "phpextman.list.status.can_manage" = "Cette extension est installée et peut être gérée par PHP Monitor.";
 
 // PHPMAN

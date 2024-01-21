@@ -103,7 +103,7 @@
 
 "phpextman.list.status.external" = "Deze extensie is al geïnstalleerd via een andere bron en kan niet worden beheerd.";
 "phpextman.list.status.installable" = "Deze extensie kan worden geïnstalleerd.";
-"phpextman.list.status.dependent" = "U kunt dit niet deïnstalleren voordat u **%@** deïnstalleert.";
+"phpextman.list.status.dependent" = "U kunt dit niet deïnstalleren voordat u %@ deïnstalleert.";
 "phpextman.list.status.can_manage" = "Deze extensie is geïnstalleerd en kan worden beheerd door PHP Monitor.";
 
 // PHPMAN

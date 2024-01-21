@@ -43,11 +43,13 @@ struct BrewPhpExtension: Hashable, Comparable {
     }
 
     var hasAlternativeInstall: Bool {
-        // Extension must be active
-        let isActive = PhpEnvironments.shared.currentInstall?.extensions
-            .contains(where: { $0.name == self.name }) ?? false
+        guard let php = PhpEnvironments.shared.cachedPhpInstallations[self.phpVersion] else {
+            return false
+        }
 
-        return isActive && !isInstalled
+        let alreadyDiscovered = php.extensions.contains(where: { $0.name == self.name })
+
+        return alreadyDiscovered && !isInstalled
     }
 
     internal func firstDependent(in exts: [BrewPhpExtension]) -> BrewPhpExtension? {

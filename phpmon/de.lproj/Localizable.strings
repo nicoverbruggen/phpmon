@@ -102,7 +102,7 @@
 
 "phpextman.list.status.external" = "Diese Erweiterung ist bereits über eine andere Quelle installiert und kann nicht verwaltet werden.";
 "phpextman.list.status.installable" = "Diese Erweiterung kann installiert werden.";
-"phpextman.list.status.dependent" = "Sie können diese nicht deinstallieren, bevor Sie **%@** deinstallieren.";
+"phpextman.list.status.dependent" = "Sie können diese nicht deinstallieren, bevor Sie %@ deinstallieren.";
 "phpextman.list.status.can_manage" = "Diese Erweiterung ist installiert und kann von PHP Monitor verwaltet werden.";
 
 
