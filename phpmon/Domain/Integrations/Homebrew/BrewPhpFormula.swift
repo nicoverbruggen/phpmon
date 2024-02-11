@@ -1,5 +1,5 @@
 //
-//  BrewFormula.swift
+//  BrewPhpFormula.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 17/03/2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewFormula: Equatable {
+struct BrewPhpFormula: Equatable {
     /// Name of the formula.
     let name: String
 
@@ -20,6 +20,8 @@ struct BrewFormula: Equatable {
 
     /// The upgrade that is currently available, if it exists.
     let upgradeVersion: String?
+
+    // TODO: A rebuild attribute could be checked, to check if a Tap update exists for a pre-release version
 
     /// Whether this formula is a stable version of PHP.
     let prerelease: Bool
@@ -100,6 +102,7 @@ struct BrewFormula: Equatable {
             return nil
         }
 
-        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?.isHealthy ?? nil
+        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?
+            .isHealthy ?? nil
     }
 }

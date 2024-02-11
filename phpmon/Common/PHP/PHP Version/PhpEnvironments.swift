@@ -87,7 +87,14 @@ class PhpEnvironments {
     var cachedPhpInstallations: [String: PhpInstallation] = [:]
 
     /** Information about the currently linked PHP installation. */
-    var currentInstall: ActivePhpInstallation?
+    var currentInstall: ActivePhpInstallation? {
+        didSet {
+            // Let the PHP extension manager, if it exists, know the version changed
+            if let version = currentInstall?.version.short {
+                App.shared.phpExtensionManagerWindowController?.view?.manager.phpVersion = version
+            }
+        }
+    }
 
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
@@ -173,7 +180,7 @@ class PhpEnvironments {
             let phpAliasInstall = PhpInstallation(phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
-            if !phpAliasInstall.missingBinary {
+            if !phpAliasInstall.isMissingBinary {
                 supportedVersions.insert(phpAlias)
             }
         }

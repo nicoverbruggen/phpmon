@@ -1,5 +1,5 @@
 //
-//  PhpFormulaeStatus.swift
+//  BusyStatus.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 02/05/2023.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PhpFormulaeStatus: ObservableObject {
+class BusyStatus: ObservableObject {
     @Published var busy: Bool
     @Published var title: String
     @Published var description: String
@@ -17,5 +17,13 @@ class PhpFormulaeStatus: ObservableObject {
         self.busy = busy
         self.title = title
         self.description = description
+    }
+
+    public static func notBusy() -> BusyStatus {
+        return BusyStatus(busy: false, title: "", description: "")
+    }
+
+    public static func busy() -> BusyStatus {
+        return BusyStatus(busy: false, title: "", description: "")
     }
 }

@@ -110,6 +110,22 @@ extension DomainListVC {
         }
     }
 
+    @objc func toggleExtension(sender: ExtensionMenuItem) {
+        Task {
+            self.setUIBusy()
+
+            await sender.phpExtension?.toggle()
+
+            if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
+                await Actions.restartPhpFpm()
+            }
+
+            reloadContextMenu()
+
+            self.setUINotBusy()
+        }
+    }
+
     @objc func isolateSite(sender: PhpMenuItem) {
         guard let site = selectedSite else {
             return

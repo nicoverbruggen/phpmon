@@ -9,30 +9,34 @@
 import Foundation
 import Cocoa
 
-class SelectPreferenceView: NSView, XibLoadable {
+struct PreferenceDropdownOption {
+    let label: String
+    let value: String
+}
 
+class SelectPreferenceView: NSView, XibLoadable {
     @IBOutlet weak var labelSection: NSTextField!
     @IBOutlet weak var labelDescription: NSTextField!
     @IBOutlet weak var popupButton: NSPopUpButton!
 
-    var localizationPrefix: String = ""
+    var localizationPrefix: String?
     var imagePrefix: String?
 
-    var options: [String] = [] {
+    var options: [PreferenceDropdownOption] = [] {
         didSet {
             self.popupButton.removeAllItems()
-            self.options.forEach { value in
-                self.popupButton.addItem(
-                    withTitle: "\(localizationPrefix).\(value)".localized
-                )
+            self.options.forEach { option in
+                if let prefix = localizationPrefix {
+                    self.popupButton.addItem(withTitle: "\(prefix).\(option.label)".localized)
+                } else {
+                    self.popupButton.addItem(withTitle: option.label)
+                }
             }
 
-            if imagePrefix == nil {
-                return
-            }
-
-            self.popupButton.itemArray.enumerated().forEach { item in
-                item.element.image = NSImage(named: "\(imagePrefix!)_\(self.options[item.offset])")
+            if let prefix = imagePrefix {
+                self.popupButton.itemArray.enumerated().forEach { item in
+                    item.element.image = NSImage(named: "\(prefix)_\(self.options[item.offset].value)")
+                }
             }
         }
     }
@@ -43,19 +47,18 @@ class SelectPreferenceView: NSView, XibLoadable {
         didSet {
             let value = Preferences.preferences[preference] as! String
             self.options.enumerated().forEach { option in
-                if option.element == value {
+                if option.element.value == value {
                     self.popupButton.selectItem(at: option.offset)
                 }
             }
         }
     }
 
-    // swiftlint:disable function_parameter_count
     static func make(
         sectionText: String,
         descriptionText: String,
-        options: [String],
-        localizationPrefix: String,
+        options: [PreferenceDropdownOption],
+        localizationPrefix: String? = nil,
         imagePrefix: String? = nil,
         preference: PreferenceName,
         action: @escaping () -> Void) -> NSView {
@@ -72,11 +75,10 @@ class SelectPreferenceView: NSView, XibLoadable {
 
         return view
     }
-    // swiftlint:enable function_parameter_count
 
     @IBAction func valueChanged(_ sender: Any) {
         let index = self.popupButton.indexOfSelectedItem
-        Preferences.update(.iconTypeToDisplay, value: self.options[index])
+        Preferences.update(self.preference, value: self.options[index].value)
         self.action()
     }
 

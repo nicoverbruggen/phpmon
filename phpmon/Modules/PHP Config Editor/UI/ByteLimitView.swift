@@ -98,19 +98,19 @@ struct ByteLimitView: View {
     }
 }
 
-struct ByteLimitView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferenceContainer(
-            name: "Max Size",
-            description:
-                "Here's an extensive description that is obviously way too long but it should wrap." +
-                "The point of the wrapping text is that is allows us to see what's going on with the layout here."
-        ) {
-            ByteLimitView(preference: BytePhpPreference(key: "max_memory"))
-        }.frame(width: 600, height: 200)
+#Preview("Byte Limit View") {
+    PreferenceContainer(
+        name: "Max Size",
+        description:
+            "Here's an extensive description that is obviously way too long but it should wrap." +
+        "The point of the wrapping text is that is allows us to see what's going on with the layout here."
+    ) {
+        ByteLimitView(preference: BytePhpPreference(key: "max_memory"))
+    }.frame(width: 600, height: 200)
+}
 
-        ConfigManagerView()
-            .frame(width: 600, height: .infinity)
-            .previewDisplayName("Config Manager")
-    }
+#Preview("Config Manager") {
+    ConfigManagerView()
+        .frame(width: 600, height: .infinity)
+        .previewDisplayName("Config Manager")
 }

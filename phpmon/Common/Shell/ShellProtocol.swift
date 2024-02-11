@@ -15,6 +15,16 @@ protocol ShellProtocol {
     var PATH: String { get }
 
     /**
+     Run a command synchronously. Use with caution.
+
+     Common usage:
+     ```
+     let output = Shell.sync("php -v")
+     ```
+     */
+    func sync(_ command: String) -> ShellOutput
+
+    /**
      Run a command asynchronously.
      Returns the most relevant output (prefers error output if it exists).
 

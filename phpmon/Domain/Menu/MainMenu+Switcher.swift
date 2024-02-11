@@ -27,7 +27,7 @@ extension MainMenu {
 
             // Perform UI updates on main thread
             Task { @MainActor [self] in
-                updatePhpVersionInStatusBar()
+                refreshIcon()
                 rebuild()
 
                 if Valet.installed && !PhpEnvironments.shared.validate(version) {

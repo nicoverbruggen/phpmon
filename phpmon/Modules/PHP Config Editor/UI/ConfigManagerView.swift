@@ -84,10 +84,6 @@ struct ConfigManagerView: View {
     }
 }
 
-struct ConfigManagerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfigManagerView()
-            .frame(width: 600)
-            .previewDisplayName("Live Preview")
-    }
+#Preview {
+    ConfigManagerView().frame(width: 600)
 }

@@ -13,7 +13,11 @@
 "mi_no_php_linked" = "Geen PHP versie gelinkt!";
 "mi_fix_php_link" = "Automatisch oplossen...";
 "mi_no_php_linked_explain" = "What is dit?";
-"mi_php_version_manager" = "PHP versies beheren...";
+
+"mi_php_version_manager" = "Beheer PHP Installaties...";
+"mi_php_ext_manager" = "Beheer PHP Extensies...";
+"mi_php_config_manager" = "PHP Configuratie Editor...";
+"mi_manage_limits" = "Beheer Limieten...";
 
 "mi_diagnostics" = "Diagnostische informatie";
 "mi_active_services" = "Actieve services";
@@ -81,6 +85,26 @@
 "mi_xdebug_available_modes" = "Beschikbare modes";
 "mi_xdebug_actions" = "Acties";
 "mi_xdebug_disable_all" = "Alle modes uitschakelen";
+
+// PHPEXTMAN
+
+"phpextman.window.title" = "Extensies";
+"phpextman.description" = "**PHP Extension Manager** stelt u in staat om verschillende PHP-extensies te beheren met een simpele klik op de knop. Omdat Homebrew wordt gebruikt, hoeven extensies niet ter plekke te worden gecompileerd met `pecl`.";
+"phpextman.disclaimer" = "Bepaalde extensies kunnen vereisen dat andere afhankelijkheden worden geïnstalleerd, maar over het algemeen zou het installeren van extensies veel sneller moeten zijn dan het installeren van PHP-versies.";
+
+"phpextman.warnings.removal.title" = "De extensie `%@` verwijderen?";
+"phpextman.warnings.removal.desc" = "De extensie en het unieke configuratiebestand zullen worden verwijderd. De functionaliteit van de extensie zal niet meer beschikbaar zijn voor deze PHP-installatie. Weet u het zeker?
+
+(Als de extensie is ingeschakeld met een afwijkende bestandsnaam, zal deze niet worden verwijderd. Dus als u niet wilt dat het .ini-bestand wordt verwijderd, kunt u het best een andere naam geven. In dat geval zal de extensie alleen worden uitgeschakeld als onderdeel van het opruimproces.)";
+"phpextman.warnings.removal.button" = "Verwijderen";
+
+"phpextman.list.showing_count" = "Momenteel worden %@ extensies weergegeven voor:";
+"phpextman.list.depends_on" = "Is afhankelijk van:";
+
+"phpextman.list.status.external" = "Deze extensie is al geïnstalleerd via een andere bron en kan niet worden beheerd.";
+"phpextman.list.status.installable" = "Deze extensie kan worden geïnstalleerd.";
+"phpextman.list.status.dependent" = "U kunt dit niet deïnstalleren voordat u %@ deïnstalleert.";
+"phpextman.list.status.can_manage" = "Deze extensie is geïnstalleerd en kan worden beheerd door PHP Monitor.";
 
 // PHPMAN
 
@@ -213,6 +237,9 @@ Tijdens het verwijderingsproces kan u worden gevraagd om uw wachtwoord indien de
 "domain_list.columns.active" = "Actief";
 "domain_list.columns.kind" = "Type";
 "domain_list.columns.project_type" = "Projecttype";
+
+"domain_list.extensions" = "Extensies in-/uitschakelen";
+"domain_list.applies_to" = "Van toepassing op PHP %@";
 
 // CHOOSE WHAT TO ADD
 
@@ -788,3 +815,11 @@ Houd er rekening mee dat sommige functies (hieronder grijs weergegeven) momentee
 "onboarding.tour.feature_unavailable" = "Deze functie is momenteel niet beschikbaar en vereist de installatie van Laravel Valet.";
 "onboarding.tour.once" = "U zult de Welkomsttour slechts één keer zien. U kunt de Welkomsttour later opnieuw openen via het menubalkpictogram (beschikbaar in het menu onder First Aid & Services).";
 "onboarding.tour.close" = "Tour sluiten";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Taal:";
+"prefs.language_options_desc" = "Kies een andere taal om te gebruiken met PHP Monitor. Om deze wijziging volledig toe te passen, moet u de app herstarten.";
+
+"alert.language_changed.title" = "U moet PHP Monitor herstarten!";
+"alert.language_changed.subtitle" = "U heeft zojuist de weergavetaal van PHP Monitor gewijzigd. Het menu zal onmiddellijk de juiste taal gebruiken, maar u moet mogelijk de app herstarten om overal de nieuwe taal te zien.";

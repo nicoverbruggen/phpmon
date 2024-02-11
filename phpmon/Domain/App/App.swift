@@ -83,6 +83,9 @@ class App {
     /** The window controller of the PHP version manager window. */
     var phpVersionManagerWindowController: PhpVersionManagerWindowController?
 
+    /** The window controller of the PHP extension manager window. */
+    var phpExtensionManagerWindowController: PhpExtensionManagerWindowController?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 

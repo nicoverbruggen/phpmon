@@ -12,7 +12,11 @@
 "mi_no_php_linked" = "Keine PHP-Version verknüpft!";
 "mi_fix_php_link" = "Automatisch beheben...";
 "mi_no_php_linked_explain" = "Was ist das?";
-"mi_php_version_manager" = "PHP Versionen Manager...";
+
+"mi_php_version_manager" = "PHP-Installationen verwalten...";
+"mi_php_ext_manager" = "PHP-Erweiterungen verwalten...";
+"mi_php_config_manager" = "PHP-Konfigurationseditor...";
+"mi_manage_limits" = "Limits verwalten...";
 
 "mi_diagnostics" = "Diagnosen";
 "mi_active_services" = "Aktive Dienste";
@@ -80,6 +84,27 @@
 "mi_xdebug_available_modes" = "Verfügbare Modi";
 "mi_xdebug_actions" = "Aktionen";
 "mi_xdebug_disable_all" = "Alle Modi deaktivieren";
+
+// PHPEXTMAN
+
+"phpextman.window.title" = "Erweiterungen";
+"phpextman.description" = "**PHP Extension Manager** ermöglicht Ihnen die Verwaltung verschiedener PHP-Erweiterungen mit einem einfachen Klick auf die Schaltfläche. Da Homebrew verwendet wird, müssen Erweiterungen nicht on-the-fly mit `pecl` kompiliert werden.";
+"phpextman.disclaimer" = "Bestimmte Erweiterungen erfordern möglicherweise die Installation anderer Abhängigkeiten, im Allgemeinen sollte jedoch die Installation von Erweiterungen viel schneller sein als die Installation von PHP-Versionen.";
+
+"phpextman.warnings.removal.title" = "Die Erweiterung `%@` deinstallieren?";
+"phpextman.warnings.removal.desc" = "Die Erweiterung und ihre einzigartige Konfigurationsdatei werden entfernt. Die Funktionalität der Erweiterung wird für diese PHP-Installation nicht mehr verfügbar sein. Sind Sie sicher?
+
+(Wenn die Erweiterung mit einem nicht standardmäßigen Dateinamen aktiviert ist, wird sie nicht entfernt. Wenn Sie also nicht möchten, dass die .ini-Datei entfernt wird, benennen Sie sie am besten einfach um. In diesem Fall wird die Erweiterung nur als Teil des Bereinigungsprozesses deaktiviert.)";
+"phpextman.warnings.removal.button" = "Deinstallieren";
+
+"phpextman.list.showing_count" = "Aktuell werden %@ Erweiterungen für folgendes angezeigt:";
+"phpextman.list.depends_on" = "Hängt ab von:";
+
+"phpextman.list.status.external" = "Diese Erweiterung ist bereits über eine andere Quelle installiert und kann nicht verwaltet werden.";
+"phpextman.list.status.installable" = "Diese Erweiterung kann installiert werden.";
+"phpextman.list.status.dependent" = "Sie können diese nicht deinstallieren, bevor Sie %@ deinstallieren.";
+"phpextman.list.status.can_manage" = "Diese Erweiterung ist installiert und kann von PHP Monitor verwaltet werden.";
+
 
 // PHPMAN
 
@@ -212,6 +237,9 @@ Möglicherweise werden Sie während des Deinstallationsvorgangs nach Ihrem Passw
 "domain_list.columns.active" = "Aktiv";
 "domain_list.columns.kind" = "Art";
 "domain_list.columns.project_type" = "Projekttyp";
+
+"domain_list.extensions" = "Erweiterungen umschalten";
+"domain_list.applies_to" = "Gilt für PHP %@";
 
 // CHOOSE WHAT TO ADD
 
@@ -789,3 +817,11 @@ Bitte beachten Sie, dass einige Funktionen (unten ausgegraut) derzeit nicht verf
 "onboarding.tour.feature_unavailable" = "Diese Funktion ist derzeit nicht verfügbar und erfordert die Installation von Laravel Valet.";
 "onboarding.tour.once" = "Sie sehen die Willkommenstour nur einmal. Sie können die Willkommenstour später über das Symbol in der Menüleiste (im Menü unter Erste Hilfe & Dienste) erneut öffnen.";
 "onboarding.tour.close" = "Tour beenden";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Sprache:";
+"prefs.language_options_desc" = "Wählen Sie eine andere Sprache für die Verwendung mit PHP Monitor. Um diese Änderung vollständig anzuwenden, müssen Sie die App neu starten.";
+
+"alert.language_changed.title" = "Sie sollten PHP Monitor neu starten!";
+"alert.language_changed.subtitle" = "Sie haben soeben die Anzeigesprache von PHP Monitor geändert. Das Menü wird sofort die korrekte Sprache verwenden, aber Sie müssen die App möglicherweise neu starten, damit alle Texte in der App Ihre neue Sprachwahl widerspiegeln.";

@@ -26,7 +26,7 @@ struct WarningView: View {
                         Text(title.localizedForSwiftUI)
                             .fontWeight(.bold)
                         ForEach(paragraphs, id: \.self) { paragraph in
-                            Text(paragraph)
+                            Text(paragraph.localizedForSwiftUI)
                                 .font(.system(size: 13))
                         }
                     }
@@ -47,23 +47,23 @@ struct WarningView: View {
     }
 }
 
-struct WarningView_Previews: PreviewProvider {
-    static var previews: some View {
-        WarningView(
-            title: "warnings.helper_permissions.title",
-            paragraphs: ["warnings.helper_permissions.description"],
-            documentationUrl: "https://nicoverbruggen.be"
-        )
-        .frame(width: 600, height: 105)
+#Preview("Light Mode") {
+    WarningView(
+        title: "warnings.helper_permissions.title",
+        paragraphs: ["warnings.helper_permissions.description"],
+        documentationUrl: "https://nicoverbruggen.be"
+    )
+    .frame(width: 600, height: 105)
+    .padding(25)
+}
 
-        WarningView(
-            title: "warnings.helper_permissions.title",
-            paragraphs: ["warnings.helper_permissions.description"],
-            documentationUrl: "https://nicoverbruggen.be"
-        )
-        .preferredColorScheme(.dark)
-        .frame(width: 600, height: 105)
-
-        // WarningListView().frame(width: 600, height: 580)
-    }
+#Preview("Dark Mode") {
+    WarningView(
+        title: "warnings.helper_permissions.title",
+        paragraphs: ["warnings.helper_permissions.description"],
+        documentationUrl: "https://nicoverbruggen.be"
+    )
+    .preferredColorScheme(.dark)
+    .frame(width: 600, height: 105)
+    .padding(25)
 }

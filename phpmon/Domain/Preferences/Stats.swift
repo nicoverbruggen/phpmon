@@ -84,6 +84,10 @@ class Stats {
         )
     }
 
+    public static func clearCurrentGlobalPhpVersion() {
+        UserDefaults.standard.removeObject(forKey: InternalStats.lastGlobalPhpVersion.rawValue)
+    }
+
     /**
      Determine if the sponsor message should be displayed.
      

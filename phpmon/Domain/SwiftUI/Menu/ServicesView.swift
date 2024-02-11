@@ -172,23 +172,21 @@ struct ServiceView: View {
     }
 }
 
-struct ServicesView_Previews: PreviewProvider {
-    static var previews: some View {
-        ServicesView(manager: FakeServicesManager(
-            formulae: ["php", "nginx", "dnsmasq"],
-            status: .active
-        ), perRow: 4)
-        .frame(width: 330.0)
-        .previewDisplayName("Active 1")
+#Preview("Active 1") {
+    ServicesView(manager: FakeServicesManager(
+        formulae: ["php", "nginx", "dnsmasq"],
+        status: .active
+    ), perRow: 4)
+    .frame(width: 330.0)
+}
 
-        ServicesView(manager: FakeServicesManager(
-            formulae: [
-                "php", "nginx", "dnsmasq", "thing1",
-                "thing2", "thing3", "thing4", "thing5"
-            ],
-            status: .inactive
-        ), perRow: 4)
-        .frame(width: 330.0)
-        .previewDisplayName("Active 2")
-    }
+#Preview("Active 2") {
+    ServicesView(manager: FakeServicesManager(
+        formulae: [
+            "php", "nginx", "dnsmasq", "thing1",
+            "thing2", "thing3", "thing4", "thing5"
+        ],
+        status: .inactive
+    ), perRow: 4)
+    .frame(width: 330.0)
 }

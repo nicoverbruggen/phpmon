@@ -16,21 +16,19 @@ class DomainListKindCell: NSTableCellView, DomainListCellProtocol {
 
     func populateCell(with site: ValetSite) {
         // If the `aliasPath` is nil, we're dealing with a parked site (otherwise: linked).
-        imageViewType.image = NSImage(
-            named: site.aliasPath == nil
-            ? "IconParked"
-            : "IconLinked"
-        )
+        imageViewType.image = site.aliasPath == nil
+            ? NSImage.iconParked
+            : NSImage.iconLinked
 
         // Unless, of course, this is a default site
         if site.absolutePath == Valet.shared.config.defaultSite {
-            imageViewType.image = NSImage(named: "IconDefault")
+            imageViewType.image = NSImage.iconDefault
         }
 
         imageViewType.contentTintColor = NSColor.tertiaryLabelColor
     }
 
     func populateCell(with proxy: ValetProxy) {
-        imageViewType.image = NSImage(named: "IconProxy")
+        imageViewType.image = NSImage.iconProxy
     }
 }

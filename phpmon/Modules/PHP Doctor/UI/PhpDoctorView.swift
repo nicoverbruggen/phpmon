@@ -96,14 +96,12 @@ struct PhpDoctorView: View {
     }
 }
 
-struct WarningListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PhpDoctorView(empty: true, fake: true, manager: WarningManager())
-            .frame(width: 600, height: 480)
-            .previewDisplayName("Empty List")
+#Preview("Empty List") {
+    PhpDoctorView(empty: true, fake: true, manager: WarningManager())
+        .frame(width: 600, height: 480)
+}
 
-        PhpDoctorView(empty: false, fake: true, manager: WarningManager())
-            .frame(width: 600, height: 480)
-            .previewDisplayName("List With All Warnings")
-    }
+#Preview("List With All Warnings") {
+    PhpDoctorView(empty: false, fake: true, manager: WarningManager())
+        .frame(width: 600, height: 480)
 }

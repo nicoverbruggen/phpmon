@@ -17,7 +17,9 @@ class GeneralPreferencesVC: GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
-        _ = vc.addView(when: true, vc.getShowPhpDoctorSuggestionsPV())
+        _ = vc
+            .addView(when: true, vc.getLanguageOptionsPV())
+            .addView(when: true, vc.getShowPhpDoctorSuggestionsPV())
             .addView(when: true, vc.getAutoRestartServicesPV())
             .addView(when: true, vc.getAutomaticComposerUpdatePV())
             .addView(when: true, vc.getShortcutPV())

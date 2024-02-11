@@ -51,6 +51,7 @@ class Preferences {
             PreferenceName.allowProtocolForIntegrations.rawValue: true,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
             PreferenceName.showPhpDoctorSuggestions.rawValue: true,
+            PreferenceName.languageOverride.rawValue: "",
 
             /// Preferences: Appearance
             PreferenceName.shouldDisplayDynamicIcon.rawValue: true,

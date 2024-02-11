@@ -139,10 +139,6 @@ struct OnboardingView: View {
     }
 }
 
-struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            OnboardingView()
-        }
-    }
+#Preview {
+    OnboardingView()
 }

@@ -75,7 +75,7 @@ class MenuBarImageGenerator {
 
         // Then we'll fetch the image we want on the left
         var iconType = Preferences.preferences[.iconTypeToDisplay] as? String
-        if iconType == nil {
+        if iconType == nil || !MenuBarIcon.allCases.map({ $0.rawValue }).contains(iconType) {
             Log.warn("Invalid icon type found, using the default")
             iconType = MenuBarIcon.iconPhp.rawValue
         }

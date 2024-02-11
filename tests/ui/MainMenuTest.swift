@@ -54,6 +54,16 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_about".localized).click()
     }
 
+    final func test_can_open_config_editor() throws {
+        let app = launch(openMenu: true)
+
+        app.buttons["phpConfigButton"].click()
+
+        Thread.sleep(forTimeInterval: 0.5)
+
+        assertExists(app.staticTexts["confman.title".localized], 1)
+    }
+
     final func test_can_open_settings() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()

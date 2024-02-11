@@ -142,7 +142,7 @@ class Startup {
                     return await Shell.pipe("\(Paths.binPath)/php -v").err
                         .contains("Library not loaded")
                 },
-                name: "`no dyld issue detected",
+                name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
                 subtitleText: "startup.errors.dyld_library.subtitle".localized(
                     Paths.optPath

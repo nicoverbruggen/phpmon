@@ -28,6 +28,21 @@ class BrewDiagnostics {
     }
 
     /**
+     Logs a bunch of useful information during startup.
+     */
+    public static func logBootInformation() {
+        Log.info(BrewDiagnostics.customCaskInstalled
+             ? "[BREW] The app has been installed via Homebrew Cask."
+             : "[BREW] The app has been installed directly (optimal)."
+        )
+
+        Log.info(BrewDiagnostics.usesNginxFullFormula
+             ? "[BREW] The app will be using the `nginx-full` formula."
+             : "[BREW] The app will be using the `nginx` formula."
+        )
+    }
+
+    /**
      Determines whether the PHP Monitor Cask is installed.
      */
     public static var customCaskInstalled: Bool = {
@@ -45,6 +60,43 @@ class BrewDiagnostics {
         // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
         return destination.contains("/nginx-full/")
     }()
+
+    /**
+     It is possible to have outdated symlinks for PHP installations. This can mean that certain PHP installations
+     are going to be reported incorrectly (e.g. `php@8.2` links to an installation in a `8.3` folder after an upgrade).
+
+     To ensure this does not cause issues, PHP Monitor will automatically remove all incorrect PHP symlinks.
+     */
+    public static func checkForOutdatedPhpInstallationSymlinks() async {
+        // Set up a regular expression
+        let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
+
+        // Check for incorrect versions
+        if let contents = try? FileSystem.getShallowContentsOfDirectory("\(Paths.optPath)")
+            .filter({
+                let range = NSRange($0.startIndex..., in: $0)
+                return regex.firstMatch(in: $0, options: [], range: range) != nil
+            }) {
+
+            for symlink in contents {
+                let version = symlink.replacingOccurrences(of: "php@", with: "")
+                if let destination = try? FileSystem.getDestinationOfSymlink("\(Paths.optPath)/\(symlink)") {
+                    if !destination.contains("Cellar/php/\(version)")
+                        && !destination.contains("Cellar/php@\(version)") {
+                        Log.err("Symlink for \(symlink) is incorrect. Removing...")
+                        do {
+                            try FileSystem.remove("\(Paths.optPath)/\(symlink)")
+                            Log.info("Incorrect symlink for \(symlink) has been successfully removed.")
+                        } catch {
+                            Log.err("Symlink for \(symlink) was incorrect but could not be removed!")
+                        }
+                    }
+                } else {
+                    Log.warn("Could not read symlink at: \(Paths.optPath)/\(symlink)! Symlink check skipped.")
+                }
+            }
+        }
+    }
 
     /**
      It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.

@@ -48,11 +48,44 @@ class GenericPreferenceVC: NSViewController {
         )
     }
 
+    func getLanguageOptionsPV() -> NSView {
+        var options = Bundle.main.localizations
+            .filter({ $0 != "Base"})
+            .map({ lang in
+                return PreferenceDropdownOption(
+                    label: Locale.current.localizedString(forLanguageCode: lang)!,
+                    value: lang
+                )
+            })
+        options.insert(PreferenceDropdownOption(label: "System Default", value: ""), at: 0)
+
+        return SelectPreferenceView.make(
+            sectionText: "prefs.language".localized,
+            descriptionText: "prefs.language_options_desc".localized,
+            options: options,
+            preference: .languageOverride,
+            action: {
+                MainMenu.shared.refreshIcon()
+                MainMenu.shared.rebuild()
+
+                if let window = App.shared.preferencesWindowController?.window {
+                    let alert = NSAlert()
+                    alert.messageText = "alert.language_changed.title".localized
+                    alert.informativeText = "alert.language_changed.subtitle".localized
+                    alert.alertStyle = .warning
+                    alert.addButton(withTitle: "generic.ok".localized)
+                    alert.beginSheetModal(for: window)
+                }
+            }
+        )
+    }
+
     func getIconOptionsPV() -> NSView {
         return SelectPreferenceView.make(
             sectionText: "",
             descriptionText: "prefs.icon_options_desc".localized,
-            options: MenuBarIcon.allCases.map({ return $0.rawValue }),
+            options: MenuBarIcon.allCases
+                .map({ return PreferenceDropdownOption(label: $0.rawValue, value: $0.rawValue) }),
             localizationPrefix: "prefs.icon_options",
             preference: .iconTypeToDisplay,
             action: {

@@ -21,13 +21,15 @@ class RemovePhpVersionCommand: BrewCommand {
         self.phpGuard = PhpGuard()
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        let progressTitle = "Removing PHP \(version)..."
+    func getCommandTitle() -> String {
+        return "phpman.steps.removing".localized("PHP \(version)...")
+    }
 
+    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
-            title: progressTitle,
-            description: "Please wait while Homebrew removes PHP \(version)..."
+            title: getCommandTitle(),
+            description: "phpman.steps.wait".localized
         ))
 
         let command = """
@@ -56,7 +58,7 @@ class RemovePhpVersionCommand: BrewCommand {
         )
 
         if process.terminationStatus <= 0 {
-            onProgress(.create(value: 0.95, title: progressTitle, description: "Reloading PHP versions..."))
+            onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
 
             await PhpEnvironments.detectPhpVersions()
 
@@ -66,7 +68,7 @@ class RemovePhpVersionCommand: BrewCommand {
                 await MainMenu.shared.switchToPhpVersionAndWait(version, silently: true)
             }
 
-            onProgress(.create(value: 1, title: progressTitle, description: "The operation has succeeded."))
+            onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
             throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
         }

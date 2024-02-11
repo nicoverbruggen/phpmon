@@ -15,7 +15,7 @@ extension MainMenu {
     func startup() async {
         // Start with the icon
         Task { @MainActor in
-            self.setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+            self.setStatusBar(image: NSImage.statusBarIcon)
         }
 
         if await Startup().checkEnvironment() {
@@ -32,19 +32,14 @@ extension MainMenu {
         // Determine what the `php` formula is aliased to
         await PhpEnvironments.shared.determinePhpAlias()
 
+        // Make sure that broken symlinks are removed ASAP
+        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+
         // Initialize preferences
         _ = Preferences.shared
 
-        // Determine install method
-        Log.info(BrewDiagnostics.customCaskInstalled
-            ? "[BREW] The app has been installed via Homebrew Cask."
-            : "[BREW] The app has been installed directly (optimal)."
-        )
-
-        Log.info(BrewDiagnostics.usesNginxFullFormula
-             ? "[BREW] The app will be using the `nginx-full` formula."
-             : "[BREW] The app will be using the `nginx` formula."
-        )
+        // Put some useful diagnostics information in log
+        BrewDiagnostics.logBootInformation()
 
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
@@ -63,9 +58,6 @@ extension MainMenu {
         // Check for an alias conflict
         await BrewDiagnostics.checkForCaskConflict()
 
-        // Update the icon
-        updatePhpVersionInStatusBar()
-
         // Attempt to find out if PHP-FPM is broken
         PhpEnvironments.prepare()
 
@@ -76,7 +68,6 @@ extension MainMenu {
         WarningManager.shared.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
-        Log.info("Setting up watchers...")
         App.shared.handlePhpConfigWatcher()
 
         // Detect built-in and custom applications
@@ -106,11 +97,32 @@ extension MainMenu {
         }
 
         // Keep track of which PHP versions are currently about to release
-        Log.info("Experimental PHP versions: \(Constants.ExperimentalPhpVersions)")
+        Log.info("Experimental PHP versions are: \(Constants.ExperimentalPhpVersions)")
 
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
+        // Post-launch stats and update check, but only if not running tests
+        await performPostLaunchActions()
+
+        // Check if the linked version has changed between launches of phpmon
+        PhpGuard().compareToLastGlobalVersion()
+
+        // We are ready!
+        PhpEnvironments.shared.isBusy = false
+
+        // Finally!
+        Log.info("PHP Monitor is ready to serve!")
+
+        // Check if we upgraded from a previous version
+        AppUpdater.checkIfUpdateWasPerformed()
+    }
+
+    /**
+     Performs a set of post-launch actions, like incrementing stats and checking for updates.
+     (This code is skipped when running SwiftUI previews.)
+     */
+    private func performPostLaunchActions() async {
         if !isRunningSwiftUIPreview {
             Stats.incrementSuccessfulLaunchCount()
             Stats.evaluateSponsorMessageShouldBeDisplayed()
@@ -124,15 +136,6 @@ extension MainMenu {
                 await AppUpdater().checkForUpdates(userInitiated: false)
             }
         }
-
-        // Check if the linked version has changed between launches of phpmon
-        PhpGuard().compareToLastGlobalVersion()
-
-        // We are ready!
-        Log.info("PHP Monitor is ready to serve!")
-
-        // Check if we upgraded just now
-        AppUpdater.checkIfUpdateWasPerformed()
     }
 
     /**

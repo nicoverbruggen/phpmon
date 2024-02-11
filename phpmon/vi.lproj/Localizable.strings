@@ -12,7 +12,11 @@
 "mi_no_php_linked" = "Không có phiên bản PHP nào được liên kết!";
 "mi_fix_php_link" = "Sửa tự động...";
 "mi_no_php_linked_explain" = "Cái này là gì?";
-"mi_php_version_manager" = "Quản lý Phiên bản PHP...";
+
+"mi_php_version_manager" = "Quản lý cài đặt PHP...";
+"mi_php_ext_manager" = "Quản lý tiện ích mở rộng PHP...";
+"mi_php_config_manager" = "Trình chỉnh sửa cấu hình PHP...";
+"mi_manage_limits" = "Quản lý giới hạn...";
 
 "mi_diagnostics" = "Chẩn đoán";
 "mi_active_services" = "Dịch vụ hoạt động";
@@ -80,6 +84,26 @@
 "mi_xdebug_available_modes" = "Các Chế độ Khả dụng";
 "mi_xdebug_actions" = "Hành động";
 "mi_xdebug_disable_all" = "Tắt Tất cả Chế độ";
+
+// PHPEXTMAN
+
+"phpextman.window.title" = "Tiện ích mở rộng";
+"phpextman.description" = "**PHP Extension Manager** cho phép bạn quản lý các tiện ích mở rộng PHP khác nhau chỉ bằng một cú nhấp chuột đơn giản. Vì sử dụng Homebrew, các tiện ích mở rộng không cần phải được biên dịch trực tiếp bằng `pecl`.";
+"phpextman.disclaimer" = "Một số tiện ích mở rộng có thể yêu cầu cài đặt các phụ thuộc khác, nhưng nói chung, việc cài đặt tiện ích mở rộng sẽ nhanh hơn nhiều so với việc cài đặt các phiên bản PHP.";
+
+"phpextman.warnings.removal.title" = "Gỡ cài đặt tiện ích mở rộng `%@`?";
+"phpextman.warnings.removal.desc" = "Tiện ích mở rộng và tệp cấu hình duy nhất của nó sẽ bị xóa. Chức năng của tiện ích mở rộng sẽ không còn sẵn có cho cài đặt PHP này. Bạn có chắc không?
+
+(Nếu tiện ích mở rộng được kích hoạt bằng một tên tệp không chuẩn, nó sẽ không bị xóa. Vì vậy, nếu bạn không muốn tệp .ini bị xóa, tốt nhất là đơn giản hãy đổi tên nó. Trong trường hợp đó, tiện ích mở rộng chỉ sẽ bị vô hiệu hóa như một phần của quá trình dọn dẹp.)";
+"phpextman.warnings.removal.button" = "Gỡ cài đặt";
+
+"phpextman.list.showing_count" = "Hiện đang hiển thị %@ tiện ích mở rộng cho:";
+"phpextman.list.depends_on" = "Phụ thuộc vào:";
+
+"phpextman.list.status.external" = "Tiện ích mở rộng này đã được cài đặt thông qua một nguồn khác và không thể được quản lý.";
+"phpextman.list.status.installable" = "Tiện ích mở rộng này có thể được cài đặt.";
+"phpextman.list.status.dependent" = "Bạn không thể gỡ cài đặt điều này trước khi gỡ cài đặt %@.";
+"phpextman.list.status.can_manage" = "Tiện ích mở rộng này đã được cài đặt và có thể được quản lý bởi PHP Monitor.";
 
 // PHPMAN
 
@@ -292,6 +316,9 @@ Bạn có thể được yêu cầu nhập mật khẩu của mình trong quá t
 "domain_list.columns.active" = "Kích hoạt";
 "domain_list.columns.kind" = "Loại";
 "domain_list.columns.project_type" = "Loại dự án";
+
+"domain_list.extensions" = "Bật/tắt Tiện ích mở rộng";
+"domain_list.applies_to" = "Áp dụng cho PHP %@";
 
 // DRIVERS
 
@@ -782,3 +809,11 @@ Vui lòng lưu ý rằng một số tính năng (xám bên dưới) hiện khôn
 "onboarding.tour.feature_unavailable" = "Tính năng này hiện không khả dụng và yêu cầu Laravel Valet được cài đặt.";
 "onboarding.tour.once" = "Bạn chỉ sẽ thấy Hướng Dẫn Chào Mừng một lần. Bạn có thể mở lại Hướng Dẫn Chào Mừng sau này qua biểu tượng thanh menu (có sẵn trong menu, ở dưới Cứu hộ và Các dịch vụ).";
 "onboarding.tour.close" = "Đóng Tour";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Ngôn ngữ:";
+"prefs.language_options_desc" = "Chọn một ngôn ngữ khác để sử dụng với PHP Monitor. Để áp dụng hoàn toàn thay đổi này, bạn phải khởi động lại ứng dụng.";
+
+"alert.language_changed.title" = "Bạn nên khởi động lại PHP Monitor!";
+"alert.language_changed.subtitle" = "Bạn vừa thay đổi ngôn ngữ hiển thị của PHP Monitor. Menu sẽ ngay lập tức sử dụng ngôn ngữ đúng, nhưng bạn có thể cần phải khởi động lại ứng dụng để toàn bộ văn bản trong ứng dụng phản ánh sự lựa chọn ngôn ngữ mới của bạn.";

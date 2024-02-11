@@ -10,7 +10,6 @@ import Foundation
 
 /**
  Run a simple blocking Shell command on the user's own system.
- Avoid using this method in favor of the fakeable Shell class unless needed for express system operations.
  */
 public func system(_ command: String) -> String {
     let task = Process()

@@ -27,7 +27,9 @@ var isRunningSwiftUIPreview: Bool {
 
 extension Color {
     public static var appPrimary: Color = Color("AppColor")
-    public static var appSecondary: Color = Color("AppSecondary")
+
+    // This next one is generated automatically via asset catalogs now
+    // public static var appSecondary: Color = Color("AppSecondary")
 
     public static var debug: Color = {
         if ProcessInfo.processInfo.environment["PAINT_PHPMON_SWIFTUI_VIEWS"] != nil {

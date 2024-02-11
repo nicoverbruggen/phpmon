@@ -23,6 +23,14 @@ class RealShellTest: XCTestCase {
         XCTAssertTrue(output.out.contains("Copyright (c) The PHP Group"))
     }
 
+    func test_system_shell_can_be_used_synchronously() {
+        XCTAssertTrue(Shell is RealShell)
+
+        let output = Shell.sync("php -v")
+
+        XCTAssertTrue(output.out.contains("Copyright (c) The PHP Group"))
+    }
+
     func test_system_shell_has_path() {
         let systemShell = Shell as! RealShell
 

@@ -42,7 +42,20 @@ extension DomainListVC {
             addDisabledIsolation(to: menu)
         }
 
+        addSeparator(to: menu)
+
+        if let extensions = site.isolatedPhpVersion?.extensions ?? PhpEnvironments.phpInstall?.extensions,
+           let version = site.isolatedPhpVersion?.versionNumber.short ?? PhpEnvironments.phpInstall?.version.short {
+            menu.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
+            addMenuItemsForExtensions(
+                to: menu,
+                for: extensions,
+                version: version
+            )
+        }
+
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.actions".localized))
+
         addToggleSecure(to: menu, secured: site.secured)
         addUnlink(to: menu, with: site)
 
@@ -148,6 +161,28 @@ extension DomainListVC {
             action: #selector(toggleSecure),
             keyEquivalent: ""
         )
+    }
+
+    private func addMenuItemsForExtensions(to menu: NSMenu, for extensions: [PhpExtension], version: String) {
+        var items: [NSMenuItem] = [
+            NSMenuItem(title: "domain_list.applies_to".localized(version))
+        ]
+
+        for phpExtension in extensions {
+            let item = ExtensionMenuItem(
+                title: "\(phpExtension.name) (\(phpExtension.fileNameOnly))",
+                action: #selector(self.toggleExtension),
+                keyEquivalent: ""
+            )
+
+            item.state = phpExtension.enabled ? .on : .off
+            item.phpExtension = phpExtension
+
+            items.append(item)
+        }
+
+        menu.addItem(NSMenuItem(title: "domain_list.extensions".localized, submenu: items))
+        menu.addItem(NSMenuItem.separator())
     }
 
     // MARK: - Menu Items for Proxy

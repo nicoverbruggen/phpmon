@@ -102,6 +102,10 @@ public class Paths {
         return "\(shared.baseDir.rawValue)/etc"
     }
 
+    public static var tapPath: String {
+        return "\(shared.baseDir.rawValue)/Library/Taps"
+    }
+
     public static var caskroomPath: String {
         return "\(shared.baseDir.rawValue)/Caskroom/"
             + (App.identifier.contains(".dev") ? "phpmon-dev" : "phpmon")

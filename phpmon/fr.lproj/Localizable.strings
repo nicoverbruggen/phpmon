@@ -12,7 +12,9 @@
 "mi_no_php_linked" = "Aucune version de PHP n'est liée !";
 "mi_fix_php_link" = "Réparer Automatiquement...";
 "mi_no_php_linked_explain" = "Qu'est-ce que c'est ?";
-"mi_php_version_manager" = "Gestionnaire de Versions PHP...";
+
+"mi_php_version_manager" = "Gérer les Installations PHP...";
+"mi_php_ext_manager" = "Gérer les Extensions PHP...";
 "mi_php_config_manager" = "Éditeur de Configuration PHP...";
 "mi_manage_limits" = "Gérer les Limites...";
 
@@ -97,6 +99,26 @@
 "php_ini.file_uploads.description" = "Activer ou désactiver complètement les téléchargements montant de fichiers. Il est recommandé de laisser cette option activée.";
 "php_ini.upload_max_filesize.title" = "Taille maximale de téléchargement montant";
 "php_ini.upload_max_filesize.description" = "Taille maximale d'un téléchargement montant. La taille maximale POST doit être supérieure à cette valeur.";
+
+// PHPEXTMAN
+
+"phpextman.window.title" = "Extensions";
+"phpextman.description" = "**PHP Extension Manager** vous permet de gérer différentes extensions PHP d'un simple clic sur le bouton. Comme Homebrew est utilisé, les extensions n'ont pas besoin d'être compilées à la volée avec `pecl`.";
+"phpextman.disclaimer" = "Certaines extensions peuvent nécessiter l'installation d'autres dépendances, mais en général, l'installation des extensions devrait être beaucoup plus rapide que l'installation des versions de PHP.";
+
+"phpextman.warnings.removal.title" = "Désinstaller l'extension `%@`?";
+"phpextman.warnings.removal.desc" = "L'extension et son fichier de configuration unique seront supprimés. La fonctionnalité de l'extension ne sera plus disponible pour cette installation PHP. Êtes-vous sûr?
+
+(Si l'extension est activée à l'aide d'un nom de fichier non standard, elle ne sera pas supprimée. Donc, si vous ne voulez pas que le fichier .ini soit supprimé, il est préférable de simplement le renommer. Dans ce cas, l'extension ne sera désactivée que dans le cadre du processus de nettoyage.)";
+"phpextman.warnings.removal.button" = "Désinstaller";
+
+"phpextman.list.showing_count" = "Affiche actuellement %@ extensions pour:";
+"phpextman.list.depends_on" = "Dépend de:";
+
+"phpextman.list.status.external" = "Cette extension est déjà installée via une autre source et ne peut pas être gérée.";
+"phpextman.list.status.installable" = "Cette extension peut être installée.";
+"phpextman.list.status.dependent" = "Vous ne pouvez pas désinstaller ceci avant de désinstaller %@.";
+"phpextman.list.status.can_manage" = "Cette extension est installée et peut être gérée par PHP Monitor.";
 
 // PHPMAN
 
@@ -229,6 +251,9 @@ Il se peut que vous deviez saisir votre mot de passe pendant le processus de dé
 "domain_list.columns.active" = "Actif";
 "domain_list.columns.kind" = "Sorte";
 "domain_list.columns.project_type" = "Type de Projet";
+
+"domain_list.extensions" = "Activer/désactiver les extensions";
+"domain_list.applies_to" = "S'applique à PHP %@";
 
 // CHOOSE WHAT TO ADD
 
@@ -803,3 +828,11 @@ Veuillez noter que certaines fonctionnalités (grisées ci-dessous) sont actuell
 "onboarding.tour.feature_unavailable" = "Cette fonctionnalité n'est actuellement pas disponible et nécessite l'installation de Laravel Valet.";
 "onboarding.tour.once" = "Vous ne verrez la visite de bienvenue qu'une seule fois. Vous pouvez rouvrir la visite de bienvenue ultérieurement via l'icône de la barre de menu (disponible dans le menu, sous Premiers Secours et Services).";
 "onboarding.tour.close" = "Fermer la Visite d'Accueil";
+
+// LANGUAGE CHOICE
+
+"prefs.language" = "Langue :";
+"prefs.language_options_desc" = "Choisissez une autre langue à utiliser avec PHP Monitor. Pour appliquer pleinement ce changement, vous devez redémarrer l'application.";
+
+"alert.language_changed.title" = "Vous devriez redémarrer PHP Monitor !";
+"alert.language_changed.subtitle" = "Vous venez de changer la langue d'affichage de PHP Monitor. Le menu utilisera immédiatement la bonne langue, mais vous devrez peut-être redémarrer l'application pour que tout le texte dans l'application reflète votre nouveau choix de langue.";

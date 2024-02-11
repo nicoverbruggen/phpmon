@@ -37,8 +37,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - UI related
 
     /**
-     Rebuilds the menu (either asynchronously or synchronously).
-     Defaults to rebuilding the menu asynchronously.
+     Rebuilds the menu on the main thread.
      */
     func rebuild() {
         Task { @MainActor [self] in
@@ -80,7 +79,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func refreshActiveInstallation() {
         if !PhpEnvironments.shared.isBusy {
             PhpEnvironments.shared.currentInstall = ActivePhpInstallation.load()
-            updatePhpVersionInStatusBar()
+            refreshIcon()
+            rebuild()
         } else {
             Log.perf("Skipping version refresh due to busy status!")
         }
@@ -155,12 +155,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { @MainActor [self] in
             if PhpEnvironments.shared.isBusy {
                 Log.perf("Refreshing icon: currently busy")
-                setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIcon"))!)
+                setStatusBar(image: NSImage.statusBarIcon)
             } else {
                 Log.perf("Refreshing icon: no longer busy")
                 if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
-                    setStatusBar(image: NSImage(named: NSImage.Name("StatusBarIconStatic"))!)
+                    setStatusBar(image: NSImage.statusBarIconStatic)
                 } else {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
@@ -213,6 +213,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func openPhpVersionManager() {
         PhpVersionManagerWindowController.show()
+    }
+
+    @objc func openPhpExtensionManager() {
+        PhpExtensionManagerWindowController.show()
     }
 
     @objc func openDonate() {

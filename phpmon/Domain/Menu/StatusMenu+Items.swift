@@ -152,6 +152,9 @@ extension StatusMenu {
             NSMenuItem(title: "mi_php_version_manager".localized,
                        action: #selector(MainMenu.openPhpVersionManager),
                        keyEquivalent: "m"),
+            NSMenuItem(title: "mi_php_ext_manager".localized,
+                       action: #selector(MainMenu.openPhpExtensionManager),
+                       keyEquivalent: "e"),
             NSMenuItem(title: "mi_php_config".localized,
                        action: #selector(MainMenu.openActiveConfigFolder),
                        keyEquivalent: "c"),
@@ -200,16 +203,6 @@ extension StatusMenu {
             post: stats.post_max_size,
             upload: stats.upload_max_filesize)
         )
-
-        // TODO: As soon as this does more than just edit memory limits, move this
-        /*
-        addItem(NSMenuItem.separator())
-        addItem(NSMenuItem(
-            title: "mi_manage_limits".localized,
-            action: #selector(MainMenu.openConfigGUI),
-            keyEquivalent: "l")
-        )
-        */
     }
 
     // MARK: - Extensions

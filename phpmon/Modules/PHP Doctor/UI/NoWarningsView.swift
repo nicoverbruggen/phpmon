@@ -25,8 +25,6 @@ struct NoWarningsView: View {
     }
 }
 
-struct NoWarningsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoWarningsView()
-    }
+#Preview {
+    NoWarningsView().padding()
 }

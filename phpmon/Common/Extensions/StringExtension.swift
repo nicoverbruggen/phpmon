@@ -8,6 +8,18 @@ import Foundation
 import SwiftUI
 
 struct Localization {
+    static var preferredLanguage: String? {
+        guard let language = Preferences.preferences[.languageOverride] as? String else {
+            return nil
+        }
+
+        if language.isEmpty {
+            return nil
+        }
+
+        return language
+    }
+
     static var bundle: Bundle = {
         if !isRunningTests {
             return Bundle.main
@@ -32,7 +44,15 @@ struct Localization {
 
 extension String {
     var localized: String {
-        let string = NSLocalizedString(self, tableName: nil, bundle: Localization.bundle, value: "", comment: "")
+        var preferredBundle: Bundle = Localization.bundle
+
+        if let preferred = Localization.preferredLanguage,
+           let path = Localization.bundle.path(forResource: preferred, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            preferredBundle = bundle
+        }
+
+        let string = NSLocalizedString(self, tableName: nil, bundle: preferredBundle, value: "", comment: "")
 
         // Fallback to English translation if the localized value is equal to the key (should not happen)
         if string == self {

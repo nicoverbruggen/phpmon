@@ -8,23 +8,33 @@
 
 import Foundation
 
-class InstallAndUpgradeCommand: BrewCommand {
-
+class ModifyPhpVersionCommand: BrewCommand {
     let title: String
-    let installing: [BrewFormula]
-    let upgrading: [BrewFormula]
+    let installing: [BrewPhpFormula]
+    let upgrading: [BrewPhpFormula]
     let phpGuard: PhpGuard
+
+    func getCommandTitle() -> String {
+        return title
+    }
 
     /**
      You can pass in which PHP versions need to be upgraded and which ones need to be installed.
      The process will be executed in two steps: first upgrades, then installations.
+     
      Upgrades come first because... well, otherwise installations may very well break.
-     Each version that is installed will need to be checked afterwards (if it is OK).
+     Each version that is installed will need to be checked afterwards. Installing a
+     newer formula may break other PHP installations, which in turn need to be fixed.
+
+     - Important: If any PHP formula is a major upgrade that causes a PHP "version" to be
+       uninstalled, this is remedied by running `upgradeMainPhpFormula()`. This process
+       will ensure that the upgrade is applied, but the also that old version is
+       re-installed and linked again.
      */
     public init(
         title: String,
-        upgrading: [BrewFormula],
-        installing: [BrewFormula]
+        upgrading: [BrewPhpFormula],
+        installing: [BrewPhpFormula]
     ) {
         self.title = title
         self.installing = installing
@@ -33,14 +43,16 @@ class InstallAndUpgradeCommand: BrewCommand {
     }
 
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        let progressTitle = "Please wait..."
+        let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
             value: 0.2,
             title: progressTitle,
-            description: "PHP Monitor is preparing Homebrew..."
+            description: "phpman.steps.preparing".localized
         ))
 
+        // Determine if a formula will become unavailable
+        // This is the case when `php` will be bumped to a new version
         let unavailable = upgrading.first(where: { formula in
             formula.unavailableAfterUpgrade
         })
@@ -69,7 +81,7 @@ class InstallAndUpgradeCommand: BrewCommand {
     }
 
     private func upgradeMainPhpFormula(
-        _ unavailable: BrewFormula,
+        _ unavailable: BrewPhpFormula,
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
         // Determine which version was previously available (that will become unavailable)
@@ -87,18 +99,6 @@ class InstallAndUpgradeCommand: BrewCommand {
 
         // Run the upgrade command
         try await run(command, onProgress)
-    }
-
-    private func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
-            let command = "brew tap shivammathur/php"
-            try await run(command, onProgress)
-        }
-
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
-            let command = "brew tap shivammathur/extensions"
-            try await run(command, onProgress)
-        }
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -163,35 +163,12 @@ class InstallAndUpgradeCommand: BrewCommand {
         try await run(command, onProgress)
     }
 
-    private func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        var loggedMessages: [String] = []
-
-        let (process, _) = try! await Shell.attach(
-            command,
-            didReceiveOutput: { text, _ in
-                if !text.isEmpty {
-                    Log.perf(text)
-                    loggedMessages.append(text)
-                }
-
-                if let (number, text) = self.reportInstallationProgress(text) {
-                    onProgress(.create(value: number, title: self.title, description: text))
-                }
-            },
-            withTimeout: .minutes(15)
-        )
-
-        if process.terminationStatus <= 0 {
-            loggedMessages = []
-            return
-        } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
-        }
-    }
-
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
-        onProgress(.create(value: 0.95, title: self.title, description: "Reloading PHP versions..."))
+        onProgress(.create(value: 0.95, title: self.title, description: "phpman.steps.reloading".localized))
+
+        // Ensure all symlinks are correctly linked
+        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
 
         // Check which version of PHP are now installed
         await PhpEnvironments.detectPhpVersions()
@@ -210,9 +187,8 @@ class InstallAndUpgradeCommand: BrewCommand {
         // Let the UI know that the installation has been completed
         onProgress(.create(
             value: 1,
-            title: "Operation completed!",
-            description: "The installation has succeeded."
+            title: "phpman.steps.completed".localized,
+            description: "phpman.steps.success".localized
         ))
     }
-
 }

@@ -10,6 +10,8 @@ import Foundation
 
 protocol BrewCommand {
     func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws
+
+    func getCommandTitle() -> String
 }
 
 extension BrewCommand {
@@ -30,6 +32,44 @@ extension BrewCommand {
             return (0.90, "phpman.steps.summary".localized)
         }
         return nil
+    }
+
+    internal func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        var loggedMessages: [String] = []
+
+        let (process, _) = try! await Shell.attach(
+            command,
+            didReceiveOutput: { text, _ in
+                if !text.isEmpty {
+                    Log.perf(text)
+                    loggedMessages.append(text)
+                }
+
+                if let (number, text) = self.reportInstallationProgress(text) {
+                    onProgress(.create(value: number, title: getCommandTitle(), description: text))
+                }
+            },
+            withTimeout: .minutes(15)
+        )
+
+        if process.terminationStatus <= 0 {
+            loggedMessages = []
+            return
+        } else {
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
+        }
+    }
+
+    internal func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
+            let command = "brew tap shivammathur/php"
+            try await run(command, onProgress)
+        }
+
+        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
+            let command = "brew tap shivammathur/extensions"
+            try await run(command, onProgress)
+        }
     }
 }
 

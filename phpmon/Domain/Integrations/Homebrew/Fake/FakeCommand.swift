@@ -9,6 +9,10 @@
 import Foundation
 
 class FakeCommand: BrewCommand {
+    func getCommandTitle() -> String {
+        return "Hello"
+    }
+
     let version: String
 
     init(version: String) {

@@ -68,6 +68,8 @@ class PreferencesWindowController: PMWindowController {
             App.shared.preferencesWindowController?.positionWindowInTopRightCorner()
         }
 
+        App.shared.preferencesWindowController?.window?.orderFrontRegardless()
+
         NSApp.activate(ignoringOtherApps: true)
     }
 
