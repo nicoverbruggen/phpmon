@@ -105,6 +105,13 @@
 "phpextman.list.status.dependent" = "Você não pode desinstalar isso antes de desinstalar %@.";
 "phpextman.list.status.can_manage" = "Esta extensão está instalada e pode ser gerenciada pelo PHP Monitor.";
 
+"phpextman.errors.not_found.title" = "Uh oh. Nenhuma extensão descoberta!";
+"phpextman.errors.not_found.desc" = "Isto não deveria acontecer. Pode ser necessário executar o seguinte comando no seu terminal:
+
+`brew tap shivammathur/extensions`
+
+e reiniciar o PHP Monitor para que as extensões se tornem visíveis. Se o problema persistir após executar o comando e reiniciar o PHP Monitor, por favor considere abrir um problema no GitHub.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Procurando atualizações!";

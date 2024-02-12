@@ -106,6 +106,13 @@
 "phpextman.list.status.dependent" = "U kunt dit niet deïnstalleren voordat u %@ deïnstalleert.";
 "phpextman.list.status.can_manage" = "Deze extensie is geïnstalleerd en kan worden beheerd door PHP Monitor.";
 
+"phpextman.errors.not_found.title" = "Oeps. Geen extensies gevonden!";
+"phpextman.errors.not_found.desc" = "Dit zou niet moeten gebeuren. Mogelijk moet je het volgende commando in je terminal uitvoeren:
+
+`brew tap shivammathur/extensions`
+
+en PHP Monitor herstarten om de extensies zichtbaar te maken. Als het probleem zich blijft voordoen na het uitvoeren van het commando en het herstarten van PHP Monitor, overweeg dan om een issue te openen op GitHub.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Bezig met zoeken naar updates!";

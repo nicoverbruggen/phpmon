@@ -103,6 +103,10 @@ public class Paths {
     }
 
     public static var tapPath: String {
+        if shared.baseDir == .usr {
+            return "\(shared.baseDir.rawValue)/homebrew/Library/Taps"
+        }
+
         return "\(shared.baseDir.rawValue)/Library/Taps"
     }
 
