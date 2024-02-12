@@ -105,6 +105,12 @@
 "phpextman.list.status.dependent" = "Sie können diese nicht deinstallieren, bevor Sie %@ deinstallieren.";
 "phpextman.list.status.can_manage" = "Diese Erweiterung ist installiert und kann von PHP Monitor verwaltet werden.";
 
+"phpextman.errors.not_found.title" = "Oh oh. Keine Erweiterungen gefunden!";
+"phpextman.errors.not_found.desc" = "Das sollte eigentlich nicht passieren. Sie müssen möglicherweise den folgenden Befehl in Ihrem Terminal ausführen:
+
+`brew tap shivammathur/extensions`
+
+und PHP Monitor neu starten, damit die Erweiterungen sichtbar werden. Wenn das Problem nach Ausführen des Befehls und Neustart von PHP Monitor weiterhin besteht, ziehen Sie bitte in Erwägung, ein Issue auf GitHub zu eröffnen.";
 
 // PHPMAN
 

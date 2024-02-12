@@ -120,6 +120,13 @@
 "phpextman.list.status.dependent" = "You cannot uninstall this before uninstalling %@.";
 "phpextman.list.status.can_manage" = "This extension is installed and can be managed by PHP Monitor.";
 
+"phpextman.errors.not_found.title" = "Uh oh. No extensions discovered!";
+"phpextman.errors.not_found.desc" = "This is not supposed to happen. You may need to run the following command in your terminal:
+
+`brew tap shivammathur/extensions`
+
+and restart PHP Monitor for extensions to become visible. If the problem persists after running the command and restarting PHP Monitor, please consider opening an issue on GitHub.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Checking for updates!";

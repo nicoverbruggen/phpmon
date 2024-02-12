@@ -59,6 +59,18 @@ struct PhpExtensionManagerView: View {
             }
         }
         .frame(width: 600, height: 600)
+        .onAppear {
+            Task {
+                await delay(seconds: 1)
+                if self.manager.extensions.isEmpty {
+                    self.presentErrorAlert(
+                        title: "phpextman.errors.not_found.title".localized,
+                        description: "phpextman.errors.not_found.desc".localized,
+                        button: "generic.ok".localized
+                    )
+                }
+            }
+        }
     }
 
     // MARK: View Variables

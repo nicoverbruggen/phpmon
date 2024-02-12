@@ -105,6 +105,13 @@
 "phpextman.list.status.dependent" = "Bạn không thể gỡ cài đặt điều này trước khi gỡ cài đặt %@.";
 "phpextman.list.status.can_manage" = "Tiện ích mở rộng này đã được cài đặt và có thể được quản lý bởi PHP Monitor.";
 
+"phpextman.errors.not_found.title" = "Ồ. Không phát hiện thấy tiện ích mở rộng nào!";
+"phpextman.errors.not_found.desc" = "Điều này không nên xảy ra. Bạn có thể cần chạy lệnh sau trong terminal của mình:
+
+`brew tap shivammathur/extensions`
+
+và khởi động lại PHP Monitor để các tiện ích mở rộng trở nên hiển thị. Nếu vấn đề vẫn tiếp diễn sau khi chạy lệnh và khởi động lại PHP Monitor, xin hãy xem xét mở một vấn đề trên GitHub.";
+
 // PHPMAN
 
 "phpman.busy.title" = "Đang kiểm tra cập nhật!";
