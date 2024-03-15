@@ -134,7 +134,7 @@ e reiniciar o PHP Monitor para que as extensões se tornem visíveis. Se o probl
 "phpman.refresh.button" = "Procurar atualizações";
 "phpman.refresh.button.description" = "Você pode premir o botão de atualização para verificar se há atualizações disponíveis para as versões do PHP instaladas.";
 
-"phpman.has_updates.description" = "Estão disponiveis uma ou mais atualizações. (Por favor, tenha em conta que o PHP Monitor instalará ou atualizará as versões do PHP em bloco,  ou seja, atualizará todas as instalações PHP de uma só vez.)";
+"phpman.has_updates.description" = "**Estão disponiveis uma ou mais atualizações.** Por favor, tenha em conta que o PHP Monitor instalará ou atualizará as versões do PHP em bloco, ou seja, atualizará todas as instalações PHP de uma só vez.";
 "phpman.has_updates.button" = "Atualizar tudo";
 
 "phpman.warnings.unsupported.title" = "A versão instalada do Homebrew pode causar problemas";

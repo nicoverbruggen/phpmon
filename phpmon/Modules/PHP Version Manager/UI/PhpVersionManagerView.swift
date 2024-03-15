@@ -94,8 +94,10 @@ struct PhpVersionManagerView: View {
         VStack {
             header.padding(10)
 
+            Divider()
+
             if self.hasUpdates {
-                hasUpdatesView
+                hasUpdatesView.padding(.horizontal, 15)
             } else {
                 noUpdatesView
             }
@@ -160,44 +162,43 @@ struct PhpVersionManagerView: View {
 
     private var hasUpdatesView: some View {
         Group {
-            Divider()
             HStack(alignment: .center, spacing: 15) {
                 Text("phpman.has_updates.description".localizedForSwiftUI)
-                    .foregroundColor(.gray)
                     .font(.system(size: 11))
 
-                Button("phpman.has_updates.button".localizedForSwiftUI, action: {
+                Button(action: {
                     Task { await self.upgradeAll(self.formulae.upgradeable) }
-
+                }, label: {
+                    Label("phpman.has_updates.button".localizedForSwiftUI,
+                          systemImage: "arrowshape.up.circle.fill")
                 })
+                .buttonStyle(.custom)
                 .focusable(false)
                 .disabled(self.status.busy)
             }
             .padding(10)
         }
+        .background(.statusColorYellowTranslucent)
+        .cornerRadius(5)
     }
 
     private var noUpdatesView: some View {
-        Group {
-            Divider()
-
-            HStack(alignment: .center, spacing: 15) {
-                Button {
-                    Task { await self.reload() }
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                        .buttonStyle(.automatic)
-                        .controlSize(.large)
-                }
-                .focusable(false)
-                .disabled(self.status.busy)
-
-                Text("phpman.refresh.button.description".localizedForSwiftUI)
-                    .foregroundColor(.gray)
-                    .font(.system(size: 11))
+        HStack(alignment: .center, spacing: 15) {
+            Button {
+                Task { await self.reload() }
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .buttonStyle(.automatic)
+                    .controlSize(.large)
             }
-            .padding(10)
+            .focusable(false)
+            .disabled(self.status.busy)
+
+            Text("phpman.refresh.button.description".localizedForSwiftUI)
+                .foregroundColor(.gray)
+                .font(.system(size: 11))
         }
+        .padding(10)
     }
 
     private var prereleaseBadge: some View {
@@ -205,7 +206,7 @@ struct PhpVersionManagerView: View {
             .font(.system(size: 9))
             .padding(.horizontal, 5)
             .padding(.vertical, 1)
-            .background(Color.appPrimary)
+            .background(Color.statusColorBlue)
             .foregroundColor(Color.white)
             .clipShape(Capsule())
             .fixedSize(horizontal: true, vertical: true)

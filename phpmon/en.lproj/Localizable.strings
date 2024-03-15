@@ -158,7 +158,7 @@ and restart PHP Monitor for extensions to become visible. If the problem persist
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 
-"phpman.has_updates.description" = "One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)";
+"phpman.has_updates.description" = "**One or more updates are available.** PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.";
 "phpman.has_updates.button" = "Upgrade All";
 
 "phpman.warnings.outdated.title" = "This version of PHP Monitor is outdated";

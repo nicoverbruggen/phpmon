@@ -135,7 +135,7 @@ en PHP Monitor herstarten om de extensies zichtbaar te maken. Als het probleem z
 "phpman.refresh.button" = "Zoek naar updates";
 "phpman.refresh.button.description" = "Je kunt op de vernieuwen-knop drukken om te controleren of er updates beschikbaar zijn voor geïnstalleerde PHP-versies.";
 
-"phpman.has_updates.description" = "Er zijn één of meer updates beschikbaar. (Houd er rekening mee dat PHP Monitor altijd PHP-versies in bulk installeert of bijwerkt, dus u zult altijd alle installaties tegelijk upgraden.)";
+"phpman.has_updates.description" = "**Er zijn één of meer updates beschikbaar.** PHP Monitor werkt alle versies in één keer bij, hou hier rekening mee.";
 "phpman.has_updates.button" = "Alles bijwerken";
 
 "phpman.warnings.unsupported.title" = "Uw versie van Homebrew kan problemen veroorzaken";

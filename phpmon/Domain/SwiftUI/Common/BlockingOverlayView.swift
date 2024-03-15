@@ -44,7 +44,8 @@ struct BlockingOverlayView<Content: View>: View {
                         .padding(.top, -4)
                 }.padding(60)
             }
-        }.background(Color.white)
+        }
+        .background(Color.spinnerBackground)
         .disabled(isBlocking)
     }
 }
