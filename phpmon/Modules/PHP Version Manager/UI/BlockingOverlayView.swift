@@ -29,7 +29,7 @@ struct BlockingOverlayView<Content: View>: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            content().opacity(isBlocking ? 0.2 : 1)
+            content().opacity(isBlocking ? 0 : 1)
             if isBlocking {
                 VStack {
                     ActivityIndicator()
