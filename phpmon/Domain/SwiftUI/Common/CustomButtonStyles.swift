@@ -13,7 +13,7 @@ public struct CustomButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .padding(12)
+            .padding(8)
             .foregroundStyle(.white)
             .background(.statusColorBlue, in: .rect(cornerRadius: 8, style: .continuous))
             .opacity({

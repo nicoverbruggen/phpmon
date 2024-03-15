@@ -97,7 +97,7 @@ struct PhpVersionManagerView: View {
             Divider()
 
             if self.hasUpdates {
-                hasUpdatesView.padding(.horizontal, 15)
+                hasUpdatesView
             } else {
                 noUpdatesView
             }
@@ -143,9 +143,9 @@ struct PhpVersionManagerView: View {
 
     private var header: some View {
         HStack(alignment: .center, spacing: 15) {
-            Image(systemName: "arrow.down.to.line.circle.fill")
+            Image.init(.php)
                 .resizable()
-                .frame(width: 40, height: 40)
+                .frame(width: 50, height: 50)
                 .foregroundColor(Color.blue)
                 .padding(12)
             VStack(alignment: .leading, spacing: 5) {
