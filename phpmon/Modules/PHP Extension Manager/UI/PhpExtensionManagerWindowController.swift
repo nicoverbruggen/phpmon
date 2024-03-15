@@ -1,5 +1,5 @@
 //
-//  PhpVersionManagerWindowController.swift
+//  PhpExtensionManagerWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 13/11/2023.
@@ -28,7 +28,7 @@ class PhpExtensionManagerWindowController: PMWindowController {
 
         guard let window = windowController.window else { return }
         window.title = "phpextman.window.title".localized
-        window.styleMask = [.titled, .closable, .miniaturizable]
+        window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.titlebarAppearsTransparent = false
         window.delegate = delegate ?? windowController
         window.contentView = NSHostingView(rootView: windowController.view)

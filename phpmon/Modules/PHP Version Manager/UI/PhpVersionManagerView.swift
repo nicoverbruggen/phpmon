@@ -136,7 +136,8 @@ struct PhpVersionManagerView: View {
                     .listStyle(PlainListStyle())
                 }
             }
-        }.frame(width: 600, height: 600)
+        }
+        .frame(minWidth: 600, minHeight: 600)
     }
 
     // MARK: View Variables
