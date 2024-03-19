@@ -8,12 +8,14 @@
 
 import Cocoa
 import Carbon
+import SwiftUI
 
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
     // MARK: - Outlets
 
     @IBOutlet weak var tableView: PMTableView!
+    @IBOutlet weak var noResultsView: NSView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
 
     // MARK: - Variables
@@ -93,6 +95,23 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
 
+        let child = NSHostingController(
+            rootView: UnavailableContentView(
+                title: "No domains available.",
+                description: "You can always link a new domain from within PHP Monitor.",
+                icon: "globe",
+                button: "Add domain",
+                action: {
+                    App.shared.domainListWindowController?
+                        .pressedAddLink(nil)
+                }
+            )
+            .frame(width: 300, height: 300)
+        ).view
+
+        self.noResultsView.addSubview(child)
+        child.frame = self.noResultsView.bounds
+
         let mapping = [
             "SECURE": "domain_list.columns.secure",
             "DOMAIN": "domain_list.columns.domain",
@@ -132,6 +151,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         tableView.alphaValue = 0.3
         tableView.isEnabled = false
         tableView.selectRowIndexes([], byExtendingSelection: true)
+        noResultsView.isHidden = true
     }
 
     /**
@@ -142,6 +162,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
         tableView.isEnabled = true
+        updateNoResultsView()
     }
 
     /**
@@ -282,7 +303,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         Task { @MainActor in
             self.tableView.reloadData()
+            updateNoResultsView()
         }
+    }
+
+    func updateNoResultsView() {
+        self.noResultsView.isHidden = !domains.isEmpty
     }
 
     func searchedFor(text: String) {
