@@ -95,22 +95,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
 
-        let child = NSHostingController(
-            rootView: UnavailableContentView(
-                title: "No domains available.",
-                description: "You can always link a new domain from within PHP Monitor.",
-                icon: "globe",
-                button: "Add domain",
-                action: {
-                    App.shared.domainListWindowController?
-                        .pressedAddLink(nil)
-                }
-            )
-            .frame(width: 300, height: 300)
-        ).view
-
-        self.noResultsView.addSubview(child)
-        child.frame = self.noResultsView.bounds
+        addNoResultsView()
 
         let mapping = [
             "SECURE": "domain_list.columns.secure",
@@ -132,6 +117,25 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         } else {
             Task { await reloadDomains() }
         }
+    }
+
+    private func addNoResultsView() {
+        let child = NSHostingController(
+            rootView: UnavailableContentView(
+                title: "domain_list.domains_empty.title".localized,
+                description: "domain_list.domains_empty.desc".localized,
+                icon: "globe",
+                button: "domain_list.domains_empty.button".localized,
+                action: {
+                    App.shared.domainListWindowController?
+                        .pressedAddLink(nil)
+                }
+            )
+            .frame(width: 300, height: 300)
+        ).view
+
+        self.noResultsView.addSubview(child)
+        child.frame = self.noResultsView.bounds
     }
 
     // MARK: - Async Operations
