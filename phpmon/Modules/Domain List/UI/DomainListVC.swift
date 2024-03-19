@@ -131,7 +131,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
                         .pressedAddLink(nil)
                 }
             )
-            .frame(width: 300, height: 300)
+            .frame(width: 400, height: 300)
         ).view
 
         self.noResultsView.addSubview(child)

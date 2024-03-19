@@ -1093,9 +1093,9 @@ Gw
                                 </constraints>
                             </progressIndicator>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="wcV-ed-8Bv">
-                                <rect key="frame" x="163" y="5" width="300" height="300"/>
+                                <rect key="frame" x="113" y="5" width="400" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="HCo-LG-x3N"/>
+                                    <constraint firstAttribute="width" constant="400" id="HCo-LG-x3N"/>
                                     <constraint firstAttribute="height" constant="300" id="Xpi-Rl-xmb"/>
                                 </constraints>
                             </customView>
