@@ -47,7 +47,7 @@ struct UnavailableContentView: View {
                 if self.button != nil {
                     Button(self.button!) {
                         self.action!()
-                    }
+                    }.buttonStyle(.custom)
                 }
             }
         }
@@ -58,8 +58,10 @@ struct UnavailableContentView: View {
 
 #Preview {
     UnavailableContentView(
-        title: "No domains available.",
-        description: "No domains match this search query. You can always link a new domain from within PHP Monitor.",
-        icon: "globe"
+        title: "domain_list.domains_empty.title".localized,
+        description: "domain_list.domains_empty.desc".localized,
+        icon: "globe",
+        button: "domain_list.domains_empty.button".localized,
+        action: {}
     )
 }

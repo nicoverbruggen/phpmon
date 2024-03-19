@@ -53,7 +53,6 @@
 		C40175B92903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BB2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
-		C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C40508B128ADAB44008FAC1F /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
@@ -177,6 +176,9 @@
 		C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
 		C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */; };
 		C43B8FD52BA9BAD3000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD62BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD72BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD82BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
 		C43BCD4429FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
 		C43BCD4529FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
 		C43BCD4629FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
@@ -485,7 +487,6 @@
 		C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
 		C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
 		C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
-		C471E88428F9BB650021E251 /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C471E88528F9BB650021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E88628F9BB650021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E88728F9BB650021E251 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -573,7 +574,6 @@
 		C471E8E428F9BB8F0021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
 		C471E8E528F9BB8F0021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
 		C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
-		C471E8E728F9BB8F0021E251 /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C471E8E828F9BB8F0021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E8E928F9BB8F0021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E8EA28F9BB8F0021E251 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -929,7 +929,6 @@
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C40175B72903108900763A68 /* ValetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractor.swift; sourceTree = "<group>"; };
-		C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDomainResultsView.swift; sourceTree = "<group>"; };
 		C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemExtension.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
@@ -1991,7 +1990,6 @@
 			isa = PBXGroup;
 			children = (
 				C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */,
-				C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */,
 			);
 			path = Domains;
 			sourceTree = "<group>";
@@ -2694,7 +2692,6 @@
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
-				C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C40D725F2A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
@@ -2829,7 +2826,6 @@
 				C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */,
 				C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */,
 				C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */,
-				C471E88428F9BB650021E251 /* NoDomainResultsView.swift in Sources */,
 				C4513F952B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
 				C471E88528F9BB650021E251 /* ServicesView.swift in Sources */,
 				C471E88628F9BB650021E251 /* StatsView.swift in Sources */,
@@ -2846,6 +2842,7 @@
 				C471E88F28F9BB650021E251 /* ModifierFlagsExtension.swift in Sources */,
 				C456A0CD2AA6166F0080144F /* BytePhpPreference.swift in Sources */,
 				C471E7E928F9BAC20021E251 /* Paths.swift in Sources */,
+				C43B8FD72BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C45B91552956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C471E7FE28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
 				C4415E8F2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
@@ -2978,6 +2975,7 @@
 				C471E8B828F9BB8F0021E251 /* StatusMenu+Items.swift in Sources */,
 				C471E8B928F9BB8F0021E251 /* DomainListCellProtocol.swift in Sources */,
 				C471E8BA28F9BB8F0021E251 /* DomainListTLSCell.swift in Sources */,
+				C43B8FD82BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C471E8BB28F9BB8F0021E251 /* DomainListNameCell.swift in Sources */,
 				C471E8BC28F9BB8F0021E251 /* DomainListPhpCell.swift in Sources */,
 				C471E8BD28F9BB8F0021E251 /* DomainListTypeCell.swift in Sources */,
@@ -3037,7 +3035,6 @@
 				C4B79EBF29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C45D654F29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */,
-				C471E8E728F9BB8F0021E251 /* NoDomainResultsView.swift in Sources */,
 				C471E8E828F9BB8F0021E251 /* ServicesView.swift in Sources */,
 				C4E2E85F28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C471E8E928F9BB8F0021E251 /* StatsView.swift in Sources */,
@@ -3266,6 +3263,7 @@
 				C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C4B79ECC29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
+				C43B8FD62BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,
 				C485707D28BF45A200539B36 /* WarningView.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
