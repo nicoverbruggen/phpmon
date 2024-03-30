@@ -134,7 +134,7 @@ và khởi động lại PHP Monitor để các tiện ích mở rộng trở n�
 "phpman.refresh.button" = "Tìm kiếm Cập nhật";
 "phpman.refresh.button.description" = "Bạn có thể nhấn nút làm mới để kiểm tra xem có sẵn các cập nhật cho các phiên bản PHP đã cài đặt.";
 
-"phpman.has_updates.description" = "Một hoặc nhiều cập nhật có sẵn. (Vui lòng lưu ý rằng PHP Monitor sẽ luôn cài đặt hoặc cập nhật các phiên bản PHP theo lô, vì vậy bạn sẽ luôn nâng cấp tất cả các cài đặt cùng một lúc.)";
+"phpman.has_updates.description" = "**Một hoặc nhiều cập nhật có sẵn.** Vui lòng lưu ý rằng PHP Monitor sẽ luôn cài đặt hoặc cập nhật các phiên bản PHP theo lô, vì vậy bạn sẽ luôn nâng cấp tất cả các cài đặt cùng một lúc.";
 "phpman.has_updates.button" = "Nâng cấp Tất cả";
 
 "phpman.warnings.unsupported.title" = "Phiên bản Homebrew của bạn có thể gây ra vấn đề";

@@ -158,7 +158,7 @@ and restart PHP Monitor for extensions to become visible. If the problem persist
 "phpman.refresh.button" = "Search for Updates";
 "phpman.refresh.button.description" = "You can press the refresh button to check if any updates are available to installed PHP versions.";
 
-"phpman.has_updates.description" = "One or more updates are available. (Please note that PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.)";
+"phpman.has_updates.description" = "**One or more updates are available.** PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.";
 "phpman.has_updates.button" = "Upgrade All";
 
 "phpman.warnings.outdated.title" = "This version of PHP Monitor is outdated";
@@ -239,8 +239,9 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.title" = "Domains";
 "domain_list.subtitle" = "";
 
-"domain_list.no_domains" = "You have not set up any domains or proxies yet.";
-"domain_list.no_domains_for_search_query" = "There are no results for your search query.";
+"domain_list.domains_empty.title" = "No domains available.";
+"domain_list.domains_empty.desc" = "No domains were found for this search query or you haven't linked any domains yet.";
+"domain_list.domains_empty.button" = "Add domain...";
 
 "domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
 "domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";

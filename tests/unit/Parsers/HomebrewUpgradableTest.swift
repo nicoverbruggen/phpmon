@@ -28,6 +28,8 @@ class HomebrewUpgradableTest: XCTestCase {
                 : .instant("/opt/homebrew/etc/php/7.4/conf.d/php-memory-limits.ini")
         ])
 
+        // This config file assumes our PHP alias (`php`) is v8.2
+        PhpEnvironments.brewPhpAlias = "8.2"
         let env = PhpEnvironments.shared
         env.cachedPhpInstallations = [
             "8.1": PhpInstallation("8.1.16"),

@@ -30,7 +30,7 @@ struct Constants {
      will be displayed to let them know that certain operations
      will not work correctly and that they need to update their app.
      */
-    static let PhpFormulaeCutoffDate = "2024-11-01"
+    static let PhpFormulaeCutoffDate = "2024-11-01" // YYYY-MM-DD
 
     /**
      * The PHP versions that are considered pre-release versions.
@@ -53,6 +53,17 @@ struct Constants {
                 return version
             })
     }
+
+    /**
+     The Homebrew services that should be automatically
+     detected and show up in the list of managed services.
+     */
+    static let DetectedHomebrewServices: Set = [
+        "mailhog",
+        "mysql@",
+        "postgresql@",
+        "redis"
+    ]
 
     /**
      * The PHP versions supported by this application.
@@ -78,14 +89,14 @@ struct Constants {
         3: // Valet v3 dropped support for v5.6
         [
             "7.0", "7.1", "7.2", "7.3", "7.4",
-            "8.0", "8.1", "8.2",
-            "8.3", "8.4" // dev
+            "8.0", "8.1", "8.2", "8.3",
+            "8.4" // dev
         ],
         4: // Valet v4 dropped support for v7.0
         [
             "7.1", "7.2", "7.3", "7.4",
-            "8.0", "8.1", "8.2",
-            "8.3", "8.4" // dev
+            "8.0", "8.1", "8.2", "8.3",
+            "8.4" // dev
         ]
     ]
 

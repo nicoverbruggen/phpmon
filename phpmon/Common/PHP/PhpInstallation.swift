@@ -22,6 +22,16 @@ class PhpInstallation {
         return self.iniFiles.flatMap({ $0.extensions })
     }
 
+    var formulaName: String {
+        let version = self.versionNumber.short
+
+        if version == PhpEnvironments.brewPhpAlias {
+            return "php"
+        }
+
+        return "php@\(self.versionNumber.short)"
+    }
+
     /**
      In order to determine details about a PHP installation,
      we’ll simply run `php-config --version` in the relevant directory.

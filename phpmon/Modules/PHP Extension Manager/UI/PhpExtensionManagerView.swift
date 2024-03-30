@@ -58,7 +58,7 @@ struct PhpExtensionManagerView: View {
                 .searchable(text: $searchText)
             }
         }
-        .frame(width: 600, height: 600)
+        .frame(minWidth: 600, minHeight: 600)
         .onAppear {
             Task {
                 await delay(seconds: 1)

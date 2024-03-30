@@ -29,6 +29,8 @@ class PMWindowController: NSWindowController, NSWindowDelegate {
         App.shared.remove(window: windowName)
     }
 
+    func windowDidResize(_ notification: Notification) {}
+
     deinit {
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }

@@ -44,14 +44,13 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
         }
 
         return Brew.phpVersionFormulae.map { (version, formula) in
-            let fullVersion = PhpEnvironments.shared.cachedPhpInstallations[version]?
-                .versionNumber.text
-
+            var fullVersion: String?
             var upgradeVersion: String?
 
-            if let version = fullVersion {
+            if let install = PhpEnvironments.shared.cachedPhpInstallations[version] {
+                fullVersion = install.versionNumber.text
                 upgradeVersion = outdated?.first(where: { formula in
-                    return formula.installed_versions.contains(version)
+                    return formula.name == install.formulaName
                 })?.current_version
             }
 

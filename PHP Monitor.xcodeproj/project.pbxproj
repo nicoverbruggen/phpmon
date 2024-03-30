@@ -53,7 +53,6 @@
 		C40175B92903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BB2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
-		C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C40508B128ADAB44008FAC1F /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
 		C405A4D024B9B9140062FAFA /* InternetAccessPolicy.strings in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */; };
 		C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */; };
@@ -176,6 +175,10 @@
 		C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C43A8A2025D9D1D700591B77 /* brew-formula.json in Resources */ = {isa = PBXBuildFile; fileRef = C43A8A1F25D9D1D700591B77 /* brew-formula.json */; };
 		C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */; };
+		C43B8FD52BA9BAD3000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD62BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD72BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
+		C43B8FD82BA9C689000C02BE /* UnavailableContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */; };
 		C43BCD4429FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
 		C43BCD4529FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
 		C43BCD4629FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */; };
@@ -484,7 +487,6 @@
 		C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
 		C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
 		C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
-		C471E88428F9BB650021E251 /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C471E88528F9BB650021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E88628F9BB650021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E88728F9BB650021E251 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -572,7 +574,6 @@
 		C471E8E428F9BB8F0021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
 		C471E8E528F9BB8F0021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
 		C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
-		C471E8E728F9BB8F0021E251 /* NoDomainResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */; };
 		C471E8E828F9BB8F0021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E8E928F9BB8F0021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E8EA28F9BB8F0021E251 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -821,6 +822,10 @@
 		C4E6840C2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
 		C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */; };
+		C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
+		C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
+		C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
+		C4EA3C4A2BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EB53E428551F9B006F9937 /* HeaderView.swift */; };
 		C4EB53E728553117006F9937 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EB53E628553117006F9937 /* ArrayExtension.swift */; };
 		C4EC1E73279DFCF40010F296 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
@@ -924,7 +929,6 @@
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
 		C40175B72903108900763A68 /* ValetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractor.swift; sourceTree = "<group>"; };
-		C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDomainResultsView.swift; sourceTree = "<group>"; };
 		C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemExtension.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
 		C405A4CF24B9B9140062FAFA /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
@@ -998,6 +1002,7 @@
 		C43A8A1925D9CD1000591B77 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C43A8A1F25D9D1D700591B77 /* brew-formula.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "brew-formula.json"; sourceTree = "<group>"; };
 		C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewPackageTest.swift; sourceTree = "<group>"; };
+		C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnavailableContentView.swift; sourceTree = "<group>"; };
 		C43BCD4329FBEF40001547BC /* ModifyPhpVersionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPhpVersionCommand.swift; sourceTree = "<group>"; };
 		C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigChecker.swift; sourceTree = "<group>"; };
 		C44067F427E2582B0045BD4E /* DomainListNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListNameCell.swift; sourceTree = "<group>"; };
@@ -1153,6 +1158,7 @@
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
+		C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyles.swift; sourceTree = "<group>"; };
 		C4EB53E428551F9B006F9937 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4EB53E628553117006F9937 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		C4EC1E72279DFCF40010F296 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
@@ -1578,7 +1584,6 @@
 				C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */,
 				C43931C429C4BD610069165B /* PhpVersionManagerView.swift */,
 				C42106652AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift */,
-				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1963,6 +1968,9 @@
 			children = (
 				C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */,
 				C451AFF52969E40F0078E617 /* HelpButton.swift */,
+				C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */,
+				C48DDD0C29C75C9E00D032D9 /* BlockingOverlayView.swift */,
+				C43B8FD42BA9BAD3000C02BE /* UnavailableContentView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1982,7 +1990,6 @@
 			isa = PBXGroup;
 			children = (
 				C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */,
-				C40508AE28ADA23D008FAC1F /* NoDomainResultsView.swift */,
 			);
 			path = Domains;
 			sourceTree = "<group>";
@@ -2330,7 +2337,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
 					C406A5EF298AD2CE00B5B85A = {
@@ -2543,6 +2550,7 @@
 				C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				C4E49DE728F764050026AC4E /* ActiveCommand.swift in Sources */,
+				C43B8FD52BA9BAD3000C02BE /* UnavailableContentView.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
@@ -2565,6 +2573,7 @@
 				031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4AD38B228ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
 				C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */,
+				C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				C44A874828905BB000498BC4 /* ProgressVC.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
@@ -2683,7 +2692,6 @@
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
-				C40508AF28ADA23D008FAC1F /* NoDomainResultsView.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C40D725F2A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
@@ -2801,6 +2809,7 @@
 				C471E86E28F9BB650021E251 /* MenuBarIcons.swift in Sources */,
 				C471E86F28F9BB650021E251 /* Stats.swift in Sources */,
 				C4CE7F9829683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
+				C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C471E87028F9BB650021E251 /* GlobalKeybindPreference.swift in Sources */,
 				C471E87228F9BB650021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E87428F9BB650021E251 /* SelectPreferenceView.swift in Sources */,
@@ -2817,7 +2826,6 @@
 				C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */,
 				C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */,
 				C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */,
-				C471E88428F9BB650021E251 /* NoDomainResultsView.swift in Sources */,
 				C4513F952B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
 				C471E88528F9BB650021E251 /* ServicesView.swift in Sources */,
 				C471E88628F9BB650021E251 /* StatsView.swift in Sources */,
@@ -2834,6 +2842,7 @@
 				C471E88F28F9BB650021E251 /* ModifierFlagsExtension.swift in Sources */,
 				C456A0CD2AA6166F0080144F /* BytePhpPreference.swift in Sources */,
 				C471E7E928F9BAC20021E251 /* Paths.swift in Sources */,
+				C43B8FD72BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C45B91552956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C471E7FE28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
 				C4415E8F2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
@@ -2966,6 +2975,7 @@
 				C471E8B828F9BB8F0021E251 /* StatusMenu+Items.swift in Sources */,
 				C471E8B928F9BB8F0021E251 /* DomainListCellProtocol.swift in Sources */,
 				C471E8BA28F9BB8F0021E251 /* DomainListTLSCell.swift in Sources */,
+				C43B8FD82BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C471E8BB28F9BB8F0021E251 /* DomainListNameCell.swift in Sources */,
 				C471E8BC28F9BB8F0021E251 /* DomainListPhpCell.swift in Sources */,
 				C471E8BD28F9BB8F0021E251 /* DomainListTypeCell.swift in Sources */,
@@ -2990,6 +3000,7 @@
 				C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */,
 				C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */,
 				C456A0C92AA614BD0080144F /* PhpPreference.swift in Sources */,
+				C4EA3C4A2BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C4D4CB3A29C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
 				C471E8CB28F9BB8F0021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E8CC28F9BB8F0021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
@@ -3024,7 +3035,6 @@
 				C4B79EBF29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C45D654F29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */,
-				C471E8E728F9BB8F0021E251 /* NoDomainResultsView.swift in Sources */,
 				C471E8E828F9BB8F0021E251 /* ServicesView.swift in Sources */,
 				C4E2E85F28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C471E8E928F9BB8F0021E251 /* StatsView.swift in Sources */,
@@ -3253,6 +3263,7 @@
 				C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
 				C4B79ECC29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
+				C43B8FD62BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,
 				C485707D28BF45A200539B36 /* WarningView.swift in Sources */,
 				C4F7809C25D80344000DBC97 /* CommandTest.swift in Sources */,
@@ -3272,6 +3283,7 @@
 				031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4998F0B2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C485707228BF453800539B36 /* SwiftUIHelper.swift in Sources */,
+				C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
 				C44C198E276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */,
@@ -3655,7 +3667,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3668,7 +3680,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3686,7 +3698,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3699,7 +3711,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3927,7 +3939,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3940,7 +3952,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4044,7 +4056,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4057,7 +4069,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4161,7 +4173,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4174,7 +4186,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4343,7 +4355,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1425;
+				CURRENT_PROJECT_VERSION = 1455;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4356,7 +4368,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.1;
+				MARKETING_VERSION = 7.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";

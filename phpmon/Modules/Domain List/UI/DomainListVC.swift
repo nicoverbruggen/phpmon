@@ -8,12 +8,14 @@
 
 import Cocoa
 import Carbon
+import SwiftUI
 
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
     // MARK: - Outlets
 
     @IBOutlet weak var tableView: PMTableView!
+    @IBOutlet weak var noResultsView: NSView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
 
     // MARK: - Variables
@@ -93,6 +95,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     override func viewDidLoad() {
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
 
+        addNoResultsView()
+
         let mapping = [
             "SECURE": "domain_list.columns.secure",
             "DOMAIN": "domain_list.columns.domain",
@@ -115,6 +119,25 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         }
     }
 
+    private func addNoResultsView() {
+        let child = NSHostingController(
+            rootView: UnavailableContentView(
+                title: "domain_list.domains_empty.title".localized,
+                description: "domain_list.domains_empty.desc".localized,
+                icon: "globe",
+                button: "domain_list.domains_empty.button".localized,
+                action: {
+                    App.shared.domainListWindowController?
+                        .pressedAddLink(nil)
+                }
+            )
+            .frame(width: 400, height: 300)
+        ).view
+
+        self.noResultsView.addSubview(child)
+        child.frame = self.noResultsView.bounds
+    }
+
     // MARK: - Async Operations
 
     /**
@@ -132,6 +155,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         tableView.alphaValue = 0.3
         tableView.isEnabled = false
         tableView.selectRowIndexes([], byExtendingSelection: true)
+        noResultsView.isHidden = true
     }
 
     /**
@@ -142,6 +166,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
         tableView.isEnabled = true
+        updateNoResultsView()
     }
 
     /**
@@ -282,7 +307,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         Task { @MainActor in
             self.tableView.reloadData()
+            updateNoResultsView()
         }
+    }
+
+    func updateNoResultsView() {
+        self.noResultsView.isHidden = !domains.isEmpty
     }
 
     func searchedFor(text: String) {
