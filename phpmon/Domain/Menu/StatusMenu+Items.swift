@@ -242,7 +242,7 @@ extension StatusMenu {
         addLoadedPresets()
     }
 
-    private func addEmptyPresetHelp() {
+    @MainActor private func addEmptyPresetHelp() {
         addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem(title: "mi_no_presets".localized),
             NSMenuItem.separator(),
@@ -251,7 +251,7 @@ extension StatusMenu {
         ], target: MainMenu.shared))
     }
 
-    private func addLoadedPresets() {
+    @MainActor private func addLoadedPresets() {
         addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem.separator(),
             HeaderView.asMenuItem(text: "mi_apply_presets_title".localized)
@@ -266,7 +266,7 @@ extension StatusMenu {
 
     // MARK: - Xdebug
 
-    func addXdebugMenuItem() {
+    @MainActor func addXdebugMenuItem() {
         if !Xdebug.enabled {
             addItem(NSMenuItem.separator())
             return
@@ -286,7 +286,7 @@ extension StatusMenu {
 
     // MARK: - PHP Doctor
 
-    func addPhpDoctorMenuItem() {
+    @MainActor func addPhpDoctorMenuItem() {
         if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
             !WarningManager.shared.hasWarnings() {
             return
@@ -302,7 +302,7 @@ extension StatusMenu {
 
     // MARK: - First Aid & Services
 
-    func addFirstAidAndServicesMenuItems() {
+    @MainActor func addFirstAidAndServicesMenuItems() {
         let services = NSMenuItem(title: "mi_other".localized)
 
         var items: [NSMenuItem] = [
@@ -359,7 +359,7 @@ extension StatusMenu {
 
     // MARK: - Other helper methods to generate menu items
 
-    func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
+    @MainActor func addExtensionItem(_ phpExtension: PhpExtension, _ shortcutKey: Int) {
         let keyEquivalent = shortcutKey < 9 ? "\(shortcutKey)" : ""
 
         let menuItem = ExtensionMenuItem(

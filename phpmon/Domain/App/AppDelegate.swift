@@ -24,12 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let state: App
 
     /**
-     The MainMenu singleton is responsible for rendering the
-     menu bar item and its menu, as well as its actions.
-     */
-    let menu: MainMenu
-
-    /**
      The paths singleton that determines where Homebrew is installed,
      and where to look for binaries.
      */
@@ -96,7 +90,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
 
         self.state = App.shared
-        self.menu = MainMenu.shared
         self.paths = Paths.shared
         self.valet = Valet.shared
         self.brew = Brew.shared
@@ -132,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         setupNotifications()
 
         Task { // Make sure the menu performs its initial checks
-            await menu.startup()
+            await MainMenu.shared.startup()
         }
     }
 
