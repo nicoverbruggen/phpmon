@@ -16,6 +16,12 @@ struct VersionPopoverView: View {
 
     @State var parent: NSPopover!
 
+    let rows = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(getTitleText())
@@ -32,14 +38,33 @@ struct VersionPopoverView: View {
                         message: "alert.php_suggestions".localized,
                         color: Color("AppColor")
                     )
-                    HStack {
-                        ForEach(validPhpVersions, id: \.self) { version in
-                            Button("site_link.switch_to_php".localized(version.short), action: {
-                                MainMenu.shared.switchToPhpVersion(version.short)
-                                parent?.close()
-                            })
-                        }
-                    }.padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                    if Valet.enabled(feature: .isolatedSites) {
+                        LazyVGrid(columns: self.rows, alignment: .leading, spacing: 5, content: {
+                            ForEach(validPhpVersions, id: \.self) { version in
+                                Button("site_link.isolate_php".localized(version.short), action: {
+                                    Task {
+                                        // Applies isolation
+                                        App.shared.domainListWindowController?.contentVC.setUIBusy()
+                                        try? await site.isolate(version: version.short)
+                                        App.shared.domainListWindowController?.pressedReload(nil)
+                                        App.shared.domainListWindowController?.contentVC.setUINotBusy()
+                                    }
+                                    parent?.close()
+                                }).padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
+                            }
+                        }).padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                    } else {
+                        LazyVGrid(columns: self.rows, alignment: .leading, spacing: 5, content: {
+                            ForEach(validPhpVersions, id: \.self) { version in
+                                Button("site_link.switch_to_php".localized(version.short), action: {
+                                    // Uses the global switcher
+                                    MainMenu.shared.switchToPhpVersion(version.short)
+                                    parent?.close()
+                                }).padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))
+                            }
+                        }).padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                    }
+
                 }
             } else {
                 if site.preferredPhpVersionSource == .unknown {
@@ -200,7 +225,10 @@ struct DisclaimerView: View {
         ),
         validPhpVersions: [
             VersionNumber(major: 8, minor: 0, patch: 0),
-            VersionNumber(major: 8, minor: 1, patch: 0)
+            VersionNumber(major: 8, minor: 1, patch: 0),
+            VersionNumber(major: 8, minor: 2, patch: 0),
+            VersionNumber(major: 8, minor: 3, patch: 0),
+            VersionNumber(major: 8, minor: 4, patch: 0)
         ],
         parent: nil
     )
