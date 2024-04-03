@@ -121,7 +121,7 @@ extension DomainListVC {
         for version in PhpEnvironments.shared.availablePhpVersions.reversed() {
             let item = PhpMenuItem(
                 title: "domain_list.always_use_php".localized(version),
-                action: #selector(self.isolateSite),
+                action: #selector(self.isolateSiteViaMenuItem),
                 keyEquivalent: ""
             )
             if site.servingPhpVersion == version && site.isolatedPhpVersion != nil {
@@ -137,7 +137,7 @@ extension DomainListVC {
             items.append(NSMenuItem.separator())
             items.append(NSMenuItem(
                 title: "domain_list.remove_isolation".localized,
-                action: #selector(self.removeIsolatedSite)
+                action: #selector(self.removeIsolatedSiteViaMenuItem)
             ))
         }
 
