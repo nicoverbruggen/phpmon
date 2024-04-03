@@ -14,6 +14,8 @@ struct VersionPopoverView: View {
 
     @State var validPhpVersions: [VersionNumber]
 
+    @State var prefersIsolationSuggestions: Bool
+
     @State var parent: NSPopover!
 
     let rows = [
@@ -38,7 +40,7 @@ struct VersionPopoverView: View {
                         message: "alert.php_suggestions".localized,
                         color: Color("AppColor")
                     )
-                    if Valet.enabled(feature: .isolatedSites) {
+                    if prefersIsolationSuggestions {
                         LazyVGrid(columns: self.rows, alignment: .leading, spacing: 5, content: {
                             ForEach(validPhpVersions, id: \.self) { version in
                                 Button("site_link.isolate_php".localized(version.short), action: {
@@ -162,6 +164,7 @@ struct DisclaimerView: View {
             constraint: ""
         ),
         validPhpVersions: [],
+        prefersIsolationSuggestions: false,
         parent: nil
     )
 }
@@ -177,6 +180,7 @@ struct DisclaimerView: View {
             constraint: "^8.1"
         ),
         validPhpVersions: [],
+        prefersIsolationSuggestions: false,
         parent: nil
     )
 }
@@ -193,6 +197,7 @@ struct DisclaimerView: View {
             isolated: "8.0"
         ),
         validPhpVersions: [],
+        prefersIsolationSuggestions: false,
         parent: nil
     )
 }
@@ -209,6 +214,7 @@ struct DisclaimerView: View {
             isolated: "7.4"
         ),
         validPhpVersions: [],
+        prefersIsolationSuggestions: false,
         parent: nil
     )
 }
@@ -230,6 +236,7 @@ struct DisclaimerView: View {
             VersionNumber(major: 8, minor: 3, patch: 0),
             VersionNumber(major: 8, minor: 4, patch: 0)
         ],
+        prefersIsolationSuggestions: true,
         parent: nil
     )
 }
