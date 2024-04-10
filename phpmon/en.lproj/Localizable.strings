@@ -262,6 +262,7 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.confirm_unlink_desc" = "No files will be removed. You can always link the folder again by clicking on the + button and selecting the original folder.";
 "site_link.close" = "Close";
 "site_link.switch_to_php" = "Switch to PHP %@";
+"site_link.isolate_php" = "Isolate PHP %@";
 
 "domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";

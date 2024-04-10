@@ -70,7 +70,12 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         let button = self.buttonPhpVersion!
         let popover = NSPopover()
 
-        let view = VersionPopoverView(site: site, validPhpVersions: validPhpSuggestions, parent: popover)
+        let view = VersionPopoverView(
+            site: site,
+            validPhpVersions: validPhpSuggestions,
+            prefersIsolationSuggestions: Valet.enabled(feature: .isolatedSites),
+            parent: popover
+        )
 
         popover.contentViewController = NSHostingController(rootView: view)
         popover.behavior = .transient

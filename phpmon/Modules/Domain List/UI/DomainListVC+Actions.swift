@@ -126,17 +126,17 @@ extension DomainListVC {
         }
     }
 
-    @objc func isolateSite(sender: PhpMenuItem) {
-        guard let site = selectedSite else {
-            return
-        }
-
+    public func isolateSite(site: ValetSite, version: String) {
         waitAndExecute {
             do {
                 // Instruct Valet to isolate a given PHP version
-                try await site.isolate(version: sender.version)
-                // Reload the UI
-                self.reloadSelectedRow()
+                try await site.isolate(version: version)
+                // Reload the UI if it's the same site
+                if self.selectedSite?.absolutePath == site.absolutePath {
+                    self.reloadSelectedRow()
+                } else {
+                    await self.reloadDomains()
+                }
             } catch {
                 // Notify the user about a failed command
                 let error = error as! ValetInteractionError
@@ -145,7 +145,15 @@ extension DomainListVC {
         }
     }
 
-    @objc func removeIsolatedSite() {
+    @objc func isolateSiteViaMenuItem(sender: PhpMenuItem) {
+        guard let site = selectedSite else {
+            return
+        }
+
+        self.isolateSite(site: site, version: sender.version)
+    }
+
+    @objc func removeIsolatedSiteViaMenuItem() {
         guard let site = selectedSite else {
             return
         }
