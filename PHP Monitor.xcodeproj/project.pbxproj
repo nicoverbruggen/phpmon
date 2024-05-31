@@ -820,8 +820,8 @@
 		C4E6840A2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840B2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840C2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
+		C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */; };
 		C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
-		C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */; };
 		C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
@@ -894,6 +894,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
 			remoteInfo = "PHP Monitor";
+		};
+		C4E91D122C0A7A9B00D69A31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C406A5EF298AD2CE00B5B85A;
+			remoteInfo = "PHP Monitor Self-Updater";
 		};
 		C4F7807E25D7F84B000DBC97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1158,7 +1165,6 @@
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
 		C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyles.swift; sourceTree = "<group>"; };
 		C4EB53E428551F9B006F9937 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4EB53E628553117006F9937 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -1341,7 +1347,6 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
-				C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A601298AD50D00B5B85A /* Updater.swift */,
 				C4C75F5B298C31C000DFD82E /* Utility.swift */,
@@ -2266,6 +2271,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */,
 			);
 			name = "PHP Monitor";
 			packageProductDependencies = (
@@ -2402,7 +2408,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */,
+				C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */,
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
@@ -3369,6 +3375,11 @@
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
 			targetProxy = C471E7C228F9B90F0021E251 /* PBXContainerItemProxy */;
 		};
+		C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */;
+			targetProxy = C4E91D122C0A7A9B00D69A31 /* PBXContainerItemProxy */;
+		};
 		C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
@@ -3428,9 +3439,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3462,9 +3474,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3496,9 +3509,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3530,9 +3544,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -4224,9 +4239,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -4406,9 +4422,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
