@@ -22,7 +22,7 @@ struct ProjectTypeDetection {
      This list is checked first to see if a project dependency can be mapped to a certain project type.
      */
     public static let SpecificDependencyList = [
-        "roots/bedrock": "Bedrock",
+        "roots/bedrock-autoloader": "Bedrock",
         "cakephp/app": "CakePHP",
         "craftcms/craft": "Craft",
         "drupal/core": "Drupal",
