@@ -597,6 +597,10 @@
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
 		C481F79726164A78004FBCFF /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
 		C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5B2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5D2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
 		C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
 		C485706E28BF451C00539B36 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
 		C485706F28BF452300539B36 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
@@ -1074,6 +1078,7 @@
 		C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C4821C592C2DEDE200357A68 /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 		C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBrewFormulaeHandler.swift; sourceTree = "<group>"; };
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
@@ -1856,6 +1861,7 @@
 				C4F361602836BFD9003598CC /* MainMenu+Actions.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */,
+				C4821C592C2DEDE200357A68 /* AppMenu.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -2699,6 +2705,7 @@
 				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
+				C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C40D725F2A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
@@ -2918,6 +2925,7 @@
 				C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */,
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
+				C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4B79ECD29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
@@ -2996,6 +3004,7 @@
 				C471E8C128F9BB8F0021E251 /* DomainListVC+ContextMenu.swift in Sources */,
 				C4BF56AE2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E8C228F9BB8F0021E251 /* DomainListVC+Actions.swift in Sources */,
+				C4821C5D2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C4D36618291160A1006BD146 /* WIP.swift in Sources */,
 				C471E8C328F9BB8F0021E251 /* SelectionVC.swift in Sources */,
 				C471E8C428F9BB8F0021E251 /* AddSiteVC.swift in Sources */,
@@ -3198,6 +3207,7 @@
 				C4C0E8E327F88B13002D32A9 /* ValetDomainScanner.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
+				C4821C5B2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C463E381284930EE00422731 /* PresetHelper.swift in Sources */,
 				C441CC572AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
 				C4F520672AF03791006787F2 /* ExtensionEnumeratorTest.swift in Sources */,

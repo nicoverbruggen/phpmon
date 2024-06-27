@@ -10,31 +10,27 @@ import Cocoa
 
 extension DomainListVC {
 
-    private var actionsMenu: NSMenuItem? {
-        return NSApplication.shared.mainMenu?.items[1].submenu?.items.last
-    }
-
     internal func reloadContextMenu() {
         guard let selected = selected else {
             tableView.menu = nil
-            actionsMenu?.title = "mm_actions".localized
-            actionsMenu?.submenu = nil
-            actionsMenu?.isEnabled = false
+            AppMenu.actionsMenu?.title = "mm_actions".localized
+            AppMenu.actionsMenu?.submenu = nil
+            AppMenu.actionsMenu?.isEnabled = false
             return
         }
 
         if let selected = selected as? ValetSite {
             tableView.menu = addMenuItemsForSite(selected)
-            actionsMenu?.title = "mm_actions".localized + " (\(selected.name).\(selected.tld))"
-            actionsMenu?.submenu = tableView.menu
-            actionsMenu?.isEnabled = true
+            AppMenu.actionsMenu?.title = "mm_actions".localized + " (\(selected.name).\(selected.tld))"
+            AppMenu.actionsMenu?.submenu = tableView.menu
+            AppMenu.actionsMenu?.isEnabled = true
             return
         }
         if let selected = selected as? ValetProxy {
             tableView.menu = addMenuItemsForProxy(selected)
-            actionsMenu?.title = "mm_actions".localized + " (\(selected.domain).\(selected.tld))"
-            actionsMenu?.submenu = tableView.menu
-            actionsMenu?.isEnabled = true
+            AppMenu.actionsMenu?.title = "mm_actions".localized + " (\(selected.domain).\(selected.tld))"
+            AppMenu.actionsMenu?.submenu = tableView.menu
+            AppMenu.actionsMenu?.isEnabled = true
             return
         }
     }
