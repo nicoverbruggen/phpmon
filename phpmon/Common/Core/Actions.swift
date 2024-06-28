@@ -20,6 +20,11 @@ class Actions {
         await brew("services restart \(HomebrewFormulae.php)", sudo: HomebrewFormulae.php.elevated)
     }
 
+    public static func restartPhpFpm(version: String) async {
+        let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
+        await brew("services restart \(formula)", sudo: HomebrewFormulae.php.elevated)
+    }
+
     public static func restartNginx() async {
         await brew("services restart \(HomebrewFormulae.nginx)", sudo: HomebrewFormulae.nginx.elevated)
     }

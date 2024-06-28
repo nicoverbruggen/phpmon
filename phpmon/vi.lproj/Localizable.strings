@@ -85,6 +85,8 @@
 "mi_xdebug_actions" = "Hành động";
 "mi_xdebug_disable_all" = "Tắt Tất cả Chế độ";
 
+"mm_actions" = "Hành động";
+
 // PHPEXTMAN
 
 "phpextman.window.title" = "Tiện ích mở rộng";

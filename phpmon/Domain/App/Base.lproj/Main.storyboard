@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -62,6 +62,13 @@
                                             <connections>
                                                 <action selector="focusSearchField:" target="Voe-Tx-rLC" id="O8j-1B-hll"/>
                                             </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="bPr-YU-lg4"/>
+                                        <menuItem title="actions" enabled="NO" id="cAS-FU-WUA" userLabel="actions" customClass="LocalizedMenuItem" customModule="PHP_Monitor" customModuleProvider="target">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="mm_actions"/>
+                                            </userDefinedRuntimeAttributes>
                                         </menuItem>
                                     </items>
                                 </menu>
@@ -429,7 +436,7 @@
                                 </toolbarItem>
                                 <searchToolbarItem implicitItemIdentifier="7C834FBE-7118-4082-A09F-7CBECEC1356A" label="Search" paletteLabel="Search" visibilityPriority="1001" id="G2g-jS-RVc">
                                     <nil key="toolTip"/>
-                                    <searchField key="view" verticalHuggingPriority="750" textCompletion="NO" id="0gE-Yr-MLy">
+                                    <searchField key="view" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="0gE-Yr-MLy">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="vp9-vH-goQ">
@@ -575,7 +582,7 @@ Gw
                                     <constraint firstAttribute="bottom" secondItem="8zu-cF-KCX" secondAttribute="bottom" constant="20" symbolic="YES" id="wIl-uw-y3p"/>
                                 </constraints>
                             </visualEffectView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U1c-qS-cIm">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U1c-qS-cIm">
                                 <rect key="frame" x="98" y="153" width="384" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="380" id="WgB-hj-d4P"/>
@@ -586,7 +593,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yI6-qf-htf">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yI6-qf-htf">
                                 <rect key="frame" x="98" y="127" width="384" height="16"/>
                                 <textFieldCell key="cell" selectable="YES" title="This is a slightly more expanded explanation." id="rY3-Nd-Iit">
                                     <font key="font" metaFont="system"/>
@@ -610,7 +617,7 @@ Gw
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="7eT-Hw-EL9"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hml-dl-Cah">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hml-dl-Cah">
                                 <rect key="frame" x="98" y="70" width="384" height="42"/>
                                 <textFieldCell key="cell" selectable="YES" id="7iW-Lc-DqO">
                                     <font key="font" metaFont="smallSystem"/>
@@ -699,7 +706,7 @@ Gw
                                     <action selector="pressedCancel:" target="glS-wF-sEU" id="q0L-YZ-F3J"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
                                 <rect key="frame" x="20" y="150" width="440" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="NFa-1D-Bi4">
                                     <font key="font" metaFont="system"/>
@@ -710,7 +717,7 @@ Gw
                                     <outlet property="delegate" destination="glS-wF-sEU" id="Dyf-0M-Gwj"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-5a-cmT">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-5a-cmT">
                                 <rect key="frame" x="18" y="128" width="444" height="14"/>
                                 <textFieldCell key="cell" title="[i18n] Preview text here" id="bJr-s6-tdP">
                                     <font key="font" metaFont="smallSystem"/>
@@ -728,7 +735,7 @@ Gw
                                     <action selector="pressedSecure:" target="glS-wF-sEU" id="OIj-Pz-5Ea"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-7e-dlb">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-7e-dlb">
                                 <rect key="frame" x="18" y="60" width="444" height="28"/>
                                 <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="4gd-KM-5Fu">
                                     <font key="font" metaFont="smallSystem"/>
@@ -743,7 +750,7 @@ Gw
                                     <url key="url" string="file:///Users/"/>
                                 </pathCell>
                             </pathControl>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-Ht-R8n">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-Ht-R8n">
                                 <rect key="frame" x="18" y="209" width="128" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Link a Folder" id="S4j-ZC-ddT">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
@@ -751,7 +758,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
+                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
                                 <rect key="frame" x="140" y="23" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
@@ -822,11 +829,11 @@ Gw
                             <scrollView borderType="none" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
-                                    <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="611" height="294"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj" customClass="PMTableView" customModule="PHP_Monitor" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="626" height="281"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="611" height="266"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -886,7 +893,7 @@ Gw
                                                             <rect key="frame" x="69" y="0.0" width="200" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
                                                                     <rect key="frame" x="3" y="26" width="145" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="my-domain-name.test" id="SGC-Gm-Mxd">
                                                                         <font key="font" metaFont="systemSemibold" size="13"/>
@@ -894,7 +901,7 @@ Gw
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
                                                                     <rect key="frame" x="3" y="12" width="75" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="~/path/to/site" id="fe7-Ha-mR9">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1027,7 +1034,7 @@ Gw
                                                             <rect key="frame" x="470" y="0.0" width="97" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
                                                                     <rect key="frame" x="6" y="26" width="93" height="14"/>
                                                                     <textFieldCell key="cell" alignment="left" title="Laravel" id="0lu-L6-oKr">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -1035,7 +1042,7 @@ Gw
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPK-Xc-J4B">
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPK-Xc-J4B">
                                                                     <rect key="frame" x="6" y="15" width="93" height="11"/>
                                                                     <textFieldCell key="cell" alignment="left" title="PHP 8.0" id="puf-Jh-ham">
                                                                         <font key="font" metaFont="miniSystem"/>
@@ -1073,15 +1080,15 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="620" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="0.0" y="293" width="626" height="16"/>
+                                    <rect key="frame" x="0.0" y="294" width="611" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">
-                                    <rect key="frame" x="610" y="28" width="16" height="281"/>
+                                    <rect key="frame" x="611" y="28" width="15" height="266"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="xUg-Mq-OSh">
-                                    <rect key="frame" x="0.0" y="0.0" width="626" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="611" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1135,7 +1142,7 @@ Gw
                                     <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
                                             <rect key="frame" x="20" y="196" width="500" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="http://127.0.0.1:80" placeholderString="http://127.0.0.1:80" drawsBackground="YES" id="muS-8M-KSy">
                                                 <font key="font" metaFont="system"/>
@@ -1146,7 +1153,7 @@ Gw
                                                 <outlet property="delegate" destination="dwh-CF-6iv" id="lNE-OI-G93"/>
                                             </connections>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uib-vA-HRc">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uib-vA-HRc">
                                             <rect key="frame" x="18" y="221" width="325" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Proxy subject (usually: protocol, IP address and port)" id="G1Z-3f-BhL">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
@@ -1154,7 +1161,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-Zt-Hu8">
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-Zt-Hu8">
                                             <rect key="frame" x="18" y="172" width="112" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Domain name" id="dQs-oZ-80e">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
@@ -1162,7 +1169,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
+                                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
                                             <rect key="frame" x="20" y="147" width="500" height="21"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="gTQ-Y2-Y9w">
                                                 <font key="font" metaFont="system"/>
@@ -1218,7 +1225,7 @@ Gw
                                     <action selector="pressedCancel:" target="dwh-CF-6iv" id="J2T-Zj-A0j"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
                                 <rect key="frame" x="18" y="128" width="504" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="sF1-RG-URI"/>
@@ -1239,7 +1246,7 @@ Gw
                                     <action selector="pressedSecure:" target="dwh-CF-6iv" id="b74-8T-AzO"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
                                 <rect key="frame" x="18" y="60" width="504" height="28"/>
                                 <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="IMB-O5-ZOy">
                                     <font key="font" metaFont="smallSystem"/>
@@ -1247,7 +1254,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAh-br-Dfx">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAh-br-Dfx">
                                 <rect key="frame" x="18" y="250" width="123" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Add a Proxy" id="AZ1-04-kUl">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
@@ -1255,7 +1262,7 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
+                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
                                 <rect key="frame" x="191" y="23" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="4sH-94-UJl">
                                     <font key="font" metaFont="smallSystem"/>
@@ -1399,7 +1406,7 @@ Gw
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
                                         <rect key="frame" x="18" y="138" width="504" height="19"/>
                                         <textFieldCell key="cell" selectable="YES" alignment="left" title="[i18n] What kind of domain would you like to set up?" id="agk-Nj-FLd">
                                             <font key="font" metaFont="systemBold" size="15"/>
@@ -1407,7 +1414,7 @@ Gw
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
+                                    <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
                                         <rect key="frame" x="18" y="60" width="504" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="tbl-AV-4qB"/>

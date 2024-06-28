@@ -13,22 +13,31 @@ extension DomainListVC {
     internal func reloadContextMenu() {
         guard let selected = selected else {
             tableView.menu = nil
+            AppMenu.actionsMenu?.title = "mm_actions".localized
+            AppMenu.actionsMenu?.submenu = nil
+            AppMenu.actionsMenu?.isEnabled = false
             return
         }
 
         if let selected = selected as? ValetSite {
-            addMenuItemsForSite(selected)
+            tableView.menu = addMenuItemsForSite(selected)
+            AppMenu.actionsMenu?.title = "mm_actions".localized + " (\(selected.name).\(selected.tld))"
+            AppMenu.actionsMenu?.submenu = tableView.menu
+            AppMenu.actionsMenu?.isEnabled = true
             return
         }
         if let selected = selected as? ValetProxy {
-            addMenuItemsForProxy(selected)
+            tableView.menu = addMenuItemsForProxy(selected)
+            AppMenu.actionsMenu?.title = "mm_actions".localized + " (\(selected.domain).\(selected.tld))"
+            AppMenu.actionsMenu?.submenu = tableView.menu
+            AppMenu.actionsMenu?.isEnabled = true
             return
         }
     }
 
     // MARK: - Menu Items for Site
 
-    private func addMenuItemsForSite(_ site: ValetSite) {
+    private func addMenuItemsForSite(_ site: ValetSite) -> NSMenu? {
         let menu = NSMenu()
 
         addSystemApps(to: menu)
@@ -59,7 +68,7 @@ extension DomainListVC {
         addToggleSecure(to: menu, secured: site.secured)
         addUnlink(to: menu, with: site)
 
-        tableView.menu = menu
+        return menu
     }
 
     private func addSystemApps(to menu: NSMenu) {
@@ -187,13 +196,13 @@ extension DomainListVC {
 
     // MARK: - Menu Items for Proxy
 
-    private func addMenuItemsForProxy(_ proxy: ValetProxy) {
+    private func addMenuItemsForProxy(_ proxy: ValetProxy) -> NSMenu {
         let menu = NSMenu()
         addOpenProxyInBrowser(to: menu)
         addSeparator(to: menu)
         addToggleSecure(to: menu, secured: proxy.secured)
         addRemoveProxy(to: menu)
-        tableView.menu = menu
+        return menu
     }
 
     private func addOpenProxyInBrowser(to menu: NSMenu) {

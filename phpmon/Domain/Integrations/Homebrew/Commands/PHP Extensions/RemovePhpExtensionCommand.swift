@@ -61,6 +61,8 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             await PhpEnvironments.detectPhpVersions()
 
+            await Actions.restartPhpFpm(version: phpExtension.phpVersion)
+
             await MainMenu.shared.refreshActiveInstallation()
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))

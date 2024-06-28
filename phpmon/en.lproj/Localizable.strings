@@ -85,6 +85,8 @@
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
 
+"mm_actions" = "Actions";
+
 // CONFMAN
 
 "confman.title" = "PHP Configuration Editor";

@@ -597,6 +597,10 @@
 		C4811D2A22D70F9A00B5F6B3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
 		C481F79726164A78004FBCFF /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
 		C481F79A26164A7C004FBCFF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
+		C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5B2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
+		C4821C5D2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
 		C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
 		C485706E28BF451C00539B36 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
 		C485706F28BF452300539B36 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
@@ -751,10 +755,6 @@
 		C4D3660D29113F20006BD146 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660A29113F20006BD146 /* System.swift */; };
 		C4D3660E29113F20006BD146 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660A29113F20006BD146 /* System.swift */; };
 		C4D36611291140BE006BD146 /* TestableFileSystemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3660F291140BE006BD146 /* TestableFileSystemTest.swift */; };
-		C4D36615291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
-		C4D36616291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
-		C4D36617291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
-		C4D36618291160A1006BD146 /* WIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36614291160A1006BD146 /* WIP.swift */; };
 		C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
 		C4D3661B291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
 		C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D36619291173EA006BD146 /* DictionaryExtension.swift */; };
@@ -820,8 +820,8 @@
 		C4E6840A2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840B2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840C2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
+		C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */; };
 		C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
-		C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */; };
 		C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
@@ -894,6 +894,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
 			remoteInfo = "PHP Monitor";
+		};
+		C4E91D122C0A7A9B00D69A31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C406A5EF298AD2CE00B5B85A;
+			remoteInfo = "PHP Monitor Self-Updater";
 		};
 		C4F7807E25D7F84B000DBC97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1026,6 +1033,7 @@
 		C44F868D2835BD8D005C353A /* phpmon-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "phpmon-config.json"; sourceTree = "<group>"; };
 		C450C8C528C919EC002A2B4B /* PreferenceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceName.swift; sourceTree = "<group>"; };
 		C451AFF52969E40F0078E617 /* HelpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpButton.swift; sourceTree = "<group>"; };
+		C453874C2BE37FD6002B9C65 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C4551656297AED18009B8466 /* ValetRcTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetRcTest.swift; sourceTree = "<group>"; };
 		C4551658297AED7D009B8466 /* valetrc.valid */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.valid; sourceTree = "<group>"; };
 		C455165A297AEDB5009B8466 /* valetrc.broken */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = valetrc.broken; sourceTree = "<group>"; };
@@ -1066,6 +1074,7 @@
 		C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		C4811D2322D70A4700B5F6B3 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		C4821C592C2DEDE200357A68 /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 		C489E0BA2A220A4200323F5E /* FakeBrewFormulaeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeBrewFormulaeHandler.swift; sourceTree = "<group>"; };
 		C48D0C9225CC804200CC7490 /* XibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibLoadable.swift; sourceTree = "<group>"; };
 		C48D6C6F279CD2AC00F26D7E /* VersionNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionNumber.swift; sourceTree = "<group>"; };
@@ -1128,7 +1137,6 @@
 		C4D36600291132B7006BD146 /* ValetScanners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetScanners.swift; sourceTree = "<group>"; };
 		C4D3660A29113F20006BD146 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		C4D3660F291140BE006BD146 /* TestableFileSystemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableFileSystemTest.swift; sourceTree = "<group>"; };
-		C4D36614291160A1006BD146 /* WIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIP.swift; sourceTree = "<group>"; };
 		C4D36619291173EA006BD146 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		C4D4CB3629C109CF00DB9F93 /* InternalSwitcher+Valet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InternalSwitcher+Valet.swift"; sourceTree = "<group>"; };
 		C4D5576329C77CC5001A44CD /* PhpVersionManagerWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpVersionManagerWindowController.swift; sourceTree = "<group>"; };
@@ -1157,7 +1165,6 @@
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "PHP Monitor Self-Updater.app"; sourceTree = "<group>"; };
 		C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyles.swift; sourceTree = "<group>"; };
 		C4EB53E428551F9B006F9937 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4EB53E628553117006F9937 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -1340,7 +1347,6 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
-				C4E9D90029CBA09E00BD28D4 /* PHP Monitor Self-Updater.app */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A601298AD50D00B5B85A /* Updater.swift */,
 				C4C75F5B298C31C000DFD82E /* Utility.swift */,
@@ -1850,6 +1856,7 @@
 				C4F361602836BFD9003598CC /* MainMenu+Actions.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */,
+				C4821C592C2DEDE200357A68 /* AppMenu.swift */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1864,7 +1871,6 @@
 				C4CCBA6B275C567B008C7055 /* PMWindowController.swift */,
 				C4B5635D276AB09000F12CCB /* VersionExtractor.swift */,
 				C4D3660A29113F20006BD146 /* System.swift */,
-				C4D36614291160A1006BD146 /* WIP.swift */,
 				C47DF1AE299D5A3B0007055D /* LoginItemManager.swift */,
 				C49EAA5129B12A5A00AB28FC /* Measurements.swift */,
 			);
@@ -2265,6 +2271,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */,
 			);
 			name = "PHP Monitor";
 			packageProductDependencies = (
@@ -2370,6 +2377,7 @@
 				"pt-PT",
 				Base,
 				fr,
+				"zh-Hans",
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
@@ -2400,7 +2408,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4E9D90129CBA09E00BD28D4 /* PHP Monitor Self-Updater.app in Resources */,
+				C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */,
 				C41C1B3B22B0098000E7CF16 /* Assets.xcassets in Resources */,
 				C41C1B3E22B0098000E7CF16 /* Main.storyboard in Resources */,
 				C405A4D124B9B9140062FAFA /* InternetAccessPolicy.plist in Resources */,
@@ -2672,7 +2680,6 @@
 				033D45A32B0D531D00070080 /* PhpExtensionManagerView+Actions.swift in Sources */,
 				C474B00624C0E98C00066A22 /* LocalNotification.swift in Sources */,
 				C4D5CFCA27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
-				C4D36615291160A1006BD146 /* WIP.swift in Sources */,
 				C485707028BF452300539B36 /* PhpDoctorWindowController.swift in Sources */,
 				C4CE3BBA27B31F670086CA49 /* ComposerWindow.swift in Sources */,
 				C40D725A2A018ACC0054A067 /* BusyStatus.swift in Sources */,
@@ -2691,6 +2698,7 @@
 				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
+				C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C40D725F2A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
@@ -2764,7 +2772,6 @@
 				C471E85428F9BB650021E251 /* StatusMenu.swift in Sources */,
 				C471E85528F9BB650021E251 /* StatusMenu+Items.swift in Sources */,
 				C471E85628F9BB650021E251 /* DomainListCellProtocol.swift in Sources */,
-				C4D36617291160A1006BD146 /* WIP.swift in Sources */,
 				C471E85728F9BB650021E251 /* DomainListTLSCell.swift in Sources */,
 				C471E85828F9BB650021E251 /* DomainListNameCell.swift in Sources */,
 				C4B79EBE29CA38DB00A483EE /* BrewCommand.swift in Sources */,
@@ -2910,6 +2917,7 @@
 				C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */,
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
+				C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4B79ECD29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
@@ -2988,7 +2996,7 @@
 				C471E8C128F9BB8F0021E251 /* DomainListVC+ContextMenu.swift in Sources */,
 				C4BF56AE2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E8C228F9BB8F0021E251 /* DomainListVC+Actions.swift in Sources */,
-				C4D36618291160A1006BD146 /* WIP.swift in Sources */,
+				C4821C5D2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C471E8C328F9BB8F0021E251 /* SelectionVC.swift in Sources */,
 				C471E8C428F9BB8F0021E251 /* AddSiteVC.swift in Sources */,
 				C45B91562956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
@@ -3190,6 +3198,7 @@
 				C4C0E8E327F88B13002D32A9 /* ValetDomainScanner.swift in Sources */,
 				C4CCBA6D275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C4B5635F276AB09000F12CCB /* VersionExtractor.swift in Sources */,
+				C4821C5B2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C463E381284930EE00422731 /* PresetHelper.swift in Sources */,
 				C441CC572AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
 				C4F520672AF03791006787F2 /* ExtensionEnumeratorTest.swift in Sources */,
@@ -3255,7 +3264,6 @@
 				C4513F932B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
-				C4D36616291160A1006BD146 /* WIP.swift in Sources */,
 				03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
@@ -3367,6 +3375,11 @@
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
 			targetProxy = C471E7C228F9B90F0021E251 /* PBXContainerItemProxy */;
 		};
+		C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */;
+			targetProxy = C4E91D122C0A7A9B00D69A31 /* PBXContainerItemProxy */;
+		};
 		C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
@@ -3392,6 +3405,7 @@
 				C4DD662A2A4A1B4E00D6A731 /* de */,
 				C4622F572A7593CB0016F8FB /* pt-PT */,
 				0336CAAF2B0D0CDA009A1034 /* fr */,
+				C453874C2BE37FD6002B9C65 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -3425,9 +3439,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3459,9 +3474,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3493,9 +3509,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3527,9 +3544,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3667,7 +3685,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3680,7 +3698,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3698,7 +3716,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3711,7 +3729,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3939,7 +3957,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3952,7 +3970,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4056,7 +4074,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4069,7 +4087,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4173,7 +4191,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4186,7 +4204,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4221,9 +4239,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -4355,7 +4374,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1460;
+				CURRENT_PROJECT_VERSION = 1490;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4368,7 +4387,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.3;
+				MARKETING_VERSION = 7.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4403,9 +4422,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
