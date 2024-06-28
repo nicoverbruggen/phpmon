@@ -85,6 +85,8 @@
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Disable All Modes";
 
+"mm_actions" = "Actions";
+
 // CONFMAN
 
 "confman.title" = "PHP Configuration Editor";
@@ -233,7 +235,6 @@ You may be asked for your password during the uninstallation process if file per
 "mm_add_folder_as_link" = "Add Folder as Link...";
 "mm_reload_domain_list" = "Reload Domains List";
 "mm_find_in_domain_list" = "Search in Domains List";
-"mm_actions" = "Actions";
 
 // SITE LIST
 

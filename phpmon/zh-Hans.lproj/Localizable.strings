@@ -85,6 +85,8 @@
 "mi_xdebug_actions" = "操作";
 "mi_xdebug_disable_all" = "禁用所有模式";
 
+"mm_actions" = "操作";
+
 // CONFMAN
 
 "confman.title" = "PHP 配置编辑器";

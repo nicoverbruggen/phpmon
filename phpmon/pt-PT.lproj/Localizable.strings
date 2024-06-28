@@ -85,6 +85,8 @@
 "mi_xdebug_actions" = "Ações";
 "mi_xdebug_disable_all" = "Desativar todos os modos";
 
+"mm_actions" = "Ações";
+
 // PHPEXTMAN
 
 "phpextman.window.title" = "Extensões";
