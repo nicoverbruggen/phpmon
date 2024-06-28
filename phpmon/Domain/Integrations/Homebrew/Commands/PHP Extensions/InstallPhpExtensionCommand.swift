@@ -61,6 +61,11 @@ class InstallPhpExtensionCommand: BrewCommand {
         // Reload and restart PHP versions
         onProgress(.create(value: 0.95, title: self.getCommandTitle(), description: "phpman.steps.reloading".localized))
 
+        // Restart PHP-FPM
+        if let installed = self.installing.first {
+            await Actions.restartPhpFpm(version: installed.phpVersion)
+        }
+
         // Check which version of PHP are now installed
         await PhpEnvironments.detectPhpVersions()
 
