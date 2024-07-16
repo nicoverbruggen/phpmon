@@ -51,7 +51,7 @@ final class UpdateCheckTest: UITestCase {
         let app = launch(openMenu: false, with: configuration)
 
         // Expect to see the content of the appropriate alert box
-        assertExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], 2)
+        assertExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], 3.0)
         assertExists(app.buttons["updater.alerts.buttons.install".localized])
         assertExists(app.buttons["updater.alerts.buttons.dismiss".localized])
     }

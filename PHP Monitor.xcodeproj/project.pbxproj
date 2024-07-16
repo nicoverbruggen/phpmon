@@ -303,6 +303,12 @@
 		C47014FC2C46D31B0069AAE7 /* NVAppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = C47014FB2C46D31B0069AAE7 /* NVAppUpdater */; };
 		C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C47014FE2C46D57C0069AAE7 /* NVAlert */; };
 		C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47015012C46D6910069AAE7 /* NVAlertExtension.swift */; };
+		C47015032C46D7F00069AAE7 /* NVAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47015012C46D6910069AAE7 /* NVAlertExtension.swift */; };
+		C47015042C46D7F00069AAE7 /* NVAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47015012C46D6910069AAE7 /* NVAlertExtension.swift */; };
+		C47015052C46D7F10069AAE7 /* NVAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47015012C46D6910069AAE7 /* NVAlertExtension.swift */; };
+		C47015072C46D8180069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C47015062C46D8180069AAE7 /* NVAlert */; };
+		C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150A2C46D81E0069AAE7 /* NVAlert */; };
+		C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150C2C46D83E0069AAE7 /* NVAlert */; };
 		C4709CA228524B3400088BB8 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
@@ -1202,6 +1208,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1209,6 +1216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,6 +1224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47015072C46D8180069AAE7 /* NVAlert in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2276,6 +2285,9 @@
 				C471E7B228F9B4940021E251 /* PBXTargetDependency */,
 			);
 			name = "Feature Tests";
+			packageProductDependencies = (
+				C470150A2C46D81E0069AAE7 /* NVAlert */,
+			);
 			productName = "Feature Tests";
 			productReference = C471E7AD28F9B4940021E251 /* Feature Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2294,6 +2306,9 @@
 				C471E7C328F9B90F0021E251 /* PBXTargetDependency */,
 			);
 			name = "UI Tests";
+			packageProductDependencies = (
+				C470150C2C46D83E0069AAE7 /* NVAlert */,
+			);
 			productName = "UI Tests";
 			productReference = C471E7BC28F9B90F0021E251 /* UI Tests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -2313,6 +2328,7 @@
 			);
 			name = "Unit Tests";
 			packageProductDependencies = (
+				C47015062C46D8180069AAE7 /* NVAlert */,
 			);
 			productName = "phpmon-tests";
 			productReference = C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */;
@@ -2768,6 +2784,7 @@
 				C4E2E86628FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C471E85F28F9BB650021E251 /* DomainListVC+Actions.swift in Sources */,
 				C4D5576629C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
+				C47015042C46D7F00069AAE7 /* NVAlertExtension.swift in Sources */,
 				C4ACE9E329F84EDD00110766 /* PhpGuard.swift in Sources */,
 				C471E86028F9BB650021E251 /* SelectionVC.swift in Sources */,
 				C471E86128F9BB650021E251 /* AddSiteVC.swift in Sources */,
@@ -3030,6 +3047,7 @@
 				C456A0CE2AA6166F0080144F /* BytePhpPreference.swift in Sources */,
 				C4FD87A829AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,
 				C45B9151295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
+				C47015032C46D7F00069AAE7 /* NVAlertExtension.swift in Sources */,
 				C471E8EC28F9BB8F0021E251 /* SwiftUIHelper.swift in Sources */,
 				C471E8EE28F9BB8F0021E251 /* HotKey.swift in Sources */,
 				C471E8EF28F9BB8F0021E251 /* HotKeysController.swift in Sources */,
@@ -3290,6 +3308,7 @@
 				C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */,
 				C4C0E8E027F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C4463FCD29804BCB007B93D5 /* RCFile.swift in Sources */,
+				C47015052C46D7F10069AAE7 /* NVAlertExtension.swift in Sources */,
 				C409349E298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
@@ -4615,6 +4634,21 @@
 			productName = NVAppUpdater;
 		};
 		C47014FE2C46D57C0069AAE7 /* NVAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */;
+			productName = NVAlert;
+		};
+		C47015062C46D8180069AAE7 /* NVAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */;
+			productName = NVAlert;
+		};
+		C470150A2C46D81E0069AAE7 /* NVAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */;
+			productName = NVAlert;
+		};
+		C470150C2C46D83E0069AAE7 /* NVAlert */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */;
 			productName = NVAlert;
