@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import NVAlert
 
 class Stats {
 
@@ -123,7 +124,7 @@ class Stats {
         }
 
         Task { @MainActor in
-            let donate = BetterAlert()
+            let donate = NVAlert()
                 .withInformation(
                     title: "startup.sponsor_encouragement.title".localized,
                     subtitle: "startup.sponsor_encouragement.subtitle".localized,

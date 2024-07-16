@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 class BrewDiagnostics {
     /**
@@ -183,7 +184,7 @@ class BrewDiagnostics {
      */
     private static func presentAlertAboutConflict() {
         Task { @MainActor in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.php_alias_conflict.title".localized,
                     subtitle: "alert.php_alias_conflict.info".localized

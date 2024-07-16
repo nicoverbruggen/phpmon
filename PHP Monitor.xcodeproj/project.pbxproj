@@ -64,11 +64,6 @@
 		C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4068CA927B0890D00544CD5 /* MenuBarIcons.swift */; };
 		C406A5F3298AD2CE00B5B85A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A5F2298AD2CE00B5B85A /* main.swift */; };
 		C406A5F7298AD2CF00B5B85A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F6298AD2CF00B5B85A /* Assets.xcassets */; };
-		C406A602298AD50D00B5B85A /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406A601298AD50D00B5B85A /* Updater.swift */; };
-		C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
-		C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
-		C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
-		C4080FFB27BD956700BF2C6B /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
 		C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
 		C409349E298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
 		C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409349C298EE8E900D25014 /* AppUpdater.swift */; };
@@ -305,6 +300,9 @@
 		C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */; };
 		C46FA9892822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */; };
 		C46FA98C2822F08F00D78807 /* PhpConfigurationFileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */; };
+		C47014FC2C46D31B0069AAE7 /* NVAppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = C47014FB2C46D31B0069AAE7 /* NVAppUpdater */; };
+		C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C47014FE2C46D57C0069AAE7 /* NVAlert */; };
+		C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47015012C46D6910069AAE7 /* NVAlertExtension.swift */; };
 		C4709CA228524B3400088BB8 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
@@ -392,10 +390,6 @@
 		C471E81828F9BAE80021E251 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
 		C471E81A28F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */; };
-		C471E81B28F9BB250021E251 /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
-		C471E81C28F9BB250021E251 /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
-		C471E81D28F9BB260021E251 /* BetterAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */; };
-		C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */; };
 		C471E81F28F9BB290021E251 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D5CFC927E0F9CD00035329 /* NginxConfigurationFile.swift */; };
 		C471E82128F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415937E27A1B54F00D2E1B7 /* ProjectTypeDetection.swift */; };
@@ -720,8 +714,6 @@
 		C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */; };
 		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
-		C4C75F5A298C2D5700DFD82E /* LaunchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C75F59298C2D5700DFD82E /* LaunchControl.swift */; };
-		C4C75F5C298C31C000DFD82E /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C75F5B298C31C000DFD82E /* Utility.swift */; };
 		C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C4C8900528F0E3D100CE5E97 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
 		C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
@@ -946,9 +938,6 @@
 		C406A5F2298AD2CE00B5B85A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C406A5F6298AD2CF00B5B85A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "phpmon-updater.entitlements"; sourceTree = "<group>"; };
-		C406A601298AD50D00B5B85A /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
-		C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlert.swift; sourceTree = "<group>"; };
-		C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterAlertVC.swift; sourceTree = "<group>"; };
 		C409349C298EE8E900D25014 /* AppUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
 		C40934A1298EEB2C00D25014 /* CaskFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaskFile.swift; sourceTree = "<group>"; };
 		C40934A6298EEB8700D25014 /* phpmon-dev.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = "phpmon-dev.rb"; sourceTree = "<group>"; };
@@ -1060,6 +1049,7 @@
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFile.swift; sourceTree = "<group>"; };
 		C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFileTest.swift; sourceTree = "<group>"; };
+		C47015012C46D6910069AAE7 /* NVAlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVAlertExtension.swift; sourceTree = "<group>"; };
 		C4709CA128524B3400088BB8 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feature Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1120,8 +1110,6 @@
 		C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
 		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
 		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
-		C4C75F59298C2D5700DFD82E /* LaunchControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchControl.swift; sourceTree = "<group>"; };
-		C4C75F5B298C31C000DFD82E /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProtocol.swift; sourceTree = "<group>"; };
 		C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealFileSystem.swift; sourceTree = "<group>"; };
 		C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveFileSystem.swift; sourceTree = "<group>"; };
@@ -1198,6 +1186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47014FC2C46D31B0069AAE7 /* NVAppUpdater in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1205,6 +1194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1348,22 +1338,10 @@
 			isa = PBXGroup;
 			children = (
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
-				C406A601298AD50D00B5B85A /* Updater.swift */,
-				C4C75F5B298C31C000DFD82E /* Utility.swift */,
-				C4C75F59298C2D5700DFD82E /* LaunchControl.swift */,
 				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
 				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
 			);
 			path = "phpmon-updater";
-			sourceTree = "<group>";
-		};
-		C4080FF827BD955900BF2C6B /* Notice */ = {
-			isa = PBXGroup;
-			children = (
-				C4080FF527BD8C6400BF2C6B /* BetterAlert.swift */,
-				C4080FF927BD956700BF2C6B /* BetterAlertVC.swift */,
-			);
-			path = Notice;
 			sourceTree = "<group>";
 		};
 		C40C5C9E2846A42D00E28255 /* Presets */ = {
@@ -1468,7 +1446,7 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				C4080FF827BD955900BF2C6B /* Notice */,
+				C47015002C46D6860069AAE7 /* Notice */,
 				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* App */,
 				C4D9ADBD27761084007277F4 /* PHP */,
@@ -1791,6 +1769,14 @@
 				C44DFA852A67090A00B98ED5 /* UI */,
 			);
 			path = "Domain List";
+			sourceTree = "<group>";
+		};
+		C47015002C46D6860069AAE7 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				C47015012C46D6910069AAE7 /* NVAlertExtension.swift */,
+			);
+			path = Notice;
 			sourceTree = "<group>";
 		};
 		C471E6D928F9AFC20021E251 /* Testables */ = {
@@ -2255,6 +2241,9 @@
 			dependencies = (
 			);
 			name = "PHP Monitor Self-Updater";
+			packageProductDependencies = (
+				C47014FB2C46D31B0069AAE7 /* NVAppUpdater */,
+			);
 			productName = "PHP Monitor Updater";
 			productReference = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */;
 			productType = "com.apple.product-type.application";
@@ -2275,6 +2264,7 @@
 			);
 			name = "PHP Monitor";
 			packageProductDependencies = (
+				C47014FE2C46D57C0069AAE7 /* NVAlert */,
 			);
 			productName = phpmon;
 			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
@@ -2381,6 +2371,8 @@
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
+				C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */,
+				C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */,
 			);
 			productRefGroup = C41C1B3422B0097F00E7CF16 /* Products */;
 			projectDirPath = "";
@@ -2508,10 +2500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4C75F5C298C31C000DFD82E /* Utility.swift in Sources */,
 				C490E3BC29BCA375006D2DE6 /* Measurements.swift in Sources */,
-				C406A602298AD50D00B5B85A /* Updater.swift in Sources */,
-				C4C75F5A298C2D5700DFD82E /* LaunchControl.swift in Sources */,
 				C41F3D08298AED0D0042ACBF /* System.swift in Sources */,
 				C406A5F3298AD2CE00B5B85A /* main.swift in Sources */,
 			);
@@ -2552,7 +2541,6 @@
 				C48DDD0D29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C45B91532956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C41C708D28AA7F7900E8D498 /* NoWarningsView.swift in Sources */,
-				C4080FF627BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
 				0309E6672B0D4B2F002AC007 /* BrewExtensionsObservable.swift in Sources */,
 				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */,
@@ -2686,7 +2674,6 @@
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */,
 				C4415E8D2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
-				C4080FFA27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
 				C43FDBE929A932B0003D85EC /* PhpConfigChecker.swift in Sources */,
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
@@ -2715,6 +2702,7 @@
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 				C493084A279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */,
+				C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */,
 				C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2879,7 +2867,6 @@
 				C471E82A28F9BB330021E251 /* ValetListable.swift in Sources */,
 				031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C471E82728F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
-				C471E81C28F9BB250021E251 /* BetterAlert.swift in Sources */,
 				C471E7DB28F9BA8F0021E251 /* RealShell.swift in Sources */,
 				C490E3B929BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
 				C471E7FF28F9BAD10021E251 /* Xdebug.swift in Sources */,
@@ -2896,7 +2883,6 @@
 				C42106682AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79EC829CA474200A483EE /* FakeCommand.swift in Sources */,
 				C471E7DE28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
-				C471E81B28F9BB250021E251 /* BetterAlertVC.swift in Sources */,
 				C471E82928F9BB330021E251 /* Valet.swift in Sources */,
 				C471E80728F9BAD40021E251 /* PhpConfigurationFile.swift in Sources */,
 				C471E7D528F9BA8F0021E251 /* TestableConfigurations.swift in Sources */,
@@ -3092,7 +3078,6 @@
 				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
-				C471E81E28F9BB260021E251 /* BetterAlert.swift in Sources */,
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C4513F8E2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
@@ -3108,7 +3093,6 @@
 				C471E7DD28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
 				C471E7D128F9BA630021E251 /* RealFileSystem.swift in Sources */,
 				033D459B2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */,
-				C471E81D28F9BB260021E251 /* BetterAlertVC.swift in Sources */,
 				C471E82B28F9BB340021E251 /* Valet.swift in Sources */,
 				C471E80328F9BAD40021E251 /* PhpConfigurationFile.swift in Sources */,
 				C471E7C928F9BA2F0021E251 /* TestableConfigurations.swift in Sources */,
@@ -3165,7 +3149,6 @@
 				C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */,
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C485707528BF454F00539B36 /* StatsView.swift in Sources */,
-				C4080FFB27BD956700BF2C6B /* BetterAlertVC.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				54D9E0BB27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C485707328BF454300539B36 /* OnboardingView.swift in Sources */,
@@ -3258,7 +3241,6 @@
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
 				C469E6FF294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
-				C4080FF727BD8C6400BF2C6B /* BetterAlert.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
 				C4513F932B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
@@ -3439,7 +3421,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3474,7 +3456,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3509,7 +3491,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3544,7 +3526,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -3685,7 +3667,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3698,7 +3680,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3716,7 +3698,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3729,7 +3711,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3957,7 +3939,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3970,7 +3952,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4074,7 +4056,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4087,7 +4069,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4191,7 +4173,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4204,7 +4186,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4239,7 +4221,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4374,7 +4356,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1490;
+				CURRENT_PROJECT_VERSION = 1500;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4387,7 +4369,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.0.4;
+				MARKETING_VERSION = 7.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4422,7 +4404,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4614,6 +4596,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicoverbruggen/NVAppUpdater";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicoverbruggen/NVAlert";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C47014FB2C46D31B0069AAE7 /* NVAppUpdater */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */;
+			productName = NVAppUpdater;
+		};
+		C47014FE2C46D57C0069AAE7 /* NVAlert */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */;
+			productName = NVAlert;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C41C1B2B22B0097F00E7CF16 /* Project object */;
 }

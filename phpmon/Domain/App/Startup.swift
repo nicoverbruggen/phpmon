@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import NVAlert
 
 class Startup {
 
@@ -55,7 +56,7 @@ class Startup {
      */
     @MainActor private func showAlert(for check: EnvironmentCheck) {
         if check.requiresAppRestart {
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: check.titleText,
                     subtitle: check.subtitleText,
@@ -66,7 +67,7 @@ class Startup {
                 }).show()
         }
 
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: check.titleText,
                 subtitle: check.subtitleText,

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 @MainActor class ComposerWindow {
     private var shouldNotify: Bool! = nil
@@ -109,7 +110,7 @@ import Foundation
     // MARK: Alert
 
     private func presentMissingAlert() {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "alert.composer_missing.title".localized,
                 subtitle: "alert.composer_missing.subtitle".localized,

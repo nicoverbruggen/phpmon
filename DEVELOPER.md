@@ -14,6 +14,17 @@ It also automatically runs when you try to build the project. You'll get a warni
 swiftlint --fix
 ```
 
+## 📦 Swift Packages
+
+Starting from PHP Monitor 7.1, the app now uses various first-party package dependencies.
+
+The following package dependencies are in use:
+
+* [`NVAppUpdater`](https://github.com/nicoverbruggen/NVAppUpdater)
+* [`NVAlert`](https://github.com/nicoverbruggen/NVAlert)
+
+You may need an internet connection to download these dependencies, or you can also clone the dependencies and include them manually.
+
 ## ⚙️ Preferences
 
 You can find the persisted configuration file in `~/Library/Preferences/com.nicoverbruggen.phpmon.plist`

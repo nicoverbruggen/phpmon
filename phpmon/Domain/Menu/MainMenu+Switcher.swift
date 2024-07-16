@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 extension MainMenu {
 
@@ -75,7 +76,7 @@ extension MainMenu {
     }
 
     @MainActor private func suggestFixMyValet(failed version: String) {
-        let outcome = BetterAlert()
+        let outcome = NVAlert()
             .withInformation(
                 title: "alert.php_switch_failed.title".localized(version),
                 subtitle: "alert.php_switch_failed.info".localized(version),
@@ -90,7 +91,7 @@ extension MainMenu {
     }
 
     @MainActor private func suggestFixMyComposer() {
-        BetterAlert().withInformation(
+        NVAlert().withInformation(
             title: "alert.global_composer_platform_issues.title".localized,
             subtitle: "alert.global_composer_platform_issues.subtitle".localized,
             description: "alert.global_composer_platform_issues.desc".localized

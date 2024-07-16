@@ -7,8 +7,17 @@
 //
 
 import Cocoa
+import NVAppUpdater
 
-let app = NSApplication.shared
-let delegate = Updater()
-app.delegate = delegate
+let delegate = SelfUpdater(
+    appName: "PHP Monitor",
+    bundleIdentifiers: [
+        "com.nicoverbruggen.phpmon.eap",
+        "com.nicoverbruggen.phpmon.dev",
+        "com.nicoverbruggen.phpmon"
+    ],
+    selfUpdaterPath: "~/.config/phpmon/updater"
+)
+
+NSApplication.shared.delegate = delegate
 _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)

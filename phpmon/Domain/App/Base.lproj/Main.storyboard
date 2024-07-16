@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -515,10 +514,10 @@
             </objects>
             <point key="canvasLocation" x="-374" y="2267"/>
         </scene>
-        <!--Better AlertVC-->
+        <!--AlertVC-->
         <scene sceneID="y9E-bB-wIG">
             <objects>
-                <viewController storyboardIdentifier="noticeVC" id="hkw-9V-NxP" customClass="BetterAlertVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="noticeVC" id="hkw-9V-NxP" customClass="NVAlertVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="UPH-hV-Naz">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="212"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -830,7 +829,7 @@ Gw
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
                                     <rect key="frame" x="0.0" y="0.0" width="611" height="294"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj" customClass="PMTableView" customModule="PHP_Monitor" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="611" height="266"/>

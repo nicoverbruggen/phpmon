@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import NVAlert
 
 struct ServicesView: View {
 
@@ -81,7 +82,7 @@ struct ServicesView: View {
                                 : "key_service_not_running"
 
                             // Show an alert with more information
-                            BetterAlert().withInformation(
+                            NVAlert().withInformation(
                                 title: "alert.\(type).title".localized,
                                 subtitle: "alert.\(type).subtitle".localized,
                                 description: "alert.\(type).desc".localized
@@ -116,7 +117,7 @@ struct ServiceView: View {
                 if service.status == .missing {
                     Button {
                         Task { @MainActor in
-                            BetterAlert().withInformation(
+                            NVAlert().withInformation(
                                 title: "alert.warnings.service_missing.title".localized,
                                 subtitle: "alert.warnings.service_missing.subtitle".localized,
                                 description: "alert.warnings.service_missing.description".localized

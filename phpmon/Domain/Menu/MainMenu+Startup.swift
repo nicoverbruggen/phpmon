@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NVAlert
 
 extension MainMenu {
     /**
@@ -143,7 +144,7 @@ extension MainMenu {
      */
     private func onEnvironmentFail() async {
         Task { @MainActor [self] in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.cannot_start.title".localized,
                     subtitle: "alert.cannot_start.subtitle".localized,

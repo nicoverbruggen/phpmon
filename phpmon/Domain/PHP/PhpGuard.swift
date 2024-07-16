@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 class PhpGuard {
 
@@ -43,7 +44,7 @@ class PhpGuard {
         Log.info("PHP Guard noticed a different PHP version. An alert will be displayed!")
 
         Task { @MainActor in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "startup.version_mismatch.title".localized,
                     subtitle: "startup.version_mismatch.subtitle".localized(

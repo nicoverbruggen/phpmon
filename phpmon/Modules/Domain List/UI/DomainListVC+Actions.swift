@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import NVAlert
 
 extension DomainListVC {
 
@@ -17,7 +18,7 @@ extension DomainListVC {
         }
 
         guard let url = selected.getListableUrl() else {
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "domain_list.alert.invalid_folder_name".localized,
                     subtitle: "domain_list.alert.invalid_folder_name_desc".localized
@@ -249,7 +250,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutUsingIsolatedPhpVersionInTerminal(version: VersionNumber) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_isolated_php_terminal.title".localized(version.short),
                 subtitle: "domain_list.alerts_isolated_php_terminal.subtitle".localized(
@@ -263,7 +264,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutFailedSecureStatus(command: String) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_status_not_changed.title".localized,
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
@@ -273,7 +274,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutFailedSiteIsolation(command: String) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_isolation_failed.title".localized,
                 subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,
