@@ -1446,7 +1446,6 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				C47015002C46D6860069AAE7 /* Notice */,
 				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* App */,
 				C4D9ADBD27761084007277F4 /* PHP */,
@@ -1769,14 +1768,6 @@
 				C44DFA852A67090A00B98ED5 /* UI */,
 			);
 			path = "Domain List";
-			sourceTree = "<group>";
-		};
-		C47015002C46D6860069AAE7 /* Notice */ = {
-			isa = PBXGroup;
-			children = (
-				C47015012C46D6910069AAE7 /* NVAlertExtension.swift */,
-			);
-			path = Notice;
 			sourceTree = "<group>";
 		};
 		C471E6D928F9AFC20021E251 /* Testables */ = {
@@ -2221,6 +2212,7 @@
 				C44B3A4528E5C70100718CB1 /* TimeIntervalExtension.swift */,
 				C4E2E84928FC1E70003B070C /* DataExtension.swift */,
 				C4D36619291173EA006BD146 /* DictionaryExtension.swift */,
+				C47015012C46D6910069AAE7 /* NVAlertExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3414,7 +3406,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3449,7 +3441,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3484,7 +3476,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3519,7 +3511,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4214,7 +4206,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4397,7 +4389,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
