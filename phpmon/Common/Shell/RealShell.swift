@@ -8,9 +8,6 @@
 
 import Foundation
 
-extension Process: @unchecked Sendable {}
-extension Timer: @unchecked Sendable {}
-
 class RealShell: ShellProtocol {
     /**
      The launch path of the terminal in question that is used.
@@ -184,29 +181,36 @@ class RealShell: ShellProtocol {
         }
 
         return try await withCheckedThrowingContinuation({ continuation in
-            let timer = Timer.scheduledTimer(withTimeInterval: timeout, repeats: false) { _ in
+            let task = Task {
+                try await Task.sleep(nanoseconds: timeout.nanoseconds)
                 // Only terminate if the process is still running
                 if process.isRunning {
                     process.terminationHandler = nil
                     process.terminate()
-                    return continuation.resume(throwing: ShellError.timedOut)
+                    continuation.resume(throwing: ShellError.timedOut)
                 }
             }
 
-            process.terminationHandler = { [timer, output] process in
-                timer.invalidate()
+            process.terminationHandler = { [output] process in
+                task.cancel()
 
                 process.haltListening()
 
                 if !output.err.isEmpty {
-                    return continuation.resume(returning: (process, .err(output.err)))
+                    continuation.resume(returning: (process, .err(output.err)))
+                } else {
+                    continuation.resume(returning: (process, .out(output.out)))
                 }
-
-                return continuation.resume(returning: (process, .out(output.out)))
             }
 
             process.launch()
             process.waitUntilExit()
         })
+    }
+}
+
+extension TimeInterval {
+    var nanoseconds: UInt64 {
+        return UInt64(self * 1_000_000_000)
     }
 }
