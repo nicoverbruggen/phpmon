@@ -13,7 +13,11 @@ class ValetProxy: ValetListable {
     var tld: String
     var target: String
     var secured: Bool = false
+
     var favorited: Bool = false
+    var favoriteSignature: String {
+        "proxy:domain:\(domain).\(tld)|target:\(target)"
+    }
 
     init(domain: String, target: String, secure: Bool, tld: String) {
         self.domain = domain
@@ -29,6 +33,8 @@ class ValetProxy: ValetListable {
             secure: false,
             tld: configuration.tld
         )
+
+        self.favorited = Favorites.shared.contains(domain: self.domain)
         self.determineSecured()
     }
 
@@ -70,6 +76,11 @@ class ValetProxy: ValetListable {
 
     func determineSecured() {
         self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+    }
+
+    func toggleFavorite() {
+        self.favorited.toggle()
+        Favorites.shared.toggle(domain: self.favoriteSignature)
     }
 
     func toggleSecure() async throws {

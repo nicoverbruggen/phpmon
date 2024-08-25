@@ -89,6 +89,9 @@ class App {
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 
+    /** Favorites storage, which keeps track of favorited domains. */
+    var favorites = Favorites.shared
+
     /** The warning manager, responsible for keeping track of warnings. */
     var warnings = WarningManager.shared
 

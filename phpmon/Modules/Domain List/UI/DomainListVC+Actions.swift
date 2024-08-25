@@ -106,10 +106,10 @@ extension DomainListVC {
         waitAndExecute {
             do {
                 if let site = domain as? ValetSite {
-                    site.favorited.toggle()
+                    site.toggleFavorite()
                 }
                 if let proxy = domain as? ValetProxy {
-                    proxy.favorited.toggle()
+                    proxy.toggleFavorite()
                 }
 
                 // Reload the entire table as the sorting may be affected

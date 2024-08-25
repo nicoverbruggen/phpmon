@@ -290,6 +290,10 @@
 		C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */; };
 		C469E706294CFDF700A82AB2 /* DomainsListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469E702294CFDF700A82AB2 /* DomainsListTest.swift */; };
+		C46DC7A42C7B55DC00F19D17 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DC7A32C7B55DC00F19D17 /* Favorites.swift */; };
+		C46DC7A52C7B5BC900F19D17 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DC7A32C7B55DC00F19D17 /* Favorites.swift */; };
+		C46DC7A62C7B5BC900F19D17 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DC7A32C7B55DC00F19D17 /* Favorites.swift */; };
+		C46DC7A72C7B5BCA00F19D17 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DC7A32C7B55DC00F19D17 /* Favorites.swift */; };
 		C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
@@ -1049,6 +1053,7 @@
 		C464ADB1275A87CA003FCD53 /* DomainListCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListCellProtocol.swift; sourceTree = "<group>"; };
 		C469E6FD294CF7B200A82AB2 /* FakeValetProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeValetProxy.swift; sourceTree = "<group>"; };
 		C469E702294CFDF700A82AB2 /* DomainsListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsListTest.swift; sourceTree = "<group>"; };
+		C46DC7A32C7B55DC00F19D17 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
 		C46EBC4628DB9644007ACC74 /* RealShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShell.swift; sourceTree = "<group>"; };
 		C46EBC4928DB966A007ACC74 /* TestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableShell.swift; sourceTree = "<group>"; };
@@ -1775,6 +1780,7 @@
 			isa = PBXGroup;
 			children = (
 				C44DFA852A67090A00B98ED5 /* UI */,
+				C46DC7A32C7B55DC00F19D17 /* Favorites.swift */,
 			);
 			path = "Domain List";
 			sourceTree = "<group>";
@@ -2686,6 +2692,7 @@
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
+				C46DC7A42C7B55DC00F19D17 /* Favorites.swift in Sources */,
 				54D9E0B627E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C4AFC4AE29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
 				C4D936C927E3EB6100BD69FE /* PhpHelper.swift in Sources */,
@@ -2852,6 +2859,7 @@
 				C4415E8F2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C471E7D828F9BA8F0021E251 /* FileSystemProtocol.swift in Sources */,
 				C471E7F328F9BAC70021E251 /* PhpHelper.swift in Sources */,
+				C46DC7A62C7B5BC900F19D17 /* Favorites.swift in Sources */,
 				C471E7E728F9BAC20021E251 /* Constants.swift in Sources */,
 				C471E81628F9BAE80021E251 /* DateExtension.swift in Sources */,
 				C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
@@ -2999,6 +3007,7 @@
 				C471E8C628F9BB8F0021E251 /* PMTableView.swift in Sources */,
 				C471E8C728F9BB8F0021E251 /* Warning.swift in Sources */,
 				C471E8C828F9BB8F0021E251 /* WarningManager.swift in Sources */,
+				C46DC7A72C7B5BCA00F19D17 /* Favorites.swift in Sources */,
 				C471E8C928F9BB8F0021E251 /* PhpDoctorWindowController.swift in Sources */,
 				C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */,
 				C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */,
@@ -3206,6 +3215,7 @@
 				C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */,
 				C456A0C72AA614BD0080144F /* PhpPreference.swift in Sources */,
 				C42106672AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
+				C46DC7A52C7B5BC900F19D17 /* Favorites.swift in Sources */,
 				C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */,
 				54D9E0B927E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
@@ -3678,7 +3688,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3709,7 +3719,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3950,7 +3960,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4067,7 +4077,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4184,7 +4194,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4367,7 +4377,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1500;
+				CURRENT_PROJECT_VERSION = 1505;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;

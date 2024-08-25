@@ -62,6 +62,9 @@ class ValetSite: ValetListable {
     }
 
     var favorited: Bool = false
+    var favoriteSignature: String {
+        "site:domain:\(name).\(tld)|path:\(absolutePath)"
+    }
 
     init(
         name: String,
@@ -77,6 +80,7 @@ class ValetSite: ValetListable {
         self.secured = false
 
         if makeDeterminations {
+            self.favorited = Favorites.shared.contains(domain: favoriteSignature)
             determineSecured()
             determineIsolated()
             determineComposerPhpVersion()
@@ -315,6 +319,11 @@ class ValetSite: ValetListable {
 
     func toggleSecure() async throws {
         try await ValetInteractor.shared.toggleSecure(site: self)
+    }
+
+    func toggleFavorite() {
+        self.favorited.toggle()
+        Favorites.shared.toggle(domain: self.favoriteSignature)
     }
 
     func isolate(version: String) async throws {
