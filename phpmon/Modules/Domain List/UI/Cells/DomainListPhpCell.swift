@@ -11,12 +11,14 @@ import AppKit
 import SwiftUI
 
 class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListPhpCell"
-
     var site: ValetSite?
 
     @IBOutlet weak var buttonPhpVersion: NSButton!
     @IBOutlet weak var imageViewPhpVersionOK: NSImageView!
+
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return "domainListPhpCell"
+    }
 
     func populateCell(with site: ValetSite) {
         self.site = site

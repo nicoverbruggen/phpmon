@@ -10,10 +10,12 @@ import Cocoa
 import AppKit
 
 class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListTypeCell"
-
     @IBOutlet weak var labelDriver: NSTextField!
     @IBOutlet weak var labelPhpVersion: NSTextField!
+
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return "domainListTypeCell"
+    }
 
     func populateCell(with site: ValetSite) {
         labelDriver.stringValue = site.driver ?? "driver.not_detected".localized

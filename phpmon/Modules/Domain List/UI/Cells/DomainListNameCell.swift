@@ -10,20 +10,20 @@ import Cocoa
 import AppKit
 
 class DomainListNameCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListNameCell"
-
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
 
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return domain.getListableFavorited() ? "domainListNameCellFavorited" : "domainListNameCell"
+    }
+
     func populateCell(with site: ValetSite) {
-        let favoritePrefix = site.favorited ? "★ " : ""
-        labelSiteName.stringValue = "\(favoritePrefix)\(site.name).\(site.tld)"
+        labelSiteName.stringValue = "\(site.name).\(site.tld)"
         labelPathName.stringValue = site.absolutePathRelative
     }
 
     func populateCell(with proxy: ValetProxy) {
-        let favoritePrefix = proxy.favorited ? "★ " : ""
-        labelSiteName.stringValue = "\(favoritePrefix)\(proxy.domain).\(proxy.tld)"
+        labelSiteName.stringValue = "\(proxy.domain).\(proxy.tld)"
         labelPathName.stringValue = proxy.target
     }
 }

@@ -930,6 +930,50 @@ Gw
                                                                 <outlet property="labelSiteName" destination="XJL-Uw-frD" id="f0t-vd-W68"/>
                                                             </connections>
                                                         </tableCellView>
+                                                        <tableCellView identifier="domainListNameCellFavorited" wantsLayer="YES" id="Byb-te-u65" customClass="DomainListNameCell" customModule="PHP_Monitor" customModuleProvider="target">
+                                                            <rect key="frame" x="69" y="54" width="200" height="54"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aot-FJ-HIk">
+                                                                    <rect key="frame" x="33" y="26" width="145" height="16"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="my-domain-name.test" id="LHu-UF-QlC">
+                                                                        <font key="font" metaFont="systemSemibold" size="13"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-l8-oki">
+                                                                    <rect key="frame" x="33" y="12" width="75" height="14"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="~/path/to/site" id="LNw-Ju-0Ot">
+                                                                        <font key="font" metaFont="smallSystem"/>
+                                                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Wp-DX-An9">
+                                                                    <rect key="frame" x="5" y="4.5" width="19" height="45"/>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Q76-fI-lkW">
+                                                                        <imageReference key="image" image="star.square.fill" catalog="system" symbolScale="large"/>
+                                                                    </imageCell>
+                                                                    <color key="contentTintColor" name="AccentColor"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="3Wp-DX-An9" firstAttribute="leading" secondItem="Byb-te-u65" secondAttribute="leading" constant="5" id="CTd-ON-loK"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aot-FJ-HIk" secondAttribute="trailing" constant="20" symbolic="YES" id="Csc-Dy-H4K"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GNH-l8-oki" secondAttribute="trailing" constant="20" symbolic="YES" id="H10-MG-hCG"/>
+                                                                <constraint firstItem="GNH-l8-oki" firstAttribute="leading" secondItem="aot-FJ-HIk" secondAttribute="leading" id="Hk0-x3-RyN"/>
+                                                                <constraint firstItem="3Wp-DX-An9" firstAttribute="top" secondItem="Byb-te-u65" secondAttribute="top" constant="9" id="erH-dR-K7S"/>
+                                                                <constraint firstItem="aot-FJ-HIk" firstAttribute="top" secondItem="Byb-te-u65" secondAttribute="top" constant="12" id="ktI-fg-qaX"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3Wp-DX-An9" secondAttribute="bottom" constant="9" id="uyc-26-gZb"/>
+                                                                <constraint firstItem="aot-FJ-HIk" firstAttribute="leading" secondItem="Byb-te-u65" secondAttribute="leading" constant="35" id="vXE-jj-lLF"/>
+                                                                <constraint firstItem="GNH-l8-oki" firstAttribute="top" secondItem="aot-FJ-HIk" secondAttribute="bottom" id="wSX-fR-O7a"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="labelPathName" destination="GNH-l8-oki" id="GC1-TA-lIk"/>
+                                                                <outlet property="labelSiteName" destination="aot-FJ-HIk" id="HdZ-Rh-ua6"/>
+                                                            </connections>
+                                                        </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn identifier="ENVIRONMENT" width="100" minWidth="100" maxWidth="150" id="hzb-XI-Out">
@@ -1126,7 +1170,7 @@ Gw
                 </viewController>
                 <customObject id="HgD-aB-bQb" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="323" y="723"/>
+            <point key="canvasLocation" x="323" y="722.5"/>
         </scene>
         <!--Add ProxyVC-->
         <scene sceneID="g8z-pE-RL9">
@@ -1503,6 +1547,10 @@ Gw
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
+        <image name="star.square.fill" catalog="system" width="19" height="18"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="IconColorGreen">
             <color red="0.24699999392032623" green="0.69700002670288086" blue="0.50099998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -10,6 +10,7 @@ import Cocoa
 import AppKit
 
 protocol DomainListCellProtocol {
+    static func getCellIdentifier(for domain: ValetListable) -> String
     func populateCell(with site: ValetSite)
     func populateCell(with proxy: ValetProxy)
 }
