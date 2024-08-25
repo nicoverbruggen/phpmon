@@ -16,12 +16,14 @@ class DomainListNameCell: NSTableCellView, DomainListCellProtocol {
     @IBOutlet weak var labelPathName: NSTextField!
 
     func populateCell(with site: ValetSite) {
-        labelSiteName.stringValue = "\(site.name).\(site.tld)"
+        let favoritePrefix = site.favorited ? "★ " : ""
+        labelSiteName.stringValue = "\(favoritePrefix)\(site.name).\(site.tld)"
         labelPathName.stringValue = site.absolutePathRelative
     }
 
     func populateCell(with proxy: ValetProxy) {
-        labelSiteName.stringValue = "\(proxy.domain).\(proxy.tld)"
+        let favoritePrefix = proxy.favorited ? "★ " : ""
+        labelSiteName.stringValue = "\(favoritePrefix)\(proxy.domain).\(proxy.tld)"
         labelPathName.stringValue = proxy.target
     }
 }

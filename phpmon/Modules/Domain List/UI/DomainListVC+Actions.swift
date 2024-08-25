@@ -67,6 +67,14 @@ extension DomainListVC {
 
     // MARK: - Interactions with `valet` or terminal
 
+    @objc func toggleFavorite() {
+        guard let selected = self.selected else {
+            return
+        }
+
+        Task { await toggleFavorite(domain: selected) }
+    }
+
     @objc func toggleSecure() {
         if selected is ValetSite {
             Task { await toggleSecure(site: selected as! ValetSite) }
@@ -90,6 +98,22 @@ extension DomainListVC {
                 // Notify the user about a failed command
                 let error = error as! ValetInteractionError
                 self.notifyAboutFailedSecureStatus(command: error.command)
+            }
+        }
+    }
+
+    func toggleFavorite(domain: any ValetListable) async {
+        waitAndExecute {
+            do {
+                if let site = domain as? ValetSite {
+                    site.favorited.toggle()
+                }
+                if let proxy = domain as? ValetProxy {
+                    proxy.favorited.toggle()
+                }
+
+                // Reload the entire table as the sorting may be affected
+                self.reloadTable()
             }
         }
     }

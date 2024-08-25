@@ -65,6 +65,7 @@ extension DomainListVC {
 
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.actions".localized))
 
+        addToggleFavorite(to: menu, favorited: site.favorited)
         addToggleSecure(to: menu, secured: site.secured)
         addUnlink(to: menu, with: site)
 
@@ -172,6 +173,16 @@ extension DomainListVC {
         )
     }
 
+    private func addToggleFavorite(to menu: NSMenu, favorited: Bool) {
+        menu.addItem(
+            withTitle: favorited
+            ? "domain_list.unfavorite".localized
+            : "domain_list.favorite".localized,
+            action: #selector(toggleFavorite),
+            keyEquivalent: ""
+        )
+    }
+
     private func addMenuItemsForExtensions(to menu: NSMenu, for extensions: [PhpExtension], version: String) {
         var items: [NSMenuItem] = [
             NSMenuItem(title: "domain_list.applies_to".localized(version))
@@ -200,6 +211,7 @@ extension DomainListVC {
         let menu = NSMenu()
         addOpenProxyInBrowser(to: menu)
         addSeparator(to: menu)
+        addToggleFavorite(to: menu, favorited: proxy.favorited)
         addToggleSecure(to: menu, secured: proxy.secured)
         addRemoveProxy(to: menu)
         return menu

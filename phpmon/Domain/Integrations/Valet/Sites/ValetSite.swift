@@ -61,6 +61,8 @@ class ValetSite: ValetListable {
             ?? "???"
     }
 
+    var favorited: Bool = false
+
     init(
         name: String,
         tld: String,
@@ -303,6 +305,10 @@ class ValetSite: ValetListable {
 
     func getListableUrl() -> URL? {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.name).\(Valet.shared.config.tld)")
+    }
+
+    func getListableFavorited() -> Bool {
+        return self.favorited
     }
 
     // MARK: - Interactions

@@ -13,6 +13,7 @@ class ValetProxy: ValetListable {
     var tld: String
     var target: String
     var secured: Bool = false
+    var favorited: Bool = false
 
     init(domain: String, target: String, secure: Bool, tld: String) {
         self.domain = domain
@@ -59,6 +60,10 @@ class ValetProxy: ValetListable {
 
     func getListableUrl() -> URL? {
         return URL(string: "\(self.secured ? "https://" : "http://")\(self.domain).\(self.tld)")
+    }
+
+    func getListableFavorited() -> Bool {
+        return self.favorited
     }
 
     // MARK: - Interactions

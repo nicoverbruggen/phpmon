@@ -221,7 +221,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         default: break
         }
 
-        self.domains = descriptor.ascending ? sorted.reversed() : sorted
+        sorted = descriptor.ascending ? sorted.reversed() : sorted
+
+        self.domains = sorted.sorted { $0.getListableFavorited() && !$1.getListableFavorited() }
     }
 
     func addedNewSite(name: String, secureAfterLinking: Bool) async {

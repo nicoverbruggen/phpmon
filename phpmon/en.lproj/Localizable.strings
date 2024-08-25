@@ -330,6 +330,8 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.always_use_php" = "Always use PHP %@";
 "domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
+"domain_list.favorite" = "Favorite Domain";
+"domain_list.unfavorite" = "Unfavorite Domain";
 "domain_list.actions" = "Actions";
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
