@@ -12,6 +12,7 @@ import SwiftUI
 struct PhpExtensionManagerView: View {
     @ObservedObject var manager: BrewExtensionsObservable
     @ObservedObject var status: BusyStatus
+
     @State var searchText: String
     @State private var highlightedExtension: String?
 
@@ -21,6 +22,14 @@ struct PhpExtensionManagerView: View {
         let version = PhpEnvironments.shared.currentInstall!.version.short
         self.manager = BrewExtensionsObservable(phpVersion: version)
         self.status.busy = false
+    }
+
+    var availablePhpVersions: [String] {
+        if isRunningSwiftUIPreview {
+            return [manager.phpVersion]
+        }
+
+        return PhpEnvironments.shared.availablePhpVersions
     }
 
     var filteredExtensions: [BrewPhpExtension] {
@@ -85,9 +94,8 @@ struct PhpExtensionManagerView: View {
     // MARK: View Variables
 
     private var phpVersionPicker: some View {
-        Picker("",
-               selection: $manager.phpVersion) {
-            ForEach(PhpEnvironments.shared.availablePhpVersions, id: \.self) {
+        Picker("", selection: $manager.phpVersion) {
+            ForEach(self.availablePhpVersions, id: \.self) {
                 Text("PHP \($0)")
                     .tag($0)
                     .font(.system(size: 12))
@@ -156,30 +164,16 @@ struct PhpExtensionManagerView: View {
         }
     }
 
-    private func scrollAndAnimate(_ ext: BrewPhpExtension, _ proxy: ScrollViewProxy) {
-        withAnimation {
-            highlightedExtension = ext.name
-            proxy.scrollTo(ext.name, anchor: .top)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            withAnimation {
-                highlightedExtension = nil
-            }
-        }
-    }
-
     private func listContent(for ext: BrewPhpExtension, proxy: ScrollViewProxy) -> some View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
                 HStack {
                     HStack {
                         Image(systemName: ext.isInstalled || ext.hasAlternativeInstall
-                              ? "puzzlepiece.extension.fill"
-                              : "puzzlepiece.extension")
-                            .resizable()
-                            .frame(width: 24, height: 20)
-                            .foregroundColor(ext.hasAlternativeInstall ? Color.gray : Color.blue)
+                              ? "puzzlepiece.extension.fill" : "puzzlepiece.extension")
+                        .resizable()
+                        .frame(width: 24, height: 20)
+                        .foregroundColor(ext.hasAlternativeInstall ? Color.gray : Color.blue)
                     }.frame(width: 36, height: 24)
 
                     VStack(alignment: .leading, spacing: 5) {
@@ -226,9 +220,21 @@ struct PhpExtensionManagerView: View {
         .cornerRadius(8)
         .animation(.easeInOut(duration: 0.5), value: highlightedExtension)
     }
+
+    private func scrollAndAnimate(_ ext: BrewPhpExtension, _ proxy: ScrollViewProxy) {
+        withAnimation {
+            highlightedExtension = ext.name
+            proxy.scrollTo(ext.name, anchor: .top)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                highlightedExtension = nil
+            }
+        }
+    }
 }
 
 #Preview {
-    PhpExtensionManagerView()
-        .frame(width: 600, height: 600)
+    PhpExtensionManagerView().frame(width: 600, height: 600)
 }
