@@ -13,6 +13,7 @@ struct PhpExtensionManagerView: View {
     @ObservedObject var manager: BrewExtensionsObservable
     @ObservedObject var status: BusyStatus
     @State var searchText: String
+    @State private var highlightedExtension: String?
 
     init() {
         self.searchText = ""
@@ -24,9 +25,12 @@ struct PhpExtensionManagerView: View {
 
     var filteredExtensions: [BrewPhpExtension] {
         guard !searchText.isEmpty else {
-            return manager.extensions
+            return manager.extensions.sorted { $0.isInstalled && !$1.isInstalled }
         }
-        return manager.extensions.filter { $0.name.contains(searchText) }
+
+        return manager.extensions
+            .filter { $0.name.contains(searchText) }
+            .sorted { $0.isInstalled && !$1.isInstalled }
     }
 
     var body: some View {
@@ -48,14 +52,19 @@ struct PhpExtensionManagerView: View {
                 title: self.status.title,
                 text: self.status.description
             ) {
-                List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, ext) in
-                    listContent(for: ext)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 8)
+                ScrollViewReader { proxy in
+                    List(Array(self.filteredExtensions.enumerated()), id: \.1.name) { (_, ext) in
+                        listContent(for: ext, proxy: proxy)
+                    }
+                    .edgesIgnoringSafeArea(.top)
+                    .listStyle(PlainListStyle())
+                    .searchable(text: $searchText)
+                    .onChange(of: manager.phpVersion, perform: { _ in
+                        if let ext = self.filteredExtensions.first {
+                            proxy.scrollTo(ext.name)
+                        }
+                    })
                 }
-                .edgesIgnoringSafeArea(.top)
-                .listStyle(PlainListStyle())
-                .searchable(text: $searchText)
             }
         }
         .frame(minWidth: 600, minHeight: 600)
@@ -147,7 +156,20 @@ struct PhpExtensionManagerView: View {
         }
     }
 
-    private func listContent(for ext: BrewPhpExtension) -> some View {
+    private func scrollAndAnimate(_ ext: BrewPhpExtension, _ proxy: ScrollViewProxy) {
+        withAnimation {
+            highlightedExtension = ext.name
+            proxy.scrollTo(ext.name, anchor: .top)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                highlightedExtension = nil
+            }
+        }
+    }
+
+    private func listContent(for ext: BrewPhpExtension, proxy: ScrollViewProxy) -> some View {
         HStack(alignment: .center, spacing: 7.0) {
             VStack(alignment: .center, spacing: 0) {
                 HStack {
@@ -184,15 +206,25 @@ struct PhpExtensionManagerView: View {
             HStack {
                 if ext.isInstalled {
                     Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                        self.confirmUninstall(ext)
-                    }.disabled(ext.firstDependent(in: self.manager.extensions) != nil)
+                        self.confirmUninstall(ext, onCompletion: {
+                            scrollAndAnimate(ext, proxy)
+                        })
+                    }
+                    .disabled(ext.firstDependent(in: self.manager.extensions) != nil)
                 } else {
                     Button("phpman.buttons.install".localizedForSwiftUI) {
-                        self.install(ext)
+                        self.install(ext, onCompletion: {
+                            scrollAndAnimate(ext, proxy)
+                        })
                     }.disabled(ext.hasAlternativeInstall)
                 }
             }
         }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .background(highlightedExtension == ext.name ? Color.accentColor.opacity(0.3) : Color.clear)
+        .cornerRadius(8)
+        .animation(.easeInOut(duration: 0.5), value: highlightedExtension)
     }
 }
 

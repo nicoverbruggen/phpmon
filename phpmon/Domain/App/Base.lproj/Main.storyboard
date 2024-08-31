@@ -951,9 +951,9 @@ Gw
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Wp-DX-An9">
-                                                                    <rect key="frame" x="5" y="4.5" width="19" height="45"/>
+                                                                    <rect key="frame" x="5" y="4" width="20" height="47"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Q76-fI-lkW">
-                                                                        <imageReference key="image" image="star.square.fill" catalog="system" symbolScale="large"/>
+                                                                        <imageReference key="image" image="star.circle.fill" catalog="system" symbolScale="large"/>
                                                                     </imageCell>
                                                                     <color key="contentTintColor" name="AccentColor"/>
                                                                 </imageView>
@@ -1547,7 +1547,7 @@ Gw
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
         <image name="plus" catalog="system" width="14" height="13"/>
-        <image name="star.square.fill" catalog="system" width="19" height="18"/>
+        <image name="star.circle.fill" catalog="system" width="20" height="20"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

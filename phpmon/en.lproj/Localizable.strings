@@ -120,7 +120,7 @@
 "phpextman.list.status.external" = "This extension is already installed via another source, and cannot be managed.";
 "phpextman.list.status.installable" = "This extension can be installed.";
 "phpextman.list.status.dependent" = "You cannot uninstall this before uninstalling %@.";
-"phpextman.list.status.can_manage" = "This extension is installed and can be managed by PHP Monitor.";
+"phpextman.list.status.can_manage" = "This extension is installed and managed by PHP Monitor.";
 
 "phpextman.errors.not_found.title" = "Uh oh. No extensions discovered!";
 "phpextman.errors.not_found.desc" = "This is not supposed to happen. You may need to run the following command in your terminal:
