@@ -30,7 +30,7 @@ struct Constants {
      will be displayed to let them know that certain operations
      will not work correctly and that they need to update their app.
      */
-    static let PhpFormulaeCutoffDate = "2024-11-31" // YYYY-MM-DD
+    static let PhpFormulaeCutoffDate = "2024-11-30" // YYYY-MM-DD
 
     /**
      * The PHP versions that are considered pre-release versions.
