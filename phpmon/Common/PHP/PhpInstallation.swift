@@ -14,6 +14,8 @@ class PhpInstallation {
 
     var iniFiles: [PhpConfigurationFile] = []
 
+    var isPreRelease: Bool = false
+
     var isMissingBinary: Bool = false
 
     var isHealthy: Bool = true
@@ -58,6 +60,10 @@ class PhpInstallation {
                 arguments: ["--version"],
                 trimNewlines: false
             ).trimmingCharacters(in: .whitespacesAndNewlines)
+
+            if longVersionString.contains("-dev") {
+                isPreRelease = true
+            }
 
             // The parser should always work, or the string has to be very unusual.
             // If so, the app SHOULD crash, so that the users report what's up.
