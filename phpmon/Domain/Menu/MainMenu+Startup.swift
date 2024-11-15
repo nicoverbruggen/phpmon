@@ -115,6 +115,9 @@ extension MainMenu {
         // Finally!
         Log.info("PHP Monitor is ready to serve!")
 
+        // Avoid showing the "startup timeout" alert
+        Startup.invalidateTimeoutTimer()
+
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
     }

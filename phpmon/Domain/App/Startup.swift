@@ -11,6 +11,20 @@ import NVAlert
 
 class Startup {
 
+    @MainActor static var startupTimer: Timer?
+
+    @MainActor func startTimeoutTimer() {
+        Self.startupTimer = Timer.scheduledTimer(
+            timeInterval: 30.0, target: self, selector: #selector(startupTimeout),
+            userInfo: nil, repeats: false
+        )
+    }
+
+    @MainActor static func invalidateTimeoutTimer() {
+        Self.startupTimer?.invalidate()
+        Self.startupTimer = nil
+    }
+
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
@@ -21,6 +35,11 @@ class Startup {
     func checkEnvironment() async -> Bool {
         // Do the important system setup checks
         Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
+
+        // Set up a "background" timer on the main thread
+        Task { @MainActor in
+            startTimeoutTimer()
+        }
 
         for group in self.groups {
             if group.condition() {
@@ -45,8 +64,32 @@ class Startup {
         // If we get here, nothing has gone wrong. That's what we want!
         initializeSwitcher()
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
+
         Log.separator(as: .info)
         return true
+    }
+
+    /**
+     Displays an alert for when the application startup process takes too long.
+     */
+    @MainActor @objc func startupTimeout() {
+        NVAlert()
+            .withInformation(
+                title: "startup.timeout.title".localized,
+                subtitle: "startup.timeout.subtitle".localized,
+                description: "startup.timeout.description".localized
+            )
+            .withPrimary(text: "alert.cannot_start.close".localized, action: { vc in
+                vc.close(with: .alertFirstButtonReturn)
+                exit(1)
+            })
+            .withSecondary(text: "startup.timeout.ignore".localized, action: { vc in
+                vc.close(with: .alertSecondButtonReturn)
+            })
+            .withTertiary(text: "", action: { _ in
+                NSWorkspace.shared.open(URL(string: "https://github.com/nicoverbruggen/phpmon/issues/294")!)
+            })
+            .show()
     }
 
     /**

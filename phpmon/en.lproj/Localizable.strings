@@ -864,3 +864,14 @@ Please note that some features (greyed out below) are currently unavailable beca
 
 "alert.language_changed.title" = "You must restart PHP Monitor!";
 "alert.language_changed.subtitle" = "You just changed the display language of PHP Monitor. The menu will immediately use the correct language, but you may need to restart the app for all text throughout the app to reflect your new language choice.";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "Ignore";
+"startup.timeout.title" = "PHP Monitor is taking too long to initialize!";
+"startup.timeout.subtitle" = "If PHP Monitor remains busy for longer than 30 seconds, there may be something wrong with your Homebrew setup.";
+"startup.timeout.description" = "Sometimes, due to various file permission issues, things may break. You can try using `brew doctor` and `brew cleanup` to fix this. 
+
+It is recommended to restart PHP Monitor afterwards. Learn more about this issue at: https://github.com/nicoverbruggen/phpmon/issues/294.
+
+If PHP Monitor has finished initializing anyway or you want to wait a bit longer, feel free to click 'Ignore' and use PHP Monitor as usual. Either way, you may want to investigate, because this isn't supposed to take this long.";

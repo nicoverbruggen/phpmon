@@ -112,5 +112,4 @@ struct ByteLimitView: View {
 #Preview("Config Manager") {
     ConfigManagerView()
         .frame(width: 600, height: .infinity)
-        .previewDisplayName("Config Manager")
 }
