@@ -24,13 +24,13 @@ struct Constants {
 
      This hardcoded list will expire and will need to be modified when
      the cutoff date occurs, which is when the `php` formula will
-     become PHP 8.4, and a new build will need to be made.
+     become PHP 8.5, and a new build will need to be made.
 
      If users launch an older version of the app, then a warning
      will be displayed to let them know that certain operations
      will not work correctly and that they need to update their app.
      */
-    static let PhpFormulaeCutoffDate = "2024-11-30" // YYYY-MM-DD
+    static let PhpFormulaeCutoffDate = "2025-11-30" // YYYY-MM-DD
 
     /**
      * The PHP versions that are considered pre-release versions.
@@ -39,8 +39,8 @@ struct Constants {
      */
     static var ExperimentalPhpVersions: Set<String> {
         let releaseDates = [
-            // "8.5": Date.fromString("2025-11-01"), // PLACEHOLDER DATE
-            "8.4": Date.fromString("2024-11-22"),
+            "8.5": Date.fromString(Self.PhpFormulaeCutoffDate),
+            "8.4": Date.fromString("2024-11-22")
         ]
 
         return Set(releaseDates
@@ -73,7 +73,8 @@ struct Constants {
     static let DetectedPhpVersions: Set = [
         "5.6",
         "7.0", "7.1", "7.2", "7.3", "7.4",
-        "8.0", "8.1", "8.2", "8.3", "8.4"
+        "8.0", "8.1", "8.2", "8.3", "8.4",
+        "8.5" // DEV
     ]
 
     /**
@@ -94,7 +95,8 @@ struct Constants {
         4: // Valet v4 dropped support for v7.0
         [
             "7.1", "7.2", "7.3", "7.4",
-            "8.0", "8.1", "8.2", "8.3", "8.4"
+            "8.0", "8.1", "8.2", "8.3", "8.4",
+            "8.5" // DEV
         ]
     ]
 
