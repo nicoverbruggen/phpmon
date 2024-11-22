@@ -291,9 +291,7 @@ struct PhpVersionManagerView: View {
                 .font(.system(size: 11))
                 .foregroundColor(.gray)
             HelpButton(action: {
-                // Show an alert that displays information about the missing formula
-                // and what can be done to fix this particular issue.
-                // Running `brew tap shivammathur/php` generally works, I think.
+                NSWorkspace.shared.open(Constants.Urls.WikiPhpUnavailable)
             })
         }
     }
