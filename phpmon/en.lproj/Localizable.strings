@@ -139,7 +139,8 @@ and restart PHP Monitor for extensions to become visible. If the problem persist
 "phpman.version.installed" = "Version %@ is currently installed.";
 "phpman.version.available_for_installation" = "This version can be installed.";
 "phpman.version.unavailable" = "This version is temporarily unavailable.";
-"phpman.version.automatic_upgrade" = "This version will be automatically installed by upgrading an older version.";
+"phpman.version.automatic_upgrade" = "This version will be automatically installed by upgrading an older version. 
+(Both this new version and the old one will be available after upgrading.)";
 "phpman.buttons.uninstall" = "Uninstall";
 "phpman.buttons.install" = "Install";
 "phpman.buttons.update" = "Update";
