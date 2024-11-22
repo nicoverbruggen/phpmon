@@ -21,8 +21,6 @@ struct BrewPhpFormula: Equatable {
     /// The upgrade that is currently available, if it exists.
     let upgradeVersion: String?
 
-    // TODO: A rebuild attribute could be checked, to check if a Tap update exists for a pre-release version
-
     /// Whether this formula is a stable version of PHP.
     let prerelease: Bool
 
@@ -48,6 +46,16 @@ struct BrewPhpFormula: Equatable {
     /// Whether the formula can be upgraded.
     var hasUpgrade: Bool {
         return upgradeVersion != nil
+    }
+    
+    var hasFormulaFile: Bool {
+        guard let version = shortVersion else {
+            return false
+        }
+        
+        return FileSystem.fileExists(
+            "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+        )
     }
 
     /// Whether this formula alias is different.

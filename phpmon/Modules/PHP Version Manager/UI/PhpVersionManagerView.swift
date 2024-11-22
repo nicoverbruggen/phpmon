@@ -238,7 +238,7 @@ struct PhpVersionManagerView: View {
             } else {
                 Button("phpman.buttons.install".localizedForSwiftUI) {
                     Task { await self.install(formula) }
-                }.disabled(formula.hasUpgradedFormulaAlias)
+                }.disabled(formula.hasUpgradedFormulaAlias || !formula.hasFormulaFile)
             }
         }
     }
@@ -268,6 +268,17 @@ struct PhpVersionManagerView: View {
                 Text("phpman.version.installed".localized(formula.installedVersion!))
                     .font(.system(size: 11))
                     .foregroundColor(.gray)
+            } else if !formula.hasFormulaFile {
+                HStack(spacing: 5) {
+                    Text("phpman.version.unavailable".localizedForSwiftUI)
+                        .font(.system(size: 11))
+                        .foregroundColor(.gray)
+                    HelpButton(action: {
+                        // Show an alert that displays information about the missing formula
+                        // and what can be done to fix this particular issue.
+                        // Running `brew tap shivammathur/php` generally works, I think.
+                    })
+                }
             } else {
                 Text("phpman.version.available_for_installation".localizedForSwiftUI)
                     .font(.system(size: 11))
