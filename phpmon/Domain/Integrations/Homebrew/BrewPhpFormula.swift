@@ -47,14 +47,15 @@ struct BrewPhpFormula: Equatable {
     var hasUpgrade: Bool {
         return upgradeVersion != nil
     }
-    
+
     var hasFormulaFile: Bool {
         guard let version = shortVersion else {
             return false
         }
-        
+
         return FileSystem.fileExists(
             "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+                .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
         )
     }
 

@@ -269,16 +269,7 @@ struct PhpVersionManagerView: View {
                     .font(.system(size: 11))
                     .foregroundColor(.gray)
             } else if !formula.hasFormulaFile {
-                HStack(spacing: 5) {
-                    Text("phpman.version.unavailable".localizedForSwiftUI)
-                        .font(.system(size: 11))
-                        .foregroundColor(.gray)
-                    HelpButton(action: {
-                        // Show an alert that displays information about the missing formula
-                        // and what can be done to fix this particular issue.
-                        // Running `brew tap shivammathur/php` generally works, I think.
-                    })
-                }
+                unavailableFormula()
             } else {
                 Text("phpman.version.available_for_installation".localizedForSwiftUI)
                     .font(.system(size: 11))
@@ -292,6 +283,19 @@ struct PhpVersionManagerView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func unavailableFormula() -> some View {
+        HStack(spacing: 5) {
+            Text("phpman.version.unavailable".localizedForSwiftUI)
+                .font(.system(size: 11))
+                .foregroundColor(.gray)
+            HelpButton(action: {
+                // Show an alert that displays information about the missing formula
+                // and what can be done to fix this particular issue.
+                // Running `brew tap shivammathur/php` generally works, I think.
+            })
+        }
     }
 
     private func formulaIcon(for formula: BrewPhpFormula) -> some View {
