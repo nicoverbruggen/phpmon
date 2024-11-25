@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 
+// swiftlint:disable type_body_length
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: BusyStatus
@@ -231,7 +232,11 @@ struct PhpVersionManagerView: View {
                 }
             }
 
-            if formula.isInstalled {
+            if formula.hasUpgradedFormulaAlias {
+                HelpButton(frameSize: 18, textSize: 14, shadowOpacity: 1, shadowRadius: 2, action: {
+                    NSWorkspace.shared.open(Constants.Urls.WikiPhpUpgrade)
+                })
+            } else if formula.isInstalled {
                 Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
                     Task { await self.confirmUninstall(formula) }
                 }
@@ -285,6 +290,15 @@ struct PhpVersionManagerView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    private func formulaIcon(for formula: BrewPhpFormula) -> some View {
+        Image(systemName: formula.icon)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 16, height: 16)
+            .foregroundColor(formula.iconColor)
+            .padding(.horizontal, 5)
+    }
+
     private func unavailableFormula() -> some View {
         HStack(spacing: 5) {
             Text("phpman.version.unavailable".localizedForSwiftUI)
@@ -295,16 +309,8 @@ struct PhpVersionManagerView: View {
             })
         }
     }
-
-    private func formulaIcon(for formula: BrewPhpFormula) -> some View {
-        Image(systemName: formula.icon)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 16, height: 16)
-            .foregroundColor(formula.iconColor)
-            .padding(.horizontal, 5)
-    }
 }
+// swiftlint:enable type_body_length
 
 #Preview {
     PhpVersionManagerView(

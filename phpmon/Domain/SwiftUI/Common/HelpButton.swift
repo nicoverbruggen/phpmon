@@ -10,6 +10,11 @@ import Foundation
 import SwiftUI
 
 struct HelpButton: View {
+    @State var frameSize: CGFloat = 14
+    @State var textSize: CGFloat = 12
+    @State var shadowOpacity: CGFloat = 0.3
+    @State var shadowRadius: CGFloat = 1
+
     var action: () -> Void
 
     var body: some View {
@@ -18,9 +23,10 @@ struct HelpButton: View {
                 Circle()
                     .strokeBorder(Color(NSColor.separatorColor), lineWidth: 0.5)
                     .background(Circle().foregroundColor(Color(NSColor.controlColor)).opacity(0.7))
-                    .shadow(color: Color(NSColor.separatorColor).opacity(0.3), radius: 1)
-                    .frame(width: 14, height: 14)
-                Text("?").font(.system(size: 12, weight: .medium))
+                    .shadow(color: Color(NSColor.separatorColor)
+                        .opacity(shadowOpacity), radius: shadowRadius)
+                    .frame(width: frameSize, height: frameSize)
+                Text("?").font(.system(size: textSize, weight: .medium))
                     .foregroundColor(Color(NSColor.labelColor))
             }
         })

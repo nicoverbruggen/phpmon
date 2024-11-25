@@ -116,6 +116,10 @@ struct Constants {
             string: "https://phpmon.app/php-unavailable"
         )!
 
+        static let WikiPhpUpgrade = URL(
+            string: "https://phpmon.app/php-upgrade"
+        )!
+
         static let DonationPayment = URL(
             string: "https://phpmon.app/sponsor/now"
         )!
