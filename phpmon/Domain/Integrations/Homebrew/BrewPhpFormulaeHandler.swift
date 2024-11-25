@@ -39,7 +39,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
                 OutdatedFormulae.self,
                 from: rawJsonText
             ).formulae.filter({ formula in
-                formula.name.starts(with: "php")
+                formula.name.starts(with: "shivammathur/php/php") || formula.name.starts(with: "php")
             })
         }
 
@@ -53,7 +53,8 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
                 fullVersion = install.isPreRelease ? "\(fullVersion!)-dev" : fullVersion
 
                 upgradeVersion = outdated?.first(where: { formula in
-                    return formula.name == install.formulaName
+                    return formula.name.replacingOccurrences(of: "shivammathur/php/", with: "")
+                        == install.formulaName.replacingOccurrences(of: "shivammathur/php/", with: "")
                 })?.current_version
 
                 isPrerelease = install.isPreRelease
