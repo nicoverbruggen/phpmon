@@ -14,6 +14,17 @@ It also automatically runs when you try to build the project. You'll get a warni
 swiftlint --fix
 ```
 
+## 📦 Swift Packages
+
+Starting from PHP Monitor 7.1, the app now uses various first-party package dependencies.
+
+The following package dependencies are in use:
+
+* [`NVAppUpdater`](https://github.com/nicoverbruggen/NVAppUpdater)
+* [`NVAlert`](https://github.com/nicoverbruggen/NVAlert)
+
+You may need an internet connection to download these dependencies, or you can also clone the dependencies and include them manually.
+
 ## ⚙️ Preferences
 
 You can find the persisted configuration file in `~/Library/Preferences/com.nicoverbruggen.phpmon.plist`
@@ -39,6 +50,12 @@ Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you 
 **Important**: The updater now gets automatically built and included as part of the main target.
 
 If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
+
+## ✅ Testing
+
+In order to properly test everything, you will want to use the _PHP Monitor DEV_ target. There are unit and UI tests both.
+
+You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve?
 
 ## 🚀 Release procedure
 

@@ -27,13 +27,14 @@ extension PhpExtensionManagerView {
         )
     }
 
-    public func install(_ ext: BrewPhpExtension) {
+    public func install(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
         Task {
             await self.runCommand(InstallPhpExtensionCommand(install: [ext]))
+            onCompletion()
         }
     }
 
-    public func confirmUninstall(_ ext: BrewPhpExtension) {
+    public func confirmUninstall(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
         Alert.confirm(
             onWindow: App.shared.phpExtensionManagerWindowController!.window!,
             messageText: "phpextman.warnings.removal.title".localized(ext.name),
@@ -45,6 +46,7 @@ extension PhpExtensionManagerView {
             onFirstButtonPressed: {
                 Task {
                     await self.runCommand(RemovePhpExtensionCommand(remove: ext))
+                    onCompletion()
                 }
             }
         )

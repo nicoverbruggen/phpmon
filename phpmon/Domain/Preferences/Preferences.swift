@@ -28,6 +28,10 @@ class Preferences {
             environmentVariables: [:]
         )
 
+        if isRunningSwiftUIPreview {
+            return
+        }
+
         Task { await loadCustomPreferences() }
     }
 

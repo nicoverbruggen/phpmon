@@ -302,6 +302,8 @@ Poderá ser-lhe solicitada a sua palavra-passe durante o processo de desinstala�
 "domain_list.always_use_php" = "Usar sempre PHP %@";
 "domain_list.isolation_unavailable" = "Isolamento não suportado (no Laravel Valet 2)";
 
+"domain_list.favorite" = "Marcar como favorito";
+"domain_list.unfavorite" = "Desmarcar do favoritado";
 "domain_list.actions" = "Ações";
 "domain_list.unlink" = "Desvincular diretoria";
 "domain_list.secure" = "Domínio seguro";
@@ -616,7 +618,7 @@ Pode faze-lo executando `composer global update` no seu Terminal. Depois disso, 
 
 // STARTUP
 
-/// 0. Architecture mismatch
+// 0. Architecture mismatch
 
 "alert.homebrew_missing.title" = "PHP Monitor não pode iniciar!";
 "alert.homebrew_missing.subtitle" = "Não foi encontrado um executável do Homebrew da diretoria por defeito. Reinicie a aplicação depois de corrigir o problema.";
@@ -624,32 +626,32 @@ Pode faze-lo executando `composer global update` no seu Terminal. Depois disso, 
 
 "alert.homebrew_missing.quit" = "Sair";
 
-/// PHP binary not found
+// PHP binary not found
 "startup.errors.php_binary.title" = "O PHP não está instalado corretamente";
 "startup.errors.php_binary.subtitle" = "Deve instalar o PHP através do Homebrew. Esta aplicação não funcionará corretamente até que resolva este problema.";
 "startup.errors.php_binary.desc" = "Normalmente, executar `brew link php` no seu Terminal resolve este problema.\n\nPara diagnosticar o que está errado, pode tentar executar `which php` no seu Terminal, que deverá mostrar `%@`.";
 
-/// PHP not found in /usr/local/opt or /opt/homebrew/opt
+// PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "O PHP não está instalado corretamente";
 "startup.errors.php_opt.subtitle" = "O alias do PHP não foi encontrado em `%@`. Esta aplicação não funcionará corretamente até que resolva este problema.";
 "startup.errors.php_opt.desc" = "Se já possui a fórmula `php` instalada, pode ser necessário executar `brew install php` para que o PHP Monitor detecte a instalação.";
 
-/// PHP binary is broken
+// PHP binary is broken
 "startup.errors.dyld_library.title" = "O PHP está instalado, mas parece estar incorretamente instalado";
 "startup.errors.dyld_library.subtitle" = "Quando o PHP Monitor tenta executar comandos, falha. Isto geralmente é um indicador de uma instalação do PHP incorretamente instalado.";
 "startup.errors.dyld_library.desc" = "Executar `brew reinstall php && brew link php` no seu Terminal pode resolver este problema, pelo que deve tentar executar este comando.";
 
-/// Valet is not installed
+// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet não está instalado corretamente";
 "startup.errors.valet_executable.subtitle" = "Deve instalar o Laravel Valet com o Composer. Esta aplicação não funcionará corretamente até que resolva este problema.";
 "startup.errors.valet_executable.desc" = "Se ainda não instalou o Laravel Valet, faça-o agora. Se já instalou, tente executar `which valet` no seu Terminal, que deverá mostrar: `%@`.";
 
-/// Valet configuration file missing or broken
+// Valet configuration file missing or broken
 "startup.errors.valet_json_invalid.title" = "ficheiro de configuração Laravel Valet inválido ou inexistente";
 "startup.errors.valet_json_invalid.subtitle" = "O PHP Monitor precisa de ler o ficheiro de configuração. Parece que o ficheiro está malformado ou inexistente. Por favor, verifique se o ficheiro existe e se está formatado corretamente.";
 "startup.errors.valet_json_invalid.desc" = "Pode encontrar o ficheiro em `~/.config/valet/config.json`. Se o Laravel Valet não puder analisar o ficheiro de configuração, execute um comando `valet` qualquer que geralmente corrigirá automaticamente o ficheiro JSON. Tente executar `valet --version` para corrigir automaticamente o ficheiro.";
 
-/// Valet version not readable
+// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "A versão Laravel Valet não pôde ser obtida";
 "startup.errors.valet_version_unknown.subtitle" = "A análise do output de `valet --version` falhou. Certifique-se de que a instalação do Laravel Valet funciona e está atualizada.";
 "startup.errors.valet_version_unknown.desc" = "Tente executar `valet --version` no seu Terminal para descobrir o motivo do problema.";
@@ -665,27 +667,27 @@ Se ainda vê esta mensagem, e não percebe porque a diretoria desapareceu, conv�
 "startup.errors.valet_version_not_supported.subtitle" = "Está a executar uma versão do Laravel Valet que não é compatível de momento. O PHP Monitor atualmente funciona apenas com Laravel Valet v2, v3 e v4. Para evitar problemas no seu sistema, o PHP Monitor não pode ser iniciado.";
 "startup.errors.valet_version_not_supported.desc" = "Deve instalar uma versão do Laravel Valet que seja compatível com o PHP Monitor, ou pode ser necessário atualizar para uma versão mais recente do PHP Monitor que pode incluir compatibilidade para esta versão do Laravel Valet (consulte as notas de versão mais recentes para obter mais informações).";
 
-/// Brew & sudoers
+// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew não foi adicionado a sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "Deve executar `sudo valet trust` no seu Terminal para garantir que o Laravel Valet pode iniciar e parar os serviços sem ter que usar sempre o sudo. Esta aplicação não funcionará corretamente até que resolva este problema.";
 "startup.errors.sudoers_brew.desc" = "Se continuar a ver este erro, é possível que haja um problema de permissão em que o PHP Monitor não pode validar o ficheiro, o que normalmente pode ser resolvido executando no seu Terminal: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
-/// Valet & sudoers
+// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Laravel Valet não foi adicionado a sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "Você deve executar `sudo valet trust` para garantir que o Laravel Valet possa iniciar e parar os serviços sem ter que usar o sudo todas as vezes. Esta aplicação não funcionará corretamente até que você resolva este problema. Mesmo que já tenha feito isto antes, experimente executar novamente no seu Terminal `sudo valet trust`.";
 "startup.errors.sudoers_valet.desc" = "Se continuar a ver este erro, é possível que haja um problema de permissão em que o PHP Monitor não pode validar o ficheiro, que normalmente pode ser resolvido executando no seu Terminal: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
-/// Platform issue detected
+// Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "O PHP Monitor e o Laravel Valet não funcionam corretamente: o Composer reporta um problema com sua plataforma";
 "startup.errors.global_composer_platform_issues.subtitle" = "Siga estes passos recomendados para evitar este problema de futuro:\n\n1. Execute a `atualização global do compositor`.\n2. Reinicie o PHP Monitor. (Deve funcionar novamente.)\n3. Mude para a versão mais antiga do PHP que instalou.\n4. Execute a `atualização global do compositor` novamente.";
 "startup.errors.global_composer_platform_issues.desc" = "Pode ir a Preferências e marcar a opção 'Atualizar dependências globais automaticamente'. Isto atualizará as suas dependências globais do Composer sempre que alterar versões do PHP, portanto, no entanto, pode não ser a solução ideal se não tiver acesso à Internet.\n\nPara descobrir exatamente o que está errado, tente executar no seu Terminal `valet --version`. O Laravel Valet não está a funcionar com as dependências instaladas. Normalmente, isso é provocado por uma incompatibilidade de versão: ou seja, dependências instaladas para uma versão mais recente do PHP do que a versão que está vinculada no momento.";
 
-/// Cannot retrieve services
+// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Não é possível determinar o status dos serviços";
 "startup.errors.services_json_error.subtitle" = "O PHP Monitor geralmente usar o `brew` usando o seguinte comando para testar se os serviços podem ser recuperados: `sudo brew services info nginx --json`.\n\nO PHP Monitor não pôde interpretar a resposta do `brew`.";
 "startup.errors.services_json_error.desc" = "Isto pode acontecer se a instalação do Homebrew estiver desatualizada, e o Homebrew ainda não retornar JSON. Geralmente, pode corrigir isto executando no seu Terminal `brew update` ou `brew tap homebrew/services`. Também pode tentar executar no seu Terminal `sudo brew services info nginx --json`.";
 
-/// Issue with `which` alias
+// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "Foi detectado um problema de configuração";
 "startup.errors.which_alias_issue.subtitle" = "Parece que há um ficheiro em `/usr/local/bin/which`. Isto geralmente é configurado pelo NodeJS, mas `node` não está no PATH em `/usr/local/bin`. Para corrigir isto, continue a ler.";
 "startup.errors.which_alias_issue.desc" = "Precisará vincular `node` à diretoria `/usr/local/bin` para garantir que o PHP Monitor possa iniciar com sucesso. Para mais informações, consulte: https://github.com/nicoverbruggen/phpmon/issues/174";

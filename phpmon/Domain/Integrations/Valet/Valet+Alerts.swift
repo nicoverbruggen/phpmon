@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 extension Valet {
 
@@ -16,7 +17,7 @@ extension Valet {
     public func notifyAboutUnsupportedTLD() {
         if Valet.shared.config.tld != "test" && Preferences.isEnabled(.warnAboutNonStandardTLD) {
             Task { @MainActor in
-                BetterAlert().withInformation(
+                NVAlert().withInformation(
                     title: "alert.warnings.tld_issue.title".localized,
                     subtitle: "alert.warnings.tld_issue.subtitle".localized,
                     description: "alert.warnings.tld_issue.description".localized
@@ -33,7 +34,7 @@ extension Valet {
 
     public func notifyAboutOutdatedValetVersion(_ version: VersionNumber) {
         Task { @MainActor in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.min_valet_version.title".localized,
                     subtitle: "alert.min_valet_version.info".localized(
@@ -60,7 +61,7 @@ extension Valet {
         }
 
         Task { @MainActor in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.php_fpm_broken.title".localized,
                     subtitle: "alert.php_fpm_broken.info".localized,

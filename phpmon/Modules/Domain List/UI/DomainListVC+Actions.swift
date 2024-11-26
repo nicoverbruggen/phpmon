@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import NVAlert
 
 extension DomainListVC {
 
@@ -17,7 +18,7 @@ extension DomainListVC {
         }
 
         guard let url = selected.getListableUrl() else {
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "domain_list.alert.invalid_folder_name".localized,
                     subtitle: "domain_list.alert.invalid_folder_name_desc".localized
@@ -66,6 +67,14 @@ extension DomainListVC {
 
     // MARK: - Interactions with `valet` or terminal
 
+    @objc func toggleFavorite() {
+        guard let selected = self.selected else {
+            return
+        }
+
+        Task { await toggleFavorite(domain: selected) }
+    }
+
     @objc func toggleSecure() {
         if selected is ValetSite {
             Task { await toggleSecure(site: selected as! ValetSite) }
@@ -89,6 +98,22 @@ extension DomainListVC {
                 // Notify the user about a failed command
                 let error = error as! ValetInteractionError
                 self.notifyAboutFailedSecureStatus(command: error.command)
+            }
+        }
+    }
+
+    func toggleFavorite(domain: any ValetListable) async {
+        waitAndExecute {
+            do {
+                if let site = domain as? ValetSite {
+                    site.toggleFavorite()
+                }
+                if let proxy = domain as? ValetProxy {
+                    proxy.toggleFavorite()
+                }
+
+                // Reload the entire table as the sorting may be affected
+                self.reloadTable()
             }
         }
     }
@@ -249,7 +274,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutUsingIsolatedPhpVersionInTerminal(version: VersionNumber) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_isolated_php_terminal.title".localized(version.short),
                 subtitle: "domain_list.alerts_isolated_php_terminal.subtitle".localized(
@@ -263,7 +288,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutFailedSecureStatus(command: String) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_status_not_changed.title".localized,
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
@@ -273,7 +298,7 @@ extension DomainListVC {
     }
 
     private func notifyAboutFailedSiteIsolation(command: String) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "domain_list.alerts_isolation_failed.title".localized,
                 subtitle: "domain_list.alerts_isolation_failed.subtitle".localized,

@@ -85,22 +85,27 @@ final class MainMenuTest: UITestCase {
 
     final func test_can_open_php_version_manager() throws {
         let app = launch(openMenu: true)
+
         app.mainMenuItem(withText: "mi_php_version_manager".localized).click()
 
         // Should display loader
         assertExists(app.staticTexts["phpman.busy.title".localized], 1)
 
-        // After loading, should display PHP 8.2 and PHP 8.3
+        // After loading, should display PHP 8.2, PHP 8.3, PHP 8.4
         assertExists(app.staticTexts["PHP 8.2"], 5)
         assertExists(app.staticTexts["PHP 8.3"])
+        assertExists(app.staticTexts["PHP 8.4"])
 
         // Should also display pre-release version
-        assertExists(app.staticTexts["PHP 8.4"])
+        assertExists(app.staticTexts["PHP 8.5"])
         assertExists(app.staticTexts["phpman.version.prerelease".localized.uppercased()])
         assertExists(app.staticTexts["phpman.version.available_for_installation".localized])
 
-        // But not PHP 8.5 (yet)
-        assertNotExists(app.staticTexts["PHP 8.5"])
+        // The pre-release version should be unavailable
+        assertExists(app.staticTexts["phpman.version.unavailable".localized])
+
+        // But not PHP 8.6 (yet)
+        assertNotExists(app.staticTexts["PHP 8.6"])
 
         // Also, PHP 8.2 should have an update available
         assertExists(app.staticTexts["phpman.version.has_update".localized(

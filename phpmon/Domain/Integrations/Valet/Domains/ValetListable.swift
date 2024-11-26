@@ -24,4 +24,6 @@ protocol ValetListable {
 
     func getListableUrl() -> URL?
 
+    func getListableFavorited() -> Bool
+
 }

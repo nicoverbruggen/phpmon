@@ -45,7 +45,7 @@ extension NSEvent.ModifierFlags {
 	}
 }
 
-extension NSEvent.ModifierFlags: CustomStringConvertible {
+extension NSEvent.ModifierFlags: @retroactive CustomStringConvertible {
     public var description: String {
         var output = ""
 

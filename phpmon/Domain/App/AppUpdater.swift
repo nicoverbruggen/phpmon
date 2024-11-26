@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import NVAlert
 
 class AppUpdater {
     var caskFile: CaskFile!
@@ -72,7 +73,7 @@ class AppUpdater {
             : "brew upgrade phpmon"
 
         Task { @MainActor in
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "updater.alerts.newer_version_available.title"
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
@@ -112,7 +113,7 @@ class AppUpdater {
 
     public func presentNoNewerVersionAvailableAlert() {
         Task { @MainActor in
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "updater.alerts.is_latest_version.title".localized,
                 subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
                 description: ""
@@ -124,7 +125,7 @@ class AppUpdater {
 
     public func presentCouldNotRetrieveUpdate() {
         Task { @MainActor in
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "updater.alerts.cannot_check_for_update.title".localized,
                 subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,
                 description: "updater.alerts.cannot_check_for_update.description".localized(

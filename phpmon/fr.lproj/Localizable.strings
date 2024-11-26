@@ -317,6 +317,8 @@ Il se peut que vous deviez saisir votre mot de passe pendant le processus de dé
 "domain_list.always_use_php" = "Tojours utiliser PHP %@";
 "domain_list.isolation_unavailable" = "Isolement non pris en charge (dans Valet 2)";
 
+"domain_list.favorite" = "Marquer comme favori";
+"domain_list.unfavorite" = "Démarquer des favoris";
 "domain_list.actions" = "Actions";
 "domain_list.unlink" = "Supprimer le Lien vers le Dossier";
 "domain_list.secure" = "Sécuriser le Domaine";
@@ -629,7 +631,7 @@ Vous pouvez mettre à jour en executant `composer global update` dans votre term
 
 // STARTUP
 
-/// 0. Architecture mismatch
+// 0. Architecture mismatch
 
 "alert.homebrew_missing.title" = "Le PHP Monitor ne peut pas démarrer !";
 "alert.homebrew_missing.subtitle" = "Un binaire Homebrew fonctionnel n'a pas pu être trouvé à l'emplacement standard. Veuillez redémarrer l'application après avoir résolu ce problème.";
@@ -637,32 +639,32 @@ Vous pouvez mettre à jour en executant `composer global update` dans votre term
 
 "alert.homebrew_missing.quit" = "Quitter";
 
-/// PHP binary not found
+// PHP binary not found
 "startup.errors.php_binary.title" = "PHP n'est pas correctement installé";
 "startup.errors.php_binary.subtitle" = "Vous devez installer PHP via Homebrew. L'application ne fonctionnera pas correctement tant que vous n'aurez pas résolu ce problème.";
 "startup.errors.php_binary.desc" = "Généralement, l'exécution de `brew link php` dans votre Terminal résoudra ce problème.\n\nPour diagnostiquer ce qui ne va pas, vous pouvez essayer de lancer `which php` dans votre Terminal, il devrait retourner `%@`.";
 
-/// PHP not found in /usr/local/opt or /opt/homebrew/opt
+// PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP n'est pas correctement installé";
 "startup.errors.php_opt.subtitle" = "L'alias PHP n'a pas été trouvé dans `%@`. L'application ne fonctionnera pas correctement tant que vous n'aurez pas résolu ce problème.";
 "startup.errors.php_opt.desc" = "Si vous avez déjà installé la formule `php`, vous pouvez avoir besoin de lancer `brew install php` pour que PHP Monitor détecte cette installation.";
 
-/// PHP binary is broken
+// PHP binary is broken
 "startup.errors.dyld_library.title" = "PHP est installé, mais ne fonctionne manifestement pas.";
 "startup.errors.dyld_library.subtitle" = "Lorsque le PHP Monitor tente d'exécuter des commandes, il ne parvient pas à le faire correctement. C'est généralement un indicateur d'une installation PHP défectueuse.";
 "startup.errors.dyld_library.desc" = "Lancer `brew reinstall php && brew link php` dans votre Terminal peut résoudre ce problème, veuillez donc essayer.";
 
-/// Valet is not installed
+// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet n'est pas correctement installé";
 "startup.errors.valet_executable.subtitle" = "Vous devez installer Valet avec Composer. L'application ne fonctionnera pas correctement tant que vous n'aurez pas résolu ce problème.";
 "startup.errors.valet_executable.desc" = "Si vous n'avez pas encore installé Laravel Valet, faites-le d'abord. Si vous l'avez installé mais que vous voyez quand même ce message, essayez de lancer `which valet` dans Terminal, il devrait retourner : `%@`.";
 
-/// Valet configuration file missing or broken
+// Valet configuration file missing or broken
 "startup.errors.valet_json_invalid.title" = "Fichier de configuration de Laravel Valet invalide ou manquant";
 "startup.errors.valet_json_invalid.subtitle" = "PHP Monitor doit pouvoir lire le fichier de configuration. Il semble que le fichier soit malformé ou manquant. Veuillez vérifier qu'il existe et qu'il est correctement formaté.";
 "startup.errors.valet_json_invalid.desc" = "Vous pouvez trouver le fichier à `~/.config/valet/config.json`. Si Laravel Valet ne peut pas analyser le fichier de configuration, l'exécution de n'importe quelle commande `valet` corrigera automatiquement le fichier JSON. Essayez d'exécuter `valet --version` pour corriger automatiquement le fichier.";
 
-/// Valet version not readable
+// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "La version de votre Valet n'a pu être lue";
 "startup.errors.valet_version_unknown.subtitle" = "L'analyse de la réponse de `valet --version` a échoué. Assurez-vous que votre installation de Valet fonctionne et qu'elle est à jour.";
 "startup.errors.valet_version_unknown.desc" = "Essayez de lancer `valet --version` dans un terminal pour savoir ce qui se passe.";
@@ -678,32 +680,32 @@ Si vous voyez ce message mais que vous ne savez pas pourquoi ce dossier a dispar
 "startup.errors.valet_version_not_supported.subtitle" = "Vous utilisez une version de Valet qui n'est pas supportée actuellement. PHP Monitor fonctionne actuellement avec Valet v2, v3 et v4. Afin d'éviter de causer des problèmes sur votre système, PHP Monitor ne peut pas démarrer.";
 "startup.errors.valet_version_not_supported.desc" = "Vous devez installer une version de Valet qui est compatible avec PHP Monitor, ou vous pouvez avoir besoin de mettre à jour vers une version plus récente de PHP Monitor qui peut inclure la compatibilité avec cette version de Valet (consultez les dernières notes de version pour plus d'informations).";
 
-/// Brew & sudoers
+// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew n'a pas été ajouté à sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "Vous devez exécuter `sudo valet trust` pour vous assurer que Valet peut démarrer et arrêter les services sans avoir à utiliser sudo à chaque fois. L'application ne fonctionnera pas correctement tant que vous n'aurez pas résolu ce problème.";
 "startup.errors.sudoers_brew.desc" = "Si vous continuez à voir cette erreur, il est possible qu'il y ait un problème de permission où PHP Monitor ne peut pas valider le fichier, ce qui peut généralement être résolu en exécutant : `sudo chmod +r /private/etc/sudoers.d/brew`";
 
-/// Valet & sudoers
+// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet n'a pas été ajouté à sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "Vous devez exécuter `sudo valet trust` pour vous assurer que Valet peut démarrer et arrêter les services sans avoir à utiliser sudo à chaque fois. L'application ne fonctionnera pas correctement tant que vous n'aurez pas résolu ce problème. Si vous l'avez déjà fait, exécutez à nouveau `sudo valet trust`.";
 "startup.errors.sudoers_valet.desc" = "Si vous continuez à voir cette erreur, il est possible qu'il y ait un problème de permission où PHP Monitor ne peut pas valider le fichier, ce qui peut généralement être résolu en exécutant : `sudo chmod +r /private/etc/sudoers.d/valet`";
 
-/// Platform issue detected
+// Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor et Valet ne peuvent pas fonctionner correctement : Composer signale un problème avec votre plateforme";
 "startup.errors.global_composer_platform_issues.subtitle" = "Veuillez suivre les étapes suivantes pour éviter ce problème à l'avenir :\n\n1. Exécuter `composer global update`.\n2. Redémarrer PHP Monitor. (Il devrait fonctionner à nouveau.)\n3. Passez à la version la plus ancienne de PHP que vous avez installée.\n4. Exécutez à nouveau  `composer global update`.";
 "startup.errors.global_composer_platform_issues.desc" = "Vous pouvez aller dans Préférences et cocher l'option 'Mettre à jour automatiquement les dépendances globales'. Cela mettra à jour les dépendances globales de Composer à chaque fois que vous changerez de version de PHP, ce qui n'est pas idéal si vous n'avez pas un accès constant à internet.\n\nPour savoir exactement ce qui ne va pas, essayez de lancer `valet --version`. Valet n'est actuellement pas fonctionnel avec les dépendances installées. Habituellement, cela est dû à une incompatibilité de version : c'est-à-dire que les dépendances installées correspondent à une version de PHP plus récente que la version actuellement active.";
 
-/// Cannot retrieve services
+// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Impossible de déterminer l'état des services";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor interroge habituellement `brew` en utilisant la commande suivante pour tester si les services peuvent être récupérés : `sudo brew services info nginx --json`.\n\n Le moniteur PHP n'a pas pu interpréter cette réponse.";
 "startup.errors.services_json_error.desc" = "Cela peut arriver si votre installation Homebrew n'est pas à jour, auquel cas Homebrew ne renverra pas encore de JSON. Vous pouvez généralement corriger cela en lançant `brew update` ou `brew tap homebrew/services`. Vous pouvez aussi essayer de lancer `sudo brew services info nginx --json` dans le terminal de votre choix.";
 
-/// Issue with `which` alias
+// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "Un problème de configuration a été détecté";
 "startup.errors.which_alias_issue.subtitle" = "Il semble qu'il y ait un fichier dans `/usr/local/bin/which`. Ceci est généralement mis en place par NodeJS, mais `node` n'est pas dans le PATH de `/usr/local/bin`. Pour corriger cela, continuez à lire.";
 "startup.errors.which_alias_issue.desc" = "Vous devrez faire un lien symbolique entre `node` et le répertoire `/usr/local/bin` pour vous assurer que PHP Monitor peut démarrer avec succès. Pour plus d'informations, voir : https://github.com/nicoverbruggen/phpmon/issues/174";
 
-/// Laravel Herd conflicts
+// Laravel Herd conflicts
 "startup.errors.herd_running.title" = "Laravel Herd semble être lancé";
 "startup.errors.herd_running.subtitle" = "Il semble que Laravel Herd soit en cours d'exécution. La configuration de Valet intégrée à Herd peut entrer en conflit avec votre installation habituelle de Valet, veuillez donc quitter Herd avant de continuer. (Vous pouvez parfaitement mélanger l'utilisation de Herd et de Valet mais vous ne devez pas utiliser les deux en même temps).";
 "startup.errors.herd_running.desc" = "Vous pouvez également constater que l'alias `php` ajouté par Herd à votre $PATH peut empêcher l'alias `php` de PHP Monitor de fonctionner, alors gardez cela à l'esprit. Vous pouvez vérifier `~/.zshrc` et voir ce que Herd a ajouté à votre $PATH.";

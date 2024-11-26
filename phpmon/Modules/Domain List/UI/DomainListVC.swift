@@ -221,7 +221,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         default: break
         }
 
-        self.domains = descriptor.ascending ? sorted.reversed() : sorted
+        sorted = descriptor.ascending ? sorted.reversed() : sorted
+
+        self.domains = sorted.sorted { $0.getListableFavorited() && !$1.getListableFavorited() }
     }
 
     func addedNewSite(name: String, secureAfterLinking: Bool) async {
@@ -261,16 +263,17 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let mapping: [String: String] = [
-            "TLS": DomainListTLSCell.reusableName,
-            "DOMAIN": DomainListNameCell.reusableName,
-            "ENVIRONMENT": DomainListPhpCell.reusableName,
-            "KIND": DomainListKindCell.reusableName,
-            "TYPE": DomainListTypeCell.reusableName
+        let mapping: [String: DomainListCellProtocol.Type] = [
+            "TLS": DomainListTLSCell.self,
+            "DOMAIN": DomainListNameCell.self,
+            "ENVIRONMENT": DomainListPhpCell.self,
+            "KIND": DomainListKindCell.self,
+            "TYPE": DomainListTypeCell.self
         ]
 
         let columnName = tableColumn!.identifier.rawValue
-        let identifier = NSUserInterfaceItemIdentifier(rawValue: mapping[columnName]!)
+        guard let cellType = mapping[columnName] else { return nil }
+        let identifier = NSUserInterfaceItemIdentifier(rawValue: cellType.getCellIdentifier(for: domains[row]))
 
         guard let userCell = tableView.makeView(withIdentifier: identifier, owner: self)
             as? DomainListCellProtocol else { return nil }

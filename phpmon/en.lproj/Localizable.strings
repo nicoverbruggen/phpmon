@@ -120,7 +120,7 @@
 "phpextman.list.status.external" = "This extension is already installed via another source, and cannot be managed.";
 "phpextman.list.status.installable" = "This extension can be installed.";
 "phpextman.list.status.dependent" = "You cannot uninstall this before uninstalling %@.";
-"phpextman.list.status.can_manage" = "This extension is installed and can be managed by PHP Monitor.";
+"phpextman.list.status.can_manage" = "This extension is installed and managed by PHP Monitor.";
 
 "phpextman.errors.not_found.title" = "Uh oh. No extensions discovered!";
 "phpextman.errors.not_found.desc" = "This is not supposed to happen. You may need to run the following command in your terminal:
@@ -138,7 +138,9 @@ and restart PHP Monitor for extensions to become visible. If the problem persist
 "phpman.version.has_update" = "Version %@ installed, %@ available.";
 "phpman.version.installed" = "Version %@ is currently installed.";
 "phpman.version.available_for_installation" = "This version can be installed.";
-"phpman.version.automatic_upgrade" = "This version will be automatically installed by upgrading an older version.";
+"phpman.version.unavailable" = "This version is temporarily unavailable.";
+"phpman.version.automatic_upgrade" = "This version will be automatically installed by upgrading an older version. 
+(Both this new version and the old one will be available after upgrading.)";
 "phpman.buttons.uninstall" = "Uninstall";
 "phpman.buttons.install" = "Install";
 "phpman.buttons.update" = "Update";
@@ -330,6 +332,8 @@ You may be asked for your password during the uninstallation process if file per
 "domain_list.always_use_php" = "Always use PHP %@";
 "domain_list.isolation_unavailable" = "Isolation Not Supported (in Valet 2)";
 
+"domain_list.favorite" = "Favorite Domain";
+"domain_list.unfavorite" = "Unfavorite Domain";
 "domain_list.actions" = "Actions";
 "domain_list.unlink" = "Unlink Directory";
 "domain_list.secure" = "Secure Domain";
@@ -645,7 +649,7 @@ You can do this by running `composer global update` in your terminal. After that
 
 // STARTUP
 
-/// 0. Architecture mismatch
+// 0. Architecture mismatch
 
 "alert.homebrew_missing.title" = "PHP Monitor cannot start!";
 "alert.homebrew_missing.subtitle" = "A working Homebrew binary could not be found in the usual location. Please restart the app after fixing this issue.";
@@ -653,32 +657,32 @@ You can do this by running `composer global update` in your terminal. After that
 
 "alert.homebrew_missing.quit" = "Quit";
 
-/// PHP binary not found
+// PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
 "startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
-/// PHP not found in /usr/local/opt or /opt/homebrew/opt
+// PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
 "startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_opt.desc" = "If you already have the `php` formula installed, you may need to run `brew install php` in order for PHP Monitor to detect this installation.";
 
-/// PHP binary is broken
+// PHP binary is broken
 "startup.errors.dyld_library.title" = "PHP is installed, but appears to be broken";
 "startup.errors.dyld_library.subtitle" = "When PHP Monitor is attempting to run commands, it is failing to do so correctly. This is usually an indicator of a broken PHP installation.";
 "startup.errors.dyld_library.desc" = "Running `brew reinstall php && brew link php` in your Terminal may resolve this issue, so please give that a try.";
 
-/// Valet is not installed
+// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet is not correctly installed";
 "startup.errors.valet_executable.subtitle" = "You must install Valet with Composer. The app will not work correctly until you resolve this issue.";
 "startup.errors.valet_executable.desc" = "If you haven't installed Laravel Valet yet, please do so first. If you have it installed but are seeing this message anyway, then try running `which valet` in Terminal, it should return: `%@`.";
 
-/// Valet configuration file missing or broken
+// Valet configuration file missing or broken
 "startup.errors.valet_json_invalid.title" = "Laravel Valet configuration file invalid or missing";
 "startup.errors.valet_json_invalid.subtitle" = "PHP Monitor needs to be able to read the configuration file. It appears the file is malformed or missing. Please check that it exists and is formatted correctly.";
 "startup.errors.valet_json_invalid.desc" = "You can find the file at `~/.config/valet/config.json`. If Laravel Valet cannot parse the configuration file, running any `valet` command will usually automatically fix the JSON file. Try running `valet --version` to automatically fix the file.";
 
-/// Valet version not readable
+// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "Your Valet version could not be read";
 "startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
 "startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
@@ -694,32 +698,32 @@ If you are seeing this message but are confused why this folder has gone missing
 "startup.errors.valet_version_not_supported.subtitle" = "You are running a version of Valet that is currently not supported. PHP Monitor currently works with Valet v2, v3 and v4. In order to avoid causing issues on your system, PHP Monitor cannot start.";
 "startup.errors.valet_version_not_supported.desc" = "You must install a version of Valet that is compatible with PHP Monitor, or you may need to upgrade to a newer version of PHP Monitor which may include compatibility for this version of Valet (consult the latest release notes for more info).";
 
-/// Brew & sudoers
+// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 "startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
-/// Valet & sudoers
+// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
-/// Platform issue detected
+// Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
 "startup.errors.global_composer_platform_issues.subtitle" = "Please follow these recommended steps to avoid seeing this issue in the future:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. (It should work again.)\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again.";
 "startup.errors.global_composer_platform_issues.desc" = "You can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
 
-/// Cannot retrieve services
+// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor usually queries `brew` using the following command to test if the services can be retrieved: `sudo brew services info nginx --json`.\n\nPHP Monitor could not interpret this response.";
 "startup.errors.services_json_error.desc" = "This can happen if your Homebrew installation is out of date, in which case Homebrew won't return JSON yet. You can usually fix this by running `brew update` or `brew tap homebrew/services`. You can also try running `sudo brew services info nginx --json` in your terminal of choice.";
 
-/// Issue with `which` alias
+// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "A configuration issue was detected";
 "startup.errors.which_alias_issue.subtitle" = "It appears that there's a file in `/usr/local/bin/which`. This is usually set up by NodeJS, but `node` isn't in the PATH in `/usr/local/bin`. To fix this, keep reading.";
 "startup.errors.which_alias_issue.desc" = "You will need to symlink `node` into the `/usr/local/bin` directory to make sure PHP Monitor can start successfully. For more info, see: https://github.com/nicoverbruggen/phpmon/issues/174";
 
-/// Laravel Herd conflicts
+// Laravel Herd conflicts
 "startup.errors.herd_running.title" = "Laravel Herd appears to be running";
 "startup.errors.herd_running.subtitle" = "It seems that Laravel Herd is currently running. Herd's built-in Valet setup may conflict with your regular Valet installation, so please quit Herd before continuing. (You can perfectly mix usage of Herd and regular Valet but you shouldn't run both at the same time.)";
 "startup.errors.herd_running.desc" = "You may also find that the `php` alias by Herd added to your $PATH may prevent `php` aliasing of PHP Monitor from working, so keep that in mind. You can check out `~/.zshrc` and see what Herd has added to your $PATH.";
@@ -749,7 +753,7 @@ Valet might break if you link these PHP versions so PHP Monitor won't let you sw
 "startup.sponsor_encouragement.learn_more" = "Learn More";
 "startup.sponsor_encouragement.skip" = "No Thanks";
 
-// ERROR MESSAGES (based on AlertableError)
+// ERROR MESSAGES
 
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
@@ -862,3 +866,14 @@ Please note that some features (greyed out below) are currently unavailable beca
 
 "alert.language_changed.title" = "You must restart PHP Monitor!";
 "alert.language_changed.subtitle" = "You just changed the display language of PHP Monitor. The menu will immediately use the correct language, but you may need to restart the app for all text throughout the app to reflect your new language choice.";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "Ignore";
+"startup.timeout.title" = "PHP Monitor is taking too long to initialize!";
+"startup.timeout.subtitle" = "If PHP Monitor remains busy for longer than 30 seconds, there may be something wrong with your Homebrew setup.";
+"startup.timeout.description" = "Sometimes, due to various file permission issues, things may break. You can try using `brew doctor` and `brew cleanup` to fix this. 
+
+It is recommended to restart PHP Monitor afterwards. Learn more about this issue at: https://github.com/nicoverbruggen/phpmon/issues/294.
+
+If PHP Monitor has finished initializing anyway or you want to wait a bit longer, feel free to click 'Ignore' and use PHP Monitor as usual. Either way, you may want to investigate, because this isn't supposed to take this long.";

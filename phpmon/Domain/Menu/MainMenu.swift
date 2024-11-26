@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import NVAlert
 
 @MainActor
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
@@ -120,7 +121,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func showIncompatiblePhpVersionsAlert() {
         Task { @MainActor in
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "startup.unsupported_versions_explanation.title".localized,
                 subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
                     PhpEnvironments.shared.incompatiblePhpVersions
@@ -185,7 +186,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func openLiteModeInfo() {
         Task { @MainActor in
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "lite_mode_explanation.title".localized,
                 subtitle: "lite_mode_explanation.subtitle".localized,
                 description: "lite_mode_explanation.description".localized

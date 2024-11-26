@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import NVAlert
 
 class ValetServicesManager: ServicesManager {
     override init() {
@@ -131,7 +132,7 @@ class ValetServicesManager: ServicesManager {
             Log.err("The service '\(named)' is now reporting an error.")
 
             guard let errorLogPath = after.error_log_path else {
-                return BetterAlert().withInformation(
+                return NVAlert().withInformation(
                     title: "alert.service_error.title".localized(named),
                     subtitle: "alert.service_error.subtitle.no_error_log".localized(named),
                     description: "alert.service_error.extra".localized
@@ -140,7 +141,7 @@ class ValetServicesManager: ServicesManager {
                 .show()
             }
 
-            BetterAlert().withInformation(
+            NVAlert().withInformation(
                 title: "alert.service_error.title".localized(named),
                 subtitle: "alert.service_error.subtitle.error_log".localized(named),
                 description: "alert.service_error.extra".localized

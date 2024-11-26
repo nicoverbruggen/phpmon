@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol AlertableError {
+public protocol AlertableError {
     func getErrorMessageKey() -> String
 }

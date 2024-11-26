@@ -10,10 +10,12 @@ import Cocoa
 import AppKit
 
 class DomainListNameCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListNameCell"
-
     @IBOutlet weak var labelSiteName: NSTextField!
     @IBOutlet weak var labelPathName: NSTextField!
+
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return domain.getListableFavorited() ? "domainListNameCellFavorited" : "domainListNameCell"
+    }
 
     func populateCell(with site: ValetSite) {
         labelSiteName.stringValue = "\(site.name).\(site.tld)"

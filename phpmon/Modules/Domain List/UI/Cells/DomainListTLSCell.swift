@@ -10,9 +10,11 @@ import Cocoa
 import AppKit
 
 class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListTLSCell"
-
     @IBOutlet weak var imageViewLock: NSImageView!
+
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return "domainListTLSCell"
+    }
 
     func populateCell(with site: ValetSite) {
         imageViewLock.contentTintColor = site.secured

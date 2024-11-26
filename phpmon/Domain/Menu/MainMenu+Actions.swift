@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NVAlert
 
 extension MainMenu {
 
@@ -20,7 +21,7 @@ extension MainMenu {
 
     @MainActor @objc func displayUnlinkedInfo() {
         Task { @MainActor in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "phpman.unlinked.title".localized,
                     subtitle: "phpman.unlinked.desc".localized,
@@ -32,7 +33,7 @@ extension MainMenu {
     }
 
     @MainActor @objc func fixHomebrewPermissions() {
-        if !BetterAlert()
+        if !NVAlert()
             .withInformation(
                 title: "alert.fix_homebrew_permissions.title".localized,
                 subtitle: "alert.fix_homebrew_permissions.subtitle".localized,
@@ -47,7 +48,7 @@ extension MainMenu {
         asyncExecution {
             try Actions.fixHomebrewPermissions()
         } success: {
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.fix_homebrew_permissions_done.title".localized,
                     subtitle: "alert.fix_homebrew_permissions_done.subtitle".localized,
@@ -56,7 +57,7 @@ extension MainMenu {
                 .withPrimary(text: "generic.ok".localized)
                 .show()
         } failure: { error in
-            BetterAlert.show(for: error as! HomebrewPermissionError)
+            NVAlert.show(for: error as! HomebrewPermissionError)
         }
     }
 
@@ -175,7 +176,7 @@ extension MainMenu {
             return
         }
 
-        BetterAlert().withInformation(
+        NVAlert().withInformation(
             title: "alert.revert_description.title".localized,
             subtitle: "alert.revert_description.subtitle".localized(
                 preset.textDescription
@@ -196,7 +197,7 @@ extension MainMenu {
     }
 
     @MainActor @objc func showPresetHelp() {
-        BetterAlert().withInformation(
+        NVAlert().withInformation(
             title: "preset_help_title".localized,
             subtitle: "preset_help_info".localized,
             description: "preset_help_desc".localized
@@ -263,7 +264,7 @@ extension MainMenu {
             Task { MainMenu.shared.switchToPhpVersion(version) }
         } else {
             Task {
-                BetterAlert().withInformation(
+                NVAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
                 ).withPrimary(

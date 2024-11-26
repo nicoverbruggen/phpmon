@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import NVAlert
 
 struct Preset: Codable, Equatable {
     let name: String
@@ -139,7 +140,7 @@ struct Preset: Codable, Equatable {
             return true
         } else {
             Task { @MainActor in
-                BetterAlert().withInformation(
+                NVAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
                     description: "alert.php_switch_unavailable.info".localized(

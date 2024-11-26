@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NVAlert
 
 extension MainMenu {
     /**
@@ -114,6 +115,9 @@ extension MainMenu {
         // Finally!
         Log.info("PHP Monitor is ready to serve!")
 
+        // Avoid showing the "startup timeout" alert
+        Startup.invalidateTimeoutTimer()
+
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
     }
@@ -143,7 +147,7 @@ extension MainMenu {
      */
     private func onEnvironmentFail() async {
         Task { @MainActor [self] in
-            BetterAlert()
+            NVAlert()
                 .withInformation(
                     title: "alert.cannot_start.title".localized,
                     subtitle: "alert.cannot_start.subtitle".localized,

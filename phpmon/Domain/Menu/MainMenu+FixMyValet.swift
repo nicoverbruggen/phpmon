@@ -8,6 +8,7 @@
 
 import Foundation
 import AppKit
+import NVAlert
 
 extension MainMenu {
 
@@ -19,7 +20,7 @@ extension MainMenu {
             return
         }
 
-        if !BetterAlert()
+        if !NVAlert()
             .withInformation(
                 title: "alert.fix_my_valet.title".localized,
                 subtitle: "alert.fix_my_valet.info".localized(PhpEnvironments.brewPhpAlias)
@@ -43,7 +44,7 @@ extension MainMenu {
     }
 
     @MainActor private func presentAlertForMissingFormula() {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "alert.php_formula_missing.title".localized,
                 subtitle: "alert.php_formula_missing.info".localized
@@ -53,7 +54,7 @@ extension MainMenu {
     }
 
     @MainActor private func presentAlertForSameVersion() {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "alert.fix_my_valet_done.title".localized,
                 subtitle: "alert.fix_my_valet_done.subtitle".localized,
@@ -64,7 +65,7 @@ extension MainMenu {
     }
 
     @MainActor private func presentAlertForDifferentVersion(version: String) {
-        BetterAlert()
+        NVAlert()
             .withInformation(
                 title: "alert.fix_my_valet_done.title".localized,
                 subtitle: "alert.fix_my_valet_done.subtitle".localized,

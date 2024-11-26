@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 
+// swiftlint:disable type_body_length
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: BusyStatus
@@ -192,6 +193,7 @@ struct PhpVersionManagerView: View {
                     .buttonStyle(.automatic)
                     .controlSize(.large)
             }
+            .accessibilityIdentifier("RefreshButton")
             .focusable(false)
             .disabled(self.status.busy)
 
@@ -231,14 +233,18 @@ struct PhpVersionManagerView: View {
                 }
             }
 
-            if formula.isInstalled {
+            if formula.hasUpgradedFormulaAlias {
+                HelpButton(frameSize: 18, textSize: 14, shadowOpacity: 1, shadowRadius: 2, action: {
+                    NSWorkspace.shared.open(Constants.Urls.WikiPhpUpgrade)
+                })
+            } else if formula.isInstalled {
                 Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
                     Task { await self.confirmUninstall(formula) }
                 }
             } else {
                 Button("phpman.buttons.install".localizedForSwiftUI) {
                     Task { await self.install(formula) }
-                }.disabled(formula.hasUpgradedFormulaAlias)
+                }.disabled(formula.hasUpgradedFormulaAlias || !formula.hasFormulaFile)
             }
         }
     }
@@ -268,6 +274,8 @@ struct PhpVersionManagerView: View {
                 Text("phpman.version.installed".localized(formula.installedVersion!))
                     .font(.system(size: 11))
                     .foregroundColor(.gray)
+            } else if !formula.hasFormulaFile {
+                unavailableFormula()
             } else {
                 Text("phpman.version.available_for_installation".localizedForSwiftUI)
                     .font(.system(size: 11))
@@ -291,7 +299,19 @@ struct PhpVersionManagerView: View {
             .foregroundColor(formula.iconColor)
             .padding(.horizontal, 5)
     }
+
+    private func unavailableFormula() -> some View {
+        HStack(spacing: 5) {
+            Text("phpman.version.unavailable".localizedForSwiftUI)
+                .font(.system(size: 11))
+                .foregroundColor(.gray)
+            HelpButton(action: {
+                NSWorkspace.shared.open(Constants.Urls.WikiPhpUnavailable)
+            })
+        }
+    }
 }
+// swiftlint:enable type_body_length
 
 #Preview {
     PhpVersionManagerView(

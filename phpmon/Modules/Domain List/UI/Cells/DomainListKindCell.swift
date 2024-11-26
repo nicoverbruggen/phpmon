@@ -10,9 +10,11 @@ import Cocoa
 import AppKit
 
 class DomainListKindCell: NSTableCellView, DomainListCellProtocol {
-    static let reusableName = "domainListKindCell"
-
     @IBOutlet weak var imageViewType: NSImageView!
+
+    static func getCellIdentifier(for domain: ValetListable) -> String {
+        return "domainListKindCell"
+    }
 
     func populateCell(with site: ValetSite) {
         // If the `aliasPath` is nil, we're dealing with a parked site (otherwise: linked).
