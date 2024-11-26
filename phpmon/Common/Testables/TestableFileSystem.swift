@@ -18,11 +18,11 @@ class TestableFileSystem: FileSystemProtocol {
         self.files = files
 
         // Ensure that each of the ~ characters are replaced with the home directory path
-        for key in self.files.keys where key.contains("~") {
-            self.files.renameKey(
-                fromKey: key,
-                toKey: key.replacingOccurrences(of: "~", with: self.homeDirectory)
-            )
+        accessQueue.sync {
+            for (key, value) in files {
+                let adjustedKey = key.contains("~") ? key.replacingOccurrences(of: "~", with: self.homeDirectory) : key
+                self.files[adjustedKey] = value
+            }
         }
 
         // Ensure that intermediate directories are created
@@ -46,38 +46,49 @@ class TestableFileSystem: FileSystemProtocol {
      */
     private(set) var homeDirectory = "/Users/fake"
 
+    /**
+     Serial dispatch queue for ensuring thread-safe access to the `files` dictionary.
+     */
+    private let accessQueue = DispatchQueue(label: "com.testablefilesystem.accessQueue")
+
     // MARK: - Basics
 
     func createDirectory(_ path: String, withIntermediateDirectories: Bool) throws {
         let path = path.replacingTildeWithHomeDirectory
 
-        if files[path] != nil {
-            throw TestableFileSystemError.alreadyExists
+        try accessQueue.sync {
+            if files[path] != nil {
+                throw TestableFileSystemError.alreadyExists
+            }
+
+            self.createIntermediateDirectories(path)
+
+            self.files[path] = .fake(.directory)
         }
-
-        self.createIntermediateDirectories(path)
-
-        self.files[path] = .fake(.directory)
     }
 
     func writeAtomicallyToFile(_ path: String, content: String) throws {
         let path = path.replacingTildeWithHomeDirectory
 
-        if files[path] != nil {
-            throw TestableFileSystemError.alreadyExists
-        }
+        try accessQueue.sync {
+            if files[path] != nil {
+                throw TestableFileSystemError.alreadyExists
+            }
 
-        self.files[path] = .fake(.text, content)
+            self.files[path] = .fake(.text, content)
+        }
     }
 
     func getStringFromFile(_ path: String) throws -> String {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            throw TestableFileSystemError.fileMissing
-        }
+        return try accessQueue.sync {
+            guard let file = files[path] else {
+                throw TestableFileSystemError.fileMissing
+            }
 
-        return file.content ?? ""
+            return file.content ?? ""
+        }
     }
 
     func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
@@ -88,32 +99,36 @@ class TestableFileSystem: FileSystemProtocol {
             seek = "\(seek)/"
         }
 
-        return self.files.keys
-            .filter { $0.hasPrefix(seek) }
-            .map { $0.replacingOccurrences(of: seek, with: "") }
-            .filter { !$0.contains("/") }
+        return accessQueue.sync {
+            self.files.keys
+                .filter { $0.hasPrefix(seek) }
+                .map { $0.replacingOccurrences(of: seek, with: "") }
+                .filter { !$0.contains("/") }
+        }
     }
 
     func getDestinationOfSymlink(_ path: String) throws -> String {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            throw TestableFileSystemError.fileMissing
-        }
+        return try accessQueue.sync {
+            guard let file = files[path] else {
+                throw TestableFileSystemError.fileMissing
+            }
 
-        if file.type != .symlink {
-            throw TestableFileSystemError.notSymlink
-        }
+            if file.type != .symlink {
+                throw TestableFileSystemError.notSymlink
+            }
 
-        guard let pathToSymlink = file.content else {
-            throw TestableFileSystemError.invalidSymlink
-        }
+            guard let pathToSymlink = file.content else {
+                throw TestableFileSystemError.invalidSymlink
+            }
 
-        if !files.keys.contains(pathToSymlink) {
-            throw TestableFileSystemError.invalidSymlink
-        }
+            if !files.keys.contains(pathToSymlink) {
+                throw TestableFileSystemError.invalidSymlink
+            }
 
-        return pathToSymlink
+            return pathToSymlink
+        }
     }
 
     // MARK: - Move & Delete Files
@@ -122,27 +137,31 @@ class TestableFileSystem: FileSystemProtocol {
         let path = path.replacingTildeWithHomeDirectory
         let newPath = newPath.replacingTildeWithHomeDirectory
 
-        self.files.keys.forEach { key in
-            if key.hasPrefix(path) {
-                self.files.renameKey(
-                    fromKey: key,
-                    toKey: key.replacingOccurrences(of: path, with: newPath)
-                )
+        accessQueue.sync {
+            self.files.keys.forEach { key in
+                if key.hasPrefix(path) {
+                    self.files.renameKey(
+                        fromKey: key,
+                        toKey: key.replacingOccurrences(of: path, with: newPath)
+                    )
+                }
             }
-        }
 
-        self.files.renameKey(fromKey: path, toKey: newPath)
+            self.files.renameKey(fromKey: path, toKey: newPath)
+        }
     }
 
     func remove(_ path: String) throws {
-        // Remove recursively
-        self.files.keys.forEach { key in
-            if key.hasPrefix(path) {
-                self.files.removeValue(forKey: key)
+        accessQueue.sync {
+            // Remove recursively
+            self.files.keys.forEach { key in
+                if key.hasPrefix(path) {
+                    self.files.removeValue(forKey: key)
+                }
             }
-        }
 
-        self.files.removeValue(forKey: path)
+            self.files.removeValue(forKey: path)
+        }
     }
 
     // MARK: — Attributes
@@ -150,11 +169,13 @@ class TestableFileSystem: FileSystemProtocol {
     func makeExecutable(_ path: String) throws {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            throw TestableFileSystemError.fileMissing
-        }
+        try accessQueue.sync {
+            guard let file = files[path] else {
+                throw TestableFileSystemError.fileMissing
+            }
 
-        file.type = .binary
+            file.type = .binary
+        }
     }
 
     // MARK: - Checks
@@ -162,92 +183,106 @@ class TestableFileSystem: FileSystemProtocol {
     func isExecutableFile(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path.replacingTildeWithHomeDirectory] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path.replacingTildeWithHomeDirectory] else {
+                return false
+            }
 
-        return file.type == .binary
+            return file.type == .binary
+        }
     }
 
     func isWriteableFile(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path.replacingTildeWithHomeDirectory] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path.replacingTildeWithHomeDirectory] else {
+                return false
+            }
 
-        return !file.readOnly
+            return !file.readOnly
+        }
     }
 
     func anyExists(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        return files.keys.contains(path)
+        return accessQueue.sync {
+            files.keys.contains(path)
+        }
     }
 
     func fileExists(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path] else {
+                return false
+            }
 
-        return [.binary, .symlink, .text].contains(file.type)
+            return [.binary, .symlink, .text].contains(file.type)
+        }
     }
 
     func directoryExists(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path] else {
+                return false
+            }
 
-        return [.directory].contains(file.type)
+            return [.directory].contains(file.type)
+        }
     }
 
     func isSymlink(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path] else {
+                return false
+            }
 
-        return file.type == .symlink
+            return file.type == .symlink
+        }
     }
 
     func isDirectory(_ path: String) -> Bool {
         let path = path.replacingTildeWithHomeDirectory
 
-        guard let file = files[path] else {
-            return false
-        }
+        return accessQueue.sync {
+            guard let file = files[path] else {
+                return false
+            }
 
-        return file.type == .directory
+            return file.type == .directory
+        }
     }
 
     public func printContents() {
-        for key in self.files.keys.sorted() {
-            print("\(key) -> \(self.files[key]!.type)")
+        accessQueue.sync {
+            for key in self.files.keys.sorted() {
+                print("\(key) -> \(self.files[key]!.type)")
+            }
         }
     }
 
     private func createIntermediateDirectories(_ path: String) {
         let path = path.replacingTildeWithHomeDirectory
-
         let items = path.components(separatedBy: "/")
-
         var preceding = ""
 
+        var directoriesToCreate: [String] = []
+
         for item in items {
-            let key = preceding == "/"
-                ? "/\(item)"
-                : "\(preceding)/\(item)"
-
-            if !self.files.keys.contains(key) {
-                self.files[key] = .fake(.directory)
-            }
-
+            let key = preceding == "/" ? "/\(item)" : "\(preceding)/\(item)"
+            directoriesToCreate.append(key)
             preceding = key
+        }
+
+        for key in directoriesToCreate where !self.files.keys.contains(key) {
+            self.files[key] = .fake(.directory)
         }
     }
 }
