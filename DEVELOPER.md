@@ -51,6 +51,12 @@ Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you 
 
 If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
 
+## ✅ Testing
+
+In order to properly test everything, you will want to use the _PHP Monitor DEV_ target. There are unit and UI tests both.
+
+You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve?
+
 ## 🚀 Release procedure
 
 1. Merge into `main`
