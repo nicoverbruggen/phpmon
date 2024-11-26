@@ -35,6 +35,19 @@ class TestableConfigurations {
                         "loopback": "127.0.0.1"
                     }
                     """),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php.rb"       : .fake(.text),
+                // "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.5.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.4.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.3.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.2.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.1.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@8.0.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@7.4.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@7.3.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@7.2.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@7.1.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@7.0.rb"   : .fake(.text),
+                "/opt/homebrew/Library/Taps/shivammathur/homebrew-php/Formula/php@5.6.rb"   : .fake(.text)
             ],
             shellOutput: [
                 "/opt/homebrew/bin/brew --version"

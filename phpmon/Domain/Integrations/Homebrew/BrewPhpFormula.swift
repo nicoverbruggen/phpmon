@@ -24,6 +24,9 @@ struct BrewPhpFormula: Equatable {
     /// Whether this formula is a stable version of PHP.
     let prerelease: Bool
 
+    /// Whether this formula's associated Homebrew file exists.
+    var hasFormulaFile: Bool = false
+
     /// Whether the formula is currently installed.
     var isInstalled: Bool {
         return installedVersion != nil
@@ -41,22 +44,12 @@ struct BrewPhpFormula: Equatable {
         self.installedVersion = installedVersion
         self.upgradeVersion = upgradeVersion
         self.prerelease = prerelease
+        self.hasFormulaFile = checkFormulaFile()
     }
 
     /// Whether the formula can be upgraded.
     var hasUpgrade: Bool {
         return upgradeVersion != nil
-    }
-
-    var hasFormulaFile: Bool {
-        guard let version = shortVersion else {
-            return false
-        }
-
-        return FileSystem.fileExists(
-            "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
-                .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
-        )
     }
 
     /// Whether this formula alias is different.
@@ -100,6 +93,21 @@ struct BrewPhpFormula: Equatable {
     /// Will report true if no health information is available.
     var healthy: Bool {
         return isHealthy() ?? true
+    }
+
+    /**
+     Verify whether the formula file exists (sourced via `shivammathur/homebrew-php`).
+     If it does not exist, the formula cannot be installed.
+     */
+    private func checkFormulaFile() -> Bool {
+        guard let version = shortVersion else {
+            return false
+        }
+
+        return FileSystem.fileExists(
+            "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+                .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
+        )
     }
 
     /**

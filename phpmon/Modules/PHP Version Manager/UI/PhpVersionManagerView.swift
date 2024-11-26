@@ -193,6 +193,7 @@ struct PhpVersionManagerView: View {
                     .buttonStyle(.automatic)
                     .controlSize(.large)
             }
+            .accessibilityIdentifier("RefreshButton")
             .focusable(false)
             .disabled(self.status.busy)
 
