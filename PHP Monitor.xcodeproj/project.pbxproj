@@ -1085,6 +1085,7 @@
 		C4930849279F331F009C240B /* AddSiteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSiteVC.swift; sourceTree = "<group>"; };
 		C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentCheck.swift; sourceTree = "<group>"; };
 		C4998F092617633900B2526E /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		C49DA9BC2D67AC49006F9CF4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C49EAA5129B12A5A00AB28FC /* Measurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
 		C49EAA5629B1689200AB28FC /* App+BrewWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+BrewWatch.swift"; sourceTree = "<group>"; };
 		C4A81CA328C67101008DD9D1 /* PMTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMTableView.swift; sourceTree = "<group>"; };
@@ -2348,7 +2349,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
 					C406A5EF298AD2CE00B5B85A = {
@@ -2382,6 +2383,7 @@
 				Base,
 				fr,
 				"zh-Hans",
+				es,
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
@@ -3409,6 +3411,7 @@
 				C4622F572A7593CB0016F8FB /* pt-PT */,
 				0336CAAF2B0D0CDA009A1034 /* fr */,
 				C453874C2BE37FD6002B9C65 /* zh-Hans */,
+				C49DA9BC2D67AC49006F9CF4 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
