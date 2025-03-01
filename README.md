@@ -84,9 +84,13 @@ Initially, I had an Alfred workflow for this — but it has now been replaced wi
 
 ## 🐘 Why not use Laravel Herd?
 
-If you don't need to customize your local PHP setup and just want an easy and ready-to-go environment to start coding, [Laravel Herd](https://herd.laravel.com) is probably more than sufficient for many use cases. 
+_**Disclaimer**: The author is not affiliated with Laravel or the Laravel team, nor Beyond Code, who maintain Laravel Herd. PHP Monitor is an independent project._
 
-If you need more customization and flexibility I encourage you to consider PHP Monitor in combination with Laravel Valet or some other solution like Docker (with Laravel Sail, for example).
+If you don't need to customize your local PHP setup and just want an easy and ready-to-go environment to start coding, [Laravel Herd](https://herd.laravel.com) is probably more than sufficient for many use cases. They also offer paid features that may be useful to you or your team. 
+
+At this point, many people enjoy using Herd. However, Herd may not be for everyone, which is why other solutions to run PHP locally exist. If you need more customization and flexibility I encourage you to consider PHP Monitor in combination with Laravel Valet. 
+
+If you want to get as close as you can to a real server environment your best bet is probably to use a Docker container. I _highly_ recommend that you try different setups, and use what you like best.
 
 ## 🤬 The app won't start?!
 
