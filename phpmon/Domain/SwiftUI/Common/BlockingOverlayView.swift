@@ -38,10 +38,12 @@ struct BlockingOverlayView<Content: View>: View {
                         .bold()
                         .foregroundColor(.primary)
                         .padding(.top, 8)
+                        .multilineTextAlignment(.center)
                     Text(detailText)
                         .font(.system(size: 11))
                         .foregroundColor(.primary)
                         .padding(.top, -4)
+                        .multilineTextAlignment(.center)
                 }.padding(60)
             }
         }

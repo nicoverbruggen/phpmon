@@ -201,11 +201,11 @@ You may be asked for your password during the uninstallation process if file per
 "phpman.operations.updating" = "Installing updates...";
 "phpman.operations.installing" = "Installing %@...";
 
-"phpman.steps.fetching" = "Fetching...";
+"phpman.steps.fetching" = "Fetching some package metadata...";
 "phpman.steps.downloading" = "Downloading package data...";
 "phpman.steps.installing" = "Installing some package data...";
 "phpman.steps.pouring" = "Pouring... This can take a while...";
-"phpman.steps.summary" = "Some package has finished installing...";
+"phpman.steps.summary" = "Please wait a moment...";
 
 "phpman.services.loading" = "Loading...";
 "phpman.services.not_installed" = "A key service is not installed.";
