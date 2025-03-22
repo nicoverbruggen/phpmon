@@ -3441,7 +3441,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3476,7 +3476,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3511,7 +3511,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3546,7 +3546,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3694,7 +3694,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3725,7 +3725,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -3966,7 +3966,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4083,7 +4083,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4200,7 +4200,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4241,7 +4241,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4383,7 +4383,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1530;
+				CURRENT_PROJECT_VERSION = 1535;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				DEVELOPMENT_TEAM = 8M54J5J787;
@@ -4424,7 +4424,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor Self-Updater";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2024 Nico Verbruggen. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023-2025 Nico Verbruggen. All rights reserved.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
