@@ -16,21 +16,65 @@ protocol BrewCommand {
 
 extension BrewCommand {
     internal func reportInstallationProgress(_ text: String) -> (Double, String)? {
-        if text.contains("Fetching") {
+        // Special cases: downloading a manifest is effectively fetching metadata
+        if text.contains("==> Downloading") && text.contains("/manifests/") {
             return (0.1, "phpman.steps.fetching".localized)
         }
-        if text.contains("Downloading") {
-            return (0.25, "phpman.steps.downloading".localized)
-        }
-        if text.contains("Installing") {
-            return (0.60, "phpman.steps.installing".localized)
-        }
-        if text.contains("Pouring") {
-            return (0.80, "phpman.steps.pouring".localized)
-        }
-        if text.contains("Summary") {
+
+        // Logical progress evaluation (reverse order for accuracy)
+        if text.contains("==> Summary") {
             return (0.90, "phpman.steps.summary".localized)
         }
+        if text.contains("==> Pouring") {
+            if let subject = extractContext(from: text) {
+                return (0.80, "phpman.steps.pouring".localized + "\n(\(subject))")
+            }
+            return (0.80, "phpman.steps.pouring".localized)
+        }
+        if text.contains("==> Installing") {
+            if let subject = extractContext(from: text) {
+                return (0.60, "phpman.steps.installing".localized + "\n(\(subject))")
+            }
+            return (0.60, "phpman.steps.installing".localized)
+        }
+        if text.contains("==> Downloading") {
+            if let subject = extractContext(from: text) {
+                return (0.25, "phpman.steps.downloading".localized + "\n(\(subject))")
+            }
+            return (0.25, "phpman.steps.downloading".localized)
+        }
+        if text.contains("==> Fetching") {
+            return (0.1, "phpman.steps.fetching".localized)
+        }
+        return nil
+    }
+
+    internal func extractContext(from text: String) -> String? {
+        var pattern = #""#
+        if text.contains("==> Fetching") {
+            pattern = #"==> Fetching (\S+)"#
+        }
+        if text.contains("==> Downloading") {
+            pattern = #"==> Downloading (\S+)"#
+        }
+        if text.contains("==> Installing") {
+            pattern = #"==> Installing (\S+)"#
+        }
+        if text.contains("==> Pouring") {
+            pattern = #"==> Pouring (\S+)"#
+        }
+
+        guard let regex = try? NSRegularExpression(pattern: pattern) else {
+            return nil
+        }
+
+        let range = NSRange(text.startIndex..<text.endIndex, in: text)
+        if let match = regex.firstMatch(in: text, options: [], range: range) {
+            if let formulaRange = Range(match.range(at: 1), in: text) {
+                return String(text[formulaRange])
+            }
+        }
+
         return nil
     }
 

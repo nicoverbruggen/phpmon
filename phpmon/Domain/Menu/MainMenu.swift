@@ -181,7 +181,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func openAbout() {
         NSApplication.shared.activate(ignoringOtherApps: true)
-        NSApplication.shared.orderFrontStandardAboutPanel()
+        NSApplication.shared.orderFrontStandardAboutPanel(self)
     }
 
     @objc func openLiteModeInfo() {

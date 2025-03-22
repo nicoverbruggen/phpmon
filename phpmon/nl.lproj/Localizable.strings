@@ -123,8 +123,10 @@ en PHP Monitor herstarten om de extensies zichtbaar te maken. Als het probleem z
 "phpman.version.broken" = "Deze versie lijkt kapot te zijn, u kan proberen herstellen.";
 "phpman.version.has_update" = "Versie %@ geïnstalleerd, %@ beschikbaar.";
 "phpman.version.installed" = "Versie %@ is momenteel geïnstalleerd.";
+"phpman.version.unavailable" = "Deze versie is tijdelijk niet beschikbaar.";
 "phpman.version.available_for_installation" = "Deze versie kan worden geïnstalleerd.";
-"phpman.version.automatic_upgrade" = "Deze versie zal automatisch geïnstalleerd worden door een upgrade.";
+"phpman.version.automatic_upgrade" = "Deze versie wordt automatisch geïnstalleerd door een oudere versie te upgraden. 
+(Zowel deze nieuwe versie als de oude versie zullen beschikbaar zijn na de upgrade.)";
 "phpman.buttons.uninstall" = "Verwijderen";
 "phpman.buttons.install" = "Installeren";
 "phpman.buttons.update" = "Bijwerken";
@@ -834,3 +836,14 @@ Houd er rekening mee dat sommige functies (hieronder grijs weergegeven) momentee
 
 "alert.language_changed.title" = "U moet PHP Monitor herstarten!";
 "alert.language_changed.subtitle" = "U heeft zojuist de weergavetaal van PHP Monitor gewijzigd. Het menu zal onmiddellijk de juiste taal gebruiken, maar u moet mogelijk de app herstarten om overal de nieuwe taal te zien.";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "Negeren";
+"startup.timeout.title" = "PHP Monitor doet er te lang over om te initialiseren!";
+"startup.timeout.subtitle" = "Als PHP Monitor langer dan 30 seconden bezig blijft, kan er iets mis zijn met je Homebrew-installatie.";
+"startup.timeout.description" = "Soms kunnen dingen misgaan door problemen met bestandstoestemmingen. Je kunt proberen `brew doctor` en `brew cleanup` te gebruiken om dit te verhelpen. 
+
+Het wordt aanbevolen om daarna PHP Monitor opnieuw te starten. Lees meer over dit probleem op: https://github.com/nicoverbruggen/phpmon/issues/294.
+
+Als PHP Monitor toch is geïnitialiseerd of als je nog even wilt wachten, klik dan op 'Negeren' en gebruik PHP Monitor zoals gewoonlijk. Hoe dan ook, het is verstandig om dit te onderzoeken, want dit zou niet zo lang moeten duren.";

@@ -122,8 +122,10 @@ và khởi động lại PHP Monitor để các tiện ích mở rộng trở n�
 "phpman.version.broken" = "Phiên bản này có vẻ đã bị hỏng, bạn có thể thử sửa chữa.";
 "phpman.version.has_update" = "Phiên bản %@ được cài đặt, Phiên bản %@ có sẵn.";
 "phpman.version.installed" = "Phiên bản %@ hiện đã được cài đặt.";
+"phpman.version.unavailable" = "Phiên bản này tạm thời không khả dụng.";
 "phpman.version.available_for_installation" = "Phiên bản này có thể được cài đặt.";
-"phpman.version.automatic_upgrade" = "Phiên bản này sẽ được cài đặt tự động bằng cách nâng cấp từ một phiên bản cũ hơn.";
+"phpman.version.automatic_upgrade" = "Phiên bản này sẽ được cài đặt tự động khi nâng cấp từ phiên bản cũ hơn. 
+(Cả phiên bản mới này và phiên bản cũ đều sẽ có sẵn sau khi nâng cấp.)";
 "phpman.buttons.uninstall" = "Gỡ cài đặt";
 "phpman.buttons.install" = "Cài đặt";
 "phpman.buttons.update" = "Cập nhật";
@@ -828,3 +830,14 @@ Vui lòng lưu ý rằng một số tính năng (xám bên dưới) hiện khôn
 
 "alert.language_changed.title" = "Bạn nên khởi động lại PHP Monitor!";
 "alert.language_changed.subtitle" = "Bạn vừa thay đổi ngôn ngữ hiển thị của PHP Monitor. Menu sẽ ngay lập tức sử dụng ngôn ngữ đúng, nhưng bạn có thể cần phải khởi động lại ứng dụng để toàn bộ văn bản trong ứng dụng phản ánh sự lựa chọn ngôn ngữ mới của bạn.";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "Bỏ qua";
+"startup.timeout.title" = "PHP Monitor đang mất quá nhiều thời gian để khởi tạo!";
+"startup.timeout.subtitle" = "Nếu PHP Monitor vẫn bận hơn 30 giây, có thể có vấn đề với thiết lập Homebrew của bạn.";
+"startup.timeout.description" = "Đôi khi, do các vấn đề về quyền tệp, mọi thứ có thể bị lỗi. Bạn có thể thử sử dụng `brew doctor` và `brew cleanup` để khắc phục. 
+
+Bạn nên khởi động lại PHP Monitor sau đó. Tìm hiểu thêm về vấn đề này tại: https://github.com/nicoverbruggen/phpmon/issues/294.
+
+Nếu PHP Monitor đã hoàn tất khởi tạo hoặc bạn muốn chờ thêm một chút, hãy nhấn 'Bỏ qua' và sử dụng PHP Monitor như bình thường. Dù thế nào, bạn cũng nên kiểm tra vì quá trình này không nên mất quá nhiều thời gian.";

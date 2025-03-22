@@ -137,8 +137,10 @@
 "phpman.version.broken" = "此版本似乎已损坏，您可以尝试修复";
 "phpman.version.has_update" = "已安装 %@ 版本，%@ 可用";
 "phpman.version.installed" = "当前已安装 %@ 版本";
+"phpman.version.unavailable" = "此版本暂时不可用。";
 "phpman.version.available_for_installation" = "此版本可以安装";
-"phpman.version.automatic_upgrade" = "此版本将通过升级旧版本自动安装";
+"phpman.version.automatic_upgrade" = "此版本将在升级旧版本时自动安装。 
+（升级后，新旧两个版本都将可用。）";
 "phpman.buttons.uninstall" = "卸载";
 "phpman.buttons.install" = "安装";
 "phpman.buttons.update" = "更新";
@@ -864,3 +866,14 @@ PHP Monitor 将尝试重新启动服务，如果失败(很有可能)，它将提
 
 "alert.language_changed.title" = "您必须重新启动 PHP Monitor！";
 "alert.language_changed.subtitle" = "您刚刚更改了 PHP Monitor 的显示语言。菜单将立即使用正确的语言，但您可能需要重新启动应用程序，以使整个应用程序中的所有文本都应用您的新语言选择";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "忽略";
+"startup.timeout.title" = "PHP Monitor 初始化时间过长！";
+"startup.timeout.subtitle" = "如果 PHP Monitor 持续忙碌超过 30 秒，可能是您的 Homebrew 配置存在问题。";
+"startup.timeout.description" = "有时候，由于文件权限问题，可能会导致程序无法正常运行。您可以尝试使用 `brew doctor` 和 `brew cleanup` 来修复问题。 
+
+建议随后重新启动 PHP Monitor。了解更多信息，请访问：https://github.com/nicoverbruggen/phpmon/issues/294。
+
+如果 PHP Monitor 现在已经初始化完成，或者您愿意再等一会儿，可以点击“忽略”并照常使用 PHP Monitor。不过，仍然建议检查问题，因为初始化不应该花费这么长时间。";

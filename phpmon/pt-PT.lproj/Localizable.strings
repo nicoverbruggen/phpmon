@@ -122,8 +122,10 @@ e reiniciar o PHP Monitor para que as extensões se tornem visíveis. Se o probl
 "phpman.version.broken" = "Esta versão parece estar danificada, você pode tentar repara-la.";
 "phpman.version.has_update" = "Versão %@ instalada, %@ disponível.";
 "phpman.version.installed" = "Versão %@ atualmente instalada.";
+"phpman.version.unavailable" = "Esta versão está temporariamente indisponível.";
 "phpman.version.available_for_installation" = "Esta versão pode ser instalada.";
-"phpman.version.automatic_upgrade" = "Esta versão será instalada automaticamente ao atualizar uma versão mais antiga.";
+"phpman.version.automatic_upgrade" = "Esta versão será instalada automaticamente ao atualizar a partir de uma versão mais antiga. 
+(Tanto esta nova versão como a versão antiga estarão disponíveis após a atualização.)";
 "phpman.buttons.uninstall" = "Desinstalar";
 "phpman.buttons.install" = "Instalar";
 "phpman.buttons.update" = "Atualizar";
@@ -832,3 +834,14 @@ Tenha em conta que algumas funcionalidades (esmaecidos abaixo) estão indisponí
 
 "alert.language_changed.title" = "Deve reiniciar o PHP Monitor!";
 "alert.language_changed.subtitle" = "Acabou de mudar o idioma de exibição do PHP Monitor. O menu usará imediatamente a língua correta, mas pode ser necessário reiniciar a aplicação para que todo o texto na aplicação reflita a sua nova escolha de idioma.";
+
+// STARTUP TIMEOUT
+
+"startup.timeout.ignore" = "Ignorar";
+"startup.timeout.title" = "O PHP Monitor está a demorar demasiado tempo a inicializar!";
+"startup.timeout.subtitle" = "Se o PHP Monitor continuar ocupado por mais de 30 segundos, poderá haver um problema com a sua configuração do Homebrew.";
+"startup.timeout.description" = "Por vezes, devido a problemas com permissões de ficheiros, as coisas podem correr mal. Pode tentar utilizar `brew doctor` e `brew cleanup` para resolver a situação. 
+
+Recomenda-se reiniciar o PHP Monitor depois disso. Saiba mais sobre este problema em: https://github.com/nicoverbruggen/phpmon/issues/294.
+
+Se o PHP Monitor já tiver inicializado ou se quiser esperar um pouco mais, pode clicar em 'Ignorar' e continuar a usar o PHP Monitor normalmente. De qualquer forma, é aconselhável investigar, pois isto não deveria demorar tanto tempo.";
