@@ -3707,7 +3707,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3738,7 +3738,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3979,7 +3979,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4096,7 +4096,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4213,7 +4213,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4396,7 +4396,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 7.1.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
