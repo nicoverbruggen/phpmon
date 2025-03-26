@@ -1,48 +1,48 @@
 // MENU ITEMS (MI)
 
 "mi_busy" = "PHP Monitor sedang sibuk...";
-"mi_unsure" = "Kami tidak yakin tentang versi PHP yang Anda jalankan.";
-"mi_php_version" = "Versi Global: PHP";
-"mi_php_switch" = "Ganti ke PHP";
-"mi_php_unsupported" = "Beberapa versi PHP yang terpasang tidak ditampilkan.";
-"mi_php_broken_1" = "Ouch! Tentu saja, instalasi PHP Anda bermasalah...";
+"mi_unsure" = "Kami tidak yakin versi PHP mana yang sedang Anda jalankan.";
+"mi_php_version" = "Versi global: PHP";
+"mi_php_switch" = "Beralih ke PHP";
+"mi_php_unsupported" = "Beberapa versi PHP yang terinstal tidak ditampilkan.";
+"mi_php_broken_1" = "Wah! Sepertinya instalasi PHP Anda bermasalah...";
 "mi_php_broken_2" = "Coba jalankan `php -v` di terminal Anda.";
-"mi_php_broken_3" = "Anda mungkin ingin mencoba memilih versi lainnya.";
-"mi_php_broken_4" = "Memastikan `brew reinstall php` (atau untuk versi yang sama) mungkin akan membantu.";
-"mi_no_php_linked" = "Tidak ada versi PHP terhubung!";
-"mi_fix_php_link" = "Sunting Otomatis...";
-"mi_no_php_linked_explain" = "Apa Itu?";
+"mi_php_broken_3" = "Anda juga bisa mencoba beralih ke versi lain.";
+"mi_php_broken_4" = "Menjalankan `brew reinstall php` (atau untuk versi yang setara) mungkin bisa membantu.";
+"mi_no_php_linked" = "Tidak ada versi PHP yang terhubung!";
+"mi_fix_php_link" = "Perbaiki Secara Otomatis...";
+"mi_no_php_linked_explain" = "Apa Ini?";
 
-"mi_php_version_manager" = "Manajer Versi PHP...";
-"mi_php_ext_manager" = "Manajer Ekstensi PHP...";
-"mi_php_config_manager" = "Pengelola Konfigurasi PHP...";
-"mi_manage_limits" = "Manajemen Batasan...";
+"mi_php_version_manager" = "Kelola Instalasi PHP...";
+"mi_php_ext_manager" = "Kelola Ekstensi PHP...";
+"mi_php_config_manager" = "Editor Konfigurasi PHP...";
+"mi_manage_limits" = "Kelola Batasan...";
 
-"mi_diagnostics" = "Penyakit";
-"mi_active_services" = "Jasa yang Aktif";
-"mi_restart_php_fpm" = "Buat Lagi: php";
-"mi_restart_nginx" = "Buat Lagi: nginx";
-"mi_restart_dnsmasq" = "Buat Lagi: dnsmasq";
-"mi_manage_services" = "Manajemen Jasa";
-"mi_restart_valet_services" = "Buat Lagi Layanan Valet";
-"mi_stop_valet_services" = "Stop Layanan Valet";
+"mi_diagnostics" = "Diagnostik";
+"mi_active_services" = "Layanan Aktif";
+"mi_restart_php_fpm" = "Mulai Ulang Layanan: php";
+"mi_restart_nginx" = "Mulai Ulang Layanan: nginx";
+"mi_restart_dnsmasq" = "Mulai Ulang Layanan: dnsmasq";
+"mi_manage_services" = "Kelola Layanan";
+"mi_restart_valet_services" = "Mulai Ulang Layanan Valet";
+"mi_stop_valet_services" = "Hentikan Layanan Valet";
 
-"mi_fix_my_valet" = "Sunting My Valet...";
-"mi_fix_my_valet_tooltip" = "Ada masalah dengan instalasi Anda Valet? PHP Monitor akan membantu Anda mengatur ulang dan kembalinya ke operasi dalam waktu singkat!";
-"mi_fix_brew_permissions" = "Kembalikan Izin Homebrew...";
-"mi_fix_brew_permissions_tooltip" = "Sudahkah Anda membutuhkan izin ketika menjalankan `brew upgrade`? PHP Monitor akan membantu mengatasi masalah izin tersebut.";
+"mi_fix_my_valet" = "Perbaiki Valet Saya...";
+"mi_fix_my_valet_tooltip" = "Ada masalah dengan instalasi Valet Anda? Coba perbaikan otomatis dari PHP Monitor yang akan membuatnya berfungsi kembali dalam sekejap!";
+"mi_fix_brew_permissions" = "Pulihkan Izin Homebrew...";
+"mi_fix_brew_permissions_tooltip" = "Mengalami masalah izin saat menjalankan `brew upgrade`? PHP Monitor siap membantu!";
 
-"mi_php_refresh" = "Refresh Information";
+"mi_php_refresh" = "Perbarui Informasi";
 
 "mi_configuration" = "Konfigurasi PHP";
-"mi_limits" = "Batasan Konfigurasi";
+"mi_limits" = "Konfigurasi Batasan";
 "mi_memory_limit" = "Batas Memori";
-"mi_post_max_size" = "Max POST";
-"mi_upload_max_filesize" = "Max Upload";
-"mi_manual_actions" = "Tindakan Tangan Pertama";
-"mi_services" = "Jasa";
-"mi_other" = "Pertolongan & Jasa";
-"mi_first_aid" = "Pertolongan";
+"mi_post_max_size" = "Maksimal POST";
+"mi_upload_max_filesize" = "Maksimal Unggahan";
+"mi_manual_actions" = "Tindakan Manual";
+"mi_services" = "Layanan";
+"mi_other" = "Pertolongan Pertama & Layanan";
+"mi_first_aid" = "Pertolongan Pertama";
 
 "mi_xdebug_mode" = "Manajer Mode Xdebug";
 
@@ -52,38 +52,40 @@
 "mi_phpmon_config" = "Temukan Folder PHP Monitor (.config/phpmon)";
 "mi_global_composer" = "Temukan File Composer Global (.composer)";
 "mi_phpinfo" = "Tampilkan Konfigurasi Saat Ini (phpinfo)";
-"mi_update_global_composer" = "Perbarui Dependent Composer Global...";
-"mi_detected_extensions" = "Ekstensi yang Didektksi";
-"mi_no_extensions_detected" = "Tidak ada ekstensi tambahan yang didekati.";
+"mi_update_global_composer" = "Perbarui Dependensi Composer Global...";
+"mi_detected_extensions" = "Ekstensi Terdeteksi";
+"mi_no_extensions_detected" = "Tidak ada ekstensi tambahan yang terdeteksi.";
 
-"mi_php_doctor" = "Dokter PHP";
-"mi_fa_php_doctor" = "Buka Dokter PHP...";
-"mi_recommendations_count" = "%i Pertanyaan Ditemukan!";
+"mi_php_doctor" = "PHP Doctor";
+"mi_fa_php_doctor" = "Buka PHP Doctor...";
+"mi_recommendations_count" = "%i Masalah Terdeteksi!";
 "mi_view_recommendations" = "Lihat Rekomendasi...";
 
-"mi_valet" = "Valet Laravel";
+"mi_valet" = "Laravel Valet";
 "mi_domain_list" = "Lihat Daftar Domain...";
 
-"mi_preferences" = "Pengaturan...";
+"mi_preferences" = "Preferensi...";
 "mi_donate" = "Donasi...";
-"mi_check_for_updates" = "Cek Perbarui...";
+"mi_check_for_updates" = "Periksa Pembaruan...";
 "mi_lite_mode" = "Tentang Mode Standalone...";
-"mi_quit" = "Selesai PHP Monitor";
+"mi_quit" = "Keluar dari PHP Monitor";
 "mi_about" = "Tentang PHP Monitor";
 
 "mi_presets_title" = "Preset Konfigurasi";
-"mi_apply_presets_title" = "Aplikasi Preset Konfigurasi";
+"mi_apply_presets_title" = "Terapkan Preset Konfigurasi";
 "mi_revert_to_prev_config" = "Kembalikan ke Konfigurasi Sebelumnya...";
-"mi_profiles_loaded" = "%i profile di-load dari file konfigurasi";
+"mi_profiles_loaded" = "%i profil dimuat dari file konfigurasi";
 
 "mi_no_presets" = "Tidak ada preset yang tersedia.";
 "mi_set_up_presets" = "Pelajari lebih lanjut tentang preset...";
 
-"mi_view_onboarding" = "Buka Tour Pendahuluan...";
+"mi_view_onboarding" = "Buka Tur Selamat Datang...";
 
-"mi_xdebug_available_modes" = "Mode Tersedia";
-"mi_xdebug_actions" = "Aksi";
-"mi_xdebug_disable_all" = "Tutup Semua Mode";
+"mi_xdebug_available_modes" = "Mode yang Tersedia";
+"mi_xdebug_actions" = "Tindakan";
+"mi_xdebug_disable_all" = "Nonaktifkan Semua Mode";
+
+"mm_actions" = "Tindakan";
 
 // CONFMAN
 
