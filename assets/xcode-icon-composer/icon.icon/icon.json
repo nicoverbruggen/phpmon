@@ -1,0 +1,45 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "srgb:0.27800,0.58000,0.98800,1.00000",
+      "srgb:0.27800,0.58000,0.98800,1.00000"
+    ]
+  },
+  "groups" : [
+    {
+      "blend-mode" : "screen",
+      "blur-material" : null,
+      "layers" : [
+        {
+          "blend-mode" : "normal",
+          "glass" : true,
+          "image-name" : "phpmon.svg",
+          "name" : "phpmon",
+          "position" : {
+            "scale" : 1.85,
+            "translation-in-points" : [
+              10.0234375,
+              8.21875
+            ]
+          }
+        }
+      ],
+      "lighting" : "individual",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
