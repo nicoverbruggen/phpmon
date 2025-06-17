@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -826,13 +826,6 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
-                                <rect key="frame" x="298" y="150" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="XK3-AR-Oc0"/>
-                                    <constraint firstAttribute="height" constant="30" id="lfW-dB-Eu3"/>
-                                </constraints>
-                            </progressIndicator>
                             <scrollView borderType="none" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
@@ -1150,21 +1143,51 @@ Gw
                                     <constraint firstAttribute="height" constant="300" id="Xpi-Rl-xmb"/>
                                 </constraints>
                             </customView>
+                            <visualEffectView hidden="YES" blendingMode="behindWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="r8h-6t-ZNm">
+                                <rect key="frame" x="263" y="125" width="100" height="80"/>
+                                <subviews>
+                                    <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ZiS-Gq-TLQ">
+                                        <rect key="frame" x="35" y="35" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="XK3-AR-Oc0"/>
+                                            <constraint firstAttribute="height" constant="30" id="lfW-dB-Eu3"/>
+                                        </constraints>
+                                    </progressIndicator>
+                                    <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xoy-5Y-WDT">
+                                        <rect key="frame" x="15" y="14" width="71" height="13"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="PLEASE WAIT" id="tMX-Ky-caT">
+                                            <font key="font" metaFont="system" size="10"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="xoy-5Y-WDT" firstAttribute="top" secondItem="ZiS-Gq-TLQ" secondAttribute="bottom" constant="8" symbolic="YES" id="4pN-Xn-po4"/>
+                                    <constraint firstAttribute="width" constant="100" id="Fo3-MY-e5e"/>
+                                    <constraint firstItem="xoy-5Y-WDT" firstAttribute="centerX" secondItem="r8h-6t-ZNm" secondAttribute="centerX" id="JPe-3T-uYg"/>
+                                    <constraint firstAttribute="height" constant="80" id="hcO-TE-dKr"/>
+                                    <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerX" secondItem="r8h-6t-ZNm" secondAttribute="centerX" id="sbD-l6-6kk"/>
+                                    <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerY" secondItem="r8h-6t-ZNm" secondAttribute="centerY" constant="-10" id="x7S-hb-YV1"/>
+                                </constraints>
+                            </visualEffectView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="leading" secondItem="rIZ-4U-bhj" secondAttribute="leading" id="2Tx-yb-xrv"/>
                             <constraint firstItem="wcV-ed-8Bv" firstAttribute="centerX" secondItem="rIZ-4U-bhj" secondAttribute="centerX" id="DPz-kQ-aP0"/>
                             <constraint firstItem="wcV-ed-8Bv" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" id="HCW-zJ-gSY"/>
+                            <constraint firstItem="r8h-6t-ZNm" firstAttribute="centerX" secondItem="rIZ-4U-bhj" secondAttribute="centerX" id="JF1-EN-aWm"/>
                             <constraint firstItem="p0j-eB-I2i" firstAttribute="top" secondItem="rIZ-4U-bhj" secondAttribute="top" id="Pst-5A-dI0"/>
                             <constraint firstAttribute="bottom" secondItem="p0j-eB-I2i" secondAttribute="bottom" id="QEw-5m-u1s"/>
-                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" constant="-10" id="XqX-Tf-8ck"/>
-                            <constraint firstItem="ZiS-Gq-TLQ" firstAttribute="centerX" secondItem="rIZ-4U-bhj" secondAttribute="centerX" id="eD8-TV-7dF"/>
+                            <constraint firstItem="r8h-6t-ZNm" firstAttribute="centerY" secondItem="rIZ-4U-bhj" secondAttribute="centerY" constant="-10" id="dkm-LB-eCY"/>
                             <constraint firstAttribute="trailing" secondItem="p0j-eB-I2i" secondAttribute="trailing" id="zWH-TD-RZv"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="labelProgressIndicator" destination="xoy-5Y-WDT" id="Wfj-oK-Bni"/>
                         <outlet property="noResultsView" destination="wcV-ed-8Bv" id="K3s-fb-1aN"/>
                         <outlet property="progressIndicator" destination="ZiS-Gq-TLQ" id="Ylb-Vk-uub"/>
+                        <outlet property="progressIndicatorContainer" destination="r8h-6t-ZNm" id="x0d-1g-Kzw"/>
                         <outlet property="tableView" destination="cp3-34-pQj" id="sdw-Ac-27X"/>
                     </connections>
                 </viewController>
@@ -1399,7 +1422,7 @@ Gw
                             <visualEffectView blendingMode="behindWindow" material="toolTip" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="F37-zt-gM3">
                                 <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
+                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
                                         <rect key="frame" x="13" y="13" width="114" height="32"/>
                                         <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LxP-t4-H2W">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1418,7 +1441,7 @@ Gw
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-Qu-qnK">
                                         <rect key="frame" x="187" y="20" width="333" height="20"/>
                                         <subviews>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
                                                 <rect key="frame" x="-7" y="-7" width="172" height="32"/>
                                                 <buttonCell key="cell" type="push" title="[i18n] Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="8UP-Sw-TP6">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1429,7 +1452,7 @@ Gw
                                                     <action selector="pressedCreateLink:" target="gOD-Gu-zDG" id="77M-Ip-GMi"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
+                                            <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
                                                 <rect key="frame" x="159" y="-7" width="181" height="32"/>
                                                 <buttonCell key="cell" type="push" title="[i18n] Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="bJ4-q8-1Ej">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
