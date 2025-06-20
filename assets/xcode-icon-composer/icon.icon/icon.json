@@ -12,6 +12,9 @@
       "layers" : [
         {
           "blend-mode" : "normal",
+          "fill" : {
+            "solid" : "srgb:1.00000,0.99038,0.96423,1.00000"
+          },
           "glass" : true,
           "image-name" : "phpmon.svg",
           "name" : "phpmon",
