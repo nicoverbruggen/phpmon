@@ -14,6 +14,24 @@ extension NSMenuItem {
         action: Selector? = nil,
         keyEquivalent: String = "",
         keyModifier: NSEvent.ModifierFlags = [],
+        systemImage: String? = nil,
+        customImage: String? = nil,
+    ) {
+        self.init(title: title, action: action, keyEquivalent: keyEquivalent)
+        self.keyEquivalentModifierMask = keyModifier
+        if systemImage != nil {
+            self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
+        }
+        if customImage != nil {
+            self.image = NSImage(named: customImage!)
+        }
+    }
+
+    convenience init(
+        title: String,
+        action: Selector? = nil,
+        keyEquivalent: String = "",
+        keyModifier: NSEvent.ModifierFlags = [],
         toolTip: String? = nil
     ) {
         self.init(title: title, action: action, keyEquivalent: keyEquivalent)
@@ -26,12 +44,20 @@ extension NSMenuItem {
         keyEquivalent: String = "",
         keyModifier: NSEvent.ModifierFlags = [],
         toolTip: String? = nil,
+        systemImage: String? = nil,
+        customImage: String? = nil,
         submenu: [NSMenuItem],
         target: NSObject? = nil
     ) {
         self.init(title: title, action: nil, keyEquivalent: keyEquivalent)
         self.keyEquivalentModifierMask = keyModifier
         self.toolTip = toolTip
+        if systemImage != nil {
+            self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
+        }
+        if customImage != nil {
+            self.image = NSImage(named: customImage!)
+        }
         self.submenu = NSMenu(items: submenu, target: target)
     }
 }

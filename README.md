@@ -1,7 +1,7 @@
 > **Note**
 > If this software has been useful to you, I ask that you **please star the repository**, that way I know that the software is being used. Also, please consider [sponsoring](https://nicoverbruggen.be/sponsor) to support the project, as this is something I make in my free time. **Thank you!** ⭐️
-
-<p align="center"><img src="./docs/logo.png" alt="PHP Monitor Logo" width="500px" /></p>
+ 
+<p align="center"><img src="./docs/logo.svg" alt="PHP Monitor Logo" width="500px" /></p>
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up if you want to use all of the functionality of the app</u> (consult the FAQ below with info about how to set up your environment).
 
@@ -22,7 +22,7 @@ You can also add new domains as links, isolate sites, manage various services, a
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
 * Your user account can administer your computer (required for some functionality, e.g. certificate generation)
-* macOS 12.4 or later
+* macOS 13.5 or later
 * Homebrew is installed in the default location (`/usr/local/homebrew` or `/opt/homebrew`)
 * Homebrew `php` formula is installed
 * Optional but recommended: Laravel Valet

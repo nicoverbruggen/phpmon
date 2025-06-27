@@ -17,6 +17,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     @IBOutlet weak var tableView: PMTableView!
     @IBOutlet weak var noResultsView: NSView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet weak var progressIndicatorContainer: NSVisualEffectView!
+    @IBOutlet weak var labelProgressIndicator: NSTextField!
 
     // MARK: - Variables
 
@@ -149,6 +151,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             Task {
                 @MainActor in self.progressIndicator.startAnimation(true)
+                self.labelProgressIndicator.stringValue = "phpman.steps.wait".localized
+                self.progressIndicatorContainer.layer?.cornerRadius = 10
+                self.progressIndicatorContainer.isHidden = false
             }
         })
 
@@ -163,6 +168,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      */
     @MainActor public func setUINotBusy() {
         timer?.invalidate()
+        progressIndicatorContainer.isHidden = true
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
         tableView.isEnabled = true

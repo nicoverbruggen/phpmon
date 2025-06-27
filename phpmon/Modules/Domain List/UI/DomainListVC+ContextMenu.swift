@@ -74,21 +74,24 @@ extension DomainListVC {
 
     private func addSystemApps(to menu: NSMenu) {
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.system_apps".localized))
-        menu.addItem(
-            withTitle: "domain_list.open_in_finder".localized,
+        menu.addItem(NSMenuItem(
+            title: "domain_list.open_in_finder".localized,
             action: #selector(self.openInFinder),
-            keyEquivalent: "F"
-        )
-        menu.addItem(
-            withTitle: "domain_list.open_in_terminal".localized,
+            keyEquivalent: "F",
+            systemImage: "folder"
+        ))
+        menu.addItem(NSMenuItem(
+            title: "domain_list.open_in_terminal".localized,
             action: #selector(self.openInTerminal),
-            keyEquivalent: "T"
-        )
-        menu.addItem(
-            withTitle: "domain_list.open_in_browser".localized,
+            keyEquivalent: "T",
+            systemImage: "apple.terminal.fill"
+        ))
+        menu.addItem(NSMenuItem(
+            title: "domain_list.open_in_browser".localized,
             action: #selector(self.openInBrowser),
-            keyEquivalent: "B"
-        )
+            keyEquivalent: "B",
+            systemImage: "globe"
+        ))
     }
 
     private func addDetectedApps(to menu: NSMenu) {
@@ -100,7 +103,8 @@ extension DomainListVC {
                 let editorMenuItem = EditorMenuItem(
                     title: "domain_list.open_in".localized(editor.name),
                     action: #selector(self.openWithEditor(sender:)),
-                    keyEquivalent: ""
+                    keyEquivalent: "",
+                    systemImage: "arrow.up.right"
                 )
                 editorMenuItem.editor = editor
                 menu.addItem(editorMenuItem)
@@ -110,11 +114,12 @@ extension DomainListVC {
 
     private func addUnlink(to menu: NSMenu, with site: ValetSite) {
         if site.aliasPath != nil {
-            menu.addItem(
-                withTitle: "domain_list.unlink".localized,
+            menu.addItem(NSMenuItem(
+                title: "domain_list.unlink".localized,
                 action: #selector(self.unlinkSite),
-                keyEquivalent: ""
-            )
+                keyEquivalent: "",
+                systemImage: "trash"
+            ))
             menu.addItem(NSMenuItem.separator())
         }
     }
@@ -164,23 +169,25 @@ extension DomainListVC {
     }
 
     private func addToggleSecure(to menu: NSMenu, secured: Bool) {
-        menu.addItem(
-            withTitle: secured
+        menu.addItem(NSMenuItem(
+            title: secured
             ? "domain_list.unsecure".localized
             : "domain_list.secure".localized,
             action: #selector(toggleSecure),
-            keyEquivalent: ""
-        )
+            keyEquivalent: "",
+            systemImage: secured ? "lock.slash" : "lock"
+        ))
     }
 
     private func addToggleFavorite(to menu: NSMenu, favorited: Bool) {
-        menu.addItem(
-            withTitle: favorited
+        menu.addItem(NSMenuItem(
+            title: favorited
             ? "domain_list.unfavorite".localized
             : "domain_list.favorite".localized,
             action: #selector(toggleFavorite),
-            keyEquivalent: ""
-        )
+            keyEquivalent: "",
+            systemImage: favorited ? "star.slash.fill" : "star.fill"
+        ))
     }
 
     private func addMenuItemsForExtensions(to menu: NSMenu, for extensions: [PhpExtension], version: String) {
