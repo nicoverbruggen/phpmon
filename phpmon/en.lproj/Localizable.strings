@@ -68,6 +68,7 @@
 "mi_donate" = "Donate...";
 "mi_check_for_updates" = "Check for Updates...";
 "mi_lite_mode" = "About Standalone Mode...";
+"mi_driver" = "App Driver: %@";
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 

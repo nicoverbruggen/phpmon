@@ -103,13 +103,6 @@ extension StatusMenu {
         }
     }
 
-    @MainActor func addLiteModeMenuItem() {
-        addItems([
-            NSMenuItem.separator(),
-            NSMenuItem(title: "mi_lite_mode".localized, action: #selector(MainMenu.openLiteModeInfo))
-        ])
-    }
-
     @MainActor func addPreferencesMenuItems() {
 
         addItems([
@@ -331,13 +324,14 @@ extension StatusMenu {
         if Valet.installed {
             items.append(contentsOf: [
                 NSMenuItem.separator(),
+                HeaderView.asMenuItem(text: "Laravel Valet"),
                 NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnvironments.brewPhpAlias),
                            action: #selector(MainMenu.fixMyValet),
                            toolTip: "mi_fix_my_valet_tooltip".localized),
                 NSMenuItem(title: "mi_fix_brew_permissions".localized(),
                            action: #selector(MainMenu.fixHomebrewPermissions),
                            toolTip: "mi_fix_brew_permissions_tooltip".localized),
-                NSMenuItem.separator(),
+               NSMenuItem.separator(),
 
                 // SERVICES
                 HeaderView.asMenuItem(text: "mi_services".localized),

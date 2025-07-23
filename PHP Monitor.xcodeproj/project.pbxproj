@@ -25,6 +25,10 @@
 		03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF52A2E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
+		03BFF52C2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
+		03BFF52D2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
+		03BFF52E2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
+		03BFF52F2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
 		03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		5420395926135DC100FB00FA /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
@@ -925,6 +929,7 @@
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpExtensionManagerView+Actions.swift"; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
+		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03E36FE628D9219000636F7F /* ActiveShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveShell.swift; sourceTree = "<group>"; };
 		5420395826135DC100FB00FA /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -1855,6 +1860,7 @@
 				C4F361602836BFD9003598CC /* MainMenu+Actions.swift */,
 				C47331A1247093B7009A0597 /* StatusMenu.swift */,
 				C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */,
+				03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */,
 				C4821C592C2DEDE200357A68 /* AppMenu.swift */,
 			);
 			path = Menu;
@@ -2648,6 +2654,7 @@
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewDecodable.swift in Sources */,
+				03BFF52E2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
@@ -2869,6 +2876,7 @@
 				C471E7FE28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
 				C4415E8F2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C471E7D828F9BA8F0021E251 /* FileSystemProtocol.swift in Sources */,
+				03BFF52F2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				C471E7F328F9BAC70021E251 /* PhpHelper.swift in Sources */,
 				C46DC7A62C7B5BC900F19D17 /* Favorites.swift in Sources */,
 				C471E7E728F9BAC20021E251 /* Constants.swift in Sources */,
@@ -3098,6 +3106,7 @@
 				C471E80228F9BAD40021E251 /* PhpInstallation.swift in Sources */,
 				C471E81028F9BAE80021E251 /* StringExtension.swift in Sources */,
 				C48DDD1029C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
+				03BFF52C2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */,
 				C471E82128F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */,
@@ -3246,6 +3255,7 @@
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
+				03BFF52D2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				C4AFC4B429C4F43300BF4E0D /* HomebrewUpgradableTest.swift in Sources */,
 				C4E2E84828FC1D93003B070C /* TestableConfigurationTest.swift in Sources */,
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
