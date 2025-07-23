@@ -10,21 +10,6 @@ import AppKit
 import NVAlert
 
 class Startup {
-
-    @MainActor static var startupTimer: Timer?
-
-    @MainActor func startTimeoutTimer() {
-        Self.startupTimer = Timer.scheduledTimer(
-            timeInterval: 30.0, target: self, selector: #selector(startupTimeout),
-            userInfo: nil, repeats: false
-        )
-    }
-
-    @MainActor static func invalidateTimeoutTimer() {
-        Self.startupTimer?.invalidate()
-        Self.startupTimer = nil
-    }
-
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.

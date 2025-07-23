@@ -21,6 +21,10 @@
 		033D45A02B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */; };
 		033D45A12B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */; };
 		033D45A32B0D531D00070080 /* PhpExtensionManagerView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */; };
+		03BFF5272E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
+		03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
+		03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
+		03BFF52A2E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		5420395926135DC100FB00FA /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
@@ -920,6 +924,7 @@
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpExtensionManagerView+Actions.swift"; sourceTree = "<group>"; };
+		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03E36FE628D9219000636F7F /* ActiveShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveShell.swift; sourceTree = "<group>"; };
 		5420395826135DC100FB00FA /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -1938,6 +1943,7 @@
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C409349C298EE8E900D25014 /* AppUpdater.swift */,
@@ -2589,6 +2595,7 @@
 				C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */,
 				C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
+				03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */,
 				C44A874828905BB000498BC4 /* ProgressVC.swift in Sources */,
 				C4CCBA6C275C567B008C7055 /* PMWindowController.swift in Sources */,
 				C456A0C62AA614BD0080144F /* PhpPreference.swift in Sources */,
@@ -2892,6 +2899,7 @@
 				C490E3B929BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
 				C471E7FF28F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */,
+				03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */,
 				C471E7F228F9BAC70021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7E628F9BAC20021E251 /* Process.swift in Sources */,
 				C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
@@ -3078,6 +3086,7 @@
 				C4611E5A2AEAD2E20010BE24 /* ConfigManagerWindowController.swift in Sources */,
 				C471E80E28F9BAE80021E251 /* DateExtension.swift in Sources */,
 				C490E3BA29BCA368006D2DE6 /* App+BrewWatch.swift in Sources */,
+				03BFF5272E312C3D007F96FA /* Startup+Timers.swift in Sources */,
 				C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */,
 				C471E81228F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7DF28F9BAAB0021E251 /* RealCommand.swift in Sources */,
@@ -3248,6 +3257,7 @@
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,
 				C481F79726164A78004FBCFF /* PreferencesVC.swift in Sources */,
 				C495F5B028A42E080087F70A /* EnvironmentCheck.swift in Sources */,
+				03BFF52A2E312C3D007F96FA /* Startup+Timers.swift in Sources */,
 				C41E871B2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
@@ -3692,7 +3702,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3704,7 +3714,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3722,7 +3732,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3734,7 +3744,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3955,7 +3965,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3967,7 +3977,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4071,7 +4081,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4083,7 +4093,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.dev;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) DEV";
@@ -4187,7 +4197,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4199,7 +4209,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -4366,7 +4376,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1556;
+				CURRENT_PROJECT_VERSION = 1560;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -4378,7 +4388,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 25.06;
+				MARKETING_VERSION = 25.07;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";

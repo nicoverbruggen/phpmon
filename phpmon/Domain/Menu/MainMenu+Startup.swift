@@ -103,12 +103,6 @@ extension MainMenu {
         // Find out which services are active
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
-        // Post-launch stats and update check, but only if not running tests
-        await performPostLaunchActions()
-
-        // Check if the linked version has changed between launches of phpmon
-        PhpGuard().compareToLastGlobalVersion()
-
         // We are ready!
         PhpEnvironments.shared.isBusy = false
 
@@ -120,6 +114,9 @@ extension MainMenu {
 
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
+
+        // Post-launch stats and update check, but only if not running tests
+        await performPostLaunchActions()
     }
 
     /**
@@ -127,18 +124,24 @@ extension MainMenu {
      (This code is skipped when running SwiftUI previews.)
      */
     private func performPostLaunchActions() async {
-        if !isRunningSwiftUIPreview {
-            Stats.incrementSuccessfulLaunchCount()
-            Stats.evaluateSponsorMessageShouldBeDisplayed()
+        if isRunningSwiftUIPreview {
+            return
+        }
 
-            if Stats.successfulLaunchCount == 1 {
-                Log.info("Should present the first launch screen!")
-                Task { @MainActor in
-                    OnboardingWindowController.show()
-                }
-            } else {
-                await AppUpdater().checkForUpdates(userInitiated: false)
+        Stats.incrementSuccessfulLaunchCount()
+        Stats.evaluateSponsorMessageShouldBeDisplayed()
+
+        if Stats.successfulLaunchCount == 1 {
+            Log.info("Should present the first launch screen!")
+            Task { @MainActor in
+                OnboardingWindowController.show()
             }
+        } else {
+            // Check for updates
+            await AppUpdater().checkForUpdates(userInitiated: false)
+
+            // Check if the linked version has changed between launches of phpmon
+            await PhpGuard().compareToLastGlobalVersion()
         }
     }
 
