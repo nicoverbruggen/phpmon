@@ -23,7 +23,7 @@ class PhpGuard {
         Log.info("The currently linked version of PHP is: \(linked.version.short).")
     }
 
-    public func compareToLastGlobalVersion() {
+    public func compareToLastGlobalVersion() async {
         guard let currentVersion else {
             return
         }
@@ -34,6 +34,7 @@ class PhpGuard {
             Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
             return Log.warn("PHP Guard is saving the currently linked PHP version (first time only).")
         }
+
         Log.info("Previously, the globally linked PHP version was: \(previousVersion).")
 
         if previousVersion == currentVersion {

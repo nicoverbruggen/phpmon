@@ -51,7 +51,15 @@ class ValetInteractor {
 
         // Keep track of the command we wish to run
         let action = site.secured ? "unsecure" : "secure"
-        let command = "cd '\(site.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+
+        // Use modernized version of command using domain name
+        // This will allow us to secure multiple domains that use the same path
+        var command = "sudo \(Paths.valet) \(action) '\(site.name)' && exit;"
+
+        // For Valet 2, use the old syntax; this has a known issue so Valet 3+ is preferred
+        if !Valet.enabled(feature: .isolatedSites) {
+            command = "cd '\(site.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+        }
 
         // Run the command
         await Shell.quiet(command)

@@ -19,6 +19,16 @@ struct Constants {
     static let MinimumRecommendedValetVersion = "2.16.2"
 
     /**
+     The amount of seconds that is considered the threshold for
+     PHP Monitor to mark any given launch as a "slow" launch.
+     
+     If the startup procedure was slow (or hangs), this message should
+     be displayed. This is based on an appropriate launch time on a
+     basic M1 Apple chip, with some margin for slower Intel chips.
+     */
+    static let SlowBootThresholdInterval: TimeInterval = 30.0
+
+    /**
      PHP Monitor supplies a hardcoded list of PHP packages in its own
      PHP Version Manager. 
 

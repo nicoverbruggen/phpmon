@@ -15,7 +15,8 @@ struct ProjectTypeDetection {
     public static let CommonDependencyList = [
         "laravel/framework": "Laravel",
         "symfony/symfony": "Symfony",
-        "laravel/lumen": "Lumen"
+        "laravel/lumen": "Lumen",
+        "tempest/framework": "Tempest"
     ]
 
     /**
