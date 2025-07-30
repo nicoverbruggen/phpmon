@@ -66,12 +66,14 @@ class StatusMenu: NSMenu {
 
         addPreferencesMenuItems()
 
-        if Valet.installed {
-            // Add the menu item displaying the driver information
-            addValetVersionItem()
-        } else {
-            // No driver, using Standalone Mode (internally: lite mode)
-            addLiteModeMenuItem()
+        if Preferences.isEnabled(.displayDriver) {
+            if Valet.installed {
+                // Add the menu item displaying the driver information
+                addValetVersionItem()
+            } else {
+                // No driver, using Standalone Mode (internally: lite mode)
+                addLiteModeMenuItem()
+            }
         }
 
         addCoreMenuItems()

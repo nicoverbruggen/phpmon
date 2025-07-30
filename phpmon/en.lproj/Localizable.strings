@@ -467,6 +467,9 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.warn_about_non_standard_tld_desc" = "If you use a non-standard TLD, you may not wish to get repeated notifications about this.";
 "prefs.warn_about_non_standard_tld" = "Warn about non-standard TLD";
 
+"prefs.display_driver_desc" = "If disabled, you will not be able to see which driver is in use. If Valet is active, the version number will also no longer be visible.";
+"prefs.display_driver" = "App Driver";
+
 "prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
 "prefs.display_global_version_switcher" = "PHP Switcher";
 

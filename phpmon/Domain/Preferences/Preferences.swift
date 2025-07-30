@@ -72,6 +72,7 @@ class Preferences {
             PreferenceName.notifyAboutGlobalComposerStatus.rawValue: true,
 
             /// Preferences: UI Preferences
+            PreferenceName.displayDriver.rawValue: true,
             PreferenceName.displayGlobalVersionSwitcher.rawValue: true,
             PreferenceName.displayServicesManager.rawValue: true,
             PreferenceName.displayValetIntegration.rawValue: true,

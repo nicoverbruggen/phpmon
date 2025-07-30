@@ -55,7 +55,8 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
-        _ = vc.addView(when: true, vc.displayFeature("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true))
+        return vc
+            .addView(when: true, vc.displayFeature("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true))
             .addView(when: Valet.installed, vc.displayFeature("prefs.display_services_manager", .displayServicesManager))
             .addView(when: Valet.installed, vc.displayFeature("prefs.display_valet_integration", .displayValetIntegration))
             .addView(when: true, vc.displayFeature("prefs.display_php_config_finder", .displayPhpConfigFinder))
@@ -64,8 +65,7 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
             .addView(when: true, vc.displayFeature("prefs.display_extensions", .displayExtensions))
             .addView(when: true, vc.displayFeature("prefs.display_presets", .displayPresets))
             .addView(when: true, vc.displayFeature("prefs.display_misc", .displayMisc))
-
-        return vc
+            .addView(when: true, vc.displayFeature("prefs.display_driver", .displayDriver))
     }
     // swiftlint:enable line_length
 }
@@ -76,15 +76,13 @@ class NotificationPreferencesVC: GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
-        _ = vc.addView(when: true, vc.getNotifyAboutVersionChangePV())
+        return vc.addView(when: true, vc.getNotifyAboutVersionChangePV())
             .addView(when: true, vc.getNotifyAboutPresetsPV())
             .addView(when: Valet.installed, vc.getNotifyAboutSecureTogglePV())
             .addView(when: true, vc.getNotifyAboutGlobalComposerStatusPV())
             .addView(when: true, vc.getNotifyAboutServicesPV())
             .addView(when: Valet.installed, vc.getNotifyAboutPhpFpmChangePV())
             .addView(when: Valet.installed, vc.getWarnAboutNonStandardTldPV())
-
-        return vc
     }
 
 }
