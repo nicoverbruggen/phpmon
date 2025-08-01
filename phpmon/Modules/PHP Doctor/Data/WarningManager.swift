@@ -36,7 +36,8 @@ class WarningManager: ObservableObject {
             name: "Running PHP Monitor with Rosetta on M1",
             title: "warnings.arm_compatibility.title",
             paragraphs: { return ["warnings.arm_compatibility.description"] },
-            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon",
+            fix: nil
         ),
         Warning(
             command: {
@@ -50,7 +51,15 @@ class WarningManager: ObservableObject {
                 "warnings.helper_permissions.unavailable",
                 "warnings.helper_permissions.symlink"
             ] },
-            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
+            fix: {
+                // Add to PATH
+                await Provision().addPhpMonitorPath()
+                // Reload the PATH (via new Shell instance)
+                ActiveShell.reload()
+                // Finally, perform environment checks again
+                await WarningManager.shared.checkEnvironment()
+            }
         ),
         Warning(
             command: {
@@ -64,7 +73,8 @@ class WarningManager: ObservableObject {
                     PhpConfigChecker.shared.missing.joined(separator: "\n• ")
                 )
             ] },
-            url: nil
+            url: nil,
+            fix: nil
         )
     ]
 

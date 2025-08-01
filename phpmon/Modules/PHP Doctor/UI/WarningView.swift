@@ -12,6 +12,7 @@ struct WarningView: View {
     @State var title: String
     @State var paragraphs: [String]
     @State var documentationUrl: String?
+    @State var automaticFix: (() async -> Void)?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,9 +37,20 @@ struct WarningView: View {
                         minHeight: 0, maxHeight: .infinity,
                         alignment: .topLeading
                     )
-                    if documentationUrl != nil {
-                        Button("Learn More") {
-                            NSWorkspace.shared.open(URL(string: documentationUrl!)!)
+
+                    HStack {
+                        if let automaticFix {
+                            Button("Fix Automatically") {
+                                Task {
+                                    await automaticFix()
+                                }
+                            }
+                        }
+
+                        if let documentationUrl {
+                            Button("Learn More") {
+                                NSWorkspace.shared.open(URL(string: documentationUrl)!)
+                            }
                         }
                     }
                 }
