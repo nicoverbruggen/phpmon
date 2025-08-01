@@ -54,9 +54,7 @@ class WarningManager: ObservableObject {
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
             fix: {
                 // Add to PATH
-                await Provision().addPhpMonitorPath()
-                // Reload the PATH (via new Shell instance)
-                ActiveShell.reload()
+                await ZshRunCommand().addPhpMonitorPath()
                 // Finally, perform environment checks again
                 await WarningManager.shared.checkEnvironment()
             }
@@ -98,6 +96,8 @@ class WarningManager: ObservableObject {
      Checks the user's environment and checks if any special warnings apply.
      */
     func checkEnvironment() async {
+        ActiveShell.reload()
+
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.temporaryWarnings = self.evaluations
             await self.broadcastWarnings()
