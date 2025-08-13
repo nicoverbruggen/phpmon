@@ -5,17 +5,19 @@
 
 **PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up if you want to use all of the functionality of the app</u> (consult the FAQ below with info about how to set up your environment).
 
-<img src="./docs/screenshot.jpg" width="1280px" alt="phpmon screenshot (menu bar app)"/>
+<img src="./docs/screenshot@2x.jpg" width="1280px" alt="phpmon screenshot (menu bar app)"/>
 
-<small><i>Screenshot: Showing the key functionality of PHP Monitor.</i></small>
+<small><i>Screenshot: Showing the key functionality of PHP Monitor. You can switch between PHP versions, manage PHP installations, install extensions, manage domains, and much more.</i></small>
 
-It's super convenient to switch between different versions of PHP. You'll even get notifications (only if you choose to opt-in, of course)!
+It's super convenient to **globally switch** between different versions of PHP. This applies the selected version of PHP as the default on your system.
+
+If you prefer, you can also **pick a PHP version on a per-site basis** (this uses Valet's site isolation feature) which is very helpful.
 
 <img src="./docs/notification.png" width="370px" alt="phpmon screenshot (notification)"/>
 
 PHP Monitor also gives you quick access to various useful functionality (like accessing configuration files, restarting services, and more).
 
-You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP link issues.
+You can also add new domains as links, isolate sites, manage various services, and perform First Aid to fix all kinds of common PHP and Homebrew issues.
 
 ## 🖥 System requirements
 
