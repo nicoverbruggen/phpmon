@@ -9,23 +9,27 @@
 class FakeDomainScanner: DomainScanner {
 
     var sites: [ValetSite] = [
-        FakeValetSite(fakeWithName: "laravel", tld: "test", secure: true,
-                  path: "~/Code/laravel/framework", linked: true),
+        FakeValetSite(fakeWithName: "larament", tld: "test", secure: true,
+                      path: "~/Code/sites/larament", linked: true),
 
-        FakeValetSite(fakeWithName: "tailwind", tld: "test", secure: true,
-                  path: "~/Code/tailwind/site", linked: true, constraint: "8.0"),
+        FakeValetSite(fakeWithName: "symfony", tld: "test", secure: true,
+                  path: "~/Code/sites/symfony", linked: true, driver: "Symfony (^7.3)"),
 
-        FakeValetSite(fakeWithName: "forge", tld: "test", secure: true,
-                  path: "~/Code/laravel/forge", linked: true),
-
-        FakeValetSite(fakeWithName: "concord", tld: "test", secure: false,
-                  path: "~/Code/concord", linked: true, driver: "Laravel (^8.0)", constraint: "^7.4", isolated: "7.4"),
+        FakeValetSite(fakeWithName: "tempest", tld: "test", secure: true,
+                  path: "~/Code/sites/tempest", linked: true, driver: "Tempest (^1.6)", constraint: "^8.4"),
 
         FakeValetSite(fakeWithName: "drupal", tld: "test", secure: false,
-                  path: "~/Sites/drupal", linked: false, driver: "Drupal", constraint: "^7.4", isolated: "7.4"),
+                  path: "~/Sites/drupal", linked: false, driver: "Drupal", constraint: "^8.2", isolated: "8.2"),
 
         FakeValetSite(fakeWithName: "wordpress", tld: "test", secure: false,
-                  path: "~/Sites/wordpress", linked: false, driver: "WordPress", constraint: "^7.4", isolated: "7.4")
+                  path: "~/Sites/wordpress", linked: false, driver: "WordPress", constraint: "^8.0", isolated: "8.0"),
+
+        FakeValetSite(fakeWithName: "concord", tld: "test", secure: false,
+                  path: "~/Code/concord", linked: true, driver: "Laravel (^10)", constraint: "^8.3", isolated: "8.3"),
+
+        FakeValetSite(fakeWithName: "gen-ai-mcp", tld: "test", secure: true,
+                      path: "~/Code/gen-ai-mcp", linked: true, driver: "Laravel (^12)",
+                      constraint: "^8.4", isolated: "8.4")
     ]
 
     var proxies: [ValetProxy] = [

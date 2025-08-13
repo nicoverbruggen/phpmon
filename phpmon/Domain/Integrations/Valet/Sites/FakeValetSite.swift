@@ -15,8 +15,8 @@ class FakeValetSite: ValetSite {
         secure: Bool,
         path: String,
         linked: Bool,
-        driver: String = "Laravel (^9.0)",
-        constraint: String = "^8.1",
+        driver: String = "Laravel (^12)",
+        constraint: String = "^8.4",
         isolated: String? = nil
     ) {
         self.init(
