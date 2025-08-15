@@ -51,6 +51,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             \(Paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
             """
 

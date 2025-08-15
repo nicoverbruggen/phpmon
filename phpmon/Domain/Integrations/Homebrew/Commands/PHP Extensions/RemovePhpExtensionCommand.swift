@@ -36,6 +36,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             \(Paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
