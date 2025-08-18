@@ -71,6 +71,7 @@ struct PhpVersionManagerView: View {
             )
         }
 
+        // Finally, load PHP information
         await PhpEnvironments.detectPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
