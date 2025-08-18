@@ -161,6 +161,8 @@ class WarningManager: ObservableObject {
     func checkEnvironment() async {
         ActiveShell.reload()
 
+        await BrewDiagnostics.loadInstalledTaps()
+
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.temporaryWarnings = self.evaluations
             await self.broadcastWarnings()

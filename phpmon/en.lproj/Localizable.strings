@@ -819,6 +819,7 @@ COMMON TROUBLESHOOTING TIPS
 
 "warnings.limits_error.title" = "PHP Monitor could not retrieve limits.";
 "warnings.limits_error.steps" = "Try running ‘php -v’ in your terminal.";
+"warnings.being_fixed.description" = "PHP Monitor is addressing this issue. Please wait a bit.";
 
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";

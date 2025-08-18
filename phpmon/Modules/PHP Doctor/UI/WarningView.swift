@@ -50,12 +50,6 @@ struct WarningView: View {
                                     }
                                 },
                                 label: {
-                                    if busyFixing {
-                                        ProgressView()
-                                           .progressViewStyle(CircularProgressViewStyle())
-                                           .scaleEffect(0.6)
-                                    }
-
                                     Text("Fix Automatically")
                                 }
                             )
@@ -65,6 +59,17 @@ struct WarningView: View {
                             Button("Learn More") {
                                 NSWorkspace.shared.open(URL(string: documentationUrl)!)
                             }
+                        }
+                    }
+
+                    if busyFixing {
+                        HStack {
+                            ProgressView()
+                               .progressViewStyle(CircularProgressViewStyle())
+                               .scaleEffect(0.6)
+                            Text("warnings.being_fixed.description".localizedForSwiftUI)
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color.secondary)
                         }
                     }
                 }
