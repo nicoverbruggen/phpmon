@@ -56,10 +56,9 @@ extension MainMenu {
         // Actually detect the PHP versions
         await PhpEnvironments.detectPhpVersions()
 
-        // Verify and install third party taps (if missing)
-        // This may fail if the user has no internet, at which point
-        // the missing tap(s) will be actionable as a warning
-        await BrewDiagnostics.verifyAndInstallThirdPartyTaps()
+        // Verify third party taps
+        // The missing tap(s) will be actionable later
+        await BrewDiagnostics.verifyThirdPartyTaps()
 
         // Check for an alias conflict
         await BrewDiagnostics.checkForCaskConflict()

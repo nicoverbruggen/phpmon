@@ -13,6 +13,7 @@ struct WarningView: View {
     @State var paragraphs: [String]
     @State var documentationUrl: String?
     @State var automaticFix: (() async -> Void)?
+    @State var busyFixing: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -40,12 +41,25 @@ struct WarningView: View {
 
                     HStack {
                         if let automaticFix {
-                            Button("Fix Automatically") {
-                                Task {
-                                    await automaticFix()
+                            Button(
+                                action: {
+                                    Task {
+                                        busyFixing = true
+                                        await automaticFix()
+                                        busyFixing = false
+                                    }
+                                },
+                                label: {
+                                    if busyFixing {
+                                        ProgressView()
+                                           .progressViewStyle(CircularProgressViewStyle())
+                                           .scaleEffect(0.6)
+                                    }
+
+                                    Text("Fix Automatically")
                                 }
-                            }
-                        }
+                            )
+                            .disabled(busyFixing)                        }
 
                         if let documentationUrl {
                             Button("Learn More") {

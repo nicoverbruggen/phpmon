@@ -138,26 +138,11 @@ class BrewDiagnostics {
         }
     }
 
-    public static func verifyAndInstallThirdPartyTaps() async {
+    public static func verifyThirdPartyTaps() async {
         let requiredTaps = [
             "shivammathur/php",
             "shivammathur/extensions"
         ]
-
-        var requiredInstall = false
-
-        // Install required taps if missing (if possible)
-        for tap in requiredTaps where !installedTaps.contains(tap) {
-            Log.info("Required tap `\(tap)` is missing... will install!")
-            await Shell.quiet("brew tap \(tap)")
-            Log.info("Completed command. Will verify installation later...")
-            requiredInstall = true
-        }
-
-        // Reload the list of taps after installing
-        if requiredInstall {
-            await loadInstalledTaps()
-        }
 
         // Check the status of the installed taps
         for tap in requiredTaps {

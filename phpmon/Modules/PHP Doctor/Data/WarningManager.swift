@@ -100,7 +100,9 @@ class WarningManager: ObservableObject {
             ] },
             url: "https://github.com/shivammathur/homebrew-php",
             fix: {
+                await delay(seconds: 10)
                 await Shell.quiet("brew tap shivammathur/php")
+                await BrewDiagnostics.loadInstalledTaps()
                 await WarningManager.shared.checkEnvironment()
             }
         ),
@@ -116,6 +118,7 @@ class WarningManager: ObservableObject {
             url: "https://github.com/shivammathur/homebrew-extensions",
             fix: {
                 await Shell.quiet("brew tap shivammathur/extensions")
+                await BrewDiagnostics.loadInstalledTaps()
                 await WarningManager.shared.checkEnvironment()
             }
         ),
