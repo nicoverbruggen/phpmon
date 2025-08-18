@@ -61,6 +61,66 @@ class WarningManager: ObservableObject {
         ),
         Warning(
             command: {
+                PhpEnvironments.shared.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
+                && !Xdebug.enabled
+            },
+            name: "Missing configuration file for `xdebug.mode`",
+            title: "warnings.xdebug_conf_missing.title",
+            paragraphs: { return [
+                "warnings.xdebug_conf_missing.description"
+            ] },
+            url: "https://xdebug.org/docs/install#mode",
+            fix: {
+                if let php = PhpEnvironments.shared.currentInstall {
+                    if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
+                       let original = try? FileSystem.getStringFromFile(xdebug.file) {
+                        // Append xdebug.mode = off to the file
+                        try? FileSystem.writeAtomicallyToFile(
+                            xdebug.file,
+                            content: original + "\nxdebug.mode = off"
+                        )
+
+                        // Reload extension configuration by updating PHP installation info (reload)
+                        PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+
+                        // Finally, reload warnings
+                        await WarningManager.shared.checkEnvironment()
+                    }
+                }
+            }
+        ),
+        Warning(
+            command: {
+                !BrewDiagnostics.installedTaps.contains("shivammathur/php")
+            },
+            name: "`shivammathur/php` tap is missing",
+            title: "warnings.php_tap_missing.title",
+            paragraphs: { return [
+                "warnings.php_tap_missing.description"
+            ] },
+            url: "https://github.com/shivammathur/homebrew-php",
+            fix: {
+                await Shell.quiet("brew tap shivammathur/php")
+                await WarningManager.shared.checkEnvironment()
+            }
+        ),
+        Warning(
+            command: {
+                !BrewDiagnostics.installedTaps.contains("shivammathur/extensions")
+            },
+            name: "`shivammathur/extensions` tap is missing",
+            title: "warnings.extensions_tap_missing.title",
+            paragraphs: { return [
+                "warnings.extensions_tap_missing.description"
+            ] },
+            url: "https://github.com/shivammathur/homebrew-extensions",
+            fix: {
+                await Shell.quiet("brew tap shivammathur/extensions")
+                await WarningManager.shared.checkEnvironment()
+            }
+        ),
+        Warning(
+            command: {
                 PhpConfigChecker.shared.check()
                 return !PhpConfigChecker.shared.missing.isEmpty
             },

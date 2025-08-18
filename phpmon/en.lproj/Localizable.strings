@@ -824,7 +824,7 @@ COMMON TROUBLESHOOTING TIPS
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
 "warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
 "warnings.refresh.button" = "Scan Again";
-"warnings.refresh.button.description" = "Press this button once you've fixed an issue. This will cause PHP Monitor to re-evaluate your environment. If it's really fixed, the recommendation should disappear.";
+"warnings.refresh.button.description" = "Press this button if you've manually fixed an issue. This will cause PHP Monitor to re-evaluate your environment. (Automatic fixes do not require you to press this button.)";
 
 "warnings.helper_permissions.title" = "PHP Monitor’s helpers are currently unavailable.";
 "warnings.helper_permissions.description" = "PHP Monitor comes with various helper scripts. Using these scripts allows you to easily invoke a specific version of PHP without switching the linked PHP version.";
@@ -840,6 +840,15 @@ COMMON TROUBLESHOOTING TIPS
 • %@
 
 When files like these are missing, you should switch to the PHP version associated with those files: that may resolve the problem. If this doesn't fix the issue, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet (if you are using Valet).";
+
+"warnings.xdebug_conf_missing.title" = "Xdebug configuration is incomplete";
+"warnings.xdebug_conf_missing.description" = "You have Xdebug installed, but no mode is specified. Would you like for PHP Monitor to update your configuration? You can also fix this manually.";
+
+"warnings.php_tap_missing.title" = "`shivammathur/php` tap is missing";
+"warnings.php_tap_missing.description" = "This Homebrew tap is required to install older PHP versions via this app's PHP Version Manager.";
+
+"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap is missing";
+"warnings.extensions_tap_missing.description" = "This Homebrew tap is required to install extensions via this app's PHP Extension Manager.";
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
