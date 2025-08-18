@@ -52,12 +52,12 @@ class WarningManager: ObservableObject {
                 "warnings.helper_permissions.symlink"
             ] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
-            fix: {
+            fix: Paths.shell == "/bin/zsh" ? {
                 // Add to PATH
                 await ZshRunCommand().addPhpMonitorPath()
                 // Finally, perform environment checks again
                 await WarningManager.shared.checkEnvironment()
-            }
+            } : nil
         ),
         Warning(
             command: {
