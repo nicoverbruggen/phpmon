@@ -148,7 +148,9 @@ class BrewDiagnostics {
 
         // Install required taps if missing (if possible)
         for tap in requiredTaps where !installedTaps.contains(tap) {
+            Log.info("Required tap `\(tap)` is missing... will install!")
             await Shell.quiet("brew tap \(tap)")
+            Log.info("Completed command. Will verify installation later...")
             requiredInstall = true
         }
 
