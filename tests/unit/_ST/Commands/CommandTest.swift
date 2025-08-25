@@ -6,21 +6,23 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
 
-class CommandTest: XCTestCase {
+@Suite("Commands") 
+struct CommandTest {
 
-    func test_determine_php_version() {
+    @Test
+    func determinePhpVersion() {
         let version = Command.execute(
             path: Paths.php,
             arguments: ["-v"],
             trimNewlines: false
         )
 
-        XCTAssert(version.contains("(cli)"))
-        XCTAssert(version.contains("NTS"))
-        XCTAssert(version.contains("built"))
-        XCTAssert(version.contains("Zend"))
+        #expect(version.contains("(cli)"))
+        #expect(version.contains("NTS"))
+        #expect(version.contains("built"))
+        #expect(version.contains("Zend"))
     }
 
 }

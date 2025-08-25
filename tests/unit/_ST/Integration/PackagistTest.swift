@@ -8,6 +8,7 @@
 
 import Testing
 
+@Suite("Integration")
 struct PackagistTest {
     @Test func packagistRetrieval() async {
         let packageToCheck = "laravel/valet"
