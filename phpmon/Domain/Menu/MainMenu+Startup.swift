@@ -147,8 +147,10 @@ extension MainMenu {
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()
 
-            // Check if Valet has updates
-            await Valet.shared.checkForUpdates()
+            // Check if Valet has updates, but only if the driver display is enabled
+            if Preferences.isEnabled(.displayDriver) {
+                await Valet.shared.checkForUpdates()
+            }
         }
     }
 
