@@ -10,7 +10,7 @@ import Testing
 
 @Suite("Integration")
 struct PackagistTest {
-    @Test func packagistRetrieval() async {
+    @Test func canRetrieveLaravelValetVersion() async {
         let packageToCheck = "laravel/valet"
         let latestVersion = try? await Packagist.getLatestStableVersion(packageName: packageToCheck)
 

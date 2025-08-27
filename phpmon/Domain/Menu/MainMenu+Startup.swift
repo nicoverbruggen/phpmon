@@ -146,6 +146,9 @@ extension MainMenu {
 
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()
+
+            // Check if Valet has updates
+            await Valet.shared.checkForUpdates()
         }
     }
 
