@@ -219,7 +219,7 @@ class Valet {
             let latestVersion = try? await Packagist.getLatestStableVersion(packageName: "laravel/valet") {
             self.latestVersion = latestVersion
 
-            if latestVersion.isNewerThan(currentVersion, false) {
+            if latestVersion.isNewerThan(currentVersion) {
                 Log.info("The latest version of Valet is \(latestVersion.text); current is \(currentVersion.text).")
 
                 // Update the menu so this update is visible.

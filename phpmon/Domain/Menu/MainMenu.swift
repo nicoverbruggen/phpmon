@@ -137,6 +137,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    @objc func showValetUpgradeAvailableAlert() {
+        ValetUpgrader.showUpgradeAlert()
+    }
+
     /** Reloads the menu in the background, using `asyncExecution`. */
     @objc func reloadPhpMonitorMenuInBackground() {
         asyncExecution({

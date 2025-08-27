@@ -72,6 +72,9 @@
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
+"mi_valet_upgrade_available" = "An updated version of Valet is available.";
+"mi_valet_upgrade_action" = "Upgrade to Valet %@...";
+
 "mi_presets_title" = "Configuration Presets";
 "mi_apply_presets_title" = "Apply Configuration Presets";
 "mi_revert_to_prev_config" = "Revert to Previous Configuration...";
@@ -467,8 +470,8 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.warn_about_non_standard_tld_desc" = "If you use a non-standard TLD, you may not wish to get repeated notifications about this.";
 "prefs.warn_about_non_standard_tld" = "Warn about non-standard TLD";
 
-"prefs.display_driver_desc" = "If disabled, you will not be able to see which driver is in use. If Valet is active, the version number will also no longer be visible.";
-"prefs.display_driver" = "App Driver";
+"prefs.display_driver_desc" = "If disabled, you will not be able to see which driver is in use. If Valet is active, the version number will also no longer be visible, and you will not be notified about updates to Valet in the menu.";
+"prefs.display_driver" = "Driver & Updates";
 
 "prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
 "prefs.display_global_version_switcher" = "PHP Switcher";
@@ -891,3 +894,17 @@ Please note that some features (greyed out below) are currently unavailable beca
 It is recommended to restart PHP Monitor afterwards. Learn more about this issue at: https://github.com/nicoverbruggen/phpmon/issues/294.
 
 If PHP Monitor has finished initializing anyway or you want to wait a bit longer, feel free to click 'Ignore' and use PHP Monitor as usual. Either way, you may want to investigate, because this isn't supposed to take this long.";
+
+// VALET UPGRADES
+
+"valet_upgrade_available.title" = "Do you want to upgrade Valet to the latest compatible version?";
+"valet_upgrade_available.subtitle" = "Laravel Valet %@ is available. PHP Monitor can update your global Composer dependencies for you.";
+"valet_upgrade_available.description_constraint_ok" = "Given your global Composer setup, the latest version that will be installed should be the very latest, Laravel Valet %@.";
+"valet_upgrade_available.description_constraint_fail" = "Please note that given your global Composer setup, the latest version that can be automatically installed WILL NOT be latest version available. This is due to constraints in your global `composer.json` file. 
+
+Your version constraint for Valet is: `%@`, which prohibits the installation of Valet %@. 
+
+If you want to make edits to this file, please do so before upgrading. When you see this message, you should probably check Valet's release notes, as Valet's requirements may have changed.";
+"valet_upgrade_available.upgrade" = "Upgrade";
+"valet_upgrade_available.cancel" = "Cancel";
+"valet_upgrade_available.open_composer" = "Locate `composer.json`";
