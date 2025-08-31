@@ -126,7 +126,7 @@ For maximum compatibility with older PHP versions, you may wish to keep using Va
 <details>
 <summary><strong>How do I install additional versions of PHP, including legacy versions?</strong></summary>
 
-Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.3.
+Assuming you have installed the `php` formula, the latest stable version of PHP is installed. At the time of writing, this is PHP 8.4.
 
 You can install other supported versions of PHP via PHP Monitor's **PHP Version Manager**. (You can manually install or upgrade PHP versions too, but this is not recommended.)
 
@@ -208,16 +208,33 @@ If you'd like to have Valet as well, continue and install Valet with Composer, l
 
     composer global require laravel/valet
 
-For optimal results, you should lock your PHP platform for global dependencies to the oldest version of PHP you intend to run. If that version is PHP 7.0, your `~/.composer/composer.json` file could look like this (please adjust the version accordingly!):
+For optimal results, you should lock your PHP platform for global dependencies to the oldest version of PHP you intend to run. 
+
+If that version is PHP 8.4, your `~/.composer/composer.json` file could look like this (please adjust the version accordingly!):
 
 ```
 {
     "require": {
-        "laravel/valet": "^3.0",
+        "laravel/valet": "^4.9",
     },
     "config": {
         "platform": {
-            "php": "7.0"
+            "php": "8.4"
+        }
+    }
+}
+```
+
+A more realistic example is locking to an earlier version of PHP 8.0, like this:
+
+```
+{
+    "require": {
+        "laravel/valet": "^4.0",
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
         }
     }
 }
@@ -309,16 +326,16 @@ However, this might not be the case on your system. You _might_ have a specific 
 
 You can find out which version of PHP is being used by running `which php`.
 
-You can find out what exactly is causing the issue by running a command. On Intel, you can run (replace `7.4` with the version that is broken):
+You can find out what exactly is causing the issue by running a command. On Intel, you can run (replace `8.4` with the version that is broken):
 
 ```
-/usr/local/opt/php@7.4/bin/php -r "print phpversion();"
+/usr/local/opt/php@8.4/bin/php -r "print phpversion();"
 ```
 
-On Apple Silicon, you can run (replace `7.4` with the version that is broken):
+On Apple Silicon, you can run (replace `8.4` with the version that is broken):
 
 ```
-/opt/homebrew/opt/php@7.4/bin/php -r "print phpversion();"
+/opt/homebrew/opt/php@8.4/bin/php -r "print phpversion();"
 ```
 
 You should see an error or a warning here in the output. 
