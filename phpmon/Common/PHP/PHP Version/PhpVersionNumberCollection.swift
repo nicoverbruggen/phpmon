@@ -92,7 +92,7 @@ public struct PhpVersionNumberCollection: Equatable {
                 // If a patch is provided then the minor version cannot be bumped.
                 ? $0.hasSameMajorAndMinorButNewerOrSamePatch(version, strict)
                 // If a patch is not provided then the major version cannot be bumped.
-                : $0.hasSameMajorButNewerOrSameMinor(version, strict)
+                : $0.hasSameMajorButNewerOrSameMinor(version)
             }
         }
 

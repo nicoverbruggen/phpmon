@@ -138,6 +138,22 @@ class BrewDiagnostics {
         }
     }
 
+    public static func verifyThirdPartyTaps() async {
+        let requiredTaps = [
+            "shivammathur/php",
+            "shivammathur/extensions"
+        ]
+
+        // Check the status of the installed taps
+        for tap in requiredTaps {
+            if installedTaps.contains(tap) {
+                Log.info("As expected, `\(tap)` is installed!")
+            } else {
+                Log.warn("`\(tap)` does not appear to be installed, will be noted in warnings.")
+            }
+        }
+    }
+
     /**
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */

@@ -15,6 +15,7 @@ struct Warning: Identifiable, Hashable {
     let title: String
     let paragraphs: () -> [String]
     let url: String?
+    let fix: (() async -> Void)?
 
     /**
      - Parameters:
@@ -23,19 +24,22 @@ struct Warning: Identifiable, Hashable {
         - title: The title displayed for the user
         - paragraphs: The main body of text displayed for the user
         - url: The URL that one can navigate to for more information (if applicable)
+        - fix: The automatic fix that can be applied (if applicable)
      */
     init(
         command: @escaping () async -> Bool,
         name: String,
         title: String,
         paragraphs: @escaping () -> [String],
-        url: String?
+        url: String?,
+        fix: (() async -> Void)?
     ) {
         self.command = command
         self.name = name
         self.title = title
         self.paragraphs = paragraphs
         self.url = url
+        self.fix = fix
     }
 
     public func applies() async -> Bool {

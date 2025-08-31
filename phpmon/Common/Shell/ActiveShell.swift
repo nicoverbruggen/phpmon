@@ -15,6 +15,13 @@ var Shell: ShellProtocol {
 class ActiveShell {
     static var shared: ShellProtocol = RealShell()
 
+    public static func reload() {
+        if shared is RealShell {
+            // Start a new shell, this will re-populate the PATH
+            shared = RealShell()
+        }
+    }
+
     public static func useTestable(_ expectations: [String: BatchFakeShellOutput]) {
         Self.shared = TestableShell(expectations: expectations)
     }

@@ -76,7 +76,8 @@ struct PhpDoctorView: View {
                                 WarningView(
                                     title: warning.title,
                                     paragraphs: warning.paragraphs(),
-                                    documentationUrl: warning.url
+                                    documentationUrl: warning.url,
+                                    automaticFix: warning.fix
                                 )
                                 .fixedSize(horizontal: false, vertical: true)
 

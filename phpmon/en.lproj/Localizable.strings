@@ -72,6 +72,9 @@
 "mi_quit" = "Quit PHP Monitor";
 "mi_about" = "About PHP Monitor";
 
+"mi_valet_upgrade_available" = "An updated version of Valet is available.";
+"mi_valet_upgrade_action" = "Upgrade to Valet %@...";
+
 "mi_presets_title" = "Configuration Presets";
 "mi_apply_presets_title" = "Apply Configuration Presets";
 "mi_revert_to_prev_config" = "Revert to Previous Configuration...";
@@ -467,6 +470,9 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.warn_about_non_standard_tld_desc" = "If you use a non-standard TLD, you may not wish to get repeated notifications about this.";
 "prefs.warn_about_non_standard_tld" = "Warn about non-standard TLD";
 
+"prefs.display_driver_desc" = "If disabled, you will not be able to see which driver is in use. If Valet is active, the version number will also no longer be visible, and you will not be notified about updates to Valet in the menu.";
+"prefs.display_driver" = "Driver & Updates";
+
 "prefs.display_global_version_switcher_desc" = "If disabled, you will not be able to change the globally linked PHP version via the main menu.";
 "prefs.display_global_version_switcher" = "PHP Switcher";
 
@@ -816,12 +822,13 @@ COMMON TROUBLESHOOTING TIPS
 
 "warnings.limits_error.title" = "PHP Monitor could not retrieve limits.";
 "warnings.limits_error.steps" = "Try running ‘php -v’ in your terminal.";
+"warnings.being_fixed.description" = "PHP Monitor is addressing this issue. Please wait a bit.";
 
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
 "warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
 "warnings.refresh.button" = "Scan Again";
-"warnings.refresh.button.description" = "Press this button once you've fixed an issue. This will cause PHP Monitor to re-evaluate your environment. If it's really fixed, the recommendation should disappear.";
+"warnings.refresh.button.description" = "Press this button if you've manually fixed an issue. This will cause PHP Monitor to re-evaluate your environment. (Automatic fixes do not require you to press this button.)";
 
 "warnings.helper_permissions.title" = "PHP Monitor’s helpers are currently unavailable.";
 "warnings.helper_permissions.description" = "PHP Monitor comes with various helper scripts. Using these scripts allows you to easily invoke a specific version of PHP without switching the linked PHP version.";
@@ -837,6 +844,15 @@ COMMON TROUBLESHOOTING TIPS
 • %@
 
 When files like these are missing, you should switch to the PHP version associated with those files: that may resolve the problem. If this doesn't fix the issue, it's recommended to reinstall the appropriate PHP version(s) via Homebrew again, which should restore the configuration files that are missing. Missing configuration files can be the reason why you get '502 Bad Gateway' errors, even after running Fix My Valet (if you are using Valet).";
+
+"warnings.xdebug_conf_missing.title" = "Xdebug configuration is incomplete";
+"warnings.xdebug_conf_missing.description" = "You have Xdebug installed, but no mode is specified. Would you like for PHP Monitor to update your configuration? You can also fix this manually.";
+
+"warnings.php_tap_missing.title" = "`shivammathur/php` tap is missing";
+"warnings.php_tap_missing.description" = "This Homebrew tap is required to install older PHP versions via this app's PHP Version Manager.";
+
+"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap is missing";
+"warnings.extensions_tap_missing.description" = "This Homebrew tap is required to install extensions via this app's PHP Extension Manager.";
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
@@ -878,3 +894,21 @@ Please note that some features (greyed out below) are currently unavailable beca
 It is recommended to restart PHP Monitor afterwards. Learn more about this issue at: https://github.com/nicoverbruggen/phpmon/issues/294.
 
 If PHP Monitor has finished initializing anyway or you want to wait a bit longer, feel free to click 'Ignore' and use PHP Monitor as usual. Either way, you may want to investigate, because this isn't supposed to take this long.";
+
+// VALET UPGRADES
+
+"valet_upgrade_available.title" = "Do you want to upgrade Valet to the latest compatible version?";
+"valet_upgrade_available.subtitle" = "Laravel Valet %@ is available. PHP Monitor can update your global Composer dependencies for you.";
+"valet_upgrade_available.description_constraint_ok" = "Given your global Composer setup, the latest version that will be installed should be the very latest, Laravel Valet %@.";
+"valet_upgrade_available.description_constraint_fail" = "Please note that given your global Composer setup, the latest version that can be automatically installed WILL NOT be latest version available. This is due to constraints in your global `composer.json` file. 
+
+Your version constraint for Valet is: `%@`, which prohibits the installation of Valet %@. 
+
+If you want to make edits to this file, please do so before upgrading. When you see this message, you should probably check Valet's release notes, as Valet's requirements may have changed.";
+"valet_upgrade_available.upgrade" = "Upgrade";
+"valet_upgrade_available.cancel" = "Cancel";
+"valet_upgrade_available.open_composer" = "Locate `composer.json`";
+
+"valet_upgraded.title" = "Valet has been upgraded!";
+"valet_upgraded.subtitle" = "Sometimes, upgrades may require you to run `valet install` in a terminal after upgrading.";
+"valet_upgraded.description" = "PHP Monitor cannot know if this is necessary, so it doesn't do this automatically. However, if things don't seem to work correctly, you can try running `valet install` again and restart PHP Monitor.";

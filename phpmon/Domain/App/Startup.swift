@@ -278,19 +278,7 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    let output = await Shell.pipe("valet --version").out
-                    // Failure condition #1: does not contain Laravel Valet
-                    if !output.contains("Laravel Valet") {
-                        return true
-                    }
-                    // Failure condition #2: version cannot be parsed
-                    let versionString = output
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .components(separatedBy: "Laravel Valet")[1]
-                        .trimmingCharacters(in: .whitespaces)
-                    // Extract the version number
-                    Valet.shared.version = try! VersionNumber.parse(VersionExtractor.from(versionString)!)
-                    // Get the actual version
+                    await Valet.shared.updateVersionNumber()
                     return Valet.shared.version == nil
                 },
                 name: "`valet --version` was loaded",

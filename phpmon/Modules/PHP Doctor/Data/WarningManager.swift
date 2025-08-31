@@ -36,7 +36,8 @@ class WarningManager: ObservableObject {
             name: "Running PHP Monitor with Rosetta on M1",
             title: "warnings.arm_compatibility.title",
             paragraphs: { return ["warnings.arm_compatibility.description"] },
-            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon"
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon",
+            fix: nil
         ),
         Warning(
             command: {
@@ -50,7 +51,75 @@ class WarningManager: ObservableObject {
                 "warnings.helper_permissions.unavailable",
                 "warnings.helper_permissions.symlink"
             ] },
-            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries"
+            url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
+            fix: Paths.shell == "/bin/zsh" ? {
+                // Add to PATH
+                await ZshRunCommand().addPhpMonitorPath()
+                // Finally, perform environment checks again
+                await WarningManager.shared.checkEnvironment()
+            } : nil
+        ),
+        Warning(
+            command: {
+                PhpEnvironments.shared.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
+                && !Xdebug.enabled
+            },
+            name: "Missing configuration file for `xdebug.mode`",
+            title: "warnings.xdebug_conf_missing.title",
+            paragraphs: { return [
+                "warnings.xdebug_conf_missing.description"
+            ] },
+            url: "https://xdebug.org/docs/install#mode",
+            fix: {
+                if let php = PhpEnvironments.shared.currentInstall {
+                    if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
+                       let original = try? FileSystem.getStringFromFile(xdebug.file) {
+                        // Append xdebug.mode = off to the file
+                        try? FileSystem.writeAtomicallyToFile(
+                            xdebug.file,
+                            content: original + "\nxdebug.mode = off"
+                        )
+
+                        // Reload extension configuration by updating PHP installation info (reload)
+                        PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+
+                        // Finally, reload warnings
+                        await WarningManager.shared.checkEnvironment()
+                    }
+                }
+            }
+        ),
+        Warning(
+            command: {
+                !BrewDiagnostics.installedTaps.contains("shivammathur/php")
+            },
+            name: "`shivammathur/php` tap is missing",
+            title: "warnings.php_tap_missing.title",
+            paragraphs: { return [
+                "warnings.php_tap_missing.description"
+            ] },
+            url: "https://github.com/shivammathur/homebrew-php",
+            fix: {
+                await Shell.quiet("brew tap shivammathur/php")
+                await BrewDiagnostics.loadInstalledTaps()
+                await WarningManager.shared.checkEnvironment()
+            }
+        ),
+        Warning(
+            command: {
+                !BrewDiagnostics.installedTaps.contains("shivammathur/extensions")
+            },
+            name: "`shivammathur/extensions` tap is missing",
+            title: "warnings.extensions_tap_missing.title",
+            paragraphs: { return [
+                "warnings.extensions_tap_missing.description"
+            ] },
+            url: "https://github.com/shivammathur/homebrew-extensions",
+            fix: {
+                await Shell.quiet("brew tap shivammathur/extensions")
+                await BrewDiagnostics.loadInstalledTaps()
+                await WarningManager.shared.checkEnvironment()
+            }
         ),
         Warning(
             command: {
@@ -64,7 +133,8 @@ class WarningManager: ObservableObject {
                     PhpConfigChecker.shared.missing.joined(separator: "\n• ")
                 )
             ] },
-            url: nil
+            url: nil,
+            fix: nil
         )
     ]
 
@@ -88,6 +158,10 @@ class WarningManager: ObservableObject {
      Checks the user's environment and checks if any special warnings apply.
      */
     func checkEnvironment() async {
+        ActiveShell.reload()
+
+        await BrewDiagnostics.loadInstalledTaps()
+
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.temporaryWarnings = self.evaluations
             await self.broadcastWarnings()

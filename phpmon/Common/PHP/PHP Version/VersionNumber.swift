@@ -93,7 +93,7 @@ public struct VersionNumber: Equatable, Hashable {
         return self.major == version.major
     }
 
-    internal func isSameAs(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func isSameAs(_ version: VersionNumber, _ strict: Bool = true) -> Bool {
         return self.major == version.major
             && self.minor == version.minor
             && (strict ? self.patch(strict, version) == version.patch(strict) : true)
@@ -103,7 +103,7 @@ public struct VersionNumber: Equatable, Hashable {
         return self.major == version.major && self.minor == version.minor
     }
 
-    internal func isNewerThan(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func isNewerThan(_ version: VersionNumber, _ strict: Bool = true) -> Bool {
         return (
             self.major > version.major ||
             self.major == version.major && self.minor > version.minor ||
@@ -112,7 +112,7 @@ public struct VersionNumber: Equatable, Hashable {
         )
     }
 
-    internal func isOlderThan(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func isOlderThan(_ version: VersionNumber, _ strict: Bool = true) -> Bool {
         return (
             self.major < version.major ||
             self.major == version.major && self.minor < version.minor ||
@@ -121,7 +121,7 @@ public struct VersionNumber: Equatable, Hashable {
         )
     }
 
-    internal func hasNewerMinorVersionOrPatch(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func hasNewerMinorVersionOrPatch(_ version: VersionNumber, _ strict: Bool = true) -> Bool {
         return self.major == version.major &&
         (
             (self.minor == version.minor && self.patch(strict) >= version.patch(strict, self))
@@ -129,12 +129,12 @@ public struct VersionNumber: Equatable, Hashable {
         )
     }
 
-    internal func hasSameMajorAndMinorButNewerOrSamePatch(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func hasSameMajorAndMinorButNewerOrSamePatch(_ version: VersionNumber, _ strict: Bool = true) -> Bool {
         return self.major == version.major && self.minor == version.minor
             && self.patch(strict, version) >= version.patch(strict)
     }
 
-    internal func hasSameMajorButNewerOrSameMinor(_ version: VersionNumber, _ strict: Bool) -> Bool {
+    internal func hasSameMajorButNewerOrSameMinor(_ version: VersionNumber) -> Bool {
         return self.major == version.major
             && self.minor >= version.minor
     }

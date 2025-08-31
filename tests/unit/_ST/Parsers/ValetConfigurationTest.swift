@@ -6,18 +6,20 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class ValetConfigurationTest: XCTestCase {
-
+@Suite("Parsers")
+struct ValetConfigurationTest {
     static var jsonConfigFileUrl: URL {
-        return Bundle(for: Self.self).url(
+        return TestBundle.url(
             forResource: "valet-config",
             withExtension: "json"
         )!
     }
 
-    func test_can_load_config_file() throws {
+    @Test("Can load config file") 
+    func can_load_config_file() throws {
         let json = try? String(
             contentsOf: Self.jsonConfigFileUrl,
             encoding: .utf8
@@ -27,13 +29,13 @@ class ValetConfigurationTest: XCTestCase {
             from: json!.data(using: .utf8)!
         )
 
-        XCTAssertEqual(config.tld, "test")
-        XCTAssertEqual(config.paths, [
+        #expect(config.tld == "test")
+        #expect(config.paths == [
             "/Users/username/.config/valet/Sites",
             "/Users/username/Sites"
         ])
-        XCTAssertEqual(config.defaultSite, "/Users/username/default-site")
-        XCTAssertEqual(config.loopback, "127.0.0.1")
+        #expect(config.defaultSite == "/Users/username/default-site")
+        #expect(config.loopback == "127.0.0.1")
     }
 
 }

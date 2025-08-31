@@ -24,6 +24,9 @@ class Valet {
     /// The version of Valet that was detected.
     var version: VersionNumber?
 
+    /// The latest version of Valet, checked via Packagist, if possible.
+    var latestVersion: VersionNumber?
+
     /// The Valet configuration file.
     var config: Valet.Configuration!
 
@@ -78,6 +81,29 @@ class Valet {
      */
     public static func getDomainListable() -> [ValetListable] {
         return self.shared.sites + self.shared.proxies
+    }
+
+    /**
+     Updates the internal version number of Laravel Valet.
+     If this version number cannot be determined, it fails,
+     and the app cannot start.
+     */
+    public func updateVersionNumber() async {
+        let output = await Shell.pipe("valet --version").out
+
+        // Failure condition #1: does not contain Laravel Valet
+        if !output.contains("Laravel Valet") {
+            return
+        }
+
+        // Failure condition #2: version cannot be parsed
+        let versionString = output
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: "Laravel Valet")[1]
+            .trimmingCharacters(in: .whitespaces)
+
+        // Extract the version number
+        Valet.shared.version = try? VersionNumber.parse(VersionExtractor.from(versionString)!)
     }
 
     /**
@@ -182,6 +208,28 @@ class Valet {
     public func hasPlatformIssues() async -> Bool {
         return await Shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
+    }
+
+    /**
+     Determine if there is a newer version of Laravel Valet available.
+     Checks by verifying the latest version via Packagist (Composer).
+     */
+    public func checkForUpdates() async {
+        if let currentVersion = self.version,
+            let latestVersion = try? await Packagist.getLatestStableVersion(packageName: "laravel/valet") {
+            self.latestVersion = latestVersion
+
+            if latestVersion.isNewerThan(currentVersion) {
+                Log.info("The latest version of Valet is \(latestVersion.text); current is \(currentVersion.text).")
+
+                // Update the menu so this update is visible.
+                await MainMenu.shared.rebuild()
+            } else {
+                Log.info("You are running the latest version of Valet (\(latestVersion.text)).")
+            }
+        } else {
+            Log.warn("Could not check for latest version of Valet.")
+        }
     }
 
     /**

@@ -92,6 +92,7 @@ class ModifyPhpVersionCommand: BrewCommand {
 
         // Upgrade the main formula
         let command = """
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) upgrade php;
             \(Paths.brew) install php@\(short);
@@ -108,6 +109,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         }
 
         let command = """
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))

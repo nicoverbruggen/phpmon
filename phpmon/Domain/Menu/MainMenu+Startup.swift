@@ -56,6 +56,10 @@ extension MainMenu {
         // Actually detect the PHP versions
         await PhpEnvironments.detectPhpVersions()
 
+        // Verify third party taps
+        // The missing tap(s) will be actionable later
+        await BrewDiagnostics.verifyThirdPartyTaps()
+
         // Check for an alias conflict
         await BrewDiagnostics.checkForCaskConflict()
 
@@ -142,6 +146,11 @@ extension MainMenu {
 
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()
+
+            // Check if Valet has updates, but only if the driver display is enabled
+            if Preferences.isEnabled(.displayDriver) {
+                await Valet.shared.checkForUpdates()
+            }
         }
     }
 

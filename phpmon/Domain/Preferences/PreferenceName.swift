@@ -48,6 +48,7 @@ enum PreferenceName: String, Codable {
     case displayExtensions = "display_extensions"
     case displayPresets = "display_presets"
     case displayMisc = "display_misc"
+    case displayDriver = "display_driver"
 
     /**
      What type of data each preference contains.
@@ -81,7 +82,8 @@ enum PreferenceName: String, Codable {
             .displayLimitsWidget,
             .displayExtensions,
             .displayPresets,
-            .displayMisc
+            .displayMisc,
+            .displayDriver
         ],
         .string: [
             .globalHotkey,

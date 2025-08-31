@@ -84,7 +84,14 @@ import NVAlert
                 )
             }
             window = nil
+
+            // Update the internal Valet number because it may have updated
+            await Valet.shared.updateVersionNumber()
+
+            // Update the UI
             removeBusyStatus()
+
+            // Fire completion callback
             completion(true)
         }
     }
