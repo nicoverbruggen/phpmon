@@ -225,7 +225,7 @@ class Valet {
                 // Update the menu so this update is visible.
                 await MainMenu.shared.rebuild()
             } else {
-                Log.info("You are running the latest version of Valet (\(latestVersion.text).")
+                Log.info("You are running the latest version of Valet (\(latestVersion.text)).")
             }
         } else {
             Log.warn("Could not check for latest version of Valet.")

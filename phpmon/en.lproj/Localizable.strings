@@ -908,3 +908,7 @@ If you want to make edits to this file, please do so before upgrading. When you 
 "valet_upgrade_available.upgrade" = "Upgrade";
 "valet_upgrade_available.cancel" = "Cancel";
 "valet_upgrade_available.open_composer" = "Locate `composer.json`";
+
+"valet_upgraded.title" = "Valet has been upgraded!";
+"valet_upgraded.subtitle" = "Sometimes, upgrades may require you to run `valet install` in a terminal after upgrading.";
+"valet_upgraded.description" = "PHP Monitor cannot know if this is necessary, so it doesn't do this automatically. However, if things don't seem to work correctly, you can try running `valet install` again and restart PHP Monitor.";
