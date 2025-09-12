@@ -53,6 +53,11 @@ class App {
         return machine
     }
 
+    static var macVersion: String {
+        let version = ProcessInfo.processInfo.operatingSystemVersion
+        return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
+    }
+
     /**
      A fake architecture.
      When set, the real machine's system architecture is not used,

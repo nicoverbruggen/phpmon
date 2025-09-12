@@ -30,7 +30,14 @@ struct CaskFile {
         if url.scheme == "file" {
             string = try? String(contentsOf: url)
         } else {
-            string = await Shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
+            string = await Shell.pipe("""
+                curl -s --max-time 10 \
+                -H "User-Agent: phpmon \(App.shortVersion)" \
+                -H "X-phpmon-version: \(App.bundleVersion)" \
+                -H "X-phpmon-os-version: \(App.macVersion)" \
+                -H "X-phpmon-bundle-id: \(App.identifier)" \
+                '\(url.absoluteString)'
+            """).out
         }
 
         guard let string else {

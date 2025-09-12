@@ -134,30 +134,21 @@ struct Constants {
             string: "https://phpmon.app/sponsor/now"
         )!
 
+        static let EarlyAccessChangelog = URL(
+            string: "https://phpmon.app/early-access/release-notes"
+        )!
+
+        // API endpoints (via api.phpmon.app)
+
+        static let UpdateCheckEndpoint =  URL(
+            string: "https://api.phpmon.test/api/v1/update-check"
+        )
+
         // GitHub URLs (do not alias these)
 
         static let GitHubReleases = URL(
             string: "https://github.com/nicoverbruggen/phpmon/releases"
         )!
-
-        static let StableBuildCaskFile = URL(
-            string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb"
-        )!
-
-        static let DevBuildCaskFile = URL(
-            string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon-dev.rb"
-        )!
-
-        // EAP URLs
-
-        static let EarlyAccessCaskFile = URL(
-            string: "https://phpmon.app/builds/early-access/sponsors/phpmon-eap.rb"
-        )!
-
-        static let EarlyAccessChangelog = URL(
-            string: "https://phpmon.app/early-access/release-notes"
-        )!
-
     }
 
 }
