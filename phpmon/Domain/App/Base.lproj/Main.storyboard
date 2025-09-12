@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -1443,7 +1443,7 @@ Gw
                                         <subviews>
                                             <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
                                                 <rect key="frame" x="-7" y="-7" width="172" height="32"/>
-                                                <buttonCell key="cell" type="push" title="[i18n] Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="8UP-Sw-TP6">
+                                                <buttonCell key="cell" type="push" title="[i18n] Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8UP-Sw-TP6">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                     <string key="keyEquivalent">l</string>
@@ -1454,7 +1454,7 @@ Gw
                                             </button>
                                             <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
                                                 <rect key="frame" x="159" y="-7" width="181" height="32"/>
-                                                <buttonCell key="cell" type="push" title="[i18n] Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="bJ4-q8-1Ej">
+                                                <buttonCell key="cell" type="push" title="[i18n] Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bJ4-q8-1Ej">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                     <string key="keyEquivalent">p</string>
