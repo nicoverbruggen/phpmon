@@ -36,6 +36,10 @@
 		036C39122E5C8D42008DAEDF /* PackagistError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C390E2E5C8D3B008DAEDF /* PackagistError.swift */; };
 		036C39142E5CB822008DAEDF /* TestBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39132E5CB820008DAEDF /* TestBundle.swift */; };
 		036C3A212E5CBBAA008DAEDF /* ValetConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */; };
+		0396160D2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
+		0396160E2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
+		0396160F2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
+		039616102E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
 		039E1D792E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7A2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
@@ -962,6 +966,7 @@
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
 		036C390E2E5C8D3B008DAEDF /* PackagistError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistError.swift; sourceTree = "<group>"; };
 		036C39132E5CB820008DAEDF /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
+		0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggableEvent.swift; sourceTree = "<group>"; };
 		039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetUpgrader.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
@@ -1340,6 +1345,14 @@
 				C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */,
 			);
 			path = Parsers;
+			sourceTree = "<group>";
+		};
+		0396160B2E74A617002DD7F6 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */,
+			);
+			path = Analytics;
 			sourceTree = "<group>";
 		};
 		03BFF1D12E3CF4F2004C56A9 /* Provision */ = {
@@ -1999,6 +2012,7 @@
 		C4AF9F6B275445D300D44ED0 /* Integrations */ = {
 			isa = PBXGroup;
 			children = (
+				0396160B2E74A617002DD7F6 /* Analytics */,
 				036C38FB2E5C8827008DAEDF /* Packagist */,
 				C4463FD029804C13007B93D5 /* Common */,
 				C4C0E8DA27F887CC002D32A9 /* Nginx */,
@@ -2684,6 +2698,7 @@
 				C463E380284930EE00422731 /* PresetHelper.swift in Sources */,
 				C41C02A927E61A65009F26CB /* FakeValetSite.swift in Sources */,
 				C4E2E85C28FC282B003B070C /* TestableConfiguration.swift in Sources */,
+				039616102E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
@@ -3002,6 +3017,7 @@
 				C471E7E828F9BAC20021E251 /* Actions.swift in Sources */,
 				C40D72612A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C471E82528F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
+				0396160D2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				C441CC582AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
 				C471E80828F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C471E7F928F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
@@ -3193,6 +3209,7 @@
 				C471E8F128F9BB8F0021E251 /* KeyCombo.swift in Sources */,
 				C471E8F228F9BB8F0021E251 /* ModifierFlagsExtension.swift in Sources */,
 				C471E7F028F9BAC30021E251 /* Paths.swift in Sources */,
+				0396160F2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				03CC1FE72E3D22120050FC18 /* InstallHomebrew.swift in Sources */,
 				C4CE7F9929683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
 				C471E7FC28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
@@ -3405,6 +3422,7 @@
 				C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */,
+				0396160E2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */,
