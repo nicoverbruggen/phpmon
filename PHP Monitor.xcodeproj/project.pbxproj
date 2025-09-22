@@ -3835,9 +3835,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -3867,9 +3866,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4102,9 +4100,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4220,9 +4217,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4338,9 +4334,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4519,9 +4514,8 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
-				ENABLE_APP_SANDBOX = YES;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
