@@ -13,20 +13,28 @@
           "image-name" : "eap.svg",
           "name" : "eap",
           "position" : {
-            "scale" : 2,
+            "scale" : 2.5,
             "translation-in-points" : [
-              286.078125,
-              380.6015625
+              345.96875,
+              354.0390625
             ]
           }
         }
       ],
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          1.3203125,
+          6.5390625
+        ]
+      },
       "shadow" : {
         "kind" : "neutral",
         "opacity" : 0.5
       },
+      "specular" : true,
       "translucency" : {
-        "enabled" : true,
+        "enabled" : false,
         "value" : 0.5
       }
     },
@@ -45,8 +53,8 @@
           "position" : {
             "scale" : 1.85,
             "translation-in-points" : [
-              12.0234375,
-              -22.453125
+              21.8515625,
+              -6.34375
             ]
           }
         }
