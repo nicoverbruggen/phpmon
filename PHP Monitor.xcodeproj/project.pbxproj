@@ -58,6 +58,9 @@
 		03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
+		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
+		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
+		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
 		5420395926135DC100FB00FA /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489625728312FAD004F647A /* CreatedFromFile.swift */; };
@@ -965,6 +968,9 @@
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
 		03E36FE628D9219000636F7F /* ActiveShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveShell.swift; sourceTree = "<group>"; };
+		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
+		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
 		5420395826135DC100FB00FA /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5489625728312FAD004F647A /* CreatedFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedFromFile.swift; sourceTree = "<group>"; };
@@ -1443,6 +1449,7 @@
 		C406A5F1298AD2CE00B5B85A /* phpmon-updater */ = {
 			isa = PBXGroup;
 			children = (
+				03FE39E92E81694500B7B5AC /* AppIconUD.icon */,
 				C406A5F2298AD2CE00B5B85A /* main.swift */,
 				C406A5F6298AD2CF00B5B85A /* Assets.xcassets */,
 				C406A5FB298AD2CF00B5B85A /* phpmon-updater.entitlements */,
@@ -1535,6 +1542,8 @@
 				C4232EE42612526500158FC6 /* Credits.html */,
 				C41C1B4022B0098000E7CF16 /* phpmon.entitlements */,
 				C41C1B3A22B0098000E7CF16 /* Assets.xcassets */,
+				03FE39E52E81682800B7B5AC /* AppIcon.icon */,
+				03FE39E62E81682800B7B5AC /* AppIconEAP.icon */,
 				C4FC8D422A49816300FBBD16 /* Localizable.strings */,
 				C405A4CD24B9B9070062FAFA /* IAP */,
 			);
@@ -2444,7 +2453,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
 					C406A5EF298AD2CE00B5B85A = {
@@ -2505,6 +2514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C406A5F7298AD2CF00B5B85A /* Assets.xcassets in Resources */,
+				03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2519,6 +2529,8 @@
 				C44C1991276E44CB0072762D /* ProgressWindow.storyboard in Resources */,
 				C4232EE52612526500158FC6 /* Credits.html in Resources */,
 				54FCFD26276C883F004CE748 /* SelectPreferenceView.xib in Resources */,
+				03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */,
+				03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */,
 				C4FC8D3D2A49816300FBBD16 /* Localizable.strings in Resources */,
 				C4068CA427B0780A00544CD5 /* CheckboxPreferenceView.xib in Resources */,
 				54FCFD2D276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */,
@@ -3553,7 +3565,7 @@
 		C406A5FD298AD2CF00B5B85A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3587,7 +3599,7 @@
 		C406A5FE298AD2CF00B5B85A /* Debug.Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3621,7 +3633,7 @@
 		C406A5FF298AD2CF00B5B85A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3655,7 +3667,7 @@
 		C406A600298AD2CF00B5B85A /* Release.Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3823,7 +3835,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -3853,7 +3867,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4086,7 +4102,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4202,7 +4220,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor DEV";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4318,7 +4338,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4339,7 +4361,7 @@
 		C4E9D8F129CB9A6400BD28D4 /* Debug.EA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -4497,7 +4519,9 @@
 				CURRENT_PROJECT_VERSION = 1590;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				INFOPLIST_FILE = phpmon/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "PHP Monitor EAP";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -4518,7 +4542,7 @@
 		C4E9D8F729CB9A7200BD28D4 /* Release.EA */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconUD;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
