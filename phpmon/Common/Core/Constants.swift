@@ -142,7 +142,7 @@ struct Constants {
 
         static let UpdateCheckEndpoint =  URL(
             string: "https://api.phpmon.test/api/v1/update-check"
-        )
+        )!
 
         // GitHub URLs (do not alias these)
 

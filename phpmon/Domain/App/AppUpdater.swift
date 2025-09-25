@@ -25,7 +25,7 @@ class AppUpdater {
 
         Log.info("The app will search for updates...")
 
-        var caskUrl = URL(string: "https://api.phpmon.test/api/v1/update-check")!
+        let caskUrl = Constants.Urls.UpdateCheckEndpoint
 
         guard let caskFile = await CaskFile.from(url: caskUrl) else {
             Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
