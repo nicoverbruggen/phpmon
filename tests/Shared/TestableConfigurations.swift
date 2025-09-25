@@ -180,6 +180,10 @@ class TestableConfigurations {
                     : .delayed(0.2, "OK"),
                 "ln -sF ~/.config/valet/valet82.sock ~/.config/valet/valet.sock"
                     : .instant("OK"),
+                "ln -sF ~/.config/valet/valet83.sock ~/.config/valet/valet.sock"
+                    : .instant("OK"),
+                "ln -sF ~/.config/valet/valet84.sock ~/.config/valet/valet.sock"
+                    : .instant("OK"),
                 "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae": .delayed(2.0, """
                 {
                 "formulae": [
@@ -206,6 +210,8 @@ class TestableConfigurations {
                 .automaticBackgroundUpdateCheck: false
             ],
             phpVersions: [
+                VersionNumber(major: 8, minor: 4, patch: 5),
+                VersionNumber(major: 8, minor: 3, patch: 5),
                 VersionNumber(major: 8, minor: 2, patch: 6),
                 VersionNumber(major: 8, minor: 1, patch: 0),
                 VersionNumber(major: 8, minor: 0, patch: 0),
