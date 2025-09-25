@@ -52,17 +52,16 @@ class TestableConfigurations {
             shellOutput: [
                 "/opt/homebrew/bin/brew --version"
                     : .instant("""
-                    Homebrew 4.0.17-93-gb0dc84b
-                    Homebrew/homebrew-core (git revision 4113c35d80d; last commit 2023-04-06)
-                    Homebrew/homebrew-cask (git revision bcd8ecb74c; last commit 2023-04-06)
+                    Homebrew 4.6.11
                     """),
                 "/opt/homebrew/bin/php -v"
                     : .instant("""
-                    PHP 8.2.6 (cli) (built: May 11 2023 12:51:38) (NTS)
+                    PHP 8.4.5 (cli) (built: Aug 26 2025 13:36:28) (NTS)
                     Copyright (c) The PHP Group
-                    Zend Engine v4.2.6, Copyright (c) Zend Technologies
-                    with Zend OPcache v8.2.6, Copyright (c), by Zend Technologies
-                    with Xdebug v3.2.0, Copyright (c) 2002-2022, by Derick Rethans
+                    Built by Homebrew
+                    Zend Engine v4.4.12, Copyright (c) Zend Technologies
+                    with Xdebug v3.4.5, Copyright (c) 2002-2025, by Derick Rethans
+                    with Zend OPcache v8.4.12, Copyright (c), by Zend Technologies
                     """),
                 "sysctl -n sysctl.proc_translated"
                     : .instant("0"),
@@ -105,7 +104,7 @@ class TestableConfigurations {
                     %admin ALL=(root) NOPASSWD:SETENV: VALET
                     """),
                 "valet --version"
-                    : .instant("Laravel Valet 3.1.11"),
+                    : .instant("Laravel Valet 4.9.0"),
                 "/opt/homebrew/bin/brew tap"
                     : .instant("""
                     homebrew/cask
@@ -150,7 +149,7 @@ class TestableConfigurations {
                 cask 'phpmon-dev' do
                     depends_on formula: 'gnu-sed'
 
-                    version '6.0.0_1000'
+                    version '25.08.0_1000'
                     sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
 
                     url 'https://github.com/nicoverbruggen/phpmon/releases/download/v6.0/phpmon-dev.zip'
@@ -178,10 +177,6 @@ class TestableConfigurations {
                     : .delayed(0.2, "OK"),
                 "sudo /opt/homebrew/bin/brew services start dnsmasq"
                     : .delayed(0.2, "OK"),
-                "ln -sF ~/.config/valet/valet82.sock ~/.config/valet/valet.sock"
-                    : .instant("OK"),
-                "ln -sF ~/.config/valet/valet83.sock ~/.config/valet/valet.sock"
-                    : .instant("OK"),
                 "ln -sF ~/.config/valet/valet84.sock ~/.config/valet/valet.sock"
                     : .instant("OK"),
                 "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae": .delayed(2.0, """
@@ -190,9 +185,9 @@ class TestableConfigurations {
                     {
                         "name": "php",
                         "installed_versions": [
-                            "8.2.6"
+                            "8.4.5"
                         ],
-                        "current_version": "8.2.11",
+                        "current_version": "8.4.11",
                         "pinned": false,
                         "pinned_version": null
                     }
