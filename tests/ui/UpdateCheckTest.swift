@@ -32,7 +32,14 @@ final class UpdateCheckTest: UITestCase {
 
         // Ensure an update is available
         configuration.shellOutput[
-            "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
+            """
+                curl -s --max-time 10 \
+                -H "User-Agent: phpmon \(App.shortVersion)" \
+                -H "X-phpmon-version: \(App.bundleVersion)" \
+                -H "X-phpmon-os-version: \(App.macVersion)" \
+                -H "X-phpmon-bundle-id: \(App.identifier)" \
+                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
+            """
         ] = .delayed(0.5, """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
@@ -64,7 +71,14 @@ final class UpdateCheckTest: UITestCase {
 
         // Ensure an update is available
         configuration.shellOutput[
-            "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
+            """
+                curl -s --max-time 10 \
+                -H "User-Agent: phpmon \(App.shortVersion)" \
+                -H "X-phpmon-version: \(App.bundleVersion)" \
+                -H "X-phpmon-os-version: \(App.macVersion)" \
+                -H "X-phpmon-bundle-id: \(App.identifier)" \
+                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
+            """
         ] = .delayed(0.5, """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
@@ -104,7 +118,14 @@ final class UpdateCheckTest: UITestCase {
 
         // Ensure an update is available
         configuration.shellOutput[
-            "curl -s --max-time 10 '\(Constants.Urls.DevBuildCaskFile.absoluteString)'"
+            """
+                curl -s --max-time 10 \
+                -H "User-Agent: phpmon \(App.shortVersion)" \
+                -H "X-phpmon-version: \(App.bundleVersion)" \
+                -H "X-phpmon-os-version: \(App.macVersion)" \
+                -H "X-phpmon-bundle-id: \(App.identifier)" \
+                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
+            """
         ] = .delayed(0.5, "404 PAGE NOT FOUND")
 
         // Wait for the menu to open and search for updates

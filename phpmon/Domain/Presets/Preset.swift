@@ -172,7 +172,6 @@ struct Preset: Codable, Equatable {
 
     // MARK: - Menu Items
 
-    // swiftlint:disable void_function_in_ternary
     public func getMenuItemText() -> String {
         var info = extensions.count == 1
             ? "preset.extension".localized(extensions.count)
@@ -197,7 +196,6 @@ struct Preset: Codable, Equatable {
         + info + "</i>"
         + "</span>"
     }
-    // swiftlint:enable void_function_in_ternary
 
     // MARK: - Reverting
 
