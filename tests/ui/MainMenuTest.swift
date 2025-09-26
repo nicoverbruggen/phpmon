@@ -108,10 +108,10 @@ final class MainMenuTest: UITestCase {
         // But not PHP 8.6 (yet)
         assertNotExists(app.staticTexts["PHP 8.6"])
 
-        // Also, PHP 8.2 should have an update available
+        // Also, PHP 8.4 should have an update available
         assertExists(app.staticTexts["phpman.version.has_update".localized(
-            "8.2.6",
-            "8.2.11"
+            "8.4.5",
+            "8.4.11"
         )], 5)
     }
 
