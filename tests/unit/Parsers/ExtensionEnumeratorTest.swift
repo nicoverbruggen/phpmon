@@ -15,7 +15,7 @@ final class ExtensionEnumeratorTest: XCTestCase {
             "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.1.rb": .fake(.text, "<test>"),
             "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.2.rb": .fake(.text, "<test>"),
             "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.3.rb": .fake(.text, "<test>"),
-            "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.4.rb": .fake(.text, "<test>"),
+            "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.4.rb": .fake(.text, "<test>")
         ])
     }
 
@@ -37,5 +37,4 @@ final class ExtensionEnumeratorTest: XCTestCase {
         XCTAssertEqual(formulae["8.3"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.3")])
         XCTAssertEqual(formulae["8.4"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.4")])
     }
-    
 }

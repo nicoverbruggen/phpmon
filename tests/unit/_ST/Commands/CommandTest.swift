@@ -8,7 +8,7 @@
 
 import Testing
 
-@Suite("Commands") 
+@Suite("Commands")
 struct CommandTest {
 
     @Test

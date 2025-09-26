@@ -18,7 +18,7 @@ struct ValetConfigurationTest {
         )!
     }
 
-    @Test("Can load config file") 
+    @Test("Can load config file")
     func can_load_config_file() throws {
         let json = try? String(
             contentsOf: Self.jsonConfigFileUrl,

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable colon
 class TestableConfigurations {
     /** A functional, working system setup that is compatible with PHP Monitor. */
     static var working: TestableConfiguration {
@@ -179,7 +180,9 @@ class TestableConfigurations {
                     : .delayed(0.2, "OK"),
                 "ln -sF ~/.config/valet/valet84.sock ~/.config/valet/valet.sock"
                     : .instant("OK"),
-                "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae": .delayed(2.0, """
+                "/opt/homebrew/bin/brew update >/dev/null && /opt/homebrew/bin/brew outdated --json --formulae"
+                    : .delayed(2.0,
+                """
                 {
                 "formulae": [
                     {
@@ -199,7 +202,7 @@ class TestableConfigurations {
             commandOutput: [
                 "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M",
                 "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "512M",
-                "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M",
+                "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M"
             ],
             preferenceOverrides: [
                 .automaticBackgroundUpdateCheck: false
@@ -223,6 +226,7 @@ class TestableConfigurations {
         return configuration
     }
 }
+// swiftlint:enable colon
 
 class ShellStrings {
     static var shared = ShellStrings()

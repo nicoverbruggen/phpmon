@@ -12,7 +12,7 @@ class TestableConfigurationTest: XCTestCase {
     func test_configuration_can_be_saved_as_json() async {
         // WORKING
         var configuration = TestableConfigurations.working
-        
+
         try! configuration.toJson().write(
             toFile: NSHomeDirectory() + "/.phpmon_fconf_working.json",
             atomically: true,
@@ -38,4 +38,3 @@ class TestableConfigurationTest: XCTestCase {
         )
     }
 }
-

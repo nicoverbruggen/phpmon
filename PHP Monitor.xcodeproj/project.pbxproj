@@ -12,6 +12,10 @@
 		031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6C2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
+		03263A382E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
+		03263A392E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
+		03263A3A2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
+		03263A3B2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
 		033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D459A2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
@@ -957,6 +961,7 @@
 /* Begin PBXFileReference section */
 		0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionsObservable.swift; sourceTree = "<group>"; };
 		031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewPhpExtension.swift; sourceTree = "<group>"; };
+		03263A372E86D5E800BD0415 /* UpdateScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateScheduler.swift; sourceTree = "<group>"; };
 		0336CAAF2B0D0CDA009A1034 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
@@ -2058,6 +2063,7 @@
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C409349C298EE8E900D25014 /* AppUpdater.swift */,
+				03263A372E86D5E800BD0415 /* UpdateScheduler.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -2679,6 +2685,7 @@
 				C48DDD0D29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C45B91532956123A00F4EC78 /* FakeServicesManager.swift in Sources */,
 				C41C708D28AA7F7900E8D498 /* NoWarningsView.swift in Sources */,
+				03263A382E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
 				0309E6672B0D4B2F002AC007 /* BrewExtensionsObservable.swift in Sources */,
 				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */,
@@ -3006,6 +3013,7 @@
 				C471E81A28F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7E128F9BAAB0021E251 /* RealCommand.swift in Sources */,
 				C471E7E228F9BAAB0021E251 /* ActiveCommand.swift in Sources */,
+				03263A392E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
 				C471E80A28F9BADC0021E251 /* CreatedFromFile.swift in Sources */,
 				C471E80528F9BAD40021E251 /* ActivePhpInstallation.swift in Sources */,
 				C471E80628F9BAD40021E251 /* PhpInstallation.swift in Sources */,
@@ -3286,6 +3294,7 @@
 				C471E80F28F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C471E80B28F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C471E7F428F9BAC80021E251 /* VersionNumber.swift in Sources */,
+				03263A3B2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
 				C471E7CB28F9BA5B0021E251 /* TestableCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3344,6 +3353,7 @@
 				54D9E0B527E4F51E003B9AD9 /* Key.swift in Sources */,
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */,
+				03263A3A2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
 				C451AFF72969E40F0078E617 /* HelpButton.swift in Sources */,
 				C47DF1B0299D5A3B0007055D /* LoginItemManager.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,

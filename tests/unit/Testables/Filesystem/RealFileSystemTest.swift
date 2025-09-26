@@ -71,8 +71,6 @@ class RealFileSystemTest: XCTestCase {
         return executablePath
     }
 
-
-
     func test_can_read_file_as_text() {
         let temporaryDirectory = self.createUniqueTemporaryDirectory()
         let executable = self.createTestBinaryFile(temporaryDirectory)

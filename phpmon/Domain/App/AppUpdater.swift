@@ -10,17 +10,24 @@ import Foundation
 import Cocoa
 import NVAlert
 
+enum UpdateCheckResult {
+    case success
+    case networkError
+    case parseError
+    case disabled
+}
+
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
     var interactive: Bool = false
 
-    public func checkForUpdates(userInitiated: Bool) async {
+    public func checkForUpdates(userInitiated: Bool) async -> UpdateCheckResult {
         self.interactive = userInitiated
 
         if !interactive && !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
             Log.info("Skipping automatic update check due to user preference.")
-            return
+            return .disabled
         }
 
         Log.info("The app will search for updates...")
@@ -29,7 +36,8 @@ class AppUpdater {
 
         guard let caskFile = await CaskFile.from(url: caskUrl) else {
             Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
-            return presentCouldNotRetrieveUpdateIfInteractive()
+            presentCouldNotRetrieveUpdateIfInteractive()
+            return .networkError
         }
 
         self.caskFile = caskFile
@@ -38,7 +46,8 @@ class AppUpdater {
 
         guard let onlineVersion = AppVersion.from(caskFile.version) else {
             Log.err("The version string from the CaskFile could not be read.")
-            return presentCouldNotRetrieveUpdateIfInteractive()
+            presentCouldNotRetrieveUpdateIfInteractive()
+            return .parseError
         }
 
         latestVersionOnline = onlineVersion
@@ -49,6 +58,8 @@ class AppUpdater {
         } else if interactive {
             presentNoNewerVersionAvailableAlert()
         }
+
+        return .success
     }
 
     private func presentCouldNotRetrieveUpdateIfInteractive() {

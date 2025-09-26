@@ -110,6 +110,7 @@ enum PersistentAppState: String {
     case wasLaunchedBefore = "launched_before"
     case lastAutomaticUpdateCheck = "last_automatic_update_check"
     case userFavorites = "user_favorites"
+    case updateCheckFailureCount = "update_check_failure_count"
 }
 
 /**

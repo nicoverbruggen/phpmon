@@ -22,7 +22,6 @@ class ValetRcTest: XCTestCase {
             .url(forResource: "valetrc", withExtension: "broken")!
     }
 
-
     // MARK: - Tests
 
     func test_can_extract_fields_from_valetrc_file() throws {

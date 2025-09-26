@@ -30,7 +30,7 @@ class TestableShellTest: XCTestCase {
 
         XCTAssertEqual("Hello world\nGoodbye world", output.out)
     }
-    
+
     func test_fake_shell_synchronous_output() {
         let greeting = BatchFakeShellOutput(items: [
             .instant("Hello world\n"),

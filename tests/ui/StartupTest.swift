@@ -26,7 +26,7 @@ final class StartupTest: UITestCase {
         assertAllExist([
             app.dialogs["generic.notice".localized],
             app.staticTexts["startup.errors.php_binary.title".localized],
-            app.buttons["generic.ok".localized],
+            app.buttons["generic.ok".localized]
         ])
         click(app.buttons["generic.ok".localized])
 
