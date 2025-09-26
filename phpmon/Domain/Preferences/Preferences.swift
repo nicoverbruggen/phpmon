@@ -85,6 +85,7 @@ class Preferences {
 
             /// Persistent App State
             PersistentAppState.lastAutomaticUpdateCheck.rawValue: 0,
+            PersistentAppState.updateCheckFailureCount.rawValue: 0,
 
             /// Stats
             InternalStats.switchCount.rawValue: 0,

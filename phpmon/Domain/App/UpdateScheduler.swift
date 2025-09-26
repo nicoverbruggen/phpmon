@@ -27,13 +27,18 @@ actor UpdateScheduler {
      Perform an automatic update check and schedule the next one.
      */
     private func performUpdateCheck() async {
-        guard isNotThrottled() else {
-            // If we are throttled, just schedule a regular check the regular time from now!
+        guard Preferences.isEnabled(.automaticBackgroundUpdateCheck) else {
+            Log.info("Automatic update checks disabled. Skipping check but maintaining schedule.")
             scheduleTimer()
             return
         }
 
-        // This check will be aborted if the preference disallows it in AppUpdater
+        guard isNotThrottled() else {
+            Log.info("Last check was too recent. Skipping check but maintaining schedule.")
+            scheduleTimer()
+            return
+        }
+
         let result = await AppUpdater().checkForUpdates(userInitiated: false)
 
         switch result {
@@ -43,10 +48,6 @@ actor UpdateScheduler {
             UserDefaults.standard.set(Date(), forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue)
             scheduleTimer()
             Log.info("Update check succeeded. Next check in \(Constants.AutomaticUpdateCheckInterval)s.")
-
-        case .disabled:
-            // User disabled automatic checks, don't schedule another
-            Log.info("Automatic update checks disabled. No further checks scheduled.")
 
         case .networkError, .parseError:
             // Handle failures with exponential backoff
@@ -85,10 +86,6 @@ actor UpdateScheduler {
      Returns true if a check should happen, false otherwise.
      */
     private func isNotThrottled() -> Bool {
-        guard Preferences.isEnabled(.automaticBackgroundUpdateCheck) else {
-            return false
-        }
-
         let minimumTimeAgo = Date().addingTimeInterval(-Constants.MinimumUpdateCheckInterval)
         let lastCheckTime = UserDefaults.standard.object(
             forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue

@@ -31,24 +31,24 @@ struct Constants {
     /**
      The interval between automatic background update checks.
      */
-    static let AutomaticUpdateCheckInterval: TimeInterval = 15.0 // 60.0 * 60 * 24 // 24 hours
+    static let AutomaticUpdateCheckInterval: TimeInterval = 60.0 * 60 * 24 // 24 hours
 
     /**
      The minimum interval that must pass before allowing another
      automatic update check. This prevents excessive checking
      on frequent app restarts (due to crashes or bad config).
      */
-    static let MinimumUpdateCheckInterval: TimeInterval = 5.0 // 60.0 * 60 // 60 minutes
+    static let MinimumUpdateCheckInterval: TimeInterval = 60.0 * 60 // 60 minutes
 
     /**
      Retry intervals for failed automatic update checks.
-     Uses exponential backoff: 5 min → 15 min → 1 hr → 3 hrs before falling back to normal schedule.
+     Uses exponential backoff before falling back to normal schedule.
      */
     static let UpdateCheckRetryIntervals: [TimeInterval] = [
-        300,    // 5 minutes
-        900,    // 15 minutes
-        3600,   // 1 hour
-        10800   // 3 hours (final attempt)
+        60 * 5,         // 5 minutes
+        60 * 15,        // 15 minutes
+        60 * 60,        // 1 hour
+        60 * 60 * 3     // 3 hours (final attempt)
     ]
 
     /**

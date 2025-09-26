@@ -14,7 +14,6 @@ enum UpdateCheckResult {
     case success
     case networkError
     case parseError
-    case disabled
 }
 
 class AppUpdater {
@@ -24,11 +23,6 @@ class AppUpdater {
 
     public func checkForUpdates(userInitiated: Bool) async -> UpdateCheckResult {
         self.interactive = userInitiated
-
-        if !interactive && !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
-            Log.info("Skipping automatic update check due to user preference.")
-            return .disabled
-        }
 
         Log.info("The app will search for updates...")
 
