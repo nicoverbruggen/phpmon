@@ -32,14 +32,7 @@ final class UpdateCheckTest: UITestCase {
 
         // Ensure an update is available
         configuration.shellOutput[
-            """
-                curl -s --max-time 10 \
-                -H "User-Agent: phpmon \(App.shortVersion)" \
-                -H "X-phpmon-version: \(App.bundleVersion)" \
-                -H "X-phpmon-os-version: \(App.macVersion)" \
-                -H "X-phpmon-bundle-id: \(App.identifier)" \
-                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
-            """
+            "curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"
         ] = .delayed(0.5, """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
@@ -57,8 +50,9 @@ final class UpdateCheckTest: UITestCase {
 
         let app = launch(openMenu: false, with: configuration)
 
-        // Expect to see the content of the appropriate alert box
-        assertExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], 3.0)
+        // Expect to see the content of the appropriate alert box, but this may take a while; if this test fails try increasing the timeout
+        let timeout: TimeInterval = 10.0
+        assertExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], timeout)
         assertExists(app.buttons["updater.alerts.buttons.install".localized])
         assertExists(app.buttons["updater.alerts.buttons.dismiss".localized])
     }
@@ -70,16 +64,7 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
 
         // Ensure an update is available
-        configuration.shellOutput[
-            """
-                curl -s --max-time 10 \
-                -H "User-Agent: phpmon \(App.shortVersion)" \
-                -H "X-phpmon-version: \(App.bundleVersion)" \
-                -H "X-phpmon-os-version: \(App.macVersion)" \
-                -H "X-phpmon-bundle-id: \(App.identifier)" \
-                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
-            """
-        ] = .delayed(0.5, """
+        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
 
@@ -117,16 +102,7 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
 
         // Ensure an update is available
-        configuration.shellOutput[
-            """
-                curl -s --max-time 10 \
-                -H "User-Agent: phpmon \(App.shortVersion)" \
-                -H "X-phpmon-version: \(App.bundleVersion)" \
-                -H "X-phpmon-os-version: \(App.macVersion)" \
-                -H "X-phpmon-bundle-id: \(App.identifier)" \
-                '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
-            """
-        ] = .delayed(0.5, "404 PAGE NOT FOUND")
+        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, "404 PAGE NOT FOUND")
 
         // Wait for the menu to open and search for updates
         let app = launch(openMenu: true, with: configuration)

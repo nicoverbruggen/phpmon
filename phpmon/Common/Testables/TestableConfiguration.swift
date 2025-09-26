@@ -140,6 +140,12 @@ public struct TestableConfiguration: Codable {
             Log.info("Applying fake Valet domain interactor...")
             ValetInteractor.useFake()
         }
+
+        // Clear volatile app state for tests
+        UserDefaults.standard.removeObject(forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue)
+
+        // Set variable to tell app we're testin'
+        App.hasLoadedTestableConfiguration = true
     }
 
     // MARK: Persist and load

@@ -138,14 +138,7 @@ class TestableConfigurations {
                     : .instant(ShellStrings.shared.brewServicesAsRoot),
                 "/opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsUser),
-                """
-                    curl -s --max-time 10 \
-                    -H "User-Agent: phpmon \(App.shortVersion)" \
-                    -H "X-phpmon-version: \(App.bundleVersion)" \
-                    -H "X-phpmon-os-version: \(App.macVersion)" \
-                    -H "X-phpmon-bundle-id: \(App.identifier)" \
-                    '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'
-                """
+                "curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"
                     : .delayed(0.5, """
                 cask 'phpmon-dev' do
                     depends_on formula: 'gnu-sed'
