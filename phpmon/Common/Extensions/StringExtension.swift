@@ -25,8 +25,7 @@ struct Localization {
             return Bundle.main
         }
 
-        let foundBundle = Bundle(identifier: "com.nicoverbruggen.phpmon.dev")
-            ?? Bundle(identifier: "com.nicoverbruggen.phpmon")
+        let foundBundle = Bundle(identifier: "com.nicoverbruggen.phpmon")
             ?? Bundle(identifier: "com.nicoverbruggen.phpmon.ui-tests")
 
         if foundBundle == nil {

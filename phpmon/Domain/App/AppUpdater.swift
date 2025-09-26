@@ -67,9 +67,7 @@ class AppUpdater {
     // MARK: - Alerts
 
     public func presentNewerVersionAvailableAlert() {
-        let command = App.identifier.contains(".dev")
-            ? "brew upgrade phpmon-dev"
-            : "brew upgrade phpmon"
+        let command = "brew upgrade phpmon"
 
         Task { @MainActor in
             NVAlert().withInformation(
@@ -187,7 +185,7 @@ class AppUpdater {
         // Cleanup the upgrade.success file
         if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
-                if App.identifier.contains(".phpmon.eap") || App.identifier.contains(".phpmon.dev") {
+                if App.identifier.contains(".phpmon.eap") {
                     LocalNotification.send(
                         title: "notification.phpmon_updated.title".localized,
                         subtitle: "notification.phpmon_updated_dev.desc".localized(App.shortVersion, App.bundleVersion),
