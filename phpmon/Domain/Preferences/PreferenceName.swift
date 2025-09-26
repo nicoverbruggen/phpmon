@@ -10,9 +10,6 @@
  These are the keys used for every preference in the app.
  */
 enum PreferenceName: String, Codable {
-    // FIRST-TIME LAUNCH
-    case wasLaunchedBefore = "launched_before"
-
     // GENERAL
     case autoServiceRestartAfterExtensionToggle = "auto_restart_after_extension_toggle"
     case autoComposerGlobalUpdateAfterSwitch = "auto_composer_global_update_after_switch"
@@ -102,6 +99,17 @@ enum PreferenceType {
  */
 enum RetiredPreferenceName: String {
     case shouldDisplayPhpHintInIcon = "add_php_to_icon"
+}
+
+/**
+ Persistent internal application state keys for UserDefaults.
+ These track internal app state and behavior that persists across launches,
+ but are not user preferences or statistics.
+ */
+enum PersistentAppState: String {
+    case wasLaunchedBefore = "launched_before"
+    case lastAutomaticUpdateCheck = "last_automatic_update_check"
+    case userFavorites = "user_favorites"
 }
 
 /**

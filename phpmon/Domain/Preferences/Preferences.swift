@@ -83,6 +83,9 @@ class Preferences {
             PreferenceName.displayPresets.rawValue: true,
             PreferenceName.displayMisc.rawValue: true,
 
+            /// Persistent App State
+            PersistentAppState.lastAutomaticUpdateCheck.rawValue: 0,
+
             /// Stats
             InternalStats.switchCount.rawValue: 0,
             InternalStats.launchCount.rawValue: 0,
@@ -90,13 +93,13 @@ class Preferences {
             InternalStats.lastGlobalPhpVersion.rawValue: ""
         ])
 
-        if UserDefaults.standard.bool(forKey: PreferenceName.wasLaunchedBefore.rawValue) {
+        if UserDefaults.standard.bool(forKey: PersistentAppState.wasLaunchedBefore.rawValue) {
             handleMigration()
             return
         }
 
         Log.info("Saving first-time preferences!")
-        UserDefaults.standard.setValue(true, forKey: PreferenceName.wasLaunchedBefore.rawValue)
+        UserDefaults.standard.setValue(true, forKey: PersistentAppState.wasLaunchedBefore.rawValue)
         UserDefaults.standard.synchronize()
     }
 

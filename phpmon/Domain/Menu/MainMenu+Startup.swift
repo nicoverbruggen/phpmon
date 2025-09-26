@@ -142,7 +142,7 @@ extension MainMenu {
             }
         } else {
             // Check for updates
-            await AppUpdater().checkForUpdates(userInitiated: false)
+            await performAutomaticUpdateCheck()
 
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()
@@ -204,5 +204,61 @@ extension MainMenu {
         }
 
         Log.info("Detected applications: \(appNames)")
+    }
+
+    /**
+     Perform an automatic update check and schedule the next one.
+     */
+    private func performAutomaticUpdateCheck() async {
+        guard Preferences.isEnabled(.automaticBackgroundUpdateCheck) else {
+            // The user has chosen not to receive update notifications
+            return
+        }
+
+        guard automaticUpdateCheckIsNotThrottled() else {
+            // If we are throttled, just schedule a regular check 24 hours from now
+            scheduleUpdateCheckTimer()
+            return
+        }
+
+        await AppUpdater().checkForUpdates(userInitiated: false)
+
+        UserDefaults.standard.set(Date(), forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue)
+
+        scheduleUpdateCheckTimer()
+    }
+
+    /**
+     Determine whether another automatic update check should occur based on the last check timestamp.
+     Returns true if a check should happen, false otherwise.
+     */
+    private func automaticUpdateCheckIsNotThrottled() -> Bool {
+        guard Preferences.isEnabled(.automaticBackgroundUpdateCheck) else {
+            return false
+        }
+
+        let minimumTimeAgo = Date().addingTimeInterval(-Constants.MinimumUpdateCheckInterval)
+        let lastCheckTime = UserDefaults.standard.object(
+            forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue
+        ) as? Date
+
+        // If no previous check or last check was > minimum time frame, should check now
+        return lastCheckTime == nil || lastCheckTime! < minimumTimeAgo
+    }
+
+    /**
+     Schedule a timer to perform an update check after the specified interval.
+     */
+    private func scheduleUpdateCheckTimer() {
+        let interval = Constants.AutomaticUpdateCheckInterval
+
+        Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
+            Task {
+                Log.info("Performing scheduled update check after \(interval) seconds.")
+                await self.performAutomaticUpdateCheck()
+            }
+        }
+
+        Log.info("A new update check will occur in \(interval) seconds from now.")
     }
 }

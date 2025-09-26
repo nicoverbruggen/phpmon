@@ -6,6 +6,12 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+// TODO: Add anonymous analytics system
+// Batch events and dispatch them every hour.
+// Reset the counts when send successfully.
+// That's the plan. Currently not implemented!
+// Also, there should be an opt-out.
+
 enum LoggableEvent: String {
     case menuOpened = "menu_opened"
 
@@ -17,9 +23,5 @@ enum LoggableEvent: String {
 
     case openedSettings = "opened_settings"
 
-    // TODO: Add one for each feature and make sure each feature used actually increments a count somewhere
-    // Ensure that the events are broadcast within 24 hrs since launch OR when the app quits
-    // If the events are broadcast after 24 hrs of the app being running, reset analytics
-    // Alternatively, batch events and dispatch them every hour (and keep track of what was sent)
-    // I will think about this some more, these are just ideas for now
+    // TODO: Add more tracked things.
 }
