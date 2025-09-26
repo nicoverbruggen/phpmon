@@ -57,7 +57,7 @@ final class UpdateCheckTest: UITestCase {
         assertExists(app.buttons["updater.alerts.buttons.dismiss".localized])
     }
 
-    final func test_will_require_manual_search_for_update() throws {
+    final func test_does_not_do_automatic_background_check() throws {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
@@ -84,9 +84,32 @@ final class UpdateCheckTest: UITestCase {
 
         // The check should not happen if the preference is disabled
         assertNotExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], 2)
+    }
 
-        // Open the menu and check manually
-        app.statusItems.firstMatch.click()
+    final func test_will_require_manual_search_for_update() throws {
+        var configuration = TestableConfigurations.working
+
+        // Ensure automatic check is disabled
+        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
+
+        // Ensure an update is available
+        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, """
+            cask 'phpmon-dev' do
+                depends_on formula: 'gnu-sed'
+
+                version '99.0.0_9999'
+                sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
+
+                url 'https://github.com/nicoverbruggen/phpmon/releases/download/v99.0/phpmon-dev.zip'
+                name 'PHP Monitor DEV'
+                homepage 'https://phpmon.app'
+
+                app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
+            end
+            """)
+
+        // Wait for the menu to open and search for updates
+        let app = launch(openMenu: true, with: configuration)
         app.menuItems["mi_check_for_updates".localized].click()
 
         // Expect to see the content of the appropriate alert box
