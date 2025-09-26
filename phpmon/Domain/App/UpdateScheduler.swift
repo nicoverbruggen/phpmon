@@ -8,9 +8,10 @@
 
 import Foundation
 
-@MainActor
-class UpdateScheduler {
+actor UpdateScheduler {
     static let shared = UpdateScheduler()
+
+    private var currentTimer: Timer?
 
     private init() {}
 
@@ -41,11 +42,11 @@ class UpdateScheduler {
             UserDefaults.standard.removeObject(forKey: PersistentAppState.updateCheckFailureCount.rawValue)
             UserDefaults.standard.set(Date(), forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue)
             scheduleTimer()
-            Log.info("Update check completed successfully. Next check scheduled in \(Constants.AutomaticUpdateCheckInterval) seconds.")
+            Log.info("Update check succeeded. Next check in \(Constants.AutomaticUpdateCheckInterval)s.")
 
         case .disabled:
             // User disabled automatic checks, don't schedule another
-            Log.info("Automatic update checks are disabled. No further checks will be scheduled.")
+            Log.info("Automatic update checks disabled. No further checks scheduled.")
 
         case .networkError, .parseError:
             // Handle failures with exponential backoff
@@ -68,12 +69,12 @@ class UpdateScheduler {
         if newFailureCount <= Constants.UpdateCheckRetryIntervals.count {
             // Use exponential backoff
             retryInterval = Constants.UpdateCheckRetryIntervals[newFailureCount - 1]
-            Log.info("Update check failed (\(result)). Retry attempt \(newFailureCount) scheduled in \(retryInterval) seconds.")
+            Log.info("Update check failed (\(result)). Retry \(newFailureCount) in \(retryInterval)s.")
         } else {
             // Exceeded max retries, fall back to normal schedule and reset counter
             retryInterval = Constants.AutomaticUpdateCheckInterval
             UserDefaults.standard.removeObject(forKey: PersistentAppState.updateCheckFailureCount.rawValue)
-            Log.info("Update check failed (\(result)). Max retries exceeded. Falling back to normal schedule in \(retryInterval) seconds.")
+            Log.info("Update check failed (\(result)). Max retries exceeded. Normal schedule in \(retryInterval)s.")
         }
 
         scheduleTimer(after: retryInterval)
@@ -101,13 +102,29 @@ class UpdateScheduler {
      Schedule a timer to perform an update check after the specified interval.
      */
     private func scheduleTimer(after interval: TimeInterval = Constants.AutomaticUpdateCheckInterval) {
-        Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
-            Task {
-                Log.info("Performing scheduled update check after \(interval) seconds.")
-                await self.performUpdateCheck()
+        // Invalidate any existing timer
+        currentTimer?.invalidate()
+
+        // Ensure timer is scheduled on main run loop since actors run on background threads
+        Task { @MainActor in
+            let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
+                Task {
+                    Log.info("Performing scheduled update check after \(interval)s.")
+                    await self.performUpdateCheck()
+                }
             }
+
+            // Store timer reference back in actor
+            await self.setCurrentTimer(timer)
         }
 
-        Log.info("A new update check will occur in \(interval) seconds from now.")
+        Log.info("Next update check scheduled in \(interval)s.")
+    }
+
+    /**
+     Set the current timer reference. Used to store timer from main thread back to actor.
+     */
+    private func setCurrentTimer(_ timer: Timer) {
+        currentTimer = timer
     }
 }
