@@ -6,10 +6,11 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class TestableConfigurationTest: XCTestCase {
-    func test_configuration_can_be_saved_as_json() async {
+struct TestableConfigurationTest {
+    @Test func configuration_can_be_saved_as_json() async {
         // WORKING
         var configuration = TestableConfigurations.working
 
@@ -36,5 +37,10 @@ class TestableConfigurationTest: XCTestCase {
             atomically: true,
             encoding: .utf8
         )
+
+        // Verify that the files were written to disk
+        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working.json"))
+        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json"))
+        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_broken.json"))
     }
 }

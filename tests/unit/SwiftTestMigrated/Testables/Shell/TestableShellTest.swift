@@ -6,10 +6,12 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class TestableShellTest: XCTestCase {
-    func test_fake_shell_output_can_be_declared() async {
+@Suite(.serialized)
+struct TestableShellTest {
+    @Test func fake_shell_output_can_be_declared() async {
         let greeting = BatchFakeShellOutput(items: [
             .instant("Hello world\n"),
             .delayed(0.3, "Goodbye world")
@@ -17,10 +19,10 @@ class TestableShellTest: XCTestCase {
 
         let output = await greeting.outputInstantaneously()
 
-        XCTAssertEqual("Hello world\nGoodbye world", output.out)
+        #expect("Hello world\nGoodbye world" == output.out)
     }
 
-    func test_fake_shell_can_output_in_realtime() async {
+    @Test func fake_shell_can_output_in_realtime() async {
         let greeting = BatchFakeShellOutput(items: [
             .instant("Hello world\n"),
             .delayed(2, "Goodbye world")
@@ -28,10 +30,10 @@ class TestableShellTest: XCTestCase {
 
         let output = await greeting.output(didReceiveOutput: { _, _ in })
 
-        XCTAssertEqual("Hello world\nGoodbye world", output.out)
+        #expect("Hello world\nGoodbye world" == output.out)
     }
 
-    func test_fake_shell_synchronous_output() {
+    @Test func fake_shell_synchronous_output() {
         let greeting = BatchFakeShellOutput(items: [
             .instant("Hello world\n"),
             .delayed(0.2, "Goodbye world")
@@ -39,10 +41,10 @@ class TestableShellTest: XCTestCase {
 
         let output = greeting.syncOutput()
 
-        XCTAssertEqual("Hello world\nGoodbye world", output.out)
+        #expect("Hello world\nGoodbye world" == output.out)
     }
 
-    func test_fake_shell_usage() {
+    @Test func fake_shell_usage() {
         let expectedOutput = """
                 PHP 8.3.0 (cli) (built: Nov 21 2023 14:40:35) (NTS)
                 Copyright (c) The PHP Group
@@ -56,13 +58,13 @@ class TestableShellTest: XCTestCase {
             "echo $PATH": .instant("/Users/user/bin:/opt/homebrew/bin")
         ])
 
-        XCTAssertEqual(expectedOutput, shell.sync("php -v").out)
-        XCTAssertEqual("/Users/user/bin:/opt/homebrew/bin", shell.sync("echo $PATH").out)
+        #expect(expectedOutput == shell.sync("php -v").out)
+        #expect("/Users/user/bin:/opt/homebrew/bin" == shell.sync("echo $PATH").out)
     }
 
-    func test_fake_shell_has_path() {
+    @Test func fake_shell_has_path() {
         ActiveShell.useTestable([:])
 
-        XCTAssertEqual(Shell.PATH, "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
+        #expect(Shell.PATH == "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
     }
 }

@@ -1346,15 +1346,16 @@
 			path = Integration;
 			sourceTree = "<group>";
 		};
-		036C3A222E5CBC33008DAEDF /* _ST */ = {
+		036C3A222E5CBC33008DAEDF /* SwiftTestMigrated */ = {
 			isa = PBXGroup;
 			children = (
 				039C291E2E8AA39B007F5FAB /* Api */,
 				C4C1019927C65A4D001FACC2 /* Commands */,
-				036C3A232E5CBC57008DAEDF /* Parsers */,
 				036C39062E5C8890008DAEDF /* Integration */,
+				036C3A232E5CBC57008DAEDF /* Parsers */,
+				03D53E902E8AE089001B1671 /* Testables */,
 			);
-			path = _ST;
+			path = SwiftTestMigrated;
 			sourceTree = "<group>";
 		};
 		036C3A232E5CBC57008DAEDF /* Parsers */ = {
@@ -1406,6 +1407,16 @@
 				03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */,
 			);
 			path = Provision;
+			sourceTree = "<group>";
+		};
+		03D53E902E8AE089001B1671 /* Testables */ = {
+			isa = PBXGroup;
+			children = (
+				C4E2E84628FC1D8C003B070C /* TestableConfigurationTest.swift */,
+				C413E43328DA3E8F00AE33C7 /* Shell */,
+				C471E6DA28F9AFCB0021E251 /* Filesystem */,
+			);
+			path = Testables;
 			sourceTree = "<group>";
 		};
 		5420395726135DB800FB00FA /* Preferences */ = {
@@ -1935,16 +1946,6 @@
 			path = "Domain List";
 			sourceTree = "<group>";
 		};
-		C471E6D928F9AFC20021E251 /* Testables */ = {
-			isa = PBXGroup;
-			children = (
-				C471E6DA28F9AFCB0021E251 /* Filesystem */,
-				C413E43328DA3E8F00AE33C7 /* Shell */,
-				C4E2E84628FC1D8C003B070C /* TestableConfigurationTest.swift */,
-			);
-			path = Testables;
-			sourceTree = "<group>";
-		};
 		C471E6DA28F9AFCB0021E251 /* Filesystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -2325,9 +2326,8 @@
 		C4F7807A25D7F84B000DBC97 /* unit */ = {
 			isa = PBXGroup;
 			children = (
-				036C3A222E5CBC33008DAEDF /* _ST */,
-				C471E6D928F9AFC20021E251 /* Testables */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
+				036C3A222E5CBC33008DAEDF /* SwiftTestMigrated */,
 				C4C1019827C65A1A001FACC2 /* Versions */,
 			);
 			path = unit;
