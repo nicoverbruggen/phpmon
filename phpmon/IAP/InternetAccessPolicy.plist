@@ -14,6 +14,22 @@
 			<key>IsIncoming</key>
 			<false/>
 			<key>Host</key>
+			<string>phpmon.app, api.phpmon.app</string>
+			<key>NetworkProtocol</key>
+			<string>TCP</string>
+			<key>Port</key>
+			<string>80, 443</string>
+			<key>Relevance</key>
+			<string>Essential</string>
+			<key>Purpose</key>
+			<string>PHP Monitor contacts the official phpmon domain to check for updates, and visit aliased links that point to documentation.</string>
+			<key>DenyConsequences</key>
+			<string>If you deny these connections, PHP Monitor will not be able to determine if a newer version is available, and certain documentation links in the app may not function as desired.</string>
+		</dict>
+		<dict>
+			<key>IsIncoming</key>
+			<false/>
+			<key>Host</key>
 			<string>github.com, api.github.com</string>
 			<key>NetworkProtocol</key>
 			<string>TCP</string>
