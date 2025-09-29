@@ -9,13 +9,14 @@
 import Testing
 import Foundation
 
-@Suite("Api")
 struct TestableApiTest {
-
-    @Test
-    func createFakeApi() {
+    @Test func createFakeApi() {
         let api = TestableApi(responses: [
-            url("https://api.phpmon.test"): FakeApiResponse(statusCode: 200, headers: [:], text: "{\"success\": true}")
+            url("https://api.phpmon.test"): FakeApiResponse(
+                statusCode: 200,
+                headers: [:],
+                text: "{\"success\": true}"
+            )
         ])
 
         #expect(api.hasResponse(for: url("https://api.phpmon.test")) == true)
@@ -25,5 +26,4 @@ struct TestableApiTest {
         #expect(response.statusCode == 200)
         #expect(response.text.contains("success"))
     }
-
 }

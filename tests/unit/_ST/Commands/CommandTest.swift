@@ -8,11 +8,8 @@
 
 import Testing
 
-@Suite("Commands")
 struct CommandTest {
-
-    @Test
-    func determinePhpVersion() {
+    @Test func determinePhpVersion() {
         let version = Command.execute(
             path: Paths.php,
             arguments: ["-v"],
@@ -24,5 +21,4 @@ struct CommandTest {
         #expect(version.contains("built"))
         #expect(version.contains("Zend"))
     }
-
 }

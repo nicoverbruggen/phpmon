@@ -8,7 +8,6 @@
 
 import Testing
 
-@Suite("Integration")
 struct PackagistTest {
     @Test func canRetrieveLaravelValetVersion() async {
         let packageToCheck = "laravel/valet"

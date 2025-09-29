@@ -6,53 +6,54 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class HomebrewPackageTest: XCTestCase {
+struct HomebrewPackageTest {
 
     // - MARK: SYNTHETIC TESTS
 
     static var jsonBrewFile: URL {
-        return Bundle(for: Self.self)
+        return TestBundle
             .url(forResource: "brew-formula", withExtension: "json")!
     }
 
-    func test_can_load_extension_json() throws {
+    static var jsonBrewServicesFile: URL {
+        return TestBundle
+            .url(forResource: "brew-services", withExtension: "json")!
+    }
+
+    @Test func test_can_load_extension_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewFile, encoding: .utf8)
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self, from: json.data(using: .utf8)!
         ).first!
 
-        XCTAssertEqual(package.full_name, "php")
-        XCTAssertEqual(package.aliases.first!, "php@8.4")
-        XCTAssertEqual(package.installed.contains(where: { installed in
+        #expect(package.full_name == "php")
+        #expect(package.aliases.first! == "php@8.4")
+        #expect(package.installed.contains(where: { installed in
             installed.version.starts(with: "8.4")
-        }), true)
+        }) == true)
     }
 
-    static var jsonBrewServicesFile: URL {
-        return Bundle(for: Self.self)
-            .url(forResource: "brew-services", withExtension: "json")!
-    }
-
-    func test_can_parse_services_json() throws {
+    @Test func test_can_parse_services_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewServicesFile, encoding: .utf8)
         let services = try! JSONDecoder().decode(
             [HomebrewService].self, from: json.data(using: .utf8)!
         )
 
-        XCTAssertGreaterThan(services.count, 0)
-        XCTAssertEqual(services.first?.name, "dnsmasq")
-        XCTAssertEqual(services.first?.service_name, "homebrew.mxcl.dnsmasq")
+        #expect(!services.isEmpty)
+        #expect(services.first?.name == "dnsmasq")
+        #expect(services.first?.service_name == "homebrew.mxcl.dnsmasq")
     }
 
-    /*
     // - MARK: LIVE TESTS
 
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the Valet services to be installed: php, nginx and dnsmasq.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
+    @Test(.disabled("Uses system command; enable at your own risk"))
     func test_can_parse_services_json_from_cli_output() async throws {
         ActiveShell.useSystem()
 
@@ -65,17 +66,19 @@ class HomebrewPackageTest: XCTestCase {
             return ["php", "nginx", "dnsmasq"].contains(service.name)
         })
 
-        XCTAssertTrue(services.contains(where: {$0.name == "php"}))
-        XCTAssertTrue(services.contains(where: {$0.name == "nginx"}))
-        XCTAssertTrue(services.contains(where: {$0.name == "dnsmasq"}))
-        XCTAssertEqual(services.count, 3)
+        #expect(services.contains(where: {$0.name == "php"}))
+        #expect(services.contains(where: {$0.name == "nginx"}))
+        #expect(services.contains(where: {$0.name == "dnsmasq"}))
+        #expect(services.count == 3)
     }
 
     /// This test requires that you have a valid Homebrew installation set up,
     /// and requires the `php` formula to be installed.
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
+    @Test(.disabled("Uses system command; enable at your own risk"))
     func test_can_load_extension_json_from_cli_output() async throws {
+
         ActiveShell.useSystem()
 
         let package = try! JSONDecoder().decode(
@@ -83,7 +86,6 @@ class HomebrewPackageTest: XCTestCase {
             from: await Shell.pipe("\(Paths.brew) info php --json").out.data(using: .utf8)!
         ).first!
 
-        XCTAssertTrue(package.name == "php")
+        #expect(package.full_name == "php")
     }
-     */
 }

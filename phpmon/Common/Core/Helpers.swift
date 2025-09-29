@@ -52,7 +52,9 @@ func delay(seconds: Double) async {
     try! await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
 }
 
-/** A simpler way to initialize a fixed, valid URL. */
+/**
+ A simpler way to initialize a fixed, valid URL.
+ */
 func url(_ string: String) -> URL {
     return URL(string: string)!
 }

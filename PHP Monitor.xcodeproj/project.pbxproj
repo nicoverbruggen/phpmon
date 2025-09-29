@@ -1361,6 +1361,11 @@
 			isa = PBXGroup;
 			children = (
 				C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */,
+				C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */,
+				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
+				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
+				C4551656297AED18009B8466 /* ValetRcTest.swift */,
+				C456A0D02AA6175D0080144F /* Config */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -2188,11 +2193,6 @@
 		C4C1019727C65A11001FACC2 /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				C456A0D02AA6175D0080144F /* Config */,
-				C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */,
-				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
-				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
-				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
 				C4AFC4B229C4F43300BF4E0D /* HomebrewUpgradableTest.swift */,
 				C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */,

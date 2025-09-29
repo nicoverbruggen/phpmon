@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 
-@Suite("Parsers")
 struct ValetConfigurationTest {
     static var jsonConfigFileUrl: URL {
         return TestBundle.url(
@@ -18,8 +17,7 @@ struct ValetConfigurationTest {
         )!
     }
 
-    @Test("Can load config file")
-    func can_load_config_file() throws {
+    @Test func can_load_config_file() throws {
         let json = try? String(
             contentsOf: Self.jsonConfigFileUrl,
             encoding: .utf8
@@ -37,5 +35,4 @@ struct ValetConfigurationTest {
         #expect(config.defaultSite == "/Users/username/default-site")
         #expect(config.loopback == "127.0.0.1")
     }
-
 }
