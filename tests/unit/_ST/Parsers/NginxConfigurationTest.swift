@@ -35,17 +35,17 @@ struct NginxConfigurationTest {
 
     // MARK: - Tests
 
-    @Test func test_can_determine_site_name_and_tld() throws {
+    @Test func can_determine_site_name_and_tld() throws {
         #expect("nginx-site" == NginxConfigurationFile.from(filePath: Self.regularUrl.path)?.domain)
         #expect("test" == NginxConfigurationFile.from(filePath: Self.regularUrl.path)?.tld)
     }
 
-    @Test func test_can_determine_isolation() throws {
+    @Test func can_determine_isolation() throws {
         #expect(nil == NginxConfigurationFile.from(filePath: Self.regularUrl.path)?.isolatedVersion)
         #expect("8.1" == NginxConfigurationFile.from(filePath: Self.isolatedUrl.path)?.isolatedVersion)
     }
 
-    @Test func test_can_determine_proxy() throws {
+    @Test func can_determine_proxy() throws {
         let proxied = NginxConfigurationFile.from(filePath: Self.proxyUrl.path)!
         #expect(proxied.contents.contains("# valet stub: proxy.valet.conf"))
         #expect("http://127.0.0.1:90" == proxied.proxy)
@@ -55,13 +55,13 @@ struct NginxConfigurationTest {
         #expect(nil == normal.proxy)
     }
 
-    @Test func test_can_determine_secured_proxy() throws {
+    @Test func can_determine_secured_proxy() throws {
         let proxied = NginxConfigurationFile.from(filePath: Self.secureProxyUrl.path)!
         #expect(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
         #expect("http://127.0.0.1:90" == proxied.proxy)
     }
 
-    @Test func test_can_determine_proxy_with_custom_tld() throws {
+    @Test func can_determine_proxy_with_custom_tld() throws {
         let proxied = NginxConfigurationFile.from(filePath: Self.customTldProxyUrl.path)!
         #expect(proxied.contents.contains("# valet stub: secure.proxy.valet.conf"))
         #expect("http://localhost:8080" == proxied.proxy)

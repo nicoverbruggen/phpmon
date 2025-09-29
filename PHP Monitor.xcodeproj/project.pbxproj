@@ -1360,12 +1360,16 @@
 		036C3A232E5CBC57008DAEDF /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
-				C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */,
-				C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */,
+				C456A0D12AA6179D0080144F /* BytePhpPreferenceTest.swift */,
+				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
+				C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */,
 				C43A8A2325D9D20D00591B77 /* HomebrewPackageTest.swift */,
+				C4AFC4B229C4F43300BF4E0D /* HomebrewUpgradableTest.swift */,
 				C42CFB1927DFE8BD00862737 /* NginxConfigurationTest.swift */,
+				C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */,
+				C4F780AD25D80B37000DBC97 /* PhpExtensionTest.swift */,
+				C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */,
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
-				C456A0D02AA6175D0080144F /* Config */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -1852,15 +1856,6 @@
 			path = "PHP Extensions";
 			sourceTree = "<group>";
 		};
-		C456A0D02AA6175D0080144F /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */,
-				C456A0D12AA6179D0080144F /* BytePhpPreferenceTest.swift */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
 		C459B4BE27F6093A00E9B4B4 /* nginx */ = {
 			isa = PBXGroup;
 			children = (
@@ -2190,16 +2185,6 @@
 			path = Nginx;
 			sourceTree = "<group>";
 		};
-		C4C1019727C65A11001FACC2 /* Parsers */ = {
-			isa = PBXGroup;
-			children = (
-				C40934AA298EEDA900D25014 /* CaskFileParserTest.swift */,
-				C4AFC4B229C4F43300BF4E0D /* HomebrewUpgradableTest.swift */,
-				C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */,
-			);
-			path = Parsers;
-			sourceTree = "<group>";
-		};
 		C4C1019827C65A1A001FACC2 /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2344,7 +2329,6 @@
 				C471E6D928F9AFC20021E251 /* Testables */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
 				C4C1019827C65A1A001FACC2 /* Versions */,
-				C4C1019727C65A11001FACC2 /* Parsers */,
 			);
 			path = unit;
 			sourceTree = "<group>";

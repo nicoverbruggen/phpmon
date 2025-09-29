@@ -11,16 +11,16 @@ import Foundation
 
 struct PhpExtensionTest {
     static var phpIniFileUrl: URL {
-        return TestBundle.url(forResource: "php", withExtension: "ini")!
+        TestBundle.url(forResource: "php", withExtension: "ini")!
     }
 
-    @Test func test_can_load_extension() throws {
+    @Test func can_load_extension() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         #expect(!extensions.isEmpty)
     }
 
-    @Test func test_extension_name_is_correct() throws {
+    @Test func extension_name_is_correct() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         let extensionNames = extensions.map { (ext) -> String in
@@ -39,7 +39,7 @@ struct PhpExtensionTest {
         #expect(extensionNames.contains("nice") == false)
     }
 
-    @Test func test_extension_status_is_correct() throws {
+    @Test func extension_status_is_correct() throws {
         let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
 
         // xdebug should be enabled
@@ -49,7 +49,7 @@ struct PhpExtensionTest {
         #expect(extensions[1].enabled == false)
     }
 
-    @Test func test_toggle_works_as_expected() async throws {
+    @Test func toggle_works_as_expected() async throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.from(filePath: destination.path)
         #expect(extensions.count == 6)

@@ -11,10 +11,7 @@ import Foundation
 
 struct ValetConfigurationTest {
     static var jsonConfigFileUrl: URL {
-        return TestBundle.url(
-            forResource: "valet-config",
-            withExtension: "json"
-        )!
+        TestBundle.url(forResource: "valet-config", withExtension: "json")!
     }
 
     @Test func can_load_config_file() throws {

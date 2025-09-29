@@ -9,7 +9,7 @@
 import Testing
 
 struct BytePhpPreferenceTest {
-    @Test func test_can_extract_memory_value() throws {
+    @Test func can_extract_memory_value() throws {
         let pref = BytePhpPreference(key: "memory_limit")
 
         #expect(pref.internalValue == "512M")
@@ -17,7 +17,7 @@ struct BytePhpPreferenceTest {
         #expect(pref.value == 512)
     }
 
-    @Test func test_can_parse_all_kinds_of_values() throws {
+    @Test func can_parse_all_kinds_of_values() throws {
         var (unit, value) = BytePhpPreference.readFrom(internalValue: "1G")!
         #expect(unit == .gigabyte)
         #expect(value == 1)

@@ -12,15 +12,15 @@ import Foundation
 struct ValetRcTest {
     // MARK: - Test Files
     static var validPath: URL {
-        return TestBundle.url(forResource: "valetrc", withExtension: "valid")!
+        TestBundle.url(forResource: "valetrc", withExtension: "valid")!
     }
 
     static var brokenPath: URL {
-        return TestBundle.url(forResource: "valetrc", withExtension: "broken")!
+        TestBundle.url(forResource: "valetrc", withExtension: "broken")!
     }
 
     // MARK: - Tests
-    @Test func test_can_extract_fields_from_valet_rc_file() throws {
+    @Test func can_extract_fields_from_valet_rc_file() throws {
         let fakeFile = RCFile.fromPath("/Users/fake/file.rc")
         #expect(nil == fakeFile)
 

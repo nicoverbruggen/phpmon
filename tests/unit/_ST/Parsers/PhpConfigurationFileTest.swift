@@ -15,14 +15,14 @@ class PhpConfigurationFileTest {
         return TestBundle.url(forResource: "php", withExtension: "ini")!
     }
 
-    @Test func test_can_load_extension() throws {
+    @Test func can_load_extension() throws {
         let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)
 
         #expect(iniFile != nil)
         #expect(!iniFile!.extensions.isEmpty)
     }
 
-    @Test func test_can_check_key_existence() throws {
+    @Test func can_check_key_existence() throws {
         let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
 
         #expect(iniFile.has(key: "error_reporting"))
@@ -30,7 +30,7 @@ class PhpConfigurationFileTest {
         #expect(false == iniFile.has(key: "my_unknown_key"))
     }
 
-    @Test func test_can_check_key_value() throws {
+    @Test func can_check_key_value() throws {
         let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
 
         #expect(iniFile.get(for: "error_reporting") != nil)
@@ -40,7 +40,7 @@ class PhpConfigurationFileTest {
         #expect(iniFile.get(for: "display_errors") == "On")
     }
 
-    @Test func test_can_customize_configuration_value() throws {
+    @Test func can_customize_configuration_value() throws {
         let destination = Utility
             .copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
 

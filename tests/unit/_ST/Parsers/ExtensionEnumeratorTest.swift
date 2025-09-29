@@ -6,11 +6,11 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-final class ExtensionEnumeratorTest: XCTestCase {
-
-    override func setUp() async throws {
+struct ExtensionEnumeratorTest {
+    init() async throws {
         ActiveFileSystem.useTestable([
             "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.1.rb": .fake(.text, "<test>"),
             "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula/xdebug@8.2.rb": .fake(.text, "<test>"),
@@ -19,22 +19,19 @@ final class ExtensionEnumeratorTest: XCTestCase {
         ])
     }
 
-    func testCanReadFormulae() throws {
+    @Test func can_read_formulae() throws {
         let directory = "\(Paths.tapPath)/shivammathur/homebrew-extensions/Formula"
         let files = try FileSystem.getShallowContentsOfDirectory(directory)
 
-        XCTAssertEqual(
-            Set(["xdebug@8.1.rb", "xdebug@8.2.rb", "xdebug@8.3.rb", "xdebug@8.4.rb"]),
-            Set(files)
-        )
+        #expect(Set(files) == Set(["xdebug@8.1.rb", "xdebug@8.2.rb", "xdebug@8.3.rb", "xdebug@8.4.rb"]))
     }
 
-    func testCanParseFormulaeBasedOnSyntax() throws {
+    @Test func can_parse_formulae_based_on_syntax() throws {
         let formulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
 
-        XCTAssertEqual(formulae["8.1"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.1")])
-        XCTAssertEqual(formulae["8.2"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.2")])
-        XCTAssertEqual(formulae["8.3"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.3")])
-        XCTAssertEqual(formulae["8.4"], [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.4")])
+        #expect(formulae["8.1"] == [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.1")])
+        #expect(formulae["8.2"] == [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.2")])
+        #expect(formulae["8.3"] == [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.3")])
+        #expect(formulae["8.4"] == [BrewPhpExtension(path: "/", name: "xdebug", phpVersion: "8.4")])
     }
 }

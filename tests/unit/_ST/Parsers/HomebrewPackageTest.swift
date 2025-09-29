@@ -14,16 +14,14 @@ struct HomebrewPackageTest {
     // - MARK: SYNTHETIC TESTS
 
     static var jsonBrewFile: URL {
-        return TestBundle
-            .url(forResource: "brew-formula", withExtension: "json")!
+        TestBundle.url(forResource: "brew-formula", withExtension: "json")!
     }
 
     static var jsonBrewServicesFile: URL {
-        return TestBundle
-            .url(forResource: "brew-services", withExtension: "json")!
+        TestBundle.url(forResource: "brew-services", withExtension: "json")!
     }
 
-    @Test func test_can_load_extension_json() throws {
+    @Test func can_load_extension_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewFile, encoding: .utf8)
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self, from: json.data(using: .utf8)!
@@ -36,7 +34,7 @@ struct HomebrewPackageTest {
         }) == true)
     }
 
-    @Test func test_can_parse_services_json() throws {
+    @Test func can_parse_services_json() throws {
         let json = try! String(contentsOf: Self.jsonBrewServicesFile, encoding: .utf8)
         let services = try! JSONDecoder().decode(
             [HomebrewService].self, from: json.data(using: .utf8)!
@@ -54,7 +52,7 @@ struct HomebrewPackageTest {
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
-    func test_can_parse_services_json_from_cli_output() async throws {
+    func can_parse_services_json_from_cli_output() async throws {
         ActiveShell.useSystem()
 
         let services = try! JSONDecoder().decode(
@@ -77,7 +75,7 @@ struct HomebrewPackageTest {
     /// If this test fails, there is an issue with your Homebrew installation
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
-    func test_can_load_extension_json_from_cli_output() async throws {
+    func can_load_extension_json_from_cli_output() async throws {
 
         ActiveShell.useSystem()
 
