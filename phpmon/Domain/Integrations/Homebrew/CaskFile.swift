@@ -30,7 +30,7 @@ struct CaskFile {
         } else {
             return await Shell.pipe("""
                 curl -s --max-time 10 \
-                -H "User-Agent: phpmon-curl 1.0" \
+                -H "User-Agent: phpmon-curl/1.0" \
                 -H "X-phpmon-version: \(App.shortVersion) (\(App.bundleVersion))" \
                 -H "X-phpmon-os-version: \(App.macVersion)" \
                 -H "X-phpmon-bundle-id: \(App.identifier)" \
