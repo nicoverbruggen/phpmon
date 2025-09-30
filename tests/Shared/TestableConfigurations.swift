@@ -153,6 +153,21 @@ class TestableConfigurations {
                     app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
                 end
                 """),
+                "curl -s --max-time 10 'https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb''" :
+                    .delayed(0.5, """
+                cask 'phpmon-dev' do
+                    depends_on formula: 'gnu-sed'
+
+                    version '25.08.0_1000'
+                    sha256 '1cb147bd1b1fbd52971d90dff577465b644aee7c878f15ede57f46e8f217067a'
+
+                    url 'https://github.com/nicoverbruggen/phpmon/releases/download/v6.0/phpmon-dev.zip'
+                    name 'PHP Monitor DEV'
+                    homepage 'https://phpmon.app'
+
+                    app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
+                end
+                """),
                 "/opt/homebrew/bin/brew unlink php"
                     : .delayed(0.2, "OK"),
                 "/opt/homebrew/bin/brew unlink php@8.2"

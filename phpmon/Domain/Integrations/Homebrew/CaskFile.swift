@@ -25,7 +25,7 @@ struct CaskFile {
     }
 
     private static func loadFromApi(_ url: URL) async -> String {
-        if App.hasLoadedTestableConfiguration {
+        if App.hasLoadedTestableConfiguration || url.absoluteString.contains("https://raw.githubusercontent.com") {
             return await Shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
         } else {
             return await Shell.pipe("""

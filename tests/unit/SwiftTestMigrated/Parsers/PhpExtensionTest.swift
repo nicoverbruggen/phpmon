@@ -9,7 +9,12 @@
 import Testing
 import Foundation
 
+@Suite(.serialized)
 struct PhpExtensionTest {
+    init () async throws {
+        ActiveShell.useSystem()
+    }
+
     static var phpIniFileUrl: URL {
         TestBundle.url(forResource: "php", withExtension: "ini")!
     }

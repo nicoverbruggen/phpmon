@@ -9,13 +9,14 @@
 import Testing
 import Foundation
 
+@Suite(.serialized)
 class PhpConfigurationFileTest {
-
     static var phpIniFileUrl: URL {
         return TestBundle.url(forResource: "php", withExtension: "ini")!
     }
 
     @Test func can_load_extension() throws {
+        ActiveFileSystem.useSystem()
         let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)
 
         #expect(iniFile != nil)
@@ -23,6 +24,7 @@ class PhpConfigurationFileTest {
     }
 
     @Test func can_check_key_existence() throws {
+        print(Self.phpIniFileUrl.path)
         let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
 
         #expect(iniFile.has(key: "error_reporting"))

@@ -9,7 +9,12 @@
 import Testing
 import Foundation
 
+@Suite(.serialized)
 struct CaskFileParserTest {
+
+    init() async throws {
+        ActiveShell.useSystem()
+    }
 
     // MARK: - Test Files
     static var exampleFilePath: URL {

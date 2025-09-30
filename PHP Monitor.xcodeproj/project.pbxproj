@@ -1144,7 +1144,6 @@
 		C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFileTest.swift; sourceTree = "<group>"; };
 		C47015012C46D6910069AAE7 /* NVAlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVAlertExtension.swift; sourceTree = "<group>"; };
 		C4709CA128524B3400088BB8 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
-		C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feature Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C471E7AF28F9B4940021E251 /* InternalSwitcherTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalSwitcherTest.swift; sourceTree = "<group>"; };
 		C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1970,7 +1969,6 @@
 			isa = PBXGroup;
 			children = (
 				C4E2E86828FC2FF2003B070C /* Shared */,
-				C471E79228F9B1D30021E251 /* PHP Monitor.xctestplan */,
 				C4F7807A25D7F84B000DBC97 /* unit */,
 				C471E7AE28F9B4940021E251 /* feature */,
 				C471E7BD28F9B90F0021E251 /* ui */,
