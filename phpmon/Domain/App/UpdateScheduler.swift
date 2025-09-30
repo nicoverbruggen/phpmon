@@ -47,7 +47,6 @@ actor UpdateScheduler {
             UserDefaults.standard.removeObject(forKey: PersistentAppState.updateCheckFailureCount.rawValue)
             UserDefaults.standard.set(Date(), forKey: PersistentAppState.lastAutomaticUpdateCheck.rawValue)
             scheduleTimer()
-            Log.info("Update check succeeded. Next check in \(Constants.AutomaticUpdateCheckInterval)s.")
 
         case .networkError, .parseError:
             // Handle failures with exponential backoff

@@ -23,7 +23,3 @@ class ActiveApi {
         Self.shared = RealApi()
     }
 }
-
-protocol ApiProtocol {}
-
-class RealApi: ApiProtocol {}

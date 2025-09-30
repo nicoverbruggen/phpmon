@@ -16,6 +16,14 @@
 		03263A392E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
 		03263A3A2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
 		03263A3B2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
+		032DAC282E8BEB5B0018E01C /* RealApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC272E8BEB590018E01C /* RealApi.swift */; };
+		032DAC292E8BEB5B0018E01C /* RealApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC272E8BEB590018E01C /* RealApi.swift */; };
+		032DAC2A2E8BEB5B0018E01C /* RealApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC272E8BEB590018E01C /* RealApi.swift */; };
+		032DAC2B2E8BEB5B0018E01C /* RealApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC272E8BEB590018E01C /* RealApi.swift */; };
+		032DAC2D2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */; };
+		032DAC2E2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */; };
+		032DAC2F2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */; };
+		032DAC302E8BEB6B0018E01C /* ApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */; };
 		033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D459A2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
@@ -971,6 +979,8 @@
 		0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionsObservable.swift; sourceTree = "<group>"; };
 		031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewPhpExtension.swift; sourceTree = "<group>"; };
 		03263A372E86D5E800BD0415 /* UpdateScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateScheduler.swift; sourceTree = "<group>"; };
+		032DAC272E8BEB590018E01C /* RealApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealApi.swift; sourceTree = "<group>"; };
+		032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProtocol.swift; sourceTree = "<group>"; };
 		0336CAAF2B0D0CDA009A1034 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
@@ -1386,8 +1396,9 @@
 		039C29112E8AA159007F5FAB /* Http */ = {
 			isa = PBXGroup;
 			children = (
-				039C29172E8AA311007F5FAB /* TestableApi.swift */,
 				039C29122E8AA15F007F5FAB /* ActiveApi.swift */,
+				032DAC272E8BEB590018E01C /* RealApi.swift */,
+				032DAC2C2E8BEB690018E01C /* ApiProtocol.swift */,
 			);
 			path = Http;
 			sourceTree = "<group>";
@@ -2346,6 +2357,7 @@
 		C4F787A728EF812600790735 /* Testables */ = {
 			isa = PBXGroup;
 			children = (
+				039C29172E8AA311007F5FAB /* TestableApi.swift */,
 				C46EBC4928DB966A007ACC74 /* TestableShell.swift */,
 				C4AD38B128ECD9D300FA8D83 /* TestableFileSystem.swift */,
 				C4E49DEC28F764A00026AC4E /* TestableCommand.swift */,
@@ -2707,6 +2719,7 @@
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				C4E49DE728F764050026AC4E /* ActiveCommand.swift in Sources */,
 				C43B8FD52BA9BAD3000C02BE /* UnavailableContentView.swift in Sources */,
+				032DAC2A2E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
@@ -2726,6 +2739,7 @@
 				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
 				C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */,
+				032DAC2E2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */,
 				C4F2E4372752F0870020E974 /* BrewDiagnostics.swift in Sources */,
 				031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4AD38B228ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
@@ -2920,6 +2934,7 @@
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
 				C4513F922B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
+				032DAC2B2E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
@@ -3082,6 +3097,7 @@
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
 				C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */,
+				032DAC2D2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */,
 				C4513F902B13E2E6001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
 				C471E81528F9BAE80021E251 /* ArrayExtension.swift in Sources */,
 				C471E7DA28F9BA8F0021E251 /* TestableCommand.swift in Sources */,
@@ -3153,6 +3169,7 @@
 				C471E8B528F9BB8F0021E251 /* MainMenu+FixMyValet.swift in Sources */,
 				C471E8B628F9BB8F0021E251 /* MainMenu+Actions.swift in Sources */,
 				C471E8B728F9BB8F0021E251 /* StatusMenu.swift in Sources */,
+				032DAC302E8BEB6B0018E01C /* ApiProtocol.swift in Sources */,
 				C471E8B828F9BB8F0021E251 /* StatusMenu+Items.swift in Sources */,
 				036C390C2E5C8CC5008DAEDF /* PackagistP2Response.swift in Sources */,
 				C471E8B928F9BB8F0021E251 /* DomainListCellProtocol.swift in Sources */,
@@ -3268,6 +3285,7 @@
 				C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */,
 				C471E82328F9BB2E0021E251 /* ComposerJson.swift in Sources */,
 				C471E82128F9BB2E0021E251 /* ProjectTypeDetection.swift in Sources */,
+				032DAC282E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				C471E7EF28F9BAC30021E251 /* Actions.swift in Sources */,
 				C471E82228F9BB2E0021E251 /* ComposerWindow.swift in Sources */,
 				C4D3660E29113F20006BD146 /* System.swift in Sources */,
@@ -3400,6 +3418,7 @@
 				C456A0C72AA614BD0080144F /* PhpPreference.swift in Sources */,
 				C42106672AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C46DC7A52C7B5BC900F19D17 /* Favorites.swift in Sources */,
+				032DAC2F2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */,
 				C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
 				C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */,
 				54D9E0B927E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
@@ -3407,6 +3426,7 @@
 				C4159AF728E4D40400545349 /* RealShellTest.swift in Sources */,
 				C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				C40D725B2A018ACC0054A067 /* BusyStatus.swift in Sources */,
+				032DAC292E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,
 				C40D72602A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C485707B28BF458900539B36 /* VersionPopoverView.swift in Sources */,
