@@ -18,11 +18,12 @@ final class MainMenuTest: UITestCase {
         let app = launch(openMenu: true)
 
         assertAllExist([
-            // "Switch to PHP 8.2 (php)" should be visible since it is aliased to `php`
-            app.menuItems["\("mi_php_switch".localized) 8.2 (php)"],
+            // "Switch to PHP 8.4 (php)" should be visible since it is aliased to `php`
+            app.menuItems["\("mi_php_switch".localized) 8.4 (php)"],
             // "Switch to PHP 8.1" should be the non-disabled option
+            app.menuItems["\("mi_php_switch".localized) 8.3 (php@8.3)"],
+            app.menuItems["\("mi_php_switch".localized) 8.2 (php@8.2)"],
             app.menuItems["\("mi_php_switch".localized) 8.1 (php@8.1)"],
-            // "Switch to PHP 8.0" should be the non-disabled option
             app.menuItems["\("mi_php_switch".localized) 8.0 (php@8.0)"],
             // We should see the about and quit items
             app.menuItems["mi_about".localized],
@@ -107,10 +108,10 @@ final class MainMenuTest: UITestCase {
         // But not PHP 8.6 (yet)
         assertNotExists(app.staticTexts["PHP 8.6"])
 
-        // Also, PHP 8.2 should have an update available
+        // Also, PHP 8.4 should have an update available
         assertExists(app.staticTexts["phpman.version.has_update".localized(
-            "8.2.6",
-            "8.2.11"
+            "8.4.5",
+            "8.4.11"
         )], 5)
     }
 

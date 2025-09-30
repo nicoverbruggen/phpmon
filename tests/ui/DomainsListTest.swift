@@ -35,7 +35,7 @@ final class DomainsListTest: UITestCase {
         searchField.click()
         searchField.typeText("non-existent thing")
         Thread.sleep(forTimeInterval: 0.2)
-        XCTAssertTrue(window.tables.tableRows.count == 0)
+        XCTAssertTrue(window.tables.tableRows.count == 0) // swiftlint:disable:this empty_count
 
         searchField.clearText()
         searchField.click()

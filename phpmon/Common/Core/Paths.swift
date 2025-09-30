@@ -111,8 +111,7 @@ public class Paths {
     }
 
     public static var caskroomPath: String {
-        return "\(shared.baseDir.rawValue)/Caskroom/"
-            + (App.identifier.contains(".dev") ? "phpmon-dev" : "phpmon")
+        return "\(shared.baseDir.rawValue)/Caskroom/phpmon"
     }
 
     public static var shell: String {

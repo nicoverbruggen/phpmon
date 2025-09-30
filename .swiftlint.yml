@@ -3,13 +3,25 @@ disabled_rules:
   - identifier_name
   - force_try
   - force_cast
-  
+  - private_over_fileprivate
+
 opt_in_rules:
   - empty_count
 
 included:
   - phpmon
-  - phpmon-tests
+  - phpmon-updater
+  - tests
 
 excluded:
   - phpmon/Vendor
+
+line_length:
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_urls: true
+  warning: 120
+  error: 200
+
+analyzer_rules:
+  - unused_import

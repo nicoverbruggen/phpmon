@@ -8,7 +8,7 @@
 
 import XCTest
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 class PhpVersionNumberTest: XCTestCase {
 
     func test_can_deconstruct_php_version() throws {
@@ -50,7 +50,6 @@ class PhpVersionNumberTest: XCTestCase {
         XCTAssertEqual(version!.major, 7)
         XCTAssertEqual(version!.minor, 0)
     }
-
 
     func test_can_check_wildcard_version_constraint() throws {
         // Wildcard for patch only
@@ -408,3 +407,4 @@ class PhpVersionNumberTest: XCTestCase {
         )
     }
 }
+// swiftlint:enable type_body_length file_length

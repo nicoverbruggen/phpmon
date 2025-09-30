@@ -439,7 +439,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them.";
 
 "prefs.automatic_update_check_title" = "Automatically check for updates";
-"prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check if there is a newer version available, and notify you if that is the case.";
+"prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check daily if there is a newer version available, and notify you if that is the case.";
 
 "prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "If you uncheck this item, no PHP Doctor suggestions will appear in PHP Monitor's menu. Keep in mind that PHP Doctor will not appear if there are no recommendations.";

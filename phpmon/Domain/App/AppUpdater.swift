@@ -10,32 +10,28 @@ import Foundation
 import Cocoa
 import NVAlert
 
+enum UpdateCheckResult {
+    case success
+    case networkError
+    case parseError
+}
+
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
     var interactive: Bool = false
 
-    public func checkForUpdates(userInitiated: Bool) async {
+    public func checkForUpdates(userInitiated: Bool) async -> UpdateCheckResult {
         self.interactive = userInitiated
-
-        if !interactive && !Preferences.isEnabled(.automaticBackgroundUpdateCheck) {
-            Log.info("Skipping automatic update check due to user preference.")
-            return
-        }
 
         Log.info("The app will search for updates...")
 
-        var caskUrl = Constants.Urls.StableBuildCaskFile
-
-        if App.identifier.contains(".phpmon.eap") {
-            caskUrl = Constants.Urls.EarlyAccessCaskFile
-        } else if App.identifier.contains(".phpmon.dev") {
-            caskUrl = Constants.Urls.DevBuildCaskFile
-        }
+        let caskUrl = Constants.Urls.UpdateCheckEndpoint
 
         guard let caskFile = await CaskFile.from(url: caskUrl) else {
             Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
-            return presentCouldNotRetrieveUpdateIfInteractive()
+            presentCouldNotRetrieveUpdateIfInteractive()
+            return .networkError
         }
 
         self.caskFile = caskFile
@@ -44,7 +40,8 @@ class AppUpdater {
 
         guard let onlineVersion = AppVersion.from(caskFile.version) else {
             Log.err("The version string from the CaskFile could not be read.")
-            return presentCouldNotRetrieveUpdateIfInteractive()
+            presentCouldNotRetrieveUpdateIfInteractive()
+            return .parseError
         }
 
         latestVersionOnline = onlineVersion
@@ -55,6 +52,8 @@ class AppUpdater {
         } else if interactive {
             presentNoNewerVersionAvailableAlert()
         }
+
+        return .success
     }
 
     private func presentCouldNotRetrieveUpdateIfInteractive() {
@@ -68,9 +67,7 @@ class AppUpdater {
     // MARK: - Alerts
 
     public func presentNewerVersionAvailableAlert() {
-        let command = App.identifier.contains(".dev")
-            ? "brew upgrade phpmon-dev"
-            : "brew upgrade phpmon"
+        let command = "brew upgrade phpmon"
 
         Task { @MainActor in
             NVAlert().withInformation(
@@ -188,7 +185,7 @@ class AppUpdater {
         // Cleanup the upgrade.success file
         if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
-                if App.identifier.contains(".phpmon.eap") || App.identifier.contains(".phpmon.dev") {
+                if App.identifier.contains(".phpmon.eap") {
                     LocalNotification.send(
                         title: "notification.phpmon_updated.title".localized,
                         subtitle: "notification.phpmon_updated_dev.desc".localized(App.shortVersion, App.bundleVersion),

@@ -111,7 +111,13 @@ class PhpEnvironments {
      It's possible for the alias to be newer than the actual installed version of PHP.
      */
     static var homebrewBrewPhpAlias: String {
-        if PhpEnvironments.shared.homebrewPackage == nil { return "8.2" }
+        if PhpEnvironments.shared.homebrewPackage == nil {
+            // For UI testing and as a fallback, determine this version by using (fake) php-config
+            let version = Command.execute(path: "/opt/homebrew/bin/php-config",
+                                   arguments: ["--version"],
+                                   trimNewlines: true)
+            return try! VersionNumber.parse(version).short
+        }
 
         return PhpEnvironments.shared.homebrewPackage.version
     }

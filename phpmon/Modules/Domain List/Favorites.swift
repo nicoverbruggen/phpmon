@@ -14,7 +14,7 @@ class Favorites {
     var items: [String]
 
     init() {
-        if let items = UserDefaults.standard.array(forKey: "user_favorites") as? [String] {
+        if let items = UserDefaults.standard.array(forKey: PersistentAppState.userFavorites.rawValue) as? [String] {
             self.items = items
         } else {
             self.items = []
@@ -32,7 +32,7 @@ class Favorites {
             items.append(domain)
         }
 
-        UserDefaults.standard.setValue(items, forKey: "user_favorites")
+        UserDefaults.standard.setValue(items, forKey: PersistentAppState.userFavorites.rawValue)
         UserDefaults.standard.synchronize()
     }
 }

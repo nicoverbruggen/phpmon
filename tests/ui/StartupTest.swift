@@ -26,7 +26,7 @@ final class StartupTest: UITestCase {
         assertAllExist([
             app.dialogs["generic.notice".localized],
             app.staticTexts["startup.errors.php_binary.title".localized],
-            app.buttons["generic.ok".localized],
+            app.buttons["generic.ok".localized]
         ])
         click(app.buttons["generic.ok".localized])
 
@@ -48,7 +48,7 @@ final class StartupTest: UITestCase {
 
     final func test_get_warning_about_missing_fpm_symlink() throws {
         var configuration = TestableConfigurations.working
-        configuration.filesystem["/opt/homebrew/etc/php/8.2/php-fpm.d/valet-fpm.conf"] = nil
+        configuration.filesystem["/opt/homebrew/etc/php/8.4/php-fpm.d/valet-fpm.conf"] = nil
 
         let app = launch(with: configuration)
 

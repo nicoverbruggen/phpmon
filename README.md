@@ -399,13 +399,15 @@ PHP Monitor is a universal app and supports both architectures, so [find out her
 <details>
 <summary><strong>Why is the app doing network requests?</strong></summary>
 
-The app will automatically check for updates, which is the most likely culprit. 
+This happens for various reasons. 
 
-This happens at launch (unless disabled), and the app directly checks the Caskfile hosted on GitHub. This data is not, and will not be used for analytics (and, as far as I can tell, cannot).
+PHP Monitor will connect to the `api.phpmon.app` domain to check for updates. To provide a good update experience, some information about which version of PHP Monitor and macOS you are using is transmitted to determine which updates are available for your system configuration.
 
-I also can't prevent `brew` from doing things via the network when PHP Monitor uses the binary.
+The app includes an Internet Access Policy file, so if you're using something like [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) there should be a description why these connections occur.
 
-The app includes an Internet Access Policy file, so if you're using something like Little Snitch there should be a description why these calls occur.
+Certain connections may not be documented if Homebrew functionality is being invoked via the GUI. I also can't prevent `brew` from doing things via the network when PHP Monitor invokes `brew`, obviously. 
+
+For example: Homebrew automatically sends analytics to an `influxdata.com` endpoint (more info [here](https://docs.brew.sh/Analytics)). You can disable this by running `brew analytics off`.
 
 </details>
 

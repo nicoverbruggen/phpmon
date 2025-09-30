@@ -23,11 +23,11 @@ class TestableFileSystem: FileSystemProtocol {
                 let adjustedKey = key.contains("~") ? key.replacingOccurrences(of: "~", with: self.homeDirectory) : key
                 self.files[adjustedKey] = value
             }
-        }
 
-        // Ensure that intermediate directories are created
-        for file in self.files {
-            self.createIntermediateDirectories(file.key)
+            // Ensure that intermediate directories are created
+            for file in self.files {
+                self.createIntermediateDirectories(file.key)
+            }
         }
     }
 

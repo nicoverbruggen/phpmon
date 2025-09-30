@@ -50,7 +50,6 @@ class AppearancePreferencesVC: GenericPreferenceVC {
 
 class MenuStructurePreferencesVC: GenericPreferenceVC {
 
-    // swiftlint:disable line_length
     public static func fromStoryboard() -> GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
@@ -67,7 +66,6 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
             .addView(when: true, vc.displayFeature("prefs.display_misc", .displayMisc))
             .addView(when: true, vc.displayFeature("prefs.display_driver", .displayDriver))
     }
-    // swiftlint:enable line_length
 }
 
 class NotificationPreferencesVC: GenericPreferenceVC {

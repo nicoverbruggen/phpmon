@@ -142,7 +142,7 @@ extension MainMenu {
             }
         } else {
             // Check for updates
-            await AppUpdater().checkForUpdates(userInitiated: false)
+            await UpdateScheduler.shared.startAutomaticUpdateChecking()
 
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()

@@ -17,7 +17,7 @@ class FeatureTestCase: XCTestCase {
             return fs as! TestableFileSystem
         }
 
-        fatalError("The active filesystem is not a TestableFileSystem. Please use `ActiveFileSystem` to use the fake filesystem.")
+        fatalError("The active filesystem is not a TestableFileSystem. Please use `ActiveFileSystem`.")
     }
 
     public func assertFileSystemHas(
@@ -44,6 +44,4 @@ class FeatureTestCase: XCTestCase {
     ) {
         XCTAssertEqual(contents, fakeFileSystem.files[path]?.content, file: file, line: line)
     }
-
 }
-

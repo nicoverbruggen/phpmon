@@ -14,6 +14,9 @@ class App {
     /** The static app instance. Accessible at any time. */
     static let shared = App()
 
+    /** Use to determine whether a loaded testable configuration is being used. */
+    static var hasLoadedTestableConfiguration: Bool = false
+
     /** Retrieve the version number from the main info dictionary, Info.plist. */
     static var version: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
@@ -51,6 +54,11 @@ class App {
             }
         }
         return machine
+    }
+
+    static var macVersion: String {
+        let version = ProcessInfo.processInfo.operatingSystemVersion
+        return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
     /**
