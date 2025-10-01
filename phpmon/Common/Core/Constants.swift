@@ -154,8 +154,12 @@ struct Constants {
 
         static let EarlyAccessChangelog = url("https://phpmon.app/early-access/release-notes")
 
-        // API endpoints (via api.phpmon.app)
-        static let UpdateCheckEndpoint =  url("https://api.phpmon.app/api/v1/update-check")
+        // API endpoints
+        #if DEBUG
+        static let UpdateCheckEndpoint = url("https://api.phpmon.test/api/v1/update-check")
+        #else
+        static let UpdateCheckEndpoint = url("https://api.phpmon.app/api/v1/update-check")
+        #endif
 
         // GitHub URLs (do not alias these)
         static let GitHubReleases = url("https://github.com/nicoverbruggen/phpmon/releases")
