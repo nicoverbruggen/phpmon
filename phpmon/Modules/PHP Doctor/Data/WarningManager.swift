@@ -33,7 +33,7 @@ class WarningManager: ObservableObject {
                 return await Shell.pipe("sysctl -n sysctl.proc_translated").out
                     .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
             },
-            name: "Running PHP Monitor with Rosetta on M1",
+            name: "Running PHP Monitor with Rosetta on Apple Silicon",
             title: "warnings.arm_compatibility.title",
             paragraphs: { return ["warnings.arm_compatibility.description"] },
             url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-and-Apple-Silicon",

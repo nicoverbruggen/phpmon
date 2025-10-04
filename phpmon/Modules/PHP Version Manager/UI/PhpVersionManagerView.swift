@@ -109,34 +109,19 @@ struct PhpVersionManagerView: View {
                 title: self.status.title,
                 text: self.status.description
             ) {
-                if #available(macOS 13, *) {
-                    List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
-                        listContent(for: formula)
-                            .listRowBackground(
-                                index % 2 == 0
-                                ? Color.gray.opacity(0)
-                                : Color.gray.opacity(0.08)
-                            )
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 8)
-                            .listRowSeparator(.hidden)
-                    }
-                    .edgesIgnoringSafeArea(.top)
-                    .listStyle(PlainListStyle())
-                } else {
-                    List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
-                        listContent(for: formula)
-                            .listRowBackground(
-                                index % 2 == 0
-                                ? Color.gray.opacity(0)
-                                : Color.gray.opacity(0.08)
-                            )
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 8)
-                    }
-                    .edgesIgnoringSafeArea(.top)
-                    .listStyle(PlainListStyle())
+                List(Array(formulae.phpVersions.enumerated()), id: \.1.name) { (index, formula) in
+                    listContent(for: formula)
+                        .listRowBackground(
+                            index % 2 == 0
+                            ? Color.gray.opacity(0)
+                            : Color.gray.opacity(0.08)
+                        )
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 8)
+                        .listRowSeparator(.hidden)
                 }
+                .edgesIgnoringSafeArea(.top)
+                .listStyle(PlainListStyle())
             }
         }
         .frame(minWidth: 600, minHeight: 600)

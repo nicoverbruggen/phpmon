@@ -17,7 +17,7 @@ class GeneralPreferencesVC: GenericPreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
 
-        _ = vc
+        return vc
             .addView(when: true, vc.getLanguageOptionsPV())
             .addView(when: true, vc.getShowPhpDoctorSuggestionsPV())
             .addView(when: true, vc.getAutoRestartServicesPV())
@@ -25,12 +25,7 @@ class GeneralPreferencesVC: GenericPreferenceVC {
             .addView(when: true, vc.getShortcutPV())
             .addView(when: true, vc.getIntegrationsPV())
             .addView(when: true, vc.getAutomaticUpdateCheckPV())
-
-        if #available(macOS 13, *) {
-            vc.views.append(CheckboxPreferenceView.makeLoginItemView())
-        }
-
-        return vc
+            .addView(when: true, CheckboxPreferenceView.makeLoginItemView())
     }
 }
 

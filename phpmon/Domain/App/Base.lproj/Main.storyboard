@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -491,194 +491,24 @@
             </objects>
             <point key="canvasLocation" x="-374" y="1137"/>
         </scene>
-        <!--Window Controller-->
-        <scene sceneID="BD0-La-ygq">
-            <objects>
-                <windowController storyboardIdentifier="noticeWindow" id="nfT-AN-9ZW" sceneMemberID="viewController">
-                    <window key="window" title="Notice" separatorStyle="none" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" frameAutosaveName="" titlebarAppearsTransparent="YES" toolbarStyle="unified" titleVisibility="hidden" id="AoF-SN-xB0">
-                        <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
-                        <rect key="contentRect" x="425" y="462" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
-                        <view key="contentView" id="Src-7L-4Z4">
-                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </view>
-                        <connections>
-                            <outlet property="delegate" destination="nfT-AN-9ZW" id="8dd-JR-bQG"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="hkw-9V-NxP" kind="relationship" relationship="window.shadowedContentViewController" id="eob-YS-ACy"/>
-                    </connections>
-                </windowController>
-                <customObject id="i3j-z8-nxv" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-374" y="2267"/>
-        </scene>
-        <!--AlertVC-->
-        <scene sceneID="y9E-bB-wIG">
-            <objects>
-                <viewController storyboardIdentifier="noticeVC" id="hkw-9V-NxP" customClass="NVAlertVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="UPH-hV-Naz">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="212"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="JVG-5w-fPd">
-                                <rect key="frame" x="0.0" y="0.0" width="500" height="212"/>
-                                <subviews>
-                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8zu-cF-KCX">
-                                        <rect key="frame" x="383" y="13" width="104" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Primary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="F26-vf-hFH">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                        </buttonCell>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="4Uf-fh-jWJ"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="primaryButtonAction:" target="hkw-9V-NxP" id="W7d-3b-pZT"/>
-                                        </connections>
-                                    </button>
-                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-nS-HN2">
-                                        <rect key="frame" x="281" y="13" width="104" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Secondary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="eCk-FC-9Zr">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                        </buttonCell>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="QWZ-BA-0g9"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="secondaryButtonAction:" target="hkw-9V-NxP" id="YJs-Hu-lFP"/>
-                                        </connections>
-                                    </button>
-                                    <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5T-nn-k3j">
-                                        <rect key="frame" x="13" y="13" width="81" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Tertiary" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="mzA-Uu-gyf">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="tertiaryButtonAction:" target="hkw-9V-NxP" id="o1C-av-ifx"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="8zu-cF-KCX" secondAttribute="trailing" constant="20" symbolic="YES" id="0DC-rd-xbu"/>
-                                    <constraint firstItem="8zu-cF-KCX" firstAttribute="leading" secondItem="TCp-nS-HN2" secondAttribute="trailing" constant="12" symbolic="YES" id="8tH-KO-fjY"/>
-                                    <constraint firstAttribute="bottom" secondItem="8zu-cF-KCX" secondAttribute="bottom" constant="20" symbolic="YES" id="L6V-KQ-nj3"/>
-                                    <constraint firstItem="n5T-nn-k3j" firstAttribute="leading" secondItem="JVG-5w-fPd" secondAttribute="leading" constant="20" symbolic="YES" id="QLS-fE-1PM"/>
-                                    <constraint firstAttribute="trailing" secondItem="8zu-cF-KCX" secondAttribute="trailing" constant="20" symbolic="YES" id="RRS-WO-6KO"/>
-                                    <constraint firstAttribute="bottom" secondItem="n5T-nn-k3j" secondAttribute="bottom" constant="20" symbolic="YES" id="Scj-z1-AdN"/>
-                                    <constraint firstAttribute="bottom" secondItem="TCp-nS-HN2" secondAttribute="bottom" constant="20" symbolic="YES" id="fYa-HG-gmL"/>
-                                    <constraint firstItem="n5T-nn-k3j" firstAttribute="bottom" secondItem="TCp-nS-HN2" secondAttribute="bottom" id="lOI-ZI-wCd"/>
-                                    <constraint firstItem="TCp-nS-HN2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n5T-nn-k3j" secondAttribute="trailing" constant="12" symbolic="YES" id="rUC-0t-9H9"/>
-                                    <constraint firstAttribute="bottom" secondItem="8zu-cF-KCX" secondAttribute="bottom" constant="20" symbolic="YES" id="wIl-uw-y3p"/>
-                                </constraints>
-                            </visualEffectView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U1c-qS-cIm">
-                                <rect key="frame" x="98" y="153" width="384" height="19"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="380" id="WgB-hj-d4P"/>
-                                </constraints>
-                                <textFieldCell key="cell" selectable="YES" title="This is the title of the notice window." id="bzW-MI-jXb">
-                                    <font key="font" metaFont="systemBold" size="15"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yI6-qf-htf">
-                                <rect key="frame" x="98" y="127" width="384" height="16"/>
-                                <textFieldCell key="cell" selectable="YES" title="This is a slightly more expanded explanation." id="rY3-Nd-Iit">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0rX-Ss-3Xd">
-                                <rect key="frame" x="12" y="144" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Uib-R1-GEx">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QkM-5D-ZEQ">
-                                <rect key="frame" x="20" y="111" width="64" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="VhJ-fI-IKC"/>
-                                    <constraint firstAttribute="width" constant="64" id="a2d-Gn-Oor"/>
-                                </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="7eT-Hw-EL9"/>
-                            </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hml-dl-Cah">
-                                <rect key="frame" x="98" y="70" width="384" height="42"/>
-                                <textFieldCell key="cell" selectable="YES" id="7iW-Lc-DqO">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <string key="title">Sometimes you need a really long explanation and in that case you can get a really, really long description here, along with, for example, various steps you can take. This allows for a lot of text to be displayed, yay!</string>
-                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="hml-dl-Cah" firstAttribute="leading" secondItem="yI6-qf-htf" secondAttribute="leading" id="1Lh-ve-rwK"/>
-                            <constraint firstItem="U1c-qS-cIm" firstAttribute="leading" secondItem="QkM-5D-ZEQ" secondAttribute="trailing" constant="16" id="2xX-Ma-iQZ"/>
-                            <constraint firstAttribute="trailing" secondItem="U1c-qS-cIm" secondAttribute="trailing" constant="20" symbolic="YES" id="39u-Uk-TDI"/>
-                            <constraint firstItem="8zu-cF-KCX" firstAttribute="top" secondItem="hml-dl-Cah" secondAttribute="bottom" constant="30" id="7fT-EZ-cAO"/>
-                            <constraint firstItem="JVG-5w-fPd" firstAttribute="top" secondItem="UPH-hV-Naz" secondAttribute="top" id="CE7-54-G09"/>
-                            <constraint firstItem="hml-dl-Cah" firstAttribute="trailing" secondItem="yI6-qf-htf" secondAttribute="trailing" id="DBa-7d-sS3"/>
-                            <constraint firstItem="yI6-qf-htf" firstAttribute="trailing" secondItem="U1c-qS-cIm" secondAttribute="trailing" id="NvJ-vf-wEl"/>
-                            <constraint firstItem="hml-dl-Cah" firstAttribute="top" secondItem="yI6-qf-htf" secondAttribute="bottom" constant="15" id="Pmz-I9-2up"/>
-                            <constraint firstItem="U1c-qS-cIm" firstAttribute="top" secondItem="UPH-hV-Naz" secondAttribute="top" constant="40" id="Uqt-sc-vxn"/>
-                            <constraint firstItem="QkM-5D-ZEQ" firstAttribute="top" secondItem="U1c-qS-cIm" secondAttribute="top" constant="-3" id="WAj-rw-srg"/>
-                            <constraint firstItem="yI6-qf-htf" firstAttribute="leading" secondItem="U1c-qS-cIm" secondAttribute="leading" id="bng-pH-jSG"/>
-                            <constraint firstAttribute="trailing" secondItem="JVG-5w-fPd" secondAttribute="trailing" id="dRt-Pq-6n0"/>
-                            <constraint firstItem="JVG-5w-fPd" firstAttribute="leading" secondItem="UPH-hV-Naz" secondAttribute="leading" id="ejC-of-zjN"/>
-                            <constraint firstAttribute="bottom" secondItem="JVG-5w-fPd" secondAttribute="bottom" id="hGp-DD-cKr"/>
-                            <constraint firstItem="QkM-5D-ZEQ" firstAttribute="leading" secondItem="UPH-hV-Naz" secondAttribute="leading" constant="20" symbolic="YES" id="jG8-dt-l4x"/>
-                            <constraint firstItem="yI6-qf-htf" firstAttribute="top" secondItem="U1c-qS-cIm" secondAttribute="bottom" constant="10" id="kqR-yg-zdG"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="buttonPrimary" destination="8zu-cF-KCX" id="MT5-Px-K97"/>
-                        <outlet property="buttonSecondary" destination="TCp-nS-HN2" id="nPn-OX-Z4m"/>
-                        <outlet property="buttonTertiary" destination="n5T-nn-k3j" id="UnB-8x-s3D"/>
-                        <outlet property="imageView" destination="QkM-5D-ZEQ" id="zsW-l7-eH0"/>
-                        <outlet property="labelDescription" destination="hml-dl-Cah" id="ehw-zs-EPc"/>
-                        <outlet property="labelSubtitle" destination="yI6-qf-htf" id="m7A-bX-HE8"/>
-                        <outlet property="labelTitle" destination="U1c-qS-cIm" id="oM3-kl-PL8"/>
-                        <outlet property="primaryButtonTopMargin" destination="7fT-EZ-cAO" id="r6u-1l-dbl"/>
-                    </connections>
-                </viewController>
-                <customObject id="5Ts-EZ-bJh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="230" y="2267"/>
-        </scene>
         <!--Add SiteVC-->
         <scene sceneID="6JC-H6-u4K">
             <objects>
                 <viewController storyboardIdentifier="newSiteLink" id="glS-wF-sEU" customClass="AddSiteVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JJJ-T9-Yuv">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="252"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="js9-OW-xzC">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="252"/>
                                 <view key="contentView" id="HRC-RT-LxR">
-                                    <rect key="frame" x="0.0" y="0.0" width="480" height="245"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="480" height="252"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PVw-cM-qAB">
-                                <rect key="frame" x="326" y="13" width="141" height="32"/>
+                                <rect key="frame" x="329" y="20" width="131" height="24"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Create Link" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwW-Wv-I8s">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -691,7 +521,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwS-o8-pbl">
-                                <rect key="frame" x="13" y="13" width="114" height="32"/>
+                                <rect key="frame" x="20" y="20" width="104" height="24"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WHE-HW-jwp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -707,7 +537,7 @@ Gw
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-s1-23i">
-                                <rect key="frame" x="20" y="150" width="440" height="21"/>
+                                <rect key="frame" x="20" y="154" width="440" height="24"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="NFa-1D-Bi4">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -718,7 +548,7 @@ Gw
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VzR-5a-cmT">
-                                <rect key="frame" x="18" y="128" width="444" height="14"/>
+                                <rect key="frame" x="18" y="132" width="444" height="14"/>
                                 <textFieldCell key="cell" title="[i18n] Preview text here" id="bJr-s6-tdP">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -726,7 +556,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-b0-9cm">
-                                <rect key="frame" x="18" y="95" width="266" height="18"/>
+                                <rect key="frame" x="20" y="100" width="262" height="16"/>
                                 <buttonCell key="cell" type="check" title="[i18n] Secure this domain after creation" bezelStyle="regularSquare" imagePosition="left" inset="2" id="vFv-Of-2yZ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -736,7 +566,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mmQ-7e-dlb">
-                                <rect key="frame" x="18" y="60" width="444" height="28"/>
+                                <rect key="frame" x="18" y="64" width="444" height="28"/>
                                 <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="4gd-KM-5Fu">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -744,14 +574,14 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6JT-Vt-3q0">
-                                <rect key="frame" x="20" y="179" width="440" height="22"/>
+                                <rect key="frame" x="20" y="186" width="440" height="22"/>
                                 <pathCell key="cell" selectable="YES" refusesFirstResponder="YES" alignment="left" id="m8d-XF-kh9">
                                     <font key="font" metaFont="system"/>
                                     <url key="url" string="file:///Users/"/>
                                 </pathCell>
                             </pathControl>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P0B-Ht-R8n">
-                                <rect key="frame" x="18" y="209" width="128" height="16"/>
+                                <rect key="frame" x="18" y="216" width="128" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Link a Folder" id="S4j-ZC-ddT">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -759,7 +589,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="900-Z2-tID">
-                                <rect key="frame" x="140" y="23" width="180" height="14"/>
+                                <rect key="frame" x="136" y="25" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="jOt-n6-TQf">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -829,11 +659,11 @@ Gw
                             <scrollView borderType="none" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
-                                    <rect key="frame" x="0.0" y="0.0" width="611" height="294"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="609" height="292"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj" customClass="PMTableView" customModule="PHP_Monitor" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="611" height="266"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="609" height="264"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1124,15 +954,15 @@ Gw
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="620" id="iRQ-sz-oyv"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="TDE-ff-DQT">
-                                    <rect key="frame" x="0.0" y="294" width="611" height="15"/>
+                                    <rect key="frame" x="0.0" y="292" width="609" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wFn-93-f10">
-                                    <rect key="frame" x="611" y="28" width="15" height="266"/>
+                                    <rect key="frame" x="609" y="28" width="17" height="264"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" wantsLayer="YES" id="xUg-Mq-OSh">
-                                    <rect key="frame" x="0.0" y="0.0" width="611" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="609" height="28"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
@@ -1200,17 +1030,17 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="newProxyLink" id="dwh-CF-6iv" customClass="AddProxyVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="U5U-QR-YXS">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="296"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="kkd-UV-SnA">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="296"/>
                                 <view key="contentView" id="IXW-35-8NJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="540" height="286"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="540" height="296"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-Z9-w7g">
-                                            <rect key="frame" x="20" y="196" width="500" height="21"/>
+                                            <rect key="frame" x="20" y="203" width="500" height="24"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="http://127.0.0.1:80" placeholderString="http://127.0.0.1:80" drawsBackground="YES" id="muS-8M-KSy">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1221,7 +1051,7 @@ Gw
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uib-vA-HRc">
-                                            <rect key="frame" x="18" y="221" width="325" height="14"/>
+                                            <rect key="frame" x="18" y="231" width="325" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Proxy subject (usually: protocol, IP address and port)" id="G1Z-3f-BhL">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1229,7 +1059,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-Zt-Hu8">
-                                            <rect key="frame" x="18" y="172" width="112" height="14"/>
+                                            <rect key="frame" x="18" y="179" width="112" height="14"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Domain name" id="dQs-oZ-80e">
                                                 <font key="font" metaFont="systemMedium" size="11"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1237,7 +1067,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNw-oQ-bnb">
-                                            <rect key="frame" x="20" y="147" width="500" height="21"/>
+                                            <rect key="frame" x="20" y="151" width="500" height="24"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Enter a domain name here." drawsBackground="YES" id="gTQ-Y2-Y9w">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1264,7 +1094,7 @@ Gw
                                 <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4Vi-cN-ude">
-                                <rect key="frame" x="377" y="13" width="150" height="32"/>
+                                <rect key="frame" x="380" y="20" width="140" height="24"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Create Proxy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H2Z-c5-5Vk">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1277,7 +1107,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nC0-dk-QaF">
-                                <rect key="frame" x="13" y="13" width="114" height="32"/>
+                                <rect key="frame" x="20" y="20" width="104" height="24"/>
                                 <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="D8g-GE-7TU">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1293,7 +1123,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSZ-x8-Pqi">
-                                <rect key="frame" x="18" y="128" width="504" height="14"/>
+                                <rect key="frame" x="18" y="132" width="504" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="sF1-RG-URI"/>
                                 </constraints>
@@ -1304,7 +1134,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rJa-yg-nCn">
-                                <rect key="frame" x="18" y="95" width="170" height="18"/>
+                                <rect key="frame" x="20" y="100" width="166" height="16"/>
                                 <buttonCell key="cell" type="check" title="[i18n] Secure this proxy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5LI-lt-Asl">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1314,7 +1144,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5x7-ll-2f7">
-                                <rect key="frame" x="18" y="60" width="504" height="28"/>
+                                <rect key="frame" x="18" y="64" width="504" height="28"/>
                                 <textFieldCell key="cell" title="[i18n] Securing a domain requires administrative privileges.  You may be prompted for your password or Touch ID." id="IMB-O5-ZOy">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1322,7 +1152,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DAh-br-Dfx">
-                                <rect key="frame" x="18" y="250" width="123" height="16"/>
+                                <rect key="frame" x="18" y="260" width="123" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="[i18n] Add a Proxy" id="AZ1-04-kUl">
                                     <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1330,7 +1160,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0k-CK-0u4">
-                                <rect key="frame" x="191" y="23" width="180" height="14"/>
+                                <rect key="frame" x="187" y="25" width="180" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="That domain name already exists." id="4sH-94-UJl">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -1416,14 +1246,14 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="addDomainChoice" id="gOD-Gu-zDG" customClass="SelectionVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ysc-sm-sli">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="181"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <visualEffectView blendingMode="behindWindow" material="toolTip" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="F37-zt-gM3">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="177"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="181"/>
                                 <subviews>
                                     <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhN-AM-SkI">
-                                        <rect key="frame" x="13" y="13" width="114" height="32"/>
+                                        <rect key="frame" x="20" y="20" width="104" height="24"/>
                                         <buttonCell key="cell" type="push" title="[i18n] Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LxP-t4-H2W">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1439,10 +1269,10 @@ Gw
                                         </connections>
                                     </button>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYe-Qu-qnK">
-                                        <rect key="frame" x="187" y="20" width="333" height="20"/>
+                                        <rect key="frame" x="165" y="20" width="355" height="24"/>
                                         <subviews>
                                             <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L5n-Gw-J27">
-                                                <rect key="frame" x="-7" y="-7" width="172" height="32"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="169" height="24"/>
                                                 <buttonCell key="cell" type="push" title="[i18n] Create a Link" bezelStyle="rounded" image="IconLinked" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8UP-Sw-TP6">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1453,7 +1283,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-IV-hv1">
-                                                <rect key="frame" x="159" y="-7" width="181" height="32"/>
+                                                <rect key="frame" x="177" y="0.0" width="178" height="24"/>
                                                 <buttonCell key="cell" type="push" title="[i18n] Create a Proxy" bezelStyle="rounded" image="IconProxy" imagePosition="leading" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bJ4-q8-1Ej">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1474,7 +1304,7 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJK-Ke-IK3">
-                                        <rect key="frame" x="18" y="138" width="504" height="19"/>
+                                        <rect key="frame" x="18" y="142" width="504" height="19"/>
                                         <textFieldCell key="cell" selectable="YES" alignment="left" title="[i18n] What kind of domain would you like to set up?" id="agk-Nj-FLd">
                                             <font key="font" metaFont="systemBold" size="15"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1482,7 +1312,7 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="urj-Xq-TrJ">
-                                        <rect key="frame" x="18" y="60" width="504" height="70"/>
+                                        <rect key="frame" x="18" y="64" width="504" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="tbl-AV-4qB"/>
                                         </constraints>
@@ -1510,7 +1340,7 @@ Gw
                                 </constraints>
                             </visualEffectView>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNh-Wc-ADk">
-                                <rect key="frame" x="200" y="109" width="0.0" height="48"/>
+                                <rect key="frame" x="200" y="113" width="0.0" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OQ5-hX-qai">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
