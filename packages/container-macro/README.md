@@ -1,28 +1,18 @@
-# NVContainer Macro
+# ContainerMacro
 
 A Swift macro for automatic container dependency injection in PHP Monitor.
 
 ## Usage
 
 ```swift
-import NVContainer
+import ContainerMacro
 
-// Expose all Container services
 @ContainerAccess
 class MyClass {
     func doSomething() {
         shell.run("command")
         favorites.add(site)
         warningManager.evaluateWarnings()
-    }
-}
-
-// Or expose only specific services
-@ContainerAccess(["shell", "favorites"])
-class AnotherClass {
-    func doSomething() {
-        shell.run("command")
-        favorites.add(site)
     }
 }
 ```
@@ -38,7 +28,7 @@ The `@ContainerAccess` macro automatically adds:
 
 When you add new services to `Container`, you must update the service list in:
 
-**`Sources/NVContainerMacros/ContainerAccessMacro.swift`** (lines 14-18):
+**`Sources/ContainerMacroPlugin/ContainerAccessMacro.swift`** (lines 14-18):
 
 ```swift
 let allContainerServices: [(name: String, type: String)] = [

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetProxy: ValetListable, ContainerAccess {
+class ValetProxy: ValetListable {
     var domain: String
     var tld: String
     var target: String

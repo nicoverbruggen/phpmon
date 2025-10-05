@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import ContainerMacro
 
-class ValetSite: ValetListable, ContainerAccess {
+@ContainerAccess
+class ValetSite: ValetListable {
     /// Name of the site. Does not include the TLD.
     var name: String
 
@@ -64,8 +66,6 @@ class ValetSite: ValetListable, ContainerAccess {
     var favoriteSignature: String {
         "site:domain:\(name).\(tld)|path:\(absolutePath)"
     }
-
-    var container: Container
 
     init(
         container: Container = App.shared.container,

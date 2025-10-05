@@ -17,30 +17,6 @@ public struct ContainerAccessMacro: MemberMacro {
             ("warningManager", "WarningManager")
         ]
 
-        // Extract the service names from the macro arguments (if provided)
-        var requestedServices: [String]? = nil
-        if let argumentList = node.arguments?.as(LabeledExprListSyntax.self),
-           let firstArgument = argumentList.first,
-           let arrayExpr = firstArgument.expression.as(ArrayExprSyntax.self) {
-            requestedServices = arrayExpr.elements.compactMap { element -> String? in
-                guard let stringLiteral = element.expression.as(StringLiteralExprSyntax.self),
-                      let segment = stringLiteral.segments.first?.as(StringSegmentSyntax.self) else {
-                    return nil
-                }
-                return segment.content.text
-            }
-        }
-
-        // Determine which services to expose
-        let servicesToExpose: [(name: String, type: String)]
-        if let requested = requestedServices, !requested.isEmpty {
-            // Only expose the requested services
-            servicesToExpose = allContainerServices.filter { requested.contains($0.name) }
-        } else {
-            // No arguments provided - expose ALL services
-            servicesToExpose = allContainerServices
-        }
-
         // Check if the class already has an initializer
         let hasExistingInit = declaration.memberBlock.members.contains { member in
             if let initDecl = member.decl.as(InitializerDeclSyntax.self) {
@@ -54,7 +30,7 @@ public struct ContainerAccessMacro: MemberMacro {
         // Add the container property
         members.append(
             """
-            private let container: Container
+            public let container: Container
             """
         )
 
@@ -70,7 +46,7 @@ public struct ContainerAccessMacro: MemberMacro {
         }
 
         // Add computed properties for each service
-        for service in servicesToExpose {
+        for service in allContainerServices {
             members.append(
                 """
                 private var \(raw: service.name): \(raw: service.type) {
@@ -85,7 +61,7 @@ public struct ContainerAccessMacro: MemberMacro {
 }
 
 @main
-struct NVContainerMacrosPlugin: CompilerPlugin {
+struct ContainerMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         ContainerAccessMacro.self,
     ]

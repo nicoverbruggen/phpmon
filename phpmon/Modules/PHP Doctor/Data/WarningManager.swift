@@ -8,10 +8,10 @@
 
 import Foundation
 import Cocoa
+import ContainerMacro
 
-class WarningManager: ObservableObject, ContainerAccess {
-    var container: Container
-
+@ContainerAccess
+class WarningManager: ObservableObject {
     init(
         container: Container = App.shared.container,
         fake: Bool = false

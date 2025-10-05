@@ -124,8 +124,6 @@ public struct TestableConfiguration: Codable {
         Log.separator()
         Log.info("Applying to container...")
         App.shared.container.overrideWith(config: self)
-        Log.info("Applying fake filesystem...")
-        ActiveFileSystem.useTestable(filesystem)
         Log.info("Applying fake commands...")
         ActiveCommand.useTestable(commandOutput)
         Log.info("Applying temporary preference overrides...")

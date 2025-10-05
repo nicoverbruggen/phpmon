@@ -8,14 +8,16 @@
 
 class Container {
     var shell: ShellProtocol!
+    var filesystem: FileSystemProtocol!
+
     var favorites: Favorites!
     var warningManager: WarningManager!
 
     init() {}
 
     public func prepare() {
-        self.shell = RealShell()
-        // TODO: filesystem etc.
+        self.shell = RealShell(container: self)
+        self.filesystem = RealFileSystem(container: self)
 
         self.favorites = Favorites()
         self.warningManager = WarningManager(container: self)
@@ -23,9 +25,6 @@ class Container {
 
     public func overrideWith(config: TestableConfiguration) {
         self.shell = TestableShell(expectations: config.shellOutput)
+        self.filesystem = TestableFileSystem(files: config.filesystem)
     }
-}
-
-protocol ContainerAccess {
-    var container: Container { get set }
 }

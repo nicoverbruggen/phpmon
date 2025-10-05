@@ -17,9 +17,7 @@ extension String {
 class RealFileSystem: FileSystemProtocol {
     var container: Container
 
-    init(
-        container: Container = App.shared.container,
-    ) {
+    init(container: Container) {
         self.container = container
     }
 

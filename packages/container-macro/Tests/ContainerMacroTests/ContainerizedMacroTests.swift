@@ -2,8 +2,8 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
 
-#if canImport(NVContainerMacros)
-import NVContainerMacros
+#if canImport(ContainerMacroPlugin)
+import ContainerMacroPlugin
 
 final class ContainerAccessMacroTests: XCTestCase {
     let testMacros: [String: Macro.Type] = [

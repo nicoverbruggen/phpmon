@@ -28,7 +28,7 @@ extension App {
     }
 
     func handlePhpConfigWatcher(forceReload: Bool = false) {
-        if ActiveFileSystem.shared is TestableFileSystem {
+        if container.filesystem is TestableFileSystem {
             Log.warn("Config watch manager is disabled when using testable filesystem.")
             return
         }

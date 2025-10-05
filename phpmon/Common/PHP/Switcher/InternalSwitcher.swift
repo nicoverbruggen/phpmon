@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import NVContainer
+import ContainerMacro
 
 @ContainerAccess
 class InternalSwitcher: PhpSwitcher {

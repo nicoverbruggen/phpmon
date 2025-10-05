@@ -8,9 +8,10 @@
 
 import Foundation
 
-class RealShell: ShellProtocol, ContainerAccess {
+class RealShell: ShellProtocol {
     var container: Container
-    init(container: Container = App.shared.container) {
+
+    init(container: Container) {
         self.container = container
     }
 
@@ -214,7 +215,7 @@ class RealShell: ShellProtocol, ContainerAccess {
     }
 
     func reload() {
-        container.shell = RealShell()
+        container.shell = RealShell(container: container)
     }
 }
 

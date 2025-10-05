@@ -4,12 +4,12 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-    name: "NVContainer",
+    name: "ContainerMacro",
     platforms: [.macOS(.v13)],
     products: [
         .library(
-            name: "NVContainer",
-            targets: ["NVContainer"]
+            name: "ContainerMacro",
+            targets: ["ContainerMacro"]
         ),
     ],
     dependencies: [
@@ -17,20 +17,20 @@ let package = Package(
     ],
     targets: [
         .macro(
-            name: "NVContainerMacros",
+            name: "ContainerMacroPlugin",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
         .target(
-            name: "NVContainer",
-            dependencies: ["NVContainerMacros"]
+            name: "ContainerMacro",
+            dependencies: ["ContainerMacroPlugin"]
         ),
         .testTarget(
-            name: "NVContainerTests",
+            name: "ContainerMacroTests",
             dependencies: [
-                "NVContainerMacros",
+                "ContainerMacroPlugin",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),
