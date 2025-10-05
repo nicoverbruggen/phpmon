@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NVContainer
 
 /**
  An installed version of PHP, that was detected by scanning the `/opt/php@version/bin` directory.
@@ -16,6 +17,8 @@ import Foundation
  - Note: Each installation has a separate version number.
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
+
+@ContainerAccess
 class ActivePhpInstallation {
     var version: VersionNumber!
     var limits: Limits!
@@ -45,7 +48,9 @@ class ActivePhpInstallation {
         return ActivePhpInstallation()
     }
 
-    init() {
+    init(container: Container = App.shared.container) {
+        self.container = container
+
         // Show information about the current version
         do {
             try determineVersion()
@@ -69,7 +74,7 @@ class ActivePhpInstallation {
             post_max_size: getByteCount(key: "post_max_size")
         )
 
-        let paths = Shell
+        let paths = shell
             .sync("\(Paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }

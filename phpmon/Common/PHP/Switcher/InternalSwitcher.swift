@@ -7,18 +7,10 @@
 //
 
 import Foundation
+import NVContainer
 
+@ContainerAccess
 class InternalSwitcher: PhpSwitcher {
-    private var container: Container
-
-    init(container: Container = App.shared.container) {
-        self.container = container
-    }
-
-    var shell: ShellProtocol {
-        return container.shell
-    }
-
     /**
      Switching to a new PHP version involves:
      - unlinking the current version

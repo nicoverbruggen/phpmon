@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030341272E92BD130031BE17 /* NVContainer in Frameworks */ = {isa = PBXBuildFile; productRef = 030341262E92BD130031BE17 /* NVContainer */; };
 		0309E6672B0D4B2F002AC007 /* BrewExtensionsObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */; };
 		031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
@@ -1295,6 +1296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				030341272E92BD130031BE17 /* NVContainer in Frameworks */,
 				C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2431,6 +2433,7 @@
 			name = "PHP Monitor";
 			packageProductDependencies = (
 				C47014FE2C46D57C0069AAE7 /* NVAlert */,
+				030341262E92BD130031BE17 /* NVContainer */,
 			);
 			productName = phpmon;
 			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
@@ -2548,6 +2551,7 @@
 			packageReferences = (
 				C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */,
 				C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */,
+				030341252E92BD130031BE17 /* XCLocalSwiftPackageReference "packages/container-macro" */,
 			);
 			productRefGroup = C41C1B3422B0097F00E7CF16 /* Products */;
 			projectDirPath = "";
@@ -4503,6 +4507,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		030341252E92BD130031BE17 /* XCLocalSwiftPackageReference "packages/container-macro" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "packages/container-macro";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -4523,6 +4534,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		030341262E92BD130031BE17 /* NVContainer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NVContainer;
+		};
 		C47014FB2C46D31B0069AAE7 /* NVAppUpdater */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */;
