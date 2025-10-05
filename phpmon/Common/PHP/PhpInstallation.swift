@@ -94,7 +94,7 @@ class PhpInstallation {
     }
 
     private func determineIniFiles(_ phpExecutablePath: String) {
-        let paths = ActiveShell.shared
+        let paths = Shell
             .sync("\(phpExecutablePath) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }

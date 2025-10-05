@@ -213,7 +213,7 @@ extension MainMenu {
     @objc func openPhpInfo() {
         asyncWithBusyUI {
             Task { // Create temporary file and open the URL
-                let url = await Actions.createTempPhpInfoFile()
+                let url = await Actions().createTempPhpInfoFile()
                 NSWorkspace.shared.open(url)
             }
         }

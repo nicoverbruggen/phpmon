@@ -117,12 +117,13 @@ public struct TestableConfiguration: Codable {
 
     // MARK: Interactions
 
+    #warning("This method should replace the container's resolved classes with the fake ones.")
     func apply() {
         Log.separator()
         Log.info("USING TESTABLE CONFIGURATION...")
         Log.separator()
-        Log.info("Applying fake shell...")
-        ActiveShell.useTestable(shellOutput)
+        Log.info("Applying to container...")
+        App.shared.container.overrideWith(config: self)
         Log.info("Applying fake filesystem...")
         ActiveFileSystem.useTestable(filesystem)
         Log.info("Applying fake commands...")

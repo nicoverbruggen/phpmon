@@ -70,7 +70,7 @@ extension MainMenu {
         App.shared.prepareHomebrewWatchers()
 
         // Check for other problems
-        WarningManager.shared.evaluateWarnings()
+        App.shared.container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
         App.shared.handlePhpConfigWatcher()

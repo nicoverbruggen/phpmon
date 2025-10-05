@@ -8,7 +8,12 @@
 
 import Foundation
 
-class RealShell: ShellProtocol {
+class RealShell: ShellProtocol, ContainerAccess {
+    var container: Container
+    init(container: Container = App.shared.container) {
+        self.container = container
+    }
+
     /**
      The launch path of the terminal in question that is used.
      On macOS, we use /bin/sh since it's pretty fast.
@@ -206,6 +211,10 @@ class RealShell: ShellProtocol {
             process.launch()
             process.waitUntilExit()
         })
+    }
+
+    func reload() {
+        container.shell = RealShell()
     }
 }
 

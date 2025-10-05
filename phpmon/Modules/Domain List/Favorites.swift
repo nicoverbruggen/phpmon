@@ -8,9 +8,10 @@
 
 import Foundation
 
+/**
+ Favorite tracking.
+ */
 class Favorites {
-    static var shared: Favorites = Favorites()
-
     var items: [String]
 
     init() {

@@ -9,13 +9,15 @@
 import Foundation
 
 class PhpEnvironments {
+    var container: Container
 
     // MARK: - Initializer
 
     /**
      Loads the currently active PHP installation upon startup. May be empty.
      */
-    init() {
+    init(container: Container = App.shared.container) {
+        self.container = container
         self.currentInstall = ActivePhpInstallation.load()
     }
 
@@ -30,7 +32,7 @@ class PhpEnvironments {
      Determine which PHP version the `php` formula is aliased to.
      */
     @MainActor func determinePhpAlias() async {
-        let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
+        let brewPhpAlias = await container.shell.pipe("\(Paths.brew) info php --json").out
 
         self.homebrewPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
@@ -162,7 +164,7 @@ class PhpEnvironments {
      Returns a `Set<String>` of installations that are considered valid.
      */
     public func detectPhpVersions() async -> Set<String> {
-        let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
+        let files = await container.shell.pipe("ls \(Paths.optPath) | grep php@").out
 
         let versions = await extractPhpVersions(from: files.components(separatedBy: "\n"))
 

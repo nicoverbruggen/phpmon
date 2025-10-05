@@ -9,6 +9,15 @@
 import Foundation
 
 class InternalSwitcher: PhpSwitcher {
+    private var container: Container
+
+    init(container: Container = App.shared.container) {
+        self.container = container
+    }
+
+    var shell: ShellProtocol {
+        return container.shell
+    }
 
     /**
      Switching to a new PHP version involves:
@@ -102,7 +111,7 @@ class InternalSwitcher: PhpSwitcher {
 
             if Valet.enabled(feature: .isolatedSites) && primary {
                 let socketVersion = version.replacingOccurrences(of: ".", with: "")
-                await Shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+                await shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
                 Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
             }
         }

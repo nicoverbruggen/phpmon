@@ -56,6 +56,11 @@ protocol ShellProtocol {
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput)
+
+    /**
+     Reloads the shell instance, which also reloads the PATH.
+     */
+    func reload()
 }
 
 enum ShellStream: Codable {

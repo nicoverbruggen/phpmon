@@ -297,13 +297,13 @@ extension StatusMenu {
 
     @MainActor func addPhpDoctorMenuItem() {
         if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
-            !WarningManager.shared.hasWarnings() {
+            !App.shared.container.warningManager.hasWarnings() {
             return
         }
 
         addItems([
             HeaderView.asMenuItem(text: "mi_php_doctor".localized),
-            NSMenuItem(title: "mi_recommendations_count".localized(WarningManager.shared.warnings.count)),
+            NSMenuItem(title: "mi_recommendations_count".localized(App.shared.container.warningManager.warnings.count)),
             NSMenuItem(title: "mi_view_recommendations".localized, action: #selector(MainMenu.openWarnings)),
             NSMenuItem.separator()
         ])

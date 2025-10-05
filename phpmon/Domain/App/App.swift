@@ -70,6 +70,12 @@ class App {
 
     // MARK: Variables
 
+    /**
+     The dependency container.
+     This is supposed to be injected, so direct access is discouraged.
+     */
+    let container = Container()
+
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!
 
@@ -96,12 +102,6 @@ class App {
 
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
-
-    /** Favorites storage, which keeps track of favorited domains. */
-    var favorites = Favorites.shared
-
-    /** The warning manager, responsible for keeping track of warnings. */
-    var warnings = WarningManager.shared
 
     /** Timer that will periodically reload info about the user's PHP installation. */
     var timer: Timer?

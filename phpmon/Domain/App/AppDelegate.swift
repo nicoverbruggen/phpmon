@@ -90,6 +90,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
 
         self.state = App.shared
+        self.state.container.prepare()
+
         self.paths = Paths.shared
         self.valet = Valet.shared
         self.brew = Brew.shared

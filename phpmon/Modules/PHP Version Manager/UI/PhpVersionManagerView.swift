@@ -9,7 +9,6 @@
 import Foundation
 import SwiftUI
 
-// swiftlint:disable type_body_length
 struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: BusyStatus
@@ -297,7 +296,6 @@ struct PhpVersionManagerView: View {
         }
     }
 }
-// swiftlint:enable type_body_length
 
 #Preview {
     PhpVersionManagerView(

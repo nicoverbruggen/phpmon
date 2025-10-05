@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ValetProxy: ValetListable {
+class ValetProxy: ValetListable, ContainerAccess {
     var domain: String
     var tld: String
     var target: String
@@ -19,7 +19,10 @@ class ValetProxy: ValetListable {
         "proxy:domain:\(domain).\(tld)|target:\(target)"
     }
 
-    init(domain: String, target: String, secure: Bool, tld: String) {
+    var container: Container
+
+    init(container: Container = App.shared.container, domain: String, target: String, secure: Bool, tld: String) {
+        self.container = container
         self.domain = domain
         self.tld = tld
         self.target = target
@@ -34,7 +37,7 @@ class ValetProxy: ValetListable {
             tld: configuration.tld
         )
 
-        self.favorited = Favorites.shared.contains(domain: self.domain)
+        self.favorited = container.favorites.contains(domain: self.domain)
         self.determineSecured()
     }
 
@@ -80,7 +83,7 @@ class ValetProxy: ValetListable {
 
     func toggleFavorite() {
         self.favorited.toggle()
-        Favorites.shared.toggle(domain: self.favoriteSignature)
+        container.favorites.toggle(domain: self.favoriteSignature)
     }
 
     func toggleSecure() async throws {

@@ -9,6 +9,13 @@ import Foundation
 import AppKit
 
 class Actions {
+    var container: Container
+
+    init(
+        container: Container = App.shared.container,
+    ) {
+        self.container = container
+    }
 
     // MARK: - Services
 
@@ -104,11 +111,11 @@ class Actions {
 
     // MARK: - Other Actions
 
-    public static func createTempPhpInfoFile() async -> URL {
+    public func createTempPhpInfoFile() async -> URL {
         try! FileSystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
-        await Shell.quiet("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+        await container.shell.quiet("\(Paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
 
         return URL(string: "file:///private/tmp/phpmon_phpinfo.html")!
     }

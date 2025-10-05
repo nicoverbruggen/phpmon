@@ -69,7 +69,7 @@ class ActivePhpInstallation {
             post_max_size: getByteCount(key: "post_max_size")
         )
 
-        let paths = ActiveShell.shared
+        let paths = Shell
             .sync("\(Paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }

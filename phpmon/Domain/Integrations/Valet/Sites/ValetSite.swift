@@ -8,8 +8,7 @@
 
 import Foundation
 
-class ValetSite: ValetListable {
-
+class ValetSite: ValetListable, ContainerAccess {
     /// Name of the site. Does not include the TLD.
     var name: String
 
@@ -66,13 +65,17 @@ class ValetSite: ValetListable {
         "site:domain:\(name).\(tld)|path:\(absolutePath)"
     }
 
+    var container: Container
+
     init(
+        container: Container = App.shared.container,
         name: String,
         tld: String,
         absolutePath: String,
         aliasPath: String? = nil,
         makeDeterminations: Bool = true
     ) {
+        self.container = container
         self.name = name
         self.tld = tld
         self.absolutePath = absolutePath
@@ -80,7 +83,7 @@ class ValetSite: ValetListable {
         self.secured = false
 
         if makeDeterminations {
-            self.favorited = Favorites.shared.contains(domain: favoriteSignature)
+            self.favorited = container.favorites.contains(domain: favoriteSignature)
             determineSecured()
             determineIsolated()
             determineComposerPhpVersion()
@@ -323,7 +326,7 @@ class ValetSite: ValetListable {
 
     func toggleFavorite() {
         self.favorited.toggle()
-        Favorites.shared.toggle(domain: self.favoriteSignature)
+        container.favorites.toggle(domain: self.favoriteSignature)
     }
 
     func isolate(version: String) async throws {

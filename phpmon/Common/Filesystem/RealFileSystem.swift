@@ -15,6 +15,13 @@ extension String {
 }
 
 class RealFileSystem: FileSystemProtocol {
+    var container: Container
+
+    init(
+        container: Container = App.shared.container,
+    ) {
+        self.container = container
+    }
 
     // MARK: - Basics
 
@@ -64,7 +71,7 @@ class RealFileSystem: FileSystemProtocol {
     // MARK: — FS Attributes
 
     func makeExecutable(_ path: String) throws {
-        _ = ActiveShell.shared.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
+        _ = container.shell.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
     }
 
     // MARK: - Checks
