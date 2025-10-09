@@ -272,7 +272,7 @@ struct Preset: Codable, Equatable {
     private func persistRevert() async {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        await Shell.quiet("mkdir -p ~/.config/phpmon")
+        await App.shared.container.shell.quiet("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(

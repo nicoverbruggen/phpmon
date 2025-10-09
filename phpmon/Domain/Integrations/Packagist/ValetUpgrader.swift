@@ -14,7 +14,7 @@ class ValetUpgrader {
         let path = "~/.composer/composer.json".replacingTildeWithHomeDirectory
 
         do {
-            if FileSystem.fileExists(path) {
+            if App.shared.container.filesystem.fileExists(path) {
                 return try JSONDecoder().decode(
                     ComposerJson.self,
                     from: String(

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class RemovePhpExtensionCommand: BrewCommand {
     public let phpExtension: BrewPhpExtension
 
@@ -19,7 +21,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         return "phpman.steps.removing".localized(phpExtension.name)
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
@@ -42,7 +44,7 @@ class RemovePhpExtensionCommand: BrewCommand {
 
         var loggedMessages: [String] = []
 
-        let (process, _) = try! await Shell.attach(
+        let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
@@ -77,7 +79,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             // The extension's default configuration file can be removed
             Log.info("The extension was found in a default extension .ini location. Purging that .ini file.")
             do {
-                try FileSystem.remove(ext.file)
+                try filesystem.remove(ext.file)
             } catch {
                 Log.err("The file `\(ext.file)` could not be removed.")
             }

@@ -8,8 +8,9 @@
 
 import Foundation
 import NVAlert
+import ContainerMacro
 
-@MainActor class ComposerWindow {
+@MainActor @ContainerAccess class ComposerWindow {
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
@@ -55,7 +56,7 @@ import NVAlert
 
         self.window?.addToConsole("\(command)\n")
 
-        let (process, _) = try await Shell.attach(
+        let (process, _) = try await shell.attach(
             command,
             didReceiveOutput: { [weak self] (incoming, _) in
                 guard let window = self?.window else { return }

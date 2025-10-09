@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import ContainerMacro
 
 struct ValetInteractionError: Error {
     /// The command the user should try (and failed).
     var command: String
 }
 
+@ContainerAccess
 class ValetInteractor {
     static var shared = ValetInteractor()
 
@@ -23,11 +25,11 @@ class ValetInteractor {
     // MARK: - Managing Domains
 
     public func link(path: String, domain: String) async throws {
-        await Shell.quiet("cd '\(path)' && \(Paths.valet) link '\(domain)' && valet links")
+        await shell.quiet("cd '\(path)' && \(Paths.valet) link '\(domain)' && valet links")
     }
 
     public func unlink(site: ValetSite) async throws {
-        await Shell.quiet("valet unlink '\(site.name)'")
+        await shell.quiet("valet unlink '\(site.name)'")
     }
 
     public func proxy(domain: String, proxy: String, secure: Bool) async throws {
@@ -35,12 +37,12 @@ class ValetInteractor {
             ? "\(Paths.valet) proxy \(domain) \(proxy) --secure"
             : "\(Paths.valet) proxy \(domain) \(proxy)"
 
-        await Shell.quiet(command)
+        await shell.quiet(command)
         await Actions.restartNginx()
     }
 
     public func remove(proxy: ValetProxy) async throws {
-        await Shell.quiet("valet unproxy '\(proxy.domain)'")
+        await shell.quiet("valet unproxy '\(proxy.domain)'")
     }
 
     // MARK: - Modifying Domains
@@ -62,7 +64,7 @@ class ValetInteractor {
         }
 
         // Run the command
-        await Shell.quiet(command)
+        await shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineSecured()
@@ -87,7 +89,7 @@ class ValetInteractor {
 
         // Run the commands
         for command in commands {
-            await Shell.quiet(command)
+            await shell.quiet(command)
         }
 
         // Check if the secured status has actually changed
@@ -106,7 +108,7 @@ class ValetInteractor {
         let command = "sudo \(Paths.valet) isolate php@\(version) --site '\(site.name)'"
 
         // Run the command
-        await Shell.quiet(command)
+        await shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineIsolated()
@@ -122,7 +124,7 @@ class ValetInteractor {
         let command = "sudo \(Paths.valet) unisolate --site '\(site.name)'"
 
         // Run the command
-        await Shell.quiet(command)
+        await shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineIsolated()

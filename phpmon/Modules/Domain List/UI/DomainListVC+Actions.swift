@@ -32,11 +32,11 @@ extension DomainListVC {
     }
 
     @objc func openInFinder() {
-        Task { return await Shell.quiet("open '\(selectedSite!.absolutePath)'") }
+        Task { return await App.shared.container.shell.quiet("open '\(selectedSite!.absolutePath)'") }
     }
 
     @objc func openInTerminal() {
-        Task { await Shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'") }
+        Task { await App.shared.container.shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'") }
     }
 
     @objc func openWithEditor(sender: EditorMenuItem) {
@@ -50,7 +50,7 @@ extension DomainListVC {
         let rowToReload = tableView.selectedRow
 
         waitAndExecute {
-            await Shell.quiet(command)
+            await App.shared.container.shell.quiet(command)
         } completion: { [self] in
             beforeCellReload()
             tableView.reloadData(forRowIndexes: [rowToReload], columnIndexes: [0, 1, 2, 3, 4])

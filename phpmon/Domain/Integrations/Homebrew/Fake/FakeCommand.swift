@@ -19,7 +19,7 @@ class FakeCommand: BrewCommand {
         self.version = version
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(value: 0.2, title: "Hello", description: "Doing the work"))
         await delay(seconds: 2)
         onProgress(.create(value: 0.5, title: "Hello", description: "Doing some more work"))

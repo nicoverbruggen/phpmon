@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class ValetDomainScanner: DomainScanner {
 
     // MARK: - Sites
@@ -15,7 +17,7 @@ class ValetDomainScanner: DomainScanner {
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
             do {
-                let entries = try FileSystem
+                let entries = try filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries
@@ -35,7 +37,7 @@ class ValetDomainScanner: DomainScanner {
 
         paths.forEach { path in
             do {
-                let entries = try FileSystem
+                let entries = try filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries.forEach {
@@ -59,7 +61,7 @@ class ValetDomainScanner: DomainScanner {
         // Get the TLD from the global Valet object
         let tld = Valet.shared.config.tld
 
-        if !FileSystem.anyExists(path) {
+        if !filesystem.anyExists(path) {
             Log.warn("Could not parse the site: \(path), skipping!")
         }
 
@@ -69,9 +71,9 @@ class ValetDomainScanner: DomainScanner {
             return nil
         }
 
-        if FileSystem.isSymlink(path) {
-            return ValetSite(aliasPath: path, tld: tld)
-        } else if FileSystem.isDirectory(path) {
+        if filesystem.isSymlink(path) {
+            return ValetSite(filesystem: filesystem, aliasPath: path, tld: tld)
+        } else if filesystem.isDirectory(path) {
             return ValetSite(absolutePath: path, tld: tld)
         }
 
@@ -85,7 +87,7 @@ class ValetDomainScanner: DomainScanner {
     private func isSite(_ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
-        return (FileSystem.isDirectory(siteDir) || FileSystem.isSymlink(siteDir))
+        return (App.shared.container.filesystem.isDirectory(siteDir) || App.shared.container.filesystem.isSymlink(siteDir))
     }
 
     // MARK: - Proxies

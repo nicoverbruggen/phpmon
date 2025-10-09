@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class PhpInstallation {
 
     var versionNumber: VersionNumber
@@ -54,8 +56,8 @@ class PhpInstallation {
     }
 
     private func determineVersion(_ phpConfigExecutablePath: String, _ phpExecutablePath: String) {
-        if FileSystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = Command.execute(
+        if filesystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"],
                 trimNewlines: false
@@ -76,8 +78,8 @@ class PhpInstallation {
     }
 
     private func determineHealth(_ phpExecutablePath: String) {
-        if FileSystem.fileExists(phpExecutablePath) {
-            let testCommand = Command.execute(
+        if filesystem.fileExists(phpExecutablePath) {
+            let testCommand = command.execute(
                 path: phpExecutablePath,
                 arguments: ["-v"],
                 trimNewlines: false,
@@ -94,7 +96,7 @@ class PhpInstallation {
     }
 
     private func determineIniFiles(_ phpExecutablePath: String) {
-        let paths = Shell
+        let paths = shell
             .sync("\(phpExecutablePath) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }

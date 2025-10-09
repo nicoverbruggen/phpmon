@@ -59,7 +59,7 @@ class ConfigWatchManager {
         eventMask: DispatchSource.FileSystemEvent,
         behaviour: ConfigFSNotifier.Behaviour = .reloadsMenu
     ) {
-        if !FileSystem.anyExists(url.path) {
+        if !App.shared.container.filesystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }

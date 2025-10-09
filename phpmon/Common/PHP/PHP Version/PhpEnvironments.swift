@@ -44,8 +44,8 @@ class PhpEnvironments {
 
         // Check if that version actually corresponds to an older version
         let phpConfigExecutablePath = "\(Paths.optPath)/php/bin/php-config"
-        if FileSystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = Command.execute(
+        if container.filesystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = container.command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"],
                 trimNewlines: false
@@ -115,7 +115,7 @@ class PhpEnvironments {
     static var homebrewBrewPhpAlias: String {
         if PhpEnvironments.shared.homebrewPackage == nil {
             // For UI testing and as a fallback, determine this version by using (fake) php-config
-            let version = Command.execute(path: "/opt/homebrew/bin/php-config",
+            let version = App.shared.container.command.execute(path: "/opt/homebrew/bin/php-config",
                                    arguments: ["--version"],
                                    trimNewlines: true)
             return try! VersionNumber.parse(version).short
@@ -184,7 +184,7 @@ class PhpEnvironments {
         let phpAlias = homebrewPackage.version
 
         // Avoid inserting a duplicate
-        if !supportedVersions.contains(phpAlias) && FileSystem.fileExists("\(Paths.optPath)/php/bin/php") {
+        if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(Paths.optPath)/php/bin/php") {
             let phpAliasInstall = PhpInstallation(phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
@@ -237,7 +237,7 @@ class PhpEnvironments {
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
                 && supported.contains(version)
-                && (checkBinaries ? FileSystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true) {
+                && (checkBinaries ? container.filesystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true) {
                 output.insert(version)
             }
         }

@@ -87,8 +87,6 @@
 		03CC1FF52E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF62E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
-		03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
-		03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
@@ -383,7 +381,6 @@
 		C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150A2C46D81E0069AAE7 /* NVAlert */; };
 		C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150C2C46D83E0069AAE7 /* NVAlert */; };
 		C4709CA228524B3400088BB8 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
-		C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
 		C471E7BF28F9B90F0021E251 /* StartupTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C471E7BE28F9B90F0021E251 /* StartupTest.swift */; };
@@ -393,12 +390,8 @@
 		C471E7CC28F9BA5B0021E251 /* TestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4928DB966A007ACC74 /* TestableShell.swift */; };
 		C471E7CD28F9BA600021E251 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C471E7CE28F9BA600021E251 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
-		C471E7CF28F9BA600021E251 /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
 		C471E7D028F9BA630021E251 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C471E7D128F9BA630021E251 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
-		C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
-		C471E7D328F9BA8F0021E251 /* ActiveShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E36FE628D9219000636F7F /* ActiveShell.swift */; };
-		C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C471E7D528F9BA8F0021E251 /* TestableConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40F505428ECA64E004AD45B /* TestableConfigurations.swift */; };
 		C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
 		C471E7D728F9BA8F0021E251 /* TestableFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AD38B128ECD9D300FA8D83 /* TestableFileSystem.swift */; };
@@ -410,9 +403,7 @@
 		C471E7DD28F9BAA30021E251 /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
 		C471E7DE28F9BAA30021E251 /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
 		C471E7DF28F9BAAB0021E251 /* RealCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* RealCommand.swift */; };
-		C471E7E028F9BAAB0021E251 /* ActiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE628F764050026AC4E /* ActiveCommand.swift */; };
 		C471E7E128F9BAAB0021E251 /* RealCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5853D2770FE3900DA4FBE /* RealCommand.swift */; };
-		C471E7E228F9BAAB0021E251 /* ActiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE628F764050026AC4E /* ActiveCommand.swift */; };
 		C471E7E328F9BAC20021E251 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2F27722E8D00DDDCDC /* Logger.swift */; };
 		C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C417DC73277614690015E6EE /* Helpers.swift */; };
 		C471E7E528F9BAC20021E251 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EC1E72279DFCF40010F296 /* Events.swift */; };
@@ -794,7 +785,6 @@
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C4C8900528F0E3D100CE5E97 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
-		C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */; };
 		C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
 		C4C8E819276F54D8003AC782 /* App+ConfigWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */; };
 		C4C8E81B276F54E5003AC782 /* ConfigWatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8E81A276F54E5003AC782 /* ConfigWatchManager.swift */; };
@@ -880,8 +870,6 @@
 		C4E2E86A28FC3002003B070C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A8A1925D9CD1000591B77 /* Utility.swift */; };
 		C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
 		C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
-		C4E49DE728F764050026AC4E /* ActiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE628F764050026AC4E /* ActiveCommand.swift */; };
-		C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE628F764050026AC4E /* ActiveCommand.swift */; };
 		C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
 		C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
 		C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
@@ -1007,7 +995,6 @@
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
-		03E36FE628D9219000636F7F /* ActiveShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveShell.swift; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
@@ -1214,7 +1201,6 @@
 		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
 		C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProtocol.swift; sourceTree = "<group>"; };
 		C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealFileSystem.swift; sourceTree = "<group>"; };
-		C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveFileSystem.swift; sourceTree = "<group>"; };
 		C4C8E817276F54D8003AC782 /* App+ConfigWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App+ConfigWatch.swift"; sourceTree = "<group>"; };
 		C4C8E81A276F54E5003AC782 /* ConfigWatchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigWatchManager.swift; sourceTree = "<group>"; };
 		C4CB250429B28BB800CA4492 /* MainMenuTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuTest.swift; sourceTree = "<group>"; };
@@ -1248,7 +1234,6 @@
 		C4E2E85B28FC282B003B070C /* TestableConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableConfiguration.swift; sourceTree = "<group>"; };
 		C4E2E86328FC2F1B003B070C /* XCPMApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCPMApplication.swift; sourceTree = "<group>"; };
 		C4E4404527C56F4700D225E1 /* ValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSite.swift; sourceTree = "<group>"; };
-		C4E49DE628F764050026AC4E /* ActiveCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCommand.swift; sourceTree = "<group>"; };
 		C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandProtocol.swift; sourceTree = "<group>"; };
 		C4E49DEC28F764A00026AC4E /* TestableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableCommand.swift; sourceTree = "<group>"; };
 		C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewTapFormulae.swift; sourceTree = "<group>"; };
@@ -2229,7 +2214,6 @@
 		C4C8900128F0E27900CE5E97 /* Filesystem */ = {
 			isa = PBXGroup;
 			children = (
-				C4C8900628F0E3EF00CE5E97 /* ActiveFileSystem.swift */,
 				C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */,
 				C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */,
 			);
@@ -2297,7 +2281,6 @@
 		C4E49DE528F763E20026AC4E /* Command */ = {
 			isa = PBXGroup;
 			children = (
-				C4E49DE628F764050026AC4E /* ActiveCommand.swift */,
 				C4B5853D2770FE3900DA4FBE /* RealCommand.swift */,
 				C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */,
 			);
@@ -2356,7 +2339,6 @@
 		C4F787A628EF811000790735 /* Shell */ = {
 			isa = PBXGroup;
 			children = (
-				03E36FE628D9219000636F7F /* ActiveShell.swift */,
 				C46EBC4628DB9644007ACC74 /* RealShell.swift */,
 				C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */,
 			);
@@ -2702,7 +2684,6 @@
 				C47DF1AF299D5A3B0007055D /* LoginItemManager.swift in Sources */,
 				C4292D542B023F61004F0D2A /* PhpExtensionManagerWindowController.swift in Sources */,
 				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
-				C4C8900728F0E3EF00CE5E97 /* ActiveFileSystem.swift in Sources */,
 				C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
 				C43931CA29C4C03F0069165B /* Brew.swift in Sources */,
@@ -2728,7 +2709,6 @@
 				C4E0F7ED27BEBDA9007475F2 /* NSWindowExtension.swift in Sources */,
 				C4205A7E27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C4C8E818276F54D8003AC782 /* App+ConfigWatch.swift in Sources */,
-				C4E49DE728F764050026AC4E /* ActiveCommand.swift in Sources */,
 				C43B8FD52BA9BAD3000C02BE /* UnavailableContentView.swift in Sources */,
 				032DAC2A2E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
@@ -2815,7 +2795,6 @@
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewDecodable.swift in Sources */,
 				03BFF52E2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
-				03E36FE728D9219000636F7F /* ActiveShell.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4D5857C2A7038DB00DDBB63 /* ByteLimitView.swift in Sources */,
@@ -3059,7 +3038,6 @@
 				C471E7D728F9BA8F0021E251 /* TestableFileSystem.swift in Sources */,
 				C471E81A28F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7E128F9BAAB0021E251 /* RealCommand.swift in Sources */,
-				C471E7E228F9BAAB0021E251 /* ActiveCommand.swift in Sources */,
 				03263A392E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
 				C471E80A28F9BADC0021E251 /* CreatedFromFile.swift in Sources */,
 				C471E80528F9BAD40021E251 /* ActivePhpInstallation.swift in Sources */,
@@ -3092,7 +3070,6 @@
 				C471E7D928F9BA8F0021E251 /* TestableShell.swift in Sources */,
 				C471E81428F9BAE80021E251 /* NSWindowExtension.swift in Sources */,
 				C43BCD4629FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
-				C471E7D328F9BA8F0021E251 /* ActiveShell.swift in Sources */,
 				C42106682AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79EC829CA474200A483EE /* FakeCommand.swift in Sources */,
 				C471E7DE28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
@@ -3110,7 +3087,6 @@
 				C489E0BD2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
 				C471E82028F9BB290021E251 /* NginxConfigurationFile.swift in Sources */,
-				C471E7D428F9BA8F0021E251 /* ActiveFileSystem.swift in Sources */,
 				032DAC2D2E8BEB6B0018E01C /* ApiProtocol.swift in Sources */,
 				C4513F902B13E2E6001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
 				C471E81528F9BAE80021E251 /* ArrayExtension.swift in Sources */,
@@ -3273,7 +3249,6 @@
 				03CC1FE72E3D22120050FC18 /* InstallHomebrew.swift in Sources */,
 				C4CE7F9929683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
 				C471E7FC28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
-				C471E7CF28F9BA600021E251 /* ActiveShell.swift in Sources */,
 				C4BB393C2981AFC700F8E797 /* PhpVersionSource.swift in Sources */,
 				C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */,
 				039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */,
@@ -3288,7 +3263,6 @@
 				C471E81228F9BAE80021E251 /* TimeIntervalExtension.swift in Sources */,
 				C471E7DF28F9BAAB0021E251 /* RealCommand.swift in Sources */,
 				C469E701294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
-				C471E7E028F9BAAB0021E251 /* ActiveCommand.swift in Sources */,
 				C40175BB2903108900763A68 /* ValetInteractor.swift in Sources */,
 				C471E80928F9BADC0021E251 /* CreatedFromFile.swift in Sources */,
 				C471E80128F9BAD40021E251 /* ActivePhpInstallation.swift in Sources */,
@@ -3312,7 +3286,6 @@
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C4513F8E2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
-				C471E7D228F9BA630021E251 /* ActiveFileSystem.swift in Sources */,
 				C471E80028F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C471E7F528F9BAC80021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7ED28F9BAC30021E251 /* Process.swift in Sources */,
@@ -3486,13 +3459,10 @@
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
 				C4513F932B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
-				C471E79328F9B21F0021E251 /* ActiveFileSystem.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
-				03E36FE828D9219000636F7F /* ActiveShell.swift in Sources */,
 				0396160E2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				C4B97B79275CF1B5003F3378 /* App+ActivationPolicy.swift in Sources */,
 				C4E2E86528FC2F1B003B070C /* XCPMApplication.swift in Sources */,
-				C4E49DE828F764050026AC4E /* ActiveCommand.swift in Sources */,
 				C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				036C390B2E5C8CC5008DAEDF /* PackagistP2Response.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class ModifyPhpVersionCommand: BrewCommand {
     let title: String
     let installing: [BrewPhpFormula]
@@ -32,17 +34,19 @@ class ModifyPhpVersionCommand: BrewCommand {
        re-installed and linked again.
      */
     public init(
+        container: Container = App.shared.container,
         title: String,
         upgrading: [BrewPhpFormula],
         installing: [BrewPhpFormula]
     ) {
+        self.container = container
         self.title = title
         self.installing = installing
         self.upgrading = upgrading
         self.phpGuard = PhpGuard()
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
@@ -58,7 +62,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         })
 
         // Make sure the tap is installed
-        try await self.checkPhpTap(onProgress)
+        try await self.checkPhpTap(shell: shell, onProgress)
 
         if unavailable == nil {
             // Try to run all upgrade and installation operations
@@ -99,7 +103,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             """
 
         // Run the upgrade command
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -115,7 +119,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
 
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -130,7 +134,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(Paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
             """
 
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -162,7 +166,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(Paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
 
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
@@ -170,7 +174,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         onProgress(.create(value: 0.95, title: self.title, description: "phpman.steps.reloading".localized))
 
         // Ensure all symlinks are correctly linked
-        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+        await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Check which version of PHP are now installed
         await PhpEnvironments.detectPhpVersions()

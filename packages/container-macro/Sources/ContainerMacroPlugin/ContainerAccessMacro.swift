@@ -13,6 +13,8 @@ public struct ContainerAccessMacro: MemberMacro {
         // This should be kept in sync with the Container class
         let allContainerServices: [(name: String, type: String)] = [
             ("shell", "ShellProtocol"),
+            ("filesystem", "FileSystemProtocol"),
+            ("command", "CommandProtocol"),
             ("favorites", "Favorites"),
             ("warningManager", "WarningManager")
         ]

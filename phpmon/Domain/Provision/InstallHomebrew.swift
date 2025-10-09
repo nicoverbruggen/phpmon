@@ -6,6 +6,9 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+import ContainerMacro
+
+@ContainerAccess
 class InstallHomebrew {
     public func run() async throws {
         let script = """
@@ -13,7 +16,7 @@ class InstallHomebrew {
             "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         """
 
-        _ = try await Shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
+        _ = try await shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
             print(string)
         }, withTimeout: 60 * 10)
     }

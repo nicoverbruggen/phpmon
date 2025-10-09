@@ -106,7 +106,7 @@ class Stats {
      */
     public static func evaluateSponsorMessageShouldBeDisplayed() {
 
-        if Shell is TestableShell {
+        if App.shared.container.shell is TestableShell {
             return Log.info("A fake shell is in use, skipping sponsor alert.")
         }
 

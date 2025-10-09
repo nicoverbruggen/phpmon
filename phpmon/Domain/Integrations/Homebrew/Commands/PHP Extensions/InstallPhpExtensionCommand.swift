@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class InstallPhpExtensionCommand: BrewCommand {
     let installing: [BrewPhpExtension]
 
@@ -23,7 +25,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         self.installing = extensions
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
@@ -33,16 +35,16 @@ class InstallPhpExtensionCommand: BrewCommand {
         ))
 
         // Make sure the tap is installed
-        try await self.checkPhpTap(onProgress)
+        try await self.checkPhpTap(shell: shell, onProgress)
 
         // Make sure that the extension(s) are installed
-        try await self.installPackages(onProgress)
+        try await self.installPackages(shell, onProgress)
 
         // Finally, complete all operations
         await self.completedOperations(onProgress)
     }
 
-    private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    private func installPackages(_ shell: ShellProtocol, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // If no installations are needed, early exit
         if self.installing.isEmpty {
             return
@@ -55,7 +57,7 @@ class InstallPhpExtensionCommand: BrewCommand {
             \(Paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
             """
 
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {

@@ -59,7 +59,7 @@ struct BrewPhpExtension: Hashable, Comparable {
     }
 
     static func hasInstallationReceipt(for formulaName: String) -> Bool {
-        return FileSystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
+        return App.shared.container.filesystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
     }
 
     static func < (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
@@ -74,7 +74,7 @@ struct BrewPhpExtension: Hashable, Comparable {
         let regexPattern = #"depends_on "(.*)""#
         var dependencies: [String] = []
 
-        guard let content = try? FileSystem.getStringFromFile(path) else {
+        guard let content = try? App.shared.container.filesystem.getStringFromFile(path) else {
             return []
         }
 

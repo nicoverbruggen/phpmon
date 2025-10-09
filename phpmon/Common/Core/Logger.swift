@@ -33,7 +33,7 @@ class Log {
             system_quiet("mkdir -p ~/.config/phpmon 2> /dev/null")
             system_quiet("rm ~/.config/phpmon/last_session.log 2> /dev/null")
             system_quiet("touch ~/.config/phpmon/last_session.log 2> /dev/null")
-            self.logExists = FileSystem.fileExists(self.logFilePath)
+            self.logExists = App.shared.container.filesystem.fileExists(self.logFilePath)
         }
     }
 

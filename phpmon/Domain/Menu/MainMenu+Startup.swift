@@ -34,13 +34,13 @@ extension MainMenu {
         await PhpEnvironments.shared.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP
-        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+        await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Initialize preferences
         _ = Preferences.shared
 
         // Put some useful diagnostics information in log
-        BrewDiagnostics.logBootInformation()
+        BrewDiagnostics.shared.logBootInformation()
 
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
@@ -58,10 +58,10 @@ extension MainMenu {
 
         // Verify third party taps
         // The missing tap(s) will be actionable later
-        await BrewDiagnostics.verifyThirdPartyTaps()
+        await BrewDiagnostics.shared.verifyThirdPartyTaps()
 
         // Check for an alias conflict
-        await BrewDiagnostics.checkForCaskConflict()
+        await BrewDiagnostics.shared.checkForCaskConflict()
 
         // Attempt to find out if PHP-FPM is broken
         PhpEnvironments.prepare()
@@ -92,7 +92,7 @@ extension MainMenu {
             await Valet.shared.startPreloadingSites()
 
             // After preloading sites, check for PHP-FPM pool conflicts
-            await BrewDiagnostics.checkForValetMisconfiguration()
+            await BrewDiagnostics.shared.checkForValetMisconfiguration()
 
             // Check if PHP-FPM is broken (should be fixed automatically if phpmon >= 6.0)
             await Valet.shared.notifyAboutBrokenPhpFpm()

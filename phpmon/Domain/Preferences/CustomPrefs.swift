@@ -45,7 +45,7 @@ struct CustomPrefs: Decodable {
 extension Preferences {
     func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        await Shell.quiet("mkdir -p ~/.config/phpmon")
+        await App.shared.container.shell.quiet("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
         await moveOutdatedConfigurationFile()
@@ -64,7 +64,7 @@ extension Preferences {
     func moveOutdatedConfigurationFile() async {
         if FileSystem.fileExists("~/.phpmon.conf.json") && !FileSystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            await Shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await App.shared.container.shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }
@@ -88,7 +88,7 @@ extension Preferences {
 
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
-                if let shell = Shell as? RealShell {
+                if let shell = App.shared.container.shell as? RealShell {
                     shell.exports = customPreferences.exportAsString
                 }
             }

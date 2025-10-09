@@ -25,8 +25,8 @@ public class Paths {
 
         // Ensure that if a different location is used, it takes precendence
         if baseDir == .usr
-            && FileSystem.directoryExists("/usr/local/homebrew")
-            && !FileSystem.directoryExists("/usr/local/Cellar") {
+            && App.shared.container.filesystem.directoryExists("/usr/local/homebrew")
+            && !App.shared.container.filesystem.directoryExists("/usr/local/Cellar") {
             Log.warn("Using /usr/local/homebrew as base directory!")
             baseDir = .usr_hb
         }
@@ -74,12 +74,12 @@ public class Paths {
     }
 
     public static var homePath: String {
-        if FileSystem is RealFileSystem {
+        if App.shared.container.filesystem is RealFileSystem {
             return NSHomeDirectory()
         }
 
-        if FileSystem is TestableFileSystem {
-            let fs = FileSystem as! TestableFileSystem
+        if App.shared.container.filesystem is TestableFileSystem {
+            let fs = App.shared.container.filesystem as! TestableFileSystem
             return fs.homeDirectory
         }
 
@@ -123,11 +123,11 @@ public class Paths {
     // (PHP Monitor will not use the user's own PATH)
 
     private func detectComposerBinary() {
-        if FileSystem.fileExists("/usr/local/bin/composer") {
+        if App.shared.container.filesystem.fileExists("/usr/local/bin/composer") {
             Paths.composer = "/usr/local/bin/composer"
-        } else if FileSystem.fileExists("/opt/homebrew/bin/composer") {
+        } else if App.shared.container.filesystem.fileExists("/opt/homebrew/bin/composer") {
             Paths.composer = "/opt/homebrew/bin/composer"
-        } else if FileSystem.fileExists("/usr/local/homebrew/bin/composer") {
+        } else if App.shared.container.filesystem.fileExists("/usr/local/homebrew/bin/composer") {
             Paths.composer = "/usr/local/homebrew/bin/composer"
         } else {
             Paths.composer = nil

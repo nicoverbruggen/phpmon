@@ -12,7 +12,7 @@ extension WarningManager {
         return [
             Warning(
                 command: {
-                    return await Shell.pipe("sysctl -n sysctl.proc_translated").out
+                    return await App.shared.container.shell.pipe("sysctl -n sysctl.proc_translated").out
                         .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
                 },
                 name: "Running PHP Monitor with Rosetta on Apple Silicon",
@@ -23,7 +23,7 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    return !Shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
+                    return !App.shared.container.shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
                         !FileSystem.isWriteableFile("/usr/local/bin/")
                 },
                 name: "Helpers cannot be symlinked and not in PATH",
@@ -73,7 +73,7 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    !BrewDiagnostics.installedTaps.contains("shivammathur/php")
+                    !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php")
                 },
                 name: "`shivammathur/php` tap is missing",
                 title: "warnings.php_tap_missing.title",
@@ -82,14 +82,14 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await Shell.quiet("brew tap shivammathur/php")
-                    await BrewDiagnostics.loadInstalledTaps()
+                    await App.shared.container.shell.quiet("brew tap shivammathur/php")
+                    await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
             ),
             Warning(
                 command: {
-                    !BrewDiagnostics.installedTaps.contains("shivammathur/extensions")
+                    !BrewDiagnostics.shared.installedTaps.contains("shivammathur/extensions")
                 },
                 name: "`shivammathur/extensions` tap is missing",
                 title: "warnings.extensions_tap_missing.title",
@@ -98,8 +98,8 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-extensions",
                 fix: {
-                    await Shell.quiet("brew tap shivammathur/extensions")
-                    await BrewDiagnostics.loadInstalledTaps()
+                    await App.shared.container.shell.quiet("brew tap shivammathur/extensions")
+                    await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
             ),

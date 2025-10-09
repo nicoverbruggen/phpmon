@@ -16,11 +16,14 @@ class Paths {
 
     static let shared = Paths()
     var baseDir: HomebrewDir
-    var userName = String(Shell.pipe("whoami").split(separator: "\n")[0])
+    var userName: String
 
     init() {
-        let optBrewFound = Shell.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
-        let usrBrewFound = Shell.fileExists("\(HomebrewDir.usr.rawValue)/bin/brew")
+        let shell = App.shared.container.shell
+        self.userName = String(shell.sync("whoami").out.split(separator: "\n")[0])
+
+        let optBrewFound = App.shared.container.filesystem.fileExists("\(HomebrewDir.opt.rawValue)/bin/brew")
+        let usrBrewFound = App.shared.container.filesystem.fileExists("\(HomebrewDir.usr.rawValue)/bin/brew")
 
         if optBrewFound {
             // This is usually the case with Homebrew installed on Apple Silicon

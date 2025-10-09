@@ -12,7 +12,7 @@ class BrewTapFormulae {
     public static func from(tap: String) -> [String: [BrewPhpExtension]] {
         let directory = "\(Paths.tapPath)/\(tap)/Formula"
 
-        let files = try? FileSystem.getShallowContentsOfDirectory(directory)
+        let files = try? App.shared.container.filesystem.getShallowContentsOfDirectory(directory)
 
         var availableExtensions = [String: [BrewPhpExtension]]()
 

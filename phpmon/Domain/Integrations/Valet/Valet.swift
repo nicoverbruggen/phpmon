@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import ContainerMacro
 
 /**
  This class is responsible for handling the state of Valet throughout PHP Monitor. A singleton instance is created
  and accessible throughout the lifecycle of the app, unless the user has decided to not use Valet. In that case,
  only a restricted subset of functionality is available in the app.
  */
+@ContainerAccess
 class Valet {
 
     enum FeatureFlag {
@@ -65,8 +67,8 @@ class Valet {
     }
 
     lazy var installed: Bool = {
-        return FileSystem.fileExists(Paths.binPath.appending("/valet"))
-            && FileSystem.anyExists("~/.config/valet")
+        return filesystem.fileExists(Paths.binPath.appending("/valet"))
+            && filesystem.anyExists("~/.config/valet")
     }()
 
     /**
@@ -89,7 +91,7 @@ class Valet {
      and the app cannot start.
      */
     public func updateVersionNumber() async {
-        let output = await Shell.pipe("valet --version").out
+        let output = await shell.pipe("valet --version").out
 
         // Failure condition #1: does not contain Laravel Valet
         if !output.contains("Laravel Valet") {
@@ -119,7 +121,7 @@ class Valet {
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
-                from: FileSystem.getStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
+                from: filesystem.getStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
             )
         } catch {
             Log.err(error)
@@ -206,7 +208,7 @@ class Valet {
      Determine if any platform issues are detected when running `valet --version`.
      */
     public func hasPlatformIssues() async -> Bool {
-        return await Shell.pipe("valet --version")
+        return await shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
     }
 
@@ -248,12 +250,12 @@ class Valet {
         if version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
-            return await Shell.pipe("cat \(fileName)").out
+            return await shell.pipe("cat \(fileName)").out
                 .contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return FileSystem.fileExists("\(Paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
+        return filesystem.fileExists("\(Paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     /**

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol BrewCommand {
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws
 
     func getCommandTitle() -> String
 }
@@ -78,10 +78,14 @@ extension BrewCommand {
         return nil
     }
 
-    internal func run(_ command: String, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    internal func run(
+        shell: ShellProtocol,
+        _ command: String,
+        _ onProgress: @escaping (BrewCommandProgress) -> Void
+    ) async throws {
         var loggedMessages: [String] = []
 
-        let (process, _) = try! await Shell.attach(
+        let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
@@ -104,15 +108,18 @@ extension BrewCommand {
         }
     }
 
-    internal func checkPhpTap(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/php") {
+    internal func checkPhpTap(
+        shell: ShellProtocol,
+        _ onProgress: @escaping (BrewCommandProgress) -> Void
+    ) async throws {
+        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php") {
             let command = "brew tap shivammathur/php"
-            try await run(command, onProgress)
+            try await run(shell: shell, command, onProgress)
         }
 
-        if !BrewDiagnostics.installedTaps.contains("shivammathur/extensions") {
+        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/extensions") {
             let command = "brew tap shivammathur/extensions"
-            try await run(command, onProgress)
+            try await run(shell: shell, command, onProgress)
         }
     }
 }

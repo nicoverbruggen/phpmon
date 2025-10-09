@@ -78,7 +78,7 @@ class ValetProxy: ValetListable {
     // MARK: - Interactions
 
     func determineSecured() {
-        self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+        self.secured = container.filesystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
     }
 
     func toggleFavorite() {

@@ -8,18 +8,22 @@
 
 import Foundation
 import NVAlert
+import ContainerMacro
 
+@ContainerAccess
 class BrewDiagnostics {
+    public static let shared = BrewDiagnostics()
+
     /**
      Determines the Homebrew taps the user has installed.
      */
-    public static var installedTaps: [String] = []
+    public var installedTaps: [String] = []
 
     /**
      Load which taps are installed.
      */
-    public static func loadInstalledTaps() async {
-        installedTaps = await Shell
+    public func loadInstalledTaps() async {
+        installedTaps = await shell
             .pipe("\(Paths.brew) tap")
             .out
             .split(separator: "\n")
@@ -31,13 +35,13 @@ class BrewDiagnostics {
     /**
      Logs a bunch of useful information during startup.
      */
-    public static func logBootInformation() {
-        Log.info(BrewDiagnostics.customCaskInstalled
+    public func logBootInformation() {
+        Log.info(customCaskInstalled
              ? "[BREW] The app has been installed via Homebrew Cask."
              : "[BREW] The app has been installed directly (optimal)."
         )
 
-        Log.info(BrewDiagnostics.usesNginxFullFormula
+        Log.info(usesNginxFullFormula
              ? "[BREW] The app will be using the `nginx-full` formula."
              : "[BREW] The app will be using the `nginx` formula."
         )
@@ -46,21 +50,20 @@ class BrewDiagnostics {
     /**
      Determines whether the PHP Monitor Cask is installed.
      */
-    public static var customCaskInstalled: Bool = {
+    public var customCaskInstalled: Bool {
         return installedTaps.contains("nicoverbruggen/cask")
-            && FileSystem.directoryExists(Paths.caskroomPath)
-    }()
+            && filesystem.directoryExists(Paths.caskroomPath)
+    }
 
     /**
      Determines whether to use the regular `nginx` or `nginx-full` formula.
      */
-    public static var usesNginxFullFormula: Bool = {
-        guard let destination = try? FileManager.default
-            .destinationOfSymbolicLink(atPath: "\(Paths.binPath)/nginx") else { return false }
+    public var usesNginxFullFormula: Bool {
+        guard let destination = try? filesystem.getDestinationOfSymlink("\(Paths.binPath)/nginx") else { return false }
 
         // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
         return destination.contains("/nginx-full/")
-    }()
+    }
 
     /**
      It is possible to have outdated symlinks for PHP installations. This can mean that certain PHP installations
@@ -68,12 +71,12 @@ class BrewDiagnostics {
 
      To ensure this does not cause issues, PHP Monitor will automatically remove all incorrect PHP symlinks.
      */
-    public static func checkForOutdatedPhpInstallationSymlinks() async {
+    public func checkForOutdatedPhpInstallationSymlinks() async {
         // Set up a regular expression
         let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
 
         // Check for incorrect versions
-        if let contents = try? FileSystem.getShallowContentsOfDirectory("\(Paths.optPath)")
+        if let contents = try? filesystem.getShallowContentsOfDirectory("\(Paths.optPath)")
             .filter({
                 let range = NSRange($0.startIndex..., in: $0)
                 return regex.firstMatch(in: $0, options: [], range: range) != nil
@@ -81,12 +84,12 @@ class BrewDiagnostics {
 
             for symlink in contents {
                 let version = symlink.replacingOccurrences(of: "php@", with: "")
-                if let destination = try? FileSystem.getDestinationOfSymlink("\(Paths.optPath)/\(symlink)") {
+                if let destination = try? filesystem.getDestinationOfSymlink("\(Paths.optPath)/\(symlink)") {
                     if !destination.contains("Cellar/php/\(version)")
                         && !destination.contains("Cellar/php@\(version)") {
                         Log.err("Symlink for \(symlink) is incorrect. Removing...")
                         do {
-                            try FileSystem.remove("\(Paths.optPath)/\(symlink)")
+                            try filesystem.remove("\(Paths.optPath)/\(symlink)")
                             Log.info("Incorrect symlink for \(symlink) has been successfully removed.")
                         } catch {
                             Log.err("Symlink for \(symlink) was incorrect but could not be removed!")
@@ -106,7 +109,7 @@ class BrewDiagnostics {
 
      This check only needs to be performed if the `shivammathur/php` tap is active.
      */
-    public static func checkForCaskConflict() async {
+    public func checkForCaskConflict() async {
         if await hasAliasConflict() {
             presentAlertAboutConflict()
         }
@@ -116,7 +119,7 @@ class BrewDiagnostics {
      It is possible to upgrade PHP, but forget running `valet install`.
      This results in a scenario where a rogue www.conf file exists.
      */
-    public static func checkForValetMisconfiguration() async {
+    public func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
         guard let install = PhpEnvironments.phpInstall else {
@@ -138,7 +141,7 @@ class BrewDiagnostics {
         }
     }
 
-    public static func verifyThirdPartyTaps() async {
+    public func verifyThirdPartyTaps() async {
         let requiredTaps = [
             "shivammathur/php",
             "shivammathur/extensions"
@@ -157,8 +160,8 @@ class BrewDiagnostics {
     /**
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
-    private static func hasAliasConflict() async -> Bool {
-        let tapAlias = await Shell.pipe("brew info shivammathur/php/php --json").out
+    private func hasAliasConflict() async -> Bool {
+        let tapAlias = await shell.pipe("brew info shivammathur/php/php --json").out
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") || tapAlias.isEmpty {
             Log.info("The user does not appear to have tapped: shivammathur/php")
@@ -198,7 +201,7 @@ class BrewDiagnostics {
     /**
      Show this alert in case the tapped Cask does cause issues because of the conflict.
      */
-    private static func presentAlertAboutConflict() {
+    private func presentAlertAboutConflict() {
         Task { @MainActor in
             NVAlert()
                 .withInformation(
@@ -214,8 +217,8 @@ class BrewDiagnostics {
      In order to see if we support the --json syntax, we'll query nginx.
      If the JSON response cannot be parsed, Homebrew is probably out of date.
      */
-    public static func cannotLoadService(_ name: String) async -> Bool {
-        let nginxJson = await Shell
+    public func cannotLoadService(_ name: String) async -> Bool {
+        let nginxJson = await shell
             .pipe("sudo \(Paths.brew) services info \(name) --json")
             .out
 

@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class BytePhpPreference: PhpPreference {
     enum UnitOption: String, CaseIterable {
         case kilobyte = "K"
@@ -35,8 +37,8 @@ class BytePhpPreference: PhpPreference {
         didSet { updatedFieldValue() }
     }
 
-    override init(key: String) {
-        let value = Command.execute(
+    init(container: Container = App.shared.container, key: String) {
+        let value = container.command.execute(
             path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
             trimNewlines: false
         )
@@ -47,6 +49,7 @@ class BytePhpPreference: PhpPreference {
             self.value = value
         }
         super.init(key: key)
+        self.container = container
     }
 
     // MARK: Save Value

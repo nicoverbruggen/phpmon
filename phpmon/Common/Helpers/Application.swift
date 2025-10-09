@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import ContainerMacro
 
 /// An application that is capable of opening a particular directory (usually of a PHP project).
 /// In most cases this is going to be a code editor, but it could also be another application
 /// that supports opening those directories, like a visual Git client or a terminal app.
+@ContainerAccess
 class Application {
 
     enum AppType {
@@ -34,19 +36,19 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        Task { await Shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
+        Task { await shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
     }
 
     /** Checks if the app is installed. */
     func isInstalled() async -> Bool {
 
-        let (process, output) = try! await Shell.attach(
+        let (process, output) = try! await shell.attach(
             "/usr/bin/open -Ra \"\(name)\"",
             didReceiveOutput: { _, _ in },
             withTimeout: 2.0
         )
 
-        if Shell is TestableShell {
+        if shell is TestableShell {
             // When testing, check the error output (must not be empty)
             return !output.hasError
         } else {

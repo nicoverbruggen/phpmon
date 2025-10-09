@@ -26,9 +26,9 @@ struct CaskFile {
 
     private static func loadFromApi(_ url: URL) async -> String {
         if App.hasLoadedTestableConfiguration || url.absoluteString.contains("https://raw.githubusercontent.com") {
-            return await Shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
+            return await App.shared.container.shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
         } else {
-            return await Shell.pipe("""
+            return await App.shared.container.shell.pipe("""
                 curl -s --max-time 10 \
                 -H "User-Agent: phpmon-curl/1.0" \
                 -H "X-phpmon-version: \(App.shortVersion) (\(App.bundleVersion))" \

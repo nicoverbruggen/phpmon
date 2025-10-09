@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class Brew {
     static let shared = Brew()
 
@@ -19,7 +21,7 @@ class Brew {
 
     /// Determine which version of Homebrew is installed.
     public func determineVersion() async {
-        let output = await Shell.pipe("\(Paths.brew) --version")
+        let output = await shell.pipe("\(Paths.brew) --version")
         self.version = try? VersionNumber.parse(output.out)
 
         if let version = version {

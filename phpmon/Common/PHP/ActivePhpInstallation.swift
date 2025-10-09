@@ -41,7 +41,7 @@ class ActivePhpInstallation {
     // MARK: - Initializer
 
     public static func load() -> ActivePhpInstallation? {
-        if !FileSystem.fileExists(Paths.phpConfig) {
+        if !App.shared.container.filesystem.fileExists(Paths.phpConfig) {
             return nil
         }
 
@@ -92,7 +92,7 @@ class ActivePhpInstallation {
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
     private func determineVersion() throws {
-        let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
+        let output = command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
@@ -115,7 +115,7 @@ class ActivePhpInstallation {
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
     private func getByteCount(key: String) -> String {
-        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
+        let value = command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
 
         // Check if the value is unlimited
         if value == "-1" {

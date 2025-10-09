@@ -96,9 +96,9 @@ class ValetSite: ValetListable {
         self.init(name: name, tld: tld, absolutePath: absolutePath)
     }
 
-    convenience init(aliasPath: String, tld: String) {
+    convenience init(filesystem: FileSystemProtocol, aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! FileSystem.getDestinationOfSymlink(aliasPath)
+        let absolutePath = try! filesystem.getDestinationOfSymlink(aliasPath)
         self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 
@@ -106,7 +106,7 @@ class ValetSite: ValetListable {
      Determine whether a site is isolated.
      */
     public func determineIsolated() {
-        if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+        if let version = ValetSite.isolatedVersion(container, "~/.config/valet/Nginx/\(self.name).\(self.tld)") {
             if !PhpEnvironments.shared.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
@@ -123,7 +123,7 @@ class ValetSite: ValetListable {
      - Note: The file is not validated, only its presence is checked.
      */
     public func determineSecured() {
-        secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        secured = filesystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
     }
 
     /**
@@ -185,7 +185,7 @@ class ValetSite: ValetListable {
         let path = "\(absolutePath)/composer.json"
 
         do {
-            if FileSystem.fileExists(path) {
+            if filesystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
                     from: String(
@@ -216,7 +216,7 @@ class ValetSite: ValetListable {
         for (suffix, source) in files {
             do {
                 let path = "\(absolutePath)/\(suffix)"
-                if FileSystem.fileExists(path) {
+                if filesystem.fileExists(path) {
                     return try self.handleValetFile(path, source)
                 }
             } catch {
@@ -274,8 +274,11 @@ class ValetSite: ValetListable {
 
     // MARK: - File Parsing
 
-    public static func isolatedVersion(_ filePath: String) -> String? {
-        if FileSystem.fileExists(filePath) {
+    public static func isolatedVersion(
+        _ container: Container = App.shared.container,
+        _ filePath: String
+    ) -> String? {
+        if container.filesystem.fileExists(filePath) {
             return NginxConfigurationFile
                 .from(filePath: filePath)?
                 .isolatedVersion ?? nil

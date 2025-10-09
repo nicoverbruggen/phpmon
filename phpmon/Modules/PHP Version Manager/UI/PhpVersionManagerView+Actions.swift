@@ -22,7 +22,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await command.execute { progress in
+            try await command.execute(shell: App.shared.container.shell) { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
                     self.status.description = progress.description
@@ -107,7 +107,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await command.execute { progress in
+            try await command.execute(shell: App.shared.container.shell) { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
                     self.status.description = progress.description

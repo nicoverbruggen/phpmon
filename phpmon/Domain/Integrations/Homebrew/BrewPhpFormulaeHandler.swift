@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ContainerMacro
 
 protocol HandlesBrewPhpFormulae {
     func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula]
@@ -23,6 +24,7 @@ extension HandlesBrewPhpFormulae {
     }
 }
 
+@ContainerAccess
 class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         var outdated: [OutdatedFormula]?
@@ -33,7 +35,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             \(Paths.brew) outdated --json --formulae
             """
 
-            let rawJsonText = await Shell.pipe(command).out
+            let rawJsonText = await shell.pipe(command).out
                 .data(using: .utf8)!
             outdated = try? JSONDecoder().decode(
                 OutdatedFormulae.self,

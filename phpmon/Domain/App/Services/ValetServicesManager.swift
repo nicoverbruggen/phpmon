@@ -9,7 +9,9 @@
 import Foundation
 import Cocoa
 import NVAlert
+import ContainerMacro
 
+@ContainerAccess
 class ValetServicesManager: ServicesManager {
     override init() {
         super.init()
@@ -46,7 +48,7 @@ class ValetServicesManager: ServicesManager {
                     .filter { $0.elevated }
                     .map { $0.name }
 
-                let rootJson = await Shell
+                let rootJson = await App.shared.container.shell
                     .pipe("sudo \(Paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 
@@ -61,7 +63,7 @@ class ValetServicesManager: ServicesManager {
                     .filter { !$0.elevated }
                     .map { $0.name }
 
-                let normalJson = await Shell
+                let normalJson = await App.shared.container.shell
                     .pipe("\(Paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 

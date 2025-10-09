@@ -75,7 +75,7 @@ class AppUpdater {
                     .localized(latestVersionOnline.humanReadable),
                 subtitle: "updater.alerts.newer_version_available.subtitle"
                     .localized,
-                description: BrewDiagnostics.customCaskInstalled
+                description: BrewDiagnostics.shared.customCaskInstalled
                 ? "updater.installation_source.brew".localized(command)
                 : "updater.installation_source.direct".localized
             )
@@ -152,7 +152,7 @@ class AppUpdater {
 
         system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
 
-        try! FileSystem.writeAtomicallyToFile(
+        try! App.shared.container.filesystem.writeAtomicallyToFile(
             "\(updaterDirectory)/update.json",
             content: "{ \"url\": \"\(caskFile.url)\", \"sha256\": \"\(caskFile.sha256)\" }"
         )
@@ -168,10 +168,10 @@ class AppUpdater {
     private func cleanupCaskroom() {
         let path = Paths.caskroomPath
 
-        if FileSystem.directoryExists(path) {
+        if App.shared.container.filesystem.directoryExists(path) {
             Log.info("Removing the Caskroom directory for PHP Monitor...")
             do {
-                try FileSystem.remove(path)
+                try App.shared.container.filesystem.remove(path)
                 Log.info("Removed the Caskroom directory at `\(path)`.")
             } catch {
                 Log.err("Automatically removing the Caskroom directory at `\(path)` failed.")
@@ -183,7 +183,7 @@ class AppUpdater {
 
     public static func checkIfUpdateWasPerformed() {
         // Cleanup the upgrade.success file
-        if FileSystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
+        if App.shared.container.filesystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
                 if App.identifier.contains(".phpmon.eap") {
                     LocalNotification.send(
@@ -201,13 +201,13 @@ class AppUpdater {
             }
 
             Log.info("The `upgrade.success` file was found! An update was installed. Cleaning up...")
-            try? FileSystem.remove("~/.config/phpmon/updater/upgrade.success")
+            try? App.shared.container.filesystem.remove("~/.config/phpmon/updater/upgrade.success")
         }
 
         // Cleanup the previous updater
-        if FileSystem.anyExists("~/.config/phpmon/updater/PHP Monitor Self-Updater.app") {
+        if App.shared.container.filesystem.anyExists("~/.config/phpmon/updater/PHP Monitor Self-Updater.app") {
             Log.info("A remnant of the self-updater must still be removed...")
-            try? FileSystem.remove("~/.config/phpmon/updater/PHP Monitor Self-Updater.app")
+            try? App.shared.container.filesystem.remove("~/.config/phpmon/updater/PHP Monitor Self-Updater.app")
         }
     }
 }

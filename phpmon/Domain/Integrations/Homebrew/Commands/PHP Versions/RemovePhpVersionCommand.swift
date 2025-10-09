@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 class RemovePhpVersionCommand: BrewCommand {
     let formula: String
     let version: String
@@ -25,7 +27,7 @@ class RemovePhpVersionCommand: BrewCommand {
         return "phpman.steps.removing".localized("PHP \(version)...")
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
@@ -47,7 +49,7 @@ class RemovePhpVersionCommand: BrewCommand {
 
         var loggedMessages: [String] = []
 
-        let (process, _) = try! await Shell.attach(
+        let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {

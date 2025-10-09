@@ -104,7 +104,7 @@ struct BrewPhpFormula: Equatable {
             return false
         }
 
-        return FileSystem.fileExists(
+        return App.shared.container.filesystem.fileExists(
             "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
                 .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
         )
