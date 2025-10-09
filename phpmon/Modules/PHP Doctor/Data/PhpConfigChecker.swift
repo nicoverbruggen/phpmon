@@ -35,7 +35,7 @@ class PhpConfigChecker {
                 }
 
                 // Do the check
-                let fullFilePath = Paths.etcPath.appending("/php/\(version)/\(file.path)")
+                let fullFilePath = App.shared.container.paths.etcPath.appending("/php/\(version)/\(file.path)")
                 if !App.shared.container.filesystem.fileExists(fullFilePath) {
                     missing.append(fullFilePath)
                 }

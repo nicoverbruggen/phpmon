@@ -101,15 +101,15 @@ class Startup {
             // The Homebrew binary must exist.
             // =================================================================================
             EnvironmentCheck(
-                command: { return !App.shared.container.filesystem.fileExists(Paths.brew) },
-                name: "`\(Paths.brew)` exists",
+                command: { return !App.shared.container.filesystem.fileExists(App.shared.container.paths.brew) },
+                name: "`\(App.shared.container.paths.brew)` exists",
                 titleText: "alert.homebrew_missing.title".localized,
                 subtitleText: "alert.homebrew_missing.subtitle".localized,
                 descriptionText: "alert.homebrew_missing.info".localized(
                     App.architecture
                         .replacingOccurrences(of: "x86_64", with: "Intel")
                         .replacingOccurrences(of: "arm64", with: "Apple Silicon"),
-                    Paths.brew
+                    App.shared.container.paths.brew
                 ),
                 buttonText: "alert.homebrew_missing.quit".localized,
                 requiresAppRestart: true
@@ -119,12 +119,12 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    return await !App.shared.container.shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php")
+                    return await !App.shared.container.shell.pipe("ls \(App.shared.container.paths.optPath) | grep php").out.contains("php")
                 },
-                name: "`ls \(Paths.optPath) | grep php` returned php result",
+                name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
                 subtitleText: "startup.errors.php_opt.subtitle".localized(
-                    Paths.optPath
+                    App.shared.container.paths.optPath
                 ),
                 descriptionText: "startup.errors.php_opt.desc".localized
             )
@@ -134,24 +134,24 @@ class Startup {
             // The PHP binary must exist.
             // =================================================================================
             EnvironmentCheck(
-                command: { return !App.shared.container.filesystem.fileExists(Paths.php) },
-                name: "`\(Paths.php)` exists",
+                command: { return !App.shared.container.filesystem.fileExists(App.shared.container.paths.php) },
+                name: "`\(App.shared.container.paths.php)` exists",
                 titleText: "startup.errors.php_binary.title".localized,
                 subtitleText: "startup.errors.php_binary.subtitle".localized,
-                descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
+                descriptionText: "startup.errors.php_binary.desc".localized(App.shared.container.paths.php)
             ),
             // =================================================================================
             // Ensure that the main PHP installation is not broken.
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    return await App.shared.container.shell.pipe("\(Paths.binPath)/php -v").err
+                    return await App.shared.container.shell.pipe("\(App.shared.container.paths.binPath)/php -v").err
                         .contains("Library not loaded")
                 },
                 name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
                 subtitleText: "startup.errors.dyld_library.subtitle".localized(
-                    Paths.optPath
+                    App.shared.container.paths.optPath
                 ),
                 descriptionText: "startup.errors.dyld_library.desc".localized
             ),
@@ -160,14 +160,14 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    return !(App.shared.container.filesystem.fileExists(Paths.valet)
+                    return !(App.shared.container.filesystem.fileExists(App.shared.container.paths.valet)
                              || App.shared.container.filesystem.fileExists("~/.composer/vendor/bin/valet"))
                 },
                 name: "`valet` binary exists",
                 titleText: "startup.errors.valet_executable.title".localized,
                 subtitleText: "startup.errors.valet_executable.subtitle".localized,
                 descriptionText: "startup.errors.valet_executable.desc".localized(
-                    Paths.valet
+                    App.shared.container.paths.valet
                 )
             ),
             // =================================================================================
@@ -176,14 +176,14 @@ class Startup {
             // functioning correctly. Let the user know that they need to run `valet trust`.
             // =================================================================================
             EnvironmentCheck(
-                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(Paths.brew) },
+                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(App.shared.container.paths.brew) },
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
                 subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
                 descriptionText: "startup.errors.sudoers_brew.desc".localized
             ),
             EnvironmentCheck(
-                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(Paths.valet) },
+                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(App.shared.container.paths.valet) },
                 name: "`/private/etc/sudoers.d/valet` contains valet",
                 titleText: "startup.errors.sudoers_valet.title".localized,
                 subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
@@ -207,7 +207,7 @@ class Startup {
             EnvironmentCheck(
                 command: {
                     // Detect additional binaries (e.g. Composer)
-                    Paths.shared.detectBinaryPaths()
+                    App.shared.container.paths.detectBinaryPaths()
                     // Load the configuration file (config.json)
                     Valet.shared.loadConfiguration()
                     // This check fails when the config is nil
@@ -226,7 +226,7 @@ class Startup {
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     return await BrewDiagnostics.shared.cannotLoadService("dnsmasq")
                 },
-                name: "`sudo \(Paths.brew) services info` JSON loaded",
+                name: "`sudo \(App.shared.container.paths.brew) services info` JSON loaded",
                 titleText: "startup.errors.services_json_error.title".localized,
                 subtitleText: "startup.errors.services_json_error.subtitle".localized,
                 descriptionText: "startup.errors.services_json_error.desc".localized

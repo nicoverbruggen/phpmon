@@ -68,7 +68,7 @@ class Valet {
     }
 
     lazy var installed: Bool = {
-        return filesystem.fileExists(Paths.binPath.appending("/valet"))
+        return filesystem.fileExists(container.paths.binPath.appending("/valet"))
             && filesystem.anyExists("~/.config/valet")
     }()
 
@@ -250,13 +250,13 @@ class Valet {
 
         if version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
-            let fileName = "\(Paths.etcPath)/php/5.6/php-fpm.conf"
+            let fileName = "\(container.paths.etcPath)/php/5.6/php-fpm.conf"
             return await shell.pipe("cat \(fileName)").out
                 .contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return filesystem.fileExists("\(Paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
+        return filesystem.fileExists("\(container.paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     /**

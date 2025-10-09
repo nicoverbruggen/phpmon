@@ -48,7 +48,7 @@ class ValetServicesManager: ServicesManager {
                     .map { $0.name }
 
                 let rootJson = await App.shared.container.shell
-                    .pipe("sudo \(Paths.brew) services info --all --json")
+                    .pipe("sudo \(App.shared.container.paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 
                 return try! JSONDecoder()
@@ -63,7 +63,7 @@ class ValetServicesManager: ServicesManager {
                     .map { $0.name }
 
                 let normalJson = await App.shared.container.shell
-                    .pipe("\(Paths.brew) services info --all --json")
+                    .pipe("\(App.shared.container.paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 
                 return try! JSONDecoder()

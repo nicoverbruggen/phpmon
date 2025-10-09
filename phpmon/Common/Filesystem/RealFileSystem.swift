@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     var replacingTildeWithHomeDirectory: String {
-        return self.replacingOccurrences(of: "~", with: Paths.homePath)
+        return self.replacingOccurrences(of: "~", with: App.shared.container.paths.homePath)
     }
 }
 

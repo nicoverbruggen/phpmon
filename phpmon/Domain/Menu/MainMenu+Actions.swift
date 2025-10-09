@@ -15,7 +15,7 @@ extension MainMenu {
 
     @MainActor @objc func linkPhpBinary() {
         Task {
-            await Actions.linkPhp()
+            await Actions().linkPhp()
         }
     }
 
@@ -46,7 +46,7 @@ extension MainMenu {
         }
 
         asyncExecution {
-            try Actions.fixHomebrewPermissions()
+            try Actions().fixHomebrewPermissions()
         } success: {
             NVAlert()
                 .withInformation(
@@ -63,27 +63,27 @@ extension MainMenu {
 
     @objc func restartPhpFpm() {
         Task { // Simple restart service
-            await Actions.restartPhpFpm()
+            await Actions().restartPhpFpm()
         }
     }
 
     @objc func restartNginx() {
         Task { // Simple restart service
-            await Actions.restartNginx()
+            await Actions().restartNginx()
         }
     }
 
     @objc func restartDnsMasq() {
         Task { // Simple restart service
-            await Actions.restartDnsMasq()
+            await Actions().restartDnsMasq()
         }
     }
 
     @MainActor @objc func restartValetServices() {
         Task { // Restart services and show notification
-            await Actions.restartDnsMasq()
-            await Actions.restartPhpFpm()
-            await Actions.restartNginx()
+            await Actions().restartDnsMasq()
+            await Actions().restartPhpFpm()
+            await Actions().restartNginx()
 
             LocalNotification.send(
                 title: "notification.services_restarted".localized,
@@ -95,7 +95,7 @@ extension MainMenu {
 
     @MainActor @objc func stopValetServices() {
         Task { // Stop services and show notification
-            await Actions.stopValetServices()
+            await Actions().stopValetServices()
 
             LocalNotification.send(
                 title: "notification.services_stopped".localized,
@@ -158,7 +158,7 @@ extension MainMenu {
             await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
-                await Actions.restartPhpFpm()
+                await Actions().restartPhpFpm()
             }
         }
     }
@@ -233,23 +233,23 @@ extension MainMenu {
         }
 
         if install.hasErrorState {
-            Actions.openGenericPhpConfigFolder()
+            Actions().openGenericPhpConfigFolder()
             return
         }
 
-        Actions.openPhpConfigFolder(version: install.version.short)
+        Actions().openPhpConfigFolder(version: install.version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {
-        Actions.openPhpMonitorConfigFile()
+        Actions().openPhpMonitorConfigFile()
     }
 
     @objc func openGlobalComposerFolder() {
-        Actions.openGlobalComposerFolder()
+        Actions().openGlobalComposerFolder()
     }
 
     @objc func openValetConfigFolder() {
-        Actions.openValetConfigFolder()
+        Actions().openValetConfigFolder()
     }
 
     @objc func switchToPhpVersion(sender: PhpMenuItem) {

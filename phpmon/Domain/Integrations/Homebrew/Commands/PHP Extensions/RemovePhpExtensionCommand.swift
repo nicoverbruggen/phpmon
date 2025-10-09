@@ -41,7 +41,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
-            \(Paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
+            \(container.paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
         var loggedMessages: [String] = []
@@ -66,7 +66,7 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             await PhpEnvironments.detectPhpVersions()
 
-            await Actions.restartPhpFpm(version: phpExtension.phpVersion)
+            await Actions().restartPhpFpm(version: phpExtension.phpVersion)
 
             await MainMenu.shared.refreshActiveInstallation()
 

@@ -39,7 +39,7 @@ class RemovePhpVersionCommand: BrewCommand {
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) remove \(formula) --force --ignore-dependencies
+            \(container.paths.brew) remove \(formula) --force --ignore-dependencies
             """
 
         do {

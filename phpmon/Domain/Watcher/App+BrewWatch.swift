@@ -12,7 +12,7 @@ extension App {
 
     public func prepareHomebrewWatchers() {
         let notifier = FSNotifier(
-            for: URL(fileURLWithPath: Paths.binPath),
+            for: URL(fileURLWithPath: container.paths.binPath),
             eventMask: .all,
             onChange: { Task { await self.onHomebrewPhpModification() } }
         )

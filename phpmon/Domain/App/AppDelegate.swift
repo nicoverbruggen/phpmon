@@ -24,12 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let state: App
 
     /**
-     The paths singleton that determines where Homebrew is installed,
-     and where to look for binaries.
-     */
-    let paths: Paths
-
-    /**
      The Valet singleton that determines all information
      about Valet and its current configuration.
      */
@@ -93,7 +87,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.separator(as: .info)
         }
 
-        self.paths = Paths.shared
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()

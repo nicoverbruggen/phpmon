@@ -15,6 +15,7 @@ public struct ContainerAccessMacro: MemberMacro {
             ("shell", "ShellProtocol"),
             ("filesystem", "FileSystemProtocol"),
             ("command", "CommandProtocol"),
+            ("paths", "Paths"),
             ("favorites", "Favorites"),
             ("warningManager", "WarningManager")
         ]

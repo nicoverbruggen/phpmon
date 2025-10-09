@@ -59,7 +59,7 @@ struct BrewPhpExtension: Hashable, Comparable {
     }
 
     static func hasInstallationReceipt(for formulaName: String) -> Bool {
-        return App.shared.container.filesystem.fileExists("\(Paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
+        return App.shared.container.filesystem.fileExists("\(App.shared.container.paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
     }
 
     static func < (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {

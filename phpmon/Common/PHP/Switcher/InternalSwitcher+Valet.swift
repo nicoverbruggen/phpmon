@@ -30,12 +30,12 @@ extension InternalSwitcher {
     // MARK: - Corrections
 
     public func disableDefaultPhpFpmPool(_ version: String) async -> FixApplied {
-        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+        let pool = "\(App.shared.container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
 
         if App.shared.container.filesystem.fileExists(pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
-            let existing = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-            let new = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
+            let existing = "\(App.shared.container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+            let new = "\(App.shared.container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
             do {
                 if App.shared.container.filesystem.fileExists(new) {
                     Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
@@ -59,7 +59,7 @@ extension InternalSwitcher {
 
         // For each of the files, attempt to fix anything that is wrong
         let outcomes = files.map { file in
-            let configFileExists = App.shared.container.filesystem.fileExists("\(Paths.etcPath)/php/\(version)/" + file.destination)
+            let configFileExists = App.shared.container.filesystem.fileExists("\(App.shared.container.paths.etcPath)/php/\(version)/" + file.destination)
 
             if configFileExists {
                 return false
@@ -79,7 +79,7 @@ extension InternalSwitcher {
                 }
 
                 try App.shared.container.filesystem.writeAtomicallyToFile(
-                    "\(Paths.etcPath)/php/\(version)" + file.destination,
+                    "\(App.shared.container.paths.etcPath)/php/\(version)" + file.destination,
                     content: contents
                 )
             } catch {
@@ -102,7 +102,7 @@ extension InternalSwitcher {
                 destination: "/php-fpm.d/valet-fpm.conf",
                 source: "/cli/stubs/etc-phpfpm-valet.conf",
                 replacements: [
-                    "VALET_USER": Paths.whoami,
+                    "VALET_USER": App.shared.container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
                     "valet.sock": "valet\(version.replacingOccurrences(of: ".", with: "")).sock"
                 ],
@@ -112,7 +112,7 @@ extension InternalSwitcher {
                 destination: "/conf.d/error_log.ini",
                 source: "/cli/stubs/etc-phpfpm-error_log.ini",
                 replacements: [
-                    "VALET_USER": Paths.whoami,
+                    "VALET_USER": App.shared.container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory
                 ],
                 applies: { return true }

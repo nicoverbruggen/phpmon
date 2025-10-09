@@ -43,8 +43,8 @@ class PhpInstallation {
     init(container: Container = App.shared.container, _ version: String) {
         self.container = container
 
-        let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config",
-            phpExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php"
+        let phpConfigExecutablePath = "\(container.paths.optPath)/php@\(version)/bin/php-config",
+            phpExecutablePath = "\(container.paths.optPath)/php@\(version)/bin/php"
 
         versionNumber = VersionNumber.make(from: version)!
 

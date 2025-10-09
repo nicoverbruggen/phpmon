@@ -23,7 +23,7 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    return !App.shared.container.shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
+                    return !App.shared.container.shell.PATH.contains("\(App.shared.container.paths.homePath)/.config/phpmon/bin") &&
                         !App.shared.container.filesystem.isWriteableFile("/usr/local/bin/")
                 },
                 name: "Helpers cannot be symlinked and not in PATH",
@@ -34,7 +34,7 @@ extension WarningManager {
                     "warnings.helper_permissions.symlink"
                 ] },
                 url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
-                fix: Paths.shell == "/bin/zsh" ? {
+                fix: App.shared.container.paths.shell == "/bin/zsh" ? {
                     // Add to PATH
                     await ZshRunCommand().addPhpMonitorPath()
                     // Finally, perform environment checks again

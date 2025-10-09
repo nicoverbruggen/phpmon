@@ -38,7 +38,7 @@ class BytePhpPreference: PhpPreference {
 
     override init(container: Container = App.shared.container, key: String) {
         let value = container.command.execute(
-            path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
+            path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
             trimNewlines: false
         )
 

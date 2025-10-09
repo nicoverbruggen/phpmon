@@ -79,7 +79,7 @@ struct Preset: Codable, Equatable {
         if self.version != nil {
             if await !switchToPhpVersionIfValid() {
                 PresetHelper.rollbackPreset = nil
-                await Actions.restartPhpFpm()
+                await Actions().restartPhpFpm()
                 return
             }
         }
@@ -107,7 +107,7 @@ struct Preset: Codable, Equatable {
         PresetHelper.loadRollbackPresetFromFile()
 
         // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-        await Actions.restartPhpFpm()
+        await Actions().restartPhpFpm()
 
         Task { @MainActor in
             // Show the correct notification
@@ -276,7 +276,7 @@ struct Preset: Codable, Equatable {
 
         try! String(data: data, encoding: .utf8)!
             .write(
-                toFile: "\(Paths.homePath)/.config/phpmon/preset_revert.json",
+                toFile: "\(App.shared.container.paths.homePath)/.config/phpmon/preset_revert.json",
                 atomically: true,
                 encoding: .utf8
             )

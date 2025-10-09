@@ -39,7 +39,7 @@ extension App {
             return
         }
 
-        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(install.version.short)")
+        let url = URL(fileURLWithPath: "\(container.paths.etcPath)/php/\(install.version.short)")
 
         // Check whether the manager exists and schedule on the main thread
         // if we don't consistently do this, the app will create duplicate watchers

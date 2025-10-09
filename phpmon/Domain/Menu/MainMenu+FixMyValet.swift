@@ -33,7 +33,7 @@ extension MainMenu {
         }
 
         Task { @MainActor in
-            await Actions.fixMyValet()
+            await Actions().fixMyValet()
 
             if previousVersion == PhpEnvironments.brewPhpAlias || previousVersion == nil {
                 self.presentAlertForSameVersion()

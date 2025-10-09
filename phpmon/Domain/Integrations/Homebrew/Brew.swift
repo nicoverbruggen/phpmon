@@ -21,7 +21,7 @@ class Brew {
 
     /// Determine which version of Homebrew is installed.
     public func determineVersion() async {
-        let output = await shell.pipe("\(Paths.brew) --version")
+        let output = await shell.pipe("\(container.paths.brew) --version")
         self.version = try? VersionNumber.parse(output.out)
 
         if let version = version {

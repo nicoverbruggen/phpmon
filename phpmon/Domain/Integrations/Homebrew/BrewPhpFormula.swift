@@ -77,7 +77,7 @@ struct BrewPhpFormula: Equatable {
             .replacingOccurrences(of: "shivammathur/php/", with: "")
             .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
 
-        return "\(Paths.optPath)/\(resolved)/bin"
+        return "\(App.shared.container.paths.optPath)/\(resolved)/bin"
     }
 
     /// The short version associated with this formula, if installed.
@@ -105,7 +105,7 @@ struct BrewPhpFormula: Equatable {
         }
 
         return App.shared.container.filesystem.fileExists(
-            "\(Paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+            "\(App.shared.container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
                 .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
         )
     }

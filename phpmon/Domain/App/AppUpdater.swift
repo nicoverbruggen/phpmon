@@ -166,7 +166,7 @@ class AppUpdater {
     }
 
     private func cleanupCaskroom() {
-        let path = Paths.caskroomPath
+        let path = App.shared.container.paths.caskroomPath
 
         if App.shared.container.filesystem.directoryExists(path) {
             Log.info("Removing the Caskroom directory for PHP Monitor...")

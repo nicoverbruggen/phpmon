@@ -31,8 +31,11 @@ class PhpConfigurationFile: CreatedFromFile {
     var lines: [String]
 
     /** Resolves a PHP configuration file (.ini) */
-    static func from(filePath: String) -> Self? {
-        let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
+    static func from(
+        filePath: String,
+        container: Container = App.shared.container
+    ) -> Self? {
+        let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
 
         do {
             let fileContents = try App.shared.container.filesystem.getStringFromFile(path)

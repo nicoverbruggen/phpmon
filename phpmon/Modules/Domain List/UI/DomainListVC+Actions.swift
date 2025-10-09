@@ -142,7 +142,7 @@ extension DomainListVC {
             await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
-                await Actions.restartPhpFpm()
+                await Actions().restartPhpFpm()
             }
 
             reloadContextMenu()

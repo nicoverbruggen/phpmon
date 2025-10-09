@@ -98,8 +98,8 @@ class ModifyPhpVersionCommand: BrewCommand {
         let command = """
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) upgrade php;
-            \(Paths.brew) install php@\(short);
+            \(container.paths.brew) upgrade php;
+            \(container.paths.brew) install php@\(short);
             """
 
         // Run the upgrade command
@@ -116,7 +116,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
+            \(container.paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
 
         try await run(shell: shell, command, onProgress)
@@ -131,7 +131,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
+            \(container.paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
             """
 
         try await run(shell: shell, command, onProgress)
@@ -163,7 +163,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true; \
-            \(Paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
+            \(container.paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
 
         try await run(shell: shell, command, onProgress)

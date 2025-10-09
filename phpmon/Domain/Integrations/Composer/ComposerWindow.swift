@@ -22,9 +22,9 @@ import ContainerMacro
         self.shouldNotify = notify
         self.completion = completion
 
-        Paths.shared.detectBinaryPaths()
+        container.paths.detectBinaryPaths()
 
-        if Paths.composer == nil {
+        if container.paths.composer == nil {
             self.presentMissingAlert()
             return
         }
@@ -52,7 +52,7 @@ import ContainerMacro
     }
 
     private func runComposerUpdateShellCommand() async throws {
-        let command = "\(Paths.composer!) global update"
+        let command = "\(container.paths.composer!) global update"
 
         self.window?.addToConsole("\(command)\n")
 

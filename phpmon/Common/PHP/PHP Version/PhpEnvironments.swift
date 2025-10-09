@@ -32,7 +32,7 @@ class PhpEnvironments {
      Determine which PHP version the `php` formula is aliased to.
      */
     @MainActor func determinePhpAlias() async {
-        let brewPhpAlias = await container.shell.pipe("\(Paths.brew) info php --json").out
+        let brewPhpAlias = await container.shell.pipe("\(container.paths.brew) info php --json").out
 
         self.homebrewPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
@@ -43,7 +43,7 @@ class PhpEnvironments {
         Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
 
         // Check if that version actually corresponds to an older version
-        let phpConfigExecutablePath = "\(Paths.optPath)/php/bin/php-config"
+        let phpConfigExecutablePath = "\(container.paths.optPath)/php/bin/php-config"
         if container.filesystem.fileExists(phpConfigExecutablePath) {
             let longVersionString = container.command.execute(
                 path: phpConfigExecutablePath,
@@ -164,7 +164,7 @@ class PhpEnvironments {
      Returns a `Set<String>` of installations that are considered valid.
      */
     public func detectPhpVersions() async -> Set<String> {
-        let files = await container.shell.pipe("ls \(Paths.optPath) | grep php@").out
+        let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
 
         let versions = await extractPhpVersions(from: files.components(separatedBy: "\n"))
 
@@ -184,7 +184,7 @@ class PhpEnvironments {
         let phpAlias = homebrewPackage.version
 
         // Avoid inserting a duplicate
-        if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(Paths.optPath)/php/bin/php") {
+        if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
             let phpAliasInstall = PhpInstallation(phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
@@ -237,7 +237,7 @@ class PhpEnvironments {
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
                 && supported.contains(version)
-                && (checkBinaries ? container.filesystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true) {
+                && (checkBinaries ? container.filesystem.fileExists("\(container.paths.optPath)/php@\(version)/bin/php") : true) {
                 output.insert(version)
             }
         }

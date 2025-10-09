@@ -59,7 +59,7 @@ class RealShell: ShellProtocol {
         var completeCommand = ""
 
         // Basic export (PATH)
-        completeCommand += "export PATH=\(Paths.binPath):$PATH && "
+        completeCommand += "export PATH=\(container.paths.binPath):$PATH && "
 
         // Put additional exports (as defined by the user) in between
         if !self.exports.isEmpty {

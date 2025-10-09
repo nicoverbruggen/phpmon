@@ -56,7 +56,7 @@ class InstallPhpExtensionCommand: BrewCommand {
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
-            \(Paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
+            \(container.paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
             """
 
         try await run(shell: shell, command, onProgress)
@@ -68,7 +68,7 @@ class InstallPhpExtensionCommand: BrewCommand {
 
         // Restart PHP-FPM
         if let installed = self.installing.first {
-            await Actions.restartPhpFpm(version: installed.phpVersion)
+            await Actions().restartPhpFpm(version: installed.phpVersion)
         }
 
         // Check which version of PHP are now installed

@@ -25,7 +25,7 @@ class ValetInteractor {
     // MARK: - Managing Domains
 
     public func link(path: String, domain: String) async throws {
-        await shell.quiet("cd '\(path)' && \(Paths.valet) link '\(domain)' && valet links")
+        await shell.quiet("cd '\(path)' && \(container.paths.valet) link '\(domain)' && valet links")
     }
 
     public func unlink(site: ValetSite) async throws {
@@ -34,11 +34,11 @@ class ValetInteractor {
 
     public func proxy(domain: String, proxy: String, secure: Bool) async throws {
         let command = secure
-            ? "\(Paths.valet) proxy \(domain) \(proxy) --secure"
-            : "\(Paths.valet) proxy \(domain) \(proxy)"
+            ? "\(container.paths.valet) proxy \(domain) \(proxy) --secure"
+            : "\(container.paths.valet) proxy \(domain) \(proxy)"
 
         await shell.quiet(command)
-        await Actions.restartNginx()
+        await Actions().restartNginx()
     }
 
     public func remove(proxy: ValetProxy) async throws {
@@ -56,11 +56,11 @@ class ValetInteractor {
 
         // Use modernized version of command using domain name
         // This will allow us to secure multiple domains that use the same path
-        var command = "sudo \(Paths.valet) \(action) '\(site.name)' && exit;"
+        var command = "sudo \(container.paths.valet) \(action) '\(site.name)' && exit;"
 
         // For Valet 2, use the old syntax; this has a known issue so Valet 3+ is preferred
         if !Valet.enabled(feature: .isolatedSites) {
-            command = "cd '\(site.absolutePath)' && sudo \(Paths.valet) \(action) && exit;"
+            command = "cd '\(site.absolutePath)' && sudo \(container.paths.valet) \(action) && exit;"
         }
 
         // Run the command
@@ -80,11 +80,11 @@ class ValetInteractor {
         // Build the list of commands we will need to run
         let commands: [String] = [
             // Unproxy the given domain
-            "\(Paths.valet) unproxy \(proxy.domain)",
+            "\(container.paths.valet) unproxy \(proxy.domain)",
             // Re-create the proxy (with the inverse secured status)
             originalSecureStatus
-                ? "\(Paths.valet) proxy \(proxy.domain) \(proxy.target)"
-                : "\(Paths.valet) proxy \(proxy.domain) \(proxy.target) --secure"
+                ? "\(container.paths.valet) proxy \(proxy.domain) \(proxy.target)"
+                : "\(container.paths.valet) proxy \(proxy.domain) \(proxy.target) --secure"
         ]
 
         // Run the commands
@@ -101,11 +101,11 @@ class ValetInteractor {
         }
 
         // Restart nginx to load the new configuration
-        await Actions.restartNginx()
+        await Actions().restartNginx()
     }
 
     public func isolate(site: ValetSite, version: String) async throws {
-        let command = "sudo \(Paths.valet) isolate php@\(version) --site '\(site.name)'"
+        let command = "sudo \(container.paths.valet) isolate php@\(version) --site '\(site.name)'"
 
         // Run the command
         await shell.quiet(command)
@@ -121,7 +121,7 @@ class ValetInteractor {
     }
 
     public func unisolate(site: ValetSite) async throws {
-        let command = "sudo \(Paths.valet) unisolate --site '\(site.name)'"
+        let command = "sudo \(container.paths.valet) unisolate --site '\(site.name)'"
 
         // Run the command
         await shell.quiet(command)

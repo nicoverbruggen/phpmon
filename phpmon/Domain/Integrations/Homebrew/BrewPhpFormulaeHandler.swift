@@ -31,8 +31,8 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
 
         if loadOutdated {
             let command = """
-            \(Paths.brew) update >/dev/null && \
-            \(Paths.brew) outdated --json --formulae
+            \(container.paths.brew) update >/dev/null && \
+            \(container.paths.brew) outdated --json --formulae
             """
 
             let rawJsonText = await shell.pipe(command).out

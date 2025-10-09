@@ -13,8 +13,12 @@ import Foundation
 /**
  Runs a `brew` command. Can run as superuser.
  */
-func brew(_ command: String, sudo: Bool = false, shell: ShellProtocol = App.shared.container.shell) async {
-    await shell.quiet("\(sudo ? "sudo " : "")" + "\(Paths.brew) \(command)")
+func brew(
+    _ command: String,
+    sudo: Bool = false,
+    container: Container = App.shared.container,
+) async {
+    await container.shell.quiet("\(sudo ? "sudo " : "")" + "\(container.paths.brew) \(command)")
 }
 
 /**
@@ -25,7 +29,8 @@ func sed(
     original: String,
     replacement: String,
     filesystem: FileSystemProtocol = App.shared.container.filesystem,
-    shell: ShellProtocol = App.shared.container.shell
+    shell: ShellProtocol = App.shared.container.shell,
+    paths: Paths = App.shared.container.paths,
 ) async {
     // Escape slashes (or `sed` won't work)
     let e_original = original.replacingOccurrences(of: "/", with: "\\/")
@@ -33,8 +38,8 @@ func sed(
 
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
-    if filesystem.fileExists("\(Paths.binPath)/gsed") {
-        await shell.quiet("\(Paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
+    if filesystem.fileExists("\(paths.binPath)/gsed") {
+        await shell.quiet("\(paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
         await shell.quiet("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
     }

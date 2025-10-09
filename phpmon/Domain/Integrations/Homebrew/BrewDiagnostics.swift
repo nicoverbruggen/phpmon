@@ -24,7 +24,7 @@ class BrewDiagnostics {
      */
     public func loadInstalledTaps() async {
         installedTaps = await shell
-            .pipe("\(Paths.brew) tap")
+            .pipe("\(container.paths.brew) tap")
             .out
             .split(separator: "\n")
             .map { string in
@@ -52,14 +52,14 @@ class BrewDiagnostics {
      */
     public var customCaskInstalled: Bool {
         return installedTaps.contains("nicoverbruggen/cask")
-            && filesystem.directoryExists(Paths.caskroomPath)
+            && filesystem.directoryExists(container.paths.caskroomPath)
     }
 
     /**
      Determines whether to use the regular `nginx` or `nginx-full` formula.
      */
     public var usesNginxFullFormula: Bool {
-        guard let destination = try? filesystem.getDestinationOfSymlink("\(Paths.binPath)/nginx") else { return false }
+        guard let destination = try? filesystem.getDestinationOfSymlink("\(container.paths.binPath)/nginx") else { return false }
 
         // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
         return destination.contains("/nginx-full/")
@@ -76,7 +76,7 @@ class BrewDiagnostics {
         let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
 
         // Check for incorrect versions
-        if let contents = try? filesystem.getShallowContentsOfDirectory("\(Paths.optPath)")
+        if let contents = try? filesystem.getShallowContentsOfDirectory("\(container.paths.optPath)")
             .filter({
                 let range = NSRange($0.startIndex..., in: $0)
                 return regex.firstMatch(in: $0, options: [], range: range) != nil
@@ -84,19 +84,19 @@ class BrewDiagnostics {
 
             for symlink in contents {
                 let version = symlink.replacingOccurrences(of: "php@", with: "")
-                if let destination = try? filesystem.getDestinationOfSymlink("\(Paths.optPath)/\(symlink)") {
+                if let destination = try? filesystem.getDestinationOfSymlink("\(container.paths.optPath)/\(symlink)") {
                     if !destination.contains("Cellar/php/\(version)")
                         && !destination.contains("Cellar/php@\(version)") {
                         Log.err("Symlink for \(symlink) is incorrect. Removing...")
                         do {
-                            try filesystem.remove("\(Paths.optPath)/\(symlink)")
+                            try filesystem.remove("\(container.paths.optPath)/\(symlink)")
                             Log.info("Incorrect symlink for \(symlink) has been successfully removed.")
                         } catch {
                             Log.err("Symlink for \(symlink) was incorrect but could not be removed!")
                         }
                     }
                 } else {
-                    Log.warn("Could not read symlink at: \(Paths.optPath)/\(symlink)! Symlink check skipped.")
+                    Log.warn("Could not read symlink at: \(container.paths.optPath)/\(symlink)! Symlink check skipped.")
                 }
             }
         }
@@ -219,7 +219,7 @@ class BrewDiagnostics {
      */
     public func cannotLoadService(_ name: String) async -> Bool {
         let nginxJson = await shell
-            .pipe("sudo \(Paths.brew) services info \(name) --json")
+            .pipe("sudo \(container.paths.brew) services info \(name) --json")
             .out
 
         let serviceInfo = try? JSONDecoder().decode(

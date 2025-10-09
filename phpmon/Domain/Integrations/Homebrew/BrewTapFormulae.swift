@@ -10,7 +10,7 @@ import Foundation
 
 class BrewTapFormulae {
     public static func from(tap: String) -> [String: [BrewPhpExtension]] {
-        let directory = "\(Paths.tapPath)/\(tap)/Formula"
+        let directory = "\(App.shared.container.paths.tapPath)/\(tap)/Formula"
 
         let files = try? App.shared.container.filesystem.getShallowContentsOfDirectory(directory)
 
@@ -35,7 +35,7 @@ class BrewTapFormulae {
 
                     // Create a new BrewPhpExtension object (determines if installed)
                     let phpExtension = BrewPhpExtension(
-                        path: "\(Paths.tapPath)/\(tap)/Formula/\(file)",
+                        path: "\(App.shared.container.paths.tapPath)/\(tap)/Formula/\(file)",
                         name: phpExtensionName,
                         phpVersion: phpVersion
                     )
