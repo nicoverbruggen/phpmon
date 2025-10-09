@@ -8,7 +8,9 @@
 
 import Foundation
 import SwiftUI
+import ContainerMacro
 
+@ContainerAccess
 class ServicesManager: ObservableObject {
 
     @ObservedObject static var shared: ServicesManager = ValetServicesManager()
@@ -121,8 +123,10 @@ class ServicesManager: ObservableObject {
         return formulae
     }
 
-    init() {
+    init(container: Container = App.shared.container) {
         Log.info("The services manager will determine which Valet services exist on this system.")
+
+        self.container = container
 
         services = formulae.map {
             Service(formula: $0)

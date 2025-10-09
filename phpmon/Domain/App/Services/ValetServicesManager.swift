@@ -11,10 +11,9 @@ import Cocoa
 import NVAlert
 import ContainerMacro
 
-@ContainerAccess
 class ValetServicesManager: ServicesManager {
-    override init() {
-        super.init()
+    override init(container: Container = App.shared.container) {
+        super.init(container: container)
 
         // Load the initial services state
         Task {

@@ -35,7 +35,7 @@ class PhpConfigurationFile: CreatedFromFile {
         let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
 
         do {
-            let fileContents = try FileSystem.getStringFromFile(path)
+            let fileContents = try App.shared.container.filesystem.getStringFromFile(path)
             return Self.init(path: path, contents: fileContents)
         } catch {
             Log.warn("Could not read the PHP configuration file at: `\(filePath)`")

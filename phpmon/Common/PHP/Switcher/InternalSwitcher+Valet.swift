@@ -32,17 +32,17 @@ extension InternalSwitcher {
     public func disableDefaultPhpFpmPool(_ version: String) async -> FixApplied {
         let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
 
-        if FileSystem.fileExists(pool) {
+        if App.shared.container.filesystem.fileExists(pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
             let existing = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
             let new = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
             do {
-                if FileSystem.fileExists(new) {
+                if App.shared.container.filesystem.fileExists(new) {
                     Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
                              + "cleaning up so the newer `www.conf` can be moved again.")
-                    try FileSystem.remove(new)
+                    try App.shared.container.filesystem.remove(new)
                 }
-                try FileSystem.move(from: existing, to: new)
+                try App.shared.container.filesystem.move(from: existing, to: new)
                 Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
                 return true
             } catch {
@@ -59,7 +59,7 @@ extension InternalSwitcher {
 
         // For each of the files, attempt to fix anything that is wrong
         let outcomes = files.map { file in
-            let configFileExists = FileSystem.fileExists("\(Paths.etcPath)/php/\(version)/" + file.destination)
+            let configFileExists = App.shared.container.filesystem.fileExists("\(Paths.etcPath)/php/\(version)/" + file.destination)
 
             if configFileExists {
                 return false
@@ -72,13 +72,13 @@ extension InternalSwitcher {
             }
 
             do {
-                var contents = try FileSystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
+                var contents = try App.shared.container.filesystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
 
                 for (original, replacement) in file.replacements {
                     contents = contents.replacingOccurrences(of: original, with: replacement)
                 }
 
-                try FileSystem.writeAtomicallyToFile(
+                try App.shared.container.filesystem.writeAtomicallyToFile(
                     "\(Paths.etcPath)/php/\(version)" + file.destination,
                     content: contents
                 )

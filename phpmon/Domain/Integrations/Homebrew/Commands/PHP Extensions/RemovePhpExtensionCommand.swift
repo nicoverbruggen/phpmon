@@ -13,7 +13,9 @@ import ContainerMacro
 class RemovePhpExtensionCommand: BrewCommand {
     public let phpExtension: BrewPhpExtension
 
-    public init(remove formula: BrewPhpExtension) {
+    public init(container: Container = App.shared.container,
+                remove formula: BrewPhpExtension) {
+        self.container = container
         self.phpExtension = formula
     }
 

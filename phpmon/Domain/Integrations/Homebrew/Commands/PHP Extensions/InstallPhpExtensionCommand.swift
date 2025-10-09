@@ -21,7 +21,9 @@ class InstallPhpExtensionCommand: BrewCommand {
         return "phpman.steps.installing".localized(getExtensionNames())
     }
 
-    public init(install extensions: [BrewPhpExtension]) {
+    public init(container: Container = App.shared.container,
+                install extensions: [BrewPhpExtension]) {
+        self.container = container
         self.installing = extensions
     }
 

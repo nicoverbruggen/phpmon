@@ -8,11 +8,14 @@
 
 import Foundation
 import SwiftUI
+import ContainerMacro
 
+@ContainerAccess
 class PhpPreference {
     let key: String
 
-    init(key: String) {
+    init(container: Container = App.shared.container, key: String) {
+        self.container = container
         self.key = key
     }
 

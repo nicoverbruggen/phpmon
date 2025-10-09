@@ -15,7 +15,8 @@ class RemovePhpVersionCommand: BrewCommand {
     let version: String
     let phpGuard: PhpGuard
 
-    init(formula: String) {
+    init(container: Container = App.shared.container, formula: String) {
+        self.container = container
         self.version = formula
             .replacingOccurrences(of: "php@", with: "")
             .replacingOccurrences(of: "shivammathur/php/", with: "")

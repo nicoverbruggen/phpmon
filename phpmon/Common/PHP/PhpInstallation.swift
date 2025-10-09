@@ -40,7 +40,9 @@ class PhpInstallation {
      In order to determine details about a PHP installation,
      we’ll simply run `php-config --version` in the relevant directory.
      */
-    init(_ version: String) {
+    init(container: Container = App.shared.container, _ version: String) {
+        self.container = container
+
         let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config",
             phpExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php"
 

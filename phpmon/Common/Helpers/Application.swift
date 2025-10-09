@@ -26,7 +26,8 @@ class Application {
     let type: AppType
 
     /// Initializer. Used to detect a specific app of a specific type.
-    init(_ name: String, _ type: AppType) {
+    init(container: Container = App.shared.container, _ name: String, _ type: AppType) {
+        self.container = container
         self.name = name
         self.type = type
     }

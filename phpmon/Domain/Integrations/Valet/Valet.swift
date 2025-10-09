@@ -46,7 +46,8 @@ class Valet {
 
     /// When initialising the Valet singleton, assume no sites or proxies loaded.
     /// We will load the version later.
-    init() {
+    init(container: Container = App.shared.container) {
+        self.container = container
         self.version = nil
         self.sites = []
         self.proxies = []

@@ -24,7 +24,7 @@ extension WarningManager {
             Warning(
                 command: {
                     return !App.shared.container.shell.PATH.contains("\(Paths.homePath)/.config/phpmon/bin") &&
-                        !FileSystem.isWriteableFile("/usr/local/bin/")
+                        !App.shared.container.filesystem.isWriteableFile("/usr/local/bin/")
                 },
                 name: "Helpers cannot be symlinked and not in PATH",
                 title: "warnings.helper_permissions.title",
@@ -55,9 +55,9 @@ extension WarningManager {
                 fix: {
                     if let php = PhpEnvironments.shared.currentInstall {
                         if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
-                           let original = try? FileSystem.getStringFromFile(xdebug.file) {
+                           let original = try? App.shared.container.filesystem.getStringFromFile(xdebug.file) {
                             // Append xdebug.mode = off to the file
-                            try? FileSystem.writeAtomicallyToFile(
+                            try? App.shared.container.filesystem.writeAtomicallyToFile(
                                 xdebug.file,
                                 content: original + "\nxdebug.mode = off"
                             )
