@@ -39,6 +39,9 @@
 		033D45A02B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */; };
 		033D45A12B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */; };
 		033D45A32B0D531D00070080 /* PhpExtensionManagerView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */; };
+		035983A12E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
+		035983A22E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
+		035983A32E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
 		036C39022E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39032E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39042E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
@@ -2923,6 +2926,7 @@
 				C4E2E85E28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C45E2A7529199248005C7CFD /* InternalSwitcherTest.swift in Sources */,
 				C471E84428F9BB650021E251 /* App+ActivationPolicy.swift in Sources */,
+				035983A22E97FA9100218DC7 /* Container.swift in Sources */,
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
 				C4513F922B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
@@ -3313,6 +3317,7 @@
 				C4513F972B13E338001AD760 /* PhpExtensionManagerView+Actions.swift in Sources */,
 				C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C471E80D28F9BAE80021E251 /* ArrayExtension.swift in Sources */,
+				035983A32E97FA9100218DC7 /* Container.swift in Sources */,
 				C471E7CD28F9BA600021E251 /* ShellProtocol.swift in Sources */,
 				C471E7EC28F9BAC30021E251 /* Events.swift in Sources */,
 				C471E7CE28F9BA600021E251 /* RealShell.swift in Sources */,
@@ -3342,6 +3347,7 @@
 				C42F26742805B4B400938AC7 /* ValetListable.swift in Sources */,
 				C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
 				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
+				035983A12E97FA9100218DC7 /* Container.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,

@@ -11,8 +11,13 @@ import Foundation
 
 @Suite(.serialized)
 struct RealFileSystemTest {
+    var filesystem: FileSystemProtocol
+
     init() throws {
-        ActiveFileSystem.useSystem()
+        let container = Container()
+        container.prepare()
+
+        filesystem = container.filesystem
     }
 
     private func createUniqueTemporaryDirectory() -> String {
@@ -26,7 +31,7 @@ struct RealFileSystemTest {
     private func createTestBinaryFile(_ temporaryDirectory: String) -> String {
         let executablePath = "\(temporaryDirectory)/exec.sh"
 
-        try! FileSystem.writeAtomicallyToFile(executablePath, content: """
+        try! filesystem.writeAtomicallyToFile(executablePath, content: """
             !#/bin/bash
             echo 'Hello world';
             """)
@@ -35,18 +40,18 @@ struct RealFileSystemTest {
     }
 
     @Test func testable_fs_is_in_use() {
-        #expect(FileSystem is RealFileSystem)
+        #expect(filesystem is RealFileSystem)
     }
 
     @Test func temporary_path_exists() {
         let temporaryDirectory = self.createUniqueTemporaryDirectory()
 
         // True
-        #expect(FileSystem.directoryExists(temporaryDirectory))
-        #expect(FileSystem.anyExists(temporaryDirectory))
+        #expect(filesystem.directoryExists(temporaryDirectory))
+        #expect(filesystem.anyExists(temporaryDirectory))
 
         // False
-        #expect(!FileSystem.fileExists(temporaryDirectory))
+        #expect(!filesystem.fileExists(temporaryDirectory))
     }
 
     @Test func directory_can_be_created_symlinked_and_read() {
@@ -54,18 +59,18 @@ struct RealFileSystemTest {
 
         let folderPath = "\(temporaryDirectory)/brew/etc/lib/c"
 
-        try! FileSystem.createDirectory(folderPath, withIntermediateDirectories: true)
+        try! filesystem.createDirectory(folderPath, withIntermediateDirectories: true)
 
-        #expect(FileSystem.directoryExists("\(temporaryDirectory)/brew"))
-        #expect(FileSystem.directoryExists("\(temporaryDirectory)/brew/etc"))
-        #expect(FileSystem.directoryExists("\(temporaryDirectory)/brew/etc/lib"))
-        #expect(FileSystem.directoryExists("\(temporaryDirectory)/brew/etc/lib/c"))
+        #expect(filesystem.directoryExists("\(temporaryDirectory)/brew"))
+        #expect(filesystem.directoryExists("\(temporaryDirectory)/brew/etc"))
+        #expect(filesystem.directoryExists("\(temporaryDirectory)/brew/etc/lib"))
+        #expect(filesystem.directoryExists("\(temporaryDirectory)/brew/etc/lib/c"))
 
         _ = system("ln -s \(temporaryDirectory)/brew/etc/lib/c \(temporaryDirectory)/c")
-        #expect(FileSystem.directoryExists("\(temporaryDirectory)/c"))
-        #expect(FileSystem.isSymlink("\(temporaryDirectory)/c"))
+        #expect(filesystem.directoryExists("\(temporaryDirectory)/c"))
+        #expect(filesystem.isSymlink("\(temporaryDirectory)/c"))
         #expect(
-            try! FileSystem.getDestinationOfSymlink("\(temporaryDirectory)/c") ==
+            try! filesystem.getDestinationOfSymlink("\(temporaryDirectory)/c") ==
             "\(temporaryDirectory)/brew/etc/lib/c"
         )
 
@@ -78,7 +83,7 @@ struct RealFileSystemTest {
         let executable = self.createTestBinaryFile(temporaryDirectory)
 
         #expect(
-            try! FileSystem.getStringFromFile(executable) ==
+            try! filesystem.getStringFromFile(executable) ==
             """
             !#/bin/bash
             echo 'Hello world';
@@ -90,45 +95,45 @@ struct RealFileSystemTest {
         let temporaryDirectory = self.createUniqueTemporaryDirectory()
         let executable = self.createTestBinaryFile(temporaryDirectory)
 
-        #expect(FileSystem.isWriteableFile(executable))
-        #expect(!FileSystem.isExecutableFile(executable))
+        #expect(filesystem.isWriteableFile(executable))
+        #expect(!filesystem.isExecutableFile(executable))
 
-        try! FileSystem.makeExecutable(executable)
+        try! filesystem.makeExecutable(executable)
 
-        #expect(FileSystem.isExecutableFile(executable))
-        #expect(!FileSystem.isDirectory(executable))
-        #expect(!FileSystem.isSymlink(executable))
+        #expect(filesystem.isExecutableFile(executable))
+        #expect(!filesystem.isDirectory(executable))
+        #expect(!filesystem.isSymlink(executable))
     }
 
     @Test func non_existent_file_is_not_symlink_or_directory() {
         let path = "/path/that/does/not/exist"
 
-        #expect(!FileSystem.isDirectory(path))
-        #expect(!FileSystem.isSymlink(path))
+        #expect(!filesystem.isDirectory(path))
+        #expect(!filesystem.isSymlink(path))
     }
 
     @Test func moving_file() {
         let temporaryDirectory = self.createUniqueTemporaryDirectory()
         let executable = self.createTestBinaryFile(temporaryDirectory)
 
-        #expect(FileSystem.fileExists(executable))
+        #expect(filesystem.fileExists(executable))
 
         let newExecutable = executable.replacingOccurrences(of: "/exec.sh", with: "/file.txt")
 
-        try! FileSystem.move(from: executable, to: newExecutable)
+        try! filesystem.move(from: executable, to: newExecutable)
 
-        #expect(FileSystem.fileExists(newExecutable))
-        #expect(!FileSystem.fileExists(executable))
+        #expect(filesystem.fileExists(newExecutable))
+        #expect(!filesystem.fileExists(executable))
     }
 
     @Test func deleting_file() {
         let temporaryDirectory = self.createUniqueTemporaryDirectory()
         let executable = self.createTestBinaryFile(temporaryDirectory)
 
-        #expect(FileSystem.fileExists(executable))
+        #expect(filesystem.fileExists(executable))
 
-        try! FileSystem.remove(executable)
+        try! filesystem.remove(executable)
 
-        #expect(!FileSystem.fileExists(executable))
+        #expect(!filesystem.fileExists(executable))
     }
 }

@@ -9,39 +9,33 @@
 import XCTest
 
 class FeatureTestCase: XCTestCase {
-
-    var fakeFileSystem: TestableFileSystem {
-        let fs = ActiveFileSystem.shared
-
-        if fs is TestableFileSystem {
-            return fs as! TestableFileSystem
-        }
-
-        fatalError("The active filesystem is not a TestableFileSystem. Please use `ActiveFileSystem`.")
-    }
+    // TODO: make fake filesystem accessible via test case
 
     public func assertFileSystemHas(
         _ path: String,
         file: StaticString = #filePath,
-        line: UInt = #line
+        line: UInt = #line,
+        fs: TestableFileSystem
     ) {
-        XCTAssertTrue(fakeFileSystem.files.keys.contains(path), file: file, line: line)
+        XCTAssertTrue(fs.files.keys.contains(path), file: file, line: line)
     }
 
     public func assertFileSystemDoesNotHave(
         _ path: String,
         file: StaticString = #filePath,
-        line: UInt = #line
+        line: UInt = #line,
+        fs: TestableFileSystem
     ) {
-        XCTAssertFalse(fakeFileSystem.files.keys.contains(path), file: file, line: line)
+        XCTAssertFalse(fs.files.keys.contains(path), file: file, line: line)
     }
 
     public func assertFileHasContents(
         _ path: String,
         contents: String,
         file: StaticString = #filePath,
-        line: UInt = #line
+        line: UInt = #line,
+        fs: TestableFileSystem
     ) {
-        XCTAssertEqual(contents, fakeFileSystem.files[path]?.content, file: file, line: line)
+        XCTAssertEqual(contents, fs.files[path]?.content, file: file, line: line)
     }
 }
