@@ -11,6 +11,10 @@ import AppKit
 import SwiftUI
 
 class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
+    var container: Container {
+        return App.shared.container
+    }
+
     var site: ValetSite?
 
     @IBOutlet weak var buttonPhpVersion: NSButton!
@@ -60,11 +64,12 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
                 return []
             }
 
-            guard let install = PhpEnvironments.phpInstall else {
+            guard let install = container.phpEnvs.phpInstall else {
                 return []
             }
 
-            return PhpEnvironments.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
+            return container.phpEnvs.validVersions(for: site.preferredPhpVersion)
+                .filter({ version in
                 version.short != install.version.short
             })
         }

@@ -13,6 +13,9 @@ struct PhpVersionManagerView: View {
     @ObservedObject var formulae: BrewFormulaeObservable
     @ObservedObject var status: BusyStatus
     var handler: HandlesBrewPhpFormulae
+    var container: Container {
+        return App.shared.container
+    }
 
     init(
         formulae: BrewFormulaeObservable,
@@ -71,7 +74,7 @@ struct PhpVersionManagerView: View {
         }
 
         // Finally, load PHP information
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
         self.status.busy = false

@@ -13,9 +13,9 @@ import NVAlert
 extension MainMenu {
 
     @MainActor @objc func fixMyValet() {
-        let previousVersion = PhpEnvironments.phpInstall?.version.short
+        let previousVersion = container.phpEnvs.phpInstall?.version.short
 
-        if !PhpEnvironments.shared.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias) {
+        if !App.shared.container.phpEnvs.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias) {
             presentAlertForMissingFormula()
             return
         }

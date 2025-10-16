@@ -43,8 +43,8 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    PhpEnvironments.shared.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
-                    && !Xdebug.enabled
+                    App.shared.container.phpEnvs.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
+                    && !Xdebug().enabled
                 },
                 name: "Missing configuration file for `xdebug.mode`",
                 title: "warnings.xdebug_conf_missing.title",
@@ -53,7 +53,7 @@ extension WarningManager {
                 ] },
                 url: "https://xdebug.org/docs/install#mode",
                 fix: {
-                    if let php = PhpEnvironments.shared.currentInstall {
+                    if let php = App.shared.container.phpEnvs.currentInstall {
                         if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
                            let original = try? App.shared.container.filesystem.getStringFromFile(xdebug.file) {
                             // Append xdebug.mode = off to the file
@@ -63,7 +63,7 @@ extension WarningManager {
                             )
 
                             // Reload extension configuration by updating PHP installation info (reload)
-                            PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+                            App.shared.container.phpEnvs.currentInstall = ActivePhpInstallation()
 
                             // Finally, reload warnings
                             await self.checkEnvironment()

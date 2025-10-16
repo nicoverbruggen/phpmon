@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct VersionPopoverView: View {
+    var container: Container {
+        return App.shared.container
+    }
 
     @State var site: ValetSite
 
@@ -120,7 +123,7 @@ struct VersionPopoverView: View {
         if site.isolatedPhpVersion != nil {
             information += "alert.composer_php_isolated.desc".localized(
                 site.isolatedPhpVersion!.versionNumber.short,
-                PhpEnvironments.phpInstall?.version.short ?? "???"
+                container.phpEnvs.phpInstall?.version.short ?? "???"
             )
             information += "\n\n"
         }

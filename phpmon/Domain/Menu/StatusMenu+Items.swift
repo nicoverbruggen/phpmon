@@ -13,7 +13,7 @@ import Cocoa
 extension StatusMenu {
 
     @MainActor func addPhpVersionMenuItems() {
-        if PhpEnvironments.phpInstall == nil {
+        if container.phpEnvs.phpInstall == nil {
             addItem(HeaderView.asMenuItem(text: "⚠️ " + "mi_no_php_linked".localized, minimumWidth: 280))
             addItems([
                 NSMenuItem.separator(),
@@ -23,29 +23,29 @@ extension StatusMenu {
             return
         }
 
-        if PhpEnvironments.phpInstall!.hasErrorState {
+        if container.phpEnvs.phpInstall!.hasErrorState {
             let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
             return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
         }
 
         addItem(HeaderView.asMenuItem(
-            text: "\("mi_php_version".localized) \(PhpEnvironments.phpInstall!.version.long)",
+            text: "\("mi_php_version".localized) \(container.phpEnvs.phpInstall!.version.long)",
             minimumWidth: 280 // this ensures the menu is at least wide enough not to cause clipping
         ))
     }
 
     @MainActor func addPhpActionMenuItems() {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             addItem(NSMenuItem(title: "mi_busy".localized))
             return
         }
 
-        if PhpEnvironments.shared.availablePhpVersions.isEmpty
-            && PhpEnvironments.shared.incompatiblePhpVersions.isEmpty {
+        if App.shared.container.phpEnvs.availablePhpVersions.isEmpty
+            && App.shared.container.phpEnvs.incompatiblePhpVersions.isEmpty {
             return
         }
 
-        if PhpEnvironments.shared.currentInstall == nil {
+        if App.shared.container.phpEnvs.currentInstall == nil {
             return
         }
 
@@ -55,7 +55,7 @@ extension StatusMenu {
     }
 
     @MainActor func addServicesManagerMenuItem() {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             return
         }
 
@@ -67,10 +67,10 @@ extension StatusMenu {
 
     @MainActor func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
-        for index in (0..<PhpEnvironments.shared.availablePhpVersions.count) {
+        for index in (0..<App.shared.container.phpEnvs.availablePhpVersions.count) {
             // Get the short and long version
-            let shortVersion = PhpEnvironments.shared.availablePhpVersions[index]
-            let longVersion = PhpEnvironments.shared.cachedPhpInstallations[shortVersion]!.versionNumber
+            let shortVersion = App.shared.container.phpEnvs.availablePhpVersions[index]
+            let longVersion = App.shared.container.phpEnvs.cachedPhpInstallations[shortVersion]!.versionNumber
 
             let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
             let versionString = long ? longVersion.text : shortVersion
@@ -78,7 +78,7 @@ extension StatusMenu {
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(shortVersion)"
 
-            let isActive = (shortVersion == PhpEnvironments.phpInstall?.version.short)
+            let isActive = (shortVersion == container.phpEnvs.phpInstall?.version.short)
 
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",
@@ -92,11 +92,11 @@ extension StatusMenu {
             addItem(menuItem)
         }
 
-        if !PhpEnvironments.shared.incompatiblePhpVersions.isEmpty {
+        if !App.shared.container.phpEnvs.incompatiblePhpVersions.isEmpty {
             addItem(NSMenuItem.separator())
             addItem(NSMenuItem(
                 title: "⚠️ " + "mi_php_unsupported".localized(
-                    "\(PhpEnvironments.shared.incompatiblePhpVersions.count)"
+                    "\(App.shared.container.phpEnvs.incompatiblePhpVersions.count)"
                 ),
                 action: #selector(MainMenu.showIncompatiblePhpVersionsAlert)
             ))
@@ -187,7 +187,7 @@ extension StatusMenu {
             ),
             NSMenuItem(
                 title: "mi_update_global_composer".localized,
-                action: PhpEnvironments.shared.isBusy
+                action: App.shared.container.phpEnvs.isBusy
                 ? nil
                 : #selector(MainMenu.updateGlobalComposerDependencies),
                 keyEquivalent: "g",
@@ -200,7 +200,7 @@ extension StatusMenu {
     // MARK: - Stats
 
     @MainActor func addStatsMenuItem() {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("Not showing stats menu item if no PHP version is linked.")
             return
         }
@@ -217,7 +217,7 @@ extension StatusMenu {
     // MARK: - Extensions
 
     @MainActor func addExtensionsMenuItems() {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("Not showing extensions menu items if no PHP version is linked.")
             return
         }
@@ -276,7 +276,9 @@ extension StatusMenu {
     // MARK: - Xdebug
 
     @MainActor func addXdebugMenuItem() {
-        if !Xdebug.enabled {
+        let xdebug = Xdebug()
+
+        if !xdebug.enabled {
             addItem(NSMenuItem.separator())
             return
         }
@@ -284,7 +286,7 @@ extension StatusMenu {
         addItems([
             NSMenuItem(title: "mi_xdebug_mode".localized, submenu: [
                 HeaderView.asMenuItem(text: "mi_xdebug_available_modes".localized)
-            ] + Xdebug.asMenuItems() + [
+            ] + xdebug.asMenuItems() + [
                 HeaderView.asMenuItem(text: "mi_xdebug_actions".localized),
                 NSMenuItem(title: "mi_xdebug_disable_all".localized,
                            action: #selector(MainMenu.disableAllXdebugModes))

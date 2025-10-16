@@ -72,7 +72,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         }
 
         // Check which version of PHP are now installed
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

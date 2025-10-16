@@ -137,6 +137,10 @@ class PhpEnvironments {
         return InternalSwitcher()
     }
 
+    public func reloadPhpVersions() async {
+        _ = await self.detectPhpVersions()
+    }
+
     /**
      Detects which versions of PHP are installed.
      This step also detects which versions of PHP are incompatible with the current version of Valet.

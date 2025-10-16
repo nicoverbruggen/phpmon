@@ -11,6 +11,10 @@ import ContainerMacro
 
 @ContainerAccess
 class Actions {
+    var formulae: HomebrewFormulae {
+        return HomebrewFormulae()
+    }
+
     // MARK: - Services
 
     public func linkPhp() async {
@@ -18,40 +22,40 @@ class Actions {
     }
 
     public func restartPhpFpm() async {
-        await brew("services restart \(HomebrewFormulae.php)", sudo: HomebrewFormulae.php.elevated)
+        await brew("services restart \(formulae.php)", sudo: formulae.php.elevated)
     }
 
     public func restartPhpFpm(version: String) async {
         let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
-        await brew("services restart \(formula)", sudo: HomebrewFormulae.php.elevated)
+        await brew("services restart \(formula)", sudo: formulae.php.elevated)
     }
 
     public func restartNginx() async {
-        await brew("services restart \(HomebrewFormulae.nginx)", sudo: HomebrewFormulae.nginx.elevated)
+        await brew("services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
     }
 
     public func restartDnsMasq() async {
-        await brew("services restart \(HomebrewFormulae.dnsmasq)", sudo: HomebrewFormulae.dnsmasq.elevated)
+        await brew("services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
     }
 
     public func stopValetServices() async {
-        await brew("services stop \(HomebrewFormulae.php)", sudo: HomebrewFormulae.php.elevated)
-        await brew("services stop \(HomebrewFormulae.nginx)", sudo: HomebrewFormulae.nginx.elevated)
-        await brew("services stop \(HomebrewFormulae.dnsmasq)", sudo: HomebrewFormulae.dnsmasq.elevated)
+        await brew("services stop \(formulae.php)", sudo: formulae.php.elevated)
+        await brew("services stop \(formulae.nginx)", sudo: formulae.nginx.elevated)
+        await brew("services stop \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
     }
 
     public func fixHomebrewPermissions() throws {
         var servicesCommands = [
-            "\(paths.brew) services stop \(HomebrewFormulae.nginx)",
-            "\(paths.brew) services stop \(HomebrewFormulae.dnsmasq)"
+            "\(paths.brew) services stop \(formulae.nginx)",
+            "\(paths.brew) services stop \(formulae.dnsmasq)"
         ]
 
         var cellarCommands = [
-            "chown -R \(paths.whoami):admin \(paths.cellarPath)/\(HomebrewFormulae.nginx)",
-            "chown -R \(paths.whoami):admin \(paths.cellarPath)/\(HomebrewFormulae.dnsmasq)"
+            "chown -R \(paths.whoami):admin \(paths.cellarPath)/\(formulae.nginx)",
+            "chown -R \(paths.whoami):admin \(paths.cellarPath)/\(formulae.dnsmasq)"
         ]
 
-        PhpEnvironments.shared.availablePhpVersions.forEach { version in
+        App.shared.container.phpEnvs.availablePhpVersions.forEach { version in
             let formula = version == PhpEnvironments.brewPhpAlias
                 ? "php"
                 : "php@\(version)"
@@ -130,8 +134,8 @@ class Actions {
      */
     public func fixMyValet() async {
         await InternalSwitcher().performSwitch(to: PhpEnvironments.brewPhpAlias)
-        await brew("services restart \(HomebrewFormulae.dnsmasq)", sudo: HomebrewFormulae.dnsmasq.elevated)
-        await brew("services restart \(HomebrewFormulae.php)", sudo: HomebrewFormulae.php.elevated)
-        await brew("services restart \(HomebrewFormulae.nginx)", sudo: HomebrewFormulae.nginx.elevated)
+        await brew("services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
+        await brew("services restart \(formulae.php)", sudo: formulae.php.elevated)
+        await brew("services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
     }
 }

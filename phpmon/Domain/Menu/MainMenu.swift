@@ -8,8 +8,11 @@
 import Cocoa
 import NVAlert
 
-@MainActor
+@MainActor 
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
+    var container: Container {
+        return App.shared.container
+    }
 
     static let shared = MainMenu()
 
@@ -78,8 +81,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Reloads which PHP versions is currently active. */
     @objc func refreshActiveInstallation() {
-        if !PhpEnvironments.shared.isBusy {
-            PhpEnvironments.shared.currentInstall = ActivePhpInstallation.load()
+        if !container.phpEnvs.isBusy {
+            container.phpEnvs.currentInstall = ActivePhpInstallation.load()
             refreshIcon()
             rebuild()
         } else {
@@ -124,7 +127,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             NVAlert().withInformation(
                 title: "startup.unsupported_versions_explanation.title".localized,
                 subtitle: "startup.unsupported_versions_explanation.subtitle".localized(
-                    PhpEnvironments.shared.incompatiblePhpVersions
+                    container.phpEnvs.incompatiblePhpVersions
                         .map({ version in
                             return "• PHP \(version)"
                         })
@@ -156,9 +159,8 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     /** Refreshes the icon with the PHP version. */
     @objc func refreshIcon() {
-
         Task { @MainActor [self] in
-            if PhpEnvironments.shared.isBusy {
+            if container.phpEnvs.isBusy {
                 Log.perf("Refreshing icon: currently busy")
                 setStatusBar(image: NSImage.statusBarIcon)
             } else {
@@ -170,7 +172,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
 
-                    guard let install = PhpEnvironments.phpInstall else {
+                    guard let install = container.phpEnvs.phpInstall else {
                         setStatusBarImage(version: "???")
                         return
                     }

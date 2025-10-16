@@ -46,7 +46,7 @@ extension MainMenu {
         ]
     ) {
         if behaviours.contains(.reloadsPhpInstallation) || behaviours.contains(.setsBusyUI) {
-            PhpEnvironments.shared.isBusy = true
+            App.shared.container.phpEnvs.isBusy = true
         }
 
         Task(priority: .userInitiated) { [unowned self] in
@@ -59,7 +59,7 @@ extension MainMenu {
 
             Task { @MainActor [self, error] in
                 if behaviours.contains(.reloadsPhpInstallation) {
-                    PhpEnvironments.shared.currentInstall = ActivePhpInstallation()
+                    App.shared.container.phpEnvs.currentInstall = ActivePhpInstallation()
                 }
 
                 if behaviours.contains(.updatesMenuBarContents) {
@@ -72,7 +72,7 @@ extension MainMenu {
                 }
 
                 if behaviours.contains(.setsBusyUI) {
-                    PhpEnvironments.shared.isBusy = false
+                    App.shared.container.phpEnvs.isBusy = false
                 }
 
                 if error != nil {

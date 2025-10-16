@@ -11,7 +11,7 @@ import SwiftUI
 
 extension PhpVersionManagerView {
     public func runCommand(_ command: ModifyPhpVersionCommand) async {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             self.presentErrorAlert(
                 title: "phpman.action_prevented_busy.title".localized,
                 description: "phpman.action_prevented_busy.desc".localized,
@@ -79,7 +79,7 @@ extension PhpVersionManagerView {
 
     public func confirmUninstall(_ formula: BrewPhpFormula) async {
         // Disallow removal of the currently active versipn
-        if formula.installedVersion == PhpEnvironments.shared.currentInstall?.version.text {
+        if formula.installedVersion == App.shared.container.phpEnvs.currentInstall?.version.text {
             self.presentErrorAlert(
                 title: "phpman.uninstall_prevented.title".localized,
                 description: "phpman.uninstall_prevented.desc".localized,
@@ -133,7 +133,7 @@ extension PhpVersionManagerView {
 
     public func setBusyStatus(_ busy: Bool) {
         Task { @MainActor in
-            PhpEnvironments.shared.isBusy = busy
+            App.shared.container.phpEnvs.isBusy = busy
             self.status.busy = busy
         }
     }

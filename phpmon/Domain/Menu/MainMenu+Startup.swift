@@ -31,7 +31,7 @@ extension MainMenu {
      */
     private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        await PhpEnvironments.shared.determinePhpAlias()
+        await App.shared.container.phpEnvs.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
@@ -54,7 +54,7 @@ extension MainMenu {
         await Brew.shared.determineVersion()
 
         // Actually detect the PHP versions
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
 
         // Verify third party taps
         // The missing tap(s) will be actionable later
@@ -62,9 +62,6 @@ extension MainMenu {
 
         // Check for an alias conflict
         await BrewDiagnostics.shared.checkForCaskConflict()
-
-        // Attempt to find out if PHP-FPM is broken
-        PhpEnvironments.prepare()
 
         // Set up the filesystem watcher for the Homebrew binaries
         App.shared.prepareHomebrewWatchers()
@@ -108,7 +105,7 @@ extension MainMenu {
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
         // We are ready!
-        PhpEnvironments.shared.isBusy = false
+        App.shared.container.phpEnvs.isBusy = false
 
         // Finally!
         Log.info("PHP Monitor is ready to serve!")

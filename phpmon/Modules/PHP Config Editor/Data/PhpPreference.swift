@@ -20,7 +20,7 @@ class PhpPreference {
     }
 
     internal static func persistToIniFile(key: String, value: String) throws {
-        if let file = PhpEnvironments.shared.getConfigFile(forKey: key) {
+        if let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) {
             return try file.replace(key: key, value: value)
         }
 

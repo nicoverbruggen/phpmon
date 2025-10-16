@@ -27,9 +27,9 @@ extension App {
     }
 
     public func onHomebrewPhpModification() async {
-        // let previous = PhpEnvironments.shared.currentInstall?.version.text
+        // let previous = App.shared.container.phpEnvs.currentInstall?.version.text
         Log.info("Something changed in the Homebrew binary directory...")
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
         await MainMenu.shared.refreshActiveInstallation()
 
         //
@@ -37,7 +37,7 @@ extension App {
         // Check if the new and previous version of PHP are different
         // if so, we can show a notification if needed or alert the user
         //
-        // let new = PhpEnvironments.shared.currentInstall?.version.text
+        // let new = App.shared.container.phpEnvs.currentInstall?.version.text
         //
     }
 }

@@ -11,7 +11,7 @@ import XCTest
 class PhpVersionDetectionTest: XCTestCase {
 
     func test_can_detect_valid_php_versions() async throws {
-        let outcome = await PhpEnvironments.shared.extractPhpVersions(
+        let outcome = await App.shared.container.phpEnvs.extractPhpVersions(
             from: [
                 "", // empty lines should be omitted
                 "php@8.0",

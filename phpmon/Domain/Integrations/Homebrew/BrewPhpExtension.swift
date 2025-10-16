@@ -43,7 +43,7 @@ struct BrewPhpExtension: Hashable, Comparable {
     }
 
     var hasAlternativeInstall: Bool {
-        guard let php = PhpEnvironments.shared.cachedPhpInstallations[self.phpVersion] else {
+        guard let php = App.shared.container.phpEnvs.cachedPhpInstallations[self.phpVersion] else {
             return false
         }
 

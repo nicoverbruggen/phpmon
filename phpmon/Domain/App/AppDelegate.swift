@@ -93,7 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
 
     func initializeSwitcher() {
-        self.phpEnvironments = PhpEnvironments.shared
+        self.phpEnvironments = App.shared.container.phpEnvs
     }
 
     static func initializeTestingProfile(_ path: String) {
