@@ -57,8 +57,8 @@ class PhpInstallation {
     }
 
     private func determineVersion(_ phpConfigExecutablePath: String, _ phpExecutablePath: String) {
-        if filesystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = command.execute(
+        if container.filesystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = container.command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"],
                 trimNewlines: false
@@ -79,8 +79,8 @@ class PhpInstallation {
     }
 
     private func determineHealth(_ phpExecutablePath: String) {
-        if filesystem.fileExists(phpExecutablePath) {
-            let testCommand = command.execute(
+        if container.filesystem.fileExists(phpExecutablePath) {
+            let testCommand = container.command.execute(
                 path: phpExecutablePath,
                 arguments: ["-v"],
                 trimNewlines: false,
@@ -97,7 +97,7 @@ class PhpInstallation {
     }
 
     private func determineIniFiles(_ phpExecutablePath: String) {
-        let paths = shell
+        let paths = container.shell
             .sync("\(phpExecutablePath) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }

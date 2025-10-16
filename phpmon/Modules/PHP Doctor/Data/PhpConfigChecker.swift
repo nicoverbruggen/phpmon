@@ -16,7 +16,7 @@ struct FileExistenceCheck {
 
 @ContainerAccess
 class PhpConfigChecker {
-    public static var shared = PhpConfigChecker()
+    public static var shared = PhpConfigChecker(App.shared.container)
 
     var missing: [String] = []
 

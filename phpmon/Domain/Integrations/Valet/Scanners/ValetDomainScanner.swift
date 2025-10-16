@@ -17,7 +17,7 @@ class ValetDomainScanner: DomainScanner {
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
             do {
-                let entries = try filesystem
+                let entries = try container.filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries
@@ -37,7 +37,7 @@ class ValetDomainScanner: DomainScanner {
 
         paths.forEach { path in
             do {
-                let entries = try filesystem
+                let entries = try container.filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries.forEach {
@@ -61,7 +61,7 @@ class ValetDomainScanner: DomainScanner {
         // Get the TLD from the global Valet object
         let tld = Valet.shared.config.tld
 
-        if !filesystem.anyExists(path) {
+        if !container.filesystem.anyExists(path) {
             Log.warn("Could not parse the site: \(path), skipping!")
         }
 
@@ -71,9 +71,9 @@ class ValetDomainScanner: DomainScanner {
             return nil
         }
 
-        if filesystem.isSymlink(path) {
+        if container.filesystem.isSymlink(path) {
             return ValetSite(container, aliasPath: path, tld: tld)
-        } else if filesystem.isDirectory(path) {
+        } else if container.filesystem.isDirectory(path) {
             return ValetSite(container, absolutePath: path, tld: tld)
         }
 

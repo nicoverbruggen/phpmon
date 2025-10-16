@@ -134,7 +134,7 @@ class PhpEnvironments {
      but currently this is no longer needed.
      */
     public static var switcher: PhpSwitcher {
-        return InternalSwitcher()
+        return InternalSwitcher(App.shared.container)
     }
 
     public func reloadPhpVersions() async {

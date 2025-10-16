@@ -38,7 +38,7 @@ extension MainMenu {
 
                 // Run composer updates
                 if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
-                    ComposerWindow().updateGlobalDependencies(
+                    ComposerWindow(App.shared.container).updateGlobalDependencies(
                         notify: false,
                         completion: { _ in
                             self.notifyAboutVersionChange(to: version)
@@ -99,7 +99,7 @@ extension MainMenu {
         .withPrimary(text: "alert.global_composer_platform_issues.buttons.update".localized, action: { alert in
             alert.close(with: .OK)
             Log.info("The user has chosen to update global dependencies.")
-            ComposerWindow().updateGlobalDependencies(
+            ComposerWindow(App.shared.container).updateGlobalDependencies(
                 notify: true,
                 completion: { success in
                     Log.info("Dependencies updated successfully: \(success)")

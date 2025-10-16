@@ -13,11 +13,11 @@ import ContainerMacro
 @ContainerAccess
 class Xdebug {
     public var enabled: Bool {
-        return phpEnvs.getConfigFile(forKey: "xdebug.mode") != nil
+        return container.phpEnvs.getConfigFile(forKey: "xdebug.mode") != nil
     }
 
     public var activeModes: [String] {
-        guard let file = phpEnvs.getConfigFile(forKey: "xdebug.mode") else {
+        guard let file = container.phpEnvs.getConfigFile(forKey: "xdebug.mode") else {
             return []
         }
 

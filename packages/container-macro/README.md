@@ -10,9 +10,8 @@ import ContainerMacro
 @ContainerAccess
 class MyClass {
     func doSomething() {
-        shell.run("command")
-        favorites.add(site)
-        warningManager.evaluateWarnings()
+        container.shell.run("command")
+        container.favorites.add(site)
     }
 }
 ```
@@ -21,7 +20,7 @@ class MyClass {
 
 The `@ContainerAccess` macro automatically adds:
 - A private `container: Container` property
-- An `init(container:)` with default parameter `App.shared.container`
+- An `init(_ container:)` initializer
 - Computed properties for each Container service you want to access
 
 ## Maintenance
@@ -33,8 +32,6 @@ When you add new services to `Container`, you must update the service list in:
 ```swift
 let allContainerServices: [(name: String, type: String)] = [
     ("shell", "ShellProtocol"),
-    ("favorites", "Favorites"),
-    ("warningManager", "WarningManager"),
     // Add your new service here:
     // ("myNewService", "MyServiceType"),
 ]

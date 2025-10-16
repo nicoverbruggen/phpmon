@@ -68,7 +68,7 @@ class InstallPhpExtensionCommand: BrewCommand {
 
         // Restart PHP-FPM
         if let installed = self.installing.first {
-            await Actions().restartPhpFpm(version: installed.phpVersion)
+            await Actions(container).restartPhpFpm(version: installed.phpVersion)
         }
 
         // Check which version of PHP are now installed

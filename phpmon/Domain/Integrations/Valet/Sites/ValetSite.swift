@@ -58,7 +58,7 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? phpEnvs.phpInstall?.version.short
+            ?? container.phpEnvs.phpInstall?.version.short
             ?? "???"
     }
 
@@ -107,12 +107,12 @@ class ValetSite: ValetListable {
      */
     public func determineIsolated() {
         if let version = ValetSite.isolatedVersion(container, "~/.config/valet/Nginx/\(self.name).\(self.tld)") {
-            if !phpEnvs.cachedPhpInstallations.keys.contains(version) {
+            if !container.phpEnvs.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
                 return
             }
-            self.isolatedPhpVersion = phpEnvs.cachedPhpInstallations[version]
+            self.isolatedPhpVersion = container.phpEnvs.cachedPhpInstallations[version]
         } else {
             self.isolatedPhpVersion = nil
         }
@@ -123,7 +123,10 @@ class ValetSite: ValetListable {
      - Note: The file is not validated, only its presence is checked.
      */
     public func determineSecured() {
-        secured = filesystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        secured = container.filesystem
+            .fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+
+        // TODO: Also verify the certificate hasn't expired
     }
 
     /**
@@ -185,7 +188,7 @@ class ValetSite: ValetListable {
         let path = "\(absolutePath)/composer.json"
 
         do {
-            if filesystem.fileExists(path) {
+            if container.filesystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
                     from: String(
@@ -216,7 +219,7 @@ class ValetSite: ValetListable {
         for (suffix, source) in files {
             do {
                 let path = "\(absolutePath)/\(suffix)"
-                if filesystem.fileExists(path) {
+                if container.filesystem.fileExists(path) {
                     return try self.handleValetFile(path, source)
                 }
             } catch {
@@ -253,7 +256,7 @@ class ValetSite: ValetListable {
             return
         }
 
-        guard let linked = phpEnvs.phpInstall else {
+        guard let linked = container.phpEnvs.phpInstall else {
             self.isCompatibleWithPreferredPhpVersion = false
             return
         }

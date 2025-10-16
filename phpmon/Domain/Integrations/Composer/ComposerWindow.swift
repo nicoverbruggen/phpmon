@@ -30,7 +30,7 @@ import ContainerMacro
             return
         }
 
-        phpEnvs.isBusy = true
+        container.phpEnvs.isBusy = true
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -57,7 +57,7 @@ import ContainerMacro
 
         self.window?.addToConsole("\(command)\n")
 
-        let (process, _) = try await shell.attach(
+        let (process, _) = try await container.shell.attach(
             command,
             didReceiveOutput: { [weak self] (incoming, _) in
                 guard let window = self?.window else { return }
@@ -113,7 +113,7 @@ import ContainerMacro
     // MARK: Main Menu Update
 
     private func removeBusyStatus() {
-        phpEnvs.isBusy = false
+        container.phpEnvs.isBusy = false
     }
 
     // MARK: Alert

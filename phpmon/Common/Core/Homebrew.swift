@@ -12,11 +12,11 @@ import ContainerMacro
 @ContainerAccess
 struct HomebrewFormulae {
     var php: HomebrewFormula {
-        if phpEnvs.homebrewPackage == nil {
+        if container.phpEnvs.homebrewPackage == nil {
             return HomebrewFormula("php", elevated: true)
         }
 
-        guard let install = phpEnvs.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             return HomebrewFormula("php", elevated: true)
         }
 

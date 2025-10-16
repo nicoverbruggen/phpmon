@@ -31,7 +31,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         ))
 
         // Keep track of the file that contains the information about the extension
-        let existing = phpEnvs
+        let existing = container.phpEnvs
             .cachedPhpInstallations[phpExtension.phpVersion]?
             .extensions.first(where: { ext in
             ext.name == phpExtension.name
@@ -64,9 +64,9 @@ class RemovePhpExtensionCommand: BrewCommand {
                 await performExtensionCleanup(for: ext)
             }
 
-            _ = await phpEnvs.detectPhpVersions()
+            _ = await container.phpEnvs.detectPhpVersions()
 
-            await Actions().restartPhpFpm(version: phpExtension.phpVersion)
+            await Actions(container).restartPhpFpm(version: phpExtension.phpVersion)
 
             await MainMenu.shared.refreshActiveInstallation()
 
@@ -81,7 +81,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             // The extension's default configuration file can be removed
             Log.info("The extension was found in a default extension .ini location. Purging that .ini file.")
             do {
-                try filesystem.remove(ext.file)
+                try container.filesystem.remove(ext.file)
             } catch {
                 Log.err("The file `\(ext.file)` could not be removed.")
             }

@@ -36,19 +36,19 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        Task { await shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
+        Task { await container.shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
     }
 
     /** Checks if the app is installed. */
     func isInstalled() async -> Bool {
 
-        let (process, output) = try! await shell.attach(
+        let (process, output) = try! await container.shell.attach(
             "/usr/bin/open -Ra \"\(name)\"",
             didReceiveOutput: { _, _ in },
             withTimeout: 2.0
         )
 
-        if shell is TestableShell {
+        if container.shell is TestableShell {
             // When testing, check the error output (must not be empty)
             return !output.hasError
         } else {

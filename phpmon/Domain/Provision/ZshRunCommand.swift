@@ -14,7 +14,7 @@ class ZshRunCommand {
      Adds a given line to .zshrc, which may be needed to adjust the PATH.
      */
     private func add(_ text: String) async -> Bool {
-        let outcome = await shell.pipe("""
+        let outcome = await container.shell.pipe("""
             touch ~/.zshrc && \
             grep -qxF '\(text)' ~/.zshrc \
             || echo '\n\n\(text)\n' >> ~/.zshrc

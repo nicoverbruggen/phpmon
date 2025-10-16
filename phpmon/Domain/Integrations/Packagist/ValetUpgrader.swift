@@ -62,7 +62,7 @@ class ValetUpgrader {
     }
 
     @MainActor private static func upgradeValet() {
-        ComposerWindow().updateGlobalDependencies(
+        ComposerWindow(App.shared.container).updateGlobalDependencies(
             notify: true,
             completion: { success in
                 if success {

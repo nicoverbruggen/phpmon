@@ -7,14 +7,17 @@
 //
 
 class Container {
+    // Core abstractions
     var shell: ShellProtocol!
     var filesystem: FileSystemProtocol!
     var command: CommandProtocol!
 
+    // Additional abstractions
     var paths: Paths!
     var phpEnvs: PhpEnvironments!
-
     var favorites: Favorites!
+
+    // TODO: Pending a rename
     var warningManager: WarningManager!
 
     init() {}

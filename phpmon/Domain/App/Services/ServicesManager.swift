@@ -36,7 +36,7 @@ class ServicesManager: ObservableObject {
     }
 
     var formulae: [HomebrewFormula] {
-        let f = HomebrewFormulae()
+        let f = HomebrewFormulae(container)
 
         var formulae = [
             f.php,

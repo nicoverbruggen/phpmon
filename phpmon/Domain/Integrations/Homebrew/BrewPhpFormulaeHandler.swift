@@ -35,7 +35,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             \(container.paths.brew) outdated --json --formulae
             """
 
-            let rawJsonText = await shell.pipe(command).out
+            let rawJsonText = await container.shell.pipe(command).out
                 .data(using: .utf8)!
             outdated = try? JSONDecoder().decode(
                 OutdatedFormulae.self,
@@ -50,7 +50,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             var upgradeVersion: String?
             var isPrerelease: Bool = Constants.ExperimentalPhpVersions.contains(version)
 
-            if let install = phpEnvs.cachedPhpInstallations[version] {
+            if let install = container.phpEnvs.cachedPhpInstallations[version] {
                 fullVersion = install.versionNumber.text
                 fullVersion = install.isPreRelease ? "\(fullVersion!)-dev" : fullVersion
 

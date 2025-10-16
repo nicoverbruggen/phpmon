@@ -12,7 +12,11 @@ import ContainerMacro
 
 @ContainerAccess
 class BrewDiagnostics {
-    public static let shared = BrewDiagnostics()
+    public static let shared = BrewDiagnostics(App.shared.container)
+
+    var filesystem: FileSystemProtocol {
+        return container.filesystem
+    }
 
     /**
      Determines the Homebrew taps the user has installed.
@@ -23,7 +27,7 @@ class BrewDiagnostics {
      Load which taps are installed.
      */
     public func loadInstalledTaps() async {
-        installedTaps = await shell
+        installedTaps = await container.shell
             .pipe("\(container.paths.brew) tap")
             .out
             .split(separator: "\n")
@@ -123,7 +127,7 @@ class BrewDiagnostics {
     public func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
-        guard let install = phpEnvs.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
@@ -132,7 +136,7 @@ class BrewDiagnostics {
         let primary = install.version.short
 
         // Versions to be handled
-        let switcher = InternalSwitcher()
+        let switcher = InternalSwitcher(container)
 
         for version in switcher.getVersionsToBeHandled(primary)
         where await switcher.ensureValetConfigurationIsValidForPhpVersion(version) {
@@ -162,7 +166,7 @@ class BrewDiagnostics {
      Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
      */
     private func hasAliasConflict() async -> Bool {
-        let tapAlias = await shell.pipe("brew info shivammathur/php/php --json").out
+        let tapAlias = await container.shell.pipe("brew info shivammathur/php/php --json").out
 
         if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") || tapAlias.isEmpty {
             Log.info("The user does not appear to have tapped: shivammathur/php")
@@ -181,8 +185,10 @@ class BrewDiagnostics {
                          + "This could be a problem!")
                 Log.info("Determining whether both of these versions are installed...")
 
-                let bothInstalled = phpEnvs.availablePhpVersions.contains(tapPhp.version)
-                    && phpEnvs.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
+                let availablePhpVersions = container.phpEnvs.availablePhpVersions
+
+                let bothInstalled = availablePhpVersions.contains(tapPhp.version)
+                    && availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
 
                 if bothInstalled {
                     Log.warn("Both conflicting aliases seem to be installed, warning the user!")
@@ -219,7 +225,7 @@ class BrewDiagnostics {
      If the JSON response cannot be parsed, Homebrew is probably out of date.
      */
     public func cannotLoadService(_ name: String) async -> Bool {
-        let nginxJson = await shell
+        let nginxJson = await container.shell
             .pipe("sudo \(container.paths.brew) services info \(name) --json")
             .out
 

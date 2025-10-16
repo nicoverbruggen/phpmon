@@ -36,7 +36,7 @@ extension WarningManager {
                 url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
                 fix: self.container.paths.shell == "/bin/zsh" ? {
                     // Add to PATH
-                    await ZshRunCommand().addPhpMonitorPath()
+                    await ZshRunCommand(self.container).addPhpMonitorPath()
                     // Finally, perform environment checks again
                     await self.checkEnvironment()
                 } : nil
@@ -44,7 +44,7 @@ extension WarningManager {
             Warning(
                 command: {
                     self.container.phpEnvs.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
-                    && !Xdebug().enabled
+                    && !Xdebug(self.container).enabled
                 },
                 name: "Missing configuration file for `xdebug.mode`",
                 title: "warnings.xdebug_conf_missing.title",

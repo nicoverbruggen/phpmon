@@ -71,11 +71,11 @@ class ModifyPhpVersionCommand: BrewCommand {
         } else {
             // Simply upgrade `php` to the latest version
             try await self.upgradeMainPhpFormula(unavailable!, onProgress)
-            await phpEnvs.determinePhpAlias()
+            await container.phpEnvs.determinePhpAlias()
         }
 
         // Re-check the installed versions
-        _ = await phpEnvs.detectPhpVersions()
+        _ = await container.phpEnvs.detectPhpVersions()
 
         // After performing operations, attempt to run repairs if needed
         try await self.repairBrokenPackages(onProgress)
@@ -103,7 +103,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             """
 
         // Run the upgrade command
-        try await run(shell: shell, command, onProgress)
+        try await run(shell: container.shell, command, onProgress)
     }
 
     private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -119,7 +119,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(container.paths.brew) upgrade \(self.upgrading.map { $0.name }.joined(separator: " "))
             """
 
-        try await run(shell: shell, command, onProgress)
+        try await run(shell: container.shell, command, onProgress)
     }
 
     private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
@@ -134,13 +134,13 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(container.paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
             """
 
-        try await run(shell: shell, command, onProgress)
+        try await run(shell: container.shell, command, onProgress)
     }
 
     private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // Determine which PHP installations are considered unhealthy
         // Build a list of formulae to reinstall
-        let requiringRepair = phpEnvs
+        let requiringRepair = container.phpEnvs
             .cachedPhpInstallations.values
             .filter({ !$0.isHealthy })
             .map { installation in
@@ -166,7 +166,7 @@ class ModifyPhpVersionCommand: BrewCommand {
             \(container.paths.brew) reinstall \(requiringRepair.joined(separator: " ")) --force
         """
 
-        try await run(shell: shell, command, onProgress)
+        try await run(shell: container.shell, command, onProgress)
     }
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
@@ -177,7 +177,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Check which version of PHP are now installed
-        _ = await phpEnvs.detectPhpVersions()
+        _ = await container.phpEnvs.detectPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

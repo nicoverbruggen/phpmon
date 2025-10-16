@@ -14,6 +14,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         return App.shared.container
     }
 
+    var actions: Actions {
+        return Actions(container)
+    }
+
     static let shared = MainMenu()
 
     override init() {

@@ -10,7 +10,7 @@ import Foundation
 
 class ValetScanner {
 
-    static var active: DomainScanner = ValetDomainScanner()
+    static var active: DomainScanner = ValetDomainScanner(App.shared.container)
 
     public static func useFake() {
         ValetScanner.active = FakeDomainScanner()

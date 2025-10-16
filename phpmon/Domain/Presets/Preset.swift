@@ -83,7 +83,7 @@ struct Preset: Codable, Equatable {
         if self.version != nil {
             if await !switchToPhpVersionIfValid() {
                 PresetHelper.rollbackPreset = nil
-                await Actions().restartPhpFpm()
+                await Actions(container).restartPhpFpm()
                 return
             }
         }
@@ -111,7 +111,7 @@ struct Preset: Codable, Equatable {
         PresetHelper.loadRollbackPresetFromFile()
 
         // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-        await Actions().restartPhpFpm()
+        await Actions(container).restartPhpFpm()
 
         Task { @MainActor in
             // Show the correct notification

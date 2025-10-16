@@ -1422,6 +1422,15 @@
 			path = Provision;
 			sourceTree = "<group>";
 		};
+		03C099422EA156C100B76D43 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				0329A9A02E92A2A800A62A12 /* Container.swift */,
+				031F247F2EA1071700CFB8D9 /* Container+Fake.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
 		03D53E902E8AE089001B1671 /* Testables */ = {
 			isa = PBXGroup;
 			children = (
@@ -1615,8 +1624,7 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
-				031F247F2EA1071700CFB8D9 /* Container+Fake.swift */,
-				0329A9A02E92A2A800A62A12 /* Container.swift */,
+				03C099422EA156C100B76D43 /* Container */,
 				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
 				54D9E0BE27E4F5C0003B9AD9 /* Vendor */,

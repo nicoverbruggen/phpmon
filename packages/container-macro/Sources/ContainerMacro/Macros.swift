@@ -2,7 +2,7 @@
 ///
 /// This macro generates:
 /// - A public `container` property
-/// - An `init(container:)` with a default parameter of `App.shared.container` (only if no init exists)
+/// - An `init(_ container:)` initializer
 /// - Computed properties for all Container services
 ///
 /// Usage:
@@ -12,9 +12,8 @@
 /// @ContainerAccess
 /// class MyClass {
 ///     func doSomething() {
-///         shell.run("command")
-///         favorites.add(site)
-///         warningManager.evaluateWarnings()
+///         container.shell.run("command")
+///         container.favorites.add(site)
 ///     }
 /// }
 /// ```

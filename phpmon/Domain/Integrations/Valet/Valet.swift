@@ -68,8 +68,8 @@ class Valet {
     }
 
     lazy var installed: Bool = {
-        return filesystem.fileExists(container.paths.binPath.appending("/valet"))
-            && filesystem.anyExists("~/.config/valet")
+        return container.filesystem.fileExists(container.paths.binPath.appending("/valet"))
+        && container.filesystem.anyExists("~/.config/valet")
     }()
 
     /**
@@ -92,7 +92,7 @@ class Valet {
      and the app cannot start.
      */
     public func updateVersionNumber() async {
-        let output = await shell.pipe("valet --version").out
+        let output = await container.shell.pipe("valet --version").out
 
         // Failure condition #1: does not contain Laravel Valet
         if !output.contains("Laravel Valet") {
@@ -122,7 +122,9 @@ class Valet {
         do {
             config = try JSONDecoder().decode(
                 Valet.Configuration.self,
-                from: filesystem.getStringFromFile("~/.config/valet/config.json").data(using: .utf8)!
+                from: container.filesystem
+                    .getStringFromFile("~/.config/valet/config.json")
+                    .data(using: .utf8)!
             )
         } catch {
             Log.err(error)
@@ -186,7 +188,7 @@ class Valet {
             return
         }
 
-        if phpEnvs.phpInstall == nil {
+        if container.phpEnvs.phpInstall == nil {
             Log.info("Cannot validate Valet version if no PHP version is linked.")
             return
         }
@@ -209,7 +211,7 @@ class Valet {
      Determine if any platform issues are detected when running `valet --version`.
      */
     public func hasPlatformIssues() async -> Bool {
-        return await shell.pipe("valet --version")
+        return await container.shell.pipe("valet --version")
             .out.contains("Composer detected issues in your platform")
     }
 
@@ -243,7 +245,7 @@ class Valet {
      that means that Valet won't work properly.
      */
     func phpFpmConfigurationValid() async -> Bool {
-        guard let version = phpEnvs.currentInstall?.version else {
+        guard let version = container.phpEnvs.currentInstall?.version else {
             Log.info("Cannot check PHP-FPM status: no version of PHP is active")
             return true
         }
@@ -251,12 +253,13 @@ class Valet {
         if version.short == "5.6" {
             // The main PHP config file should contain `valet.sock` and then we're probably fine?
             let fileName = "\(container.paths.etcPath)/php/5.6/php-fpm.conf"
-            return await shell.pipe("cat \(fileName)").out
+            return await container.shell.pipe("cat \(fileName)").out
                 .contains("valet.sock")
         }
 
         // Make sure to check if valet-fpm.conf exists. If it does, we should be fine :)
-        return filesystem.fileExists("\(container.paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
+        return container.filesystem
+            .fileExists("\(container.paths.etcPath)/php/\(version.short)/php-fpm.d/valet-fpm.conf")
     }
 
     /**

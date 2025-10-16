@@ -275,7 +275,7 @@ extension StatusMenu {
     // MARK: - Xdebug
 
     @MainActor func addXdebugMenuItem() {
-        let xdebug = Xdebug()
+        let xdebug = Xdebug(container)
 
         if !xdebug.enabled {
             addItem(NSMenuItem.separator())

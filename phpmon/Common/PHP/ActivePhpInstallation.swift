@@ -74,7 +74,7 @@ class ActivePhpInstallation {
             post_max_size: getByteCount(key: "post_max_size")
         )
 
-        let paths = shell
+        let paths = container.shell
             .sync("\(container.paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }
@@ -92,7 +92,11 @@ class ActivePhpInstallation {
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
     private func determineVersion() throws {
-        let output = command.execute(path: container.paths.phpConfig, arguments: ["--version"], trimNewlines: true)
+        let output = container.command.execute(
+            path: container.paths.phpConfig,
+            arguments: ["--version"],
+            trimNewlines: true
+        )
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
@@ -115,7 +119,11 @@ class ActivePhpInstallation {
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
     private func getByteCount(key: String) -> String {
-        let value = command.execute(path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
+        let value = container.command.execute(
+            path: container.paths.php,
+            arguments: ["-r", "echo ini_get('\(key)');"],
+            trimNewlines: false
+        )
 
         // Check if the value is unlimited
         if value == "-1" {

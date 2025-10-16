@@ -16,20 +16,20 @@ struct ValetInteractionError: Error {
 
 @ContainerAccess
 class ValetInteractor {
-    static var shared = ValetInteractor()
+    static var shared = ValetInteractor(App.shared.container)
 
     public static func useFake() {
-        ValetInteractor.shared = FakeValetInteractor()
+        ValetInteractor.shared = FakeValetInteractor(App.shared.container)
     }
 
     // MARK: - Managing Domains
 
     public func link(path: String, domain: String) async throws {
-        await shell.quiet("cd '\(path)' && \(container.paths.valet) link '\(domain)' && valet links")
+        await container.shell.quiet("cd '\(path)' && \(container.paths.valet) link '\(domain)' && valet links")
     }
 
     public func unlink(site: ValetSite) async throws {
-        await shell.quiet("valet unlink '\(site.name)'")
+        await container.shell.quiet("valet unlink '\(site.name)'")
     }
 
     public func proxy(domain: String, proxy: String, secure: Bool) async throws {
@@ -37,12 +37,12 @@ class ValetInteractor {
             ? "\(container.paths.valet) proxy \(domain) \(proxy) --secure"
             : "\(container.paths.valet) proxy \(domain) \(proxy)"
 
-        await shell.quiet(command)
-        await Actions().restartNginx()
+        await container.shell.quiet(command)
+        await Actions(container).restartNginx()
     }
 
     public func remove(proxy: ValetProxy) async throws {
-        await shell.quiet("valet unproxy '\(proxy.domain)'")
+        await container.shell.quiet("valet unproxy '\(proxy.domain)'")
     }
 
     // MARK: - Modifying Domains
@@ -64,7 +64,7 @@ class ValetInteractor {
         }
 
         // Run the command
-        await shell.quiet(command)
+        await container.shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineSecured()
@@ -89,7 +89,7 @@ class ValetInteractor {
 
         // Run the commands
         for command in commands {
-            await shell.quiet(command)
+            await container.shell.quiet(command)
         }
 
         // Check if the secured status has actually changed
@@ -101,14 +101,14 @@ class ValetInteractor {
         }
 
         // Restart nginx to load the new configuration
-        await Actions().restartNginx()
+        await Actions(container).restartNginx()
     }
 
     public func isolate(site: ValetSite, version: String) async throws {
         let command = "sudo \(container.paths.valet) isolate php@\(version) --site '\(site.name)'"
 
         // Run the command
-        await shell.quiet(command)
+        await container.shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineIsolated()
@@ -124,7 +124,7 @@ class ValetInteractor {
         let command = "sudo \(container.paths.valet) unisolate --site '\(site.name)'"
 
         // Run the command
-        await shell.quiet(command)
+        await container.shell.quiet(command)
 
         // Check if the secured status has actually changed
         site.determineIsolated()

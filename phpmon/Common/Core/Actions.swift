@@ -12,7 +12,11 @@ import ContainerMacro
 @ContainerAccess
 class Actions {
     var formulae: HomebrewFormulae {
-        return HomebrewFormulae()
+        return HomebrewFormulae(App.shared.container)
+    }
+
+    var paths: Paths {
+        return container.paths
     }
 
     // MARK: - Services
@@ -110,10 +114,10 @@ class Actions {
     // MARK: - Other Actions
 
     public func createTempPhpInfoFile() async -> URL {
-        try! filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
+        try! container.filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
-        await shell.quiet("\(paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+        await container.shell.quiet("\(paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
 
         return URL(string: "file:///private/tmp/phpmon_phpinfo.html")!
     }
@@ -133,7 +137,7 @@ class Actions {
      extensions and/or run `composer global update`.
      */
     public func fixMyValet() async {
-        await InternalSwitcher().performSwitch(to: PhpEnvironments.brewPhpAlias)
+        await InternalSwitcher(container).performSwitch(to: PhpEnvironments.brewPhpAlias)
         await brew(container, "services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
         await brew(container, "services restart \(formulae.php)", sudo: formulae.php.elevated)
         await brew(container, "services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)

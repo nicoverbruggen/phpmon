@@ -42,19 +42,8 @@ public struct ContainerAccessMacro: MemberMacro {
         if !hasExistingInit {
             members.append(
                 """
-                init(container: Container = App.shared.container) {
+                init(_ container: Container) {
                     self.container = container
-                }
-                """
-            )
-        }
-
-        // Add computed properties for each service
-        for service in allContainerServices {
-            members.append(
-                """
-                private var \(raw: service.name): \(raw: service.type) {
-                    return container.\(raw: service.name)
                 }
                 """
             )

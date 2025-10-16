@@ -11,7 +11,7 @@ import ContainerMacro
 
 @ContainerAccess
 class Brew {
-    static let shared = Brew()
+    static let shared = Brew(App.shared.container)
 
     /// Formulae that can be observed.
     var formulae = BrewFormulaeObservable()
@@ -21,7 +21,7 @@ class Brew {
 
     /// Determine which version of Homebrew is installed.
     public func determineVersion() async {
-        let output = await shell.pipe("\(container.paths.brew) --version")
+        let output = await container.shell.pipe("\(container.paths.brew) --version")
         self.version = try? VersionNumber.parse(output.out)
 
         if let version = version {

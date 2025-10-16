@@ -26,7 +26,7 @@ class InternalSwitcher: PhpSwitcher {
         let versions = getVersionsToBeHandled(version)
 
         await withTaskGroup(of: String.self, body: { group in
-            for available in phpEnvs.availablePhpVersions {
+            for available in container.phpEnvs.availablePhpVersions {
                 group.addTask {
                     await self.unlinkAndStopPhpVersion(available)
                     return available
@@ -103,7 +103,7 @@ class InternalSwitcher: PhpSwitcher {
 
             if Valet.enabled(feature: .isolatedSites) && primary {
                 let socketVersion = version.replacingOccurrences(of: ".", with: "")
-                await shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+                await container.shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
                 Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
             }
         }

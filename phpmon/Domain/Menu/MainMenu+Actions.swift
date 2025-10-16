@@ -14,7 +14,7 @@ extension MainMenu {
 
     @MainActor @objc func linkPhpBinary() {
         Task {
-            await Actions().linkPhp()
+            await actions.linkPhp()
         }
     }
 
@@ -45,7 +45,7 @@ extension MainMenu {
         }
 
         asyncExecution {
-            try Actions().fixHomebrewPermissions()
+            try self.actions.fixHomebrewPermissions()
         } success: {
             NVAlert()
                 .withInformation(
@@ -62,27 +62,27 @@ extension MainMenu {
 
     @objc func restartPhpFpm() {
         Task { // Simple restart service
-            await Actions().restartPhpFpm()
+            await actions.restartPhpFpm()
         }
     }
 
     @objc func restartNginx() {
         Task { // Simple restart service
-            await Actions().restartNginx()
+            await actions.restartNginx()
         }
     }
 
     @objc func restartDnsMasq() {
         Task { // Simple restart service
-            await Actions().restartDnsMasq()
+            await actions.restartDnsMasq()
         }
     }
 
     @MainActor @objc func restartValetServices() {
         Task { // Restart services and show notification
-            await Actions().restartDnsMasq()
-            await Actions().restartPhpFpm()
-            await Actions().restartNginx()
+            await actions.restartDnsMasq()
+            await actions.restartPhpFpm()
+            await actions.restartNginx()
 
             LocalNotification.send(
                 title: "notification.services_restarted".localized,
@@ -94,7 +94,7 @@ extension MainMenu {
 
     @MainActor @objc func stopValetServices() {
         Task { // Stop services and show notification
-            await Actions().stopValetServices()
+            await actions.stopValetServices()
 
             LocalNotification.send(
                 title: "notification.services_stopped".localized,
@@ -129,7 +129,7 @@ extension MainMenu {
         }
 
         do {
-            var modes = Xdebug().activeModes
+            var modes = Xdebug(container).activeModes
 
             if let index = modes.firstIndex(of: sender.mode) {
                 modes.remove(at: index)
@@ -157,7 +157,7 @@ extension MainMenu {
             await sender.phpExtension?.toggle()
 
             if Preferences.isEnabled(.autoServiceRestartAfterExtensionToggle) {
-                await Actions().restartPhpFpm()
+                await actions.restartPhpFpm()
             }
         }
     }
@@ -212,14 +212,14 @@ extension MainMenu {
     @objc func openPhpInfo() {
         asyncWithBusyUI {
             Task { // Create temporary file and open the URL
-                let url = await Actions().createTempPhpInfoFile()
+                let url = await self.actions.createTempPhpInfoFile()
                 NSWorkspace.shared.open(url)
             }
         }
     }
 
     @MainActor @objc func updateGlobalComposerDependencies() {
-        ComposerWindow().updateGlobalDependencies(
+        ComposerWindow(container).updateGlobalDependencies(
             notify: true,
             completion: { _ in }
         )
@@ -232,23 +232,23 @@ extension MainMenu {
         }
 
         if install.hasErrorState {
-            Actions().openGenericPhpConfigFolder()
+            actions.openGenericPhpConfigFolder()
             return
         }
 
-        Actions().openPhpConfigFolder(version: install.version.short)
+        actions.openPhpConfigFolder(version: install.version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {
-        Actions().openPhpMonitorConfigFile()
+        actions.openPhpMonitorConfigFile()
     }
 
     @objc func openGlobalComposerFolder() {
-        Actions().openGlobalComposerFolder()
+        actions.openGlobalComposerFolder()
     }
 
     @objc func openValetConfigFolder() {
-        Actions().openValetConfigFolder()
+        actions.openValetConfigFolder()
     }
 
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
