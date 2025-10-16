@@ -21,7 +21,7 @@ class ValetProxy: ValetListable {
 
     var container: Container
 
-    init(container: Container = App.shared.container, domain: String, target: String, secure: Bool, tld: String) {
+    init(_ container: Container, domain: String, target: String, secure: Bool, tld: String) {
         self.container = container
         self.domain = domain
         self.tld = tld
@@ -29,8 +29,9 @@ class ValetProxy: ValetListable {
         self.secured = false
     }
 
-    convenience init(_ configuration: NginxConfigurationFile) {
+    convenience init(_ container: Container, _ configuration: NginxConfigurationFile) {
         self.init(
+            container,
             domain: configuration.domain,
             target: configuration.proxy!,
             secure: false,

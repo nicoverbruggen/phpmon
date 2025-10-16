@@ -11,10 +11,9 @@ import SwiftUI
 
 struct ConfigManagerView: View {
     var preferences: [PhpPreference] = [
-        BytePhpPreference(key: "memory_limit"),
-        BytePhpPreference(key: "post_max_size"),
-        // BoolPhpPreference(key: "file_uploads"),
-        BytePhpPreference(key: "upload_max_filesize")
+        BytePhpPreference(App.shared.container, key: "memory_limit"),
+        BytePhpPreference(App.shared.container, key: "post_max_size"),
+        BytePhpPreference(App.shared.container, key: "upload_max_filesize")
     ]
 
     var body: some View {

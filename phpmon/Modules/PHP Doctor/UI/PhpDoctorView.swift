@@ -94,11 +94,11 @@ struct PhpDoctorView: View {
 }
 
 #Preview("Empty List") {
-    PhpDoctorView(empty: true, fake: true, manager: WarningManager())
+    PhpDoctorView(empty: true, fake: true, manager: WarningManager(container: App.shared.container))
         .frame(width: 600, height: 480)
 }
 
 #Preview("List With All Warnings") {
-    PhpDoctorView(empty: false, fake: true, manager: WarningManager())
+    PhpDoctorView(empty: false, fake: true, manager: WarningManager(container: App.shared.container))
         .frame(width: 600, height: 480)
 }

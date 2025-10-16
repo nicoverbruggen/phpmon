@@ -13,7 +13,7 @@ import Foundation
  Checks that require an app restart will always lead to an alert and app termination shortly after.
  */
 struct EnvironmentCheck {
-    let command: () async -> Bool
+    let command: (_ container: Container) async -> Bool
     let name: String
     let titleText: String
     let subtitleText: String
@@ -22,13 +22,13 @@ struct EnvironmentCheck {
     let requiresAppRestart: Bool
 
     init(
-        command: @escaping () async -> Bool,
+        command: @escaping (_ container: Container) async -> Bool,
         name: String,
         titleText: String,
         subtitleText: String,
         descriptionText: String = "",
         buttonText: String = "OK",
-        requiresAppRestart: Bool = false
+        requiresAppRestart: Bool = false,
     ) {
         self.command = command
         self.name = name
@@ -40,7 +40,7 @@ struct EnvironmentCheck {
     }
 
     public func succeeds() async -> Bool {
-        return await !self.command()
+        return await !self.command(App.shared.container)
     }
 }
 

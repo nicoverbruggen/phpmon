@@ -12,18 +12,45 @@ import ContainerMacro
 
 @ContainerAccess
 class ServicesManager: ObservableObject {
-
-    @ObservedObject static var shared: ServicesManager = ValetServicesManager()
+    @ObservedObject static var shared: ServicesManager = ValetServicesManager(App.shared.container)
 
     @Published var services = [Service]()
 
     @Published var firstRunComplete: Bool = false
 
-    public static func useFake() {
+    init(_ container: Container) {
+        self.container = container
+
+        Log.info("The services manager will determine which Valet services exist on this system.")
+        services = formulae.map {
+            Service(formula: $0)
+        }
+    }
+
+    public static func useFake(_ container: Container) {
         ServicesManager.shared = FakeServicesManager.init(
+            container,
             formulae: ["php", "nginx", "dnsmasq", "mysql"],
             status: .active
         )
+    }
+
+    var formulae: [HomebrewFormula] {
+        let f = HomebrewFormulae()
+
+        var formulae = [
+            f.php,
+            f.nginx,
+            f.dnsmasq
+        ]
+
+        let additionalFormulae = (Preferences.custom.services ?? []).map({ item in
+            return HomebrewFormula(item, elevated: false)
+        })
+
+        formulae.append(contentsOf: additionalFormulae)
+
+        return formulae
     }
 
     /**
@@ -104,34 +131,6 @@ class ServicesManager: ObservableObject {
     public func broadcastServicesUpdated() {
         Task { @MainActor in
             self.objectWillChange.send()
-        }
-    }
-
-    var formulae: [HomebrewFormula] {
-        let f = HomebrewFormulae()
-
-        var formulae = [
-            f.php,
-            f.nginx,
-            f.dnsmasq
-        ]
-
-        let additionalFormulae = (Preferences.custom.services ?? []).map({ item in
-            return HomebrewFormula(item, elevated: false)
-        })
-
-        formulae.append(contentsOf: additionalFormulae)
-
-        return formulae
-    }
-
-    init(container: Container = App.shared.container) {
-        Log.info("The services manager will determine which Valet services exist on this system.")
-
-        self.container = container
-
-        services = formulae.map {
-            Service(formula: $0)
         }
     }
 }

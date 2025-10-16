@@ -14,7 +14,6 @@ import ContainerMacro
 /// that supports opening those directories, like a visual Git client or a terminal app.
 @ContainerAccess
 class Application {
-
     enum AppType {
         case editor, browser, git_gui, terminal, user_supplied
     }
@@ -26,7 +25,7 @@ class Application {
     let type: AppType
 
     /// Initializer. Used to detect a specific app of a specific type.
-    init(container: Container = App.shared.container, _ name: String, _ type: AppType) {
+    init(_ container: Container, _ name: String, _ type: AppType) {
         self.container = container
         self.name = name
         self.type = type
@@ -61,15 +60,17 @@ class Application {
     /**
      Detect which apps are available to open a specific directory.
      */
-    static public func detectPresetApplications() async -> [Application] {
+    static public func detectPresetApplications(
+        _ container: Container
+    ) async -> [Application] {
         var detected: [Application] = []
 
         let detectable = [
-            Application("PhpStorm", .editor),
-            Application("Visual Studio Code", .editor),
-            Application("Sublime Text", .editor),
-            Application("Sublime Merge", .git_gui),
-            Application("iTerm", .terminal)
+            Application(container, "PhpStorm", .editor),
+            Application(container, "Visual Studio Code", .editor),
+            Application(container, "Sublime Text", .editor),
+            Application(container, "Sublime Merge", .git_gui),
+            Application(container, "iTerm", .terminal)
         ]
 
         for app in detectable where await app.isInstalled() {

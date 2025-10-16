@@ -59,7 +59,7 @@ extension MainMenu {
 
             Task { @MainActor [self, error] in
                 if behaviours.contains(.reloadsPhpInstallation) {
-                    App.shared.container.phpEnvs.currentInstall = ActivePhpInstallation()
+                    container.phpEnvs.currentInstall = ActivePhpInstallation(container)
                 }
 
                 if behaviours.contains(.updatesMenuBarContents) {

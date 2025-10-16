@@ -11,6 +11,7 @@ import Foundation
 // swiftlint:disable function_body_length
 class FakeBrewFormulaeHandler: HandlesBrewPhpFormulae {
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
+        // Using the shared container is allowed since this only runs w/ UI tests
         let container = App.shared.container
 
         return [

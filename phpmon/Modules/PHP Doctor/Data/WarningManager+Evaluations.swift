@@ -63,7 +63,7 @@ extension WarningManager {
                             )
 
                             // Reload extension configuration by updating PHP installation info (reload)
-                            self.container.phpEnvs.currentInstall = ActivePhpInstallation()
+                            self.container.phpEnvs.currentInstall = ActivePhpInstallation(self.container)
 
                             // Finally, reload warnings
                             await self.checkEnvironment()

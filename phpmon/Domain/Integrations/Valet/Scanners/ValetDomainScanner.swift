@@ -72,9 +72,9 @@ class ValetDomainScanner: DomainScanner {
         }
 
         if filesystem.isSymlink(path) {
-            return ValetSite(filesystem: filesystem, aliasPath: path, tld: tld)
+            return ValetSite(container, aliasPath: path, tld: tld)
         } else if filesystem.isDirectory(path) {
-            return ValetSite(absolutePath: path, tld: tld)
+            return ValetSite(container, absolutePath: path, tld: tld)
         }
 
         return nil
@@ -106,7 +106,7 @@ class ValetDomainScanner: DomainScanner {
                 return $0.proxy != nil
             }
             .map {
-                return ValetProxy($0)
+                return ValetProxy(container, $0)
             }
     }
 }

@@ -134,12 +134,12 @@ struct Preset: Codable, Equatable {
     // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async -> Bool {
-        if App.shared.container.phpEnvs.currentInstall?.version.short == self.version! {
+        if container.phpEnvs.currentInstall?.version.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
             return true
         }
 
-        if App.shared.container.phpEnvs.availablePhpVersions.first(where: { $0 == self.version }) != nil {
+        if container.phpEnvs.availablePhpVersions.first(where: { $0 == self.version }) != nil {
             await MainMenu.shared.switchToPhp(self.version!)
             return true
         } else {
@@ -149,7 +149,7 @@ struct Preset: Codable, Equatable {
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
                     description: "alert.php_switch_unavailable.info".localized(
                         version!,
-                        App.shared.container.phpEnvs.availablePhpVersions.joined(separator: ", ")
+                        container.phpEnvs.availablePhpVersions.joined(separator: ", ")
                     )
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
@@ -160,7 +160,7 @@ struct Preset: Codable, Equatable {
     }
 
     private func applyConfigurationValue(key: String, value: String) {
-        guard let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) else {
+        guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
             return
         }
 
@@ -260,7 +260,7 @@ struct Preset: Codable, Equatable {
         var items: [String: String?] = [:]
 
         for (key, _) in self.configuration {
-            guard let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) else {
+            guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
                 break
             }
 
@@ -276,11 +276,11 @@ struct Preset: Codable, Equatable {
     private func persistRevert() async {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        await App.shared.container.shell.quiet("mkdir -p ~/.config/phpmon")
+        await container.shell.quiet("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(
-                toFile: "\(App.shared.container.paths.homePath)/.config/phpmon/preset_revert.json",
+                toFile: "\(container.paths.homePath)/.config/phpmon/preset_revert.json",
                 atomically: true,
                 encoding: .utf8
             )

@@ -43,6 +43,7 @@ class FakeValetInteractor: ValetInteractor {
         if let scanner = ValetScanner.active as? FakeDomainScanner {
             scanner.proxies.append(
                 FakeValetProxy(
+                    container,
                     domain: domain,
                     target: proxy,
                     secure: secure,

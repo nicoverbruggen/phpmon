@@ -13,7 +13,7 @@ import ContainerMacro
 @ContainerAccess
 class WarningManager: ObservableObject {
     init(
-        container: Container = App.shared.container,
+        container: Container,
         fake: Bool = false
     ) {
         self.container = container

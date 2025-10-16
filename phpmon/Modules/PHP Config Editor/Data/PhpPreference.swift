@@ -14,7 +14,7 @@ import ContainerMacro
 class PhpPreference {
     let key: String
 
-    init(_ container: Container = App.shared.container, key: String) {
+    init(_ container: Container, key: String) {
         self.container = container
         self.key = key
     }

@@ -31,7 +31,7 @@ extension MainMenu {
      */
     private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        await App.shared.container.phpEnvs.determinePhpAlias()
+        await container.phpEnvs.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
@@ -67,7 +67,7 @@ extension MainMenu {
         App.shared.prepareHomebrewWatchers()
 
         // Check for other problems
-        App.shared.container.warningManager.evaluateWarnings()
+        container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
         App.shared.handlePhpConfigWatcher()
@@ -105,7 +105,7 @@ extension MainMenu {
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
         // We are ready!
-        App.shared.container.phpEnvs.isBusy = false
+        container.phpEnvs.isBusy = false
 
         // Finally!
         Log.info("PHP Monitor is ready to serve!")
@@ -181,10 +181,10 @@ extension MainMenu {
     private func detectApplications() async {
         Log.info("Detecting applications...")
 
-        App.shared.detectedApplications = await Application.detectPresetApplications()
+        App.shared.detectedApplications = await Application.detectPresetApplications(container)
 
         let customApps = Preferences.custom.scanApps?.map { appName in
-            return Application(appName, .user_supplied)
+            return Application(container, appName, .user_supplied)
         } ?? []
 
         var detectedCustomApps: [Application] = []

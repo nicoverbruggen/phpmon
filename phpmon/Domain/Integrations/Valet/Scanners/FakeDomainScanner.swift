@@ -33,7 +33,7 @@ class FakeDomainScanner: DomainScanner {
     ]
 
     var proxies: [ValetProxy] = [
-        FakeValetProxy(domain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
+        FakeValetProxy(fakeDomain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
     ]
 
     // MARK: - Sites

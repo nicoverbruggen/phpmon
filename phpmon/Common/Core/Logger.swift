@@ -9,7 +9,6 @@
 import Foundation
 
 class Log {
-
     static var shared = Log()
 
     var logFilePath = "~/.config/phpmon/last_session.log"

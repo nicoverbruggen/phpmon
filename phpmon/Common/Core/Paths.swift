@@ -17,7 +17,7 @@ public class Paths {
     private var userName: String
     private var preferredShell: String
 
-    init(container: Container = App.shared.container) {
+    init(container: Container) {
         // Assume the default directory is correct
         baseDir = App.architecture != "x86_64" ? .opt : .usr
 

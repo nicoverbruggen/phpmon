@@ -29,7 +29,7 @@ extension PhpExtensionManagerView {
 
     public func install(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
         Task {
-            await self.runCommand(InstallPhpExtensionCommand(install: [ext]))
+            await self.runCommand(InstallPhpExtensionCommand(container, install: [ext]))
             onCompletion()
         }
     }
@@ -45,7 +45,7 @@ extension PhpExtensionManagerView {
             style: .warning,
             onFirstButtonPressed: {
                 Task {
-                    await self.runCommand(RemovePhpExtensionCommand(remove: ext))
+                    await self.runCommand(RemovePhpExtensionCommand(container, remove: ext))
                     onCompletion()
                 }
             }

@@ -40,17 +40,15 @@ class ActivePhpInstallation {
 
     // MARK: - Initializer
 
-    public static func load(
-        container: Container = App.shared.container
-    ) -> ActivePhpInstallation? {
+    public static func load(_ container: Container) -> ActivePhpInstallation? {
         if !container.filesystem.fileExists(container.paths.phpConfig) {
             return nil
         }
 
-        return ActivePhpInstallation(container: container)
+        return ActivePhpInstallation(container)
     }
 
-    init(container: Container = App.shared.container) {
+    init(_ container: Container) {
         self.container = container
 
         // Show information about the current version

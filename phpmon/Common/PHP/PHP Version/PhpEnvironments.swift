@@ -16,9 +16,9 @@ class PhpEnvironments {
     /**
      Loads the currently active PHP installation upon startup. May be empty.
      */
-    init(container: Container = App.shared.container) {
+    init(container: Container) {
         self.container = container
-        self.currentInstall = ActivePhpInstallation.load(container: container)
+        self.currentInstall = ActivePhpInstallation.load(container)
     }
 
     /**
@@ -229,7 +229,7 @@ class PhpEnvironments {
 
         if generateHelpers {
             for item in output {
-                await PhpHelper.generate(for: item)
+                await PhpHelper.generate(container, for: item)
             }
         }
 

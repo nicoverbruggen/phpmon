@@ -55,6 +55,7 @@ extension PhpVersionManagerView {
 
     public func repairAll() async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.repairing".localized,
             upgrading: [],
             installing: []
@@ -63,6 +64,7 @@ extension PhpVersionManagerView {
 
     public func upgradeAll(_ formulae: [BrewPhpFormula]) async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.updating".localized,
             upgrading: formulae,
             installing: []
@@ -71,6 +73,7 @@ extension PhpVersionManagerView {
 
     public func install(_ formula: BrewPhpFormula) async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.installing".localized(formula.displayName),
             upgrading: [],
             installing: [formula]
@@ -103,7 +106,7 @@ extension PhpVersionManagerView {
     }
 
     public func uninstall(_ formula: BrewPhpFormula) async {
-        let command = RemovePhpVersionCommand(formula: formula.name)
+        let command = RemovePhpVersionCommand(container, formula: formula.name)
 
         do {
             self.setBusyStatus(true)

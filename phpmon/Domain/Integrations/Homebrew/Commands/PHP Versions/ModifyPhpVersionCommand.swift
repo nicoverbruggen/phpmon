@@ -34,7 +34,7 @@ class ModifyPhpVersionCommand: BrewCommand {
        re-installed and linked again.
      */
     public init(
-        container: Container = App.shared.container,
+        _ container: Container,
         title: String,
         upgrading: [BrewPhpFormula],
         installing: [BrewPhpFormula]

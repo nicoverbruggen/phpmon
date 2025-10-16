@@ -12,8 +12,8 @@ import NVAlert
 import ContainerMacro
 
 class ValetServicesManager: ServicesManager {
-    override init(container: Container = App.shared.container) {
-        super.init(container: container)
+    override init(_ container: Container) {
+        super.init(container)
 
         // Load the initial services state
         Task {
@@ -47,8 +47,8 @@ class ValetServicesManager: ServicesManager {
                     .filter { $0.elevated }
                     .map { $0.name }
 
-                let rootJson = await App.shared.container.shell
-                    .pipe("sudo \(App.shared.container.paths.brew) services info --all --json")
+                let rootJson = await self.container.shell
+                    .pipe("sudo \(self.container.paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 
                 return try! JSONDecoder()
@@ -62,8 +62,8 @@ class ValetServicesManager: ServicesManager {
                     .filter { !$0.elevated }
                     .map { $0.name }
 
-                let normalJson = await App.shared.container.shell
-                    .pipe("\(App.shared.container.paths.brew) services info --all --json")
+                let normalJson = await self.container.shell
+                    .pipe("\(self.container.paths.brew) services info --all --json")
                     .out.data(using: .utf8)!
 
                 return try! JSONDecoder()

@@ -14,7 +14,7 @@ import Foundation
  Runs a `brew` command. Can run as superuser.
  */
 func brew(
-    _ container: Container = App.shared.container,
+    _ container: Container,
     _ command: String,
     sudo: Bool = false,
 ) async {
@@ -25,7 +25,7 @@ func brew(
  Runs `sed` in order to replace all occurrences of a string in a specific file with another.
  */
 func sed(
-    _ container: Container = App.shared.container,
+    _ container: Container,
     file: String,
     original: String,
     replacement: String
@@ -47,7 +47,7 @@ func sed(
  Uses `grep` to determine whether a particular query string can be found in a particular file.
  */
 func grepContains(
-    shell: ShellProtocol = App.shared.container.shell,
+    shell: ShellProtocol,
     file: String,
     query: String
 ) async -> Bool {

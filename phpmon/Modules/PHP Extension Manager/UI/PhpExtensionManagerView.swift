@@ -16,6 +16,10 @@ struct PhpExtensionManagerView: View {
     @State var searchText: String
     @State private var highlightedExtension: String?
 
+    var container: Container {
+        return App.shared.container
+    }
+
     init() {
         self.searchText = ""
         self.status = BusyStatus.busy()

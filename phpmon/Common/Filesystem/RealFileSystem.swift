@@ -15,6 +15,7 @@ extension String {
             return self.replacingOccurrences(of: "~", with: paths.homePath)
         }
 
+        // TODO: Come up with some other way to handle this when the app container is not available, especially for tests
         return self
     }
 }

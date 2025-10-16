@@ -12,16 +12,17 @@ class FakeServicesManager: ServicesManager {
     var fixedFormulae: [String] = []
     var fixedStatus: Service.Status = .active
 
-    override init(container: Container = App.shared.container) {
-        super.init(container: container)
+    override init(_ container: Container) {
+        super.init(container)
     }
 
     init(
+        _ container: Container,
         formulae: [String] = ["php", "nginx", "dnsmasq"],
         status: Service.Status = .active,
         loading: Bool = false
     ) {
-        super.init()
+        super.init(container)
 
         Log.warn("A fake services manager is being used, so Homebrew formula resolver is set to act in fake mode.")
         Log.warn("If you do not want this behaviour, do not make use of a `FakeServicesManager`!")

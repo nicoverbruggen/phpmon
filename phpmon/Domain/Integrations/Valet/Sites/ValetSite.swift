@@ -68,7 +68,7 @@ class ValetSite: ValetListable {
     }
 
     init(
-        container: Container = App.shared.container,
+        _ container: Container,
         name: String,
         tld: String,
         absolutePath: String,
@@ -91,15 +91,15 @@ class ValetSite: ValetListable {
         }
     }
 
-    convenience init(absolutePath: String, tld: String) {
+    convenience init(_ container: Container, absolutePath: String, tld: String) {
         let name = URL(fileURLWithPath: absolutePath).lastPathComponent
-        self.init(name: name, tld: tld, absolutePath: absolutePath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath)
     }
 
-    convenience init(filesystem: FileSystemProtocol, aliasPath: String, tld: String) {
+    convenience init(_ container: Container, aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! filesystem.getDestinationOfSymlink(aliasPath)
-        self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
+        let absolutePath = try! container.filesystem.getDestinationOfSymlink(aliasPath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 
     /**
@@ -275,7 +275,7 @@ class ValetSite: ValetListable {
     // MARK: - File Parsing
 
     public static func isolatedVersion(
-        _ container: Container = App.shared.container,
+        _ container: Container,
         _ filePath: String
     ) -> String? {
         if container.filesystem.fileExists(filePath) {
