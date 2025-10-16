@@ -86,6 +86,10 @@
 		03BFF52D2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
 		03BFF52E2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
 		03BFF52F2E313244007F96FA /* StatusMenu+Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */; };
+		03C099442EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
+		03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
+		03C099462EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
+		03C099472EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
 		03CC1FE52E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
 		03CC1FE62E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
 		03CC1FE72E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
@@ -1002,6 +1006,7 @@
 		039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetUpgrader.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
+		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -1426,6 +1431,7 @@
 			isa = PBXGroup;
 			children = (
 				0329A9A02E92A2A800A62A12 /* Container.swift */,
+				03C099432EA15C8B00B76D43 /* Container+Real.swift */,
 				031F247F2EA1071700CFB8D9 /* Container+Fake.swift */,
 			);
 			path = Container;
@@ -2738,6 +2744,7 @@
 				039616102E74A61E002DD7F6 /* LoggableEvent.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
+				03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
 				C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */,
@@ -2929,6 +2936,7 @@
 				C471E83F28F9BB650021E251 /* AppDelegate.swift in Sources */,
 				C471E84028F9BB650021E251 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4D36603291132B7006BD146 /* ValetScanners.swift in Sources */,
+				03C099442EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C471E84128F9BB650021E251 /* AppDelegate+Notifications.swift in Sources */,
 				C471E84228F9BB650021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E84328F9BB650021E251 /* App.swift in Sources */,
@@ -3219,6 +3227,7 @@
 				C471E8D128F9BB8F0021E251 /* MenuBarIcons.swift in Sources */,
 				C471E8D228F9BB8F0021E251 /* Stats.swift in Sources */,
 				C471E8D328F9BB8F0021E251 /* GlobalKeybindPreference.swift in Sources */,
+				03C099462EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				039C29152E8AA163007F5FAB /* ActiveApi.swift in Sources */,
 				C471E8D528F9BB8F0021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E8D728F9BB8F0021E251 /* SelectPreferenceView.swift in Sources */,
@@ -3366,6 +3375,7 @@
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
 				039C291A2E8AA314007F5FAB /* TestableApi.swift in Sources */,
 				C4FE011228084FC200D1DE6D /* SelectionVC.swift in Sources */,
+				03C099472EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C4D3661B291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C45D654D29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
