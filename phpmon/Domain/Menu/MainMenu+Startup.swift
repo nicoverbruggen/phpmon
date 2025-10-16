@@ -37,7 +37,7 @@ extension MainMenu {
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Initialize preferences
-        _ = Preferences.shared
+        Preferences.shared = Preferences(container)
 
         // Put some useful diagnostics information in log
         BrewDiagnostics.shared.logBootInformation()

@@ -123,6 +123,7 @@ public struct TestableConfiguration: Codable {
         Log.separator()
         Log.info("Applying to container...")
         App.shared.container.overrideWith(config: self)
+        Preferences.shared = Preferences(App.shared.container)
         Log.info("Applying temporary preference overrides...")
         preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
             Preferences.shared.cachedPreferences[key] = value

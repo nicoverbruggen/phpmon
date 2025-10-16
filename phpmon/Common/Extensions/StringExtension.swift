@@ -9,6 +9,10 @@ import SwiftUI
 
 struct Localization {
     static var preferredLanguage: String? {
+        if Preferences.shared == nil {
+            return nil
+        }
+
         guard let language = Preferences.preferences[.languageOverride] as? String else {
             return nil
         }
