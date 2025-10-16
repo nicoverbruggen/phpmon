@@ -8,15 +8,16 @@
 
 import Foundation
 import Cocoa
+import ContainerMacro
 
+@ContainerAccess
 class Xdebug {
-
-    public static var enabled: Bool {
-        return PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") != nil
+    public var enabled: Bool {
+        return phpEnvs.getConfigFile(forKey: "xdebug.mode") != nil
     }
 
-    public static var activeModes: [String] {
-        guard let file = PhpEnvironments.shared.getConfigFile(forKey: "xdebug.mode") else {
+    public var activeModes: [String] {
+        guard let file = phpEnvs.getConfigFile(forKey: "xdebug.mode") else {
             return []
         }
 
@@ -24,15 +25,13 @@ class Xdebug {
             return []
         }
 
-        return value.components(separatedBy: ",").filter { self.modes.contains($0) }
+        return value.components(separatedBy: ",").filter { self.availableModes.contains($0) }
     }
 
-    public static func asMenuItems() -> [NSMenuItem] {
+    public func asMenuItems() -> [NSMenuItem] {
         var items: [NSMenuItem] = []
 
-        let activeModes = Self.activeModes
-
-        for mode in Self.modes {
+        for mode in availableModes {
             let item = XdebugMenuItem(
                 title: mode,
                 action: #selector(MainMenu.toggleXdebugMode(sender:)),
@@ -47,7 +46,7 @@ class Xdebug {
         return items
     }
 
-    public static var modes: [String] {
+    public var availableModes: [String] {
         return [
             "develop",
             "coverage",

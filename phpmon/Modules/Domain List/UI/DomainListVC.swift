@@ -9,7 +9,9 @@
 import Cocoa
 import Carbon
 import SwiftUI
+import ContainerMacro
 
+@ContainerAccess
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
 
     // MARK: - Outlets

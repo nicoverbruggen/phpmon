@@ -16,6 +16,7 @@ public struct ContainerAccessMacro: MemberMacro {
             ("filesystem", "FileSystemProtocol"),
             ("command", "CommandProtocol"),
             ("paths", "Paths"),
+            ("phpEnvs", "PhpEnvironments"),
             ("favorites", "Favorites"),
             ("warningManager", "WarningManager")
         ]

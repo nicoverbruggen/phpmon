@@ -10,6 +10,7 @@ import Foundation
 
 class FakeValetSite: ValetSite {
     convenience init(
+        container: Container = App.shared.container,
         fakeWithName name: String,
         tld: String,
         secure: Bool,
@@ -42,7 +43,7 @@ class FakeValetSite: ValetSite {
             self.isolatedPhpVersion = PhpInstallation(isolated)
         }
 
-        if PhpEnvironments.shared.currentInstall != nil {
+        if container.phpEnvs.currentInstall != nil {
             self.evaluateCompatibility()
         }
     }

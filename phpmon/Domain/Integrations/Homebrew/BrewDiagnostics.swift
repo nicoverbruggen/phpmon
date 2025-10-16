@@ -122,7 +122,7 @@ class BrewDiagnostics {
     public func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = phpEnvs.phpInstall else {
             Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
@@ -180,8 +180,8 @@ class BrewDiagnostics {
                          + "This could be a problem!")
                 Log.info("Determining whether both of these versions are installed...")
 
-                let bothInstalled = PhpEnvironments.shared.availablePhpVersions.contains(tapPhp.version)
-                    && PhpEnvironments.shared.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
+                let bothInstalled = phpEnvs.availablePhpVersions.contains(tapPhp.version)
+                    && phpEnvs.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
 
                 if bothInstalled {
                     Log.warn("Both conflicting aliases seem to be installed, warning the user!")

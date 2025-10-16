@@ -22,13 +22,6 @@ class PhpEnvironments {
     }
 
     /**
-     Creates the shared instance. Called when starting the app.
-     */
-    static func prepare() {
-        _ = Self.shared
-    }
-
-    /**
      Determine which PHP version the `php` formula is aliased to.
      */
     @MainActor func determinePhpAlias() async {
@@ -67,9 +60,6 @@ class PhpEnvironments {
 
     /** The delegate that is informed of updates. */
     weak var delegate: PhpSwitcherDelegate?
-
-    /** The static instance. Accessible at any time. */
-    static let shared = PhpEnvironments()
 
     /** Whether the switcher is busy performing any actions. */
     @MainActor var isBusy: Bool = false {
@@ -112,8 +102,8 @@ class PhpEnvironments {
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
      */
-    static var homebrewBrewPhpAlias: String {
-        if PhpEnvironments.shared.homebrewPackage == nil {
+    var homebrewBrewPhpAlias: String {
+        if homebrewPackage == nil {
             // For UI testing and as a fallback, determine this version by using (fake) php-config
             let version = App.shared.container.command.execute(path: "/opt/homebrew/bin/php-config",
                                    arguments: ["--version"],
@@ -121,14 +111,14 @@ class PhpEnvironments {
             return try! VersionNumber.parse(version).short
         }
 
-        return PhpEnvironments.shared.homebrewPackage.version
+        return homebrewPackage.version
     }
 
     /**
      The currently linked and active PHP installation.
      */
-    static var phpInstall: ActivePhpInstallation? {
-        return Self.shared.currentInstall
+    var phpInstall: ActivePhpInstallation? {
+        return currentInstall
     }
 
     /**
@@ -145,15 +135,6 @@ class PhpEnvironments {
      */
     public static var switcher: PhpSwitcher {
         return InternalSwitcher()
-    }
-
-    /**
-     Alias that detects which versions of PHP are installed.
-     See also: `detectPhpVersions()`. Please note that this method
-     does *not* return the set of PHP versions that are supported.
-     */
-    public static func detectPhpVersions() async {
-        _ = await Self.shared.detectPhpVersions()
     }
 
     /**
@@ -267,7 +248,7 @@ class PhpEnvironments {
      Validates whether the currently running version matches the provided version.
      */
     public func validate(_ version: String) -> Bool {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = self.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             return false
         }
@@ -288,7 +269,7 @@ class PhpEnvironments {
      You can then use the configuration file instance to change values.
      */
     public func getConfigFile(forKey key: String) -> PhpConfigurationFile? {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = self.phpInstall else {
             return nil
         }
 

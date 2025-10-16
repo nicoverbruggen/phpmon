@@ -31,7 +31,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         ))
 
         // Keep track of the file that contains the information about the extension
-        let existing = PhpEnvironments.shared
+        let existing = phpEnvs
             .cachedPhpInstallations[phpExtension.phpVersion]?
             .extensions.first(where: { ext in
             ext.name == phpExtension.name
@@ -64,7 +64,7 @@ class RemovePhpExtensionCommand: BrewCommand {
                 await performExtensionCleanup(for: ext)
             }
 
-            await PhpEnvironments.detectPhpVersions()
+            _ = await phpEnvs.detectPhpVersions()
 
             await Actions().restartPhpFpm(version: phpExtension.phpVersion)
 

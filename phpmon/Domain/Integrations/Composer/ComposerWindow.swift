@@ -10,7 +10,8 @@ import Foundation
 import NVAlert
 import ContainerMacro
 
-@MainActor @ContainerAccess class ComposerWindow {
+@ContainerAccess
+@MainActor class ComposerWindow {
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
@@ -29,7 +30,7 @@ import ContainerMacro
             return
         }
 
-        PhpEnvironments.shared.isBusy = true
+        phpEnvs.isBusy = true
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -112,7 +113,7 @@ import ContainerMacro
     // MARK: Main Menu Update
 
     private func removeBusyStatus() {
-        PhpEnvironments.shared.isBusy = false
+        phpEnvs.isBusy = false
     }
 
     // MARK: Alert

@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import ContainerMacro
 
 struct BrewPhpFormula: Equatable {
+    var container: Container {
+        return App.shared.container
+    }
+
     /// Name of the formula.
     let name: String
 
@@ -54,8 +59,8 @@ struct BrewPhpFormula: Equatable {
 
     /// Whether this formula alias is different.
     var hasUpgradedFormulaAlias: Bool {
-        return self.shortVersion == PhpEnvironments.homebrewBrewPhpAlias
-            && PhpEnvironments.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
+        return self.shortVersion == container.phpEnvs.homebrewBrewPhpAlias
+        && container.phpEnvs.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
     }
 
     var unavailableAfterUpgrade: Bool {
@@ -104,8 +109,8 @@ struct BrewPhpFormula: Equatable {
             return false
         }
 
-        return App.shared.container.filesystem.fileExists(
-            "\(App.shared.container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+        return container.filesystem.fileExists(
+            "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
                 .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
         )
     }
@@ -119,7 +124,16 @@ struct BrewPhpFormula: Equatable {
             return nil
         }
 
-        return PhpEnvironments.shared.cachedPhpInstallations[shortVersion]?
+        return container.phpEnvs.cachedPhpInstallations[shortVersion]?
             .isHealthy ?? nil
+    }
+
+    static func == (lhs: BrewPhpFormula, rhs: BrewPhpFormula) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.displayName == rhs.displayName
+            && lhs.installedVersion == rhs.installedVersion
+            && lhs.upgradeVersion == rhs.upgradeVersion
+            && lhs.prerelease == rhs.prerelease
+            && lhs.hasFormulaFile == rhs.hasFormulaFile
     }
 }

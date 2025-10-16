@@ -53,7 +53,7 @@ extension PhpExtensionManagerView {
     }
 
     public func runCommand(_ command: BrewCommand) async {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             self.presentErrorAlert(
                 title: "phpman.action_prevented_busy.title".localized,
                 description: "phpman.action_prevented_busy.desc".localized,

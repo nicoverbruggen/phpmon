@@ -71,11 +71,11 @@ class ModifyPhpVersionCommand: BrewCommand {
         } else {
             // Simply upgrade `php` to the latest version
             try await self.upgradeMainPhpFormula(unavailable!, onProgress)
-            await PhpEnvironments.shared.determinePhpAlias()
+            await phpEnvs.determinePhpAlias()
         }
 
         // Re-check the installed versions
-        await PhpEnvironments.detectPhpVersions()
+        _ = await phpEnvs.detectPhpVersions()
 
         // After performing operations, attempt to run repairs if needed
         try await self.repairBrokenPackages(onProgress)
@@ -140,7 +140,7 @@ class ModifyPhpVersionCommand: BrewCommand {
     private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // Determine which PHP installations are considered unhealthy
         // Build a list of formulae to reinstall
-        let requiringRepair = PhpEnvironments.shared
+        let requiringRepair = phpEnvs
             .cachedPhpInstallations.values
             .filter({ !$0.isHealthy })
             .map { installation in
@@ -177,7 +177,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Check which version of PHP are now installed
-        await PhpEnvironments.detectPhpVersions()
+        _ = await phpEnvs.detectPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

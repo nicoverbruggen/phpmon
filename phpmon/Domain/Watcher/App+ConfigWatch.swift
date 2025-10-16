@@ -33,7 +33,7 @@ extension App {
             return
         }
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             Log.info("The config watch manager be disabled until a PHP install is active.")
             return

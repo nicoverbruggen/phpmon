@@ -26,7 +26,7 @@ class InternalSwitcher: PhpSwitcher {
         let versions = getVersionsToBeHandled(version)
 
         await withTaskGroup(of: String.self, body: { group in
-            for available in PhpEnvironments.shared.availablePhpVersions {
+            for available in phpEnvs.availablePhpVersions {
                 group.addTask {
                     await self.unlinkAndStopPhpVersion(available)
                     return available

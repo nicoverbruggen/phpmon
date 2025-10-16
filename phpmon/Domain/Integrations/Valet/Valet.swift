@@ -186,7 +186,7 @@ class Valet {
             return
         }
 
-        if PhpEnvironments.phpInstall == nil {
+        if phpEnvs.phpInstall == nil {
             Log.info("Cannot validate Valet version if no PHP version is linked.")
             return
         }
@@ -243,7 +243,7 @@ class Valet {
      that means that Valet won't work properly.
      */
     func phpFpmConfigurationValid() async -> Bool {
-        guard let version = PhpEnvironments.shared.currentInstall?.version else {
+        guard let version = phpEnvs.currentInstall?.version else {
             Log.info("Cannot check PHP-FPM status: no version of PHP is active")
             return true
         }

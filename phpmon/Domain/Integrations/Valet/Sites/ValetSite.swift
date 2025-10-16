@@ -58,7 +58,7 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? PhpEnvironments.phpInstall?.version.short
+            ?? phpEnvs.phpInstall?.version.short
             ?? "???"
     }
 
@@ -107,12 +107,12 @@ class ValetSite: ValetListable {
      */
     public func determineIsolated() {
         if let version = ValetSite.isolatedVersion(container, "~/.config/valet/Nginx/\(self.name).\(self.tld)") {
-            if !PhpEnvironments.shared.cachedPhpInstallations.keys.contains(version) {
+            if !phpEnvs.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
                 return
             }
-            self.isolatedPhpVersion = PhpEnvironments.shared.cachedPhpInstallations[version]
+            self.isolatedPhpVersion = phpEnvs.cachedPhpInstallations[version]
         } else {
             self.isolatedPhpVersion = nil
         }
@@ -253,7 +253,7 @@ class ValetSite: ValetListable {
             return
         }
 
-        guard let linked = PhpEnvironments.phpInstall else {
+        guard let linked = phpEnvs.phpInstall else {
             self.isCompatibleWithPreferredPhpVersion = false
             return
         }

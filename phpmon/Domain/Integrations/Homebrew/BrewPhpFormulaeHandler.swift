@@ -18,7 +18,7 @@ extension HandlesBrewPhpFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
         Task { @MainActor in
-            await PhpEnvironments.shared.determinePhpAlias()
+            await App.shared.container.phpEnvs.determinePhpAlias()
             Brew.shared.formulae.phpVersions = items
         }
     }
@@ -50,7 +50,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             var upgradeVersion: String?
             var isPrerelease: Bool = Constants.ExperimentalPhpVersions.contains(version)
 
-            if let install = PhpEnvironments.shared.cachedPhpInstallations[version] {
+            if let install = phpEnvs.cachedPhpInstallations[version] {
                 fullVersion = install.versionNumber.text
                 fullVersion = install.isPreRelease ? "\(fullVersion!)-dev" : fullVersion
 

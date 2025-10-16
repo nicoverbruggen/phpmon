@@ -7,27 +7,29 @@
 //
 
 import Foundation
+import ContainerMacro
 
+@ContainerAccess
 struct HomebrewFormulae {
-    static var php: HomebrewFormula {
-        if PhpEnvironments.shared.homebrewPackage == nil {
+    var php: HomebrewFormula {
+        if phpEnvs.homebrewPackage == nil {
             return HomebrewFormula("php", elevated: true)
         }
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = phpEnvs.phpInstall else {
             return HomebrewFormula("php", elevated: true)
         }
 
         return HomebrewFormula(install.formula, elevated: true)
     }
 
-    static var nginx: HomebrewFormula {
+    var nginx: HomebrewFormula {
         return BrewDiagnostics.shared.usesNginxFullFormula
         ? HomebrewFormula("nginx-full", elevated: true)
         : HomebrewFormula("nginx", elevated: true)
     }
 
-    static var dnsmasq: HomebrewFormula {
+    var dnsmasq: HomebrewFormula {
         return HomebrewFormula("dnsmasq", elevated: true)
     }
 }

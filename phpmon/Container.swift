@@ -10,7 +10,9 @@ class Container {
     var shell: ShellProtocol!
     var filesystem: FileSystemProtocol!
     var command: CommandProtocol!
+
     var paths: Paths!
+    var phpEnvs: PhpEnvironments!
 
     var favorites: Favorites!
     var warningManager: WarningManager!
@@ -21,7 +23,9 @@ class Container {
         self.shell = RealShell(container: self)
         self.filesystem = RealFileSystem(container: self)
         self.command = RealCommand()
+
         self.paths = Paths(container: self)
+        self.phpEnvs = PhpEnvironments(container: self)
 
         self.favorites = Favorites()
         self.warningManager = WarningManager(container: self)
@@ -31,5 +35,11 @@ class Container {
         self.shell = TestableShell(expectations: config.shellOutput)
         self.filesystem = TestableFileSystem(files: config.filesystem)
         self.command = TestableCommand(commands: config.commandOutput)
+    }
+
+    public func overrideFake() {
+        self.shell = TestableShell(expectations: [:])
+        self.filesystem = TestableFileSystem(files: [:])
+        self.command = TestableCommand(commands: [:])
     }
 }

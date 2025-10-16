@@ -11,7 +11,6 @@ import Cocoa
 import NVAlert
 
 extension DomainListVC {
-
     @objc func openInBrowser() {
         guard let selected = self.selected else {
             return

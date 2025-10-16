@@ -9,7 +9,6 @@
 import Cocoa
 
 extension DomainListVC {
-
     internal func reloadContextMenu() {
         guard let selected = selected else {
             tableView.menu = nil
@@ -53,8 +52,8 @@ extension DomainListVC {
 
         addSeparator(to: menu)
 
-        if let extensions = site.isolatedPhpVersion?.extensions ?? PhpEnvironments.phpInstall?.extensions,
-           let version = site.isolatedPhpVersion?.versionNumber.short ?? PhpEnvironments.phpInstall?.version.short {
+        if let extensions = site.isolatedPhpVersion?.extensions ?? container.phpEnvs.phpInstall?.extensions,
+           let version = site.isolatedPhpVersion?.versionNumber.short ?? container.phpEnvs.phpInstall?.version.short {
             menu.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
             addMenuItemsForExtensions(
                 to: menu,
@@ -133,7 +132,7 @@ extension DomainListVC {
     private func addIsolate(to menu: NSMenu, with site: ValetSite) {
         var items: [NSMenuItem] = []
 
-        for version in PhpEnvironments.shared.availablePhpVersions.reversed() {
+        for version in container.phpEnvs.availablePhpVersions.reversed() {
             let item = PhpMenuItem(
                 title: "domain_list.always_use_php".localized(version),
                 action: #selector(self.isolateSiteViaMenuItem),
