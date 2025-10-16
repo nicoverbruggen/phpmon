@@ -104,7 +104,6 @@ extension StatusMenu {
     }
 
     @MainActor func addPreferencesMenuItems() {
-
         addItems([
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_preferences".localized,

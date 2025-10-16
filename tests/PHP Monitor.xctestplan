@@ -13,7 +13,6 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
       "parallelizable" : false,
       "target" : {
         "containerPath" : "container:PHP Monitor.xcodeproj",

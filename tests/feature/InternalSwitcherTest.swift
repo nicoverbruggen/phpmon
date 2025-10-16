@@ -14,7 +14,9 @@ final class InternalSwitcherTest: FeatureTestCase {
             "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf": .fake(.text)
         ]), fs = c.filesystem as! TestableFileSystem
 
-        let outcome = await InternalSwitcher(container: c).disableDefaultPhpFpmPool("8.1")
+        let outcome = await InternalSwitcher(container: c)
+            .disableDefaultPhpFpmPool("8.1")
+
         XCTAssertTrue(outcome)
 
         assertFileSystemHas("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon", in: fs)
