@@ -18,7 +18,7 @@ class PhpEnvironments {
      */
     init(container: Container = App.shared.container) {
         self.container = container
-        self.currentInstall = ActivePhpInstallation.load()
+        self.currentInstall = ActivePhpInstallation.load(container: container)
     }
 
     /**
@@ -170,7 +170,7 @@ class PhpEnvironments {
 
         // Avoid inserting a duplicate
         if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
-            let phpAliasInstall = PhpInstallation(phpAlias)
+            let phpAliasInstall = PhpInstallation(container, phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
             if !phpAliasInstall.isMissingBinary {
@@ -190,7 +190,7 @@ class PhpEnvironments {
         var mappedVersions: [String: PhpInstallation] = [:]
 
         availablePhpVersions.forEach { version in
-            mappedVersions[version] = PhpInstallation(version)
+            mappedVersions[version] = PhpInstallation(container, version)
         }
 
         cachedPhpInstallations = mappedVersions

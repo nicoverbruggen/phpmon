@@ -40,7 +40,7 @@ class FakeValetSite: ValetSite {
         }
 
         if let isolated = isolated {
-            self.isolatedPhpVersion = PhpInstallation(isolated)
+            self.isolatedPhpVersion = PhpInstallation(container, isolated)
         }
 
         if container.phpEnvs.currentInstall != nil {

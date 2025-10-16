@@ -11,9 +11,14 @@ import Foundation
 
 @Suite(.serialized)
 struct CaskFileParserTest {
+    var container: Container
 
     init() async throws {
-        ActiveShell.useSystem()
+        container = Container.real()
+    }
+
+    var Shell: ShellProtocol {
+        return container.shell
     }
 
     // MARK: - Test Files
@@ -22,7 +27,7 @@ struct CaskFileParserTest {
     }
 
     @Test func can_extract_fields_from_cask_file() async throws {
-        guard let caskFile = await CaskFile.from(url: CaskFileParserTest.exampleFilePath) else {
+        guard let caskFile = await CaskFile.from(container, url: CaskFileParserTest.exampleFilePath) else {
             Issue.record("The CaskFile could not be parsed, check the log for more info")
             return
         }
@@ -48,7 +53,7 @@ struct CaskFileParserTest {
     @Test func can_extract_fields_from_remote_cask_file() async throws {
         let url = URL(string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb")!
 
-        guard let caskFile = await CaskFile.from(url: url) else {
+        guard let caskFile = await CaskFile.from(container, url: url) else {
             Issue.record("The remote CaskFile could not be parsed, check the log for more info")
             return
         }

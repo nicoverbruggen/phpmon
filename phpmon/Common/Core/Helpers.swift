@@ -14,9 +14,9 @@ import Foundation
  Runs a `brew` command. Can run as superuser.
  */
 func brew(
+    _ container: Container = App.shared.container,
     _ command: String,
     sudo: Bool = false,
-    container: Container = App.shared.container,
 ) async {
     await container.shell.quiet("\(sudo ? "sudo " : "")" + "\(container.paths.brew) \(command)")
 }
@@ -25,12 +25,10 @@ func brew(
  Runs `sed` in order to replace all occurrences of a string in a specific file with another.
  */
 func sed(
+    _ container: Container = App.shared.container,
     file: String,
     original: String,
-    replacement: String,
-    filesystem: FileSystemProtocol = App.shared.container.filesystem,
-    shell: ShellProtocol = App.shared.container.shell,
-    paths: Paths = App.shared.container.paths,
+    replacement: String
 ) async {
     // Escape slashes (or `sed` won't work)
     let e_original = original.replacingOccurrences(of: "/", with: "\\/")
@@ -38,17 +36,21 @@ func sed(
 
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
-    if filesystem.fileExists("\(paths.binPath)/gsed") {
-        await shell.quiet("\(paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
+    if container.filesystem.fileExists("\(container.paths.binPath)/gsed") {
+        await container.shell.quiet("\(container.paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
-        await shell.quiet("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
+        await container.shell.quiet("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
     }
 }
 
 /**
  Uses `grep` to determine whether a particular query string can be found in a particular file.
  */
-func grepContains(file: String, query: String, shell: ShellProtocol = App.shared.container.shell) async -> Bool {
+func grepContains(
+    shell: ShellProtocol = App.shared.container.shell,
+    file: String,
+    query: String
+) async -> Bool {
     return await shell.pipe("""
             grep -q '\(query)' \(file); [ $? -eq 0 ] && echo "YES" || echo "NO"
             """).out

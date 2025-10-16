@@ -9,13 +9,11 @@
 import XCTest
 
 class FeatureTestCase: XCTestCase {
-    // TODO: make fake filesystem accessible via test case
-
     public func assertFileSystemHas(
         _ path: String,
         file: StaticString = #filePath,
         line: UInt = #line,
-        fs: TestableFileSystem
+        in fs: TestableFileSystem
     ) {
         XCTAssertTrue(fs.files.keys.contains(path), file: file, line: line)
     }
@@ -24,7 +22,7 @@ class FeatureTestCase: XCTestCase {
         _ path: String,
         file: StaticString = #filePath,
         line: UInt = #line,
-        fs: TestableFileSystem
+        in fs: TestableFileSystem
     ) {
         XCTAssertFalse(fs.files.keys.contains(path), file: file, line: line)
     }
@@ -34,7 +32,7 @@ class FeatureTestCase: XCTestCase {
         contents: String,
         file: StaticString = #filePath,
         line: UInt = #line,
-        fs: TestableFileSystem
+        in fs: TestableFileSystem
     ) {
         XCTAssertEqual(contents, fs.files[path]?.content, file: file, line: line)
     }

@@ -11,8 +11,10 @@ import Foundation
 
 @Suite(.serialized)
 struct PhpExtensionTest {
+    var container: Container
+
     init () async throws {
-        ActiveShell.useSystem()
+        container = Container.real()
     }
 
     static var phpIniFileUrl: URL {
@@ -20,13 +22,13 @@ struct PhpExtensionTest {
     }
 
     @Test func can_load_extension() throws {
-        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
+        let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         #expect(!extensions.isEmpty)
     }
 
     @Test func extension_name_is_correct() throws {
-        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
+        let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         let extensionNames = extensions.map { (ext) -> String in
             return ext.name
@@ -45,7 +47,7 @@ struct PhpExtensionTest {
     }
 
     @Test func extension_status_is_correct() throws {
-        let extensions = PhpExtension.from(filePath: Self.phpIniFileUrl.path)
+        let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         // xdebug should be enabled
         #expect(extensions[0].enabled == true)
@@ -56,7 +58,7 @@ struct PhpExtensionTest {
 
     @Test func toggle_works_as_expected() async throws {
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
-        let extensions = PhpExtension.from(filePath: destination.path)
+        let extensions = PhpExtension.from(container, filePath: destination.path)
         #expect(extensions.count == 6)
 
         // Try to disable xdebug (should be detected first)!
@@ -71,6 +73,6 @@ struct PhpExtensionTest {
         #expect(file.contains("; zend_extension=\"xdebug.so\""))
 
         // Make sure if we load the data again, it's disabled
-        #expect(PhpExtension.from(filePath: destination.path).first!.enabled == false)
+        #expect(PhpExtension.from(container, filePath: destination.path).first!.enabled == false)
     }
 }

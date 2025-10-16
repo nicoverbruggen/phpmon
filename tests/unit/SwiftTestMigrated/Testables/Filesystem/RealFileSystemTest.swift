@@ -74,7 +74,7 @@ struct RealFileSystemTest {
             "\(temporaryDirectory)/brew/etc/lib/c"
         )
 
-        let contents = try! FileSystem.getShallowContentsOfDirectory("\(temporaryDirectory)/brew/etc/lib/c")
+        let contents = try! filesystem.getShallowContentsOfDirectory("\(temporaryDirectory)/brew/etc/lib/c")
         #expect([] == contents)
     }
 

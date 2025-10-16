@@ -30,16 +30,18 @@ struct BrewPhpExtension: Hashable, Comparable {
         return "\(name)@\(phpVersion)"
     }
 
-    init(path: String, name: String, phpVersion: String) {
+    init(_ container: Container, path: String, name: String, phpVersion: String) {
         self.path = path
         self.name = name
         self.phpVersion = phpVersion
 
         self.isInstalled = BrewPhpExtension.hasInstallationReceipt(
-            for: "\(name)@\(phpVersion)"
+            container, for: "\(name)@\(phpVersion)"
         )
 
-        self.dependencies = BrewPhpExtension.extractDependencies(from: path)
+        self.dependencies = BrewPhpExtension.extractDependencies(
+            container, from: path
+        )
     }
 
     var hasAlternativeInstall: Bool {
@@ -58,8 +60,8 @@ struct BrewPhpExtension: Hashable, Comparable {
             .first { $0.dependencies.contains("shivammathur/extensions/\(self.formulaName)") }
     }
 
-    static func hasInstallationReceipt(for formulaName: String) -> Bool {
-        return App.shared.container.filesystem.fileExists("\(App.shared.container.paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
+    static func hasInstallationReceipt(_ container: Container, for formulaName: String) -> Bool {
+        return container.filesystem.fileExists("\(container.paths.optPath)/\(formulaName)/INSTALL_RECEIPT.json")
     }
 
     static func < (lhs: BrewPhpExtension, rhs: BrewPhpExtension) -> Bool {
@@ -70,11 +72,11 @@ struct BrewPhpExtension: Hashable, Comparable {
         return lhs.name == rhs.name
     }
 
-    private static func extractDependencies(from path: String) -> [String] {
+    private static func extractDependencies(_ container: Container, from path: String) -> [String] {
         let regexPattern = #"depends_on "(.*)""#
         var dependencies: [String] = []
 
-        guard let content = try? App.shared.container.filesystem.getStringFromFile(path) else {
+        guard let content = try? container.filesystem.getStringFromFile(path) else {
             return []
         }
 

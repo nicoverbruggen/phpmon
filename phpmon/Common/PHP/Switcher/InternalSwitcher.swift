@@ -53,7 +53,7 @@ class InternalSwitcher: PhpSwitcher {
 
             if Valet.installed {
                 Log.info("Restarting nginx, just to be sure!")
-                await brew("services restart nginx", sudo: true)
+                await brew(container, "services restart nginx", sudo: true)
             }
 
             Log.info("The new version(s) have been linked!")
@@ -78,10 +78,10 @@ class InternalSwitcher: PhpSwitcher {
 
     func unlinkAndStopPhpVersion(_ version: String) async {
         let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
-        await brew("unlink \(formula)")
+        await brew(container, "unlink \(formula)")
 
         if Valet.installed {
-            await brew("services stop \(formula)", sudo: true)
+            await brew(container, "services stop \(formula)", sudo: true)
             Log.info("Unlinked and stopped services for \(formula)")
         } else {
             Log.info("Unlinked \(formula)")
@@ -93,13 +93,13 @@ class InternalSwitcher: PhpSwitcher {
 
         if primary {
             Log.info("\(formula) is the primary formula, linking...")
-            await brew("link \(formula) --overwrite --force")
+            await brew(container, "link \(formula) --overwrite --force")
         } else {
             Log.info("\(formula) is an isolated PHP version, not linking!")
         }
 
         if Valet.installed {
-            await brew("services start \(formula)", sudo: true)
+            await brew(container, "services start \(formula)", sudo: true)
 
             if Valet.enabled(feature: .isolatedSites) && primary {
                 let socketVersion = version.replacingOccurrences(of: ".", with: "")

@@ -28,7 +28,7 @@ class AppUpdater {
 
         let caskUrl = Constants.Urls.UpdateCheckEndpoint
 
-        guard let caskFile = await CaskFile.from(url: caskUrl) else {
+        guard let caskFile = await CaskFile.from(App.shared.container, url: caskUrl) else {
             Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
             presentCouldNotRetrieveUpdateIfInteractive()
             return .networkError

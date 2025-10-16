@@ -11,7 +11,6 @@ import ContainerMacro
 
 @ContainerAccess
 class PhpInstallation {
-
     var versionNumber: VersionNumber
 
     var iniFiles: [PhpConfigurationFile] = []
@@ -40,7 +39,7 @@ class PhpInstallation {
      In order to determine details about a PHP installation,
      we’ll simply run `php-config --version` in the relevant directory.
      */
-    init(container: Container = App.shared.container, _ version: String) {
+    init(_ container: Container, _ version: String) {
         self.container = container
 
         let phpConfigExecutablePath = "\(container.paths.optPath)/php@\(version)/bin/php-config",
@@ -105,7 +104,7 @@ class PhpInstallation {
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+            if let file = PhpConfigurationFile.from(container, filePath: iniFilePath) {
                 iniFiles.append(file)
             }
         }

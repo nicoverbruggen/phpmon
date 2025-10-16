@@ -9,7 +9,6 @@
 import Foundation
 
 class NginxConfigurationFile: CreatedFromFile {
-
     /// Contents of the Nginx file in question, as a string.
     var contents: String!
 
@@ -21,8 +20,8 @@ class NginxConfigurationFile: CreatedFromFile {
 
     /** Resolves an nginx configuration file (.conf) */
     static func from(
+        _ container: Container,
         filePath: String,
-        container: Container = App.shared.container
     ) -> Self? {
         let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
 

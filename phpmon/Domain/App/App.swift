@@ -74,7 +74,7 @@ class App {
      The dependency container.
      This is supposed to be injected, so direct access is discouraged.
      */
-    let container = Container()
+    var container: Container = Container()
 
     /** The list of preferences that are currently active. */
     var preferences: [PreferenceName: Bool]!

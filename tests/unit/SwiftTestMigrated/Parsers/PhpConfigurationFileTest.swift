@@ -11,21 +11,25 @@ import Foundation
 
 @Suite(.serialized)
 class PhpConfigurationFileTest {
+    var container: Container
+
+    init() {
+        self.container = Container.real()
+    }
+
     static var phpIniFileUrl: URL {
         return TestBundle.url(forResource: "php", withExtension: "ini")!
     }
 
     @Test func can_load_extension() throws {
-        ActiveFileSystem.useSystem()
-        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)
+        let iniFile = PhpConfigurationFile.from(container, filePath: Self.phpIniFileUrl.path)
 
         #expect(iniFile != nil)
         #expect(!iniFile!.extensions.isEmpty)
     }
 
     @Test func can_check_key_existence() throws {
-        print(Self.phpIniFileUrl.path)
-        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
+        let iniFile = PhpConfigurationFile.from(container, filePath: Self.phpIniFileUrl.path)!
 
         #expect(iniFile.has(key: "error_reporting"))
         #expect(iniFile.has(key: "display_errors"))
@@ -33,7 +37,7 @@ class PhpConfigurationFileTest {
     }
 
     @Test func can_check_key_value() throws {
-        let iniFile = PhpConfigurationFile.from(filePath: Self.phpIniFileUrl.path)!
+        let iniFile = PhpConfigurationFile.from(container, filePath: Self.phpIniFileUrl.path)!
 
         #expect(iniFile.get(for: "error_reporting") != nil)
         #expect(iniFile.get(for: "error_reporting") == "E_ALL")
@@ -46,8 +50,7 @@ class PhpConfigurationFileTest {
         let destination = Utility
             .copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
 
-        let configurationFile = PhpConfigurationFile
-            .from(filePath: destination.path)!
+        let configurationFile = PhpConfigurationFile.from(container, filePath: destination.path)!
 
         // 0. Verify the original value
         #expect(configurationFile.get(for: "error_reporting") == "E_ALL")

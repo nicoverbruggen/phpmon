@@ -63,6 +63,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             }
 
             return BrewPhpFormula(
+                container,
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,

@@ -110,6 +110,7 @@ class ValetServicesManager: ServicesManager {
 
         // Run the command
         await brew(
+            container,
             "services \(action) \(wrapper.formula.name)",
             sudo: wrapper.formula.elevated
         )

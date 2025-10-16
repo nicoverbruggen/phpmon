@@ -11,10 +11,15 @@ import Foundation
 
 @Suite(.serialized)
 struct RealShellTest {
+    var container: Container
 
     init() async throws {
         // Reset to the default shell
-        ActiveShell.useSystem()
+        container = Container.real()
+    }
+
+    var Shell: ShellProtocol {
+        return container.shell
     }
 
     @Test func system_shell_is_default() async {

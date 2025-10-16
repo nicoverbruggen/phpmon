@@ -280,7 +280,7 @@ class ValetSite: ValetListable {
     ) -> String? {
         if container.filesystem.fileExists(filePath) {
             return NginxConfigurationFile
-                .from(filePath: filePath)?
+                .from(container, filePath: filePath)?
                 .isolatedVersion ?? nil
         }
 

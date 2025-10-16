@@ -87,7 +87,7 @@ class ValetDomainScanner: DomainScanner {
     private func isSite(_ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
-        return (App.shared.container.filesystem.isDirectory(siteDir) || App.shared.container.filesystem.isSymlink(siteDir))
+        return (container.filesystem.isDirectory(siteDir) || container.filesystem.isSymlink(siteDir))
     }
 
     // MARK: - Proxies
@@ -100,7 +100,7 @@ class ValetDomainScanner: DomainScanner {
                 return !$0.starts(with: ".")
             }
             .compactMap {
-                return NginxConfigurationFile.from(filePath: "\(directoryPath)/\($0)")
+                return NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\($0)")
             }
             .filter {
                 return $0.proxy != nil

@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "CDAF5C24-6A14-4AD7-B204-61734226DBF0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C4F7807825D7F84B000DBC97",
+        "name" : "Unit Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

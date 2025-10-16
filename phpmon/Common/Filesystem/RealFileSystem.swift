@@ -10,7 +10,12 @@ import Foundation
 
 extension String {
     var replacingTildeWithHomeDirectory: String {
-        return self.replacingOccurrences(of: "~", with: App.shared.container.paths.homePath)
+        // Try and check if there's a shared container
+        if let paths = App.shared.container.paths {
+            return self.replacingOccurrences(of: "~", with: paths.homePath)
+        }
+
+        return self
     }
 }
 

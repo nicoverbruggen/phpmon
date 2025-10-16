@@ -37,9 +37,9 @@ class Container {
         self.command = TestableCommand(commands: config.commandOutput)
     }
 
-    public func overrideFake() {
-        self.shell = TestableShell(expectations: [:])
-        self.filesystem = TestableFileSystem(files: [:])
-        self.command = TestableCommand(commands: [:])
+    public static func real() -> Container {
+        let container = Container()
+        container.prepare()
+        return container
     }
 }

@@ -23,7 +23,10 @@ class BrewExtensionsObservable: ObservableObject {
     }
 
     public func loadExtensionData(for version: String) {
-        let tapFormulae = BrewTapFormulae.from(tap: "shivammathur/homebrew-extensions")
+        let tapFormulae = BrewTapFormulae.from(
+            App.shared.container,
+            tap: "shivammathur/homebrew-extensions"
+        )
 
         if let filteredTapFormulae = tapFormulae[version] {
             self.extensions = filteredTapFormulae

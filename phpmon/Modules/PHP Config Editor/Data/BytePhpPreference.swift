@@ -36,7 +36,7 @@ class BytePhpPreference: PhpPreference {
         didSet { updatedFieldValue() }
     }
 
-    override init(container: Container = App.shared.container, key: String) {
+    override init(_ container: Container = App.shared.container, key: String) {
         let value = container.command.execute(
             path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
             trimNewlines: false
@@ -48,7 +48,7 @@ class BytePhpPreference: PhpPreference {
             self.value = value
         }
         
-        super.init(container: container, key: key)
+        super.init(container, key: key)
     }
 
     // MARK: Save Value

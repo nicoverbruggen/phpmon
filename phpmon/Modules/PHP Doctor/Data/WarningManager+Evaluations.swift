@@ -12,7 +12,7 @@ extension WarningManager {
         return [
             Warning(
                 command: {
-                    return await App.shared.container.shell.pipe("sysctl -n sysctl.proc_translated").out
+                    return await self.container.shell.pipe("sysctl -n sysctl.proc_translated").out
                         .trimmingCharacters(in: .whitespacesAndNewlines) == "1"
                 },
                 name: "Running PHP Monitor with Rosetta on Apple Silicon",
@@ -23,8 +23,8 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    return !App.shared.container.shell.PATH.contains("\(App.shared.container.paths.homePath)/.config/phpmon/bin") &&
-                        !App.shared.container.filesystem.isWriteableFile("/usr/local/bin/")
+                    return !self.container.shell.PATH.contains("\(self.container.paths.homePath)/.config/phpmon/bin") &&
+                        !self.container.filesystem.isWriteableFile("/usr/local/bin/")
                 },
                 name: "Helpers cannot be symlinked and not in PATH",
                 title: "warnings.helper_permissions.title",
@@ -34,7 +34,7 @@ extension WarningManager {
                     "warnings.helper_permissions.symlink"
                 ] },
                 url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
-                fix: App.shared.container.paths.shell == "/bin/zsh" ? {
+                fix: self.container.paths.shell == "/bin/zsh" ? {
                     // Add to PATH
                     await ZshRunCommand().addPhpMonitorPath()
                     // Finally, perform environment checks again
@@ -43,7 +43,7 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    App.shared.container.phpEnvs.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
+                    self.container.phpEnvs.currentInstall?.extensions.contains { $0.name == "xdebug" } ?? false
                     && !Xdebug().enabled
                 },
                 name: "Missing configuration file for `xdebug.mode`",
@@ -53,17 +53,17 @@ extension WarningManager {
                 ] },
                 url: "https://xdebug.org/docs/install#mode",
                 fix: {
-                    if let php = App.shared.container.phpEnvs.currentInstall {
+                    if let php = self.container.phpEnvs.currentInstall {
                         if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
-                           let original = try? App.shared.container.filesystem.getStringFromFile(xdebug.file) {
+                           let original = try? self.container.filesystem.getStringFromFile(xdebug.file) {
                             // Append xdebug.mode = off to the file
-                            try? App.shared.container.filesystem.writeAtomicallyToFile(
+                            try? self.container.filesystem.writeAtomicallyToFile(
                                 xdebug.file,
                                 content: original + "\nxdebug.mode = off"
                             )
 
                             // Reload extension configuration by updating PHP installation info (reload)
-                            App.shared.container.phpEnvs.currentInstall = ActivePhpInstallation()
+                            self.container.phpEnvs.currentInstall = ActivePhpInstallation()
 
                             // Finally, reload warnings
                             await self.checkEnvironment()
@@ -82,7 +82,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await App.shared.container.shell.quiet("brew tap shivammathur/php")
+                    await self.container.shell.quiet("brew tap shivammathur/php")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
@@ -98,7 +98,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-extensions",
                 fix: {
-                    await App.shared.container.shell.quiet("brew tap shivammathur/extensions")
+                    await self.container.shell.quiet("brew tap shivammathur/extensions")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }

@@ -13,6 +13,10 @@
 		031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6C2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
+		031F24802EA1071A00CFB8D9 /* Container+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F247F2EA1071700CFB8D9 /* Container+Fake.swift */; };
+		031F24812EA1071A00CFB8D9 /* Container+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F247F2EA1071700CFB8D9 /* Container+Fake.swift */; };
+		031F24822EA1071A00CFB8D9 /* Container+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F247F2EA1071700CFB8D9 /* Container+Fake.swift */; };
+		031F24832EA1071A00CFB8D9 /* Container+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031F247F2EA1071700CFB8D9 /* Container+Fake.swift */; };
 		03263A382E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
 		03263A392E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
 		03263A3A2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03263A372E86D5E800BD0415 /* UpdateScheduler.swift */; };
@@ -975,6 +979,8 @@
 /* Begin PBXFileReference section */
 		0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionsObservable.swift; sourceTree = "<group>"; };
 		031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewPhpExtension.swift; sourceTree = "<group>"; };
+		031F247F2EA1071700CFB8D9 /* Container+Fake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Fake.swift"; sourceTree = "<group>"; };
+		031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		03263A372E86D5E800BD0415 /* UpdateScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateScheduler.swift; sourceTree = "<group>"; };
 		0329A9A02E92A2A800A62A12 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		0329A9A22E92A68B00A62A12 /* WarningManager+Evaluations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarningManager+Evaluations.swift"; sourceTree = "<group>"; };
@@ -1609,6 +1615,7 @@
 		C41C1B3522B0097F00E7CF16 /* phpmon */ = {
 			isa = PBXGroup;
 			children = (
+				031F247F2EA1071700CFB8D9 /* Container+Fake.swift */,
 				0329A9A02E92A2A800A62A12 /* Container.swift */,
 				C4B5853A2770FE2500DA4FBE /* Common */,
 				C41E181722CB61EB0072CF09 /* Domain */,
@@ -1967,6 +1974,7 @@
 		C471E79628F9B4260021E251 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */,
 				C4E2E86828FC2FF2003B070C /* Shared */,
 				C4F7807A25D7F84B000DBC97 /* unit */,
 				C471E7AE28F9B4940021E251 /* feature */,
@@ -2848,6 +2856,7 @@
 				C485707028BF452300539B36 /* PhpDoctorWindowController.swift in Sources */,
 				C4CE3BBA27B31F670086CA49 /* ComposerWindow.swift in Sources */,
 				C40D725A2A018ACC0054A067 /* BusyStatus.swift in Sources */,
+				031F24802EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
 				C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */,
 				C4415E8D2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
@@ -2956,6 +2965,7 @@
 				C471E85A28F9BB650021E251 /* DomainListTypeCell.swift in Sources */,
 				C471E85B28F9BB650021E251 /* DomainListKindCell.swift in Sources */,
 				C4611E5E2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
+				031F24822EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C4BF56AD2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E85C28F9BB650021E251 /* DomainListWindowController.swift in Sources */,
 				C471E85D28F9BB650021E251 /* DomainListVC.swift in Sources */,
@@ -3255,6 +3265,7 @@
 				C471E7FC28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
 				C4BB393C2981AFC700F8E797 /* PhpVersionSource.swift in Sources */,
 				C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */,
+				031F24812EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */,
 				C471E7EE28F9BAC30021E251 /* Constants.swift in Sources */,
 				C40934A0298EE8E900D25014 /* AppUpdater.swift in Sources */,
@@ -3419,6 +3430,7 @@
 				C4EED88A27A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C4159AF728E4D40400545349 /* RealShellTest.swift in Sources */,
 				C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */,
+				031F24832EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C40D725B2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				032DAC292E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,

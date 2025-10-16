@@ -40,14 +40,14 @@ class ActivePhpInstallation {
 
     // MARK: - Initializer
 
-    public static func load() -> ActivePhpInstallation? {
-        let container = App.shared.container
-
+    public static func load(
+        container: Container = App.shared.container
+    ) -> ActivePhpInstallation? {
         if !container.filesystem.fileExists(container.paths.phpConfig) {
             return nil
         }
 
-        return ActivePhpInstallation()
+        return ActivePhpInstallation(container: container)
     }
 
     init(container: Container = App.shared.container) {
@@ -83,7 +83,7 @@ class ActivePhpInstallation {
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+            if let file = PhpConfigurationFile.from(container, filePath: iniFilePath) {
                 iniFiles.append(file)
             }
         }

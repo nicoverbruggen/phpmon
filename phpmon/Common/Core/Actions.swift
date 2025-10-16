@@ -18,30 +18,30 @@ class Actions {
     // MARK: - Services
 
     public func linkPhp() async {
-        await brew("link php --overwrite --force")
+        await brew(container, "link php --overwrite --force")
     }
 
     public func restartPhpFpm() async {
-        await brew("services restart \(formulae.php)", sudo: formulae.php.elevated)
+        await brew(container, "services restart \(formulae.php)", sudo: formulae.php.elevated)
     }
 
     public func restartPhpFpm(version: String) async {
         let formula = (version == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version)"
-        await brew("services restart \(formula)", sudo: formulae.php.elevated)
+        await brew(container, "services restart \(formula)", sudo: formulae.php.elevated)
     }
 
     public func restartNginx() async {
-        await brew("services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
+        await brew(container, "services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
     }
 
     public func restartDnsMasq() async {
-        await brew("services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
+        await brew(container, "services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
     }
 
     public func stopValetServices() async {
-        await brew("services stop \(formulae.php)", sudo: formulae.php.elevated)
-        await brew("services stop \(formulae.nginx)", sudo: formulae.nginx.elevated)
-        await brew("services stop \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
+        await brew(container, "services stop \(formulae.php)", sudo: formulae.php.elevated)
+        await brew(container, "services stop \(formulae.nginx)", sudo: formulae.nginx.elevated)
+        await brew(container, "services stop \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
     }
 
     public func fixHomebrewPermissions() throws {
@@ -134,8 +134,8 @@ class Actions {
      */
     public func fixMyValet() async {
         await InternalSwitcher().performSwitch(to: PhpEnvironments.brewPhpAlias)
-        await brew("services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
-        await brew("services restart \(formulae.php)", sudo: formulae.php.elevated)
-        await brew("services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
+        await brew(container, "services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
+        await brew(container, "services restart \(formulae.php)", sudo: formulae.php.elevated)
+        await brew(container, "services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)
     }
 }

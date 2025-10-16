@@ -9,8 +9,14 @@
 import Testing
 
 struct BytePhpPreferenceTest {
+    var container: Container
+
+    init () async throws {
+        container = Container.real()
+    }
+
     @Test func can_extract_memory_value() throws {
-        let pref = BytePhpPreference(key: "memory_limit")
+        let pref = BytePhpPreference(container, key: "memory_limit")
 
         #expect(pref.internalValue == "512M")
         #expect(pref.unit == .megabyte)

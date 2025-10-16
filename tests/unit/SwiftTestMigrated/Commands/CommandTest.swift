@@ -10,8 +10,10 @@ import Testing
 
 struct CommandTest {
     @Test func determinePhpVersion() {
-        let version = Command.execute(
-            path: Paths.php,
+        let container = Container.real()
+
+        let version = container.command.execute(
+            path: container.paths.php,
             arguments: ["-v"],
             trimNewlines: false
         )

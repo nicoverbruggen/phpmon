@@ -10,9 +10,8 @@ import Foundation
 import ContainerMacro
 
 struct BrewPhpFormula: Equatable {
-    var container: Container {
-        return App.shared.container
-    }
+    /// The dependency container.
+    let container: Container
 
     /// Name of the formula.
     let name: String
@@ -38,12 +37,14 @@ struct BrewPhpFormula: Equatable {
     }
 
     init(
+        _ container: Container,
         name: String,
         displayName: String,
         installedVersion: String?,
         upgradeVersion: String?,
         prerelease: Bool = false
     ) {
+        self.container = container
         self.name = name
         self.displayName = displayName
         self.installedVersion = installedVersion
