@@ -1339,6 +1339,18 @@
 			path = "PHP Versions";
 			sourceTree = "<group>";
 		};
+		036575C62EA12E2200BA41BF /* Versions */ = {
+			isa = PBXGroup;
+			children = (
+				C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */,
+				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
+				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
+				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
+				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
+			);
+			path = Versions;
+			sourceTree = "<group>";
+		};
 		036C38FB2E5C8827008DAEDF /* Packagist */ = {
 			isa = PBXGroup;
 			children = (
@@ -1356,18 +1368,6 @@
 				036C39072E5C88A2008DAEDF /* PackagistTest.swift */,
 			);
 			path = Integration;
-			sourceTree = "<group>";
-		};
-		036C3A222E5CBC33008DAEDF /* SwiftTestMigrated */ = {
-			isa = PBXGroup;
-			children = (
-				039C291E2E8AA39B007F5FAB /* Api */,
-				C4C1019927C65A4D001FACC2 /* Commands */,
-				036C39062E5C8890008DAEDF /* Integration */,
-				036C3A232E5CBC57008DAEDF /* Parsers */,
-				03D53E902E8AE089001B1671 /* Testables */,
-			);
-			path = SwiftTestMigrated;
 			sourceTree = "<group>";
 		};
 		036C3A232E5CBC57008DAEDF /* Parsers */ = {
@@ -2202,18 +2202,6 @@
 			path = Nginx;
 			sourceTree = "<group>";
 		};
-		C4C1019827C65A1A001FACC2 /* Versions */ = {
-			isa = PBXGroup;
-			children = (
-				C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */,
-				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
-				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
-				C4AF9F7C275454A900D44ED0 /* ValetVersionExtractorTest.swift */,
-				C40FE739282ABB2E00A302C2 /* AppVersionTest.swift */,
-			);
-			path = Versions;
-			sourceTree = "<group>";
-		};
 		C4C1019927C65A4D001FACC2 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -2341,8 +2329,12 @@
 			isa = PBXGroup;
 			children = (
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
-				036C3A222E5CBC33008DAEDF /* SwiftTestMigrated */,
-				C4C1019827C65A1A001FACC2 /* Versions */,
+				039C291E2E8AA39B007F5FAB /* Api */,
+				C4C1019927C65A4D001FACC2 /* Commands */,
+				036C39062E5C8890008DAEDF /* Integration */,
+				036C3A232E5CBC57008DAEDF /* Parsers */,
+				03D53E902E8AE089001B1671 /* Testables */,
+				036575C62EA12E2200BA41BF /* Versions */,
 			);
 			path = unit;
 			sourceTree = "<group>";
@@ -3928,7 +3920,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.feature-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3946,7 +3938,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.feature-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3963,7 +3955,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3981,7 +3973,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4148,7 +4140,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.unit-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -4164,7 +4156,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.feature-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4181,7 +4173,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4341,7 +4333,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.unit-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -4357,7 +4349,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.feature-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4374,7 +4366,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4397,7 +4389,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.unit-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -4417,7 +4409,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon.unit-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

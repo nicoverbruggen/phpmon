@@ -6,20 +6,19 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class VersionExtractorTest: XCTestCase {
-
-    func test_extract_version() {
-        XCTAssertEqual(VersionExtractor.from("Laravel Valet 2.17.1"), "2.17.1")
-        XCTAssertEqual(VersionExtractor.from("Laravel Valet 2.0"), "2.0")
+struct VersionExtractorTest {
+    @Test func test_extract_version() {
+        #expect(VersionExtractor.from("Laravel Valet 2.17.1") == "2.17.1")
+        #expect(VersionExtractor.from("Laravel Valet 2.0") == "2.0")
     }
 
-    func test_version_comparison() {
-        XCTAssertEqual("2.0".versionCompare("2.1"), .orderedAscending)
-        XCTAssertEqual("2.1".versionCompare("2.0"), .orderedDescending)
-        XCTAssertEqual("2.0".versionCompare("2.0"), .orderedSame)
-        XCTAssertEqual("2.17.0".versionCompare("2.17.1"), .orderedAscending)
+    @Test func test_version_comparison() {
+        #expect("2.0".versionCompare("2.1") == .orderedAscending)
+        #expect("2.1".versionCompare("2.0") == .orderedDescending)
+        #expect("2.0".versionCompare("2.0") == .orderedSame)
+        #expect("2.17.0".versionCompare("2.17.1") == .orderedAscending)
     }
-
 }
