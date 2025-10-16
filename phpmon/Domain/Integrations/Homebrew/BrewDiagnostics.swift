@@ -59,7 +59,8 @@ class BrewDiagnostics {
      Determines whether to use the regular `nginx` or `nginx-full` formula.
      */
     public var usesNginxFullFormula: Bool {
-        guard let destination = try? filesystem.getDestinationOfSymlink("\(container.paths.binPath)/nginx") else { return false }
+        guard let destination = try? filesystem
+            .getDestinationOfSymlink("\(container.paths.binPath)/nginx") else { return false }
 
         // Verify that the `nginx` binary is symlinked to a directory that includes `nginx-full`.
         return destination.contains("/nginx-full/")

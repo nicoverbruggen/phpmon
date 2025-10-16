@@ -117,7 +117,6 @@ public struct TestableConfiguration: Codable {
 
     // MARK: Interactions
 
-    #warning("This method should replace the container's resolved classes with the fake ones.")
     func apply() {
         Log.separator()
         Log.info("USING TESTABLE CONFIGURATION...")

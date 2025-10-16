@@ -47,7 +47,7 @@ class BytePhpPreference: PhpPreference {
             self.unit = unit
             self.value = value
         }
-        
+
         super.init(container, key: key)
     }
 

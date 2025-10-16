@@ -119,7 +119,8 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: {
-                    return await !App.shared.container.shell.pipe("ls \(App.shared.container.paths.optPath) | grep php").out.contains("php")
+                    return await !App.shared.container.shell
+                        .pipe("ls \(App.shared.container.paths.optPath) | grep php").out.contains("php")
                 },
                 name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
@@ -176,14 +177,16 @@ class Startup {
             // functioning correctly. Let the user know that they need to run `valet trust`.
             // =================================================================================
             EnvironmentCheck(
-                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(App.shared.container.paths.brew) },
+                command: { return await !App.shared.container.shell
+                    .pipe("cat /private/etc/sudoers.d/brew").out.contains(App.shared.container.paths.brew) },
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
                 subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
                 descriptionText: "startup.errors.sudoers_brew.desc".localized
             ),
             EnvironmentCheck(
-                command: { return await !App.shared.container.shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(App.shared.container.paths.valet) },
+                command: { return await !App.shared.container.shell
+                    .pipe("cat /private/etc/sudoers.d/valet").out.contains(App.shared.container.paths.valet) },
                 name: "`/private/etc/sudoers.d/valet` contains valet",
                 titleText: "startup.errors.sudoers_valet.title".localized,
                 subtitleText: "startup.errors.sudoers_valet.subtitle".localized,

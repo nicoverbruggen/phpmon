@@ -8,7 +8,7 @@
 import Cocoa
 import NVAlert
 
-@MainActor 
+@MainActor
 class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
     var container: Container {
         return App.shared.container
