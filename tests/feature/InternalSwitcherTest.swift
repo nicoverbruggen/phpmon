@@ -14,7 +14,7 @@ final class InternalSwitcherTest: FeatureTestCase {
             "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf": .fake(.text)
         ]), fs = c.filesystem as! TestableFileSystem
 
-        let outcome = await InternalSwitcher(container: c)
+        let outcome = await InternalSwitcher(c)
             .disableDefaultPhpFpmPool("8.1")
 
         XCTAssertTrue(outcome)
@@ -24,15 +24,15 @@ final class InternalSwitcherTest: FeatureTestCase {
     }
 
     public func testExistingDisabledByPhpMonFileIsRemoved() async {
-        let c = Container.fake(files: [
+        let container = Container.fake(files: [
             "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf": .fake(.text, "system generated"),
             "/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon": .fake(.text, "phpmon generated")
-        ]), fs = c.filesystem as! TestableFileSystem
+        ]), fs = container.filesystem as! TestableFileSystem
 
         assertFileHasContents("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon",
             contents: "phpmon generated", in: fs)
 
-        let outcome = await InternalSwitcher(container: c).disableDefaultPhpFpmPool("8.1")
+        let outcome = await InternalSwitcher(container).disableDefaultPhpFpmPool("8.1")
         XCTAssertTrue(outcome)
 
         assertFileSystemHas("/opt/homebrew/etc/php/8.1/php-fpm.d/www.conf.disabled-by-phpmon", in: fs)

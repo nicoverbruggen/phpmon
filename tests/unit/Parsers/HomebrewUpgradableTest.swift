@@ -47,7 +47,7 @@ struct HomebrewUpgradableTest {
             "7.4": PhpInstallation(container, "7.4.11")
         ]
 
-        let data = await BrewPhpFormulaeHandler(container: container)
+        let data = await BrewPhpFormulaeHandler(container)
             .loadPhpVersions(loadOutdated: true)
 
         #expect(true == data.contains(where: { formula in
