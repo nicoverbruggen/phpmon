@@ -6,10 +6,18 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
-import ContainerMacro
-
-@ContainerAccess
 class ZshRunCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Methods
+
     /**
      Adds a given line to .zshrc, which may be needed to adjust the PATH.
      */

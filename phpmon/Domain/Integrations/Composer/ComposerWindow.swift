@@ -8,13 +8,24 @@
 
 import Foundation
 import NVAlert
-import ContainerMacro
 
-@ContainerAccess
 @MainActor class ComposerWindow {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
+
+    // MARK: - Methods
 
     /**
      Updates the global dependencies and runs the completion callback when done.

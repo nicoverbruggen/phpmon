@@ -7,10 +7,15 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class InstallPhpExtensionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     let installing: [BrewPhpExtension]
 
     func getExtensionNames() -> String {
@@ -20,6 +25,8 @@ class InstallPhpExtensionCommand: BrewCommand {
     func getCommandTitle() -> String {
         return "phpman.steps.installing".localized(getExtensionNames())
     }
+
+    // MARK: - Methods
 
     public init(_ container: Container,
                 install extensions: [BrewPhpExtension]) {

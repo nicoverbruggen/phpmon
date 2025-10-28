@@ -6,10 +6,21 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
-import ContainerMacro
-
-@ContainerAccess
+///
+/// This class is still WIP and pending for a future release of PHP Monitor.
+///
 class InstallHomebrew {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Methods
+
     public func run() async throws {
         let script = """
             NONINTERACTIVE=1 /bin/bash -c \

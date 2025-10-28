@@ -8,10 +8,11 @@
 
 import Foundation
 import SwiftUI
-import ContainerMacro
 
-@ContainerAccess
 class ServicesManager: ObservableObject {
+
+    var container: Container
+
     @ObservedObject static var shared: ServicesManager = ValetServicesManager(App.shared.container)
 
     @Published var services = [Service]()

@@ -8,11 +8,22 @@
 
 import Foundation
 import NVAlert
-import ContainerMacro
 
-@ContainerAccess
 class BrewDiagnostics {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Static Instance
+
     public static let shared = BrewDiagnostics(App.shared.container)
+
+    // MARK: - Variables
 
     var filesystem: FileSystemProtocol {
         return container.filesystem
@@ -22,6 +33,8 @@ class BrewDiagnostics {
      Determines the Homebrew taps the user has installed.
      */
     public var installedTaps: [String] = []
+
+    // MARK: - Methods
 
     /**
      Load which taps are installed.

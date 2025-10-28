@@ -8,10 +8,19 @@
 
 import Foundation
 import Cocoa
-import ContainerMacro
 
-@ContainerAccess
 class Xdebug {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     public var enabled: Bool {
         return container.phpEnvs.getConfigFile(forKey: "xdebug.mode") != nil
     }
@@ -27,6 +36,19 @@ class Xdebug {
 
         return value.components(separatedBy: ",").filter { self.availableModes.contains($0) }
     }
+
+    public var availableModes: [String] {
+        return [
+            "develop",
+            "coverage",
+            "debug",
+            "gcstats",
+            "profile",
+            "trace"
+        ]
+    }
+
+    // MARK: - Methods
 
     public func asMenuItems() -> [NSMenuItem] {
         var items: [NSMenuItem] = []
@@ -44,17 +66,6 @@ class Xdebug {
         }
 
         return items
-    }
-
-    public var availableModes: [String] {
-        return [
-            "develop",
-            "coverage",
-            "debug",
-            "gcstats",
-            "profile",
-            "trace"
-        ]
     }
 
 }

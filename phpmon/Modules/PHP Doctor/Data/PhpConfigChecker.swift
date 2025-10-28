@@ -7,18 +7,17 @@
 //
 
 import Foundation
-import ContainerMacro
 
-struct FileExistenceCheck {
-    let condition: (() -> Bool)?
-    let path: String
-}
-
-@ContainerAccess
 class PhpConfigChecker {
     public static var shared = PhpConfigChecker(App.shared.container)
 
     var missing: [String] = []
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
 
     public func check() {
         missing = []
@@ -48,4 +47,9 @@ class PhpConfigChecker {
             Log.warn("The following config file(s) were missing: \(missing)")
         }
     }
+}
+
+struct FileExistenceCheck {
+    let condition: (() -> Bool)?
+    let path: String
 }

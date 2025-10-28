@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import ContainerMacro
 
 struct BrewPhpFormula: Equatable {
+
     /// The dependency container.
     let container: Container
 

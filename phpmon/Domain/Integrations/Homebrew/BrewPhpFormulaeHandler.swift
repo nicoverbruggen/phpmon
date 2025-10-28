@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ContainerMacro
 
 protocol HandlesBrewPhpFormulae {
     func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula]
@@ -24,8 +23,17 @@ extension HandlesBrewPhpFormulae {
     }
 }
 
-@ContainerAccess
 class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Methods
+
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         var outdated: [OutdatedFormula]?
 

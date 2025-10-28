@@ -9,9 +9,9 @@
 import Foundation
 import Cocoa
 import NVAlert
-import ContainerMacro
 
 class ValetServicesManager: ServicesManager {
+
     override init(_ container: Container) {
         super.init(container)
 

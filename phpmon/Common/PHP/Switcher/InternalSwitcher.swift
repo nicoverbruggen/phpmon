@@ -7,10 +7,19 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class InternalSwitcher: PhpSwitcher {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Switcher
+
     /**
      Switching to a new PHP version involves:
      - unlinking the current version

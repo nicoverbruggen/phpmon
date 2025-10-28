@@ -7,10 +7,19 @@
 
 import Foundation
 import AppKit
-import ContainerMacro
 
-@ContainerAccess
 class Actions {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     var formulae: HomebrewFormulae {
         return HomebrewFormulae(App.shared.container)
     }

@@ -7,16 +7,21 @@
 //
 
 import Foundation
-import ContainerMacro
 
 /// An application that is capable of opening a particular directory (usually of a PHP project).
 /// In most cases this is going to be a code editor, but it could also be another application
 /// that supports opening those directories, like a visual Git client or a terminal app.
-@ContainerAccess
 class Application {
+
     enum AppType {
         case editor, browser, git_gui, terminal, user_supplied
     }
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
 
     /// Name of the app. Used for display purposes and to determine `name.app` exists.
     let name: String

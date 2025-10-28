@@ -8,10 +8,11 @@
 
 import Foundation
 import Cocoa
-import ContainerMacro
 
-@ContainerAccess
 class WarningManager: ObservableObject {
+
+    var container: Container
+
     init(
         container: Container,
         fake: Bool = false

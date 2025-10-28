@@ -7,14 +7,12 @@
 //
 
 import Foundation
-import ContainerMacro
 
 /**
  This class is responsible for handling the state of Valet throughout PHP Monitor. A singleton instance is created
  and accessible throughout the lifecycle of the app, unless the user has decided to not use Valet. In that case,
  only a restricted subset of functionality is available in the app.
  */
-@ContainerAccess
 class Valet {
 
     enum FeatureFlag {
@@ -22,6 +20,9 @@ class Valet {
     }
 
     static let shared = Valet()
+
+    /// The dependency container.
+    var container: Container
 
     /// The version of Valet that was detected.
     var version: VersionNumber?

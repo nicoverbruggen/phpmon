@@ -7,10 +7,16 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class ValetDomainScanner: DomainScanner {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
 
     // MARK: - Sites
 

@@ -7,13 +7,20 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class RemovePhpVersionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     let formula: String
     let version: String
     let phpGuard: PhpGuard
+
+    // MARK: - Methods
 
     init(
         _ container: Container,

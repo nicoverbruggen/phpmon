@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ContainerMacro
 
 /**
  An installed version of PHP, that was detected by scanning the `/opt/php@version/bin` directory.
@@ -18,21 +17,26 @@ import ContainerMacro
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
 
-@ContainerAccess
 class ActivePhpInstallation {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     var version: VersionNumber!
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
-
     var hasErrorState: Bool = false
+
+    // MARK: - Computed
 
     var extensions: [PhpExtension] {
         return iniFiles.flatMap { initFile in
             return initFile.extensions
         }
     }
-
-    // MARK: - Computed
 
     var formula: String {
         return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"

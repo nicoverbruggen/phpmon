@@ -7,14 +7,21 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class ModifyPhpVersionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     let title: String
     let installing: [BrewPhpFormula]
     let upgrading: [BrewPhpFormula]
     let phpGuard: PhpGuard
+
+    // MARK: - Methods
 
     func getCommandTitle() -> String {
         return title

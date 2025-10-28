@@ -7,10 +7,19 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 struct HomebrewFormulae {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     var php: HomebrewFormula {
         if container.phpEnvs.homebrewPackage == nil {
             return HomebrewFormula("php", elevated: true)

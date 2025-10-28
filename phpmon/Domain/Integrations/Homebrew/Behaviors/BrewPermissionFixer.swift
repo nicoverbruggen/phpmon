@@ -7,10 +7,19 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class BrewPermissionFixer {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     var broken: [DueOwnershipFormula] = []
 
     /**

@@ -7,10 +7,19 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class Brew {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     static let shared = Brew(App.shared.container)
 
     /// Formulae that can be observed.

@@ -7,10 +7,15 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class PhpInstallation {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     var versionNumber: VersionNumber
 
     var iniFiles: [PhpConfigurationFile] = []
@@ -34,6 +39,8 @@ class PhpInstallation {
 
         return "php@\(self.versionNumber.short)"
     }
+
+    // MARK: - Methods
 
     /**
      In order to determine details about a PHP installation,

@@ -7,15 +7,24 @@
 //
 
 import Foundation
-import ContainerMacro
 
 struct ValetInteractionError: Error {
     /// The command the user should try (and failed).
     var command: String
 }
 
-@ContainerAccess
 class ValetInteractor {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Shared Instance
+
     static var shared = ValetInteractor(App.shared.container)
 
     public static func useFake() {

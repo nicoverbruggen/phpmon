@@ -7,11 +7,18 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class RemovePhpExtensionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     public let phpExtension: BrewPhpExtension
+
+    // MARK: - Methods
 
     public init(_ container: Container,
                 remove formula: BrewPhpExtension) {

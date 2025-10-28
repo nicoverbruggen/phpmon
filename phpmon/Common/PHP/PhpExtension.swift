@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ContainerMacro
 
 /**
  A PHP extension that was detected in the php.ini file.
@@ -16,8 +15,14 @@ import ContainerMacro
  - Note: You need to know more about regular expressions to be able to deal with these NSRegularExpression
  instances. You can find more information here: https://nshipster.com/swift-regular-expressions/
  */
-@ContainerAccess
 class PhpExtension {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     /// The file where this extension was located.
     var file: String
 

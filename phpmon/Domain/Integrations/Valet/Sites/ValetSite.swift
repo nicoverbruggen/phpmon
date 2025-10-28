@@ -7,10 +7,12 @@
 //
 
 import Foundation
-import ContainerMacro
 
-@ContainerAccess
 class ValetSite: ValetListable {
+
+    /// Dependency container.
+    var container: Container
+
     /// Name of the site. Does not include the TLD.
     var name: String
 
