@@ -38,6 +38,9 @@ class ValetSite: ValetListable {
     /// Whether the site has been secured.
     var secured: Bool!
 
+    /// When the certificate expires.
+    var expiryDate: Date?
+
     /// What driver is currently in use. If not detected, defaults to nil.
     var driver: String?
 
@@ -122,13 +125,23 @@ class ValetSite: ValetListable {
 
     /**
      Checks if a certificate file can be found in the `valet/Certificates` directory.
-     - Note: The file is not validated, only its presence is checked.
+     Also tracks the expiry date of the certificate if it exists.
      */
     public func determineSecured() {
-        secured = container.filesystem
-            .fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        let certificatePath = "~/.config/valet/Certificates/\(self.name).\(self.tld).crt"
 
-        // TODO: Also verify the certificate hasn't expired
+        let (exists, expiryDate) = CertificateValidator(container)
+            .validateCertificate(at: certificatePath)
+
+        if exists, let expiryDate {
+            Log.info("Certificate for \(self.name).\(self.tld) expires at: \(expiryDate).")
+        } else {
+            Log.info("No certificate for \(self.name).\(self.tld).")
+        }
+
+        // Persist the information for the list
+        self.secured = exists
+        self.expiryDate = expiryDate
     }
 
     /**
