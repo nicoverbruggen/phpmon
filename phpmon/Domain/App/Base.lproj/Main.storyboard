@@ -705,6 +705,9 @@ Gw
                                                                         <constraint firstAttribute="width" constant="30" id="B8B-Bs-ZMG"/>
                                                                         <constraint firstAttribute="height" constant="30" id="Ssm-kd-GFd"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <action selector="pressedPhpVersion:" target="hft-M4-nWb" id="7IB-z6-CA4"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -714,6 +717,7 @@ Gw
                                                                 <constraint firstItem="3fp-xd-haK" firstAttribute="centerX" secondItem="hft-M4-nWb" secondAttribute="centerX" id="tQh-hX-llf"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="buttonLockStatus" destination="3fp-xd-haK" id="RFv-pZ-6fX"/>
                                                                 <outlet property="imageViewLock" destination="Wel-Ho-Kpp" id="iji-uw-8we"/>
                                                             </connections>
                                                         </tableCellView>

@@ -60,6 +60,10 @@ class ValetProxy: ValetListable {
         return self.secured
     }
 
+    func getListableCertificateExpiryDate() -> Date? {
+        return self.certificateExpiryDate
+    }
+
     func getListableAbsolutePath() -> String {
         return self.domain
     }

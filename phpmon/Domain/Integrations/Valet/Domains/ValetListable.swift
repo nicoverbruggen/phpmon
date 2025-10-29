@@ -14,6 +14,8 @@ protocol ValetListable {
 
     func getListableSecured() -> Bool
 
+    func getListableCertificateExpiryDate() -> Date?
+
     func getListableAbsolutePath() -> String
 
     func getListablePhpVersion() -> String

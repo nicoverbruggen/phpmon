@@ -64,6 +64,10 @@
 		0392CDE72EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
 		0392CDE82EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
 		0392CDE92EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
+		0392CDEB2EB25371009176DA /* SecurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDEA2EB25371009176DA /* SecurePopoverView.swift */; };
+		0392CDEC2EB25371009176DA /* SecurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDEA2EB25371009176DA /* SecurePopoverView.swift */; };
+		0392CDED2EB25371009176DA /* SecurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDEA2EB25371009176DA /* SecurePopoverView.swift */; };
+		0392CDEE2EB25371009176DA /* SecurePopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDEA2EB25371009176DA /* SecurePopoverView.swift */; };
 		0396160D2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
 		0396160E2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
 		0396160F2E74A61E002DD7F6 /* LoggableEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */; };
@@ -1003,6 +1007,7 @@
 		036C390E2E5C8D3B008DAEDF /* PackagistError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistError.swift; sourceTree = "<group>"; };
 		036C39132E5CB820008DAEDF /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
 		0392CDE52EB23B8F009176DA /* CertificateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateValidator.swift; sourceTree = "<group>"; };
+		0392CDEA2EB25371009176DA /* SecurePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurePopoverView.swift; sourceTree = "<group>"; };
 		0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggableEvent.swift; sourceTree = "<group>"; };
 		039C29122E8AA15F007F5FAB /* ActiveApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveApi.swift; sourceTree = "<group>"; };
 		039C29172E8AA311007F5FAB /* TestableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableApi.swift; sourceTree = "<group>"; };
@@ -2177,6 +2182,7 @@
 		C4B609182853AAA700C95265 /* Domains */ = {
 			isa = PBXGroup;
 			children = (
+				0392CDEA2EB25371009176DA /* SecurePopoverView.swift */,
 				C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */,
 			);
 			path = Domains;
@@ -2732,6 +2738,7 @@
 				032DAC2A2E8BEB5B0018E01C /* RealApi.swift in Sources */,
 				54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */,
 				C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */,
+				0392CDEB2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C4D9F24B280B69E100DCD39A /* AddProxyVC.swift in Sources */,
@@ -3122,6 +3129,7 @@
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */,
+				0392CDED2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4B79ECD29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
@@ -3309,6 +3317,7 @@
 				C471E80428F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C43931C829C4BD610069165B /* PhpVersionManagerView.swift in Sources */,
 				C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
+				0392CDEE2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
@@ -3574,6 +3583,7 @@
 				C485706F28BF452300539B36 /* PhpDoctorWindowController.swift in Sources */,
 				C46FA9892822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */,
 				C43931CB29C4C03F0069165B /* Brew.swift in Sources */,
+				0392CDEC2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C41C02AB27E61CB3009F26CB /* FakeValetSite.swift in Sources */,
 				C4F780C925D80B75000DBC97 /* StringExtension.swift in Sources */,
 				C4D9F24C280B69E100DCD39A /* AddProxyVC.swift in Sources */,

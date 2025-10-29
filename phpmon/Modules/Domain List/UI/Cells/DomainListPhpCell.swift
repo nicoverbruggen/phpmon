@@ -92,7 +92,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         let fittingSize = controller.view.fittingSize
         let finalWidth: CGFloat = min(fittingSize.width, 400)
-        let finalHeight: CGFloat = min(fittingSize.height, 300)
+        let finalHeight: CGFloat = min(fittingSize.height, 700)
 
         controller.view.frame = NSRect(x: 0, y: 0, width: finalWidth, height: finalHeight)
 
