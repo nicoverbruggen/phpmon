@@ -39,7 +39,15 @@ class ValetSite: ValetListable {
     var secured: Bool!
 
     /// When the certificate expires.
-    var expiryDate: Date?
+    var certificateExpiryDate: Date?
+
+    /// A simple bool to check if the certificate has expired.
+    var isCertificateExpired: Bool {
+        guard let certificateExpiryDate = certificateExpiryDate else {
+            return false
+        }
+        return certificateExpiryDate < Date()
+    }
 
     /// What driver is currently in use. If not detected, defaults to nil.
     var driver: String?
@@ -141,7 +149,7 @@ class ValetSite: ValetListable {
 
         // Persist the information for the list
         self.secured = exists
-        self.expiryDate = expiryDate
+        self.certificateExpiryDate = expiryDate
     }
 
     /**

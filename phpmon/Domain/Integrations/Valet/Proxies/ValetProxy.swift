@@ -14,6 +14,14 @@ class ValetProxy: ValetListable {
     var target: String
     var secured: Bool = false
 
+    var certificateExpiryDate: Date?
+    var isCertificateExpired: Bool {
+        guard let certificateExpiryDate = certificateExpiryDate else {
+            return false
+        }
+        return certificateExpiryDate < Date()
+    }
+
     var favorited: Bool = false
     var favoriteSignature: String {
         "proxy:domain:\(domain).\(tld)|target:\(target)"
@@ -79,7 +87,20 @@ class ValetProxy: ValetListable {
     // MARK: - Interactions
 
     func determineSecured() {
-        self.secured = container.filesystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+        let certificatePath = "~/.config/valet/Certificates/\(self.domain).\(self.tld).crt"
+
+        let (exists, expiryDate) = CertificateValidator(container)
+            .validateCertificate(at: certificatePath)
+
+        if exists, let expiryDate {
+            Log.info("Certificate for \(self.domain).\(self.tld) expires at: \(expiryDate).")
+        } else {
+            Log.info("No certificate for \(self.domain).\(self.tld).")
+        }
+
+        // Persist the information for the list
+        self.secured = exists
+        self.certificateExpiryDate = expiryDate
     }
 
     func toggleFavorite() {
