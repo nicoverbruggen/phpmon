@@ -20,31 +20,31 @@ struct SecurePopoverView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if expires == nil {
-                Text("The domain \"\(name).\(tld)\" is not secured.")
+                Text("cert_popover.insecure_domain".localized("\(name).\(tld)"))
                     .fontWeight(.bold)
                 DisclaimerView(
                     iconName: "info.circle.fill",
-                    message: "Traffic is served by nginx over plain HTTP. Keep in mind that certain web features may not work correctly without a secure connection.",
+                    message: "cert_popover.insecure_domain_text".localized,
                     color: Color.statusColorRed
                 )
             } else {
-                Text("The domain \"\(name).\(tld)\" is secured.")
+                Text("cert_popover.secure_domain".localized("\(name).\(tld)"))
                     .fontWeight(.bold)
                     .fixedSize(horizontal: false, vertical: true)
                 if let expires {
-                    Text("Because this domain has been secured with a certificate, traffic to this domain is served by nginx over HTTPS.")
+                    Text("cert_popover.secure_domain_traffic".localized)
                         .font(.subheadline)
                         .fixedSize(horizontal: false, vertical: true)
                     if expires < Date() {
                         DisclaimerView(
-                            iconName: "info.circle.fill",
-                            message: "The certificate expired on \(expires.formatted()). You must renew it to continue using HTTPS without errors.",
+                            iconName: "exclamationmark.triangle.fill",
+                            message: "cert_popover.secure_domain_expired".localized(expires.formatted()),
                             color: Color.statusColorOrange
                         )
                     } else {
                         DisclaimerView(
-                            iconName: "info.circle.fill",
-                            message: "The certificate is valid. It will expire on \(expires.formatted()). At that point it will need to be renewed, but you will be notified.",
+                            iconName: "checkmark.circle.fill",
+                            message: "cert_popover.secure_domain_expiring_later".localized(expires.formatted()),
                             color: Color.statusColorGreen
                         )
                     }

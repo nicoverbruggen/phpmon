@@ -912,3 +912,10 @@ If you want to make edits to this file, please do so before upgrading. When you 
 "valet_upgraded.title" = "Valet has been upgraded!";
 "valet_upgraded.subtitle" = "Sometimes, upgrades may require you to run `valet install` in a terminal after upgrading.";
 "valet_upgraded.description" = "PHP Monitor cannot know if this is necessary, so it doesn't do this automatically. However, if things don't seem to work correctly, you can try running `valet install` again and restart PHP Monitor.";
+
+"cert_popover.insecure_domain" = "The domain \"%@\" is not secured.";
+"cert_popover.insecure_domain_text" = "Traffic is served by nginx over plain HTTP. Keep in mind that certain web features may not work correctly without a secure connection.";
+"cert_popover.secure_domain" = "The domain \"%@\" is secured.";
+"cert_popover.secure_domain_traffic" = "Because this domain has been secured with a certificate, traffic to this domain is served by nginx over HTTPS.";
+"cert_popover.secure_domain_expired" = "The certificate expired on %@. You must renew it to continue using HTTPS without errors.";
+"cert_popover.secure_domain_expiring_later" = "The certificate is valid. It will expire on %@. At that point it will need to be renewed, but you will be notified.";
