@@ -84,7 +84,19 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             parent: popover
         )
 
-        popover.contentViewController = NSHostingController(rootView: view)
+        let controller = NSHostingController(rootView: view)
+
+        // Force a layout pass to get accurate sizing, this resolves positioning issues
+        controller.view.setFrameSize(NSSize(width: 400, height: 1000))
+        controller.view.layoutSubtreeIfNeeded()
+
+        let fittingSize = controller.view.fittingSize
+        let finalWidth: CGFloat = min(fittingSize.width, 400)
+        let finalHeight: CGFloat = min(fittingSize.height, 300)
+
+        controller.view.frame = NSRect(x: 0, y: 0, width: finalWidth, height: finalHeight)
+
+        popover.contentViewController = controller
         popover.behavior = .transient
         popover.animates = true
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
