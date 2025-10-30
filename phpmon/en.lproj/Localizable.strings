@@ -920,7 +920,10 @@ If you want to make edits to this file, please do so before upgrading. When you 
 "cert_popover.secure_domain_expired" = "The certificate expired on %@. You must renew it to continue using HTTPS without errors.";
 "cert_popover.secure_domain_expiring_later" = "The certificate is valid. It will expire on %@. At that point it will need to be renewed, but you will be notified.";
 
-"cert_alert.title" = "One or more certificates for have expired, and must be renewed.";
-"cert_alert.description" = "Certificates signed with the CA from Laravel Valet are usually valid for only one year. Do you want PHP Monitor to unsecure and re-secure any expired domains? The following certificates are affected:";
+"cert_alert.title" = "One or more certificates have expired, and must be renewed.";
+"cert_alert.description" = "Certificates used to secure domains are usually valid for one year. Do you want PHP Monitor to unsecure and re-secure any expired domains?";
+"cert_alert.domains" = "The following certificates are affected and will be renewed:
+
+%@";
 "cert_alert.renew" = "Renew Certificate(s)";
 "cert_alert.cancel" = "Cancel";

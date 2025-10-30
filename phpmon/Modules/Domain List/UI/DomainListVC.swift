@@ -9,7 +9,9 @@
 import Cocoa
 import Carbon
 import SwiftUI
+import NVAlert
 
+// swiftlint:disable type_body_length file_length
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var container: Container {
         return App.shared.container
@@ -117,11 +119,20 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         if !Valet.shared.sites.isEmpty {
             // Preloaded list
-            domains = Valet.getDomainListable()
+            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         } else {
             Task { await reloadDomains() }
         }
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        checkForCertificateRenewal()
+    }
+
+    private func reloadDomainListables() {
+        domains = Valet.getDomainListable()
     }
 
     private func addNoResultsView() {
@@ -205,14 +216,14 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         waitAndExecute {
             await Valet.shared.reloadSites()
         } completion: { [self] in
-            domains = Valet.shared.sites
+            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         }
     }
 
     func reloadDomainsWithoutUI() async {
         await Valet.shared.reloadSites()
-        domains = Valet.shared.sites
+        reloadDomainListables()
         searchedFor(text: lastSearchedFor)
     }
 
@@ -244,7 +255,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
 
     private func find(_ name: String, _ shouldSecure: Bool = false) {
-        domains = Valet.getDomainListable()
+        reloadDomainListables()
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
             Task { @MainActor in
@@ -359,3 +370,4 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 }
+// swiftlint:enable type_body_length file_length

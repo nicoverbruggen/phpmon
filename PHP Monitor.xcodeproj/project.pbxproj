@@ -105,6 +105,10 @@
 		03CC1FF52E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF62E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
+		03DAD3A62EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
+		03DAD3A72EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
+		03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
+		03DAD3A92EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
@@ -1018,6 +1022,7 @@
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
+		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
@@ -1869,6 +1874,7 @@
 			children = (
 				C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */,
 				C464ADAE275A7A69003FCD53 /* DomainListVC.swift */,
+				03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */,
 				C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */,
 				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
 				C4FE011028084FC200D1DE6D /* SelectionVC.swift */,
@@ -2827,6 +2833,7 @@
 				C45E76142854A65300B4FE0C /* ServicesManager.swift in Sources */,
 				C4D5857C2A7038DB00DDBB63 /* ByteLimitView.swift in Sources */,
 				C4D4CB3729C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
+				03DAD3A72EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */,
 				C4068CAA27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C441CC562AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
@@ -3128,6 +3135,7 @@
 				C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */,
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
+				03DAD3A92EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				0392CDED2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
@@ -3180,6 +3188,7 @@
 				C4513F912B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				C471E8A728F9BB8F0021E251 /* App+ActivationPolicy.swift in Sources */,
 				C45B914C295607F400F4EC78 /* Service.swift in Sources */,
+				03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C471E8A828F9BB8F0021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
 				C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */,
@@ -3509,6 +3518,7 @@
 				C489E0BC2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				036C390B2E5C8CC5008DAEDF /* PackagistP2Response.swift in Sources */,
 				C4CE3BBB27B324230086CA49 /* MainMenu+Switcher.swift in Sources */,
+				03DAD3A62EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C4B79ECC29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C43B8FD62BA9C689000C02BE /* UnavailableContentView.swift in Sources */,
 				C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */,
@@ -4534,8 +4544,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nicoverbruggen/NVAlert";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
