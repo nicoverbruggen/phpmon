@@ -12,6 +12,8 @@ protocol ValetListable {
 
     func getListableName() -> String
 
+    func getListableTLD() -> String
+
     func getListableSecured() -> Bool
 
     func getListableCertificateExpiryDate() -> Date?

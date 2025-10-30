@@ -141,10 +141,8 @@ class ValetSite: ValetListable {
         let (exists, expiryDate) = CertificateValidator(container)
             .validateCertificate(at: certificatePath)
 
-        if exists, let expiryDate {
-            Log.info("Certificate for \(self.name).\(self.tld) expires at: \(expiryDate).")
-        } else {
-            Log.info("No certificate for \(self.name).\(self.tld).")
+        if exists, let expiryDate, expiryDate < Date() {
+            Log.warn("Certificate for \(self.name).\(self.tld) expired at: \(expiryDate). It should be renewed.")
         }
 
         // Persist the information for the list
@@ -317,6 +315,10 @@ class ValetSite: ValetListable {
 
     func getListableName() -> String {
         return self.name
+    }
+
+    func getListableTLD() -> String {
+        return self.tld
     }
 
     func getListableSecured() -> Bool {

@@ -56,6 +56,10 @@ class ValetProxy: ValetListable {
         return self.domain
     }
 
+    func getListableTLD() -> String {
+        return self.tld
+    }
+
     func getListableSecured() -> Bool {
         return self.secured
     }
@@ -96,10 +100,8 @@ class ValetProxy: ValetListable {
         let (exists, expiryDate) = CertificateValidator(container)
             .validateCertificate(at: certificatePath)
 
-        if exists, let expiryDate {
-            Log.info("Certificate for \(self.domain).\(self.tld) expires at: \(expiryDate).")
-        } else {
-            Log.info("No certificate for \(self.domain).\(self.tld).")
+        if exists, let expiryDate, expiryDate < Date() {
+            Log.warn("Certificate for \(self.domain).\(self.tld) expired at: \(expiryDate). It should be renewed.")
         }
 
         // Persist the information for the list
