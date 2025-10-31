@@ -11,7 +11,6 @@ import Carbon
 import SwiftUI
 import NVAlert
 
-// swiftlint:disable type_body_length file_length
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
     var container: Container {
         return App.shared.container
@@ -370,4 +369,3 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 }
-// swiftlint:enable type_body_length file_length

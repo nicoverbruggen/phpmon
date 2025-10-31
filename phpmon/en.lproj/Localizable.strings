@@ -924,6 +924,8 @@ If you want to make edits to this file, please do so before upgrading. When you 
 "cert_alert.description" = "Certificates used to secure domains are usually valid for one year. Do you want PHP Monitor to unsecure and re-secure any expired domains?";
 "cert_alert.domains" = "The following certificates are affected and will be renewed:
 
-%@";
-"cert_alert.renew" = "Renew Certificate(s)";
-"cert_alert.cancel" = "Cancel";
+%@
+
+PHP Monitor will tell Valet to unsecure and re-secure all expired domains for you. This can take a while, as nginx may be restarted a few times if multiple domains need to be re-secured. You will be prompted about this issue every time this window opens, so it is recommended to take action now.";
+"cert_alert.renew" = "Re-secure Domain(s)";
+"cert_alert.cancel" = "Not Now";

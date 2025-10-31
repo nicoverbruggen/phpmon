@@ -19,6 +19,11 @@ extension DomainListVC {
             return false
         }
 
+        // If no expired domains exist, skip this alert
+        if expired.isEmpty {
+            return
+        }
+
         // An easily accessible list of domains
         let domainListing = "- " + expired.map {
             $0.getListableName() + "." + $0.getListableTLD()
@@ -38,13 +43,32 @@ extension DomainListVC {
                 description: "cert_alert.domains".localized(domainListing)
             )
             .withPrimary(text: "cert_alert.renew".localized, action: { vc in
-                // TODO: renewal
+                Task { await self.renewCertificates(expired) }
                 vc.close(with: .OK)
             })
             .withSecondary(text: "cert_alert.cancel".localized, action: { vc in
                 vc.close(with: .abort)
             })
             .presentAsSheet(attachedTo: window)
+        }
+    }
+
+    public func renewCertificates(_ expired: [ValetListable]) async {
+        waitAndExecute {
+            for domain in expired {
+                // Unsecure domain first
+                try? await domain.toggleSecure()
+
+                // Resecure if unsecured
+                if !domain.getListableSecured() {
+                    try? await domain.toggleSecure()
+                }
+            }
+        } completion: {
+            Task {
+                await delay(seconds: 1)
+                await self.reloadDomainsWithoutUI()
+            }
         }
     }
 }

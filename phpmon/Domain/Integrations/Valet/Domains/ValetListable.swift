@@ -30,4 +30,6 @@ protocol ValetListable {
 
     func getListableFavorited() -> Bool
 
+    func toggleSecure() async throws
+
 }
