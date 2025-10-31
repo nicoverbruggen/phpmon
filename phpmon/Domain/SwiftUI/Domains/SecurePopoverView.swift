@@ -16,6 +16,7 @@ struct SecurePopoverView: View {
     @State var name: String
     @State var tld: String
     @State var expires: Date?
+    var callback: () -> Void = {}
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -41,6 +42,9 @@ struct SecurePopoverView: View {
                             message: "cert_popover.secure_domain_expired".localized(expires.formatted()),
                             color: Color.statusColorOrange
                         )
+                        Button("cert_popover.cta_renewal".localized) {
+                            callback()
+                        }.padding(.top, 10)
                     } else {
                         DisclaimerView(
                             iconName: "checkmark.circle.fill",

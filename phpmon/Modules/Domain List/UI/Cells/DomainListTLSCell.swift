@@ -58,7 +58,11 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
         let view = SecurePopoverView(
             name: site.getListableName(),
             tld: Valet.shared.config.tld,
-            expires: site.getListableCertificateExpiryDate()
+            expires: site.getListableCertificateExpiryDate(),
+            callback: {
+                App.shared.domainListWindowController?
+                    .contentVC.checkForCertificateRenewal()
+            }
         )
 
         let controller = NSHostingController(rootView: view)

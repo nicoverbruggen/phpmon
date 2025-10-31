@@ -919,6 +919,7 @@ If you want to make edits to this file, please do so before upgrading. When you 
 "cert_popover.secure_domain_traffic" = "Because this domain has been secured with a certificate, traffic to this domain is served by nginx over HTTPS.";
 "cert_popover.secure_domain_expired" = "The certificate expired on %@. You must renew it to continue using HTTPS without errors.";
 "cert_popover.secure_domain_expiring_later" = "The certificate is valid. It will expire on %@. At that point it will need to be renewed, but you will be notified.";
+"cert_popover.cta_renewal" = "Renew Certificates...";
 
 "cert_alert.title" = "One or more certificates have expired, and must be renewed.";
 "cert_alert.description" = "Certificates used to secure domains are usually valid for one year. Do you want PHP Monitor to unsecure and re-secure any expired domains?";
@@ -926,6 +927,6 @@ If you want to make edits to this file, please do so before upgrading. When you 
 
 %@
 
-PHP Monitor will tell Valet to unsecure and re-secure all expired domains for you. This can take a while, as nginx may be restarted a few times if multiple domains need to be re-secured. You will be prompted about this issue every time this window opens, so it is recommended to take action now.";
+PHP Monitor will tell Valet to unsecure and re-secure all expired domains for you. This can take a while, as nginx may be restarted a few times if multiple domains need to be re-secured.";
 "cert_alert.renew" = "Re-secure Domain(s)";
 "cert_alert.cancel" = "Not Now";
