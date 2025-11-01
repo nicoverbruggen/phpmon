@@ -63,7 +63,7 @@ struct Constants {
      will be displayed to let them know that certain operations
      will not work correctly and that they need to update their app.
 
-     The cutoff date is always a few days after GA of the latest
+     It always takes a few days for a new update after GA of the latest
      release, as it often takes a while for Homebrew to make the
      new release available and not everyone uses a separate tap.
      */

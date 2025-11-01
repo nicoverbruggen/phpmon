@@ -67,7 +67,7 @@ struct PhpVersionManagerView: View {
         if Date.fromString(Constants.PhpFormulaeCutoffDate)! < Date.now {
             self.presentErrorAlert(
                 title: "phpman.warnings.outdated.title".localized,
-                description: "phpman.warnings.outdated.desc".localized(version.text),
+                description: "phpman.warnings.outdated.desc".localized,
                 button: "generic.ok".localized,
                 style: .warning
             )

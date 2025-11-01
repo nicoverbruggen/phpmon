@@ -169,8 +169,10 @@ and restart PHP Monitor for extensions to become visible. If the problem persist
 "phpman.has_updates.description" = "**One or more updates are available.** PHP Monitor will always install or update PHP versions in bulk, so you will always upgrade all installations at once.";
 "phpman.has_updates.button" = "Upgrade All";
 
-"phpman.warnings.outdated.title" = "This version of PHP Monitor is outdated";
-"phpman.warnings.outdated.desc" = "It is highly likely that the Homebrew formulae have changed since this version of PHP Monitor was created. I highly recommend updating the application before using the version manager to install, remove or upgrade PHP versions.";
+"phpman.warnings.outdated.title" = "This version of PHP Monitor is likely outdated and requires an update to support the latest version of PHP";
+"phpman.warnings.outdated.desc" = "Due to a recent new release of PHP, it is likely that the Homebrew formulae have changed since this version of PHP Monitor was created. 
+
+I recommend updating PHP Monitor before using the version manager to install, remove or upgrade PHP versions. Depending on how long it takes for Homebrew to update their formulae this may take a couple of days, so keep that in mind.";
 
 "phpman.warnings.unsupported.title" = "Your version of Homebrew may cause issues";
 "phpman.warnings.unsupported.desc" = "No functionality is disabled, but some commands may not work as expected. You are currently running Homebrew %@.
