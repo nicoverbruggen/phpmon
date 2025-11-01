@@ -13,8 +13,11 @@ import AppKit
 
 class CrashReporter {
 
+    /**
+     Initializes the crash reporting toolkit. Keep in mind that this crash reporter only keeps track of crashes,
+     it does not automatically send information. I have my own API for my crash report ingest system.
+     */
     static func initialize() {
-
         if CrashReporter.isDebuggerAttached() {
             Log.err("[CrashReporter] The debugger is attached, won't start crash reporting.")
             return
@@ -67,6 +70,7 @@ class CrashReporter {
                     alert.close(with: .OK)
                 }).runModal()
 
+                // Check the outcome of what the user chose
                 if response == .abort {
                     Log.warn("[CrashReporter] The user has chosen not to send the report.")
                     crashReporter.purgePendingCrashReport()
