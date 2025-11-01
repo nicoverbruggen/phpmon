@@ -8,6 +8,8 @@
 
 import Foundation
 import CrashReporter
+import NVAlert
+import AppKit
 
 class CrashReporter {
 
@@ -32,27 +34,61 @@ class CrashReporter {
         }
 
         if crashReporter.hasPendingCrashReport() {
-            CrashReporter.requestSendingCrashReport(crashReporter)
+            Task { @MainActor in
+                CrashReporter.requestSendingCrashReport(crashReporter)
+            }
         }
     }
 
-    static func requestSendingCrashReport(_ crashReporter: PLCrashReporter) {
+    /**
+     If a pending crash report can be sent, show an alert to the user.
+     */
+    @MainActor static func requestSendingCrashReport(_ crashReporter: PLCrashReporter) {
         do {
             let data = try crashReporter.loadPendingCrashReportDataAndReturnError()
             let report = try PLCrashReport(data: data)
 
             if let text = PLCrashReportTextFormatter.stringValue(for: report, with: PLCrashReportTextFormatiOS) {
-                submitCrashReportToApi(text)
+                // Ask the user to submit the crash report
+                let response = NVAlert().withInformation(
+                    title: "crash_reporter.title".localized,
+                    subtitle: "crash_reporter.subtitle".localized,
+                    description: "crash_reporter.description".localized
+                )
+                .withTertiary(text: "", action: { _ in
+                    try? text.write(toFile: "/tmp/pm_crash_log.txt", atomically: true, encoding: .utf8)
+                    let fileUrl = URL(string: "file:///private/tmp/pm_crash_log.txt")!
+                    NSWorkspace.shared.open(fileUrl)
+                })
+                .withSecondary(text: "crash_reporter.do_not_send".localized, action: { alert in
+                    alert.close(with: .abort)
+                })
+                .withPrimary(text: "crash_reporter.send_report".localized, action: { alert in
+                    alert.close(with: .OK)
+                }).runModal()
+
+                if response == .abort {
+                    Log.warn("[CrashReporter] The user has chosen not to send the report.")
+                    crashReporter.purgePendingCrashReport()
+                }
+                if response == .OK {
+                    submitCrashReportToApi(text)
+                    crashReporter.purgePendingCrashReport()
+                }
             } else {
                 Log.err("[CrashReporter] Could not convert report to text.")
+                crashReporter.purgePendingCrashReport()
             }
         } catch let error {
             Log.err("[CrashReporter] Failed to load and parse with error: \(error)")
+            crashReporter.purgePendingCrashReport()
         }
-
-        crashReporter.purgePendingCrashReport()
     }
 
+    /**
+     Submits the crash report to the API. Does this with high priority on the main thread
+     and we wait for completion (w/ a DispatchSemaphore) before continuing boot.
+     */
     private static func submitCrashReportToApi(_ text: String) {
         let timeout = TimeInterval.seconds(10)
 
