@@ -105,6 +105,10 @@
 		03CC1FF52E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF62E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
+		03D846252EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
+		03D846262EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
+		03D846272EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
+		03D846282EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
 		03DAD3A62EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A72EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
@@ -1022,6 +1026,7 @@
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
+		03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Window.swift"; sourceTree = "<group>"; };
 		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
@@ -1874,6 +1879,7 @@
 			children = (
 				C464ADAB275A7A3F003FCD53 /* DomainListWindowController.swift */,
 				C464ADAE275A7A69003FCD53 /* DomainListVC.swift */,
+				03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */,
 				03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */,
 				C41E87192763D42300161EE0 /* DomainListVC+ContextMenu.swift */,
 				C41CA5EC2774F8EE00A2C80E /* DomainListVC+Actions.swift */,
@@ -2901,6 +2907,7 @@
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C40D725F2A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
+				03D846282EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */,
 				03CC1FE62E3D22120050FC18 /* InstallHomebrew.swift in Sources */,
 				C4D89BC62783C99400A02B68 /* ComposerJson.swift in Sources */,
 				C43BCD4429FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
@@ -3051,6 +3058,7 @@
 				C471E88528F9BB650021E251 /* ServicesView.swift in Sources */,
 				C471E88628F9BB650021E251 /* StatsView.swift in Sources */,
 				C451AFF82969E40F0078E617 /* HelpButton.swift in Sources */,
+				03D846272EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */,
 				C471E88728F9BB650021E251 /* SectionHeaderView.swift in Sources */,
 				C471E88828F9BB650021E251 /* HeaderView.swift in Sources */,
 				C471E88928F9BB650021E251 /* SwiftUIHelper.swift in Sources */,
@@ -3258,6 +3266,7 @@
 				C471E8DA28F9BB8F0021E251 /* Keys.swift in Sources */,
 				C471E8DB28F9BB8F0021E251 /* TerminalProgressWindowController.swift in Sources */,
 				C471E8DC28F9BB8F0021E251 /* ProgressVC.swift in Sources */,
+				03D846262EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */,
 				C490E3BF29BCA376006D2DE6 /* Measurements.swift in Sources */,
 				C471E8DE28F9BB8F0021E251 /* App+ConfigWatch.swift in Sources */,
 				C471E8DF28F9BB8F0021E251 /* ConfigWatchManager.swift in Sources */,
@@ -3561,6 +3570,7 @@
 				039C29162E8AA163007F5FAB /* ActiveApi.swift in Sources */,
 				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
 				C485707C28BF459500539B36 /* NoWarningsView.swift in Sources */,
+				03D846252EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */,
 				0329A9A42E92A69000A62A12 /* WarningManager+Evaluations.swift in Sources */,
 				033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */,
 				C4F5FBCD28218CB8001065C5 /* Xdebug.swift in Sources */,
