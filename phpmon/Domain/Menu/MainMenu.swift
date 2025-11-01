@@ -190,7 +190,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - Menu Item Functionality
 
     @objc func openAbout() {
-        fatalError("Woof we intentionally crashed")
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel(self)
     }
