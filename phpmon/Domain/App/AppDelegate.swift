@@ -87,6 +87,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.separator(as: .info)
         }
 
+        // Initialize the crash reporter
+        CrashReporter.initialize()
+
+        // Set up final singletons
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()

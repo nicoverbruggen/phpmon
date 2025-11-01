@@ -109,6 +109,11 @@
 		03D846262EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
 		03D846272EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
 		03D846282EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
+		03D8462B2EB6418F006EFE3C /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 03D8462A2EB6418F006EFE3C /* CrashReporter */; };
+		03D846322EB64E39006EFE3C /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846312EB64E35006EFE3C /* CrashReporter.swift */; };
+		03D846332EB64E39006EFE3C /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846312EB64E35006EFE3C /* CrashReporter.swift */; };
+		03D846342EB64E39006EFE3C /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846312EB64E35006EFE3C /* CrashReporter.swift */; };
+		03D846352EB64E39006EFE3C /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846312EB64E35006EFE3C /* CrashReporter.swift */; };
 		03DAD3A62EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A72EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
@@ -1027,6 +1032,7 @@
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
 		03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Window.swift"; sourceTree = "<group>"; };
+		03D846312EB64E35006EFE3C /* CrashReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
@@ -1315,6 +1321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */,
+				03D8462B2EB6418F006EFE3C /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2135,6 +2142,7 @@
 				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
 				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
 				C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */,
+				03D846312EB64E35006EFE3C /* CrashReporter.swift */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
 				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
@@ -2454,6 +2462,7 @@
 			name = "PHP Monitor";
 			packageProductDependencies = (
 				C47014FE2C46D57C0069AAE7 /* NVAlert */,
+				03D8462A2EB6418F006EFE3C /* CrashReporter */,
 			);
 			productName = phpmon;
 			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
@@ -2571,6 +2580,7 @@
 			packageReferences = (
 				C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */,
 				C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */,
+				03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */,
 			);
 			productRefGroup = C41C1B3422B0097F00E7CF16 /* Products */;
 			projectDirPath = "";
@@ -2848,6 +2858,7 @@
 				C417DC74277614690015E6EE /* Helpers.swift in Sources */,
 				C415D3E82770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C41C1B3722B0097F00E7CF16 /* AppDelegate.swift in Sources */,
+				03D846352EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				C42759672627662800093CAE /* NSMenuExtension.swift in Sources */,
 				C422DDAA28A2C49900CEAC97 /* PhpDoctorView.swift in Sources */,
 				C469E6FE294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
@@ -2932,6 +2943,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03D846322EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				036C39122E5C8D42008DAEDF /* PackagistError.swift in Sources */,
 				C471E82D28F9BB650021E251 /* AlertableError.swift in Sources */,
 				C471E82E28F9BB650021E251 /* Errors.swift in Sources */,
@@ -3336,6 +3348,7 @@
 				C43931C829C4BD610069165B /* PhpVersionManagerView.swift in Sources */,
 				C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
 				0392CDEE2EB25371009176DA /* SecurePopoverView.swift in Sources */,
+				03D846342EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
@@ -3417,6 +3430,7 @@
 				C485707528BF454F00539B36 /* StatsView.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				54D9E0BB27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
+				03D846332EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				C485707328BF454300539B36 /* OnboardingView.swift in Sources */,
 				C485707728BF455300539B36 /* HeaderView.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
@@ -4542,6 +4556,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/microsoft/plcrashreporter.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.12.0;
+			};
+		};
 		C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nicoverbruggen/NVAppUpdater";
@@ -4561,6 +4583,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		03D8462A2EB6418F006EFE3C /* CrashReporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */;
+			productName = CrashReporter;
+		};
 		C47014FB2C46D31B0069AAE7 /* NVAppUpdater */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C47014FA2C46D31B0069AAE7 /* XCRemoteSwiftPackageReference "NVAppUpdater" */;

@@ -157,8 +157,10 @@ struct Constants {
         // API endpoints
         #if DEBUG
         static let UpdateCheckEndpoint = url("https://api.phpmon.test/api/v1/update-check")
+        static let CrashReportingEndpoint = url("https://api.phpmon.test/api/v1/report-crash")
         #else
         static let UpdateCheckEndpoint = url("https://api.phpmon.app/api/v1/update-check")
+        static let CrashReportingEndpoint = url("https://api.phpmon.app/api/v1/report-crash")
         #endif
 
         // GitHub URLs (do not alias these)
