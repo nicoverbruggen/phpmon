@@ -79,7 +79,11 @@ You can enable marketing mode by setting the `PHPMON_MARKETING_MODE` environment
 
 ## 🐛 Symbolication of crashes
 
-If you have an archived build of the app and exported the DSYM, it is possible to symbolicate .ips crash logs.
+The easiest way to symbolicate crashes is to simply rename the file to `.crash`, and drag it into Xcode. 
+
+Starting with PHP Monitor 25.10, opt-in automatic crash reporting is now included with `PLCrashReporter` and a custom API endpoint. These crash logs can also be symbolicated in exactly the same way.
+
+If you have an archived build of the app and exported the DSYM, it is possible to manually symbolicate `.ips` crash logs.
 
 For example, given the following crash (from an .ips file):
 
