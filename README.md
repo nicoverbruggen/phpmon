@@ -593,15 +593,17 @@ If you would like to know more, consult [this issue](https://github.com/nicoverb
 <details>
 <summary><strong>The app has crashed!</strong></summary>
 
-Please get in touch and open an issue. PHP Monitor shouldn't crash... (unless you are actually removing PHP *while* the app is running, that’s considered normal behaviour!)
+When you launch PHP Monitor again, a crash report can be submitted automatically. This is really helpful, please consider doing this!
 
-If you would like to report a crash, please include the associated **log files** so I can find out what exactly went wrong.
+However, if you'd like to help out more, you can. You can also get in touch and open an issue with additional info.
 
-To find the logs, take a look in `~/Library/Logs/DiagnosticReports` (in Finder) and see if there's any (log) files that start with "PHP Monitor".
+- First, you need the **crash report**. To find the crash report, take a look in `~/Library/Logs/DiagnosticReports` (in Finder) and see if there's any (log) files that start with "PHP Monitor". If you've accepted the automatic crash report, I should already have received this, but if you want to report a bug, please include it again.
 
-Additionally, you can help me figure out even more information by sending me your verbose log for your latest session of PHP Monitor. Logging is disabled by default. 
+- Additionally, you can help me figure out even more information by sending me your **verbose log for your latest session of PHP Monitor**. Since logging is disabled by default, you will need to turn it on. You can start extra verbose logging by running: `touch ~/.config/phpmon/verbose` and restarting PHP Monitor. You can find the latest log in: `~/.config/phpmon/last_session.log`. (This is only relevant if you have something crash that you can reliably reproduce.)
 
-You can start extra verbose logging by running: `touch ~/.config/phpmon/verbose` and restarting PHP Monitor. You can find the latest log in: `~/.config/phpmon/last_session.log`. Please attach it to the relevant bug report.
+- If you can, in fact, easily reproduce the issue, providing me the **reproduction steps** is very helpful. I may ask you additional questions to help resolve the issue.
+
+Any further information besides the crash report may help shed light on what's causing things to go wrong.
 
 </details>
 
