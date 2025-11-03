@@ -104,8 +104,8 @@ class RealShell: ShellProtocol {
         task.launch()
         task.waitUntilExit()
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
         if Log.shared.verbosity == .cli {
             log(task: task, stdOut: stdOut, stdErr: stdErr)
@@ -130,8 +130,8 @@ class RealShell: ShellProtocol {
 
         return await withCheckedContinuation { continuation in
             task.terminationHandler = { [weak self] _ in
-                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
                 if Log.shared.verbosity == .cli {
                     self?.log(task: task, stdOut: stdOut, stdErr: stdErr)
@@ -141,7 +141,6 @@ class RealShell: ShellProtocol {
             }
 
             task.launch()
-            task.waitUntilExit()
         }
     }
 
@@ -215,7 +214,6 @@ class RealShell: ShellProtocol {
             }
 
             process.launch()
-            process.waitUntilExit()
         })
     }
 
