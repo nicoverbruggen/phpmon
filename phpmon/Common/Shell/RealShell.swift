@@ -127,17 +127,22 @@ class RealShell: ShellProtocol {
 
         task.standardOutput = outputPipe
         task.standardError = errorPipe
-        task.launch()
-        task.waitUntilExit()
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        return await withCheckedContinuation { continuation in
+            task.terminationHandler = { [weak self] _ in
+                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
 
-        if Log.shared.verbosity == .cli {
-            log(task: task, stdOut: stdOut, stdErr: stdErr)
+                if Log.shared.verbosity == .cli {
+                    self?.log(task: task, stdOut: stdOut, stdErr: stdErr)
+                }
+
+                continuation.resume(returning: .out(stdOut, stdErr))
+            }
+
+            task.launch()
+            task.waitUntilExit()
         }
-
-        return .out(stdOut, stdErr)
     }
 
     private func log(task: Process, stdOut: String, stdErr: String) {

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0309E6672B0D4B2F002AC007 /* BrewExtensionsObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */; };
+		0310B17A2EB8F3FF00A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B1792EB8F3FF00A8B140 /* CrashReporter */; };
+		0310B17C2EB8F40100A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B17B2EB8F40100A8B140 /* CrashReporter */; };
+		0310B17E2EB8F40400A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B17D2EB8F40400A8B140 /* CrashReporter */; };
 		031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
 		031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */; };
@@ -1330,6 +1333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */,
+				0310B17C2EB8F40100A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,6 +1342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */,
+				0310B17E2EB8F40400A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,6 +1351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C47015072C46D8180069AAE7 /* NVAlert in Frameworks */,
+				0310B17A2EB8F3FF00A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2484,6 +2490,7 @@
 			name = "Feature Tests";
 			packageProductDependencies = (
 				C470150A2C46D81E0069AAE7 /* NVAlert */,
+				0310B17B2EB8F40100A8B140 /* CrashReporter */,
 			);
 			productName = "Feature Tests";
 			productReference = C471E7AD28F9B4940021E251 /* Feature Tests.xctest */;
@@ -2505,6 +2512,7 @@
 			name = "UI Tests";
 			packageProductDependencies = (
 				C470150C2C46D83E0069AAE7 /* NVAlert */,
+				0310B17D2EB8F40400A8B140 /* CrashReporter */,
 			);
 			productName = "UI Tests";
 			productReference = C471E7BC28F9B90F0021E251 /* UI Tests.xctest */;
@@ -2526,6 +2534,7 @@
 			name = "Unit Tests";
 			packageProductDependencies = (
 				C47015062C46D8180069AAE7 /* NVAlert */,
+				0310B1792EB8F3FF00A8B140 /* CrashReporter */,
 			);
 			productName = "phpmon-tests";
 			productReference = C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */;
@@ -4583,6 +4592,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0310B1792EB8F3FF00A8B140 /* CrashReporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */;
+			productName = CrashReporter;
+		};
+		0310B17B2EB8F40100A8B140 /* CrashReporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */;
+			productName = CrashReporter;
+		};
+		0310B17D2EB8F40400A8B140 /* CrashReporter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */;
+			productName = CrashReporter;
+		};
 		03D8462A2EB6418F006EFE3C /* CrashReporter */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */;
