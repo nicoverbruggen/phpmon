@@ -190,6 +190,10 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - Menu Item Functionality
 
     @objc func openAbout() {
+        if NSEvent.modifierFlags.contains(.option) && NSEvent.modifierFlags.contains(.command) {
+            fatalError("Debug crash triggered via About menu with OPT+CMD.")
+        }
+
         NSApplication.shared.activate(ignoringOtherApps: true)
         NSApplication.shared.orderFrontStandardAboutPanel(self)
     }
