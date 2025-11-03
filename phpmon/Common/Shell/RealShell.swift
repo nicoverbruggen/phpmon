@@ -90,7 +90,7 @@ class RealShell: ShellProtocol {
     // MARK: - Shellable Protocol
 
     func sync(_ command: String) -> ShellOutput {
-        let task = getShellProcess(for: command)
+        let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -99,23 +99,23 @@ class RealShell: ShellProtocol {
             sleep(3)
         }
 
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
-        task.launch()
-        task.waitUntilExit()
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
+        process.launch()
+        process.waitUntilExit()
 
         let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
         if Log.shared.verbosity == .cli {
-            log(task: task, stdOut: stdOut, stdErr: stdErr)
+            log(process: process, stdOut: stdOut, stdErr: stdErr)
         }
 
         return .out(stdOut, stdErr)
     }
 
     func pipe(_ command: String) async -> ShellOutput {
-        let task = getShellProcess(for: command)
+        let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -125,27 +125,27 @@ class RealShell: ShellProtocol {
             await delay(seconds: 3.0)
         }
 
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
         return await withCheckedContinuation { continuation in
-            task.terminationHandler = { [weak self] _ in
+            process.terminationHandler = { [weak self] _ in
                 let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                 let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
                 if Log.shared.verbosity == .cli {
-                    self?.log(task: task, stdOut: stdOut, stdErr: stdErr)
+                    self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
                 }
 
                 continuation.resume(returning: .out(stdOut, stdErr))
             }
 
-            task.launch()
+            process.launch()
         }
     }
 
-    private func log(task: Process, stdOut: String, stdErr: String) {
-        var args = task.arguments ?? []
+    private func log(process: Process, stdOut: String, stdErr: String) {
+        var args = process.arguments ?? []
         let last = "\"" + (args.popLast() ?? "") + "\""
         var log = """
 
