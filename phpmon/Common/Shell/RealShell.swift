@@ -181,17 +181,15 @@ class RealShell: ShellProtocol {
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let process = getShellProcess(for: command)
+        let outputPipe = Pipe(), errorPipe = Pipe()
+
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
         let output = ShellOutput.empty()
 
-        process.listen { incoming in
-            output.out += incoming; didReceiveOutput(incoming, .stdOut)
-        } didReceiveStandardErrorData: { incoming in
-            output.err += incoming; didReceiveOutput(incoming, .stdErr)
-        }
-
         return try await withCheckedThrowingContinuation({ continuation in
-            let task = Task {
+            let timeoutTask = Task {
                 try await Task.sleep(nanoseconds: timeout.nanoseconds)
                 // Only terminate if the process is still running
                 if process.isRunning {
@@ -201,10 +199,44 @@ class RealShell: ShellProtocol {
                 }
             }
 
-            process.terminationHandler = { [output] process in
-                task.cancel()
+            // Set up background reading for stdout
+            outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
+                let data = fileHandle.availableData
+                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
+                    output.out += string
+                    didReceiveOutput(string, .stdOut)
+                }
+            }
 
-                process.haltListening()
+            // Set up background reading for stderr
+            errorPipe.fileHandleForReading.readabilityHandler = { fileHandle in
+                let data = fileHandle.availableData
+                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
+                    output.err += string
+                    didReceiveOutput(string, .stdErr)
+                }
+            }
+
+            process.terminationHandler = { process in
+                timeoutTask.cancel()
+
+                // Clean up readability handlers
+                outputPipe.fileHandleForReading.readabilityHandler = nil
+                errorPipe.fileHandleForReading.readabilityHandler = nil
+
+                // Read any remaining data
+                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+
+                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
+                    output.out += string
+                    didReceiveOutput(string, .stdOut)
+                }
+
+                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
+                    output.err += string
+                    didReceiveOutput(string, .stdErr)
+                }
 
                 if !output.err.isEmpty {
                     continuation.resume(returning: (process, .err(output.err)))
