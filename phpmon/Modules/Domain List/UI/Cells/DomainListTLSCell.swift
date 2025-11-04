@@ -24,7 +24,7 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
             .resized(to: NSSize(width: 20, height: 20))
         buttonLockStatus.contentTintColor = color
         buttonLockStatus.wantsLayer = true
-        buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.15).cgColor
+        buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.10).cgColor
         buttonLockStatus.layer?.cornerRadius = buttonLockStatus.bounds.width / 2
         buttonLockStatus.layer?.masksToBounds = true
     }
