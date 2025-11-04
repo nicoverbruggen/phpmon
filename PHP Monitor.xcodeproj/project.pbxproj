@@ -88,6 +88,10 @@
 		039E1D7A2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7C2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
+		03B675E92EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
+		03B675EA2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
+		03B675EB2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
+		03B675EC2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03BFF5272E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
@@ -1029,6 +1033,7 @@
 		039C29172E8AA311007F5FAB /* TestableApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableApi.swift; sourceTree = "<group>"; };
 		039C291C2E8AA399007F5FAB /* TestableApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableApiTest.swift; sourceTree = "<group>"; };
 		039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetUpgrader.swift; sourceTree = "<group>"; };
+		03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
@@ -2413,6 +2418,7 @@
 		C4F8C0A222D4F100002EFE61 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */,
 				C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */,
 				C46FA23E246C358E00944F05 /* StringExtension.swift */,
 				C48D0C9225CC804200CC7490 /* XibLoadable.swift */,
@@ -2852,6 +2858,7 @@
 				036C39102E5C8D42008DAEDF /* PackagistError.swift in Sources */,
 				C40C7F3027722E8D00DDDCDC /* Logger.swift in Sources */,
 				C41CA5ED2774F8EE00A2C80E /* DomainListVC+Actions.swift in Sources */,
+				03B675EA2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
 				C412E5FC25700D5300A1FB67 /* HomebrewDecodable.swift in Sources */,
 				03BFF52E2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				C4D9ADBF277610E1007277F4 /* PhpSwitcher.swift in Sources */,
@@ -3059,6 +3066,7 @@
 				C471E86F28F9BB650021E251 /* Stats.swift in Sources */,
 				C4CE7F9829683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
 				C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
+				03B675E92EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
 				C471E87028F9BB650021E251 /* GlobalKeybindPreference.swift in Sources */,
 				C471E87228F9BB650021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E87428F9BB650021E251 /* SelectPreferenceView.swift in Sources */,
@@ -3357,6 +3365,7 @@
 				C43931C829C4BD610069165B /* PhpVersionManagerView.swift in Sources */,
 				C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
 				0392CDEE2EB25371009176DA /* SecurePopoverView.swift in Sources */,
+				03B675EB2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
 				03D846342EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
@@ -3531,6 +3540,7 @@
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
 				036C39082E5C88A7008DAEDF /* PackagistTest.swift in Sources */,
 				C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */,
+				03B675EC2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
 				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C4611E612AEAD3110010BE24 /* ByteLimitView.swift in Sources */,

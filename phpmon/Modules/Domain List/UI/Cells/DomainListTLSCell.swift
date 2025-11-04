@@ -14,35 +14,53 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
     var domain: ValetListable?
 
     @IBOutlet weak var buttonLockStatus: NSButton!
-    @IBOutlet weak var imageViewLock: NSImageView!
 
     static func getCellIdentifier(for domain: ValetListable) -> String {
         return "domainListTLSCell"
     }
 
+    func styleLockButton(secured: Bool, color: NSColor) {
+        buttonLockStatus.image = NSImage(named: secured ? "Lock" : "LockUnlocked")!
+            .resized(to: NSSize(width: 20, height: 20))
+        buttonLockStatus.contentTintColor = color
+        buttonLockStatus.wantsLayer = true
+        buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.15).cgColor
+        buttonLockStatus.layer?.cornerRadius = buttonLockStatus.bounds.width / 2
+        buttonLockStatus.layer?.masksToBounds = true
+    }
+
     func populateCell(with site: ValetSite) {
         domain = site
 
-        imageViewLock.image = NSImage(named: site.secured ? "Lock" : "LockUnlocked")!
+        let color = {
+            if site.secured && site.isCertificateExpired {
+                return NSColor.statusColorOrange
+            }
 
-        imageViewLock.contentTintColor = site.secured
-            ? nil
-            : NSColor(named: "IconColorRed")
+            return site.secured ? NSColor.statusColorNeutral : NSColor.statusColorRed
+        }()
 
-        if site.secured && site.isCertificateExpired {
-            imageViewLock.contentTintColor = NSColor(named: "StatusColorOrange")
-        }
+        self.styleLockButton(
+            secured: site.secured,
+            color: color
+        )
     }
 
     func populateCell(with proxy: ValetProxy) {
-        imageViewLock.image = NSImage(named: proxy.secured ? "Lock" : "LockUnlocked")!
-        imageViewLock.contentTintColor = proxy.secured
-            ? nil
-            : NSColor(named: "IconColorRed")
+        domain = proxy
 
-        if proxy.secured && proxy.isCertificateExpired {
-            imageViewLock.contentTintColor = NSColor(named: "StatusColorOrange")
-        }
+        let color = {
+            if proxy.secured && proxy.isCertificateExpired {
+                return NSColor.statusColorOrange
+            }
+
+            return proxy.secured ? NSColor.statusColorNeutral : NSColor.statusColorRed
+        }()
+
+        self.styleLockButton(
+            secured: proxy.secured,
+            color: color
+        )
     }
 
     var container: Container {
