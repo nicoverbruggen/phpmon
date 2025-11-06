@@ -12,29 +12,7 @@ extension WarningManager {
     // swiftlint:disable function_body_length
     func allAvailableWarnings() -> [Warning] {
         return [
-            Warning(
-                command: {
-                    if Valet.installed {
-                        return !Valet.getExpiredDomainListable().isEmpty
-                    }
-
-                    return false
-                },
-                name: "One or more domain certificates expired",
-                title: "warnings.certificates_expired.title",
-                paragraphs: { return ["warnings.certificates_expired.description"] },
-                url: nil,
-                fix: {
-                    await DomainListVC.show()
-
-                    if let vc = await App.shared.domainListWindowController?
-                        .window?.contentViewController as? DomainListVC {
-                        await vc.checkForCertificateRenewal {
-                            await self.checkEnvironment()
-                        }
-                    }
-                }
-            ),
+            // SYSTEM
             Warning(
                 command: {
                     return await self.container.shell.pipe("sysctl -n sysctl.proc_translated").out
@@ -96,6 +74,8 @@ extension WarningManager {
                     }
                 }
             ),
+
+            // HOMEBREW
             Warning(
                 command: {
                     !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php")
@@ -128,6 +108,8 @@ extension WarningManager {
                     await self.checkEnvironment()
                 }
             ),
+
+            // PHP
             Warning(
                 command: {
                     PhpConfigChecker.shared.check()
@@ -142,7 +124,32 @@ extension WarningManager {
                 ] },
                 url: nil,
                 fix: nil
-            )
+            ),
+
+            // VALET
+            Warning(
+                command: {
+                    if Valet.installed {
+                        return !Valet.getExpiredDomainListable().isEmpty
+                    }
+
+                    return false
+                },
+                name: "One or more domain certificates expired",
+                title: "warnings.certificates_expired.title",
+                paragraphs: { return ["warnings.certificates_expired.description"] },
+                url: nil,
+                fix: {
+                    await DomainListVC.show()
+
+                    if let vc = await App.shared.domainListWindowController?
+                        .window?.contentViewController as? DomainListVC {
+                        await vc.checkForCertificateRenewal {
+                            await self.checkEnvironment()
+                        }
+                    }
+                }
+            ),
         ]
     }
     // swiftlint:enable function_body_length
