@@ -139,11 +139,7 @@ extension MainMenu {
             }
         } else {
             // Check for updates
-            #if DEBUG
-            Log.info("Skipping update check for debug builds.")
-            #else
             await UpdateScheduler.shared.startAutomaticUpdateChecking()
-            #endif
 
             // Check if the linked version has changed between launches of phpmon
             await PhpGuard().compareToLastGlobalVersion()
