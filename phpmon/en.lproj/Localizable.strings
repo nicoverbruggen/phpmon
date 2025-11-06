@@ -856,6 +856,9 @@ When files like these are missing, you should switch to the PHP version associat
 "warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap is missing";
 "warnings.extensions_tap_missing.description" = "This Homebrew tap is required to install extensions via this app's PHP Extension Manager.";
 
+"warnings.certificates_expired.title" = "One or more certificates that are being used to serve a domain have expired.";
+"warnings.certificates_expired.description" = "Expired certificates will stop HTTPS traffic from working correctly. You can have PHP Monitor automatically attempt to resolve this for you by opening the Domains list.";
+
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
 // ONBOARDING

@@ -88,6 +88,19 @@ class Valet {
     }
 
     /**
+     Retrieve a list of all domains, including sites & proxies
+     that have expired certificates.
+     */
+    public static func getExpiredDomainListable() -> [ValetListable] {
+        return self.getDomainListable().filter { item in
+            if let expiry = item.getListableCertificateExpiryDate() {
+                return expiry < Date()
+            }
+            return false
+        }
+    }
+
+    /**
      Updates the internal version number of Laravel Valet.
      If this version number cannot be determined, it fails,
      and the app cannot start.

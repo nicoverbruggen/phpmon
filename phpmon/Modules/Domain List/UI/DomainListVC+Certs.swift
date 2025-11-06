@@ -10,7 +10,7 @@ import NVAlert
 import Foundation
 
 extension DomainListVC {
-    func checkForCertificateRenewal() {
+    func checkForCertificateRenewal(completion: @escaping () async -> Void = {}) {
         // Check for expired certificates
         let expired = domains.filter { item in
             if let expiry = item.getListableCertificateExpiryDate() {
@@ -43,7 +43,10 @@ extension DomainListVC {
                 description: "cert_alert.domains".localized(domainListing)
             )
             .withPrimary(text: "cert_alert.renew".localized, action: { vc in
-                Task { await self.renewCertificates(expired) }
+                Task {
+                    await self.renewCertificates(expired)
+                    await completion()
+                }
                 vc.close(with: .OK)
             })
             .withSecondary(text: "cert_alert.cancel".localized, action: { vc in
@@ -54,20 +57,23 @@ extension DomainListVC {
     }
 
     public func renewCertificates(_ expired: [ValetListable]) async {
-        waitAndExecute {
-            for domain in expired {
-                // Unsecure domain first
-                try? await domain.toggleSecure()
-
-                // Resecure if unsecured
-                if !domain.getListableSecured() {
+        return await withCheckedContinuation { continuation in
+            waitAndExecute {
+                for domain in expired {
+                    // Unsecure domain first
                     try? await domain.toggleSecure()
+
+                    // Resecure if unsecured
+                    if !domain.getListableSecured() {
+                        try? await domain.toggleSecure()
+                    }
                 }
-            }
-        } completion: {
-            Task {
-                await delay(seconds: 1)
-                await self.reloadDomainsWithoutUI()
+            } completion: {
+                Task {
+                    await delay(seconds: 1)
+                    await self.reloadDomainsWithoutUI()
+                    continuation.resume()
+                }
             }
         }
     }

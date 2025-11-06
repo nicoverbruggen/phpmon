@@ -6,10 +6,35 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 extension WarningManager {
     // swiftlint:disable function_body_length
     func allAvailableWarnings() -> [Warning] {
         return [
+            Warning(
+                command: {
+                    if Valet.installed {
+                        return !Valet.getExpiredDomainListable().isEmpty
+                    }
+
+                    return false
+                },
+                name: "One or more domain certificates expired",
+                title: "warnings.certificates_expired.title",
+                paragraphs: { return ["warnings.certificates_expired.description"] },
+                url: nil,
+                fix: {
+                    await DomainListVC.show()
+
+                    if let vc = await App.shared.domainListWindowController?
+                        .window?.contentViewController as? DomainListVC {
+                        await vc.checkForCertificateRenewal {
+                            await self.checkEnvironment()
+                        }
+                    }
+                }
+            ),
             Warning(
                 command: {
                     return await self.container.shell.pipe("sysctl -n sysctl.proc_translated").out
