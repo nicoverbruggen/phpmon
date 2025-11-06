@@ -149,7 +149,7 @@ extension WarningManager {
                         }
                     }
                 }
-            ),
+            )
         ]
     }
     // swiftlint:enable function_body_length
