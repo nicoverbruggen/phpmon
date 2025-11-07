@@ -72,7 +72,7 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
         App.shared.domainListWindowController?.contentVC.setUIBusy()
 
         Task { // Ensure we proxy the site asynchronously and reload UI on main thread again
-            try! await ValetInteractor.shared.proxy(
+            try? await ValetInteractor.shared.proxy(
                 domain: domain,
                 proxy: proxyName,
                 secure: secure

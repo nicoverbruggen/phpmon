@@ -71,7 +71,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
         // Adding `valet links` is a workaround for Valet malforming the config.json file
         Task {
-            try! await ValetInteractor.shared.link(path: path, domain: name)
+            try? await ValetInteractor.shared.link(path: path, domain: name)
 
             dismissView(outcome: .OK)
 
