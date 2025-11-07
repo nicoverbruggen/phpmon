@@ -62,7 +62,7 @@ func grepContains(
  Attempts to introduce sleep for a particular duration. Use with caution.
  */
 func delay(seconds: Double) async {
-    try! await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+    try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
 }
 
 /**
