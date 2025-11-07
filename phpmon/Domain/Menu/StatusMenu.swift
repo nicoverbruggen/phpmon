@@ -8,17 +8,21 @@
 import Cocoa
 
 class StatusMenu: NSMenu {
+    var container: Container {
+        return App.shared.container
+    }
+
     // swiftlint:disable cyclomatic_complexity
     @MainActor func addMenuItems() {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
             addPhpActionMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnvironments.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
+        if container.phpEnvs.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }
@@ -28,23 +32,23 @@ class StatusMenu: NSMenu {
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
+        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
             addConfigurationMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
+        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
             addComposerMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if !PhpEnvironments.shared.isBusy {
-            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
+        if !App.shared.container.phpEnvs.isBusy {
+            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
                 addStatsMenuItem()
                 addItem(NSMenuItem.separator())
             }
 
-            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
+            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
                 addExtensionsMenuItems()
                 NSMenuItem.separator()
 
@@ -53,11 +57,11 @@ class StatusMenu: NSMenu {
 
             addPhpDoctorMenuItem()
 
-            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
+            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
                 addPresetsMenuItem()
             }
 
-            if PhpEnvironments.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
+            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
                 addFirstAidAndServicesMenuItems()
             }
         }

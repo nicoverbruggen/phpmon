@@ -63,7 +63,7 @@ struct Constants {
      will be displayed to let them know that certain operations
      will not work correctly and that they need to update their app.
 
-     The cutoff date is always a few days after GA of the latest
+     It always takes a few days for a new update after GA of the latest
      release, as it often takes a while for Homebrew to make the
      new release available and not everyone uses a separate tap.
      */
@@ -154,8 +154,14 @@ struct Constants {
 
         static let EarlyAccessChangelog = url("https://phpmon.app/early-access/release-notes")
 
-        // API endpoints (via api.phpmon.app)
-        static let UpdateCheckEndpoint =  url("https://api.phpmon.app/api/v1/update-check")
+        // API endpoints
+        #if DEBUG
+        static let UpdateCheckEndpoint = url("https://api.phpmon.test/api/v1/update-check")
+        static let CrashReportingEndpoint = url("https://api.phpmon.test/api/v1/report-crash")
+        #else
+        static let UpdateCheckEndpoint = url("https://api.phpmon.app/api/v1/update-check")
+        static let CrashReportingEndpoint = url("https://api.phpmon.app/api/v1/report-crash")
+        #endif
 
         // GitHub URLs (do not alias these)
         static let GitHubReleases = url("https://github.com/nicoverbruggen/phpmon/releases")

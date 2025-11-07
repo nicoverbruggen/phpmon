@@ -9,6 +9,12 @@
 import Foundation
 
 class RealShell: ShellProtocol {
+    var container: Container
+
+    init(container: Container) {
+        self.container = container
+    }
+
     /**
      The launch path of the terminal in question that is used.
      On macOS, we use /bin/sh since it's pretty fast.
@@ -53,7 +59,7 @@ class RealShell: ShellProtocol {
         var completeCommand = ""
 
         // Basic export (PATH)
-        completeCommand += "export PATH=\(Paths.binPath):$PATH && "
+        completeCommand += "export PATH=\(container.paths.binPath):$PATH && "
 
         // Put additional exports (as defined by the user) in between
         if !self.exports.isEmpty {
@@ -84,7 +90,7 @@ class RealShell: ShellProtocol {
     // MARK: - Shellable Protocol
 
     func sync(_ command: String) -> ShellOutput {
-        let task = getShellProcess(for: command)
+        let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -93,23 +99,23 @@ class RealShell: ShellProtocol {
             sleep(3)
         }
 
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
-        task.launch()
-        task.waitUntilExit()
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
+        process.launch()
+        process.waitUntilExit()
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
         if Log.shared.verbosity == .cli {
-            log(task: task, stdOut: stdOut, stdErr: stdErr)
+            log(process: process, stdOut: stdOut, stdErr: stdErr)
         }
 
         return .out(stdOut, stdErr)
     }
 
     func pipe(_ command: String) async -> ShellOutput {
-        let task = getShellProcess(for: command)
+        let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -119,23 +125,27 @@ class RealShell: ShellProtocol {
             await delay(seconds: 3.0)
         }
 
-        task.standardOutput = outputPipe
-        task.standardError = errorPipe
-        task.launch()
-        task.waitUntilExit()
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8)!
+        return await withCheckedContinuation { continuation in
+            process.terminationHandler = { [weak self] _ in
+                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
 
-        if Log.shared.verbosity == .cli {
-            log(task: task, stdOut: stdOut, stdErr: stdErr)
+                if Log.shared.verbosity == .cli {
+                    self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
+                }
+
+                continuation.resume(returning: .out(stdOut, stdErr))
+            }
+
+            process.launch()
         }
-
-        return .out(stdOut, stdErr)
     }
 
-    private func log(task: Process, stdOut: String, stdErr: String) {
-        var args = task.arguments ?? []
+    private func log(process: Process, stdOut: String, stdErr: String) {
+        var args = process.arguments ?? []
         let last = "\"" + (args.popLast() ?? "") + "\""
         var log = """
 
@@ -171,18 +181,16 @@ class RealShell: ShellProtocol {
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let process = getShellProcess(for: command)
+        let outputPipe = Pipe(), errorPipe = Pipe()
+
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
         let output = ShellOutput.empty()
 
-        process.listen { incoming in
-            output.out += incoming; didReceiveOutput(incoming, .stdOut)
-        } didReceiveStandardErrorData: { incoming in
-            output.err += incoming; didReceiveOutput(incoming, .stdErr)
-        }
-
         return try await withCheckedThrowingContinuation({ continuation in
-            let task = Task {
-                try await Task.sleep(nanoseconds: timeout.nanoseconds)
+            let timeoutTask = Task {
+                try? await Task.sleep(nanoseconds: timeout.nanoseconds)
                 // Only terminate if the process is still running
                 if process.isRunning {
                     process.terminationHandler = nil
@@ -191,10 +199,44 @@ class RealShell: ShellProtocol {
                 }
             }
 
-            process.terminationHandler = { [output] process in
-                task.cancel()
+            // Set up background reading for stdout
+            outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
+                let data = fileHandle.availableData
+                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
+                    output.out += string
+                    didReceiveOutput(string, .stdOut)
+                }
+            }
 
-                process.haltListening()
+            // Set up background reading for stderr
+            errorPipe.fileHandleForReading.readabilityHandler = { fileHandle in
+                let data = fileHandle.availableData
+                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
+                    output.err += string
+                    didReceiveOutput(string, .stdErr)
+                }
+            }
+
+            process.terminationHandler = { process in
+                timeoutTask.cancel()
+
+                // Clean up readability handlers
+                outputPipe.fileHandleForReading.readabilityHandler = nil
+                errorPipe.fileHandleForReading.readabilityHandler = nil
+
+                // Read any remaining data
+                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+
+                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
+                    output.out += string
+                    didReceiveOutput(string, .stdOut)
+                }
+
+                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
+                    output.err += string
+                    didReceiveOutput(string, .stdErr)
+                }
 
                 if !output.err.isEmpty {
                     continuation.resume(returning: (process, .err(output.err)))
@@ -204,8 +246,11 @@ class RealShell: ShellProtocol {
             }
 
             process.launch()
-            process.waitUntilExit()
         })
+    }
+
+    func reload() {
+        container.shell = RealShell(container: container)
     }
 }
 

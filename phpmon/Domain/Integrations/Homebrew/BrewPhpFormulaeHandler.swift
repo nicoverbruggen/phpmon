@@ -17,23 +17,33 @@ extension HandlesBrewPhpFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
         Task { @MainActor in
-            await PhpEnvironments.shared.determinePhpAlias()
+            await App.shared.container.phpEnvs.determinePhpAlias()
             Brew.shared.formulae.phpVersions = items
         }
     }
 }
 
 class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Methods
+
     public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         var outdated: [OutdatedFormula]?
 
         if loadOutdated {
             let command = """
-            \(Paths.brew) update >/dev/null && \
-            \(Paths.brew) outdated --json --formulae
+            \(container.paths.brew) update >/dev/null && \
+            \(container.paths.brew) outdated --json --formulae
             """
 
-            let rawJsonText = await Shell.pipe(command).out
+            let rawJsonText = await container.shell.pipe(command).out
                 .data(using: .utf8)!
             outdated = try? JSONDecoder().decode(
                 OutdatedFormulae.self,
@@ -48,7 +58,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             var upgradeVersion: String?
             var isPrerelease: Bool = Constants.ExperimentalPhpVersions.contains(version)
 
-            if let install = PhpEnvironments.shared.cachedPhpInstallations[version] {
+            if let install = container.phpEnvs.cachedPhpInstallations[version] {
                 fullVersion = install.versionNumber.text
                 fullVersion = install.isPreRelease ? "\(fullVersion!)-dev" : fullVersion
 
@@ -61,6 +71,7 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
             }
 
             return BrewPhpFormula(
+                container,
                 name: formula,
                 displayName: "PHP \(version)",
                 installedVersion: fullVersion,

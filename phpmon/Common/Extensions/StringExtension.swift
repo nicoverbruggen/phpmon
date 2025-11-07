@@ -9,6 +9,10 @@ import SwiftUI
 
 struct Localization {
     static var preferredLanguage: String? {
+        if Preferences.shared == nil {
+            return nil
+        }
+
         guard let language = Preferences.preferences[.languageOverride] as? String else {
             return nil
         }
@@ -61,12 +65,7 @@ extension String {
             return NSLocalizedString(self, bundle: bundle, comment: "")
         }
 
-        // Ensure that on more recent versions of macOS, "Preferences" is replaced with "Settings"
-        if #available(macOS 13, *) {
-            return string.replacingOccurrences(of: "Preferences", with: "Settings")
-        }
-
-        return string
+        return string.replacingOccurrences(of: "Preferences", with: "Settings")
     }
 
     var localizedForSwiftUI: LocalizedStringKey {

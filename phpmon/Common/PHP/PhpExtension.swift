@@ -17,6 +17,12 @@ import Foundation
  */
 class PhpExtension {
 
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     /// The file where this extension was located.
     var file: String
 
@@ -54,7 +60,9 @@ class PhpExtension {
     /**
      When registering an extension, we do that based on the line found inside the .ini file.
      */
-    init(_ line: String, file: String) {
+    init(_ container: Container, _ line: String, file: String) {
+        self.container = container
+
         let regex = try! NSRegularExpression(pattern: Self.extensionRegex, options: [])
         let match = regex.matches(in: line, options: [], range: NSRange(location: 0, length: line.count)).first
         let range = Range(match!.range(withName: "name"), in: line)!
@@ -82,7 +90,7 @@ class PhpExtension {
             // ENABLED: Line where the comment delimiter (;) is removed
             : line.replacingOccurrences(of: "; ", with: "")
 
-        await sed(file: file, original: line, replacement: newLine)
+        await sed(container, file: file, original: line, replacement: newLine)
 
         self.enabled = !newLine.starts(with: ";")
         self.line = newLine
@@ -96,15 +104,15 @@ class PhpExtension {
 
     // MARK: - Static Methods
 
-    static func from(_ lines: [String], filePath: String) -> [PhpExtension] {
+    static func from(_ container: Container, _ lines: [String], filePath: String) -> [PhpExtension] {
         return lines.filter {
             return $0.range(of: Self.extensionRegex, options: .regularExpression) != nil
         }.map {
-            return PhpExtension($0, file: filePath)
+            return PhpExtension(container, $0, file: filePath)
         }
     }
 
-    static func from(filePath: String) -> [PhpExtension] {
+    static func from(_ container: Container, filePath: String) -> [PhpExtension] {
         let file = try? String(contentsOfFile: filePath)
 
         if file == nil {
@@ -113,6 +121,7 @@ class PhpExtension {
         }
 
         return Self.from(
+            container,
             file!.components(separatedBy: "\n"),
             filePath: filePath
         )

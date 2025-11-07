@@ -11,8 +11,9 @@ import Cocoa
 import NVAlert
 
 class ValetServicesManager: ServicesManager {
-    override init() {
-        super.init()
+
+    override init(_ container: Container) {
+        super.init(container)
 
         // Load the initial services state
         Task {
@@ -33,47 +34,43 @@ class ValetServicesManager: ServicesManager {
      This method allows us to reload the Homebrew services, but we run this command
      twice (once for user services, and once for root services). Please note that
      these two commands are executed concurrently.
+
+     If this fails, question marks will be displayed in the menu bar and we will
+     try one more time to reload the services.
      */
     override func reloadServicesStatus() async {
+        await reloadServicesStatus(isRetry: false)
+    }
+
+    private func reloadServicesStatus(isRetry: Bool) async {
         if !Valet.installed {
             return Log.info("Not reloading services because running in Standalone Mode.")
         }
 
         await withTaskGroup(of: [HomebrewService].self, body: { group in
-            // First, retrieve the status of the formulae that run as root
+            // Retrieve the status of the formulae that run as root
             group.addTask {
-                let rootServiceNames = self.formulae
-                    .filter { $0.elevated }
-                    .map { $0.name }
-
-                let rootJson = await Shell
-                    .pipe("sudo \(Paths.brew) services info --all --json")
-                    .out.data(using: .utf8)!
-
-                return try! JSONDecoder()
-                    .decode([HomebrewService].self, from: rootJson)
-                    .filter({ return rootServiceNames.contains($0.name) })
+                await self.fetchHomebrewServices(elevated: true)
             }
 
             // At the same time, retrieve the status of the formulae that run as user
             group.addTask {
-                let userServiceNames = self.formulae
-                    .filter { !$0.elevated }
-                    .map { $0.name }
-
-                let normalJson = await Shell
-                    .pipe("\(Paths.brew) services info --all --json")
-                    .out.data(using: .utf8)!
-
-                return try! JSONDecoder()
-                    .decode([HomebrewService].self, from: normalJson)
-                    .filter({ return userServiceNames.contains($0.name) })
+                await self.fetchHomebrewServices(elevated: false)
             }
 
             // Ensure that Homebrew services' output is stored
             self.homebrewServices = []
+
             for await services in group {
                 homebrewServices.append(contentsOf: services)
+            }
+
+            // If we didn't get any service data and this isn't a retry, try again
+            if self.homebrewServices.isEmpty && !isRetry {
+                Log.warn("Failed to retrieve any Homebrew services data. Retrying once in 2 seconds...")
+                await delay(seconds: 2)
+                await self.reloadServicesStatus(isRetry: true)
+                return
             }
 
             // Dispatch the update of the new service wrappers
@@ -94,6 +91,43 @@ class ValetServicesManager: ServicesManager {
         })
     }
 
+    /**
+     Fetches Homebrew services information for either elevated (root) or user services.
+
+     - Parameter elevated: Whether to fetch services running as root (true) or user (false)
+     - Returns: Array of HomebrewService objects, or empty array if fetching fails
+     */
+    private func fetchHomebrewServices(elevated: Bool) async -> [HomebrewService] {
+        // Check which formulae we are supposed to be looking for
+        let serviceNames = self.formulae
+            .filter { $0.elevated == elevated }
+            .map { $0.name }
+
+        // Determine which command to run
+        let command = elevated
+            ? "sudo \(self.container.paths.brew) services info --all --json"
+            : "\(self.container.paths.brew) services info --all --json"
+
+        // Run and get the output of the command
+        let output = await self.container.shell.pipe(command).out
+
+        // Attempt to parse the output
+        guard let jsonData = output.data(using: .utf8) else {
+            Log.err("Failed to convert \(elevated ? "root" : "user") services output to UTF-8 data. Output: \(output)")
+            return []
+        }
+
+        // Attempt to decode the JSON output. In certain situations the output may not be valid and this prevents a crash
+        do {
+            return try JSONDecoder()
+                .decode([HomebrewService].self, from: jsonData)
+                .filter { serviceNames.contains($0.name) }
+        } catch {
+            Log.err("Failed to decode \(elevated ? "root" : "user") services JSON: \(error). Output: \(output)")
+            return []
+        }
+    }
+
     override func toggleService(named: String) async {
         guard let wrapper = self[named] else {
             return Log.err("The wrapper for '\(named)' is missing.")
@@ -109,6 +143,7 @@ class ValetServicesManager: ServicesManager {
 
         // Run the command
         await brew(
+            container,
             "services \(action) \(wrapper.formula.name)",
             sudo: wrapper.formula.elevated
         )

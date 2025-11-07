@@ -7,5 +7,5 @@
 //
 
 protocol ApiProtocol {
-    
+
 }

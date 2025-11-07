@@ -10,9 +10,22 @@ import Foundation
 import NVAlert
 
 @MainActor class ComposerWindow {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     private var shouldNotify: Bool! = nil
     private var completion: ((Bool) -> Void)! = nil
     private var window: TerminalProgressWindowController?
+
+    // MARK: - Methods
 
     /**
      Updates the global dependencies and runs the completion callback when done.
@@ -21,14 +34,14 @@ import NVAlert
         self.shouldNotify = notify
         self.completion = completion
 
-        Paths.shared.detectBinaryPaths()
+        container.paths.detectBinaryPaths()
 
-        if Paths.composer == nil {
+        if container.paths.composer == nil {
             self.presentMissingAlert()
             return
         }
 
-        PhpEnvironments.shared.isBusy = true
+        container.phpEnvs.isBusy = true
 
         window = TerminalProgressWindowController.display(
             title: "alert.composer_progress.title".localized,
@@ -51,11 +64,11 @@ import NVAlert
     }
 
     private func runComposerUpdateShellCommand() async throws {
-        let command = "\(Paths.composer!) global update"
+        let command = "\(container.paths.composer!) global update"
 
         self.window?.addToConsole("\(command)\n")
 
-        let (process, _) = try await Shell.attach(
+        let (process, _) = try await container.shell.attach(
             command,
             didReceiveOutput: { [weak self] (incoming, _) in
                 guard let window = self?.window else { return }
@@ -111,7 +124,7 @@ import NVAlert
     // MARK: Main Menu Update
 
     private func removeBusyStatus() {
-        PhpEnvironments.shared.isBusy = false
+        container.phpEnvs.isBusy = false
     }
 
     // MARK: Alert

@@ -6,11 +6,11 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class ValetVersionExtractorTest: XCTestCase {
-
-    func test_can_determine_valet_version_regardless_of_deprecations() async {
+class ValetVersionExtractorTest {
+    @Test func test_can_determine_valet_version_regardless_of_deprecations() async {
         let output = """
         Deprecated: Return type of Tightenco\\Collect\\Support\\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/dummy/.composer/vendor/tightenco/collect/src/Collect/Support/Collection.php on line 1789
 
@@ -35,6 +35,6 @@ class ValetVersionExtractorTest: XCTestCase {
 
         let version = try! VersionNumber.parse(VersionExtractor.from(versionString)!)
 
-        XCTAssertEqual(version.major, 3)
+        #expect(version.major == 3)
     }
 }

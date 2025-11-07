@@ -121,12 +121,12 @@ public struct TestableConfiguration: Codable {
         Log.separator()
         Log.info("USING TESTABLE CONFIGURATION...")
         Log.separator()
-        Log.info("Applying fake shell...")
-        ActiveShell.useTestable(shellOutput)
-        Log.info("Applying fake filesystem...")
-        ActiveFileSystem.useTestable(filesystem)
-        Log.info("Applying fake commands...")
-        ActiveCommand.useTestable(commandOutput)
+        Log.info("Applying to container...")
+
+        let container = App.shared.container
+        container.overrideWith(config: self)
+
+        Preferences.shared = Preferences(container)
         Log.info("Applying temporary preference overrides...")
         preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
             Preferences.shared.cachedPreferences[key] = value
@@ -136,7 +136,7 @@ public struct TestableConfiguration: Codable {
             Log.info("Applying fake scanner...")
             ValetScanner.useFake()
             Log.info("Applying fake services manager...")
-            ServicesManager.useFake()
+            ServicesManager.useFake(container)
             Log.info("Applying fake Valet domain interactor...")
             ValetInteractor.useFake()
         }

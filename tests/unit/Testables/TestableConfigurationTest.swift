@@ -11,6 +11,8 @@ import Foundation
 
 struct TestableConfigurationTest {
     @Test func configuration_can_be_saved_as_json() async {
+        let container = Container.real()
+
         // WORKING
         var configuration = TestableConfigurations.working
 
@@ -39,8 +41,8 @@ struct TestableConfigurationTest {
         )
 
         // Verify that the files were written to disk
-        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working.json"))
-        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json"))
-        #expect(FileSystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_broken.json"))
+        #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working.json"))
+        #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json"))
+        #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_broken.json"))
     }
 }

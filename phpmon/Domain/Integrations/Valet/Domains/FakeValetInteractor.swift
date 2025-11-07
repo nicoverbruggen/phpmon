@@ -43,6 +43,7 @@ class FakeValetInteractor: ValetInteractor {
         if let scanner = ValetScanner.active as? FakeDomainScanner {
             scanner.proxies.append(
                 FakeValetProxy(
+                    container,
                     domain: domain,
                     target: proxy,
                     secure: secure,
@@ -75,7 +76,7 @@ class FakeValetInteractor: ValetInteractor {
     override func isolate(site: ValetSite, version: String) async throws {
         await delay(seconds: delayTime)
 
-        site.isolatedPhpVersion = PhpEnvironments.shared.cachedPhpInstallations[version]
+        site.isolatedPhpVersion = App.shared.container.phpEnvs.cachedPhpInstallations[version]
         site.evaluateCompatibility()
     }
 

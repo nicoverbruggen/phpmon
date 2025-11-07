@@ -9,8 +9,12 @@
 import Cocoa
 import Carbon
 import SwiftUI
+import NVAlert
 
 class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
+    var container: Container {
+        return App.shared.container
+    }
 
     // MARK: - Outlets
 
@@ -36,6 +40,11 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
 
+    /// Set to true if we already checked for expired certificates.
+    /// This prevents notifications about expired certificates from
+    /// popping up when we re-open the Domains window.
+    var didCheckForCertRenewal: Bool = false
+
     // MARK: - Helper Variables
 
     var selectedSite: ValetSite? {
@@ -59,38 +68,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         return domains[tableView.selectedRow]
     }
 
+    /// Timer used to determine whether this window has been busy
+    /// for a certain amount of time.
     var timer: Timer?
-
-    // MARK: - Display
-
-    public static func create(delegate: NSWindowDelegate?) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "domainListWindow"
-        ) as! DomainListWindowController
-
-        guard let window = windowController.window else { return }
-
-        window.title = "domain_list.title".localized
-        window.subtitle = "domain_list.subtitle".localized
-        window.delegate = delegate ?? windowController
-        window.styleMask = [.titled, .closable, .resizable, .miniaturizable]
-        window.minSize = NSSize(width: 550, height: 200)
-        window.setFrameAutosaveName("domainListWindow")
-
-        App.shared.domainListWindowController = windowController
-    }
-
-    public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.domainListWindowController == nil {
-            Self.create(delegate: delegate)
-        }
-
-        App.shared.domainListWindowController!.showWindow(self)
-        NSApp.activate(ignoringOtherApps: true)
-        App.shared.domainListWindowController?.window?.orderFrontRegardless()
-    }
 
     // MARK: - Lifecycle
 
@@ -114,11 +94,24 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         if !Valet.shared.sites.isEmpty {
             // Preloaded list
-            domains = Valet.getDomainListable()
+            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         } else {
             Task { await reloadDomains() }
         }
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+
+        if !didCheckForCertRenewal {
+            checkForCertificateRenewal()
+            didCheckForCertRenewal = true
+        }
+    }
+
+    private func reloadDomainListables() {
+        domains = Valet.getDomainListable()
     }
 
     private func addNoResultsView() {
@@ -202,14 +195,14 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         waitAndExecute {
             await Valet.shared.reloadSites()
         } completion: { [self] in
-            domains = Valet.shared.sites
+            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         }
     }
 
     func reloadDomainsWithoutUI() async {
         await Valet.shared.reloadSites()
-        domains = Valet.shared.sites
+        reloadDomainListables()
         searchedFor(text: lastSearchedFor)
     }
 
@@ -241,7 +234,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
 
     private func find(_ name: String, _ shouldSecure: Bool = false) {
-        domains = Valet.getDomainListable()
+        reloadDomainListables()
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
             Task { @MainActor in

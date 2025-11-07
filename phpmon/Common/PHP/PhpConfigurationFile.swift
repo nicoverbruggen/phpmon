@@ -9,6 +9,7 @@
 import Foundation
 
 class PhpConfigurationFile: CreatedFromFile {
+    var container: Container
 
     struct ConfigValue {
         let lineIndex: Int
@@ -31,22 +32,26 @@ class PhpConfigurationFile: CreatedFromFile {
     var lines: [String]
 
     /** Resolves a PHP configuration file (.ini) */
-    static func from(filePath: String) -> Self? {
-        let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
+    static func from(
+        _ container: Container,
+        filePath: String
+    ) -> Self? {
+        let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
 
         do {
-            let fileContents = try FileSystem.getStringFromFile(path)
-            return Self.init(path: path, contents: fileContents)
+            let fileContents = try container.filesystem.getStringFromFile(path)
+            return Self.init(container, path: path, contents: fileContents)
         } catch {
             Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
             return nil
         }
     }
 
-    required init(path: String, contents: String) {
+    required init(_ container: Container, path: String, contents: String) {
+        self.container = container
         self.filePath = path
         self.lines = contents.components(separatedBy: "\n")
-        self.extensions = PhpExtension.from(lines, filePath: path)
+        self.extensions = PhpExtension.from(container, lines, filePath: path)
         self.content = Self.parseConfig(lines: lines)
     }
 
@@ -113,7 +118,7 @@ class PhpConfigurationFile: CreatedFromFile {
     public func reload() {
         self.lines = try! String(contentsOfFile: self.filePath)
             .components(separatedBy: "\n")
-        self.extensions = PhpExtension.from(lines, filePath: self.filePath)
+        self.extensions = PhpExtension.from(container, lines, filePath: self.filePath)
         self.content = Self.parseConfig(lines: lines)
     }
 

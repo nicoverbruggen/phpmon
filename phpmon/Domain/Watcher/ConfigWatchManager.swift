@@ -21,7 +21,7 @@ class ConfigWatchManager {
     var watchers: [ConfigFSNotifier] = []
 
     init(for url: URL) {
-        if FileSystem is TestableFileSystem {
+        if App.shared.container.filesystem is TestableFileSystem {
             fatalError("""
                 ConfigWatchManager is currently incompatible with a testable filesystem!"
                 You are not allowed to instantiate these while using a testable filesystem.
@@ -59,7 +59,7 @@ class ConfigWatchManager {
         eventMask: DispatchSource.FileSystemEvent,
         behaviour: ConfigFSNotifier.Behaviour = .reloadsMenu
     ) {
-        if !FileSystem.anyExists(url.path) {
+        if !App.shared.container.filesystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }

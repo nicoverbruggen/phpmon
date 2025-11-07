@@ -12,21 +12,19 @@ import Foundation
  The path to the Homebrew directory and the user's name are fetched only once, at boot.
  */
 public class Paths {
-
-    public static let shared = Paths()
-
+    internal let container: Container
     internal var baseDir: Paths.HomebrewDir
     private var userName: String
     private var preferredShell: String
 
-    init() {
+    init(container: Container) {
         // Assume the default directory is correct
         baseDir = App.architecture != "x86_64" ? .opt : .usr
 
         // Ensure that if a different location is used, it takes precendence
         if baseDir == .usr
-            && FileSystem.directoryExists("/usr/local/homebrew")
-            && !FileSystem.directoryExists("/usr/local/Cellar") {
+            && container.filesystem.directoryExists("/usr/local/homebrew")
+            && !container.filesystem.directoryExists("/usr/local/Cellar") {
             Log.warn("Using /usr/local/homebrew as base directory!")
             baseDir = .usr_hb
         }
@@ -38,6 +36,8 @@ public class Paths {
             Log.info("The current username is `\(userName)`.")
             Log.info("The user's shell is `\(preferredShell)`.")
         }
+
+        self.container = container
     }
 
     public func detectBinaryPaths() {
@@ -46,76 +46,76 @@ public class Paths {
 
     // - MARK: Binaries
 
-    public static var valet: String {
+    public var valet: String {
         return "\(binPath)/valet"
     }
 
-    public static var brew: String {
+    public var brew: String {
         return "\(binPath)/brew"
     }
 
-    public static var php: String {
+    public var php: String {
         return "\(binPath)/php"
     }
 
-    public static var phpConfig: String {
+    public var phpConfig: String {
         return "\(binPath)/php-config"
     }
 
     // - MARK: Detected Binaries
 
     /** The path to the Composer binary. Can be in multiple locations, so is detected instead. */
-    public static var composer: String?
+    public var composer: String?
 
     // - MARK: Paths
 
-    public static var whoami: String {
-        return shared.userName
+    public var whoami: String {
+        return userName
     }
 
-    public static var homePath: String {
-        if FileSystem is RealFileSystem {
+    public var homePath: String {
+        if container.filesystem is RealFileSystem {
             return NSHomeDirectory()
         }
 
-        if FileSystem is TestableFileSystem {
-            let fs = FileSystem as! TestableFileSystem
+        if container.filesystem is TestableFileSystem {
+            let fs = container.filesystem as! TestableFileSystem
             return fs.homeDirectory
         }
 
         fatalError("A valid FileSystem must be allowed to return the home path")
     }
 
-    public static var cellarPath: String {
-        return "\(shared.baseDir.rawValue)/Cellar"
+    public var cellarPath: String {
+        return "\(baseDir.rawValue)/Cellar"
     }
 
-    public static var binPath: String {
-        return "\(shared.baseDir.rawValue)/bin"
+    public var binPath: String {
+        return "\(baseDir.rawValue)/bin"
     }
 
-    public static var optPath: String {
-        return "\(shared.baseDir.rawValue)/opt"
+    public var optPath: String {
+        return "\(baseDir.rawValue)/opt"
     }
 
-    public static var etcPath: String {
-        return "\(shared.baseDir.rawValue)/etc"
+    public var etcPath: String {
+        return "\(baseDir.rawValue)/etc"
     }
 
-    public static var tapPath: String {
-        if shared.baseDir == .usr {
-            return "\(shared.baseDir.rawValue)/homebrew/Library/Taps"
+    public var tapPath: String {
+        if baseDir == .usr {
+            return "\(baseDir.rawValue)/homebrew/Library/Taps"
         }
 
-        return "\(shared.baseDir.rawValue)/Library/Taps"
+        return "\(baseDir.rawValue)/Library/Taps"
     }
 
-    public static var caskroomPath: String {
-        return "\(shared.baseDir.rawValue)/Caskroom/phpmon"
+    public var caskroomPath: String {
+        return "\(baseDir.rawValue)/Caskroom/phpmon"
     }
 
-    public static var shell: String {
-        return shared.preferredShell
+    public var shell: String {
+        return preferredShell
     }
 
     // MARK: - Flexible Binaries
@@ -123,14 +123,14 @@ public class Paths {
     // (PHP Monitor will not use the user's own PATH)
 
     private func detectComposerBinary() {
-        if FileSystem.fileExists("/usr/local/bin/composer") {
-            Paths.composer = "/usr/local/bin/composer"
-        } else if FileSystem.fileExists("/opt/homebrew/bin/composer") {
-            Paths.composer = "/opt/homebrew/bin/composer"
-        } else if FileSystem.fileExists("/usr/local/homebrew/bin/composer") {
-            Paths.composer = "/usr/local/homebrew/bin/composer"
+        if container.filesystem.fileExists("/usr/local/bin/composer") {
+            composer = "/usr/local/bin/composer"
+        } else if container.filesystem.fileExists("/opt/homebrew/bin/composer") {
+            composer = "/opt/homebrew/bin/composer"
+        } else if container.filesystem.fileExists("/usr/local/homebrew/bin/composer") {
+            composer = "/usr/local/homebrew/bin/composer"
         } else {
-            Paths.composer = nil
+            composer = nil
             Log.warn("Composer was not found.")
         }
     }

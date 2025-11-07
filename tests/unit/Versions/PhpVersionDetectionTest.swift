@@ -6,12 +6,14 @@
 //  Copyright © 2023 Nico Verbruggen. All rights reserved.
 //
 
-import XCTest
+import Testing
+import Foundation
 
-class PhpVersionDetectionTest: XCTestCase {
+struct PhpVersionDetectionTest {
+    @Test func test_can_detect_valid_php_versions() async throws {
+        let container = Container.real()
 
-    func test_can_detect_valid_php_versions() async throws {
-        let outcome = await PhpEnvironments.shared.extractPhpVersions(
+        let versions = await container.phpEnvs.extractPhpVersions(
             from: [
                 "", // empty lines should be omitted
                 "php@8.0",
@@ -28,6 +30,6 @@ class PhpVersionDetectionTest: XCTestCase {
             generateHelpers: false
         )
 
-        XCTAssertEqual(outcome, ["8.0", "7.0", "5.6"])
+        #expect(versions == ["8.0", "7.0", "5.6"])
     }
 }

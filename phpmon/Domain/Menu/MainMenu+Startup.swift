@@ -31,16 +31,16 @@ extension MainMenu {
      */
     private func onEnvironmentPass() async {
         // Determine what the `php` formula is aliased to
-        await PhpEnvironments.shared.determinePhpAlias()
+        await container.phpEnvs.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP
-        await BrewDiagnostics.checkForOutdatedPhpInstallationSymlinks()
+        await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Initialize preferences
-        _ = Preferences.shared
+        Preferences.shared = Preferences(container)
 
         // Put some useful diagnostics information in log
-        BrewDiagnostics.logBootInformation()
+        BrewDiagnostics.shared.logBootInformation()
 
         // Attempt to find out more info about Valet
         if Valet.shared.version != nil {
@@ -54,23 +54,20 @@ extension MainMenu {
         await Brew.shared.determineVersion()
 
         // Actually detect the PHP versions
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
 
         // Verify third party taps
         // The missing tap(s) will be actionable later
-        await BrewDiagnostics.verifyThirdPartyTaps()
+        await BrewDiagnostics.shared.verifyThirdPartyTaps()
 
         // Check for an alias conflict
-        await BrewDiagnostics.checkForCaskConflict()
-
-        // Attempt to find out if PHP-FPM is broken
-        PhpEnvironments.prepare()
+        await BrewDiagnostics.shared.checkForCaskConflict()
 
         // Set up the filesystem watcher for the Homebrew binaries
         App.shared.prepareHomebrewWatchers()
 
         // Check for other problems
-        WarningManager.shared.evaluateWarnings()
+        container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
         App.shared.handlePhpConfigWatcher()
@@ -92,7 +89,7 @@ extension MainMenu {
             await Valet.shared.startPreloadingSites()
 
             // After preloading sites, check for PHP-FPM pool conflicts
-            await BrewDiagnostics.checkForValetMisconfiguration()
+            await BrewDiagnostics.shared.checkForValetMisconfiguration()
 
             // Check if PHP-FPM is broken (should be fixed automatically if phpmon >= 6.0)
             await Valet.shared.notifyAboutBrokenPhpFpm()
@@ -108,7 +105,7 @@ extension MainMenu {
         Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
 
         // We are ready!
-        PhpEnvironments.shared.isBusy = false
+        container.phpEnvs.isBusy = false
 
         // Finally!
         Log.info("PHP Monitor is ready to serve!")
@@ -184,10 +181,10 @@ extension MainMenu {
     private func detectApplications() async {
         Log.info("Detecting applications...")
 
-        App.shared.detectedApplications = await Application.detectPresetApplications()
+        App.shared.detectedApplications = await Application.detectPresetApplications(container)
 
         let customApps = Preferences.custom.scanApps?.map { appName in
-            return Application(appName, .user_supplied)
+            return Application(container, appName, .user_supplied)
         } ?? []
 
         var detectedCustomApps: [Application] = []

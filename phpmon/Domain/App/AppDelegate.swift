@@ -24,12 +24,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let state: App
 
     /**
-     The paths singleton that determines where Homebrew is installed,
-     and where to look for binaries.
-     */
-    let paths: Paths
-
-    /**
      The Valet singleton that determines all information
      about Valet and its current configuration.
      */
@@ -60,10 +54,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      When the application initializes, create all singletons.
      */
     override init() {
+        // Prepare the container with the defaults
+        self.state = App.shared
+        self.state.container.prepare()
+
         #if DEBUG
         logger.verbosity = .performance
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
-            Self.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
+            AppDelegate.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
         }
         #endif
 
@@ -77,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("Extra CLI mode has been activated via --cli flag.")
         }
 
-        if FileSystem.fileExists("~/.config/phpmon/verbose") {
+        if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
             logger.verbosity = .cli
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
@@ -89,15 +87,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.separator(as: .info)
         }
 
-        self.state = App.shared
-        self.paths = Paths.shared
+        // Initialize the crash reporter
+        CrashReporter.initialize()
+
+        // Set up final singletons
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()
     }
 
     func initializeSwitcher() {
-        self.phpEnvironments = PhpEnvironments.shared
+        self.phpEnvironments = App.shared.container.phpEnvs
     }
 
     static func initializeTestingProfile(_ path: String) {

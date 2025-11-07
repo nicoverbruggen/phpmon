@@ -45,14 +45,14 @@ struct CustomPrefs: Decodable {
 extension Preferences {
     func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        await Shell.quiet("mkdir -p ~/.config/phpmon")
+        await container.shell.quiet("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
         await moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
-        let url = URL(fileURLWithPath: "\(Paths.homePath)/.config/phpmon/config.json")
-        if FileSystem.fileExists(url.path) {
+        let url = URL(fileURLWithPath: "\(container.paths.homePath)/.config/phpmon/config.json")
+        if container.filesystem.fileExists(url.path) {
 
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             loadCustomPreferencesFile(url)
@@ -62,9 +62,9 @@ extension Preferences {
     }
 
     func moveOutdatedConfigurationFile() async {
-        if FileSystem.fileExists("~/.phpmon.conf.json") && !FileSystem.fileExists("~/.config/phpmon/config.json") {
+        if container.filesystem.fileExists("~/.phpmon.conf.json") && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            await Shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await container.shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }
@@ -88,7 +88,7 @@ extension Preferences {
 
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
-                if let shell = Shell as? RealShell {
+                if let shell = App.shared.container.shell as? RealShell {
                     shell.exports = customPreferences.exportAsString
                 }
             }

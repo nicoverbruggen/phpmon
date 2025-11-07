@@ -105,7 +105,7 @@ struct ByteLimitView: View {
             "Here's an extensive description that is obviously way too long but it should wrap." +
         "The point of the wrapping text is that is allows us to see what's going on with the layout here."
     ) {
-        ByteLimitView(preference: BytePhpPreference(key: "max_memory"))
+        ByteLimitView(preference: BytePhpPreference(App.shared.container, key: "max_memory"))
     }.frame(width: 600, height: 200)
 }
 

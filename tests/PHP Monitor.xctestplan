@@ -1,0 +1,42 @@
+{
+  "configurations" : [
+    {
+      "id" : "CDAF5C24-6A14-4AD7-B204-61734226DBF0",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C4F7807825D7F84B000DBC97",
+        "name" : "Unit Tests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7AC28F9B4940021E251",
+        "name" : "Feature Tests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:PHP Monitor.xcodeproj",
+        "identifier" : "C471E7BB28F9B90F0021E251",
+        "name" : "UI Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

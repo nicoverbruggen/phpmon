@@ -9,16 +9,17 @@
 import Foundation
 
 class Preferences {
-
     // MARK: - Singleton
+    static var shared: Preferences!
 
-    static var shared = Preferences()
+    var container: Container
 
     var customPreferences: CustomPrefs
 
     var cachedPreferences: [PreferenceName: Any?]
 
-    public init() {
+    public init(_ container: Container) {
+        self.container = container
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
         customPreferences = CustomPrefs(

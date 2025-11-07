@@ -10,12 +10,20 @@ import Foundation
 
 class ValetDomainScanner: DomainScanner {
 
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
     // MARK: - Sites
 
     func resolveSiteCount(paths: [String]) -> Int {
         return paths.map { path in
             do {
-                let entries = try FileSystem
+                let entries = try container.filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries
@@ -35,7 +43,7 @@ class ValetDomainScanner: DomainScanner {
 
         paths.forEach { path in
             do {
-                let entries = try FileSystem
+                let entries = try container.filesystem
                     .getShallowContentsOfDirectory(path)
 
                 return entries.forEach {
@@ -59,7 +67,7 @@ class ValetDomainScanner: DomainScanner {
         // Get the TLD from the global Valet object
         let tld = Valet.shared.config.tld
 
-        if !FileSystem.anyExists(path) {
+        if !container.filesystem.anyExists(path) {
             Log.warn("Could not parse the site: \(path), skipping!")
         }
 
@@ -69,10 +77,10 @@ class ValetDomainScanner: DomainScanner {
             return nil
         }
 
-        if FileSystem.isSymlink(path) {
-            return ValetSite(aliasPath: path, tld: tld)
-        } else if FileSystem.isDirectory(path) {
-            return ValetSite(absolutePath: path, tld: tld)
+        if container.filesystem.isSymlink(path) {
+            return ValetSite(container, aliasPath: path, tld: tld)
+        } else if container.filesystem.isDirectory(path) {
+            return ValetSite(container, absolutePath: path, tld: tld)
         }
 
         return nil
@@ -85,7 +93,7 @@ class ValetDomainScanner: DomainScanner {
     private func isSite(_ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
-        return (FileSystem.isDirectory(siteDir) || FileSystem.isSymlink(siteDir))
+        return (container.filesystem.isDirectory(siteDir) || container.filesystem.isSymlink(siteDir))
     }
 
     // MARK: - Proxies
@@ -98,13 +106,13 @@ class ValetDomainScanner: DomainScanner {
                 return !$0.starts(with: ".")
             }
             .compactMap {
-                return NginxConfigurationFile.from(filePath: "\(directoryPath)/\($0)")
+                return NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\($0)")
             }
             .filter {
                 return $0.proxy != nil
             }
             .map {
-                return ValetProxy($0)
+                return ValetProxy(container, $0)
             }
     }
 }

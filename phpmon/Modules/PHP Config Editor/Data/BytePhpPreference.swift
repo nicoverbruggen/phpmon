@@ -9,6 +9,7 @@
 import Foundation
 
 class BytePhpPreference: PhpPreference {
+
     enum UnitOption: String, CaseIterable {
         case kilobyte = "K"
         case megabyte = "M"
@@ -35,9 +36,9 @@ class BytePhpPreference: PhpPreference {
         didSet { updatedFieldValue() }
     }
 
-    override init(key: String) {
-        let value = Command.execute(
-            path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
+    override init(_ container: Container, key: String) {
+        let value = container.command.execute(
+            path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
             trimNewlines: false
         )
 
@@ -46,7 +47,8 @@ class BytePhpPreference: PhpPreference {
             self.unit = unit
             self.value = value
         }
-        super.init(key: key)
+
+        super.init(container, key: key)
     }
 
     // MARK: Save Value

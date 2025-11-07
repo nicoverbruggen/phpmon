@@ -6,14 +6,28 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+///
+/// This class is still WIP and pending for a future release of PHP Monitor.
+///
 class InstallHomebrew {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Methods
+
     public func run() async throws {
         let script = """
             NONINTERACTIVE=1 /bin/bash -c \
             "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         """
 
-        _ = try await Shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
+        _ = try await container.shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
             print(string)
         }, withTimeout: 60 * 10)
     }

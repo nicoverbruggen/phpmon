@@ -10,11 +10,25 @@ import Foundation
 
 extension String {
     var replacingTildeWithHomeDirectory: String {
-        return self.replacingOccurrences(of: "~", with: Paths.homePath)
+        // Try and check if there's a shared container
+        if let paths = App.shared.container.paths {
+            return self.replacingOccurrences(of: "~", with: paths.homePath)
+        }
+
+        // TODO: Come up with some other way to handle this when the app container is not available, especially for tests
+        return self
     }
 }
 
 class RealFileSystem: FileSystemProtocol {
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(container: Container) {
+        self.container = container
+    }
 
     // MARK: - Basics
 
@@ -64,7 +78,7 @@ class RealFileSystem: FileSystemProtocol {
     // MARK: — FS Attributes
 
     func makeExecutable(_ path: String) throws {
-        _ = ActiveShell.shared.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
+        _ = container.shell.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
     }
 
     // MARK: - Checks

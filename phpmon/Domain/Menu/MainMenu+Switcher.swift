@@ -18,7 +18,7 @@ extension MainMenu {
     nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
         Task { @MainActor in
-            PhpEnvironments.shared.isBusy = false
+            container.phpEnvs.isBusy = false
         }
 
         Task { // Things to do after reloading domain list data
@@ -31,14 +31,14 @@ extension MainMenu {
                 refreshIcon()
                 rebuild()
 
-                if Valet.installed && !PhpEnvironments.shared.validate(version) {
+                if Valet.installed && !container.phpEnvs.validate(version) {
                     self.suggestFixMyValet(failed: version)
                     return
                 }
 
                 // Run composer updates
                 if Preferences.isEnabled(.autoComposerGlobalUpdateAfterSwitch) {
-                    ComposerWindow().updateGlobalDependencies(
+                    ComposerWindow(App.shared.container).updateGlobalDependencies(
                         notify: false,
                         completion: { _ in
                             self.notifyAboutVersionChange(to: version)
@@ -99,7 +99,7 @@ extension MainMenu {
         .withPrimary(text: "alert.global_composer_platform_issues.buttons.update".localized, action: { alert in
             alert.close(with: .OK)
             Log.info("The user has chosen to update global dependencies.")
-            ComposerWindow().updateGlobalDependencies(
+            ComposerWindow(App.shared.container).updateGlobalDependencies(
                 notify: true,
                 completion: { success in
                     Log.info("Dependencies updated successfully: \(success)")
@@ -135,7 +135,7 @@ extension MainMenu {
             preference: .notifyAboutVersionChange
         )
 
-        guard PhpEnvironments.phpInstall != nil else {
+        guard container.phpEnvs.phpInstall != nil else {
             Log.err("Cannot notify about version change if PHP is unlinked")
             return
         }

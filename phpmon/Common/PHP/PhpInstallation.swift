@@ -10,6 +10,12 @@ import Foundation
 
 class PhpInstallation {
 
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     var versionNumber: VersionNumber
 
     var iniFiles: [PhpConfigurationFile] = []
@@ -34,13 +40,17 @@ class PhpInstallation {
         return "php@\(self.versionNumber.short)"
     }
 
+    // MARK: - Methods
+
     /**
      In order to determine details about a PHP installation,
      we’ll simply run `php-config --version` in the relevant directory.
      */
-    init(_ version: String) {
-        let phpConfigExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php-config",
-            phpExecutablePath = "\(Paths.optPath)/php@\(version)/bin/php"
+    init(_ container: Container, _ version: String) {
+        self.container = container
+
+        let phpConfigExecutablePath = "\(container.paths.optPath)/php@\(version)/bin/php-config",
+            phpExecutablePath = "\(container.paths.optPath)/php@\(version)/bin/php"
 
         versionNumber = VersionNumber.make(from: version)!
 
@@ -54,8 +64,8 @@ class PhpInstallation {
     }
 
     private func determineVersion(_ phpConfigExecutablePath: String, _ phpExecutablePath: String) {
-        if FileSystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = Command.execute(
+        if container.filesystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = container.command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"],
                 trimNewlines: false
@@ -76,8 +86,8 @@ class PhpInstallation {
     }
 
     private func determineHealth(_ phpExecutablePath: String) {
-        if FileSystem.fileExists(phpExecutablePath) {
-            let testCommand = Command.execute(
+        if container.filesystem.fileExists(phpExecutablePath) {
+            let testCommand = container.command.execute(
                 path: phpExecutablePath,
                 arguments: ["-v"],
                 trimNewlines: false,
@@ -94,14 +104,14 @@ class PhpInstallation {
     }
 
     private func determineIniFiles(_ phpExecutablePath: String) {
-        let paths = ActiveShell.shared
+        let paths = container.shell
             .sync("\(phpExecutablePath) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+            if let file = PhpConfigurationFile.from(container, filePath: iniFilePath) {
                 iniFiles.append(file)
             }
         }

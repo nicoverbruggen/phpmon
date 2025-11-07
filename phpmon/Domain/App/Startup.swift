@@ -101,15 +101,17 @@ class Startup {
             // The Homebrew binary must exist.
             // =================================================================================
             EnvironmentCheck(
-                command: { return !FileSystem.fileExists(Paths.brew) },
-                name: "`\(Paths.brew)` exists",
+                command: { container in
+                    return !container.filesystem.fileExists(container.paths.brew)
+                },
+                name: "`\(App.shared.container.paths.brew)` exists",
                 titleText: "alert.homebrew_missing.title".localized,
                 subtitleText: "alert.homebrew_missing.subtitle".localized,
                 descriptionText: "alert.homebrew_missing.info".localized(
                     App.architecture
                         .replacingOccurrences(of: "x86_64", with: "Intel")
                         .replacingOccurrences(of: "arm64", with: "Apple Silicon"),
-                    Paths.brew
+                    App.shared.container.paths.brew
                 ),
                 buttonText: "alert.homebrew_missing.quit".localized,
                 requiresAppRestart: true
@@ -118,13 +120,14 @@ class Startup {
             // Make sure we can detect one or more PHP installations.
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    return await !Shell.pipe("ls \(Paths.optPath) | grep php").out.contains("php")
+                command: { container in
+                    return await !container.shell
+                        .pipe("ls \(container.paths.optPath) | grep php").out.contains("php")
                 },
-                name: "`ls \(Paths.optPath) | grep php` returned php result",
+                name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
                 subtitleText: "startup.errors.php_opt.subtitle".localized(
-                    Paths.optPath
+                    App.shared.container.paths.optPath
                 ),
                 descriptionText: "startup.errors.php_opt.desc".localized
             )
@@ -134,24 +137,26 @@ class Startup {
             // The PHP binary must exist.
             // =================================================================================
             EnvironmentCheck(
-                command: { return !FileSystem.fileExists(Paths.php) },
-                name: "`\(Paths.php)` exists",
+                command: { container in
+                    return !container.filesystem.fileExists(container.paths.php)
+                },
+                name: "`\(App.shared.container.paths.php)` exists",
                 titleText: "startup.errors.php_binary.title".localized,
                 subtitleText: "startup.errors.php_binary.subtitle".localized,
-                descriptionText: "startup.errors.php_binary.desc".localized(Paths.php)
+                descriptionText: "startup.errors.php_binary.desc".localized(App.shared.container.paths.php)
             ),
             // =================================================================================
             // Ensure that the main PHP installation is not broken.
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    return await Shell.pipe("\(Paths.binPath)/php -v").err
+                command: { container in
+                    return await container.shell.pipe("\(container.paths.binPath)/php -v").err
                         .contains("Library not loaded")
                 },
                 name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
                 subtitleText: "startup.errors.dyld_library.subtitle".localized(
-                    Paths.optPath
+                    App.shared.container.paths.optPath
                 ),
                 descriptionText: "startup.errors.dyld_library.desc".localized
             ),
@@ -159,15 +164,15 @@ class Startup {
             // The Valet binary must exist.
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    return !(FileSystem.fileExists(Paths.valet)
-                             || FileSystem.fileExists("~/.composer/vendor/bin/valet"))
+                command: { container in
+                    return !(container.filesystem.fileExists(container.paths.valet)
+                             || container.filesystem.fileExists("~/.composer/vendor/bin/valet"))
                 },
                 name: "`valet` binary exists",
                 titleText: "startup.errors.valet_executable.title".localized,
                 subtitleText: "startup.errors.valet_executable.subtitle".localized,
                 descriptionText: "startup.errors.valet_executable.desc".localized(
-                    Paths.valet
+                    App.shared.container.paths.valet
                 )
             ),
             // =================================================================================
@@ -176,14 +181,21 @@ class Startup {
             // functioning correctly. Let the user know that they need to run `valet trust`.
             // =================================================================================
             EnvironmentCheck(
-                command: { return await !Shell.pipe("cat /private/etc/sudoers.d/brew").out.contains(Paths.brew) },
+                command: { container in
+                    return await !container.shell
+                        .pipe("cat /private/etc/sudoers.d/brew")
+                        .out.contains(container.paths.brew)
+                },
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
                 subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
                 descriptionText: "startup.errors.sudoers_brew.desc".localized
             ),
             EnvironmentCheck(
-                command: { return await !Shell.pipe("cat /private/etc/sudoers.d/valet").out.contains(Paths.valet) },
+                command: { container in
+                    return await !container.shell
+                        .pipe("cat /private/etc/sudoers.d/valet").out.contains(container.paths.valet)
+                },
                 name: "`/private/etc/sudoers.d/valet` contains valet",
                 titleText: "startup.errors.sudoers_valet.title".localized,
                 subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
@@ -193,8 +205,8 @@ class Startup {
             // Determine that Valet is installed
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    return !FileSystem.directoryExists("~/.config/valet")
+                command: { container in
+                    return !container.filesystem.directoryExists("~/.config/valet")
                 },
                 name: "`.config/valet` not empty (Valet installed)",
                 titleText: "startup.errors.valet_not_installed.title".localized,
@@ -205,9 +217,9 @@ class Startup {
             // Determine that the Valet configuration JSON file is valid.
             // =================================================================================
             EnvironmentCheck(
-                command: {
+                command: { container in
                     // Detect additional binaries (e.g. Composer)
-                    Paths.shared.detectBinaryPaths()
+                    container.paths.detectBinaryPaths()
                     // Load the configuration file (config.json)
                     Valet.shared.loadConfiguration()
                     // This check fails when the config is nil
@@ -222,11 +234,11 @@ class Startup {
             // Verify if the Homebrew services are running (as root).
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    await BrewDiagnostics.loadInstalledTaps()
-                    return await BrewDiagnostics.cannotLoadService("dnsmasq")
+                command: { _ in
+                    await BrewDiagnostics.shared.loadInstalledTaps()
+                    return await BrewDiagnostics.shared.cannotLoadService("dnsmasq")
                 },
-                name: "`sudo \(Paths.brew) services info` JSON loaded",
+                name: "`sudo \(App.shared.container.paths.brew) services info` JSON loaded",
                 titleText: "startup.errors.services_json_error.title".localized,
                 subtitleText: "startup.errors.services_json_error.subtitle".localized,
                 descriptionText: "startup.errors.services_json_error.desc".localized
@@ -235,10 +247,10 @@ class Startup {
             // Check for `which` alias issue
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    let nodePath = await Shell.pipe("which node").out
+                command: { container in
+                    let nodePath = await container.shell.pipe("which node").out
                     return App.architecture == "x86_64"
-                    && FileSystem.fileExists("/usr/local/bin/which")
+                    && container.filesystem.fileExists("/usr/local/bin/which")
                     && nodePath.contains("env: node: No such file or directory")
                 },
                 name: "`env: node` issue does not apply",
@@ -250,7 +262,7 @@ class Startup {
             // Determine that Laravel Herd is not running (may cause conflicts)
             // =================================================================================
             EnvironmentCheck(
-                command: {
+                command: { _ in
                     return NSWorkspace.shared.runningApplications.contains(where: { app in
                         return app.bundleIdentifier == "de.beyondco.herd"
                     })
@@ -264,8 +276,8 @@ class Startup {
             // Determine that Valet works correctly (no issues in platform detected)
             // =================================================================================
             EnvironmentCheck(
-                command: {
-                    return await Shell.pipe("valet --version").out
+                command: { container in
+                    return await container.shell.pipe("valet --version").out
                         .contains("Composer detected issues in your platform")
                 },
                 name: "no global composer issues",
@@ -277,7 +289,7 @@ class Startup {
             // Determine the Valet version and ensure it isn't unknown.
             // =================================================================================
             EnvironmentCheck(
-                command: {
+                command: { _ in
                     await Valet.shared.updateVersionNumber()
                     return Valet.shared.version == nil
                 },
@@ -290,7 +302,7 @@ class Startup {
             // Ensure the Valet version is supported.
             // =================================================================================
             EnvironmentCheck(
-                command: {
+                command: { _ in
                     // We currently support Valet 2, 3 or 4. Any other version should get an alert.
                     return ![2, 3, 4].contains(Valet.shared.version?.major)
                 },

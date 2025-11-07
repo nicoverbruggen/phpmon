@@ -20,6 +20,7 @@ class FakeValetSite: ValetSite {
         isolated: String? = nil
     ) {
         self.init(
+            App.shared.container,
             name: name,
             tld: tld,
             absolutePath: path,
@@ -39,10 +40,10 @@ class FakeValetSite: ValetSite {
         }
 
         if let isolated = isolated {
-            self.isolatedPhpVersion = PhpInstallation(isolated)
+            self.isolatedPhpVersion = PhpInstallation(container, isolated)
         }
 
-        if PhpEnvironments.shared.currentInstall != nil {
+        if container.phpEnvs.currentInstall != nil {
             self.evaluateCompatibility()
         }
     }

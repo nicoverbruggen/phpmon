@@ -9,28 +9,23 @@
 import Foundation
 
 class PhpEnvironments {
+    var container: Container
 
     // MARK: - Initializer
 
     /**
      Loads the currently active PHP installation upon startup. May be empty.
      */
-    init() {
-        self.currentInstall = ActivePhpInstallation.load()
-    }
-
-    /**
-     Creates the shared instance. Called when starting the app.
-     */
-    static func prepare() {
-        _ = Self.shared
+    init(container: Container) {
+        self.container = container
+        self.currentInstall = ActivePhpInstallation.load(container)
     }
 
     /**
      Determine which PHP version the `php` formula is aliased to.
      */
     @MainActor func determinePhpAlias() async {
-        let brewPhpAlias = await Shell.pipe("\(Paths.brew) info php --json").out
+        let brewPhpAlias = await container.shell.pipe("\(container.paths.brew) info php --json").out
 
         self.homebrewPackage = try! JSONDecoder().decode(
             [HomebrewPackage].self,
@@ -41,9 +36,9 @@ class PhpEnvironments {
         Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
 
         // Check if that version actually corresponds to an older version
-        let phpConfigExecutablePath = "\(Paths.optPath)/php/bin/php-config"
-        if FileSystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = Command.execute(
+        let phpConfigExecutablePath = "\(container.paths.optPath)/php/bin/php-config"
+        if container.filesystem.fileExists(phpConfigExecutablePath) {
+            let longVersionString = container.command.execute(
                 path: phpConfigExecutablePath,
                 arguments: ["--version"],
                 trimNewlines: false
@@ -65,9 +60,6 @@ class PhpEnvironments {
 
     /** The delegate that is informed of updates. */
     weak var delegate: PhpSwitcherDelegate?
-
-    /** The static instance. Accessible at any time. */
-    static let shared = PhpEnvironments()
 
     /** Whether the switcher is busy performing any actions. */
     @MainActor var isBusy: Bool = false {
@@ -110,23 +102,23 @@ class PhpEnvironments {
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
      */
-    static var homebrewBrewPhpAlias: String {
-        if PhpEnvironments.shared.homebrewPackage == nil {
+    var homebrewBrewPhpAlias: String {
+        if homebrewPackage == nil {
             // For UI testing and as a fallback, determine this version by using (fake) php-config
-            let version = Command.execute(path: "/opt/homebrew/bin/php-config",
+            let version = App.shared.container.command.execute(path: "/opt/homebrew/bin/php-config",
                                    arguments: ["--version"],
                                    trimNewlines: true)
             return try! VersionNumber.parse(version).short
         }
 
-        return PhpEnvironments.shared.homebrewPackage.version
+        return homebrewPackage.version
     }
 
     /**
      The currently linked and active PHP installation.
      */
-    static var phpInstall: ActivePhpInstallation? {
-        return Self.shared.currentInstall
+    var phpInstall: ActivePhpInstallation? {
+        return currentInstall
     }
 
     /**
@@ -142,16 +134,11 @@ class PhpEnvironments {
      but currently this is no longer needed.
      */
     public static var switcher: PhpSwitcher {
-        return InternalSwitcher()
+        return InternalSwitcher(App.shared.container)
     }
 
-    /**
-     Alias that detects which versions of PHP are installed.
-     See also: `detectPhpVersions()`. Please note that this method
-     does *not* return the set of PHP versions that are supported.
-     */
-    public static func detectPhpVersions() async {
-        _ = await Self.shared.detectPhpVersions()
+    public func reloadPhpVersions() async {
+        _ = await self.detectPhpVersions()
     }
 
     /**
@@ -162,7 +149,7 @@ class PhpEnvironments {
      Returns a `Set<String>` of installations that are considered valid.
      */
     public func detectPhpVersions() async -> Set<String> {
-        let files = await Shell.pipe("ls \(Paths.optPath) | grep php@").out
+        let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
 
         let versions = await extractPhpVersions(from: files.components(separatedBy: "\n"))
 
@@ -182,8 +169,8 @@ class PhpEnvironments {
         let phpAlias = homebrewPackage.version
 
         // Avoid inserting a duplicate
-        if !supportedVersions.contains(phpAlias) && FileSystem.fileExists("\(Paths.optPath)/php/bin/php") {
-            let phpAliasInstall = PhpInstallation(phpAlias)
+        if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
+            let phpAliasInstall = PhpInstallation(container, phpAlias)
             // Before inserting, ensure that the actual output matches the alias
             // if that isn't the case, our formula remains out-of-date
             if !phpAliasInstall.isMissingBinary {
@@ -203,7 +190,7 @@ class PhpEnvironments {
         var mappedVersions: [String: PhpInstallation] = [:]
 
         availablePhpVersions.forEach { version in
-            mappedVersions[version] = PhpInstallation(version)
+            mappedVersions[version] = PhpInstallation(container, version)
         }
 
         cachedPhpInstallations = mappedVersions
@@ -235,14 +222,14 @@ class PhpEnvironments {
             // is supported and where the binary exists (avoids broken installs)
             if !output.contains(version)
                 && supported.contains(version)
-                && (checkBinaries ? FileSystem.fileExists("\(Paths.optPath)/php@\(version)/bin/php") : true) {
+                && (checkBinaries ? container.filesystem.fileExists("\(container.paths.optPath)/php@\(version)/bin/php") : true) {
                 output.insert(version)
             }
         }
 
         if generateHelpers {
             for item in output {
-                await PhpHelper.generate(for: item)
+                await PhpHelper.generate(container, for: item)
             }
         }
 
@@ -265,7 +252,7 @@ class PhpEnvironments {
      Validates whether the currently running version matches the provided version.
      */
     public func validate(_ version: String) -> Bool {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = self.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             return false
         }
@@ -286,7 +273,7 @@ class PhpEnvironments {
      You can then use the configuration file instance to change values.
      */
     public func getConfigFile(forKey key: String) -> PhpConfigurationFile? {
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = self.phpInstall else {
             return nil
         }
 

@@ -9,7 +9,5 @@
 import Foundation
 
 protocol CreatedFromFile {
-
-    static func from(filePath: String) -> Self?
-
+    static func from(_ container: Container, filePath: String) -> Self?
 }

@@ -29,7 +29,7 @@ extension PhpExtensionManagerView {
 
     public func install(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
         Task {
-            await self.runCommand(InstallPhpExtensionCommand(install: [ext]))
+            await self.runCommand(InstallPhpExtensionCommand(container, install: [ext]))
             onCompletion()
         }
     }
@@ -45,7 +45,7 @@ extension PhpExtensionManagerView {
             style: .warning,
             onFirstButtonPressed: {
                 Task {
-                    await self.runCommand(RemovePhpExtensionCommand(remove: ext))
+                    await self.runCommand(RemovePhpExtensionCommand(container, remove: ext))
                     onCompletion()
                 }
             }
@@ -53,7 +53,7 @@ extension PhpExtensionManagerView {
     }
 
     public func runCommand(_ command: BrewCommand) async {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             self.presentErrorAlert(
                 title: "phpman.action_prevented_busy.title".localized,
                 description: "phpman.action_prevented_busy.desc".localized,
@@ -66,7 +66,7 @@ extension PhpExtensionManagerView {
 
         do {
             self.status.busy = true
-            try await command.execute { progress in
+            try await command.execute(shell: App.shared.container.shell) { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
                     self.status.description = progress.description

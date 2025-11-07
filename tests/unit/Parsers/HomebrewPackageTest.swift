@@ -53,12 +53,12 @@ struct HomebrewPackageTest {
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
     func can_parse_services_json_from_cli_output() async throws {
-        ActiveShell.useSystem()
+        let container = Container.real()
 
         let services = try! JSONDecoder().decode(
             [HomebrewService].self,
-            from: await Shell.pipe(
-                "sudo \(Paths.brew) services info --all --json"
+            from: await container.shell.pipe(
+                "sudo \(container.paths.brew) services info --all --json"
             ).out.data(using: .utf8)!
         ).filter({ service in
             return ["php", "nginx", "dnsmasq"].contains(service.name)
@@ -76,12 +76,11 @@ struct HomebrewPackageTest {
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
     func can_load_extension_json_from_cli_output() async throws {
-
-        ActiveShell.useSystem()
+        let container = Container.real()
 
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self,
-            from: await Shell.pipe("\(Paths.brew) info php --json").out.data(using: .utf8)!
+            from: await container.shell.pipe("\(container.paths.brew) info php --json").out.data(using: .utf8)!
         ).first!
 
         #expect(package.full_name == "php")

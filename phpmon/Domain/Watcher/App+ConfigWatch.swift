@@ -28,18 +28,18 @@ extension App {
     }
 
     func handlePhpConfigWatcher(forceReload: Bool = false) {
-        if ActiveFileSystem.shared is TestableFileSystem {
+        if container.filesystem is TestableFileSystem {
             Log.warn("Config watch manager is disabled when using testable filesystem.")
             return
         }
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("It appears as if no PHP installation is currently active.")
             Log.info("The config watch manager be disabled until a PHP install is active.")
             return
         }
 
-        let url = URL(fileURLWithPath: "\(Paths.etcPath)/php/\(install.version.short)")
+        let url = URL(fileURLWithPath: "\(container.paths.etcPath)/php/\(install.version.short)")
 
         // Check whether the manager exists and schedule on the main thread
         // if we don't consistently do this, the app will create duplicate watchers

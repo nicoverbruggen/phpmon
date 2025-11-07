@@ -9,7 +9,6 @@
 import XCTest
 
 final class MainMenuTest: UITestCase {
-
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
@@ -30,7 +29,8 @@ final class MainMenuTest: UITestCase {
             app.menuItems["mi_quit".localized]
         ])
 
-        sleep(2)
+        // Wait briefly
+        _ = app.menuItems["mi_about".localized].waitForExistence(timeout: 2.0)
     }
 
     final func test_can_open_domains_list() throws {
@@ -40,13 +40,13 @@ final class MainMenuTest: UITestCase {
 
     final func test_can_open_php_doctor() throws {
         let app = launch(openMenu: true)
-        app.mainMenuItem(withText: "mi_other".localized).click()
+        app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
     }
 
     final func test_can_view_onboarding_flow() throws {
         let app = launch(openMenu: true)
-        app.mainMenuItem(withText: "mi_other".localized).click()
+        app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_view_onboarding".localized).click()
     }
 

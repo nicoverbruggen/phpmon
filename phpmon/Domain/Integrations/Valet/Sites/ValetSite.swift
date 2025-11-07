@@ -10,6 +10,9 @@ import Foundation
 
 class ValetSite: ValetListable {
 
+    /// Dependency container.
+    var container: Container
+
     /// Name of the site. Does not include the TLD.
     var name: String
 
@@ -20,7 +23,7 @@ class ValetSite: ValetListable {
     /// replacing the user's home folder with ~.
     lazy var absolutePathRelative: String = {
         return self.absolutePath
-            .replacingOccurrences(of: Paths.homePath, with: "~")
+            .replacingOccurrences(of: container.paths.homePath, with: "~")
     }()
 
     /// The TLD used to locate this site.
@@ -34,6 +37,17 @@ class ValetSite: ValetListable {
 
     /// Whether the site has been secured.
     var secured: Bool!
+
+    /// When the certificate expires.
+    var certificateExpiryDate: Date?
+
+    /// A simple bool to check if the certificate has expired.
+    var isCertificateExpired: Bool {
+        guard let certificateExpiryDate = certificateExpiryDate else {
+            return false
+        }
+        return certificateExpiryDate < Date()
+    }
 
     /// What driver is currently in use. If not detected, defaults to nil.
     var driver: String?
@@ -57,7 +71,7 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? PhpEnvironments.phpInstall?.version.short
+            ?? container.phpEnvs.phpInstall?.version.short
             ?? "???"
     }
 
@@ -67,12 +81,14 @@ class ValetSite: ValetListable {
     }
 
     init(
+        _ container: Container,
         name: String,
         tld: String,
         absolutePath: String,
         aliasPath: String? = nil,
         makeDeterminations: Bool = true
     ) {
+        self.container = container
         self.name = name
         self.tld = tld
         self.absolutePath = absolutePath
@@ -80,7 +96,7 @@ class ValetSite: ValetListable {
         self.secured = false
 
         if makeDeterminations {
-            self.favorited = Favorites.shared.contains(domain: favoriteSignature)
+            self.favorited = container.favorites.contains(domain: favoriteSignature)
             determineSecured()
             determineIsolated()
             determineComposerPhpVersion()
@@ -88,28 +104,28 @@ class ValetSite: ValetListable {
         }
     }
 
-    convenience init(absolutePath: String, tld: String) {
+    convenience init(_ container: Container, absolutePath: String, tld: String) {
         let name = URL(fileURLWithPath: absolutePath).lastPathComponent
-        self.init(name: name, tld: tld, absolutePath: absolutePath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath)
     }
 
-    convenience init(aliasPath: String, tld: String) {
+    convenience init(_ container: Container, aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! FileSystem.getDestinationOfSymlink(aliasPath)
-        self.init(name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
+        let absolutePath = try! container.filesystem.getDestinationOfSymlink(aliasPath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 
     /**
      Determine whether a site is isolated.
      */
     public func determineIsolated() {
-        if let version = ValetSite.isolatedVersion("~/.config/valet/Nginx/\(self.name).\(self.tld)") {
-            if !PhpEnvironments.shared.cachedPhpInstallations.keys.contains(version) {
+        if let version = ValetSite.isolatedVersion(container, "~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+            if !container.phpEnvs.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
                 return
             }
-            self.isolatedPhpVersion = PhpEnvironments.shared.cachedPhpInstallations[version]
+            self.isolatedPhpVersion = container.phpEnvs.cachedPhpInstallations[version]
         } else {
             self.isolatedPhpVersion = nil
         }
@@ -117,10 +133,21 @@ class ValetSite: ValetListable {
 
     /**
      Checks if a certificate file can be found in the `valet/Certificates` directory.
-     - Note: The file is not validated, only its presence is checked.
+     Also tracks the expiry date of the certificate if it exists.
      */
     public func determineSecured() {
-        secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.name).\(self.tld).key")
+        let certificatePath = "~/.config/valet/Certificates/\(self.name).\(self.tld).crt"
+
+        let (exists, expiryDate) = CertificateValidator(container)
+            .validateCertificate(at: certificatePath)
+
+        if exists, let expiryDate, expiryDate < Date() {
+            Log.warn("Certificate for \(self.name).\(self.tld) expired at: \(expiryDate). It should be renewed.")
+        }
+
+        // Persist the information for the list
+        self.secured = exists
+        self.certificateExpiryDate = expiryDate
     }
 
     /**
@@ -182,7 +209,7 @@ class ValetSite: ValetListable {
         let path = "\(absolutePath)/composer.json"
 
         do {
-            if FileSystem.fileExists(path) {
+            if container.filesystem.fileExists(path) {
                 let decoded = try JSONDecoder().decode(
                     ComposerJson.self,
                     from: String(
@@ -213,7 +240,7 @@ class ValetSite: ValetListable {
         for (suffix, source) in files {
             do {
                 let path = "\(absolutePath)/\(suffix)"
-                if FileSystem.fileExists(path) {
+                if container.filesystem.fileExists(path) {
                     return try self.handleValetFile(path, source)
                 }
             } catch {
@@ -250,7 +277,7 @@ class ValetSite: ValetListable {
             return
         }
 
-        guard let linked = PhpEnvironments.phpInstall else {
+        guard let linked = container.phpEnvs.phpInstall else {
             self.isCompatibleWithPreferredPhpVersion = false
             return
         }
@@ -271,10 +298,13 @@ class ValetSite: ValetListable {
 
     // MARK: - File Parsing
 
-    public static func isolatedVersion(_ filePath: String) -> String? {
-        if FileSystem.fileExists(filePath) {
+    public static func isolatedVersion(
+        _ container: Container,
+        _ filePath: String
+    ) -> String? {
+        if container.filesystem.fileExists(filePath) {
             return NginxConfigurationFile
-                .from(filePath: filePath)?
+                .from(container, filePath: filePath)?
                 .isolatedVersion ?? nil
         }
 
@@ -287,8 +317,16 @@ class ValetSite: ValetListable {
         return self.name
     }
 
+    func getListableTLD() -> String {
+        return self.tld
+    }
+
     func getListableSecured() -> Bool {
         return self.secured
+    }
+
+    func getListableCertificateExpiryDate() -> Date? {
+        return self.certificateExpiryDate
     }
 
     func getListableAbsolutePath() -> String {
@@ -323,7 +361,7 @@ class ValetSite: ValetListable {
 
     func toggleFavorite() {
         self.favorited.toggle()
-        Favorites.shared.toggle(domain: self.favoriteSignature)
+        container.favorites.toggle(domain: self.favoriteSignature)
     }
 
     func isolate(version: String) async throws {

@@ -9,11 +9,24 @@
 import Foundation
 
 class RemovePhpVersionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     let formula: String
     let version: String
     let phpGuard: PhpGuard
 
-    init(formula: String) {
+    // MARK: - Methods
+
+    init(
+        _ container: Container,
+        formula: String
+    ) {
+        self.container = container
         self.version = formula
             .replacingOccurrences(of: "php@", with: "")
             .replacingOccurrences(of: "shivammathur/php/", with: "")
@@ -25,7 +38,7 @@ class RemovePhpVersionCommand: BrewCommand {
         return "phpman.steps.removing".localized("PHP \(version)...")
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
@@ -36,18 +49,18 @@ class RemovePhpVersionCommand: BrewCommand {
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
-            \(Paths.brew) remove \(formula) --force --ignore-dependencies
+            \(container.paths.brew) remove \(formula) --force --ignore-dependencies
             """
 
         do {
-            try await BrewPermissionFixer().fixPermissions()
+            try await BrewPermissionFixer(container).fixPermissions()
         } catch {
             return
         }
 
         var loggedMessages: [String] = []
 
-        let (process, _) = try! await Shell.attach(
+        let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
@@ -61,7 +74,7 @@ class RemovePhpVersionCommand: BrewCommand {
         if process.terminationStatus <= 0 {
             onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
 
-            await PhpEnvironments.detectPhpVersions()
+            _ = await container.phpEnvs.detectPhpVersions()
 
             await MainMenu.shared.refreshActiveInstallation()
 

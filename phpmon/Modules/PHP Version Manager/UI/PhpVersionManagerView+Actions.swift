@@ -11,7 +11,7 @@ import SwiftUI
 
 extension PhpVersionManagerView {
     public func runCommand(_ command: ModifyPhpVersionCommand) async {
-        if PhpEnvironments.shared.isBusy {
+        if App.shared.container.phpEnvs.isBusy {
             self.presentErrorAlert(
                 title: "phpman.action_prevented_busy.title".localized,
                 description: "phpman.action_prevented_busy.desc".localized,
@@ -22,7 +22,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await command.execute { progress in
+            try await command.execute(shell: App.shared.container.shell) { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
                     self.status.description = progress.description
@@ -55,6 +55,7 @@ extension PhpVersionManagerView {
 
     public func repairAll() async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.repairing".localized,
             upgrading: [],
             installing: []
@@ -63,6 +64,7 @@ extension PhpVersionManagerView {
 
     public func upgradeAll(_ formulae: [BrewPhpFormula]) async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.updating".localized,
             upgrading: formulae,
             installing: []
@@ -71,6 +73,7 @@ extension PhpVersionManagerView {
 
     public func install(_ formula: BrewPhpFormula) async {
         await self.runCommand(ModifyPhpVersionCommand(
+            container,
             title: "phpman.operations.installing".localized(formula.displayName),
             upgrading: [],
             installing: [formula]
@@ -79,7 +82,7 @@ extension PhpVersionManagerView {
 
     public func confirmUninstall(_ formula: BrewPhpFormula) async {
         // Disallow removal of the currently active versipn
-        if formula.installedVersion == PhpEnvironments.shared.currentInstall?.version.text {
+        if formula.installedVersion == App.shared.container.phpEnvs.currentInstall?.version.text {
             self.presentErrorAlert(
                 title: "phpman.uninstall_prevented.title".localized,
                 description: "phpman.uninstall_prevented.desc".localized,
@@ -103,11 +106,11 @@ extension PhpVersionManagerView {
     }
 
     public func uninstall(_ formula: BrewPhpFormula) async {
-        let command = RemovePhpVersionCommand(formula: formula.name)
+        let command = RemovePhpVersionCommand(container, formula: formula.name)
 
         do {
             self.setBusyStatus(true)
-            try await command.execute { progress in
+            try await command.execute(shell: App.shared.container.shell) { progress in
                 Task { @MainActor in
                     self.status.title = progress.title
                     self.status.description = progress.description
@@ -133,7 +136,7 @@ extension PhpVersionManagerView {
 
     public func setBusyStatus(_ busy: Bool) {
         Task { @MainActor in
-            PhpEnvironments.shared.isBusy = busy
+            App.shared.container.phpEnvs.isBusy = busy
             self.status.busy = busy
         }
     }

@@ -10,6 +10,16 @@ import Foundation
 
 class BrewPermissionFixer {
 
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
     var broken: [DueOwnershipFormula] = []
 
     /**
@@ -54,15 +64,15 @@ class BrewPermissionFixer {
      whether the Homebrew binary directory for the given PHP version is owned by root.
      */
     private func determineBrokenFormulae() async {
-        let formulae = PhpEnvironments.shared.cachedPhpInstallations.keys
+        let formulae = container.phpEnvs.cachedPhpInstallations.keys
 
         for formula in formulae {
             let realFormula = formula == PhpEnvironments.brewPhpAlias
                 ? "php"
                 : "php@\(formula)"
 
-            let binFolderOwned = isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/bin")
-            let sbinFolderOwned = isOwnedByRoot(path: "\(Paths.optPath)/\(realFormula)/sbin")
+            let binFolderOwned = isOwnedByRoot(path: "\(container.paths.optPath)/\(realFormula)/bin")
+            let sbinFolderOwned = isOwnedByRoot(path: "\(container.paths.optPath)/\(realFormula)/sbin")
 
             if binFolderOwned || sbinFolderOwned {
                 Log.warn("\(formula) is owned by root")
@@ -70,14 +80,14 @@ class BrewPermissionFixer {
                 if binFolderOwned {
                     broken.append(DueOwnershipFormula(
                         formula: realFormula,
-                        path: "\(Paths.optPath)/\(realFormula)/bin"
+                        path: "\(container.paths.optPath)/\(realFormula)/bin"
                     ))
                 }
 
                 if sbinFolderOwned {
                     broken.append(DueOwnershipFormula(
                         formula: realFormula,
-                        path: "\(Paths.optPath)/\(realFormula)/sbin"
+                        path: "\(container.paths.optPath)/\(realFormula)/sbin"
                     ))
                 }
             }
@@ -92,8 +102,8 @@ class BrewPermissionFixer {
         return broken
             .map { b in
                 return """
-                    \(Paths.brew) services stop \(b.formula) \
-                    && chown -R \(Paths.whoami):admin \(b.path)
+                    \(container.paths.brew) services stop \(b.formula) \
+                    && chown -R \(container.paths.whoami):admin \(b.path)
                     """
             }
             .joined(

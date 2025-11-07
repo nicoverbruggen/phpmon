@@ -9,9 +9,20 @@
 import Foundation
 
 class RemovePhpExtensionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     public let phpExtension: BrewPhpExtension
 
-    public init(remove formula: BrewPhpExtension) {
+    // MARK: - Methods
+
+    public init(_ container: Container,
+                remove formula: BrewPhpExtension) {
+        self.container = container
         self.phpExtension = formula
     }
 
@@ -19,7 +30,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         return "phpman.steps.removing".localized(phpExtension.name)
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
@@ -27,7 +38,7 @@ class RemovePhpExtensionCommand: BrewCommand {
         ))
 
         // Keep track of the file that contains the information about the extension
-        let existing = PhpEnvironments.shared
+        let existing = container.phpEnvs
             .cachedPhpInstallations[phpExtension.phpVersion]?
             .extensions.first(where: { ext in
             ext.name == phpExtension.name
@@ -37,12 +48,12 @@ class RemovePhpExtensionCommand: BrewCommand {
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
-            \(Paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
+            \(container.paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
         var loggedMessages: [String] = []
 
-        let (process, _) = try! await Shell.attach(
+        let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
@@ -60,9 +71,9 @@ class RemovePhpExtensionCommand: BrewCommand {
                 await performExtensionCleanup(for: ext)
             }
 
-            await PhpEnvironments.detectPhpVersions()
+            _ = await container.phpEnvs.detectPhpVersions()
 
-            await Actions.restartPhpFpm(version: phpExtension.phpVersion)
+            await Actions(container).restartPhpFpm(version: phpExtension.phpVersion)
 
             await MainMenu.shared.refreshActiveInstallation()
 
@@ -77,7 +88,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             // The extension's default configuration file can be removed
             Log.info("The extension was found in a default extension .ini location. Purging that .ini file.")
             do {
-                try FileSystem.remove(ext.file)
+                try container.filesystem.remove(ext.file)
             } catch {
                 Log.err("The file `\(ext.file)` could not be removed.")
             }

@@ -55,7 +55,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
         let path = pathControl.url!.path
         let name = inputDomainName.stringValue
 
-        if !FileSystem.anyExists(path) {
+        if !App.shared.container.filesystem.anyExists(path) {
             Alert.confirm(
                 onWindow: view.window!,
                 messageText: "domain_list.alert.folder_missing.title".localized,
@@ -71,7 +71,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
         // Adding `valet links` is a workaround for Valet malforming the config.json file
         Task {
-            try! await ValetInteractor.shared.link(path: path, domain: name)
+            try? await ValetInteractor.shared.link(path: path, domain: name)
 
             dismissView(outcome: .OK)
 

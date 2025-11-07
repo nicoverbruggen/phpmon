@@ -9,6 +9,21 @@
 import Foundation
 
 class FakeValetProxy: ValetProxy {
+    convenience init(
+        fakeDomain: String,
+        target: String,
+        secure: Bool,
+        tld: String
+    ) {
+        self.init(
+            App.shared.container,
+            domain: fakeDomain,
+            target: tld,
+            secure: secure,
+            tld: tld
+        )
+    }
+
     override func determineSecured() {
         return
     }

@@ -17,6 +17,12 @@ class Application {
         case editor, browser, git_gui, terminal, user_supplied
     }
 
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     /// Name of the app. Used for display purposes and to determine `name.app` exists.
     let name: String
 
@@ -24,7 +30,8 @@ class Application {
     let type: AppType
 
     /// Initializer. Used to detect a specific app of a specific type.
-    init(_ name: String, _ type: AppType) {
+    init(_ container: Container, _ name: String, _ type: AppType) {
+        self.container = container
         self.name = name
         self.type = type
     }
@@ -34,19 +41,19 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func openDirectory(file: String) {
-        Task { await Shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
+        Task { await container.shell.quiet("/usr/bin/open -a \"\(name)\" \"\(file)\"") }
     }
 
     /** Checks if the app is installed. */
     func isInstalled() async -> Bool {
 
-        let (process, output) = try! await Shell.attach(
+        let (process, output) = try! await container.shell.attach(
             "/usr/bin/open -Ra \"\(name)\"",
             didReceiveOutput: { _, _ in },
             withTimeout: 2.0
         )
 
-        if Shell is TestableShell {
+        if container.shell is TestableShell {
             // When testing, check the error output (must not be empty)
             return !output.hasError
         } else {
@@ -58,15 +65,17 @@ class Application {
     /**
      Detect which apps are available to open a specific directory.
      */
-    static public func detectPresetApplications() async -> [Application] {
+    static public func detectPresetApplications(
+        _ container: Container
+    ) async -> [Application] {
         var detected: [Application] = []
 
         let detectable = [
-            Application("PhpStorm", .editor),
-            Application("Visual Studio Code", .editor),
-            Application("Sublime Text", .editor),
-            Application("Sublime Merge", .git_gui),
-            Application("iTerm", .terminal)
+            Application(container, "PhpStorm", .editor),
+            Application(container, "Visual Studio Code", .editor),
+            Application(container, "Sublime Text", .editor),
+            Application(container, "Sublime Merge", .git_gui),
+            Application(container, "iTerm", .terminal)
         ]
 
         for app in detectable where await app.isInstalled() {

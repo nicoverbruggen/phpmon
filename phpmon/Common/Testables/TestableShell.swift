@@ -64,6 +64,10 @@ public class TestableShell: ShellProtocol {
 
         return (Process(), output)
     }
+
+    func reload() {
+        // does nothing
+    }
 }
 
 struct FakeShellOutput: Codable {

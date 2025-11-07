@@ -14,27 +14,39 @@ class ValetProxy: ValetListable {
     var target: String
     var secured: Bool = false
 
+    var certificateExpiryDate: Date?
+    var isCertificateExpired: Bool {
+        guard let certificateExpiryDate = certificateExpiryDate else {
+            return false
+        }
+        return certificateExpiryDate < Date()
+    }
+
     var favorited: Bool = false
     var favoriteSignature: String {
         "proxy:domain:\(domain).\(tld)|target:\(target)"
     }
 
-    init(domain: String, target: String, secure: Bool, tld: String) {
+    var container: Container
+
+    init(_ container: Container, domain: String, target: String, secure: Bool, tld: String) {
+        self.container = container
         self.domain = domain
         self.tld = tld
         self.target = target
         self.secured = false
     }
 
-    convenience init(_ configuration: NginxConfigurationFile) {
+    convenience init(_ container: Container, _ configuration: NginxConfigurationFile) {
         self.init(
+            container,
             domain: configuration.domain,
             target: configuration.proxy!,
             secure: false,
             tld: configuration.tld
         )
 
-        self.favorited = Favorites.shared.contains(domain: self.domain)
+        self.favorited = container.favorites.contains(domain: self.domain)
         self.determineSecured()
     }
 
@@ -44,8 +56,16 @@ class ValetProxy: ValetListable {
         return self.domain
     }
 
+    func getListableTLD() -> String {
+        return self.tld
+    }
+
     func getListableSecured() -> Bool {
         return self.secured
+    }
+
+    func getListableCertificateExpiryDate() -> Date? {
+        return self.certificateExpiryDate
     }
 
     func getListableAbsolutePath() -> String {
@@ -75,12 +95,23 @@ class ValetProxy: ValetListable {
     // MARK: - Interactions
 
     func determineSecured() {
-        self.secured = FileSystem.fileExists("~/.config/valet/Certificates/\(self.domain).\(self.tld).key")
+        let certificatePath = "~/.config/valet/Certificates/\(self.domain).\(self.tld).crt"
+
+        let (exists, expiryDate) = CertificateValidator(container)
+            .validateCertificate(at: certificatePath)
+
+        if exists, let expiryDate, expiryDate < Date() {
+            Log.warn("Certificate for \(self.domain).\(self.tld) expired at: \(expiryDate). It should be renewed.")
+        }
+
+        // Persist the information for the list
+        self.secured = exists
+        self.certificateExpiryDate = expiryDate
     }
 
     func toggleFavorite() {
         self.favorited.toggle()
-        Favorites.shared.toggle(domain: self.favoriteSignature)
+        container.favorites.toggle(domain: self.favoriteSignature)
     }
 
     func toggleSecure() async throws {

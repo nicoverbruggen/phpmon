@@ -12,7 +12,11 @@ protocol ValetListable {
 
     func getListableName() -> String
 
+    func getListableTLD() -> String
+
     func getListableSecured() -> Bool
+
+    func getListableCertificateExpiryDate() -> Date?
 
     func getListableAbsolutePath() -> String
 
@@ -25,5 +29,7 @@ protocol ValetListable {
     func getListableUrl() -> URL?
 
     func getListableFavorited() -> Bool
+
+    func toggleSecure() async throws
 
 }

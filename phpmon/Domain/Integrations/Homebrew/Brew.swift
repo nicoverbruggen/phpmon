@@ -9,7 +9,18 @@
 import Foundation
 
 class Brew {
-    static let shared = Brew()
+
+    // MARK: - Container
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
+    // MARK: - Variables
+
+    static let shared = Brew(App.shared.container)
 
     /// Formulae that can be observed.
     var formulae = BrewFormulaeObservable()
@@ -19,7 +30,7 @@ class Brew {
 
     /// Determine which version of Homebrew is installed.
     public func determineVersion() async {
-        let output = await Shell.pipe("\(Paths.brew) --version")
+        let output = await container.shell.pipe("\(container.paths.brew) --version")
         self.version = try? VersionNumber.parse(output.out)
 
         if let version = version {

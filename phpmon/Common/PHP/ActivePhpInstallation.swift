@@ -16,12 +16,21 @@ import Foundation
  - Note: Each installation has a separate version number.
  Using `version.short` is advisable if you want to interact with Homebrew.
  */
+
 class ActivePhpInstallation {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     var version: VersionNumber!
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
-
     var hasErrorState: Bool = false
+
+    // MARK: - Computed
 
     var extensions: [PhpExtension] {
         return iniFiles.flatMap { initFile in
@@ -29,23 +38,23 @@ class ActivePhpInstallation {
         }
     }
 
-    // MARK: - Computed
-
     var formula: String {
         return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Initializer
 
-    public static func load() -> ActivePhpInstallation? {
-        if !FileSystem.fileExists(Paths.phpConfig) {
+    public static func load(_ container: Container) -> ActivePhpInstallation? {
+        if !container.filesystem.fileExists(container.paths.phpConfig) {
             return nil
         }
 
-        return ActivePhpInstallation()
+        return ActivePhpInstallation(container)
     }
 
-    init() {
+    init(_ container: Container) {
+        self.container = container
+
         // Show information about the current version
         do {
             try determineVersion()
@@ -69,14 +78,14 @@ class ActivePhpInstallation {
             post_max_size: getByteCount(key: "post_max_size")
         )
 
-        let paths = ActiveShell.shared
-            .sync("\(Paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
+        let paths = container.shell
+            .sync("\(container.paths.php) --ini | grep -E -o '(/[^ ]+\\.ini)'").out
             .split(separator: "\n")
             .map { String($0) }
 
         // See if any extensions are present in said .ini files
         paths.forEach { (iniFilePath) in
-            if let file = PhpConfigurationFile.from(filePath: iniFilePath) {
+            if let file = PhpConfigurationFile.from(container, filePath: iniFilePath) {
                 iniFiles.append(file)
             }
         }
@@ -87,7 +96,11 @@ class ActivePhpInstallation {
      _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
      */
     private func determineVersion() throws {
-        let output = Command.execute(path: Paths.phpConfig, arguments: ["--version"], trimNewlines: true)
+        let output = container.command.execute(
+            path: container.paths.phpConfig,
+            arguments: ["--version"],
+            trimNewlines: true
+        )
 
         self.hasErrorState = (output == "" || output.contains("Warning") || output.contains("Error"))
 
@@ -110,7 +123,11 @@ class ActivePhpInstallation {
      - Parameter key: The key of the `ini` value that needs to be retrieved. For example, you can use `memory_limit`.
      */
     private func getByteCount(key: String) -> String {
-        let value = Command.execute(path: Paths.php, arguments: ["-r", "echo ini_get('\(key)');"], trimNewlines: false)
+        let value = container.command.execute(
+            path: container.paths.php,
+            arguments: ["-r", "echo ini_get('\(key)');"],
+            trimNewlines: false
+        )
 
         // Check if the value is unlimited
         if value == "-1" {

@@ -14,14 +14,10 @@ struct PhpDoctorView: View {
     init(empty: Bool = false, fake: Bool = false, manager: WarningManager? = nil) {
         if manager == nil {
             // Use the singleton by default
-            warningManager = WarningManager.shared
+            warningManager = App.shared.container.warningManager
         } else {
             // Use a provided instance (for e.g. preview purposes)
             warningManager = manager!
-        }
-
-        if fake {
-            warningManager.warnings = warningManager.evaluations
         }
 
         if empty {
@@ -98,11 +94,11 @@ struct PhpDoctorView: View {
 }
 
 #Preview("Empty List") {
-    PhpDoctorView(empty: true, fake: true, manager: WarningManager())
+    PhpDoctorView(empty: true, fake: true, manager: WarningManager(container: App.shared.container))
         .frame(width: 600, height: 480)
 }
 
 #Preview("List With All Warnings") {
-    PhpDoctorView(empty: false, fake: true, manager: WarningManager())
+    PhpDoctorView(empty: false, fake: true, manager: WarningManager(container: App.shared.container))
         .frame(width: 600, height: 480)
 }

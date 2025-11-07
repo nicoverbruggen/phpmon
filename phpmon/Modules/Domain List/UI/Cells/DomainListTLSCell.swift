@@ -8,23 +8,95 @@
 
 import Cocoa
 import AppKit
+import SwiftUI
 
 class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
-    @IBOutlet weak var imageViewLock: NSImageView!
+    var domain: ValetListable?
+
+    @IBOutlet weak var buttonLockStatus: NSButton!
 
     static func getCellIdentifier(for domain: ValetListable) -> String {
         return "domainListTLSCell"
     }
 
+    func styleLockButton(secured: Bool, color: NSColor) {
+        buttonLockStatus.image = NSImage(named: secured ? "Lock" : "LockUnlocked")!
+            .resized(to: NSSize(width: 20, height: 20))
+        buttonLockStatus.contentTintColor = color
+        buttonLockStatus.wantsLayer = true
+        buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.10).cgColor
+        buttonLockStatus.layer?.cornerRadius = buttonLockStatus.bounds.width / 2
+        buttonLockStatus.layer?.masksToBounds = true
+    }
+
     func populateCell(with site: ValetSite) {
-        imageViewLock.contentTintColor = site.secured
-            ? NSColor(named: "IconColorGreen")
-            : NSColor(named: "IconColorRed")
+        domain = site
+
+        let color = {
+            if site.secured && site.isCertificateExpired {
+                return NSColor.statusColorOrange
+            }
+
+            return site.secured ? NSColor.statusColorNeutral : NSColor.statusColorRed
+        }()
+
+        self.styleLockButton(
+            secured: site.secured,
+            color: color
+        )
     }
 
     func populateCell(with proxy: ValetProxy) {
-        imageViewLock.contentTintColor = proxy.secured
-            ? NSColor(named: "IconColorGreen")
-            : NSColor(named: "IconColorRed")
+        domain = proxy
+
+        let color = {
+            if proxy.secured && proxy.isCertificateExpired {
+                return NSColor.statusColorOrange
+            }
+
+            return proxy.secured ? NSColor.statusColorNeutral : NSColor.statusColorRed
+        }()
+
+        self.styleLockButton(
+            secured: proxy.secured,
+            color: color
+        )
+    }
+
+    var container: Container {
+        return App.shared.container
+    }
+
+    @IBAction func pressedPhpVersion(_ sender: Any) {
+        guard let site = self.domain else { return }
+
+        let button = self.buttonLockStatus!
+        let popover = NSPopover()
+
+        let view = SecurePopoverView(
+            name: site.getListableName(),
+            tld: Valet.shared.config.tld,
+            expires: site.getListableCertificateExpiryDate(),
+            callback: {
+                App.shared.domainListWindowController?
+                    .contentVC.checkForCertificateRenewal()
+            }
+        )
+
+        let controller = NSHostingController(rootView: view)
+
+        // Force a layout pass to get accurate sizing, this resolves positioning issues
+        controller.view.setFrameSize(NSSize(width: 300, height: 1000))
+        controller.view.layoutSubtreeIfNeeded()
+
+        let fittingSize = controller.view.fittingSize
+        let finalWidth: CGFloat = min(fittingSize.width, 300)
+
+        controller.view.frame = NSRect(x: 0, y: 0, width: finalWidth, height: fittingSize.height)
+
+        popover.contentViewController = controller
+        popover.behavior = .transient
+        popover.animates = true
+        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
     }
 }

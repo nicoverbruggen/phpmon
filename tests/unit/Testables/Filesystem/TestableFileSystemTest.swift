@@ -11,8 +11,9 @@ import Foundation
 
 @Suite(.serialized)
 struct TestableFileSystemTest {
+    var container: Container
     init() throws {
-        ActiveFileSystem.useTestable([
+        container = Container.fake(files: [
             "/home/user/bin/foo": .fake(.binary),
             "/home/user/docs": .fake(.symlink, "/home/user/documents"),
             "/home/user/documents/script.sh": .fake(.text, "echo 'cool';"),
@@ -20,6 +21,10 @@ struct TestableFileSystemTest {
             "/home/user/documents/filters/filter1.txt": .fake(.text, "F1"),
             "/home/user/documents/filters/filter2.txt": .fake(.text, "F2")
         ])
+    }
+
+    var FileSystem: FileSystemProtocol {
+        return container.filesystem
     }
 
     @Test func testable_fs_is_in_use() {

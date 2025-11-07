@@ -16,7 +16,7 @@ class PresetHelper {
 
     public static func loadRollbackPresetFromFile() {
         guard let revert = try? String(
-            contentsOfFile: "\(Paths.homePath)/.config/phpmon/preset_revert.json",
+            contentsOfFile: "\(App.shared.container.paths.homePath)/.config/phpmon/preset_revert.json",
             encoding: .utf8
         ) else {
             PresetHelper.rollbackPreset = nil

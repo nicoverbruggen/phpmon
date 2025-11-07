@@ -11,6 +11,10 @@ import AppKit
 import SwiftUI
 
 class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
+    var container: Container {
+        return App.shared.container
+    }
+
     var site: ValetSite?
 
     @IBOutlet weak var buttonPhpVersion: NSButton!
@@ -60,11 +64,12 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
                 return []
             }
 
-            guard let install = PhpEnvironments.phpInstall else {
+            guard let install = container.phpEnvs.phpInstall else {
                 return []
             }
 
-            return PhpEnvironments.shared.validVersions(for: site.preferredPhpVersion).filter({ version in
+            return container.phpEnvs.validVersions(for: site.preferredPhpVersion)
+                .filter({ version in
                 version.short != install.version.short
             })
         }
@@ -79,7 +84,19 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             parent: popover
         )
 
-        popover.contentViewController = NSHostingController(rootView: view)
+        let controller = NSHostingController(rootView: view)
+
+        // Force a layout pass to get accurate sizing, this resolves positioning issues
+        controller.view.setFrameSize(NSSize(width: 400, height: 1000))
+        controller.view.layoutSubtreeIfNeeded()
+
+        let fittingSize = controller.view.fittingSize
+        let finalWidth: CGFloat = min(fittingSize.width, 400)
+        let finalHeight: CGFloat = min(fittingSize.height, 700)
+
+        controller.view.frame = NSRect(x: 0, y: 0, width: finalWidth, height: finalHeight)
+
+        popover.contentViewController = controller
         popover.behavior = .transient
         popover.animates = true
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)

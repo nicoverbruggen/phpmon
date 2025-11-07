@@ -9,6 +9,13 @@
 import Foundation
 
 class InstallPhpExtensionCommand: BrewCommand {
+
+    // MARK: - Container
+
+    var container: Container
+
+    // MARK: - Variables
+
     let installing: [BrewPhpExtension]
 
     func getExtensionNames() -> String {
@@ -19,11 +26,15 @@ class InstallPhpExtensionCommand: BrewCommand {
         return "phpman.steps.installing".localized(getExtensionNames())
     }
 
-    public init(install extensions: [BrewPhpExtension]) {
+    // MARK: - Methods
+
+    public init(_ container: Container,
+                install extensions: [BrewPhpExtension]) {
+        self.container = container
         self.installing = extensions
     }
 
-    func execute(onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
@@ -33,16 +44,16 @@ class InstallPhpExtensionCommand: BrewCommand {
         ))
 
         // Make sure the tap is installed
-        try await self.checkPhpTap(onProgress)
+        try await self.checkPhpTap(shell: shell, onProgress)
 
         // Make sure that the extension(s) are installed
-        try await self.installPackages(onProgress)
+        try await self.installPackages(shell, onProgress)
 
         // Finally, complete all operations
         await self.completedOperations(onProgress)
     }
 
-    private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    private func installPackages(_ shell: ShellProtocol, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
         // If no installations are needed, early exit
         if self.installing.isEmpty {
             return
@@ -52,10 +63,10 @@ class InstallPhpExtensionCommand: BrewCommand {
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
-            \(Paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
+            \(container.paths.brew) install \(self.installing.map { $0.formulaName }.joined(separator: " ")) --force
             """
 
-        try await run(command, onProgress)
+        try await run(shell: shell, command, onProgress)
     }
 
     private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
@@ -64,11 +75,11 @@ class InstallPhpExtensionCommand: BrewCommand {
 
         // Restart PHP-FPM
         if let installed = self.installing.first {
-            await Actions.restartPhpFpm(version: installed.phpVersion)
+            await Actions(container).restartPhpFpm(version: installed.phpVersion)
         }
 
         // Check which version of PHP are now installed
-        await PhpEnvironments.detectPhpVersions()
+        await container.phpEnvs.reloadPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

@@ -9,7 +9,6 @@
 import Foundation
 
 class NginxConfigurationFile: CreatedFromFile {
-
     /// Contents of the Nginx file in question, as a string.
     var contents: String!
 
@@ -20,8 +19,11 @@ class NginxConfigurationFile: CreatedFromFile {
     var tld: String
 
     /** Resolves an nginx configuration file (.conf) */
-    static func from(filePath: String) -> Self? {
-        let path = filePath.replacingOccurrences(of: "~", with: Paths.homePath)
+    static func from(
+        _ container: Container,
+        filePath: String,
+    ) -> Self? {
+        let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
 
         do {
             let fileContents = try String(contentsOfFile: path)

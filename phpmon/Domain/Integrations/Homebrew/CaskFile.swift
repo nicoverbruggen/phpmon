@@ -24,11 +24,11 @@ struct CaskFile {
         return self.properties["version"]!
     }
 
-    private static func loadFromApi(_ url: URL) async -> String {
-        if App.hasLoadedTestableConfiguration || url.absoluteString.contains("https://raw.githubusercontent.com") {
-            return await Shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
+    private static func loadFromApi(_ container: Container, _ url: URL) async -> String {
+        if isRunningTests || App.hasLoadedTestableConfiguration || url.absoluteString.contains("https://raw.githubusercontent.com") {
+            return await container.shell.pipe("curl -s --max-time 10 '\(url.absoluteString)'").out
         } else {
-            return await Shell.pipe("""
+            return await container.shell.pipe("""
                 curl -s --max-time 10 \
                 -H "User-Agent: phpmon-curl/1.0" \
                 -H "X-phpmon-version: \(App.shortVersion) (\(App.bundleVersion))" \
@@ -39,13 +39,13 @@ struct CaskFile {
         }
     }
 
-    public static func from(url: URL) async -> CaskFile? {
+    public static func from(_ container: Container, url: URL) async -> CaskFile? {
         var string: String?
 
         if url.scheme == "file" {
             string = try? String(contentsOf: url)
         } else {
-            string = await CaskFile.loadFromApi(url)
+            string = await CaskFile.loadFromApi(container, url)
         }
 
         guard let string else {

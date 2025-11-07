@@ -63,8 +63,8 @@ struct TestableShellTest {
     }
 
     @Test func fake_shell_has_path() {
-        ActiveShell.useTestable([:])
+        let container = Container.fake()
 
-        #expect(Shell.PATH == "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
+        #expect(container.shell.PATH == "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
     }
 }

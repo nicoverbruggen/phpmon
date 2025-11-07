@@ -8,15 +8,16 @@
 
 import Foundation
 
-struct FileExistenceCheck {
-    let condition: (() -> Bool)?
-    let path: String
-}
-
 class PhpConfigChecker {
-    public static var shared = PhpConfigChecker()
+    public static var shared = PhpConfigChecker(App.shared.container)
 
     var missing: [String] = []
+
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
 
     public func check() {
         missing = []
@@ -27,7 +28,7 @@ class PhpConfigChecker {
             FileExistenceCheck(condition: { Valet.installed }, path: "php-fpm.d/valet-fpm.conf")
         ]
 
-        for version in PhpEnvironments.shared.availablePhpVersions {
+        for version in container.phpEnvs.availablePhpVersions {
             for file in shouldExist {
                 // Early exit in case our condition is not met
                 if file.condition != nil && file.condition!() == false {
@@ -35,8 +36,8 @@ class PhpConfigChecker {
                 }
 
                 // Do the check
-                let fullFilePath = Paths.etcPath.appending("/php/\(version)/\(file.path)")
-                if !FileSystem.fileExists(fullFilePath) {
+                let fullFilePath = container.paths.etcPath.appending("/php/\(version)/\(file.path)")
+                if !container.filesystem.fileExists(fullFilePath) {
                     missing.append(fullFilePath)
                 }
             }
@@ -46,4 +47,9 @@ class PhpConfigChecker {
             Log.warn("The following config file(s) were missing: \(missing)")
         }
     }
+}
+
+struct FileExistenceCheck {
+    let condition: (() -> Bool)?
+    let path: String
 }

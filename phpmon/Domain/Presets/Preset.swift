@@ -10,6 +10,10 @@ import Foundation
 import NVAlert
 
 struct Preset: Codable, Equatable {
+    var container: Container {
+        return App.shared.container
+    }
+
     let name: String
     let version: String?
     let extensions: [String: Bool]
@@ -79,7 +83,7 @@ struct Preset: Codable, Equatable {
         if self.version != nil {
             if await !switchToPhpVersionIfValid() {
                 PresetHelper.rollbackPreset = nil
-                await Actions.restartPhpFpm()
+                await Actions(container).restartPhpFpm()
                 return
             }
         }
@@ -89,7 +93,7 @@ struct Preset: Codable, Equatable {
             applyConfigurationValue(key: conf.key, value: conf.value ?? "")
         }
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             Log.info("Cannot toggle extensions if no PHP version is linked.")
             return
         }
@@ -107,7 +111,7 @@ struct Preset: Codable, Equatable {
         PresetHelper.loadRollbackPresetFromFile()
 
         // Restart PHP FPM process (also reloads menu, which will show the preset rollback)
-        await Actions.restartPhpFpm()
+        await Actions(container).restartPhpFpm()
 
         Task { @MainActor in
             // Show the correct notification
@@ -130,12 +134,12 @@ struct Preset: Codable, Equatable {
     // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async -> Bool {
-        if PhpEnvironments.shared.currentInstall?.version.short == self.version! {
+        if container.phpEnvs.currentInstall?.version.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
             return true
         }
 
-        if PhpEnvironments.shared.availablePhpVersions.first(where: { $0 == self.version }) != nil {
+        if container.phpEnvs.availablePhpVersions.first(where: { $0 == self.version }) != nil {
             await MainMenu.shared.switchToPhp(self.version!)
             return true
         } else {
@@ -145,7 +149,7 @@ struct Preset: Codable, Equatable {
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version!),
                     description: "alert.php_switch_unavailable.info".localized(
                         version!,
-                        PhpEnvironments.shared.availablePhpVersions.joined(separator: ", ")
+                        container.phpEnvs.availablePhpVersions.joined(separator: ", ")
                     )
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
@@ -156,7 +160,7 @@ struct Preset: Codable, Equatable {
     }
 
     private func applyConfigurationValue(key: String, value: String) {
-        guard let file = PhpEnvironments.shared.getConfigFile(forKey: key) else {
+        guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
             return
         }
 
@@ -217,7 +221,7 @@ struct Preset: Codable, Equatable {
             return nil
         }
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             return nil
         }
 
@@ -234,7 +238,7 @@ struct Preset: Codable, Equatable {
     private func diffExtensions() -> [String: Bool] {
         var items: [String: Bool] = [:]
 
-        guard let install = PhpEnvironments.phpInstall else {
+        guard let install = container.phpEnvs.phpInstall else {
             fatalError("If no PHP version is linked, diffing extensions is not possible.")
         }
 
@@ -256,7 +260,7 @@ struct Preset: Codable, Equatable {
         var items: [String: String?] = [:]
 
         for (key, _) in self.configuration {
-            guard let file = PhpEnvironments.shared.getConfigFile(forKey: key) else {
+            guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
                 break
             }
 
@@ -272,11 +276,11 @@ struct Preset: Codable, Equatable {
     private func persistRevert() async {
         let data = try! JSONEncoder().encode(self.revertSnapshot)
 
-        await Shell.quiet("mkdir -p ~/.config/phpmon")
+        await container.shell.quiet("mkdir -p ~/.config/phpmon")
 
         try! String(data: data, encoding: .utf8)!
             .write(
-                toFile: "\(Paths.homePath)/.config/phpmon/preset_revert.json",
+                toFile: "\(container.paths.homePath)/.config/phpmon/preset_revert.json",
                 atomically: true,
                 encoding: .utf8
             )

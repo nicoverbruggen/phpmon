@@ -8,7 +8,6 @@
 import Cocoa
 
 public class RealCommand: CommandProtocol {
-
     public func execute(
         path: String,
         arguments: [String],
@@ -52,5 +51,4 @@ public class RealCommand: CommandProtocol {
             withStandardError: false
         )
     }
-
 }

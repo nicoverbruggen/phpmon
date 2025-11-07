@@ -9,7 +9,6 @@
 import Foundation
 
 extension InternalSwitcher {
-
     typealias FixApplied = Bool
 
     public func ensureValetConfigurationIsValidForPhpVersion(_ version: String) async -> FixApplied {
@@ -30,19 +29,19 @@ extension InternalSwitcher {
     // MARK: - Corrections
 
     public func disableDefaultPhpFpmPool(_ version: String) async -> FixApplied {
-        let pool = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+        let pool = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
 
-        if FileSystem.fileExists(pool) {
+        if container.filesystem.fileExists(pool) {
             Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
-            let existing = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-            let new = "\(Paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
+            let existing = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
+            let new = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
             do {
-                if FileSystem.fileExists(new) {
+                if container.filesystem.fileExists(new) {
                     Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
                              + "cleaning up so the newer `www.conf` can be moved again.")
-                    try FileSystem.remove(new)
+                    try container.filesystem.remove(new)
                 }
-                try FileSystem.move(from: existing, to: new)
+                try container.filesystem.move(from: existing, to: new)
                 Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
                 return true
             } catch {
@@ -59,7 +58,7 @@ extension InternalSwitcher {
 
         // For each of the files, attempt to fix anything that is wrong
         let outcomes = files.map { file in
-            let configFileExists = FileSystem.fileExists("\(Paths.etcPath)/php/\(version)/" + file.destination)
+            let configFileExists = container.filesystem.fileExists("\(container.paths.etcPath)/php/\(version)/" + file.destination)
 
             if configFileExists {
                 return false
@@ -72,14 +71,14 @@ extension InternalSwitcher {
             }
 
             do {
-                var contents = try FileSystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
+                var contents = try container.filesystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
 
                 for (original, replacement) in file.replacements {
                     contents = contents.replacingOccurrences(of: original, with: replacement)
                 }
 
-                try FileSystem.writeAtomicallyToFile(
-                    "\(Paths.etcPath)/php/\(version)" + file.destination,
+                try container.filesystem.writeAtomicallyToFile(
+                    "\(container.paths.etcPath)/php/\(version)" + file.destination,
                     content: contents
                 )
             } catch {
@@ -102,7 +101,7 @@ extension InternalSwitcher {
                 destination: "/php-fpm.d/valet-fpm.conf",
                 source: "/cli/stubs/etc-phpfpm-valet.conf",
                 replacements: [
-                    "VALET_USER": Paths.whoami,
+                    "VALET_USER": container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
                     "valet.sock": "valet\(version.replacingOccurrences(of: ".", with: "")).sock"
                 ],
@@ -112,7 +111,7 @@ extension InternalSwitcher {
                 destination: "/conf.d/error_log.ini",
                 source: "/cli/stubs/etc-phpfpm-error_log.ini",
                 replacements: [
-                    "VALET_USER": Paths.whoami,
+                    "VALET_USER": container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory
                 ],
                 applies: { return true }
