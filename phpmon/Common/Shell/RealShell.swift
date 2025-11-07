@@ -190,7 +190,7 @@ class RealShell: ShellProtocol {
 
         return try await withCheckedThrowingContinuation({ continuation in
             let timeoutTask = Task {
-                try await Task.sleep(nanoseconds: timeout.nanoseconds)
+                try? await Task.sleep(nanoseconds: timeout.nanoseconds)
                 // Only terminate if the process is still running
                 if process.isRunning {
                     process.terminationHandler = nil
