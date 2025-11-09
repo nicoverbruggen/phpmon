@@ -36,13 +36,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     let brew: Brew
 
     /**
-     The PhpEnvironments singleton that handles PHP version
-     detection, as well as switching. It is initialized
-     when the app is ready and passed all checks.
-     */
-    var phpEnvironments: PhpEnvironments! = nil
-
-    /**
      The logger is responsible for different levels of logging.
      You can tweak the verbosity in the `init` method here.
      */
@@ -94,10 +87,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()
-    }
-
-    func initializeSwitcher() {
-        self.phpEnvironments = App.shared.container.phpEnvs
     }
 
     static func initializeTestingProfile(_ path: String) {
