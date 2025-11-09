@@ -15,7 +15,7 @@ extension MainMenu {
      */
     func startup() async {
         // Start with the icon
-        Task { @MainActor in
+        await MainActor.run {
             self.setStatusBar(image: NSImage.statusBarIcon)
         }
 
@@ -35,9 +35,6 @@ extension MainMenu {
 
         // Make sure that broken symlinks are removed ASAP
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
-
-        // Initialize preferences
-        Preferences.shared = Preferences(container)
 
         // Put some useful diagnostics information in log
         BrewDiagnostics.shared.logBootInformation()

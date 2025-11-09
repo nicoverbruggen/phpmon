@@ -7,16 +7,17 @@
 //
 
 class Container {
-    // Core abstractions
+    // Primary
     var shell: ShellProtocol!
     var filesystem: FileSystemProtocol!
     var command: CommandProtocol!
-
-    // Extra abstractions
     var paths: Paths!
+
+    // Secondary (uses primary instances above)
+    var preferences: Preferences!
     var phpEnvs: PhpEnvironments!
     var favorites: Favorites!
-    var warningManager: WarningManager! // pending rename?
+    var warningManager: WarningManager!
 
     ///
     /// The initializer is empty. You must call `prepare` to enable the container.
@@ -32,13 +33,17 @@ class Container {
     /// the container itself and passing the reference on to each component that needs it.
     ///
     public func prepare() {
-        // Core
+        // These are the most basic building blocks. We need these before
+        // any of the other classes can be initialized!
         self.shell = RealShell(container: self)
         self.filesystem = RealFileSystem(container: self)
         self.command = RealCommand()
-
-        // Extra
         self.paths = Paths(container: self)
+
+        // Please note that the order in which these are initialized, matters!
+        // For example, preferences leverages the Paths instance, so don't just
+        // swap these around for no reason... the order is very intentional.
+        self.preferences = Preferences(container: self)
         self.phpEnvs = PhpEnvironments(container: self)
         self.favorites = Favorites()
         self.warningManager = WarningManager(container: self)

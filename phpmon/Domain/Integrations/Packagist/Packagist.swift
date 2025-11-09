@@ -34,32 +34,23 @@ class Packagist {
                 throw PackagistError.unexpectedResponseStructure
             }
 
-            // Filter for stable versions using the version_normalized string.
-            // A stable version typically does not have a hyphen (-) indicating a pre-release.
+            // Packagist v2 API returns versions in descending order (newest first).
+            // Filter for stable versions - those without a hyphen in version_normalized.
             let stableVersions = versionsArray.filter { version in
                 guard let versionNormalized = version.version_normalized else {
                     return false
                 }
-
-                // Filter out versions with a hyphen, which are usually unstable.
+                // Filter out pre-release versions (alpha, beta, RC, etc.)
                 return !versionNormalized.contains("-")
             }
 
-            // Sort the filtered versions using version_normalized, which is designed for lexicographical sorting.
-            let sortedVersions = stableVersions.sorted { (version1, version2) -> Bool in
-                guard let v1 = version1.version_normalized, let v2 = version2.version_normalized else {
-                    return false
-                }
-                return v1.lexicographicallyPrecedes(v2)
-            }
-
-            // The last element of the sorted array is the latest version
-            guard let latestVersionInfo = sortedVersions.last,
+            // Get the first stable version (which is the latest)
+            guard let latestVersionInfo = stableVersions.first,
                   let latestVersion = latestVersionInfo.version else {
                 throw PackagistError.noStableVersions
             }
 
-            return try! VersionNumber.parse(latestVersion)
+            return try VersionNumber.parse(latestVersion)
         } catch {
             // Catch any errors that occurred and re-throw them as our custom error type for better diagnostics.
             if let decodingError = error as? DecodingError {

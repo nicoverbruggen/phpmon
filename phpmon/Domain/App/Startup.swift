@@ -22,7 +22,7 @@ class Startup {
         Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
 
         // Set up a "background" timer on the main thread
-        Task { @MainActor in
+        await MainActor.run {
             startStartupTimer()
         }
 
@@ -47,7 +47,6 @@ class Startup {
         }
 
         // If we get here, nothing has gone wrong. That's what we want!
-        initializeSwitcher()
         Log.info("PHP Monitor has determined the application has successfully passed all checks.")
 
         Log.separator(as: .info)
@@ -80,17 +79,6 @@ class Startup {
             )
             .withPrimary(text: "generic.ok".localized)
             .show()
-    }
-
-    /**
-     Because the Switcher requires various environment guarantees, the switcher is only
-     initialized when it is done working. The switcher must be initialized on the main thread.
-     */
-    private func initializeSwitcher() {
-        Task { @MainActor in
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.initializeSwitcher()
-        }
     }
 
     // MARK: - Check (List)
