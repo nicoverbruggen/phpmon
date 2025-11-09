@@ -9,16 +9,13 @@
 import Foundation
 
 class Preferences {
-    // MARK: - Singleton
-    static var shared: Preferences!
-
     var container: Container
 
     var customPreferences: CustomPrefs
 
     var cachedPreferences: [PreferenceName: Any?]
 
-    public init(_ container: Container) {
+    public init(container: Container) {
         self.container = container
         Preferences.handleFirstTimeLaunch()
         cachedPreferences = Self.cache()
@@ -124,11 +121,11 @@ class Preferences {
     // MARK: - API
 
     static var preferences: [PreferenceName: Any?] {
-        return Self.shared.cachedPreferences
+        return App.shared.container.preferences.cachedPreferences
     }
 
     static var custom: CustomPrefs {
-        return Self.shared.customPreferences
+        return App.shared.container.preferences.customPreferences
     }
 
     /**
@@ -168,6 +165,6 @@ class Preferences {
         UserDefaults.standard.synchronize()
 
         // Update the preferences cache in memory!
-        Preferences.shared.cachedPreferences = Preferences.cache()
+        App.shared.container.preferences.cachedPreferences = Preferences.cache()
     }
 }

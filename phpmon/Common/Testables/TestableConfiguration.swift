@@ -126,10 +126,9 @@ public struct TestableConfiguration: Codable {
         let container = App.shared.container
         container.overrideWith(config: self)
 
-        Preferences.shared = Preferences(container)
         Log.info("Applying temporary preference overrides...")
         preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
-            Preferences.shared.cachedPreferences[key] = value
+            container.preferences.cachedPreferences[key] = value
         }
 
         if Valet.shared.installed {

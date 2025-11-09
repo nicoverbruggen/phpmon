@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Localization {
     static var preferredLanguage: String? {
-        if Preferences.shared == nil {
+        if App.shared.preferences == nil {
             return nil
         }
 
