@@ -22,7 +22,7 @@ class Startup {
         Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
 
         // Set up a "background" timer on the main thread
-        Task { @MainActor in
+        await MainActor.run {
             startStartupTimer()
         }
 
