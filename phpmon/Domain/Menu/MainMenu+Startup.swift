@@ -30,6 +30,9 @@ extension MainMenu {
      When the environment is all clear and the app can run, let's go.
      */
     private func onEnvironmentPass() async {
+        // Load additional preferences
+        await container.preferences.loadCustomPreferences()
+
         // Determine what the `php` formula is aliased to
         await container.phpEnvs.determinePhpAlias()
 

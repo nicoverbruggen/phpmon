@@ -29,8 +29,6 @@ class Preferences {
         if isRunningSwiftUIPreview {
             return
         }
-
-        Task { await loadCustomPreferences() }
     }
 
     // MARK: - First Time Run
