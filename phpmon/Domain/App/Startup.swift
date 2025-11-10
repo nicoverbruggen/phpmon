@@ -118,9 +118,7 @@ class Startup {
                     App.shared.container.paths.optPath
                 ),
                 descriptionText: "startup.errors.php_opt.desc".localized
-            )
-        ]),
-        EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed }, checks: [
+            ),
             // =================================================================================
             // The PHP binary must exist.
             // =================================================================================
@@ -148,6 +146,21 @@ class Startup {
                 ),
                 descriptionText: "startup.errors.dyld_library.desc".localized
             ),
+            // =================================================================================
+            // Make sure we can get valid output from Homebrew's info command.
+            // =================================================================================
+            EnvironmentCheck(
+                command: { container in
+                    await container.phpEnvs.getHomebrewInformation()
+                    return container.phpEnvs.homebrewPackage == nil
+                },
+                name: "`brew info php --json` could parse valid JSON",
+                titleText: "startup.errors.php_brew_info_invalid.title".localized,
+                subtitleText: "startup.errors.php_brew_info_invalid.subtitle".localized,
+                descriptionText: "startup.errors.php_brew_info_invalid.desc".localized
+            )
+        ]),
+        EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed }, checks: [
             // =================================================================================
             // The Valet binary must exist.
             // =================================================================================

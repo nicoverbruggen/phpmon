@@ -22,16 +22,39 @@ class PhpEnvironments {
     }
 
     /**
-     Determine which PHP version the `php` formula is aliased to.
+     Loads the valid HomebrewPackage information.
+     If invalid, this will prevent PHP Monitor from starting correctly.
      */
-    @MainActor func determinePhpAlias() async {
+    func getHomebrewInformation() async {
         let brewPhpAlias = await container.shell.pipe("\(container.paths.brew) info php --json").out
 
-        self.homebrewPackage = try! JSONDecoder().decode(
-            [HomebrewPackage].self,
-            from: brewPhpAlias.data(using: .utf8)!
-        ).first!
+        // Remove any non-JSON output (progress indicators, etc.) before the actual JSON array
+        // This is a workaround for https://github.com/homebrew/brew/issues/20978
+        // Since users may not upgrade Homebrew frequently, this fix will remain
+        let jsonString = brewPhpAlias
+            .components(separatedBy: .newlines)
+            .drop(while: { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("[") })
+            .joined(separator: "\n")
 
+        // Get all packages
+        let packages = try? JSONDecoder().decode(
+            [HomebrewPackage].self,
+            from: jsonString.data(using: .utf8)!
+        )
+
+        // But we only need the first one!
+        guard let package = packages?.first else {
+            Log.err("Could not determine PHP version due to malformed output.")
+            return
+        }
+
+        self.homebrewPackage = package
+    }
+
+    /**
+     Determine which PHP version the `php` formula is aliased to.
+     */
+    func determinePhpAlias() async {
         PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
         Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
 
