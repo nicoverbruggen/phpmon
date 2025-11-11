@@ -38,17 +38,28 @@ class ConfigFSNotifier {
         _ eventMask: DispatchSource.FileSystemEvent,
         behaviour: ConfigFSNotifier.Behaviour
     ) {
+        // Ensure our starting state is correct, we may already be monitoring!
         guard folderMonitorSource == nil && monitoredFolderFileDescriptor == -1 else {
             return
         }
 
+        // We'll try to open a file descriptor and validate it
         monitoredFolderFileDescriptor = open(url.path, O_EVTONLY)
+
+        // If our file descriptor here is still -1, there may have been an issue and we abort
+        guard monitoredFolderFileDescriptor >= 0 else {
+            Log.err("Failed to open file descriptor for \(url.path), not monitoring.")
+            return
+        }
+
+        // Set the source (with proper file descriptor, event mask and using the right queue)
         folderMonitorSource = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: monitoredFolderFileDescriptor,
             eventMask: eventMask,
             queue: parent.folderMonitorQueue
         )
 
+        // Set the event handler (fires depending on the event mask)
         folderMonitorSource?.setEventHandler { [weak self] in
             if behaviour == .reloadsWatchers
                 && !ConfigWatchManager.ignoresModificationsToConfigValues {
@@ -56,11 +67,15 @@ class ConfigFSNotifier {
                 return App.shared.handlePhpConfigWatcher(forceReload: true)
             }
 
-            self?.parent.didChange?(self!.url)
+            if let url = self?.url {
+                self?.parent.didChange?(url)
+            }
         }
 
+        // Cancellation handler, fired when we stop monitoring files
         folderMonitorSource?.setCancelHandler { [weak self] in
             guard let self = self else { return }
+
             close(self.monitoredFolderFileDescriptor)
             self.monitoredFolderFileDescriptor = -1
             self.folderMonitorSource = nil

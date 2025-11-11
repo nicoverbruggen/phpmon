@@ -40,12 +40,15 @@ class ConfigWatchManager {
         // Scan the conf.d folder for .ini files, and add a watcher for each file
         let filePaths = FileManager.default.enumerator(
             atPath: self.url.appendingPathComponent("conf.d").path
-        )?.allObjects as! [String]
+        )?.allObjects as? [String]
 
-        // Loop over the .ini files that we discovered
-        filePaths.filter { $0.contains(".ini") }.forEach { (file) in
-            // Add a watcher for each file we have discovered
-            self.addWatcher(for: self.url.appendingPathComponent("conf.d/\(file)"), eventMask: .write)
+        // Only loop over the discovered files if applicable
+        if let filePaths {
+            // Loop over the .ini files that we discovered
+            filePaths.filter { $0.contains(".ini") }.forEach { (file) in
+                // Add a watcher for each file we have discovered
+                self.addWatcher(for: self.url.appendingPathComponent("conf.d/\(file)"), eventMask: .write)
+            }
         }
 
         Log.perf("A watcher exists for the following config paths:")
