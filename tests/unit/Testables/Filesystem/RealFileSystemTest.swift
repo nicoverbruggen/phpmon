@@ -118,7 +118,7 @@ struct RealFileSystemTest {
 
         #expect(filesystem.fileExists(executable))
 
-        let newExecutable = executable.replacingOccurrences(of: "/exec.sh", with: "/file.txt")
+        let newExecutable = executable.replacing("/exec.sh", with: "/file.txt")
 
         try! filesystem.move(from: executable, to: newExecutable)
 

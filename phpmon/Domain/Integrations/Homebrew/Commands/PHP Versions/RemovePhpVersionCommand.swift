@@ -28,8 +28,8 @@ class RemovePhpVersionCommand: BrewCommand {
     ) {
         self.container = container
         self.version = formula
-            .replacingOccurrences(of: "php@", with: "")
-            .replacingOccurrences(of: "shivammathur/php/", with: "")
+            .replacing("php@", with: "")
+            .replacing("shivammathur/php/", with: "")
         self.formula = formula
         self.phpGuard = PhpGuard()
     }

@@ -74,7 +74,7 @@ extension InternalSwitcher {
                 var contents = try container.filesystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
 
                 for (original, replacement) in file.replacements {
-                    contents = contents.replacingOccurrences(of: original, with: replacement)
+                    contents = contents.replacing(original, with: replacement)
                 }
 
                 try container.filesystem.writeAtomicallyToFile(
@@ -103,7 +103,7 @@ extension InternalSwitcher {
                 replacements: [
                     "VALET_USER": container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
-                    "valet.sock": "valet\(version.replacingOccurrences(of: ".", with: "")).sock"
+                    "valet.sock": "valet\(version.replacing(".", with: "")).sock"
                 ],
                 applies: { Valet.shared.version!.major > 2 }
             ),

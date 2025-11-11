@@ -21,8 +21,8 @@ struct BrewPhpExtension: Hashable, Comparable {
                 $0.contains("shivammathur/extensions/") && $0.contains("@\(phpVersion)")
             }
             .map {
-                $0.replacingOccurrences(of: "shivammathur/extensions/", with: "")
-                    .replacingOccurrences(of: "@\(phpVersion)", with: "")
+                $0.replacing("shivammathur/extensions/", with: "")
+                    .replacing("@\(phpVersion)", with: "")
             }
     }
 

@@ -23,7 +23,7 @@ class NginxConfigurationFile: CreatedFromFile {
         _ container: Container,
         filePath: String,
     ) -> Self? {
-        let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
+        let path = filePath.replacing("~", with: container.paths.homePath)
 
         do {
             let fileContents = try String(contentsOfFile: path)
@@ -40,7 +40,7 @@ class NginxConfigurationFile: CreatedFromFile {
         let tld = String(domain.split(separator: ".").last!)
 
         self.contents = contents
-        self.domain = domain.replacingOccurrences(of: ".\(tld)", with: "")
+        self.domain = domain.replacing(".\(tld)", with: "")
         self.tld = tld
     }
 

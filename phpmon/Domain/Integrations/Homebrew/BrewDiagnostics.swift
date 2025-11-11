@@ -101,7 +101,7 @@ class BrewDiagnostics {
             }) {
 
             for symlink in contents {
-                let version = symlink.replacingOccurrences(of: "php@", with: "")
+                let version = symlink.replacing("php@", with: "")
                 if let destination = try? filesystem.getDestinationOfSymlink("\(container.paths.optPath)/\(symlink)") {
                     if !destination.contains("Cellar/php/\(version)")
                         && !destination.contains("Cellar/php@\(version)") {

@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         #if DEBUG
         logger.verbosity = .performance
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
-            AppDelegate.initializeTestingProfile(profile.replacingOccurrences(of: "--configuration:", with: ""))
+            AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
         }
         #endif
 

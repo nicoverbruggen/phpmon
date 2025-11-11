@@ -15,7 +15,7 @@ struct HomebrewPackage: Decodable {
 
     public var version: String {
         return aliases.first!
-            .replacingOccurrences(of: "php@", with: "")
+            .replacing("php@", with: "")
     }
 }
 

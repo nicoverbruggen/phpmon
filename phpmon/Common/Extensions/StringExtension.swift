@@ -65,7 +65,7 @@ extension String {
             return NSLocalizedString(self, bundle: bundle, comment: "")
         }
 
-        return string.replacingOccurrences(of: "Preferences", with: "Settings")
+        return string.replacing("Preferences", with: "Settings")
     }
 
     var localizedForSwiftUI: LocalizedStringKey {

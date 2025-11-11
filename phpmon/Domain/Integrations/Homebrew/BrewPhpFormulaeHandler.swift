@@ -63,8 +63,8 @@ class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
                 fullVersion = install.isPreRelease ? "\(fullVersion!)-dev" : fullVersion
 
                 upgradeVersion = outdated?.first(where: { formula in
-                    return formula.name.replacingOccurrences(of: "shivammathur/php/", with: "")
-                        == install.formulaName.replacingOccurrences(of: "shivammathur/php/", with: "")
+                    return formula.name.replacing("shivammathur/php/", with: "")
+                        == install.formulaName.replacing("shivammathur/php/", with: "")
                 })?.current_version
 
                 isPrerelease = install.isPreRelease

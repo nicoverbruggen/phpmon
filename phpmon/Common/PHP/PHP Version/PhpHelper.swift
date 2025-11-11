@@ -16,7 +16,7 @@ class PhpHelper {
         for version: String
     ) async {
         // Take the PHP version (e.g. "7.2") and generate a dotless version
-        let dotless = version.replacingOccurrences(of: ".", with: "")
+        let dotless = version.replacing(".", with: "")
 
         // Determine the dotless name for this PHP version
         let destination = "\(container.paths.homePath)/.config/phpmon/bin/pm\(dotless)"

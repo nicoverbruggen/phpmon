@@ -29,7 +29,7 @@ extension AppDelegate {
         guard let url = urls.first else { return }
 
         self.interpretCommand(
-            url.absoluteString.replacingOccurrences(of: "phpmon://", with: ""),
+            url.absoluteString.replacing("phpmon://", with: ""),
             commands: InterApp.getCommands()
         )
     }

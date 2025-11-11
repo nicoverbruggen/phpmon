@@ -148,7 +148,7 @@ class AppUpdater {
         system_quiet("mkdir -p ~/.config/phpmon/updater 2> /dev/null")
 
         let updaterDirectory = "~/.config/phpmon/updater"
-            .replacingOccurrences(of: "~", with: NSHomeDirectory())
+            .replacing("~", with: NSHomeDirectory())
 
         system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
 

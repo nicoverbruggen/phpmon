@@ -48,10 +48,10 @@ class CertificateValidator {
 
             // Remove PEM headers and footers, and whitespace
             let cleanedCertificate = certificateString
-                .replacingOccurrences(of: "-----BEGIN CERTIFICATE-----", with: "")
-                .replacingOccurrences(of: "-----END CERTIFICATE-----", with: "")
-                .replacingOccurrences(of: "\n", with: "")
-                .replacingOccurrences(of: "\r", with: "")
+                .replacing("-----BEGIN CERTIFICATE-----", with: "")
+                .replacing("-----END CERTIFICATE-----", with: "")
+                .replacing("\n", with: "")
+                .replacing("\r", with: "")
                 .trimmingCharacters(in: .whitespacesAndNewlines)
 
             guard let certificateData = Data(base64Encoded: cleanedCertificate) else {

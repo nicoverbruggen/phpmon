@@ -80,8 +80,8 @@ struct BrewPhpFormula: Equatable {
     /// The associated Homebrew folder with this PHP formula.
     var homebrewFolder: String {
         let resolved = name
-            .replacingOccurrences(of: "shivammathur/php/", with: "")
-            .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
+            .replacing("shivammathur/php/", with: "")
+            .replacing("php@" + PhpEnvironments.brewPhpAlias, with: "php")
 
         return "\(App.shared.container.paths.optPath)/\(resolved)/bin"
     }
@@ -89,7 +89,7 @@ struct BrewPhpFormula: Equatable {
     /// The short version associated with this formula, if installed.
     var shortVersion: String? {
         guard let version = self.installedVersion else {
-            return self.displayName.replacingOccurrences(of: "PHP ", with: "")
+            return self.displayName.replacing("PHP ", with: "")
         }
 
         return VersionNumber.make(from: version)?.short ?? nil
@@ -112,7 +112,7 @@ struct BrewPhpFormula: Equatable {
 
         return container.filesystem.fileExists(
             "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
-                .replacingOccurrences(of: "php@" + PhpEnvironments.brewPhpAlias, with: "php")
+                .replacing("php@" + PhpEnvironments.brewPhpAlias, with: "php")
         )
     }
 
