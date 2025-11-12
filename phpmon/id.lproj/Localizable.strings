@@ -167,9 +167,9 @@ dan mulai kembali PHP Monitor untuk ekstensi menjadi visible. Jika masalah tetap
 "phpman.warnings.outdated.desc" = "Dengan sangat mungkin, formulae Homebrew telah berubah sejak versi PHP Monitor ini dibuat. Saya sangat merekomendasikan Anda memperbarui aplikasi ini sebelum menggunakan Pengelola Versi PHP untuk menginstal, menghapus atau memperbarui variasi versi PHP.";
 
 "phpman.warnings.unsupported.title" = "Versi Homebrew Anda mungkin menyebabkan masalah";
-"phpman.warnings.unsupported.desc" = "Tidak ada fungsi yang di-disabled, tetapi beberapa perintah mungkin tidak berfungsi seakan-akan dengan benar. Anda saat ini menjalankan Homebrew %@.
+"phpman.warnings.unsupported.desc" = "Tidak ada fungsionalitas yang dinonaktifkan, tetapi beberapa perintah mungkin tidak berfungsi seperti yang diharapkan. Anda saat ini menjalankan Homebrew %@.
 
-Saat ini, versi Homebrew 4 adalah versi yang hanya didukung oleh Pengelola Versi PHP. Jika Anda sedang menjalankan versi Homebrew yang lebih baru, mungkin Anda ingin memeriksa apakah ada versi pengelolaan PHP yang tersedia.";
+Saat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika Anda menjalankan versi Homebrew yang lebih baru, Anda mungkin ingin memeriksa apakah ada versi PHP Monitor yang lebih baru tersedia.";
 
 "phpman.warnings.removal.title" = "Anda yakin ingin menghapus %@?";
 "phpman.warnings.removal.desc" = "Diperhatikan, konfigurasi tidak dihapus, jadi seharusnya mudah untuk menginstal kembali jika diperlukan.

@@ -142,9 +142,9 @@ và khởi động lại PHP Monitor để các tiện ích mở rộng trở n�
 "phpman.has_updates.button" = "Nâng cấp Tất cả";
 
 "phpman.warnings.unsupported.title" = "Phiên bản Homebrew của bạn có thể gây ra vấn đề";
-"phpman.warnings.unsupported.desc" = "Không có chức năng nào bị vô hiệu hóa, nhưng một số lệnh có thể không hoạt động như mong đợi. Hiện tại, bạn đang chạy Homebrew %@.
+"phpman.warnings.unsupported.desc" = "Không có chức năng nào bị vô hiệu hóa, nhưng một số lệnh có thể không hoạt động như mong đợi. Bạn đang chạy Homebrew %@.
 
-Hiện nay, Homebrew 4 là phiên bản được hỗ trợ duy nhất cho Quản lý Phiên bản PHP. Nếu bạn đang chạy phiên bản Homebrew mới hơn, bạn có thể muốn kiểm tra xem có bản PHP Monitor mới hơn có sẵn không.";
+Hiện tại, chỉ có Homebrew 4 và 5 được hỗ trợ cho PHP Version Manager. Nếu bạn đang chạy phiên bản Homebrew mới hơn, bạn có thể muốn kiểm tra xem có phiên bản mới của PHP Monitor sẵn có không.";
 
 "phpman.warnings.removal.title" = "Bạn có chắc chắn muốn gỡ cài đặt %@ không?";
 "phpman.warnings.removal.desc" = "Vui lòng lưu ý rằng các tệp cấu hình sẽ không bị xóa, vì vậy việc cài đặt lại sau này nếu cần sẽ dễ dàng hơn.

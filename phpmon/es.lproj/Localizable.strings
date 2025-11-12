@@ -169,9 +169,9 @@ y reiniciar PHP Monitor para que las extensiones sean visibles. Si el problema p
 "phpman.warnings.outdated.desc" = "Es muy probable que las fórmulas de Homebrew hayan cambiado desde que se creó esta versión de PHP Monitor. Te recomiendo encarecidamente actualizar la aplicación antes de usar el gestor de versiones para instalar, eliminar o actualizar versiones de PHP.";
 
 "phpman.warnings.unsupported.title" = "Tu versión de Homebrew puede causar problemas";
-"phpman.warnings.unsupported.desc" = "No se ha desactivado ninguna funcionalidad, pero algunos comandos pueden no funcionar como se espera. Actualmente estás ejecutando Homebrew %@.
+"phpman.warnings.unsupported.desc" = "No se deshabilita ninguna funcionalidad, pero algunos comandos pueden no funcionar como se espera. Actualmente está ejecutando Homebrew %@.
 
-Actualmente, Homebrew 4 es la única versión compatible con el Gestor de versiones de PHP. Si estás ejecutando una versión más nueva de Homebrew, es posible que desees comprobar si hay una versión más nueva de PHP Monitor disponible.";
+Actualmente, solo Homebrew 4 y 5 son compatibles con PHP Version Manager. Si está ejecutando una versión más reciente de Homebrew, es posible que desee comprobar si hay disponible una versión más nueva de PHP Monitor.";
 
 "phpman.warnings.removal.title" = "¿Estás seguro de que quieres desinstalar %@?";
 "phpman.warnings.removal.desc" = "Ten en cuenta que los archivos de configuración no se eliminarán, por lo que debería ser fácil reinstalar más tarde si es necesario.

@@ -52,7 +52,7 @@ struct PhpVersionManagerView: View {
         await delay(seconds: 1)
 
         // PHP formulae may not be installable with older Homebrew version
-        if version.major != 4 {
+        if version.major != 4 && version.major != 5 {
             Task { @MainActor in
                 self.presentErrorAlert(
                     title: "phpman.warnings.unsupported.title".localized,

@@ -144,7 +144,7 @@ und PHP Monitor neu starten, damit die Erweiterungen sichtbar werden. Wenn das P
 "phpman.warnings.unsupported.title" = "Ihre Version von Homebrew kann Probleme verursachen";
 "phpman.warnings.unsupported.desc" = "Keine Funktion ist deaktiviert, aber einige Befehle funktionieren möglicherweise nicht wie erwartet. Sie führen derzeit Homebrew %@ aus.
 
-Derzeit ist Homebrew 4 die einzige unterstützte Version für den PHP Version Manager. Wenn Sie eine neuere Version von Homebrew verwenden, sollten Sie prüfen, ob eine neuere Version von PHP Monitor verfügbar ist.";
+Derzeit werden nur Homebrew 4 und 5 für PHP Version Manager unterstützt. Falls Sie eine neuere Version von Homebrew verwenden, sollten Sie prüfen, ob ein neueres PHP Monitor verfügbar ist.";
 
 "phpman.warnings.removal.title" = "Sind Sie sicher, dass Sie %@ deinstallieren wollen?";
 "phpman.warnings.removal.desc" = "Bitte beachten Sie, dass die Konfigurationsdateien nicht entfernt werden, so dass eine spätere Neuinstallation problemlos möglich sein sollte.

@@ -171,7 +171,7 @@
 "phpman.warnings.unsupported.title" = "您的 Homebrew 版本可能会导致问题";
 "phpman.warnings.unsupported.desc" = "没有禁用任何功能，但某些命令可能无法按预期运行。您当前运行的是 Homebrew %@。
 
-目前，Homebrew 4 是 PHP 版本管理器唯一支持的版本。如果您运行的是更新版本的 Homebrew，您可能需要检查是否有更新版本的 PHP Monitor 可用 ";
+目前仅支持 PHP 版本管理器的 Homebrew 4 和 5。如果您使用的是更新版本的 Homebrew，建议检查是否有可用的新版本 PHP Monitor。";
 
 "phpman.warnings.removal.title" = "您确定要卸载 %@？";
 "phpman.warnings.removal.desc" = "请注意，配置文件不会被删除，因此如果需要，稍后重新安装应该很容易。
