@@ -6,6 +6,7 @@
     --language="Dutch" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/nl.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -13,6 +14,7 @@
     --language="French" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/fr.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -20,6 +22,7 @@
     --language="Spanish" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/es.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -27,6 +30,7 @@
     --language="German" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/de.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -34,6 +38,7 @@
     --language="Indonesian" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/id.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -41,6 +46,7 @@
     --language="Portuguese (Portugal)" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/pt-PT.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -48,6 +54,7 @@
     --language="Vietnamese" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/vi.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -55,6 +62,7 @@
     --language="Chinese (simplified)" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/zh-Hans.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -62,6 +70,7 @@
     --language="Italian" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/it.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -69,6 +78,7 @@
     --language="Turkish" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/tr.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -76,6 +86,7 @@
     --language="Japanese" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/ja.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -83,6 +94,7 @@
     --language="Hindi" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/hi.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -90,6 +102,7 @@
     --language="Bengali" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/bn.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
 
 .build/arm64-apple-macosx/release/transllm \
@@ -97,4 +110,5 @@
     --language="Arabic" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/ar.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
+    --ip="192.168.129.200" \
     --model-instances=1; \
