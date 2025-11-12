@@ -1023,6 +1023,10 @@
 		033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpExtensionManagerView+Actions.swift"; sourceTree = "<group>"; };
 		034515442EC4F3A000472561 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515452EC4F3C000472561 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		034515462EC4FB9100472561 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		034515472EC4FB9800472561 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		034515482EC4FBB500472561 /* bn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		034515492EC4FBBD00472561 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		036C39012E5C883A008DAEDF /* Packagist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packagist.swift; sourceTree = "<group>"; };
 		036C39072E5C88A2008DAEDF /* PackagistTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistTest.swift; sourceTree = "<group>"; };
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
@@ -2594,6 +2598,10 @@
 				id,
 				it,
 				tr,
+				ja,
+				hi,
+				bn,
+				ar,
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
@@ -3716,6 +3724,10 @@
 				C49DA9BD2D67B298006F9CF4 /* id */,
 				034515442EC4F3A000472561 /* it */,
 				034515452EC4F3C000472561 /* tr */,
+				034515462EC4FB9100472561 /* ja */,
+				034515472EC4FB9800472561 /* hi */,
+				034515482EC4FBB500472561 /* bn */,
+				034515492EC4FBBD00472561 /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -69,4 +69,32 @@
     --language="Turkish" \
     --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/tr.lproj/Localizable.strings" \
     --model="openai/gpt-oss-20b" \
-    --model-instances=1;
+    --model-instances=1; \
+
+.build/arm64-apple-macosx/release/transllm \
+    --source="/Users/nico/Code/PHP Monitor/phpmon/phpmon/en.lproj/Localizable.strings" \
+    --language="Japanese" \
+    --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/ja.lproj/Localizable.strings" \
+    --model="openai/gpt-oss-20b" \
+    --model-instances=1; \
+
+.build/arm64-apple-macosx/release/transllm \
+    --source="/Users/nico/Code/PHP Monitor/phpmon/phpmon/en.lproj/Localizable.strings" \
+    --language="Hindi" \
+    --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/hi.lproj/Localizable.strings" \
+    --model="openai/gpt-oss-20b" \
+    --model-instances=1; \
+
+.build/arm64-apple-macosx/release/transllm \
+    --source="/Users/nico/Code/PHP Monitor/phpmon/phpmon/en.lproj/Localizable.strings" \
+    --language="Bengali" \
+    --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/bn.lproj/Localizable.strings" \
+    --model="openai/gpt-oss-20b" \
+    --model-instances=1; \
+
+.build/arm64-apple-macosx/release/transllm \
+    --source="/Users/nico/Code/PHP Monitor/phpmon/phpmon/en.lproj/Localizable.strings" \
+    --language="Arabic" \
+    --target="/Users/nico/Code/PHP Monitor/phpmon/phpmon/ar.lproj/Localizable.strings" \
+    --model="openai/gpt-oss-20b" \
+    --model-instances=1; \
