@@ -1,5 +1,3 @@
-// MENU ITEMS (MI)
-
 "mi_busy" = "PHP Monitor sedang sibuk...";
 "mi_unsure" = "Kami tidak yakin tentang versi PHP yang Anda jalankan.";
 "mi_php_version" = "Versi Global: PHP";
@@ -12,12 +10,10 @@
 "mi_no_php_linked" = "Tidak ada versi PHP terhubung!";
 "mi_fix_php_link" = "Sunting Otomatis...";
 "mi_no_php_linked_explain" = "Apa Itu?";
-
 "mi_php_version_manager" = "Manajer Versi PHP...";
 "mi_php_ext_manager" = "Manajer Ekstensi PHP...";
 "mi_php_config_manager" = "Pengelola Konfigurasi PHP...";
 "mi_manage_limits" = "Manajemen Batasan...";
-
 "mi_diagnostics" = "Penyakit";
 "mi_active_services" = "Jasa yang Aktif";
 "mi_restart_php_fpm" = "Buat Lagi: php";
@@ -26,14 +22,11 @@
 "mi_manage_services" = "Manajemen Jasa";
 "mi_restart_valet_services" = "Buat Lagi Layanan Valet";
 "mi_stop_valet_services" = "Stop Layanan Valet";
-
 "mi_fix_my_valet" = "Sunting My Valet...";
 "mi_fix_my_valet_tooltip" = "Ada masalah dengan instalasi Anda Valet? PHP Monitor akan membantu Anda mengatur ulang dan kembalinya ke operasi dalam waktu singkat!";
 "mi_fix_brew_permissions" = "Kembalikan Izin Homebrew...";
 "mi_fix_brew_permissions_tooltip" = "Sudahkah Anda membutuhkan izin ketika menjalankan `brew upgrade`? PHP Monitor akan membantu mengatasi masalah izin tersebut.";
-
 "mi_php_refresh" = "Refresh Information";
-
 "mi_configuration" = "Konfigurasi PHP";
 "mi_limits" = "Batasan Konfigurasi";
 "mi_memory_limit" = "Batas Memori";
@@ -43,9 +36,7 @@
 "mi_services" = "Jasa";
 "mi_other" = "Pertolongan & Jasa";
 "mi_first_aid" = "Pertolongan";
-
 "mi_xdebug_mode" = "Manajer Mode Xdebug";
-
 "mi_composer" = "Composer";
 "mi_valet_config" = "Temukan Folder Valet (.config/valet)";
 "mi_php_config" = "Temukan File Konfigurasi PHP (php.ini)";
@@ -55,42 +46,35 @@
 "mi_update_global_composer" = "Perbarui Dependent Composer Global...";
 "mi_detected_extensions" = "Ekstensi yang Didektksi";
 "mi_no_extensions_detected" = "Tidak ada ekstensi tambahan yang didekati.";
-
 "mi_php_doctor" = "Dokter PHP";
 "mi_fa_php_doctor" = "Buka Dokter PHP...";
 "mi_recommendations_count" = "%i Pertanyaan Ditemukan!";
 "mi_view_recommendations" = "Lihat Rekomendasi...";
-
 "mi_valet" = "Valet Laravel";
 "mi_domain_list" = "Lihat Daftar Domain...";
-
 "mi_preferences" = "Pengaturan...";
 "mi_donate" = "Donasi...";
 "mi_check_for_updates" = "Cek Perbarui...";
 "mi_lite_mode" = "Tentang Mode Standalone...";
+"mi_driver" = "Pengemudi Aplikasi: %@";
 "mi_quit" = "Selesai PHP Monitor";
 "mi_about" = "Tentang PHP Monitor";
-
+"mi_valet_upgrade_available" = "Valet versi terbaru tersedia.";
+"mi_valet_upgrade_action" = "Tingkatkan ke Valet %@...";
 "mi_presets_title" = "Preset Konfigurasi";
 "mi_apply_presets_title" = "Aplikasi Preset Konfigurasi";
 "mi_revert_to_prev_config" = "Kembalikan ke Konfigurasi Sebelumnya...";
 "mi_profiles_loaded" = "%i profile di-load dari file konfigurasi";
-
 "mi_no_presets" = "Tidak ada preset yang tersedia.";
 "mi_set_up_presets" = "Pelajari lebih lanjut tentang preset...";
-
 "mi_view_onboarding" = "Buka Tour Pendahuluan...";
-
 "mi_xdebug_available_modes" = "Mode Tersedia";
 "mi_xdebug_actions" = "Aksi";
 "mi_xdebug_disable_all" = "Tutup Semua Mode";
-
-// CONFMAN
-
+"mm_actions" = "Aksi";
 "confman.title" = "Pengaturan PHP Editor";
 "confman.description" = "Fitur ini memungkinkan Anda mengatur pengkonfigurasi PHP dengan mudah.\nPerhatian: apapun perubahan yang Anda buat segera dan otomatis dijalankan.";
 "confman.byte_limit.unlimited" = "Biar tidak ada batas";
-
 "php_ini.memory_limit.title" = "Maksimum Batasan Memori";
 "php_ini.memory_limit.description" = "Ini menetapkan jumlah maksimum memori dalam byte yang sebuah skrip boleh gunakan. Ini membantu mencegah skrip buruk yang menghabiskan semua memori tersedia pada server.";
 "php_ini.post_max_size.title" = "Maksimum Ukuran POST";
@@ -99,40 +83,22 @@
 "php_ini.file_uploads.description" = "Kembalikan atau tidakkan pengunggahan berkas secara keseluruhan. Dia direkomendasikan untuk tetap diaktifkan.";
 "php_ini.upload_max_filesize.title" = "Batasan Ukuran Pengunggahan Berkas";
 "php_ini.upload_max_filesize.description" = "Ukuran maksimum dari berkas yang dapat diunggah. Maksimum Ukuran POST harus lebih besar daripada ini.";
-
-// PHPEXTMAN
-
 "phpextman.window.title" = "Ekseni";
 "phpextman.description" = "**Pengelola Eksen PHP** memungkinkan Anda mengelola berbagai ekstensi PHP dengan klik tombol sederhana. Karena Homebrew digunakan, ekstensi tidak perlu dicompile secara langsung menggunakan `pecl`.";
 "phpextman.disclaimer" = "Secara umum, beberapa ekstensi mungkin membutuhkan penginstalan lain untuk diinstal, tetapi umumnya, menginstal ekstensi harus lebih cepat daripada menginstal versi PHP.";
-
 "phpextman.warnings.removal.title" = "Hapus ekstensi `%@`?";
-"phpextman.warnings.removal.desc" = "Ekseni dan file konfigurasi unik akan dihapus. Fungsionalitasnya tidak tersedia lagi untuk pengaturan PHP ini. Anda yakin?
-
-( Jika ekstensi diaktifkan menggunakan nama yang tidak standar, ia tidak akan dihapus. Oleh karena itu, jika Anda tidak ingin file .ini dihapus, terbaik adalah menggandakan namanya ke sesuatu. Dalam kasus tersebut, ekstensi hanya akan diaktifkan kembali sebagai bagian dari proses pembersihan.)";
+"phpextman.warnings.removal.desc" = "Ekseni dan file konfigurasi unik akan dihapus. Fungsionalitasnya tidak tersedia lagi untuk pengaturan PHP ini. Anda yakin?\n\n( Jika ekstensi diaktifkan menggunakan nama yang tidak standar, ia tidak akan dihapus. Oleh karena itu, jika Anda tidak ingin file .ini dihapus, terbaik adalah menggandakan namanya ke sesuatu. Dalam kasus tersebut, ekstensi hanya akan diaktifkan kembali sebagai bagian dari proses pembersihan.)";
 "phpextman.warnings.removal.button" = "Hapus";
-
 "phpextman.list.showing_count" = "Saat ini menunjukkan %@ ekstensi untuk:";
 "phpextman.list.depends_on" = "Tergantung pada:";
-
 "phpextman.list.status.external" = "Ini ekstensi sudah diinstal menggunakan sumber lain, dan tidak dapat dikendalikan.";
 "phpextman.list.status.installable" = "Ini bisa diinstal.";
 "phpextman.list.status.dependent" = "Anda tidak bisa menghapusnya sebelum menghapus %@.";
 "phpextman.list.status.can_manage" = "Ekseni ini diinstal dan dikendalikan oleh PHP Monitor.";
-
 "phpextman.errors.not_found.title" = "Oh-oh. Tiada ekstensi yang ditemukan!";
-"phpextman.errors.not_found.desc" = "Tidak seharusnya terjadi. Anda mungkin membutuhkan perintah berikut di terminal Anda:
-
-`brew tap shivammathur/extensions`
-
-dan mulai kembali PHP Monitor untuk ekstensi menjadi visible. Jika masalah tetap ada setelah menjalankan perintah dan mengeklik mulai kembali PHP Monitor, silakan buka isu di GitHub.";
-
-```
-// PHPMAN
-
+"phpextman.errors.not_found.desc" = "Tidak seharusnya terjadi. Anda mungkin membutuhkan perintah berikut di terminal Anda:\n\n`brew tap shivammathur/extensions`\n\ndan mulai kembali PHP Monitor untuk ekstensi menjadi visible. Jika masalah tetap ada setelah menjalankan perintah dan mengeklik mulai kembali PHP Monitor, silakan buka isu di GitHub.";
 "phpman.busy.title" = "Mendapatkan update!";
 "phpman.busy.description.outdated" = "Mereka memeriksa apakah versi PHP yang diinstalasi adalah versi lama...";
-
 "phpman.version.broken" = "Versi ini tampaknya rusak, Anda dapat mencoba pemulihan.";
 "phpman.version.has_update" = "Versi %@ terpasang, tersedia untuk %@.";
 "phpman.version.installed" = "Versi %@ saat ini terpasang.";
@@ -144,8 +110,7 @@ dan mulai kembali PHP Monitor untuk ekstensi menjadi visible. Jika masalah tetap
 "phpman.buttons.update" = "Update";
 "phpman.buttons.repair" = "Pemulihan";
 "phpman.version.prerelease" = "Pre-release";
-
-"phpman.steps.installing" = "Menginstal %@";
+"phpman.steps.installing" = "Menginstal beberapa data paket...";
 "phpman.steps.removing" = "Menghapus %@";
 "phpman.steps.reloading" = "Memuat kembali versi PHP... Mereka mengumpulkan semua versi PHP...";
 "phpman.steps.preparing" = "PHP Monitor sedang mempersiapkan Homebrew...";
@@ -153,153 +118,98 @@ dan mulai kembali PHP Monitor untuk ekstensi menjadi visible. Jika masalah tetap
 "phpman.steps.completed" = "Proses selesai!";
 "phpman.steps.success" = "Operasi berhasil dilakukan.";
 "phpman.steps.failure" = "Perintah gagal dijalankan dengan benar.";
-
 "phpman.title" = "Pengelola Versi PHP";
 "phpman.description" = "**Pengelola Versi PHP** memungkinkan Anda menginstal, memperbarui dan menghapus variasi versi PHP melalui Homebrew tanpa perlu menjalankan perintah di terminal secara manual.";
 "phpman.disclaimer" = "Perhatian, instalasi atau pembaruan versi PHP mungkin akan menyebabkan upgrade paket Homebrew yang lain. Sebagian besar langkah penginstalan biasanya membutuhkan waktu, jadi silakan menunggu sementara Homebrew melakukannya.";
 "phpman.refresh.button" = "Cari Perbarui";
 "phpman.refresh.button.description" = "Anda dapat tekan tombol refresh untuk memeriksa apakah ada perbaruan tersedia pada variasi PHP yang terpasang.";
-
 "phpman.has_updates.description" = "**Ada satu atau lebih perbaruan yang tersedia.** Pengelola Versi PHP akan selalu menginstal atau memperbaruhi variasi PHP secara otomatis, jadi Anda akan selalu mengupgrade semua instalasi sekaligus.";
 "phpman.has_updates.button" = "Upgrade All";
-
 "phpman.warnings.outdated.title" = "Versi PHP Monitor ini adalah versi yang tidak terbaru";
 "phpman.warnings.outdated.desc" = "Dengan sangat mungkin, formulae Homebrew telah berubah sejak versi PHP Monitor ini dibuat. Saya sangat merekomendasikan Anda memperbarui aplikasi ini sebelum menggunakan Pengelola Versi PHP untuk menginstal, menghapus atau memperbarui variasi versi PHP.";
-
 "phpman.warnings.unsupported.title" = "Versi Homebrew Anda mungkin menyebabkan masalah";
-"phpman.warnings.unsupported.desc" = "Tidak ada fungsionalitas yang dinonaktifkan, tetapi beberapa perintah mungkin tidak berfungsi seperti yang diharapkan. Anda saat ini menjalankan Homebrew %@.
-
-Saat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika Anda menjalankan versi Homebrew yang lebih baru, Anda mungkin ingin memeriksa apakah ada versi PHP Monitor yang lebih baru tersedia.";
-
+"phpman.warnings.unsupported.desc" = "Tidak ada fungsionalitas yang dinonaktifkan, tetapi beberapa perintah mungkin tidak berfungsi seperti yang diharapkan. Anda saat ini menjalankan Homebrew %@.\n\nSaat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika Anda menjalankan versi Homebrew yang lebih baru, Anda mungkin ingin memeriksa apakah ada versi PHP Monitor yang lebih baru tersedia.";
 "phpman.warnings.removal.title" = "Anda yakin ingin menghapus %@?";
-"phpman.warnings.removal.desc" = "Diperhatikan, konfigurasi tidak dihapus, jadi seharusnya mudah untuk menginstal kembali jika diperlukan.
- 
- Anda mungkin akan diminta kata sandi selama proses penghapusan apabila izin akses file tidak memungkinkan pemindahan yang sederhana.";
+"phpman.warnings.removal.desc" = "Diperhatikan, konfigurasi tidak dihapus, jadi seharusnya mudah untuk menginstal kembali jika diperlukan.\n \n Anda mungkin akan diminta kata sandi selama proses penghapusan apabila izin akses file tidak memungkinkan pemindahan yang sederhana.";
 "phpman.warnings.removal.button" = "Uninstall";
-
 "phpman.failures.install.title" = "Instalasi gagal!";
-"phpman.failures.install.desc" = "Sayangnya, operasinya kembali dengan kode error untuk alasan yang tidak jelas. Mungkin Anda akan menemukan bahwa formulae sudah benar-benar diinstal atau diperbarui. Sayangnya, saya tidak dapat banyak tentang ini. Silakan cek pesan terakhir dari Homebrew disini untuk lebih informasi mengapa hal itu terjadi:
-
-%@";
-
+"phpman.failures.install.desc" = "Sayangnya, operasinya kembali dengan kode error untuk alasan yang tidak jelas. Mungkin Anda akan menemukan bahwa formulae sudah benar-benar diinstal atau diperbarui. Sayangnya, saya tidak dapat banyak tentang ini. Silakan cek pesan terakhir dari Homebrew disini untuk lebih informasi mengapa hal itu terjadi:\n\n%@";
 "phpman.action_prevented_busy.title" = "Pengelola Versi PHP sedang sibuk.";
 "phpman.action_prevented_busy.desc" = "Pengelola Versi PHP sedang melakukan sesuatu seperti memilih antara variasi PHP. Untuk menghindari kerusakan pada sistem Anda, Anda harus menunggu hingga Pengelola Versi PHP siap sebelum mencoba lagi.";
-
 "phpman.uninstall_prevented.title" = "Anda tidak dapat menghapus versi aktif dari PHP menggunakan antarmuka ini.";
 "phpman.uninstall_prevented.desc" = "Dengan sengaja, instalasi versi aktif dari PHP tidak mungkin dihapus menggunakan antarmuka ini. Anda dapat memilih versi dan mencobanya kembali atau menghapuskannya secara manual melalui terminal.\n\nPeringatan, Pengelola Versi PHP mungkin akan gagal jika Anda menghapus versi yang di-linkkan.";
-
 "phpman.failures.uninstall.title" = "Gagal menghapus!";
 "phpman.failures.uninstall.desc" = "Sayangnya, uninstallasi otomatis gagal. Anda dapat mencoba menjalankan perintah ini secara manual: `%@` dan temukan apa yang salah. Ingat untuk restart Pengelola Versi PHP (atau tekan tombol refresh) setelah itu.";
-
 "phpman.unlinked.title" = "Tidak ada variasi dari PHP yang terpasang pada sistem Anda saat ini";
 "phpman.unlinked.desc" = "Anda mungkin masih memiliki beberapa versi dari PHP yang sedang diinstal, tetapi saat ini tidak ada variasi PHP yang di-link.";
 "phpman.unlinked.detail" = "Tanpa versi PHP yang di-link, ikon `php` bukan tersedia pada sistem Anda dan Anda tidak dapat menjalankan script PHP tanpa secara eksplisit menjadi bagian dari PATH. Anda mungkin ingin memperbarui masalah ini (pilih 'Pemulihan Otomatis' dalam menu utama), atau seharusnya mengatasi sendiri dengan menjalankan `brew link php --force`.";
-
 "phpman.operations.repairing" = "Mengatur ulang instalasi...";
 "phpman.operations.updating" = "Instal perbaruan...";
 "phpman.operations.installing" = "Instal %@...";
-
 "phpman.steps.fetching" = "Mendapatkan...";
 "phpman.steps.downloading" = "Memuat data paket...";
 "phpman.steps.installing" = "Menginstal beberapa data paket...";
 "phpman.steps.pouring" = "Mengganti... Ini mungkin memakan waktu cukup lama...";
 "phpman.steps.summary" = "Paket tersebut telah selesai diinstal...";
-
 "phpman.services.loading" = "Memuat...";
 "phpman.services.not_installed" = "Pelayanan kunci tidak terpasang.";
 "phpman.services.error" = "Pelayanan kunci melaporkan sebuah keadaan gagal.";
 "phpman.services.inactive" = "Pelayanan kunci tidak berjalan.";
 "phpman.services.all_ok" = "Semua layanan Valet baik.";
-
-// LITE MODE
-
 "lite_mode_explanation.title" = "Andalah sedang menjalankan PHP Monitor dalam Mode Standalone.";
 "lite_mode_explanation.subtitle" = "PHP Monitor memiliki fitur tambahan yang tersedia jika Anda menggunakan Laravel Valet. Saat ini, PHP Monitor tidak bisa mendeteksi instalasi aktif Valet pada sistem Anda, maka fitur-fiturnya tidak dapat digunakan.";
-"lite_mode_explanation.description" = "Untuk lebih banyak informasi, saya merekomendasikan untuk memeriksa README ( tersedia di GitHub) yang akan menjelaskan langkah-langkah apa yang harus anda lakukan untuk menginstal Valet dan membuat PHP Monitor bekerja dengan benar saat Valet terpasang. Anda perlu menutup PHP Monitor sebelum fitur-fitur tersebut dapat digunakan kembali.";
 "lite_mode_explanation.description" = "Setelah dijalankan kembali, semua preset yang ada dalam file config.json akan dijalankan.";
-
-// GENERIC
-
 "generic.ok" = "OK";
 "generic.cancel" = "Batal";
 "generic.retry" = "Ulangi";
 "generic.notice" = "Peringatan";
-
-// PRESET LOADING
-
 "preset_help_title" = "Bekerja dengan Preset Konfigurasi";
 "preset_help_info" = "Anda dapat mengatur preset konfigurasi dalam file config.json, yang berada di ~/.config/phpmon/config.json. Preset ini dapat memilih beberapa nilai pengaturan secara bersamaan. Fitur ini sangat kuat, tetapi saat ini harus diatur manual.";
 "preset_help_desc" = "Setelah dijalankan kembali, semua preset yang ada dalam file akan dijalankan. Jika tidak ada preset yang muncul, kemungkinan file tersebut dapat diterima dengan baik.";
-
-// MENU ITEMS (if window is open)
-
 "mm_add_folder_as_link" = "Tambahkan Folder sebagai Link...";
 "mm_reload_domain_list" = "Ulangi Daftar Domains";
 "mm_find_in_domain_list" = "Carilah di Daftar Domains";
-
-// SITE LIST
-
 "domain_list.title" = "Domains";
 "domain_list.subtitle" = "";
-
 "domain_list.domains_empty.title" = "Tidak ada domain yang tersedia.";
 "domain_list.domains_empty.desc" = "Tidak ada domain yang ditemukan untuk pencarian ini atau Anda belum menautkan sebarang domain.";
 "domain_list.domains_empty.button" = "Tambahkan domain...";
-
 "domain_list.tooltips.isolated" = "Domain ini diisolasi dan menggunakan PHP %@ daripada PHP yang terhubung secara global.";
 "domain_list.tooltips.checkmark" = "Domain ini disajikan dengan versi PHP yang kompatibel dengan persyaratan (PHP %@). Klik pada versi PHP di sebelah pemberat cek untuk mendapatkan informasi lebih lanjut.";
-
 "domain_list.alerts_isolation_failed.title" = "Oops! Isolasi Gagal";
 "domain_list.alerts_isolation_failed.subtitle" = "Ada masalah saat mengubah status isolasi untuk domain ini. Jika ini adalah domain default tetapi tidak terhubung, saya merekomendasikan anda menautkan domain sebelum mengatur isolasi.";
 "domain_list.alerts_isolation_failed.desc" = "Untuk mendapatkan informasi apa yang salah, cobalah menjalankan perintah di terminal Anda manual: %@";
-
 "domain_list.alerts_status_not_changed.title" = "Oops! Status SSL Tidak Diganti";
 "domain_list.alerts_status_not_changed.desc" = "Ada masalah. Cobalah menjalankan perintah dalam terminal Anda manual: %@";
-
 "domain_list.alerts_status_changed.title" = "Status SSL Diganti";
 "domain_list.alerts_status_changed.desc" = "Domain '%@' sekarang adalah %@.";
 "domain_list.alerts_status_secure" = "Aman";
 "domain_list.alerts_status_unsecure" = "Tidak Aman";
-
 "domain_list.confirm_unlink" = "Anda yakin ingin melepaskan '%@'?";
-"domain_list.confirm_unlink_desc" = "Tidak ada file yang akan dihapus. Anda dapat selalu menautkan folder lagi dengan memilih folder asli dan memilih "+" dan mengatur folder tersebut.";
+"domain_list.confirm_unlink_desc" = "Tidak ada file yang akan dihapus. Anda dapat selalu menautkan folder lagi dengan memilih folder asli dan memilih ";
 "site_link.close" = "Tutup";
 "site_link.switch_to_php" = "Pindahkan ke PHP %@";
 "site_link.isolate_php" = "Isolasi PHP %@";
-
 "domain_list.confirm_unproxy" = "Anda yakin ingin melepaskan proxy '%@'?";
-"domain_list.confirm_unproxy_desc" = "Anda dapat selalu mengimpor proxy lagi dengan memilih "+" dan menambahkan proxy yang sama.";
-
+"domain_list.confirm_unproxy_desc" = "Anda dapat selalu mengimpor proxy lagi dengan memilih ";
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domain";
 "domain_list.columns.active" = "Aktif";
 "domain_list.columns.kind" = "Jenis";
 "domain_list.columns.project_type" = "Tipe Proyek";
-
 "domain_list.extensions" = "Pengaturan Tambahan";
 "domain_list.applies_to" = "Berlaku untuk PHP %@";
-
-// CHOOSE WHAT TO ADD
-
 "selection.title" = "Apakah Anda ingin menetapkan jenis domain?";
 "selection.description" = "Link digunakan untuk secara langsung menyajikan proyek. Jika Anda memiliki folder Laravel, Symfony, WordPress dsb dengan kode, Anda akan perlu menciptakan link dan memilih folder di mana kode Anda hidup.\n\nJika Anda membutuhkan proxy, Anda dapat mengimpor misalnya container ke nama domain tertentu. Ini bisa berguna dalam kombinasi dengan Docker, misalnya.";
 "selection.create_link" = "Buat Link";
 "selection.create_proxy" = "Buat Proxy";
 "selection.cancel" = "Batalkan";
-
-// ADD PROXY TO DOMAINS LIST
-
 "domain_list.add.set_up_proxy" = "Tetapkan Proxy";
 "domain_list.add.proxy_subject" = "Subject Proxy (harus mencakup protokol dan port)";
 "domain_list.add.domain_name" = "Nama Domain";
 "domain_list.add.create_proxy" = "Buat Proxy";
 "domain_list.add.proxy_available" = "%@ akan diimpor dan tersedia melalui: %@://%@.%@";
-"domain_list.add.proxy_https_warning" = "%@ akan diimpor dan tersedia melalui: %@://%@.%@.
-
-(!) Penting! Anda perlu menambahkan `proxy_ssl_verify off;` ke config nginx untuk domain ini. Dianjurkan untuk menggunakan domain yang tidak aman sebagai subject proxy.";
-
-// ADD SITE TO DOMAINS LIST
-
+"domain_list.add.proxy_https_warning" = "%@ akan diimpor dan tersedia melalui: %@://%@.%@.\n\n(!) Penting! Anda perlu menambahkan `proxy_ssl_verify off;` ke config nginx untuk domain ini. Dianjurkan untuk menggunakan domain yang tidak aman sebagai subject proxy.";
 "domain_list.add.link_folder" = "Link Folder";
 "domain_list.add.domain_name_placeholder" = "Masukkan nama domain disini";
 "domain_list.add.secure_after_creation" = "Securing %@.%@ setelah dibuat";
@@ -307,30 +217,21 @@ Saat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika A
 "domain_list.add.create_link" = "Create Link";
 "domain_list.add.cancel" = "Cancel";
 "domain_list.add.folder_available" = "This site will be available via the following URL: %@://%@.%@";
-
 "domain_list.add.empty_fields" = "One or more fields are empty. Please fill all required fields.";
 "domain_list.add.errors.empty" = "Anda wajib masukkan nama domain.";
 "domain_list.add.errors.empty_proxy" = "Anda wajib memasukkan apa yang akan diproksi.";
 "domain_list.add.errors.subject_invalid" = "Topik yang Anda masukkan tidak valid.\nAnda harus mencukupi protokol dan port.";
 "domain_list.add.errors.already_exists" = "Terdapat tautan dengan nama tersebut sudah ada.";
-
-// ADD SITE ERROR: FOLDER MISSING SINCE SELECTION
-
 "domain_list.alert.folder_missing.desc" = "Folder yang Anda pilih tidak terlihat lagi. Apakah Anda ingin membatalkan menautkan folder ini? Jika Anda pindah folder, Anda masih bisa menempatkan kembali dan cobalah lagi.";
 "domain_list.alert.folder_missing.title" = "Folder Missing!";
 "domain_list.alert.folder_missing.cancel" = "Cancel Link";
 "domain_list.alert.folder_missing.return" = "OK";
-
 "domain_list.add.modal_description" = "Terlebih dahulu, pilih folder mana yang Anda ingin tautkan.";
-
-// SITE LIST ACTIONS
-
 "domain_list.isolate" = "Ganti Versi PHP";
 "domain_list.site_isolation" = "Isolasi Situs";
 "domain_list.remove_isolation" = "Hapus Isolasi";
 "domain_list.always_use_php" = "Sedang Gunakan PHP %@";
 "domain_list.isolation_unavailable" = "Isolasi Tidak Dibutuhkan (di Valet 2)";
-
 "domain_list.favorite" = "Domain Favorit";
 "domain_list.unfavorite" = "Batalkan Domain sebagai Favorit";
 "domain_list.actions" = "Aksi";
@@ -345,56 +246,33 @@ Saat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika A
 "domain_list.system_apps" = "Aplikasi Sistem";
 "domain_list.unproxy" = "Hapus Proksi";
 "domain_list.use_in_terminal" = "Buka PHP %@ di Terminal";
-
 "domain_list.alerts_isolated_php_terminal.title" = "Anda dapat menggunakan PHP %@ di terminal spesifik!";
-"domain_list.alerts_isolated_php_terminal.subtitle" = "Sayangnya, PHP Monitor tidak bisa membuka terminal untuk Anda (dan mengetik perintah yang tepat). Anda harus memanfaatkan skrip bantuan secara manual untuk menggunakan versi PHP spesifik tersebut. Untuk ini, Anda dapat mengcopy dan paste berikut ke terminal pilihan Anda:
-
-. pm%@
-
-Ini akan memuat skrip bantuan seperti dihasilkan oleh PHP Monitor dan memungkinkan penggunaan PHP %@ pada terminal spesifik yang digunakan. Ini tidak memiliki dampak pada terminal lainnya, hanya untuk sesi terminal yang sedang dipakai (misalnya jika Anda punya beberapa tab di aplikasi terminal, tab & jendela lainnya tidak terpengaruh.).";
+"domain_list.alerts_isolated_php_terminal.subtitle" = "Sayangnya, PHP Monitor tidak bisa membuka terminal untuk Anda (dan mengetik perintah yang tepat). Anda harus memanfaatkan skrip bantuan secara manual untuk menggunakan versi PHP spesifik tersebut. Untuk ini, Anda dapat mengcopy dan paste berikut ke terminal pilihan Anda:\n\n. pm%@\n\nIni akan memuat skrip bantuan seperti dihasilkan oleh PHP Monitor dan memungkinkan penggunaan PHP %@ pada terminal spesifik yang digunakan. Ini tidak memiliki dampak pada terminal lainnya, hanya untuk sesi terminal yang sedang dipakai (misalnya jika Anda punya beberapa tab di aplikasi terminal, tab & jendela lainnya tidak terpengaruh.).";
 "domain_list.alerts_isolated_php_terminal.desc" = "Jika ini belum berjalan, mungkin Anda ingin memeriksa PHP Doctor melalui menu Pertolongan Cemas di sini di PHP Monitor. Informasi lebih lanjut tentang fitur ini juga tersedia pada GitHub (di wiki pada repositori PHP Monitor). Pemberitahuan ini dimuat untuk meningkatkan visibilitas fitur tersebut.";
-
-
 "domain_list.warning.spaces" = "Peringatan! Domain Anda memiliki ruang kosong dalam folder.\nDomain tidak bisa diakses melalui browser.";
-
 "domain_list.alert.invalid_folder_name" = "Nama Folder Invalid";
 "domain_list.alert.invalid_folder_name_desc" = "Folder ini tidak dapat diidentifikasi sebagai URL yang valid. Ini umumnya karena ada ruang di dalam nama folder. Silakan rename folder, reload daftar domain, dan cobalah lagi.";
-
 "domain_list.columns.tls" = "TLS";
 "domain_list.columns.domain" = "Domain";
 "domain_list.columns.php" = "PHP";
 "domain_list.columns.type" = "Tipe";
 "domain_list.columns.kind" = "Jenis";
-
-// DRIVERS
-
 "driver.not_detected" = "Lainnya";
-
-// PRESET
-
 "preset.extension" = "%i ekstensi";
 "preset.extensions" = "%i ekstensi";
 "preset.preference" = "%i preferensi";
 "preset.preferences" = "%i preferensi";
-
-// EDITORS
-
 "editors.alert.try_again" = "Coba Lagi";
 "editors.alert.cancel" = "Batal";
-
-// PREFERENCES
-
 "prefs.title" = "Pilihul Monitor PHP";
 "prefs.subtitle" = "Pilihan";
 "prefs.close" = "Tutup";
-
 "prefs.tabs.general" = "Umum";
 "prefs.tabs.appearance" = "Penampilan";
 "prefs.tabs.visibility" = "Kepercayaan";
 "prefs.tabs.notifications" = "Pemberitahuan";
-
 "prefs.global_shortcut" = "Ketika Pilihan Shortcut Global:";
-"prefs.dynamic_icon" = "Icon Dinamis:";
+"prefs.dynamic_icon" = "Jenis Icon:";
 "prefs.dynamic_icon" = "Jenis Icon:";
 "prefs.info_density" = "Densitas Informasi:";
 "prefs.services" = "Jasa:";
@@ -406,111 +284,88 @@ Ini akan memuat skrip bantuan seperti dihasilkan oleh PHP Monitor dan memungkink
 "prefs.warnings" = "Peringatan:";
 "prefs.menu_contents" = "Fasilitas dalam Menu:";
 "prefs.startup" = "Pemulihan:";
-
 "prefs.auto_start_desc" = "Automatically starts PHP Monitor when you log into your Mac.";
 "prefs.auto_start_title" = "Mulai Pilihul Monitor PHP pada masuk";
-
 "prefs.icon_options.php" = "Tampilkan Icon PHP";
 "prefs.icon_options.elephant" = "Tampilkan Icon Gajah";
 "prefs.icon_options.none" = "Tidak Tampilkan Icon";
-
 "prefs.icon_options_desc" = "Pilihan ini menentukan apa icon yang akan ditunjukkan di samping nomor versi aktif dari PHP yang sedang terhubung. Jika opsi Dynamic Icon telah dihapus, tidak ada efeknya.";
-
 "prefs.auto_restart_services_title" = "Auto-restart PHP-FPM";
 "prefs.auto_restart_services_desc" = "Jika Anda mengecek ini, aplikasi akan secara otomatis restart PHP-FPM ketika Anda mengecek atau mematikan ekstensi. Sedikit lambat saat diaktifkan, tetapi hal ini akan mengaplikasikan perubahan ekstensi untuk semua situs yang sedang Anda layani, tidak perlu mengrestart PHP-FPM secara manual.";
-
 "prefs.dynamic_icon_title" = "Tampilkan icon dinamis dalam menu bar";
 "prefs.dynamic_icon_desc" = "Jika Anda menonaktifkan kotak centang ini, ikon truck akan selalu ada. Jika diaktifkan, ia akan menunjukkan nomor versi mayor dari PHP yang sedang terhubung.";
-
 "prefs.display_full_php_version" = "Tampilkan versi PHP penuh di mana saja";
 "prefs.display_full_php_version_desc" = "Tampilkan versi seluruhnya daripada versi mayor yang ditampilkan dalam menu bar dan dropdown menu. (Ini mungkin tidak menguntungkan pada layar kecil, jadi ini diaktifkan oleh default.)";
-
 "prefs.auto_composer_update_title" = "Automatically update global dependencies";
 "prefs.auto_composer_update_desc" = "Jika Anda mengecek ini, PHP Monitor akan secara otomatis meminta Composer untuk menjalankan `composer global update` saat Anda berganti antara versi PHP berbeda. Anda dapat melihat perubahan apa pun, atau apabila ini gagal.";
-
 "prefs.open_protocol_title" = "Allow third-party integrations";
 "prefs.open_protocol_desc" = "Jika Anda mengecek ini, hal ini akan memungkinkan interaksi dengan utility ketiga bekerja (mis. Alfred, Raycast). Jika diaktifkan, PHP Monitor tetap menerima perintah, tetapi tidak akan terlibat dalamnya.";
-
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "Jika Anda mengecek ini, PHP Monitor akan secara otomatis mencari versi yang lebih baru tersedia dan memberitahu Anda jika hal itu ada.";
-
 "prefs.php_doctor_suggestions_title" = "Always show suggestions";
 "prefs.php_doctor_suggestions_desc" = "Jika Anda menonaktifkan item ini, tidak ada saran dari PHP Doctor akan ditampilkan dalam menu PHP Monitor. Ingat bahwa PHP Doctor tidak akan muncul jika tidak ada rekomendasi.";
-
 "prefs.shortcut_set" = "Set global shortcut";
 "prefs.shortcut_listening" = "<menunggu teks>";
 "prefs.shortcut_clear" = "Hapus";
 "prefs.shortcut_desc" = "Jika kombinasi tombol panah Anda terpasang, Anda dapat mengeklik PHP Monitor di mana saja dengan menggunakan kombinasi teks yang Anda pilih. (Batalkan memilih opsi shortcut dengan menekan tombol ruang.)";
-
 "prefs.notify_about_version_change_desc" = "Menampilkan pemberitahuan ketika versi PHP aktif berubah.";
 "prefs.notify_about_version_change" = "Pemberitahuan tentang perubahan versi PHP";
-
 "prefs.notify_about_php_fpm_change_desc" = "Menampilkan pemberitahuan ketika proses PHP-FPM telah diulangi karena perubahan konfigurasi";
 "prefs.notify_about_php_fpm_change" = "Pemberitahuan tentang ulang PHP-FPM";
-
 "prefs.notify_about_services_desc" = "Menampilkan pemberitahuan ketika layanan Homebrew (terpasang dan konfigurasinya oleh Valet) telah diulangi atau dihentikan.";
 "prefs.notify_about_services" = "Pemberitahau tentang status jasa";
-
 "prefs.notify_about_presets_desc" = "Menampilkan pemberitahuan ketika preset berhasil diterapkan atau dikembalikan";
 "prefs.notify_about_presets" = "Pemberitahau tentang preset yang diterapkan";
-
 "prefs.notify_about_secure_status_desc" = "Menampilkan pemberitahuan saat domain telah dienkripsi atau tidak terenkripsi.";
 "prefs.notify_about_secure_status" = "Pemberitahau tentang status yang dienkripsi/tidak dienkripsi";
-
 "prefs.notify_about_composer_success_desc" = "Menampilkan pemberitahuan ketika konfigurasi Composer global berhasil diupdate.";
 "prefs.notify_about_composer_success" = "Pemberitahau tentang update composer global";
-
 "prefs.warn_about_non_standard_tld_desc" = "Jika Anda menggunakan TLD yang tidak standar, mungkin Anda tidak ingin mendapatkan notifikasi yang repetitif ini.";
 "prefs.warn_about_non_standard_tld" = "Peringatan tentang TLD yang tidak standar";
-
+"prefs.display_driver_desc" = "Jika dinonaktifkan, Anda tidak akan dapat melihat driver apa yang digunakan. Jika Valet aktif, nomor versi juga tidak lagi terlihat, dan Anda tidak akan diberi tahu tentang pembaruan Valet di menu.";
+"prefs.display_driver" = "Driver & Pembaruan";
 "prefs.display_global_version_switcher_desc" = "Jika dihapus, Anda tidak dapat mengubah versi PHP global melalui menu utama.";
 "prefs.display_global_version_switcher" = "PHP Switcher";
-
 "prefs.display_services_manager_desc" = "Jika dihapus, Anda tidak dapat melihat, memulai atau mematikan layanan individu. (Jika ada layanan yang dihapus, Anda tidak mudah untuk mengetahui bahwa ini adalah kasusnya.)";
 "prefs.display_services_manager" = "Manager Layanan";
-
 "prefs.display_valet_integration_desc" = "Jika dihapus, Anda tidak dapat melihat folder Utama Valet atau daftar domain.";
 "prefs.display_valet_integration" = "Integrasi Valet";
-
 "prefs.display_php_config_finder_desc" = "Jika dihapus, Anda tidak dapat dengan mudah mencari file konfigurasi PHP dan/atau menghasilkan dump phpinfo().";
 "prefs.display_php_config_finder" = "Pencarian Konfigurasi PHP";
-
 "prefs.display_composer_toolkit_desc" = "Jika dihapus, Anda tidak dapat memanggil Composer melalui menu utama. Perubahan Composer otomatis setelah berganti pilihan tetap tidak dipengaruhi oleh perubahan ini.";
 "prefs.display_composer_toolkit" = "Tool Komposer";
-
 "prefs.display_limits_widget_desc" = "Jika dihapus, Anda tidak dapat melihat widget batas (memori, POST, upload) dalam menu utama.";
 "prefs.display_limits_widget" = "Widget Batas";
-
 "prefs.display_extensions_desc" = "Jika dihapus, Anda tidak dapat dengan mudah mengeklik ekstensi menggunakan menu utama.";
 "prefs.display_extensions" = "Ekstensi";
-
 "prefs.display_presets_desc" = "Jika dihapus, Anda tidak dapat mengaplikasikan atau membalikkan preset konfigurasi PHP.";
 "prefs.display_presets" = "Preset";
-
 "prefs.display_misc_desc" = "Jika dihapus, Anda tidak dapat dengan mudah mengakses menu Pertolongan Pertama & Layanan.";
 "prefs.display_misc" = "Menu Pertolongan Pertama & Layanan";
-
-// Composer Update
+"notification.version_changed_title" = "PHP %@ sekarang aktif";
+"notification.version_changed_desc" = "PHP Monitor telah beralih ke PHP %@.";
+"notification.php_fpm_restarted" = "PHP-FPM secara otomatis dimulai ulang";
+"notification.php_fpm_restarted_desc" = "Anda mengubah status ekstensi, sehingga PHP-FPM secara otomatis dimulai ulang.";
+"notification.services_stopped" = "Layanan Valet dihentikan";
+"notification.services_stopped_desc" = "Semua layanan telah berhasil dihentikan.";
+"notification.services_restarted" = "Layanan Valet dimulai ulang";
+"notification.services_restarted_desc" = "Semua layanan telah berhasil dimulai ulang.";
+"notification.preset_applied_title" = "Preset diterapkan";
+"notification.preset_applied_desc" = "Preset '%@' telah berhasil diterapkan.";
+"notification.preset_reverted_title" = "Preset dikembalikan";
+"notification.preset_reverted_desc" = "Pengaturan preset terakhir yang Anda terapkan telah dibatalkan. Konfigurasi sebelumnya kini aktif.";
+"notification.phpmon_updated.title" = "PHP Monitor telah diperbarui!";
+"notification.phpmon_updated.desc" = "Anda sekarang menjalankan PHP Monitor v%@. Terima kasih telah tetap up-to-date!";
+"notification.phpmon_updated_dev.desc" = "PHP Monitor v%@ (build %@) sekarang terpasang dan aktif.";
 "alert.composer_missing.title" = "Composer tidak ditemukan!";
 "alert.composer_missing.subtitle" = "PHP Monitor tidak dapat menemukan Composer. Periksa jika Composer telah terpasang dan coba lagi.";
-"alert.composer_missing.desc" = "PHP Monitor mempelajari bahwa Composer berlokasi di salah satu dari:
-
-• `/usr/local/bin/composer`
-• `/opt/homebrew/bin/composer`
-
-Perhatikan apakah Anda memiliki Composer yang terpasang di lokasi ini, atau buat symlink jika Anda memiliki Composer yang terpasang di tempat lain.";
-
+"alert.composer_missing.desc" = "PHP Monitor mempelajari bahwa Composer berlokasi di salah satu dari:\n\n• `/usr/local/bin/composer`\n• `/opt/homebrew/bin/composer`\n\nPerhatikan apakah Anda memiliki Composer yang terpasang di lokasi ini, atau buat symlink jika Anda memiliki Composer yang terpasang di tempat lain.";
 "alert.composer_progress.title" = "Mengupdate dependencies global...";
 "alert.composer_progress.info" = "Anda bisa melihat kemajuan pada output terminal di bawah ini.";
-
 "alert.composer_failure.title" = "Terjadi masalah!";
-"alert.composer_failure.info" = "Dependensi Composer global Anda tidak dapat diperbarui.
-Anda bisa menemukan informasi lebih lanjut pada output terminal di bawah ini. Anda harus memperbaiki masalah ini sendiri, menggunakan terminal pribadi Anda (ini hanya menunjukkan output).";
-
+"alert.composer_failure.info" = "Dependensi Composer global Anda tidak dapat diperbarui.\nAnda bisa menemukan informasi lebih lanjut pada output terminal di bawah ini. Anda harus memperbaiki masalah ini sendiri, menggunakan terminal pribadi Anda (ini hanya menunjukkan output).";
 "alert.composer_success.title" = "Composer berhasil mengupdate!";
 "alert.composer_success.info" = "Dependensi Composer global Anda telah diperbarui dengan sukses.";
-
-// Composer Version
 "alert.composer_php_isolated.desc" = "Halaman ini telah diisolasi, yang berarti bahwa Valet memasarkan PHP %@ untuk halaman ini khusus. Versi PHP yang global saat ini adalah %@.";
 "alert.composer_php_requirement.title" = "'%@' membutuhkan PHP %@.";
 "alert.composer_php_requirement.unable_to_determine" = "Tidak dapat menentukan versi PHP yang diperlukan";
@@ -523,290 +378,184 @@ Anda bisa menemukan informasi lebih lanjut pada output terminal di bawah ini. An
 "alert.php_version_ideal" = "Versi PHP aktif saat ini adalah ideal untuk situs ini.";
 "alert.php_version_incorrect" = "Versi PHP aktif saat ini tidak sesuai dengan ketentuan yang telah disetujui untuk halaman ini.";
 "alert.php_suggestions" = "Mungkin ada versi PHP lainnya yang dekat dengan ketentuan.";
-
-// Suggest Fix My Valet
 "alert.php_switch_failed.title" = "Ganti ke PHP %@ tampaknya gagal.";
 "alert.php_switch_failed.info" = "PHP Monitor telah memperoleh peringatan bahwa PHP %@ tidak aktif setelah menyelesaikan prosedur pindah. Anda bisa mencoba menjalankan \"Fix My Valet\" dan ganti kembali setelah itu. Apakah Anda ingin mencobanya solusi ini?";
 "alert.php_switch_failed.desc" = "Pertama, Anda harus mencoba \"Fix My Valet\" jika belum mencobanya. Jika PHP Monitor tetap tidak mampu untuk menggantikan versi aktif PHP bahkan setelah itu, Anda mungkin perlu mengupdate Valet dan paket Homebrew di sistem Anda. Anda bisa melakukannya dengan menjalankan `brew update && brew upgrade` serta mengupgrade Valet dengan menjalankan `composer global update && valet install`.";
 "alert.php_switch_failed.confirm" = "Ya, jalankan \"Fix My Valet\"";
 "alert.php_switch_failed.cancel" = "Tidak Run";
-
-// PHP Formula Missing
 "alert.php_formula_missing.title" = "Oops! The `php` formula harus diinstal untuk Fix My Valet...";
 "alert.php_formula_missing.info" = "Terlihat bahwa Anda tidak memiliki `php` formula yang telah diinstall, yang mencegah PHP Monitor dari menjalankan Fix My Valet. Silakan install dengan menjalankan `brew install php`, restart PHP Monitor dan coba lagi.";
-
-// Fix My Valet Started
 "alert.fix_my_valet.title" = "Saya punya masalah? Fix My Valet siap dimulai!";
 "alert.fix_my_valet.info" = "Ini memakan waktu. Silahkan sabar.\n\nKetika ini selesai, semua jasa lainnya akan dihentikan dan PHP %@ akan terkaitkan. Anda dapat menggantung versi PHP yang diinginkan setelah operasi ini telah selesai.\n\n(Anda akan mendapatkan notifikasi lagi saat Fix My Valet selesai.)";
 "alert.fix_my_valet.ok" = "Terus";
 "alert.fix_my_valet.cancel" = "Dibatalkan";
-
-// Fix My Valet Done
 "alert.fix_my_valet_done.title" = "Fix My Valet telah selesai menjalankan operasinya.";
 "alert.fix_my_valet_done.subtitle" = "Semua jasa yang berpengaruh telah dihentikan dan diperjalankan kembali, dan versi terbaru dari PHP seharusnya saat ini aktif. Anda bisa mencoba menggantung ke versi PHP lainnya.";
 "alert.fix_my_valet_done.stay" = "Sisanya pada PHP %@";
 "alert.fix_my_valet_done.switch_back" = "Kembalikan ke PHP %@";
 "alert.fix_my_valet_done.desc" = "Jika mengunjungi situs masih tidak berfungsi, Anda mungkin perlu menjalankan `valet install` kembali, ini bisa mengatasi issue 502 (Bad Gateway).\n\nJika Valet rusak dan Anda tidak dapat menjalankan `valet install`, Anda mungkin perlu menjalankan `composer global update`. Silakan periksa FAQ di GitHub jika Anda memiliki masalah lanjutan.";
-
-// Restore Homebrew Permissions
 "alert.fix_homebrew_permissions.title" = "Tentang \"Restore Homebrew Permissions\"";
 "alert.fix_homebrew_permissions.subtitle" = "Fitur ini diciptakan agar Anda dapat menjalankan `brew upgrade` atau `brew cleanup` tanpa masalah izin.";
 "alert.fix_homebrew_permissions.desc" = "Ini membutuhkan kekuatan penuh, karena PHP Monitor akan mengatur kembali kepemilikan file dan folder yang sekarang dimiliki oleh pengguna `root`, karena jasa Valet berjalan sebagai user `root`.";
 "alert.fix_homebrew_permissions.ok" = "Restore Permissions";
 "alert.fix_homebrew_permissions.cancel" = "Cancel";
-
 "alert.fix_homebrew_permissions_done.title" = "Semua izin file dan folder untuk dependensi Valet telah dikembalikan.";
 "alert.fix_homebrew_permissions_done.subtitle" = "Karena itu, semua jasa dari Valet saat ini tidak berjalan. Anda dapat menginteraksi dengan Homebrew, tetapi situs Anda Valet sedang tidak tersedia karena semua jasa dihentikan.";
 "alert.fix_homebrew_permissions_done.desc" = "Jika Anda selesai dengan Homebrew (setelah menjalankan `brew upgrade`, misalnya) Anda harus restart PHP Monitor dan pilih \"Restart Valet Services\" jika Anda ingin Valet bekerja lagi. Selalu direkomendasikan untuk restart PHP Monitor saat Anda mengupgrade versi PHP menggunakan `brew upgrade`, atau hal-hal mungkin akan gagal.";
-
-// PHP FPM Broken
 "alert.php_fpm_broken.title" = "Konfigurasi PHP-FPM Anda tidak mengarah ke socket Valet!";
 "alert.php_fpm_broken.info" = "PHP Monitor telah menemukan masalah pada konfigurasi PHP-FPM Anda. Ini akan menyebabkan respons '502 Bad Gateway' jika Anda mengunjungi situs yang terhubung melalui Valet.";
 "alert.php_fpm_broken.description" = "Jika sudah beberapa waktu, Anda biasanya dapat memperbaiki hal ini dengan menjalankan `valet install`, yang memperbarui konfigurasi PHP-FPM Anda.\n\nJika Anda lihat pesan ini dan Anda sedang mencoba versi pre-release PHP, mungkin Valet tidak mendukung ini versi pre-release PHP ini.\n\nAnda mungkin perlu mengupdate instalasi Laravel Valet ke setidaknya v3.1.11, sesudah itu Anda harus menjalankan `valet install`. Informasi lebih lanjut disini: https://phpmon.app/prerelease-php";
-
-// PHP Monitor Cannot Start
 "alert.cannot_start.title" = "PHP Monitor tidak dapat dimulai akibat masalah konfigurasi sistem";
 "alert.cannot_start.subtitle" = "Masalah yang Anda diberi tahu sebelumnya tidak dapat membuat PHP Monitor berfungsi dengan benar.";
 "alert.cannot_start.description" = "Anda mungkin tidak harus menghentikan PHP Monitor dan mulai ulang. Jika masalah telah diatasi (atau Anda tidak ingat apa yang isinya) Anda bisa menekan Retri, yang akan memungkinkan PHP Monitor mencoba kembali periksa awal.";
 "alert.cannot_start.close" = "Selesai";
 "alert.cannot_start.retry" = "Coba Ulang";
-
-// PHP alias issue
 "alert.php_alias_conflict.title" = "Konflik alias `php` dalam formula Homebrew terdeteksi";
-"alert.php_alias_conflict.info" = "PHP Monitor telah mendeteksi konflik alias `php` di pengaturan Homebrew Anda, yang kedua di antaranya telah diidentifikasi sebagai terpasang.\n\nIni akan mungkin menyebabkan tautan linking yang gagal ketika Anda mengganti versi PHP, dan akan memperparah fungsi PHP Monitor.";
 "alert.php_alias_conflict.info" = "Konflik alias `php` dalam formula Homebrew terdeteksi";
-"alert.php_alias_conflict.info" = "Konflik alias `php` dalam formula Homebrew terdeteksi";
-
 "alert.min_valet_version.title" = "Versi Valet yang diinstal tidak memenuhi syarat minimum. PHP Monitor mungkin tidak berfungsi sebagaimana diharapkan!";
-"alert.min_valet_version.info" = "Anda sedang menggunakan Valet %@.
-
-Untuk dukungan terbaik terhadap versi terakhir dari PHP dan fungsi berpindah PHP yang benar, disarankan untuk memperbarui ke versi %@, yang merupakan syarat paling rendah dari PHP Monitor ini.
-
-Anda dapat melakukan ini dengan menjalankan `composer global update` di terminal Anda. Sesudah itu, jalankan lagi `valet install`. Untuk hasil terbaik, restart PHP Monitor sesudah itu. Hingga hal ini diselesaikan, PHP Monitor mungkin tidak berfungsi sebagaimana yang direncanakan.";
-
-// Preset text description
+"alert.min_valet_version.info" = "Anda sedang menggunakan Valet %@.\n\nUntuk dukungan terbaik terhadap versi terakhir dari PHP dan fungsi berpindah PHP yang benar, disarankan untuk memperbarui ke versi %@, yang merupakan syarat paling rendah dari PHP Monitor ini.\n\nAnda dapat melakukan ini dengan menjalankan `composer global update` di terminal Anda. Sesudah itu, jalankan lagi `valet install`. Untuk hasil terbaik, restart PHP Monitor sesudah itu. Hingga hal ini diselesaikan, PHP Monitor mungkin tidak berfungsi sebagaimana yang direncanakan.";
 "alert.preset_description.switcher_version" = "Pindahkan ke PHP %@.\n\n";
 "alert.preset_description.applying_extensions" = "Mengaplikasikan ekstensi berikut:\n";
 "alert.preset_description.applying_config" = "Mengaplikasikan nilai konfigurasi berikut:\n";
 "alert.preset_description.enabled" = "dibuka";
 "alert.preset_description.disabled" = "ditutup";
 "alert.preset_description.empty" = "(kosong)";
-
-// PHP version unavailable
 "alert.php_switch_unavailable.title" = "Versi PHP yang tidak tersedia";
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor tidak dapat pindah ke PHP %@, karena mungkin tidak terpasang atau tersedia. Menerapkan preset ini telah dibatalkan.";
 "alert.php_switch_unavailable.info" = "Pastikan PHP %@ terpasang dan Anda dapat menggantungnya dalam dropdown. Saat ini versi yang didukung adalah PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
-
-// Service error
 "alert.service_error.title" = "Service '%@' mengadukan masalah!";
 "alert.service_error.subtitle.error_log" = "Ini berarti service '%@' tidak sedang berjalan. Ini mungkin akan memperparah kerja Valet. File log yang terkait ini mungkin Anda ingin dilihat, namun";
 "alert.service_error.subtitle.no_error_log" = "Ini berarti service '%@' tidak sedang berjalan. Ini mungkin akan memperparah kerja Valet. Tidak ada file log terkait untuk ini.";
 "alert.service_error.extra" = "Anda juga boleh mengikuti langkah penelitian biasa. Untuk mendapatkan lebih banyak informasi, tekan tombol '?' dalam bagian layanan dalam PHP Monitor.";
-
 "alert.service_error.button.show_log" = "Lihat Log Error";
 "alert.service_error.button.close" = "Selesai";
-
-// Composer issues
 "alert.global_composer_platform_issues.title" = "Composer menemukan masalah di platform Anda";
 "alert.global_composer_platform_issues.subtitle" = "Versi PHP yang Anda pilih adalah terlalu lama untuk dependensi global Composer Anda yang terpasang. Ini akan memerlukan perbarui.";
 "alert.global_composer_platform_issues.desc" = "Cara termudah untuk menghindari masalah ini di masa depan adalah dengan pindah ke versi PHP tertua yang Anda miliki dan menjalankan `composer global update` lagi. \n\nAlternatifnya, Anda bisa memilih 'Automatically update global dependencies' dalam Preferences untuk mencegah masalah seperti ini juga.\n\nJika Anda terus melihat pesan ini setelah mencoba perbarui dependensi global tersebut, mungkin Anda ingin melihat konfigurasi composer global Anda yang terletak di `~/.composer/composer.json`.";
 "alert.global_composer_platform_issues.buttons.update" = "Update Dependensi Global";
 "alert.global_composer_platform_issues.buttons.quit" = "Selesai PHP Monitor";
-
-// Revert
 "alert.revert_description.title" = "Revert Konfigurasi?";
 "alert.revert_description.subtitle" = "PHP Monitor dapat mengembalikan konfigurasi yang sebelumnya aktif. Ini adalah apa yang akan diaplikasikan: \n\n%@";
 "alert.revert_description.ok" = "Revert";
 "alert.revert_description.cancel" = "Batal";
-
-// STARTUP
-
-// 0. Architecture mismatch
-
 "alert.homebrew_missing.title" = "PHP Monitor tidak dapat dimulai!";
 "alert.homebrew_missing.subtitle" = "Binary Homebrew bekerja yang tidak ditemukan dapat dilihat di tempat yang biasa. Silakan mulai aplikasi setelah masalah ini diselesaikan.";
 "alert.homebrew_missing.info" = "Anda sedang menjalankan PHP Monitor dengan arsitektur berikut: %@. Sebagai hasilnya, sebuah binary Homebrew bekerja diperlukan di tempat-tempat yang umum, yaitu `%@`, tetapi tidak ditemukan. Ini adalah sebabnya mengapa PHP Monitor tidak dapat berfungsi.\n\nJika Anda belum menginstal Homebrew, silakan melakukan hal itu. Jika Anda menggunakan prosesor Apple Silicon, pastikan bahwa Homebrew dan PHP Monitor yang Anda gunakan memiliki arsitektur yang sama, dengan memungkinkan atau menonaktifkan Rosetta sesuai kebutuhan.";
-
 "alert.homebrew_missing.quit" = "Keluar";
-
-// PHP binary not found
 "startup.errors.php_binary.title" = "PHP tidak terpasang dengan benar";
 "startup.errors.php_binary.subtitle" = "Anda harus menginstal PHP via Homebrew. Aplikasi ini tidak akan berfungsi dengan benar sampai Anda menyelesaikan masalah ini.";
 "startup.errors.php_binary.desc" = "Umumnya, menjalankan `brew link php` di Terminal Anda akan memecahkan masalah ini.\n\nUntuk meng diagnosis apa yang salah, Anda dapat mencoba menjalankan `which php` dalam Terminal, ia harus memberikan `%@.`.";
-
-// PHP not found in /usr/local/opt or /opt/homebrew/opt
+"startup.errors.php_brew_info_invalid.title" = "Homebrew mengembalikan keluaran tidak valid untuk `brew info php --json` yang memerlukan JSON yang sah sebagai output.";
+"startup.errors.php_brew_info_invalid.subtitle" = "Ini akan mencegah PHP Monitor dimulai dengan benar. Kemungkinan Homebrew saat ini dalam keadaan rusak atau ada logging tambahan yang masuk ke output perintah ini. Ini adalah masalah yang sudah diketahui.";
+"startup.errors.php_brew_info_invalid.desc" = "Coba lagi mungkin dapat memperbaiki masalah, tetapi Anda bisa menjalankan perintah sendiri jika masalah tetap ada dan memverifikasi apakah itu JSON yang valid. Tekan OK, lalu pilih Retry untuk mencoba lagi.";
 "startup.errors.php_opt.title" = "PHP tidak terpasang dengan benar";
 "startup.errors.php_opt.subtitle" = "Alias PHP tidak ditemukan di `%@`. Aplikasi ini tidak akan berfungsi dengan benar sampai Anda menyelesaikan masalah ini.";
 "startup.errors.php_opt.desc" = "Jika Anda sudah memiliki formula `php` yang terpasang, Anda mungkin harus menjalankan `brew install php` agar PHP Monitor dapat mendeteksi pengaturan instalasi ini.";
-
-// PHP binary is broken
 "startup.errors.dyld_library.title" = "PHP terpasang namun tampaknya patah";
 "startup.errors.dyld_library.subtitle" = "Kemungkinan untuk menjalankan perintah dengan baik oleh PHP Monitor sedang gagal. Ini adalah tanda dari instalasi PHP yang patah.";
 "startup.errors.dyld_library.desc" = "Jika Anda ingin memperbaiki masalah ini, silakan jalankan `brew reinstall php && brew link php` dalam Terminal Anda.";
-
-// Valet is not installed
 "startup.errors.valet_executable.title" = "Laravel Valet tidak terpasang dengan benar";
 "startup.errors.valet_executable.subtitle" = "Anda harus menginstal Valet menggunakan Composer. Aplikasi ini tidak akan berfungsi dengan benar sampai Anda menyelesaikan masalah ini.";
 "startup.errors.valet_executable.desc" = "Jika Anda belum menginstall Laravel Valet, silakan melakukan hal itu terlebih dahulu. Jika Anda sudah memiliki instalasinya tapi melihat pesan ini, maka coba jalankan `which valet` di Terminal, ia harus memberikan: `%@.`.";
-
-// Valet configuration file missing or broken
 "startup.errors.valet_json_invalid.title" = "File konfigurasi Laravel Valet tidak benar atau hilang";
 "startup.errors.valet_json_invalid.subtitle" = "PHP Monitor membutuhkan cara untuk membaca file konfigurasi. Terdapat indikasi bahwa file ini cacat atau hilang. Silakan periksa apakah ia ada dan dikelola dengan baik.";
 "startup.errors.valet_json_invalid.desc" = "File tersebut dapat di temukan di `~/.config/valet/config.json`. Jika Laravel Valet tidak mampu membaca file konfigurasi, menjalankan setiap `valet` komandan akan biasanya otomatis memperbaiki file JSON ini. Coba jalankan `valet --version` untuk memperbaiki file ini.";
-
-// Valet version not readable
 "startup.errors.valet_version_unknown.title" = "Versi Laravel Valet tidak dapat dibaca";
 "startup.errors.valet_version_unknown.subtitle" = "Penginterpretasi output dari `valet --version` gagal. Pastikan instalasi Anda valet berfungsi dan terupdate.";
 "startup.errors.valet_version_unknown.desc" = "Coba jalankan `valet --version` di terminal untuk mengetahui apa yang sedang terjadi.";
-
 "startup.errors.valet_not_installed.title" = "Direktori konfigurasi Valet Anda hilang";
 "startup.errors.valet_not_installed.subtitle" = "Direktori yang diperlukan `~/.config/valet` hilang. Ini biasanya berarti Anda lupa menjalankan `valet install`.";
-"startup.errors.valet_not_installed.desc" = "Asumsi Anda sudah menginstal Valet menggunakan Composer, silakan jalankan `valet install` untuk menyelesaikan pengaturan Laravel Valet.
-
-Jika Anda melihat pesan ini tapi terpikirkan mengapa folder ini hilang, maka mungkin Anda ingin memeriksa alasannya, karena folder ini tidak harus menghilang dan berarti instalasi Valet Anda patah.";
-
-// Valet version too new or old
+"startup.errors.valet_not_installed.desc" = "Asumsi Anda sudah menginstal Valet menggunakan Composer, silakan jalankan `valet install` untuk menyelesaikan pengaturan Laravel Valet.\n\nJika Anda melihat pesan ini tapi terpikirkan mengapa folder ini hilang, maka mungkin Anda ingin memeriksa alasannya, karena folder ini tidak harus menghilang dan berarti instalasi Valet Anda patah.";
 "startup.errors.valet_version_not_supported.title" = "Versi Valet yang tidak didukung";
 "startup.errors.valet_version_not_supported.subtitle" = "Anda sedang menggunakan versi Valet yang saat ini tidak didukung. PHP Monitor saat ini bisa digunakan dengan Valet v2, v3 dan v4. Dalam rangka mencegah terjadinya masalah pada sistem Anda, PHP Monitor tidak dapat dijalankan.";
 "startup.errors.valet_version_not_supported.desc" = "Untuk menghindari masalah yang timbul akibat penggunaan versi Valet yang tidak kompatibel dengan PHP Monitor, silakan instal ulang versi Valet yang kompatibel dengan PHP Monitor (silakan lihat catatan rilis terbaru untuk lebih jelasnya).";
-
-// Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew belum ditambahkan ke sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "Anda harus menjalankan `valet trust` menggunakan perintah `sudo` untuk membuat Valet dapat dijalankan dan dihentikan tanpa harus menggunakan `sudo` setiap kali. PHP Monitor tidak akan berfungsi dengan baik hingga masalah ini diselesaikan.";
 "startup.errors.sudoers_brew.desc" = "Jika Anda terus melihat pesan kesalahan ini, mungkin terdapat masalah izin di mana PHP Monitor tidak dapat validasi file. Masalah ini umumnya dapat diatasi dengan menjalankan `sudo chmod +r /private/etc/sudoers.d/brew`";
-
-// Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Brew belum ditambahkan ke sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "Anda harus menjalankan `valet trust` menggunakan perintah `sudo` untuk membuat Valet dapat dijalankan dan dihentikan tanpa harus menggunakan `sudo` setiap kali. Jika Anda telah menambahkan Brew ke sudoers.d sebelumnya, silakan jalankannya lagi: `valet trust`.";
 "startup.errors.sudoers_valet.desc" = "Jika Anda terus melihat pesan kesalahan ini, mungkin terdapat masalah izin di mana PHP Monitor tidak dapat validasi file. Masalah ini umumnya dapat diatasi dengan menjalankan: `sudo chmod +r /private/etc/sudoers.d/valet`";
-
-// Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor dan Valet tidak bisa bekerja secara normal: Composer melaporkan masalah tentang platform Anda";
 "startup.errors.global_composer_platform_issues.subtitle" = "Silakan ikuti langkah-langkah yang direkomendasikan untuk mencegah terjadinya masalah di masa depan:\n\n1. Jalankan `composer global update`.\n2. Tutup dan jalankan kembali PHP Monitor (PHP Monitor akan bekerja lagi).\n3. Pergilah ke versi PHP tertua yang Anda miliki.\n4. Jalankan `composer global update` sekali lagi.";
 "startup.errors.global_composer_platform_issues.desc" = "Anda bisa memilih opsi 'Automatically update global dependencies' pada Preferences. Ini akan memperbarui ketergantungan Composer global saat Anda mengubah versi PHP, jadi hal ini mungkin tidak cocok jika Anda tidak selalu memiliki akses ke internet.\n\nUntuk mengetahui apa yang salah, cobalah menjalankan `valet --version`. Saat ini Valet bukanlah fitur yang bisa digunakan dengan ketergantungan Composer yang terpasang. Umumnya masalah ini disebabkan oleh perbedaan versi: yaitu, ketergantungan instalasi untuk versi PHP yang lebih baru daripada versi PHP yang saat ini aktif.";
-
-// Cannot retrieve services
 "startup.errors.services_json_error.title" = "Gagal memeriksa status jasa";
 "startup.errors.services_json_error.subtitle" = "Biasanya, PHP Monitor mengirimkan perintah berikut untuk menguji apakah layanan dapat diperiksa: `sudo brew services info nginx --json`.\n\nPHP Monitor tidak dapat memahami balasan ini.";
 "startup.errors.services_json_error.desc" = "Ini bisa terjadi jika instalasi Homebrew Anda tidak terupdate, sehingga Homebrew tidak akan mengembalikan JSON lagi. Masalah ini umumnya dapat diatasi dengan menjalankan `brew update` atau `brew tap homebrew/services`. Anda juga bisa mencoba menjalankan `sudo brew services info nginx --json` pada terminal yang dimainkan pilihannya.";
-
-// Issue with `which` alias
 "startup.errors.which_alias_issue.title" = "Masalah yang diidentifikasi";
 "startup.errors.which_alias_issue.subtitle" = "Terlihat bahwa ada file yang terdapat dalam `/usr/local/bin/which`. Ini biasanya diset oleh NodeJS, namun `node` tidak terdaftar dalam PATH di `/usr/local/bin`. Agar PHP Monitor dapat dijalankan dengan baik, Anda perlu membuat tautan (symlink) `node` ke folder `/usr/local/bin`.";
 "startup.errors.which_alias_issue.desc" = "Untuk lebih jelasnya, silakan baca: https://github.com/nicoverbruggen/phpmon/issues/174";
-
-// Laravel Herd conflicts
 "startup.errors.herd_running.title" = "Laravel Herd sedang berjalan";
 "startup.errors.herd_running.subtitle" = "Pertemuan terlihat bahwa Laravel Herd saat ini telah dijalankan. Konfigurasi Valet yang sudah dibuat oleh Herd mungkin bertabrakan dengan pengaturan Valet Anda secara normal, jadi sebaiknya tutup Herd sebelum melanjutkan. (Anda boleh menggunakan Herd dan Valet secara bersamaan tetapi Anda harus tidak mengjalankannya pada waktu yang sama.)";
 "startup.errors.herd_running.desc" = "Pada gilirannya, Anda mungkin akan menemukan bahwa `php` alias dari Herd yang terdaftar dalam $PATH mungkin akan mencegah `php` alias dari PHP Monitor bekerja, jadi ingatilah. Anda bisa mencari tautan `~/.zshrc` dan lihat apa yang telah ditambahkan ke $PATH oleh Herd.";
-
-// Warning about a different PHP version linked than last time
 "startup.version_mismatch.title" = "Versi PHP yang aktif berbeda";
 "startup.version_mismatch.subtitle" = "Sejak saat PHP Monitor terakhir dijalankan, versi PHP yang terdaftar telah berganti ke PHP %@. Apakah Anda ingin kembali ke PHP %@ atau tetap menggunakan versi yang sedang digunakan sekarang?";
 "startup.version_mismatch.desc" = "PHP Monitor mengingat versi PHP yang saat ini terdaftar sebagai versi yang terpasang secara global. Versi global mungkin telah diubah karena beberapa program lainnya atau Homebrew telah menautkan versi formula setelah pembaruan.";
 "startup.version_mismatch.button_switch_back" = "Kembalikan ke PHP %@";
-"startup.version_mismatch.button_stay" = "Tetap menggunakan PHP %@",
-
-// Warning about unsupported PHP versions
+"startup.version_mismatch.button_stay" = "Tetap menggunakan PHP %@";
 "startup.unsupported_versions_explanation.title" = "Versi PHP yang tidak didukung terdeteksi!";
-"startup.unsupported_versions_explanation.subtitle" = "Versi PHP berikut ini telah terpasang pada sistem Anda tetapi tidak didukung oleh versi Valet saat ini.
-%@
-
-Valet mungkin akan patah jika Anda menggabungkan antara beberapa versi PHP yang tidak didukung.";
+"startup.unsupported_versions_explanation.subtitle" = "Versi PHP berikut ini telah terpasang pada sistem Anda tetapi tidak didukung oleh versi Valet saat ini.\n%@\n\nValet mungkin akan patah jika Anda menggabungkan antara beberapa versi PHP yang tidak didukung.";
 "startup.unsupported_versions_explanation.desc" = "Jika Anda membutuhkan dukungan untuk versi PHP yang lebih lama, Anda mungkin perlu turunkan ke sebuah versi Valet yang lebih tua. Jika tidak, mungkin merupakan ide yang baik untuk menghapus versi PHP yang belum digunakan yang tidak di gunakan. Ini juga bisa jadi hal yang tidak tepat dari versi Valet ini. Pesan ini hanya akan hilang setelah Anda restart PHP Monitor.";
-
-// Sponsor encouragement
 "startup.sponsor_encouragement.title" = "Jika PHP Monitor telah berguna bagi Anda atau perusahaan Anda, silakan beri tips";
 "startup.sponsor_encouragement.subtitle" = "Agar 100% transparan: Saya rencana untuk tetap membuka sumber code dari PHP Monitor dan gratis. Bantuan Anda memudahkan untuk mengambil keputusan ini.\n\n(Anda hanya akan melihat prompt ini sekali.)";
 "startup.sponsor_encouragement.desc" = "Jika Anda sudah menyumbang sebelumnya, maka ini adalah pesan terima kasih kepada Anda. Saya mengapresiasi dukungan Anda.";
-
 "startup.sponsor_encouragement.accept" = "Berikan Bantuan";
 "startup.sponsor_encouragement.learn_more" = "Mau Tahu Lebih Lanjut";
-"startup.sponsor_encouragement.skip" = "Tidak Terlalu"
-
-// ERROR MESSAGES
-
+"startup.sponsor_encouragement.skip" = "Tidak Terlalu";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions gagal dijalankan.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "Kebenaran dari skrip yang diperkenalkan untuk mengatur izin kembali adalah nil, yang biasanya berarti Anda tidak memberikan izin administratif kepada PHP Monitor.\n\nJika Anda menekan Batal pada tanda permintaan verifikasi, ini biasa. Jika Anda benar-benar melakukan pengautentikan dan Anda masih melihat pesan ini, mungkin ada masalah.";
 "alert.key_service_not_running.title" = "Karena masalah dengan layanan Homebrew yang diperlukan, Valet saat ini tidak bekerja dengan benar";
-"alert.key_service_not_running.subtitle" = "Untuk Valet untuk berfungsi dengan baik, setidaknya tiga layanan kunci harus dapat berjalan dengan benar.
-
-PHP Monitor melaporkan bahwa hal ini bukanlah kasus. Anda bisa mencoba menekan tombol dengan huruf 'X' di menu di bawah layanan yang terjejas untuk (kembali) memulai layanan yang sedang tidak aktif.";
-"alert.key_service_not_running.desc" = "Jika menekan tombol di bawah layanan tidak bekerja (yaitu, spinner muncul tapi tetap menjadi 'X' setelah beberapa waktu), Anda mungkin perlu menggunakan First Aid > Fix My Valet. Anda bisa melakukannya dengan menggunakan menu yang ada atau gunakan `valet stop` dan `valet start` di terminal, yang kemungkinan juga akan memperbaiki masalah (sebagai alternatif untuk First Aid > Fix My Valet).
-
-Untuk debugging lebih lanjut, Anda mungkin ingin memeriksa halaman issue tracker GitHub, dimana mungkin telah ada masalah serupa. Sebagai pengembang, saya mencoba pastikan setiap pertanyaan diterjawab :)";
-
+"alert.key_service_not_running.subtitle" = "Untuk Valet untuk berfungsi dengan baik, setidaknya tiga layanan kunci harus dapat berjalan dengan benar.\n\nPHP Monitor melaporkan bahwa hal ini bukanlah kasus. Anda bisa mencoba menekan tombol dengan huruf 'X' di menu di bawah layanan yang terjejas untuk (kembali) memulai layanan yang sedang tidak aktif.";
+"alert.key_service_not_running.desc" = "Jika menekan tombol di bawah layanan tidak bekerja (yaitu, spinner muncul tapi tetap menjadi 'X' setelah beberapa waktu), Anda mungkin perlu menggunakan First Aid > Fix My Valet. Anda bisa melakukannya dengan menggunakan menu yang ada atau gunakan `valet stop` dan `valet start` di terminal, yang kemungkinan juga akan memperbaiki masalah (sebagai alternatif untuk First Aid > Fix My Valet).\n\nUntuk debugging lebih lanjut, Anda mungkin ingin memeriksa halaman issue tracker GitHub, dimana mungkin telah ada masalah serupa. Sebagai pengembang, saya mencoba pastikan setiap pertanyaan diterjawab :)";
 "alert.key_service_has_error.title" = "Karena masalah dengan layanan Homebrew yang diperlukan, Valet saat ini tidak bekerja dengan benar";
-"alert.key_service_has_error.subtitle" = "Untuk Valet untuk berfungsi dengan baik, setidaknya tiga layanan kunci harus dapat berjalan dengan benar.
-
-PHP Monitor melaporkan bahwa hal ini bukanlah kasus. Terdapat kesalahan pada layanan yang terjejas, maka saya sarankan menekan 'E'.";
-"alert.key_service_has_error.desc" = "Saya tidak yakin apakah jika sebuah layanan memberitahukan ada kesalahan, masalah seringkali disebabkan oleh konfigurasi state yang tidak valid, yang mungkin sulit di debugging.
-
-TIPS PERBAIKAN KOMMON
-
-• Coba restart layanan dan periksa log file (jika ada) terlebih dahulu. Anda bisa menggunakan PHP Monitor untuk melakukan ini dengan menekan tombol 'E'.";
-
-// CHECK FOR UPDATES
-
+"alert.key_service_has_error.subtitle" = "Untuk Valet untuk berfungsi dengan baik, setidaknya tiga layanan kunci harus dapat berjalan dengan benar.\n\nPHP Monitor melaporkan bahwa hal ini bukanlah kasus. Terdapat kesalahan pada layanan yang terjejas, maka saya sarankan menekan 'E'.";
+"alert.key_service_has_error.desc" = "Saya tidak yakin apakah jika sebuah layanan memberitahukan ada kesalahan, masalah seringkali disebabkan oleh konfigurasi state yang tidak valid, yang mungkin sulit di debugging.\n\nTIPS PERBAIKAN KOMMON\n\n• Coba restart layanan dan periksa log file (jika ada) terlebih dahulu. Anda bisa menggunakan PHP Monitor untuk melakukan ini dengan menekan tombol 'E'.";
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ saat ini tersedia!";
 "updater.alerts.newer_version_available.subtitle" = "Menggunakan versi terbaru PHP Monitor sangat di-rekomendasikan, karena versi baru sering kali menyelesaikan masalah dan memperbaiki pembaruan untuk mendukung versi terbaru dari Valet dan PHP.";
 "updater.installation_source.brew" = "Metode yang direkomendasikan untuk mengunduh perbarui PHP Monitor adalah dengan menekan 'Install Update'.\n\nSejak Anda menggunakan Homebrew untuk instal aplikasi, Anda juga bisa mengupgrade melalui terminal dengan menjalankan `%@', tapi ini tidak di-rekomendasikan.\n\n(Silakan catat bahwa mengimpor melalui updater built-in ini akan menghapus PHP Monitor dari direktori Caskroom Homebrew, untuk mencegah unduhan duplicate yang disebabkan dan menyebabkan masalah potensial nanti.)";
 "updater.installation_source.direct" = "Metode yang direkomendasikan untuk mengunduh perbarui PHP Monitor adalah dengan menekan 'Install Update'.";
 "updater.alerts.buttons.release_notes" = "Lihat Catatan Rilis";
-
 "updater.alerts.is_latest_version.title" = "Versi terbaru dari PHP Monitor telah diinstal!";
 "updater.alerts.is_latest_version.subtitle" = "Versi yang sedang dipakai (v%@) sudah terupdate.\nTidak ada versi yang lebih baru tersedia.";
-
 "updater.alerts.cannot_check_for_update.title" = "PHP Monitor tidak dapat mengetahui apakah ada versi yang lebih baru.";
 "updater.alerts.cannot_check_for_update.subtitle" = "Mungkin Anda tidak terhubung ke internet, sedang menutup arus atau GitHub tidak memungkinkan untuk memeriksa perbaruan. Jika Anda tetap melihat pesan ini, Anda mungkin ingin memeriksanya manual.";
 "updater.alerts.cannot_check_for_update.description" = "Versi yang sedang dipakai adalah: %@. Anda bisa pergi ke daftar versi terbaru (pada GitHub) dengan menekan tombol di sebelah kanan.";
 "updater.alerts.buttons.releases_on_github" = "Lihat Rilis";
 "updater.alerts.buttons.install" = "Unduh Perbarui";
 "updater.alerts.buttons.dismiss" = "Tutup";
-
-// WARNINGS ABOUT NON-DEFAULT TLD
-
 "alert.warnings.tld_issue.title" = "Anda tidak menggunakan `.test` sebagai TLD untuk Valet.";
 "alert.warnings.tld_issue.subtitle" = "Memakai TLD yang bukan default mungkin tidak berfungsi dengan baik dan belum diijinkan secara resmi.";
 "alert.warnings.tld_issue.description" = "PHP Monitor tetap bisa berjalan, tapi mungkin akan ada masalah: aplikasi mungkin tidak tepat menunjukkan domain mana saja yang telah dilindungi. Untuk hasil optimal, pergi ke konfigurasi Valet Anda (config.json di direktori Valet) dan ganti kembali TLD menjadi `test`.";
-
 "alert.do_not_tell_again" = "Tidak Kembali lagi";
-
-// WARNINGS
-
 "warnings.limits_error.title" = "PHP Monitor tidak dapat mengumpulkan batasan.";
 "warnings.limits_error.steps" = "Coba jalankan 'php -v' di terminal Anda.";
-
+"warnings.being_fixed.description" = "Monitor PHP sedang menangani masalah ini. Mohon tunggu sebentar.";
 "warnings.title" = "Dokter PHP";
 "warnings.description" = "**Dokter PHP** akan merekomendasikan perbaikan untuk konfigurasi sistem yang aktif Anda.";
 "warnings.disclaimer" = "Anda mungkin memilih untuk menutup semua saran dari menu PHP Monitor di Preferences, tetapi direkomendasikan Anda menghadapi semua item tindakan yang dapat diambil.";
 "warnings.refresh.button" = "Scan Lagi";
 "warnings.refresh.button.description" = "Tekan tombol ini setelah Anda selesai memperbaiki masalah. Ini akan menyebabkan PHP Monitor untuk mengulang evaluasinya terhadap lingkungan Anda. Jika benar-benar diperbaiki, rekomendasi harus hilang.";
-
 "warnings.helper_permissions.title" = "Pompa bantuan PHP Monitor saat ini tidak tersedia.";
 "warnings.helper_permissions.description" = "PHP Monitor datang dengan berbagai skrip bantu. Menggunakan skrip ini memungkinkan Anda untuk mengeksekusi versi spesifik dari PHP tanpa mengganti versi yang terhubung.";
 "warnings.helper_permissions.unavailable" = "Namun, bantuan ini mungkin *tidak tersedia* karena PHP Monitor tidak bisa menciptakan atau mengupdate tautan yang diperlukan.";
 "warnings.helper_permissions.symlink" = "Jika Anda tidak ingin membuat `/usr/local/bin` sebagai tulisan biasa, Anda bisa menambahkan direktori bantuan helper PHP Monitor ke variabel `PATH`. (Klik 'Lihat lebih lanjut' untuk mengenali cara untuk memperbaiki masalah.)";
-
 "warnings.arm_compatibility.title" = "Anda sedang menggunakan PHP Monitor menggunakan Rosetta pada Apple Silicon, yang berarti lingkungan PHP Anda juga melakukannya melalui Rosetta.";
 "warnings.arm_compatibility.description" = "Anda tampaknya sedang menjalankan versi kompatible ARM dari macOS, tetapi Anda saat ini menjalankannya menggunakan Rosetta. Ini akan bekerja dengan benar, tetapi direkomendasikan untuk menggunakannya versi yang sesuai dengan sistem yang asli Homebrew.";
-
 "warnings.files_missing.title" = "Instalasi PHP Anda sedang missing key file konfigurasi.";
-"warnings.files_missing.description" = "Berikut ini beberapa config file yang harus ada setelah menginstal PHP:
-
-• %@
-
-Ketika file seperti ini hilang, Anda mungkin ingin menyingkirkan versi PHP yang terhubung: hal tersebut mungkin akan memperbaiki masalah. Jika ini tidak mengatasi masalah, direkomendasikan untuk reinstall versi PHP spesifik via Homebrew kembali, yang seharusnya akan memulihkan config file yang hilang. File konfigurasi yang hilang mungkin menjadi alasan mengapa Anda mendapatkan '502 Bad Gateway' errors, bahkan setelah menggunakan First Aid > Fix My Valet (jika Anda sedang menggunakan Valet).";
+"warnings.files_missing.description" = "Berikut ini beberapa config file yang harus ada setelah menginstal PHP:\n\n• %@\n\nKetika file seperti ini hilang, Anda mungkin ingin menyingkirkan versi PHP yang terhubung: hal tersebut mungkin akan memperbaiki masalah. Jika ini tidak mengatasi masalah, direkomendasikan untuk reinstall versi PHP spesifik via Homebrew kembali, yang seharusnya akan memulihkan config file yang hilang. File konfigurasi yang hilang mungkin menjadi alasan mengapa Anda mendapatkan '502 Bad Gateway' errors, bahkan setelah menggunakan First Aid > Fix My Valet (jika Anda sedang menggunakan Valet).";
+"warnings.xdebug_conf_missing.title" = "Konfigurasi Xdebug tidak lengkap";
+"warnings.xdebug_conf_missing.description" = "Anda memiliki Xdebug terpasang, tetapi tidak ada mode yang ditentukan. Apakah Anda ingin PHP Monitor memperbarui konfigurasi Anda? Anda juga dapat memperbaikinya secara manual.";
+"warnings.php_tap_missing.title" = "`shivammathur/php` tap tidak ditemukan";
+"warnings.php_tap_missing.description" = "Tap Homebrew ini diperlukan untuk menginstal versi PHP lebih lama melalui Manajer Versi PHP aplikasi ini.";
+"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap tidak ditemukan";
+"warnings.extensions_tap_missing.description" = "Tap Homebrew ini diperlukan untuk menginstal ekstensi melalui Manajer Ekstensi PHP aplikasi ini.";
+"warnings.certificates_expired.title" = "Satu atau lebih sertifikat yang digunakan untuk melayani domain telah kedaluwarsa.";
+"warnings.certificates_expired.description" = "Sertifikat yang kedaluwarsa akan menghentikan lalu lintas HTTPS agar berfungsi dengan benar. Anda dapat meminta PHP Monitor secara otomatis mencoba menyelesaikannya untuk Anda dengan membuka daftar Domain.";
 "warnings.none" = "Tidak ada saran yang tersedia untuk Anda saat ini. Anda berada dalam kondisi baik!";
-
-// ONBOARDING
-
 "onboarding.title" = "Selamat Datang";
 "onboarding.welcome" = "Selamat datang ke PHP Monitor!";
 "onboarding.explore" = "Setelah ini, Anda telah memiliki akses penuh ke berbagai fungsi dari PHP Monitor. Anda dapat belajar lebih lanjut tentang beberapa fitur yang ditawarkan oleh PHP Monitor di halaman ini.";
-"onboarding.explore.lite" = "Anda sekarang memiliki akses ke fitur terpenting dari PHP Monitor.
-Perhatian: Beberapa fitur (dipaparkan dengan abu-abu di bawah) saat ini tidak tersedia karena Laravel Valet belum diaktifkan.";
+"onboarding.explore.lite" = "Anda sekarang memiliki akses ke fitur terpenting dari PHP Monitor.\nPerhatian: Beberapa fitur (dipaparkan dengan abu-abu di bawah) saat ini tidak tersedia karena Laravel Valet belum diaktifkan.";
 "onboarding.tour.menu_bar.title" = "Daya Tidur di Menu Bar";
 "onboarding.tour.menu_bar" = "PHP Monitor hidup di menu bar Anda. Dari menu ini, Anda dapat mengakses sebagian besar fungsi kunci dari PHP Monitor, termasuk mengganti versi PHP yang terhubung secara global, lokasi file konfigurasi, menginstal versi PHP berbeda dan lebih lanjut.";
 "onboarding.tour.faq_hint" = "**Soalan?** Saya sarankan untuk anda tahu tentang [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md): ia memuatkan FAQ lengkap dengan beberapa tips yang sering dijumpai dan jawapan soalan-soalan biasa.";
@@ -819,22 +568,38 @@ Perhatian: Beberapa fitur (dipaparkan dengan abu-abu di bawah) saat ini tidak te
 "onboarding.tour.feature_unavailable" = "Fitur ini saat ini tidak tersedia dan memerlukan Laravel Valet terpasang.";
 "onboarding.tour.once" = "Anda akan melihat tur selamat datang hanya sekali. Anda dapat membukanya kembali dengan mengeklik icon menu bar (dapat diakses dalam menu, bawah Pertolongan & Servis).";
 "onboarding.tour.close" = "Tutup Tur";
-
-// LANGUAGE CHOICE
-
 "prefs.language" = "Bahasa:";
 "prefs.language_options_desc" = "Pilih bahasa yang berbeda untuk digunakan dengan PHP Monitor. Untuk penuh, Anda perlu mengeksekusi ulang aplikasi.";
-
 "alert.language_changed.title" = "Anda harus restart PHP Monitor!";
 "alert.language_changed.subtitle" = "Anda baru-baru ini mengubah bahasa penampilan dari PHP Monitor. Menu akan segera menggunakan bahasa yang benar, tapi mungkin Anda memerlukan mengeksekusi ulang aplikasi untuk semua teks melalui aplikasi untuk terlihat bahasa yang baru pilih.";
-
-// STARTUP TIMEOUT
-
 "startup.timeout.ignore" = "Biarkan tidak diabaikan";
 "startup.timeout.title" = "PHP Monitor membutuhkan waktu yang lama untuk dimulai!";
 "startup.timeout.subtitle" = "Jika PHP Monitor tetap sibuk selama lebih dari 30 detik, mungkin ada masalah dengan pengaturan Homebrew Anda.";
-"startup.timeout.description" = "kadang-kadang, disebabkan oleh berbagai isu izin file, hal itu dapat rusak. Anda bisa mencoba menggunakan `brew doctor` dan `brew cleanup` untuk memperbaiki ini. 
-
-Dianjurkan untuk merestart PHP Monitor setelahnya. Beli tahu lebih lanjut tentang masalah ini di: https://github.com/nicoverbruggen/phpmon/issues/294.
-
-Jika PHP Monitor telah selesai dimulai atau Anda ingin menunggu sebentar lagi, tidak perlu khawatir dan klik 'Biarkan tidak diabaikan' dan gunakan PHP Monitor secara khusus. Tentu saja, cara yang satu pun mungkin perlu untuk dicek, karena ini bukanlah waktu yang dibutuhkan ini.";
+"startup.timeout.description" = "kadang-kadang, disebabkan oleh berbagai isu izin file, hal itu dapat rusak. Anda bisa mencoba menggunakan `brew doctor` dan `brew cleanup` untuk memperbaiki ini. \n\nDianjurkan untuk merestart PHP Monitor setelahnya. Beli tahu lebih lanjut tentang masalah ini di: https://github.com/nicoverbruggen/phpmon/issues/294.\n\nJika PHP Monitor telah selesai dimulai atau Anda ingin menunggu sebentar lagi, tidak perlu khawatir dan klik 'Biarkan tidak diabaikan' dan gunakan PHP Monitor secara khusus. Tentu saja, cara yang satu pun mungkin perlu untuk dicek, karena ini bukanlah waktu yang dibutuhkan ini.";
+"valet_upgrade_available.title" = "Apakah Anda ingin memperbarui Valet ke versi terbaru yang kompatibel?";
+"valet_upgrade_available.subtitle" = "Laravel Valet %@ tersedia. PHP Monitor dapat memperbarui dependensi Composer global Anda.";
+"valet_upgrade_available.description_constraint_ok" = "Menggunakan konfigurasi Composer global Anda, versi terbaru yang akan diinstal seharusnya adalah versi terbaru, Laravel Valet %@.";
+"valet_upgrade_available.description_constraint_fail" = "Harap dicatat bahwa mengingat pengaturan Composer global Anda, versi terbaru yang dapat diinstal secara otomatis TIDAK AKAN menjadi versi terbaru yang tersedia. Hal ini disebabkan oleh batasan dalam file `composer.json` global Anda.\\n\\nBatas versi Anda untuk Valet adalah: `%@`, yang melarang instalasi Valet %@.\\n\\nJika Anda ingin melakukan perubahan pada file ini, silakan lakukan sebelum memperbarui. Ketika Anda melihat pesan ini, sebaiknya periksa catatan rilis Valet, karena persyaratan Valet mungkin telah berubah.";
+"valet_upgrade_available.upgrade" = "Tingkatkan";
+"valet_upgrade_available.cancel" = "Batal";
+"valet_upgrade_available.open_composer" = "Temukan `composer.json`";
+"valet_upgraded.title" = "Valet telah ditingkatkan!";
+"valet_upgraded.subtitle" = "Terkadang, upgrade mungkin memerlukan Anda menjalankan `valet install` di terminal setelah memperbarui.";
+"valet_upgraded.description" = "PHP Monitor tidak dapat mengetahui apakah ini diperlukan, jadi ia tidak melakukannya secara otomatis. Namun, jika hal-hal tampaknya tidak berfungsi dengan benar, Anda dapat mencoba menjalankan `valet install` lagi dan memulai ulang PHP Monitor.";
+"cert_popover.insecure_domain" = "Domain \\\"%@\\\" tidak aman.";
+"cert_popover.insecure_domain_text" = "Lalu lintas disajikan oleh nginx melalui HTTP biasa. Perhatikan bahwa beberapa fitur web mungkin tidak berfungsi dengan benar tanpa koneksi aman.";
+"cert_popover.secure_domain" = "Domain \\\"%@\\\" sudah teramankan.";
+"cert_popover.secure_domain_traffic" = "Karena domain ini telah diamankan dengan sertifikat, lalu lintas ke domain ini disajikan oleh nginx melalui HTTPS.";
+"cert_popover.secure_domain_expired" = "Sertifikat telah kedaluwarsa pada %@. Anda harus memperbarui untuk terus menggunakan HTTPS tanpa kesalahan.";
+"cert_popover.secure_domain_expiring_later" = "Sertifikat masih berlaku. Akan kedaluwarsa pada %@. Pada saat itu, sertifikat perlu diperbarui, namun Anda akan diberi tahu.";
+"cert_popover.cta_renewal" = "Perbarui Sertifikat...";
+"cert_alert.title" = "Satu atau lebih sertifikat telah kedaluwarsa, dan harus diperbarui.";
+"cert_alert.description" = "Sertifikat yang digunakan untuk mengamankan domain biasanya berlaku satu tahun. Apakah Anda ingin PHP Monitor membuka keamanan dan menyiapkan ulang keamanan pada domain yang sudah kedaluwarsa?";
+"cert_alert.domains" = "Sertifikat berikut terpengaruh dan akan diperbarui:\\n\\n%@\\n\\nPHP Monitor akan memberi tahu Valet untuk menghapus keamanan dan mengamankan kembali semua domain yang sudah kedaluwarsa untuk Anda. Ini dapat memakan waktu, karena nginx mungkin akan di-restart beberapa kali jika banyak domain perlu dikunci ulang.";
+"cert_alert.renew" = "Perkuat Kembali Domain(s)";
+"cert_alert.cancel" = "Tidak sekarang";
+"crash_reporter.title" = "PHP Monitor sebelumnya mengalami crash, ingin mengirim laporan crash?";
+"crash_reporter.subtitle" = "Anda dapat mengirim laporan kerusakan ke pengembang aplikasi, sehingga masalah ini dapat diperbaiki. Ini sangat disarankan. Apakah Anda ingin melakukannya?";
+"crash_reporter.description" = "Tanpa mengirim laporan kerusakan ini, pengembang mungkin tidak menyadari masalah khusus ini. Tidak ada log atau data pribadi yang dikirim bersama laporan kerusakan, hanya laporan kerusakan yang tidak disimbolkan. Tidak ada tindakan lebih lanjut yang perlu Anda lakukan.";
+"crash_reporter.send_report" = "Kirim Laporan";
+"crash_reporter.do_not_send" = "Jangan Kirim";
