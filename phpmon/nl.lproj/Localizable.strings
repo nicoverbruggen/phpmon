@@ -188,8 +188,8 @@
 "domain_list.confirm_unlink" = "Weet u zeker dat u '%@' wilt loskoppelen?";
 "domain_list.confirm_unlink_desc" = "Er worden geen bestanden verwijderd. U kan de map altijd opnieuw koppelen door op de + knop te klikken en de oorspronkelijke map te selecteren.";
 "site_link.close" = "Sluiten";
-"site_link.switch_to_php" = "Overschakelen naar PHP %@";
-"site_link.isolate_php" = "PHP isoleren %@";
+"site_link.switch_to_php" = "Switch naar PHP %@";
+"site_link.isolate_php" = "Isoleer PHP %@";
 "domain_list.confirm_unproxy" = "Weet u zeker dat u de proxy '%@' wilt verwijderen?";
 "domain_list.confirm_unproxy_desc" = "U kan de proxy altijd opnieuw maken door op de + knop te klikken.";
 "domain_list.columns.secure" = "TLS";
