@@ -68,12 +68,18 @@ extension StatusMenu {
     @MainActor func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
         for index in (0..<App.shared.container.phpEnvs.availablePhpVersions.count) {
-            // Get the short and long version
+            // Get the short version
             let shortVersion = App.shared.container.phpEnvs.availablePhpVersions[index]
-            let longVersion = App.shared.container.phpEnvs.cachedPhpInstallations[shortVersion]!.versionNumber
+            var versionString = shortVersion
 
-            let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
-            let versionString = long ? longVersion.text : shortVersion
+            // Attempt to get the long version from cache (may not be ready)
+            if let longVersion = App.shared.container.phpEnvs.cachedPhpInstallations[shortVersion]?.versionNumber {
+                if Preferences.isEnabled(.fullPhpVersionDynamicIcon) {
+                    versionString = longVersion.text
+                }
+            } else {
+                Log.warn("The cached install for PHP \(shortVersion) is not available yet while building the menu.")
+            }
 
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(shortVersion)"
