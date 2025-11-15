@@ -58,15 +58,19 @@ class ValetServicesManager: ServicesManager {
                 await self.fetchHomebrewServices(elevated: false)
             }
 
-            // Ensure that Homebrew services' output is stored
-            self.homebrewServices = []
+            // Collect all services into a local variable first (more thread-safe)
+            // Ideally, we'd want to turn this class into an actor in the future
+            var collectedServices: [HomebrewService] = []
 
             for await services in group {
-                homebrewServices.append(contentsOf: services)
+                collectedServices.append(contentsOf: services)
             }
 
+            // Only assign once, after all tasks complete
+            self.homebrewServices = collectedServices
+
             // If we didn't get any service data and this isn't a retry, try again
-            if self.homebrewServices.isEmpty && !isRetry {
+            if collectedServices.isEmpty && !isRetry {
                 Log.warn("Failed to retrieve any Homebrew services data. Retrying once in 2 seconds...")
                 await delay(seconds: 2)
                 await self.reloadServicesStatus(isRetry: true)
@@ -79,7 +83,7 @@ class ValetServicesManager: ServicesManager {
                 services = formulae.map { formula in
                     Service(
                         formula: formula,
-                        service: homebrewServices.first(where: { service in
+                        service: collectedServices.first(where: { service in
                             service.name == formula.name
                         })
                     )
