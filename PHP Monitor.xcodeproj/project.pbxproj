@@ -104,6 +104,10 @@
 		03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
 		03C099462EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
 		03C099472EA15C8E00B76D43 /* Container+Real.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C099432EA15C8B00B76D43 /* Container+Real.swift */; };
+		03C29A772EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */; };
+		03C29A782EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */; };
+		03C29A792EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */; };
+		03C29A7A2EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */; };
 		03CC1FE52E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
 		03CC1FE62E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
 		03CC1FE72E3D22120050FC18 /* InstallHomebrew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */; };
@@ -1043,6 +1047,7 @@
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
+		03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetServicesDataManager.swift; sourceTree = "<group>"; };
 		03CC1FE42E3D220F0050FC18 /* InstallHomebrew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallHomebrew.swift; sourceTree = "<group>"; };
 		03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommand.swift; sourceTree = "<group>"; };
 		03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Window.swift"; sourceTree = "<group>"; };
@@ -1998,6 +2003,7 @@
 				C45B9148295607F400F4EC78 /* Service.swift */,
 				C45E76132854A65300B4FE0C /* ServicesManager.swift */,
 				C45B914D295608E300F4EC78 /* ValetServicesManager.swift */,
+				03C29A762EC88E2C00FBA25E /* ValetServicesDataManager.swift */,
 				C45B91522956123A00F4EC78 /* FakeServicesManager.swift */,
 			);
 			path = Services;
@@ -2897,6 +2903,7 @@
 				C4EC1E73279DFCF40010F296 /* Events.swift in Sources */,
 				C44067FB27E25FD70045BD4E /* DomainListTLSCell.swift in Sources */,
 				C4C8900528F0E3D100CE5E97 /* RealFileSystem.swift in Sources */,
+				03C29A782EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C4A81CA428C67101008DD9D1 /* PMTableView.swift in Sources */,
 				C4927F0B27B2DFC200C55AFD /* Errors.swift in Sources */,
 				C4CE7F9629683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
@@ -3053,6 +3060,7 @@
 				C471E86228F9BB650021E251 /* AddProxyVC.swift in Sources */,
 				C471E86328F9BB650021E251 /* PMTableView.swift in Sources */,
 				C471E86428F9BB650021E251 /* Warning.swift in Sources */,
+				03C29A772EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */,
 				C43931C729C4BD610069165B /* PhpVersionManagerView.swift in Sources */,
 				036C390A2E5C8CC5008DAEDF /* PackagistP2Response.swift in Sources */,
@@ -3302,6 +3310,7 @@
 				039C29152E8AA163007F5FAB /* ActiveApi.swift in Sources */,
 				C471E8D528F9BB8F0021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E8D728F9BB8F0021E251 /* SelectPreferenceView.swift in Sources */,
+				03C29A7A2EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C471E8D928F9BB8F0021E251 /* HotkeyPreferenceView.swift in Sources */,
 				C4611E5D2AEAD2FA0010BE24 /* ConfigManagerView.swift in Sources */,
 				C471E8DA28F9BB8F0021E251 /* Keys.swift in Sources */,
@@ -3596,6 +3605,7 @@
 				031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4998F0B2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C485707228BF453800539B36 /* SwiftUIHelper.swift in Sources */,
+				03C29A792EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
