@@ -13,7 +13,7 @@ class ServicesManager: ObservableObject {
 
     var container: Container
 
-    @ObservedObject static var shared: ServicesManager = ValetServicesManager(App.shared.container)
+    static var shared: ServicesManager = ValetServicesManager(App.shared.container)
 
     @Published var services = [Service]()
 
@@ -123,15 +123,5 @@ class ServicesManager: ObservableObject {
      */
     public func toggleService(named: String) async {
         fatalError("This method `\(#function)` has not been implemented")
-    }
-
-    /**
-     This method will notify all publishers that subscribe to notifiable objects.
-     The notified objects include this very ServicesManager as well as any individual service instances.
-     */
-    public func broadcastServicesUpdated() {
-        Task { @MainActor in
-            self.objectWillChange.send()
-        }
     }
 }

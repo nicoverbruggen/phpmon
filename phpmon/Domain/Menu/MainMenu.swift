@@ -252,18 +252,41 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
 
-        // Exit early if Valet is not detected (i.e. standalone mode)
-        if !Valet.installed {
-            return
-        }
+        // If Valet is installed, periodically refresh service data upon menu open!
+        if Valet.installed && !lastInitiatedServicesReloadWasRecent() {
+            // First, we need to update the timestamp
+            lastInitiatedServicesReload = Date()
 
-        Task { // Reload Homebrew services information asynchronously, but only if Valet is enabled
-            await ServicesManager.shared.reloadServicesStatus()
+            Task { // Next up, dispatch the Homebrew services reload asynchronously
+                await ServicesManager.shared.reloadServicesStatus()
+            }
         }
     }
 
     func menuDidClose(_ menu: NSMenu) {
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false
+    }
+
+    // MARK: - Debounce for `ServicesManager`
+
+    /**
+     Tracks the last time services were reloaded to enable debouncing.
+     */
+    private var lastInitiatedServicesReload: Date?
+
+    /**
+     Returns true if the last reload was, indeed, too recent.
+     */
+    func lastInitiatedServicesReloadWasRecent() -> Bool {
+        if let lastReload = lastInitiatedServicesReload {
+            let timeSinceLastReload = Date().timeIntervalSince(lastReload)
+            if timeSinceLastReload < .seconds(2) {
+                Log.perf("Skipping services reload on menu open, too recent.")
+                return true
+            }
+        }
+
+        return false
     }
 }

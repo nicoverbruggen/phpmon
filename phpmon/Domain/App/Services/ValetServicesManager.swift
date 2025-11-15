@@ -20,7 +20,6 @@ class ValetServicesManager: ServicesManager {
         // Load the initial services state
         Task {
             await self.reloadServicesStatus()
-
             await MainActor.run {
                 firstRunComplete = true
             }
@@ -28,6 +27,8 @@ class ValetServicesManager: ServicesManager {
     }
 
     override func reloadServicesStatus() async {
+        Log.perf("Reloading Homebrew services status...")
+
         // Fetch data on background (actor-isolated, thread-safe)
         let homebrewServices = await data.reloadServicesStatus(isRetry: false)
 
@@ -40,7 +41,7 @@ class ValetServicesManager: ServicesManager {
                 )
             }
 
-            self.broadcastServicesUpdated()
+            Log.perf("Homebrew service data received and broadcast!")
         }
     }
 
