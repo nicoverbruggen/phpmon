@@ -155,7 +155,7 @@ struct DisclaimerView: View {
 #Preview("Unknown Requirement") {
     VersionPopoverView(
         site: FakeValetSite(
-            fakeWithName: "amazingwebsite",
+            withDomain: "amazingwebsite",
             tld: "test",
             secure: true,
             path: "/path/to/site",
@@ -171,7 +171,7 @@ struct DisclaimerView: View {
 #Preview("Requirement Matches") {
     VersionPopoverView(
         site: FakeValetSite(
-            fakeWithName: "amazingwebsite",
+            withDomain: "amazingwebsite",
             tld: "test",
             secure: true,
             path: "/path/to/site",
@@ -187,7 +187,7 @@ struct DisclaimerView: View {
 #Preview("Isolated") {
     VersionPopoverView(
         site: FakeValetSite(
-            fakeWithName: "anothersite",
+            withDomain: "anothersite",
             tld: "test",
             secure: true,
             path: "/path/to/site",
@@ -204,7 +204,7 @@ struct DisclaimerView: View {
 #Preview("Isolated Mismatch") {
     VersionPopoverView(
         site: FakeValetSite(
-            fakeWithName: "anothersite",
+            withDomain: "anothersite",
             tld: "test",
             secure: true,
             path: "/path/to/site",
@@ -221,7 +221,7 @@ struct DisclaimerView: View {
 #Preview("Recommend Alternatives") {
     VersionPopoverView(
         site: FakeValetSite(
-            fakeWithName: "anothersite",
+            withDomain: "anothersite",
             tld: "test",
             secure: true,
             path: "/path/to/site",

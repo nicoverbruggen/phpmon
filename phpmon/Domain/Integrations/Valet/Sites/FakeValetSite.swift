@@ -10,7 +10,7 @@ import Foundation
 
 class FakeValetSite: ValetSite {
     convenience init(
-        fakeWithName name: String,
+        withDomain name: String,
         tld: String,
         secure: Bool,
         path: String,
