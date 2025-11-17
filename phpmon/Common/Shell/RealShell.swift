@@ -45,10 +45,14 @@ class RealShell: ShellProtocol {
         task.standardOutput = pipe
         task.launch()
 
-        return String(
+        let path = String(
             data: pipe.fileHandleForReading.readDataToEndOfFile(),
             encoding: String.Encoding.utf8
         ) ?? ""
+
+        try? pipe.fileHandleForReading.close()
+
+        return path
     }
 
     /**
@@ -104,8 +108,16 @@ class RealShell: ShellProtocol {
         process.launch()
         process.waitUntilExit()
 
+        if process.terminationReason == .uncaughtSignal {
+            Log.err("The command `\(command)` likely crashed. Returning empty output.")
+            return .out("", "")
+        }
+
         let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+
+        try? outputPipe.fileHandleForReading.close()
+        try? errorPipe.fileHandleForReading.close()
 
         if Log.shared.verbosity == .cli {
             log(process: process, stdOut: stdOut, stdErr: stdErr)
@@ -130,8 +142,16 @@ class RealShell: ShellProtocol {
 
         return await withCheckedContinuation { continuation in
             process.terminationHandler = { [weak self] _ in
+                if process.terminationReason == .uncaughtSignal {
+                    Log.err("The command `\(command)` likely crashed. Returning empty output.")
+                    continuation.resume(returning: .out("", ""))
+                }
+
                 let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                 let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+
+                try? outputPipe.fileHandleForReading.close()
+                try? errorPipe.fileHandleForReading.close()
 
                 if Log.shared.verbosity == .cli {
                     self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
