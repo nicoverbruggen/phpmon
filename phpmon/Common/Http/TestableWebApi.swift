@@ -1,5 +1,5 @@
 //
-//  TestableApi.swift
+//  TestableWebApi.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/09/2025.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-class TestableApi: ApiProtocol {
-    private var fakeResponses: [URL: FakeApiResponse] = [:]
+class TestableWebApi: WebApiProtocol {
+    private var fakeResponses: [URL: FakeWebApiResponse] = [:]
 
-    init(responses: [URL: FakeApiResponse]) {
+    init(responses: [URL: FakeWebApiResponse]) {
         self.fakeResponses = responses
     }
 
@@ -19,12 +19,12 @@ class TestableApi: ApiProtocol {
         return fakeResponses.keys.contains(url)
     }
 
-    public func getResponse(for url: URL) -> FakeApiResponse {
+    public func getResponse(for url: URL) -> FakeWebApiResponse {
         return fakeResponses[url]!
     }
 }
 
-struct FakeApiResponse {
+struct FakeWebApiResponse {
     let statusCode: Int
     let headers: [String: String]
     let data: Data?

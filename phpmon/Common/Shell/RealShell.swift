@@ -13,6 +13,7 @@ class RealShell: ShellProtocol {
 
     init(container: Container) {
         self.container = container
+        self.PATH = RealShell.getPath()
     }
 
     /**
@@ -25,7 +26,7 @@ class RealShell: ShellProtocol {
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private(set) var PATH: String = { return RealShell.getPath() }()
+    private(set) var PATH: String
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
@@ -269,8 +270,9 @@ class RealShell: ShellProtocol {
         })
     }
 
-    func reload() {
-        container.shell = RealShell(container: container)
+    func reloadEnvPath() {
+        // Instead of replacing the entire shell instance, we simply re-fetch the PATH
+        self.PATH = RealShell.getPath()
     }
 }
 

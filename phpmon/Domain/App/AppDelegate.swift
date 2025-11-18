@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         // Prepare the container with the defaults
         self.state = App.shared
-        self.state.container.prepare()
+        self.state.container.bind()
 
         #if DEBUG
         logger.verbosity = .performance

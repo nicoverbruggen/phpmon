@@ -10,18 +10,26 @@ import Testing
 import Foundation
 
 struct TestableApiTest {
-    @Test func createFakeApi() {
-        let api = TestableApi(responses: [
-            url("https://api.phpmon.test"): FakeApiResponse(
+    private var container: Container
+
+    init() throws {
+        self.container = Container.fake(apiResponses: [
+            url("https://api.phpmon.test"): FakeWebApiResponse(
                 statusCode: 200,
                 headers: [:],
                 text: "{\"success\": true}"
             )
         ])
+    }
 
-        #expect(api.hasResponse(for: url("https://api.phpmon.test")) == true)
+    var WebApi: TestableWebApi {
+        return container.webApi as! TestableWebApi
+    }
 
-        let response = api.getResponse(for: url("https://api.phpmon.test"))
+    @Test func createFakeApi() {
+        #expect(WebApi.hasResponse(for: url("https://api.phpmon.test")) == true)
+
+        let response = WebApi.getResponse(for: url("https://api.phpmon.test"))
 
         #expect(response.statusCode == 200)
         #expect(response.text.contains("success"))

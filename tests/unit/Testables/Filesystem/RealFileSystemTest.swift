@@ -15,7 +15,7 @@ struct RealFileSystemTest {
 
     init() throws {
         let container = Container()
-        container.prepare()
+        container.bind()
 
         filesystem = container.filesystem
     }

@@ -58,9 +58,9 @@ protocol ShellProtocol {
     ) async throws -> (Process, ShellOutput)
 
     /**
-     Reloads the shell instance, which also reloads the PATH.
+     Reloads the PATH.
      */
-    func reload()
+    func reloadEnvPath()
 }
 
 enum ShellStream: Codable {
