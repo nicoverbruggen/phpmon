@@ -11,15 +11,6 @@ import Foundation
 class RealWebApi: WebApiProtocol {
     var container: Container
 
-    var defaultHeaders: HttpHeaders {
-        return [
-            "User-Agent": "phpmon-nur/2.0",
-            "X-phpmon-version": "\(App.shortVersion) (\(App.bundleVersion))",
-            "X-phpmon-os-version": "\(App.macVersion)",
-            "X-phpmon-bundle-id": "\(App.identifier)"
-        ]
-    }
-
     init(container: Container) {
         self.container = container
     }
@@ -62,7 +53,7 @@ class RealWebApi: WebApiProtocol {
 
     func get(
         _ url: URL,
-        withHeaders headers: HttpHeaders = [:],
+        withHeaders headers: HttpHeaders,
         withTimeout timeout: TimeInterval = URLSession.shared.configuration.timeoutIntervalForRequest
     ) async throws -> WebApiResponse {
         try await self.request(
@@ -87,5 +78,14 @@ class RealWebApi: WebApiProtocol {
             headers: headers,
             timeout: timeout
         )
+    }
+
+    var defaultHeaders: HttpHeaders {
+        return [
+            "User-Agent": "phpmon-nur/2.0",
+            "X-phpmon-version": "\(App.shortVersion) (\(App.bundleVersion))",
+            "X-phpmon-os-version": "\(App.macVersion)",
+            "X-phpmon-bundle-id": "\(App.identifier)"
+        ]
     }
 }
