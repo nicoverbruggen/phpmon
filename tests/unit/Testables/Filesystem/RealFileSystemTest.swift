@@ -9,7 +9,7 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
+@Suite(.serialized) // serialized due to how unique temp directory works
 struct RealFileSystemTest {
     var filesystem: FileSystemProtocol
 

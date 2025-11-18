@@ -9,18 +9,73 @@
 import Foundation
 
 class TestableWebApi: WebApiProtocol {
-    private var fakeResponses: [URL: FakeWebApiResponse] = [:]
+    private var fakeGetResponses: [URL: FakeWebApiResponse] = [:]
+    private var fakePostResponses: [URL: FakeWebApiResponse] = [:]
+    private var slow: Bool = false
 
-    init(responses: [URL: FakeWebApiResponse]) {
-        self.fakeResponses = responses
+    public func setSlowMode(_ slow: Bool) {
+        self.slow = slow
     }
 
-    public func hasResponse(for url: URL) -> Bool {
-        return fakeResponses.keys.contains(url)
+    init(
+        getResponses: [URL: FakeWebApiResponse],
+        postResponses: [URL: FakeWebApiResponse]
+    ) {
+        self.fakeGetResponses = getResponses
+        self.fakePostResponses = postResponses
     }
 
-    public func getResponse(for url: URL) -> FakeWebApiResponse {
-        return fakeResponses[url]!
+    public func hasGetResponse(for url: URL) -> Bool {
+        return fakeGetResponses.keys.contains(url)
+    }
+
+    public func hasPostResponse(for url: URL) -> Bool {
+        return fakePostResponses.keys.contains(url)
+    }
+
+    func get(
+        _ url: URL,
+        withHeaders headers: HttpHeaders = [:],
+        withTimeout timeout: TimeInterval = .seconds(10)
+    ) async throws -> WebApiResponse {
+        if hasGetResponse(for: url) {
+            let response = fakeGetResponses[url]!
+
+            if response.requestDuration > timeout {
+                if slow {
+                    await delay(seconds: timeout)
+                }
+                throw WebApiError.timedOut
+            } else {
+                if slow {
+                    await delay(seconds: response.requestDuration)
+                }
+                return response.toWebApiResponse()
+            }
+        } else {
+            throw WebApiError.invalidURL
+        }
+    }
+
+    func post(
+        _ url: URL,
+        withHeaders headers: HttpHeaders = [:],
+        withData data: String,
+        withTimeout timeout: TimeInterval
+    ) async throws -> WebApiResponse {
+        if hasPostResponse(for: url) {
+            let response = fakePostResponses[url]!
+
+            if response.requestDuration > timeout {
+                await delay(seconds: timeout)
+                throw WebApiError.timedOut
+            } else {
+                await delay(seconds: response.requestDuration)
+                return response.toWebApiResponse()
+            }
+        } else {
+            throw WebApiError.invalidURL
+        }
     }
 }
 
@@ -28,14 +83,33 @@ struct FakeWebApiResponse {
     let statusCode: Int
     let headers: [String: String]
     let data: Data?
+    let requestDuration: TimeInterval
 
-    init(statusCode: Int, headers: [String: String], text: String) {
+    init(
+        statusCode: Int,
+        headers: [String: String],
+        text: String,
+        duration: TimeInterval
+    ) {
         self.statusCode = statusCode
         self.headers = headers
         self.data = text.data(using: .utf8)
+        self.requestDuration = duration
     }
 
     var text: String {
-        return String(data: self.data!, encoding: .utf8) ?? ""
+        guard let data = self.data else {
+            return ""
+        }
+
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+
+    func toWebApiResponse() -> WebApiResponse {
+        WebApiResponse(
+            statusCode: self.statusCode,
+            headers: self.headers,
+            data: self.data
+        )
     }
 }

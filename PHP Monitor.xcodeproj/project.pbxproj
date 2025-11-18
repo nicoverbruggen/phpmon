@@ -79,7 +79,7 @@
 		039C29192E8AA314007F5FAB /* TestableWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039C29172E8AA311007F5FAB /* TestableWebApi.swift */; };
 		039C291A2E8AA314007F5FAB /* TestableWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039C29172E8AA311007F5FAB /* TestableWebApi.swift */; };
 		039C291B2E8AA314007F5FAB /* TestableWebApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039C29172E8AA311007F5FAB /* TestableWebApi.swift */; };
-		039C291D2E8AA39A007F5FAB /* TestableApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039C291C2E8AA399007F5FAB /* TestableApiTest.swift */; };
+		039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */; };
 		039E1D792E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7A2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
@@ -1036,7 +1036,7 @@
 		0392CDEA2EB25371009176DA /* SecurePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurePopoverView.swift; sourceTree = "<group>"; };
 		0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggableEvent.swift; sourceTree = "<group>"; };
 		039C29172E8AA311007F5FAB /* TestableWebApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableWebApi.swift; sourceTree = "<group>"; };
-		039C291C2E8AA399007F5FAB /* TestableApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableApiTest.swift; sourceTree = "<group>"; };
+		039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableWebApiTest.swift; sourceTree = "<group>"; };
 		039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetUpgrader.swift; sourceTree = "<group>"; };
 		03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
@@ -1455,7 +1455,7 @@
 		039C291E2E8AA39B007F5FAB /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				039C291C2E8AA399007F5FAB /* TestableApiTest.swift */,
+				039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -3630,7 +3630,7 @@
 				C409349E298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
-				039C291D2E8AA39A007F5FAB /* TestableApiTest.swift in Sources */,
+				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,

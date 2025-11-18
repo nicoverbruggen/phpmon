@@ -86,12 +86,16 @@ class Container {
         shellExpectations: [String: BatchFakeShellOutput] = [:],
         fileSystemFiles: [String: FakeFile] = [:],
         commands: [String: String] = [:],
-        fakeApiResponses: [URL: FakeWebApiResponse] = [:]
+        webApiGetResponses: [URL: FakeWebApiResponse] = [:],
+        webApiPostResponses: [URL: FakeWebApiResponse] = [:]
     ) {
         self.shell = TestableShell(expectations: shellExpectations)
         self.filesystem = TestableFileSystem(files: fileSystemFiles)
         self.command = TestableCommand(commands: commands)
-        self.webApi = TestableWebApi(responses: fakeApiResponses)
+        self.webApi = TestableWebApi(
+            getResponses: webApiGetResponses,
+            postResponses: webApiPostResponses
+        )
     }
 
     /**

@@ -18,7 +18,8 @@ extension Container {
         shell: [String: BatchFakeShellOutput] = [:],
         files: [String: FakeFile] = [:],
         commands: [String: String] = [:],
-        apiResponses: [URL: FakeWebApiResponse] = [:]
+        getResponses: [URL: FakeWebApiResponse] = [:],
+        postResponses: [URL: FakeWebApiResponse] = [:]
     ) -> Container {
         // Create a new container
         let container = Container()
@@ -31,7 +32,8 @@ extension Container {
             shellExpectations: shell,
             fileSystemFiles: files,
             commands: commands,
-            fakeApiResponses: apiResponses
+            webApiGetResponses: getResponses,
+            webApiPostResponses: postResponses
         )
 
         // Return the newly created container

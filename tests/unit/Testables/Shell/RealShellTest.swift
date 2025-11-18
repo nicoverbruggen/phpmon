@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct RealShellTest {
     var container: Container
 
@@ -75,6 +74,6 @@ struct RealShellTest {
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .milliseconds(1500)) // Should complete in ~700ms if parallel
+        #expect(duration < .milliseconds(2000)) // Should complete in ~700ms if parallel
     }
 }

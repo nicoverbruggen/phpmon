@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct TestableFileSystemTest {
     private var container: Container
 
