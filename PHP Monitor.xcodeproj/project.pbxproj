@@ -84,6 +84,11 @@
 		039E1D7A2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
 		039E1D7C2E5F0F300072D13D /* ValetUpgrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */; };
+		03ACC6452ECCAB190070D4CD /* RealWebApiTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ACC6442ECCAB140070D4CD /* RealWebApiTest.swift */; };
+		03ACC6472ECCBA130070D4CD /* CaskFile+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */; };
+		03ACC6482ECCBA130070D4CD /* CaskFile+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */; };
+		03ACC6492ECCBA130070D4CD /* CaskFile+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */; };
+		03ACC64A2ECCBA130070D4CD /* CaskFile+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */; };
 		03B675E92EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03B675EA2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03B675EB2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
@@ -1038,6 +1043,8 @@
 		039C29172E8AA311007F5FAB /* TestableWebApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableWebApi.swift; sourceTree = "<group>"; };
 		039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableWebApiTest.swift; sourceTree = "<group>"; };
 		039E1D782E5F0F2C0072D13D /* ValetUpgrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetUpgrader.swift; sourceTree = "<group>"; };
+		03ACC6442ECCAB140070D4CD /* RealWebApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealWebApiTest.swift; sourceTree = "<group>"; };
+		03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaskFile+API.swift"; sourceTree = "<group>"; };
 		03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
@@ -1455,9 +1462,17 @@
 		039C291E2E8AA39B007F5FAB /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */,
 			);
 			path = Api;
+			sourceTree = "<group>";
+		};
+		03ACC6432ECCAAF70070D4CD /* WebApi */ = {
+			isa = PBXGroup;
+			children = (
+				039C291C2E8AA399007F5FAB /* TestableWebApiTest.swift */,
+				03ACC6442ECCAB140070D4CD /* RealWebApiTest.swift */,
+			);
+			path = WebApi;
 			sourceTree = "<group>";
 		};
 		03BFF1D12E3CF4F2004C56A9 /* Provision */ = {
@@ -1485,6 +1500,7 @@
 				C4E2E84628FC1D8C003B070C /* TestableConfigurationTest.swift */,
 				C413E43328DA3E8F00AE33C7 /* Shell */,
 				C471E6DA28F9AFCB0021E251 /* Filesystem */,
+				03ACC6432ECCAAF70070D4CD /* WebApi */,
 			);
 			path = Testables;
 			sourceTree = "<group>";
@@ -2145,6 +2161,7 @@
 				C4B79EB529CA387F00A483EE /* BrewPhpFormulaeHandler.swift */,
 				C4F2E4362752F0870020E974 /* BrewDiagnostics.swift */,
 				C40934A1298EEB2C00D25014 /* CaskFile.swift */,
+				03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */,
 				C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */,
 				031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */,
 			);
@@ -2914,6 +2931,7 @@
 				C45D654C29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C4D3660B29113F20006BD146 /* System.swift in Sources */,
 				C4D36601291132B7006BD146 /* ValetScanners.swift in Sources */,
+				03ACC6472ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C4B79EB629CA387F00A483EE /* BrewPhpFormulaeHandler.swift in Sources */,
@@ -3143,6 +3161,7 @@
 				C441CC582AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
 				C471E80828F9BAD40021E251 /* PhpExtension.swift in Sources */,
 				C471E7F928F9BACB0021E251 /* PhpSwitcher.swift in Sources */,
+				03ACC6482ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
 				C471E82A28F9BB330021E251 /* ValetListable.swift in Sources */,
 				031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C471E82728F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
@@ -3251,6 +3270,7 @@
 				C471E8B428F9BB8F0021E251 /* MainMenu+Switcher.swift in Sources */,
 				C471E8B528F9BB8F0021E251 /* MainMenu+FixMyValet.swift in Sources */,
 				C471E8B628F9BB8F0021E251 /* MainMenu+Actions.swift in Sources */,
+				03ACC64A2ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
 				C471E8B728F9BB8F0021E251 /* StatusMenu.swift in Sources */,
 				032DAC302E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */,
 				C471E8B828F9BB8F0021E251 /* StatusMenu+Items.swift in Sources */,
@@ -3547,6 +3567,7 @@
 				C40C7F3127722E8D00DDDCDC /* Logger.swift in Sources */,
 				C4068CAB27B0890D00544CD5 /* MenuBarIcons.swift in Sources */,
 				C4AD38B328ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
+				03ACC6492ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
 				C40C5C9D2846A40600E28255 /* Preset.swift in Sources */,
 				C4CE7F9729683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
 				C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */,
@@ -3557,6 +3578,7 @@
 				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C4611E612AEAD3110010BE24 /* ByteLimitView.swift in Sources */,
 				C40175B92903108900763A68 /* ValetInteractor.swift in Sources */,
+				03ACC6452ECCAB190070D4CD /* RealWebApiTest.swift in Sources */,
 				039E1D792E5F0F300072D13D /* ValetUpgrader.swift in Sources */,
 				C4CE3BBC27B324250086CA49 /* ComposerWindow.swift in Sources */,
 				C40B24F427A310830018C7D2 /* StatusMenu.swift in Sources */,

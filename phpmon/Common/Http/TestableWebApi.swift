@@ -9,13 +9,32 @@
 import Foundation
 
 class TestableWebApi: WebApiProtocol {
+
+    // MARK: - Internal Fake Responses
+
     private var fakeGetResponses: [URL: FakeWebApiResponse] = [:]
     private var fakePostResponses: [URL: FakeWebApiResponse] = [:]
+
+    // MARK: - Slow Mode
+
     private var slow: Bool = false
 
     public func setSlowMode(_ slow: Bool) {
         self.slow = slow
     }
+
+    // MARK: - Default Headers
+
+    var defaultHeaders: HttpHeaders {
+        return [
+            "User-Agent": "phpmon-nur/2.0",
+            "X-phpmon-version": "\(App.shortVersion) (\(App.bundleVersion))",
+            "X-phpmon-os-version": "\(App.macVersion)",
+            "X-phpmon-bundle-id": "\(App.identifier)"
+        ]
+    }
+
+    // MARK: - Constructor
 
     init(
         getResponses: [URL: FakeWebApiResponse],
@@ -24,6 +43,8 @@ class TestableWebApi: WebApiProtocol {
         self.fakeGetResponses = getResponses
         self.fakePostResponses = postResponses
     }
+
+    // MARK: - Public API
 
     public func hasGetResponse(for url: URL) -> Bool {
         return fakeGetResponses.keys.contains(url)

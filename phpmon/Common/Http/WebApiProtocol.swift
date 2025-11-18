@@ -14,6 +14,7 @@ enum WebApiError: Error {
     case invalidURL
     case networkError
     case timedOut
+    case other
 }
 
 struct WebApiResponse {
@@ -37,6 +38,8 @@ struct WebApiResponse {
 }
 
 protocol WebApiProtocol {
+    var defaultHeaders: HttpHeaders { get }
+
     func get(
         _ url: URL,
         withHeaders headers: HttpHeaders,

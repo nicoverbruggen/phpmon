@@ -27,7 +27,7 @@ struct CaskFileParserTest {
     }
 
     @Test func can_extract_fields_from_cask_file() async throws {
-        guard let caskFile = await CaskFile.from(container, url: CaskFileParserTest.exampleFilePath) else {
+        guard let caskFile = try? await CaskFile.fromUrl(container, CaskFileParserTest.exampleFilePath) else {
             Issue.record("The CaskFile could not be parsed, check the log for more info")
             return
         }
@@ -53,7 +53,7 @@ struct CaskFileParserTest {
     @Test func can_extract_fields_from_remote_cask_file() async throws {
         let url = URL(string: "https://raw.githubusercontent.com/nicoverbruggen/homebrew-cask/master/Casks/phpmon.rb")!
 
-        guard let caskFile = await CaskFile.from(container, url: url) else {
+        guard let caskFile = try? await CaskFile.fromUrl(container, url) else {
             Issue.record("The remote CaskFile could not be parsed, check the log for more info")
             return
         }
