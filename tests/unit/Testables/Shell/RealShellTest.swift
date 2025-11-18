@@ -9,6 +9,7 @@
 import Testing
 import Foundation
 
+@Suite(.serialized)
 struct RealShellTest {
     var container: Container
 
