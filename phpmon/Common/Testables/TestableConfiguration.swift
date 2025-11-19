@@ -14,6 +14,8 @@ public struct TestableConfiguration: Codable {
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
     var preferenceOverrides: [PreferenceName: Bool]
+    var apiGetResponses: [URL: FakeWebApiResponse]
+    var apiPostResponses: [URL: FakeWebApiResponse]
 
     init(
         architecture: String,
@@ -21,13 +23,17 @@ public struct TestableConfiguration: Codable {
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
         preferenceOverrides: [PreferenceName: Bool],
-        phpVersions: [VersionNumber]
+        phpVersions: [VersionNumber],
+        apiGetResponses: [URL: FakeWebApiResponse],
+        apiPostResponses: [URL: FakeWebApiResponse]
     ) {
         self.architecture = architecture
         self.filesystem = filesystem
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
         self.preferenceOverrides = preferenceOverrides
+        self.apiGetResponses = apiGetResponses
+        self.apiPostResponses = apiPostResponses
 
         phpVersions.enumerated().forEach { (index, version) in
             self.addPhpVersion(version, primary: index == 0)
@@ -35,7 +41,13 @@ public struct TestableConfiguration: Codable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case architecture, filesystem, shellOutput, commandOutput, preferenceOverrides
+        case architecture,
+             filesystem,
+             shellOutput,
+             commandOutput,
+             preferenceOverrides,
+             apiGetResponses,
+             apiPostResponses
     }
 
     // MARK: Add PHP versions

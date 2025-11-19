@@ -107,7 +107,9 @@ class Container {
         self.overrideFake(
             shellExpectations: config.shellOutput,
             fileSystemFiles: config.filesystem,
-            commands: config.commandOutput
+            commands: config.commandOutput,
+            webApiGetResponses: config.apiGetResponses,
+            webApiPostResponses: config.apiPostResponses
         )
     }
 }

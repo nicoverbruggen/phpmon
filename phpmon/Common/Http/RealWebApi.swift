@@ -53,7 +53,7 @@ class RealWebApi: WebApiProtocol {
 
     func get(
         _ url: URL,
-        withHeaders headers: HttpHeaders,
+        withHeaders headers: HttpHeaders = [:],
         withTimeout timeout: TimeInterval = URLSession.shared.configuration.timeoutIntervalForRequest
     ) async throws -> WebApiResponse {
         try await self.request(
@@ -67,7 +67,7 @@ class RealWebApi: WebApiProtocol {
 
     func post(
         _ url: URL,
-        withHeaders headers: HttpHeaders,
+        withHeaders headers: HttpHeaders = [:],
         withData data: String,
         withTimeout timeout: TimeInterval
     ) async throws -> WebApiResponse {
