@@ -164,4 +164,10 @@ extension String {
             of: "^[0-9]*$", // 1
             options: .regularExpression) != nil
     }
+
+    // MARK: - Helpers
+
+    var withDisplayName: String {
+        return self.replacing("PHP Monitor", with: App.displayName)
+    }
 }

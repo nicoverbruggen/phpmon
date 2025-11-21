@@ -17,8 +17,8 @@ class App {
     /** Use to determine whether a loaded testable configuration is being used. */
     static var hasLoadedTestableConfiguration: Bool = false
 
-    /** The name of the app. Has EAP suffixed when an actual EAP build. */
-    static var name: String {
+    /** The display name of the app, as declared in Info.plist. */
+    static var displayName: String {
         return Bundle.main.infoDictionary?["CFBundleName"] as! String
     }
 
