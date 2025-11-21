@@ -56,9 +56,6 @@ extension MainMenu {
         // Actually detect the PHP versions
         await container.phpEnvs.reloadPhpVersions()
 
-        // Check for an alias conflict
-        await BrewDiagnostics.shared.checkForCaskConflict()
-
         // Set up the filesystem watcher for the Homebrew binaries
         App.shared.prepareHomebrewWatchers()
 

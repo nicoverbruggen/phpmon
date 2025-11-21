@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "ডোমেইন তালিকা পুনরায় লোড করুন";
 "mm_find_in_domain_list" = "ডোমেইন তালিকায় অনুসন্ধান করুন";
 "domain_list.title" = "ডোমেইনসমূহ";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "কোনো ডোমেইন উপলব্ধ নেই।";
 "domain_list.domains_empty.desc" = "এই অনুসন্ধান প্রশ্নের জন্য কোনো ডোমেইন পাওয়া যায়নি বা আপনি এখনও কোনো ডোমেইন যুক্ত করেননি।";
 "domain_list.domains_empty.button" = "ডোমেইন যোগ করুন...";
@@ -187,7 +186,7 @@
 "domain_list.alerts_status_unsecure" = "অসুরক্ষিত";
 "domain_list.confirm_unlink" = "আপনি কি নিশ্চিত যে আপনি '%@' আনলিঙ্ক করতে চান?";
 "domain_list.confirm_unlink_desc" = "কোনো ফাইল মুছে যাবে না। আপনি সবসময় + বোতামে ক্লিক করে এবং মূল ফোল্ডার নির্বাচন করে আবারও ফোল্ডারটি লিঙ্ক করতে পারেন।";
-"site_link.close" = "";
+"site_link.close" = "বন্ধ";
 "site_link.switch_to_php" = "PHP %@‑এ স্যুইচ করুন";
 "site_link.isolate_php" = "PHP আলাদা করুন %@";
 "domain_list.confirm_unproxy" = "আপনি কি নিশ্চিত যে আপনি প্রোক্সি '%@' সরাতে চান?";
@@ -266,7 +265,7 @@
 "editors.alert.cancel" = "বাতিল";
 "prefs.title" = "PHP Monitor";
 "prefs.subtitle" = "পছন্দসমূহ";
-"prefs.close" = "";
+"prefs.close" = "বন্ধ";
 "prefs.tabs.general" = "সাধারণ";
 "prefs.tabs.appearance" = "দর্শন";
 "prefs.tabs.visibility" = "দৃশ্যমানতা";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "আপনাকে হয়তো PHP Monitor বন্ধ করে পুনরায় চালু করতে হবে না। যদি আপনি সমস্যাটি সমাধান করে থাকেন (বা ঠিক কী সমস্যা ছিল তা মনে না থাকে), তাহলে আপনি 'Retry' এ ক্লিক করতে পারেন, যার ফলে PHP Monitor স্টার্ট‑আপ চেকগুলো আবার চেষ্টা করবে।";
 "alert.cannot_start.close" = "প্রস্থান করুন";
 "alert.cannot_start.retry" = "পুনরায় চেষ্টার";
-"alert.php_alias_conflict.title" = "হোমব্রু `php` ফর্মুলা এলিয়াস সংঘর্ষ শনাক্ত হয়েছে";
-"alert.php_alias_conflict.info" = "PHP Monitor আপনার Homebrew সেটআপে সংঘর্ষপূর্ণ `php` এলিয়াস সনাক্ত করেছে, যেগুলি উভয়ই ইনস্টল করা হিসাবে চিহ্নিত হয়েছে।\n\nএটি সম্ভবত PHP সংস্করণ পরিবর্তনের সময় লিংক ব্যর্থ করবে এবং PHP Monitor এর কার্যকারিতা ভেঙে দেবে।\n\nআরও তথ্যের জন্য দেখুন: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "ইনস্টল করা Valet এর সংস্করণ ন্যূনতম সংস্করণ চাহিদা পূরণ করে না। PHP Monitor প্রত্যাশিতভাবে কাজ করতে পারে না!";
 "alert.min_valet_version.info" = "আপনি বর্তমানে Valet %@ চালাচ্ছেন।\n\nPHP এর সর্বশেষ সংস্করণগুলির জন্য এবং সঠিক ভার্সন সুইচিংয়ের জন্য সর্বোত্তম সমর্থনের জন্য, আপনাকে এই PHP Monitor এর সংস্করণের ন্যূনতম প্রয়োজনীয়তা পূরণকারী %@ সংস্করণে আপডেট করার পরামর্শ দেওয়া হয়।\n\nআপনি আপনার টার্মিনালে `composer global update` চালিয়ে এটি করতে পারেন। এরপর আবার `valet install` চালান। সর্বোত্তম ফলাফলের জন্য, এর পরে PHP Monitor পুনরায় শুরু করুন। এই সমস্যা সমাধান না হওয়া পর্যন্ত, PHP Monitor প্রত্যাশিতভাবে আচরণ নাও করতে পারে।";
 "alert.preset_description.switcher_version" = "PHP %@ এ স্যুইচ করে।\n\n";
@@ -429,7 +426,7 @@
 "alert.service_error.subtitle.no_error_log" = "এর অর্থ হল যে সার্ভিস '%@' চলছে না। এটি ভ্যালেটকে সঠিকভাবে কাজ করতে বাধা দিতে পারে। দুর্ভাগ্যবশত, এই সার্ভিসের জন্য কোনো সংশ্লিষ্ট লগ ফাইল নেই।";
 "alert.service_error.extra" = "আপনি সাধারণ সমস্যাসমাধান পদক্ষেপগুলো অনুসরণ করতে চাইতে পারেন। আরো জানার জন্য, PHP Monitor-এর সেবা বিভাগে '?' বাটনটিতে টিপুন।";
 "alert.service_error.button.show_log" = "ত্রুটি লগ দেখুন";
-"alert.service_error.button.close" = "";
+"alert.service_error.button.close" = "বন্ধ";
 "alert.global_composer_platform_issues.title" = "Composer আপনার প্ল্যাটফর্মে সমস্যাগুলি সনাক্ত করেছে";
 "alert.global_composer_platform_issues.subtitle" = "আপনি যেই PHP সংস্করণে স্যুইচ করেছেন তা আপনার ইনস্টল করা গ্লোবাল Composer নির্ভরশীলতার জন্য খুব পুরনো। এই নির্ভরশীলতাগুলো আপডেট করতে হবে.";
 "alert.global_composer_platform_issues.desc" = "এই সমস্যাটি ভবিষ্যতে ঘটার থেকে রোধ করার সবচেয়ে সহজ উপায় হল আপনি যে সর্বপ্রথম ইনস্টল করা PHP সংস্করণটি আছে তাতে স্যুইচ করা এবং আবারও `composer global update` চালানো। বিকল্পভাবে, আপনি পছন্দসমূহে 'স্বয়ংক্রিয়ভাবে গ্লোবাল নির্ভরশীলতা আপডেট করুন' বিকল্পটি নির্বাচন করে এই সমস্যাটি এড়াতে পারেন। আপনি যদি সেই গ্লোবাল নির্ভরশীলতাগুলি আপডেট করার চেষ্টা সত্ত্বেও এই বার্তা দেখতে থাকেন, তবে আপনি আপনার গ্লোবাল কম্পোজার কনফিগারেশন ফাইলটি দেখতে পারেন, যা `~/.composer/composer.json` এ অবস্থিত।";

@@ -169,8 +169,7 @@
 "mm_add_folder_as_link" = "Tambah Folder sebagai Tautan...";
 "mm_reload_domain_list" = "Muat Ulang Daftar Domain";
 "mm_find_in_domain_list" = "Cari di Daftar Domain";
-"domain_list.title" = "";
-"domain_list.subtitle" = "";
+"domain_list.title" = "Domain";
 "domain_list.domains_empty.title" = "Tidak ada domain yang tersedia.";
 "domain_list.domains_empty.desc" = "Tidak ada domain yang ditemukan untuk kueri pencarian ini atau Anda belum menautkan domain apa pun.";
 "domain_list.domains_empty.button" = "Tambahkan domain...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Anda mungkin tidak perlu keluar dari PHP Monitor dan memulainya kembali. Jika Anda sudah memperbaiki masalah (atau tidak ingat apa masalahnya) Anda dapat klik Retry, yang akan membuat PHP Monitor mencoba ulang pemeriksaan startup.";
 "alert.cannot_start.close" = "Keluar";
 "alert.cannot_start.retry" = "Coba lagi";
-"alert.php_alias_conflict.title" = "Konflik alias formula `php` Homebrew terdeteksi";
-"alert.php_alias_conflict.info" = "PHP Monitor telah mendeteksi alias `php` yang bertentangan di pengaturan Homebrew Anda, keduanya terdeteksi sebagai terpasang.\n\nHal ini kemungkinan akan menyebabkan kegagalan tautan saat mengganti versi PHP, dan akan merusak fungsionalitas PHP Monitor.\n\nUntuk informasi lebih lanjut, silakan kunjungi: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "Versi Valet yang terpasang tidak memenuhi persyaratan versi minimum. PHP Monitor mungkin tidak berfungsi sebagaimana mestinya!";
 "alert.min_valet_version.info" = "Saat ini Anda menjalankan Valet %@.\n\nUntuk dukungan optimal terhadap versi terbaru PHP dan pergantian versi yang tepat, disarankan untuk memperbarui ke versi %@, yang merupakan persyaratan minimum bagi versi PHP Monitor ini.\n\nAnda dapat melakukannya dengan menjalankan `composer global update` di terminal Anda. Setelah itu, jalankan `valet install` lagi. Untuk hasil terbaik, restart PHP Monitor setelahnya. Hingga masalah ini diselesaikan, PHP Monitor mungkin tidak berperilaku seperti yang diharapkan.";
 "alert.preset_description.switcher_version" = "Beralih ke PHP %@.\n\n";
@@ -509,7 +506,17 @@
 "alert.key_service_not_running.desc" = "Jika menekan tombol di bawah tidak membuat layanan berfungsi (misalnya spinner muncul tetapi tetap menjadi 'X' setelah beberapa waktu), Anda mungkin perlu menjalankan Fix My Valet. Anda dapat melakukannya melalui menu First Aid > Fix My Valet.\n\nAlternatifnya, Anda dapat menggunakan `valet stop` dan `valet start` di terminal, yang juga bisa memperbaiki masalah (sebagai alternatif Fix My Valet).\n\nUntuk debugging lebih lanjut, Anda mungkin ingin memeriksa pelacak isu GitHub, tempat orang lain mungkin mengalami masalah serupa. Sebagai pengembang, saya berusaha memastikan setiap pertanyaan mendapatkan jawaban :)";
 "alert.key_service_has_error.title" = "Karena masalah dengan layanan Homebrew yang diperlukan, Valet saat ini tidak berfungsi dengan benar";
 "alert.key_service_has_error.subtitle" = "Untuk Valet bekerja dengan baik, setidaknya tiga layanan kunci perlu berjalan dengan benar.\n\nPHP Monitor melaporkan bahwa hal tersebut tidak terjadi. Tampaknya salah satu layanan yang terpengaruh sedang mengalami kondisi error, jadi saya sarankan mengklik 'E'.\n\nPHP Monitor akan mencoba memulai ulang layanan tersebut, dan jika gagal (yang kemungkinan besar), ia akan menawarkan untuk menemukan file log jika ada, yang mungkin berisi informasi tambahan yang dapat membantu Anda memperbaiki masalah.";
-"alert.key_service_has_error.desc" = "";
+"alert.key_service_has_error.desc" = "Sayangnya, jika suatu layanan melaporkan kesalahan, hal ini sering kali disebabkan oleh status konfigurasi yang tidak valid, yang mungkin sulit di-debug.
+
+TIPS PEMECAHAN MASALAH UMUM
+
+• Coba mulai ulang layanan dan periksa berkas log (jika ada) terlebih dahulu. Anda dapat meminta PHP Monitor melakukannya dengan mengeklik tombol 'E'.
+
+• PHP: Jika Anda melihat status kesalahan, mungkin ada masalah dengan konfigurasi PHP. Pastikan berkas .ini di instalasi Homebrew baik-baik saja, dan tidak ada konflik soket.
+
+• nginx: Jika Anda melihat status kesalahan, kemungkinan situs tersebut salah dikonfigurasi (biasanya tercatat di log kesalahan). Anda mungkin perlu memeriksa folder nginx di Valet.
+
+• dnsmasq: Jika Anda melihat status kesalahan, kemungkinan berkas konfigurasi dnsmasq rusak (biasanya terletak di ~/.config/valet/dnsmasq.d)."
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ sekarang tersedia!";
 "updater.alerts.newer_version_available.subtitle" = "Disarankan untuk selalu memperbarui PHP Monitor karena versi yang lebih baru biasanya memperbaiki bug dan menyertakan perbaikan untuk mendukung versi terbaru Valet dan PHP.";
 "updater.installation_source.brew" = "Metode yang disarankan untuk memperbarui PHP Monitor adalah dengan menekan “Install Update”.\n\nKarena Anda menggunakan Homebrew untuk menginstal aplikasi, Anda juga dapat meningkatkan versi melalui terminal dengan menjalankan `%@`, namun ini tidak dianjurkan.\n\n(Pastikan bahwa memasang melalui pembaruan bawaan ini akan menghapus PHP Monitor dari direktori Caskroom Homebrew, untuk mencegah pembaruan duplikat diunduh dan menyebabkan masalah potensial di kemudian hari.)";

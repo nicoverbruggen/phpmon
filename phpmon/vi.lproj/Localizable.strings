@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Tải lại Danh sách Tên miền";
 "mm_find_in_domain_list" = "Tìm kiếm trong Danh sách Tên miền";
 "domain_list.title" = "Tên miền";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Không có tên miền nào được cung cấp.";
 "domain_list.domains_empty.desc" = "Không có tên miền nào được tìm thấy cho truy vấn này hoặc bạn chưa liên kết bất kỳ tên miền nào.";
 "domain_list.domains_empty.button" = "Thêm miền...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Bạn có thể không cần thoát PHP Monitor và khởi động lại. Nếu bạn đã sửa chữa vấn đề (hoặc không nhớ chính xác là vấn đề gì), bạn có thể nhấp vào Thử lại, điều này sẽ khiến PHP Monitor thử lại kiểm tra khởi động.";
 "alert.cannot_start.close" = "Thoát";
 "alert.cannot_start.retry" = "Thử lại";
-"alert.php_alias_conflict.title" = "Phát hiện xung đột bí danh `php` của công thức Homebrew";
-"alert.php_alias_conflict.info" = "PHP Monitor đã phát hiện ra các bí danh `php` xung đột trong cài đặt Homebrew của bạn, cả hai đều được xác định là đã được cài đặt.\n\nĐiều này sẽ dẫn đến việc liên kết không thành công khi chuyển đổi phiên bản PHP và sẽ làm hỏng chức năng của PHP Monitor.\n\nĐể biết thêm thông tin, vui lòng truy cập: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "Phiên bản Valet đã cài đặt không đáp ứng yêu cầu phiên bản tối thiểu. PHP Monitor có thể không hoạt động như mong đợi!";
 "alert.min_valet_version.info" = "Bạn đang chạy Valet %@.\n\nĐể hỗ trợ tốt nhất cho các phiên bản PHP mới nhất và chuyển đổi phiên bản đúng cách, đề nghị bạn cập nhật lên phiên bản %@, đây là yêu cầu tối thiểu cho phiên bản PHP Monitor này.\n\nBạn có thể làm điều này bằng cách chạy `composer global update` trong terminal của bạn. Sau đó, chạy lại `valet install`. Để có kết quả tốt nhất, khởi động lại PHP Monitor sau đó. Cho đến khi điều này được giải quyết, PHP Monitor có thể không hoạt động như mong đợi.";
 "alert.preset_description.switcher_version" = "Chuyển sang PHP %@.\n\n";

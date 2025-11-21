@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Domeinlijst herladen";
 "mm_find_in_domain_list" = "Zoeken in domeinlijst";
 "domain_list.title" = "Domeinen";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Geen domeinen beschikbaar.";
 "domain_list.domains_empty.desc" = "Geen domeinen gevonden voor deze zoekopdracht of u heeft nog geen domeinen gekoppeld.";
 "domain_list.domains_empty.button" = "Domein toevoegen...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Mogelijk hoeft u PHP Monitor niet te sluiten en opnieuw te starten. Als u het probleem hebt opgelost (of niet meer weet wat het exacte probleem is), kunt u op Opnieuw proberen klikken, waardoor PHP Monitor de opstartcontroles opnieuw zal uitvoeren.";
 "alert.cannot_start.close" = "Afsluiten";
 "alert.cannot_start.retry" = "Opnieuw proberen";
-"alert.php_alias_conflict.title" = "Conflict gedetecteerd met de alias voor Homebrew `php` formule";
-"alert.php_alias_conflict.info" = "PHP Monitor heeft conflicterende `php` aliassen gedetecteerd in uw Homebrew-configuratie, waarvan beide als geïnstalleerd zijn gedetecteerd.\n\nDit zal waarschijnlijk leiden tot mislukte koppelingen bij het overschakelen van PHP-versies en zal de functionaliteit van PHP Monitor verbreken.\n\nVoor meer informatie kunt u terecht op: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "De geïnstalleerde versie van Valet voldoet niet aan de minimale versievereiste. PHP Monitor functioneert mogelijk niet zoals verwacht!";
 "alert.min_valet_version.info" = "U gebruikt momenteel Valet %@.\n\nVoor optimale ondersteuning van de nieuwste versies van PHP en correcte versie-overschakeling wordt aanbevolen om te upgraden naar versie %@, wat de minimale vereiste is voor deze versie van PHP Monitor.\n\nU kunt dit doen door `composer global update` uit te voeren in uw terminal. Voer daarna opnieuw `valet install` uit. Voor het beste resultaat, herstart u PHP Monitor daarna. Tot dit is opgelost, kan PHP Monitor mogelijk niet zoals verwacht functioneren.";
 "alert.preset_description.switcher_version" = "Schakelt over naar PHP %@.\n\n";

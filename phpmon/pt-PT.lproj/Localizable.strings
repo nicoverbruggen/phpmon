@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Recarregar lista de domínios";
 "mm_find_in_domain_list" = "Pesquisar na lista de domínios";
 "domain_list.title" = "Domínios";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Nenhum domínio disponível.";
 "domain_list.domains_empty.desc" = "Não foram encontrados domínios para esta consulta de pesquisa ou ainda não vinculou nenhum domínio.";
 "domain_list.domains_empty.button" = "Adicionar domínio...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Talvez não precise sair do PHP Monitor e reiniciá-lo. Se corrigiu o problema (ou não lembra qual é o problema exato), clique em \"Tentar novamente\", e o PHP Monitor repitirá as verificações de inicialização.";
 "alert.cannot_start.close" = "Sair";
 "alert.cannot_start.retry" = "Tentar novamente";
-"alert.php_alias_conflict.title" = "Detetado conflito de alias da fórmula `php` Homebrew";
-"alert.php_alias_conflict.info" = "O PHP Monitor detectou aliases `php` em conflito na configuração do seu Homebrew, ambos detectados como instalados.\n\nIsso provavelmente resultará numa falha na vinculação ao trocar de versão do PHP e interromperá o funcionamento do PHP Monitor.\n\nPara mais informações, visite: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "A versão instalada do Laravel Valet não cumpre um requisito mínimo de versão. O PHP Monitor pode não funcionar como esperado!";
 "alert.min_valet_version.info" = "Está a executar o Laravel Valet %@ neste momento.\n\nPara suporte ideal das versões mais recentes do PHP e mudança de versão corretamente, é recomendado atualizar para a versão %@, que é o requisito mínimo para esta versão do PHP Monitor.\n\nPode faze-lo executando `composer global update` no seu Terminal. Depois disso, execute novamente `valet install`. Para obter melhores resultados, reinicie o PHP Monitor depois. Até que isto seja resolvido, o PHP Monitor pode não funcionar como esperado.";
 "alert.preset_description.switcher_version" = "Mudar para PHP %@.\n\n";

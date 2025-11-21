@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Recargar lista de dominios";
 "mm_find_in_domain_list" = "Buscar en lista de dominios";
 "domain_list.title" = "Dominios";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "No hay dominios disponibles.";
 "domain_list.domains_empty.desc" = "No se encontraron dominios para esta búsqueda o aún no has vinculado ningún dominio.";
 "domain_list.domains_empty.button" = "Agregar dominio...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Puede que no necesites cerrar PHP Monitor y reiniciarlo. Si has solucionado el problema (o no recuerdas cuál era el problema exacto) puedes hacer clic en Reintentar, lo que hará que PHP Monitor vuelva a realizar las comprobaciones de inicio.";
 "alert.cannot_start.close" = "Cerrar";
 "alert.cannot_start.retry" = "Reintentar";
-"alert.php_alias_conflict.title" = "Detectado conflicto de alias de fórmula `php` de Homebrew";
-"alert.php_alias_conflict.info" = "PHP Monitor ha detectado alias `php` conflictivos en tu configuración de Homebrew, ambos detectados como instalados.\n\nEsto probablemente resultará en fallos de enlace al cambiar versiones de PHP y romperá la funcionalidad de PHP Monitor.\n\nPara más información, por favor visita: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "La versión instalada de Valet no cumple con el requisito mínimo de versión. ¡PHP Monitor puede no funcionar como se espera!";
 "alert.min_valet_version.info" = "Actualmente estás ejecutando Valet %@.\n\nPara un soporte óptimo de las últimas versiones de PHP y un cambio de versión adecuado, se recomienda que actualices a la versión %@, que es el requisito mínimo para esta versión de PHP Monitor.\n\nPuedes hacer esto ejecutando `composer global update` en tu terminal. Después de eso, ejecuta `valet install` de nuevo. Para mejores resultados, reinicia PHP Monitor después de eso. Hasta que esto se resuelva, PHP Monitor puede no comportarse como se espera.";
 "alert.preset_description.switcher_version" = "Cambia a PHP %@.\n\n";

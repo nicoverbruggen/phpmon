@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Ricarica elenco domini";
 "mm_find_in_domain_list" = "Ricerca nella lista dei domini";
 "domain_list.title" = "Domini";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Nessun dominio disponibile.";
 "domain_list.domains_empty.desc" = "Non sono stati trovati domini per questa ricerca o non hai ancora collegato alcun dominio.";
 "domain_list.domains_empty.button" = "Aggiungi dominio...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Potrebbe non essere necessario chiudere PHP Monitor e riavviarlo. Se hai risolto il problema (o non ricordi quale sia esattamente) puoi fare clic su Riprova, che farà ripetere a PHP Monitor i controlli di avvio.";
 "alert.cannot_start.close" = "Esci";
 "alert.cannot_start.retry" = "Riprova";
-"alert.php_alias_conflict.title" = "Conflitto di alias della formula `php` di Homebrew rilevato";
-"alert.php_alias_conflict.info" = "PHP Monitor ha rilevato alias `php` conflittuali nella tua configurazione Homebrew, entrambi segnalati come installati.\n\nCiò probabilmente causerà errori di collegamento quando si cambia versione PHP e interromperà la funzionalità di PHP Monitor.\n\nPer maggiori informazioni, visita: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "La versione installata di Valet non soddisfa i requisiti minimi. PHP Monitor potrebbe non funzionare come previsto!";
 "alert.min_valet_version.info" = "Stai attualmente eseguendo Valet %@.\n\nPer un supporto ottimale delle ultime versioni di PHP e per uno switching corretto delle versioni, si consiglia di aggiornare alla versione %@, che è il requisito minimo per questa versione di PHP Monitor.\n\nPuoi fare ciò eseguendo `composer global update` nel tuo terminale. Dopo, esegui nuovamente `valet install`. Per i migliori risultati, riavvia PHP Monitor dopo. Fino a quando non sarà risolto, PHP Monitor potrebbe non comportarsi come previsto.";
 "alert.preset_description.switcher_version" = "Passa a PHP %@.\n\n";
@@ -509,7 +506,17 @@
 "alert.key_service_not_running.desc" = "Se fai clic sul pulsante qui sotto e il servizio non funziona (cioè lo spinner appare ma rimane un 'X' dopo qualche tempo), potresti dover eseguire Fix My Valet. Puoi farlo tramite il menu First Aid > Fix My Valet.\n\nIn alternativa, puoi usare `valet stop` e `valet start` nel terminale, che potrebbero anche risolvere il problema (come alternativa a Fix My Valet).\n\nPer ulteriori debug, potresti voler controllare il tracker dei problemi su GitHub, dove altri potrebbero aver avuto problemi simili. Come sviluppatore, cerco di assicurarmi che ogni domanda riceva una risposta :)";
 "alert.key_service_has_error.title" = "A causa di problemi con i servizi Homebrew richiesti, Valet non funziona correttamente al momento.";
 "alert.key_service_has_error.subtitle" = "Per far funzionare Valet correttamente, almeno tre servizi chiave devono essere in esecuzione correttamente.\n\nPHP Monitor segnala che questo non è il caso. Sembra che uno dei servizi interessati stia segnalando uno stato di errore, quindi ti consiglio di fare clic su 'E'.\n\nPHP Monitor tenterà di riavviare il servizio e, se fallisce (cosa probabile), offrirà di localizzare il file di registro se esiste, che potrebbe contenere informazioni aggiuntive utili per la risoluzione del problema.";
-"alert.key_service_has_error.desc" = "";
+"alert.key_service_has_error.desc" = "Sfortunatamente, se un servizio segnala un errore, spesso ciò è dovuto a uno stato di configurazione non valido, che potrebbe essere difficile da correggere.
+
+SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
+
+• Prova a riavviare il servizio e a controllare prima il file di log (se esiste). Puoi farlo tramite PHP Monitor cliccando sul pulsante "E".
+
+• PHP: Se visualizzi uno stato di errore, potrebbe esserci un problema con la configurazione di PHP. Assicurati che i file .ini nell'installazione Homebrew siano a posto e che non ci siano conflitti di socket.
+
+• Nginx: Se visualizzi uno stato di errore, è probabile che un sito sia configurato in modo errato (solitamente indicato nel log degli errori). Probabilmente vorrai controllare la cartella nginx di Valet.
+
+• dnsmasq: Se visualizzi uno stato di errore, è probabile che il file di configurazione di dnsmasq sia danneggiato (solitamente si trova in ~/.config/valet/dnsmasq.d)."
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ è ora disponibile!";
 "updater.alerts.newer_version_available.subtitle" = "Mantenere aggiornato PHP Monitor è altamente consigliato, poiché le versioni più recenti di solito correggono bug e includono correzioni per supportare le ultime versioni di Valet e PHP.";
 "updater.installation_source.brew" = "Il metodo consigliato per installare gli aggiornamenti di PHP Monitor è semplicemente premere “Installa Aggiornamento”. Poiché hai usato Homebrew per installare l'app, puoi anche aggiornare tramite il terminale eseguendo `%@`, ma non è raccomandato. (Si prega di notare che l'installazione tramite questo aggiornatore integrato rimuoverà PHP Monitor dalla directory Caskroom di Homebrew, per prevenire download duplicati e potenziali problemi successivi.)";

@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "डोमेन सूची पुनः लोड करें";
 "mm_find_in_domain_list" = "डोमेन सूची में खोजें";
 "domain_list.title" = "डोमेन्स";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "कोई डोमेन उपलब्ध नहीं है.";
 "domain_list.domains_empty.desc" = "इस खोज क्वेरी के लिए कोई डोमेन नहीं मिला या आपने अभी तक किसी भी डोमेन को लिंक नहीं किया है।";
 "domain_list.domains_empty.button" = "डोमेन जोड़ें...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "आपको PHP Monitor को बंद करके पुनः आरंभ करने की आवश्यकता नहीं हो सकती है। यदि आपने समस्या ठीक कर ली है (या आपको सटीक समस्या याद नहीं है) तो आप Retry पर क्लिक कर सकते हैं, जिससे PHP Monitor स्टार्टअप जांचों को फिर से चलाएगा।";
 "alert.cannot_start.close" = "बाहर निकलें";
 "alert.cannot_start.retry" = "पुनः प्रयास करें";
-"alert.php_alias_conflict.title" = "Homebrew `php` फ़ॉर्मूला उपनाम संघर्ष का पता चला";
-"alert.php_alias_conflict.info" = "PHP Monitor ने आपके Homebrew सेटअप में विरोधी `php` उपनामों का पता लगाया है, जिनमें से दोनों को स्थापित के रूप में पहचाना गया है।\n\nयह संभवतः PHP संस्करण बदलते समय लिंकिंग विफलता का कारण बनेगा और PHP Monitor की कार्यक्षमता को तोड़ देगा।\n\nअधिक जानकारी के लिए कृपया यहाँ जाएँ: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "इंस्टॉल किया गया Valet संस्करण न्यूनतम संस्करण आवश्यकता को पूरा नहीं करता है। PHP Monitor अपेक्षित रूप से कार्य नहीं कर सकता!";
 "alert.min_valet_version.info" = "आप वर्तमान में Valet %@ चला रहे हैं।\n\nPHP के नवीनतम संस्करणों और सही संस्करण स्विचिंग का अनुकूल समर्थन करने के लिए, इस PHP Monitor के संस्करण के न्यूनतम आवश्यकत्‍व के रूप में संस्करण %@ पर अपडेट करना अनुशंसित है।\n\nआप यह अपने टर्मिनल में `composer global update` चलाकर कर सकते हैं। इसके बाद, फिर से `valet install` चलाएँ। सर्वोत्तम परिणामों के लिए, उसके बाद PHP Monitor को पुनः प्रारम्भ करें। जब तक यह हल नहीं हो जाता, PHP Monitor अपेक्षित रूप से व्यवहार नहीं कर सकता।";
 "alert.preset_description.switcher_version" = "PHP %@ पर स्विच करता है।\n\n";
