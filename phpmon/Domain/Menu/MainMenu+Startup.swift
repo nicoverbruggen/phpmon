@@ -33,7 +33,7 @@ extension MainMenu {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
 
-        // Determine what the `php` formula is aliased to
+        // Determine what the `php` formula is aliased to (again)
         await container.phpEnvs.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP

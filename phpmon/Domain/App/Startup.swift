@@ -158,6 +158,19 @@ class Startup {
                 titleText: "startup.errors.php_brew_info_invalid.title".localized,
                 subtitleText: "startup.errors.php_brew_info_invalid.subtitle".localized,
                 descriptionText: "startup.errors.php_brew_info_invalid.desc".localized
+            ),
+            // =================================================================================
+            // Make sure we can determine the PHP alias.
+            // =================================================================================
+            EnvironmentCheck(
+                command: { container in
+                    await container.phpEnvs.determinePhpAlias()
+                    return PhpEnvironments.brewPhpAlias == nil
+                },
+                name: "`brew` alias is not nil and valid",
+                titleText: "startup.errors.could_not_determine_alias.title".localized,
+                subtitleText: "startup.errors.could_not_determine_alias.subtitle".localized,
+                descriptionText: "startup.errors.could_not_determine_alias.desc".localized
             )
         ]),
         EnvironmentCheckGroup(name: "valet", condition: { return Valet.installed }, checks: [

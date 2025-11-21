@@ -676,6 +676,11 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.php_brew_info_invalid.subtitle" = "This will prevent PHP Monitor from starting correctly. It's possible that Homebrew is currently in a broken state or some additional logging crept into the output of this command. This is a known issue.";
 "startup.errors.php_brew_info_invalid.desc" = "Simply retrying may fix the issue, but you may want to run the command yourself if the issue persists and validate if it's valid JSON. Press OK, and select Retry to try again.";
 
+// Could not determine alias
+"startup.errors.could_not_determine_alias.title" = "Could not determine which version the `php` formula is aliased to";
+"startup.errors.could_not_determine_alias.subtitle" = "This will prevent PHP Monitor from starting correctly. It's possible that Homebrew is currently in a broken state or that there's an issue with the formula.";
+"startup.errors.could_not_determine_alias.desc" = "Try running `brew update` to update your formulae and try again. If the issue persists, please report it on GitHub, as this could be a bug.";
+
 // PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
 "startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
@@ -701,6 +706,7 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
 "startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
 
+// Valet not installed
 "startup.errors.valet_not_installed.title" = "Your Valet configuration directory is missing";
 "startup.errors.valet_not_installed.subtitle" = "The required directory `~/.config/valet` is missing. This usually means that you forgot to run `valet install`.";
 "startup.errors.valet_not_installed.desc" = "Assuming you already installed Valet via Composer, please run `valet install` to finish setting up Laravel Valet.
