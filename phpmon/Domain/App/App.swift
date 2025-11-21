@@ -17,6 +17,11 @@ class App {
     /** Use to determine whether a loaded testable configuration is being used. */
     static var hasLoadedTestableConfiguration: Bool = false
 
+    /** The name of the app. Has EAP suffixed when an actual EAP build. */
+    static var name: String {
+        return Bundle.main.infoDictionary?["CFBundleName"] as! String
+    }
+
     /** Retrieve the version number from the main info dictionary, Info.plist. */
     static var version: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String

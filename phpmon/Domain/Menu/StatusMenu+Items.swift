@@ -127,9 +127,9 @@ extension StatusMenu {
     @MainActor func addCoreMenuItems() {
         addItems([
             NSMenuItem.separator(),
-            NSMenuItem(title: "mi_about".localized,
+            NSMenuItem(title: "mi_about".localized.replacing("PHP Monitor", with: App.name),
                        action: #selector(MainMenu.openAbout)),
-            NSMenuItem(title: "mi_quit".localized,
+            NSMenuItem(title: "mi_quit".localized.replacing("PHP Monitor", with: App.name),
                        action: #selector(MainMenu.terminateApp), keyEquivalent: "q")
         ])
     }
