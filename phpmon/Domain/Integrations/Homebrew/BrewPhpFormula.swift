@@ -79,9 +79,12 @@ struct BrewPhpFormula: Equatable {
 
     /// The associated Homebrew folder with this PHP formula.
     var homebrewFolder: String {
-        let resolved = name
+        var resolved = name
             .replacing("shivammathur/php/", with: "")
-            .replacing("php@" + PhpEnvironments.brewPhpAlias, with: "php")
+
+        if let alias = PhpEnvironments.brewPhpAlias {
+            resolved = resolved.replacing("php@" + alias, with: "php")
+        }
 
         return "\(App.shared.container.paths.optPath)/\(resolved)/bin"
     }
@@ -110,10 +113,13 @@ struct BrewPhpFormula: Equatable {
             return false
         }
 
-        return container.filesystem.fileExists(
-            "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
-                .replacing("php@" + PhpEnvironments.brewPhpAlias, with: "php")
-        )
+        var path = "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
+
+        if let alias = PhpEnvironments.brewPhpAlias {
+            path = path.replacing("php@" + alias, with: "php")
+        }
+
+        return container.filesystem.fileExists(path)
     }
 
     /**

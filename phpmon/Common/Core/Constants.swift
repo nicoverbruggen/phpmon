@@ -77,7 +77,7 @@ struct Constants {
     static var ExperimentalPhpVersions: Set<String> {
         let releaseDates = [
             "8.6": Date.fromString(PhpFormulaeCutoffDate),
-            "8.5": Date.fromString("2025-12-22"),
+            "8.5": Date.fromString("2025-11-20"),
             "8.4": Date.fromString("2024-11-22")
         ]
 

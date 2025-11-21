@@ -193,15 +193,20 @@ class BrewDiagnostics {
                 from: tapAlias.data(using: .utf8)!
             ).first!
 
-            if tapPhp.version != PhpEnvironments.brewPhpAlias {
+            guard let tapPhpVersion = tapPhp.version else {
+                Log.warn("The `php` formula could not be determined.")
+                return false
+            }
+
+            if PhpEnvironments.brewPhpAlias != nil && tapPhp.version != PhpEnvironments.brewPhpAlias {
                 Log.warn("The `php` formula alias seems to be the different between the tap and core. "
                          + "This could be a problem!")
                 Log.info("Determining whether both of these versions are installed...")
 
                 let availablePhpVersions = container.phpEnvs.availablePhpVersions
 
-                let bothInstalled = availablePhpVersions.contains(tapPhp.version)
-                    && availablePhpVersions.contains(PhpEnvironments.brewPhpAlias)
+                let bothInstalled = availablePhpVersions.contains(tapPhpVersion)
+                    && availablePhpVersions.contains(PhpEnvironments.brewPhpAlias!)
 
                 if bothInstalled {
                     Log.warn("Both conflicting aliases seem to be installed, warning the user!")
@@ -212,7 +217,7 @@ class BrewDiagnostics {
                 return bothInstalled
             }
 
-            Log.info("All seems to be OK. No conflicts, both are PHP \(tapPhp.version).")
+            Log.info("All seems to be OK. No conflicts, both are PHP \(tapPhpVersion).")
 
             return false
         }

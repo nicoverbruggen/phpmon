@@ -332,8 +332,10 @@ extension StatusMenu {
             items.append(contentsOf: [
                 NSMenuItem.separator(),
                 HeaderView.asMenuItem(text: "Laravel Valet"),
-                NSMenuItem(title: "mi_fix_my_valet".localized(PhpEnvironments.brewPhpAlias),
-                           action: #selector(MainMenu.fixMyValet),
+                NSMenuItem(title: "mi_fix_my_valet".localized,
+                           action: PhpEnvironments.brewPhpAlias != nil
+                           ? #selector( MainMenu.fixMyValet)
+                           : nil, // disable when `php` formula is unavailable
                            toolTip: "mi_fix_my_valet_tooltip".localized),
                 NSMenuItem(title: "mi_fix_brew_permissions".localized(),
                            action: #selector(MainMenu.fixHomebrewPermissions),
