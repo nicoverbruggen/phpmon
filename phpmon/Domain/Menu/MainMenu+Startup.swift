@@ -56,10 +56,6 @@ extension MainMenu {
         // Actually detect the PHP versions
         await container.phpEnvs.reloadPhpVersions()
 
-        // Verify third party taps
-        // The missing tap(s) will be actionable later
-        await BrewDiagnostics.shared.verifyThirdPartyTaps()
-
         // Check for an alias conflict
         await BrewDiagnostics.shared.checkForCaskConflict()
 

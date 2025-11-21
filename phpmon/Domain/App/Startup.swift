@@ -151,6 +151,9 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: { container in
+                    // first, verify the taps
+                    await BrewDiagnostics.shared.verifyThirdPartyTaps()
+                    // then, check the Homebrew information
                     await container.phpEnvs.getHomebrewInformation()
                     return container.phpEnvs.homebrewPackage == nil
                 },
