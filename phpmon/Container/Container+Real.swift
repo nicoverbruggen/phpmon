@@ -9,7 +9,7 @@
 extension Container {
     public static func real() -> Container {
         let container = Container()
-        container.prepare()
+        container.bind()
         return container
     }
 }

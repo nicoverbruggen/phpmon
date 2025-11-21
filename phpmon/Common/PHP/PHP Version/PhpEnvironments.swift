@@ -55,8 +55,13 @@ class PhpEnvironments {
      Determine which PHP version the `php` formula is aliased to.
      */
     func determinePhpAlias() async {
-        PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
-        Log.info("[BREW] On your system, the `php` formula means version \(homebrewPackage.version).")
+        if let alias = self.homebrewPackage.version {
+            PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
+            Log.info("[BREW] On your system, the `php` formula means version \(alias).")
+        } else {
+            Log.info("[BREW] Could not determine what version the `php` formula is. The alias may have been removed.")
+            return
+        }
 
         // Check if that version actually corresponds to an older version
         let phpConfigExecutablePath = "\(container.paths.optPath)/php/bin/php-config"
@@ -120,12 +125,12 @@ class PhpEnvironments {
      
      As such, we take that information from Homebrew.
      */
-    static var brewPhpAlias: String = ""
+    static var brewPhpAlias: String?
 
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
      */
-    var homebrewBrewPhpAlias: String {
+    var homebrewBrewPhpAlias: String? {
         if homebrewPackage == nil {
             // For UI testing and as a fallback, determine this version by using (fake) php-config
             let version = App.shared.container.command.execute(path: "/opt/homebrew/bin/php-config",
@@ -142,6 +147,25 @@ class PhpEnvironments {
      */
     var phpInstall: ActivePhpInstallation? {
         return currentInstall
+    }
+
+    /**
+     The most recent and stable PHP version available.
+     Used when the Homebrew PHP alias could not be determined.
+     */
+    var fallbackPhpVersion: String {
+        let stableVersion = container.phpEnvs.cachedPhpInstallations.first { (_: String, value: PhpInstallation) in
+            return value.isPreRelease == false
+        }
+
+        if let stableVersion {
+            return stableVersion.value.versionNumber.short
+        } else {
+            guard let unstableVersion = container.phpEnvs.cachedPhpInstallations.first else {
+                fatalError("Could not find a valid PHP version to fallback to. None are installed?")
+            }
+            return unstableVersion.value.versionNumber.short
+        }
     }
 
     /**
@@ -189,15 +213,15 @@ class PhpEnvironments {
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
         // We should also detect that as a version that is installed
-        let phpAlias = homebrewPackage.version
-
-        // Avoid inserting a duplicate
-        if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
-            let phpAliasInstall = PhpInstallation(container, phpAlias)
-            // Before inserting, ensure that the actual output matches the alias
-            // if that isn't the case, our formula remains out-of-date
-            if !phpAliasInstall.isMissingBinary {
-                supportedVersions.insert(phpAlias)
+        if let phpAlias = homebrewPackage.version {
+            // Avoid inserting a duplicate
+            if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
+                let phpAliasInstall = PhpInstallation(container, phpAlias)
+                // Before inserting, ensure that the actual output matches the alias
+                // if that isn't the case, our formula remains out-of-date
+                if !phpAliasInstall.isMissingBinary {
+                    supportedVersions.insert(phpAlias)
+                }
             }
         }
 

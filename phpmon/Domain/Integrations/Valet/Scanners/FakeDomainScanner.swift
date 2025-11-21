@@ -9,31 +9,31 @@
 class FakeDomainScanner: DomainScanner {
 
     var sites: [ValetSite] = [
-        FakeValetSite(fakeWithName: "larament", tld: "test", secure: true,
+        FakeValetSite(withDomain: "larament", tld: "test", secure: true,
                       path: "~/Code/sites/larament", linked: true),
 
-        FakeValetSite(fakeWithName: "symfony", tld: "test", secure: true,
+        FakeValetSite(withDomain: "symfony", tld: "test", secure: true,
                   path: "~/Code/sites/symfony", linked: true, driver: "Symfony (^7.3)"),
 
-        FakeValetSite(fakeWithName: "tempest", tld: "test", secure: true,
+        FakeValetSite(withDomain: "tempest", tld: "test", secure: true,
                   path: "~/Code/sites/tempest", linked: true, driver: "Tempest (^1.6)", constraint: "^8.4"),
 
-        FakeValetSite(fakeWithName: "drupal", tld: "test", secure: false,
+        FakeValetSite(withDomain: "drupal", tld: "test", secure: false,
                   path: "~/Sites/drupal", linked: false, driver: "Drupal", constraint: "^8.2", isolated: "8.2"),
 
-        FakeValetSite(fakeWithName: "wordpress", tld: "test", secure: false,
+        FakeValetSite(withDomain: "wordpress", tld: "test", secure: false,
                   path: "~/Sites/wordpress", linked: false, driver: "WordPress", constraint: "^8.0", isolated: "8.0"),
 
-        FakeValetSite(fakeWithName: "concord", tld: "test", secure: false,
+        FakeValetSite(withDomain: "concord", tld: "test", secure: false,
                   path: "~/Code/concord", linked: true, driver: "Laravel (^10)", constraint: "^8.3", isolated: "8.3"),
 
-        FakeValetSite(fakeWithName: "gen-ai-mcp", tld: "test", secure: true,
+        FakeValetSite(withDomain: "gen-ai-mcp", tld: "test", secure: true,
                       path: "~/Code/gen-ai-mcp", linked: true, driver: "Laravel (^12)",
                       constraint: "^8.4", isolated: "8.4")
     ]
 
     var proxies: [ValetProxy] = [
-        FakeValetProxy(fakeDomain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
+        FakeValetProxy(withDomain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
     ]
 
     // MARK: - Sites

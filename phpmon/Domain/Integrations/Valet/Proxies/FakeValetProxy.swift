@@ -10,15 +10,15 @@ import Foundation
 
 class FakeValetProxy: ValetProxy {
     convenience init(
-        fakeDomain: String,
+        withDomain domain: String,
         target: String,
         secure: Bool,
         tld: String
     ) {
         self.init(
             App.shared.container,
-            domain: fakeDomain,
-            target: tld,
+            domain: domain,
+            target: target,
             secure: secure,
             tld: tld
         )

@@ -101,15 +101,11 @@ class CrashReporter {
         request.setValue("text/crash", forHTTPHeaderField: "Content-Type")
         request.setValue("phpmon-crashrep/1.0", forHTTPHeaderField: "User-Agent")
         request.httpBody = text.data(using: .utf8)
+        request.timeoutInterval = timeout
 
-        // Send the request synchronously, we want the report to be sent before anything else
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = timeout
-
-        let session = URLSession(configuration: config)
         let semaphore = DispatchSemaphore(value: 0)
 
-        let task = session.dataTask(with: request) { _, response, error in
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
             defer { semaphore.signal() }
 
             if let error = error {

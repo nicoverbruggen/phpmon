@@ -31,9 +31,10 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = true
 
         // Ensure an update is available
-        configuration.shellOutput[
-            "curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"
-        ] = .delayed(0.5, """
+        configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
+            statusCode: 200,
+            headers: [:],
+            text: """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
 
@@ -46,7 +47,9 @@ final class UpdateCheckTest: UITestCase {
 
                 app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
             end
-            """)
+            """,
+            duration: 0.5
+        )
 
         let app = launch(openMenu: false, with: configuration)
 
@@ -64,7 +67,10 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
 
         // Ensure an update is available
-        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, """
+        configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
+            statusCode: 200,
+            headers: [:],
+            text: """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
 
@@ -77,7 +83,9 @@ final class UpdateCheckTest: UITestCase {
 
                 app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
             end
-            """)
+            """,
+            duration: 0.5
+        )
 
         // Wait for the menu to open and search for updates
         let app = launch(openMenu: false, with: configuration)
@@ -93,7 +101,10 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
 
         // Ensure an update is available
-        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, """
+        configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
+            statusCode: 200,
+            headers: [:],
+            text: """
             cask 'phpmon-dev' do
                 depends_on formula: 'gnu-sed'
 
@@ -106,7 +117,9 @@ final class UpdateCheckTest: UITestCase {
 
                 app 'PHP Monitor DEV.app', target: "PHP Monitor DEV.app"
             end
-            """)
+            """,
+            duration: 0.5
+        )
 
         // Wait for the menu to open and search for updates
         let app = launch(openMenu: true, with: configuration)
@@ -125,7 +138,14 @@ final class UpdateCheckTest: UITestCase {
         configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
 
         // Ensure an update is available
-        configuration.shellOutput["curl -s --max-time 10 '\(Constants.Urls.UpdateCheckEndpoint.absoluteString)'"] = .delayed(0.5, "404 PAGE NOT FOUND")
+        configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
+            statusCode: 500,
+            headers: [:],
+            text: """
+            OOPS, SERVER DOWN
+            """,
+            duration: 0.5
+        )
 
         // Wait for the menu to open and search for updates
         let app = launch(openMenu: true, with: configuration)

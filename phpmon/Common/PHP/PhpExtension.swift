@@ -70,8 +70,8 @@ class PhpExtension {
         self.line = line
 
         let fullPath = String(line[range])
-            .replacingOccurrences(of: "\"", with: "") // replace excess "
-            .replacingOccurrences(of: ".so", with: "") // replace excess .so
+            .replacing("\"", with: "") // replace excess "
+            .replacing(".so", with: "") // replace excess .so
 
         self.name = String(fullPath.split(separator: "/").last!) // take last segment
 
@@ -88,7 +88,7 @@ class PhpExtension {
             // DISABLED: Commented out line
             ? "; \(line)"
             // ENABLED: Line where the comment delimiter (;) is removed
-            : line.replacingOccurrences(of: "; ", with: "")
+            : line.replacing("; ", with: "")
 
         await sed(container, file: file, original: line, replacement: newLine)
 

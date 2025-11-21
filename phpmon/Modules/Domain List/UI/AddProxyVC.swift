@@ -135,10 +135,10 @@ class AddProxyVC: NSViewController, NSTextFieldDelegate {
 
     func updateTextField() {
         inputDomainName.stringValue = inputDomainName.stringValue
-            .replacingOccurrences(of: " ", with: "-")
+            .replacing(" ", with: "-")
 
         inputProxySubject.stringValue = inputProxySubject.stringValue
-            .replacingOccurrences(of: " ", with: "-")
+            .replacing(" ", with: "-")
 
         buttonCreateProxy.isEnabled = validate(
             domain: inputDomainName.stringValue,

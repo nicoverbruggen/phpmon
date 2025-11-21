@@ -31,8 +31,8 @@ func sed(
     replacement: String
 ) async {
     // Escape slashes (or `sed` won't work)
-    let e_original = original.replacingOccurrences(of: "/", with: "\\/")
-    let e_replacement = replacement.replacingOccurrences(of: "/", with: "\\/")
+    let e_original = original.replacing("/", with: "\\/")
+    let e_replacement = replacement.replacing("/", with: "\\/")
 
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension

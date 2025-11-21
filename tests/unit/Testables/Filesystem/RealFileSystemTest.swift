@@ -9,13 +9,13 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
+@Suite(.serialized) // serialized due to how unique temp directory works
 struct RealFileSystemTest {
     var filesystem: FileSystemProtocol
 
     init() throws {
         let container = Container()
-        container.prepare()
+        container.bind()
 
         filesystem = container.filesystem
     }
@@ -118,7 +118,7 @@ struct RealFileSystemTest {
 
         #expect(filesystem.fileExists(executable))
 
-        let newExecutable = executable.replacingOccurrences(of: "/exec.sh", with: "/file.txt")
+        let newExecutable = executable.replacing("/exec.sh", with: "/file.txt")
 
         try! filesystem.move(from: executable, to: newExecutable)
 

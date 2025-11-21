@@ -177,7 +177,7 @@ I recommend updating PHP Monitor before using the version manager to install, re
 "phpman.warnings.unsupported.title" = "Your version of Homebrew may cause issues";
 "phpman.warnings.unsupported.desc" = "No functionality is disabled, but some commands may not work as expected. You are currently running Homebrew %@.
 
-Currently, Homebrew 4 is the only supported version for the PHP Version Manager. If you are running a newer version of Homebrew, you may wish to check if a newer version of PHP Monitor is available.";
+Currently, only Homebrew 4 and 5 are supported for PHP Version Manager. If you are running a newer version of Homebrew, you may wish to check if a newer version of PHP Monitor is available.";
 
 "phpman.warnings.removal.title" = "Are you sure you want to uninstall %@?";
 "phpman.warnings.removal.desc" = "Please note that configuration files will not be removed, so it should be easy to reinstall later if needed.

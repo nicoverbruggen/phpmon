@@ -136,6 +136,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         }
 
         let command = """
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             \(container.paths.brew) install \(self.installing.map { $0.name }.joined(separator: " ")) --force
@@ -167,6 +168,7 @@ class ModifyPhpVersionCommand: BrewCommand {
 
         // If the health comes back as negative, attempt to reinstall
         let command = """
+            export HOMEBREW_DOWNLOAD_CONCURRENCY=auto; \
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
             export HOMEBREW_NO_INSTALL_CLEANUP=true; \
             export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true; \

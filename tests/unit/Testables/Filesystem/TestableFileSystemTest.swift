@@ -9,9 +9,9 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct TestableFileSystemTest {
-    var container: Container
+    private var container: Container
+
     init() throws {
         container = Container.fake(files: [
             "/home/user/bin/foo": .fake(.binary),

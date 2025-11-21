@@ -7,15 +7,37 @@
 
 import Foundation
 
+struct HomebrewVersion: Decodable {
+    let stable: String
+    let head: String?
+    let bottle: Bool?
+}
+
 struct HomebrewPackage: Decodable {
     let full_name: String
     let aliases: [String]
     let installed: [HomebrewInstalled]
+    let versions: HomebrewVersion?
     let linked_keg: String?
 
-    public var version: String {
-        return aliases.first!
-            .replacingOccurrences(of: "php@", with: "")
+    public var version: String? {
+        // Get the stable version directly
+        if let versions, let version = try? VersionNumber.parse(versions.stable).short {
+            return version
+        }
+
+        // Read it from the aliases list
+        if !aliases.isEmpty {
+            return aliases.first!.replacing("php@", with: "")
+        }
+
+        // Fallback to the linked keg
+        if let linked = linked_keg,
+           let version = try? VersionNumber.parse(linked).short {
+            return version
+        }
+
+        fatalError("Could not determine package")
     }
 }
 

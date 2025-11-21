@@ -19,7 +19,7 @@ class FakeValetInteractor: ValetInteractor {
         if let scanner = ValetScanner.active as? FakeDomainScanner {
             scanner.sites.append(
                 FakeValetSite(
-                    fakeWithName: domain,
+                    withDomain: domain,
                     tld: Valet.shared.config.tld,
                     secure: false,
                     path: path,

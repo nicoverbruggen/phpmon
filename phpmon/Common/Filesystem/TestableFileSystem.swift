@@ -20,7 +20,7 @@ class TestableFileSystem: FileSystemProtocol {
         // Ensure that each of the ~ characters are replaced with the home directory path
         accessQueue.sync {
             for (key, value) in files {
-                let adjustedKey = key.contains("~") ? key.replacingOccurrences(of: "~", with: self.homeDirectory) : key
+                let adjustedKey = key.contains("~") ? key.replacing("~", with: self.homeDirectory) : key
                 self.files[adjustedKey] = value
             }
 
@@ -102,7 +102,7 @@ class TestableFileSystem: FileSystemProtocol {
         return accessQueue.sync {
             self.files.keys
                 .filter { $0.hasPrefix(seek) }
-                .map { $0.replacingOccurrences(of: seek, with: "") }
+                .map { $0.replacing(seek, with: "") }
                 .filter { !$0.contains("/") }
         }
     }
@@ -142,7 +142,7 @@ class TestableFileSystem: FileSystemProtocol {
                 if key.hasPrefix(path) {
                     self.files.renameKey(
                         fromKey: key,
-                        toKey: key.replacingOccurrences(of: path, with: newPath)
+                        toKey: key.replacing(path, with: newPath)
                     )
                 }
             }

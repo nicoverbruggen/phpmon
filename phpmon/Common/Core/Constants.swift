@@ -67,7 +67,7 @@ struct Constants {
      release, as it often takes a while for Homebrew to make the
      new release available and not everyone uses a separate tap.
      */
-    static let PhpFormulaeCutoffDate = "2025-11-20" // YYYY-MM-DD
+    static let PhpFormulaeCutoffDate = "2026-11-30" // YYYY-MM-DD
 
     /**
      * The PHP versions that are considered pre-release versions.
@@ -76,8 +76,8 @@ struct Constants {
      */
     static var ExperimentalPhpVersions: Set<String> {
         let releaseDates = [
-            // "8.6": Date.fromString("2026-11-30"), // TBD
-            "8.5": Date.fromString(PhpFormulaeCutoffDate),
+            "8.6": Date.fromString(PhpFormulaeCutoffDate),
+            "8.5": Date.fromString("2025-11-20"),
             "8.4": Date.fromString("2024-11-22")
         ]
 
@@ -112,8 +112,8 @@ struct Constants {
         "5.6",
         "7.0", "7.1", "7.2", "7.3", "7.4",
         "8.0", "8.1", "8.2", "8.3", "8.4",
-        "8.5" // DEV
-        // "8.6" // TBD
+        "8.5",
+        "8.6" // DEV
     ]
 
     /**
@@ -135,8 +135,8 @@ struct Constants {
         [
             "7.1", "7.2", "7.3", "7.4",
             "8.0", "8.1", "8.2", "8.3", "8.4",
-            "8.5" // DEV
-            // "8.6" // TBD
+            "8.5",
+            "8.6" // DEV
         ]
     ]
 

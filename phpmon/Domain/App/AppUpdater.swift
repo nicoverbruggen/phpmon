@@ -28,8 +28,7 @@ class AppUpdater {
 
         let caskUrl = Constants.Urls.UpdateCheckEndpoint
 
-        guard let caskFile = await CaskFile.from(App.shared.container, url: caskUrl) else {
-            Log.err("The contents of the CaskFile at '\(caskUrl.absoluteString)' could not be retrieved.")
+        guard let caskFile = try? await CaskFile.fromUrl(App.shared.container, caskUrl) else {
             presentCouldNotRetrieveUpdateIfInteractive()
             return .networkError
         }
@@ -148,7 +147,7 @@ class AppUpdater {
         system_quiet("mkdir -p ~/.config/phpmon/updater 2> /dev/null")
 
         let updaterDirectory = "~/.config/phpmon/updater"
-            .replacingOccurrences(of: "~", with: NSHomeDirectory())
+            .replacing("~", with: NSHomeDirectory())
 
         system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
 

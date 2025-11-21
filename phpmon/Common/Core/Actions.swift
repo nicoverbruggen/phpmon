@@ -146,7 +146,12 @@ class Actions {
      extensions and/or run `composer global update`.
      */
     public func fixMyValet() async {
-        await InternalSwitcher(container).performSwitch(to: PhpEnvironments.brewPhpAlias)
+        if let alias = PhpEnvironments.brewPhpAlias {
+            await InternalSwitcher(container).performSwitch(to: alias)
+        } else {
+            await InternalSwitcher(container).performSwitch(to: container.phpEnvs.fallbackPhpVersion)
+        }
+
         await brew(container, "services restart \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
         await brew(container, "services restart \(formulae.php)", sudo: formulae.php.elevated)
         await brew(container, "services restart \(formulae.nginx)", sudo: formulae.nginx.elevated)

@@ -9,6 +9,7 @@
 import Foundation
 
 extension TimeInterval {
+    static func milliseconds(_ value: Double) -> TimeInterval { value / 1000 }
     static func seconds(_ value: Double) -> TimeInterval { value }
     static func minutes(_ value: Double) -> TimeInterval { value * 60 }
     static func hours(_ value: Double) -> TimeInterval { value * 3600 }

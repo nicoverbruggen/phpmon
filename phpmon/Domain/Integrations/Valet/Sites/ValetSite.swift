@@ -23,7 +23,7 @@ class ValetSite: ValetListable {
     /// replacing the user's home folder with ~.
     lazy var absolutePathRelative: String = {
         return self.absolutePath
-            .replacingOccurrences(of: container.paths.homePath, with: "~")
+            .replacing(container.paths.homePath, with: "~")
     }()
 
     /// The TLD used to locate this site.

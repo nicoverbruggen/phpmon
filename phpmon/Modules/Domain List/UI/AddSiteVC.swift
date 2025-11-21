@@ -129,7 +129,7 @@ class AddSiteVC: NSViewController, NSTextFieldDelegate {
 
     func updateTextField() {
         inputDomainName.stringValue = inputDomainName.stringValue
-            .replacingOccurrences(of: " ", with: "-")
+            .replacing(" ", with: "-")
 
         buttonCreateLink.isEnabled = isValidLinkName(inputDomainName.stringValue)
         updatePreview()

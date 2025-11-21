@@ -13,6 +13,7 @@ class RealShell: ShellProtocol {
 
     init(container: Container) {
         self.container = container
+        self.PATH = RealShell.getPath()
     }
 
     /**
@@ -25,7 +26,7 @@ class RealShell: ShellProtocol {
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private(set) var PATH: String = { return RealShell.getPath() }()
+    private(set) var PATH: String
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
@@ -45,10 +46,14 @@ class RealShell: ShellProtocol {
         task.standardOutput = pipe
         task.launch()
 
-        return String(
+        let path = String(
             data: pipe.fileHandleForReading.readDataToEndOfFile(),
             encoding: String.Encoding.utf8
         ) ?? ""
+
+        try? pipe.fileHandleForReading.close()
+
+        return path
     }
 
     /**
@@ -104,8 +109,16 @@ class RealShell: ShellProtocol {
         process.launch()
         process.waitUntilExit()
 
+        if process.terminationReason == .uncaughtSignal {
+            Log.err("The command `\(command)` likely crashed. Returning empty output.")
+            return .out("", "")
+        }
+
         let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+
+        try? outputPipe.fileHandleForReading.close()
+        try? errorPipe.fileHandleForReading.close()
 
         if Log.shared.verbosity == .cli {
             log(process: process, stdOut: stdOut, stdErr: stdErr)
@@ -130,8 +143,16 @@ class RealShell: ShellProtocol {
 
         return await withCheckedContinuation { continuation in
             process.terminationHandler = { [weak self] _ in
+                if process.terminationReason == .uncaughtSignal {
+                    Log.err("The command `\(command)` likely crashed. Returning empty output.")
+                    continuation.resume(returning: .out("", ""))
+                }
+
                 let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                 let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+
+                try? outputPipe.fileHandleForReading.close()
+                try? errorPipe.fileHandleForReading.close()
 
                 if Log.shared.verbosity == .cli {
                     self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
@@ -249,8 +270,9 @@ class RealShell: ShellProtocol {
         })
     }
 
-    func reload() {
-        container.shell = RealShell(container: container)
+    func reloadEnvPath() {
+        // Instead of replacing the entire shell instance, we simply re-fetch the PATH
+        self.PATH = RealShell.getPath()
     }
 }
 

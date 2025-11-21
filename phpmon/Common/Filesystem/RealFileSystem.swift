@@ -12,11 +12,15 @@ extension String {
     var replacingTildeWithHomeDirectory: String {
         // Try and check if there's a shared container
         if let paths = App.shared.container.paths {
-            return self.replacingOccurrences(of: "~", with: paths.homePath)
+            return self.replacing("~", with: paths.homePath)
         }
 
-        // TODO: Come up with some other way to handle this when the app container is not available, especially for tests
-        return self
+        // It's also okay if we're running tests
+        if isRunningTests {
+            return self
+        }
+
+        fatalError("The app container is not available, the home directory could not be inferred.")
     }
 }
 

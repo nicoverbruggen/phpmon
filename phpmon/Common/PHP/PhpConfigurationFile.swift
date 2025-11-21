@@ -36,7 +36,7 @@ class PhpConfigurationFile: CreatedFromFile {
         _ container: Container,
         filePath: String
     ) -> Self? {
-        let path = filePath.replacingOccurrences(of: "~", with: container.paths.homePath)
+        let path = filePath.replacing("~", with: container.paths.homePath)
 
         do {
             let fileContents = try container.filesystem.getStringFromFile(path)
@@ -96,7 +96,7 @@ class PhpConfigurationFile: CreatedFromFile {
 
         // Replace the value with the new one
         components[1] = components[1]
-            .replacingOccurrences(of: item.value, with: value)
+            .replacing(item.value, with: value)
 
         // Replace the specific line
         self.lines[item.lineIndex] = components.joined(separator: "=")

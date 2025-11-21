@@ -13,9 +13,13 @@ import NVAlert
 extension MainMenu {
 
     @MainActor @objc func fixMyValet() {
+        guard let brewAlias = PhpEnvironments.brewPhpAlias else {
+            return
+        }
+
         let previousVersion = container.phpEnvs.phpInstall?.version.short
 
-        if !App.shared.container.phpEnvs.availablePhpVersions.contains(PhpEnvironments.brewPhpAlias) {
+        if !App.shared.container.phpEnvs.availablePhpVersions.contains(brewAlias) {
             presentAlertForMissingFormula()
             return
         }
@@ -23,7 +27,7 @@ extension MainMenu {
         if !NVAlert()
             .withInformation(
                 title: "alert.fix_my_valet.title".localized,
-                subtitle: "alert.fix_my_valet.info".localized(PhpEnvironments.brewPhpAlias)
+                subtitle: "alert.fix_my_valet.info".localized(brewAlias)
             )
             .withPrimary(text: "alert.fix_my_valet.ok".localized)
             .withSecondary(text: "alert.fix_my_valet.cancel".localized)
@@ -35,7 +39,7 @@ extension MainMenu {
         Task { @MainActor in
             await Actions(container).fixMyValet()
 
-            if previousVersion == PhpEnvironments.brewPhpAlias || previousVersion == nil {
+            if previousVersion == brewAlias || previousVersion == nil {
                 self.presentAlertForSameVersion()
             } else {
                 self.presentAlertForDifferentVersion(version: previousVersion!)
@@ -65,6 +69,10 @@ extension MainMenu {
     }
 
     @MainActor private func presentAlertForDifferentVersion(version: String) {
+        guard let brewAlias = PhpEnvironments.brewPhpAlias else {
+            return
+        }
+
         NVAlert()
             .withInformation(
                 title: "alert.fix_my_valet_done.title".localized,
@@ -75,7 +83,7 @@ extension MainMenu {
                 alert.close(with: .alertSecondButtonReturn)
                 MainMenu.shared.switchToPhpVersion(version)
             })
-            .withSecondary(text: "alert.fix_my_valet_done.stay".localized(PhpEnvironments.brewPhpAlias))
+            .withSecondary(text: "alert.fix_my_valet_done.stay".localized(brewAlias))
             .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })

@@ -31,13 +31,13 @@ struct RCFile {
                     let content = line.split(separator: "=")
                     let key = String(content[0])
                         .trimmingCharacters(in: .whitespaces)
-                        .replacingOccurrences(of: "\"", with: "")
+                        .replacing("\"", with: "")
                     if key.starts(with: "#") {
                         return
                     }
                     let value = String(content[1])
                         .trimmingCharacters(in: .whitespaces)
-                        .replacingOccurrences(of: "\"", with: "")
+                        .replacing("\"", with: "")
                     fields[key] = value
                 }
             })

@@ -97,8 +97,8 @@ class Startup {
                 subtitleText: "alert.homebrew_missing.subtitle".localized,
                 descriptionText: "alert.homebrew_missing.info".localized(
                     App.architecture
-                        .replacingOccurrences(of: "x86_64", with: "Intel")
-                        .replacingOccurrences(of: "arm64", with: "Apple Silicon"),
+                        .replacing("x86_64", with: "Intel")
+                        .replacing("arm64", with: "Apple Silicon"),
                     App.shared.container.paths.brew
                 ),
                 buttonText: "alert.homebrew_missing.quit".localized,

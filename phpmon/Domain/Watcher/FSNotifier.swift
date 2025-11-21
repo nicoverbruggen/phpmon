@@ -25,6 +25,11 @@ class FSNotifier {
 
         fileDescriptor = open(url.path, O_EVTONLY)
 
+        guard fileDescriptor >= 0 else {
+            Log.err("Failed to open file descriptor for \(url.path), this notifier will not work.")
+            return
+        }
+
         dispatchSource = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: fileDescriptor,
             eventMask: eventMask,
@@ -44,7 +49,6 @@ class FSNotifier {
                 }
             }
         })
-
         dispatchSource?.setCancelHandler(handler: { [weak self] in
             guard let self = self else { return }
 
@@ -52,7 +56,6 @@ class FSNotifier {
             self.fileDescriptor = -1
             self.dispatchSource = nil
         })
-
         dispatchSource?.resume()
     }
 
