@@ -53,6 +53,9 @@ extension MainMenu {
         // Validate the Homebrew version (determines install/upgrade functionality)
         await Brew.shared.determineVersion()
 
+        // Verify third party taps (will display as warning)
+        await BrewDiagnostics.shared.verifyThirdPartyTaps()
+
         // Actually detect the PHP versions
         await container.phpEnvs.reloadPhpVersions()
 

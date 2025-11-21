@@ -147,12 +147,12 @@ class Startup {
                 descriptionText: "startup.errors.dyld_library.desc".localized
             ),
             // =================================================================================
-            // Make sure we can get valid output from Homebrew's info command.
+            // Make sure we can get valid output from Homebrew's `info` command.
             // =================================================================================
             EnvironmentCheck(
                 command: { container in
                     // first, verify the taps
-                    await BrewDiagnostics.shared.verifyThirdPartyTaps()
+                    await BrewDiagnostics.shared.loadInstalledTaps()
                     // then, check the Homebrew information
                     await container.phpEnvs.getHomebrewInformation()
                     return container.phpEnvs.homebrewPackage == nil
