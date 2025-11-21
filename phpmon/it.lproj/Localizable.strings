@@ -510,13 +510,13 @@
 
 SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
 
-• Prova a riavviare il servizio e a controllare prima il file di log (se esiste). Puoi farlo tramite PHP Monitor cliccando sul pulsante "E".
+• Prova a riavviare il servizio e a controllare prima il file di log (se esiste). Puoi farlo tramite PHP Monitor cliccando sul pulsante \"E\".
 
 • PHP: Se visualizzi uno stato di errore, potrebbe esserci un problema con la configurazione di PHP. Assicurati che i file .ini nell'installazione Homebrew siano a posto e che non ci siano conflitti di socket.
 
 • Nginx: Se visualizzi uno stato di errore, è probabile che un sito sia configurato in modo errato (solitamente indicato nel log degli errori). Probabilmente vorrai controllare la cartella nginx di Valet.
 
-• dnsmasq: Se visualizzi uno stato di errore, è probabile che il file di configurazione di dnsmasq sia danneggiato (solitamente si trova in ~/.config/valet/dnsmasq.d)."
+• dnsmasq: Se visualizzi uno stato di errore, è probabile che il file di configurazione di dnsmasq sia danneggiato (solitamente si trova in ~/.config/valet/dnsmasq.d).";
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ è ora disponibile!";
 "updater.alerts.newer_version_available.subtitle" = "Mantenere aggiornato PHP Monitor è altamente consigliato, poiché le versioni più recenti di solito correggono bug e includono correzioni per supportare le ultime versioni di Valet e PHP.";
 "updater.installation_source.brew" = "Il metodo consigliato per installare gli aggiornamenti di PHP Monitor è semplicemente premere “Installa Aggiornamento”. Poiché hai usato Homebrew per installare l'app, puoi anche aggiornare tramite il terminale eseguendo `%@`, ma non è raccomandato. (Si prega di notare che l'installazione tramite questo aggiornatore integrato rimuoverà PHP Monitor dalla directory Caskroom di Homebrew, per prevenire download duplicati e potenziali problemi successivi.)";

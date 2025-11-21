@@ -516,7 +516,7 @@ TIPS PEMECAHAN MASALAH UMUM
 
 • nginx: Jika Anda melihat status kesalahan, kemungkinan situs tersebut salah dikonfigurasi (biasanya tercatat di log kesalahan). Anda mungkin perlu memeriksa folder nginx di Valet.
 
-• dnsmasq: Jika Anda melihat status kesalahan, kemungkinan berkas konfigurasi dnsmasq rusak (biasanya terletak di ~/.config/valet/dnsmasq.d)."
+• dnsmasq: Jika Anda melihat status kesalahan, kemungkinan berkas konfigurasi dnsmasq rusak (biasanya terletak di ~/.config/valet/dnsmasq.d).";
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ sekarang tersedia!";
 "updater.alerts.newer_version_available.subtitle" = "Disarankan untuk selalu memperbarui PHP Monitor karena versi yang lebih baru biasanya memperbaiki bug dan menyertakan perbaikan untuk mendukung versi terbaru Valet dan PHP.";
 "updater.installation_source.brew" = "Metode yang disarankan untuk memperbarui PHP Monitor adalah dengan menekan “Install Update”.\n\nKarena Anda menggunakan Homebrew untuk menginstal aplikasi, Anda juga dapat meningkatkan versi melalui terminal dengan menjalankan `%@`, namun ini tidak dianjurkan.\n\n(Pastikan bahwa memasang melalui pembaruan bawaan ini akan menghapus PHP Monitor dari direktori Caskroom Homebrew, untuk mencegah pembaruan duplikat diunduh dan menyebabkan masalah potensial di kemudian hari.)";
