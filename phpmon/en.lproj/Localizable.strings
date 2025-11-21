@@ -247,7 +247,6 @@ You may be asked for your password during the uninstallation process if file per
 // SITE LIST
 
 "domain_list.title" = "Domains";
-"domain_list.subtitle" = "";
 
 "domain_list.domains_empty.title" = "No domains available.";
 "domain_list.domains_empty.desc" = "No domains were found for this search query or you haven't linked any domains yet.";
@@ -609,10 +608,6 @@ problem manually, using your own Terminal app (this just shows you the output)."
 "alert.cannot_start.close" = "Quit";
 "alert.cannot_start.retry" = "Retry";
 
-// PHP alias issue
-"alert.php_alias_conflict.title" = "Homebrew `php` formula alias conflict detected";
-"alert.php_alias_conflict.info" = "PHP Monitor has detected conflicting `php` aliases in your Homebrew setup, both of which have been detected as installed.\n\nThis will likely result in failed linking when switching PHP versions, and will break PHP Monitor functionality.\n\nFor more information, please visit: https://github.com/nicoverbruggen/phpmon/issues/54";
-
 "alert.min_valet_version.title" = "The installed version of Valet does not meet the minimum version requirement. PHP Monitor may not function as expected!";
 "alert.min_valet_version.info" = "You are currently running Valet %@.
 
@@ -676,6 +671,11 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.php_brew_info_invalid.subtitle" = "This will prevent PHP Monitor from starting correctly. It's possible that Homebrew is currently in a broken state or some additional logging crept into the output of this command. This is a known issue.";
 "startup.errors.php_brew_info_invalid.desc" = "Simply retrying may fix the issue, but you may want to run the command yourself if the issue persists and validate if it's valid JSON. Press OK, and select Retry to try again.";
 
+// Could not determine alias
+"startup.errors.could_not_determine_alias.title" = "Could not determine which version the `php` formula is aliased to";
+"startup.errors.could_not_determine_alias.subtitle" = "This will prevent PHP Monitor from starting correctly. It's possible that Homebrew is currently in a broken state or that there's an issue with the formula.";
+"startup.errors.could_not_determine_alias.desc" = "Try running `brew update` to update your formulae and try again. If the issue persists, please report it on GitHub, as this could be a bug.";
+
 // PHP not found in /usr/local/opt or /opt/homebrew/opt
 "startup.errors.php_opt.title" = "PHP is not correctly installed";
 "startup.errors.php_opt.subtitle" = "The PHP alias was not found in `%@`. The app will not work correctly until you resolve this issue.";
@@ -701,6 +701,7 @@ You can do this by running `composer global update` in your terminal. After that
 "startup.errors.valet_version_unknown.subtitle" = "Parsing the output of `valet --version` failed. Make sure your Valet installation works and is up-to-date.";
 "startup.errors.valet_version_unknown.desc" = "Try running `valet --version` in a terminal to find out what's going on.";
 
+// Valet not installed
 "startup.errors.valet_not_installed.title" = "Your Valet configuration directory is missing";
 "startup.errors.valet_not_installed.subtitle" = "The required directory `~/.config/valet` is missing. This usually means that you forgot to run `valet install`.";
 "startup.errors.valet_not_installed.desc" = "Assuming you already installed Valet via Composer, please run `valet install` to finish setting up Laravel Valet.
@@ -943,6 +944,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 
 "crash_reporter.title" = "PHP Monitor crashed earlier, want to send a crash report?";
 "crash_reporter.subtitle" = "It is possible to send the crash report to the developer of the app, so this issue can be fixed. This is highly recommended. Would you like to do that?";
-"crash_reporter.description" = "Without sending this crash report, the developer may not be aware of this particular issue. No logs or personal data is sent with the crash report, only the unsymbolicated crash report. No further action is necessary on your part.";
+"crash_reporter.description" = "Without sending this crash report, the developer may not be aware of this particular issue. No logs or personal data is sent with the crash report, only the unsymbolicated crash report. No further action is necessary on your part.
+
+➡️ If the crash keeps happening at a specific point in time, you may want to check GitHub's issue tracker to see if a fix is not in the works. If the app keeps crashing prior to initialization, you may need to update PHP Monitor manually.";
 "crash_reporter.send_report" = "Send Report";
 "crash_reporter.do_not_send" = "Don't Send";

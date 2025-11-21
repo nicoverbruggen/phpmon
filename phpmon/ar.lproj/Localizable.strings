@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "إعادة تحميل قائمة النطاقات";
 "mm_find_in_domain_list" = "بحث في قائمة النطاقات";
 "domain_list.title" = "النطاقات";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "لا توجد نطاقات متاحة.";
 "domain_list.domains_empty.desc" = "لم يتم العثور على أي نطاقات لهذا البحث أو أنك لم تقم بربط أي نطاقات حتى الآن.";
 "domain_list.domains_empty.button" = "إضافة نطاق...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "قد لا تحتاج إلى إيقاف تشغيل PHP Monitor وإعادة تشغيله. إذا كنت قد أصلحت المشكلة (أو لا تتذكر ما هي المشكلة بالضبط) يمكنك النقر على إعادة المحاولة، التي ستجعل PHP Monitor يعيد التحقق من عمليات الإقلاع.";
 "alert.cannot_start.close" = "إغلاق";
 "alert.cannot_start.retry" = "إعادة المحاولة";
-"alert.php_alias_conflict.title" = "تم اكتشاف تعارض في صيغة Homebrew `php`";
-"alert.php_alias_conflict.info" = "أكتشف PHP Monitor وجود تعارض في أسماء `php` في إعداد Homebrew الخاص بك، وقد تم اكتشاف كلاهما كأنما مثبتين. هذا قد يؤدي إلى فشل الربط عند تبديل إصدارات PHP، وسيفقد وظائف PHP Monitor. للمزيد من المعلومات، يرجى زيارة: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "الإصدار المُثبت من Valet لا يفي بمتطلبات الحد الأدنى للإصدار. قد لا يعمل PHP Monitor كما هو متوقع!";
 "alert.min_valet_version.info" = "أنت حاليًا تشغل Valet %@.\n\nللحصول على دعم أمثل لأحدث إصدارات PHP والتبديل الصحيح للإصدار، يُنصح بتحديث إلى الإصدار %@، وهو الحد الأدنى المطلوب لهذا الإصدار من PHP Monitor.\n\nيمكنك القيام بذلك عن طريق تشغيل `composer global update` في الطرفية الخاصة بك. بعد ذلك، شغّل `valet install` مرة أخرى. للحصول على أفضل النتائج، أعد تشغيل PHP Monitor بعد ذلك. حتى يتم حل هذه المشكلة، قد لا يتصرف PHP Monitor كما هو متوقع.";
 "alert.preset_description.switcher_version" = "يتحول إلى PHP %@.\n\n";

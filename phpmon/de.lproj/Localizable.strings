@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Domain-Liste neu laden";
 "mm_find_in_domain_list" = "In Domain-Liste suchen...";
 "domain_list.title" = "Domains";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Keine Domains verfügbar.";
 "domain_list.domains_empty.desc" = "Es wurden keine Domains für diese Suchanfrage gefunden oder Sie haben noch keine Domains verknüpft.";
 "domain_list.domains_empty.button" = "Domain hinzufügen…";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "Möglicherweise müssen Sie PHP Monitor nicht beenden und neu starten. Wenn Sie das Problem behoben haben (oder sich nicht mehr an das genaue Problem erinnern können), können Sie auf Wiederholen klicken, damit PHP Monitor die Startprüfungen erneut durchführt.";
 "alert.cannot_start.close" = "Beenden";
 "alert.cannot_start.retry" = "Erneut versuchen";
-"alert.php_alias_conflict.title" = "Homebrew `php` Formel-Alias-Konflikt entdeckt";
-"alert.php_alias_conflict.info" = "PHP Monitor hat in Ihrem Homebrew-Setup widersprüchliche `php`-Aliase entdeckt, die beide als installiert erkannt wurden.\n\nDies wird wahrscheinlich zu einem fehlgeschlagenen Linking führen, wenn Sie die PHP-Version wechseln, und die Funktionalität von PHP Monitor unterbrechen.\n\nFür weitere Informationen besuchen Sie bitte: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "Die installierte Version von Valet erfüllt nicht die Mindestanforderungen. PHP Monitor funktioniert möglicherweise nicht wie erwartet!";
 "alert.min_valet_version.info" = "Sie führen gerade Valet %@ aus.\n\nFür eine optimale Unterstützung der neuesten PHP-Versionen und einen korrekten Versionswechsel wird empfohlen, auf die Version %@ zu aktualisieren, die die Mindestanforderung für diese Version von PHP Monitor ist.\n\nSie können dies tun, indem Sie `composer global update` in Ihrem Terminal ausführen. Danach führen Sie erneut `valet install` aus. Die besten Ergebnisse erzielen Sie, wenn Sie PHP Monitor danach neu starten. Bis das Problem behoben ist, verhält sich PHP Monitor möglicherweise nicht wie erwartet.";
 "alert.preset_description.switcher_version" = "Wechselt zu PHP %@.\n\n";

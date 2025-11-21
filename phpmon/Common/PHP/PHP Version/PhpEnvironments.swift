@@ -26,7 +26,16 @@ class PhpEnvironments {
      If invalid, this will prevent PHP Monitor from starting correctly.
      */
     func getHomebrewInformation() async {
-        let brewPhpAlias = await container.shell.pipe("\(container.paths.brew) info php --json").out
+        // Let's see which formula we need to check
+        var formulaToLoad = "php"
+
+        // Depending on whether the `shivammathur/php` tap is installed, this command will vary
+        if BrewDiagnostics.shared.installedTaps.contains("shivammathur/php") {
+            formulaToLoad = "shivammathur/php/php"
+        }
+
+        // Let's check the alias by using `brew info`
+        let brewPhpAlias = await container.shell.pipe("\(container.paths.brew) info \(formulaToLoad) --json").out
 
         // Remove any non-JSON output (progress indicators, etc.) before the actual JSON array
         // This is a workaround for https://github.com/homebrew/brew/issues/20978
@@ -75,7 +84,7 @@ class PhpEnvironments {
             if let version = try? VersionNumber.parse(longVersionString) {
                 PhpEnvironments.brewPhpAlias = version.short
                 if version.short != homebrewPackage.version {
-                    Log.info("[BREW] An older version of `php` is actually installed (\(version.short)).")
+                    Log.info("[BREW] An older or newer version of `php` is actually installed (\(version.short)).")
                 }
             } else {
                 Log.warn("Could not determine the actual version of the php binary; assuming Homebrew is correct.")

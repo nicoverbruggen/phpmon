@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "ドメインリストを再読み込み";
 "mm_find_in_domain_list" = "ドメインリストで検索";
 "domain_list.title" = "ドメイン";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "利用可能なドメインはありません。";
 "domain_list.domains_empty.desc" = "この検索クエリに該当するドメインは見つからなかったか、まだドメインをリンクしていません。";
 "domain_list.domains_empty.button" = "ドメインを追加…";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "PHP Monitorを終了して再起動する必要はないかもしれません。問題が解決した（または正確な問題が思い出せない）場合、Retry をクリックすると、PHP Monitor がスタートアップチェックを再試行します。";
 "alert.cannot_start.close" = "終了";
 "alert.cannot_start.retry" = "再試行";
-"alert.php_alias_conflict.title" = "Homebrew `php` フォーミュラエイリアスの衝突が検出されました";
-"alert.php_alias_conflict.info" = "PHP Monitor は、Homebrew の設定で競合する `php` エイリアスを検出しました。どちらもインストールされていると判定されています。これにより PHP バージョンの切替時にリンク失敗が起き、PHP Monitor の機能が壊れる可能性があります。詳細については https://github.com/nicoverbruggen/phpmon/issues/54 をご覧ください";
 "alert.min_valet_version.title" = "インストールされている Valet のバージョンが最低要件を満たしていません。PHP Monitor が期待通りに機能しない可能性があります！";
 "alert.min_valet_version.info" = "現在、Valet %@ を実行しています。\n\nPHP の最新バージョンと適切なバージョン切替を最適にサポートするためには、この PHP Monitor バージョンの最低要件であるバージョン %@ への更新が推奨されます。\n\nターミナルで `composer global update` を実行してから、再び `valet install` を走らせてください。最良の結果を得るには、その後 PHP Monitor を再起動してください。この問題が解決するまで、PHP Monitor は期待通りに動作しない可能性があります。";
 "alert.preset_description.switcher_version" = "PHP %@に切り替えます。\n\n";

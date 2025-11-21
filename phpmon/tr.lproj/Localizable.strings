@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "Alan Adı Listesini Yenile";
 "mm_find_in_domain_list" = "Etki Alanı Listesinde Ara";
 "domain_list.title" = "Alanlar";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "Kullanılabilir alan adı yok.";
 "domain_list.domains_empty.desc" = "Bu arama sorgusu için hiç alan adı bulunamadı veya henüz hiçbir alan adı bağlamadınız.";
 "domain_list.domains_empty.button" = "Alan ekle...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "PHP Monitor'ı kapatıp yeniden başlatmanız gerekmeyebilir. Sorunu çözdüyseniz (veya tam olarak ne sorunun olduğunu hatırlamıyorsanız) Yeniden Dene'e tıklayarak PHP Monitor'ın başlangıç kontrollerini tekrar denemesini sağlayabilirsiniz.";
 "alert.cannot_start.close" = "Çıkış";
 "alert.cannot_start.retry" = "Tekrar dene";
-"alert.php_alias_conflict.title" = "Homebrew `php` formülü takma ad çakışması tespit edildi";
-"alert.php_alias_conflict.info" = "PHP Monitor, Homebrew kurulumunuzda çakışan `php` takma adları tespit etti; ikisi de yüklü olarak algılandı.\nBu durum, PHP sürümleri değiştirildiğinde bağlantının başarısız olmasına ve PHP Monitor işlevselliğinin bozulmasına yol açabilir.\nDaha fazla bilgi için lütfen ziyaret edin: https://github.com/nicoverbruggen/phpmon/issues/54";
 "alert.min_valet_version.title" = "Kurulu Valet sürümü minimum sürüm gereksinimini karşılamıyor. PHP Monitor beklenen şekilde çalışmayabilir!";
 "alert.min_valet_version.info" = "Şu anda Valet %@ sürümünü çalıştırıyorsunuz.\n\nPHP'nin en son sürümlerinin ve doğru sürüm değişikliğinin optimal desteği için, bu PHP Monitor sürümü için minimum gereklilik olan %@ sürümüne güncellemeniz önerilir.\n\nBunu terminalinizde `composer global update` yazarak yapabilirsiniz. Daha sonra tekrar `valet install` çalıştırın. En iyi sonuçlar için ardından PHP Monitor'ı yeniden başlatın. Bu çözülene kadar, PHP Monitor beklenildiği gibi davranmayabilir.";
 "alert.preset_description.switcher_version" = "PHP %@'ye geçer.\n";

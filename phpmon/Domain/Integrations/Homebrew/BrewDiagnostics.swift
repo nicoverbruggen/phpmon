@@ -121,19 +121,6 @@ class BrewDiagnostics {
     }
 
     /**
-     It is possible to have the `shivammathur/php` tap installed, and for the core homebrew information to be outdated.
-     This will then result in two different aliases claiming to point to the same formula (`php`).
-     This will break all linking functionality in PHP Monitor, and the user needs to be informed of this.
-
-     This check only needs to be performed if the `shivammathur/php` tap is active.
-     */
-    public func checkForCaskConflict() async {
-        if await hasAliasConflict() {
-            presentAlertAboutConflict()
-        }
-    }
-
-    /**
      It is possible to upgrade PHP, but forget running `valet install`.
      This results in a scenario where a rogue www.conf file exists.
      */
@@ -172,69 +159,6 @@ class BrewDiagnostics {
             } else {
                 Log.warn("`\(tap)` does not appear to be installed, will be noted in warnings.")
             }
-        }
-    }
-
-    /**
-     Check if the alias conflict as documented in `checkForCaskConflict` actually occurred.
-     */
-    private func hasAliasConflict() async -> Bool {
-        let tapAlias = await container.shell.pipe("brew info shivammathur/php/php --json").out
-
-        if tapAlias.contains("brew tap shivammathur/php") || tapAlias.contains("Error") || tapAlias.isEmpty {
-            Log.info("The user does not appear to have tapped: shivammathur/php")
-            return false
-        } else {
-            Log.info("The user DOES have the following tapped: shivammathur/php")
-            Log.info("Checking for `php` formula conflicts...")
-
-            let tapPhp = try! JSONDecoder().decode(
-                [HomebrewPackage].self,
-                from: tapAlias.data(using: .utf8)!
-            ).first!
-
-            guard let tapPhpVersion = tapPhp.version else {
-                Log.warn("The `php` formula could not be determined.")
-                return false
-            }
-
-            if PhpEnvironments.brewPhpAlias != nil && tapPhp.version != PhpEnvironments.brewPhpAlias {
-                Log.warn("The `php` formula alias seems to be the different between the tap and core. "
-                         + "This could be a problem!")
-                Log.info("Determining whether both of these versions are installed...")
-
-                let availablePhpVersions = container.phpEnvs.availablePhpVersions
-
-                let bothInstalled = availablePhpVersions.contains(tapPhpVersion)
-                    && availablePhpVersions.contains(PhpEnvironments.brewPhpAlias!)
-
-                if bothInstalled {
-                    Log.warn("Both conflicting aliases seem to be installed, warning the user!")
-                } else {
-                    Log.info("Conflicting aliases are not both installed, seems fine!")
-                }
-
-                return bothInstalled
-            }
-
-            Log.info("All seems to be OK. No conflicts, both are PHP \(tapPhpVersion).")
-
-            return false
-        }
-    }
-
-    /**
-     Show this alert in case the tapped Cask does cause issues because of the conflict.
-     */
-    private func presentAlertAboutConflict() {
-        Task { @MainActor in
-            NVAlert()
-                .withInformation(
-                    title: "alert.php_alias_conflict.title".localized,
-                    subtitle: "alert.php_alias_conflict.info".localized
-                )
-                .withPrimary(text: "generic.ok".localized)
-                .show()
         }
     }
 

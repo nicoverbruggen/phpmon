@@ -170,7 +170,6 @@
 "mm_reload_domain_list" = "重新载入域名列表";
 "mm_find_in_domain_list" = "在域名列表中搜索";
 "domain_list.title" = "域名";
-"domain_list.subtitle" = "";
 "domain_list.domains_empty.title" = "无可用域名";
 "domain_list.domains_empty.desc" = "此搜索查询未找到任何域名或您尚未链接任何域名";
 "domain_list.domains_empty.button" = "添加域名...";
@@ -410,8 +409,6 @@
 "alert.cannot_start.description" = "您可能不需要退出 PHP Monitor 并重新启动它。如果您已解决问题(或不记得具体问题是什么)，可以点击重试，PHP Monitor 将重试启动检查";
 "alert.cannot_start.close" = "退出";
 "alert.cannot_start.retry" = "重试";
-"alert.php_alias_conflict.title" = "检测到 Homebrew 的 `php` Formula 别名冲突";
-"alert.php_alias_conflict.info" = "PHP Monitor 在您的 Homebrew 设置中检测到了相互冲突的 `php` 别名，这两个别名都已被检测到安装";
 "alert.min_valet_version.title" = "安装的 Valet 版本不符合最低版本要求。PHP Monitor 可能无法按预期运行！";
 "alert.min_valet_version.info" = "您当前正在运行 Valet %@。\n\n为优化对最新版本 PHP 的支持和正确的版本切换，建议您更新到 %@版本，这是该版本 PHP Monitor 的最低要求。\n\n在终端运行 `composer global update` 即可。然后，再次运行 `valet install`。为获得最佳效果，请重新启动 PHP Monitor。在此问题解决之前，PHP Monitor 可能无法正常运行。";
 "alert.preset_description.switcher_version" = "切换到 PHP %@.\n\n";

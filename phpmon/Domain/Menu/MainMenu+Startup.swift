@@ -33,7 +33,7 @@ extension MainMenu {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
 
-        // Determine what the `php` formula is aliased to
+        // Determine what the `php` formula is aliased to (again)
         await container.phpEnvs.determinePhpAlias()
 
         // Make sure that broken symlinks are removed ASAP
@@ -53,15 +53,11 @@ extension MainMenu {
         // Validate the Homebrew version (determines install/upgrade functionality)
         await Brew.shared.determineVersion()
 
-        // Actually detect the PHP versions
-        await container.phpEnvs.reloadPhpVersions()
-
-        // Verify third party taps
-        // The missing tap(s) will be actionable later
+        // Verify third party taps (will display as warning)
         await BrewDiagnostics.shared.verifyThirdPartyTaps()
 
-        // Check for an alias conflict
-        await BrewDiagnostics.shared.checkForCaskConflict()
+        // Actually detect the PHP versions
+        await container.phpEnvs.reloadPhpVersions()
 
         // Set up the filesystem watcher for the Homebrew binaries
         App.shared.prepareHomebrewWatchers()
