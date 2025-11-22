@@ -29,8 +29,6 @@ PHP Monitor is a universal application that runs natively on Apple Silicon **and
 * Homebrew `php` formula is installed
 * Optional but recommended: Laravel Valet
 
-_Starting with PHP Monitor 6.0, you do not need to have Laravel Valet installed for PHP Monitor to work. To get access to all features of PHP Monitor however, installing Valet is **recommended**._
-
 For more information, please see [SECURITY.md](./SECURITY.md) to find out which version of the app is currently supported.
 
 ## 🚀 How to install
@@ -43,7 +41,7 @@ valet install
 valet trust
 ```
 
-Currently, PHP Monitor is compatible with Laravel Valet v2, v3 and v4. Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
+Currently, PHP Monitor is compatible with Laravel Valet v2 up to v4. Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
 
 #### Manual installation (recommended, first time only)
 
@@ -51,14 +49,14 @@ Once that's done, you can [download the latest release](https://github.com/nicov
 
 #### Installation via Homebrew
 
-*Prior to version 5.8, this was the recommended way of installing PHP Monitor.*
-
-If you prefer to install the app via Homebrew, you can also run the following:
+Alternatively, if you prefer to install the app via Homebrew, you can also run the following:
 
 ```sh
 brew tap nicoverbruggen/homebrew-cask
 brew install --cask phpmon
 ```
+
+(You may want to disable the built-in update check if you install PHP Monitor this way.)
 
 ## ⬆️ How to update
 
@@ -88,11 +86,9 @@ Initially, I had an Alfred workflow for this — but it has now been replaced wi
 
 _**Disclaimer**: The author is not affiliated with Laravel or the Laravel team, nor Beyond Code, who maintain Laravel Herd. PHP Monitor is an independent project._
 
-If you don't need to customize your local PHP setup and just want an easy and ready-to-go environment to start coding, [Laravel Herd](https://herd.laravel.com) is probably more than sufficient for many use cases. They also offer paid features that may be useful to you or your team. 
+If you don't need to customize your local PHP setup and just want an easy and ready-to-go environment to start coding, [Laravel Herd](https://herd.laravel.com) is a great alternative to PHP Monitor, since it does not rely on Homebrew. The app also offers paid features that may be useful to you or your team.
 
-At this point, many people enjoy using Herd. However, Herd may not be for everyone, which is why other solutions to run PHP locally exist. If you need more customization and flexibility I encourage you to consider PHP Monitor in combination with Laravel Valet. 
-
-If you want to get as close as you can to a real server environment your best bet is probably to use a Docker container. I _highly_ recommend that you try different setups, and use what you like best.
+Herd may not be for everyone, which is why other solutions to run PHP locally exist. PHP Monitor preceded Herd and will remain supported. I _highly_ recommend that you try different tools, and use what you like best.
 
 ## 🤬 The app won't start?!
 
