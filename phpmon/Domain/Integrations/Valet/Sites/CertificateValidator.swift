@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Assistant on 29/10/2025.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation

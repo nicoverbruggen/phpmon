@@ -2,7 +2,8 @@
 //  LockedTests.swift
 //  PHP Monitor
 //
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Created by Nico Verbruggen on 23/11/2025.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing

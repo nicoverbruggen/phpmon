@@ -3,7 +3,7 @@
 //  Unit Tests
 //
 //  Created by Nico Verbruggen on 04/02/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing
