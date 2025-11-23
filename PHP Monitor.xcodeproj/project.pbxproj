@@ -63,6 +63,11 @@
 		036C39122E5C8D42008DAEDF /* PackagistError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C390E2E5C8D3B008DAEDF /* PackagistError.swift */; };
 		036C39142E5CB822008DAEDF /* TestBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39132E5CB820008DAEDF /* TestBundle.swift */; };
 		036C3A212E5CBBAA008DAEDF /* ValetConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */; };
+		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
+		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
+		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
+		0386B0B72ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
+		0386B0BC2ED36DF800CA6795 /* LockedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B82ED36DF800CA6795 /* LockedTests.swift */; };
 		0392CDE62EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
 		0392CDE72EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
 		0392CDE82EB23B8F009176DA /* CertificateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0392CDE52EB23B8F009176DA /* CertificateValidator.swift */; };
@@ -1037,6 +1042,8 @@
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
 		036C390E2E5C8D3B008DAEDF /* PackagistError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistError.swift; sourceTree = "<group>"; };
 		036C39132E5CB820008DAEDF /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
+		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
+		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		0392CDE52EB23B8F009176DA /* CertificateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateValidator.swift; sourceTree = "<group>"; };
 		0392CDEA2EB25371009176DA /* SecurePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurePopoverView.swift; sourceTree = "<group>"; };
 		0396160C2E74A61B002DD7F6 /* LoggableEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggableEvent.swift; sourceTree = "<group>"; };
@@ -1441,6 +1448,14 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
+		0386B0BD2ED36E2500CA6795 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0386B0B82ED36DF800CA6795 /* LockedTests.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		0396160B2E74A617002DD7F6 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -1457,13 +1472,6 @@
 				032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */,
 			);
 			path = Http;
-			sourceTree = "<group>";
-		};
-		039C291E2E8AA39B007F5FAB /* Api */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Api;
 			sourceTree = "<group>";
 		};
 		03ACC6432ECCAAF70070D4CD /* WebApi */ = {
@@ -2099,6 +2107,7 @@
 		C4811D2822D70D9C00B5F6B3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0386B0B32ED36C3D00CA6795 /* Locked.swift */,
 				C476FF9722B0DD830098105B /* Alert.swift */,
 				54B48B5E275F66AE006D90C5 /* Application.swift */,
 				C474B00524C0E98C00066A22 /* LocalNotification.swift */,
@@ -2410,12 +2419,12 @@
 			isa = PBXGroup;
 			children = (
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
-				039C291E2E8AA39B007F5FAB /* Api */,
 				C4C1019927C65A4D001FACC2 /* Commands */,
 				036C39062E5C8890008DAEDF /* Integration */,
 				036C3A232E5CBC57008DAEDF /* Parsers */,
 				03D53E902E8AE089001B1671 /* Testables */,
 				036575C62EA12E2200BA41BF /* Versions */,
+				0386B0BD2ED36E2500CA6795 /* Helpers */,
 			);
 			path = unit;
 			sourceTree = "<group>";
@@ -2932,6 +2941,7 @@
 				C4D3660B29113F20006BD146 /* System.swift in Sources */,
 				C4D36601291132B7006BD146 /* ValetScanners.swift in Sources */,
 				03ACC6472ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
+				0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C4B79EB629CA387F00A483EE /* BrewPhpFormulaeHandler.swift in Sources */,
@@ -3205,6 +3215,7 @@
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				03DAD3A92EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */,
+				0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */,
 				0392CDED2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
@@ -3233,6 +3244,7 @@
 				C40D725D2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				C471E89628F9BB8F0021E251 /* PMWindowController.swift in Sources */,
 				C471E89728F9BB8F0021E251 /* VersionExtractor.swift in Sources */,
+				0386B0B72ED36C3D00CA6795 /* Locked.swift in Sources */,
 				C47DF1B2299D5A3B0007055D /* LoginItemManager.swift in Sources */,
 				C4E2E86728FC2F1B003B070C /* XCPMApplication.swift in Sources */,
 				C471E89828F9BB8F0021E251 /* ValetProxy.swift in Sources */,
@@ -3479,6 +3491,7 @@
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C485707528BF454F00539B36 /* StatsView.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
+				0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */,
 				54D9E0BB27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				03D846332EB64E39006EFE3C /* CrashReporter.swift in Sources */,
 				C485707328BF454300539B36 /* OnboardingView.swift in Sources */,
@@ -3620,6 +3633,7 @@
 				C485707228BF453800539B36 /* SwiftUIHelper.swift in Sources */,
 				03C29A792EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
+				0386B0BC2ED36DF800CA6795 /* LockedTests.swift in Sources */,
 				C4F2E43B27530F750020E974 /* PhpInstallation.swift in Sources */,
 				C4F780BD25D80B65000DBC97 /* Constants.swift in Sources */,
 				036C39042E5C883B008DAEDF /* Packagist.swift in Sources */,

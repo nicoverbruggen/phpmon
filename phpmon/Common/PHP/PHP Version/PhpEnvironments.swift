@@ -106,14 +106,28 @@ class PhpEnvironments {
         }
     }
 
+    // MARK: - Thread-Safe PHP Version Storage
+
     /** All versions of PHP that are currently supported. */
-    var availablePhpVersions: [String] = []
+    private let _availablePhpVersions = Locked<[String]>([])
+    var availablePhpVersions: [String] {
+        get { _availablePhpVersions.value }
+        set { _availablePhpVersions.value = newValue }
+    }
 
     /** All versions of PHP that are currently installed but not compatible. */
-    var incompatiblePhpVersions: [String] = []
+    private let _incompatiblePhpVersions = Locked<[String]>([])
+    var incompatiblePhpVersions: [String] {
+        get { _incompatiblePhpVersions.value }
+        set { _incompatiblePhpVersions.value = newValue }
+    }
 
     /** Cached information about the PHP installations. */
-    var cachedPhpInstallations: [String: PhpInstallation] = [:]
+    private let _cachedPhpInstallations = Locked<[String: PhpInstallation]>([:])
+    var cachedPhpInstallations: [String: PhpInstallation] {
+        get { _cachedPhpInstallations.value }
+        set { _cachedPhpInstallations.value = newValue }
+    }
 
     /** Information about the currently linked PHP installation. */
     var currentInstall: ActivePhpInstallation? {
