@@ -24,6 +24,7 @@ struct HeaderView: View {
 
     // MARK: - NSMenuItem
 
+    @MainActor
     static func asMenuItem(
         text: String,
         minimumWidth: CGFloat? = nil

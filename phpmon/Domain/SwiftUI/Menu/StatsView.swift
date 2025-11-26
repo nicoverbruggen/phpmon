@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StatsView: View {
 
+    @MainActor
     static func asMenuItem(memory: String, post: String, upload: String) -> NSMenuItem {
         let item = NSMenuItem()
         let view = NSHostingView(

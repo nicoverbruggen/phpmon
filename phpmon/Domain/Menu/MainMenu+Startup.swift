@@ -151,24 +151,20 @@ extension MainMenu {
      When the environment is not OK, present an alert to inform the user.
      */
     private func onEnvironmentFail() async {
-        Task { @MainActor [self] in
-            NVAlert()
-                .withInformation(
-                    title: "alert.cannot_start.title".localized,
-                    subtitle: "alert.cannot_start.subtitle".localized,
-                    description: "alert.cannot_start.description".localized
-                )
-                .withPrimary(text: "alert.cannot_start.retry".localized)
-                .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
-                    vc.close(with: .alertSecondButtonReturn)
-                    exit(1)
-                })
-                .show()
+        NVAlert()
+            .withInformation(
+                title: "alert.cannot_start.title".localized,
+                subtitle: "alert.cannot_start.subtitle".localized,
+                description: "alert.cannot_start.description".localized
+            )
+            .withPrimary(text: "alert.cannot_start.retry".localized)
+            .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
+                vc.close(with: .alertSecondButtonReturn)
+                exit(1)
+            })
+            .show()
 
-            Task { // An issue occurred, fire startup checks again after dismissal
-                await startup()
-            }
-        }
+        await startup()
     }
 
     /**

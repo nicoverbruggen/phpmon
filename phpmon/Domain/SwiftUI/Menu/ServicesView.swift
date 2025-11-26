@@ -12,6 +12,7 @@ import NVAlert
 
 struct ServicesView: View {
 
+    @MainActor
     static func asMenuItem(perRow: Int = 4) -> NSMenuItem {
         let view = {
             let rootView = Self(manager: ServicesManager.shared, perRow: perRow)
@@ -103,6 +104,13 @@ struct ServiceView: View {
     var service: Service
     @State var isBusy: Bool = false
 
+    @MainActor
+    private func toggleService() async {
+        isBusy = true
+        await ServicesManager.shared.toggleService(named: service.name)
+        isBusy = false
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             Text(service.name.uppercased())
@@ -133,11 +141,7 @@ struct ServiceView: View {
                 }
                 if service.status == .error {
                     Button {
-                        Task {
-                            isBusy = true
-                            await ServicesManager.shared.toggleService(named: service.name)
-                            isBusy = false
-                        }
+                        Task { await toggleService() }
                     } label: {
                         Text("E")
                             .frame(width: 12.0, height: 12.0)
@@ -148,11 +152,7 @@ struct ServiceView: View {
                 }
                 if service.status == .active || service.status == .inactive {
                     Button {
-                        Task {
-                            isBusy = true
-                            await ServicesManager.shared.toggleService(named: service.name)
-                            isBusy = false
-                        }
+                        Task { await toggleService() }
                     } label: {
                         Image(
                             systemName: service.status == .active ? "checkmark" : "xmark"
