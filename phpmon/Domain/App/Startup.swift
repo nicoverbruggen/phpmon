@@ -10,6 +10,12 @@ import AppKit
 import NVAlert
 
 class Startup {
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.

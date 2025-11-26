@@ -113,8 +113,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Make sure notifications will work
         setupNotifications()
 
+        // Start with the regular busy icon
+        MainMenu.shared.setStatusBar(image: NSImage.statusBarIcon)
+
         Task { // Make sure the menu performs its initial checks
-            await MainMenu.shared.startup()
+            await Startup.check(App.shared.container)
         }
     }
 

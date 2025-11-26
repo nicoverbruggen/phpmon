@@ -63,6 +63,14 @@
 		036C39122E5C8D42008DAEDF /* PackagistError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C390E2E5C8D3B008DAEDF /* PackagistError.swift */; };
 		036C39142E5CB822008DAEDF /* TestBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39132E5CB820008DAEDF /* TestBundle.swift */; };
 		036C3A212E5CBBAA008DAEDF /* ValetConfigurationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF9F76275447F100D44ED0 /* ValetConfigurationTest.swift */; };
+		0379C49F2ED71D050035D7EA /* Startup+Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */; };
+		0379C4A02ED71D050035D7EA /* Startup+Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */; };
+		0379C4A12ED71D050035D7EA /* Startup+Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */; };
+		0379C4A22ED71D050035D7EA /* Startup+Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */; };
+		0379C4A42ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
+		0379C4A52ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
+		0379C4A62ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
+		0379C4A72ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -550,7 +558,6 @@
 		C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E84D28F9BB650021E251 /* Valet+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* Valet+Alerts.swift */; };
 		C471E84E28F9BB650021E251 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
-		C471E84F28F9BB650021E251 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C471E85028F9BB650021E251 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C471E85128F9BB650021E251 /* MainMenu+Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */; };
 		C471E85228F9BB650021E251 /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
@@ -637,7 +644,6 @@
 		C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E76132854A65300B4FE0C /* ServicesManager.swift */; };
 		C471E8B028F9BB8F0021E251 /* Valet+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40C7F2727721FF600DDDCDC /* Valet+Alerts.swift */; };
 		C471E8B128F9BB8F0021E251 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */; };
-		C471E8B228F9BB8F0021E251 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C471E8B328F9BB8F0021E251 /* MainMenu+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */; };
 		C471E8B428F9BB8F0021E251 /* MainMenu+Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */; };
 		C471E8B528F9BB8F0021E251 /* MainMenu+FixMyValet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */; };
@@ -829,7 +835,6 @@
 		C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1019A27C65C6F001FACC2 /* Process.swift */; };
 		C4C3643928AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */; };
 		C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */; };
-		C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */; };
 		C4C8900528F0E3D100CE5E97 /* RealFileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */; };
@@ -947,7 +952,6 @@
 		C4F30B08278E195800755FCE /* brew-services.json in Resources */ = {isa = PBXBuildFile; fileRef = C4F30B06278E195800755FCE /* brew-services.json */; };
 		C4F30B09278E1A0E00755FCE /* CustomPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */; };
 		C4F30B0A278E1A1A00755FCE /* ComposerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D89BC52783C99400A02B68 /* ComposerJson.swift */; };
-		C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */; };
 		C4F319C927B034A500AFF46F /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DEB7D327A5D60B00834718 /* Stats.swift */; };
 		C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F361602836BFD9003598CC /* MainMenu+Actions.swift */; };
 		C4F520672AF03791006787F2 /* ExtensionEnumeratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F520662AF03791006787F2 /* ExtensionEnumeratorTest.swift */; };
@@ -1042,6 +1046,8 @@
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
 		036C390E2E5C8D3B008DAEDF /* PackagistError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistError.swift; sourceTree = "<group>"; };
 		036C39132E5CB820008DAEDF /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
+		0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Launch.swift"; sourceTree = "<group>"; };
+		0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+DetectApps.swift"; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		0392CDE52EB23B8F009176DA /* CertificateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateValidator.swift; sourceTree = "<group>"; };
@@ -1264,7 +1270,6 @@
 		C4C0E8E627F88B41002D32A9 /* DomainScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainScanner.swift; sourceTree = "<group>"; };
 		C4C1019A27C65C6F001FACC2 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		C4C3643828AE4FCE00C0770E /* StatusMenu+Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Items.swift"; sourceTree = "<group>"; };
-		C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu+Startup.swift"; sourceTree = "<group>"; };
 		C4C3ED4227834C5200AB15D8 /* CustomPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPrefs.swift; sourceTree = "<group>"; };
 		C4C8900228F0E28800CE5E97 /* FileSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProtocol.swift; sourceTree = "<group>"; };
 		C4C8900428F0E3D100CE5E97 /* RealFileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealFileSystem.swift; sourceTree = "<group>"; };
@@ -2091,7 +2096,6 @@
 			isa = PBXGroup;
 			children = (
 				C4811D2922D70F9A00B5F6B3 /* MainMenu.swift */,
-				C4C3ED402783497000AB15D8 /* MainMenu+Startup.swift */,
 				C44CCD4827AFF3B700CE40E5 /* MainMenu+Async.swift */,
 				C4CE3BB727B31F2E0086CA49 /* MainMenu+Switcher.swift */,
 				C42C49DA27C2806F0074ABAC /* MainMenu+FixMyValet.swift */,
@@ -2188,10 +2192,12 @@
 				C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */,
 				03D846312EB64E35006EFE3C /* CrashReporter.swift */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
+				0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */,
 				C4B97B77275CF1B5003F3378 /* App+ActivationPolicy.swift */,
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */,
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
@@ -2850,6 +2856,7 @@
 				C40C5C9C2846A40600E28255 /* Preset.swift in Sources */,
 				C4B79EBC29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C41CD0292628D8EE0065BBED /* GlobalKeybindPreference.swift in Sources */,
+				0379C4A42ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				C4B6091A2853AAD300C95265 /* SectionHeaderView.swift in Sources */,
 				C436B39D29F3C42500B6A64E /* PreferencesTabs.swift in Sources */,
 				C44067F727E258410045BD4E /* DomainListPhpCell.swift in Sources */,
@@ -2866,6 +2873,7 @@
 				C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */,
 				C46EBC4A28DB966A007ACC74 /* TestableShell.swift in Sources */,
 				C44C198D276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */,
+				0379C49F2ED71D050035D7EA /* Startup+Launch.swift in Sources */,
 				54D9E0B827E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
 				C4C0E8E727F88B41002D32A9 /* DomainScanner.swift in Sources */,
 				C4C3ED4327834C5200AB15D8 /* CustomPrefs.swift in Sources */,
@@ -2969,7 +2977,6 @@
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
-				C4C3ED412783497000AB15D8 /* MainMenu+Startup.swift in Sources */,
 				C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */,
 				C42106662AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79ECB29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
@@ -3039,6 +3046,7 @@
 				035983A22E97FA9100218DC7 /* Container.swift in Sources */,
 				C471E84528F9BB650021E251 /* App+GlobalHotkey.swift in Sources */,
 				C4513F922B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
+				0379C4A22ED71D050035D7EA /* Startup+Launch.swift in Sources */,
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
 				032DAC2B2E8BEB5B0018E01C /* RealWebApi.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
@@ -3049,7 +3057,6 @@
 				C471E84D28F9BB650021E251 /* Valet+Alerts.swift in Sources */,
 				C471E84E28F9BB650021E251 /* MainMenu.swift in Sources */,
 				C40934A4298EEB2C00D25014 /* CaskFile.swift in Sources */,
-				C471E84F28F9BB650021E251 /* MainMenu+Startup.swift in Sources */,
 				C471E85028F9BB650021E251 /* MainMenu+Async.swift in Sources */,
 				C471E85128F9BB650021E251 /* MainMenu+Switcher.swift in Sources */,
 				C471E85228F9BB650021E251 /* MainMenu+FixMyValet.swift in Sources */,
@@ -3084,6 +3091,7 @@
 				03C29A772EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */,
 				C43931C729C4BD610069165B /* PhpVersionManagerView.swift in Sources */,
+				0379C4A52ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				036C390A2E5C8CC5008DAEDF /* PackagistP2Response.swift in Sources */,
 				C4463FCE29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C45B9150295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
@@ -3237,6 +3245,7 @@
 				033D45A12B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */,
 				C471E89328F9BB8F0021E251 /* Application.swift in Sources */,
 				036C39022E5C883B008DAEDF /* Packagist.swift in Sources */,
+				0379C4A72ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				C471E89428F9BB8F0021E251 /* LocalNotification.swift in Sources */,
 				C441CC592AE8249400DDFACD /* ConfigFSNotifier.swift in Sources */,
 				C40934A5298EEB2C00D25014 /* CaskFile.swift in Sources */,
@@ -3271,13 +3280,13 @@
 				03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				C471E8A828F9BB8F0021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
+				0379C4A02ED71D050035D7EA /* Startup+Launch.swift in Sources */,
 				C471E8AA28F9BB8F0021E251 /* Startup.swift in Sources */,
 				C471E8AB28F9BB8F0021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E8AD28F9BB8F0021E251 /* AppVersion.swift in Sources */,
 				C471E8AE28F9BB8F0021E251 /* ServicesManager.swift in Sources */,
 				C471E8B028F9BB8F0021E251 /* Valet+Alerts.swift in Sources */,
 				C471E8B128F9BB8F0021E251 /* MainMenu.swift in Sources */,
-				C471E8B228F9BB8F0021E251 /* MainMenu+Startup.swift in Sources */,
 				C471E8B328F9BB8F0021E251 /* MainMenu+Async.swift in Sources */,
 				C471E8B428F9BB8F0021E251 /* MainMenu+Switcher.swift in Sources */,
 				C471E8B528F9BB8F0021E251 /* MainMenu+FixMyValet.swift in Sources */,
@@ -3488,6 +3497,7 @@
 				C4F780C825D80B75000DBC97 /* DateExtension.swift in Sources */,
 				C493084B279F331F009C240B /* AddSiteVC.swift in Sources */,
 				C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */,
+				0379C4A62ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
 				C485707528BF454F00539B36 /* StatsView.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
@@ -3518,6 +3528,7 @@
 				C4AF9F7B2754499000D44ED0 /* Valet.swift in Sources */,
 				C4C1019C27C65C6F001FACC2 /* Process.swift in Sources */,
 				03263A3A2E86D5EC00BD0415 /* UpdateScheduler.swift in Sources */,
+				0379C4A12ED71D050035D7EA /* Startup+Launch.swift in Sources */,
 				C451AFF72969E40F0078E617 /* HelpButton.swift in Sources */,
 				C47DF1B0299D5A3B0007055D /* LoginItemManager.swift in Sources */,
 				C4F780C025D80B6E000DBC97 /* Startup.swift in Sources */,
@@ -3649,7 +3660,6 @@
 				C42CFB1A27DFE8BD00862737 /* NginxConfigurationTest.swift in Sources */,
 				C4BF56AC2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E79428F9B23B0021E251 /* FileSystemProtocol.swift in Sources */,
-				C4F30B0B278E203C00755FCE /* MainMenu+Startup.swift in Sources */,
 				C485707C28BF459500539B36 /* NoWarningsView.swift in Sources */,
 				03D846252EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */,
 				0329A9A42E92A69000A62A12 /* WarningManager+Evaluations.swift in Sources */,
