@@ -38,9 +38,18 @@ extension DomainListVC {
         Task { await App.shared.container.shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'") }
     }
 
-    @objc func openWithEditor(sender: EditorMenuItem) {
-        guard let editor = sender.editor else { return }
-        editor.openDirectory(file: selectedSite!.absolutePath)
+    @objc func openWithApp(sender: ApplicationMenuItem) {
+        guard let site = selectedSite else { return }
+        guard let app = sender.app else { return }
+
+        if app.type == .browser {
+            guard let url = site.getListableUrl() else { return }
+            // Open the URL for the domain
+            app.open(arg: url.absoluteString)
+        } else {
+            // Open the directory for the domain
+            app.open(arg: site.absolutePath)
+        }
     }
 
     // MARK: - UI interaction

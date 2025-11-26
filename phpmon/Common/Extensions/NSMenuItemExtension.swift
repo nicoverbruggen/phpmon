@@ -84,8 +84,8 @@ class ExtensionMenuItem: NSMenuItem {
     var phpExtension: PhpExtension?
 }
 
-class EditorMenuItem: NSMenuItem {
-    var editor: Application?
+class ApplicationMenuItem: NSMenuItem {
+    var app: Application?
 }
 
 class PresetMenuItem: NSMenuItem {
