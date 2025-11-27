@@ -98,6 +98,7 @@ class Application {
 
         let detectable = [
             // Browsers (for future Open In > Browser context menu)
+            /*
             Application(container, "Safari", .browser),
             Application(container, "Google Chrome", .browser),
             Application(container, "Microsoft Edge", .browser),
@@ -105,6 +106,7 @@ class Application {
             Application(container, "Brave", .browser),
             Application(container, "Arc", .browser),
             Application(container, "Zen", .browser),
+            */
 
             // Editors
             Application(container, "PhpStorm", .ide),
