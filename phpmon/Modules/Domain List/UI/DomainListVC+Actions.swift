@@ -23,7 +23,7 @@ extension DomainListVC {
                     subtitle: "domain_list.alert.invalid_folder_name_desc".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .bringToFront)
             return
         }
 
@@ -292,7 +292,7 @@ extension DomainListVC {
                 description: "domain_list.alerts_isolated_php_terminal.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     private func notifyAboutFailedSecureStatus(command: String) {
@@ -302,7 +302,7 @@ extension DomainListVC {
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     private func notifyAboutFailedSiteIsolation(command: String) {
@@ -313,6 +313,6 @@ extension DomainListVC {
                 description: "domain_list.alerts_isolation_failed.desc".localized(command)
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 }

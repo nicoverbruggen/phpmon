@@ -18,6 +18,6 @@ extension NVAlert {
         return NVAlert().withInformation(
             title: "\(key).title".localized,
             subtitle: "\(key).description".localized
-        ).withPrimary(text: "generic.ok".localized).show()
+        ).withPrimary(text: "generic.ok".localized).show(urgency: .bringToFront)
     }
 }

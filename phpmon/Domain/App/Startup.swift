@@ -74,7 +74,7 @@ class Startup {
                 )
                 .withPrimary(text: check.buttonText, action: { _ in
                     exit(1)
-                }).show()
+                }).show(urgency: .bringToFront)
         }
 
         NVAlert()
@@ -84,7 +84,7 @@ class Startup {
                 description: check.descriptionText
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     // MARK: - Check (List)

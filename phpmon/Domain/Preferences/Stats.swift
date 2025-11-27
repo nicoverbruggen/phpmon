@@ -135,7 +135,7 @@ class Stats {
                 .withTertiary(text: "", action: { vc in
                     vc.close(with: .alertThirdButtonReturn)
                     NSWorkspace.shared.open(Constants.Urls.DonationPage)
-                }).didSelectPrimary()
+                }).didSelectPrimary(urgency: .normalRequestAttention)
 
             if donate {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")

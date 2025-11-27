@@ -171,7 +171,7 @@ extension Startup {
                 vc.close(with: .alertSecondButtonReturn)
                 exit(1)
             })
-            .show()
+            .show(urgency: .bringToFront)
 
         await self.check()
     }

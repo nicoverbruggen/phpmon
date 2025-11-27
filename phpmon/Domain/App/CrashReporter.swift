@@ -68,7 +68,7 @@ class CrashReporter {
                 })
                 .withPrimary(text: "crash_reporter.send_report".localized, action: { alert in
                     alert.close(with: .OK)
-                }).runModal()
+                }).runModal(urgency: .urgentRequestAttention)
 
                 // Check the outcome of what the user chose
                 if response == .abort {

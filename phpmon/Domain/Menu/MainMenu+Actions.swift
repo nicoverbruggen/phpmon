@@ -27,7 +27,7 @@ extension MainMenu {
                     description: "phpman.unlinked.detail".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .bringToFront)
         }
     }
 
@@ -40,7 +40,7 @@ extension MainMenu {
             )
                 .withPrimary(text: "alert.fix_homebrew_permissions.ok".localized)
                 .withSecondary(text: "alert.fix_homebrew_permissions.cancel".localized)
-                .didSelectPrimary() {
+                .didSelectPrimary(urgency: .bringToFront) {
             return
         }
 
@@ -54,7 +54,7 @@ extension MainMenu {
                     description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .urgentRequestAttention)
         } failure: { error in
             NVAlert.show(for: error as! HomebrewPermissionError)
         }
@@ -186,7 +186,7 @@ extension MainMenu {
             self.performRollback()
         })
         .withSecondary(text: "alert.revert_description.cancel".localized)
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {
@@ -206,7 +206,7 @@ extension MainMenu {
             NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             alert.close(with: .OK)
         })
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     @objc func openPhpInfo() {
@@ -262,13 +262,13 @@ extension MainMenu {
         if container.phpEnvs.availablePhpVersions.contains(version) {
             Task { MainMenu.shared.switchToPhpVersion(version) }
         } else {
-            Task {
+            Task { @MainActor in
                 NVAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
-                ).show()
+                ).show(urgency: .bringToFront)
             }
         }
     }

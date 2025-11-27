@@ -81,7 +81,7 @@ class ValetUpgrader {
         .withPrimary(text: "generic.ok".localized, action: { vc in
             vc.close(with: .OK)
         })
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     @MainActor private static func notifyAboutUpgrade(latest: String, constraint: String, passing: Bool) {
@@ -104,6 +104,6 @@ class ValetUpgrader {
             })
         }
 
-        alert.show()
+        alert.show(urgency: .bringToFront)
     }
 }

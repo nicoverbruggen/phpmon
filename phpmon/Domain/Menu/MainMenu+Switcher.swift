@@ -84,7 +84,7 @@ extension MainMenu {
             )
             .withPrimary(text: "alert.php_switch_failed.confirm".localized)
             .withSecondary(text: "alert.php_switch_failed.cancel".localized)
-            .didSelectPrimary()
+            .didSelectPrimary(urgency: .bringToFront)
         if outcome {
             MainMenu.shared.fixMyValet()
         }
@@ -113,7 +113,7 @@ extension MainMenu {
             alert.close(with: .OK)
             self.terminateApp()
         })
-        .show()
+        .show(urgency: .urgentRequestAttention)
     }
 
     private func reloadDomainListData() async {

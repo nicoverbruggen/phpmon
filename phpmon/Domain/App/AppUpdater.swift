@@ -10,12 +10,19 @@ import Foundation
 import Cocoa
 import NVAlert
 
+/**
+ The potential different outcomes of a check for updates.
+ */
 enum UpdateCheckResult {
     case success
     case networkError
     case parseError
 }
 
+/**
+ Instead of using `UpdateCheck` which is a more simplified update checking process
+ included in `NVAppUpdater`, we have a slightly more complex setup here.
+ */
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
@@ -100,7 +107,7 @@ class AppUpdater {
         .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
             vc.close(with: .OK)
         })
-        .show()
+        .show(urgency: interactive ? .bringToFront : .urgentRequestAttention)
     }
 
     @MainActor public func presentNoNewerVersionAvailableAlert() {
@@ -110,7 +117,7 @@ class AppUpdater {
             description: ""
         )
         .withPrimary(text: "generic.ok".localized)
-        .show()
+        .show(urgency: interactive ? .bringToFront : .none)
     }
 
     @MainActor public func presentCouldNotRetrieveUpdate() {
@@ -128,7 +135,7 @@ class AppUpdater {
             }
         )
         .withPrimary(text: "generic.ok".localized)
-        .show()
+        .show(urgency: interactive ? .bringToFront : .normalRequestAttention)
     }
 
     // MARK: - Preparing for Self-Updater

@@ -89,7 +89,7 @@ struct ServicesView: View {
                                 description: "alert.\(type).desc".localized
                             )
                             .withPrimary(text: "generic.ok".localized)
-                            .show()
+                            .show(urgency: .bringToFront)
                         }
                     }
                 }
@@ -131,7 +131,7 @@ struct ServiceView: View {
                                 description: "alert.warnings.service_missing.description".localized
                             )
                             .withPrimary(text: "generic.ok".localized)
-                            .show()
+                            .show(urgency: .bringToFront)
                         }
                     } label: {
                         Text("?")

@@ -91,7 +91,7 @@ class ValetServicesManager: ServicesManager {
                 description: "alert.service_error.extra".localized
             )
             .withPrimary(text: "alert.service_error.button.close".localized)
-            .show()
+            .show(urgency: .bringToFront)
         }
 
         // If we do have a path to a log file, show a more complex alert w/ Show Log button
@@ -112,6 +112,6 @@ class ValetServicesManager: ServicesManager {
 
             alert.close(with: .OK)
         })
-        .show()
+        .show(urgency: .bringToFront)
     }
 }

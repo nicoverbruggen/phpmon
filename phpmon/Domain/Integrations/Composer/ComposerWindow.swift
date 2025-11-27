@@ -137,7 +137,7 @@ import NVAlert
                 description: "alert.composer_missing.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     deinit {
