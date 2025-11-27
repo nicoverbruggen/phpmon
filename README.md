@@ -670,3 +670,5 @@ I have done my best to annotate as much as humanly possible, and have avoided us
 I also have a few tests for key parts of the application that I found needed to be tested. In the future, I would like to add even more tests for some of the UI stuff, but for now the tests are more unit tests than feature tests.
 
 For more detailed information for developers, please see [the documentation file for developers](./DEVELOPER.md).
+
+You may also find the [privacy policy](https://phpmon.app/privacy-policy) useful to learn more about how PHP Monitor deals with your data. (Spoiler alert: PHP Monitor respects your privacy!)
