@@ -169,7 +169,7 @@ class RealShell: ShellProtocol {
                     self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
                 }
 
-                continuation.resume(returning: .out(stdOut, stdErr))
+                return continuation.resume(returning: .out(stdOut, stdErr))
             }
 
             process.launch()
