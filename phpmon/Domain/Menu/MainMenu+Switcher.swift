@@ -113,7 +113,7 @@ extension MainMenu {
             alert.close(with: .OK)
             self.terminateApp()
         })
-        .show(urgency: .urgentRequestAttention)
+        .show(urgency: .bringToFront)
     }
 
     private func reloadDomainListData() async {

@@ -153,7 +153,7 @@ struct Preset: Codable, Equatable {
                     )
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
-                ).show(urgency: .urgentRequestAttention)
+                ).show(urgency: .bringToFront)
             }
             return false
         }

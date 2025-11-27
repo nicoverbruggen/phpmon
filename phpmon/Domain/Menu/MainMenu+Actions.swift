@@ -54,7 +54,7 @@ extension MainMenu {
                     description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show(urgency: .urgentRequestAttention)
+                .show(urgency: .bringToFront)
         } failure: { error in
             NVAlert.show(for: error as! HomebrewPermissionError)
         }

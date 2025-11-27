@@ -65,7 +65,7 @@ extension MainMenu {
                 description: "alert.fix_my_valet_done.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show(urgency: .normalRequestAttention)
+            .show(urgency: .bringToFront)
     }
 
     @MainActor private func presentAlertForDifferentVersion(version: String) {
@@ -87,7 +87,7 @@ extension MainMenu {
             .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })
-            .show(urgency: .urgentRequestAttention)
+            .show(urgency: .bringToFront)
     }
 
 }

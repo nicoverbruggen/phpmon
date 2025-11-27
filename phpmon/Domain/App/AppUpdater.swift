@@ -29,32 +29,44 @@ class AppUpdater {
     var interactive: Bool = false
 
     public func checkForUpdates(userInitiated: Bool) async -> UpdateCheckResult {
+        // If user initiated, we always expect to see an alert
         self.interactive = userInitiated
 
+        // Log that we're looking for updates
         Log.info("The app will search for updates...")
 
-        let caskUrl = Constants.Urls.UpdateCheckEndpoint
-
-        guard let caskFile = try? await CaskFile.fromUrl(App.shared.container, caskUrl) else {
-            await presentCouldNotRetrieveUpdateIfInteractive()
+        // Attempt to get the latest CaskFile from the API
+        guard let caskFile = try? await CaskFile.fromUrl(
+            App.shared.container,
+            Constants.Urls.UpdateCheckEndpoint
+        ) else {
+            // ERROR #1: The endpoint is unreachable or the response is invalid.
+            Log.err("Could not get a valid CaskFile from the endpoint.")
+            if interactive {
+                await presentCouldNotRetrieveUpdate()
+            }
             return .networkError
         }
 
+        // We will now persist the CaskFile so we can reference it later
         self.caskFile = caskFile
 
-        let currentVersion = AppVersion.fromCurrentVersion()
-
+        // Let's parse the latest online version if we can
         guard let onlineVersion = AppVersion.from(caskFile.version) else {
+            // ERROR #2: The CaskFile's version string is invalid.
             Log.err("The version string from the CaskFile could not be read.")
-            await presentCouldNotRetrieveUpdateIfInteractive()
+            if interactive {
+                await presentCouldNotRetrieveUpdate()
+            }
             return .parseError
         }
 
+        // We will now persist the version number so we can reference it later
         latestVersionOnline = onlineVersion
-        Log.info("The latest version read from '\(caskUrl.lastPathComponent)' is: v\(onlineVersion.computerReadable).")
+        Log.info("The latest version read from the endpoint is: v\(onlineVersion.computerReadable).")
 
         Task { // Present this concurrently w/ returning the .success value
-            if latestVersionOnline > currentVersion {
+            if latestVersionOnline > AppVersion.fromCurrentVersion() {
                 await presentNewerVersionAvailableAlert()
             } else if interactive {
                 await presentNoNewerVersionAvailableAlert()
@@ -62,12 +74,6 @@ class AppUpdater {
         }
 
         return .success
-    }
-
-    @MainActor private func presentCouldNotRetrieveUpdateIfInteractive() {
-        if interactive {
-            return presentCouldNotRetrieveUpdate()
-        }
     }
 
     // MARK: - Alerts
@@ -117,7 +123,7 @@ class AppUpdater {
             description: ""
         )
         .withPrimary(text: "generic.ok".localized)
-        .show(urgency: interactive ? .bringToFront : .none)
+        .show(urgency: .bringToFront)
     }
 
     @MainActor public func presentCouldNotRetrieveUpdate() {
@@ -135,7 +141,7 @@ class AppUpdater {
             }
         )
         .withPrimary(text: "generic.ok".localized)
-        .show(urgency: interactive ? .bringToFront : .normalRequestAttention)
+        .show(urgency: .bringToFront)
     }
 
     // MARK: - Preparing for Self-Updater

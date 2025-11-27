@@ -69,7 +69,7 @@ class PhpGuard {
                     Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
                     alert.close(with: .OK)
                 })
-                .show(urgency: .normalRequestAttention)
+                .show(urgency: .urgentRequestAttention)
         }
     }
 }
