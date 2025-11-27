@@ -286,9 +286,3 @@ class RealShell: ShellProtocol {
         self.PATH = RealShell.getPath()
     }
 }
-
-extension TimeInterval {
-    var nanoseconds: UInt64 {
-        return UInt64(self * 1_000_000_000)
-    }
-}
