@@ -80,6 +80,23 @@ class RealShell: ShellProtocol {
         return task
     }
 
+    /**
+     Reads the entire output of a `Pipe` and returns it as a UTF‑8 string.
+     Closes the pipe's file handler when done.
+     */
+    private static func getStringOutput(from pipe: Pipe) -> String {
+        // 1. Read all data (safely).
+        let rawData = (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
+
+        // 2. Convert to string (safely).
+        let result = String(data: rawData, encoding: .utf8) ?? ""
+
+        // 3. Close the handle quietly.
+        try? pipe.fileHandleForReading.close()
+
+        return result
+    }
+
     // MARK: - Public API
 
     /**
@@ -114,11 +131,8 @@ class RealShell: ShellProtocol {
             return .out("", "")
         }
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-
-        try? outputPipe.fileHandleForReading.close()
-        try? errorPipe.fileHandleForReading.close()
+        let stdOut = RealShell.getStringOutput(from: outputPipe)
+        let stdErr = RealShell.getStringOutput(from: errorPipe)
 
         if Log.shared.verbosity == .cli {
             log(process: process, stdOut: stdOut, stdErr: stdErr)
@@ -145,14 +159,11 @@ class RealShell: ShellProtocol {
             process.terminationHandler = { [weak self] _ in
                 if process.terminationReason == .uncaughtSignal {
                     Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                    continuation.resume(returning: .out("", ""))
+                    return continuation.resume(returning: .out("", ""))
                 }
 
-                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-
-                try? outputPipe.fileHandleForReading.close()
-                try? errorPipe.fileHandleForReading.close()
+                let stdOut = RealShell.getStringOutput(from: outputPipe)
+                let stdErr = RealShell.getStringOutput(from: errorPipe)
 
                 if Log.shared.verbosity == .cli {
                     self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
