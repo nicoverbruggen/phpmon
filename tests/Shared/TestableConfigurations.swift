@@ -122,6 +122,8 @@ class TestableConfigurations {
                     : .instant(""),
                 "brew info shivammathur/php/php --json"
                     : .instant("Error: No available formula with the name \"shivammathur/php/php\"."),
+
+                // TODO: refactor this so this list of responses happens dynamically?
                 "/usr/bin/open -Ra \"PhpStorm\""
                     : .instant("Unable to find application named 'PhpStorm'", .stdErr),
                 "/usr/bin/open -Ra \"WebStorm\""
