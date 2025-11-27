@@ -46,10 +46,12 @@ class AppUpdater {
         latestVersionOnline = onlineVersion
         Log.info("The latest version read from '\(caskUrl.lastPathComponent)' is: v\(onlineVersion.computerReadable).")
 
-        if latestVersionOnline > currentVersion {
-            await presentNewerVersionAvailableAlert()
-        } else if interactive {
-            await presentNoNewerVersionAvailableAlert()
+        Task { // Present this concurrently w/ returning the .success value
+            if latestVersionOnline > currentVersion {
+                await presentNewerVersionAvailableAlert()
+            } else if interactive {
+                await presentNoNewerVersionAvailableAlert()
+            }
         }
 
         return .success
