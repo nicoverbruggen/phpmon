@@ -12,7 +12,9 @@ struct BytePhpPreferenceTest {
     var container: Container
 
     init () async throws {
-        container = Container.real()
+        container = Container.fake(commands: [
+            "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M"
+        ])
     }
 
     @Test func can_extract_memory_value() throws {
