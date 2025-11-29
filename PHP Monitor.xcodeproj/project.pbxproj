@@ -74,6 +74,7 @@
 		0379C4A52ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
 		0379C4A62ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
 		0379C4A72ED720220035D7EA /* App+DetectApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */; };
+		037F44162EDB0AAA002EBF75 /* FSNotifierTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F44152EDB0AA8002EBF75 /* FSNotifierTest.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -1050,6 +1051,7 @@
 		036C39132E5CB820008DAEDF /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
 		0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Launch.swift"; sourceTree = "<group>"; };
 		0379C4A32ED7201D0035D7EA /* App+DetectApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+DetectApps.swift"; sourceTree = "<group>"; };
+		037F44152EDB0AA8002EBF75 /* FSNotifierTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSNotifierTest.swift; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		0392CDE52EB23B8F009176DA /* CertificateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateValidator.swift; sourceTree = "<group>"; };
@@ -1455,6 +1457,14 @@
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 			);
 			path = Parsers;
+			sourceTree = "<group>";
+		};
+		037F44142EDB0A9F002EBF75 /* Watchers */ = {
+			isa = PBXGroup;
+			children = (
+				037F44152EDB0AA8002EBF75 /* FSNotifierTest.swift */,
+			);
+			path = Watchers;
 			sourceTree = "<group>";
 		};
 		0386B0BD2ED36E2500CA6795 /* Helpers */ = {
@@ -2435,6 +2445,7 @@
 				03D53E902E8AE089001B1671 /* Testables */,
 				036575C62EA12E2200BA41BF /* Versions */,
 				0386B0BD2ED36E2500CA6795 /* Helpers */,
+				037F44142EDB0A9F002EBF75 /* Watchers */,
 			);
 			path = unit;
 			sourceTree = "<group>";
@@ -3523,6 +3534,7 @@
 				C485707A28BF457800539B36 /* PhpDoctorView.swift in Sources */,
 				C4C0E8E827F88B41002D32A9 /* DomainScanner.swift in Sources */,
 				C449B4F027EE7FB800C47E8A /* DomainListTLSCell.swift in Sources */,
+				037F44162EDB0AAA002EBF75 /* FSNotifierTest.swift in Sources */,
 				C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */,
 				C43A8A2425D9D20D00591B77 /* HomebrewPackageTest.swift in Sources */,
 				C485707928BF456C00539B36 /* ArrayExtension.swift in Sources */,

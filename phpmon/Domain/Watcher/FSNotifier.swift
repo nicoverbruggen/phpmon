@@ -42,18 +42,27 @@ class FSNotifier {
         )
 
         dispatchSource?.setEventHandler(handler: {
-            let distance = self.lastUpdate?.distance(to: Date().timeIntervalSince1970)
+            self.queue.async {
+                // See how long ago our last handled event was
+                let distance = self.lastUpdate?
+                    .distance(to: Date().timeIntervalSince1970)
 
-            if distance == nil || distance != nil && distance! > 1.00 {
-                // FS event fired, checking in 1s, no duplicate FS events will be acted upon
+                // Add a debounce of 1 second
+                if let distance, distance <= 1.00 {
+                    Log.perf("FSNotifier debounce active for \(url.path).")
+                    return
+                }
+
+                // Synchronize the last update property
                 self.lastUpdate = Date().timeIntervalSince1970
 
+                // Dispatch the async task we set for when the filesystem event occurs
                 Task {
-                    await delay(seconds: 1)
                     onChange()
                 }
             }
         })
+
         dispatchSource?.setCancelHandler(handler: { [weak self] in
             guard let self = self else { return }
 
@@ -61,6 +70,7 @@ class FSNotifier {
             self.fileDescriptor = -1
             self.dispatchSource = nil
         })
+
         dispatchSource?.resume()
     }
 

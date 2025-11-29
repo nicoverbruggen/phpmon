@@ -34,7 +34,7 @@ import Foundation
  situations where adopting structured concurrency would otherwise be
  too challenging or a huge refactor.
  */
-final class Locked<T> {
+final class Locked<T>: @unchecked Sendable {
     private var _value: T
     private let lock = NSLock()
 
