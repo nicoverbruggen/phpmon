@@ -55,7 +55,6 @@ public struct TestableConfiguration: Codable {
     private var primaryPhpVersion: VersionNumber?
     private var secondaryPhpVersions: [VersionNumber] = []
 
-    // swiftlint:disable function_body_length
     mutating func addPhpVersion(_ version: VersionNumber, primary: Bool) {
         if primary {
             if primaryPhpVersion != nil {
@@ -125,7 +124,6 @@ public struct TestableConfiguration: Codable {
                 )
         }
     }
-    // swiftlint:enable function_body_length
 
     // MARK: Interactions
 

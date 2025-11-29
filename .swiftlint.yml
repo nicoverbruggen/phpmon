@@ -16,6 +16,12 @@ included:
 excluded:
   - phpmon/Vendor
 
+type_body_length:
+  warning: 300
+
+function_body_length:
+  warning: 100
+
 line_length:
   ignores_function_declarations: true
   ignores_comments: true
