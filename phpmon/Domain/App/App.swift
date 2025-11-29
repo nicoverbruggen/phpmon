@@ -134,7 +134,7 @@ class App {
      */
     var openWindows: [String] = []
 
-    // MARK: - App Watchers
+    // MARK: - FS Watchers
 
     /**
      The `ConfigWatchManager` is responsible for watching the `.ini` files and the `.conf.d` folder.

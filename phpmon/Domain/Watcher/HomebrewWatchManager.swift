@@ -15,15 +15,25 @@ actor HomebrewWatchManager {
     /**
      Prepares the Homebrew watcher. This allows PHP Monitor to quickly respond to
      external `brew` changes executed by the user.
+
+     - Important: This manager remains nil when a `TestableFileSystem` is in place.
      */
     @MainActor
     public static func prepare() async {
-        let binPath = App.shared.container.paths.binPath
+        let container = App.shared.container
+
+        if container.filesystem is TestableFileSystem {
+            Log.warn("ConfigWatchManager is disabled when using a testable filesystem.")
+            return
+        }
+
         let manager = HomebrewWatchManager(
-            for: URL(fileURLWithPath: binPath),
+            for: URL(fileURLWithPath: container.paths.binPath),
             debounceInterval: 5.0
         )
+
         await manager.setupWatcher()
+
         App.shared.homebrewWatchManager = manager
     }
 

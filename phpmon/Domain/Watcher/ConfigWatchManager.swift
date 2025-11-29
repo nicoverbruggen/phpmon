@@ -17,22 +17,26 @@ actor ConfigWatchManager {
 
     // MARK: Global state (applicable to ALL watchers)
 
+    // TODO: Rework into suspend mechanism (like `HomebrewWatchManager`) to avoid issues with concurrency
     static var ignoresModificationsToConfigValues: Bool = false
 
     // MARK: Static methods
 
     /**
-     Handles the PHP config watcher lifecycle. Creates a new watcher if needed,
-     or recreates it if the PHP version has changed.
+     Handles the PHP configuration file(s) manager lifecycle.
 
-     Actor isolation ensures no duplicate watchers or retain cycles.
+     Creates a new manager w/ watchers if needed, or updates the watchers if the current
+     PHP version has changed. This will be called whenever the PHP version changes, or
+     when the application first starts.
+
+     - Important: This manager remains nil when a `TestableFileSystem` is in place.
      */
     @MainActor
     public static func handleWatcher(forceReload: Bool = false) async {
         let container = App.shared.container
 
         if container.filesystem is TestableFileSystem {
-            Log.warn("Config watch manager is disabled when using testable filesystem.")
+            Log.warn("ConfigWatchManager is disabled when using a testable filesystem.")
             return
         }
 
