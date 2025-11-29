@@ -277,10 +277,10 @@ class RealShell: ShellProtocol {
                     }
 
                     if !output.err.isEmpty {
-                        continuation.resume(returning: (process, .err(output.err)))
-                    } else {
-                        continuation.resume(returning: (process, .out(output.out)))
+                        Log.perf("Received unexpected error output for attached command '\(command)'.")
                     }
+
+                    continuation.resume(returning: (process, output))
                 }
             }
 

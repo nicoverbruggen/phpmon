@@ -83,16 +83,11 @@ struct RealShellTest {
         // from multiple readability handlers don't cause data races or crashes.
         // Without the serial queue, rapid interleaved output causes undefined behavior.
 
-        let script = """
-        for i in {1..200}; do
-            echo "stdout-$i" >&1
-            echo "stderr-$i" >&2
-        done
-        """
+        let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
         var receivedChunks = 0
         let (_, shellOutput) = try await container.shell.attach(
-            script,
+            phpScript,
             didReceiveOutput: { _, _ in
                 receivedChunks += 1
             },
@@ -107,8 +102,8 @@ struct RealShellTest {
             .components(separatedBy: "\n")
             .filter { !$0.isEmpty }
 
-        #expect(stdoutLines.count == 200)
-        #expect(stderrLines.count == 200)
+        #expect(stdoutLines.count == 500)
+        #expect(stderrLines.count == 500)
 
         // Verify content integrity - each line should match the pattern
         for i in 1...200 {
