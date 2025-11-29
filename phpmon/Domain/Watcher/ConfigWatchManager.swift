@@ -12,7 +12,7 @@ class ConfigWatchManager {
 
     static var ignoresModificationsToConfigValues: Bool = false
 
-    let folderMonitorQueue = DispatchQueue(label: "FolderMonitorQueue", attributes: .concurrent)
+    let folderMonitorQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.config_watch", attributes: .concurrent)
 
     let url: URL
     var didChange: ((URL) -> Void)?

@@ -12,7 +12,7 @@ class FSNotifier {
 
     public static var shared: FSNotifier! = nil
 
-    let queue = DispatchQueue(label: "FSWatch2Queue", attributes: .concurrent)
+    let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier", attributes: .concurrent)
     var lastUpdate: TimeInterval?
 
     private var fileDescriptor: CInt = -1

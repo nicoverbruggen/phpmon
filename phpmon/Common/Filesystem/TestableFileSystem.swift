@@ -49,7 +49,7 @@ class TestableFileSystem: FileSystemProtocol {
     /**
      Serial dispatch queue for ensuring thread-safe access to the `files` dictionary.
      */
-    private let accessQueue = DispatchQueue(label: "com.testablefilesystem.accessQueue")
+    private let accessQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_access")
 
     // MARK: - Basics
 
