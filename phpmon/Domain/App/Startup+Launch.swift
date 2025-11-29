@@ -68,13 +68,13 @@ extension Startup {
         await container.phpEnvs.reloadPhpVersions()
 
         // Set up the filesystem watcher for the Homebrew binaries
-        App.shared.prepareHomebrewWatchers()
+        await HomebrewWatchManager.prepare()
 
         // Check for other problems
         container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
 
         // Detect built-in and custom applications
         await App.shared.detectApplications()

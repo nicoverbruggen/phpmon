@@ -41,10 +41,6 @@ struct FSNotifierTest {
             }
         )
 
-        defer {
-            notifier.terminate()
-        }
-
         // Modify the file, twice
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
@@ -59,5 +55,8 @@ struct FSNotifierTest {
         // Verify after another second, our second write is actually noted
         await delay(seconds: 1.2)
         #expect(eventFired.value == 2)
+
+        // Clean up notifier
+        notifier.terminate()
     }
 }

@@ -33,7 +33,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await App.shared.withSuspendedHomebrewWatcher {
+            try await HomebrewWatchManager.withSuspended {
                 try await command.execute(shell: container.shell) { progress in
                     Task { @MainActor in
                         self.status.title = progress.title
@@ -99,7 +99,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await App.shared.withSuspendedHomebrewWatcher {
+            try await HomebrewWatchManager.withSuspended {
                 try await command.execute(shell: container.shell) { progress in
                     Task { @MainActor in
                         self.status.title = progress.title

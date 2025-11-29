@@ -8,24 +8,71 @@
 
 import Foundation
 
-class ConfigWatchManager {
+actor ConfigWatchManager {
+
+    enum Behaviour {
+        case reloadsMenu
+        case reloadsWatchers
+    }
 
     // MARK: Global state (applicable to ALL watchers)
 
     static var ignoresModificationsToConfigValues: Bool = false
 
-    // MARK: Public variables
+    // MARK: Static methods
 
-    private var watchers: [ConfigFSNotifier] = []
+    /**
+     Handles the PHP config watcher lifecycle. Creates a new watcher if needed,
+     or recreates it if the PHP version has changed.
 
-    let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.config_watch")
-    let url: URL
-    var lastUpdate: TimeInterval?
-    var didChange: ((URL) -> Void)?
+     Actor isolation ensures no duplicate watchers or retain cycles.
+     */
+    @MainActor
+    public static func handleWatcher(forceReload: Bool = false) async {
+        let container = App.shared.container
+
+        if container.filesystem is TestableFileSystem {
+            Log.warn("Config watch manager is disabled when using testable filesystem.")
+            return
+        }
+
+        guard let install = container.phpEnvs.phpInstall else {
+            Log.info("It appears as if no PHP installation is currently active.")
+            Log.info("The config watch manager is disabled until a PHP install is active.")
+            return
+        }
+
+        let url = URL(fileURLWithPath: "\(container.paths.etcPath)/php/\(install.version.short)")
+
+        // Create watcher if missing
+        guard let manager = App.shared.configWatchManager else {
+            let manager = ConfigWatchManager(for: url)
+            await manager.setupWatchers()
+            App.shared.configWatchManager = manager
+            return
+        }
+
+        // Update existing watcher if needed
+        if await manager.url != url {
+            // URL changed - update to different PHP version
+            await manager.updateUrl(to: url)
+        } else if forceReload {
+            // Same URL - just reload watchers (e.g., conf.d files added/removed)
+            await manager.reloadWatchers()
+        }
+    }
+
+    // MARK: Instance variables
+
+    private var watchers: [FSNotifier] = []
+    private var debouncer: Debouncer
+
+    private(set) var url: URL
+    nonisolated private let debounceInterval: TimeInterval
 
     // MARK: Methods
 
-    init(for url: URL) {
+    init(for url: URL, debounceInterval: TimeInterval = 0.75) {
         if App.shared.container.filesystem is TestableFileSystem {
             fatalError("""
                 ConfigWatchManager is currently incompatible with a testable filesystem!"
@@ -34,6 +81,13 @@ class ConfigWatchManager {
         }
 
         self.url = url
+        self.debounceInterval = debounceInterval
+        self.debouncer = Debouncer()
+    }
+
+    func setupWatchers() {
+        // Guard against double setup
+        assert(watchers.isEmpty, "setupWatchers() called when watchers already exist")
 
         // Add a watcher for php.ini
         self.addWatcher(for: self.url.appendingPathComponent("php.ini"), eventMask: .write)
@@ -62,25 +116,64 @@ class ConfigWatchManager {
         }))
     }
 
-    func addWatcher(
+    private func clearWatchers() {
+        for watcher in self.watchers {
+            watcher.terminate()
+        }
+        self.watchers.removeAll()
+    }
+
+    func reloadWatchers() {
+        Log.perf("Reloading configuration watchers...")
+        clearWatchers()
+        setupWatchers()
+    }
+
+    func updateUrl(to newUrl: URL) {
+        Log.perf("Updating watcher URL from \(self.url.path) to \(newUrl.path)...")
+        clearWatchers()
+        self.url = newUrl
+        setupWatchers()
+    }
+
+    private func handleConfigChange(at url: URL) async {
+        await debouncer.debounce(for: debounceInterval) {
+            Log.perf("Config file changed at \(url.path), debounce completed. Refreshing menu...")
+            Task { @MainActor in MainMenu.shared.reloadPhpMonitorMenuInBackground() }
+        }
+    }
+
+    private func addWatcher(
         for url: URL,
         eventMask: DispatchSource.FileSystemEvent,
-        behaviour: ConfigFSNotifier.Behaviour = .reloadsMenu
+        behaviour: Behaviour = .reloadsMenu
     ) {
         if !App.shared.container.filesystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }
 
-        let watcher = ConfigFSNotifier(for: url, eventMask: eventMask, parent: self, behaviour: behaviour)
+        let watcher = FSNotifier(for: url, eventMask: eventMask) { [weak self] in
+            guard let self = self else { return }
+
+            Task {
+                if behaviour == .reloadsWatchers
+                    && !ConfigWatchManager.ignoresModificationsToConfigValues {
+                    // Reload all configuration watchers on this manager
+                    await self.reloadWatchers()
+                    return
+                }
+
+                await self.handleConfigChange(at: url)
+            }
+        }
         self.watchers.append(watcher)
     }
 
-    func disable() {
+    func disable() async {
         Log.perf("Turning off all individual existing watchers...")
-        self.watchers.forEach { (watcher) in
-            watcher.stopMonitoring()
-        }
+        await debouncer.cancel()
+        clearWatchers()
     }
 
     deinit {

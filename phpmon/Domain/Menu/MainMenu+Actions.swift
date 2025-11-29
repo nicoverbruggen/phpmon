@@ -292,7 +292,7 @@ extension MainMenu {
         await PhpEnvironments.switcher.performSwitch(to: version)
 
         container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
@@ -307,7 +307,7 @@ extension MainMenu {
             await PhpEnvironments.switcher.performSwitch(to: version)
 
             container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-            App.shared.handlePhpConfigWatcher()
+            await ConfigWatchManager.handleWatcher()
             container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
         }
     }
@@ -333,7 +333,7 @@ extension MainMenu {
         await PhpEnvironments.switcher.performSwitch(to: version)
 
         container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
