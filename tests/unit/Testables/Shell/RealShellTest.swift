@@ -77,4 +77,43 @@ struct RealShellTest {
         let duration = start.duration(to: .now)
         #expect(duration < .milliseconds(2000)) // Should complete in ~700ms if parallel
     }
+
+    @Test func attach_handles_concurrent_stdout_stderr_writes_safely() async throws {
+        // This test verifies that concurrent writes to output.out and output.err
+        // from multiple readability handlers don't cause data races or crashes.
+        // Without the serial queue, rapid interleaved output causes undefined behavior.
+
+        let script = """
+        for i in {1..200}; do
+            echo "stdout-$i" >&1
+            echo "stderr-$i" >&2
+        done
+        """
+
+        var receivedChunks = 0
+        let (_, shellOutput) = try await container.shell.attach(
+            script,
+            didReceiveOutput: { _, _ in
+                receivedChunks += 1
+            },
+            withTimeout: 5.0
+        )
+
+        // Verify all output was captured without corruption
+        let stdoutLines = shellOutput.out
+            .components(separatedBy: "\n")
+            .filter { !$0.isEmpty }
+        let stderrLines = shellOutput.err
+            .components(separatedBy: "\n")
+            .filter { !$0.isEmpty }
+
+        #expect(stdoutLines.count == 200)
+        #expect(stderrLines.count == 200)
+
+        // Verify content integrity - each line should match the pattern
+        for i in 1...200 {
+            #expect(stdoutLines.contains("stdout-\(i)"))
+            #expect(stderrLines.contains("stderr-\(i)"))
+        }
+    }
 }

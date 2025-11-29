@@ -67,7 +67,7 @@ enum ShellStream: Codable {
     case stdOut, stdErr, stdIn
 }
 
-class ShellOutput {
+class ShellOutput: @unchecked Sendable {
     var out: String
     var err: String
 

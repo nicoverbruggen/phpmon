@@ -219,6 +219,7 @@ class RealShell: ShellProtocol {
         process.standardError = errorPipe
 
         let output = ShellOutput.empty()
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
 
         return try await withCheckedThrowingContinuation({ continuation in
             let timeoutTask = Task {
@@ -235,8 +236,10 @@ class RealShell: ShellProtocol {
             outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    output.out += string
-                    didReceiveOutput(string, .stdOut)
+                    serialQueue.async {
+                        output.out += string
+                        didReceiveOutput(string, .stdOut)
+                    }
                 }
             }
 
@@ -244,8 +247,10 @@ class RealShell: ShellProtocol {
             errorPipe.fileHandleForReading.readabilityHandler = { fileHandle in
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    output.err += string
-                    didReceiveOutput(string, .stdErr)
+                    serialQueue.async {
+                        output.err += string
+                        didReceiveOutput(string, .stdErr)
+                    }
                 }
             }
 
@@ -260,20 +265,22 @@ class RealShell: ShellProtocol {
                 let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
                 let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
 
-                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                    output.out += string
-                    didReceiveOutput(string, .stdOut)
-                }
+                serialQueue.async {
+                    if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
+                        output.out += string
+                        didReceiveOutput(string, .stdOut)
+                    }
 
-                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                    output.err += string
-                    didReceiveOutput(string, .stdErr)
-                }
+                    if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
+                        output.err += string
+                        didReceiveOutput(string, .stdErr)
+                    }
 
-                if !output.err.isEmpty {
-                    continuation.resume(returning: (process, .err(output.err)))
-                } else {
-                    continuation.resume(returning: (process, .out(output.out)))
+                    if !output.err.isEmpty {
+                        continuation.resume(returning: (process, .err(output.err)))
+                    } else {
+                        continuation.resume(returning: (process, .out(output.out)))
+                    }
                 }
             }
 
