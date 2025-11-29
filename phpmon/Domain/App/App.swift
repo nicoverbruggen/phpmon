@@ -139,6 +139,9 @@ class App {
     /** Individual filesystem watchers, which are, i.e. responsible for watching the Homebrew folders. */
     var watchers: [String: FSNotifier] = [:]
 
+    /** Individual debouncers for filesystem watchers. */
+    var debouncers: [String: Debouncer] = [:]
+
     /** 
      The `ConfigWatchManager` is responsible for watching the `.ini` files and the `.conf.d` folder.
      This manager object can immediately start or stop all watchers (or pause them) all at once.

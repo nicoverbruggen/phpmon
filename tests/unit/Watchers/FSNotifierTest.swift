@@ -25,13 +25,19 @@ struct FSNotifierTest {
         }
 
         let eventFired = Locked<Int>(0)
+        let debouncer = Debouncer()
 
         // Create notifier
         let notifier = FSNotifier(
             for: testFile,
             eventMask: .write,
             onChange: {
-                eventFired.value += 1
+                Task {
+                    // Debouncer is an actor so this is allowed
+                    await debouncer.debounce(for: 1.0) {
+                        eventFired.value += 1
+                    }
+                }
             }
         )
 
@@ -43,16 +49,15 @@ struct FSNotifierTest {
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
 
-        // Wait for the event to fire, verify it fired ONCE (not TWICE)
-        try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+        // Wait for the event to fire, verify it fired ONCE after 1 second debounce
+        await delay(seconds: 1.2)
         #expect(eventFired.value == 1)
 
         // Try to write again (after debounce timing)
-        try await Task.sleep(nanoseconds: 2_000_000_000)
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
 
-        // Verify our event fired AGAIN after 0.2 seconds
-        try await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+        // Verify after another second, our second write is actually noted
+        await delay(seconds: 1.2)
         #expect(eventFired.value == 2)
     }
 }

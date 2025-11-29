@@ -16,7 +16,6 @@ class FSNotifier {
 
     let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier")
     let url: URL
-    var lastUpdate: TimeInterval?
 
     // MARK: Private variables
 
@@ -43,23 +42,7 @@ class FSNotifier {
 
         dispatchSource?.setEventHandler(handler: {
             self.queue.async {
-                // See how long ago our last handled event was
-                let distance = self.lastUpdate?
-                    .distance(to: Date().timeIntervalSince1970)
-
-                // Add a debounce of 1 second
-                if let distance, distance <= 1.00 {
-                    Log.perf("FSNotifier debounce active for \(url.path).")
-                    return
-                }
-
-                // Synchronize the last update property
-                self.lastUpdate = Date().timeIntervalSince1970
-
-                // Dispatch the async task we set for when the filesystem event occurs
-                Task {
-                    onChange()
-                }
+                Task { onChange() }
             }
         })
 

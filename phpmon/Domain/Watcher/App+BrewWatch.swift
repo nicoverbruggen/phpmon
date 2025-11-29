@@ -17,27 +17,22 @@ extension App {
             onChange: { Task { await self.onHomebrewPhpModification() } }
         )
 
-        App.shared.watchers["homebrewBinaries"] = notifier
-    }
-
-    public func destroyHomebrewWatchers() {
-        // Removing requires termination and then removing reference
-        self.watchers["homebrewBinaries"]?.terminate()
-        self.watchers["homebrewBinaries"] = nil
+        self.watchers["homebrewBinaries"] = notifier
+        self.debouncers["homebrewBinaries"] = Debouncer()
     }
 
     public func onHomebrewPhpModification() async {
-        // let previous = App.shared.container.phpEnvs.currentInstall?.version.text
-        Log.info("Something changed in the Homebrew binary directory...")
-        await container.phpEnvs.reloadPhpVersions()
-        await MainMenu.shared.refreshActiveInstallation()
+        if let debouncer = self.debouncers["homebrewBinaries"] {
+            await debouncer.debounce(for: 5.0) {
+                Log.info("No changes in `\(self.container.paths.binPath)` occurred for 5 seconds. Reloading now.")
 
-        //
-        // TODO: PHP Guard 2.0
-        // Check if the new and previous version of PHP are different
-        // if so, we can show a notification if needed or alert the user
-        //
-        // let new = App.shared.container.phpEnvs.currentInstall?.version.text
-        //
+                // We reload the PHP versions in the background
+                await self.container.phpEnvs.reloadPhpVersions()
+
+                // Finally, refresh the active installation
+                await MainMenu.shared.refreshActiveInstallation()
+            }
+        }
     }
+
 }
