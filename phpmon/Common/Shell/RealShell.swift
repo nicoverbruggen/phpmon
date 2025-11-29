@@ -276,10 +276,6 @@ class RealShell: ShellProtocol {
                         didReceiveOutput(string, .stdErr)
                     }
 
-                    if !output.err.isEmpty {
-                        Log.perf("Received unexpected error output for attached command '\(command)'.")
-                    }
-
                     continuation.resume(returning: (process, output))
                 }
             }
