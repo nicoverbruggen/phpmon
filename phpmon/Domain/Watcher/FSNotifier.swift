@@ -22,6 +22,8 @@ class FSNotifier {
     private var fileDescriptor: CInt = -1
     private var dispatchSource: DispatchSourceFileSystemObject?
 
+    private var isSuspended = false
+
     // MARK: Methods
 
     init(for url: URL, eventMask: DispatchSource.FileSystemEvent, onChange: @escaping () -> Void) {
@@ -42,6 +44,10 @@ class FSNotifier {
 
         dispatchSource?.setEventHandler(handler: {
             self.queue.async {
+                // If our notifier is suspended, don't fire
+                guard !self.isSuspended else { return }
+
+                // If our notifier is not suspended, fire
                 Task { onChange() }
             }
         })
@@ -55,6 +61,20 @@ class FSNotifier {
         })
 
         dispatchSource?.resume()
+    }
+
+    func suspend() {
+        self.queue.async {
+            self.isSuspended = true
+            Log.perf("FSNotifier for \(self.url) has been suspended.")
+        }
+    }
+
+    func resume() {
+        self.queue.async {
+            self.isSuspended = false
+            Log.perf("FSNotifier for \(self.url) has been resumed.")
+        }
     }
 
     func terminate() {

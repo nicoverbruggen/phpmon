@@ -217,7 +217,9 @@ struct PhpVersionManagerView: View {
         HStack {
             if !formula.healthy {
                 Button("phpman.buttons.repair".localizedForSwiftUI, role: .destructive) {
-                    Task { await self.repairAll() }
+                    Task {
+                        await self.repairAll()
+                    }
                 }
             }
 
@@ -227,11 +229,15 @@ struct PhpVersionManagerView: View {
                 })
             } else if formula.isInstalled {
                 Button("phpman.buttons.uninstall".localizedForSwiftUI, role: .destructive) {
-                    Task { await self.confirmUninstall(formula) }
+                    Task {
+                        await self.confirmUninstall(formula)
+                    }
                 }
             } else {
                 Button("phpman.buttons.install".localizedForSwiftUI) {
-                    Task { await self.install(formula) }
+                    Task {
+                        await self.install(formula)
+                    }
                 }.disabled(formula.hasUpgradedFormulaAlias || !formula.hasFormulaFile)
             }
         }

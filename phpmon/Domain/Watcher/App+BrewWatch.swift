@@ -10,6 +10,20 @@ import Foundation
 
 extension App {
 
+    /**
+     Performs a particular action while suspending the Homebrew watcher,
+     until the task is completed.
+     */
+    public func withSuspendedHomebrewWatcher<T>(_ action: () async throws -> T) async rethrows -> T {
+        await suspendHomebrewWatcher()
+        defer { resumeHomebrewWatcher() }
+        return try await action()
+    }
+
+    /**
+     Prepares the `homebrew/bin` directory watcher. This allows PHP Monitor to quickly respond to
+     external `brew` changes executed by the user.
+     */
     public func prepareHomebrewWatchers() {
         let notifier = FSNotifier(
             for: URL(fileURLWithPath: container.paths.binPath),
@@ -19,6 +33,15 @@ extension App {
 
         self.watchers["homebrewBinaries"] = notifier
         self.debouncers["homebrewBinaries"] = Debouncer()
+    }
+
+    private func suspendHomebrewWatcher() async {
+        watchers["homebrewBinaries"]?.suspend()
+        await debouncers["homebrewBinaries"]?.cancel()
+    }
+
+    private func resumeHomebrewWatcher() {
+        watchers["homebrewBinaries"]?.resume()
     }
 
     public func onHomebrewPhpModification() async {
