@@ -15,13 +15,11 @@ class ConfigFSNotifier {
         case reloadsWatchers
     }
 
-    private var parent: ConfigWatchManager!
-
-    private var monitoredFolderFileDescriptor: CInt = -1
-
-    private var folderMonitorSource: DispatchSourceFileSystemObject?
-
     let url: URL
+
+    private var parent: ConfigWatchManager!
+    private var monitoredFolderFileDescriptor: CInt = -1
+    private var folderMonitorSource: DispatchSourceFileSystemObject?
 
     init(
         for url: URL,
@@ -56,7 +54,7 @@ class ConfigFSNotifier {
         folderMonitorSource = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: monitoredFolderFileDescriptor,
             eventMask: eventMask,
-            queue: parent.folderMonitorQueue
+            queue: parent.queue
         )
 
         // Set the event handler (fires depending on the event mask)

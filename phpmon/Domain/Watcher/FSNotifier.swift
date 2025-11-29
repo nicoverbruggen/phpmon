@@ -12,13 +12,18 @@ class FSNotifier {
 
     public static var shared: FSNotifier! = nil
 
-    let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier", attributes: .concurrent)
+    // MARK: Public variables
+
+    let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier")
+    let url: URL
     var lastUpdate: TimeInterval?
+
+    // MARK: Private variables
 
     private var fileDescriptor: CInt = -1
     private var dispatchSource: DispatchSourceFileSystemObject?
 
-    internal let url: URL
+    // MARK: Methods
 
     init(for url: URL, eventMask: DispatchSource.FileSystemEvent, onChange: @escaping () -> Void) {
         self.url = url

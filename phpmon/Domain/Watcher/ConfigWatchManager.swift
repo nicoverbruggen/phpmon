@@ -10,15 +10,20 @@ import Foundation
 
 class ConfigWatchManager {
 
+    // MARK: Global state (applicable to ALL watchers)
+
     static var ignoresModificationsToConfigValues: Bool = false
 
-    let folderMonitorQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.config_watch", attributes: .concurrent)
+    // MARK: Public variables
 
+    private var watchers: [ConfigFSNotifier] = []
+
+    let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.config_watch")
     let url: URL
-    var didChange: ((URL) -> Void)?
     var lastUpdate: TimeInterval?
+    var didChange: ((URL) -> Void)?
 
-    var watchers: [ConfigFSNotifier] = []
+    // MARK: Methods
 
     init(for url: URL) {
         if App.shared.container.filesystem is TestableFileSystem {
