@@ -82,7 +82,11 @@ class RealWebApi: WebApiProtocol {
 
     var defaultHeaders: HttpHeaders {
         return [
-            "User-Agent": "phpmon-nur/2.0",
+            // Fun fact: NUR stands for "NSURLSession Update Requester"
+            "User-Agent": "phpmon-nur/3.0",
+            // Optional randomized user API ID
+            "X-phpmon-api-id": App.shared.getApiId(),
+            // Required fields
             "X-phpmon-version": "\(App.shortVersion) (\(App.bundleVersion))",
             "X-phpmon-os-version": "\(App.macVersion)",
             "X-phpmon-bundle-id": "\(App.identifier)"
