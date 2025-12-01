@@ -942,7 +942,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "cert_alert.renew" = "Re-secure Domain(s)";
 "cert_alert.cancel" = "Not Now";
 
-"crash_reporter.title" = "PHP Monitor crashed earlier, want to send a crash report?";
+"crash_reporter.title" = "PHP Monitor crashed earlier, do you want to send a crash report?";
 "crash_reporter.subtitle" = "It is possible to send the crash report to the developer of the app, so this issue can be fixed. This is highly recommended. Would you like to do that?";
 "crash_reporter.description" = "Without sending this crash report, the developer may not be aware of this particular issue. No logs or personal data is sent with the crash report, only the unsymbolicated crash report. No further action is necessary on your part.
 

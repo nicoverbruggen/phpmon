@@ -100,6 +100,7 @@ class CrashReporter {
         request.httpMethod = "POST"
         request.setValue("text/crash", forHTTPHeaderField: "Content-Type")
         request.setValue("phpmon-crashrep/1.0", forHTTPHeaderField: "User-Agent")
+        request.setValue(App.shared.getApiId(), forHTTPHeaderField: "X-phpmon-session-uuid")
         request.httpBody = text.data(using: .utf8)
         request.timeoutInterval = timeout
 

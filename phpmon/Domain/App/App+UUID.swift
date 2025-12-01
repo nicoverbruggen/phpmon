@@ -24,13 +24,23 @@ struct Api {
 extension App {
     /**
      Returns a unique UUID that automatically refreshes every 36 hours.
-     It is used to more accurately throttle requests for a given IP, since
-     multiple users could be coming from one residential or business IP.
+     It is used to more accurately throttle API requests for a given IP,
+     since multiple users could be coming from one residential/business IP.
 
-     This UUID is NOT used for tracking purposes, only to identify unique
-     users of PHP Monitor to properly scale the server and throttle the API.
+     - Important: This UUID is NOT used for tracking.
+       It is used for legitimate purposes only.
+       Read more below to find out how this UUID is used.
 
-     The UUID is stored in UserDefaults and regenerated when expired.
+     How it is used:
+
+     - Allows identifying which IP addresses might be throttled too quickly
+       (example: many requests with the same IP, but different unique UUIDs)
+
+     - Allows counting how many unique users checked for updates in 24 hours
+       (example: previous assumption was: 1 IP = 1 user; not always true!)
+
+     The UUID is stored in UserDefaults and regenerated when it has expired.
+     Because I only use this for user counting, the ID is reset after 36 hours.
      */
     func getApiId() -> String {
         let defaults = UserDefaults.standard
