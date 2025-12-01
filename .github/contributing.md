@@ -1,22 +1,16 @@
 # Contribution Guidelines
 
-Thank you for your interest in contributing to PHP Monitor.
+Thank you for your interest in contributing to PHP Monitor!
 
-I consider this project a bit of a nice side-project to my daily gig, so it is very much a personal affair where I love to tinker around.
+While the code of the latest PHP Monitor release is public, many things are constantly in flux that may not be pushed to this repository yet. 
 
-**While the code of the latest PHP Monitor release is public, many things are constantly in flux that may not be pushed to this repository yet.**
+In particular, certain changes may only be available to [GitHub Sponsors](https://github.com/sponsors/nicoverbruggen) via the [EAP repository](https://github.com/phpmon/early-access).
 
-I don't mean to be rude, but I don't want other people involved with the project beyond simply contributing a few small things here and there, as has been the case in the past.
+Please consider creating an issue before working on anything related to the project, so that I can confirm you are not just wasting your time.
 
-The extra mental overhead of having additional contributors to report to, whose code will need to be reviewed... it's a lot and it makes working on PHP Monitor less enjoyable for me. 
+**Making any changes in a fork and opening a pull request WITHOUT properly documenting your changes and referencing an issue may require me to close your PR.**
 
-Plus, at this point, the majority of PHP Monitor's main functionality is also done.
-
-As a result, I may refer you to this file at some point. Again, I don't wish to be rude, but this general rule stands:
-
-**Making any changes in a fork and opening a pull request without opening an issue first will most likely result in your PR being closed without mercy.**
-
-To repeat, I am **not opposed** to small contributions and fixes, if they are **meaningful or insightful**.
+To repeat, I am not opposed to small contributions and fixes, if they are meaningful or insightful, but low effort changes are generally not accepted.
 
 To learn more, please check out the [pull request template](/.github/pull_request_template.md) which contains more information about my contribution requirements. (This will also show up when you open a new PR.)
 
