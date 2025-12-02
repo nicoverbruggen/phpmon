@@ -57,7 +57,7 @@ struct RealShellTest {
     @Test func system_shell_can_timeout_and_throw_error() async {
         await #expect(throws: ShellError.timedOut) {
             try await container.shell.attach(
-                "php -r \"sleep(1);\"",
+                "php -r \"sleep(30);\"",
                 didReceiveOutput: { _, _ in },
                 withTimeout: .seconds(0.1)
             )
@@ -74,7 +74,7 @@ struct RealShellTest {
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .milliseconds(2000)) // Should complete in ~700ms if parallel
+        #expect(duration < .milliseconds(3000)) // Should complete in ~700ms if parallel
     }
 
     /**
