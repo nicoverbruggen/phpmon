@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct TestableShellTest {
     @Test func fake_shell_output_can_be_declared() async {
         let greeting = BatchFakeShellOutput(items: [

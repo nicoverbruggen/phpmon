@@ -53,7 +53,7 @@ struct HomebrewPackageTest {
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
     func can_parse_services_json_from_cli_output() async throws {
-        let container = Container.real()
+        let container = Container.real(minimal: true)
 
         let services = try! JSONDecoder().decode(
             [HomebrewService].self,
@@ -76,7 +76,7 @@ struct HomebrewPackageTest {
     /// or the JSON API of the Homebrew output may have changed.
     @Test(.disabled("Uses system command; enable at your own risk"))
     func can_load_extension_json_from_cli_output() async throws {
-        let container = Container.real()
+        let container = Container.real(minimal: true)
 
         let package = try! JSONDecoder().decode(
             [HomebrewPackage].self,

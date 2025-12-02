@@ -9,25 +9,22 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct PhpExtensionTest {
-    var container: Container
-
-    init () async throws {
-        container = Container.real()
-    }
-
     static var phpIniFileUrl: URL {
         TestBundle.url(forResource: "php", withExtension: "ini")!
     }
 
     @Test func can_load_extension() throws {
+        let container = Container.real(minimal: true)
+
         let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         #expect(!extensions.isEmpty)
     }
 
     @Test func extension_name_is_correct() throws {
+        let container = Container.real(minimal: true)
+
         let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         let extensionNames = extensions.map { (ext) -> String in
@@ -47,6 +44,8 @@ struct PhpExtensionTest {
     }
 
     @Test func extension_status_is_correct() throws {
+        let container = Container.real(minimal: true)
+
         let extensions = PhpExtension.from(container, filePath: Self.phpIniFileUrl.path)
 
         // xdebug should be enabled
@@ -57,6 +56,7 @@ struct PhpExtensionTest {
     }
 
     @Test func toggle_works_as_expected() async throws {
+        let container = Container.real(minimal: true)
         let destination = Utility.copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
         let extensions = PhpExtension.from(container, filePath: destination.path)
         #expect(extensions.count == 6)

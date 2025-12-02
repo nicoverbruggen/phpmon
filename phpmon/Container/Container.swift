@@ -51,9 +51,16 @@ class Container {
     /// (Swapping instances for specific dependencies can be introduced later with dedicated
     /// methods if it ever becomes truly necessary.)
     ///
-    public func bind() {
+    /// - Parameter coreOnly: Only binds `shell`, `filesystem`, `command`, `paths` and `webApi`.
+    ///   Use this to prevent slowing down tests for a minimal container.
+    ///
+    public func bind(coreOnly: Bool = false) {
         if self.bound {
             fatalError("You cannot call `bind` on a Container more than once.")
+        }
+
+        defer {
+            self.bound = true
         }
 
         // These are the most basic building blocks. We need these before
@@ -64,6 +71,10 @@ class Container {
         self.paths = Paths(container: self)
         self.webApi = RealWebApi(container: self)
 
+        if coreOnly {
+            return
+        }
+
         // Please note that the order in which these are initialized, matters!
         // For example, preferences leverages the Paths instance, so don't just
         // swap these around for no reason... the order is very intentional.
@@ -71,9 +82,6 @@ class Container {
         self.phpEnvs = PhpEnvironments(container: self)
         self.favorites = Favorites()
         self.warningManager = WarningManager(container: self)
-
-        // At this point, our container has been bound.
-        self.bound = true
     }
 
     /**

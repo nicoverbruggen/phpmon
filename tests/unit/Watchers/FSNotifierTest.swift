@@ -9,7 +9,6 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct FSNotifierTest {
 
     @Test func notifier_fires_when_file_is_modified() async throws {

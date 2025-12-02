@@ -13,7 +13,7 @@ struct NginxConfigurationTest {
     var container: Container
 
     init () async throws {
-        container = Container.real()
+        container = Container.real(minimal: true)
     }
 
     // MARK: - Test Files

@@ -9,12 +9,11 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct CaskFileParserTest {
     var container: Container
 
     init() async throws {
-        container = Container.real()
+        container = Container.real(minimal: true)
     }
 
     var Shell: ShellProtocol {

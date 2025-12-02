@@ -9,12 +9,11 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 class PhpConfigurationFileTest {
     var container: Container
 
     init() {
-        self.container = Container.real()
+        self.container = Container.real(minimal: true)
     }
 
     static var phpIniFileUrl: URL {

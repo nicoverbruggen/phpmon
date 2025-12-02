@@ -11,7 +11,7 @@ import Foundation
 
 struct TestableConfigurationTest {
     @Test func configuration_can_be_saved_as_json() async {
-        let container = Container.real()
+        let container = Container.real(minimal: true)
 
         // WORKING
         var configuration = TestableConfigurations.working

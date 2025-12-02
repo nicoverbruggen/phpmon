@@ -13,8 +13,7 @@ struct RealWebApiTest {
     private var container: Container
 
     init() throws {
-        self.container = Container()
-        container.bind()
+        self.container = Container.real(minimal: true)
     }
 
     var WebApi: RealWebApi {

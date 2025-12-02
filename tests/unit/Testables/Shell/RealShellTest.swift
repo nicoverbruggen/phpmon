@@ -9,13 +9,12 @@
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct RealShellTest {
     var container: Container
 
     init() async throws {
         // Reset to the default shell
-        container = Container.real()
+        container = Container.real(minimal: true)
     }
 
     @Test func system_shell_is_default() async {
