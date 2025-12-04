@@ -15,6 +15,8 @@ public class RealCommand: CommandProtocol {
         withStandardError: Bool
     ) -> String {
         let task = Process()
+        var output = ""
+
         task.launchPath = path
         task.arguments = arguments
 
@@ -26,10 +28,28 @@ public class RealCommand: CommandProtocol {
         }
 
         task.launch()
+        task.waitUntilExit()
 
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output: String = String.init(data: data, encoding: String.Encoding.utf8)!
+        defer {
+            try? pipe.fileHandleForReading.close()
+        }
 
+        // Handle termination
+        if task.terminationReason == .uncaughtSignal {
+            Log.err("The command `\(path) w/ args: \(arguments)` likely crashed. Returning UNCAUGHT_SIGNAL.")
+            return "PHPMON_COMMAND_UNCAUGHT_SIGNAL"
+        }
+
+        // Try reading from file handle and close it
+        if let data = try? pipe.fileHandleForReading.readToEnd() {
+            if let string = String(data: data, encoding: .utf8) {
+                output = string
+            } else {
+                return "PHPMON_FILE_HANDLE_READ_FAILURE"
+            }
+        }
+
+        // Trim newline output if necessary
         if trimNewlines {
             return output.components(separatedBy: .newlines)
                 .filter({ !$0.isEmpty })

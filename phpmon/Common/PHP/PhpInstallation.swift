@@ -94,11 +94,23 @@ class PhpInstallation {
                 withStandardError: true
             ).trimmingCharacters(in: .whitespacesAndNewlines)
 
+            // The PHP executable did not return any output
+            if testCommand.isEmpty || testCommand.contains("HANDLE_READ_FAILURE") {
+                Log.err("No output. PHP \(self.versionNumber.short) is not healthy!")
+                self.isHealthy = false
+            }
+
+            // The PHP executable crashed with an uncaught signal when we tried to run this
+            if testCommand.contains("UNCAUGHT_SIGNAL") {
+                Log.err("Uncaught signal, PHP \(self.versionNumber.short) is not healthy!")
+                self.isHealthy = false
+            }
+
             // If the "dyld: Library not loaded" issue pops up, we have an unhealthy PHP installation
             // and we will need to reinstall this version of PHP via Homebrew.
             if testCommand.contains("Library not loaded") && testCommand.contains("dyld") {
+                Log.err("dyld error, PHP \(self.versionNumber.short) is not healthy!")
                 self.isHealthy = false
-                Log.err("The PHP installation of \(self.versionNumber.short) is not healthy!")
             }
         }
     }
