@@ -53,6 +53,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         #if DEBUG
         logger.verbosity = .performance
+        Log.info("Extra verbose mode is enabled by default on DEBUG builds.")
+
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
         }
