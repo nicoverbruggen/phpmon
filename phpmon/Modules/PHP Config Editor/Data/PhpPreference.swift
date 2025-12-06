@@ -20,9 +20,9 @@ class PhpPreference {
         self.key = key
     }
 
-    internal static func persistToIniFile(key: String, value: String) throws {
+    internal static func persistToIniFile(key: String, value: String) async throws {
         if let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) {
-            return try file.replace(key: key, value: value)
+            return try await file.replace(key: key, value: value)
         }
 
         throw PhpConfigurationFile.ReplacementErrors.missingFile

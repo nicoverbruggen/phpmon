@@ -8,17 +8,12 @@
 
 import Foundation
 
-actor ConfigWatchManager {
+actor ConfigWatchManager: Suspendable {
 
     enum Behaviour {
         case reloadsMenu
         case reloadsWatchers
     }
-
-    // MARK: Global state (applicable to ALL watchers)
-
-    // TODO: Rework into suspend mechanism (like `HomebrewWatchManager`) to avoid issues with concurrency
-    static var ignoresModificationsToConfigValues: Bool = false
 
     // MARK: Static methods
 
@@ -161,8 +156,7 @@ actor ConfigWatchManager {
             guard let self = self else { return }
 
             Task {
-                if behaviour == .reloadsWatchers
-                    && !ConfigWatchManager.ignoresModificationsToConfigValues {
+                if behaviour == .reloadsWatchers {
                     // Reload all configuration watchers on this manager
                     await self.reloadWatchers()
                     return
@@ -184,4 +178,43 @@ actor ConfigWatchManager {
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
+    // MARK: - Suspendable Protocol
+
+    /**
+     Performs a particular action while suspending the config watcher,
+     until the task is completed.
+
+     This should be used when the application writes to PHP configuration files,
+     to prevent the watcher from responding to our own changes.
+     */
+    public static func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
+        guard let manager = App.shared.configWatchManager else {
+            // If there's no manager, run the task as-is
+            return try await action()
+        }
+
+        // Suspend, execute the action, and resume
+        return try await manager.withSuspended(action)
+    }
+
+    /**
+     Suspends the `ConfigWatchManager`.
+     This prevents any changes to config files from causing events to fire.
+     */
+    func suspend() async {
+        for watcher in watchers {
+            await watcher.suspend()
+        }
+        await debouncer.cancel()
+    }
+
+    /**
+     Resumes the `ConfigWatchManager`.
+     Any changes to config files are picked up again.
+     */
+    func resume() async {
+        for watcher in watchers {
+            await watcher.resume()
+        }
+    }
 }

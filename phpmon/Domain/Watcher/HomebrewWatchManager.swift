@@ -8,7 +8,7 @@
 
 import Foundation
 
-actor HomebrewWatchManager {
+actor HomebrewWatchManager: Suspendable {
 
     // MARK: Public API
 
@@ -35,24 +35,6 @@ actor HomebrewWatchManager {
         await manager.setupWatcher()
 
         App.shared.homebrewWatchManager = manager
-    }
-
-    /**
-     Performs a particular action while suspending the Homebrew watcher,
-     until the task is completed.
-
-     Any operations that cause Homebrew to perform tasks (installing,
-     updating, removing packages) should be wrapped in this helper method,
-     to prevent the app from doing duplicate work.
-     */
-    public static func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
-        guard let manager = App.shared.homebrewWatchManager else {
-            // If there's no manager, run the task as-is
-            return try await action()
-        }
-
-        // Suspend, execute the action, and resume
-        return try await manager.withSuspended(action)
     }
 
     // MARK: - Instance variables
@@ -146,13 +128,32 @@ actor HomebrewWatchManager {
         }
     }
 
-    // MARK: - Suspend and resume
+    // MARK: - Suspendable Protocol
+
+    /**
+     Performs a particular action while suspending the Homebrew watcher,
+     until the task is completed.
+
+     Any operations that cause Homebrew to perform tasks (installing,
+     updating, removing packages) should be wrapped in this helper method,
+     to prevent the app from doing duplicate work.
+     */
+    public static func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
+        guard let manager = App.shared.homebrewWatchManager else {
+            // If there's no manager, run the task as-is
+            return try await action()
+        }
+
+        // Suspend, execute the action, and resume
+        return try await manager.withSuspended(action)
+    }
+
 
     /**
      Suspends the `HomebrewWatchManager`.
      This prevents any changes to `/homebrew/bin` from causing events to fire.
      */
-    private func suspend() async {
+    func suspend() async {
         await watcher?.suspend()
         await debouncer.cancel()
     }
@@ -161,23 +162,7 @@ actor HomebrewWatchManager {
      Resumes the `HomebrewWatchManager`.
      Any changes to `/homebrew/bin` are picked up again.
      */
-    private func resume() async {
+    func resume() async {
         await watcher?.resume()
     }
-
-    /**
-     Executes an `action` callback after suspending the watcher.
-     */
-    private func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
-        await suspend()
-        do {
-            let result = try await action()
-            await resume()
-            return result
-        } catch {
-            await resume()
-            throw error
-        }
-    }
-
 }

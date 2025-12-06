@@ -90,7 +90,7 @@ struct Preset: Codable, Equatable {
 
         // Apply the configuration changes first
         for conf in configuration {
-            applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+            await applyConfigurationValue(key: conf.key, value: conf.value ?? "")
         }
 
         guard let install = container.phpEnvs.phpInstall else {
@@ -159,7 +159,7 @@ struct Preset: Codable, Equatable {
         }
     }
 
-    private func applyConfigurationValue(key: String, value: String) {
+    private func applyConfigurationValue(key: String, value: String) async {
         guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
             return
         }
@@ -167,7 +167,7 @@ struct Preset: Codable, Equatable {
         do {
             if file.has(key: key) {
                 Log.info("Setting config value \(key) in \(file.filePath)")
-                try file.replace(key: key, value: value)
+                try await file.replace(key: key, value: value)
             }
         } catch {
             Log.err("Setting \(key) to \(value) failed.")

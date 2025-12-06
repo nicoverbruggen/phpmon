@@ -110,14 +110,16 @@ extension MainMenu {
             return
         }
 
-        do {
-            try file.replace(key: "xdebug.mode", value: "off")
+        Task {
+            do {
+                try await file.replace(key: "xdebug.mode", value: "off")
 
-            Log.perf("Refreshing menu...")
-            MainMenu.shared.rebuild()
-            restartPhpFpm()
-        } catch {
-            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
+                Log.perf("Refreshing menu...")
+                MainMenu.shared.rebuild()
+                restartPhpFpm()
+            } catch {
+                Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath).")
+            }
         }
     }
 
@@ -128,27 +130,29 @@ extension MainMenu {
             return Log.info("xdebug.mode could not be found in any .ini file, aborting.")
         }
 
-        do {
-            var modes = Xdebug(container).activeModes
+        Task {
+            do {
+                var modes = Xdebug(container).activeModes
 
-            if let index = modes.firstIndex(of: sender.mode) {
-                modes.remove(at: index)
-            } else {
-                modes.append(sender.mode)
+                if let index = modes.firstIndex(of: sender.mode) {
+                    modes.remove(at: index)
+                } else {
+                    modes.append(sender.mode)
+                }
+
+                var newValue = modes.joined(separator: ",")
+                if newValue.isEmpty {
+                    newValue = "off"
+                }
+
+                try await file.replace(key: "xdebug.mode", value: newValue)
+
+                Log.perf("Refreshing menu...")
+                MainMenu.shared.rebuild()
+                restartPhpFpm()
+            } catch {
+                Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath).")
             }
-
-            var newValue = modes.joined(separator: ",")
-            if newValue.isEmpty {
-                newValue = "off"
-            }
-
-            try file.replace(key: "xdebug.mode", value: newValue)
-
-            Log.perf("Refreshing menu...")
-            MainMenu.shared.rebuild()
-            restartPhpFpm()
-        } catch {
-            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
         }
     }
 

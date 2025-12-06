@@ -62,11 +62,13 @@ class BytePhpPreference: PhpPreference {
             internalValue = "\(value)\(unit.rawValue)"
         }
 
-        do {
-            try PhpPreference.persistToIniFile(key: self.key, value: self.internalValue)
-            Log.info("The preference \(key) was updated to: \(value)")
-        } catch {
-            Log.info("The preference \(key) could not be updated")
+        Task {
+            do {
+                try await PhpPreference.persistToIniFile(key: self.key, value: self.internalValue)
+                Log.info("The preference \(key) was updated to: \(value)")
+            } catch {
+                Log.info("The preference \(key) could not be updated")
+            }
         }
     }
 
