@@ -23,7 +23,7 @@ actor HomebrewWatchManager: Suspendable {
         let container = App.shared.container
 
         if container.filesystem is TestableFileSystem {
-            Log.warn("ConfigWatchManager is disabled when using a testable filesystem.")
+            Log.warn("HomebrewWatchManager is disabled when using a testable filesystem.")
             return
         }
 
