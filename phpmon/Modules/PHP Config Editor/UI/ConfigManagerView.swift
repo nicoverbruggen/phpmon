@@ -79,6 +79,7 @@ struct ConfigManagerView: View {
                     alignment: .topTrailing
                 )
             }
+            .padding(.bottom, 15)
         }.frame(maxHeight: 485)
     }
 }
