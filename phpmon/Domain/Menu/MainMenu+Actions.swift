@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 19/05/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -27,7 +27,7 @@ extension MainMenu {
                     description: "phpman.unlinked.detail".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .bringToFront)
         }
     }
 
@@ -40,7 +40,7 @@ extension MainMenu {
             )
                 .withPrimary(text: "alert.fix_homebrew_permissions.ok".localized)
                 .withSecondary(text: "alert.fix_homebrew_permissions.cancel".localized)
-                .didSelectPrimary() {
+                .didSelectPrimary(urgency: .bringToFront) {
             return
         }
 
@@ -54,7 +54,7 @@ extension MainMenu {
                     description: "alert.fix_homebrew_permissions_done.desc".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .bringToFront)
         } failure: { error in
             NVAlert.show(for: error as! HomebrewPermissionError)
         }
@@ -110,14 +110,16 @@ extension MainMenu {
             return
         }
 
-        do {
-            try file.replace(key: "xdebug.mode", value: "off")
+        Task {
+            do {
+                try await file.replace(key: "xdebug.mode", value: "off")
 
-            Log.perf("Refreshing menu...")
-            MainMenu.shared.rebuild()
-            restartPhpFpm()
-        } catch {
-            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
+                Log.perf("Refreshing menu...")
+                MainMenu.shared.rebuild()
+                restartPhpFpm()
+            } catch {
+                Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath).")
+            }
         }
     }
 
@@ -128,27 +130,29 @@ extension MainMenu {
             return Log.info("xdebug.mode could not be found in any .ini file, aborting.")
         }
 
-        do {
-            var modes = Xdebug(container).activeModes
+        Task {
+            do {
+                var modes = Xdebug(container).activeModes
 
-            if let index = modes.firstIndex(of: sender.mode) {
-                modes.remove(at: index)
-            } else {
-                modes.append(sender.mode)
+                if let index = modes.firstIndex(of: sender.mode) {
+                    modes.remove(at: index)
+                } else {
+                    modes.append(sender.mode)
+                }
+
+                var newValue = modes.joined(separator: ",")
+                if newValue.isEmpty {
+                    newValue = "off"
+                }
+
+                try await file.replace(key: "xdebug.mode", value: newValue)
+
+                Log.perf("Refreshing menu...")
+                MainMenu.shared.rebuild()
+                restartPhpFpm()
+            } catch {
+                Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath).")
             }
-
-            var newValue = modes.joined(separator: ",")
-            if newValue.isEmpty {
-                newValue = "off"
-            }
-
-            try file.replace(key: "xdebug.mode", value: newValue)
-
-            Log.perf("Refreshing menu...")
-            MainMenu.shared.rebuild()
-            restartPhpFpm()
-        } catch {
-            Log.err("There was an issue replacing `xdebug.mode` in \(file.filePath)")
         }
     }
 
@@ -186,7 +190,7 @@ extension MainMenu {
             self.performRollback()
         })
         .withSecondary(text: "alert.revert_description.cancel".localized)
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     @objc func togglePreset(sender: PresetMenuItem) {
@@ -206,7 +210,7 @@ extension MainMenu {
             NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             alert.close(with: .OK)
         })
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     @objc func openPhpInfo() {
@@ -262,13 +266,13 @@ extension MainMenu {
         if container.phpEnvs.availablePhpVersions.contains(version) {
             Task { MainMenu.shared.switchToPhpVersion(version) }
         } else {
-            Task {
+            Task { @MainActor in
                 NVAlert().withInformation(
                     title: "alert.php_switch_unavailable.title".localized,
                     subtitle: "alert.php_switch_unavailable.subtitle".localized(version)
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
-                ).show()
+                ).show(urgency: .bringToFront)
             }
         }
     }
@@ -292,7 +296,7 @@ extension MainMenu {
         await PhpEnvironments.switcher.performSwitch(to: version)
 
         container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
 
@@ -307,7 +311,7 @@ extension MainMenu {
             await PhpEnvironments.switcher.performSwitch(to: version)
 
             container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-            App.shared.handlePhpConfigWatcher()
+            await ConfigWatchManager.handleWatcher()
             container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
         }
     }
@@ -333,7 +337,7 @@ extension MainMenu {
         await PhpEnvironments.switcher.performSwitch(to: version)
 
         container.phpEnvs.currentInstall = ActivePhpInstallation(container)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
 

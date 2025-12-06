@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/11/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -64,7 +64,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             withTimeout: .minutes(5)
         )
 
-        if process.terminationStatus <= 0 {
+        if process.terminationStatus == 0 {
             onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
 
             if let ext = existing {

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/02/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -77,7 +77,7 @@ import NVAlert
             withTimeout: .minutes(5)
         )
 
-        if process.terminationStatus <= 0 {
+        if process.terminationStatus == 0 {
             composerUpdateSucceeded()
         } else {
             composerUpdateFailed()
@@ -137,7 +137,7 @@ import NVAlert
                 description: "alert.composer_missing.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     deinit {

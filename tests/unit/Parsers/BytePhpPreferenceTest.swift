@@ -3,7 +3,7 @@
 //  Unit Tests
 //
 //  Created by Nico Verbruggen on 04/09/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing
@@ -12,7 +12,9 @@ struct BytePhpPreferenceTest {
     var container: Container
 
     init () async throws {
-        container = Container.real()
+        container = Container.fake(commands: [
+            "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "512M"
+        ])
     }
 
     @Test func can_extract_memory_value() throws {

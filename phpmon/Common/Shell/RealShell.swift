@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/09/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -80,6 +80,23 @@ class RealShell: ShellProtocol {
         return task
     }
 
+    /**
+     Reads the entire output of a `Pipe` and returns it as a UTF‑8 string.
+     Closes the pipe's file handler when done.
+     */
+    private static func getStringOutput(from pipe: Pipe) -> String {
+        // 1. Read all data (safely).
+        let rawData = (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
+
+        // 2. Convert to string (safely).
+        let result = String(data: rawData, encoding: .utf8) ?? ""
+
+        // 3. Close the handle quietly.
+        try? pipe.fileHandleForReading.close()
+
+        return result
+    }
+
     // MARK: - Public API
 
     /**
@@ -114,11 +131,8 @@ class RealShell: ShellProtocol {
             return .out("", "")
         }
 
-        let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-        let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-
-        try? outputPipe.fileHandleForReading.close()
-        try? errorPipe.fileHandleForReading.close()
+        let stdOut = RealShell.getStringOutput(from: outputPipe)
+        let stdErr = RealShell.getStringOutput(from: errorPipe)
 
         if Log.shared.verbosity == .cli {
             log(process: process, stdOut: stdOut, stdErr: stdErr)
@@ -145,20 +159,17 @@ class RealShell: ShellProtocol {
             process.terminationHandler = { [weak self] _ in
                 if process.terminationReason == .uncaughtSignal {
                     Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                    continuation.resume(returning: .out("", ""))
+                    return continuation.resume(returning: .out("", ""))
                 }
 
-                let stdOut = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-                let stdErr = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-
-                try? outputPipe.fileHandleForReading.close()
-                try? errorPipe.fileHandleForReading.close()
+                let stdOut = RealShell.getStringOutput(from: outputPipe)
+                let stdErr = RealShell.getStringOutput(from: errorPipe)
 
                 if Log.shared.verbosity == .cli {
                     self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
                 }
 
-                continuation.resume(returning: .out(stdOut, stdErr))
+                return continuation.resume(returning: .out(stdOut, stdErr))
             }
 
             process.launch()
@@ -208,6 +219,7 @@ class RealShell: ShellProtocol {
         process.standardError = errorPipe
 
         let output = ShellOutput.empty()
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
 
         return try await withCheckedThrowingContinuation({ continuation in
             let timeoutTask = Task {
@@ -224,8 +236,10 @@ class RealShell: ShellProtocol {
             outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    output.out += string
-                    didReceiveOutput(string, .stdOut)
+                    serialQueue.async {
+                        output.out += string
+                        didReceiveOutput(string, .stdOut)
+                    }
                 }
             }
 
@@ -233,8 +247,10 @@ class RealShell: ShellProtocol {
             errorPipe.fileHandleForReading.readabilityHandler = { fileHandle in
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    output.err += string
-                    didReceiveOutput(string, .stdErr)
+                    serialQueue.async {
+                        output.err += string
+                        didReceiveOutput(string, .stdErr)
+                    }
                 }
             }
 
@@ -249,20 +265,18 @@ class RealShell: ShellProtocol {
                 let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
                 let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
 
-                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                    output.out += string
-                    didReceiveOutput(string, .stdOut)
-                }
+                serialQueue.async {
+                    if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
+                        output.out += string
+                        didReceiveOutput(string, .stdOut)
+                    }
 
-                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                    output.err += string
-                    didReceiveOutput(string, .stdErr)
-                }
+                    if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
+                        output.err += string
+                        didReceiveOutput(string, .stdErr)
+                    }
 
-                if !output.err.isEmpty {
-                    continuation.resume(returning: (process, .err(output.err)))
-                } else {
-                    continuation.resume(returning: (process, .out(output.out)))
+                    continuation.resume(returning: (process, output))
                 }
             }
 
@@ -273,11 +287,5 @@ class RealShell: ShellProtocol {
     func reloadEnvPath() {
         // Instead of replacing the entire shell instance, we simply re-fetch the PATH
         self.PATH = RealShell.getPath()
-    }
-}
-
-extension TimeInterval {
-    var nanoseconds: UInt64 {
-        return UInt64(self * 1_000_000_000)
     }
 }

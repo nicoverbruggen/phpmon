@@ -30,7 +30,6 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:PHP Monitor.xcodeproj",
         "identifier" : "C471E7BB28F9B90F0021E251",

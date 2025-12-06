@@ -3,7 +3,7 @@
 //  UI Tests
 //
 //  Created by Nico Verbruggen on 03/03/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import XCTest
@@ -92,21 +92,23 @@ final class MainMenuTest: UITestCase {
         // Should display loader
         assertExists(app.staticTexts["phpman.busy.title".localized], 1)
 
-        // After loading, should display PHP 8.2, PHP 8.3, PHP 8.4
+        // After loading, should display various versions
         assertExists(app.staticTexts["PHP 8.2"], 5)
         assertExists(app.staticTexts["PHP 8.3"])
         assertExists(app.staticTexts["PHP 8.4"])
+        assertExists(app.staticTexts["PHP 8.5"])
 
         // Should also display pre-release version
-        assertExists(app.staticTexts["PHP 8.5"])
+        assertExists(app.staticTexts["PHP 8.6"])
         assertExists(app.staticTexts["phpman.version.prerelease".localized.uppercased()])
         assertExists(app.staticTexts["phpman.version.available_for_installation".localized])
 
         // The pre-release version should be unavailable
         assertExists(app.staticTexts["phpman.version.unavailable".localized])
 
-        // But not PHP 8.6 (yet)
-        assertNotExists(app.staticTexts["PHP 8.6"])
+        // But not PHP 8.7 or 9.0 yet
+        assertNotExists(app.staticTexts["PHP 8.7"])
+        assertNotExists(app.staticTexts["PHP 9.0"])
 
         // Also, PHP 8.4 should have an update available
         assertExists(app.staticTexts["phpman.version.has_update".localized(

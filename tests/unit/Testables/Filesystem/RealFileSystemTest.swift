@@ -3,26 +3,23 @@
 //  Unit Tests
 //
 //  Created by Nico Verbruggen on 02/11/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing
 import Foundation
 
-@Suite(.serialized) // serialized due to how unique temp directory works
 struct RealFileSystemTest {
     var filesystem: FileSystemProtocol
 
     init() throws {
-        let container = Container()
-        container.bind()
-
+        let container = Container.real(minimal: true)
         filesystem = container.filesystem
     }
 
     private func createUniqueTemporaryDirectory() -> String {
         let tempDirectoryURL = NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
-        let fullTempDirectoryPath = tempDirectoryURL.appendingPathComponent("phpmon-fs-tests").path
+        let fullTempDirectoryPath = tempDirectoryURL.appendingPathComponent("phpmon-fs-tests-\(UUID().uuidString)").path
         try? FileManager.default.removeItem(atPath: fullTempDirectoryPath)
         try! FileManager.default.createDirectory(atPath: fullTempDirectoryPath, withIntermediateDirectories: false)
         return fullTempDirectoryPath

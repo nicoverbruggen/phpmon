@@ -3,140 +3,145 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/02/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 import Cocoa
 import NVAlert
 
+/**
+ The potential different outcomes of a check for updates.
+ */
 enum UpdateCheckResult {
     case success
     case networkError
     case parseError
 }
 
+/**
+ Instead of using `UpdateCheck` which is a more simplified update checking process
+ included in `NVAppUpdater`, we have a slightly more complex setup here.
+ */
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
     var interactive: Bool = false
 
     public func checkForUpdates(userInitiated: Bool) async -> UpdateCheckResult {
+        // If user initiated, we always expect to see an alert
         self.interactive = userInitiated
 
+        // Log that we're looking for updates
         Log.info("The app will search for updates...")
 
-        let caskUrl = Constants.Urls.UpdateCheckEndpoint
-
-        guard let caskFile = try? await CaskFile.fromUrl(App.shared.container, caskUrl) else {
-            presentCouldNotRetrieveUpdateIfInteractive()
+        // Attempt to get the latest CaskFile from the API
+        guard let caskFile = try? await CaskFile.fromUrl(
+            App.shared.container,
+            Constants.Urls.UpdateCheckEndpoint
+        ) else {
+            // ERROR #1: The endpoint is unreachable or the response is invalid.
+            Log.err("Could not get a valid CaskFile from the endpoint.")
+            if interactive {
+                await presentCouldNotRetrieveUpdate()
+            }
             return .networkError
         }
 
+        // We will now persist the CaskFile so we can reference it later
         self.caskFile = caskFile
 
-        let currentVersion = AppVersion.fromCurrentVersion()
-
+        // Let's parse the latest online version if we can
         guard let onlineVersion = AppVersion.from(caskFile.version) else {
+            // ERROR #2: The CaskFile's version string is invalid.
             Log.err("The version string from the CaskFile could not be read.")
-            presentCouldNotRetrieveUpdateIfInteractive()
+            if interactive {
+                await presentCouldNotRetrieveUpdate()
+            }
             return .parseError
         }
 
+        // We will now persist the version number so we can reference it later
         latestVersionOnline = onlineVersion
-        Log.info("The latest version read from '\(caskUrl.lastPathComponent)' is: v\(onlineVersion.computerReadable).")
+        Log.info("The latest version read from the endpoint is: v\(onlineVersion.computerReadable).")
 
-        if latestVersionOnline > currentVersion {
-            presentNewerVersionAvailableAlert()
-        } else if interactive {
-            presentNoNewerVersionAvailableAlert()
+        Task { // Present this concurrently w/ returning the .success value
+            if latestVersionOnline > AppVersion.fromCurrentVersion() {
+                await presentNewerVersionAvailableAlert()
+            } else if interactive {
+                await presentNoNewerVersionAvailableAlert()
+            }
         }
 
         return .success
     }
 
-    private func presentCouldNotRetrieveUpdateIfInteractive() {
-        if interactive {
-            return presentCouldNotRetrieveUpdate()
-        } else {
-            return
-        }
-    }
-
     // MARK: - Alerts
 
-    public func presentNewerVersionAvailableAlert() {
-        let command = "brew upgrade phpmon"
-
-        Task { @MainActor in
-            NVAlert().withInformation(
-                title: "updater.alerts.newer_version_available.title"
-                    .localized(latestVersionOnline.humanReadable),
-                subtitle: "updater.alerts.newer_version_available.subtitle"
-                    .localized,
-                description: BrewDiagnostics.shared.customCaskInstalled
-                ? "updater.installation_source.brew".localized(command)
-                : "updater.installation_source.direct".localized
-            )
-            .withPrimary(
-                text: "updater.alerts.buttons.install".localized,
-                action: { vc in
-                    self.cleanupCaskroom()
-                    self.prepareForDownload()
-                    vc.close(with: .OK)
-                }
-            )
-            .withSecondary(
-                text: "updater.alerts.buttons.release_notes".localized,
-                action: { _ in
-                    NSWorkspace.shared.open({
-                        if App.identifier.contains(".eap") {
-                            return Constants.Urls.EarlyAccessChangelog
-                        } else {
-                            let urlSegments = self.caskFile.url.split(separator: "/")
-                            let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
-                            return Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
-                        }
-                    }())
-                }
-            )
-            .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
+    @MainActor public func presentNewerVersionAvailableAlert() {
+        NVAlert().withInformation(
+            title: "updater.alerts.newer_version_available.title"
+                .localized(latestVersionOnline.humanReadable),
+            subtitle: "updater.alerts.newer_version_available.subtitle"
+                .localized,
+            description: BrewDiagnostics.shared.customCaskInstalled
+            ? "updater.installation_source.brew".localized("brew upgrade phpmon")
+            : "updater.installation_source.direct".localized
+        )
+        .withPrimary(
+            text: "updater.alerts.buttons.install".localized,
+            action: { vc in
+                self.cleanupCaskroom()
+                self.prepareForDownload()
                 vc.close(with: .OK)
-            })
-            .show()
-        }
+            }
+        )
+        .withSecondary(
+            text: "updater.alerts.buttons.release_notes".localized,
+            action: { _ in
+                NSWorkspace.shared.open({
+                    if App.identifier.contains(".eap") {
+                        return Constants.Urls.EarlyAccessChangelog
+                    } else {
+                        let urlSegments = self.caskFile.url.split(separator: "/")
+                        let tag = urlSegments[urlSegments.count - 2] // ../download/{tag}/{file.zip}
+                        return Constants.Urls.GitHubReleases.appendingPathComponent("/tag/\(tag)")
+                    }
+                }())
+            }
+        )
+        .withTertiary(text: "updater.alerts.buttons.dismiss".localized, action: { vc in
+            vc.close(with: .OK)
+        })
+        .show(urgency: interactive ? .bringToFront : .urgentRequestAttention)
     }
 
-    public func presentNoNewerVersionAvailableAlert() {
-        Task { @MainActor in
-            NVAlert().withInformation(
-                title: "updater.alerts.is_latest_version.title".localized,
-                subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
-                description: ""
-            )
-            .withPrimary(text: "generic.ok".localized)
-            .show()
-        }
+    @MainActor public func presentNoNewerVersionAvailableAlert() {
+        NVAlert().withInformation(
+            title: "updater.alerts.is_latest_version.title".localized,
+            subtitle: "updater.alerts.is_latest_version.subtitle".localized(App.shortVersion),
+            description: ""
+        )
+        .withPrimary(text: "generic.ok".localized)
+        .show(urgency: .bringToFront)
     }
 
-    public func presentCouldNotRetrieveUpdate() {
-        Task { @MainActor in
-            NVAlert().withInformation(
-                title: "updater.alerts.cannot_check_for_update.title".localized,
-                subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,
-                description: "updater.alerts.cannot_check_for_update.description".localized(
-                    App.version
-                )
+    @MainActor public func presentCouldNotRetrieveUpdate() {
+        NVAlert().withInformation(
+            title: "updater.alerts.cannot_check_for_update.title".localized,
+            subtitle: "updater.alerts.cannot_check_for_update.subtitle".localized,
+            description: "updater.alerts.cannot_check_for_update.description".localized(
+                App.version
             )
-            .withTertiary(
-                text: "updater.alerts.buttons.releases_on_github".localized,
-                action: { _ in
-                    NSWorkspace.shared.open(Constants.Urls.GitHubReleases)
-                }
-            )
-            .withPrimary(text: "generic.ok".localized)
-            .show()
-        }
+        )
+        .withTertiary(
+            text: "updater.alerts.buttons.releases_on_github".localized,
+            action: { _ in
+                NSWorkspace.shared.open(Constants.Urls.GitHubReleases)
+            }
+        )
+        .withPrimary(text: "generic.ok".localized)
+        .show(urgency: .bringToFront)
     }
 
     // MARK: - Preparing for Self-Updater

@@ -2,7 +2,7 @@
 //  MainMenu.swift
 //  PHP Monitor
 //
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -81,6 +81,17 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    /**
+     Dismisses the main menu if it's open.
+     */
+    func dismissMenu(animated: Bool = true) {
+        if animated {
+            self.statusItem.menu?.cancelTracking()
+        } else {
+            self.statusItem.menu?.cancelTrackingWithoutAnimation()
+        }
+    }
+
     // MARK: - User Interface
 
     /** Reloads which PHP versions is currently active. */
@@ -140,7 +151,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 description: "startup.unsupported_versions_explanation.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
         }
     }
 
@@ -206,7 +217,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 description: "lite_mode_explanation.description".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
         }
     }
 

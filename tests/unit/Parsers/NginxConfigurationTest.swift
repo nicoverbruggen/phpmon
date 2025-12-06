@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/11/2021.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing
@@ -13,7 +13,7 @@ struct NginxConfigurationTest {
     var container: Container
 
     init () async throws {
-        container = Container.real()
+        container = Container.real(minimal: true)
     }
 
     // MARK: - Test Files

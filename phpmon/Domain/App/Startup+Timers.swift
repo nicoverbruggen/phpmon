@@ -69,6 +69,6 @@ extension Startup {
             .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(URL(string: "https://github.com/nicoverbruggen/phpmon/issues/294")!)
             })
-            .show()
+            .show(urgency: .urgentRequestAttention)
     }
 }

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/02/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -84,7 +84,7 @@ extension MainMenu {
             )
             .withPrimary(text: "alert.php_switch_failed.confirm".localized)
             .withSecondary(text: "alert.php_switch_failed.cancel".localized)
-            .didSelectPrimary()
+            .didSelectPrimary(urgency: .bringToFront)
         if outcome {
             MainMenu.shared.fixMyValet()
         }
@@ -113,7 +113,7 @@ extension MainMenu {
             alert.close(with: .OK)
             self.terminateApp()
         })
-        .show()
+        .show(urgency: .bringToFront)
     }
 
     private func reloadDomainListData() async {

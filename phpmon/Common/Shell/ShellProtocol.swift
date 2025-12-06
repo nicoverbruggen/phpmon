@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/09/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -67,7 +67,7 @@ enum ShellStream: Codable {
     case stdOut, stdErr, stdIn
 }
 
-class ShellOutput {
+class ShellOutput: @unchecked Sendable {
     var out: String
     var err: String
 

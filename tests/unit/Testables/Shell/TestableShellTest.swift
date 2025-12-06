@@ -3,13 +3,12 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 20/09/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Testing
 import Foundation
 
-@Suite(.serialized)
 struct TestableShellTest {
     @Test func fake_shell_output_can_be_declared() async {
         let greeting = BatchFakeShellOutput(items: [

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/10/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -49,7 +49,7 @@ class TestableFileSystem: FileSystemProtocol {
     /**
      Serial dispatch queue for ensuring thread-safe access to the `files` dictionary.
      */
-    private let accessQueue = DispatchQueue(label: "com.testablefilesystem.accessQueue")
+    private let accessQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_access")
 
     // MARK: - Basics
 

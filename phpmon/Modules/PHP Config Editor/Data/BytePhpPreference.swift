@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/09/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -62,11 +62,13 @@ class BytePhpPreference: PhpPreference {
             internalValue = "\(value)\(unit.rawValue)"
         }
 
-        do {
-            try PhpPreference.persistToIniFile(key: self.key, value: self.internalValue)
-            Log.info("The preference \(key) was updated to: \(value)")
-        } catch {
-            Log.info("The preference \(key) could not be updated")
+        Task {
+            do {
+                try await PhpPreference.persistToIniFile(key: self.key, value: self.internalValue)
+                Log.info("The preference \(key) was updated to: \(value)")
+            } catch {
+                Log.info("The preference \(key) could not be updated")
+            }
         }
     }
 

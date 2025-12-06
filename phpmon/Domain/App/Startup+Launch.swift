@@ -1,25 +1,32 @@
 //
-//  MainMenu+Startup.swift
+//  Startup+Launch.swift
 //  PHP Monitor
 //
-//  Created by Nico Verbruggen on 03/01/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Created by Nico Verbruggen on 26/11/2025.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
 import Cocoa
 import NVAlert
 
-extension MainMenu {
+extension Startup {
     /**
      Kick off the startup of the rendering of the main menu.
      */
-    func startup() async {
-        // Start with the icon
-        await MainActor.run {
-            self.setStatusBar(image: NSImage.statusBarIcon)
-        }
+    static func check(_ container: Container) async {
+        // Create a new instance of Startup w/ the container
+        let startup = Startup(container)
 
-        if await Startup().checkEnvironment() {
+        // Perform the startup checks
+        await startup.check()
+    }
+
+    /**
+     Perform all checks and execute pass or fail results.
+     */
+    private func check() async {
+        if await self.checkEnvironment() {
             await self.onEnvironmentPass()
         } else {
             await self.onEnvironmentFail()
@@ -29,6 +36,7 @@ extension MainMenu {
     /**
      When the environment is all clear and the app can run, let's go.
      */
+    @MainActor
     private func onEnvironmentPass() async {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
@@ -60,16 +68,16 @@ extension MainMenu {
         await container.phpEnvs.reloadPhpVersions()
 
         // Set up the filesystem watcher for the Homebrew binaries
-        App.shared.prepareHomebrewWatchers()
+        await HomebrewWatchManager.prepare()
 
         // Check for other problems
         container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
-        App.shared.handlePhpConfigWatcher()
+        await ConfigWatchManager.handleWatcher()
 
         // Detect built-in and custom applications
-        await detectApplications()
+        await App.shared.detectApplications()
 
         // Load the rollback preset
         PresetHelper.loadRollbackPresetFromFile()
@@ -150,52 +158,21 @@ extension MainMenu {
     /**
      When the environment is not OK, present an alert to inform the user.
      */
+    @MainActor
     private func onEnvironmentFail() async {
-        Task { @MainActor [self] in
-            NVAlert()
-                .withInformation(
-                    title: "alert.cannot_start.title".localized,
-                    subtitle: "alert.cannot_start.subtitle".localized,
-                    description: "alert.cannot_start.description".localized
-                )
-                .withPrimary(text: "alert.cannot_start.retry".localized)
-                .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
-                    vc.close(with: .alertSecondButtonReturn)
-                    exit(1)
-                })
-                .show()
+        NVAlert()
+            .withInformation(
+                title: "alert.cannot_start.title".localized,
+                subtitle: "alert.cannot_start.subtitle".localized,
+                description: "alert.cannot_start.description".localized
+            )
+            .withPrimary(text: "alert.cannot_start.retry".localized)
+            .withSecondary(text: "alert.cannot_start.close".localized, action: { vc in
+                vc.close(with: .alertSecondButtonReturn)
+                exit(1)
+            })
+            .show(urgency: .bringToFront)
 
-            Task { // An issue occurred, fire startup checks again after dismissal
-                await startup()
-            }
-        }
-    }
-
-    /**
-     Detect which applications are installed that can be used to open a domain's source directory.
-     */
-    private func detectApplications() async {
-        Log.info("Detecting applications...")
-
-        App.shared.detectedApplications = await Application.detectPresetApplications(container)
-
-        let customApps = Preferences.custom.scanApps?.map { appName in
-            return Application(container, appName, .user_supplied)
-        } ?? []
-
-        var detectedCustomApps: [Application] = []
-
-        for app in customApps where await app.isInstalled() {
-            detectedCustomApps.append(app)
-        }
-
-        App.shared.detectedApplications
-            .append(contentsOf: detectedCustomApps)
-
-        let appNames = App.shared.detectedApplications.map { app in
-            return app.name
-        }
-
-        Log.info("Detected applications: \(appNames)")
+        await self.check()
     }
 }

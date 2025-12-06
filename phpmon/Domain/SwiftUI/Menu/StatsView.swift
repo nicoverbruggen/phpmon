@@ -3,13 +3,14 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 09/06/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import SwiftUI
 
 struct StatsView: View {
 
+    @MainActor
     static func asMenuItem(memory: String, post: String, upload: String) -> NSMenuItem {
         let item = NSMenuItem()
         let view = NSHostingView(
@@ -84,6 +85,7 @@ struct StatsView: View {
                 Divider().hidden()
                 Button {
                     Task { @MainActor in
+                        MainMenu.shared.dismissMenu()
                         MainMenu.shared.openConfigGUI()
                     }
                 } label: {

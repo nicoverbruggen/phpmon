@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 18/07/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -79,6 +79,7 @@ struct ConfigManagerView: View {
                     alignment: .topTrailing
                 )
             }
+            .padding(.bottom, 15)
         }.frame(maxHeight: 485)
     }
 }

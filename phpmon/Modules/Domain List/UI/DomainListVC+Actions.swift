@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 23/12/2021.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -23,7 +23,7 @@ extension DomainListVC {
                     subtitle: "domain_list.alert.invalid_folder_name_desc".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .bringToFront)
             return
         }
 
@@ -38,9 +38,18 @@ extension DomainListVC {
         Task { await App.shared.container.shell.quiet("open -b com.apple.terminal '\(selectedSite!.absolutePath)'") }
     }
 
-    @objc func openWithEditor(sender: EditorMenuItem) {
-        guard let editor = sender.editor else { return }
-        editor.openDirectory(file: selectedSite!.absolutePath)
+    @objc func openWithApp(sender: ApplicationMenuItem) {
+        guard let site = selectedSite else { return }
+        guard let app = sender.app else { return }
+
+        if app.type == .browser {
+            guard let url = site.getListableUrl() else { return }
+            // Open the URL for the domain
+            app.open(arg: url.absoluteString)
+        } else {
+            // Open the directory for the domain
+            app.open(arg: site.absolutePath)
+        }
     }
 
     // MARK: - UI interaction
@@ -283,7 +292,7 @@ extension DomainListVC {
                 description: "domain_list.alerts_isolated_php_terminal.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     private func notifyAboutFailedSecureStatus(command: String) {
@@ -293,7 +302,7 @@ extension DomainListVC {
                 subtitle: "domain_list.alerts_status_not_changed.desc".localized(command)
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     private func notifyAboutFailedSiteIsolation(command: String) {
@@ -304,6 +313,6 @@ extension DomainListVC {
                 description: "domain_list.alerts_isolation_failed.desc".localized(command)
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 }

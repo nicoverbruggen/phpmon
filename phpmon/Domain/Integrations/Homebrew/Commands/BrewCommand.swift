@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/03/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -84,23 +84,35 @@ extension BrewCommand {
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
         var loggedMessages: [String] = []
+        let (process, _): (Process, ShellOutput)
 
-        let (process, _) = try! await shell.attach(
-            command,
-            didReceiveOutput: { text, _ in
-                if !text.isEmpty {
-                    Log.perf(text)
-                    loggedMessages.append(text)
-                }
+        do {
+            (process, _) = try await shell.attach(
+                command,
+                didReceiveOutput: { text, _ in
+                    if !text.isEmpty {
+                        Log.perf(text)
+                        loggedMessages.append(text)
+                    }
 
-                if let (number, text) = self.reportInstallationProgress(text) {
-                    onProgress(.create(value: number, title: getCommandTitle(), description: text))
-                }
-            },
-            withTimeout: .minutes(15)
-        )
+                    if let (number, text) = self.reportInstallationProgress(text) {
+                        onProgress(.create(value: number, title: getCommandTitle(), description: text))
+                    }
+                },
+                withTimeout: .minutes(15)
+            )
+        } catch ShellError.timedOut {
+            // Possible if the brew command times out
+            Log.err("The `brew` command timed out after 15 minutes: \(command)")
+            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages)
+        } catch {
+            // Possible if the async continuation fails
+            Log.err("Failed to execute brew command: \(command) - \(error)")
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages)
+        }
 
-        if process.terminationStatus <= 0 {
+        // Finally, even if we got the command to execute, let's check the termination status
+        if process.terminationStatus == 0 {
             loggedMessages = []
             return
         } else {

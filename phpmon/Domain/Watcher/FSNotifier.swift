@@ -3,25 +3,42 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 13/01/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
 
-class FSNotifier {
+actor FSNotifier {
 
-    public static var shared: FSNotifier! = nil
+    // MARK: Variables
 
-    let queue = DispatchQueue(label: "FSWatch2Queue", attributes: .concurrent)
-    var lastUpdate: TimeInterval?
+    /** The URL of the file or folder that is being observed. */
+    nonisolated let url: URL
 
-    private var fileDescriptor: CInt = -1
-    private var dispatchSource: DispatchSourceFileSystemObject?
+    /** Whether responding to events is currently on hold. */
+    private(set) var isSuspended = false
 
-    internal let url: URL
+    // MARK: Internal Variables
 
-    init(for url: URL, eventMask: DispatchSource.FileSystemEvent, onChange: @escaping () -> Void) {
+    /** The queue that is used for the `dispatchSource`. */
+    private nonisolated let queue: DispatchQueue
+
+    /** An open file or folder required for observation. */
+    private nonisolated(unsafe) var fileDescriptor: CInt = -1
+
+    /** A dispatch source that monitors events associated with a file or folder. */
+    private nonisolated(unsafe) var dispatchSource: DispatchSourceFileSystemObject?
+
+    // MARK: Methods
+
+    init(
+        for url: URL,
+        eventMask: DispatchSource.FileSystemEvent,
+        queue: DispatchQueue? = nil,
+        onChange: @escaping () -> Void
+    ) {
         self.url = url
+        self.queue = queue ?? DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier")
 
         fileDescriptor = open(url.path, O_EVTONLY)
 
@@ -36,35 +53,46 @@ class FSNotifier {
             queue: self.queue
         )
 
-        dispatchSource?.setEventHandler(handler: {
-            let distance = self.lastUpdate?.distance(to: Date().timeIntervalSince1970)
+        dispatchSource?.setEventHandler(handler: { [weak self] in
+            Task { [weak self] in
+                guard let self = self else { return }
 
-            if distance == nil || distance != nil && distance! > 1.00 {
-                // FS event fired, checking in 1s, no duplicate FS events will be acted upon
-                self.lastUpdate = Date().timeIntervalSince1970
+                // If our notifier is suspended, don't fire
+                guard await !self.isSuspended else { return }
 
-                Task {
-                    await delay(seconds: 1)
-                    onChange()
-                }
+                // If our notifier is not suspended, fire
+                onChange()
             }
         })
-        dispatchSource?.setCancelHandler(handler: { [weak self] in
-            guard let self = self else { return }
 
+        dispatchSource?.setCancelHandler(handler: {
             close(self.fileDescriptor)
             self.fileDescriptor = -1
             self.dispatchSource = nil
         })
+
         dispatchSource?.resume()
     }
 
-    func terminate() {
+    /** Suspends responding to filesystem events. This does not stop events from being observed! */
+    func suspend() async {
+        self.isSuspended = true
+        Log.perf("FSNotifier for \(self.url.path) has been suspended.")
+    }
+
+    /** Resumes responding to filesystem events. */
+    func resume() async {
+        self.isSuspended = false
+        Log.perf("FSNotifier for \(self.url.path) has been resumed.")
+    }
+
+    /** Terminates the file monitor, which will cause `deinit` to fire. */
+    nonisolated func terminate() {
         dispatchSource?.cancel()
     }
 
-    deinit {
-        Log.perf("FSNotifier for \(self.url) will be deinitialized.")
+    nonisolated deinit {
+        Log.perf("deinit: FSNotifier @ \(self.url.path)")
     }
 
 }

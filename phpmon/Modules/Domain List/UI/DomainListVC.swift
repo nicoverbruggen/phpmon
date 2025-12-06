@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -114,6 +114,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         domains = Valet.getDomainListable()
     }
 
+    @MainActor
     private func addNoResultsView() {
         let child = NSHostingController(
             rootView: UnavailableContentView(
@@ -142,8 +143,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     @MainActor public func setUIBusy() {
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            Task {
-                @MainActor in self.progressIndicator.startAnimation(true)
+            Task { @MainActor in
+                self.progressIndicator.startAnimation(true)
                 self.labelProgressIndicator.stringValue = "phpman.steps.wait".localized
                 self.progressIndicatorContainer.layer?.cornerRadius = 10
                 self.progressIndicatorContainer.isHidden = false

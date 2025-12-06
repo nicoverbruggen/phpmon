@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 10/12/2021.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -98,15 +98,22 @@ extension DomainListVC {
             menu.addItem(NSMenuItem.separator())
             menu.addItem(HeaderView.asMenuItem(text: "domain_list.detected_apps".localized))
 
-            for editor in applications {
-                let editorMenuItem = EditorMenuItem(
-                    title: "domain_list.open_in".localized(editor.name),
-                    action: #selector(self.openWithEditor(sender:)),
+            for app in applications where app.type != .browser {
+                let menuItem = ApplicationMenuItem(
+                    title: "domain_list.open_in".localized(app.name),
+                    action: #selector(self.openWithApp(sender:)),
                     keyEquivalent: "",
                     systemImage: "arrow.up.right"
                 )
-                editorMenuItem.editor = editor
-                menu.addItem(editorMenuItem)
+
+                if let applicationPath = app.path {
+                    let icon = NSWorkspace.shared.icon(forFile: applicationPath)
+                    icon.size = NSSize(width: 16, height: 16)
+                    menuItem.image = icon
+                }
+
+                menuItem.app = app
+                menu.addItem(menuItem)
             }
         }
     }

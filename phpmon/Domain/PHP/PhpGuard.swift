@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 25/04/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -69,7 +69,7 @@ class PhpGuard {
                     Stats.persistCurrentGlobalPhpVersion(version: currentVersion)
                     alert.close(with: .OK)
                 })
-                .show()
+                .show(urgency: .urgentRequestAttention)
         }
     }
 }

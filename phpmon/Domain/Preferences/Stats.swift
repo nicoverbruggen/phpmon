@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 29/01/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -135,7 +135,7 @@ class Stats {
                 .withTertiary(text: "", action: { vc in
                     vc.close(with: .alertThirdButtonReturn)
                     NSWorkspace.shared.open(Constants.Urls.DonationPage)
-                }).didSelectPrimary()
+                }).didSelectPrimary(urgency: .normalRequestAttention)
 
             if donate {
                 Log.info("The user is an absolute badass for choosing this option. Thank you.")

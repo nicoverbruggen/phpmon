@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 10/06/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -12,6 +12,7 @@ import NVAlert
 
 struct ServicesView: View {
 
+    @MainActor
     static func asMenuItem(perRow: Int = 4) -> NSMenuItem {
         let view = {
             let rootView = Self(manager: ServicesManager.shared, perRow: perRow)
@@ -88,7 +89,7 @@ struct ServicesView: View {
                                 description: "alert.\(type).desc".localized
                             )
                             .withPrimary(text: "generic.ok".localized)
-                            .show()
+                            .show(urgency: .bringToFront)
                         }
                     }
                 }
@@ -102,6 +103,13 @@ struct ServicesView: View {
 struct ServiceView: View {
     var service: Service
     @State var isBusy: Bool = false
+
+    @MainActor
+    private func toggleService() async {
+        isBusy = true
+        await ServicesManager.shared.toggleService(named: service.name)
+        isBusy = false
+    }
 
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -123,7 +131,7 @@ struct ServiceView: View {
                                 description: "alert.warnings.service_missing.description".localized
                             )
                             .withPrimary(text: "generic.ok".localized)
-                            .show()
+                            .show(urgency: .bringToFront)
                         }
                     } label: {
                         Text("?")
@@ -133,11 +141,7 @@ struct ServiceView: View {
                 }
                 if service.status == .error {
                     Button {
-                        Task {
-                            isBusy = true
-                            await ServicesManager.shared.toggleService(named: service.name)
-                            isBusy = false
-                        }
+                        Task { await toggleService() }
                     } label: {
                         Text("E")
                             .frame(width: 12.0, height: 12.0)
@@ -148,11 +152,7 @@ struct ServiceView: View {
                 }
                 if service.status == .active || service.status == .inactive {
                     Button {
-                        Task {
-                            isBusy = true
-                            await ServicesManager.shared.toggleService(named: service.name)
-                            isBusy = false
-                        }
+                        Task { await toggleService() }
                     } label: {
                         Image(
                             systemName: service.status == .active ? "checkmark" : "xmark"

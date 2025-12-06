@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/10/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -122,17 +122,32 @@ class TestableConfigurations {
                     : .instant(""),
                 "brew info shivammathur/php/php --json"
                     : .instant("Error: No available formula with the name \"shivammathur/php/php\"."),
+
+                // TODO: refactor this so this list of responses happens dynamically?
                 "/usr/bin/open -Ra \"PhpStorm\""
                     : .instant("Unable to find application named 'PhpStorm'", .stdErr),
+                "/usr/bin/open -Ra \"WebStorm\""
+                    : .instant("Unable to find application named 'WebStorm'", .stdErr),
                 "/usr/bin/open -Ra \"Visual Studio Code\""
                     : .instant("Unable to find application named 'Visual Studio Code'", .stdErr),
+                "/usr/bin/open -Ra \"VSCodium\""
+                    : .instant("Unable to find application named 'VSCodium'", .stdErr),
                 "/usr/bin/open -Ra \"Sublime Text\""
                     : .instant("Unable to find application named 'Sublime Text'", .stdErr),
                 "/usr/bin/open -Ra \"Sublime Merge\""
                     : .instant("Unable to find application named 'Sublime Merge'", .stdErr),
+                "/usr/bin/open -Ra \"Tower\""
+                    : .instant("Unable to find application named 'Tower'", .stdErr),
+                "/usr/bin/open -Ra \"SourceTree\""
+                    : .instant("Unable to find application named 'SourceTree'", .stdErr),
                 "/usr/bin/open -Ra \"iTerm\""
                     : .instant("Unable to find application named 'iTerm'", .stdErr),
+                "/usr/bin/open -Ra \"Ghostty\""
+                    : .instant("Unable to find application named 'Ghostty'", .stdErr),
+
                 "/opt/homebrew/bin/brew info php --json"
+                    : .instant(ShellStrings.shared.brewJson),
+                "/opt/homebrew/bin/brew info shivammathur/php/php --json"
                     : .instant(ShellStrings.shared.brewJson),
                 "sudo /opt/homebrew/bin/brew services info --all --json"
                     : .instant(ShellStrings.shared.brewServicesAsRoot),

@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 04/09/2023.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -20,9 +20,13 @@ class PhpPreference {
         self.key = key
     }
 
-    internal static func persistToIniFile(key: String, value: String) throws {
+    internal static func persistToIniFile(key: String, value: String) async throws {
         if let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) {
-            return try file.replace(key: key, value: value)
+            // Do the replacement
+            try await file.replace(key: key, value: value)
+            // Reload the main menu item to reflect these new values
+            Task { @MainActor in MainMenu.shared.reloadPhpMonitorMenuInBackground() }
+            return
         }
 
         throw PhpConfigurationFile.ReplacementErrors.missingFile

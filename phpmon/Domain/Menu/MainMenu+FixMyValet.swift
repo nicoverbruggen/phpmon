@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 20/02/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -31,7 +31,7 @@ extension MainMenu {
             )
             .withPrimary(text: "alert.fix_my_valet.ok".localized)
             .withSecondary(text: "alert.fix_my_valet.cancel".localized)
-            .didSelectPrimary() {
+            .didSelectPrimary(urgency: .bringToFront) {
             Log.info("The user has chosen to abort Fix My Valet")
             return
         }
@@ -54,7 +54,7 @@ extension MainMenu {
                 subtitle: "alert.php_formula_missing.info".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     @MainActor private func presentAlertForSameVersion() {
@@ -65,7 +65,7 @@ extension MainMenu {
                 description: "alert.fix_my_valet_done.desc".localized
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     @MainActor private func presentAlertForDifferentVersion(version: String) {
@@ -87,7 +87,7 @@ extension MainMenu {
             .withTertiary(text: "", action: { _ in
                 NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
             })
-            .show()
+            .show(urgency: .bringToFront)
     }
 
 }

@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PHP Monitor
 //
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -53,6 +53,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         #if DEBUG
         logger.verbosity = .performance
+        Log.info("Extra verbose mode is enabled by default on DEBUG builds.")
+
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
         }
@@ -113,8 +115,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Make sure notifications will work
         setupNotifications()
 
+        // Start with the regular busy icon
+        MainMenu.shared.setStatusBar(image: NSImage.statusBarIcon)
+
         Task { // Make sure the menu performs its initial checks
-            await MainMenu.shared.startup()
+            await Startup.check(App.shared.container)
         }
     }
 

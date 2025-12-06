@@ -2,7 +2,7 @@
 //  Environment.swift
 //  PHP Monitor
 //
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -10,6 +10,12 @@ import AppKit
 import NVAlert
 
 class Startup {
+    var container: Container
+
+    init(_ container: Container) {
+        self.container = container
+    }
+
     /**
      Checks the user's environment and checks if PHP Monitor can be used properly.
      This checks if PHP is installed, Valet is running, the appropriate permissions are set, and more.
@@ -68,7 +74,7 @@ class Startup {
                 )
                 .withPrimary(text: check.buttonText, action: { _ in
                     exit(1)
-                }).show()
+                }).show(urgency: .bringToFront)
         }
 
         NVAlert()
@@ -78,7 +84,7 @@ class Startup {
                 description: check.descriptionText
             )
             .withPrimary(text: "generic.ok".localized)
-            .show()
+            .show(urgency: .bringToFront)
     }
 
     // MARK: - Check (List)

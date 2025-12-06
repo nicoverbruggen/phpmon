@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 31/05/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -90,7 +90,7 @@ struct Preset: Codable, Equatable {
 
         // Apply the configuration changes first
         for conf in configuration {
-            applyConfigurationValue(key: conf.key, value: conf.value ?? "")
+            await applyConfigurationValue(key: conf.key, value: conf.value ?? "")
         }
 
         guard let install = container.phpEnvs.phpInstall else {
@@ -153,13 +153,13 @@ struct Preset: Codable, Equatable {
                     )
                 ).withPrimary(
                     text: "alert.php_switch_unavailable.ok".localized
-                ).show()
+                ).show(urgency: .bringToFront)
             }
             return false
         }
     }
 
-    private func applyConfigurationValue(key: String, value: String) {
+    private func applyConfigurationValue(key: String, value: String) async {
         guard let file = container.phpEnvs.getConfigFile(forKey: key) else {
             return
         }
@@ -167,7 +167,7 @@ struct Preset: Codable, Equatable {
         do {
             if file.has(key: key) {
                 Log.info("Setting config value \(key) in \(file.filePath)")
-                try file.replace(key: key, value: value)
+                try await file.replace(key: key, value: value)
             }
         } catch {
             Log.err("Setting \(key) to \(value) failed.")

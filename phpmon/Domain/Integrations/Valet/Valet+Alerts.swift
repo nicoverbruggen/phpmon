@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 21/12/2021.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ extension Valet {
                     Preferences.update(.warnAboutNonStandardTLD, value: false)
                     alert.close(with: .alertThirdButtonReturn)
                 })
-                .show()
+                .show(urgency: .urgentRequestAttention)
             }
         }
     }
@@ -43,7 +43,7 @@ extension Valet {
                     )
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .urgentRequestAttention)
         }
     }
 
@@ -68,7 +68,7 @@ extension Valet {
                     description: "alert.php_fpm_broken.description".localized
                 )
                 .withPrimary(text: "generic.ok".localized)
-                .show()
+                .show(urgency: .urgentRequestAttention)
         }
     }
 

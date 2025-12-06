@@ -2,7 +2,7 @@
 //  StateManager.swift
 //  PHP Monitor
 //
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -134,14 +134,18 @@ class App {
      */
     var openWindows: [String] = []
 
-    // MARK: - App Watchers
+    // MARK: - FS Watchers
 
-    /** Individual filesystem watchers, which are, i.e. responsible for watching the Homebrew folders. */
-    var watchers: [String: FSNotifier] = [:]
-
-    /** 
+    /**
      The `ConfigWatchManager` is responsible for watching the `.ini` files and the `.conf.d` folder.
      This manager object can immediately start or stop all watchers (or pause them) all at once.
      */
-    var watchManager: ConfigWatchManager!
+    var configWatchManager: ConfigWatchManager?
+
+    /**
+     The `HomebrewWatchManager` is responsible for watching the Homebrew binaries folder.
+     This allows PHP Monitor to respond to external `brew` changes executed by the user.
+     */
+    var homebrewWatchManager: HomebrewWatchManager?
+
 }

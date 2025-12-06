@@ -3,7 +3,7 @@
 //  Feature Tests
 //
 //  Created by Nico Verbruggen on 07/11/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import XCTest

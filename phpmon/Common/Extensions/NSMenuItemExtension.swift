@@ -3,7 +3,7 @@
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 18/08/2022.
-//  Copyright © 2023 Nico Verbruggen. All rights reserved.
+//  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
 import Cocoa
@@ -84,8 +84,8 @@ class ExtensionMenuItem: NSMenuItem {
     var phpExtension: PhpExtension?
 }
 
-class EditorMenuItem: NSMenuItem {
-    var editor: Application?
+class ApplicationMenuItem: NSMenuItem {
+    var app: Application?
 }
 
 class PresetMenuItem: NSMenuItem {
