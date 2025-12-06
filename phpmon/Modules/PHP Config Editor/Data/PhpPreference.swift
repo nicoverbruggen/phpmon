@@ -22,7 +22,11 @@ class PhpPreference {
 
     internal static func persistToIniFile(key: String, value: String) async throws {
         if let file = App.shared.container.phpEnvs.getConfigFile(forKey: key) {
-            return try await file.replace(key: key, value: value)
+            // Do the replacement
+            try await file.replace(key: key, value: value)
+            // Reload the main menu item to reflect these new values
+            Task { @MainActor in MainMenu.shared.reloadPhpMonitorMenuInBackground() }
+            return
         }
 
         throw PhpConfigurationFile.ReplacementErrors.missingFile
