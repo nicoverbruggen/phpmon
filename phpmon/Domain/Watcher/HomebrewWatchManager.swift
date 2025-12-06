@@ -148,7 +148,6 @@ actor HomebrewWatchManager: Suspendable {
         return try await manager.withSuspended(action)
     }
 
-
     /**
      Suspends the `HomebrewWatchManager`.
      This prevents any changes to `/homebrew/bin` from causing events to fire.
