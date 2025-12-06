@@ -45,7 +45,7 @@ class PhpConfigurationFileTest {
         #expect(iniFile.get(for: "display_errors") == "On")
     }
 
-    @Test func can_customize_configuration_value() throws {
+    @Test func can_customize_configuration_value() async throws {
         let destination = Utility
             .copyToTemporaryFile(resourceName: "php", fileExtension: "ini")!
 
@@ -55,7 +55,7 @@ class PhpConfigurationFileTest {
         #expect(configurationFile.get(for: "error_reporting") == "E_ALL")
 
         // 1. Change the value
-        try! configurationFile.replace(
+        try! await configurationFile.replace(
             key: "error_reporting",
             value: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
         )
@@ -65,14 +65,14 @@ class PhpConfigurationFileTest {
         )
 
         // 2. Ensure that same key and value doesn't break subsequent saves
-        try! configurationFile.replace(
+        try! await configurationFile.replace(
             key: "error_reporting",
             value: "error_reporting"
         )
         #expect(configurationFile.get(for: "error_reporting") == "error_reporting")
 
         // 3. Verify subsequent saves weren't broken
-        try! configurationFile.replace(
+        try! await configurationFile.replace(
             key: "error_reporting",
             value: "E_ALL"
         )
