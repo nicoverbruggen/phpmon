@@ -77,7 +77,7 @@ import NVAlert
             withTimeout: .minutes(5)
         )
 
-        if process.terminationStatus <= 0 {
+        if process.terminationStatus == 0 {
             composerUpdateSucceeded()
         } else {
             composerUpdateFailed()

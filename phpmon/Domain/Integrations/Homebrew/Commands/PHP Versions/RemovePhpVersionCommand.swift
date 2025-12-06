@@ -71,7 +71,7 @@ class RemovePhpVersionCommand: BrewCommand {
             withTimeout: .minutes(5)
         )
 
-        if process.terminationStatus <= 0 {
+        if process.terminationStatus == 0 {
             onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
 
             _ = await container.phpEnvs.detectPhpVersions()

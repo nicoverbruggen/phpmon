@@ -112,7 +112,7 @@ extension BrewCommand {
         }
 
         // Finally, even if we got the command to execute, let's check the termination status
-        if process.terminationStatus <= 0 {
+        if process.terminationStatus == 0 {
             loggedMessages = []
             return
         } else {
