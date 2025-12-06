@@ -95,7 +95,8 @@ class PhpInstallation {
             ).trimmingCharacters(in: .whitespacesAndNewlines)
 
             // The PHP executable did not return any output
-            if testCommand.isEmpty || testCommand.contains("HANDLE_READ_FAILURE") {
+            if testCommand.isEmpty
+                || testCommand.contains("HANDLE_READ_FAILURE") {
                 Log.err("No output. PHP \(self.versionNumber.short) is not healthy!")
                 self.isHealthy = false
             }

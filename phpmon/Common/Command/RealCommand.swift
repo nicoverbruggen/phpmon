@@ -41,12 +41,11 @@ public class RealCommand: CommandProtocol {
         }
 
         // Try reading from file handle and close it
-        if let data = try? pipe.fileHandleForReading.readToEnd() {
-            if let string = String(data: data, encoding: .utf8) {
-                output = string
-            } else {
-                return "PHPMON_FILE_HANDLE_READ_FAILURE"
-            }
+        if let data = try? pipe.fileHandleForReading.readToEnd(),
+            let string = String(data: data, encoding: .utf8) {
+            output = string
+        } else {
+            return "PHPMON_FILE_HANDLE_READ_FAILURE"
         }
 
         // Trim newline output if necessary
