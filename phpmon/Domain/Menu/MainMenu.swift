@@ -81,6 +81,17 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    /**
+     Dismisses the main menu if it's open.
+     */
+    func dismissMenu(animated: Bool = true) {
+        if animated {
+            self.statusItem.menu?.cancelTracking()
+        } else {
+            self.statusItem.menu?.cancelTrackingWithoutAnimation()
+        }
+    }
+
     // MARK: - User Interface
 
     /** Reloads which PHP versions is currently active. */

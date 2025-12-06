@@ -85,6 +85,7 @@ struct StatsView: View {
                 Divider().hidden()
                 Button {
                     Task { @MainActor in
+                        MainMenu.shared.dismissMenu()
                         MainMenu.shared.openConfigGUI()
                     }
                 } label: {
