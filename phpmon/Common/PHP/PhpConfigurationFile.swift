@@ -23,13 +23,25 @@ class PhpConfigurationFile: CreatedFromFile {
     let filePath: String
 
     /// The extensions found in this .ini file.
-    var extensions: [PhpExtension]
+    private let _extensions: Locked<[PhpExtension]>
+    var extensions: [PhpExtension] {
+        get { _extensions.value }
+        set { _extensions.value = newValue }
+    }
 
     /// The actual, structured content of the configuration file.
-    var content: Config
+    private let _content: Locked<Config>
+    var content: Config {
+        get { _content.value }
+        set { _content.value = newValue }
+    }
 
     /// The original lines of the file.
-    var lines: [String]
+    private let _lines: Locked<[String]>
+    var lines: [String] {
+        get { _lines.value }
+        set { _lines.value = newValue }
+    }
 
     /** Resolves a PHP configuration file (.ini) */
     static func from(
@@ -50,9 +62,13 @@ class PhpConfigurationFile: CreatedFromFile {
     required init(_ container: Container, path: String, contents: String) {
         self.container = container
         self.filePath = path
-        self.lines = contents.components(separatedBy: "\n")
-        self.extensions = PhpExtension.from(container, lines, filePath: path)
-        self.content = Self.parseConfig(lines: lines)
+
+        let lines = contents.components(separatedBy: "\n")
+
+        // We only need to explicitly set our locks here
+        self._lines = Locked(lines)
+        self._extensions = Locked(PhpExtension.from(container, lines, filePath: path))
+        self._content = Locked(Self.parseConfig(lines: lines))
     }
 
     // MARK: API
@@ -89,34 +105,41 @@ class PhpConfigurationFile: CreatedFromFile {
             throw ReplacementErrors.missingKey
         }
 
+        // Get a thread-safe copy to work with
+        var localLines = lines
+
         // Figure out what comes after the assignment
-        var components = self
-            .lines[item.lineIndex]
+        var components = localLines[item.lineIndex]
             .components(separatedBy: "=")
 
         // Replace the value with the new one
         components[1] = components[1]
             .replacing(item.value, with: value)
 
-        // Replace the specific line
-        self.lines[item.lineIndex] = components.joined(separator: "=")
+        // Replace the specific line in the local copy
+        localLines[item.lineIndex] = components.joined(separator: "=")
 
         // Ensure the watchers aren't tripped up by config changes
         try await ConfigWatchManager.withSuspended {
-            // Finally, join the string and save the file atomically again
-            try self.lines.joined(separator: "\n")
+            // Finally, join the string and save the file atomically
+            try localLines.joined(separator: "\n")
                 .write(toFile: self.filePath, atomically: true, encoding: .utf8)
         }
 
-        // Reload the original file
+        self.lines = localLines
+
+        // Reload the original file (which will update all properties atomically)
         self.reload()
     }
 
     public func reload() {
-        self.lines = try! String(contentsOfFile: self.filePath)
+        let newLines = try! String(contentsOfFile: self.filePath)
             .components(separatedBy: "\n")
-        self.extensions = PhpExtension.from(container, lines, filePath: self.filePath)
-        self.content = Self.parseConfig(lines: lines)
+        
+        // Update all properties atomically
+        lines = newLines
+        extensions = PhpExtension.from(container, newLines, filePath: self.filePath)
+        content = Self.parseConfig(lines: newLines)
     }
 
     // MARK: Parsing Logic
