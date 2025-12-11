@@ -135,7 +135,7 @@ class PhpConfigurationFile: CreatedFromFile {
     public func reload() {
         let newLines = try! String(contentsOfFile: self.filePath)
             .components(separatedBy: "\n")
-        
+
         // Update all properties atomically
         lines = newLines
         extensions = PhpExtension.from(container, newLines, filePath: self.filePath)

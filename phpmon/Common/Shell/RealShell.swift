@@ -13,7 +13,7 @@ class RealShell: ShellProtocol {
 
     init(container: Container) {
         self.container = container
-        self.PATH = RealShell.getPath()
+        self._PATH = RealShell.getPath()
     }
 
     /**
@@ -23,10 +23,23 @@ class RealShell: ShellProtocol {
     private(set) var launchPath: String = "/bin/sh"
 
     /**
+     Thread-safe access to PATH is ensured via this queue.
+     */
+    private let pathQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_path")
+
+    /**
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private(set) var PATH: String
+    private var _PATH: String
+
+    /**
+     Accessor for the PATH (thread-safe access with DispatchQueue).
+     */
+    internal var PATH: String {
+        get { pathQueue.sync { _PATH } }
+        set { pathQueue.sync { _PATH = newValue } }
+    }
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
@@ -45,15 +58,10 @@ class RealShell: ShellProtocol {
         let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
+        task.waitUntilExit()
 
-        let path = String(
-            data: pipe.fileHandleForReading.readDataToEndOfFile(),
-            encoding: String.Encoding.utf8
-        ) ?? ""
-
-        try? pipe.fileHandleForReading.close()
-
-        return path
+        let path = getStringOutput(from: pipe)
+        return path.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /**
