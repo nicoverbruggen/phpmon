@@ -6,7 +6,7 @@ Generally speaking, only the latest version of **PHP Monitor** is supported, exc
 
 | Version | Apple Silicon | Supported          | Supported macOS | Minimum Deployment | Detected PHP Versions | Recommended Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
-| 25      | ✅ Universal binary | ✅ Yes | Ventura (13.5+)<br/>Sonoma (14.0+)<br/>Sequoia (15.0+)<br/>Tahoe (26.0+) | macOS 13.5+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.6 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
+| 26      | ✅ Universal binary | ✅ Yes | Ventura (13.5+)<br/>Sonoma (14.0+)<br/>Sequoia (15.0+)<br/>Tahoe (26.0+) | macOS 13.5+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.6 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
 
 ## Legacy versions
 
@@ -14,6 +14,7 @@ These versions of PHP Monitor are no longer supported, but if you’re using an 
 
 | Version | Apple Silicon | Supported          | Supported macOS | Minimum Deployment | Detected PHP Versions | Minimum Required Valet Version |
 | ------- | ------------- | ------------------ | ----- | ----- | ----- | ----
+| 25     | ✅ Universal binary | ❌ | Ventura (13.5+)<br/>Sonoma (14.0+)<br/>Sequoia (15.0+)<br/>Tahoe (26.0+) | macOS 13.5+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.6 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
 | 7.1      | ✅ Universal binary | ❌ | Monterey (12.4+)<br/>Ventura (13.0+)<br/>Sonoma (14.0+)<br/>Sequoia (15.0+) | macOS 12.4+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.5 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
 | 7.0      | ✅ Universal binary | ❌ | Monterey (12.4+)<br/>Ventura (13.0+)<br/>Sonoma (14.0) | macOS 12.4+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.4 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
 | 6.2      | ✅ Universal binary | ❌ | Monterey (12.4+)<br/>Ventura (13.0+)<br/>Sonoma (14.0) | macOS 12.4+ | PHP 5.6—PHP 8.2 (w/ Valet 2.x)<br/>PHP 7.0—PHP 8.4 (w/ Valet 3.x)<br/>PHP 7.1-PHP 8.4 (w/ Valet 4.x)| 3.0 or higher recommended<br/> 2.16.2 minimum |
