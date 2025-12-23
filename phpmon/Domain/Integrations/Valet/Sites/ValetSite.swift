@@ -203,28 +203,31 @@ class ValetSite: ValetListable {
 
     /**
      Checks the contents of the composer.json file and determine the notable dependencies,
-     as well as the requested PHP version. If no composer.json file is found, nothing happens.
+     as well as the requested PHP version. This info is then used to determine project type.
+
+     If no composer.json file is found or is invalid, some features may be unavailable, like
+     for example project type inference based on dependencies.
      */
     private func determineComposerInformation() {
         let path = "\(absolutePath)/composer.json"
 
-        do {
-            if container.filesystem.fileExists(path) {
-                let decoded = try JSONDecoder().decode(
-                    ComposerJson.self,
-                    from: String(
-                        contentsOf: URL(fileURLWithPath: path),
-                        encoding: .utf8
-                    ).data(using: .utf8)!
-                )
-
-                (self.preferredPhpVersion,
-                 self.preferredPhpVersionSource) = decoded.getPhpVersion()
-                self.notableComposerDependencies = decoded.getNotableDependencies()
-            }
-        } catch {
-            Log.err("Something went wrong reading the Composer JSON file.")
+        guard container.filesystem.fileExists(path) else {
+            return
         }
+
+        guard let fileContents = try? String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8),
+              let jsonData = fileContents.data(using: .utf8) else {
+            Log.err("Could not read the Composer JSON file at: \(path)")
+            return
+        }
+
+        guard let decoded = try? JSONDecoder().decode(ComposerJson.self, from: jsonData) else {
+            Log.err("Could not parse the Composer JSON file at: \(path)")
+            return
+        }
+
+        (self.preferredPhpVersion, self.preferredPhpVersionSource) = decoded.getPhpVersion()
+        self.notableComposerDependencies = decoded.getNotableDependencies()
     }
 
     /**
