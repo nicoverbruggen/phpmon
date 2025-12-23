@@ -227,18 +227,28 @@ class RealShell: ShellProtocol {
         process.standardError = errorPipe
 
         let output = ShellOutput.empty()
+
+        // Only access `resumed`, `output` from serialQueue to ensure thread safety
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
 
         return try await withCheckedThrowingContinuation({ continuation in
-            let timeoutTask = Task {
-                try? await Task.sleep(nanoseconds: timeout.nanoseconds)
-                // Only terminate if the process is still running
+            // Guard against resuming the continuation twice (race between timeout and termination)
+            var resumed = false
+
+            // We are using GCD here because we're already using a serial queue anyway
+            let timeoutTaskTermination = DispatchWorkItem {
                 if process.isRunning {
                     process.terminationHandler = nil
                     process.terminate()
-                    continuation.resume(throwing: ShellError.timedOut)
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(throwing: ShellError.timedOut)
+                    }
                 }
             }
+
+            // Let's make sure that once our timeout occurs, our process is terminated
+            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutTaskTermination)
 
             // Set up background reading for stdout
             outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
@@ -263,7 +273,7 @@ class RealShell: ShellProtocol {
             }
 
             process.terminationHandler = { process in
-                timeoutTask.cancel()
+                timeoutTaskTermination.cancel()
 
                 // Clean up readability handlers
                 outputPipe.fileHandleForReading.readabilityHandler = nil
@@ -284,7 +294,10 @@ class RealShell: ShellProtocol {
                         didReceiveOutput(string, .stdErr)
                     }
 
-                    continuation.resume(returning: (process, output))
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(returning: (process, output))
+                    }
                 }
             }
 
