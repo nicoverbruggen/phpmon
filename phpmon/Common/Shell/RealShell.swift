@@ -13,7 +13,7 @@ class RealShell: ShellProtocol {
 
     init(container: Container) {
         self.container = container
-        self.PATH = RealShell.getPath()
+        self._PATH = RealShell.getPath()
     }
 
     /**
@@ -23,10 +23,23 @@ class RealShell: ShellProtocol {
     private(set) var launchPath: String = "/bin/sh"
 
     /**
+     Thread-safe access to PATH is ensured via this queue.
+     */
+    private let pathQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_path")
+
+    /**
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private(set) var PATH: String
+    private var _PATH: String
+
+    /**
+     Accessor for the PATH (thread-safe access with DispatchQueue).
+     */
+    internal var PATH: String {
+        get { pathQueue.sync { _PATH } }
+        set { pathQueue.sync { _PATH = newValue } }
+    }
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
@@ -45,15 +58,10 @@ class RealShell: ShellProtocol {
         let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
+        task.waitUntilExit()
 
-        let path = String(
-            data: pipe.fileHandleForReading.readDataToEndOfFile(),
-            encoding: String.Encoding.utf8
-        ) ?? ""
-
-        try? pipe.fileHandleForReading.close()
-
-        return path
+        let path = getStringOutput(from: pipe)
+        return path.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /**
@@ -219,18 +227,28 @@ class RealShell: ShellProtocol {
         process.standardError = errorPipe
 
         let output = ShellOutput.empty()
+
+        // Only access `resumed`, `output` from serialQueue to ensure thread safety
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
 
         return try await withCheckedThrowingContinuation({ continuation in
-            let timeoutTask = Task {
-                try? await Task.sleep(nanoseconds: timeout.nanoseconds)
-                // Only terminate if the process is still running
+            // Guard against resuming the continuation twice (race between timeout and termination)
+            var resumed = false
+
+            // We are using GCD here because we're already using a serial queue anyway
+            let timeoutTaskTermination = DispatchWorkItem {
                 if process.isRunning {
                     process.terminationHandler = nil
                     process.terminate()
-                    continuation.resume(throwing: ShellError.timedOut)
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(throwing: ShellError.timedOut)
+                    }
                 }
             }
+
+            // Let's make sure that once our timeout occurs, our process is terminated
+            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutTaskTermination)
 
             // Set up background reading for stdout
             outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
@@ -255,7 +273,7 @@ class RealShell: ShellProtocol {
             }
 
             process.terminationHandler = { process in
-                timeoutTask.cancel()
+                timeoutTaskTermination.cancel()
 
                 // Clean up readability handlers
                 outputPipe.fileHandleForReading.readabilityHandler = nil
@@ -276,7 +294,10 @@ class RealShell: ShellProtocol {
                         didReceiveOutput(string, .stdErr)
                     }
 
-                    continuation.resume(returning: (process, output))
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(returning: (process, output))
+                    }
                 }
             }
 
