@@ -238,12 +238,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func openPhpVersionManager() {
-        PhpVersionManagerWindowController.show()
+        if !container.phpEnvs.cachedPhpInstallations.isEmpty {
+            PhpVersionManagerWindowController.show()
+        } else {
+            Log.err("Skipping opening version manager due to no available PHP versions.")
+        }
     }
 
     @objc func openPhpExtensionManager() {
-        if !container.phpEnvs.availablePhpVersions.isEmpty {
+        if !container.phpEnvs.cachedPhpInstallations.isEmpty {
             PhpExtensionManagerWindowController.show()
+        } else {
+            Log.err("Skipping opening extension manager due to no available PHP versions.")
         }
     }
 

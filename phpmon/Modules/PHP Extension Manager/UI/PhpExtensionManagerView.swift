@@ -239,7 +239,7 @@ struct PhpExtensionManagerView: View {
 
     static func getActivePhpVersion() -> String {
         return App.shared.container.phpEnvs.currentInstall?.version.short
-            ?? App.shared.container.phpEnvs.availablePhpVersions.first!
+            ?? App.shared.container.phpEnvs.cachedPhpInstallations.keys.first!
     }
 
     func didUpdatePhpVersion() {
