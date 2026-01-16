@@ -242,7 +242,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func openPhpExtensionManager() {
-        PhpExtensionManagerWindowController.show()
+        if !container.phpEnvs.availablePhpVersions.isEmpty {
+            PhpExtensionManagerWindowController.show()
+        }
     }
 
     @objc func openDonate() {

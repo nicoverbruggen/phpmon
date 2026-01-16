@@ -130,12 +130,14 @@ class PhpEnvironments {
     }
 
     /** Information about the currently linked PHP installation. */
+    private let _currentInstall = Locked<ActivePhpInstallation?>(nil)
     var currentInstall: ActivePhpInstallation? {
-        didSet {
+        get { _currentInstall.value }
+        set {
+            // Update the synchronized value
+            _currentInstall.value = newValue
             // Let the PHP extension manager, if it exists, know the version changed
-            if let version = currentInstall?.version.short {
-                App.shared.phpExtensionManagerWindowController?.view?.manager.phpVersion = version
-            }
+            App.shared.phpExtensionManagerWindowController?.view.didUpdatePhpVersion()
         }
     }
 
