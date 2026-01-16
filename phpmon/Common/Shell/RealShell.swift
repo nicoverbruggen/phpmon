@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@preconcurrency import Dispatch
 
 class RealShell: ShellProtocol {
     var container: Container
@@ -235,15 +236,16 @@ class RealShell: ShellProtocol {
             // Guard against resuming the continuation twice (race between timeout and termination)
             var resumed = false
 
-            // We are using GCD here because we're already using a serial queue anyway
+            // Use GCD; we're already using a serial queue so legacy concurrency approach is okay
             let timeoutTaskTermination = DispatchWorkItem {
-                if process.isRunning {
-                    process.terminationHandler = nil
-                    process.terminate()
-                    if !resumed {
-                        resumed = true
-                        continuation.resume(throwing: ShellError.timedOut)
-                    }
+                guard process.isRunning else { return }
+
+                process.terminationHandler = nil
+                process.terminate()
+
+                if !resumed {
+                    resumed = true
+                    continuation.resume(throwing: ShellError.timedOut)
                 }
             }
 
@@ -273,7 +275,9 @@ class RealShell: ShellProtocol {
             }
 
             process.terminationHandler = { process in
-                timeoutTaskTermination.cancel()
+                serialQueue.async {
+                    timeoutTaskTermination.cancel()
+                }
 
                 // Clean up readability handlers
                 outputPipe.fileHandleForReading.readabilityHandler = nil
