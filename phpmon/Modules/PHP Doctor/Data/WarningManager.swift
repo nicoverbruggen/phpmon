@@ -75,7 +75,12 @@ class WarningManager: ObservableObject {
         }
 
         await evaluate()
-        await MainMenu.shared.rebuild()
+
+        // Only rebuild the menu if the app has finished booting
+        // (otherwise the menu may become interactive before all checks are done)
+        if await Startup.hasFinishedBooting {
+            await MainMenu.shared.rebuild()
+        }
     }
 
     /**
