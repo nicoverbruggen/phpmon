@@ -23,6 +23,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     override init() {
         super.init()
         statusItem.isVisible = !isRunningSwiftUIPreview
+        statusItem.button?.isEnabled = false
     }
 
     weak var menuDelegate: NSMenuDelegate?
@@ -56,6 +57,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             })
             statusItem.menu = menu
             statusItem.menu?.delegate = self
+            statusItem.button?.isEnabled = true
         }
     }
 
