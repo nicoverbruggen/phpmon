@@ -104,6 +104,9 @@ class Container: @unchecked Sendable {
             getResponses: webApiGetResponses,
             postResponses: webApiPostResponses
         )
+
+        // We will also re-initialize PhpEnvironments due to altered dependencies
+        self.phpEnvs = PhpEnvironments(container: self)
     }
 
     /**
