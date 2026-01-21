@@ -12,10 +12,10 @@ class Container {
     // MARK: - Variables
 
     // Primary
-    private(set) var shell: ShellProtocol!
     private(set) var filesystem: FileSystemProtocol!
-    private(set) var command: CommandProtocol!
     private(set) var paths: Paths!
+    private(set) var shell: ShellProtocol!
+    private(set) var command: CommandProtocol!
     private(set) var webApi: WebApiProtocol!
 
     // Secondary (uses primary instances above)
@@ -65,10 +65,10 @@ class Container {
 
         // These are the most basic building blocks. We need these before
         // any of the other classes can be initialized!
-        self.shell = RealShell(container: self)
         self.filesystem = RealFileSystem(container: self)
-        self.command = RealCommand()
         self.paths = Paths(container: self)
+        self.shell = RealShell(binPath: paths.binPath)
+        self.command = RealCommand()
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {

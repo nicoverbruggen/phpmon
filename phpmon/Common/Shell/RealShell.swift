@@ -9,13 +9,14 @@
 import Foundation
 @preconcurrency import Dispatch
 
-class RealShell: ShellProtocol {
-    var container: Container
-
-    init(container: Container) {
-        self.container = container
+class RealShell: ShellProtocol, @unchecked Sendable {
+    init(binPath: String) {
+        self.binPath = binPath
         self._PATH = RealShell.getPath()
+        self._exports = ""
     }
+
+    private(set) var binPath: String
 
     /**
      The launch path of the terminal in question that is used.
@@ -23,30 +24,34 @@ class RealShell: ShellProtocol {
      */
     private(set) var launchPath: String = "/bin/sh"
 
-    /**
-     Thread-safe access to PATH is ensured via this queue.
-     */
-    private let pathQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_path")
+    // MARK: - Thread-safe access; public accessor
 
     /**
      For some commands, we need to know what's in the user's PATH.
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
-    private var _PATH: String
-
-    /**
-     Accessor for the PATH (thread-safe access with DispatchQueue).
-     */
     internal var PATH: String {
-        get { pathQueue.sync { _PATH } }
-        set { pathQueue.sync { _PATH = newValue } }
+        get { shellQueue.sync { _PATH } }
+        set { shellQueue.sync { _PATH = newValue } }
     }
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
      These are populated when the configuration file is being loaded.
      */
-    var exports: String = ""
+    internal var exports: String {
+        get { shellQueue.sync { _exports } }
+        set { shellQueue.sync { _exports = newValue } }
+    }
+
+    // MARK: - Thread-safe access; internal values
+
+    /** Thread-safe access to PATH and exports is ensured via this queue. */
+    private let shellQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_queue")
+    private var _PATH: String
+    private var _exports: String
+
+    // MARK: - Methods
 
     /** Retrieves the user's PATH by opening an interactive shell and echoing $PATH. */
     private static func getPath() -> String {
@@ -73,7 +78,7 @@ class RealShell: ShellProtocol {
         var completeCommand = ""
 
         // Basic export (PATH)
-        completeCommand += "export PATH=\(container.paths.binPath):$PATH && "
+        completeCommand += "export PATH=\(binPath):$PATH && "
 
         // Put additional exports (as defined by the user) in between
         if !self.exports.isEmpty {
