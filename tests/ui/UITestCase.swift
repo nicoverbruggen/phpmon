@@ -19,10 +19,19 @@ class UITestCase: XCTestCase {
         app.withConfiguration(config)
         app.launch()
 
+        let statusItem = app.statusItems.firstMatch
+        let isEnabled = NSPredicate(format: "isEnabled == true")
+        let expectation = expectation(for: isEnabled, evaluatedWith: statusItem, handler: nil)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 15)
+
+        if result == .timedOut {
+            XCTFail("PHP Monitor did not initialize with an available UI element within 15 seconds.")
+        }
+
         // Note: If this fails here, make sure the menu bar item can be displayed
         // If you use Bartender or something like this, this item may be hidden and tests will fail
         if openMenu {
-            app.statusItems.firstMatch.click()
+            statusItem.click()
         }
 
         return app
