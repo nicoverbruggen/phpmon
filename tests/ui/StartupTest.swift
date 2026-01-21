@@ -20,7 +20,10 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
 
-        let app = launch(with: configuration)
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
 
         // Dialog 1: "PHP is not correctly installed"
         assertAllExist([
@@ -50,7 +53,10 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/etc/php/8.4/php-fpm.d/valet-fpm.conf"] = nil
 
-        let app = launch(with: configuration)
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
 
         assertExists(app.staticTexts["alert.php_fpm_broken.title".localized], 3.0)
         click(app.buttons["generic.ok".localized])
@@ -60,7 +66,10 @@ final class StartupTest: UITestCase {
         var configuration = TestableConfigurations.working
         configuration.shellOutput["valet --version"] = .instant("Laravel Valet 5.0")
 
-        let app = launch(with: configuration)
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
         click(app.buttons["generic.ok".localized])
