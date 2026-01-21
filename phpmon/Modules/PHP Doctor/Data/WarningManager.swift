@@ -35,10 +35,14 @@ class WarningManager: ObservableObject {
     /// These warnings are the ones that are ready to be displayed.
     @Published public var warnings: [Warning] = []
 
-    /// This variable is thread-safe and may be modified at any time.
+    /// Thread-safe storage for warnings being evaluated.
     /// When all temporary warnings are set, you may broadcast these changes
     /// and they will be sent to the @Published variable via the main thread.
-    private var temporaryWarnings: [Warning] = []
+    private var temporaryWarnings: [Warning] {
+        get { _temporaryWarnings.value }
+        set { _temporaryWarnings.value = newValue }
+    }
+    private let _temporaryWarnings = Locked<[Warning]>([])
 
     public func hasWarnings() -> Bool {
         return !warnings.isEmpty

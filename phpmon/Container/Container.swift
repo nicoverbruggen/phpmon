@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Container {
+class Container: @unchecked Sendable {
     // MARK: - Variables
 
     // Primary
