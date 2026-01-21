@@ -11,17 +11,22 @@ import Foundation
 class Preferences {
     var container: Container
 
+    // MARK - Preferences
+
     var customPreferences: CustomPrefs {
         get { _customPreferences.value }
         set { _customPreferences.value = newValue }
     }
-    private let _customPreferences: Locked<CustomPrefs>
 
     var cachedPreferences: [PreferenceName: Any?] {
         get { _cachedPreferences.value }
         set { _cachedPreferences.value = newValue }
     }
+
+    private let _customPreferences: Locked<CustomPrefs>
     private let _cachedPreferences: Locked<[PreferenceName: Any?]>
+
+    // MARK - Initialization
 
     public init(container: Container) {
         self.container = container
