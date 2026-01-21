@@ -88,14 +88,14 @@ class WarningManager: ObservableObject {
      Will automatically broadcast these warnings.
      */
     private func evaluate() async {
-        self.temporaryWarnings = []
+        var warnings: [Warning] = []
 
         for check in self.evaluations where await check.applies() {
             Log.info("[DOCTOR] \(check.name) (!)")
-            self.temporaryWarnings.append(check)
-            continue
+            warnings.append(check)
         }
 
+        self.temporaryWarnings = warnings
         await self.broadcastWarnings()
     }
 }
