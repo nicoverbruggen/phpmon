@@ -11,20 +11,34 @@ import Foundation
 class Preferences {
     var container: Container
 
-    var customPreferences: CustomPrefs
+    // MARK: - Preferences
 
-    var cachedPreferences: [PreferenceName: Any?]
+    var customPreferences: CustomPrefs {
+        get { _customPreferences.value }
+        set { _customPreferences.value = newValue }
+    }
+
+    var cachedPreferences: [PreferenceName: Any?] {
+        get { _cachedPreferences.value }
+        set { _cachedPreferences.value = newValue }
+    }
+
+    private let _customPreferences: Locked<CustomPrefs>
+    private let _cachedPreferences: Locked<[PreferenceName: Any?]>
+
+    // MARK: - Initialization
 
     public init(container: Container) {
         self.container = container
         Preferences.handleFirstTimeLaunch()
-        cachedPreferences = Self.cache()
-        customPreferences = CustomPrefs(
+
+        _cachedPreferences = Locked(Self.cache())
+        _customPreferences = Locked(CustomPrefs(
             scanApps: [],
             presets: [],
             services: [],
             environmentVariables: [:]
-        )
+        ))
 
         if isRunningSwiftUIPreview {
             return

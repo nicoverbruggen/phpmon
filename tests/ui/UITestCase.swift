@@ -9,22 +9,41 @@
 import XCTest
 
 class UITestCase: XCTestCase {
-    /** Launches the app and opens the menu. */
+    /**
+     Launches the app and opens the menu.
+     Defaults to waiting for the app to finish initialization.
+
+     - Parameter waitForInitialization: Waits for the PHP Monitor to pass the environment checks (startup).
+     - Parameter openMenu: Attempts to open the status menu when ready; requires passing environment checks.
+     - Parameter configuration: The TestableConfiguration to include when launching PHP Monitor.
+     */
     public func launch(
+        waitForInitialization: Bool = true,
         openMenu: Bool = false,
-        with configuration: TestableConfiguration? = nil
+        with configuration: TestableConfiguration? = nil,
     ) -> XCPMApplication {
         let app = XCPMApplication()
         let config = configuration ?? TestableConfigurations.working
         app.withConfiguration(config)
         app.launch()
 
-        // Note: If this fails here, make sure the menu bar item can be displayed
-        // If you use Bartender or something like this, this item may be hidden and tests will fail
-        if openMenu {
-            app.statusItems.firstMatch.click()
+        if waitForInitialization || openMenu {
+            let statusItem = app.statusItems.firstMatch
+            let isEnabled = NSPredicate(format: "isEnabled == true")
+            let expectation = expectation(for: isEnabled, evaluatedWith: statusItem, handler: nil)
+            let result = XCTWaiter().wait(for: [expectation], timeout: 15)
+
+            if result == .timedOut {
+                XCTFail("PHP Monitor did not initialize with an available UI element within 15 seconds.")
+            }
+
+            if openMenu {
+                statusItem.click()
+            }
         }
 
+        // Note: If this fails here, make sure the menu bar item can be displayed
+        // If you use Bartender or something like this, this item may be hidden and tests will fail
         return app
     }
 

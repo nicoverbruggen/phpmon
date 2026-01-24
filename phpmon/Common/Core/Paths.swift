@@ -64,8 +64,25 @@ public class Paths {
 
     // - MARK: Detected Binaries
 
-    /** The path to the Composer binary. Can be in multiple locations, so is detected instead. */
-    public var composer: String?
+    public var composer: String? {
+        get { _composer.value }
+        set { _composer.value = newValue }
+    }
+
+    private let _composer = Locked<String?>(nil)
+
+    private func detectComposerBinary() {
+        if container.filesystem.fileExists("/usr/local/bin/composer") {
+            composer = "/usr/local/bin/composer"
+        } else if container.filesystem.fileExists("/opt/homebrew/bin/composer") {
+            composer = "/opt/homebrew/bin/composer"
+        } else if container.filesystem.fileExists("/usr/local/homebrew/bin/composer") {
+            composer = "/usr/local/homebrew/bin/composer"
+        } else {
+            composer = nil
+            Log.warn("Composer was not found.")
+        }
+    }
 
     // - MARK: Paths
 
@@ -116,23 +133,6 @@ public class Paths {
 
     public var shell: String {
         return preferredShell
-    }
-
-    // MARK: - Flexible Binaries
-    // (these can be in multiple locations, so we scan common places because)
-    // (PHP Monitor will not use the user's own PATH)
-
-    private func detectComposerBinary() {
-        if container.filesystem.fileExists("/usr/local/bin/composer") {
-            composer = "/usr/local/bin/composer"
-        } else if container.filesystem.fileExists("/opt/homebrew/bin/composer") {
-            composer = "/opt/homebrew/bin/composer"
-        } else if container.filesystem.fileExists("/usr/local/homebrew/bin/composer") {
-            composer = "/usr/local/homebrew/bin/composer"
-        } else {
-            composer = nil
-            Log.warn("Composer was not found.")
-        }
     }
 
     // MARK: - Enum

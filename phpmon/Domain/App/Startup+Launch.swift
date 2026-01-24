@@ -120,6 +120,12 @@ extension Startup {
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
 
+        // Mark app as having successfully booted passing all checks
+        Startup.hasFinishedBooting = true
+
+        // Enable the main menu item
+        MainMenu.shared.statusItem.button?.isEnabled = true
+
         // Post-launch stats and update check, but only if not running tests
         await performPostLaunchActions()
     }

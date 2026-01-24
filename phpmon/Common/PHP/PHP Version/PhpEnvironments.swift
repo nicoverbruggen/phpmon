@@ -130,25 +130,40 @@ class PhpEnvironments {
     }
 
     /** Information about the currently linked PHP installation. */
+    private let _currentInstall = Locked<ActivePhpInstallation?>(nil)
     var currentInstall: ActivePhpInstallation? {
-        didSet {
+        get { _currentInstall.value }
+        set {
+            // Update the synchronized value
+            _currentInstall.value = newValue
             // Let the PHP extension manager, if it exists, know the version changed
-            if let version = currentInstall?.version.short {
-                App.shared.phpExtensionManagerWindowController?.view?.manager.phpVersion = version
-            }
+            App.shared.phpExtensionManagerWindowController?.view.didUpdatePhpVersion()
         }
     }
 
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
-     
+
      If you're up to date, `php` will be aliased to the latest version,
      but that might not be the case since not everyone keeps their
      software up-to-date.
-     
-     As such, we take that information from Homebrew.
+
+     In order for our check to be correct, we query Homebrew locally.
      */
-    static var brewPhpAlias: String?
+    private static let _brewPhpAlias = Locked<String?>(nil)
+    static var brewPhpAlias: String? {
+        get { _brewPhpAlias.value }
+        set { _brewPhpAlias.value = newValue }
+    }
+
+    /**
+     Information we were able to discern from the Homebrew info command.
+     */
+    private let _homebrewPackage = Locked<HomebrewPackage?>(nil)
+    var homebrewPackage: HomebrewPackage! {
+        get { _homebrewPackage.value }
+        set { _homebrewPackage.value = newValue }
+    }
 
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
@@ -190,11 +205,6 @@ class PhpEnvironments {
             return unstableVersion.value.versionNumber.short
         }
     }
-
-    /**
-     Information we were able to discern from the Homebrew info command.
-     */
-    var homebrewPackage: HomebrewPackage! = nil
 
     // MARK: - Methods
 

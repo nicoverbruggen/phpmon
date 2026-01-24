@@ -23,8 +23,7 @@ struct PhpExtensionManagerView: View {
     init() {
         self.searchText = ""
         self.status = BusyStatus.busy()
-        let version = App.shared.container.phpEnvs.currentInstall!.version.short
-        self.manager = BrewExtensionsObservable(phpVersion: version)
+        self.manager = BrewExtensionsObservable(phpVersion: Self.getActivePhpVersion())
         self.status.busy = false
     }
 
@@ -236,6 +235,15 @@ struct PhpExtensionManagerView: View {
                 highlightedExtension = nil
             }
         }
+    }
+
+    static func getActivePhpVersion() -> String {
+        return App.shared.container.phpEnvs.currentInstall?.version.short
+            ?? App.shared.container.phpEnvs.cachedPhpInstallations.keys.first!
+    }
+
+    func didUpdatePhpVersion() {
+        self.manager.phpVersion = Self.getActivePhpVersion()
     }
 }
 

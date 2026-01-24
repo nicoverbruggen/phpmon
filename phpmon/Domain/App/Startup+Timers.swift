@@ -13,6 +13,7 @@ import NVAlert
 extension Startup {
     @MainActor static var startupTimer: Timer?
     @MainActor static var launchTime: Date?
+    @MainActor static var hasFinishedBooting: Bool = false
 
     /** Returns a human-readable version to indicate how many seconds elapsed since boot. */
     @MainActor static var humanReadableSinceBootTime: String {

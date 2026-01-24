@@ -137,9 +137,11 @@ public struct TestableConfiguration: Codable {
         container.overrideWith(config: self)
 
         Log.info("Applying temporary preference overrides...")
+        var cachedPrefs = container.preferences.cachedPreferences
         preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
-            container.preferences.cachedPreferences[key] = value
+            cachedPrefs[key] = value
         }
+        container.preferences.cachedPreferences = cachedPrefs
 
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")

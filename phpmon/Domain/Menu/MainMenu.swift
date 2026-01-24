@@ -23,6 +23,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     override init() {
         super.init()
         statusItem.isVisible = !isRunningSwiftUIPreview
+        statusItem.button?.isEnabled = false
     }
 
     weak var menuDelegate: NSMenuDelegate?
@@ -238,11 +239,19 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     }
 
     @objc func openPhpVersionManager() {
-        PhpVersionManagerWindowController.show()
+        if !container.phpEnvs.cachedPhpInstallations.isEmpty {
+            PhpVersionManagerWindowController.show()
+        } else {
+            Log.err("Skipping opening version manager due to no available PHP versions.")
+        }
     }
 
     @objc func openPhpExtensionManager() {
-        PhpExtensionManagerWindowController.show()
+        if !container.phpEnvs.cachedPhpInstallations.isEmpty {
+            PhpExtensionManagerWindowController.show()
+        } else {
+            Log.err("Skipping opening extension manager due to no available PHP versions.")
+        }
     }
 
     @objc func openDonate() {
