@@ -102,7 +102,7 @@ actor ValetServicesDataManager {
             ? "sudo \(self.container.paths.brew) services info --all --json"
             : "\(self.container.paths.brew) services info --all --json"
 
-        let output = await self.container.shell.pipe(command).out
+        let output = await self.container.shell.pipe(command, timeout: .seconds(10)).out
 
         guard let jsonData = output.data(using: .utf8) else {
             Log.err("Failed to convert \(elevated ? "root" : "user") services output to UTF-8 data.")

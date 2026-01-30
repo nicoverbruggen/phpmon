@@ -16,14 +16,6 @@ class ValetServicesManager: ServicesManager {
     override init(_ container: Container) {
         self.data = ValetServicesDataManager(container)
         super.init(container)
-
-        // Load the initial services state
-        Task {
-            await self.reloadServicesStatus()
-            await MainActor.run {
-                firstRunComplete = true
-            }
-        }
     }
 
     override func reloadServicesStatus() async {

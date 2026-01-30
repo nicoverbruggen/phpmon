@@ -35,7 +35,11 @@ public class TestableShell: ShellProtocol {
     }
 
     func pipe(_ command: String) async -> ShellOutput {
-        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
+        return await pipe(command, timeout: 60)
+    }
+
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
         return output
     }
 

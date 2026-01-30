@@ -64,6 +64,27 @@ struct RealShellTest {
         }
     }
 
+    @Test func pipe_can_timeout_and_return_empty_output() async {
+        let start = ContinuousClock.now
+
+        let output = await container.shell.pipe("php -r \"sleep(30);\"", timeout: 0.5)
+
+        let duration = start.duration(to: .now)
+
+        // Should return empty output on timeout
+        #expect(output.out.isEmpty)
+        #expect(output.err.isEmpty)
+
+        // Should have timed out in roughly 0.5 seconds (allow some margin)
+        #expect(duration < .seconds(2))
+    }
+
+    @Test func pipe_without_timeout_completes_normally() async {
+        let output = await container.shell.pipe("php -v")
+
+        #expect(output.out.contains("Copyright (c) The PHP Group"))
+    }
+
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
         let start = ContinuousClock.now
 

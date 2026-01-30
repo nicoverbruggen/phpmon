@@ -17,8 +17,6 @@ class ServicesManager: ObservableObject {
 
     @Published var services = [Service]()
 
-    @Published var firstRunComplete: Bool = false
-
     init(_ container: Container) {
         self.container = container
 
@@ -65,7 +63,7 @@ class ServicesManager: ObservableObject {
     }
 
     public var hasError: Bool {
-        if self.services.isEmpty || !self.firstRunComplete {
+        if self.services.isEmpty {
             return false
         }
 
@@ -75,7 +73,7 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusMessage: String {
-        if self.services.isEmpty || !self.firstRunComplete {
+        if self.services.isEmpty {
             return "phpman.services.loading".localized
         }
 
@@ -95,7 +93,7 @@ class ServicesManager: ObservableObject {
     }
 
     public var statusColor: Color {
-        if self.services.isEmpty || !self.firstRunComplete {
+        if self.services.isEmpty {
             return Color("StatusColorYellow")
         }
 

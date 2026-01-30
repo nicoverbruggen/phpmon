@@ -19,8 +19,7 @@ class FakeServicesManager: ServicesManager {
     init(
         _ container: Container,
         formulae: [String] = ["php", "nginx", "dnsmasq"],
-        status: Service.Status = .active,
-        loading: Bool = false
+        status: Service.Status = .active
     ) {
         super.init(container)
 
@@ -32,14 +31,6 @@ class FakeServicesManager: ServicesManager {
 
         self.services = []
         self.reapplyServices()
-
-        if loading {
-            return
-        }
-
-        Task { @MainActor in
-            self.firstRunComplete = true
-        }
     }
 
     private func reapplyServices() {

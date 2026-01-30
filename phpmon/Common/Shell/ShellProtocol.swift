@@ -36,6 +36,16 @@ protocol ShellProtocol {
     func pipe(_ command: String) async -> ShellOutput
 
     /**
+     Run a command asynchronously with a timeout.
+     Returns the most relevant output (prefers error output if it exists).
+
+     - Parameter command: The command to execute.
+     - Parameter timeout: Timeout in seconds. If the command exceeds this, it is terminated.
+     - Returns: The shell output. If the command times out, returns empty output.
+     */
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput
+
+    /**
      Run a command asynchronously, without returning the output of the command.
      Returns the most relevant output (prefers error output if it exists).
      */

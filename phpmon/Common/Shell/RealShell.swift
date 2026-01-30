@@ -111,6 +111,36 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         return result
     }
 
+    /**
+    Verbose logging for when executing a shell command.
+     */
+    private func log(process: Process, stdOut: String, stdErr: String) {
+        var args = process.arguments ?? []
+        let last = "\"" + (args.popLast() ?? "") + "\""
+        var log = """
+
+            <~~~~~~~~~~~~~~~~~~~~~~~
+            $ \(([self.launchPath] + args + [last]).joined(separator: " "))
+
+            [OUT]:
+            \(stdOut)
+            """
+
+        if !stdErr.isEmpty {
+            log.append("""
+                [ERR]:
+                \(stdErr)
+                """)
+        }
+
+        log.append("""
+            ~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            """)
+
+        Log.info(log)
+    }
+
     // MARK: - Public API
 
     /**
@@ -190,31 +220,69 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         }
     }
 
-    private func log(process: Process, stdOut: String, stdErr: String) {
-        var args = process.arguments ?? []
-        let last = "\"" + (args.popLast() ?? "") + "\""
-        var log = """
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        let process = getShellProcess(for: command)
 
-            <~~~~~~~~~~~~~~~~~~~~~~~
-            $ \(([self.launchPath] + args + [last]).joined(separator: " "))
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
 
-            [OUT]:
-            \(stdOut)
-            """
-
-        if !stdErr.isEmpty {
-            log.append("""
-                [ERR]:
-                \(stdErr)
-                """)
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            Log.info("[SLOW SHELL] \(command)")
+            await delay(seconds: 3.0)
         }
 
-        log.append("""
-            ~~~~~~~~~~~~~~~~~~~~~~~~>
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
-            """)
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.pipe_timeout_queue")
 
-        Log.info(log)
+        return await withCheckedContinuation { continuation in
+            var resumed = false
+
+            let timeoutWorkItem = DispatchWorkItem {
+                guard process.isRunning else { return }
+
+                Log.warn("Command timed out after \(timeout)s: \(command)")
+                process.terminationHandler = nil
+                process.terminate()
+
+                serialQueue.async {
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(returning: .out("", ""))
+                    }
+                }
+            }
+
+            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutWorkItem)
+
+            process.terminationHandler = { [weak self] _ in
+                timeoutWorkItem.cancel()
+
+                serialQueue.async {
+                    if resumed { return }
+
+                    if process.terminationReason == .uncaughtSignal {
+                        Log.err("The command `\(command)` likely crashed. Returning empty output.")
+                        resumed = true
+                        continuation.resume(returning: .out("", ""))
+                        return
+                    }
+
+                    let stdOut = RealShell.getStringOutput(from: outputPipe)
+                    let stdErr = RealShell.getStringOutput(from: errorPipe)
+
+                    if Log.shared.verbosity == .cli {
+                        self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
+                    }
+
+                    resumed = true
+                    continuation.resume(returning: .out(stdOut, stdErr))
+                }
+            }
+
+            process.launch()
+        }
     }
 
     func quiet(_ command: String) async {
@@ -235,7 +303,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         let output = ShellOutput.empty()
 
         // Only access `resumed`, `output` from serialQueue to ensure thread safety
-        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
             // Guard against resuming the continuation twice (race between timeout and termination)

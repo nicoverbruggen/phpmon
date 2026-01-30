@@ -100,19 +100,19 @@ extension Startup {
 
             // A non-default TLD is not officially supported since Valet 3.2.x
             Valet.shared.notifyAboutUnsupportedTLD()
+
+            // Determine which services are running
+            await ServicesManager.shared.reloadServicesStatus()
+
+            // Find out which services are active
+            Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
         }
 
         // Keep track of which PHP versions are currently about to release
         Log.info("Experimental PHP versions are: \(Constants.ExperimentalPhpVersions)")
 
-        // Find out which services are active
-        Log.info("The services manager knows about \(ServicesManager.shared.services.count) services.")
-
-        // We are ready!
+        // Internals are ready!
         container.phpEnvs.isBusy = false
-
-        // Finally!
-        Log.info("PHP Monitor is ready to serve!")
 
         // Avoid showing the "startup timeout" alert
         Startup.invalidateTimeoutTimer()
@@ -122,6 +122,7 @@ extension Startup {
 
         // Mark app as having successfully booted passing all checks
         Startup.hasFinishedBooting = true
+        Log.info("PHP Monitor is ready to serve!")
 
         // Enable the main menu item
         MainMenu.shared.statusItem.button?.isEnabled = true
