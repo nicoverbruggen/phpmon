@@ -71,8 +71,10 @@ import NVAlert
         let (process, _) = try await container.shell.attach(
             command,
             didReceiveOutput: { [weak self] (incoming, _) in
-                guard let window = self?.window else { return }
-                window.addToConsole(incoming)
+                Task { @MainActor in
+                    guard let window = self?.window else { return }
+                    window.addToConsole(incoming)
+                }
             },
             withTimeout: .minutes(5)
         )
