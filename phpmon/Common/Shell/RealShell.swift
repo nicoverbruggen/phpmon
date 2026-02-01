@@ -350,17 +350,18 @@ class RealShell: ShellProtocol, @unchecked Sendable {
             process.terminationHandler = { process in
                 serialQueue.async {
                     timeoutTaskTermination.cancel()
-                }
 
-                // Clean up readability handlers
-                outputPipe.fileHandleForReading.readabilityHandler = nil
-                errorPipe.fileHandleForReading.readabilityHandler = nil
+                    // Check if already resumed (timeout fired first)
+                    if resumed { return }
 
-                // Read any remaining data
-                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                    // Clean up readability handlers
+                    outputPipe.fileHandleForReading.readabilityHandler = nil
+                    errorPipe.fileHandleForReading.readabilityHandler = nil
 
-                serialQueue.async {
+                    // Read any remaining data
+                    let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                    let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+
                     if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
                         output.out += string
                         didReceiveOutput(string, .stdOut)
@@ -371,10 +372,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
                         didReceiveOutput(string, .stdErr)
                     }
 
-                    if !resumed {
-                        resumed = true
-                        continuation.resume(returning: (process, output))
-                    }
+                    resumed = true
+                    continuation.resume(returning: (process, output))
                 }
             }
 
