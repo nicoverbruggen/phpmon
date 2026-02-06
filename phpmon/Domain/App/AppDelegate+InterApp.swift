@@ -42,7 +42,7 @@ extension AppDelegate {
         )
     }
 
-    private func promptToEnableIntegrations() -> Bool {
+    @MainActor private func promptToEnableIntegrations() -> Bool {
         UserDefaults.standard.set(true, forKey: PersistentAppState.didPromptForIntegrations.rawValue)
         UserDefaults.standard.synchronize()
 
