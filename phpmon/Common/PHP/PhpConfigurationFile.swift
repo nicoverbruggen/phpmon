@@ -133,8 +133,11 @@ class PhpConfigurationFile: CreatedFromFile {
     }
 
     public func reload() {
-        let newLines = try! String(contentsOfFile: self.filePath)
-            .components(separatedBy: "\n")
+        guard let newLines = try? String(contentsOfFile: self.filePath)
+            .components(separatedBy: "\n") else {
+            Log.warn("Could not reload PHP configuration file at: `\(self.filePath)`")
+            return
+        }
 
         // Update all properties atomically
         lines = newLines
