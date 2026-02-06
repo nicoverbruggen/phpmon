@@ -37,8 +37,11 @@ extension AppDelegate {
     private func interpretCommand(_ command: String, commands: [InterApp.Action]) {
         commands.forEach { action in
             if command.starts(with: action.command) {
-                let lastElement = String(command.split(separator: "/").last!)
-                action.action(lastElement)
+                guard let lastElement = command.split(separator: "/").last else {
+                    Log.warn("Ignoring malformed phpmon:// command: '\(command)'")
+                    return
+                }
+                action.action(String(lastElement))
             }
         }
     }
