@@ -22,12 +22,17 @@ class ZshRunCommand {
      Adds a given line to .zshrc, which may be needed to adjust the PATH.
      */
     private func add(_ text: String) async -> Bool {
+        // Escape single quotes to prevent shell injection
+        let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
+
+        // Actually add the line to .zshrc
         let outcome = await container.shell.pipe("""
             touch ~/.zshrc && \
-            grep -qxF '\(text)' ~/.zshrc \
-            || echo '\n\n\(text)\n' >> ~/.zshrc
+            grep -qxF '\(escaped)' ~/.zshrc \
+            || echo '\n\n\(escaped)\n' >> ~/.zshrc
         """)
 
+        // Validate the command executed correctly
         if outcome.hasError {
             return false
         }
