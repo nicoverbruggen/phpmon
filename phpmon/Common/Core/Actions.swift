@@ -123,6 +123,11 @@ class Actions {
     // MARK: - Other Actions
 
     public func createTempPhpInfoFile() async -> URL {
+        // Clean state for temporary phpinfo files
+        try? container.filesystem.remove("/tmp/phpmon_phpinfo.php")
+        try? container.filesystem.remove("/tmp/phpmon_phpinfo.html")
+
+        // Generate a source file that we will execute immediately
         try! container.filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
