@@ -14,14 +14,6 @@ struct CustomPrefs: Decodable {
     let services: [String]?
     let environmentVariables: [String: String]?
 
-    var exportAsString: String {
-        return self.environmentVariables!
-            .map { (key, value) in
-                return "export \(key)=\(value)"
-            }
-            .joined(separator: "&&")
-    }
-
     public func hasPresets() -> Bool {
         return self.presets != nil && !self.presets!.isEmpty
     }
@@ -89,7 +81,7 @@ extension Preferences {
             if customPreferences.hasEnvironmentVariables() {
                 Log.info("Configuring the additional exports...")
                 if let shell = App.shared.container.shell as? RealShell {
-                    shell.exports = customPreferences.exportAsString
+                    shell.exports = customPreferences.environmentVariables ?? [:]
                 }
             }
         } catch {

@@ -13,7 +13,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String) {
         self.binPath = binPath
         self._PATH = RealShell.getPath()
-        self._exports = ""
+        self._exports = [:]
     }
 
     private(set) var binPath: String
@@ -38,8 +38,9 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     /**
      Exports are additional environment variables set by the user via the custom configuration.
      These are populated when the configuration file is being loaded.
+     These are now set via via Process.environment to avoid security issues, like shell injection.
      */
-    internal var exports: String {
+    internal var exports: [String: String] {
         get { shellQueue.sync { _exports } }
         set { shellQueue.sync { _exports = newValue } }
     }
@@ -49,7 +50,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     /** Thread-safe access to PATH and exports is ensured via this queue. */
     private let shellQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_queue")
     private var _PATH: String
-    private var _exports: String
+    private var _exports: [String: String]
 
     // MARK: - Methods
 
@@ -75,21 +76,22 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      This process still needs to be started, or one can attach output handlers.
      */
     private func getShellProcess(for command: String) -> Process {
-        var completeCommand = ""
-
-        // Basic export (PATH)
-        completeCommand += "export PATH=\(binPath):$PATH && "
-
-        // Put additional exports (as defined by the user) in between
-        if !self.exports.isEmpty {
-            completeCommand += "\(self.exports) && "
-        }
-
-        completeCommand += command
+        let completeCommand = "export PATH=\(binPath):$PATH && " + command
 
         let task = Process()
         task.launchPath = self.launchPath
         task.arguments = ["--noprofile", "-norc", "--login", "-c", completeCommand]
+
+        // Set user-defined environment variables safely via Process API
+        // instead of interpolating them into the shell command string.
+        let currentExports = self.exports
+        if !currentExports.isEmpty {
+            var env = ProcessInfo.processInfo.environment
+            for (key, value) in currentExports {
+                env[key] = value
+            }
+            task.environment = env
+        }
 
         return task
     }
@@ -148,9 +150,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      These will be exported when a command is executed.
      */
     public func setCustomEnvironmentVariables(_ variables: [String: String]) {
-        self.exports = variables.map { (key, value) in
-            return "export \(key)=\(value)"
-        }.joined(separator: "&&")
+        self.exports = variables
     }
 
     // MARK: - Shellable Protocol
