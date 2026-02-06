@@ -437,7 +437,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run `composer global update` whenever you switch between different PHP versions. You will be able to see what changes are being made, or should this fail.";
 
 "prefs.open_protocol_title" = "Allow third-party integrations";
-"prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them.";
+"prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them, which is more secure.";
 
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check daily if there is a newer version available, and notify you if that is the case.";
@@ -942,6 +942,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "cert_alert.renew" = "Re-secure Domain(s)";
 "cert_alert.cancel" = "Not Now";
 
+// CRASH REPORTING
+
 "crash_reporter.title" = "PHP Monitor crashed earlier, do you want to send a crash report?";
 "crash_reporter.subtitle" = "It is possible to send the crash report to the developer of the app, so this issue can be fixed. This is highly recommended. Would you like to do that?";
 "crash_reporter.description" = "Without sending this crash report, the developer may not be aware of this particular issue. No logs or personal data is sent with the crash report, only the unsymbolicated crash report. No further action is necessary on your part.
@@ -953,7 +955,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 // THIRD-PARTY INTEGRATIONS
 
 "alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor";
-"alert.enable_integrations.subtitle" = "Do you want to allow third-party integrations (like Alfred or Raycast) to control PHP Monitor via the phpmon:// protocol?\n\nThis prompt appeared because PHP Monitor just received an external command. If you triggered this from a third-party app like Alfred or Raycast, it is safe to allow this.\n\nYou can change this setting later in Preferences.";
-"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor. In that case I recommend checking what could be causing this and keeping this integration turned off for security reasons.";
-"alert.enable_integrations.ok" = "Allow Integrations";
+"alert.enable_integrations.subtitle" = "Do you want to allow third-party integrations (like Alfred or Raycast) to control PHP Monitor via the `phpmon://` protocol?\n\nThis notice appears because PHP Monitor just received an external command. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is safe to allow this.\n\nYou can change this setting later in Preferences.";
+"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor. In that case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a security risk.";
+"alert.enable_integrations.ok" = "Allow";
 "alert.enable_integrations.cancel" = "Don't Allow";
