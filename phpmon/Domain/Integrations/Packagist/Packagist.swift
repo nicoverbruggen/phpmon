@@ -10,7 +10,8 @@ import Foundation
 
 class Packagist {
     static func getLatestStableVersion(packageName: String) async throws -> VersionNumber {
-        guard let url = URL(string: "https://repo.packagist.org/p2/\(packageName).json") else {
+        guard let encodedName = packageName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+              let url = URL(string: "https://repo.packagist.org/p2/\(encodedName).json") else {
             throw PackagistError.invalidURL
         }
 
