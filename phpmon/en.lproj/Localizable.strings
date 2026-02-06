@@ -949,3 +949,11 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 ➡️ If the crash keeps happening at a specific point in time, you may want to check GitHub's issue tracker to see if a fix is not in the works. If the app keeps crashing prior to initialization, you may need to update PHP Monitor manually.";
 "crash_reporter.send_report" = "Send Report";
 "crash_reporter.do_not_send" = "Don't Send";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor";
+"alert.enable_integrations.subtitle" = "Do you want to allow third-party integrations (like Alfred or Raycast) to control PHP Monitor via the phpmon:// protocol?\n\nThis prompt appeared because PHP Monitor just received an external command. If you triggered this from a third-party app like Alfred or Raycast, it is safe to allow this.\n\nYou can change this setting later in Preferences.";
+"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor. In that case I recommend checking what could be causing this and keeping this integration turned off for security reasons.";
+"alert.enable_integrations.ok" = "Allow Integrations";
+"alert.enable_integrations.cancel" = "Don't Allow";

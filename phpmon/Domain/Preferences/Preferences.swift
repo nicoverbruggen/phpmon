@@ -62,7 +62,7 @@ class Preferences {
             /// Preferences: General
             PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
             PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
-            PreferenceName.allowProtocolForIntegrations.rawValue: true,
+            PreferenceName.allowProtocolForIntegrations.rawValue: false,
             PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
             PreferenceName.showPhpDoctorSuggestions.rawValue: true,
             PreferenceName.languageOverride.rawValue: "",
