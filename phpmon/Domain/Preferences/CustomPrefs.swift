@@ -62,30 +62,31 @@ extension Preferences {
     }
 
     func loadCustomPreferencesFile(_ url: URL) {
-        do {
-            customPreferences = try JSONDecoder().decode(
-                CustomPrefs.self,
-                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
-            )
+        guard let data = try? String(contentsOf: url, encoding: .utf8).data(using: .utf8) else {
+            Log.warn("The ~/.config/phpmon/config.json file could not be read as UTF-8.")
+            return
+        }
 
-            Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
+        guard let customPreferences = try? JSONDecoder().decode(CustomPrefs.self, from: data) else {
+            Log.warn("The ~/.config/phpmon/config.json file seems to be malformed.")
+            return
+        }
 
-            if customPreferences.hasPresets() {
-                Log.info("There are \(customPreferences.presets!.count) custom presets.")
+        Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
+
+        if customPreferences.hasPresets() {
+            Log.info("There are \(customPreferences.presets!.count) custom presets.")
+        }
+
+        if customPreferences.hasServices() {
+            Log.info("There are custom services: \(customPreferences.services!)")
+        }
+
+        if customPreferences.hasEnvironmentVariables() {
+            Log.info("Configuring the additional exports...")
+            if let shell = App.shared.container.shell as? RealShell {
+                shell.exports = customPreferences.environmentVariables ?? [:]
             }
-
-            if customPreferences.hasServices() {
-                Log.info("There are custom services: \(customPreferences.services!)")
-            }
-
-            if customPreferences.hasEnvironmentVariables() {
-                Log.info("Configuring the additional exports...")
-                if let shell = App.shared.container.shell as? RealShell {
-                    shell.exports = customPreferences.environmentVariables ?? [:]
-                }
-            }
-        } catch {
-            Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")
         }
     }
 }
