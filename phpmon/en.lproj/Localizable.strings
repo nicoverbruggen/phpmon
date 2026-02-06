@@ -954,8 +954,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 
 // THIRD-PARTY INTEGRATIONS
 
-"alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor";
-"alert.enable_integrations.subtitle" = "Do you want to allow third-party integrations (like Alfred or Raycast) to control PHP Monitor via the `phpmon://` protocol?\n\nThis notice appears because PHP Monitor just received an external command. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is safe to allow this.\n\nYou can change this setting later in Preferences.";
-"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor. In that case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a security risk.";
-"alert.enable_integrations.ok" = "Allow";
+"alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor. Do you want third-party applications to be able to communicate with PHP Monitor?";
+"alert.enable_integrations.subtitle" = "This notice appears because PHP Monitor just received an external command, and this feature is disabled by default. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is normally safe to allow this.\n\nYou can change this setting later in Preferences, you will be asked this question only once.";
+"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor.\n\nIn such a case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a potential security risk.";
+"alert.enable_integrations.ok" = "Allow Integrations";
 "alert.enable_integrations.cancel" = "Don't Allow";

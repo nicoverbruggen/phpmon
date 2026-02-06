@@ -24,7 +24,7 @@ extension Valet {
                 )
                 .withPrimary(text: "generic.ok".localized)
                 .withTertiary(text: "alert.do_not_tell_again".localized, action: { alert in
-                    Preferences.update(.warnAboutNonStandardTLD, value: false)
+                    Preferences.update(.warnAboutNonStandardTLD, value: false, notify: true)
                     alert.close(with: .alertThirdButtonReturn)
                 })
                 .show(urgency: .urgentRequestAttention)

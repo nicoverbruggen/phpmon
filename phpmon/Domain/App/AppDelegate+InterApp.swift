@@ -17,17 +17,40 @@ extension AppDelegate {
      application URL. You can use the `phpmon://` protocol to communicate with the app.
 
      At this time you can trigger the site list using Alfred (or some other application)
-     by opening the following URL: `phpmon://list`.
+     by opening the following URL: `phpmon://list`. Various other commands are also made
+     available via the `InterApp` class, which is where all commands and their different
+     interactions are declared.
 
-     Please note that PHP Monitor needs to be running in the background for this to work.
+     Please note that PHP Monitor needs to be running in the background for this to work,
+     or the app will launch and the command will be deferred until the app is ready.
      */
     @MainActor func application(_ application: NSApplication, open urls: [URL]) {
+        guard Startup.hasFinishedBooting else {
+            return deferURLs(urls)
+        }
+
+        handleURLs(urls)
+    }
+
+    @MainActor func deferURLs(_ urls: [URL]) {
+        Log.info("App has not finished booting, deferring phpmon:// command...")
+        App.shared.deferredURL = urls.first
+    }
+
+    @MainActor func handleURLs(_ urls: [URL]) {
         if !Preferences.isEnabled(.allowProtocolForIntegrations) {
-            if UserDefaults.standard.bool(forKey: PersistentAppState.didPromptForIntegrations.rawValue) {
+
+            // First, we'll check if we already prompted for integrations.
+            // If we have, we will not respond to the commands at all.
+            if UserDefaults.standard.bool(
+                forKey: PersistentAppState.didPromptForIntegrations.rawValue
+            ) {
                 Log.info("Acting on commands via phpmon:// has been disabled.")
                 return
             }
 
+            // However, if that isn't the case, we will prompt the user about integrations,
+            // which will give the user a chance to approve the command regardless.
             Log.info("Acting on commands via phpmon:// has been disabled. Prompting user...")
             if !promptToEnableIntegrations() {
                 return
@@ -58,7 +81,7 @@ extension AppDelegate {
             return false
         }
 
-        Preferences.update(.allowProtocolForIntegrations, value: true)
+        Preferences.update(.allowProtocolForIntegrations, value: true, notify: true)
         return true
     }
 

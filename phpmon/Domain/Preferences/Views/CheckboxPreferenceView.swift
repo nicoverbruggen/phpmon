@@ -65,6 +65,15 @@ class CheckboxPreferenceBehavior: CheckboxPreferenceViewBehavior {
         self.preference = preference
         self.button = button
         self.button.state = Preferences.isEnabled(self.preference) ? .on : .off
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(refreshState),
+            name: Events.PreferencesUpdated, object: nil
+        )
+    }
+
+    @objc func refreshState() {
+        self.button.state = Preferences.isEnabled(self.preference) ? .on : .off
     }
 
     public func toggled(checked: Bool) {

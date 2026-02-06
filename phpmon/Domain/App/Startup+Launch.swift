@@ -124,6 +124,12 @@ extension Startup {
         Startup.hasFinishedBooting = true
         Log.info("PHP Monitor is ready to serve!")
 
+        // Process the last URL that arrived during startup
+        if let url = App.shared.deferredURL {
+            AppDelegate.instance.handleURLs([url])
+            App.shared.deferredURL = nil
+        }
+
         // Enable the main menu item
         MainMenu.shared.statusItem.button?.isEnabled = true
 

@@ -73,7 +73,21 @@ class SelectPreferenceView: NSView, XibLoadable {
         view.preference = preference
         view.action = action
 
+        NotificationCenter.default.addObserver(
+            view, selector: #selector(view.refreshState),
+            name: Events.PreferencesUpdated, object: nil
+        )
+
         return view
+    }
+
+    @objc func refreshState() {
+        let value = Preferences.preferences[preference] as! String
+        self.options.enumerated().forEach { option in
+            if option.element.value == value {
+                self.popupButton.selectItem(at: option.offset)
+            }
+        }
     }
 
     @IBAction func valueChanged(_ sender: Any) {

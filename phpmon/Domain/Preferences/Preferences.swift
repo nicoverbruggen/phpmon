@@ -168,7 +168,7 @@ class Preferences {
         })
     }
 
-    static func update(_ preference: PreferenceName, value: Any?) {
+    static func update(_ preference: PreferenceName, value: Any?, notify: Bool = false) {
         if value == nil {
             UserDefaults.standard.removeObject(forKey: preference.rawValue)
         } else {
@@ -178,5 +178,9 @@ class Preferences {
 
         // Update the preferences cache in memory!
         App.shared.container.preferences.cachedPreferences = Preferences.cache()
+
+        if notify {
+            NotificationCenter.default.post(name: Events.PreferencesUpdated, object: nil)
+        }
     }
 }

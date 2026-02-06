@@ -105,6 +105,9 @@ class App {
     /** The window controller of the PHP extension manager window. */
     var phpExtensionManagerWindowController: PhpExtensionManagerWindowController?
 
+    /** URL that was received before the app finished booting. Will be processed once the startup procedure completes. */
+    var deferredURL: URL?
+
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
 

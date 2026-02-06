@@ -11,5 +11,6 @@ import Foundation
 class Events {
 
     static let ServicesUpdated = Notification.Name("ServicesUpdated")
+    static let PreferencesUpdated = Notification.Name("PreferencesUpdated")
 
 }
