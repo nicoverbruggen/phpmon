@@ -32,10 +32,13 @@ class Application {
     /// The full path to the application bundle (if found)
     var path: String?
 
+    /// Characters that are unsafe for shell interpolation inside double quotes.
+    private static let unsafeCharacters: Set<Character> = ["\"", "\\", "`", "$", ";", "|", "&", "!", "#"]
+
     /// Initializer. Used to detect a specific app of a specific type.
     init(_ container: Container, _ name: String, _ type: AppType) {
         self.container = container
-        self.name = name
+        self.name = String(name.filter { !Application.unsafeCharacters.contains($0) })
         self.type = type
         self.path = determinePath()
     }
