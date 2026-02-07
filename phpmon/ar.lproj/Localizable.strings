@@ -110,7 +110,7 @@
 "phpman.buttons.update" = "تحديث";
 "phpman.buttons.repair" = "إصلاح";
 "phpman.version.prerelease" = "الإصدار التجريبي";
-"phpman.steps.installing" = "تثبيت بعض بيانات الحزمة...";
+"phpman.steps.installing" = "تثبيت %@";
 "phpman.steps.removing" = "إزالة %@";
 "phpman.steps.reloading" = "جارٍ إعادة تحميل إصدارات PHP...";
 "phpman.steps.preparing" = "يقوم PHP Monitor بإعداد Homebrew...";
@@ -148,7 +148,7 @@
 "phpman.operations.installing" = "جارٍ تثبيت %@…";
 "phpman.steps.fetching" = "جاري جلب بعض بيانات الحزم...";
 "phpman.steps.downloading" = "جارٍ تنزيل بيانات الحزمة...";
-"phpman.steps.installing" = "تثبيت بعض بيانات الحزمة...";
+"phpman.steps.installing_package" = "تثبيت بعض بيانات الحزمة...";
 "phpman.steps.pouring" = "يُصبّ... قد يستغرق هذا وقتاً أطول…";
 "phpman.steps.summary" = "يرجى الانتظار لحظة...";
 "phpman.services.loading" = "جارٍ التحميل…";
@@ -193,7 +193,7 @@
 "domain_list.confirm_unproxy_desc" = "يمكنك دائمًا إعادة إنشاء الوكيل مرة أخرى بالنقر على زر +.";
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "نطاق";
-"domain_list.columns.active" = "نشط";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "نوع";
 "domain_list.columns.project_type" = "نوع المشروع";
 "domain_list.extensions" = "تبديل الإضافات";
@@ -251,11 +251,6 @@
 "domain_list.warning.spaces" = "تحذير! يحتوي هذا الموقع على مسافة في مجلده. لن يكون بإمكانك الوصول إلى الموقع عبر المتصفح.";
 "domain_list.alert.invalid_folder_name" = "اسم مجلد غير صالح";
 "domain_list.alert.invalid_folder_name_desc" = "لم يمكن حل هذا المجلد إلى عنوان URL صالح. يحدث ذلك عادةً عندما يكون هناك مسافة في اسم المجلد. يرجى إعادة تسمية المجلد، وإعادة تحميل قائمة المواقع، والمحاولة مرة أخرى.";
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "نطاق";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "النوع";
-"domain_list.columns.kind" = "نوع";
 "driver.not_detected" = "أخرى";
 "preset.extension" = "%i امتداد";
 "preset.extensions" = "%i امتدادات";
@@ -271,7 +266,6 @@
 "prefs.tabs.visibility" = "الرؤية";
 "prefs.tabs.notifications" = "الإشعارات";
 "prefs.global_shortcut" = "الاختصار العام:";
-"prefs.dynamic_icon" = "نوع الأيقونة:";
 "prefs.dynamic_icon" = "نوع الأيقونة:";
 "prefs.info_density" = "كثافة المعلومات:";
 "prefs.services" = "الخدمات:";
@@ -378,9 +372,9 @@
 "alert.php_version_incorrect" = "الإصدار الحالي لـ PHP غير متوافق مع القيد المطلوب المحدد لهذا الموقع.";
 "alert.php_suggestions" = "قد يكون هناك إصدار مختلف من PHP يقترب أكثر من القيد.";
 "alert.php_switch_failed.title" = "يبدو أن التبديل إلى PHP %@ فشل.";
-"alert.php_switch_failed.info" = "كشف PHP Monitor أن PHP %@ غير نشط بعد إتمام إجراء التبديل. يمكنك محاولة تشغيل \\\"Fix My Valet\\\" ثم إعادة التبديل مرة أخرى. هل تريد تجربة هذا الإصلاح؟";
-"alert.php_switch_failed.desc" = "أولاً، يجب عليك تجربة \\\"Fix My Valet\\\" إذا لم تقم بتجربته بعد. إذا ظلّ PHP Monitor غير قادر على تغيير إصدار PHP النشط حتى بعد ذلك، فقد تحتاج إلى تحديث Valet وحزم Homebrew على نظامك. يمكنك فعل ذلك عن طريق تشغيل `brew update && brew upgrade` بالإضافة إلى ترقية Valet عبر تشغيل `composer global update && valet install`. ";
-"alert.php_switch_failed.confirm" = "نعم، شغّل \\\"Fix My Valet\\\"";
+"alert.php_switch_failed.info" = "كشف PHP Monitor أن PHP %@ غير نشط بعد إتمام إجراء التبديل. يمكنك محاولة تشغيل \"Fix My Valet\" ثم إعادة التبديل مرة أخرى. هل تريد تجربة هذا الإصلاح؟";
+"alert.php_switch_failed.desc" = "أولاً، يجب عليك تجربة \"Fix My Valet\" إذا لم تقم بتجربته بعد. إذا ظلّ PHP Monitor غير قادر على تغيير إصدار PHP النشط حتى بعد ذلك، فقد تحتاج إلى تحديث Valet وحزم Homebrew على نظامك. يمكنك فعل ذلك عن طريق تشغيل `brew update && brew upgrade` بالإضافة إلى ترقية Valet عبر تشغيل `composer global update && valet install`. ";
+"alert.php_switch_failed.confirm" = "نعم، شغّل \"Fix My Valet\"";
 "alert.php_switch_failed.cancel" = "لا تقم بالتشغيل";
 "alert.php_formula_missing.title" = "عذرًا! يجب تثبيت صيغة `php` لـ Fix My Valet...";
 "alert.php_formula_missing.info" = "يبدو أنك لا تملك صيغة `php` المثبتة، مما يمنع PHP Monitor من تشغيل Fix My Valet. يرجى تثبيتها باستخدام `brew install php`، ثم أعد تشغيل PHP Monitor وحاول مرة أخرى.";
@@ -393,14 +387,14 @@
 "alert.fix_my_valet_done.stay" = "ابقَ على PHP %@";
 "alert.fix_my_valet_done.switch_back" = "الرجوع إلى PHP %@";
 "alert.fix_my_valet_done.desc" = "إذا ما زالت زيارة المواقع لا تعمل، يمكنك محاولة تشغيل `valet install` مرة أخرى؛ قد يصلح ذلك مشكلة 502 (بوابة خاطئة).\n\nإن كان Valet متعطلًا ولا تستطيع تشغيل `valet install`، فقد تحتاج إلى تشغيل `composer global update`. يُرجى مراجعة الأسئلة المتداولة على GitHub إذا واجهت مزيداً من المشاكل.";
-"alert.fix_homebrew_permissions.title" = "حول \\\"استعادة أذونات Homebrew\\\"";
+"alert.fix_homebrew_permissions.title" = "حول \"استعادة أذونات Homebrew\"";
 "alert.fix_homebrew_permissions.subtitle" = "تم إنشاء هذه الميزة حتى تتمكن من تشغيل `brew upgrade` أو `brew cleanup` دون مشاكل في الأذونات.\n(ستتلقى إشعارًا عندما يتم تطبيق هذا الإصلاح.)";
 "alert.fix_homebrew_permissions.desc" = "هذا سيستدعي امتيازات إدارية، لأن PHP Monitor سوف يعيد ملكية الملفات والمجلدات التي يملكها حاليًا المستخدم `root`، بسبب تشغيل خدمات Valet كـ root.";
 "alert.fix_homebrew_permissions.ok" = "استعادة الأذونات";
 "alert.fix_homebrew_permissions.cancel" = "إلغاء";
 "alert.fix_homebrew_permissions_done.title" = "تم استعادة جميع أذونات الملفات والمجلدات لمتطلبات Valet.";
 "alert.fix_homebrew_permissions_done.subtitle" = "بسبب ذلك، لم تعد جميع خدمات Valet تعمل حاليًا. يمكنك الآن التفاعل مع Homebrew، لكن مواقعك في Valet ستكون غير متاحة لأن جميع الخدمات موقفة.";
-"alert.fix_homebrew_permissions_done.desc" = "عندما تنتهي من Homebrew (بعد تشغيل `brew upgrade`، على سبيل المثال) يجب أن تعيد تشغيل PHP Monitor وتختار \\\"Restart Valet Services\\\" إذا أردت أن يعمل Valet مرة أخرى. يُنصح دائمًا بإعادة تشغيل PHP Monitor كلما قمت بترقية إصدارات PHP باستخدام `brew upgrade`، وإلا قد تتعطل الأشياء.";
+"alert.fix_homebrew_permissions_done.desc" = "عندما تنتهي من Homebrew (بعد تشغيل `brew upgrade`، على سبيل المثال) يجب أن تعيد تشغيل PHP Monitor وتختار \"Restart Valet Services\" إذا أردت أن يعمل Valet مرة أخرى. يُنصح دائمًا بإعادة تشغيل PHP Monitor كلما قمت بترقية إصدارات PHP باستخدام `brew upgrade`، وإلا قد تتعطل الأشياء.";
 "alert.php_fpm_broken.title" = "إعدادات PHP‑FPM الخاصة بك لا تُشير إلى مقبس Valet!";
 "alert.php_fpm_broken.info" = "أحكم PHP Monitor أن هناك مشاكل في إعدادات PHP‑FPM الخاصة بك. سيؤدي ذلك إلى استجابات '502 Bad Gateway' إذا زرت مواقع مرتبطة عبر Valet.";
 "alert.php_fpm_broken.description" = "إذا مر وقت طويل، يمكنك عادةً إصلاح ذلك بتشغيل `valet install`، الذي يحدّث إعدادات PHP-FPM الخاصة بك.\n\nإذا كنت ترى هذه الرسالة وتقوم بمحاولة تشغيل إصدار مسبق من PHP، فمن الممكن أن Valet لا يدعم هذا الإصدار المسبق بعد.\n\nقد تحتاج إلى ترقية تثبيت Laravel Valet الخاص بك إلى الأقل v3.1.11، ثم تشغيل `valet install`. للمزيد من المعلومات هنا: https://phpmon.app/prerelease-php";
@@ -421,7 +415,7 @@
 "alert.php_switch_unavailable.subtitle" = "لا يمكن لـ PHP Monitor التبديل إلى PHP %@، فقد لا يكون مثبتًا أو متاحًا. تم إلغاء تطبيق هذا القالب.";
 "alert.php_switch_unavailable.info" = "يرجى التأكد من تثبيت PHP %@ وأنك تستطيع التبديل إليه في القائمة المنسدلة. الإصدارات المدعومة حاليًا تشمل PHP: %@.";
 "alert.php_switch_unavailable.ok" = "موافق";
-"alert.service_error.title" = "الخدمة \\\"%@\\\" تُبلغ عن خطأ!";
+"alert.service_error.title" = "الخدمة \"%@\" تُبلغ عن خطأ!";
 "alert.service_error.subtitle.error_log" = "هذا يعني أن الخدمة '%@' لا تعمل. قد يمنع ذلك Valet من العمل بشكل صحيح. تحتوي هذه الخدمة على ملف سجل مرتبط به قد ترغب في فحصه، مع ذلك.";
 "alert.service_error.subtitle.no_error_log" = "هذا يعني أن الخدمة '%@' لا تعمل. قد يمنع ذلك Valet من العمل بشكل صحيح. للأسف، لا يوجد ملف سجل متعلق بهذه الخدمة.";
 "alert.service_error.extra" = "قد ترغب أيضًا في اتباع خطوات استكشاف الأخطاء الشائعة. لمعرفة المزيد، اضغط على زر '?' في قسم الخدمات داخل PHP Monitor.";
@@ -446,6 +440,9 @@
 "startup.errors.php_brew_info_invalid.title" = "عاد Homebrew مخرجات غير صالحة لـ `brew info php --json` والتي تتطلب JSON صالحًا كمخرج.";
 "startup.errors.php_brew_info_invalid.subtitle" = "هذا سيمنع PHP Monitor من البدء بشكل صحيح. قد يكون Homebrew في وضعٍ معطل حاليًا أو أن بعض التسجيلات الإضافية دخلت إلى مخرجات هذا الأمر. هذه مشكلة معروفة.";
 "startup.errors.php_brew_info_invalid.desc" = "إعادة المحاولة قد تُصلّح المشكلة، لكن قد ترغب في تشغيل الأمر بنفسك إذا استمرت المشكلة والتحقق مما إذا كان JSON صالحاً. اضغط OK، واختر Retry لمحاولة مرة أخرى.";
+"startup.errors.could_not_determine_alias.title" = "تعذر تحديد أي إصدار من صيغة `php` يتم الإشارة إليه";
+"startup.errors.could_not_determine_alias.subtitle" = "هذا سيمنع PHP Monitor من البدء بشكل صحيح. من المحتمل أن يكون Homebrew في وضع معطل حالياً أو أن هناك مشكلة في الصيغة.";
+"startup.errors.could_not_determine_alias.desc" = "حاول تشغيل `brew update` لتحديث الصيغ الخاصة بك وحاول مرة أخرى. إذا استمرت المشكلة، يرجى الإبلاغ عنها على GitHub، لأن هذا قد يكون خطأ.";
 "startup.errors.php_opt.title" = "لم يتم تثبيت PHP بشكل صحيح";
 "startup.errors.php_opt.subtitle" = "لم يتم العثور على مستعار PHP في `%@`. لن يعمل التطبيق بشكل صحيح حتى تحل هذه المشكلة.";
 "startup.errors.php_opt.desc" = "إذا كنت قد قمت بتثبيت صيغة `php` بالفعل، فقد تحتاج إلى تشغيل `brew install php` حتى يتمكن PHP Monitor من اكتشاف هذا التثبيت.";
@@ -520,7 +517,7 @@
 "updater.alerts.buttons.releases_on_github" = "عرض الإصدارات";
 "updater.alerts.buttons.install" = "تثبيت التحديث";
 "updater.alerts.buttons.dismiss" = "تجاهل";
-"alert.warnings.tld_issue.title" = "أنت لا تستخدم \\\".test\\\" كـ TLD لValet.";
+"alert.warnings.tld_issue.title" = "أنت لا تستخدم \".test\" كـ TLD لValet.";
 "alert.warnings.tld_issue.subtitle" = "قد لا يعمل استخدام نطاق المستوى الأعلى غير الافتراضي بشكل صحيح ولا يُدعم رسميًا.";
 "alert.warnings.tld_issue.description" = "سيظل PHP Monitor يعمل، لكن قد تظهر مشكلات: قد لا يعرض التطبيق بشكل صحيح أي النطاقات التي تم تأمينها. للحصول على أفضل النتائج، انتقل إلى ملف إعدادات Valet (config.json في مجلد Valet) وغير TLD مرة أخرى إلى `test`. ";
 "alert.do_not_tell_again" = "لا تخبرني مجدداً";
@@ -583,7 +580,7 @@
 "valet_upgraded.title" = "تم ترقية Valet!";
 "valet_upgraded.subtitle" = "أحيانًا قد تتطلب التحديثات تشغيل `valet install` في الطرفية بعد الترقية.";
 "valet_upgraded.description" = "لا يستطيع PHP Monitor معرفة ما إذا كان هذا ضروريًا، لذلك لا يقوم بذلك تلقائيًا. ومع ذلك، إذا لم تبدِ الأمور كما ينبغي، يمكنك محاولة تشغيل `valet install` مرة أخرى وإعادة تشغيل PHP Monitor.";
-"cert_popover.insecure_domain" = "النطاق \"\" غير آمن.";
+"cert_popover.insecure_domain" = "النطاق \"%@\" غير آمن.";
 "cert_popover.insecure_domain_text" = "يتم تقديم حركة المرور بواسطة nginx عبر بروتوكول HTTP عادي. ضع في اعتبارك أن بعض ميزات الويب قد لا تعمل بشكل صحيح بدون اتصال آمن.";
 "cert_popover.secure_domain" = "المجال \"%@\" مُؤمَّن.";
 "cert_popover.secure_domain_traffic" = "لأن هذا النطاق مؤمن بشهادة، يتم تقديم حركة المرور إلى هذا النطاق عبر nginx باستخدام HTTPS.";
@@ -597,6 +594,14 @@
 "cert_alert.cancel" = "ليس الآن";
 "crash_reporter.title" = "توقفت تطبيق PHP Monitor من قبل، هل ترغب في إرسال تقرير بالخطأ؟";
 "crash_reporter.subtitle" = "من الممكن إرسال تقرير الأعطال إلى مطور التطبيق، بحيث يمكن إصلاح هذه المشكلة. يُنصح بشدة بذلك. هل ترغب في القيام بذلك؟";
-"crash_reporter.description" = "بدون إرسال هذا التقرير عن الأعطال، قد لا يكون المطور على علم بهذه المشكلة بالتحديد. لا يتم إرسال سجلات أو بيانات شخصية مع تقرير العطل، فقط تقرير العطل غير المرمّز. لا حاجة لاتخاذ أي إجراء إضافي من جانبك.";
+"crash_reporter.description" = "بدون إرسال هذا التقرير عن الأعطال، قد لا يكون المطور على علم بهذه المشكلة بالتحديد. لا يتم إرسال سجلات أو بيانات شخصية مع تقرير العطل، فقط تقرير العطل غير المرمّز. لا حاجة لاتخاذ أي إجراء إضافي من جانبك.\n\n➡️ إذا استمر العطل في الحدوث في نقطة زمنية محددة، قد ترغب في التحقق من متتبع المشكلات على GitHub لمعرفة ما إذا كان يتم العمل على إصلاح. إذا استمر التطبيق في التعطل قبل التهيئة، فقد تحتاج إلى تحديث PHP Monitor يدوياً.";
 "crash_reporter.send_report" = "إرسال التقرير";
 "crash_reporter.do_not_send" = "لا ترسل";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "يحاول تطبيق خارجي التواصل مع PHP Monitor. هل تريد السماح لتطبيقات الجهات الخارجية بالتواصل مع PHP Monitor؟";
+"alert.enable_integrations.subtitle" = "يظهر هذا الإشعار لأن PHP Monitor تلقى أمرًا خارجيًا، وهذه الميزة معطلة بشكل افتراضي. إذا قمت بتشغيل هذا عن قصد، باستخدام تطبيق جهة خارجية مثل Alfred أو Raycast، فمن الآمن عادةً السماح بذلك.\n\nيمكنك تغيير هذا الإعداد لاحقًا في التفضيلات، ولن يُطرح عليك هذا السؤال سوى مرة واحدة.";
+"alert.enable_integrations.desc" = "إذا لم تقم بتشغيل هذا عبر Alfred أو Raycast، فقد يكون هناك تطبيق آخر يحاول التحكم في PHP Monitor.\n\nفي هذه الحالة، أوصي بإبقاء هذا التكامل معطلاً، إلا إذا كنت موافقًا على أن يتحكم تطبيق جهة خارجية آخر في PHP Monitor نيابةً عنك، مما قد يشكل خطرًا أمنيًا محتملاً.";
+"alert.enable_integrations.ok" = "السماح بالتكاملات";
+"alert.enable_integrations.cancel" = "عدم السماح";

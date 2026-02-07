@@ -64,10 +64,10 @@
 "mi_presets_title" = "配置预设";
 "mi_apply_presets_title" = "应用配置预设";
 "mi_revert_to_prev_config" = "还原到先前配置...";
-"mi_profiles_loaded" = "从配置文件加载 %i 配置文件";
+"mi_profiles_loaded" = "从配置文件中加载了 %i 个预设";
 "mi_no_presets" = "无可用预设";
 "mi_set_up_presets" = "了解有关预设的更多信息...";
-"mi_view_onboarding" = "打开 Welcome Tour...";
+"mi_view_onboarding" = "打开欢迎导览...";
 "mi_xdebug_available_modes" = "可用模式";
 "mi_xdebug_actions" = "操作";
 "mi_xdebug_disable_all" = "禁用所有模式";
@@ -78,7 +78,7 @@
 "php_ini.memory_limit.title" = "内存限制";
 "php_ini.memory_limit.description" = "设置允许脚本分配的最大内存字节数。这有助于防止编写不当的脚本占用服务器上的所有可用内存";
 "php_ini.post_max_size.title" = "POST 最大大小";
-"php_ini.post_max_size.description" = "设置允许的帖子数据最大大小。此设置也会影响文件上传。要上传大文件，该值必须大于上传最大大小。一般来说，内存限制应大于 POST 最大大小";
+"php_ini.post_max_size.description" = "设置允许的 POST 数据最大大小。此设置也会影响文件上传。要上传大文件，该值必须大于上传最大大小。一般来说，内存限制应大于 POST 最大大小";
 "php_ini.file_uploads.title" = "文件上传";
 "php_ini.file_uploads.description" = "启用或完全禁用文件上传。建议保持开启。";
 "php_ini.upload_max_filesize.title" = "上传最大文件大小";
@@ -87,16 +87,16 @@
 "phpextman.description" = "**PHP 扩展管理器**让您只需点击按钮即可管理不同的 PHP 扩展。由于使用的是 Homebrew，因此无需使用 `pecl` 即时编译扩展。";
 "phpextman.disclaimer" = "某些扩展可能需要安装其他依赖项，但一般来说，安装扩展应该比安装 PHP 版本快得多";
 "phpextman.warnings.removal.title" = "卸载扩展 `%@`？";
-"phpextman.warnings.removal.desc" = "扩展及其唯一的配置文件将被删除。此 PHP 安装将不再使用扩展的功能。您确定吗？\n\n(如果扩展使用非标准文件名启用，则不会被移除。因此，如果不想删除.ini 文件，最好将其重命名为其他文件名。在这种情况下，扩展名只会在清理过程中被禁用)";
+"phpextman.warnings.removal.desc" = "扩展及其唯一的配置文件将被删除。此 PHP 安装将不再使用扩展的功能。您确定吗？\n\n(如果扩展使用非标准文件名启用，则不会被移除。因此，如果不想删除.ini 文件，最好将其重命名为其他文件名。在这种情况下，扩展只会在清理过程中被禁用)";
 "phpextman.warnings.removal.button" = "卸载";
-"phpextman.list.showing_count" = "当前显示 %@ 扩展名：";
+"phpextman.list.showing_count" = "当前显示 %@ 扩展：";
 "phpextman.list.depends_on" = "依赖于:";
 "phpextman.list.status.external" = "此扩展已通过其他来源安装，无法管理";
 "phpextman.list.status.installable" = "可以安装此扩展";
 "phpextman.list.status.dependent" = "在卸载 %@ 之前无法卸载此扩展。";
 "phpextman.list.status.can_manage" = "该扩展已安装，可由 PHP Monitor 管理";
 "phpextman.errors.not_found.title" = "啊哦。未发现扩展！";
-"phpextman.errors.not_found.desc" = "不应该出现这种情况。您可能需要在终端运行以下命令：\n\n`brew tap shivammathur/extensions` 并重启 PHP Monitor。\n\n并重新启动 PHP Monitor 使扩展名可见。如果运行该命令并重启 PHP Monitor 后问题仍然存在，请考虑在 GitHub 上提交问题 ";
+"phpextman.errors.not_found.desc" = "不应该出现这种情况。您可能需要在终端运行以下命令：\n\n`brew tap shivammathur/extensions` 并重启 PHP Monitor。\n\n并重新启动 PHP Monitor 使扩展可见。如果运行该命令并重启 PHP Monitor 后问题仍然存在，请考虑在 GitHub 上提交问题 ";
 "phpman.busy.title" = "检查更新！";
 "phpman.busy.description.outdated" = "检查任何 PHP 版本是否过时...";
 "phpman.version.broken" = "此版本似乎已损坏，您可以尝试修复";
@@ -110,7 +110,7 @@
 "phpman.buttons.update" = "更新";
 "phpman.buttons.repair" = "修复";
 "phpman.version.prerelease" = "预发布";
-"phpman.steps.installing" = "安装某些软件包数据...";
+"phpman.steps.installing" = "正在安装 %@";
 "phpman.steps.removing" = "移除 %@";
 "phpman.steps.reloading" = "重载 PHP 版本...";
 "phpman.steps.preparing" = "PHP Monitor 正在准备 Homebrew...";
@@ -148,16 +148,16 @@
 "phpman.operations.installing" = "安装 %@...";
 "phpman.steps.fetching" = "获取...";
 "phpman.steps.downloading" = "下载软件包数据...";
-"phpman.steps.installing" = "安装某些软件包数据...";
-"phpman.steps.pouring" = "浇注... 这可能需要一段时间...";
-"phpman.steps.summary" = "某些软件包已完成安装...";
+"phpman.steps.installing_package" = "安装某些软件包数据...";
+"phpman.steps.pouring" = "正在安装... 这可能需要一段时间...";
+"phpman.steps.summary" = "请稍候...";
 "phpman.services.loading" = "正在加载...";
 "phpman.services.not_installed" = "关键服务未安装";
 "phpman.services.error" = "关键服务报告错误状态";
 "phpman.services.inactive" = "关键服务未运行";
 "phpman.services.all_ok" = "所有 Valet 服务均正常";
 "lite_mode_explanation.title" = "您当前正以独立模式运行 PHP Monitor";
-"lite_mode_explanation.subtitle" = "PHP Monitor 有一些附加功能，如果你恰好是 Laravel Valet 的用户，就可以使用这些功能。目前，PHP Monitor 无法检测到您的系统中正在安装 Valet，因此这些功能不可用。";
+"lite_mode_explanation.subtitle" = "PHP Monitor 有一些附加功能，如果您恰好是 Laravel Valet 的用户，就可以使用这些功能。目前，PHP Monitor 无法检测到您的系统中正在安装 Valet，因此这些功能不可用。";
 "lite_mode_explanation.description" = "如需了解更多信息，我建议查看 README(可在 GitHub 上获取)，其中将解释安装 Valet 所需的步骤，以及如何使 PHP Monitor 在安装 Valet 后正常运行。安装 Laravel Valet 后，需要重启 PHP Monitor，它才会脱离独立模式";
 "generic.ok" = "确定";
 "generic.cancel" = "取消";
@@ -193,13 +193,13 @@
 "domain_list.confirm_unproxy_desc" = "您可以随时点击 + 按钮重新创建代理";
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "域名";
-"domain_list.columns.active" = "Active";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "种类";
 "domain_list.columns.project_type" = "项目类型";
 "domain_list.extensions" = "切换扩展";
 "domain_list.applies_to" = "适用于 PHP %@";
 "selection.title" = "您想设置什么样的域名？";
-"selection.description" = "链接用于直接为项目提供服务。如果你有一个包含代码的 Laravel、Symfony、WordPress 等文件夹，你需要创建一个链接，并选择代码所在的文件夹。\n\n如果需要代理，可以将容器等代理到特定域名。 例如，这在与 Docker 结合使用时非常有用。";
+"selection.description" = "链接用于直接为项目提供服务。如果您有一个包含代码的 Laravel、Symfony、WordPress 等文件夹，您需要创建一个链接，并选择代码所在的文件夹。\n\n如果需要代理，可以将容器等代理到特定域名。 例如，这在与 Docker 结合使用时非常有用。";
 "selection.create_link" = "创建链接";
 "selection.create_proxy" = "创建代理";
 "selection.cancel" = "取消";
@@ -211,7 +211,7 @@
 "domain_list.add.proxy_https_warning" = "%@ 将被代理并可通过以下方式获得： %@://%@.%@.\n\n(!)重要提示：在该域名的 nginx 配置文件中手动添加 `proxy_ssl_verify off;` 之前，该代理可能无法工作。建议使用不安全的域名作为代理主体。";
 "domain_list.add.link_folder" = "链接文件夹";
 "domain_list.add.domain_name_placeholder" = "在此输入域名";
-"domain_list.add.secure_after_creation" = "创建后 secure %@.%@";
+"domain_list.add.secure_after_creation" = "创建后保护 %@.%@";
 "domain_list.add.secure_description" = "确保域名安全需要管理权限";
 "domain_list.add.create_link" = "创建链接";
 "domain_list.add.cancel" = "取消";
@@ -251,11 +251,6 @@
 "domain_list.warning.spaces" = "警告！该网站的文件夹中有一个空格。\n无法通过浏览器访问该网站。";
 "domain_list.alert.invalid_folder_name" = "文件夹名称无效";
 "domain_list.alert.invalid_folder_name_desc" = "该文件夹无法解析为有效的 URL。这通常是因为文件夹名称中有一个空格。请重命名文件夹，重新加载网站列表，然后再试一次。";
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "域名";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "类型";
-"domain_list.columns.kind" = "种类";
 "driver.not_detected" = "其他";
 "preset.extension" = "%i 扩展";
 "preset.extensions" = "%i 扩展";
@@ -271,7 +266,6 @@
 "prefs.tabs.visibility" = "可见性";
 "prefs.tabs.notifications" = "通知";
 "prefs.global_shortcut" = "全局快捷方式:";
-"prefs.dynamic_icon" = "图标类型:";
 "prefs.dynamic_icon" = "图标类型:";
 "prefs.info_density" = "信息密度:";
 "prefs.services" = "服务:";
@@ -335,7 +329,7 @@
 "prefs.display_composer_toolkit" = "Composer Toolkit";
 "prefs.display_limits_widget_desc" = "如果禁用，将无法在主菜单中看到限制小工具(内存、POST、上传)";
 "prefs.display_limits_widget" = "限制小工具";
-"prefs.display_extensions_desc" = "如果禁用，将无法通过主菜单轻松切换扩展名";
+"prefs.display_extensions_desc" = "如果禁用，将无法通过主菜单轻松切换扩展";
 "prefs.display_extensions" = "扩展";
 "prefs.display_presets_desc" = "如果禁用，将无法应用或恢复 PHP 配置预设";
 "prefs.display_presets" = "预设";
@@ -362,7 +356,7 @@
 "alert.composer_progress.title" = "正在更新全局依赖...";
 "alert.composer_progress.info" = "您可以在下面的终端输出中看到进度";
 "alert.composer_failure.title" = "出错了！";
-"alert.composer_failure.info" = "您的全局 Composer 依赖项无法更新。\n您可以在下面的终端输出中找到更多信息。\n你必须使用您自己的终端应用程序手动解决这个问题(这只是向您显示输出结果)。";
+"alert.composer_failure.info" = "您的全局 Composer 依赖项无法更新。\n您可以在下面的终端输出中找到更多信息。\n您必须使用您自己的终端应用程序手动解决这个问题(这只是向您显示输出结果)。";
 "alert.composer_success.title" = "Composer 已完成更新！";
 "alert.composer_success.info" = "您的全局 Composer 依赖项已成功更新";
 "alert.composer_php_isolated.desc" = "该站点已被隔离，这意味着 Valet 将专门为该站点提供 PHP %@。全局版本目前为 PHP %@。";
@@ -403,7 +397,7 @@
 "alert.fix_homebrew_permissions_done.desc" = "当您完成 Homebrew 的操作后(例如在运行 `brew upgrade` 之后)，如果您希望 Valet 重新运行，您应该重启 PHP Monitor 并选择 `Restart Valet Services`。建议每次使用 `brew upgrade` 升级 PHP 版本时都重启 PHP Monitor，否则可能会出错";
 "alert.php_fpm_broken.title" = "您的 PHP-FPM 配置没有指向 Valet 套接字！";
 "alert.php_fpm_broken.info" = "PHP Monitor 已确定您的 PHP-FPM 配置存在问题。如果您访问通过 Valet 链接的网站，这将导致 `502 Bad Gateway` 响应";
-"alert.php_fpm_broken.description" = "如果已经有一段时间了，你通常可以通过运行 `valet install` 来解决这个问题，它可以更新你的 PHP-FPM 配置.\n\n如果你看到这个消息，而你正在尝试运行一个预发布版本的 PHP，有可能是 Valet 还不支持这个预发布版本的 PHP.\n\n你可能需要将你安装的 Laravel Valet 升级到至少 v3.1.11，之后你应该运行 `valet install`。更多信息请点击：https://phpmon.app/prerelease-php";
+"alert.php_fpm_broken.description" = "如果已经有一段时间了，您通常可以通过运行 `valet install` 来解决这个问题，它可以更新您的 PHP-FPM 配置.\n\n如果您看到这个消息，而您正在尝试运行一个预发布版本的 PHP，有可能是 Valet 还不支持这个预发布版本的 PHP.\n\n您可能需要将您安装的 Laravel Valet 升级到至少 v3.1.11，之后您应该运行 `valet install`。更多信息请点击：https://phpmon.app/prerelease-php";
 "alert.cannot_start.title" = "由于您的系统配置问题，PHP Monitor 无法启动";
 "alert.cannot_start.subtitle" = "刚才通知您的问题导致 PHP Monitor 无法正常运行";
 "alert.cannot_start.description" = "您可能不需要退出 PHP Monitor 并重新启动它。如果您已解决问题(或不记得具体问题是什么)，可以点击重试，PHP Monitor 将重试启动检查";
@@ -429,7 +423,7 @@
 "alert.service_error.button.close" = "关闭";
 "alert.global_composer_platform_issues.title" = "Composer 检测到您的平台存在问题";
 "alert.global_composer_platform_issues.subtitle" = "您切换到的 PHP 版本对于您安装的全局 Composer 依赖项来说太旧。这些依赖项需要更新。";
-"alert.global_composer_platform_issues.desc" = "防止将来发生此问题的最简单方法是切换到已安装的最旧 PHP 版本，并再次运行 `composer global update`。\\另外，你也可以在偏好设置中选择 `自动更新全局依赖` 选项来避免这个问题。如果你在尝试更新全局依赖之后仍然看到这个消息，你可能需要查看一下你的全局 composer 配置文件，它位于 `~/.composer/composer.json`";
+"alert.global_composer_platform_issues.desc" = "防止将来发生此问题的最简单方法是切换到已安装的最旧 PHP 版本，并再次运行 `composer global update`。\n\n另外，您也可以在偏好设置中选择 `自动更新全局依赖` 选项来避免这个问题。如果您在尝试更新全局依赖之后仍然看到这个消息，您可能需要查看一下您的全局 composer 配置文件，它位于 `~/.composer/composer.json`";
 "alert.global_composer_platform_issues.buttons.update" = "更新全局依赖";
 "alert.global_composer_platform_issues.buttons.quit" = "退出 PHP Monitor";
 "alert.revert_description.title" = "还原配置？";
@@ -446,6 +440,9 @@
 "startup.errors.php_brew_info_invalid.title" = "Homebrew 返回了无效的 `brew info php --json` 输出，该命令需要有效的 JSON 作为输出。";
 "startup.errors.php_brew_info_invalid.subtitle" = "这将导致 PHP Monitor 无法正常启动。可能是 Homebrew 当前处于损坏状态，或此命令的输出中出现了额外日志。此问题已知存在。";
 "startup.errors.php_brew_info_invalid.desc" = "简单重试可能会解决问题，但如果问题仍然存在，您可能想亲自运行该命令并验证是否为有效的JSON。按确定，然后选择重试以再次尝试。";
+"startup.errors.could_not_determine_alias.title" = "无法确定 `php` Formula 别名指向的版本";
+"startup.errors.could_not_determine_alias.subtitle" = "这将导致 PHP Monitor 无法正常启动。可能是 Homebrew 当前处于损坏状态，或者 Formula 存在问题。";
+"startup.errors.could_not_determine_alias.desc" = "尝试运行 `brew update` 更新您的 Formula 并重试。如果问题仍然存在，请在 GitHub 上报告此问题，因为这可能是一个错误。";
 "startup.errors.php_opt.title" = "PHP 未正确安装";
 "startup.errors.php_opt.subtitle" = "在 `%@` 中找不到 PHP 别名。在您解决此问题之前，应用程序将无法正常运行";
 "startup.errors.php_opt.desc" = "如果您已经安装了 `php` Formula，则可能需要运行 `brew install php` 才能使 PHP Monitor 检测到该安装";
@@ -454,7 +451,7 @@
 "startup.errors.dyld_library.desc" = "在终端运行 `brew reinstall php && brew link php` 可能会解决此问题，因此请尝试一下";
 "startup.errors.valet_executable.title" = "Laravel Valet 未正确安装";
 "startup.errors.valet_executable.subtitle" = "您必须使用 Composer 安装 Valet。在解决此问题之前，应用程序将无法正常运行。";
-"startup.errors.valet_executable.desc" = "如果您尚未安装 Laravel Valet，请先安装。如果你已经安装，但还是看到了这条信息，那么请尝试在终端运行 `which valet`，它应该会返回：`%@`.";
+"startup.errors.valet_executable.desc" = "如果您尚未安装 Laravel Valet，请先安装。如果您已经安装，但还是看到了这条信息，那么请尝试在终端运行 `which valet`，它应该会返回：`%@`.";
 "startup.errors.valet_json_invalid.title" = "Laravel Valet 配置文件无效或丢失";
 "startup.errors.valet_json_invalid.subtitle" = "PHP Monitor 需要能够读取配置文件。文件似乎畸形或丢失。请检查该文件是否存在，格式是否正确。";
 "startup.errors.valet_json_invalid.desc" = "您可以在 `~/.config/valet/config.json` 找到该文件。如果 Laravel Valet 无法解析配置文件，运行 `valet` 命令通常会自动修复 JSON 文件。尝试运行 `valet --version` 来自动修复文件";
@@ -463,7 +460,7 @@
 "startup.errors.valet_version_unknown.desc" = "尝试在终端中运行 `valet --version` 以找出问题所在";
 "startup.errors.valet_not_installed.title" = "您的 Valet 配置目录丢失";
 "startup.errors.valet_not_installed.subtitle" = "缺少所需目录 `~/.config/valet`。这通常意味着您忘记了运行 `valet install`.";
-"startup.errors.valet_not_installed.desc" = "假设你已经通过 Composer 安装了 Valet，请运行 `valet install` 来完成 Laravel Valet 的设置。\n\n如果你看到此消息，但不明白为什么这个文件夹不见了，那么你可能想调查一下它消失的原因--它不应该就这样消失，这意味着你的 Valet 安装被破坏了。";
+"startup.errors.valet_not_installed.desc" = "假设您已经通过 Composer 安装了 Valet，请运行 `valet install` 来完成 Laravel Valet 的设置。\n\n如果您看到此消息，但不明白为什么这个文件夹不见了，那么您可能想调查一下它消失的原因--它不应该就这样消失，这意味着您的 Valet 安装被破坏了。";
 "startup.errors.valet_version_not_supported.title" = "不支持此 Valet 版本";
 "startup.errors.valet_version_not_supported.subtitle" = "您运行的 Valet 版本目前不受支持。PHP Monitor 目前适用于 Valet v2、v3 和 v4。为了避免给您的系统带来问题，PHP Monitor 无法启动";
 "startup.errors.valet_version_not_supported.desc" = "您必须安装与 PHP Monitor 兼容的 Valet 版本，或者您可能需要升级到较新版本的 PHP Monitor，该版本可能包含对该 Valet 版本的兼容性(更多信息请查阅最新发布说明)";
@@ -478,13 +475,13 @@
 "startup.errors.global_composer_platform_issues.desc" = "您可以进入首选项并选中 `自动更新全局依赖` 选项。这将在您更改 PHP 版本时更新您的全局 Composer 依赖项，因此，如果您不能持续访问互联网，这可能不是最理想的选择。要找出确切的问题所在，请尝试运行 `valet --version`。Valet 目前无法使用已安装的依赖项。通常这是由于版本不匹配造成的：即安装的 PHP 依赖版本比当前激活的版本要新";
 "startup.errors.services_json_error.title" = "无法确定服务状态";
 "startup.errors.services_json_error.subtitle" = "PHP Monitor 通常使用以下命令查询 `brew` 以测试是否可以检索服务：`sudo brew services info nginx --json`.\n\nPHP Monitor 无法解释此响应。";
-"startup.errors.services_json_error.desc" = "如果您的 Homebrew 安装过时，可能会出现这种情况，在这种情况下，Homebrew 还不会返回 JSON。通常可以通过运行 `brew update` 或 `brew tap homebrew/services` 来解决这个问题。你也可以尝试在终端运行 `sudo brew services info nginx --json`";
+"startup.errors.services_json_error.desc" = "如果您的 Homebrew 安装过时，可能会出现这种情况，在这种情况下，Homebrew 还不会返回 JSON。通常可以通过运行 `brew update` 或 `brew tap homebrew/services` 来解决这个问题。您也可以尝试在终端运行 `sudo brew services info nginx --json`";
 "startup.errors.which_alias_issue.title" = "检测到配置问题";
 "startup.errors.which_alias_issue.subtitle" = "`/usr/local/bin/which` 中似乎有一个文件。这通常是由 NodeJS 设置的，但 `/usr/local/bin` 的 PATH 中没有 `node`。要解决这个问题，请继续阅读";
 "startup.errors.which_alias_issue.desc" = "您需要将 `node` 链接到 `/usr/local/bin` 目录，以确保 PHP Monitor 能够成功启动。更多信息，请参见：https://github.com/nicoverbruggen/phpmon/issues/174";
 "startup.errors.herd_running.title" = "Laravel Herd 似乎正在运行";
-"startup.errors.herd_running.subtitle" = "Laravel Herd 似乎正在运行。Herd 的内置 Valet 设置可能与您的常规 Valet 安装冲突，因此请在继续之前退出 Herd。(你完全可以混合使用 Herd 和常规 Valet，但不应同时运行两者)";
-"startup.errors.herd_running.desc" = "你可能还会发现，Herd 添加到 $PATH 的 `php` 别名可能会阻止 PHP Monitor 的 `php` 别名生效，所以请记住这一点。您可以查看 `~/.zshrc` 并了解 Herd 在您的 $PATH 中添加了什么。";
+"startup.errors.herd_running.subtitle" = "Laravel Herd 似乎正在运行。Herd 的内置 Valet 设置可能与您的常规 Valet 安装冲突，因此请在继续之前退出 Herd。(您完全可以混合使用 Herd 和常规 Valet，但不应同时运行两者)";
+"startup.errors.herd_running.desc" = "您可能还会发现，Herd 添加到 $PATH 的 `php` 别名可能会阻止 PHP Monitor 的 `php` 别名生效，所以请记住这一点。您可以查看 `~/.zshrc` 并了解 Herd 在您的 $PATH 中添加了什么。";
 "startup.version_mismatch.title" = "您的活动 PHP 版本已更改";
 "startup.version_mismatch.subtitle" = "自 PHP Monitor 上次激活以来，您链接的 PHP 版本已更改为 PHP %@。您想切换回 PHP %@，还是继续使用当前版本？";
 "startup.version_mismatch.desc" = "PHP Monitor 会跟踪全局链接的 PHP 版本。全局版本可能由于其他程序或 Homebrew 升级后链接了不同的 Formula 而发生变化";
@@ -506,10 +503,10 @@
 "alert.key_service_not_running.desc" = "如果点击服务下方的按钮不起作用(即旋转器出现，但一段时间后仍为 `X`)，您可能需要运行 `Fix My Valet`。您可以通过菜单 `急救与服务` > `修复我的 Valet...` 进行操作。\n\n另外，也可以在终端中使用 `valet stop` 和 `valet start`，这也可以解决问题(作为修复我的 Valet 的替代方法)。\n\n如需进一步调试，您可以查看 GitHub 问题跟踪器，其他用户可能也遇到过类似问题。作为开发人员，我将尽力确保每个问题都能得到解答:)";
 "alert.key_service_has_error.title" = "由于所需的 Homebrew 服务存在问题，Valet 目前无法正常工作";
 "alert.key_service_has_error.subtitle" = "Valet 要正常工作，至少需要三个关键服务正常运行。\n\nPHP Monitor 报告说情况并非如此。其中一个受影响的服务似乎正在报告错误状态，因此我建议点击 `E`。\n\nPHP Monitor 将尝试重新启动服务，如果失败(很有可能)，它将提供日志文件(如果存在)，其中可能包含有助于调试问题的其他信息。";
-"alert.key_service_has_error.desc" = "不幸的是，如果服务报错，通常是由于配置状态无效，这可能难以调试。\n\n常见故障排除提示\n\n· 首先尝试重启服务并检查日志文件(如果存在)。您可以点击 `E` 按钮让 PHP Monitor 来做这件事。\n\n· PHP：如果看到的是错误状态，可能是 PHP 的配置出现了问题。确保 Homebrew 安装中的.ini 文件没有问题，并且不存在套接字冲突。\n\n· nginx：如果出现错误状态，则可能是网站配置错误(通常会在错误日志中指出)。你可能需要检查 Valet 的 nginx 文件夹。\n\n· dnsmasq：如果出现错误状态，可能是 dnsmasq 配置文件损坏(通常位于 ~/.config/valet/dnsmasq.d)";
+"alert.key_service_has_error.desc" = "不幸的是，如果服务报错，通常是由于配置状态无效，这可能难以调试。\n\n常见故障排除提示\n\n· 首先尝试重启服务并检查日志文件(如果存在)。您可以点击 `E` 按钮让 PHP Monitor 来做这件事。\n\n· PHP：如果看到的是错误状态，可能是 PHP 的配置出现了问题。确保 Homebrew 安装中的.ini 文件没有问题，并且不存在套接字冲突。\n\n· nginx：如果出现错误状态，则可能是网站配置错误(通常会在错误日志中指出)。您可能需要检查 Valet 的 nginx 文件夹。\n\n· dnsmasq：如果出现错误状态，可能是 dnsmasq 配置文件损坏(通常位于 ~/.config/valet/dnsmasq.d)";
 "updater.alerts.newer_version_available.title" = "PHP Monitor v%@ 现已可用！";
 "updater.alerts.newer_version_available.subtitle" = "强烈建议将 PHP Monitor 保持更新，因为新版本通常会修复漏洞并包含支持最新版本 Valet 和 PHP 的修正";
-"updater.installation_source.brew" = "安装 PHP Monitor 更新的推荐方法是直接按 `Install Update`(安装更新)。由于你使用 Homebrew 安装应用程序，你也可以通过终端运行 `%@` 进行升级，但不推荐这样做";
+"updater.installation_source.brew" = "安装 PHP Monitor 更新的推荐方法是直接按 `Install Update`(安装更新)。由于您使用 Homebrew 安装应用程序，您也可以通过终端运行 `%@` 进行升级，但不推荐这样做";
 "updater.installation_source.direct" = "向 PHP Monitor 安装更新的推荐方法是直接按 `安装更新`";
 "updater.alerts.buttons.release_notes" = "查看版本说明";
 "updater.alerts.is_latest_version.title" = "PHP Monitor 是最新版本！";
@@ -549,7 +546,7 @@
 "warnings.certificates_expired.title" = "正在为域名提供服务的一个或多个证书已过期.";
 "warnings.certificates_expired.description" = "过期的证书会导致 HTTPS 流量无法正常工作。您可以让 PHP Monitor 自动尝试为您解决此问题，只需打开域名列表即可。";
 "warnings.none" = "现在没有可用的建议。您可以放心使用！";
-"onboarding.title" = "Welcome Tour";
+"onboarding.title" = "欢迎导览";
 "onboarding.welcome" = "欢迎来到 PHP Monitor!";
 "onboarding.explore" = "您现在可以访问 PHP Monitor 的全部功能。您可以在此页面了解更多有关 PHP Monitor 所提供功能的信息";
 "onboarding.explore.lite" = "您现在可以访问 PHP Monitor 最重要的功能。\n请注意，由于 Laravel Valet 未激活，某些功能(下面灰色部分)目前不可用。";
@@ -563,7 +560,7 @@
 "onboarding.tour.isolation.title" = "隔离域名";
 "onboarding.tour.isolation" = "如果安装了 Valet 3 或更新版本，甚至可以通过右键单击域名窗口中的指定域名来使用域名隔离。这样，您就可以为该域名选择一个特定的 PHP 版本，而且只能在该域名使用。";
 "onboarding.tour.feature_unavailable" = "此功能目前不可用，需要安装 Laravel Valet。";
-"onboarding.tour.once" = "您只能看到一次 Welcome Tour。您可以稍后通过菜单栏图标(可在 `急救与服务` 下的菜单中找到)重新打开 Welcome Tour。";
+"onboarding.tour.once" = "您只能看到一次欢迎导览。您可以稍后通过菜单栏图标(可在 `急救与服务` 下的菜单中找到)重新打开欢迎导览。";
 "onboarding.tour.close" = "关闭 Tour";
 "prefs.language" = "语言:";
 "prefs.language_options_desc" = "选择不同的语言与 PHP Monitor 一起使用。要完全应用此更改，必须重新启动应用程序";
@@ -575,7 +572,7 @@
 "startup.timeout.description" = "有时候，由于文件权限问题，可能会导致程序无法正常运行。您可以尝试使用 `brew doctor` 和 `brew cleanup` 来修复问题。 \n\n建议随后重新启动 PHP Monitor。了解更多信息，请访问：https://github.com/nicoverbruggen/phpmon/issues/294。\n\n如果 PHP Monitor 现在已经初始化完成，或者您愿意再等一会儿，可以点击“忽略”并照常使用 PHP Monitor。不过，仍然建议检查问题，因为初始化不应该花费这么长时间。";
 "valet_upgrade_available.title" = "您想将Valet升级到最新兼容版本吗？";
 "valet_upgrade_available.subtitle" = "Laravel Valet %@ 已可用。PHP Monitor 可以为您更新全局 Composer 依赖。";
-"valet_upgrade_available.description_constraint_ok" = "鉴于您全局的 Composer 设置，应该安装的最新版本将是最最新版的 Laravel Valet %@。";
+"valet_upgrade_available.description_constraint_ok" = "鉴于您全局的 Composer 设置，应该安装的最新版本将是最新版的 Laravel Valet %@。";
 "valet_upgrade_available.description_constraint_fail" = "请注意，鉴于您全局的 Composer 设置，自动安装的最新版本将不是可用的最新版本。这是由于您全局 `composer.json` 文件中的约束所致。您的 Valet 版本约束为：%@，这禁止安装 Valet %@。若您想对该文件进行编辑，请在升级前完成。当您看到此消息时，最好检查 Valet 的发布说明，因为 Valet 的需求可能已更改。";
 "valet_upgrade_available.upgrade" = "升级";
 "valet_upgrade_available.cancel" = "取消";
@@ -583,9 +580,9 @@
 "valet_upgraded.title" = "Valet 已升级！";
 "valet_upgraded.subtitle" = "有时，升级后可能需要在终端运行 `valet install`。";
 "valet_upgraded.description" = "PHP Monitor 无法判断此操作是否必要，因此不会自动执行。不过，如果发现功能异常，您可以尝试再次运行 `valet install` 并重新启动 PHP Monitor。";
-"cert_popover.insecure_domain" = "域名 \\\"%@\\\" 未加密。";
+"cert_popover.insecure_domain" = "域名 \"%@\" 未加密。";
 "cert_popover.insecure_domain_text" = "流量通过 nginx 使用普通 HTTP 提供。请注意，某些 Web 功能在没有安全连接的情况下可能无法正常工作。";
-"cert_popover.secure_domain" = "域名 \\\"%@\\\" 已受保护。";
+"cert_popover.secure_domain" = "域名 \"%@\" 已受保护。";
 "cert_popover.secure_domain_traffic" = "由于此域已使用证书进行安全加固，访问该域的流量将通过 nginx 使用 HTTPS 提供。";
 "cert_popover.secure_domain_expired" = "证书已于%@过期。您必须续订，以继续使用 HTTPS 而不出现错误。";
 "cert_popover.secure_domain_expiring_later" = "证书有效。它将在%@过期。在那时需要续订，但您将收到通知。";
@@ -597,6 +594,14 @@
 "cert_alert.cancel" = "暂不";
 "crash_reporter.title" = "PHP Monitor之前崩溃，想发送崩溃报告吗？";
 "crash_reporter.subtitle" = "您可以将崩溃报告发送给应用程序的开发者，以便修复此问题。强烈建议这样做。您想这么做吗?";
-"crash_reporter.description" = "如果不发送此崩溃报告，开发者可能无法意识到此特定问题。崩溃报告中不包含任何日志或个人数据，仅发送未符号化的崩溃报告。您不需要采取进一步操作。";
+"crash_reporter.description" = "如果不发送此崩溃报告，开发者可能无法意识到此特定问题。崩溃报告中不包含任何日志或个人数据，仅发送未符号化的崩溃报告。您不需要采取进一步操作。\n\n➡️ 如果崩溃在特定时间点反复发生，您可以查看GitHub的问题追踪器，了解是否正在进行修复。如果应用在初始化之前持续崩溃，您可能需要手动更新PHP Monitor。";
 "crash_reporter.send_report" = "发送报告";
 "crash_reporter.do_not_send" = "不要发送";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "一个外部应用程序正在尝试与 PHP Monitor 通信。您是否允许第三方应用程序与 PHP Monitor 通信？";
+"alert.enable_integrations.subtitle" = "此通知出现是因为 PHP Monitor 刚刚收到了一个外部命令，而此功能默认是禁用的。如果您是故意触发此操作的，使用了 Alfred 或 Raycast 等第三方应用，通常允许是安全的。\n\n您可以稍后在偏好设置中更改此设置，此问题只会询问一次。";
+"alert.enable_integrations.desc" = "如果您不是通过 Alfred 或 Raycast 触发的，可能有另一个应用程序正在尝试控制 PHP Monitor。\n\n在这种情况下，我建议保持此集成处于关闭状态，除非您同意让另一个第三方应用代为控制 PHP Monitor，这可能存在潜在的安全风险。";
+"alert.enable_integrations.ok" = "允许集成";
+"alert.enable_integrations.cancel" = "不允许";

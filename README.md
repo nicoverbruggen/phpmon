@@ -527,7 +527,7 @@ You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor
 <details>
 <summary><strong>How can the app integrate with third party tools, like Alfred or Raycast?</strong></summary>
 
-PHP Monitor supports third party app integrations by default, and this feature is enabled in Preferences unless you disable it.
+PHP Monitor supports third party app integrations, but this feature requires your approval the first time you invoke a command via a third-party app. By default, this functionality is disabled and you will be prompted to turn it on, but this happens only once. You can change your mind later in the Settings window.
 
 You can grab the official [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor).
 

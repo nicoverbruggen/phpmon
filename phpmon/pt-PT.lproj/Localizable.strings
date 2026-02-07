@@ -110,7 +110,7 @@
 "phpman.buttons.update" = "Atualizar";
 "phpman.buttons.repair" = "Reparar";
 "phpman.version.prerelease" = "Pre-release";
-"phpman.steps.installing" = "Instalando dados do pacote...";
+"phpman.steps.installing" = "Instalando %@";
 "phpman.steps.removing" = "Removendo %@";
 "phpman.steps.reloading" = "Recarregando as versões do PHP...";
 "phpman.steps.preparing" = "O PHP Monitor está a preparar o Homebrew...";
@@ -148,7 +148,7 @@
 "phpman.operations.installing" = "Instalando %@...";
 "phpman.steps.fetching" = "Transferindo...";
 "phpman.steps.downloading" = "Transferindo dados do pacote...";
-"phpman.steps.installing" = "Instalando dados do pacote...";
+"phpman.steps.installing_package" = "Instalando dados do pacote...";
 "phpman.steps.pouring" = "Expandindo... Este processo pode demorar...";
 "phpman.steps.summary" = "Um pacote terminou de instalar...";
 "phpman.services.loading" = "Carregando...";
@@ -193,7 +193,7 @@
 "domain_list.confirm_unproxy_desc" = "Pode voltar recriar o proxy clicando no botão +.";
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domínio";
-"domain_list.columns.active" = "Ativo";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "Tipo";
 "domain_list.columns.project_type" = "Tipo de projeto";
 "domain_list.extensions" = "Alternar Extensões";
@@ -245,17 +245,12 @@
 "domain_list.system_apps" = "Aplicações de sistema";
 "domain_list.unproxy" = "Remover Proxy";
 "domain_list.use_in_terminal" = "Abrir PHP %@ no terminal";
-"domain_list.alerts_isolated_php_terminal.title" = "Pode usar o PHP %@ mum terminal específico!";
+"domain_list.alerts_isolated_php_terminal.title" = "Pode usar o PHP %@ num terminal específico!";
 "domain_list.alerts_isolated_php_terminal.subtitle" = "Infelizmente, o PHP Monitor não consegue abrir um terminal (e digitar os comandos apropriados). Terá que editar manualmente o script  para usar esta versão específica do PHP. Para isso, deve digitar o seguinte commando no terminal que preferir:\n\n. PM%@\n\nIsso editará o script auxiliar gerado pelo PHP Monitor e permitirá usar o PHP %@ no terminal usado.\n\nEsta ação não tem efeito nos restantes terminais, apenas para a sessão do terminal específico que está a usar. (ou seja, se tiver várias guias no seu terminal, as outras guias ou janelas não serão afetadas por este commando.)";
 "domain_list.alerts_isolated_php_terminal.desc" = "Se não funcionar, tente o PHP Doctor através do menu Primeiros Socorros do PHP Monitor. Mais informações sobre esta funcionalidade podem ser encontradas no GitHub (na wiki do repositório do PHP Monitor). Este alerta foi incluído para melhorar a visibilidade desta funcionalidade.";
 "domain_list.warning.spaces" = "Aviso! Este site tem um espaço no nome da diretoria.\nO site não poderá ser acedido pelo navegador.";
 "domain_list.alert.invalid_folder_name" = "Nome de diretoria inválido";
 "domain_list.alert.invalid_folder_name_desc" = "Esta diretoria não pôde ser resolvida para um URL válido. Normalmente isso acontece quando há um espaço no nome da diretoria. Renomeie a diretoria, recarregue a lista de sites e tente novamente.";
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "Domínio";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "Tipo";
-"domain_list.columns.kind" = "Tipo";
 "driver.not_detected" = "Outros";
 "preset.extension" = "%i extensão";
 "preset.extensions" = "%i extensões";
@@ -271,7 +266,6 @@
 "prefs.tabs.visibility" = "Visibilidade";
 "prefs.tabs.notifications" = "Notificações";
 "prefs.global_shortcut" = "Atalho global:";
-"prefs.dynamic_icon" = "Tipo de ícone:";
 "prefs.dynamic_icon" = "Tipo de ícone:";
 "prefs.info_density" = "Densidade da informação:";
 "prefs.services" = "Serviços:";
@@ -379,7 +373,7 @@
 "alert.php_suggestions" = "Pode haver uma versão diferente do PHP que esteja mais próxima da restrição.";
 "alert.php_switch_failed.title" = "A mudança para o PHP %@ parece ter falhado.";
 "alert.php_switch_failed.info" = "O PHP Monitor detectou que o PHP %@ não está ativo após concluir o procedimento de mudança de versão. Você pode tentar executar \"Corrigir Laravel Valet\" e tentar de novo. Deseja tentar?";
-"alert.php_switch_failed.desc" = "Em primeiro lugar, deve tentar \"Corrigir Laravel Valet\" caso ainda não tenha feito. atualize o Laravel Valet e os pacotes Homebrew no seu sistema. Pode fazer isso executando `brew update && brew upgrade`, bem como atualizando o Larevel Valet executando `composer global update && valet install`.";
+"alert.php_switch_failed.desc" = "Em primeiro lugar, deve tentar \"Corrigir Laravel Valet\" caso ainda não tenha feito. atualize o Laravel Valet e os pacotes Homebrew no seu sistema. Pode fazer isso executando `brew update && brew upgrade`, bem como atualizando o Laravel Valet executando `composer global update && valet install`.";
 "alert.php_switch_failed.confirm" = "Sim, execute \"Corrigir Laravel Valet\"";
 "alert.php_switch_failed.cancel" = "Não executar";
 "alert.php_formula_missing.title" = "Ups! A fórmula `php` deve ser instalada para \"Corrigir Laravel Valet\"...";
@@ -446,6 +440,9 @@
 "startup.errors.php_brew_info_invalid.title" = "O Homebrew devolveu uma saída inválida para `brew info php --json`, que requer JSON válido como saída.";
 "startup.errors.php_brew_info_invalid.subtitle" = "Isto impedirá o PHP Monitor de iniciar corretamente. É possível que o Homebrew esteja atualmente em um estado corrompido ou que algum registo adicional tenha entrado na saída deste comando. Este é um problema conhecido.";
 "startup.errors.php_brew_info_invalid.desc" = "Repetir a operação pode resolver o problema, mas se continuar a ocorrer pode ser necessário executar o comando manualmente e verificar se é JSON válido. Prima OK, e selecciona Repetir para tentar de novo.";
+"startup.errors.could_not_determine_alias.title" = "Não foi possível determinar para que versão a fórmula `php` está vinculada";
+"startup.errors.could_not_determine_alias.subtitle" = "Isto impedirá o PHP Monitor de iniciar corretamente. É possível que o Homebrew esteja atualmente num estado corrompido ou que haja um problema com a fórmula.";
+"startup.errors.could_not_determine_alias.desc" = "Tente executar `brew update` para atualizar as suas fórmulas e tente novamente. Se o problema persistir, por favor reporte-o no GitHub, pois isto pode ser um bug.";
 "startup.errors.php_opt.title" = "O PHP não está instalado corretamente";
 "startup.errors.php_opt.subtitle" = "O alias do PHP não foi encontrado em `%@`. Esta aplicação não funcionará corretamente até que resolva este problema.";
 "startup.errors.php_opt.desc" = "Se já possui a fórmula `php` instalada, pode ser necessário executar `brew install php` para que o PHP Monitor detecte a instalação.";
@@ -513,7 +510,7 @@
 "updater.installation_source.direct" = "O método recomendado para instalar atualizações no PHP Monitor é simplesmente pressionar “Instalar Atualização”.";
 "updater.alerts.buttons.release_notes" = "Ver notas de lançamento";
 "updater.alerts.is_latest_version.title" = "O PHP Monitor está atualizado!";
-"updater.alerts.is_latest_version.subtitle" = "A versão atualmente instalada (v%@) está atualizada.\\Não há versão mais recente disponível.";
+"updater.alerts.is_latest_version.subtitle" = "A versão atualmente instalada (v%@) está atualizada.\nNão há versão mais recente disponível.";
 "updater.alerts.cannot_check_for_update.title" = "O PHP Monitor não pôde determinar se uma versão mais recente está disponível.";
 "updater.alerts.cannot_check_for_update.subtitle" = "Pode não estar ligado à Internet, estar a bloqueando tráfego ou o GitHub está offline e não permite que verifique se há atualizações. Se continuar a ver esta mensagem, convém verificar manualmente a página de versões.";
 "updater.alerts.cannot_check_for_update.description" = "A versão atualmente instalada é: %@. Pode visualizar a lista das últimas versões (no GitHub) clicando no botão à esquerda.";
@@ -583,20 +580,28 @@
 "valet_upgraded.title" = "Valet foi actualizado!";
 "valet_upgraded.subtitle" = "Às vezes, as atualizações podem exigir que execute `valet install` num terminal após a atualização.";
 "valet_upgraded.description" = "O PHP Monitor não pode saber se isto é necessário, por isso não o faz automaticamente. No entanto, se as coisas não parecerem funcionar correctamente, pode tentar executar `valet install` novamente e reiniciar o PHP Monitor.";
-"cert_popover.insecure_domain" = "O domínio \\\"%@\\\" não está seguro.";
+"cert_popover.insecure_domain" = "O domínio \"%@\" não está seguro.";
 "cert_popover.insecure_domain_text" = "O tráfego é servido pelo nginx sobre HTTP simples. Tenha em conta que certas funcionalidades web podem não funcionar correctamente sem uma ligação segura.";
-"cert_popover.secure_domain" = "O domínio \\\"%@\\\" está seguro.";
+"cert_popover.secure_domain" = "O domínio \"%@\" está seguro.";
 "cert_popover.secure_domain_traffic" = "Como este domínio foi protegido com um certificado, o tráfego para este domínio é servido pelo nginx via HTTPS.";
 "cert_popover.secure_domain_expired" = "O certificado expirou em %@. Deve renová‑lo para continuar a usar HTTPS sem erros.";
 "cert_popover.secure_domain_expiring_later" = "O certificado é válido. Expira em %@. Nesse momento terá de ser renovado, mas será notificado.";
 "cert_popover.cta_renewal" = "Renovar Certificados...";
 "cert_alert.title" = "Um ou mais certificados expiraram e precisam ser renovados.";
 "cert_alert.description" = "Os certificados usados para proteger domínios têm, geralmente, validade de um ano. Quer que o PHP Monitor desproteja e proteja novamente os domínios expirados?";
-"cert_alert.domains" = "Os seguintes certificados estão afectados e serão renovados:\\n\\n%@\\n\\nO PHP Monitor irá dizer ao Valet para desproteger e proteger novamente todos os domínios expirados. Isto pode demorar, pois o nginx pode ser reiniciado várias vezes se vários domínios precisarem de serem protegidos novamente.";
+"cert_alert.domains" = "Os seguintes certificados estão afectados e serão renovados:\n\n%@\n\nO PHP Monitor irá dizer ao Valet para desproteger e proteger novamente todos os domínios expirados. Isto pode demorar, pois o nginx pode ser reiniciado várias vezes se vários domínios precisarem de serem protegidos novamente.";
 "cert_alert.renew" = "Re-segurar Domínio(s)";
 "cert_alert.cancel" = "Não agora";
 "crash_reporter.title" = "O PHP Monitor travou antes, deseja enviar um relatório de falha?";
 "crash_reporter.subtitle" = "Pode enviar o relatório de falha ao desenvolvedor da aplicação, para que este problema seja corrigido. É altamente recomendável. Gostaria de fazer isso?";
-"crash_reporter.description" = "Sem enviar este relatório de falha, o desenvolvedor pode não estar ciente deste problema em particular. Nenhum registo ou dados pessoais são enviados junto com o relatório de falha, apenas o relatório não simbolizado. Nenhuma ação adicional é necessária da sua parte.";
+"crash_reporter.description" = "Sem enviar este relatório de falha, o desenvolvedor pode não estar ciente deste problema em particular. Nenhum registo ou dados pessoais são enviados junto com o relatório de falha, apenas o relatório não simbolizado. Nenhuma ação adicional é necessária da sua parte.\n\n➡️ Se a falha continuar a ocorrer num momento específico, pode consultar o rastreador de problemas no GitHub para ver se uma correção está em desenvolvimento. Se a aplicação continuar a falhar antes da inicialização, poderá ser necessário atualizar o PHP Monitor manualmente.";
 "crash_reporter.send_report" = "Enviar relatório";
 "crash_reporter.do_not_send" = "Não enviar";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "Uma aplicação externa está a tentar comunicar com o PHP Monitor. Pretende permitir que aplicações de terceiros comuniquem com o PHP Monitor?";
+"alert.enable_integrations.subtitle" = "Este aviso aparece porque o PHP Monitor acabou de receber um comando externo, e esta funcionalidade está desativada por predefinição. Se ativou isto intencionalmente, usando uma aplicação de terceiros como Alfred ou Raycast, é normalmente seguro permitir.\n\nPode alterar esta definição mais tarde nas Preferências, esta pergunta será feita apenas uma vez.";
+"alert.enable_integrations.desc" = "Se não ativou isto através do Alfred ou Raycast, pode haver outra aplicação a tentar controlar o PHP Monitor.\n\nNesse caso, recomendo manter esta integração desativada, a menos que não se importe que outra aplicação de terceiros controle o PHP Monitor por si, o que pode representar um potencial risco de segurança.";
+"alert.enable_integrations.ok" = "Permitir integrações";
+"alert.enable_integrations.cancel" = "Não permitir";

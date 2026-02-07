@@ -209,7 +209,7 @@ You may be asked for your password during the uninstallation process if file per
 
 "phpman.steps.fetching" = "Fetching some package metadata...";
 "phpman.steps.downloading" = "Downloading package data...";
-"phpman.steps.installing" = "Installing some package data...";
+"phpman.steps.installing_package" = "Installing some package data...";
 "phpman.steps.pouring" = "Pouring... This can take a while...";
 "phpman.steps.summary" = "Please wait a moment...";
 
@@ -278,7 +278,7 @@ You may be asked for your password during the uninstallation process if file per
 
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domain";
-"domain_list.columns.active" = "Active";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "Kind";
 "domain_list.columns.project_type" = "Project Type";
 
@@ -368,11 +368,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "domain_list.alert.invalid_folder_name" = "Invalid folder name";
 "domain_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
 
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "Domain";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "Type";
-"domain_list.columns.kind" = "Kind";
+
 
 // DRIVERS
 
@@ -402,7 +398,6 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.tabs.notifications" = "Notifications";
 
 "prefs.global_shortcut" = "Global Shortcut:";
-"prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";
 "prefs.info_density" = "Info Density:";
 "prefs.services" = "Services:";

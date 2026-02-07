@@ -18,7 +18,7 @@
 "mi_active_services" = "アクティブサービス";
 "mi_restart_php_fpm" = "サービスを再起動: php";
 "mi_restart_nginx" = "サービスを再起動: nginx";
-"mi_restart_dnsmasq" = "サービスの再起動：dnsmasq";
+"mi_restart_dnsmasq" = "サービスを再起動: dnsmasq";
 "mi_manage_services" = "サービスを管理";
 "mi_restart_valet_services" = "Valet サービスを再起動";
 "mi_stop_valet_services" = "Valetサーバーを停止";
@@ -40,7 +40,7 @@
 "mi_composer" = "Composer";
 "mi_valet_config" = "Valet フォルダを探す (.config/valet)";
 "mi_php_config" = "PHP設定ファイル（php.ini）を探す";
-"mi_phpmon_config" = "PHP Monitor フォルダー (.config/phpmon) を見つけてください";
+"mi_phpmon_config" = "PHP Monitor フォルダ (.config/phpmon) を探す";
 "mi_global_composer" = "グローバル Composer ファイル (.composer) を探す";
 "mi_phpinfo" = "現在の設定を表示（phpinfo）";
 "mi_update_global_composer" = "全体のComposer依存関係を更新しています...";
@@ -73,7 +73,7 @@
 "mi_xdebug_disable_all" = "すべてのモードを無効にする";
 "mm_actions" = "アクション";
 "confman.title" = "PHP 設定エディタ";
-"confman.description" = "この機能を使えば、PHP インストールの設定を簡単にカスタマイズできます。<br>ご注意ください：変更は即座に自動的に適用されます。";
+"confman.description" = "この機能を使えば、PHP インストールの設定を簡単にカスタマイズできます。\nご注意ください：変更は即座に自動的に適用されます。";
 "confman.byte_limit.unlimited" = "無制限の使用を許可";
 "php_ini.memory_limit.title" = "メモリ制限";
 "php_ini.memory_limit.description" = "これは、スクリプトが割り当てることを許可される最大メモリ量（バイト）を設定します。これにより、サーバー上の利用可能なメモリをすべて消費するような不適切に書かれたスクリプトを防止できます。";
@@ -110,7 +110,7 @@
 "phpman.buttons.update" = "更新";
 "phpman.buttons.repair" = "修復";
 "phpman.version.prerelease" = "プレリリース";
-"phpman.steps.installing" = "パッケージデータをインストールしています…";
+"phpman.steps.installing" = "%@ をインストールしています";
 "phpman.steps.removing" = "%@ を削除しています";
 "phpman.steps.reloading" = "PHP バージョンを再読み込み中…";
 "phpman.steps.preparing" = "PHP Monitor が Homebrew を準備しています...";
@@ -148,7 +148,7 @@
 "phpman.operations.installing" = "インストール中 %@...";
 "phpman.steps.fetching" = "パッケージメタデータを取得しています...";
 "phpman.steps.downloading" = "パッケージデータをダウンロードしています...";
-"phpman.steps.installing" = "パッケージデータをインストールしています…";
+"phpman.steps.installing_package" = "パッケージデータをインストールしています…";
 "phpman.steps.pouring" = "注入中… 時間がかかることがあります...";
 "phpman.steps.summary" = "少々お待ちください…";
 "phpman.services.loading" = "読み込み中…";
@@ -181,7 +181,7 @@
 "domain_list.alerts_status_not_changed.title" = "おっと！SSLステータスが変更されていません";
 "domain_list.alerts_status_not_changed.desc" = "何か問題が発生しました。ターミナルで手動でコマンドを実行してみてください: %@";
 "domain_list.alerts_status_changed.title" = "SSLステータスが変更されました";
-"domain_list.alerts_status_changed.desc" = "The domain '%@' は現在 %@ です。";
+"domain_list.alerts_status_changed.desc" = "ドメイン '%@' は現在 %@ です。";
 "domain_list.alerts_status_secure" = "安全";
 "domain_list.alerts_status_unsecure" = "未保護";
 "domain_list.confirm_unlink" = "本当に'%@'のリンクを解除しますか？";
@@ -193,7 +193,7 @@
 "domain_list.confirm_unproxy_desc" = "再度+ボタンをクリックしてプロキシを再作成できます。";
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "ドメイン";
-"domain_list.columns.active" = "有効";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "種類";
 "domain_list.columns.project_type" = "プロジェクトタイプ";
 "domain_list.extensions" = "拡張機能を切替える";
@@ -230,7 +230,7 @@
 "domain_list.site_isolation" = "サイト分離";
 "domain_list.remove_isolation" = "隔離を解除";
 "domain_list.always_use_php" = "PHP %@ を常に使用します";
-"domain_list.isolation_unavailable" = "Isolation はサポートされていません（Valet 2で）";
+"domain_list.isolation_unavailable" = "隔離はサポートされていません（Valet 2で）";
 "domain_list.favorite" = "お気に入りのドメイン";
 "domain_list.unfavorite" = "お気に入りから外すドメイン";
 "domain_list.actions" = "操作";
@@ -251,11 +251,6 @@
 "domain_list.warning.spaces" = "警告！ このサイトのフォルダにスペースがあります。\nブラウザからアクセスできません。";
 "domain_list.alert.invalid_folder_name" = "無効なフォルダ名";
 "domain_list.alert.invalid_folder_name_desc" = "このフォルダは有効なURLに解決できませんでした。通常、フォルダ名にスペースが含まれているためです。フォルダの名前を変更し、サイト一覧を再読み込みしてからもう一度お試しください。";
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "ドメイン";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "タイプ";
-"domain_list.columns.kind" = "種類";
 "driver.not_detected" = "その他";
 "preset.extension" = "%i 拡張機能";
 "preset.extensions" = "%i 個の拡張機能";
@@ -271,7 +266,6 @@
 "prefs.tabs.visibility" = "可視性";
 "prefs.tabs.notifications" = "通知";
 "prefs.global_shortcut" = "グローバルショートカット：";
-"prefs.dynamic_icon" = "アイコンタイプ:";
 "prefs.dynamic_icon" = "アイコンタイプ:";
 "prefs.info_density" = "情報密度:";
 "prefs.services" = "サービス:";
@@ -380,10 +374,10 @@
 "alert.php_switch_failed.title" = "PHP %@への切り替えに失敗したようです。";
 "alert.php_switch_failed.info" = "PHP Monitor は、切り替え手順完了後に PHP %@ が有効になっていないことを検出しました。まず「Fix My Valet」を実行してから再度切り替えてみることができます。この修正を試しますか？";
 "alert.php_switch_failed.desc" = "まず最初に、まだ試していない場合は「Fix My Valet」を実行してください。それでも PHP Monitor がアクティブな PHP バージョンを変更できない場合は、Valet と Homebrew のパッケージをアップグレードする必要があります。`brew update && brew upgrade` を実行し、さらに `composer global update && valet install` で Valet をアップグレードしてください。";
-"alert.php_switch_failed.confirm" = "はい、\\\"Fix My Valet\\\"を実行します。";
+"alert.php_switch_failed.confirm" = "はい、\"Fix My Valet\"を実行します。";
 "alert.php_switch_failed.cancel" = "実行しない";
 "alert.php_formula_missing.title" = "おっと！Fix My Valet では、`php` フォーミュラがインストールされている必要があります…";
-"alert.php_formula_missing.info" = "「`php` フォーミュラがインストールされていないようです。これにより、PHP Monitor が Fix My Valet を実行できません。`brew install php` でインストールし、PHP Monitor を再起動してからもう一度お試しください。」";
+"alert.php_formula_missing.info" = "`php` フォーミュラがインストールされていないようです。これにより、PHP Monitor が Fix My Valet を実行できません。`brew install php` でインストールし、PHP Monitor を再起動してからもう一度お試しください。";
 "alert.fix_my_valet.title" = "お困りですか？Fix My Valetが開始準備完了です！";
 "alert.fix_my_valet.info" = "この操作には時間がかかる場合があります。しばらくお待ちください。\n\n完了すると、他のすべてのサービスは停止し、PHP %@ がリンクされます。この操作が終了したら、お好みの PHP バージョンに切り替えることができます。\n\n(Fix My Valet が完了すると、別のアラートが表示されます。)";
 "alert.fix_my_valet.ok" = "続ける";
@@ -446,6 +440,9 @@
 "startup.errors.php_brew_info_invalid.title" = "Homebrew が `brew info php --json` の出力として無効な結果を返しました。有効な JSON が必要です。";
 "startup.errors.php_brew_info_invalid.subtitle" = "これにより、PHP Monitor が正しく起動できなくなります。Homebrew が現在壊れた状態であるか、このコマンドの出力に追加のログが混入している可能性があります。これは既知の問題です。";
 "startup.errors.php_brew_info_invalid.desc" = "単に再試行するだけで問題が解決する場合がありますが、問題が続く場合は自分でコマンドを実行し、有効なJSONかどうか確認してください。OK を押して、Retry を選択してもう一度お試しください。";
+"startup.errors.could_not_determine_alias.title" = "`php` フォーミュラがどのバージョンにエイリアスされているか判別できませんでした";
+"startup.errors.could_not_determine_alias.subtitle" = "これにより、PHP Monitor が正しく起動できなくなります。Homebrew が現在壊れた状態であるか、フォーミュラに問題がある可能性があります。";
+"startup.errors.could_not_determine_alias.desc" = "`brew update` を実行してフォーミュラを更新し、もう一度お試しください。問題が解決しない場合は、バグの可能性があるため GitHub で報告してください。";
 "startup.errors.php_opt.title" = "PHP が正しくインストールされていません";
 "startup.errors.php_opt.subtitle" = "PHP エイリアスが %@ に見つかりませんでした。この問題を解決するまで、アプリは正しく動作しません。";
 "startup.errors.php_opt.desc" = "すでに「php」フォーミュラがインストールされている場合、PHP Monitor がこのインストールを検出できるようにするためには、`brew install php` を実行する必要があります。";
@@ -534,7 +531,7 @@
 "warnings.refresh.button.description" = "問題を手動で修正した場合はこのボタンを押してください。これにより PHP Monitor が環境を再評価します。（自動修正の場合はボタンを押す必要はありません。）";
 "warnings.helper_permissions.title" = "PHP Monitorのヘルパーは現在利用できません。";
 "warnings.helper_permissions.description" = "PHP Monitorにはさまざまなヘルパースクリプトが付属しています。これらのスクリプトを使用すると、リンクされたPHPバージョンを切り替えることなく、特定のPHPバージョンを簡単に呼び出すことができます。";
-"warnings.helper_permissions.unavailable" = "しかし、現在 PHP Monitor が必要なシンボリックリンクを作成または更新できないため、これらのヘルパーは *unavailable* となる可能性があります。";
+"warnings.helper_permissions.unavailable" = "しかし、現在 PHP Monitor が必要なシンボリックリンクを作成または更新できないため、これらのヘルパーは *利用不可* となる可能性があります。";
 "warnings.helper_permissions.symlink" = "もし`/usr/local/bin`を書き込み可能にしたくない場合、PHP Monitorのヘルパーディレクトリを`PATH`変数に追加することでこの警告を消すことができます。（「詳細情報」をクリックして、この問題の修正方法をご覧ください。）";
 "warnings.arm_compatibility.title" = "Apple Silicon 上で Rosetta を使用して PHP Monitor を実行しています。これは、PHP 環境も Rosetta 経由で動作していることを意味します。";
 "warnings.arm_compatibility.description" = "macOS の ARM 対応バージョンを実行しているようですが、現在は Rosetta を使用して PHP Monitor を動かしています。この方法でも正しく動作しますが、Homebrew のネイティブ版をご利用いただくことを推奨します。";
@@ -562,7 +559,7 @@
 "onboarding.tour.domains" = "メニューバーの項目からドメインウィンドウを開くと、リンクされているドメインやパーク済みドメイン、およびアクティブな nginx プロキシが表示されます。";
 "onboarding.tour.isolation.title" = "ドメインを隔離する";
 "onboarding.tour.isolation" = "Valet 3 以降をインストールしている場合、Domains ウィンドウでドメインを右クリックするとドメイン分離を利用できます。これにより、そのドメインだけに使用する PHP のバージョンを選択できるようになります。";
-"onboarding.tour.feature_unavailable" = "この機能は現在利用できません。Laravel Valet がインストールされている必要があります.";
+"onboarding.tour.feature_unavailable" = "この機能は現在利用できません。Laravel Valet がインストールされている必要があります。";
 "onboarding.tour.once" = "Welcome Tour は一度だけ表示されます。メニューバーのアイコン（First Aid & Services の下にある）から後で再度開くことができます。";
 "onboarding.tour.close" = "ツアーを閉じる";
 "prefs.language" = "言語:";
@@ -597,6 +594,14 @@
 "cert_alert.cancel" = "今はいいです";
 "crash_reporter.title" = "PHP Monitorが以前クラッシュしました。クラッシュレポートを送信しますか？";
 "crash_reporter.subtitle" = "アプリの開発者にクラッシュレポートを送信して、問題を修正できる可能性があります。これをおすすめします。実行しますか？";
-"crash_reporter.description" = "このクラッシュレポートを送信しないと、開発者がこの特定の問題に気付かない可能性があります。クラッシュレポートにはログや個人情報は含まれておらず、シンボル化されていないクラッシュレポートのみが送信されます。ユーザー側で追加の操作は必要ありません。";
+"crash_reporter.description" = "このクラッシュレポートを送信しないと、開発者がこの特定の問題に気付かない可能性があります。クラッシュレポートにはログや個人情報は含まれておらず、シンボル化されていないクラッシュレポートのみが送信されます。ユーザー側で追加の操作は必要ありません。\n\n➡️ 特定のタイミングでクラッシュが繰り返し発生する場合は、GitHubのイシュートラッカーで修正が進行中かどうかを確認することをお勧めします。初期化前にアプリが繰り返しクラッシュする場合は、PHP Monitorを手動で更新する必要があるかもしれません。";
 "crash_reporter.send_report" = "レポートを送信";
 "crash_reporter.do_not_send" = "送信しない";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "外部アプリケーションがPHP Monitorとの通信を試みています。サードパーティアプリケーションがPHP Monitorと通信することを許可しますか？";
+"alert.enable_integrations.subtitle" = "PHP Monitorが外部コマンドを受信したため、この通知が表示されています。この機能はデフォルトで無効になっています。AlfredやRaycastなどのサードパーティアプリを使用して意図的にトリガーした場合は、通常、許可しても安全です。\n\nこの設定は後で環境設定で変更できます。この質問は一度だけ表示されます。";
+"alert.enable_integrations.desc" = "AlfredやRaycast経由でトリガーしていない場合は、別のアプリケーションがPHP Monitorを制御しようとしている可能性があります。\n\nその場合、他のサードパーティアプリがPHP Monitorを代わりに制御することに問題がない場合を除き、この統合をオフのままにしておくことをお勧めします。これはセキュリティ上のリスクとなる可能性があります。";
+"alert.enable_integrations.ok" = "統合を許可";
+"alert.enable_integrations.cancel" = "許可しない";
