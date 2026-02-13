@@ -81,9 +81,6 @@ class App {
      */
     var container: Container = Container()
 
-    /** The list of preferences that are currently active. */
-    var preferences: [PreferenceName: Bool]!
-
     /** The window controller of the currently active preferences window. */
     var preferencesWindowController: PreferencesWindowController?
 
