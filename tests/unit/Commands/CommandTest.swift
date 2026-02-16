@@ -7,9 +7,14 @@
 //
 
 import Testing
+import Foundation
 
 struct CommandTest {
-    @Test func determinePhpVersion() {
+    @Test(.enabled(if: Binaries.exist(paths: [
+        "/opt/homebrew/bin/php",
+        "/usr/local/bin/php"
+    ]), "Requires PHP binary"))
+    func determinePhpVersion() {
         let container = Container.real(minimal: true)
 
         let version = container.command.execute(

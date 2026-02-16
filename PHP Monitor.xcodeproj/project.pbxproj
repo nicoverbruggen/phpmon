@@ -126,6 +126,8 @@
 		03B675EA2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03B675EB2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03B675EC2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
+		03B947DE2F43692500B6F899 /* TestURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B947DD2F43691D00B6F899 /* TestURL.swift */; };
+		03B947E12F436A6B00B6F899 /* Binaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B947E02F436A6700B6F899 /* Binaries.swift */; };
 		03BFF5272E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
@@ -1067,6 +1069,8 @@
 		03ACC6442ECCAB140070D4CD /* RealWebApiTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealWebApiTest.swift; sourceTree = "<group>"; };
 		03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaskFile+API.swift"; sourceTree = "<group>"; };
 		03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
+		03B947DD2F43691D00B6F899 /* TestURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURL.swift; sourceTree = "<group>"; };
+		03B947E02F436A6700B6F899 /* Binaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binaries.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
@@ -1492,6 +1496,15 @@
 				03ACC6442ECCAB140070D4CD /* RealWebApiTest.swift */,
 			);
 			path = WebApi;
+			sourceTree = "<group>";
+		};
+		03B947DF2F436A4800B6F899 /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				03B947E02F436A6700B6F899 /* Binaries.swift */,
+				03B947DD2F43691D00B6F899 /* TestURL.swift */,
+			);
+			path = Conditions;
 			sourceTree = "<group>";
 		};
 		03BFF1D12E3CF4F2004C56A9 /* Provision */ = {
@@ -2430,6 +2443,7 @@
 		C4F7807A25D7F84B000DBC97 /* unit */ = {
 			isa = PBXGroup;
 			children = (
+				03B947DF2F436A4800B6F899 /* Conditions */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
 				C4C1019927C65A4D001FACC2 /* Commands */,
 				036C39062E5C8890008DAEDF /* Integration */,
@@ -3518,6 +3532,7 @@
 				C485707728BF455300539B36 /* HeaderView.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
 				C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
+				03B947E12F436A6B00B6F899 /* Binaries.swift in Sources */,
 				036C39142E5CB822008DAEDF /* TestBundle.swift in Sources */,
 				C4E6840A2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */,
 				C4068CA827B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
@@ -3557,6 +3572,7 @@
 				C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* BrewDiagnostics.swift in Sources */,
 				C485707428BF454E00539B36 /* ServicesView.swift in Sources */,
+				03B947DE2F43692500B6F899 /* TestURL.swift in Sources */,
 				C4B79EC729CA474200A483EE /* FakeCommand.swift in Sources */,
 				C4611E5F2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */,
