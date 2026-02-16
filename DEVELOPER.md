@@ -53,7 +53,19 @@ If you'd like to create a production build, choose "Any Mac" as the target and s
 
 ## ✅ Testing
 
-In order to properly test everything, you will want to use the _PHP Monitor DEV_ target. There are unit and UI tests both.
+In order to properly test everything, you will want to use the _PHP Monitor EAP_ target. There are unit and UI tests both for this target.
+
+### Unit tests
+
+If you would like to run the unit tests outside of Xcode, you can run:
+
+    xcodebuild test \
+            -project "PHP Monitor.xcodeproj" \
+            -scheme "Unit Tests" \
+            -destination "platform=macOS" \
+            -parallel-testing-enabled NO
+            
+### Failures in UI tests
 
 You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve? You can retry the tests in question and they should eventually pass.
 
