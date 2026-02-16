@@ -60,10 +60,18 @@ In order to properly test everything, you will want to use the _PHP Monitor EAP_
 If you would like to run the unit tests outside of Xcode, you can run:
 
     xcodebuild test \
-            -project "PHP Monitor.xcodeproj" \
-            -scheme "Unit Tests" \
-            -destination "platform=macOS" \
-            -parallel-testing-enabled NO
+        -project "PHP Monitor.xcodeproj" \
+        -scheme "Unit Tests" \
+        -destination "platform=macOS" \
+        -parallel-testing-enabled NO
+
+### UI tests
+            
+    xcodebuild test \
+        -project "PHP Monitor.xcodeproj" \
+        -scheme "PHP Monitor" \
+        -destination "platform=macOS" \
+        -only-testing "UI Tests"
             
 ### Failures in UI tests
 
