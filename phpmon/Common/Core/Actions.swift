@@ -81,7 +81,7 @@ class Actions {
             + " && "
             + cellarCommands.joined(separator: " && ")
 
-        try sudo(script)
+        try AppleScript.runSimpleShellAsAdmin(script)
     }
 
     // MARK: - Finding Config Files

@@ -40,7 +40,7 @@ class BrewPermissionFixer {
         }
 
         let script = buildBrokenFormulaeScript()
-        try sudo(script)
+        try AppleScript.runSimpleShellAsAdmin(script)
 
         Log.info("Ownership was taken of the folder(s) at: " + broken
             .map({ $0.path })

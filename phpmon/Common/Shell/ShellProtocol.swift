@@ -15,24 +15,27 @@ protocol ShellProtocol {
     var PATH: String { get }
 
     /**
-     Run a command synchronously. Use with caution.
+     Run a command synchronously. Use with caution!
 
      Common usage:
      ```
      let output = Shell.sync("php -v")
      ```
+
+     @return The shell output. If the command times out, returns empty output.
      */
     @discardableResult
     func sync(_ command: String) -> ShellOutput
 
     /**
      Run a command asynchronously.
-     Returns the most relevant output (prefers error output if it exists).
 
      Common usage:
      ```
     let output = await Shell.pipe("php -v")
      ```
+
+     @return The shell output. If the command times out, returns empty output.
      */
     @discardableResult
     func pipe(_ command: String) async -> ShellOutput
@@ -43,7 +46,8 @@ protocol ShellProtocol {
 
      - Parameter command: The command to execute.
      - Parameter timeout: Timeout in seconds. If the command exceeds this, it is terminated.
-     - Returns: The shell output. If the command times out, returns empty output.
+
+     @return The shell output. If the command times out, returns empty output.
      */
     @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput
@@ -56,7 +60,8 @@ protocol ShellProtocol {
      (Whether it is complete or not.)
 
      Unlike `sync`, `pipe` and `quiet`, you can capture both `stdout` and `stderr` with this mechanism.
-     The end result is still the most relevant output (where error output is preferred if it exists).
+
+     @return A tuple, containing the `Process` and `ShellOutput` objects.
      */
     @discardableResult
     func attach(

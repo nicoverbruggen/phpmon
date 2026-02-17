@@ -39,7 +39,7 @@ class Startup {
                     let start = Measurement()
                     if await check.succeeds() {
                         Log.info("[PASS] \(check.name) (\(start.milliseconds) ms)")
-                        continue
+                        continue // continue to the next check!
                     }
 
                     // If we get here, something's gone wrong and the check has failed...
@@ -48,8 +48,9 @@ class Startup {
                     // We will present the user with an option (potentially)
                     let outcome = await showAlert(for: check)
 
+                    // If the user requested an automatic fix, do this
                     if outcome == .shouldRunFix {
-                        // First, validate there's a fix
+                        // Verify a fix actually exists
                         guard let command = check.fixCommand else {
                             return false
                         }
@@ -57,13 +58,16 @@ class Startup {
                         // We will try to run the fix, it may fail!
                         do {
                             try await command(App.shared.container)
-                            return await check.succeeds()
+                            guard await check.succeeds() else {
+                                return false
+                            }
+                            continue // continue to the next check!
                         } catch {
-                            // our fix failed :(
                             return false
                         }
                     }
 
+                    // No fix requested, this is just a failure
                     return false
                 }
             } else {
@@ -76,58 +80,6 @@ class Startup {
 
         Log.separator(as: .info)
         return true
-    }
-
-    enum EnvironmentAlertOutcome {
-        case shouldRunFix
-        case shouldRetryStartup
-    }
-
-    /**
-     Displays an alert for a particular check. There are two types of alerts:
-     - ones that require an app restart, which prompt the user to exit the app
-     - ones that allow the app to continue, which allow the user to retry
-     */
-    @MainActor private func showAlert(for check: EnvironmentCheck) -> EnvironmentAlertOutcome {
-        // Ensure that the timeout does not fire until we restart
-        Self.startupTimer?.invalidate()
-
-        if check.requiresAppRestart {
-            NVAlert()
-                .withInformation(
-                    title: check.titleText,
-                    subtitle: check.subtitleText,
-                    description: check.descriptionText
-                )
-                .withPrimary(text: check.buttonText, action: { _ in
-                    exit(1)
-                }).show(urgency: .bringToFront)
-        }
-
-        // Verify if an automatic fix is available
-        let hasAutomaticFix = check.fixCommand != nil
-
-        // Present an alert with one or two buttons (depending on fix)
-        let outcome = NVAlert()
-            .withInformation(
-                title: check.titleText,
-                subtitle: check.subtitleText,
-                description: check.descriptionText
-            )
-            .withPrimary(text: hasAutomaticFix ? "startup.fix_for_me".localized : "startup.fix_manually".localized)
-            .withSecondary(if: hasAutomaticFix, text: "startup.fix_manually".localized)
-            .withTertiary(if: hasAutomaticFix, text: "", action: { _ in
-                NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
-            })
-            .runModal(urgency: .bringToFront)
-
-        // If there's an automatic fix and we chose to fix it, return outcome
-        if hasAutomaticFix && outcome == .alertFirstButtonReturn {
-            return .shouldRunFix
-        }
-
-        // In any other situation, we will require a retry of the startup
-        return .shouldRetryStartup
     }
 
     // MARK: - Check (List)
@@ -161,6 +113,10 @@ class Startup {
                     return await !container.shell
                         .pipe("ls \(container.paths.optPath) | grep php").out.contains("php")
                 },
+                fix: { container in
+                    let brew = container.paths.brew
+                    await container.shell.pipe("\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php")
+                },
                 name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
                 subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -175,6 +131,11 @@ class Startup {
                 command: { container in
                     return !container.filesystem.fileExists(container.paths.php)
                 },
+                fix: { container in
+                    // See if we can't link PHP
+                    let brew = container.paths.brew
+                    await container.shell.pipe("\(brew) link php")
+                },
                 name: "`\(App.shared.container.paths.php)` exists",
                 titleText: "startup.errors.php_binary.title".localized,
                 subtitleText: "startup.errors.php_binary.subtitle".localized,
@@ -187,6 +148,10 @@ class Startup {
                 command: { container in
                     return await container.shell.pipe("\(container.paths.binPath)/php -v").err
                         .contains("Library not loaded")
+                },
+                fix: { container in
+                    let brew = App.shared.container.paths.brew
+                    await container.shell.pipe("\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php")
                 },
                 name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
@@ -218,6 +183,10 @@ class Startup {
                 command: { container in
                     await container.phpEnvs.determinePhpAlias()
                     return PhpEnvironments.brewPhpAlias == nil
+                },
+                fix: { container in
+                    let brew = container.paths.brew
+                    await container.shell.pipe("\(brew) update")
                 },
                 name: "`brew` alias is not nil and valid",
                 titleText: "startup.errors.could_not_determine_alias.title".localized,
@@ -253,7 +222,8 @@ class Startup {
                         .out.contains(container.paths.brew)
                 },
                 fix: { container in
-                    try sudo("export USER=\(container.paths.whoami) && export PATH=/bin:/usr/bin:\(container.paths.binPath) && valet trust")
+                    let valet = container.paths.binPath.appending("/valet")
+                    try AppleScript.runShellAsAdmin("\(valet) trust")
                 },
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
@@ -276,6 +246,10 @@ class Startup {
             EnvironmentCheck(
                 command: { container in
                     return !container.filesystem.directoryExists("~/.config/valet")
+                },
+                fix: { container in
+                    let valet = container.paths.binPath.appending("/valet")
+                    await container.shell.pipe("\(valet) install")
                 },
                 name: "`.config/valet` not empty (Valet installed)",
                 titleText: "startup.errors.valet_not_installed.title".localized,

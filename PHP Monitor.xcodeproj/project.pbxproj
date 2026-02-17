@@ -56,6 +56,10 @@
 		033E9DF82F44AD5400685F62 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DF62F44AD5200685F62 /* AppleScript.swift */; };
 		033E9DF92F44AD5400685F62 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DF62F44AD5200685F62 /* AppleScript.swift */; };
 		033E9DFA2F44AD5400685F62 /* AppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DF62F44AD5200685F62 /* AppleScript.swift */; };
+		033E9DFC2F44D93000685F62 /* Startup+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */; };
+		033E9DFD2F44D93000685F62 /* Startup+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */; };
+		033E9DFE2F44D93000685F62 /* Startup+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */; };
+		033E9DFF2F44D93000685F62 /* Startup+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */; };
 		035983A12E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
 		035983A22E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
 		035983A32E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
@@ -1046,6 +1050,7 @@
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D45A22B0D531D00070080 /* PhpExtensionManagerView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpExtensionManagerView+Actions.swift"; sourceTree = "<group>"; };
 		033E9DF62F44AD5200685F62 /* AppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleScript.swift; sourceTree = "<group>"; };
+		033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Alert.swift"; sourceTree = "<group>"; };
 		034515442EC4F3A000472561 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515452EC4F3C000472561 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515462EC4FB9100472561 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2223,6 +2228,7 @@
 				C4B97B7A275CF20A003F3378 /* App+GlobalHotkey.swift */,
 				C4EED88827A48778006D7272 /* InterAppHandler.swift */,
 				C4D8016522B1584700C6DA1B /* Startup.swift */,
+				033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */,
 				0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */,
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
@@ -2862,6 +2868,7 @@
 				C41C02A927E61A65009F26CB /* FakeValetSite.swift in Sources */,
 				C4E2E85C28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
+				033E9DFF2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				037F44192EDB27BA002EBF75 /* Debouncer.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */,
@@ -3259,6 +3266,7 @@
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4B79ECD29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
+				033E9DFE2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C471E7F128F9BAC70021E251 /* VersionNumber.swift in Sources */,
 				C471E7DC28F9BA8F0021E251 /* ShellProtocol.swift in Sources */,
 			);
@@ -3350,6 +3358,7 @@
 				C471E8C528F9BB8F0021E251 /* AddProxyVC.swift in Sources */,
 				C471E8C628F9BB8F0021E251 /* PMTableView.swift in Sources */,
 				C471E8C728F9BB8F0021E251 /* Warning.swift in Sources */,
+				033E9DFC2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C471E8C828F9BB8F0021E251 /* WarningManager.swift in Sources */,
 				C46DC7A72C7B5BCA00F19D17 /* Favorites.swift in Sources */,
 				C471E8C928F9BB8F0021E251 /* PhpDoctorWindowController.swift in Sources */,
@@ -3713,6 +3722,7 @@
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
+				033E9DFD2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
 				C4F780B725D80B5D000DBC97 /* App.swift in Sources */,
