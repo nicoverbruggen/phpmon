@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Presets";
 "prefs.display_misc_desc" = "Indien uitgeschakeld, kunt u geen toegang krijgen tot het menu First Aid & Services.";
 "prefs.display_misc" = "First & Services-menu";
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor zal menu-iconen verbergen wanneer deze optie is geselecteerd, zoals de meeste macOS-menu's eruitzagen vóór macOS Tahoe. Als u nog een oudere versie van macOS gebruikt of de voorkeur geeft aan menu's zonder iconen, kunt u deze optie inschakelen.";
+"prefs.hide_menu_icons_title" = "Menu-iconen verbergen";
 "notification.version_changed_title" = "PHP %@ nu actief";
 "notification.version_changed_desc" = "PHP Monitor is overgeschakeld naar PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM automatisch herstart";

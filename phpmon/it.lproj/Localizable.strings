@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Preimpostazioni";
 "prefs.display_misc_desc" = "Se disabilitato, non potrai accedere al menu Primo Soccorso e Servizi.";
 "prefs.display_misc" = "Menu Pronto Soccorso e Servizi";
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "Quando questa opzione è selezionata, PHP Monitor nasconderà le icone del menu, come apparivano la maggior parte dei menu di macOS prima di macOS Tahoe. Se utilizzi ancora una versione precedente di macOS o preferisci i menu senza icone, potresti voler attivare questa opzione.";
+"prefs.hide_menu_icons_title" = "Nascondi le icone del menu";
 "notification.version_changed_title" = "PHP %@ è ora attivo";
 "notification.version_changed_desc" = "PHP Monitor è passato a PHP %@.";
 "notification.php_fpm_restarted" = "PHP‑FPM è stato riavviato automaticamente";

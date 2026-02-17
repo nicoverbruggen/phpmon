@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Các preset";
 "prefs.display_misc_desc" = "Nếu tắt tính năng này, bạn sẽ không thể truy cập menu Sửa chữa và Dịch vụ.";
 "prefs.display_misc" = "Menu Cứu hộ và Dịch vụ";
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor sẽ ẩn các biểu tượng menu khi tùy chọn này được chọn, giống như giao diện của hầu hết các menu macOS trước macOS Tahoe. Nếu bạn vẫn đang sử dụng phiên bản macOS cũ hơn hoặc thích menu không có biểu tượng, bạn có thể muốn bật tùy chọn này.";
+"prefs.hide_menu_icons_title" = "Ẩn biểu tượng menu";
 "notification.version_changed_title" = "PHP %@ hiện đã được kích hoạt";
 "notification.version_changed_desc" = "PHP Monitor đã chuyển sang PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM đã được khởi động lại tự động";

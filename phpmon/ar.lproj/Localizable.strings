@@ -335,6 +335,9 @@
 "prefs.display_presets" = "الإعدادات المسبقة";
 "prefs.display_misc_desc" = "إذا كان معطلًا، لن تتمكن من الوصول إلى قائمة الإسعافات الأولية والخدمات.";
 "prefs.display_misc" = "قائمة الإسعافات الأولية والخدمات";
+"prefs.hide_menu_icons" = "القائمة:";
+"prefs.hide_menu_icons_desc" = "سيقوم PHP Monitor بإخفاء أيقونات القائمة عند تحديد هذا الخيار، وهو الشكل الذي كانت تبدو عليه معظم قوائم macOS قبل macOS Tahoe. إذا كنت لا تزال تستخدم إصدارًا أقدم من macOS أو تفضل القوائم بدون أيقونات، فقد ترغب في تبديل هذا الخيار.";
+"prefs.hide_menu_icons_title" = "إخفاء أيقونات القائمة";
 "notification.version_changed_title" = "PHP %@ الآن نشط";
 "notification.version_changed_desc" = "قد انتقل PHP Monitor إلى PHP %@.";
 "notification.php_fpm_restarted" = "تم إعادة تشغيل PHP-FPM تلقائياً";

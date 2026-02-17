@@ -335,6 +335,9 @@
 "prefs.display_presets" = "预设";
 "prefs.display_misc_desc" = "如果禁用，将无法访问急救与服务菜单";
 "prefs.display_misc" = "急救与服务菜单";
+"prefs.hide_menu_icons" = "菜单：";
+"prefs.hide_menu_icons_desc" = "选择此选项后，PHP Monitor 将隐藏菜单图标，这是 macOS Tahoe 之前大多数 macOS 菜单的外观。如果您仍在使用较旧版本的 macOS 或更喜欢没有图标的菜单，您可能需要切换此选项。";
+"prefs.hide_menu_icons_title" = "隐藏菜单图标";
 "notification.version_changed_title" = "PHP %@ 已激活";
 "notification.version_changed_desc" = "PHP Monitor 已切换到 PHP %@";
 "notification.php_fpm_restarted" = "PHP-FPM 自动重新启动";

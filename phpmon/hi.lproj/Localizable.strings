@@ -335,6 +335,9 @@
 "prefs.display_presets" = "पूर्वनिर्धारित";
 "prefs.display_misc_desc" = "यदि अक्षम किया गया है, तो आप फ़र्स्ट एड एवं सर्विसेज मेनू तक पहुँच नहीं पाएंगे।";
 "prefs.display_misc" = "प्रथम सहायता एवं सेवाएँ मेनू";
+"prefs.hide_menu_icons" = "मेनू:";
+"prefs.hide_menu_icons_desc" = "इस विकल्प को चुनने पर PHP Monitor मेनू आइकन छिपा देगा, जैसा कि macOS Tahoe से पहले अधिकांश macOS मेनू दिखते थे। यदि आप अभी भी macOS के पुराने संस्करण पर हैं या आइकन के बिना मेनू पसंद करते हैं, तो आप इस विकल्प को टॉगल कर सकते हैं।";
+"prefs.hide_menu_icons_title" = "मेनू आइकन छिपाएँ";
 "notification.version_changed_title" = "PHP %@ अब सक्रिय है";
 "notification.version_changed_desc" = "PHP Monitor ने PHP %@ पर स्विच किया है।";
 "notification.php_fpm_restarted" = "PHP‑FPM स्वचालित रूप से पुनः आरम्भ हुआ";

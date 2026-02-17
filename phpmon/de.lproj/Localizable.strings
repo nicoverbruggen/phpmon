@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Voreinstellungen";
 "prefs.display_misc_desc" = "Wenn diese Funktion deaktiviert ist, können Sie nicht auf das Menü Erste Hilfe & Dienste zugreifen.";
 "prefs.display_misc" = "Erste Hilfe & Dienste Menü";
+"prefs.hide_menu_icons" = "Menü:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor blendet die Menüsymbole aus, wenn diese Option aktiviert ist. So sahen die meisten macOS-Menüs vor macOS Tahoe aus. Wenn Sie noch eine ältere Version von macOS verwenden oder Menüs ohne Symbole bevorzugen, möchten Sie diese Option möglicherweise umschalten.";
+"prefs.hide_menu_icons_title" = "Menüsymbole ausblenden";
 "notification.version_changed_title" = "PHP %@ ist jetzt aktiv";
 "notification.version_changed_desc" = "PHP Monitor hat auf PHP %@ umgeschaltet.";
 "notification.php_fpm_restarted" = "PHP-FPM automatisch neu gestartet";

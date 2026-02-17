@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Ön ayarlar";
 "prefs.display_misc_desc" = "Devre dışı bırakılırsa, İlk Yardım ve Hizmetler menüsüne erişemezsiniz.";
 "prefs.display_misc" = "İlk Yardım ve Hizmetler Menüsü";
+"prefs.hide_menu_icons" = "Menü:";
+"prefs.hide_menu_icons_desc" = "Bu seçenek etkinleştirildiğinde PHP Monitor menü simgelerini gizler; bu, macOS Tahoe öncesinde çoğu macOS menüsünün göründüğü şekildedir. Hâlâ macOS'un eski bir sürümündeyseniz veya simgesiz menüleri tercih ediyorsanız, bu seçeneği değiştirmek isteyebilirsiniz.";
+"prefs.hide_menu_icons_title" = "Menü simgelerini gizle";
 "notification.version_changed_title" = "PHP %@ artık aktif";
 "notification.version_changed_desc" = "PHP Monitor, PHP %@ sürümüne geçti.";
 "notification.php_fpm_restarted" = "PHP-FPM otomatik olarak yeniden başlatıldı";

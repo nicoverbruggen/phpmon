@@ -335,6 +335,9 @@
 "prefs.display_presets" = "Praset";
 "prefs.display_misc_desc" = "Jika dinonaktifkan, Anda tidak akan dapat mengakses menu Pertolongan Pertama & Layanan.";
 "prefs.display_misc" = "Menu Pertolongan Pertama & Layanan";
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor akan menyembunyikan ikon menu ketika opsi ini dipilih, seperti tampilan kebanyakan menu macOS sebelum macOS Tahoe. Jika Anda masih menggunakan versi macOS yang lebih lama atau lebih suka menu tanpa ikon, Anda mungkin ingin mengaktifkan opsi ini.";
+"prefs.hide_menu_icons_title" = "Sembunyikan ikon menu";
 "notification.version_changed_title" = "PHP %@ sekarang aktif";
 "notification.version_changed_desc" = "PHP Monitor telah beralih ke PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM otomatis dimulai ulang";

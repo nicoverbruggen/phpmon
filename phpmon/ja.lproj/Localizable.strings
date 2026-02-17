@@ -335,6 +335,9 @@
 "prefs.display_presets" = "プリセット";
 "prefs.display_misc_desc" = "無効にすると、First Aid & Services メニューにアクセスできなくなります。";
 "prefs.display_misc" = "ファーストエイド＆サービスメニュー";
+"prefs.hide_menu_icons" = "メニュー：";
+"prefs.hide_menu_icons_desc" = "このオプションを選択すると、PHP Monitorはメニューアイコンを非表示にします。これはmacOS Tahoe以前のほとんどのmacOSメニューの外観です。古いバージョンのmacOSを使用している場合やアイコンなしのメニューを好む場合は、このオプションを切り替えることをお勧めします。";
+"prefs.hide_menu_icons_title" = "メニューアイコンを非表示";
 "notification.version_changed_title" = "PHP %@ が有効になりました";
 "notification.version_changed_desc" = "PHP Monitor は PHP %@ に切り替わりました。";
 "notification.php_fpm_restarted" = "PHP‑FPM が自動的に再起動されました";
