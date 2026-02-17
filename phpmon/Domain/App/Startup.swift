@@ -65,6 +65,9 @@ class Startup {
      - ones that allow the app to continue, which allow the user to retry
      */
     @MainActor private func showAlert(for check: EnvironmentCheck) {
+        // Ensure that the timeout does not fire until we restart
+        Self.startupTimer?.invalidate()
+
         if check.requiresAppRestart {
             NVAlert()
                 .withInformation(

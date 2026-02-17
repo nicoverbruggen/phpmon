@@ -22,6 +22,10 @@ extension Startup {
 
     /** Starts the timeout timer that keeps track of how long the app takes to boot. */
     @MainActor func startStartupTimer() {
+        // If we have a previous timer, invalidate it
+        Self.startupTimer?.invalidate()
+
+        // Start timing; use current timestamp as "start"
         Self.launchTime = Date()
         Self.startupTimer = Timer.scheduledTimer(
             timeInterval: Constants.SlowBootThresholdInterval, target: self,
