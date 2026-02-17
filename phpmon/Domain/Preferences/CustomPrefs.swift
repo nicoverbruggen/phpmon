@@ -54,7 +54,8 @@ extension Preferences {
     }
 
     func moveOutdatedConfigurationFile() async {
-        if container.filesystem.fileExists("~/.phpmon.conf.json") && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
+        if container.filesystem.fileExists("~/.phpmon.conf.json")
+            && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
             await container.shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")

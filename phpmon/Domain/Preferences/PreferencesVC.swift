@@ -36,18 +36,6 @@ class GenericPreferenceVC: NSViewController {
         return self
     }
 
-    func getDynamicIconPV() -> NSView {
-        return CheckboxPreferenceView.make(
-            sectionText: "prefs.dynamic_icon".localized,
-            descriptionText: "prefs.dynamic_icon_desc".localized,
-            checkboxText: "prefs.dynamic_icon_title".localized,
-            preference: .shouldDisplayDynamicIcon,
-            action: {
-                MainMenu.shared.refreshIcon()
-            }
-        )
-    }
-
     func getLanguageOptionsPV() -> NSView {
         var options = Bundle.main.localizations
             .filter({ $0 != "Base"})
@@ -76,6 +64,30 @@ class GenericPreferenceVC: NSViewController {
                     alert.addButton(withTitle: "generic.ok".localized)
                     alert.beginSheetModal(for: window)
                 }
+            }
+        )
+    }
+
+    func getDynamicIconPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.dynamic_icon".localized,
+            descriptionText: "prefs.dynamic_icon_desc".localized,
+            checkboxText: "prefs.dynamic_icon_title".localized,
+            preference: .shouldDisplayDynamicIcon,
+            action: {
+                MainMenu.shared.refreshIcon()
+            }
+        )
+    }
+
+    func getMenuIconsPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.hide_menu_icons".localized,
+            descriptionText: "prefs.hide_menu_icons_desc".localized,
+            checkboxText: "prefs.hide_menu_icons_title".localized,
+            preference: .hideIconsInMenu,
+            action: {
+                MainMenu.shared.rebuild()
             }
         )
     }

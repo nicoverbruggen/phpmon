@@ -496,6 +496,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.display_misc_desc" = "If disabled, you will not be able to access the First Aid & Services menu.";
 "prefs.display_misc" = "First Aid & Services Menu";
 
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor will hide menu icons when this option is selected, which is how most macOS menus looked prior to macOS Tahoe. If you are still on an older version of macOS or prefer menus without icons, you may want to toggle this option.";
+"prefs.hide_menu_icons_title" = "Hide menu icons";
+
 // NOTIFICATIONS
 
 "notification.version_changed_title" = "PHP %@ now active";

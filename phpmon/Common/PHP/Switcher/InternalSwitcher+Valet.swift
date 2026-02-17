@@ -71,7 +71,8 @@ extension InternalSwitcher {
             }
 
             do {
-                var contents = try container.filesystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
+                var contents = try container.filesystem
+                    .getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
 
                 for (original, replacement) in file.replacements {
                     contents = contents.replacing(original, with: replacement)

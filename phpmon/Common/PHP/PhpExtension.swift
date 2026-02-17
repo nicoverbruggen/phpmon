@@ -41,7 +41,6 @@ class PhpExtension {
         return String(file.split(separator: "/").last ?? "php.ini")
     }
 
-    // swiftlint:disable line_length
     /**
      This regular expression will allow us to identify lines which activate an extension.
      
@@ -55,7 +54,6 @@ class PhpExtension {
      - Note: Extensions that are disabled in a different way will not be detected. This is intentional.
      */
     static let extensionRegex = #"^(extension|zend_extension|;(\s?)extension|;(\s?)zend_extension)(\s?)(=)(\s?)(?<name>["]?(?:\/?.\/?)+(?:\.so)"?)$"#
-    // swiftlint:enable line_length
 
     /**
      When registering an extension, we do that based on the line found inside the .ini file.

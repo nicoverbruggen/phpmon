@@ -8,6 +8,12 @@
 
 /**
  These are the keys used for every preference in the app.
+ To add a new key, undertake the following steps:
+
+ - Declare a new enum value with a string representation.
+ - Update the mapping below to specify if it's a boolean, string or other.
+ - Go to `Preferences` and update `handleFirstTimeLaunch` to set a default.
+ - Add the preference to `GeneralPreferencesVC` in the correct class.
  */
 enum PreferenceName: String, Codable {
     // GENERAL
@@ -23,6 +29,7 @@ enum PreferenceName: String, Codable {
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
     case iconTypeToDisplay = "icon_type_to_display"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+    case hideIconsInMenu = "hide_icons_in_menu"
 
     // WARNINGS
     case warnAboutNonStandardTLD = "warn_about_non_standard_tld"
@@ -53,13 +60,16 @@ enum PreferenceName: String, Codable {
     static var mapping: [PreferenceType: [PreferenceName]] = [
         .boolean: [
             // Preferences
-            .shouldDisplayDynamicIcon,
-            .fullPhpVersionDynamicIcon,
             .autoServiceRestartAfterExtensionToggle,
             .autoComposerGlobalUpdateAfterSwitch,
             .allowProtocolForIntegrations,
             .automaticBackgroundUpdateCheck,
             .showPhpDoctorSuggestions,
+
+            // Appearance
+            .shouldDisplayDynamicIcon,
+            .fullPhpVersionDynamicIcon,
+            .hideIconsInMenu,
 
             // Notifications
             .warnAboutNonStandardTLD,

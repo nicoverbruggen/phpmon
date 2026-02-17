@@ -45,6 +45,33 @@ class Preferences {
         }
     }
 
+    static func registerPreferenceDefaults(_ configuration: [PreferenceName: Any]) {
+        let tuple = configuration.map { (key: PreferenceName, value: Any) in
+            return (key.rawValue, value)
+        }
+
+        let defaults = Dictionary(uniqueKeysWithValues: tuple)
+        UserDefaults.standard.register(defaults: defaults)
+    }
+
+    static func registerPersistentAppStateDefaults(_ configuration: [PersistentAppState: Any]) {
+        let tuple = configuration.map { (key: PersistentAppState, value: Any) in
+            return (key.rawValue, value)
+        }
+
+        let defaults = Dictionary(uniqueKeysWithValues: tuple)
+        UserDefaults.standard.register(defaults: defaults)
+    }
+
+    static func registerInternalAppStateDefaults(_ configuration: [InternalStats: Any]) {
+        let tuple = configuration.map { (key: InternalStats, value: Any) in
+            return (key.rawValue, value)
+        }
+
+        let defaults = Dictionary(uniqueKeysWithValues: tuple)
+        UserDefaults.standard.register(defaults: defaults)
+    }
+
     // MARK: - First Time Run
 
     /**
@@ -58,50 +85,53 @@ class Preferences {
      ```
      */
     static func handleFirstTimeLaunch() {
-        UserDefaults.standard.register(defaults: [
+        self.registerPreferenceDefaults([
             /// Preferences: General
-            PreferenceName.autoServiceRestartAfterExtensionToggle.rawValue: true,
-            PreferenceName.autoComposerGlobalUpdateAfterSwitch.rawValue: false,
-            PreferenceName.allowProtocolForIntegrations.rawValue: false,
-            PreferenceName.automaticBackgroundUpdateCheck.rawValue: true,
-            PreferenceName.showPhpDoctorSuggestions.rawValue: true,
-            PreferenceName.languageOverride.rawValue: "",
+            .autoServiceRestartAfterExtensionToggle: true,
+            .autoComposerGlobalUpdateAfterSwitch: false,
+            .allowProtocolForIntegrations: false,
+            .automaticBackgroundUpdateCheck: true,
+            .showPhpDoctorSuggestions: true,
+            .languageOverride: "",
 
             /// Preferences: Appearance
-            PreferenceName.shouldDisplayDynamicIcon.rawValue: true,
-            PreferenceName.iconTypeToDisplay.rawValue: MenuBarIcon.iconPhp.rawValue,
-            PreferenceName.fullPhpVersionDynamicIcon.rawValue: false,
+            .shouldDisplayDynamicIcon: true,
+            .iconTypeToDisplay: MenuBarIcon.iconPhp.rawValue,
+            .fullPhpVersionDynamicIcon: false,
+            .hideIconsInMenu: false,
 
             /// Preferences: Notifications
-            PreferenceName.warnAboutNonStandardTLD.rawValue: true,
-            PreferenceName.notifyAboutVersionChange.rawValue: true,
-            PreferenceName.notifyAboutPhpFpmRestart.rawValue: true,
-            PreferenceName.notifyAboutServices.rawValue: true,
-            PreferenceName.notifyAboutPresets.rawValue: true,
-            PreferenceName.notifyAboutSecureToggle.rawValue: true,
-            PreferenceName.notifyAboutGlobalComposerStatus.rawValue: true,
+            .warnAboutNonStandardTLD: true,
+            .notifyAboutVersionChange: true,
+            .notifyAboutPhpFpmRestart: true,
+            .notifyAboutServices: true,
+            .notifyAboutPresets: true,
+            .notifyAboutSecureToggle: true,
+            .notifyAboutGlobalComposerStatus: true,
 
             /// Preferences: UI Preferences
-            PreferenceName.displayDriver.rawValue: true,
-            PreferenceName.displayGlobalVersionSwitcher.rawValue: true,
-            PreferenceName.displayServicesManager.rawValue: true,
-            PreferenceName.displayValetIntegration.rawValue: true,
-            PreferenceName.displayPhpConfigFinder.rawValue: true,
-            PreferenceName.displayComposerToolkit.rawValue: true,
-            PreferenceName.displayLimitsWidget.rawValue: true,
-            PreferenceName.displayExtensions.rawValue: true,
-            PreferenceName.displayPresets.rawValue: true,
-            PreferenceName.displayMisc.rawValue: true,
+            .displayDriver: true,
+            .displayGlobalVersionSwitcher: true,
+            .displayServicesManager: true,
+            .displayValetIntegration: true,
+            .displayPhpConfigFinder: true,
+            .displayComposerToolkit: true,
+            .displayLimitsWidget: true,
+            .displayExtensions: true,
+            .displayPresets: true,
+            .displayMisc: true
+        ])
 
-            /// Persistent App State
-            PersistentAppState.lastAutomaticUpdateCheck.rawValue: 0,
-            PersistentAppState.updateCheckFailureCount.rawValue: 0,
+        registerPersistentAppStateDefaults([
+            .lastAutomaticUpdateCheck: 0,
+            .updateCheckFailureCount: 0
+        ])
 
-            /// Stats
-            InternalStats.switchCount.rawValue: 0,
-            InternalStats.launchCount.rawValue: 0,
-            InternalStats.didSeeSponsorEncouragement.rawValue: false,
-            InternalStats.lastGlobalPhpVersion.rawValue: ""
+        registerInternalAppStateDefaults([
+            .switchCount: 0,
+            .launchCount: 0,
+            .didSeeSponsorEncouragement: false,
+            .lastGlobalPhpVersion: ""
         ])
 
         if UserDefaults.standard.bool(forKey: PersistentAppState.wasLaunchedBefore.rawValue) {

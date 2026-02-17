@@ -38,6 +38,7 @@ class AppearancePreferencesVC: GenericPreferenceVC {
         _ = vc.addView(when: true, vc.getDynamicIconPV())
             .addView(when: true, vc.getIconOptionsPV())
             .addView(when: true, vc.getIconDensityPV())
+            .addView(when: true, vc.getMenuIconsPV())
 
         return vc
     }
