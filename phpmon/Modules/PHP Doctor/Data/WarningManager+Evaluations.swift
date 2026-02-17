@@ -87,7 +87,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await self.container.shell.quiet("brew tap shivammathur/php")
+                    await self.container.shell.pipe("brew tap shivammathur/php")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
@@ -103,7 +103,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-extensions",
                 fix: {
-                    await self.container.shell.quiet("brew tap shivammathur/extensions")
+                    await self.container.shell.pipe("brew tap shivammathur/extensions")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }

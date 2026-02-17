@@ -28,6 +28,7 @@ class GenericPreferenceVC: NSViewController {
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
+    @discardableResult
     func addView(when condition: Bool, _ view: NSView) -> GenericPreferenceVC {
         if condition {
             self.views.append(view)

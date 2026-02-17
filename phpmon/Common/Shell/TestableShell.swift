@@ -19,6 +19,7 @@ public class TestableShell: ShellProtocol {
 
     var expectations: [String: BatchFakeShellOutput] = [:]
 
+    @discardableResult
     func sync(_ command: String) -> ShellOutput {
         // This assertion will only fire during test builds
         assert(expectations.keys.contains(command), "No response declared for command: \(command)")
@@ -30,19 +31,18 @@ public class TestableShell: ShellProtocol {
         return expectation.syncOutput()
     }
 
-    func quiet(_ command: String) async {
-        _ = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
-    }
-
+    @discardableResult
     func pipe(_ command: String) async -> ShellOutput {
         return await pipe(command, timeout: 60)
     }
 
+    @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
         let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
         return output
     }
 
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,

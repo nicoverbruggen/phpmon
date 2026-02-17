@@ -18,7 +18,7 @@ func brew(
     _ command: String,
     sudo: Bool = false,
 ) async {
-    await container.shell.quiet("\(sudo ? "sudo " : "")" + "\(container.paths.brew) \(command)")
+    await container.shell.pipe("\(sudo ? "sudo " : "")" + "\(container.paths.brew) \(command)")
 }
 
 /**
@@ -37,9 +37,9 @@ func sed(
     // Check if gsed exists; it is able to follow symlinks,
     // which we want to do to toggle the extension
     if container.filesystem.fileExists("\(container.paths.binPath)/gsed") {
-        await container.shell.quiet("\(container.paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
+        await container.shell.pipe("\(container.paths.binPath)/gsed -i --follow-symlinks 's/\(e_original)/\(e_replacement)/g' \(file)")
     } else {
-        await container.shell.quiet("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
+        await container.shell.pipe("sed -i '' 's/\(e_original)/\(e_replacement)/g' \(file)")
     }
 }
 
@@ -70,21 +70,4 @@ func delay(seconds: Double) async {
  */
 func url(_ string: String) -> URL {
     return URL(string: string)!
-}
-
-/**
- Execute a script with administrative privileges.
- */
-func sudo(_ script: String) throws {
-    let source = "do shell script \"\(script)\" with administrator privileges"
-
-    Log.info("Running script via AppleScript as administrator: `\(source)`")
-
-    let appleScript = NSAppleScript(source: source)
-
-    let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
-
-    if eventResult == nil {
-        throw AdminPrivilegeError(kind: .applescriptNilError)
-    }
 }

@@ -37,7 +37,7 @@ struct CustomPrefs: Decodable {
 extension Preferences {
     func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        await container.shell.quiet("mkdir -p ~/.config/phpmon")
+        await container.shell.pipe("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
         await moveOutdatedConfigurationFile()
@@ -57,7 +57,7 @@ extension Preferences {
         if container.filesystem.fileExists("~/.phpmon.conf.json")
             && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            await container.shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await container.shell.pipe("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }

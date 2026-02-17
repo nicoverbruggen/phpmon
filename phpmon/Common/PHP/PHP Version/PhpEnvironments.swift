@@ -218,7 +218,7 @@ class PhpEnvironments {
     }
 
     public func reloadPhpVersions() async {
-        _ = await self.detectPhpVersions()
+        await self.detectPhpVersions()
     }
 
     /**
@@ -228,6 +228,7 @@ class PhpEnvironments {
 
      Returns a `Set<String>` of installations that are considered valid.
      */
+    @discardableResult
     public func detectPhpVersions() async -> Set<String> {
         let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
 

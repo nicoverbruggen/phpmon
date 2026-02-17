@@ -63,7 +63,7 @@ struct RealFileSystemTest {
         #expect(filesystem.directoryExists("\(temporaryDirectory)/brew/etc/lib"))
         #expect(filesystem.directoryExists("\(temporaryDirectory)/brew/etc/lib/c"))
 
-        _ = system("ln -s \(temporaryDirectory)/brew/etc/lib/c \(temporaryDirectory)/c")
+        system("ln -s \(temporaryDirectory)/brew/etc/lib/c \(temporaryDirectory)/c")
         #expect(filesystem.directoryExists("\(temporaryDirectory)/c"))
         #expect(filesystem.isSymlink("\(temporaryDirectory)/c"))
         #expect(

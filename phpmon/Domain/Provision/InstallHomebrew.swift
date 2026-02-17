@@ -27,7 +27,7 @@ class InstallHomebrew {
             "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         """
 
-        _ = try await container.shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
+        try await container.shell.attach(script, didReceiveOutput: { (string: String, _: ShellStream) in
             print(string)
         }, withTimeout: 60 * 10)
     }

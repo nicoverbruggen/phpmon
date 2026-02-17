@@ -89,9 +89,9 @@ struct RealShellTest {
         let start = ContinuousClock.now
 
         await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.quiet("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.quiet("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.quiet("php -r \"usleep(700000);\"") }
+            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
+            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
+            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
         }
 
         let duration = start.duration(to: .now)

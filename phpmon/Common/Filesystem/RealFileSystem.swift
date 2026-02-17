@@ -87,7 +87,7 @@ class RealFileSystem: FileSystemProtocol {
     // MARK: — FS Attributes
 
     func makeExecutable(_ path: String) throws {
-        _ = container.shell.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
+        container.shell.sync("chmod +x \(path.replacingTildeWithHomeDirectory)")
     }
 
     // MARK: - Checks

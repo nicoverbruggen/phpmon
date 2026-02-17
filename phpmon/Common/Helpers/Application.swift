@@ -48,7 +48,7 @@ class Application {
      (This will open the app if it isn't open yet.)
      */
     @objc public func open(arg: String) {
-        Task { await container.shell.quiet("/usr/bin/open -a \"\(name)\" \"\(arg)\"") }
+        Task { await container.shell.pipe("/usr/bin/open -a \"\(name)\" \"\(arg)\"") }
     }
 
     /**

@@ -185,6 +185,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         return .out(stdOut, stdErr)
     }
 
+    @discardableResult
     func pipe(_ command: String) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
@@ -220,6 +221,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         }
     }
 
+    @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
@@ -285,10 +287,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         }
     }
 
-    func quiet(_ command: String) async {
-        _ = await self.pipe(command)
-    }
-
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,

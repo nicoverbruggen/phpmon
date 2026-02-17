@@ -11,6 +11,7 @@ import Foundation
 extension InternalSwitcher {
     typealias FixApplied = Bool
 
+    @discardableResult
     public func ensureValetConfigurationIsValidForPhpVersion(_ version: String) async -> FixApplied {
         // Early exit if Valet is not installed
         if !Valet.installed {

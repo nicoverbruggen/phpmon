@@ -22,6 +22,7 @@ protocol ShellProtocol {
      let output = Shell.sync("php -v")
      ```
      */
+    @discardableResult
     func sync(_ command: String) -> ShellOutput
 
     /**
@@ -33,6 +34,7 @@ protocol ShellProtocol {
     let output = await Shell.pipe("php -v")
      ```
      */
+    @discardableResult
     func pipe(_ command: String) async -> ShellOutput
 
     /**
@@ -43,13 +45,8 @@ protocol ShellProtocol {
      - Parameter timeout: Timeout in seconds. If the command exceeds this, it is terminated.
      - Returns: The shell output. If the command times out, returns empty output.
      */
+    @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput
-
-    /**
-     Run a command asynchronously, without returning the output of the command.
-     Returns the most relevant output (prefers error output if it exists).
-     */
-    func quiet(_ command: String) async
 
     /**
      Runs a command asynchronously, and fires closure with `stdout` or `stderr` data as it comes in.
@@ -61,6 +58,7 @@ protocol ShellProtocol {
      Unlike `sync`, `pipe` and `quiet`, you can capture both `stdout` and `stderr` with this mechanism.
      The end result is still the most relevant output (where error output is preferred if it exists).
      */
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,

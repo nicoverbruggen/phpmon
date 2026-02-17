@@ -71,7 +71,7 @@ class RemovePhpExtensionCommand: BrewCommand {
                 await performExtensionCleanup(for: ext)
             }
 
-            _ = await container.phpEnvs.detectPhpVersions()
+            await container.phpEnvs.detectPhpVersions()
 
             await Actions(container).restartPhpFpm(version: phpExtension.phpVersion)
 
