@@ -44,7 +44,26 @@ class Startup {
 
                     // If we get here, something's gone wrong and the check has failed...
                     Log.info("[FAIL] \(check.name) (\(start.milliseconds) ms)")
-                    await showAlert(for: check)
+
+                    // We will present the user with an option (potentially)
+                    let outcome = await showAlert(for: check)
+
+                    if outcome == .shouldRunFix {
+                        // First, validate there's a fix
+                        guard let command = check.fixCommand else {
+                            return false
+                        }
+
+                        // We will try to run the fix, it may fail!
+                        do {
+                            try await command(App.shared.container)
+                            return await check.succeeds()
+                        } catch {
+                            // our fix failed :(
+                            return false
+                        }
+                    }
+
                     return false
                 }
             } else {
@@ -59,12 +78,17 @@ class Startup {
         return true
     }
 
+    enum EnvironmentAlertOutcome {
+        case shouldRunFix
+        case shouldRetryStartup
+    }
+
     /**
      Displays an alert for a particular check. There are two types of alerts:
      - ones that require an app restart, which prompt the user to exit the app
      - ones that allow the app to continue, which allow the user to retry
      */
-    @MainActor private func showAlert(for check: EnvironmentCheck) {
+    @MainActor private func showAlert(for check: EnvironmentCheck) -> EnvironmentAlertOutcome {
         // Ensure that the timeout does not fire until we restart
         Self.startupTimer?.invalidate()
 
@@ -80,14 +104,30 @@ class Startup {
                 }).show(urgency: .bringToFront)
         }
 
-        NVAlert()
+        // Verify if an automatic fix is available
+        let hasAutomaticFix = check.fixCommand != nil
+
+        // Present an alert with one or two buttons (depending on fix)
+        let outcome = NVAlert()
             .withInformation(
                 title: check.titleText,
                 subtitle: check.subtitleText,
                 description: check.descriptionText
             )
-            .withPrimary(text: "generic.ok".localized)
-            .show(urgency: .bringToFront)
+            .withPrimary(text: hasAutomaticFix ? "startup.fix_for_me".localized : "startup.fix_manually".localized)
+            .withSecondary(if: hasAutomaticFix, text: "startup.fix_manually".localized)
+            .withTertiary(if: hasAutomaticFix, text: "", action: { _ in
+                NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
+            })
+            .runModal(urgency: .bringToFront)
+
+        // If there's an automatic fix and we chose to fix it, return outcome
+        if hasAutomaticFix && outcome == .alertFirstButtonReturn {
+            return .shouldRunFix
+        }
+
+        // In any other situation, we will require a retry of the startup
+        return .shouldRetryStartup
     }
 
     // MARK: - Check (List)
@@ -211,6 +251,9 @@ class Startup {
                     return await !container.shell
                         .pipe("cat /private/etc/sudoers.d/brew")
                         .out.contains(container.paths.brew)
+                },
+                fix: { container in
+                    try sudo("export USER=\(container.paths.whoami) && export PATH=/bin:/usr/bin:\(container.paths.binPath) && valet trust")
                 },
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,

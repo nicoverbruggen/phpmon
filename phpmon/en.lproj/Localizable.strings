@@ -958,3 +958,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor.\n\nIn such a case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a potential security risk.";
 "alert.enable_integrations.ok" = "Allow Integrations";
 "alert.enable_integrations.cancel" = "Don't Allow";
+
+// AUTOMATIC FIXES AT STARTUP
+
+"startup.fix_for_me" = "Fix For Me";
+"startup.fix_manually" = "I Fixed It";
