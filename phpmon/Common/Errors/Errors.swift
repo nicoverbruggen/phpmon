@@ -1,5 +1,5 @@
 //
-//  VersionParseError.swift
+//  Errors.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/02/2022.
@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Alertable Errors
 // These errors must be resolved by the user.
 
-struct HomebrewPermissionError: Error, AlertableError {
+struct AdminPrivilegeError: Error, AlertableError {
     enum Kind: String {
         case applescriptNilError = "homebrew_permissions.applescript_returned_nil"
     }

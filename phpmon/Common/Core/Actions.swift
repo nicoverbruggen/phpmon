@@ -81,16 +81,7 @@ class Actions {
             + " && "
             + cellarCommands.joined(separator: " && ")
 
-        let source = "do shell script \"\(script)\" with administrator privileges"
-
-        Log.perf(source)
-        let appleScript = NSAppleScript(source: source)
-
-        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
-
-        if eventResult == nil {
-            throw HomebrewPermissionError(kind: .applescriptNilError)
-        }
+        try sudo(script)
     }
 
     // MARK: - Finding Config Files

@@ -71,3 +71,20 @@ func delay(seconds: Double) async {
 func url(_ string: String) -> URL {
     return URL(string: string)!
 }
+
+/**
+ Execute a script with administrative privileges.
+ */
+func sudo(_ script: String) throws {
+    let source = "do shell script \"\(script)\" with administrator privileges"
+
+    Log.info("Running script via AppleScript as administrator: `\(source)`")
+
+    let appleScript = NSAppleScript(source: source)
+
+    let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
+
+    if eventResult == nil {
+        throw AdminPrivilegeError(kind: .applescriptNilError)
+    }
+}

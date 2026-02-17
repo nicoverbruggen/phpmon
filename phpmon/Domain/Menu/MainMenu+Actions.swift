@@ -56,7 +56,7 @@ extension MainMenu {
                 .withPrimary(text: "generic.ok".localized)
                 .show(urgency: .bringToFront)
         } failure: { error in
-            NVAlert.show(for: error as! HomebrewPermissionError)
+            NVAlert.show(for: error as! AdminPrivilegeError)
         }
     }
 
