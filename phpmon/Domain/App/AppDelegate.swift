@@ -8,7 +8,7 @@
 import Cocoa
 import UserNotifications
 
-@NSApplicationMain
+@main
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
 
     static var instance: AppDelegate {
@@ -55,6 +55,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         logger.verbosity = .performance
         Log.info("Extra verbose mode is enabled by default on DEBUG builds.")
 
+        // No matter what, clear PHP Guard if it's a debug build
+        Stats.clearCurrentGlobalPhpVersion()
+
         if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
             AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
         }
@@ -80,10 +83,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("PHP MONITOR by Nico Verbruggen")
             Log.info("Version \(App.version)")
             Log.separator(as: .info)
-        }
 
-        // Initialize the crash reporter
-        CrashReporter.initialize()
+            // Initialize the crash reporter
+            CrashReporter.initialize()
+        }
 
         // Set up final singletons
         self.valet = Valet.shared
@@ -93,8 +96,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     static func initializeTestingProfile(_ path: String) {
         Log.info("The configuration with path `\(path)` is being requested...")
-        // Clear for PHP Guard
-        Stats.clearCurrentGlobalPhpVersion()
         // Load the configuration file
         TestableConfiguration.loadFrom(path: path).apply()
     }

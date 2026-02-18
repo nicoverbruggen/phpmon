@@ -1,5 +1,5 @@
 //
-//  MiniHeaderView.swift
+//  HeaderView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 10/06/2022.

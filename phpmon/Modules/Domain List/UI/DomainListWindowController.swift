@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftUI
 
 class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NSToolbarDelegate {
 
@@ -61,18 +62,33 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     // MARK: - Add a new site
 
     func showSelectionWindow() {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        var hostingController: NSHostingController<SelectDomainTypeView>!
 
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "showSelectionWindow"
-        ) as! NSWindowController
+        let view = SelectDomainTypeView(
+            onCancel: {
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .cancel)
+            },
+            onCreateLink: {
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .continue)
+                self.startCreateLinkFlow()
+            },
+            onCreateProxy: {
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .continue)
+                self.startCreateProxyFlow()
+            }
+        )
 
-        let viewController = windowController.window!
-            .contentViewController as! SelectionVC
-
-        viewController.domainListWC = self
-
-        self.window?.beginSheet(windowController.window!)
+        hostingController = NSHostingController(rootView: view)
+        hostingController.sizingOptions = .preferredContentSize
+        let sheetWindow = NSWindow(contentViewController: hostingController)
+        sheetWindow.styleMask = [.titled, .fullSizeContentView]
+        self.window?.beginSheet(sheetWindow)
     }
 
     func startCreateLinkFlow() {

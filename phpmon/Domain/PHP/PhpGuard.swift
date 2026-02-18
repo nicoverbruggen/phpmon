@@ -47,6 +47,11 @@ class PhpGuard {
         // At this point, the version is *not* a match
         Log.info("PHP Guard noticed a different PHP version. An alert will be displayed!")
 
+        // Exit early if we're running tests; PHP Guard may interfere
+        if isRunningSwiftUIPreview || isRunningTests {
+            return
+        }
+
         Task { @MainActor in
             NVAlert()
                 .withInformation(
