@@ -295,7 +295,7 @@ You may be asked for your password during the uninstallation process if file per
 
 // ADD PROXY TO DOMAINS LIST
 
-"domain_list.add.set_up_proxy" = "Set up a Proxy";
+"domain_list.add.set_up_proxy" = "Configure a Proxy";
 "domain_list.add.proxy_subject" = "Proxy subject (must include protocol and port)";
 "domain_list.add.domain_name" = "Domain name";
 "domain_list.add.create_proxy" = "Create Proxy";

@@ -119,27 +119,74 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     }
 
     private func showLinkPopup(_ folder: String) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        var hostingController: NSHostingController<AddSiteView>!
 
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "addSiteWindow"
-        ) as! NSWindowController
+        let view = AddSiteView(
+            path: folder,
+            tld: Valet.shared.config.tld,
+            onCancel: {
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .cancel)
+            },
+            onConfirm: { name, secure in
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                Task {
+                    self.contentVC.setUIBusy()
+                    try? await ValetInteractor.shared.link(path: folder, domain: name)
+                    self.contentVC.setUINotBusy()
 
-        let viewController = windowController.window!.contentViewController as! AddSiteVC
-        viewController.pathControl.url = URL(fileURLWithPath: folder)
-        viewController.inputDomainName.stringValue = String(folder.split(separator: "/").last!)
-        viewController.updateTextField()
+                    await self.contentVC.addedNewSite(name: name, secureAfterLinking: secure)
+                    self.searchToolbarItem.searchField.stringValue = ""
+                }
+                parent.endSheet(window, returnCode: .OK)
+            },
+            domainExists: { name in
+                Valet.shared.sites.contains(where: { $0.name == name })
+            }
+        )
 
-        self.window?.beginSheet(windowController.window!)
+        hostingController = NSHostingController(rootView: view)
+        hostingController.sizingOptions = .preferredContentSize
+        let sheetWindow = NSWindow(contentViewController: hostingController)
+        sheetWindow.styleMask = [.titled, .fullSizeContentView]
+        self.window?.beginSheet(sheetWindow)
     }
 
     private func showProxyPopup() {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        var hostingController: NSHostingController<AddProxyView>!
 
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "addProxyWindow"
-        ) as! NSWindowController
+        let view = AddProxyView(
+            tld: Valet.shared.config.tld,
+            onCancel: {
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .cancel)
+            },
+            onConfirm: { domain, proxy, secure in
+                guard let window = hostingController.view.window,
+                      let parent = window.sheetParent else { return }
+                parent.endSheet(window, returnCode: .OK)
+                self.contentVC.setUIBusy()
+                Task {
+                    try? await ValetInteractor.shared.proxy(domain: domain, proxy: proxy, secure: secure)
 
-        self.window?.beginSheet(windowController.window!)
+                    await MainActor.run {
+                        self.contentVC.setUINotBusy()
+                        self.pressedReload(nil)
+                    }
+                }
+            },
+            domainExists: { name in
+                Valet.shared.sites.contains(where: { $0.name == name })
+            }
+        )
+
+        hostingController = NSHostingController(rootView: view)
+        hostingController.sizingOptions = .preferredContentSize
+        let sheetWindow = NSWindow(contentViewController: hostingController)
+        sheetWindow.styleMask = [.titled, .fullSizeContentView]
+        self.window?.beginSheet(sheetWindow)
     }
 }

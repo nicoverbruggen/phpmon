@@ -239,11 +239,12 @@ extension DomainListVC {
     }
 
     private func addRemoveProxy(to menu: NSMenu) {
-        menu.addItem(
-            withTitle: "domain_list.unproxy".localized,
+        menu.addItem(NSMenuItem(
+            title: "domain_list.unproxy".localized,
             action: #selector(self.removeProxy),
-            keyEquivalent: ""
-        )
+            keyEquivalent: "",
+            systemImage: "trash"
+        ))
     }
 
     // MARK: - Shared
