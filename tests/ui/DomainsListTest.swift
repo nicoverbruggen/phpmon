@@ -46,7 +46,7 @@ final class DomainsListTest: UITestCase {
         sleep(1)
     }
 
-    final func test_can_tap_add_domain_button() throws {
+    final func test_can_click_add_domain_button() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
@@ -60,6 +60,50 @@ final class DomainsListTest: UITestCase {
         assertExists(app.buttons["selection.create_link".localized])
         assertExists(app.buttons["selection.create_proxy".localized])
         assertExists(app.buttons["selection.cancel".localized])
+
+        sleep(1)
+    }
+
+    final func test_can_open_create_link_view() throws {
+        let app = launch(openMenu: true)
+
+        app.menuItems["mi_domain_list".localized].click()
+
+        let window = app.windows.element(boundBy: 0)
+        XCTAssertEqual(window.title, "domain_list.title".localized)
+
+        window.buttons["Add Link"].click()
+        app.buttons["selection.create_link".localized].click()
+
+        // NSOpenPanel opens as a sheet — use Go to Folder to navigate to /tmp and confirm
+        Thread.sleep(forTimeInterval: 0.3)
+        app.typeKey("g", modifierFlags: [.command, .shift])
+        Thread.sleep(forTimeInterval: 0.2)
+        app.typeText("/tmp\n")
+        Thread.sleep(forTimeInterval: 0.2)
+        app.typeKey(.return, modifierFlags: [])
+
+        assertExists(app.staticTexts["domain_list.add.link_folder".localized])
+        assertExists(app.buttons["domain_list.add.cancel".localized])
+
+        sleep(1)
+    }
+
+    final func test_can_open_create_proxy_view() throws {
+        let app = launch(openMenu: true)
+
+        app.menuItems["mi_domain_list".localized].click()
+
+        let window = app.windows.element(boundBy: 0)
+        XCTAssertEqual(window.title, "domain_list.title".localized)
+
+        window.buttons["Add Link"].click()
+        app.buttons["selection.create_proxy".localized].click()
+
+        assertExists(app.staticTexts["domain_list.add.set_up_proxy".localized])
+        assertExists(app.staticTexts["domain_list.add.proxy_subject".localized])
+        assertExists(app.staticTexts["domain_list.add.domain_name".localized])
+        assertExists(app.buttons["domain_list.add.cancel".localized])
 
         sleep(1)
     }
