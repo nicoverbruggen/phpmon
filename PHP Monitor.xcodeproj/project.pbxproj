@@ -83,6 +83,7 @@
 		036061D82F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061D92F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061DA2F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
+		036061DC2F4C7AE700B5998F /* SettingsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DB2F4C7AE100B5998F /* SettingsTest.swift */; };
 		036C39022E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39032E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39042E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
@@ -1074,6 +1075,7 @@
 		034515482EC4FBB500472561 /* bn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515492EC4FBBD00472561 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		036061D62F4C705800B5998F /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		036061DB2F4C7AE100B5998F /* SettingsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTest.swift; sourceTree = "<group>"; };
 		036C39012E5C883A008DAEDF /* Packagist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packagist.swift; sourceTree = "<group>"; };
 		036C39072E5C88A2008DAEDF /* PackagistTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistTest.swift; sourceTree = "<group>"; };
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
@@ -2126,6 +2128,7 @@
 		C471E7BD28F9B90F0021E251 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				036061DB2F4C7AE100B5998F /* SettingsTest.swift */,
 				C471E7BE28F9B90F0021E251 /* StartupTest.swift */,
 				C469E702294CFDF700A82AB2 /* DomainsListTest.swift */,
 				C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */,
@@ -3324,6 +3327,7 @@
 				C471E89C28F9BB8F0021E251 /* ValetSite.swift in Sources */,
 				031D74882F46307300D4FF48 /* AddSiteView.swift in Sources */,
 				C471E89D28F9BB8F0021E251 /* FakeValetSite.swift in Sources */,
+				036061DC2F4C7AE700B5998F /* SettingsTest.swift in Sources */,
 				C471E89F28F9BB8F0021E251 /* ValetDomainScanner.swift in Sources */,
 				C471E8A028F9BB8F0021E251 /* FakeDomainScanner.swift in Sources */,
 				C471E8A228F9BB8F0021E251 /* AppDelegate.swift in Sources */,
