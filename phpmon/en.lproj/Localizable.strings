@@ -64,7 +64,7 @@
 "mi_valet" = "Laravel Valet";
 "mi_domain_list" = "View Domains List...";
 
-"mi_preferences" = "Preferences...";
+"mi_preferences" = "Settings...";
 "mi_donate" = "Donate...";
 "mi_check_for_updates" = "Check for Updates...";
 "mi_lite_mode" = "About Standalone Mode...";
@@ -386,10 +386,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "editors.alert.try_again" = "Try Again";
 "editors.alert.cancel" = "Cancel";
 
-// PREFERENCES
+// SETTINGS (previously PREFERENCES)
 
 "prefs.title" = "PHP Monitor";
-"prefs.subtitle" = "Preferences";
+"prefs.subtitle" = "Settings";
 "prefs.close" = "Close";
 
 "prefs.tabs.general" = "General";
@@ -640,7 +640,7 @@ You can do this by running `composer global update` in your terminal. After that
 // Composer issues
 "alert.global_composer_platform_issues.title" = "Composer detected issues in your platform";
 "alert.global_composer_platform_issues.subtitle" = "The version of PHP you switched to is too old for the global Composer dependencies you have installed. These dependencies will need to be updated.";
-"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
+"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Settings to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
 "alert.global_composer_platform_issues.buttons.update" = "Update Global Dependencies";
 "alert.global_composer_platform_issues.buttons.quit" = "Quit PHP Monitor";
 
@@ -725,7 +725,7 @@ If you are seeing this message but are confused why this folder has gone missing
 // Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
 "startup.errors.global_composer_platform_issues.subtitle" = "Please follow these recommended steps to avoid seeing this issue in the future:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. (It should work again.)\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again.";
-"startup.errors.global_composer_platform_issues.desc" = "You can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
+"startup.errors.global_composer_platform_issues.desc" = "You can go to Settings and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
 
 // Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
@@ -833,7 +833,7 @@ COMMON TROUBLESHOOTING TIPS
 
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
-"warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
+"warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Settings, but it is recommended that you deal with all actionable items.";
 "warnings.refresh.button" = "Scan Again";
 "warnings.refresh.button.description" = "Press this button if you've manually fixed an issue. This will cause PHP Monitor to re-evaluate your environment. (Automatic fixes do not require you to press this button.)";
 
@@ -954,7 +954,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 // THIRD-PARTY INTEGRATIONS
 
 "alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor. Do you want third-party applications to be able to communicate with PHP Monitor?";
-"alert.enable_integrations.subtitle" = "This notice appears because PHP Monitor just received an external command, and this feature is disabled by default. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is normally safe to allow this.\n\nYou can change this setting later in Preferences, you will be asked this question only once.";
+"alert.enable_integrations.subtitle" = "This notice appears because PHP Monitor just received an external command, and this feature is disabled by default. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is normally safe to allow this.\n\nYou can change this setting later in Settings, you will be asked this question only once.";
 "alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor.\n\nIn such a case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a potential security risk.";
 "alert.enable_integrations.ok" = "Allow Integrations";
 "alert.enable_integrations.cancel" = "Don't Allow";

@@ -65,7 +65,7 @@ extension String {
             return NSLocalizedString(self, bundle: bundle, comment: "")
         }
 
-        return string.replacing("Preferences", with: "Settings")
+        return string
     }
 
     var localizedForSwiftUI: LocalizedStringKey {
@@ -74,6 +74,13 @@ extension String {
 
     func localized(_ args: CVarArg...) -> String {
         String(format: self.localized, arguments: args)
+    }
+
+    func localized(for locale: String = "en") -> String {
+        guard let path = Localization.bundle.path(forResource: locale, ofType: "lproj"),
+            let bundle = Bundle(path: path)
+        else { return self }
+        return NSLocalizedString(self, bundle: bundle, comment: "")
     }
 
     func countInstances(of stringToFind: String) -> Int {
