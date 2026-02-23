@@ -28,13 +28,14 @@ extension AppDelegate {
     @IBAction func addSiteLinkPressed(_ sender: Any) {
         DomainListVC.show()
 
-        guard let windowController = App.shared.domainListWindowController else { return }
+        guard let windowController = WindowManager.controller(of: DomainListWC.self) else { return }
         windowController.pressedAddLink(nil)
     }
 
     @IBAction func reloadDomainListPressed(_ sender: Any) {
         Task { // Reload domains
-            let vc = App.shared.domainListWindowController?
+            let vc = WindowManager
+                .controller(of: DomainListWC.self)?
                 .window?.contentViewController as? DomainListVC
 
             if vc != nil {
@@ -50,7 +51,7 @@ extension AppDelegate {
     @IBAction func focusSearchField(_ sender: Any) {
         DomainListVC.show()
 
-        guard let windowController = App.shared.domainListWindowController else { return }
+        guard let windowController = WindowManager.controller(of: DomainListWC.self) else { return }
         windowController.searchToolbarItem.searchField.becomeFirstResponder()
     }
 

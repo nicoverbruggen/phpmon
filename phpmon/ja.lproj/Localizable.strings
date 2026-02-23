@@ -265,7 +265,7 @@
 "prefs.tabs.appearance" = "外観";
 "prefs.tabs.visibility" = "可視性";
 "prefs.tabs.notifications" = "通知";
-"prefs.global_shortcut" = "グローバルショートカット：";
+"prefs.global_shortcut" = "グローバルキー：";
 "prefs.dynamic_icon" = "アイコンタイプ:";
 "prefs.info_density" = "情報密度:";
 "prefs.services" = "サービス:";

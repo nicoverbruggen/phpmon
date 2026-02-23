@@ -29,18 +29,18 @@ class OnboardingWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: OnboardingView())
         window.setContentSize(window.contentView!.fittingSize)
 
-        App.shared.onboardingWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.onboardingWindowController == nil {
+        if !WindowManager.hasController(for: OnboardingWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.onboardingWindowController?.showWindow(self)
-        App.shared.onboardingWindowController?.window?.setCenterPosition(offsetY: 70)
-
-        NSApp.activate(ignoringOtherApps: true)
+        WindowManager.show(OnboardingWC.self)
+        WindowManager.withWindow(for: OnboardingWC.self) { window in
+            window.setCenterPosition(offsetY: 70)
+        }
     }
 
     override func close() {

@@ -137,7 +137,9 @@ class PhpEnvironments {
             // Update the synchronized value
             _currentInstall.value = newValue
             // Let the PHP extension manager, if it exists, know the version changed
-            App.shared.phpExtensionManagerWindowController?.view.didUpdatePhpVersion()
+            WindowManager
+                .controller(of: PhpExtensionManagerWC.self)?
+                .view.didUpdatePhpVersion()
         }
     }
 

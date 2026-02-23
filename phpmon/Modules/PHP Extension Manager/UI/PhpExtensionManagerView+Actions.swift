@@ -16,15 +16,17 @@ extension PhpExtensionManagerView {
         button: String,
         style: NSAlert.Style = .critical
     ) {
-        Alert.confirm(
-            onWindow: App.shared.phpExtensionManagerWindowController!.window!,
-            messageText: title,
-            informativeText: description,
-            buttonTitle: button,
-            secondButtonTitle: "",
-            style: style,
-            onFirstButtonPressed: {}
-        )
+        WindowManager.withWindow(for: PhpExtensionManagerWC.self) { window in
+            Alert.confirm(
+                onWindow: window,
+                messageText: title,
+                informativeText: description,
+                buttonTitle: button,
+                secondButtonTitle: "",
+                style: style,
+                onFirstButtonPressed: {}
+            )
+        }
     }
 
     public func install(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
@@ -35,21 +37,23 @@ extension PhpExtensionManagerView {
     }
 
     public func confirmUninstall(_ ext: BrewPhpExtension, onCompletion: @escaping () -> Void = {}) {
-        Alert.confirm(
-            onWindow: App.shared.phpExtensionManagerWindowController!.window!,
-            messageText: "phpextman.warnings.removal.title".localized(ext.name),
-            informativeText: "phpextman.warnings.removal.desc".localized(ext.name),
-            buttonTitle: "phpextman.warnings.removal.button".localized,
-            buttonIsDestructive: true,
-            secondButtonTitle: "generic.cancel".localized,
-            style: .warning,
-            onFirstButtonPressed: {
-                Task {
-                    await self.runCommand(RemovePhpExtensionCommand(container, remove: ext))
-                    onCompletion()
+        WindowManager.withWindow(for: PhpExtensionManagerWC.self) { window in
+            Alert.confirm(
+                onWindow: window,
+                messageText: "phpextman.warnings.removal.title".localized(ext.name),
+                informativeText: "phpextman.warnings.removal.desc".localized(ext.name),
+                buttonTitle: "phpextman.warnings.removal.button".localized,
+                buttonIsDestructive: true,
+                secondButtonTitle: "generic.cancel".localized,
+                style: .warning,
+                onFirstButtonPressed: {
+                    Task {
+                        await self.runCommand(RemovePhpExtensionCommand(container, remove: ext))
+                        onCompletion()
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     public func runCommand(_ command: BrewCommand) async {

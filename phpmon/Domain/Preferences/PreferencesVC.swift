@@ -56,15 +56,11 @@ class GenericPreferenceVC: NSViewController {
             action: {
                 MainMenu.shared.refreshIcon()
                 MainMenu.shared.rebuild()
+                App.shared.invalidateCachedWindows()
 
-                if let window = App.shared.preferencesWindowController?.window {
-                    let alert = NSAlert()
-                    alert.messageText = "alert.language_changed.title".localized
-                    alert.informativeText = "alert.language_changed.subtitle".localized
-                    alert.alertStyle = .warning
-                    alert.addButton(withTitle: "generic.ok".localized)
-                    alert.beginSheetModal(for: window)
-                }
+                // Re-open the preferences VC
+                WindowManager.close(PreferencesWC.self)
+                PreferencesWindowController.show()
             }
         )
     }

@@ -117,7 +117,7 @@ extension MainMenu {
     }
 
     private func reloadDomainListData() async {
-        if let window = App.shared.domainListWindowController {
+        if let window = WindowManager.controller(of: DomainListWC.self) {
             await window.contentVC.reloadDomains()
         } else {
             await Valet.shared.reloadSites()

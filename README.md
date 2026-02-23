@@ -642,7 +642,7 @@ Thank you very much for your contributions, kind words and support.
 
 ### Loading info about PHP in the background
 
-This app runs `php-config --version` in the background periodically, usually whenever your Homebrew configuration is modified. A filesystem watcher is used to determine if anything changes in your Homebrew's `bin` directory. 
+This app runs `php-config --version` in the background, usually whenever your Homebrew configuration is modified. A filesystem watcher is used to determine if anything changes in your Homebrew's `bin` directory. 
 
 PHP Monitor also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). See also the section on *Config change detection* below.
 

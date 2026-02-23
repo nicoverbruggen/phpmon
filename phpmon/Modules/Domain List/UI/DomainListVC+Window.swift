@@ -27,16 +27,14 @@ extension DomainListVC {
         window.minSize = NSSize(width: 550, height: 200)
         window.setFrameAutosaveName("domainListWindow")
 
-        App.shared.domainListWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.domainListWindowController == nil {
+        if !WindowManager.hasController(for: DomainListWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.domainListWindowController!.showWindow(self)
-        NSApp.activate(ignoringOtherApps: true)
-        App.shared.domainListWindowController?.window?.orderFrontRegardless()
+        WindowManager.show(DomainListWC.self)
     }
 }

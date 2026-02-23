@@ -81,35 +81,11 @@ class App {
      */
     var container: Container = Container()
 
-    /** The window controller of the currently active preferences window. */
-    var preferencesWindowController: PreferencesWindowController?
-
-    /** The window controller of the currently active site list window. */
-    var domainListWindowController: DomainListWindowController?
-
-    /** The window controller of the onboarding window. */
-    var onboardingWindowController: OnboardingWindowController?
-
-    /** The window controller of the config manager window. */
-    var phpConfigManagerWindowController: PhpConfigManagerWindowController?
-
-    /** The window controller of the warnings window. */
-    var phpDoctorWindowController: PhpDoctorWindowController?
-
-    /** The window controller of the PHP version manager window. */
-    var phpVersionManagerWindowController: PhpVersionManagerWindowController?
-
-    /** The window controller of the PHP extension manager window. */
-    var phpExtensionManagerWindowController: PhpExtensionManagerWindowController?
-
     /** URL that was received before the app finished booting. Will be processed once the startup procedure completes. */
     var deferredURL: URL?
 
     /** List of detected (installed) applications that PHP Monitor can work with. */
     var detectedApplications: [Application] = []
-
-    /** Timer that will periodically reload info about the user's PHP installation. */
-    var timer: Timer?
 
     // MARK: - Global Hotkey
 
@@ -122,7 +98,7 @@ class App {
         }
     }
 
-    // MARK: - Activation Policy
+    // MARK: - Windows and Activation Policy
 
     /**
      Variable that keeps track of which windows are currently open.

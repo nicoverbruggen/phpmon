@@ -30,47 +30,50 @@ class PreferencesWindowController: PMWindowController {
         window.delegate = delegate ?? windowController
         window.styleMask = [.titled, .closable, .miniaturizable]
 
-        App.shared.preferencesWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
         var justCreated = false
 
-        if App.shared.preferencesWindowController == nil {
+        if !WindowManager.hasController(for: PreferencesWC.self) {
             Self.create(delegate: delegate)
-
-            guard let preferencesWC = App.shared.preferencesWindowController else {
-                return
-            }
-
-            guard let tabVC = preferencesWC.contentViewController as? NSTabViewController else {
-                return
-            }
-
-            for vc in preferencesWC.tabVCs {
-                tabVC.addChild(vc.viewController)
-                let item = tabVC.tabViewItem(for: vc.viewController)
-                item?.image = NSImage(systemSymbolName: vc.icon, accessibilityDescription: "\(vc.label) Icon")
-                item?.label = vc.label
-            }
-
-            tabVC.preferredContentSize = NSSize(
-                width: tabVC.view.frame.size.width,
-                height: tabVC.view.frame.size.height
-            )
-
             justCreated = true
         }
 
-        App.shared.preferencesWindowController?.showWindow(self)
-
-        if justCreated {
-            App.shared.preferencesWindowController?.positionWindowInTopRightCorner()
+        guard let preferencesWC = WindowManager.controller(of: PreferencesWC.self) else {
+            return
         }
 
-        App.shared.preferencesWindowController?.window?.orderFrontRegardless()
+        if justCreated {
+            addContentTabs(to: preferencesWC)
+        }
+
+        WindowManager.show(PreferencesWC.self)
+
+        if justCreated {
+            preferencesWC.positionWindowInTopRightCorner()
+        }
 
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    private static func addContentTabs(to preferencesWC: PreferencesWC) {
+        guard let tabVC = preferencesWC.contentViewController as? NSTabViewController else {
+            return
+        }
+
+        for vc in preferencesWC.tabVCs {
+            tabVC.addChild(vc.viewController)
+            let item = tabVC.tabViewItem(for: vc.viewController)
+            item?.image = NSImage(systemSymbolName: vc.icon, accessibilityDescription: "\(vc.label) Icon")
+            item?.label = vc.label
+        }
+
+        tabVC.preferredContentSize = NSSize(
+            width: tabVC.view.frame.size.width,
+            height: tabVC.view.frame.size.height
+        )
     }
 
     // MARK: - Tabs

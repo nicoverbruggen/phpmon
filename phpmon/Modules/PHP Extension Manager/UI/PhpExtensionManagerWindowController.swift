@@ -34,19 +34,16 @@ class PhpExtensionManagerWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: windowController.view)
         window.setContentSize(NSSize(width: 600, height: 800))
 
-        App.shared.phpExtensionManagerWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.phpExtensionManagerWindowController == nil {
+        if !WindowManager.hasController(for: PhpExtensionManagerWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.phpExtensionManagerWindowController?.showWindow(self)
-        App.shared.phpExtensionManagerWindowController?.positionWindowInTopRightCorner()
-
-        NSApp.activate(ignoringOtherApps: true)
-
-        App.shared.phpExtensionManagerWindowController?.window?.orderFrontRegardless()
+        WindowManager.show(PhpExtensionManagerWC.self)
+        WindowManager.controller(of: PhpExtensionManagerWC.self)?
+            .positionWindowInTopRightCorner()
     }
 }
