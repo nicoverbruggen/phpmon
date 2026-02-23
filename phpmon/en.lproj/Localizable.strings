@@ -231,6 +231,7 @@ You may be asked for your password during the uninstallation process if file per
 "generic.cancel" = "Cancel";
 "generic.retry" = "Retry";
 "generic.notice" = "Notice";
+"generic.search" = "Search";
 
 // PRESET LOADING
 

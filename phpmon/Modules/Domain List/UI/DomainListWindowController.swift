@@ -25,6 +25,7 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
 
     override func windowDidLoad() {
         super.windowDidLoad()
+        self.searchToolbarItem.searchField.placeholderString = "generic.search".localized
         self.searchToolbarItem.searchField.delegate = self
         self.searchToolbarItem.searchField.becomeFirstResponder()
     }

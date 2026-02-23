@@ -163,6 +163,7 @@
 "generic.cancel" = "Annuler";
 "generic.retry" = "Réessayer";
 "generic.notice" = "Notice";
+"generic.search" = "Rechercher";
 "preset_help_title" = "Utilisation des paramètres de configuration";
 "preset_help_info" = "Vous pouvez configurer des paramètres de configuration dans le fichier config.json, situé dans ~/.config/phpmon/config.json. Ces paramètres peuvent appliquer une sélection de valeurs de configuration en une seule fois. Il s'agit d'une fonctionnalité puissante, mais qui doit actuellement être configurée manuellement.";
 "preset_help_desc" = "Après avoir redémarré PHP Monitor, tous les paramètres présents dans le fichier seront chargés. Si aucun paramètre n'apparaît, il est probable que le fichier n'ait pas pu être analysé correctement.\n\nVous pouvez cliquer sur le point d'interrogation dans cette alerte pour accéder à la FAQ sur GitHub, où vous trouverez plus d'informations sur cette fonctionnalité, y compris un exemple de fichier.";

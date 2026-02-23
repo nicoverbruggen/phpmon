@@ -163,6 +163,7 @@
 "generic.cancel" = "Cancelar";
 "generic.retry" = "Tentar novamente";
 "generic.notice" = "Aviso";
+"generic.search" = "Procurar";
 "preset_help_title" = "Trabalhando com predefinições de configuração";
 "preset_help_info" = "Você pode criar predefinições de configuração no ficheiro config.json, localizado na diretoria ~/.config/phpmon/config.json. Essas predefinições permitem aplicar um conjunto de valores de configuração num unico passo. É uma funcionalidade potente, mas que precisa ser configurada manualmente.";
 "preset_help_desc" = "Após reiniciar o PHP Monitor, todas as predefinições encontradas no ficheiro serão carregadas. Se nenhuma predefinição for aplicada, o ficheiro provavelmente terá algum erro de parametrização.\n\nPode clicar no ponto de interrogação no alerta para visualizar o FAQ no GitHub, onde pode encontrar mais informações sobre esta funcionalidade, incluindo um exemplo de um ficheiro de configuração.";

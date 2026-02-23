@@ -163,6 +163,7 @@
 "generic.cancel" = "Abbrechen";
 "generic.retry" = "Wiederholen";
 "generic.notice" = "Hinweis";
+"generic.search" = "Suchen";
 "preset_help_title" = "Arbeiten mit Konfigurationsvoreinstellungen";
 "preset_help_info" = "Sie können in der Datei config.json, die sich in ~/.config/phpmon/config.json befindet, Konfigurationsvoreinstellungen festlegen. Diese Voreinstellungen können eine Auswahl von Konfigurationswerten auf einmal anwenden. Dies ist eine leistungsstarke Funktion, die derzeit jedoch manuell eingerichtet werden muss.";
 "preset_help_desc" = "Nach einem Neustart von PHP Monitor werden alle in der Datei gefundenen Voreinstellungen geladen. Wenn keine Voreinstellungen angezeigt werden, konnte die Datei wahrscheinlich nicht korrekt geparst werden.\n\nSie können auf das Fragezeichen in dieser Meldung klicken, um zu den FAQ auf GitHub zu gelangen, wo Sie weitere Informationen über diese Funktion finden, einschließlich einer Beispieldatei.";

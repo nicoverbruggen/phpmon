@@ -163,6 +163,7 @@
 "generic.cancel" = "İptal";
 "generic.retry" = "Tekrar dene";
 "generic.notice" = "Bildirim";
+"generic.search" = "Ara";
 "preset_help_title" = "Konfigürasyon Ön Ayarlarıyla Çalışma";
 "preset_help_info" = "Ayarlarınızı, ~/.config/phpmon/config.json içinde bulunan config.json dosyasında yapılandırma ön ayarları olarak ayarlayabilirsiniz. Bu ön ayarlar tüm konfigürasyon değerlerini aynı anda uygulayabilir. Bu güçlü bir özelliktir, ancak şu anda manuel olarak ayarlanması gerekir.";
 "preset_help_desc" = "PHP Monitor yeniden başlatıldıktan sonra dosyada bulunan tüm ön ayarlar yüklenir. Hiç ön ayar görünmezse, dosya muhtemelen doğru şekilde ayrıştırılamamıştır.\n\nBu uyarıda soru işaretine tıklayarak GitHub'daki SSS sayfasına gidebilir, bu özellik hakkında daha fazla bilgi bulabilir ve örnek bir dosya görebilirsiniz.";

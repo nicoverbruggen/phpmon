@@ -163,6 +163,7 @@
 "generic.cancel" = "Annulla";
 "generic.retry" = "Riprova";
 "generic.notice" = "Avviso";
+"generic.search" = "Cerca";
 "preset_help_title" = "Lavorare con i preset di configurazione";
 "preset_help_info" = "Puoi impostare dei preset di configurazione nel file config.json, situato in ~/.config/phpmon/config.json. Questi preset possono applicare una selezione di valori di configurazione tutti insieme. Questa è una funzionalità potente, ma attualmente deve essere impostata manualmente.";
 "preset_help_desc" = "Dopo aver riavviato PHP Monitor, tutti i preset trovati nel file verranno caricati. Se non appaiono preset, probabilmente il file non è stato analizzato correttamente.\n\nPuoi fare clic sul punto interrogativo in questo avviso per accedere alla FAQ su GitHub, dove puoi trovare ulteriori informazioni su questa funzionalità, inclusi un esempio di file.";

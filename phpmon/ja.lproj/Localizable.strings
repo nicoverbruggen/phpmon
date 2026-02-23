@@ -163,6 +163,7 @@
 "generic.cancel" = "キャンセル";
 "generic.retry" = "再試行";
 "generic.notice" = "通知";
+"generic.search" = "検索";
 "preset_help_title" = "設定プリセットの使い方";
 "preset_help_info" = "config.json ファイル（〜/.config/phpmon/config.json）に設定プリセットを作成できます。これらのプリセットは複数の設定値を一括で適用します。強力な機能ですが、現在は手動で設定する必要があります。";
 "preset_help_desc" = "PHP Monitorを再起動した後、ファイル内にあるすべてのプリセットが読み込まれます。プリセットが表示されない場合は、ファイルが正しく解析できなかった可能性があります。警告ダイアログの質問マークをクリックするとGitHub上のFAQへ移動し、この機能に関する詳細情報やサンプルファイルを確認できます。";

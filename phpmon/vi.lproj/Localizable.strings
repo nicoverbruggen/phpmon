@@ -163,6 +163,7 @@
 "generic.cancel" = "Hủy";
 "generic.retry" = "Thử lại";
 "generic.notice" = "Thông báo";
+"generic.search" = "Tìm kiếm";
 "preset_help_title" = "Làm việc với Cấu hình Presets";
 "preset_help_info" = "Bạn có thể thiết lập các preset cấu hình trong tệp config.json, nằm trong ~/.config/phpmon/config.json. Những bộ preset này có thể áp dụng một số giá trị cấu hình cùng một lúc. Đây là tính năng mạnh mẽ, nhưng hiện tại cần phải thiết lập thủ công.";
 "preset_help_desc" = "Sau khi khởi động lại PHP Monitor, tất cả các preset được tìm thấy trong tệp sẽ được tải. Nếu không có preset nào xuất hiện, thì có thể tệp không được phân tích đúng cách.\n\nBạn có thể bấm vào dấu hỏi trong cảnh báo này để truy cập vào câu hỏi thường gặp (FAQ) trên GitHub, nơi bạn có thể tìm thấy thông tin chi tiết hơn về tính năng này, bao gồm mẫu tệp.";

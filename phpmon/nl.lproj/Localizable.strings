@@ -163,6 +163,7 @@
 "generic.cancel" = "Annuleren";
 "generic.retry" = "Opnieuw";
 "generic.notice" = "Opmerking";
+"generic.search" = "Zoeken";
 "preset_help_title" = "Werken met presets";
 "preset_help_info" = "Je kunt presets instellen in het config.json-bestand, dat zich bevindt in `~/.config/phpmon/config.json`. Deze presets kunnen een selectie van configuratiewaarden in één keer toepassen. Dit is een krachtige functie, maar moet momenteel handmatig worden ingesteld.";
 "preset_help_desc" = "Na het opnieuw opstarten van PHP Monitor worden alle gevonden presets ingeladen. Als er geen presets worden weergegeven, kon het bestand waarschijnlijk niet correct worden verwerkt.\n\nJe kunt op het vraagteken in deze melding klikken om naar de FAQ op GitHub te gaan, waar u meer informatie over deze functie kunt vinden, inclusief een voorbeeld.";

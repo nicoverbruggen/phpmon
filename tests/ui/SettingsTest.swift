@@ -57,6 +57,17 @@ final class SettingsTest: UITestCase {
         assertExists(app.buttons["prefs.tabs.general".localized(for: "ja")])
         assertExists(settingsWindowJa.staticTexts["prefs.language".localized(for: "ja")])
 
+        // Open the domains window
+        app.statusItems.firstMatch.click()
+        app.mainMenuItem(withText: "mi_domain_list".localized(for: "ja")).click()
+        let domainsWindowJa = app.windows["domain_list.title".localized(for: "ja")]
+        assertExists(domainsWindowJa, 2.0)
+
+        // Verify the localized placeholder text ("Search") exists
+        let searchField = domainsWindowJa.searchFields.element(boundBy: 0)
+        assertExists(searchField, 2.0)
+        XCTAssertEqual(searchField.placeholderValue, "generic.search".localized(for: "ja"))
+
         // Switch back to English
         let resetPopup = settingsWindowJa.popUpButtons.element(boundBy: 0)
         resetPopup.click()

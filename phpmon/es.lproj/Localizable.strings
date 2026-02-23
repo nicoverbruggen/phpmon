@@ -163,6 +163,7 @@
 "generic.cancel" = "Cancelar";
 "generic.retry" = "Reintentar";
 "generic.notice" = "Aviso";
+"generic.search" = "Buscar";
 "preset_help_title" = "Trabajar con ajustes preestablecidos de configuración";
 "preset_help_info" = "Puedes configurar ajustes preestablecidos en el archivo config.json, ubicado en ~/.config/phpmon/config.json. Estos ajustes pueden aplicar una selección de valores de configuración todos a la vez. Esta es una característica poderosa, pero actualmente necesita ser configurada manualmente.";
 "preset_help_desc" = "Después de reiniciar PHP Monitor, se cargarán todos los ajustes preestablecidos encontrados en el archivo. Si no aparecen ajustes preestablecidos, probablemente el archivo no se pudo analizar correctamente.\n\nPuedes hacer clic en el signo de interrogación en esta alerta para ir a las preguntas frecuentes en GitHub, donde puedes encontrar más información sobre esta característica, incluyendo un archivo de ejemplo.";

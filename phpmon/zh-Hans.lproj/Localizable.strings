@@ -163,6 +163,7 @@
 "generic.cancel" = "取消";
 "generic.retry" = "重试";
 "generic.notice" = "通知";
+"generic.search" = "搜索";
 "preset_help_title" = "使用配置预设";
 "preset_help_info" = "您可以在 config.json 文件中设置配置预设，该文件位于 ~/.config/phpmon/config.json。这些预设可以一次性应用选定的配置值。这是一项强大的功能，但目前需要手动设置";
 "preset_help_desc" = "重启 PHP Monitor 后，将加载文件中找到的所有预设。如果没有预设出现，则可能是文件无法正确解析。\n\n您可以点击此提示中的问号转到 GitHub 上的 FAQ，在那里您可以找到有关此功能的更多信息，包括一个示例文件。";

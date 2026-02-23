@@ -163,6 +163,7 @@
 "generic.cancel" = "Batal";
 "generic.retry" = "Ulangi";
 "generic.notice" = "Pemberitahuan";
+"generic.search" = "Cari";
 "preset_help_title" = "Bekerja dengan Prasetelan Konfigurasi";
 "preset_help_info" = "Anda dapat mengatur preset konfigurasi di file config.json, yang terletak di ~/.config/phpmon/config.json. Preset ini dapat menerapkan serangkaian nilai konfigurasi sekaligus. Ini adalah fitur yang kuat, tetapi saat ini harus disetel secara manual.";
 "preset_help_desc" = "Setelah memulai ulang PHP Monitor, semua preset yang ditemukan di dalam berkas akan dimuat. Jika tidak ada preset yang muncul, kemungkinan besar berkas tersebut tidak dapat diparsing dengan benar.\n\nAnda dapat mengklik tanda tanya pada peringatan ini untuk menuju FAQ di GitHub, tempat Anda dapat menemukan informasi lebih lanjut tentang fitur ini, termasuk contoh berkas.";
