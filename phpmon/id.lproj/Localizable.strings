@@ -577,7 +577,7 @@ TIPS PEMECAHAN MASALAH UMUM
 "onboarding.tour.once" = "Anda hanya akan melihat Tur Selamat Datang sekali saja. Anda dapat membuka kembali Tur Selamat Datang nanti melalui ikon bilah menu (tersedia di menu, di bawah First Aid & Services).";
 "onboarding.tour.close" = "Tutup Tur";
 "prefs.language" = "Bahasa:";
-"prefs.language_options_desc" = "Pilih bahasa lain untuk digunakan dengan PHP Monitor. Untuk menerapkan perubahan ini secara penuh, Anda harus memulai ulang aplikasi.";
+"prefs.language_options_desc" = "Pilih bahasa lain untuk digunakan dengan PHP Monitor.";
 "alert.language_changed.title" = "Anda harus memulai ulang PHP Monitor!";
 "alert.language_changed.subtitle" = "Anda baru saja mengubah bahasa tampilan PHP Monitor. Menu akan segera menggunakan bahasa yang benar, namun Anda mungkin perlu memulai ulang aplikasi agar semua teks di seluruh aplikasi mencerminkan pilihan bahasa baru Anda.";
 "startup.timeout.ignore" = "Abaikan";

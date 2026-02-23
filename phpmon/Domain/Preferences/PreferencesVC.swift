@@ -54,13 +54,22 @@ class GenericPreferenceVC: NSViewController {
             options: options,
             preference: .languageOverride,
             action: {
+                // Track which windows we will need to reopen
+                let windowsToReopen = self.captureOpenWindowsForLanguageSwitch()
+
+                // Rebuild the menu
                 MainMenu.shared.refreshIcon()
                 MainMenu.shared.rebuild()
+
+                // Close all windows
                 App.shared.invalidateCachedWindows()
 
-                // Re-open the preferences VC
+                // Re-open the preferences window controller
                 WindowManager.close(PreferencesWC.self)
                 PreferencesWindowController.show()
+
+                // Finally, open all other windows again
+                self.reopenWindows(afterLanguageChange: windowsToReopen)
             }
         )
     }
@@ -143,6 +152,29 @@ class GenericPreferenceVC: NSViewController {
              self
         )
      }
+
+    private func reopenWindows(afterLanguageChange windowNames: [String]) {
+        let uniqueNames = Set(windowNames)
+
+        for windowName in uniqueNames {
+            switch windowName {
+            case "DomainList":
+                DomainListVC.show()
+            case "Onboarding":
+                OnboardingWindowController.show()
+            case "ConfigManager":
+                PhpConfigManagerWindowController.show()
+            case "Warnings":
+                PhpDoctorWindowController.show()
+            case "PhpVersionManager":
+                PhpVersionManagerWindowController.show()
+            case "PhpExtensionManager":
+                PhpExtensionManagerWindowController.show()
+            default:
+                continue
+            }
+        }
+    }
 
     func getIntegrationsPV() -> NSView {
         return CheckboxPreferenceView.make(
@@ -274,4 +306,5 @@ class GenericPreferenceVC: NSViewController {
             listeningForHotkeyView = nil
         }
     }
+
 }

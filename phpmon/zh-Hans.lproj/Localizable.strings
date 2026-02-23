@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "您只能看到一次欢迎导览。您可以稍后通过菜单栏图标(可在 `急救与服务` 下的菜单中找到)重新打开欢迎导览。";
 "onboarding.tour.close" = "关闭 Tour";
 "prefs.language" = "语言:";
-"prefs.language_options_desc" = "选择不同的语言与 PHP Monitor 一起使用。要完全应用此更改，必须重新启动应用程序";
+"prefs.language_options_desc" = "选择用于 PHP Monitor 的其他语言。";
 "alert.language_changed.title" = "您必须重新启动 PHP Monitor！";
 "alert.language_changed.subtitle" = "您刚刚更改了 PHP Monitor 的显示语言。菜单将立即使用正确的语言，但您可能需要重新启动应用程序，以使整个应用程序中的所有文本都应用您的新语言选择";
 "startup.timeout.ignore" = "忽略";

@@ -84,6 +84,10 @@
 		036061D92F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061DA2F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061DC2F4C7AE700B5998F /* SettingsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DB2F4C7AE100B5998F /* SettingsTest.swift */; };
+		036061DE2F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */; };
+		036061DF2F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */; };
+		036061E02F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */; };
+		036061E12F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */; };
 		036C39022E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39032E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
 		036C39042E5C883B008DAEDF /* Packagist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C39012E5C883A008DAEDF /* Packagist.swift */; };
@@ -1076,6 +1080,7 @@
 		034515492EC4FBBD00472561 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		036061D62F4C705800B5998F /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		036061DB2F4C7AE100B5998F /* SettingsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTest.swift; sourceTree = "<group>"; };
+		036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreferencesVC+WindowRestore.swift"; sourceTree = "<group>"; };
 		036C39012E5C883A008DAEDF /* Packagist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packagist.swift; sourceTree = "<group>"; };
 		036C39072E5C88A2008DAEDF /* PackagistTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistTest.swift; sourceTree = "<group>"; };
 		036C39092E5C8CBD008DAEDF /* PackagistP2Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagistP2Response.swift; sourceTree = "<group>"; };
@@ -1570,6 +1575,7 @@
 				C4998F092617633900B2526E /* PreferencesWindowController.swift */,
 				C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */,
 				5420395826135DC100FB00FA /* PreferencesVC.swift */,
+				036061DD2F4C886800B5998F /* PreferencesVC+WindowRestore.swift */,
 				C436B39C29F3C42500B6A64E /* PreferencesTabs.swift */,
 				C450C8C528C919EC002A2B4B /* PreferenceName.swift */,
 				5420395E2613607600FB00FA /* Preferences.swift */,
@@ -2877,6 +2883,7 @@
 				C450C8C628C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				0392CDEB2EB25371009176DA /* SecurePopoverView.swift in Sources */,
 				C4E4404627C56F4700D225E1 /* ValetSite.swift in Sources */,
+				036061DF2F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */,
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C45B914E295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C4D5576429C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
@@ -3273,6 +3280,7 @@
 				C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */,
 				C471E7E428F9BAC20021E251 /* Helpers.swift in Sources */,
 				C4CB6E67292C362C002E9027 /* Homebrew.swift in Sources */,
+				036061E12F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */,
 				C4611E602AEAD3100010BE24 /* ByteLimitView.swift in Sources */,
 				C489E0BD2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C45E2A77291992DA005C7CFD /* FeatureTestCase.swift in Sources */,
@@ -3497,6 +3505,7 @@
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C4513F8E2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
+				036061E02F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */,
 				C471E80028F9BAD10021E251 /* Xdebug.swift in Sources */,
 				C471E7F528F9BAC80021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7ED28F9BAC30021E251 /* Process.swift in Sources */,
@@ -3623,6 +3632,7 @@
 				C4F2E4382752F08D0020E974 /* BrewDiagnostics.swift in Sources */,
 				C485707428BF454E00539B36 /* ServicesView.swift in Sources */,
 				03B947DE2F43692500B6F899 /* TestURL.swift in Sources */,
+				036061DE2F4C887600B5998F /* PreferencesVC+WindowRestore.swift in Sources */,
 				C4B79EC729CA474200A483EE /* FakeCommand.swift in Sources */,
 				C4611E5F2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
 				C4F780AE25D80B37000DBC97 /* PhpExtensionTest.swift in Sources */,

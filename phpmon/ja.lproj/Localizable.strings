@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "Welcome Tour は一度だけ表示されます。メニューバーのアイコン（First Aid & Services の下にある）から後で再度開くことができます。";
 "onboarding.tour.close" = "ツアーを閉じる";
 "prefs.language" = "言語:";
-"prefs.language_options_desc" = "PHP Monitorで使用する別の言語を選択してください。この変更を完全に適用するには、アプリを再起動する必要があります。";
+"prefs.language_options_desc" = "PHP Monitorで使用する別の言語を選択してください。";
 "alert.language_changed.title" = "PHP Monitor を再起動する必要があります！";
 "alert.language_changed.subtitle" = "PHP Monitor の表示言語を変更しました。メニューはすぐに正しい言語で表示されますが、アプリ全体のテキストを新しい言語設定に反映させるには再起動が必要になる場合があります。";
 "startup.timeout.ignore" = "無視";

@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "سترى جولة الترحيب مرة واحدة فقط. يمكنك إعادة فتح جولة الترحيب لاحقًا عبر أيقونة شريط القوائم (متوفرة في القائمة، تحت First Aid & Services).";
 "onboarding.tour.close" = "إغلاق الجولة";
 "prefs.language" = "اللغة:";
-"prefs.language_options_desc" = "اختر لغةً مختلفةً لاستخدامها مع PHP Monitor. لتطبيق هذا التغيير بالكامل، عليك إعادة تشغيل التطبيق.";
+"prefs.language_options_desc" = "اختر لغة مختلفة لاستخدامها مع PHP Monitor.";
 "alert.language_changed.title" = "يجب عليك إعادة تشغيل PHP Monitor!";
 "alert.language_changed.subtitle" = "لقد غيرت للتو لغة عرض PHP Monitor. سيستخدم القوائم اللغة الصحيحة فوراً، لكن قد تحتاج إلى إعادة تشغيل التطبيق ليعكس جميع النصوص داخل التطبيق اختيارك للغة الجديدة.";
 "startup.timeout.ignore" = "تجاهل";

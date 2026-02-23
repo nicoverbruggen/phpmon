@@ -577,7 +577,7 @@ SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
 "onboarding.tour.once" = "Vedrai la presentazione di benvenuto solo una volta. Puoi riaprire la presentazione di benvenuto più tardi tramite l'icona nella barra dei menu (disponibile nel menu, sotto First Aid & Services).";
 "onboarding.tour.close" = "Chiudi il tour";
 "prefs.language" = "Lingua:";
-"prefs.language_options_desc" = "Scegli una lingua diversa da usare con PHP Monitor. Per applicare completamente questa modifica, devi riavviare l'app.";
+"prefs.language_options_desc" = "Scegli una lingua diversa da usare con PHP Monitor.";
 "alert.language_changed.title" = "Devi riavviare PHP Monitor!";
 "alert.language_changed.subtitle" = "Hai appena cambiato la lingua di visualizzazione di PHP Monitor. Il menu utilizzerà immediatamente la lingua corretta, ma potresti dover riavviare l’app per far riflettersi il nuovo idioma su tutto il testo dell’app.";
 "startup.timeout.ignore" = "Ignora";

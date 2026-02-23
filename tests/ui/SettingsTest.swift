@@ -58,8 +58,6 @@ final class SettingsTest: UITestCase {
         assertExists(settingsWindowJa.staticTexts["prefs.language".localized(for: "ja")])
 
         // Open the domains window
-        app.statusItems.firstMatch.click()
-        app.mainMenuItem(withText: "mi_domain_list".localized(for: "ja")).click()
         let domainsWindowJa = app.windows["domain_list.title".localized(for: "ja")]
         assertExists(domainsWindowJa, 2.0)
 

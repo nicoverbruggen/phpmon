@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "Usted verá esta Gira Únicamente Una Vez. Puede reabrir la Gira de Bienvenida más tarde a través del ícono de la barra de menús (disponible en el menú, bajo Primera Aida & Servicios).";
 "onboarding.tour.close" = "Cierre Tour";
 "prefs.language" = "Idioma:";
-"prefs.language_options_desc" = "Seleccione un idioma diferente para usar con PHP Monitor. Para aplicar totalmente este cambio, debe reiniciar la aplicación.";
+"prefs.language_options_desc" = "Elige un idioma diferente para usar PHP Monitor.";
 "alert.language_changed.title" = "Debe reiniciar el PHP Monitor!";
 "alert.language_changed.subtitle" = "Usted acaba de cambiar el idioma de visualización del PHP Monitor. La barra de menús lo utilizará correctamente de inmediato, pero tal vez necesite reiniciar la aplicación para que todos los textos a través del app se reflejen su nuevo idioma elegido.";
 "startup.timeout.ignore" = "Ignorar";

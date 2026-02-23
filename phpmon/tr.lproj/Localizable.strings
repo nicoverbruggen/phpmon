@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "Hoş Geldiniz Turu'nu yalnızca bir kez görürsünüz. Daha sonra menü çubuğu simgesinden (Menü, İlk Yardım & Hizmetler altında) Hoş Geldiniz Turu'nu yeniden açabilirsiniz.";
 "onboarding.tour.close" = "Turu Kapat";
 "prefs.language" = "Dil:";
-"prefs.language_options_desc" = "PHP Monitor ile kullanmak için farklı bir dil seçin. Değişikliği tamamen uygulamak için uygulamayı yeniden başlatmanız gerekir.";
+"prefs.language_options_desc" = "PHP Monitor ile kullanmak için farklı bir dil seçin.";
 "alert.language_changed.title" = "PHP Monitor'ı yeniden başlatmalısınız!";
 "alert.language_changed.subtitle" = "PHP Monitor'un görüntüleme dilini değiştirdiniz. Menü hemen doğru dili kullanacak, ancak uygulamadaki tüm metinlerin yeni dil seçiminizi yansıtması için uygulamayı yeniden başlatmanız gerekebilir.";
 "startup.timeout.ignore" = "Yok say";

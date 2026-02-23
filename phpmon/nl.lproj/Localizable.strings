@@ -567,7 +567,7 @@
 "onboarding.tour.once" = "U zult de Welkomsttour slechts één keer zien. U kunt de Welkomsttour later opnieuw openen via het menubalkpictogram (beschikbaar in het menu onder First Aid & Services).";
 "onboarding.tour.close" = "Tour sluiten";
 "prefs.language" = "Taal:";
-"prefs.language_options_desc" = "Kies een andere taal om te gebruiken met PHP Monitor. Om deze wijziging volledig toe te passen, moet u de app herstarten.";
+"prefs.language_options_desc" = "Kies een andere taal om met PHP Monitor te gebruiken.";
 "alert.language_changed.title" = "U moet PHP Monitor herstarten!";
 "alert.language_changed.subtitle" = "U heeft zojuist de weergavetaal van PHP Monitor gewijzigd. Het menu zal onmiddellijk de juiste taal gebruiken, maar u moet mogelijk de app herstarten om overal de nieuwe taal te zien.";
 "startup.timeout.ignore" = "Negeren";
