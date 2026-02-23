@@ -14,16 +14,25 @@ final class SettingsTest: UITestCase {
         continueAfterFailure = false
     }
 
+    /**
+     In this test, we start with the app configured with the English override.
+     After opening the domains window, we switch to Japanese.
+     */
     final func test_changing_language_closes_other_windows() throws {
-        let app = launch(openMenu: true)
+        var configuration = TestableConfigurations.working
+
+        // Our default starting point is to use the system default language
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+
+        let app = launch(openMenu: true, with: configuration)
 
         // First, open the domains window
-        app.mainMenuItem(withText: "mi_domain_list".localized).click()
-        let domainsWindow = app.windows["domain_list.title".localized]
+        app.mainMenuItem(withText: "mi_domain_list".localized(for: "en")).click()
+        let domainsWindow = app.windows["domain_list.title".localized(for: "en")]
         assertExists(domainsWindow, 2.0)
 
         // Press the menu button again
-        app.statusItems.firstMatch.click() // press the menu button again
+        app.statusItems.firstMatch.click()
 
         // This time, open the preferences window
         app.mainMenuItem(withText: "mi_preferences".localized).click()
@@ -31,7 +40,7 @@ final class SettingsTest: UITestCase {
             .containing(.button, identifier: "prefs.tabs.general".localized(for: "en"))
             .firstMatch
         assertExists(settingsWindow, 2.0)
-        assertExists(app.buttons["prefs.tabs.general".localized(for: "en")], 2.0)
+        assertExists(app.buttons["prefs.tabs.general".localized(for: "en")])
 
         // In the languages pop-up, click on it
         let languagePopup = settingsWindow.popUpButtons.element(boundBy: 0)
@@ -45,12 +54,12 @@ final class SettingsTest: UITestCase {
             .containing(.button, identifier: "prefs.tabs.general".localized(for: "ja"))
             .firstMatch
         assertExists(settingsWindowJa, 2.0)
-        assertExists(app.buttons["prefs.tabs.general".localized(for: "ja")], 2.0)
-        assertExists(settingsWindowJa.staticTexts["prefs.language".localized(for: "ja")], 2.0)
+        assertExists(app.buttons["prefs.tabs.general".localized(for: "ja")])
+        assertExists(settingsWindowJa.staticTexts["prefs.language".localized(for: "ja")])
 
-        // Switch back to the original language
+        // Switch back to English
         let resetPopup = settingsWindowJa.popUpButtons.element(boundBy: 0)
         resetPopup.click()
-        resetPopup.menuItems["System Default"].click()
+        resetPopup.menuItems["English"].click()
     }
 }

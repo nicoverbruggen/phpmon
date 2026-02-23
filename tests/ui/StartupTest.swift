@@ -29,9 +29,9 @@ final class StartupTest: UITestCase {
         assertAllExist([
             app.dialogs["generic.notice".localized],
             app.staticTexts["startup.errors.php_binary.title".localized],
-            app.buttons["generic.ok".localized]
+            app.buttons["startup.fix_manually".localized]
         ])
-        click(app.buttons["generic.ok".localized])
+        click(app.buttons["startup.fix_manually".localized])
 
         // Dialog 2: PHP Monitor failed to start
         assertAllExist([
@@ -72,6 +72,6 @@ final class StartupTest: UITestCase {
         )
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
-        click(app.buttons["generic.ok".localized])
+        click(app.buttons["startup.fix_manually".localized])
     }
 }

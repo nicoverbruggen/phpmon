@@ -42,7 +42,7 @@ extension App {
     }
 
     /**
-     Closes and invalidates all cached secondary window controllers (excluding preferences).
+     Closes and invalidates all cached secondary window controllers (excluding Preferences).
      This ensures that windows are recreated fresh, with the correct localization, the next
      time they are opened. Each `close()` call triggers `windowWillClose`, which automatically
      removes the window from `openWindows` via the existing delegate mechanism.
