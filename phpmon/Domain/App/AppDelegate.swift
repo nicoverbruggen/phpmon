@@ -119,9 +119,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Start with the regular busy icon
         MainMenu.shared.setStatusBar(image: NSImage.statusBarIcon)
 
-        // Show the active commands debug window
-        ActiveCommandsWindowController.show()
-
         Task { // Make sure the menu performs its initial checks
             await Startup.check(App.shared.container)
         }

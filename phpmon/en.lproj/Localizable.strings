@@ -84,6 +84,7 @@
 "mi_set_up_presets" = "Learn more about presets...";
 
 "mi_view_onboarding" = "Open Welcome Tour...";
+"mi_view_command_history" = "Open Command History...";
 
 "mi_xdebug_available_modes" = "Available Modes";
 "mi_xdebug_actions" = "Actions";

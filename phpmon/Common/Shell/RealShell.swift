@@ -9,7 +9,7 @@
 import Foundation
 @preconcurrency import Dispatch
 
-class RealShell: ShellProtocol, @unchecked Sendable {
+class RealShell: TrackedShellProtocol, @unchecked Sendable {
     init(binPath: String, commandTracker: CommandTracker) {
         self.binPath = binPath
         self.commandTracker = commandTracker
@@ -17,7 +17,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         self._exports = [:]
     }
 
-    private let commandTracker: CommandTracker
+    let commandTracker: CommandTracker
     private(set) var binPath: String
 
     /**
@@ -157,16 +157,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
 
     // MARK: - Shellable Protocol
 
-    func sync(_ command: String) -> ShellOutput {
-        let tracker = self.commandTracker
-        var trackingId: UUID?
-        DispatchQueue.main.async { trackingId = tracker.track(command) }
-        defer {
-            DispatchQueue.main.async {
-                if let id = trackingId { tracker.complete(id) }
-            }
-        }
-
+    func syncRaw(_ command: String) -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -197,13 +188,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func pipe(_ command: String) async -> ShellOutput {
-        let trackingId = await commandTracker.track(command)
-        defer {
-            let tracker = self.commandTracker
-            DispatchQueue.main.async { tracker.complete(trackingId) }
-        }
-
+    func pipeRaw(_ command: String) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -239,13 +224,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
-        let trackingId = await commandTracker.track(command)
-        defer {
-            let tracker = self.commandTracker
-            DispatchQueue.main.async { tracker.complete(trackingId) }
-        }
-
+    func pipeRaw(_ command: String, timeout: TimeInterval) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -311,17 +290,11 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func attach(
+    func attachRaw(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
-        let trackingId = await commandTracker.track(command)
-        defer {
-            let tracker = self.commandTracker
-            DispatchQueue.main.async { tracker.complete(trackingId) }
-        }
-
         let process = getShellProcess(for: command)
         let outputPipe = Pipe(), errorPipe = Pipe()
 

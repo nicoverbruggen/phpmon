@@ -20,7 +20,7 @@ public class TestableShell: ShellProtocol {
     var expectations: [String: BatchFakeShellOutput] = [:]
 
     @discardableResult
-    func sync(_ command: String) -> ShellOutput {
+    func syncRaw(_ command: String) -> ShellOutput {
         // This assertion will only fire during test builds
         assert(expectations.keys.contains(command), "No response declared for command: \(command)")
 
@@ -32,18 +32,18 @@ public class TestableShell: ShellProtocol {
     }
 
     @discardableResult
-    func pipe(_ command: String) async -> ShellOutput {
-        return await pipe(command, timeout: 60)
+    func pipeRaw(_ command: String) async -> ShellOutput {
+        await pipeRaw(command, timeout: 60)
     }
 
     @discardableResult
-    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
-        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
+    func pipeRaw(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        let (_, output) = try! await self.attachRaw(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
         return output
     }
 
     @discardableResult
-    func attach(
+    func attachRaw(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
@@ -71,6 +71,30 @@ public class TestableShell: ShellProtocol {
 
     func reloadEnvPath() {
         // does nothing
+    }
+
+    @discardableResult
+    func sync(_ command: String) -> ShellOutput {
+        syncRaw(command)
+    }
+
+    @discardableResult
+    func pipe(_ command: String) async -> ShellOutput {
+        await pipeRaw(command)
+    }
+
+    @discardableResult
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        await pipeRaw(command, timeout: timeout)
+    }
+
+    @discardableResult
+    func attach(
+        _ command: String,
+        didReceiveOutput: @escaping (String, ShellStream) -> Void,
+        withTimeout timeout: TimeInterval
+    ) async throws -> (Process, ShellOutput) {
+        try await attachRaw(command, didReceiveOutput: didReceiveOutput, withTimeout: timeout)
     }
 }
 

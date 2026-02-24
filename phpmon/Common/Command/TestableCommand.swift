@@ -15,15 +15,12 @@ class TestableCommand: CommandProtocol {
 
     var commands: [String: String]
 
-    func execute(path: String, arguments: [String]) -> String {
-        self.execute(path: path, arguments: arguments, trimNewlines: false)
-    }
-
-    public func execute(path: String, arguments: [String], trimNewlines: Bool, withStandardError: Bool) -> String {
-        self.execute(path: path, arguments: arguments, trimNewlines: trimNewlines)
-    }
-
-    public func execute(path: String, arguments: [String], trimNewlines: Bool) -> String {
+    public func executeRaw(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool,
+        withStandardError: Bool
+    ) -> String {
         let concatenatedCommand = "\(path) \(arguments.joined(separator: " "))"
         assert(commands.keys.contains(concatenatedCommand), "Command `\(concatenatedCommand)` not found")
         return self.commands[concatenatedCommand]!
