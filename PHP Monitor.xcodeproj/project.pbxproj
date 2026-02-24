@@ -132,6 +132,7 @@
 		0381313E2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
 		0381313F2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
 		038131402F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
+		038131412F4DFB5B00653177 /* TrackedShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -3658,6 +3659,7 @@
 				C44A874928905BB000498BC4 /* ProgressVC.swift in Sources */,
 				0379C4A62ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				C4D9ADC0277610E1007277F4 /* PhpSwitcher.swift in Sources */,
+				038131412F4DFB5B00653177 /* TrackedShell.swift in Sources */,
 				C485707528BF454F00539B36 /* StatsView.swift in Sources */,
 				C4F780CC25D80B75000DBC97 /* ActivePhpInstallation.swift in Sources */,
 				0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */,
