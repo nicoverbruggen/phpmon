@@ -73,6 +73,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("Extra CLI mode has been activated via --cli flag.")
         }
 
+        if CommandLine.arguments.contains("--ch") {
+            Log.info("Displaying command history window (`--ch` flag).")
+            CommandHistoryWC.show()
+        }
+
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
             logger.verbosity = .cli
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
