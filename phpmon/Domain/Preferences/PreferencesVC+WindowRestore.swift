@@ -47,6 +47,11 @@ extension GenericPreferenceVC {
                     name: windowName,
                     frame: WindowManager.window(for: PhpExtensionManagerWC.self)?.frame
                 )
+            case "ActiveCommands":
+                return WindowSnapshot(
+                    name: windowName,
+                    frame: WindowManager.window(for: ActiveCommandsWC.self)?.frame
+                )
             default:
                 return nil
             }
@@ -74,6 +79,9 @@ extension GenericPreferenceVC {
             case "PhpExtensionManager":
                 PhpExtensionManagerWindowController.show()
                 applyFrame(snapshot.frame, for: PhpExtensionManagerWC.self)
+            case "ActiveCommands":
+                ActiveCommandsWindowController.show()
+                applyFrame(snapshot.frame, for: ActiveCommandsWC.self)
             default:
                 continue
             }

@@ -8,12 +8,28 @@
 import Cocoa
 
 public class RealCommand: CommandProtocol {
+    private let commandTracker: CommandTracker
+
+    init(commandTracker: CommandTracker) {
+        self.commandTracker = commandTracker
+    }
+
     public func execute(
         path: String,
         arguments: [String],
         trimNewlines: Bool,
         withStandardError: Bool
     ) -> String {
+        let tracker = self.commandTracker
+        let commandDescription = "\(path) \(arguments.joined(separator: " "))"
+        var trackingId: UUID?
+        DispatchQueue.main.async { trackingId = tracker.track(commandDescription) }
+        defer {
+            DispatchQueue.main.async {
+                if let id = trackingId { tracker.complete(id) }
+            }
+        }
+
         let task = Process()
         var output = ""
 

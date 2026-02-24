@@ -17,6 +17,7 @@ class Container: @unchecked Sendable {
     private(set) var shell: ShellProtocol!
     private(set) var command: CommandProtocol!
     private(set) var webApi: WebApiProtocol!
+    private(set) var commandTracker: CommandTracker!
 
     // Secondary (uses primary instances above)
     private(set) var preferences: Preferences!
@@ -67,8 +68,9 @@ class Container: @unchecked Sendable {
         // any of the other classes can be initialized!
         self.filesystem = RealFileSystem(container: self)
         self.paths = Paths(container: self)
-        self.shell = RealShell(binPath: paths.binPath)
-        self.command = RealCommand()
+        self.commandTracker = CommandTracker()
+        self.shell = RealShell(binPath: paths.binPath, commandTracker: commandTracker)
+        self.command = RealCommand(commandTracker: commandTracker)
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {
@@ -97,6 +99,7 @@ class Container: @unchecked Sendable {
         webApiGetResponses: [URL: FakeWebApiResponse] = [:],
         webApiPostResponses: [URL: FakeWebApiResponse] = [:]
     ) {
+        self.commandTracker = CommandTracker()
         self.shell = TestableShell(expectations: shellExpectations)
         self.filesystem = TestableFileSystem(files: fileSystemFiles)
         self.command = TestableCommand(commands: commands)

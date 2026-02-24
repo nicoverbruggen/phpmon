@@ -15,6 +15,7 @@ typealias PhpConfigManagerWC = PhpConfigManagerWindowController
 typealias PhpDoctorWC = PhpDoctorWindowController
 typealias PhpVersionManagerWC = PhpVersionManagerWindowController
 typealias PhpExtensionManagerWC = PhpExtensionManagerWindowController
+typealias ActiveCommandsWC = ActiveCommandsWindowController
 
 let WindowManager = WindowCoordinator.shared
 
