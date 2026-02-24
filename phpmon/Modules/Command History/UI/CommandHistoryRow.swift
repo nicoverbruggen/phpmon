@@ -11,7 +11,6 @@ import SwiftUI
 
 struct CommandHistoryRow: View {
     let command: LoggedCommand
-    let now: Date
     let isEvenRow: Bool
     @Binding var visibleCommandIds: Set<UUID>
 
@@ -33,9 +32,17 @@ struct CommandHistoryRow: View {
                         .lineLimit(2)
                 }
 
-                Text(command.durationText(at: now))
-                    .font(.system(size: 11))
-                    .foregroundColor(.secondary)
+                if command.isCompleted {
+                    Text(command.durationText(at: Date()))
+                        .font(.system(size: 11))
+                        .foregroundColor(.secondary)
+                } else {
+                    TimelineView(.periodic(from: .now, by: 0.08)) { context in
+                        Text(command.durationText(at: context.date))
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
             Spacer()
         }
