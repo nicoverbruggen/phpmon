@@ -55,7 +55,10 @@ class Container: @unchecked Sendable {
     /// - Parameter coreOnly: Only binds `shell`, `filesystem`, `command`, `paths` and `webApi`.
     ///   Use this to prevent slowing down tests for a minimal container.
     ///
-    public func bind(coreOnly: Bool = false) {
+    /// - Parameter commandTracking: When enabled, connects decorated RealShell and RealCommand.
+    ///   Use this if you want to disable tracking (shell) command statuses, since it's on by default.
+    ///
+    public func bind(coreOnly: Bool = false, commandTracking: Bool = true) {
         if self.bound {
             fatalError("You cannot call `bind` on a Container more than once.")
         }
@@ -69,8 +72,19 @@ class Container: @unchecked Sendable {
         self.filesystem = RealFileSystem(container: self)
         self.paths = Paths(container: self)
         self.commandTracker = CommandTracker()
-        self.shell = TrackedShell(shell: RealShell(binPath: paths.binPath), commandTracker: commandTracker)
-        self.command = TrackedCommand(command: RealCommand(), commandTracker: commandTracker)
+
+        let baseShellHandler = RealShell(binPath: paths.binPath)
+        let baseCommandHandler = RealCommand()
+
+        // Depending on whether we need command tracking wired up, we will use different real handlers
+        if commandTracking {
+            self.shell = TrackedShell(shell: baseShellHandler, commandTracker: commandTracker)
+            self.command = TrackedCommand(command: baseCommandHandler, commandTracker: commandTracker)
+        } else {
+            self.shell = baseShellHandler
+            self.command = baseCommandHandler
+        }
+
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {

@@ -14,7 +14,7 @@ struct RealShellTest {
 
     init() async throws {
         // Reset to the default shell
-        container = Container.real(minimal: true)
+        container = Container.real(minimal: true, commandTracking: false)
     }
 
     @Test func system_shell_is_default() async {
