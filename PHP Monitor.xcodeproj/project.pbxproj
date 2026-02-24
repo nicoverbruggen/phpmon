@@ -189,6 +189,8 @@
 		03CC1FF52E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF62E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
 		03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CC1FF32E3D230B0050FC18 /* ZshRunCommand.swift */; };
+		03D0F9752F4DE6FE00613D1E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
+		03D0F9762F4DE6FE00613D1E /* TestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4928DB966A007ACC74 /* TestableShell.swift */; };
 		03D846252EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
 		03D846262EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
 		03D846272EB6344E006EFE3C /* DomainListVC+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */; };
@@ -487,8 +489,8 @@
 		C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */; };
 		C46EBC4728DB9644007ACC74 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
 		C46EBC4828DB9644007ACC74 /* RealShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4628DB9644007ACC74 /* RealShell.swift */; };
-		C46EBC4A28DB966A007ACC74 /* TestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4928DB966A007ACC74 /* TestableShell.swift */; };
 		C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4928DB966A007ACC74 /* TestableShell.swift */; };
+		C46EBC4C28DB95F0007ACC74 /* TrackedShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */; };
 		C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA23E246C358E00944F05 /* StringExtension.swift */; };
 		C46FA9882822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */; };
 		C46FA9892822EFDC00D78807 /* PhpConfigurationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */; };
@@ -547,9 +549,13 @@
 		C471E7F628F9BAC80021E251 /* PhpHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D936C827E3EB6100BD69FE /* PhpHelper.swift */; };
 		C471E7F728F9BACB0021E251 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
 		C471E7F828F9BACB0021E251 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
+		C471E7F928F9BA600021E251 /* TrackedShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */; };
 		C471E7F928F9BACB0021E251 /* PhpSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADBE277610E1007277F4 /* PhpSwitcher.swift */; };
+		C471E7FA28F9BA8F0021E251 /* TrackedShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */; };
 		C471E7FA28F9BACB0021E251 /* InternalSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D9ADC7277611A0007277F4 /* InternalSwitcher.swift */; };
+		C471E7FB28F9BAA30021E251 /* TrackedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DED28F764A00026AC4E /* TrackedCommand.swift */; };
 		C471E7FB28F9BACE0021E251 /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
+		C471E7FC28F9BAA30021E251 /* TrackedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DED28F764A00026AC4E /* TrackedCommand.swift */; };
 		C471E7FC28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewDecodable.swift */; };
 		C471E7FD28F9BACE0021E251 /* HomebrewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F30B02278E16BA00755FCE /* HomebrewService.swift */; };
 		C471E7FE28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E5FB25700D5300A1FB67 /* HomebrewDecodable.swift */; };
@@ -968,8 +974,9 @@
 		C4E4404727C56F4700D225E1 /* ValetSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E4404527C56F4700D225E1 /* ValetSite.swift */; };
 		C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
 		C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */; };
-		C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
 		C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DEC28F764A00026AC4E /* TestableCommand.swift */; };
+		C4E49DF028F764A00026AC4E /* TrackedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DED28F764A00026AC4E /* TrackedCommand.swift */; };
+		C4E49DF128F764A00026AC4E /* TrackedCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E49DED28F764A00026AC4E /* TrackedCommand.swift */; };
 		C4E684092AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840A2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840B2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
@@ -1267,6 +1274,7 @@
 		C46EBC4328DB95F0007ACC74 /* ShellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellProtocol.swift; sourceTree = "<group>"; };
 		C46EBC4628DB9644007ACC74 /* RealShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealShell.swift; sourceTree = "<group>"; };
 		C46EBC4928DB966A007ACC74 /* TestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableShell.swift; sourceTree = "<group>"; };
+		C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedShell.swift; sourceTree = "<group>"; };
 		C46FA23E246C358E00944F05 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		C46FA9872822EFDC00D78807 /* PhpConfigurationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFile.swift; sourceTree = "<group>"; };
 		C46FA98A2822F08F00D78807 /* PhpConfigurationFileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpConfigurationFileTest.swift; sourceTree = "<group>"; };
@@ -1363,6 +1371,7 @@
 		C4E4404527C56F4700D225E1 /* ValetSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetSite.swift; sourceTree = "<group>"; };
 		C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandProtocol.swift; sourceTree = "<group>"; };
 		C4E49DEC28F764A00026AC4E /* TestableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableCommand.swift; sourceTree = "<group>"; };
+		C4E49DED28F764A00026AC4E /* TrackedCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedCommand.swift; sourceTree = "<group>"; };
 		C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewTapFormulae.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
@@ -1571,6 +1580,16 @@
 				031F247F2EA1071700CFB8D9 /* Container+Fake.swift */,
 			);
 			path = Container;
+			sourceTree = "<group>";
+		};
+		03D0F9772F4DE7E800613D1E /* Monitoring */ = {
+			isa = PBXGroup;
+			children = (
+				031A80DB2F4CF1690016F7DD /* CommandTracker.swift */,
+				C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */,
+				C4E49DED28F764A00026AC4E /* TrackedCommand.swift */,
+			);
+			path = Monitoring;
 			sourceTree = "<group>";
 		};
 		03D53E902E8AE089001B1671 /* Testables */ = {
@@ -2285,6 +2304,7 @@
 				C4F787A628EF811000790735 /* Shell */,
 				C4C8900128F0E27900CE5E97 /* Filesystem */,
 				C4E49DE528F763E20026AC4E /* Command */,
+				03D0F9772F4DE7E800613D1E /* Monitoring */,
 				C40C7F2127721F7300DDDCDC /* Core */,
 				54B20EDF263AA22C00D3250E /* PHP */,
 				C44CCD4327AFE93300CE40E5 /* Errors */,
@@ -2452,7 +2472,6 @@
 				C4B5853D2770FE3900DA4FBE /* RealCommand.swift */,
 				C4E49DEC28F764A00026AC4E /* TestableCommand.swift */,
 				C4E49DE928F7643D0026AC4E /* CommandProtocol.swift */,
-				031A80DB2F4CF1690016F7DD /* CommandTracker.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -2921,7 +2940,7 @@
 				C4F2E43A2752F7D00020E974 /* PhpInstallation.swift in Sources */,
 				C45B914E295608E300F4EC78 /* ValetServicesManager.swift in Sources */,
 				C4D5576429C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
-				C4E49DED28F764A00026AC4E /* TestableCommand.swift in Sources */,
+				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
 				037F44222EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */,
 				C40C7F2827721FF600DDDCDC /* Valet+Alerts.swift in Sources */,
@@ -2969,7 +2988,7 @@
 				C40175B82903108900763A68 /* ValetInteractor.swift in Sources */,
 				C4ACE9E129F84EDD00110766 /* PhpGuard.swift in Sources */,
 				C4F361612836BFD9003598CC /* MainMenu+Actions.swift in Sources */,
-				C46EBC4A28DB966A007ACC74 /* TestableShell.swift in Sources */,
+				C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */,
 				C44C198D276E3A1C0072762D /* TerminalProgressWindowController.swift in Sources */,
 				0379C49F2ED71D050035D7EA /* Startup+Launch.swift in Sources */,
 				54D9E0B827E4F51E003B9AD9 /* KeyCombo.swift in Sources */,
@@ -2986,6 +3005,7 @@
 				C40934A2298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				C495F5AF28A42E080087F70A /* EnvironmentCheck.swift in Sources */,
 				C46EBC4428DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
+				C46EBC4C28DB95F0007ACC74 /* TrackedShell.swift in Sources */,
 				C41C1B4922B00A9800E7CF16 /* MenuBarImageGenerator.swift in Sources */,
 				C4F30B03278E16BA00755FCE /* HomebrewService.swift in Sources */,
 				54D9E0B427E4F51E003B9AD9 /* Key.swift in Sources */,
@@ -3104,6 +3124,7 @@
 				039C29182E8AA314007F5FAB /* TestableWebApi.swift in Sources */,
 				C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */,
 				C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
+				C4E49DF028F764A00026AC4E /* TrackedCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3295,6 +3316,7 @@
 				031E2B6B2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C471E82728F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
 				C471E7DB28F9BA8F0021E251 /* RealShell.swift in Sources */,
+				C471E7FA28F9BA8F0021E251 /* TrackedShell.swift in Sources */,
 				C471E7FF28F9BAD10021E251 /* Xdebug.swift in Sources */,
 				037F441D2EDB9195002EBF75 /* ConfigWatchManager.swift in Sources */,
 				C409349F298EE8E900D25014 /* AppUpdater.swift in Sources */,
@@ -3310,6 +3332,7 @@
 				C42106682AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C4B79EC829CA474200A483EE /* FakeCommand.swift in Sources */,
 				C471E7DE28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
+				C471E7FB28F9BAA30021E251 /* TrackedCommand.swift in Sources */,
 				C471E82928F9BB330021E251 /* Valet.swift in Sources */,
 				C471E80728F9BAD40021E251 /* PhpConfigurationFile.swift in Sources */,
 				0329A9A32E92A69000A62A12 /* WarningManager+Evaluations.swift in Sources */,
@@ -3554,10 +3577,12 @@
 				C471E7ED28F9BAC30021E251 /* Process.swift in Sources */,
 				C471E81128F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
 				C471E7CC28F9BA5B0021E251 /* TestableShell.swift in Sources */,
+				C471E7F928F9BA600021E251 /* TrackedShell.swift in Sources */,
 				C4E6840C2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */,
 				C471E80C28F9BAE80021E251 /* NSWindowExtension.swift in Sources */,
 				C471E7CA28F9BA480021E251 /* TestableFileSystem.swift in Sources */,
 				C471E7DD28F9BAA30021E251 /* CommandProtocol.swift in Sources */,
+				C471E7FC28F9BAA30021E251 /* TrackedCommand.swift in Sources */,
 				C471E7D128F9BA630021E251 /* RealFileSystem.swift in Sources */,
 				033D459B2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */,
 				C471E82B28F9BB340021E251 /* Valet.swift in Sources */,
@@ -3674,6 +3699,7 @@
 				C4D5576529C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C4BF90C127C57C220054E78C /* MainMenu+FixMyValet.swift in Sources */,
 				C4E49DEB28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
+				C4E49DF128F764A00026AC4E /* TrackedCommand.swift in Sources */,
 				C4F2E4382752F08D0020E974 /* BrewDiagnostics.swift in Sources */,
 				C485707428BF454E00539B36 /* ServicesView.swift in Sources */,
 				03B947DE2F43692500B6F899 /* TestURL.swift in Sources */,
@@ -3731,7 +3757,7 @@
 				C40FE738282ABA4F00A302C2 /* AppVersion.swift in Sources */,
 				03B675EC2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
 				C415D3E92770F692005EF286 /* AppDelegate+InterApp.swift in Sources */,
-				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
+				03D0F9752F4DE6FE00613D1E /* TestableCommand.swift in Sources */,
 				C4611E612AEAD3110010BE24 /* ByteLimitView.swift in Sources */,
 				C40175B92903108900763A68 /* ValetInteractor.swift in Sources */,
 				03ACC6452ECCAB190070D4CD /* RealWebApiTest.swift in Sources */,
@@ -3851,7 +3877,7 @@
 				C40C7F1F2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
-				C46EBC4B28DB966A007ACC74 /* TestableShell.swift in Sources */,
+				03D0F9762F4DE6FE00613D1E /* TestableShell.swift in Sources */,
 				C40FE73B282ABB2E00A302C2 /* AppVersionTest.swift in Sources */,
 				C490E3BD29BCA375006D2DE6 /* Measurements.swift in Sources */,
 				C4F780C625D80B75000DBC97 /* XibLoadable.swift in Sources */,

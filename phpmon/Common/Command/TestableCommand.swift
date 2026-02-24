@@ -15,7 +15,7 @@ class TestableCommand: CommandProtocol {
 
     var commands: [String: String]
 
-    public func executeRaw(
+    public func execute(
         path: String,
         arguments: [String],
         trimNewlines: Bool,

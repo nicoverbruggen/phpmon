@@ -15,7 +15,7 @@ protocol ShellProtocol {
     var PATH: String { get }
 
     /**
-     Run a command synchronously without tracking. Use with caution!
+     Run a command synchronously. Use with caution!
 
      Common usage:
      ```
@@ -24,9 +24,6 @@ protocol ShellProtocol {
 
      @return The shell output. If the command times out, returns empty output.
      */
-    @discardableResult
-    func syncRaw(_ command: String) -> ShellOutput
-
     /**
      Run a command synchronously. Use with caution!
 
@@ -51,9 +48,6 @@ protocol ShellProtocol {
      @return The shell output. If the command times out, returns empty output.
      */
     @discardableResult
-    func pipeRaw(_ command: String) async -> ShellOutput
-
-    @discardableResult
     func pipe(_ command: String) async -> ShellOutput
 
     /**
@@ -65,9 +59,6 @@ protocol ShellProtocol {
 
      @return The shell output. If the command times out, returns empty output.
      */
-    @discardableResult
-    func pipeRaw(_ command: String, timeout: TimeInterval) async -> ShellOutput
-
     @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput
 
@@ -83,13 +74,6 @@ protocol ShellProtocol {
      @return A tuple, containing the `Process` and `ShellOutput` objects.
      */
     @discardableResult
-    func attachRaw(
-        _ command: String,
-        didReceiveOutput: @escaping (String, ShellStream) -> Void,
-        withTimeout timeout: TimeInterval
-    ) async throws -> (Process, ShellOutput)
-
-    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
@@ -100,42 +84,6 @@ protocol ShellProtocol {
      Reloads the PATH.
      */
     func reloadEnvPath()
-}
-
-protocol TrackedShellProtocol: ShellProtocol, CommandTrackingProvider {}
-
-extension TrackedShellProtocol {
-    @discardableResult
-    func sync(_ command: String) -> ShellOutput {
-        trackedCommand(description: command) {
-            syncRaw(command)
-        }
-    }
-
-    @discardableResult
-    func pipe(_ command: String) async -> ShellOutput {
-        await trackedCommandAsync(description: command) {
-            await pipeRaw(command)
-        }
-    }
-
-    @discardableResult
-    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
-        await trackedCommandAsync(description: command) {
-            await pipeRaw(command, timeout: timeout)
-        }
-    }
-
-    @discardableResult
-    func attach(
-        _ command: String,
-        didReceiveOutput: @escaping (String, ShellStream) -> Void,
-        withTimeout timeout: TimeInterval
-    ) async throws -> (Process, ShellOutput) {
-        try await trackedCommandAsync(description: command) {
-            try await attachRaw(command, didReceiveOutput: didReceiveOutput, withTimeout: timeout)
-        }
-    }
 }
 
 enum ShellStream: Codable {

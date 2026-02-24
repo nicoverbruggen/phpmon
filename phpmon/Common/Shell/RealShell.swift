@@ -9,15 +9,12 @@
 import Foundation
 @preconcurrency import Dispatch
 
-class RealShell: TrackedShellProtocol, @unchecked Sendable {
-    init(binPath: String, commandTracker: CommandTracker) {
+class RealShell: ShellProtocol, @unchecked Sendable {
+    init(binPath: String) {
         self.binPath = binPath
-        self.commandTracker = commandTracker
         self._PATH = RealShell.getPath()
         self._exports = [:]
     }
-
-    let commandTracker: CommandTracker
     private(set) var binPath: String
 
     /**
@@ -157,7 +154,8 @@ class RealShell: TrackedShellProtocol, @unchecked Sendable {
 
     // MARK: - Shellable Protocol
 
-    func syncRaw(_ command: String) -> ShellOutput {
+    @discardableResult
+    func sync(_ command: String) -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -188,7 +186,7 @@ class RealShell: TrackedShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func pipeRaw(_ command: String) async -> ShellOutput {
+    func pipe(_ command: String) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -224,7 +222,7 @@ class RealShell: TrackedShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func pipeRaw(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
@@ -290,7 +288,7 @@ class RealShell: TrackedShellProtocol, @unchecked Sendable {
     }
 
     @discardableResult
-    func attachRaw(
+    func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
@@ -381,6 +379,7 @@ class RealShell: TrackedShellProtocol, @unchecked Sendable {
             process.launch()
         })
     }
+
 
     func reloadEnvPath() {
         // Instead of replacing the entire shell instance, we simply re-fetch the PATH

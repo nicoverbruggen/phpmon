@@ -10,21 +10,6 @@ import Foundation
 
 protocol CommandProtocol {
     /**
-     Immediately executes a command, without tracking.
-
-     - Parameter path: The path of the command or program to invoke.
-     - Parameter arguments: A list of arguments that are passed on.
-     - Parameter trimNewlines: Removes empty new line output.
-     - Parameter withStandardError: Outputs standard error output to the same string output as well.
-     */
-    func executeRaw(
-        path: String,
-        arguments: [String],
-        trimNewlines: Bool,
-        withStandardError: Bool
-    ) -> String
-
-    /**
      Immediately executes a command.
 
      - Parameter path: The path of the command or program to invoke.
@@ -58,20 +43,6 @@ extension CommandProtocol {
     func execute(
         path: String,
         arguments: [String],
-        trimNewlines: Bool,
-        withStandardError: Bool
-    ) -> String {
-        executeRaw(
-            path: path,
-            arguments: arguments,
-            trimNewlines: trimNewlines,
-            withStandardError: withStandardError
-        )
-    }
-
-    func execute(
-        path: String,
-        arguments: [String],
         trimNewlines: Bool
     ) -> String {
         execute(
@@ -82,25 +53,4 @@ extension CommandProtocol {
         )
     }
 
-}
-
-protocol TrackedCommandProtocol: CommandProtocol, CommandTrackingProvider {}
-
-extension TrackedCommandProtocol {
-    func execute(
-        path: String,
-        arguments: [String],
-        trimNewlines: Bool,
-        withStandardError: Bool
-    ) -> String {
-        let commandDescription = "\(path) \(arguments.joined(separator: " "))"
-        return trackedCommand(description: commandDescription) {
-            executeRaw(
-                path: path,
-                arguments: arguments,
-                trimNewlines: trimNewlines,
-                withStandardError: withStandardError
-            )
-        }
-    }
 }

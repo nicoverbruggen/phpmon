@@ -34,7 +34,7 @@ struct CommandHistoryView: View {
                             Spacer()
                         }
                     } else {
-                        ForEach(commandTracker.commands) { command in
+                    ForEach(commandTracker.commands) { command in
                         HStack(alignment: .top, spacing: 10) {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack(alignment: .firstTextBaseline, spacing: 8) {

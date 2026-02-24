@@ -7,14 +7,10 @@
 
 import Cocoa
 
-public class RealCommand: TrackedCommandProtocol {
-    let commandTracker: CommandTracker
+public class RealCommand: CommandProtocol {
+    init() {}
 
-    init(commandTracker: CommandTracker) {
-        self.commandTracker = commandTracker
-    }
-
-    public func executeRaw(
+    public func execute(
         path: String,
         arguments: [String],
         trimNewlines: Bool,

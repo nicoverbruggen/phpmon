@@ -69,8 +69,10 @@ class Container: @unchecked Sendable {
         self.filesystem = RealFileSystem(container: self)
         self.paths = Paths(container: self)
         self.commandTracker = CommandTracker()
-        self.shell = RealShell(binPath: paths.binPath, commandTracker: commandTracker)
-        self.command = RealCommand(commandTracker: commandTracker)
+        let realShell = RealShell(binPath: paths.binPath)
+        self.shell = TrackedShell(shell: realShell, commandTracker: commandTracker)
+        let realCommand = RealCommand()
+        self.command = TrackedCommand(command: realCommand, commandTracker: commandTracker)
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {
