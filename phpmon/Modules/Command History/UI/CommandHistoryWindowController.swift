@@ -26,7 +26,9 @@ class CommandHistoryWindowController: PMWindowController {
         panel.isFloatingPanel = true
         panel.hidesOnDeactivate = false
         panel.delegate = delegate ?? windowController
-        panel.contentView = NSHostingView(rootView: CommandHistoryView())
+        panel.contentView = NSHostingView(rootView: CommandHistoryView(
+            commandTracker: App.shared.container.commandTracker
+        ))
         panel.setContentSize(NSSize(width: 500, height: 300))
 
         windowController.window = panel

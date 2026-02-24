@@ -128,6 +128,10 @@
 		037F44232EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F44212EDB92EC002EBF75 /* HomebrewWatchManager.swift */; };
 		037F44242EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F44212EDB92EC002EBF75 /* HomebrewWatchManager.swift */; };
 		037F44252EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F44212EDB92EC002EBF75 /* HomebrewWatchManager.swift */; };
+		0381313D2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
+		0381313E2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
+		0381313F2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
+		038131402F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -1112,6 +1116,7 @@
 		037F44172EDB27B7002EBF75 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		037F441C2EDB9195002EBF75 /* ConfigWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWatchManager.swift; sourceTree = "<group>"; };
 		037F44212EDB92EC002EBF75 /* HomebrewWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewWatchManager.swift; sourceTree = "<group>"; };
+		0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryRow.swift; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		038A2B7D2EDDB24400173ACF /* App+UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UUID.swift"; sourceTree = "<group>"; };
@@ -2581,6 +2586,7 @@
 			children = (
 				E51118AFDD02AA1B7D8C9278 /* CommandHistoryWindowController.swift */,
 				31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */,
+				0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3121,6 +3127,7 @@
 				C464ADB2275A87CA003FCD53 /* DomainListCellProtocol.swift in Sources */,
 				C4EE188422D3386B00E126E5 /* Constants.swift in Sources */,
 				C4DEB7D427A5D60B00834718 /* Stats.swift in Sources */,
+				038131402F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				039C29182E8AA314007F5FAB /* TestableWebApi.swift in Sources */,
 				C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */,
 				C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
@@ -3355,6 +3362,7 @@
 				C471E7DA28F9BA8F0021E251 /* TestableCommand.swift in Sources */,
 				C471E7E528F9BAC20021E251 /* Events.swift in Sources */,
 				C471E7D628F9BA8F0021E251 /* RealFileSystem.swift in Sources */,
+				0381313D2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				C471E81728F9BAE80021E251 /* NSMenuExtension.swift in Sources */,
 				C40D725C2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				03DAD3A92EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
@@ -3417,6 +3425,7 @@
 				C471E8A728F9BB8F0021E251 /* App+ActivationPolicy.swift in Sources */,
 				C45B914C295607F400F4EC78 /* Service.swift in Sources */,
 				03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
+				0381313F2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				C471E8A828F9BB8F0021E251 /* App+GlobalHotkey.swift in Sources */,
 				C471E8A928F9BB8F0021E251 /* InterAppHandler.swift in Sources */,
 				0379C4A02ED71D050035D7EA /* Startup+Launch.swift in Sources */,
@@ -3739,6 +3748,7 @@
 				C4513F962B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4AFC4AF29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
+				0381313E2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C4415E8E2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,

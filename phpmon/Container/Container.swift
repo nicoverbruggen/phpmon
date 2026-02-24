@@ -16,8 +16,8 @@ class Container: @unchecked Sendable {
     private(set) var paths: Paths!
     private(set) var shell: ShellProtocol!
     private(set) var command: CommandProtocol!
-    private(set) var webApi: WebApiProtocol!
     private(set) var commandTracker: CommandTracker!
+    private(set) var webApi: WebApiProtocol!
 
     // Secondary (uses primary instances above)
     private(set) var preferences: Preferences!
@@ -69,10 +69,8 @@ class Container: @unchecked Sendable {
         self.filesystem = RealFileSystem(container: self)
         self.paths = Paths(container: self)
         self.commandTracker = CommandTracker()
-        let realShell = RealShell(binPath: paths.binPath)
-        self.shell = TrackedShell(shell: realShell, commandTracker: commandTracker)
-        let realCommand = RealCommand()
-        self.command = TrackedCommand(command: realCommand, commandTracker: commandTracker)
+        self.shell = TrackedShell(shell: RealShell(binPath: paths.binPath), commandTracker: commandTracker)
+        self.command = TrackedCommand(command: RealCommand(), commandTracker: commandTracker)
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {

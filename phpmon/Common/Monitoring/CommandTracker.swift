@@ -68,18 +68,30 @@ struct LoggedCommand: Identifiable {
 
     func durationText(at date: Date = Date()) -> String {
         if let completedAt {
-            let duration = completedAt.timeIntervalSince(startedAt)
-
-            if duration < 0.001 {
-                let micros = max(1, Int(duration * 1_000_000))
-                return "Completed in \(micros) us"
-            }
-
-            let ms = max(1, Int(duration * 1000))
-            return "Completed in \(ms) ms"
+            return Self.formattedDuration(
+                completedAt.timeIntervalSince(startedAt),
+                isCompleted: true
+            )
         }
 
-        let ms = max(1, Int(date.timeIntervalSince(startedAt) * 1000))
-        return "Running for \(ms) ms"
+        return Self.formattedDuration(
+            date.timeIntervalSince(startedAt),
+            isCompleted: false
+        )
+    }
+
+    private static func formattedDuration(
+        _ duration: TimeInterval,
+        isCompleted: Bool
+    ) -> String {
+        let prefix = isCompleted ? "Completed in" : "Running for"
+
+        if duration >= 0.3 {
+            let seconds = String(format: "%.2f", duration)
+            return "\(prefix) \(seconds) sec"
+        }
+
+        let ms = max(1, Int(duration * 1000))
+        return "\(prefix) \(ms) ms"
     }
 }

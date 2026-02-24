@@ -380,7 +380,6 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         })
     }
 
-
     func reloadEnvPath() {
         // Instead of replacing the entire shell instance, we simply re-fetch the PATH
         self.PATH = RealShell.getPath()
