@@ -50,6 +50,16 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_view_onboarding".localized).click()
     }
 
+    final func test_can_open_command_history() throws {
+        let app = launch(openMenu: true)
+        app.mainMenuItem(withText: "mi_other".localized).hover()
+        app.mainMenuItem(withText: "mi_view_command_history".localized).click()
+
+        assertExists(app.windows["command_history.title".localized], 2.0)
+
+        Thread.sleep(forTimeInterval: 5)
+    }
+
     final func test_can_open_about() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_about".localized).click()

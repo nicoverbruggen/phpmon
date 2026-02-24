@@ -111,12 +111,22 @@ class Container: @unchecked Sendable {
         fileSystemFiles: [String: FakeFile] = [:],
         commands: [String: String] = [:],
         webApiGetResponses: [URL: FakeWebApiResponse] = [:],
-        webApiPostResponses: [URL: FakeWebApiResponse] = [:]
+        webApiPostResponses: [URL: FakeWebApiResponse] = [:],
+        commandTracking: Bool = true,
     ) {
         self.commandTracker = CommandTracker()
-        self.shell = TestableShell(expectations: shellExpectations)
+
+        // Depending on whether we want to fire command tracking, load different handlers
+        if commandTracking {
+            self.shell = TrackableTestableShell(expectations: shellExpectations, commandTracker)
+            self.command = TrackableTestableCommand(commands: commands, commandTracker)
+        } else {
+            self.shell = TestableShell(expectations: shellExpectations)
+            self.command = TestableCommand(commands: commands)
+        }
+
         self.filesystem = TestableFileSystem(files: fileSystemFiles)
-        self.command = TestableCommand(commands: commands)
+
         self.webApi = TestableWebApi(
             getResponses: webApiGetResponses,
             postResponses: webApiPostResponses

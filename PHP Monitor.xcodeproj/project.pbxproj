@@ -133,6 +133,14 @@
 		0381313F2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
 		038131402F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */; };
 		038131412F4DFB5B00653177 /* TrackedShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */; };
+		038131432F4E00C300653177 /* TrackedTestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131422F4E00C000653177 /* TrackedTestableShell.swift */; };
+		038131442F4E00C300653177 /* TrackedTestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131422F4E00C000653177 /* TrackedTestableShell.swift */; };
+		038131452F4E00C300653177 /* TrackedTestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131422F4E00C000653177 /* TrackedTestableShell.swift */; };
+		038131462F4E00C300653177 /* TrackedTestableShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131422F4E00C000653177 /* TrackedTestableShell.swift */; };
+		038131482F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
+		038131492F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
+		0381314A2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
+		0381314B2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -1118,6 +1126,8 @@
 		037F441C2EDB9195002EBF75 /* ConfigWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWatchManager.swift; sourceTree = "<group>"; };
 		037F44212EDB92EC002EBF75 /* HomebrewWatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomebrewWatchManager.swift; sourceTree = "<group>"; };
 		0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryRow.swift; sourceTree = "<group>"; };
+		038131422F4E00C000653177 /* TrackedTestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedTestableShell.swift; sourceTree = "<group>"; };
+		038131472F4E00D100653177 /* TrackedTestableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedTestableCommand.swift; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		038A2B7D2EDDB24400173ACF /* App+UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UUID.swift"; sourceTree = "<group>"; };
@@ -1533,6 +1543,15 @@
 			path = Watchers;
 			sourceTree = "<group>";
 		};
+		0381314C2F4E00E200653177 /* Testable */ = {
+			isa = PBXGroup;
+			children = (
+				038131472F4E00D100653177 /* TrackedTestableCommand.swift */,
+				038131422F4E00C000653177 /* TrackedTestableShell.swift */,
+			);
+			path = Testable;
+			sourceTree = "<group>";
+		};
 		0386B0BD2ED36E2500CA6795 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1591,6 +1610,7 @@
 		03D0F9772F4DE7E800613D1E /* Monitoring */ = {
 			isa = PBXGroup;
 			children = (
+				0381314C2F4E00E200653177 /* Testable */,
 				031A80DB2F4CF1690016F7DD /* CommandTracker.swift */,
 				C46EBC4A28DB966A007ACC74 /* TrackedShell.swift */,
 				C4E49DED28F764A00026AC4E /* TrackedCommand.swift */,
@@ -3080,6 +3100,7 @@
 				031D74872F46307300D4FF48 /* AddSiteView.swift in Sources */,
 				0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
+				038131482F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
 				C4B79EB629CA387F00A483EE /* BrewPhpFormulaeHandler.swift in Sources */,
 				C476FF9822B0DD830098105B /* Alert.swift in Sources */,
@@ -3133,6 +3154,7 @@
 				C47015022C46D6910069AAE7 /* NVAlertExtension.swift in Sources */,
 				C4E49DEA28F7643D0026AC4E /* CommandProtocol.swift in Sources */,
 				C4E49DF028F764A00026AC4E /* TrackedCommand.swift in Sources */,
+				038131452F4E00C300653177 /* TrackedTestableShell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3298,6 +3320,7 @@
 				C46DC7A62C7B5BC900F19D17 /* Favorites.swift in Sources */,
 				038A2B812EDDB24C00173ACF /* App+UUID.swift in Sources */,
 				C471E7E728F9BAC20021E251 /* Constants.swift in Sources */,
+				0381314B2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				C471E81628F9BAE80021E251 /* DateExtension.swift in Sources */,
 				03CC1FF72E3D23130050FC18 /* ZshRunCommand.swift in Sources */,
 				C469E700294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
@@ -3344,6 +3367,7 @@
 				C471E82928F9BB330021E251 /* Valet.swift in Sources */,
 				C471E80728F9BAD40021E251 /* PhpConfigurationFile.swift in Sources */,
 				0329A9A32E92A69000A62A12 /* WarningManager+Evaluations.swift in Sources */,
+				038131462F4E00C300653177 /* TrackedTestableShell.swift in Sources */,
 				C471E7D528F9BA8F0021E251 /* TestableConfigurations.swift in Sources */,
 				C436B39F29F3C42500B6A64E /* PreferencesTabs.swift in Sources */,
 				03CC1FE82E3D22120050FC18 /* InstallHomebrew.swift in Sources */,
@@ -3509,7 +3533,9 @@
 				C4B79ECE29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C471E8E028F9BB8F0021E251 /* Preset.swift in Sources */,
 				C471E8E128F9BB8F0021E251 /* PresetHelper.swift in Sources */,
+				038131492F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				031D747D2F46225600D4FF48 /* SimpleButton.swift in Sources */,
+				038131442F4E00C300653177 /* TrackedTestableShell.swift in Sources */,
 				C471E8E228F9BB8F0021E251 /* WarningView.swift in Sources */,
 				C471E8E328F9BB8F0021E251 /* PhpDoctorView.swift in Sources */,
 				0A1A6208D3DD2495FBD8569B /* CommandHistoryView.swift in Sources */,
@@ -3741,6 +3767,7 @@
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
+				038131432F4E00C300653177 /* TrackedTestableShell.swift in Sources */,
 				03BFF52D2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				C4AFC4B429C4F43300BF4E0D /* HomebrewUpgradableTest.swift in Sources */,
 				037F441E2EDB9195002EBF75 /* ConfigWatchManager.swift in Sources */,
@@ -3884,6 +3911,7 @@
 				C40934AB298EEDA900D25014 /* CaskFileParserTest.swift in Sources */,
 				C436B39E29F3C42500B6A64E /* PreferencesTabs.swift in Sources */,
 				C43BCD4529FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
+				0381314A2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				C4551657297AED18009B8466 /* ValetRcTest.swift in Sources */,
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
