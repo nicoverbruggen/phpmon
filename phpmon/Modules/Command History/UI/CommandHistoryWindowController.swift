@@ -29,7 +29,7 @@ class CommandHistoryWindowController: PMWindowController {
         panel.contentView = NSHostingView(rootView: CommandHistoryView(
             commandTracker: App.shared.container.commandTracker
         ))
-        panel.setContentSize(NSSize(width: 500, height: 300))
+        panel.setContentSize(NSSize(width: 600, height: 400))
 
         windowController.window = panel
 

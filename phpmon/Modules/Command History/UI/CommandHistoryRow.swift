@@ -6,15 +6,14 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+import AppKit
 import SwiftUI
 
 struct CommandHistoryRow: View {
     let command: LoggedCommand
     let now: Date
     let isEvenRow: Bool
-    let onAppear: () -> Void
-    let onDisappear: () -> Void
-    let onCompleted: () -> Void
+    @Binding var visibleCommandIds: Set<UUID>
 
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
@@ -41,11 +40,19 @@ struct CommandHistoryRow: View {
             Spacer()
         }
         .padding(.vertical, 2)
-        .onAppear(perform: onAppear)
-        .onDisappear(perform: onDisappear)
+        .onAppear {
+            // Track only visible, active commands to avoid unnecessary ticking
+            guard !command.isCompleted else { return }
+            visibleCommandIds.insert(command.id)
+        }
+        .onDisappear {
+            // Remove from visible set when the row scrolls out
+            visibleCommandIds.remove(command.id)
+        }
         .onChange(of: command.isCompleted) { isCompleted in
             guard isCompleted else { return }
-            onCompleted()
+            // Stop ticking for this row once the command completes
+            visibleCommandIds.remove(command.id)
         }
         .listRowSeparator(.hidden)
         .listRowBackground(

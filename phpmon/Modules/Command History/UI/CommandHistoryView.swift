@@ -36,19 +36,7 @@ struct CommandHistoryView: View {
                             command: command,
                             now: now,
                             isEvenRow: isEvenRow,
-                            onAppear: {
-                                // Track only visible, active commands to avoid unnecessary ticking
-                                guard !command.isCompleted else { return }
-                                visibleCommandIds.insert(command.id)
-                            },
-                            onDisappear: {
-                                // Remove from visible set when the row scrolls out
-                                visibleCommandIds.remove(command.id)
-                            },
-                            onCompleted: {
-                                // Stop ticking for this row once the command completes
-                                visibleCommandIds.remove(command.id)
-                            }
+                            visibleCommandIds: $visibleCommandIds
                         )
                         .id(command.id)
                     }
