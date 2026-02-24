@@ -68,6 +68,7 @@
 "mi_no_presets" = "プリセットは利用できません.";
 "mi_set_up_presets" = "プリセットについて詳しく知る…";
 "mi_view_onboarding" = "ウェルカムツアーを開始…";
+"mi_view_command_history" = "コマンド履歴を開く…";
 "mi_xdebug_available_modes" = "利用可能なモード";
 "mi_xdebug_actions" = "操作";
 "mi_xdebug_disable_all" = "すべてのモードを無効にする";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "AlfredやRaycast経由でトリガーしていない場合は、別のアプリケーションがPHP Monitorを制御しようとしている可能性があります。\n\nその場合、他のサードパーティアプリがPHP Monitorを代わりに制御することに問題がない場合を除き、この統合をオフのままにしておくことをお勧めします。これはセキュリティ上のリスクとなる可能性があります。";
 "alert.enable_integrations.ok" = "統合を許可";
 "alert.enable_integrations.cancel" = "許可しない";
+"startup.fix_for_me" = "自動で修復";
+"startup.fix_manually" = "修復しました";
+"command_history.title" = "コマンド履歴";
+"command_history.completed_in" = "%@で完了";
+"command_history.running_for" = "%@実行中";

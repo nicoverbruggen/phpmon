@@ -68,6 +68,7 @@
 "mi_no_presets" = "Keine Voreinstellungen verfügbar.";
 "mi_set_up_presets" = "Erfahren Sie mehr über Voreinstellungen...";
 "mi_view_onboarding" = "Willkommenstour starten...";
+"mi_view_command_history" = "Befehlsverlauf öffnen...";
 "mi_xdebug_available_modes" = "Verfügbare Modi";
 "mi_xdebug_actions" = "Aktionen";
 "mi_xdebug_disable_all" = "Alle Modi deaktivieren";
@@ -611,3 +612,8 @@
 "alert.enable_integrations.desc" = "Wenn Sie dies nicht über Alfred oder Raycast ausgelöst haben, versucht möglicherweise eine andere Anwendung, PHP Monitor zu steuern.\n\nIn einem solchen Fall empfehle ich, diese Integration deaktiviert zu lassen, es sei denn, Sie sind damit einverstanden, dass eine andere Drittanbieter-App PHP Monitor für Sie steuert, was ein potenzielles Sicherheitsrisiko darstellen könnte.";
 "alert.enable_integrations.ok" = "Integrationen erlauben";
 "alert.enable_integrations.cancel" = "Nicht erlauben";
+"startup.fix_for_me" = "Für mich beheben";
+"startup.fix_manually" = "Ich habe es behoben";
+"command_history.title" = "Befehlsverlauf";
+"command_history.completed_in" = "Abgeschlossen in %@";
+"command_history.running_for" = "Läuft seit %@";

@@ -965,3 +965,9 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 
 "startup.fix_for_me" = "Fix For Me";
 "startup.fix_manually" = "I Fixed It";
+
+// COMMAND HISTORY
+
+"command_history.title" = "Command History";
+"command_history.completed_in" = "Completed in %@";
+"command_history.running_for" = "Running for %@";

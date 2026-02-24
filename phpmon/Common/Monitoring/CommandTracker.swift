@@ -84,14 +84,18 @@ struct LoggedCommand: Identifiable {
         _ duration: TimeInterval,
         isCompleted: Bool
     ) -> String {
-        let prefix = isCompleted ? "Completed in" : "Running for"
-
         if duration >= 0.3 {
             let seconds = String(format: "%.2f", duration)
-            return "\(prefix) \(seconds) sec"
+            let durationText = "\(seconds) s"
+            return isCompleted
+                ? "command_history.completed_in".localized(durationText)
+                : "command_history.running_for".localized(durationText)
         }
 
         let ms = max(1, Int(duration * 1000))
-        return "\(prefix) \(ms) ms"
+        let durationText = "\(ms) ms"
+        return isCompleted
+            ? "command_history.completed_in".localized(durationText)
+            : "command_history.running_for".localized(durationText)
     }
 }

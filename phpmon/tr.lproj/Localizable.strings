@@ -68,6 +68,7 @@
 "mi_no_presets" = "Kullanılabilir ön ayar yok.";
 "mi_set_up_presets" = "Ön ayarlar hakkında daha fazla bilgi edinin...";
 "mi_view_onboarding" = "Hoş Geldin Turu Aç...";
+"mi_view_command_history" = "Komut geçmişini aç...";
 "mi_xdebug_available_modes" = "Mevcut Modlar";
 "mi_xdebug_actions" = "Eylemler";
 "mi_xdebug_disable_all" = "Tüm Modları Devre Dışı Bırak";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "Bunu Alfred veya Raycast üzerinden tetiklemediyseniz, başka bir uygulama PHP Monitor'ü kontrol etmeye çalışıyor olabilir.\n\nBöyle bir durumda, başka bir üçüncü taraf uygulamanın PHP Monitor'ü sizin adınıza kontrol etmesinde sakınca görmüyorsanız hariç, bu entegrasyonu kapalı tutmanızı öneririm; aksi takdirde potansiyel bir güvenlik riski oluşturabilir.";
 "alert.enable_integrations.ok" = "Entegrasyonlara İzin Ver";
 "alert.enable_integrations.cancel" = "İzin Verme";
+"startup.fix_for_me" = "Benim için düzelt";
+"startup.fix_manually" = "Düzelttim";
+"command_history.title" = "Komut Geçmişi";
+"command_history.completed_in" = "%@ içinde tamamlandı";
+"command_history.running_for" = "%@ süredir çalışıyor";

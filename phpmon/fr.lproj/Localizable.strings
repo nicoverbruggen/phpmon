@@ -68,6 +68,7 @@
 "mi_no_presets" = "Aucun paramètre disponible.";
 "mi_set_up_presets" = "En savoir plus sur les paramètres...";
 "mi_view_onboarding" = "Ouvrir la visite guidée de bienvenue...";
+"mi_view_command_history" = "Ouvrir l'historique des commandes...";
 "mi_xdebug_available_modes" = "Modes disponibles";
 "mi_xdebug_actions" = "Actions";
 "mi_xdebug_disable_all" = "Désactiver tous les modes";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "Si vous n'avez pas déclenché cela via Alfred ou Raycast, il est possible qu'une autre application tente de contrôler PHP Monitor.\n\nDans ce cas, je recommande de garder cette intégration désactivée, sauf si vous acceptez qu'une autre application tierce contrôle PHP Monitor à votre place, ce qui pourrait présenter un risque de sécurité potentiel.";
 "alert.enable_integrations.ok" = "Autoriser les intégrations";
 "alert.enable_integrations.cancel" = "Ne pas autoriser";
+"startup.fix_for_me" = "Corriger pour moi";
+"startup.fix_manually" = "Je l'ai corrigé";
+"command_history.title" = "Historique des commandes";
+"command_history.completed_in" = "Terminé en %@";
+"command_history.running_for" = "En cours depuis %@";

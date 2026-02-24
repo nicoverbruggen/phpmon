@@ -21,7 +21,7 @@ class CommandHistoryWindowController: PMWindowController {
 
         let panel = NSPanel()
         panel.styleMask = [.titled, .closable, .miniaturizable, .resizable, .utilityWindow]
-        panel.title = "Command History"
+        panel.title = "command_history.title".localized
         panel.titlebarAppearsTransparent = true
         panel.isFloatingPanel = true
         panel.hidesOnDeactivate = false

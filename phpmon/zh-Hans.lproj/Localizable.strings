@@ -68,6 +68,7 @@
 "mi_no_presets" = "无可用预设";
 "mi_set_up_presets" = "了解有关预设的更多信息...";
 "mi_view_onboarding" = "打开欢迎导览...";
+"mi_view_command_history" = "打开命令历史...";
 "mi_xdebug_available_modes" = "可用模式";
 "mi_xdebug_actions" = "操作";
 "mi_xdebug_disable_all" = "禁用所有模式";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "如果您不是通过 Alfred 或 Raycast 触发的，可能有另一个应用程序正在尝试控制 PHP Monitor。\n\n在这种情况下，我建议保持此集成处于关闭状态，除非您同意让另一个第三方应用代为控制 PHP Monitor，这可能存在潜在的安全风险。";
 "alert.enable_integrations.ok" = "允许集成";
 "alert.enable_integrations.cancel" = "不允许";
+"startup.fix_for_me" = "帮我修复";
+"startup.fix_manually" = "我已修复";
+"command_history.title" = "命令历史";
+"command_history.completed_in" = "在%@内完成";
+"command_history.running_for" = "已运行%@";

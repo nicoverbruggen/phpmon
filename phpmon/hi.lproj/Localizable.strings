@@ -68,6 +68,7 @@
 "mi_no_presets" = "कोई प्रीसेट उपलब्ध नहीं हैं.";
 "mi_set_up_presets" = "प्रीसेट्स के बारे में अधिक जानें...";
 "mi_view_onboarding" = "स्वागत यात्रा खोलें...";
+"mi_view_command_history" = "कमांड इतिहास खोलें...";
 "mi_xdebug_available_modes" = "उपलब्ध मोड";
 "mi_xdebug_actions" = "क्रियाएँ";
 "mi_xdebug_disable_all" = "सभी मोड निष्क्रिय करें";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "यदि आपने Alfred या Raycast के माध्यम से इसे ट्रिगर नहीं किया है, तो कोई अन्य एप्लिकेशन PHP Monitor को नियंत्रित करने का प्रयास कर रहा हो सकता है।\n\nऐसी स्थिति में, मैं इस इंटीग्रेशन को बंद रखने की सिफारिश करता हूँ, जब तक कि आप किसी अन्य तृतीय-पक्ष ऐप को आपकी ओर से PHP Monitor नियंत्रित करने देने से सहमत न हों, जो एक संभावित सुरक्षा जोखिम हो सकता है।";
 "alert.enable_integrations.ok" = "इंटीग्रेशन की अनुमति दें";
 "alert.enable_integrations.cancel" = "अनुमति न दें";
+"startup.fix_for_me" = "मेरे लिए ठीक करें";
+"startup.fix_manually" = "मैंने ठीक कर दिया";
+"command_history.title" = "कमांड इतिहास";
+"command_history.completed_in" = "%@ में पूरा हुआ";
+"command_history.running_for" = "%@ से चल रहा है";

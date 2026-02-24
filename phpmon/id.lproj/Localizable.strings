@@ -68,6 +68,7 @@
 "mi_no_presets" = "Tidak ada preset tersedia.";
 "mi_set_up_presets" = "Pelajari lebih lanjut tentang preset...";
 "mi_view_onboarding" = "Buka Tur Selamat Datang...";
+"mi_view_command_history" = "Buka riwayat perintah...";
 "mi_xdebug_available_modes" = "Mode Tersedia";
 "mi_xdebug_actions" = "Aksi";
 "mi_xdebug_disable_all" = "Nonaktifkan Semua Mode";
@@ -619,3 +620,8 @@ TIPS PEMECAHAN MASALAH UMUM
 "alert.enable_integrations.desc" = "Jika Anda tidak memicu ini melalui Alfred atau Raycast, mungkin ada aplikasi lain yang mencoba mengendalikan PHP Monitor.\n\nDalam kasus tersebut, saya sarankan untuk tetap menonaktifkan integrasi ini, kecuali Anda tidak keberatan jika aplikasi pihak ketiga lain mengendalikan PHP Monitor untuk Anda, yang dapat menimbulkan potensi risiko keamanan.";
 "alert.enable_integrations.ok" = "Izinkan Integrasi";
 "alert.enable_integrations.cancel" = "Jangan Izinkan";
+"startup.fix_for_me" = "Perbaiki untuk saya";
+"startup.fix_manually" = "Sudah saya perbaiki";
+"command_history.title" = "Riwayat perintah";
+"command_history.completed_in" = "Selesai dalam %@";
+"command_history.running_for" = "Berjalan selama %@";

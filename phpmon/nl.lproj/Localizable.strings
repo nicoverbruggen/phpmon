@@ -68,6 +68,7 @@
 "mi_no_presets" = "Geen presets beschikbaar.";
 "mi_set_up_presets" = "Meer te weten komen over presets...";
 "mi_view_onboarding" = "Open welkomvenster...";
+"mi_view_command_history" = "Open opdrachtgeschiedenis...";
 "mi_xdebug_available_modes" = "Beschikbare modes";
 "mi_xdebug_actions" = "Acties";
 "mi_xdebug_disable_all" = "Alle modes uitschakelen";
@@ -609,3 +610,8 @@
 "alert.enable_integrations.desc" = "Als u dit niet via Alfred of Raycast heeft geactiveerd, probeert mogelijk een andere applicatie PHP Monitor aan te sturen.\n\nIn dat geval raad ik aan om deze integratie uitgeschakeld te laten, tenzij u het geen probleem vindt als een andere app van derden PHP Monitor voor u aanstuurt, wat een potentieel beveiligingsrisico kan vormen.";
 "alert.enable_integrations.ok" = "Integraties toestaan";
 "alert.enable_integrations.cancel" = "Niet toestaan";
+"startup.fix_for_me" = "Los het voor mij op";
+"startup.fix_manually" = "Ik heb het opgelost";
+"command_history.title" = "Opdrachtgeschiedenis";
+"command_history.completed_in" = "Voltooid in %@";
+"command_history.running_for" = "Bezig sinds %@";
