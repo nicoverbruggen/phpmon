@@ -146,8 +146,11 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: { container in
+                    if container.phpEnvs.currentInstall == nil {
+                        container.phpEnvs.currentInstall = ActivePhpInstallation.load(container)
+                    }
                     return await container.shell.pipe("\(container.paths.binPath)/php -v").err
-                        .contains("Library not loaded")
+                        .contains("Library not loaded") && container.phpEnvs.currentInstall != nil
                 },
                 fix: { container in
                     let brew = App.shared.container.paths.brew
