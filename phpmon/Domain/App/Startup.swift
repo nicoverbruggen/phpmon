@@ -48,26 +48,12 @@ class Startup {
                     // We will present the user with an option (potentially)
                     let outcome = await showAlert(for: check)
 
-                    // If the user requested an automatic fix, do this
+                    // The fix ran and succeeded — continue to the next check
                     if outcome == .shouldRunFix {
-                        // Verify a fix actually exists
-                        guard let command = check.fixCommand else {
-                            return false
-                        }
-
-                        // We will try to run the fix, it may fail!
-                        do {
-                            try await command(App.shared.container)
-                            guard await check.succeeds() else {
-                                return false
-                            }
-                            continue // continue to the next check!
-                        } catch {
-                            return false
-                        }
+                        continue
                     }
 
-                    // No fix requested, this is just a failure
+                    // No fix requested or fix failed — requires full restart
                     return false
                 }
             } else {
@@ -113,10 +99,15 @@ class Startup {
                     return await !container.shell
                         .pipe("ls \(container.paths.optPath) | grep php").out.contains("php")
                 },
-                fix: { container in
+                fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
-                    await container.shell.pipe("\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php")
+                    try await container.shell.attach(
+                        "\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
                 },
+                fixDescription: "brew tap shivammathur/php && brew install shivammathur/php/php",
                 name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
                 subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -131,11 +122,15 @@ class Startup {
                 command: { container in
                     return !container.filesystem.fileExists(container.paths.php)
                 },
-                fix: { container in
-                    // See if we can't link PHP
+                fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
-                    await container.shell.pipe("\(brew) link php")
+                    try await container.shell.attach(
+                        "\(brew) link php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
                 },
+                fixDescription: "brew link php",
                 name: "`\(App.shared.container.paths.php)` exists",
                 titleText: "startup.errors.php_binary.title".localized,
                 subtitleText: "startup.errors.php_binary.subtitle".localized,
@@ -152,10 +147,15 @@ class Startup {
                     return await container.shell.pipe("\(container.paths.binPath)/php -v").err
                         .contains("Library not loaded") && container.phpEnvs.currentInstall != nil
                 },
-                fix: { container in
-                    let brew = App.shared.container.paths.brew
-                    await container.shell.pipe("\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php")
+                fix: { container, didReceiveOutput in
+                    let brew = container.paths.brew
+                    try await container.shell.attach(
+                        "\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
                 },
+                fixDescription: "brew reinstall php && brew link php",
                 name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
                 subtitleText: "startup.errors.dyld_library.subtitle".localized(
@@ -187,10 +187,15 @@ class Startup {
                     await container.phpEnvs.determinePhpAlias()
                     return PhpEnvironments.brewPhpAlias == nil
                 },
-                fix: { container in
+                fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
-                    await container.shell.pipe("\(brew) update")
+                    try await container.shell.attach(
+                        "\(brew) update",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
                 },
+                fixDescription: "brew update",
                 name: "`brew` alias is not nil and valid",
                 titleText: "startup.errors.could_not_determine_alias.title".localized,
                 subtitleText: "startup.errors.could_not_determine_alias.subtitle".localized,
@@ -224,10 +229,12 @@ class Startup {
                         .pipe("cat /private/etc/sudoers.d/brew")
                         .out.contains(container.paths.brew)
                 },
-                fix: { container in
+                fix: { container, didReceiveOutput in
                     let valet = container.paths.binPath.appending("/valet")
-                    try AppleScript.runShellAsAdmin("\(valet) trust")
+                    let result = try AppleScript.runShellAsAdmin("\(valet) trust")
+                    didReceiveOutput(result, .stdOut)
                 },
+                fixDescription: "valet trust",
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
                 subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
@@ -250,10 +257,15 @@ class Startup {
                 command: { container in
                     return !container.filesystem.directoryExists("~/.config/valet")
                 },
-                fix: { container in
+                fix: { container, didReceiveOutput in
                     let valet = container.paths.binPath.appending("/valet")
-                    await container.shell.pipe("\(valet) install")
+                    try await container.shell.attach(
+                        "\(valet) install",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
                 },
+                fixDescription: "valet install",
                 name: "`.config/valet` not empty (Valet installed)",
                 titleText: "startup.errors.valet_not_installed.title".localized,
                 subtitleText: "startup.errors.valet_not_installed.subtitle".localized,

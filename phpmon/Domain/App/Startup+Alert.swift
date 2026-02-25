@@ -15,7 +15,7 @@ extension Startup {
      The potential outcome of an environment check failure alert.
      */
     enum EnvironmentAlertOutcome {
-        /** The automatic fix was requested, will try and continue if it worked. */
+        /** The automatic fix ran and succeeded. Continue to the next check. */
         case shouldRunFix
 
         /** No automatic fix was requested, show alert and require retry of all startup checks. */
@@ -23,11 +23,11 @@ extension Startup {
     }
 
     /**
-     Displays an alert for a particular check. There are two types of alerts:
-     - ones that require an app restart, which prompt the user to exit the app
-     - ones that allow the app to continue, which allow the user to retry
+     Displays an alert for a particular check. For checks that require an app restart,
+     a simple NVAlert is shown with a quit button. For all other checks, the new
+     StartupAlertWindowController is used to show the enhanced startup alert.
      */
-    @MainActor internal func showAlert(for check: EnvironmentCheck) -> EnvironmentAlertOutcome {
+    @MainActor internal func showAlert(for check: EnvironmentCheck) async -> EnvironmentAlertOutcome {
         // Ensure that the timeout does not fire until we restart
         Self.startupTimer?.invalidate()
 
@@ -43,29 +43,8 @@ extension Startup {
                 }).show(urgency: .bringToFront)
         }
 
-        // Verify if an automatic fix is available
-        let hasAutomaticFix = check.fixCommand != nil
-
-        // Present an alert with one or two buttons (depending on fix)
-        let outcome = NVAlert()
-            .withInformation(
-                title: check.titleText,
-                subtitle: check.subtitleText,
-                description: check.descriptionText
-            )
-            .withPrimary(text: hasAutomaticFix ? "startup.fix_for_me".localized : "startup.fix_manually".localized)
-            .withSecondary(if: hasAutomaticFix, text: "startup.fix_manually".localized)
-            .withTertiary(if: hasAutomaticFix, text: "", action: { _ in
-                NSWorkspace.shared.open(Constants.Urls.FrequentlyAskedQuestions)
-            })
-            .runModal(urgency: .bringToFront)
-
-        // If there's an automatic fix and we chose to fix it, return outcome
-        if hasAutomaticFix && outcome == .alertFirstButtonReturn {
-            return .shouldRunFix
-        }
-
-        // In any other situation, we will require a retry of the startup
-        return .shouldRetryStartup
+        // Create and show the enhanced startup alert window
+        let controller = StartupAlertWindowController.create(for: check)
+        return await controller.showModal()
     }
 }

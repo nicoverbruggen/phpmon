@@ -665,7 +665,7 @@ You can do this by running `composer global update` in your terminal. After that
 // PHP binary not found
 "startup.errors.php_binary.title" = "PHP is not correctly installed";
 "startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
-"startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
+"startup.errors.php_binary.desc" = "Usually, running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
 // Invalid brew info php output
 "startup.errors.php_brew_info_invalid.title" = "Homebrew returned invalid output for `brew info php --json` which requires valid JSON as output.";
@@ -965,6 +965,10 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 
 "startup.fix_for_me" = "Fix For Me";
 "startup.fix_manually" = "I Fixed It";
+
+"startup.alert.quit" = "Quit";
+"startup.alert.fix_automatically" = "Fix Automatically";
+"startup.alert.retry" = "Retry";
 
 // COMMAND HISTORY
 

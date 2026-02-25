@@ -19,10 +19,6 @@ class CommandTracker: ObservableObject {
         commands.filter { !$0.isCompleted }
     }
 
-    var isActive: Bool {
-        !activeCommands.isEmpty
-    }
-
     @discardableResult
     func track(_ command: String, id: UUID = UUID()) -> UUID {
         let tracked = LoggedCommand(id: id, command: command, startedAt: Date())
