@@ -59,16 +59,26 @@ class StartupAlertViewModel: ObservableObject {
                 }
 
                 // Fix completed — re-run the check
-                let stillFails = await check.succeeds()
+                let didSucceed = await check.succeeds()
                 await MainActor.run {
-                    if !stillFails {
+                    if !didSucceed {
                         // Check still fails after fix
                         self.state = .idle
                         self.outputLines.append(
                             OutputLine(text: "\nFix did not resolve the issue.", stream: .stdErr)
                         )
                     } else {
-                        // Check passed
+                        // Check passed — brief delay so the user can see it worked
+                        self.state = .completed
+                        self.outputLines.append(
+                            OutputLine(text: "\nFix applied successfully!", stream: .stdOut)
+                        )
+                    }
+                }
+
+                if await MainActor.run(body: { self.state }) == .completed {
+                    try? await Task.sleep(nanoseconds: 3_000_000_000)
+                    await MainActor.run {
                         self.onComplete?(.shouldRunFix)
                     }
                 }

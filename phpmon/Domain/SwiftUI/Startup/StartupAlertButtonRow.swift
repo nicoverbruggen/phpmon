@@ -43,6 +43,15 @@ struct StartupAlertButtonRow: View {
                         .controlSize(.small)
                 }
 
+            case .completed where hasFix:
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                    Text("Fix applied successfully!")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
             case .idle, .completed:
                 Button("startup.alert.retry".localized) {
                     onRetry()
@@ -64,6 +73,14 @@ struct StartupAlertButtonRow: View {
 #Preview("Running") {
     StartupAlertButtonRow(
         state: .running, hasFix: true,
+        onQuit: {}, onRetry: {}, onFix: {}
+    )
+    .frame(width: 460)
+}
+
+#Preview("Fix succeeded") {
+    StartupAlertButtonRow(
+        state: .completed, hasFix: true,
         onQuit: {}, onRetry: {}, onFix: {}
     )
     .frame(width: 460)
