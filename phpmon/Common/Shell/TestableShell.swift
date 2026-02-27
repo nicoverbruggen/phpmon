@@ -187,83 +187,64 @@ struct BatchFakeShellOutput: Codable {
     }
 }
 
+/**
+ Prepares a particular transaction that modifies testable state after running a shell command.
+ Currently, it possible to modify the state of `TestableShell` and `TestableFileSystem`.
+ */
 struct FakeShellTransaction: Codable {
+    /// Creates a symlink for a given path to a given destination in `TestableFileSystem`.
+    static func symlink(_ path: String, to destination: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createSymlink, path: path, destination: destination)
+    }
+
+    /// Writes some content to a file to a path, overwriting existing entries in `TestableFileSystem`.
+    static func write(_ content: String, to path: String, overwrite: Bool = true) -> FakeShellTransaction {
+        FakeShellTransaction(type: .writeFile, path: path, content: content, overwrite: overwrite)
+    }
+
+    /// Removes a file from `TestableFileSystem`.
+    static func remove(_ path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .remove, path: path)
+    }
+
+    /// Moves a file in `TestableFileSystem`.
+    static func move(_ from: String, to: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .move, from: from, to: to)
+    }
+
+    /// Creates a directory in `TestableFileSystem`.
+    static func mkdir(_ path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createDirectory, path: path)
+    }
+
+    /// Updates shell output for a particular command in `TestableShell`.
+    /// Use this if you expect running a particular command twice to have a different outcome the second time, for example.
+    static func shell(_ command: String, _ output: BatchFakeShellOutput) -> FakeShellTransaction {
+        FakeShellTransaction(type: .setShellOutput, command: command, output: output)
+    }
+
     enum TransactionType: String, Codable {
         case createSymlink
         case writeFile
         case remove
         case move
         case createDirectory
-        case makeExecutable
         case setShellOutput
     }
 
-    var type: TransactionType
-    var path: String?
-    var destination: String?
-    var content: String?
-    var overwrite: Bool?
-    var from: String?
-    var to: String?
-    var command: String?
-    var output: BatchFakeShellOutput?
+    private var type: TransactionType
+    private var path: String?
+    private var destination: String?
+    private var content: String?
+    private var overwrite: Bool?
+    private var from: String?
+    private var to: String?
+    private var command: String?
+    private var output: BatchFakeShellOutput?
 
-    static func createSymlink(path: String, destination: String) -> FakeShellTransaction {
-        FakeShellTransaction(type: .createSymlink, path: path, destination: destination)
-    }
-
-    static func symlink(_ path: String, to destination: String) -> FakeShellTransaction {
-        createSymlink(path: path, destination: destination)
-    }
-
-    static func writeFile(path: String, content: String, overwrite: Bool) -> FakeShellTransaction {
-        FakeShellTransaction(type: .writeFile, path: path, content: content, overwrite: overwrite)
-    }
-
-    static func file(_ path: String, content: String, overwrite: Bool) -> FakeShellTransaction {
-        writeFile(path: path, content: content, overwrite: overwrite)
-    }
-
-    static func remove(path: String) -> FakeShellTransaction {
-        FakeShellTransaction(type: .remove, path: path)
-    }
-
-    static func remove(_ path: String) -> FakeShellTransaction {
-        remove(path: path)
-    }
-
-    static func move(from: String, to: String) -> FakeShellTransaction {
-        FakeShellTransaction(type: .move, from: from, to: to)
-    }
-
-    static func move(_ from: String, to: String) -> FakeShellTransaction {
-        move(from: from, to: to)
-    }
-
-    static func createDirectory(path: String) -> FakeShellTransaction {
-        FakeShellTransaction(type: .createDirectory, path: path)
-    }
-
-    static func directory(_ path: String) -> FakeShellTransaction {
-        createDirectory(path: path)
-    }
-
-    static func makeExecutable(path: String) -> FakeShellTransaction {
-        FakeShellTransaction(type: .makeExecutable, path: path)
-    }
-
-    static func executable(_ path: String) -> FakeShellTransaction {
-        makeExecutable(path: path)
-    }
-
-    static func setShellOutput(command: String, output: BatchFakeShellOutput) -> FakeShellTransaction {
-        FakeShellTransaction(type: .setShellOutput, command: command, output: output)
-    }
-
-    static func shellOutput(_ command: String, output: BatchFakeShellOutput) -> FakeShellTransaction {
-        setShellOutput(command: command, output: output)
-    }
-
+    /**
+     Applies a given transaction that will modify the testable filesystem or testable shell as part of a transaction.
+     */
     func apply(to filesystem: TestableFileSystem, shell: TestableShell) {
         switch type {
         case .createSymlink:
@@ -281,9 +262,6 @@ struct FakeShellTransaction: Codable {
         case .createDirectory:
             assert(path != nil, "createDirectory requires path")
             try? filesystem.createDirectory(path!, withIntermediateDirectories: true)
-        case .makeExecutable:
-            assert(path != nil, "makeExecutable requires path")
-            try? filesystem.makeExecutable(path!)
         case .setShellOutput:
             assert(command != nil && output != nil, "setShellOutput requires command and output")
             shell.expectations[command!] = output!
