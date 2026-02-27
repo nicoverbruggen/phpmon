@@ -27,7 +27,7 @@ class StartupAlertViewModel: ObservableObject {
 
     init(check: EnvironmentCheck) {
         self.check = check
-        self.state = check.fixCommand != nil ? .idle : .completed
+        self.state = .idle
     }
 
     init(check: EnvironmentCheck, state: State, outputLines: [OutputLine] = []) {

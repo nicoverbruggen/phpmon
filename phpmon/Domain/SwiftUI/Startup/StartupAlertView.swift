@@ -11,18 +11,6 @@ import SwiftUI
 struct StartupAlertView: View {
     @ObservedObject var viewModel: StartupAlertViewModel
 
-    /// Whether the bottom section (description text and/or past output) has content to display.
-    /// This is used to conditionally show the section and its divider,
-    /// avoiding empty padded sections and double dividers.
-    private var hasBottomContent: Bool {
-        let hasDescription = !viewModel.check.descriptionText.isEmpty && viewModel.state == .idle
-
-        let hasOutput = !viewModel.outputLines.isEmpty
-            && (viewModel.state == .idle || viewModel.state == .completed)
-
-        return hasDescription || hasOutput
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             StartupAlertHeaderView(
@@ -30,46 +18,37 @@ struct StartupAlertView: View {
                 subtitleText: viewModel.check.subtitleText
             )
 
-            if viewModel.state == .running
-                || viewModel.state == .failed
-                || (viewModel.hasFix && viewModel.state == .idle) {
+            // Fix command description: only shown in idle state when a fix is available
+            if viewModel.state == .idle && viewModel.hasFix {
                 Divider()
 
-                VStack(alignment: .leading, spacing: 12) {
-                    if viewModel.state == .running || viewModel.state == .failed {
-                        StartupOutputView(
-                            lines: viewModel.outputLines,
-                            isRunning: viewModel.state == .running
-                        )
-                    } else {
-                        StartupFixCommandView(
-                            command: viewModel.check.fixDescription ?? ""
-                        )
-                    }
-                }
+                StartupFixCommandView(
+                    command: viewModel.check.fixDescription ?? ""
+                )
                 .padding(15)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
 
-            if hasBottomContent {
+            // Terminal output: shown during and after fix execution
+            if !viewModel.outputLines.isEmpty
+                && (viewModel.state == .running || viewModel.state == .completed || viewModel.state == .failed) {
                 Divider()
 
-                VStack(alignment: .leading, spacing: 12) {
-                    if !viewModel.check.descriptionText.isEmpty,
-                        viewModel.state == .idle {
-                        MarkdownTextView(viewModel.check.descriptionText, fontSize: 12)
-                    }
-
-                    if !viewModel.outputLines.isEmpty,
-                        viewModel.state == .idle || viewModel.state == .completed {
-                        StartupOutputView(
-                            lines: viewModel.outputLines,
-                            isRunning: false
-                        )
-                    }
-                }
+                StartupOutputView(
+                    lines: viewModel.outputLines,
+                    isRunning: viewModel.state == .running
+                )
                 .padding(15)
                 .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            // Description text: shown in idle state
+            if !viewModel.check.descriptionText.isEmpty && viewModel.state == .idle {
+                Divider()
+
+                MarkdownTextView(viewModel.check.descriptionText, fontSize: 12)
+                    .padding(15)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             Divider()
