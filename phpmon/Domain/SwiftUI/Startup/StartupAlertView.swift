@@ -30,14 +30,16 @@ struct StartupAlertView: View {
                 subtitleText: viewModel.check.subtitleText
             )
 
-            if viewModel.state == .running || (viewModel.hasFix && viewModel.state == .idle) {
+            if viewModel.state == .running
+                || viewModel.state == .failed
+                || (viewModel.hasFix && viewModel.state == .idle) {
                 Divider()
 
                 VStack(alignment: .leading, spacing: 12) {
-                    if viewModel.state == .running {
+                    if viewModel.state == .running || viewModel.state == .failed {
                         StartupOutputView(
                             lines: viewModel.outputLines,
-                            isRunning: true
+                            isRunning: viewModel.state == .running
                         )
                     } else {
                         StartupFixCommandView(
@@ -86,37 +88,38 @@ struct StartupAlertView: View {
 
 // MARK: - Previews
 
-#Preview("Fix Available — brew link php") {
-    let check = EnvironmentCheck(
-        command: { _ in return true },
-        fix: { _, output in output("Running brew link php...", .stdOut) },
-        fixDescription: "brew link php",
-        name: "preview_php_binary",
-        titleText: "startup.errors.php_binary.title".localized,
-        subtitleText: "startup.errors.php_binary.subtitle".localized,
-        descriptionText: "startup.errors.php_binary.desc".localized(
-            App.shared.container.paths.php
-        )
+#Preview("No Fix Available") {
+    return StartupAlertView(
+        viewModel: StartupAlertViewModel(check: EnvironmentCheck(
+            command: { _ in return true },
+            fix: nil,
+            name: "preview_php_binary",
+            titleText: "startup.errors.php_binary.title".localized,
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(
+                App.shared.container.paths.php
+            )
+        ))
     )
-    let vm = StartupAlertViewModel(check: check)
-    return StartupAlertView(viewModel: vm)
 }
 
-#Preview("Fix Available — valet trust") {
-    let check = EnvironmentCheck(
-        command: { _ in return true },
-        fix: { _, output in output("Password required...", .stdOut) },
-        fixDescription: "valet trust",
-        name: "preview_sudoers_brew",
-        titleText: "startup.errors.sudoers_brew.title".localized,
-        subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
-        descriptionText: "startup.errors.sudoers_brew.desc".localized
+#Preview("Fix Available") {
+    return StartupAlertView(
+        viewModel: StartupAlertViewModel(check: EnvironmentCheck(
+            command: { _ in return true },
+            fix: { _, output in output("Running brew link php...", .stdOut) },
+            fixDescription: "brew link php",
+            name: "preview_php_binary",
+            titleText: "startup.errors.php_binary.title".localized,
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(
+                App.shared.container.paths.php
+            )
+        ))
     )
-    let vm = StartupAlertViewModel(check: check)
-    return StartupAlertView(viewModel: vm)
 }
 
-#Preview("Fix Running — brew link php") {
+#Preview("Fix Running") {
     StartupAlertView(viewModel: StartupAlertViewModel(
         check: EnvironmentCheck(
             command: { _ in return true },
@@ -132,34 +135,52 @@ struct StartupAlertView: View {
         state: .running,
         outputLines: [
             OutputLine(text: "==> Linking Binary 'php' to '/opt/homebrew/bin/php'", stream: .stdOut),
-            OutputLine(text: "==> Downloading https://formulae.brew.sh/api/formula.jws.json", stream: .stdOut),
-            OutputLine(text: "Already downloaded: /Users/nico/Library/Caches/Homebrew/downloads/abc123.json", stream: .stdOut),
-            OutputLine(text: "Warning: php is keg-only and must be linked with --force", stream: .stdErr),
             OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut)
         ]
     ))
 }
 
-#Preview("No Fix — Valet version unsupported") {
-    let check = EnvironmentCheck(
-        command: { _ in return true },
-        name: "preview_valet_version",
-        titleText: "startup.errors.valet_version_not_supported.title".localized,
-        subtitleText: "startup.errors.valet_version_not_supported.subtitle".localized,
-        descriptionText: "startup.errors.valet_version_not_supported.desc".localized
-    )
-    let vm = StartupAlertViewModel(check: check)
-    return StartupAlertView(viewModel: vm)
+#Preview("Fix Failed") {
+    StartupAlertView(viewModel: StartupAlertViewModel(
+        check: EnvironmentCheck(
+            command: { _ in return true },
+            fix: { _, output in output("Running brew link php...", .stdOut) },
+            fixDescription: "brew link php",
+            name: "preview_php_binary_failed",
+            titleText: "startup.errors.php_binary.title".localized,
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(
+                App.shared.container.paths.php
+            )
+        ),
+        state: .failed,
+        outputLines: [
+            OutputLine(text: "==> Linking Binary 'php' to '/opt/homebrew/bin/php'", stream: .stdOut),
+            OutputLine(text: "Warning: php is keg-only and must be linked with --force", stream: .stdErr),
+            OutputLine(text: "", stream: .stdOut),
+            OutputLine(text: "---\nFix did not resolve the issue.", stream: .stdOut)
+        ]
+    ))
 }
 
-#Preview("No Fix — Herd running") {
-    let check = EnvironmentCheck(
-        command: { _ in return true },
-        name: "preview_herd_running",
-        titleText: "startup.errors.herd_running.title".localized,
-        subtitleText: "startup.errors.herd_running.subtitle".localized,
-        descriptionText: "startup.errors.herd_running.desc".localized
-    )
-    let vm = StartupAlertViewModel(check: check)
-    return StartupAlertView(viewModel: vm)
+#Preview("Fix Completed") {
+    StartupAlertView(viewModel: StartupAlertViewModel(
+        check: EnvironmentCheck(
+            command: { _ in return true },
+            fix: { _, output in output("Running brew link php...", .stdOut) },
+            fixDescription: "brew link php",
+            name: "preview_php_binary_completed",
+            titleText: "startup.errors.php_binary.title".localized,
+            subtitleText: "startup.errors.php_binary.subtitle".localized,
+            descriptionText: "startup.errors.php_binary.desc".localized(
+                App.shared.container.paths.php
+            )
+        ),
+        state: .completed,
+        outputLines: [
+            OutputLine(text: "==> Linking Binary 'php' to '/opt/homebrew/bin/php'", stream: .stdOut),
+            OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut),
+            OutputLine(text: "---\nFix applied successfully! Continuing...", stream: .stdOut)
+        ]
+    ))
 }

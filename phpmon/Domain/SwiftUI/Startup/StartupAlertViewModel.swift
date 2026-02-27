@@ -13,6 +13,7 @@ class StartupAlertViewModel: ObservableObject {
         case idle
         case running
         case completed
+        case failed
     }
 
     /// The actual check that is associated with this alert modal
@@ -97,12 +98,12 @@ class StartupAlertViewModel: ObservableObject {
     }
 
     @MainActor private func fail() {
-        self.state = .idle
+        self.state = .failed
         self.outputLines.append(OutputLine(text: "---\nFix did not resolve the issue.", stream: .stdErr))
     }
 
     @MainActor private func errorAndIdle(_ error: Error) {
-        self.state = .idle
+        self.state = .failed
         self.outputLines.append(OutputLine(text: "---\nError: \(error.localizedDescription)", stream: .stdErr))
     }
 

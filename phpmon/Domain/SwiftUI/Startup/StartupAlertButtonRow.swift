@@ -29,7 +29,6 @@ struct StartupAlertButtonRow: View {
                     onQuit()
                 }
                 .focused($focusedButton, equals: .quit)
-                .disabled(state == .running)
 
                 Spacer()
 
@@ -64,6 +63,22 @@ struct StartupAlertButtonRow: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+
+            case .failed:
+                HStack(spacing: 6) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.red)
+                    Text("Fix did not resolve the issue.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Button("startup.alert.retry".localized) {
+                    onRetry()
+                }
+                .focused($focusedButton, equals: .retry)
             }
         }
         .padding(20)
@@ -99,9 +114,17 @@ struct StartupAlertButtonRow: View {
     .frame(width: 460)
 }
 
-#Preview("Fix succeeded") {
+#Preview("Fix Succeeded") {
     StartupAlertButtonRow(
         state: .completed, hasFix: true,
+        onQuit: {}, onRetry: {}, onFix: {}
+    )
+    .frame(width: 460)
+}
+
+#Preview("Fix Failed") {
+    StartupAlertButtonRow(
+        state: .failed, hasFix: true,
         onQuit: {}, onRetry: {}, onFix: {}
     )
     .frame(width: 460)
