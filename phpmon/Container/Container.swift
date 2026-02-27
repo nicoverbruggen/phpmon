@@ -116,16 +116,18 @@ class Container: @unchecked Sendable {
     ) {
         self.commandTracker = CommandTracker()
 
+        let filesystem = TestableFileSystem(files: fileSystemFiles)
+
         // Depending on whether we want to fire command tracking, load different handlers
         if commandTracking {
-            self.shell = TrackableTestableShell(expectations: shellExpectations, commandTracker)
+            self.shell = TrackableTestableShell(expectations: shellExpectations, filesystem: filesystem, commandTracker)
             self.command = TrackableTestableCommand(commands: commands, commandTracker)
         } else {
-            self.shell = TestableShell(expectations: shellExpectations)
+            self.shell = TestableShell(expectations: shellExpectations, filesystem: filesystem)
             self.command = TestableCommand(commands: commands)
         }
 
-        self.filesystem = TestableFileSystem(files: fileSystemFiles)
+        self.filesystem = filesystem
 
         self.webApi = TestableWebApi(
             getResponses: webApiGetResponses,

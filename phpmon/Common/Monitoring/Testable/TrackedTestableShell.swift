@@ -11,9 +11,13 @@ import Foundation
 final class TrackableTestableShell: TestableShell {
     private let commandTracker: CommandTracker
 
-    init(expectations: [String: BatchFakeShellOutput], _ commandTracker: CommandTracker) {
+    init(
+        expectations: [String: BatchFakeShellOutput],
+        filesystem: TestableFileSystem?,
+        _ commandTracker: CommandTracker
+    ) {
         self.commandTracker = commandTracker
-        super.init(expectations: expectations)
+        super.init(expectations: expectations, filesystem: filesystem)
     }
 
     override func sync(_ command: String) -> ShellOutput {

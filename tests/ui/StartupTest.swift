@@ -73,8 +73,19 @@ final class StartupTest: UITestCase {
     final func test_launch_halts_and_automic_fix_can_be_applied() throws {
         var configuration = TestableConfigurations.working
 
-        // TODO: Make fake shell output closure accessible w/ container so fake tests can manipulate the app's state
-        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = .delayed(0.5, "Linked PHP.", .stdOut)
+        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = BatchFakeShellOutput(
+            items: [.delayed(0.5, "Linked PHP.", .stdOut)],
+            transactions: [
+                .symlink(
+                    "/opt/homebrew/bin/php",
+                    to: "/opt/homebrew/Cellar/php/8.4.5/bin/php"
+                ),
+                .shellOutput(
+                    "/opt/homebrew/bin/brew link php",
+                    output: .instant("PHP already linked.")
+                )
+            ]
+        )
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
 
         let app = launch(

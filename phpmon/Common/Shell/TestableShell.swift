@@ -13,11 +13,13 @@ public class TestableShell: ShellProtocol {
         return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
     }
 
-    init(expectations: [String: BatchFakeShellOutput]) {
+    init(expectations: [String: BatchFakeShellOutput], filesystem: TestableFileSystem? = nil) {
         self.expectations = expectations
+        self.filesystem = filesystem
     }
 
     var expectations: [String: BatchFakeShellOutput] = [:]
+    var filesystem: TestableFileSystem?
 
     @discardableResult
     func sync(_ command: String) -> ShellOutput {
@@ -28,7 +30,9 @@ public class TestableShell: ShellProtocol {
             return .err("No Expected Output")
         }
 
-        return expectation.syncOutput()
+        let output = expectation.syncOutput()
+        applyTransactions(for: expectation)
+        return output
     }
 
     @discardableResult
@@ -66,11 +70,26 @@ public class TestableShell: ShellProtocol {
             didReceiveOutput(output, type)
         }, ignoreDelay: isRunningTests)
 
+        applyTransactions(for: expectation)
         return (Process(), output)
     }
 
     func reloadEnvPath() {
         // does nothing
+    }
+
+    private func applyTransactions(for expectation: BatchFakeShellOutput) {
+        if !expectation.transactions.isEmpty {
+            assert(filesystem != nil, "Transactions require a filesystem")
+        }
+
+        guard let filesystem else {
+            return
+        }
+
+        expectation.transactions.forEach { transaction in
+            transaction.apply(to: filesystem, shell: self)
+        }
     }
 
 }
@@ -91,6 +110,7 @@ struct FakeShellOutput: Codable {
 
 struct BatchFakeShellOutput: Codable {
     var items: [FakeShellOutput]
+    var transactions: [FakeShellTransaction] = []
 
     static func with(_ items: [FakeShellOutput]) -> BatchFakeShellOutput {
         return BatchFakeShellOutput(items: items)
@@ -121,6 +141,8 @@ struct BatchFakeShellOutput: Codable {
             if !ignoreDelay {
                 await delay(seconds: item.delay)
             }
+
+            didReceiveOutput(item.output, item.stream)
 
             if item.stream == .stdErr {
                 output.err += item.output
@@ -162,5 +184,109 @@ struct BatchFakeShellOutput: Codable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void = { _, _ in }
     ) async -> ShellOutput {
         return await self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
+    }
+}
+
+struct FakeShellTransaction: Codable {
+    enum TransactionType: String, Codable {
+        case createSymlink
+        case writeFile
+        case remove
+        case move
+        case createDirectory
+        case makeExecutable
+        case setShellOutput
+    }
+
+    var type: TransactionType
+    var path: String?
+    var destination: String?
+    var content: String?
+    var overwrite: Bool?
+    var from: String?
+    var to: String?
+    var command: String?
+    var output: BatchFakeShellOutput?
+
+    static func createSymlink(path: String, destination: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createSymlink, path: path, destination: destination)
+    }
+
+    static func symlink(_ path: String, to destination: String) -> FakeShellTransaction {
+        createSymlink(path: path, destination: destination)
+    }
+
+    static func writeFile(path: String, content: String, overwrite: Bool) -> FakeShellTransaction {
+        FakeShellTransaction(type: .writeFile, path: path, content: content, overwrite: overwrite)
+    }
+
+    static func file(_ path: String, content: String, overwrite: Bool) -> FakeShellTransaction {
+        writeFile(path: path, content: content, overwrite: overwrite)
+    }
+
+    static func remove(path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .remove, path: path)
+    }
+
+    static func remove(_ path: String) -> FakeShellTransaction {
+        remove(path: path)
+    }
+
+    static func move(from: String, to: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .move, from: from, to: to)
+    }
+
+    static func move(_ from: String, to: String) -> FakeShellTransaction {
+        move(from: from, to: to)
+    }
+
+    static func createDirectory(path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createDirectory, path: path)
+    }
+
+    static func directory(_ path: String) -> FakeShellTransaction {
+        createDirectory(path: path)
+    }
+
+    static func makeExecutable(path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .makeExecutable, path: path)
+    }
+
+    static func executable(_ path: String) -> FakeShellTransaction {
+        makeExecutable(path: path)
+    }
+
+    static func setShellOutput(command: String, output: BatchFakeShellOutput) -> FakeShellTransaction {
+        FakeShellTransaction(type: .setShellOutput, command: command, output: output)
+    }
+
+    static func shellOutput(_ command: String, output: BatchFakeShellOutput) -> FakeShellTransaction {
+        setShellOutput(command: command, output: output)
+    }
+
+    func apply(to filesystem: TestableFileSystem, shell: TestableShell) {
+        switch type {
+        case .createSymlink:
+            assert(path != nil && destination != nil, "createSymlink requires path and destination")
+            filesystem.createSymlink(path!, destination: destination!)
+        case .writeFile:
+            assert(path != nil && content != nil && overwrite != nil, "writeFile requires path, content, overwrite")
+            try? filesystem.writeFile(path!, content: content!, overwrite: overwrite!)
+        case .remove:
+            assert(path != nil, "remove requires path")
+            try? filesystem.remove(path!)
+        case .move:
+            assert(from != nil && to != nil, "move requires from and to")
+            try? filesystem.move(from: from!, to: to!)
+        case .createDirectory:
+            assert(path != nil, "createDirectory requires path")
+            try? filesystem.createDirectory(path!, withIntermediateDirectories: true)
+        case .makeExecutable:
+            assert(path != nil, "makeExecutable requires path")
+            try? filesystem.makeExecutable(path!)
+        case .setShellOutput:
+            assert(command != nil && output != nil, "setShellOutput requires command and output")
+            shell.expectations[command!] = output!
+        }
     }
 }
