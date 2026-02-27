@@ -11,6 +11,18 @@ import SwiftUI
 struct StartupAlertView: View {
     @ObservedObject var viewModel: StartupAlertViewModel
 
+    /// Whether the bottom section (description text and/or past output) has content to display.
+    /// This is used to conditionally show the section and its divider,
+    /// avoiding empty padded sections and double dividers.
+    private var hasBottomContent: Bool {
+        let hasDescription = !viewModel.check.descriptionText.isEmpty && viewModel.state == .idle
+
+        let hasOutput = !viewModel.outputLines.isEmpty
+            && (viewModel.state == .idle || viewModel.state == .completed)
+
+        return hasDescription || hasOutput
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             StartupAlertHeaderView(
@@ -18,39 +30,45 @@ struct StartupAlertView: View {
                 subtitleText: viewModel.check.subtitleText
             )
 
-            Divider()
+            if viewModel.state == .running || (viewModel.hasFix && viewModel.state == .idle) {
+                Divider()
 
-            VStack(alignment: .leading, spacing: 12) {
-                if viewModel.state == .running {
-                    StartupOutputView(
-                        lines: viewModel.outputLines,
-                        isRunning: true
-                    )
-                } else if viewModel.hasFix, viewModel.state == .idle {
-                    StartupFixCommandView(
-                        command: viewModel.check.fixDescription ?? ""
-                    )
+                VStack(alignment: .leading, spacing: 12) {
+                    if viewModel.state == .running {
+                        StartupOutputView(
+                            lines: viewModel.outputLines,
+                            isRunning: true
+                        )
+                    } else {
+                        StartupFixCommandView(
+                            command: viewModel.check.fixDescription ?? ""
+                        )
+                    }
                 }
-
-                if !viewModel.check.descriptionText.isEmpty,
-                    viewModel.state == .idle {
-                    Text(markdown: viewModel.check.descriptionText, fontSize: 12)
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .textSelection(.enabled)
-                }
-
-                if !viewModel.outputLines.isEmpty,
-                    viewModel.state == .idle || viewModel.state == .completed {
-                    StartupOutputView(
-                        lines: viewModel.outputLines,
-                        isRunning: false
-                    )
-                }
+                .padding(15)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(20)
-            .frame(maxWidth: .infinity, alignment: .leading)
+
+            if hasBottomContent {
+                Divider()
+
+                VStack(alignment: .leading, spacing: 12) {
+                    if !viewModel.check.descriptionText.isEmpty,
+                        viewModel.state == .idle {
+                        MarkdownTextView(viewModel.check.descriptionText, fontSize: 12)
+                    }
+
+                    if !viewModel.outputLines.isEmpty,
+                        viewModel.state == .idle || viewModel.state == .completed {
+                        StartupOutputView(
+                            lines: viewModel.outputLines,
+                            isRunning: false
+                        )
+                    }
+                }
+                .padding(15)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
 
             Divider()
 

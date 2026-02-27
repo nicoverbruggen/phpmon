@@ -93,17 +93,17 @@ class StartupAlertViewModel: ObservableObject {
 
     @MainActor private func pass() {
         self.state = .completed
-        self.outputLines.append(OutputLine(text: "\nFix applied successfully! Continuing...", stream: .stdOut))
+        self.outputLines.append(OutputLine(text: "---\nFix applied successfully! Continuing...", stream: .stdOut))
     }
 
     @MainActor private func fail() {
         self.state = .idle
-        self.outputLines.append(OutputLine(text: "\nFix did not resolve the issue.", stream: .stdErr))
+        self.outputLines.append(OutputLine(text: "---\nFix did not resolve the issue.", stream: .stdErr))
     }
 
     @MainActor private func errorAndIdle(_ error: Error) {
         self.state = .idle
-        self.outputLines.append(OutputLine(text: "\nError: \(error.localizedDescription)", stream: .stdErr))
+        self.outputLines.append(OutputLine(text: "---\nError: \(error.localizedDescription)", stream: .stdErr))
     }
 
     // MARK: - Alert Outcomes

@@ -663,8 +663,8 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.homebrew_missing.quit" = "Quit";
 
 // PHP binary not found
-"startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_binary.title" = "PHP is not correctly linked";
+"startup.errors.php_binary.subtitle" = "A valid PHP installation was found, but it is not linked. The app will not work correctly until you resolve this issue.";
 "startup.errors.php_binary.desc" = "Usually, running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
 // Invalid brew info php output
@@ -716,12 +716,12 @@ If you are seeing this message but are confused why this folder has gone missing
 
 // Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
-"startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_brew.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 "startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
 // Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
-"startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
+"startup.errors.sudoers_valet.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 // Platform issue detected

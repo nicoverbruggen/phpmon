@@ -19,13 +19,12 @@ struct StartupAlertHeaderView: View {
                 .frame(width: 60, height: 60)
 
             VStack(alignment: .leading, spacing: 5) {
-                Text(markdown: titleText)
+                Text(titleText)
                     .font(.system(size: 15, weight: .bold))
                     .textSelection(.enabled)
-                Text(markdown: subtitleText)
-                    .font(.system(size: 12))
+
+                MarkdownTextView(subtitleText, fontSize: 13)
                     .fixedSize(horizontal: false, vertical: true)
-                    .textSelection(.enabled)
             }
 
             Spacer()
