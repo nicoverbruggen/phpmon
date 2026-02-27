@@ -152,6 +152,6 @@ final class StartupTest: UITestCase {
         )
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
-        click(app.buttons["startup.fix_manually".localized])
+        click(app.buttons["startup.alert.fix_manually".localized])
     }
 }
