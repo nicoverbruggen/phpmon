@@ -12,6 +12,6 @@ To accomplish your task, you must:
 
 - Identify all of the Localizable languages via the Xcode project file
 - Translate the strings for each language identified
-- Insert the translation below the appropriate key using `sed` (you should be able to do this by matching the key; do not include a newline -- the translations don't have any)
+- Insert the translation below the appropriate key using `sed` (You should be able to do this by matching the key. Unlike the source English file, localization files do not have newlines or comments, so avoid adding those!)
 - Validate all translations are OK via @scripts/verify_tl.sh
 - Never read out the full translation file, it will be too long! Ask me if you somehow would need to read out the file
