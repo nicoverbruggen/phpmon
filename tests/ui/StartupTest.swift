@@ -27,11 +27,11 @@ final class StartupTest: UITestCase {
 
         // Dialog 1: "PHP is not correctly installed"
         assertAllExist([
-            app.dialogs["generic.notice".localized],
             app.staticTexts["startup.errors.php_binary.title".localized],
-            app.buttons["startup.fix_manually".localized]
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized]
         ])
-        click(app.buttons["startup.fix_manually".localized])
+        click(app.buttons["startup.alert.fix_manually".localized])
 
         // Dialog 2: PHP Monitor failed to start
         assertAllExist([
@@ -47,6 +47,51 @@ final class StartupTest: UITestCase {
 
         // At this point, we can terminate the test
         app.terminate()
+    }
+
+    final func test_launch_halts_and_automic_fix_cannot_be_applied() throws {
+        var configuration = TestableConfigurations.working
+        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = .delayed(0.5, "Brew was unable to link PHP.", .stdErr)
+        configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
+
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
+
+        // Dialog 1: "PHP is not correctly installed"
+        assertAllExist([
+            app.staticTexts["startup.errors.php_binary.title".localized],
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized]
+        ])
+        click(app.buttons["startup.alert.fix_automatically".localized])
+
+        // TODO: Verify the alert is in a failed state w/ buttons to retry or quit
+    }
+
+    final func test_launch_halts_and_automic_fix_can_be_applied() throws {
+        var configuration = TestableConfigurations.working
+
+        // TODO: Make fake shell output closure accessible w/ container so fake tests can manipulate the app's state
+        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = .delayed(0.5, "Linked PHP.", .stdOut)
+        configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
+
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
+
+        // Dialog 1: "PHP is not correctly installed"
+        assertAllExist([
+            app.staticTexts["startup.errors.php_binary.title".localized],
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized]
+        ])
+        click(app.buttons["startup.alert.fix_automatically".localized])
+
+        // We wait for the app to complete launch
+        waitForMenu(app)
     }
 
     final func test_get_warning_about_missing_fpm_symlink() throws {

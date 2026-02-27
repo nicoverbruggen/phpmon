@@ -28,23 +28,28 @@ class UITestCase: XCTestCase {
         app.launch()
 
         if waitForInitialization || openMenu {
-            let statusItem = app.statusItems.firstMatch
-            let isEnabled = NSPredicate(format: "isEnabled == true")
-            let expectation = expectation(for: isEnabled, evaluatedWith: statusItem, handler: nil)
-            let result = XCTWaiter().wait(for: [expectation], timeout: 15)
-
-            if result == .timedOut {
-                XCTFail("PHP Monitor did not initialize with an available UI element within 15 seconds.")
-            }
-
-            if openMenu {
-                statusItem.click()
-            }
+            waitForMenu(app, openMenu: openMenu)
         }
 
         // Note: If this fails here, make sure the menu bar item can be displayed
         // If you use Bartender or something like this, this item may be hidden and tests will fail
         return app
+    }
+
+    /** Waits for the menu to be enabled and opens it. */
+    public func waitForMenu(_ app: XCPMApplication, openMenu: Bool = false) {
+        let statusItem = app.statusItems.firstMatch
+        let isEnabled = NSPredicate(format: "isEnabled == true")
+        let expectation = expectation(for: isEnabled, evaluatedWith: statusItem, handler: nil)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 15)
+
+        if result == .timedOut {
+            XCTFail("PHP Monitor did not initialize with an available UI element within 15 seconds.")
+        }
+
+        if openMenu {
+            statusItem.click()
+        }
     }
 
     /** Checks if a single element exists. */
