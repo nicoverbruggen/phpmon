@@ -28,7 +28,7 @@ struct StartupOutputView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(8)
                 }
-                .frame(height: 160)
+                .frame(height: 140)
                 .background(Color.black)
                 .foregroundStyle(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 6))

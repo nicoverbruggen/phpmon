@@ -62,7 +62,7 @@ struct StartupAlertView: View {
                 onFix: { viewModel.runFix() }
             )
         }
-        .frame(width: 460)
+        .frame(width: 500)
     }
 }
 
