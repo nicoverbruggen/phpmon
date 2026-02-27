@@ -32,7 +32,8 @@ struct StartupAlertView: View {
                     )
                 }
 
-                if !viewModel.check.descriptionText.isEmpty, viewModel.state != .running {
+                if !viewModel.check.descriptionText.isEmpty,
+                    viewModel.state == .idle {
                     Text(markdown: viewModel.check.descriptionText, fontSize: 12)
                         .font(.system(size: 12))
                         .foregroundStyle(.secondary)
@@ -40,7 +41,8 @@ struct StartupAlertView: View {
                         .textSelection(.enabled)
                 }
 
-                if !viewModel.outputLines.isEmpty, viewModel.state == .idle {
+                if !viewModel.outputLines.isEmpty,
+                    viewModel.state == .idle || viewModel.state == .completed {
                     StartupOutputView(
                         lines: viewModel.outputLines,
                         isRunning: false

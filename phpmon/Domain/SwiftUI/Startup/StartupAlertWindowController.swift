@@ -52,7 +52,7 @@ class StartupAlertWindowController: PMWindowController {
             }
 
             self.showWindow(nil)
-            self.window?.center()
+            self.window?.setCenterPosition(offsetY: 70)
             NSApp.activate(ignoringOtherApps: true)
             self.window?.orderFrontRegardless()
         }

@@ -93,7 +93,7 @@ class StartupAlertViewModel: ObservableObject {
 
     @MainActor private func pass() {
         self.state = .completed
-        self.outputLines.append(OutputLine(text: "\nFix applied successfully!", stream: .stdOut))
+        self.outputLines.append(OutputLine(text: "\nFix applied successfully! Continuing...", stream: .stdOut))
     }
 
     @MainActor private func fail() {

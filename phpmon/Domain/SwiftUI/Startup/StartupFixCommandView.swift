@@ -22,15 +22,8 @@ struct StartupFixCommandView: View {
                 Text(command)
                     .font(.system(size: 12, design: .monospaced))
                     .foregroundStyle(.primary)
+                    .textSelection(.enabled)
                 Spacer()
-                Button {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(command, forType: .string)
-                } label: {
-                    Image(systemName: "doc.on.doc")
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
             }
         }
         .padding(10)
