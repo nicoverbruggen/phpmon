@@ -610,8 +610,6 @@
 "alert.enable_integrations.desc" = "Nếu bạn không kích hoạt điều này qua Alfred hoặc Raycast, có thể có một ứng dụng khác đang cố kiểm soát PHP Monitor.\n\nTrong trường hợp đó, tôi khuyên bạn nên giữ tích hợp này ở trạng thái tắt, trừ khi bạn chấp nhận việc một ứng dụng bên thứ ba khác kiểm soát PHP Monitor thay bạn, điều này có thể gây ra rủi ro bảo mật tiềm ẩn.";
 "alert.enable_integrations.ok" = "Cho phép tích hợp";
 "alert.enable_integrations.cancel" = "Không cho phép";
-"startup.fix_for_me" = "Sửa giúp tôi";
-"startup.fix_manually" = "Tôi đã sửa";
 "command_history.title" = "Lịch sử lệnh";
 "command_history.completed_in" = "Hoàn thành trong %@";
 "command_history.running_for" = "Đang chạy %@";

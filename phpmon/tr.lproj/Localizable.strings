@@ -610,8 +610,6 @@
 "alert.enable_integrations.desc" = "Bunu Alfred veya Raycast üzerinden tetiklemediyseniz, başka bir uygulama PHP Monitor'ü kontrol etmeye çalışıyor olabilir.\n\nBöyle bir durumda, başka bir üçüncü taraf uygulamanın PHP Monitor'ü sizin adınıza kontrol etmesinde sakınca görmüyorsanız hariç, bu entegrasyonu kapalı tutmanızı öneririm; aksi takdirde potansiyel bir güvenlik riski oluşturabilir.";
 "alert.enable_integrations.ok" = "Entegrasyonlara İzin Ver";
 "alert.enable_integrations.cancel" = "İzin Verme";
-"startup.fix_for_me" = "Benim için düzelt";
-"startup.fix_manually" = "Düzelttim";
 "command_history.title" = "Komut Geçmişi";
 "command_history.completed_in" = "%@ içinde tamamlandı";
 "command_history.running_for" = "%@ süredir çalışıyor";

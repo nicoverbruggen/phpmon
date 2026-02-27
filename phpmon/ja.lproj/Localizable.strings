@@ -610,8 +610,6 @@
 "alert.enable_integrations.desc" = "AlfredやRaycast経由でトリガーしていない場合は、別のアプリケーションがPHP Monitorを制御しようとしている可能性があります。\n\nその場合、他のサードパーティアプリがPHP Monitorを代わりに制御することに問題がない場合を除き、この統合をオフのままにしておくことをお勧めします。これはセキュリティ上のリスクとなる可能性があります。";
 "alert.enable_integrations.ok" = "統合を許可";
 "alert.enable_integrations.cancel" = "許可しない";
-"startup.fix_for_me" = "自動で修復";
-"startup.fix_manually" = "修復しました";
 "command_history.title" = "コマンド履歴";
 "command_history.completed_in" = "%@で完了";
 "command_history.running_for" = "%@実行中";

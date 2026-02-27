@@ -620,8 +620,6 @@ SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
 "alert.enable_integrations.desc" = "Se non hai attivato questo tramite Alfred o Raycast, potrebbe esserci un'altra applicazione che tenta di controllare PHP Monitor.\n\nIn tal caso, consiglio di mantenere questa integrazione disattivata, a meno che tu non sia d'accordo che un'altra app di terze parti controlli PHP Monitor per te, il che potrebbe rappresentare un potenziale rischio per la sicurezza.";
 "alert.enable_integrations.ok" = "Consenti integrazioni";
 "alert.enable_integrations.cancel" = "Non consentire";
-"startup.fix_for_me" = "Correggi per me";
-"startup.fix_manually" = "L'ho risolto";
 "command_history.title" = "Cronologia comandi";
 "command_history.completed_in" = "Completato in %@";
 "command_history.running_for" = "In esecuzione da %@";

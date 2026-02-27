@@ -963,10 +963,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 
 // AUTOMATIC FIXES AT STARTUP
 
-"startup.fix_for_me" = "Fix For Me";
-"startup.fix_manually" = "I Fixed It";
-
 "startup.alert.quit" = "Quit";
+"startup.alert.fix_manually" = "I Fixed It";
 "startup.alert.fix_automatically" = "Fix Automatically";
 "startup.alert.retry" = "Retry";
 

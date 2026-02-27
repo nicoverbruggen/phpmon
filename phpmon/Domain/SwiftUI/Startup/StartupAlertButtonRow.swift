@@ -33,7 +33,7 @@ struct StartupAlertButtonRow: View {
 
                 Spacer()
 
-                Button("startup.fix_manually".localized) {
+                Button("startup.alert.fix_manually".localized) {
                     onRetry()
                 }
                 .focused($focusedButton, equals: .retry)

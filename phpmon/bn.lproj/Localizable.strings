@@ -610,8 +610,6 @@
 "alert.enable_integrations.desc" = "আপনি যদি Alfred বা Raycast-এর মাধ্যমে এটি শুরু না করে থাকেন, তাহলে অন্য একটি অ্যাপ্লিকেশন PHP Monitor নিয়ন্ত্রণ করার চেষ্টা করতে পারে।\n\nএই ক্ষেত্রে, আমি এই ইন্টিগ্রেশন বন্ধ রাখার পরামর্শ দিই, যদি না আপনি অন্য তৃতীয় পক্ষের অ্যাপকে আপনার জন্য PHP Monitor নিয়ন্ত্রণ করতে দিতে চান, যা একটি সম্ভাব্য নিরাপত্তা ঝুঁকি হতে পারে।";
 "alert.enable_integrations.ok" = "ইন্টিগ্রেশন অনুমতি দিন";
 "alert.enable_integrations.cancel" = "অনুমতি দেবেন না";
-"startup.fix_for_me" = "আমার জন্য ঠিক করুন";
-"startup.fix_manually" = "আমি ঠিক করেছি";
 "command_history.title" = "কমান্ড ইতিহাস";
 "command_history.completed_in" = "%@-এ সম্পন্ন";
 "command_history.running_for" = "%@ ধরে চলছে";

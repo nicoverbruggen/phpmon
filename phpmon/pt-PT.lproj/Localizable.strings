@@ -610,8 +610,6 @@
 "alert.enable_integrations.desc" = "Se não ativou isto através do Alfred ou Raycast, pode haver outra aplicação a tentar controlar o PHP Monitor.\n\nNesse caso, recomendo manter esta integração desativada, a menos que não se importe que outra aplicação de terceiros controle o PHP Monitor por si, o que pode representar um potencial risco de segurança.";
 "alert.enable_integrations.ok" = "Permitir integrações";
 "alert.enable_integrations.cancel" = "Não permitir";
-"startup.fix_for_me" = "Corrigir por mim";
-"startup.fix_manually" = "Já corrigi";
 "command_history.title" = "Histórico de comandos";
 "command_history.completed_in" = "Concluído em %@";
 "command_history.running_for" = "A decorrer há %@";
