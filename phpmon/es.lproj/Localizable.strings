@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Sin enviar este informe de fallos, el desarrollador puede no ser consciente de este problema en particular. No se envían registros ni datos personales con el informe de fallos, solo el informe sin simbolizar. No se requiere ninguna acción adicional por su parte.\n\n➡️ Si el fallo sigue ocurriendo en un momento específico, puede consultar el rastreador de problemas de GitHub para ver si ya se está trabajando en una solución. Si la aplicación sigue fallando antes de la inicialización, es posible que necesite actualizar PHP Monitor manualmente.";
 "crash_reporter.send_report" = "Enviar informe";
 "crash_reporter.do_not_send" = "No enviar";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Una aplicación externa está intentando comunicarse con PHP Monitor. ¿Deseas permitir que las aplicaciones de terceros se comuniquen con PHP Monitor?";
 "alert.enable_integrations.subtitle" = "Este aviso aparece porque PHP Monitor acaba de recibir un comando externo, y esta función está desactivada por defecto. Si activaste esto intencionalmente, usando una aplicación de terceros como Alfred o Raycast, normalmente es seguro permitirlo.\n\nPuedes cambiar esta configuración más tarde en Preferencias, solo se te hará esta pregunta una vez.";
 "alert.enable_integrations.desc" = "Si no activaste esto a través de Alfred o Raycast, puede haber otra aplicación intentando controlar PHP Monitor.\n\nEn tal caso, recomiendo mantener esta integración desactivada, a menos que estés de acuerdo con que otra aplicación de terceros controle PHP Monitor por ti, lo que podría representar un posible riesgo de seguridad.";
 "alert.enable_integrations.ok" = "Permitir integraciones";
 "alert.enable_integrations.cancel" = "No permitir";
+"startup.alert.quit" = "Salir";
+"startup.alert.fix_manually" = "Ya lo arreglé";
+"startup.alert.fix_automatically" = "Corregir automáticamente";
+"startup.alert.retry" = "Reintentar";
 "command_history.title" = "Historial de comandos";
 "command_history.completed_in" = "Completado en %@";
 "command_history.running_for" = "En ejecución durante %@";

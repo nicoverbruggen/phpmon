@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Sans envoyer ce rapport de plantage, le développeur peut ne pas être conscient de ce problème particulier. Aucun journal ou donnée personnelle n'est envoyé avec le rapport, seulement le rapport non symbolisé. Aucune action supplémentaire n'est requise de votre part.\n\n➡️ Si le plantage continue de se produire à un moment précis, vous pouvez consulter le suivi des problèmes sur GitHub pour voir si un correctif est en cours. Si l'application plante systématiquement avant l'initialisation, vous devrez peut-être mettre à jour PHP Monitor manuellement.";
 "crash_reporter.send_report" = "Envoyer le rapport";
 "crash_reporter.do_not_send" = "Ne pas envoyer";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Une application externe tente de communiquer avec PHP Monitor. Souhaitez‑vous autoriser les applications tierces à communiquer avec PHP Monitor ?";
 "alert.enable_integrations.subtitle" = "Cet avis apparaît parce que PHP Monitor vient de recevoir une commande externe, et cette fonctionnalité est désactivée par défaut. Si vous avez déclenché cela intentionnellement, en utilisant une application tierce comme Alfred ou Raycast, il est normalement sûr de l'autoriser.\n\nVous pouvez modifier ce réglage plus tard dans les Préférences, cette question ne vous sera posée qu'une seule fois.";
 "alert.enable_integrations.desc" = "Si vous n'avez pas déclenché cela via Alfred ou Raycast, il est possible qu'une autre application tente de contrôler PHP Monitor.\n\nDans ce cas, je recommande de garder cette intégration désactivée, sauf si vous acceptez qu'une autre application tierce contrôle PHP Monitor à votre place, ce qui pourrait présenter un risque de sécurité potentiel.";
 "alert.enable_integrations.ok" = "Autoriser les intégrations";
 "alert.enable_integrations.cancel" = "Ne pas autoriser";
+"startup.alert.quit" = "Quitter";
+"startup.alert.fix_manually" = "J'ai corrigé";
+"startup.alert.fix_automatically" = "Corriger automatiquement";
+"startup.alert.retry" = "Réessayer";
 "command_history.title" = "Historique des commandes";
 "command_history.completed_in" = "Terminé en %@";
 "command_history.running_for" = "En cours depuis %@";

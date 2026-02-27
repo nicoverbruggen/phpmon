@@ -602,14 +602,15 @@
 "crash_reporter.description" = "このクラッシュレポートを送信しないと、開発者がこの特定の問題に気付かない可能性があります。クラッシュレポートにはログや個人情報は含まれておらず、シンボル化されていないクラッシュレポートのみが送信されます。ユーザー側で追加の操作は必要ありません。\n\n➡️ 特定のタイミングでクラッシュが繰り返し発生する場合は、GitHubのイシュートラッカーで修正が進行中かどうかを確認することをお勧めします。初期化前にアプリが繰り返しクラッシュする場合は、PHP Monitorを手動で更新する必要があるかもしれません。";
 "crash_reporter.send_report" = "レポートを送信";
 "crash_reporter.do_not_send" = "送信しない";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "外部アプリケーションがPHP Monitorとの通信を試みています。サードパーティアプリケーションがPHP Monitorと通信することを許可しますか？";
 "alert.enable_integrations.subtitle" = "PHP Monitorが外部コマンドを受信したため、この通知が表示されています。この機能はデフォルトで無効になっています。AlfredやRaycastなどのサードパーティアプリを使用して意図的にトリガーした場合は、通常、許可しても安全です。\n\nこの設定は後で環境設定で変更できます。この質問は一度だけ表示されます。";
 "alert.enable_integrations.desc" = "AlfredやRaycast経由でトリガーしていない場合は、別のアプリケーションがPHP Monitorを制御しようとしている可能性があります。\n\nその場合、他のサードパーティアプリがPHP Monitorを代わりに制御することに問題がない場合を除き、この統合をオフのままにしておくことをお勧めします。これはセキュリティ上のリスクとなる可能性があります。";
 "alert.enable_integrations.ok" = "統合を許可";
 "alert.enable_integrations.cancel" = "許可しない";
+"startup.alert.quit" = "終了";
+"startup.alert.fix_manually" = "修正済み";
+"startup.alert.fix_automatically" = "自動的に修正";
+"startup.alert.retry" = "再試行";
 "command_history.title" = "コマンド履歴";
 "command_history.completed_in" = "%@で完了";
 "command_history.running_for" = "%@実行中";

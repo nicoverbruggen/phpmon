@@ -602,14 +602,15 @@
 "crash_reporter.description" = "بدون إرسال هذا التقرير عن الأعطال، قد لا يكون المطور على علم بهذه المشكلة بالتحديد. لا يتم إرسال سجلات أو بيانات شخصية مع تقرير العطل، فقط تقرير العطل غير المرمّز. لا حاجة لاتخاذ أي إجراء إضافي من جانبك.\n\n➡️ إذا استمر العطل في الحدوث في نقطة زمنية محددة، قد ترغب في التحقق من متتبع المشكلات على GitHub لمعرفة ما إذا كان يتم العمل على إصلاح. إذا استمر التطبيق في التعطل قبل التهيئة، فقد تحتاج إلى تحديث PHP Monitor يدوياً.";
 "crash_reporter.send_report" = "إرسال التقرير";
 "crash_reporter.do_not_send" = "لا ترسل";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "يحاول تطبيق خارجي التواصل مع PHP Monitor. هل تريد السماح لتطبيقات الجهات الخارجية بالتواصل مع PHP Monitor؟";
 "alert.enable_integrations.subtitle" = "يظهر هذا الإشعار لأن PHP Monitor تلقى أمرًا خارجيًا، وهذه الميزة معطلة بشكل افتراضي. إذا قمت بتشغيل هذا عن قصد، باستخدام تطبيق جهة خارجية مثل Alfred أو Raycast، فمن الآمن عادةً السماح بذلك.\n\nيمكنك تغيير هذا الإعداد لاحقًا في التفضيلات، ولن يُطرح عليك هذا السؤال سوى مرة واحدة.";
 "alert.enable_integrations.desc" = "إذا لم تقم بتشغيل هذا عبر Alfred أو Raycast، فقد يكون هناك تطبيق آخر يحاول التحكم في PHP Monitor.\n\nفي هذه الحالة، أوصي بإبقاء هذا التكامل معطلاً، إلا إذا كنت موافقًا على أن يتحكم تطبيق جهة خارجية آخر في PHP Monitor نيابةً عنك، مما قد يشكل خطرًا أمنيًا محتملاً.";
 "alert.enable_integrations.ok" = "السماح بالتكاملات";
 "alert.enable_integrations.cancel" = "عدم السماح";
+"startup.alert.quit" = "إنهاء";
+"startup.alert.fix_manually" = "لقد أصلحته";
+"startup.alert.fix_automatically" = "إصلاح تلقائي";
+"startup.alert.retry" = "إعادة المحاولة";
 "command_history.title" = "سجل الأوامر";
 "command_history.completed_in" = "اكتمل خلال %@";
 "command_history.running_for" = "قيد التشغيل لمدة %@";

@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Nếu không gửi báo cáo lỗi này, nhà phát triển có thể chưa nhận biết vấn đề cụ thể này. Không có bản ghi nhật ký hay dữ liệu cá nhân nào được gửi kèm với báo cáo lỗi, chỉ có bản báo cáo lỗi chưa được ký hiệu. Bạn không cần thực hiện hành động nào thêm.\n\n➡️ Nếu sự cố tiếp tục xảy ra tại một thời điểm cụ thể, bạn có thể muốn kiểm tra trình theo dõi vấn đề trên GitHub để xem liệu bản sửa lỗi có đang được thực hiện hay không. Nếu ứng dụng liên tục bị sập trước khi khởi tạo, bạn có thể cần cập nhật PHP Monitor thủ công.";
 "crash_reporter.send_report" = "Gửi báo cáo";
 "crash_reporter.do_not_send" = "Không gửi";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Một ứng dụng bên ngoài đang cố giao tiếp với PHP Monitor. Bạn có muốn cho phép các ứng dụng bên thứ ba giao tiếp với PHP Monitor không?";
 "alert.enable_integrations.subtitle" = "Thông báo này xuất hiện vì PHP Monitor vừa nhận được một lệnh từ bên ngoài, và tính năng này bị tắt theo mặc định. Nếu bạn kích hoạt điều này một cách có chủ đích, sử dụng ứng dụng bên thứ ba như Alfred hoặc Raycast, thì việc cho phép điều này thường là an toàn.\n\nBạn có thể thay đổi cài đặt này sau trong Tùy chọn, câu hỏi này sẽ chỉ được hỏi một lần.";
 "alert.enable_integrations.desc" = "Nếu bạn không kích hoạt điều này qua Alfred hoặc Raycast, có thể có một ứng dụng khác đang cố kiểm soát PHP Monitor.\n\nTrong trường hợp đó, tôi khuyên bạn nên giữ tích hợp này ở trạng thái tắt, trừ khi bạn chấp nhận việc một ứng dụng bên thứ ba khác kiểm soát PHP Monitor thay bạn, điều này có thể gây ra rủi ro bảo mật tiềm ẩn.";
 "alert.enable_integrations.ok" = "Cho phép tích hợp";
 "alert.enable_integrations.cancel" = "Không cho phép";
+"startup.alert.quit" = "Thoát";
+"startup.alert.fix_manually" = "Tôi đã sửa";
+"startup.alert.fix_automatically" = "Tự động sửa";
+"startup.alert.retry" = "Thử lại";
 "command_history.title" = "Lịch sử lệnh";
 "command_history.completed_in" = "Hoàn thành trong %@";
 "command_history.running_for" = "Đang chạy %@";

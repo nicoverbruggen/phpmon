@@ -604,14 +604,15 @@
 ➡️ Wenn der Absturz immer wieder an einem bestimmten Zeitpunkt auftritt, sollten Sie den Issue-Tracker auf GitHub überprüfen, um zu sehen, ob bereits an einer Lösung gearbeitet wird. Wenn die App vor der Initialisierung wiederholt abstürzt, müssen Sie PHP Monitor möglicherweise manuell aktualisieren.";
 "crash_reporter.send_report" = "Bericht senden";
 "crash_reporter.do_not_send" = "Nicht senden";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Eine externe Anwendung versucht, mit PHP Monitor zu kommunizieren. Möchten Sie Drittanbieter-Anwendungen erlauben, mit PHP Monitor zu kommunizieren?";
 "alert.enable_integrations.subtitle" = "Dieser Hinweis erscheint, weil PHP Monitor gerade einen externen Befehl erhalten hat und diese Funktion standardmäßig deaktiviert ist. Wenn Sie dies absichtlich über eine Drittanbieter-App wie Alfred oder Raycast ausgelöst haben, ist es normalerweise sicher, dies zu erlauben.\n\nSie können diese Einstellung später in den Einstellungen ändern. Diese Frage wird Ihnen nur einmal gestellt.";
 "alert.enable_integrations.desc" = "Wenn Sie dies nicht über Alfred oder Raycast ausgelöst haben, versucht möglicherweise eine andere Anwendung, PHP Monitor zu steuern.\n\nIn einem solchen Fall empfehle ich, diese Integration deaktiviert zu lassen, es sei denn, Sie sind damit einverstanden, dass eine andere Drittanbieter-App PHP Monitor für Sie steuert, was ein potenzielles Sicherheitsrisiko darstellen könnte.";
 "alert.enable_integrations.ok" = "Integrationen erlauben";
 "alert.enable_integrations.cancel" = "Nicht erlauben";
+"startup.alert.quit" = "Beenden";
+"startup.alert.fix_manually" = "Ich habe es behoben";
+"startup.alert.fix_automatically" = "Automatisch beheben";
+"startup.alert.retry" = "Erneut versuchen";
 "command_history.title" = "Befehlsverlauf";
 "command_history.completed_in" = "Abgeschlossen in %@";
 "command_history.running_for" = "Läuft seit %@";

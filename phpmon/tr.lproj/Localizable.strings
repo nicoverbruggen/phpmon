@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Bu çökme raporunu göndermeden, geliştirici bu özel sorundan haberdar olmayabilir. Çökme raporu ile birlikte hiçbir günlük veya kişisel veri gönderilmez; yalnızca sembolize edilmemiş çökme raporu gönderilir. Sizin tarafınızdan başka bir işlem gerekmez.\n\n➡️ Çökme belirli bir zamanda tekrar tekrar gerçekleşiyorsa, bir düzeltmenin üzerinde çalışılıp çalışılmadığını görmek için GitHub'daki sorun takipçisini kontrol etmek isteyebilirsiniz. Uygulama başlatma öncesinde sürekli çöküyorsa, PHP Monitor'u elle güncellemeniz gerekebilir.";
 "crash_reporter.send_report" = "Rapor Gönder";
 "crash_reporter.do_not_send" = "Gönderme";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Harici bir uygulama PHP Monitor ile iletişim kurmaya çalışıyor. Üçüncü taraf uygulamaların PHP Monitor ile iletişim kurmasına izin vermek istiyor musunuz?";
 "alert.enable_integrations.subtitle" = "Bu bildirim, PHP Monitor'ün az önce harici bir komut aldığı ve bu özelliğin varsayılan olarak devre dışı olduğu için görünmektedir. Alfred veya Raycast gibi üçüncü taraf bir uygulama kullanarak bunu kasıtlı olarak tetiklediyseniz, buna izin vermek genellikle güvenlidir.\n\nBu ayarı daha sonra Tercihler'de değiştirebilirsiniz, bu soru size yalnızca bir kez sorulacaktır.";
 "alert.enable_integrations.desc" = "Bunu Alfred veya Raycast üzerinden tetiklemediyseniz, başka bir uygulama PHP Monitor'ü kontrol etmeye çalışıyor olabilir.\n\nBöyle bir durumda, başka bir üçüncü taraf uygulamanın PHP Monitor'ü sizin adınıza kontrol etmesinde sakınca görmüyorsanız hariç, bu entegrasyonu kapalı tutmanızı öneririm; aksi takdirde potansiyel bir güvenlik riski oluşturabilir.";
 "alert.enable_integrations.ok" = "Entegrasyonlara İzin Ver";
 "alert.enable_integrations.cancel" = "İzin Verme";
+"startup.alert.quit" = "Çıkış";
+"startup.alert.fix_manually" = "Düzelttim";
+"startup.alert.fix_automatically" = "Otomatik Düzelt";
+"startup.alert.retry" = "Tekrar Dene";
 "command_history.title" = "Komut Geçmişi";
 "command_history.completed_in" = "%@ içinde tamamlandı";
 "command_history.running_for" = "%@ süredir çalışıyor";

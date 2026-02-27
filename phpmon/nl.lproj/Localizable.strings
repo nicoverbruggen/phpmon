@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Zonder dit crashrapport te verzenden, is de ontwikkelaar zich mogelijk niet bewust van dit specifieke probleem. Er worden geen logs of persoonlijke gegevens verzonden met het crashrapport, alleen het ongesymboliseerde crashrapport. Er is geen verdere actie van uw kant vereist.\n\n➡️ Als de crash steeds op een specifiek moment optreedt, kunt u de issue tracker op GitHub raadplegen om te zien of er aan een oplossing wordt gewerkt. Als de app blijft crashen bij het opstarten, moet u PHP Monitor mogelijk handmatig bijwerken.";
 "crash_reporter.send_report" = "Verstuur rapport";
 "crash_reporter.do_not_send" = "Niet verzenden";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Een externe applicatie probeert te communiceren met PHP Monitor. Wilt u applicaties van derden toestaan om te communiceren met PHP Monitor?";
 "alert.enable_integrations.subtitle" = "Deze melding verschijnt omdat PHP Monitor zojuist een extern commando heeft ontvangen, en deze functie is standaard uitgeschakeld. Als u dit opzettelijk heeft geactiveerd via een app van derden zoals Alfred of Raycast, is het normaal gesproken veilig om dit toe te staan.\n\nU kunt deze instelling later wijzigen in Voorkeuren, deze vraag wordt slechts één keer gesteld.";
 "alert.enable_integrations.desc" = "Als u dit niet via Alfred of Raycast heeft geactiveerd, probeert mogelijk een andere applicatie PHP Monitor aan te sturen.\n\nIn dat geval raad ik aan om deze integratie uitgeschakeld te laten, tenzij u het geen probleem vindt als een andere app van derden PHP Monitor voor u aanstuurt, wat een potentieel beveiligingsrisico kan vormen.";
 "alert.enable_integrations.ok" = "Integraties toestaan";
 "alert.enable_integrations.cancel" = "Niet toestaan";
+"startup.alert.quit" = "Afsluiten";
+"startup.alert.fix_manually" = "Ik heb het opgelost";
+"startup.alert.fix_automatically" = "Automatisch herstellen";
+"startup.alert.retry" = "Opnieuw proberen";
 "command_history.title" = "Opdrachtgeschiedenis";
 "command_history.completed_in" = "Voltooid in %@";
 "command_history.running_for" = "Bezig sinds %@";

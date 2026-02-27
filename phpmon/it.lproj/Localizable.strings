@@ -612,14 +612,15 @@ SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
 "crash_reporter.description" = "Senza inviare questo rapporto di crash, lo sviluppatore potrebbe non essere consapevole di questo problema specifico. Nessun registro o dati personali vengono inviati con il rapporto di crash, solo il rapporto di crash senza simboli. Non è necessario alcun ulteriore intervento da parte tua.\n\n➡️ Se il crash continua a verificarsi in un momento specifico, potresti voler controllare l'issue tracker di GitHub per vedere se è in corso una correzione. Se l'app continua a bloccarsi prima dell'inizializzazione, potrebbe essere necessario aggiornare PHP Monitor manualmente.";
 "crash_reporter.send_report" = "Invia rapporto";
 "crash_reporter.do_not_send" = "Non inviare";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Un'applicazione esterna sta cercando di comunicare con PHP Monitor. Vuoi consentire alle applicazioni di terze parti di comunicare con PHP Monitor?";
 "alert.enable_integrations.subtitle" = "Questo avviso appare perché PHP Monitor ha appena ricevuto un comando esterno, e questa funzionalità è disabilitata per impostazione predefinita. Se hai attivato questo intenzionalmente, usando un'app di terze parti come Alfred o Raycast, è normalmente sicuro consentirlo.\n\nPuoi modificare questa impostazione in seguito nelle Preferenze, questa domanda ti verrà posta una sola volta.";
 "alert.enable_integrations.desc" = "Se non hai attivato questo tramite Alfred o Raycast, potrebbe esserci un'altra applicazione che tenta di controllare PHP Monitor.\n\nIn tal caso, consiglio di mantenere questa integrazione disattivata, a meno che tu non sia d'accordo che un'altra app di terze parti controlli PHP Monitor per te, il che potrebbe rappresentare un potenziale rischio per la sicurezza.";
 "alert.enable_integrations.ok" = "Consenti integrazioni";
 "alert.enable_integrations.cancel" = "Non consentire";
+"startup.alert.quit" = "Esci";
+"startup.alert.fix_manually" = "L'ho risolto";
+"startup.alert.fix_automatically" = "Correggi automaticamente";
+"startup.alert.retry" = "Riprova";
 "command_history.title" = "Cronologia comandi";
 "command_history.completed_in" = "Completato in %@";
 "command_history.running_for" = "In esecuzione da %@";

@@ -602,14 +602,15 @@
 "crash_reporter.description" = "如果不发送此崩溃报告，开发者可能无法意识到此特定问题。崩溃报告中不包含任何日志或个人数据，仅发送未符号化的崩溃报告。您不需要采取进一步操作。\n\n➡️ 如果崩溃在特定时间点反复发生，您可以查看GitHub的问题追踪器，了解是否正在进行修复。如果应用在初始化之前持续崩溃，您可能需要手动更新PHP Monitor。";
 "crash_reporter.send_report" = "发送报告";
 "crash_reporter.do_not_send" = "不要发送";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "一个外部应用程序正在尝试与 PHP Monitor 通信。您是否允许第三方应用程序与 PHP Monitor 通信？";
 "alert.enable_integrations.subtitle" = "此通知出现是因为 PHP Monitor 刚刚收到了一个外部命令，而此功能默认是禁用的。如果您是故意触发此操作的，使用了 Alfred 或 Raycast 等第三方应用，通常允许是安全的。\n\n您可以稍后在偏好设置中更改此设置，此问题只会询问一次。";
 "alert.enable_integrations.desc" = "如果您不是通过 Alfred 或 Raycast 触发的，可能有另一个应用程序正在尝试控制 PHP Monitor。\n\n在这种情况下，我建议保持此集成处于关闭状态，除非您同意让另一个第三方应用代为控制 PHP Monitor，这可能存在潜在的安全风险。";
 "alert.enable_integrations.ok" = "允许集成";
 "alert.enable_integrations.cancel" = "不允许";
+"startup.alert.quit" = "退出";
+"startup.alert.fix_manually" = "我已修复";
+"startup.alert.fix_automatically" = "自动修复";
+"startup.alert.retry" = "重试";
 "command_history.title" = "命令历史";
 "command_history.completed_in" = "在%@内完成";
 "command_history.running_for" = "已运行%@";

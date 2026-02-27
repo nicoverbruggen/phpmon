@@ -612,14 +612,15 @@ TIPS PEMECAHAN MASALAH UMUM
 "crash_reporter.description" = "Tanpa mengirim laporan kerusakan ini, pengembang mungkin tidak menyadari masalah khusus ini. Tidak ada log atau data pribadi yang dikirim bersama laporan kerusakan, hanya laporan kerusakan tanpa simbolisasi. Tidak perlu tindakan lebih lanjut dari Anda.\n\n➡️ Jika kerusakan terus terjadi pada waktu tertentu, Anda mungkin ingin memeriksa pelacak masalah GitHub untuk melihat apakah perbaikan sedang dikerjakan. Jika aplikasi terus mogok sebelum inisialisasi, Anda mungkin perlu memperbarui PHP Monitor secara manual.";
 "crash_reporter.send_report" = "Kirim Laporan";
 "crash_reporter.do_not_send" = "Jangan Kirim";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Sebuah aplikasi eksternal mencoba berkomunikasi dengan PHP Monitor. Apakah Anda ingin mengizinkan aplikasi pihak ketiga untuk berkomunikasi dengan PHP Monitor?";
 "alert.enable_integrations.subtitle" = "Pemberitahuan ini muncul karena PHP Monitor baru saja menerima perintah eksternal, dan fitur ini dinonaktifkan secara default. Jika Anda memicu ini dengan sengaja, menggunakan aplikasi pihak ketiga seperti Alfred atau Raycast, biasanya aman untuk mengizinkannya.\n\nAnda dapat mengubah pengaturan ini nanti di Preferensi, pertanyaan ini hanya akan ditanyakan sekali.";
 "alert.enable_integrations.desc" = "Jika Anda tidak memicu ini melalui Alfred atau Raycast, mungkin ada aplikasi lain yang mencoba mengendalikan PHP Monitor.\n\nDalam kasus tersebut, saya sarankan untuk tetap menonaktifkan integrasi ini, kecuali Anda tidak keberatan jika aplikasi pihak ketiga lain mengendalikan PHP Monitor untuk Anda, yang dapat menimbulkan potensi risiko keamanan.";
 "alert.enable_integrations.ok" = "Izinkan Integrasi";
 "alert.enable_integrations.cancel" = "Jangan Izinkan";
+"startup.alert.quit" = "Keluar";
+"startup.alert.fix_manually" = "Sudah Saya Perbaiki";
+"startup.alert.fix_automatically" = "Perbaiki Otomatis";
+"startup.alert.retry" = "Coba Lagi";
 "command_history.title" = "Riwayat perintah";
 "command_history.completed_in" = "Selesai dalam %@";
 "command_history.running_for" = "Berjalan selama %@";

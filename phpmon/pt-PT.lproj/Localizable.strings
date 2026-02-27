@@ -602,14 +602,15 @@
 "crash_reporter.description" = "Sem enviar este relatório de falha, o desenvolvedor pode não estar ciente deste problema em particular. Nenhum registo ou dados pessoais são enviados junto com o relatório de falha, apenas o relatório não simbolizado. Nenhuma ação adicional é necessária da sua parte.\n\n➡️ Se a falha continuar a ocorrer num momento específico, pode consultar o rastreador de problemas no GitHub para ver se uma correção está em desenvolvimento. Se a aplicação continuar a falhar antes da inicialização, poderá ser necessário atualizar o PHP Monitor manualmente.";
 "crash_reporter.send_report" = "Enviar relatório";
 "crash_reporter.do_not_send" = "Não enviar";
-
-// THIRD-PARTY INTEGRATIONS
-
 "alert.enable_integrations.title" = "Uma aplicação externa está a tentar comunicar com o PHP Monitor. Pretende permitir que aplicações de terceiros comuniquem com o PHP Monitor?";
 "alert.enable_integrations.subtitle" = "Este aviso aparece porque o PHP Monitor acabou de receber um comando externo, e esta funcionalidade está desativada por predefinição. Se ativou isto intencionalmente, usando uma aplicação de terceiros como Alfred ou Raycast, é normalmente seguro permitir.\n\nPode alterar esta definição mais tarde nas Preferências, esta pergunta será feita apenas uma vez.";
 "alert.enable_integrations.desc" = "Se não ativou isto através do Alfred ou Raycast, pode haver outra aplicação a tentar controlar o PHP Monitor.\n\nNesse caso, recomendo manter esta integração desativada, a menos que não se importe que outra aplicação de terceiros controle o PHP Monitor por si, o que pode representar um potencial risco de segurança.";
 "alert.enable_integrations.ok" = "Permitir integrações";
 "alert.enable_integrations.cancel" = "Não permitir";
+"startup.alert.quit" = "Sair";
+"startup.alert.fix_manually" = "Já corrigi";
+"startup.alert.fix_automatically" = "Corrigir automaticamente";
+"startup.alert.retry" = "Tentar novamente";
 "command_history.title" = "Histórico de comandos";
 "command_history.completed_in" = "Concluído em %@";
 "command_history.running_for" = "A decorrer há %@";
