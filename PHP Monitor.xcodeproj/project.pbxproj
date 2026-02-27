@@ -178,6 +178,10 @@
 		03B675EC2EBA30D800EE04A9 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */; };
 		03B947DE2F43692500B6F899 /* TestURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B947DD2F43691D00B6F899 /* TestURL.swift */; };
 		03B947E12F436A6B00B6F899 /* Binaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B947E02F436A6700B6F899 /* Binaries.swift */; };
+		03BC24A82F51A5F70051292B /* OutputLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BC24A72F51A5F60051292B /* OutputLine.swift */; };
+		03BC24A92F51A5F70051292B /* OutputLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BC24A72F51A5F60051292B /* OutputLine.swift */; };
+		03BC24AA2F51A5F70051292B /* OutputLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BC24A72F51A5F60051292B /* OutputLine.swift */; };
+		03BC24AB2F51A5F70051292B /* OutputLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BC24A72F51A5F60051292B /* OutputLine.swift */; };
 		03BFF5272E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5282E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
 		03BFF5292E312C3D007F96FA /* Startup+Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFF5262E312C39007F96FA /* Startup+Timers.swift */; };
@@ -221,44 +225,19 @@
 		03EC943D2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943E2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943F2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
-		EE4FA5D074AD5C9D09C25A55 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
-		7E19EE251E743286BC95EBA3 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
-		FEA10615F601BEC79BBDA45B /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
-		1D1173AE9AC9C8315E899D06 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
-		959BE2F3A5743862AC8D1E7D /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
-		C57636BF2B81A9D147B28D1C /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
-		9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
-		88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
-		E56493248D049CA2EBB82B21 /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
-		148796E43977CCBC22AAB5CC /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
-		8A8AB3D1A6DAE99C91DFBEFF /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
-		A42F1F6EF455F42769E63FF5 /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
-		BFF65E73753B67381C23D65E /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
-		288730259CFF37771C773EA2 /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
-		4AAB0E1F7037BEFAE0037AFF /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
-		C277F9F96197AD07FA91E3CB /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
-		56306F63B84C9E99C2C26375 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
-		5D754EAE78FF1E264AD02A46 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
-		95BB6DF72FB35A5A8F4E24E7 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
-		B54FBBEFE5E1782AFF7C434E /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
-		67E571F5200F9C57CC673499 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
-		F644E222C9D096B94E363E60 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
-		632A06CFEEC7A76C34992F38 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
-		F4B7E3F9B46C5AD8B8B3FEBA /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
-		CCF5FE7B49F3B0BC77BAF7D7 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
-		2F9D926CBFE51F3B21A76536 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
-		FF788D404D414CC970301C81 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
-		FB95EF9B99E4ED160E751E44 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
-		1C91CB7232F304AA7F6296CB /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
-		1224231FF18A15CB876EEF50 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
-		DDAA59E032BB88D66D71F736 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
-		F6E9803FDF532887CF899ED9 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
 		0A1A6208D3DD2495FBD8569B /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
+		1224231FF18A15CB876EEF50 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
+		148796E43977CCBC22AAB5CC /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
+		1C91CB7232F304AA7F6296CB /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
+		1D1173AE9AC9C8315E899D06 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
 		25250C95E34D20ED4C91C320 /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
+		288730259CFF37771C773EA2 /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
+		2F9D926CBFE51F3B21A76536 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
 		4181B8F1C0ED930B2C5E5532 /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
+		4AAB0E1F7037BEFAE0037AFF /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
 		5420395926135DC100FB00FA /* PreferencesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferencesVC.swift */; };
 		5420395F2613607600FB00FA /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395E2613607600FB00FA /* Preferences.swift */; };
 		5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489625728312FAD004F647A /* CreatedFromFile.swift */; };
@@ -286,9 +265,23 @@
 		54FCFD2E276C8D67004CE748 /* HotkeyPreferenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */; };
 		54FCFD30276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
 		54FCFD31276C8DA4004CE748 /* HotkeyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */; };
+		56306F63B84C9E99C2C26375 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
+		5D754EAE78FF1E264AD02A46 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
 		5FD883E3DBC963F53E12A17F /* CommandHistoryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51118AFDD02AA1B7D8C9278 /* CommandHistoryWindowController.swift */; };
+		632A06CFEEC7A76C34992F38 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
+		67E571F5200F9C57CC673499 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
 		719E6363E4F41C8A599FCC99 /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
+		7E19EE251E743286BC95EBA3 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
+		88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
+		8A8AB3D1A6DAE99C91DFBEFF /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
+		9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
+		959BE2F3A5743862AC8D1E7D /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
+		95BB6DF72FB35A5A8F4E24E7 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
+		A42F1F6EF455F42769E63FF5 /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
+		B54FBBEFE5E1782AFF7C434E /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
 		BB3AF45BED2C82AE27E86107 /* CommandHistoryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51118AFDD02AA1B7D8C9278 /* CommandHistoryWindowController.swift */; };
+		BFF65E73753B67381C23D65E /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
+		C277F9F96197AD07FA91E3CB /* MarkdownText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C0BBF856B022EA51606492 /* MarkdownText.swift */; };
 		C40175B82903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175B92903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
 		C40175BA2903108900763A68 /* ValetInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40175B72903108900763A68 /* ValetInteractor.swift */; };
@@ -1081,7 +1074,18 @@
 		C4FD87A829AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C4FD87A929AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
 		C4FD87AA29AB9ABD0002D701 /* PhpConfigChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FDBE829A932B0003D85EC /* PhpConfigChecker.swift */; };
+		C57636BF2B81A9D147B28D1C /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
+		CCF5FE7B49F3B0BC77BAF7D7 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
+		DDAA59E032BB88D66D71F736 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
 		DE164E569298309E4224C5D6 /* CommandHistoryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51118AFDD02AA1B7D8C9278 /* CommandHistoryWindowController.swift */; };
+		E56493248D049CA2EBB82B21 /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
+		EE4FA5D074AD5C9D09C25A55 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
+		F4B7E3F9B46C5AD8B8B3FEBA /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
+		F644E222C9D096B94E363E60 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
+		F6E9803FDF532887CF899ED9 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
+		FB95EF9B99E4ED160E751E44 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
+		FEA10615F601BEC79BBDA45B /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
+		FF788D404D414CC970301C81 /* StartupOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E531FA9DE31575AF518941 /* StartupOutputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1173,6 +1177,7 @@
 		03B675E82EBA30D200EE04A9 /* NSImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		03B947DD2F43691D00B6F899 /* TestURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURL.swift; sourceTree = "<group>"; };
 		03B947E02F436A6700B6F899 /* Binaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binaries.swift; sourceTree = "<group>"; };
+		03BC24A72F51A5F60051292B /* OutputLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputLine.swift; sourceTree = "<group>"; };
 		03BFF5262E312C39007F96FA /* Startup+Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+Timers.swift"; sourceTree = "<group>"; };
 		03BFF52B2E313240007F96FA /* StatusMenu+Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusMenu+Driver.swift"; sourceTree = "<group>"; };
 		03C099432EA15C8B00B76D43 /* Container+Real.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Container+Real.swift"; sourceTree = "<group>"; };
@@ -1183,18 +1188,12 @@
 		03D846312EB64E35006EFE3C /* CrashReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertViewModel.swift; sourceTree = "<group>"; };
-		349EE572012BA8A554E276E4 /* StartupAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertView.swift; sourceTree = "<group>"; };
-		D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertWindowController.swift; sourceTree = "<group>"; };
-		A4C0BBF856B022EA51606492 /* MarkdownText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownText.swift; sourceTree = "<group>"; };
-		7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertHeaderView.swift; sourceTree = "<group>"; };
-		68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupFixCommandView.swift; sourceTree = "<group>"; };
-		E3E531FA9DE31575AF518941 /* StartupOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupOutputView.swift; sourceTree = "<group>"; };
-		2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertButtonRow.swift; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
+		2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertButtonRow.swift; sourceTree = "<group>"; };
 		31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryView.swift; sourceTree = "<group>"; };
+		349EE572012BA8A554E276E4 /* StartupAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertView.swift; sourceTree = "<group>"; };
 		5420395826135DC100FB00FA /* PreferencesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesVC.swift; sourceTree = "<group>"; };
 		5420395E2613607600FB00FA /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5489625728312FAD004F647A /* CreatedFromFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatedFromFile.swift; sourceTree = "<group>"; };
@@ -1211,6 +1210,10 @@
 		54FCFD29276C8AA4004CE748 /* CheckboxPreferenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxPreferenceView.swift; sourceTree = "<group>"; };
 		54FCFD2C276C8D67004CE748 /* HotkeyPreferenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotkeyPreferenceView.xib; sourceTree = "<group>"; };
 		54FCFD2F276C8DA4004CE748 /* HotkeyPreferenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotkeyPreferenceView.swift; sourceTree = "<group>"; };
+		68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupFixCommandView.swift; sourceTree = "<group>"; };
+		7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertHeaderView.swift; sourceTree = "<group>"; };
+		A4C0BBF856B022EA51606492 /* MarkdownText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownText.swift; sourceTree = "<group>"; };
+		B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertViewModel.swift; sourceTree = "<group>"; };
 		C40175B72903108900763A68 /* ValetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractor.swift; sourceTree = "<group>"; };
 		C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemExtension.swift; sourceTree = "<group>"; };
 		C405A4CE24B9B9130062FAFA /* InternetAccessPolicy.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InternetAccessPolicy.strings; sourceTree = "<group>"; };
@@ -1457,6 +1460,8 @@
 		C4FC8D412A49816300FBBD16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C4FC8D432A49816C00FBBD16 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C4FC8D442A4981BC00FBBD16 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertWindowController.swift; sourceTree = "<group>"; };
+		E3E531FA9DE31575AF518941 /* StartupOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupOutputView.swift; sourceTree = "<group>"; };
 		E51118AFDD02AA1B7D8C9278 /* CommandHistoryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryWindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1667,6 +1672,21 @@
 				03ACC6432ECCAAF70070D4CD /* WebApi */,
 			);
 			path = Testables;
+			sourceTree = "<group>";
+		};
+		3169708AAEC47AE3F4C33F74 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */,
+				03BC24A72F51A5F60051292B /* OutputLine.swift */,
+				349EE572012BA8A554E276E4 /* StartupAlertView.swift */,
+				7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */,
+				68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */,
+				E3E531FA9DE31575AF518941 /* StartupOutputView.swift */,
+				2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */,
+				D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */,
+			);
+			path = Startup;
 			sourceTree = "<group>";
 		};
 		5420395726135DB800FB00FA /* Preferences */ = {
@@ -2552,20 +2572,6 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		3169708AAEC47AE3F4C33F74 /* Startup */ = {
-			isa = PBXGroup;
-			children = (
-				B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */,
-				349EE572012BA8A554E276E4 /* StartupAlertView.swift */,
-				7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */,
-				68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */,
-				E3E531FA9DE31575AF518941 /* StartupOutputView.swift */,
-				2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */,
-				D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */,
-			);
-			path = Startup;
-			sourceTree = "<group>";
-		};
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2990,6 +2996,7 @@
 				C4D3661A291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C409349D298EE8E900D25014 /* AppUpdater.swift in Sources */,
 				C4D8016622B1584700C6DA1B /* Startup.swift in Sources */,
+				03BC24A92F51A5F70051292B /* OutputLine.swift in Sources */,
 				C43931CA29C4C03F0069165B /* Brew.swift in Sources */,
 				C42C49DB27C2806F0074ABAC /* MainMenu+FixMyValet.swift in Sources */,
 				C4292D562B024006004F0D2A /* PhpExtensionManagerView.swift in Sources */,
@@ -3419,6 +3426,7 @@
 				C471E7F228F9BAC70021E251 /* PhpEnvironments.swift in Sources */,
 				C471E7E628F9BAC20021E251 /* Process.swift in Sources */,
 				C471E81928F9BAE80021E251 /* NSMenuItemExtension.swift in Sources */,
+				03BC24AA2F51A5F70051292B /* OutputLine.swift in Sources */,
 				C4513F982B13E338001AD760 /* PhpExtensionManagerView+Actions.swift in Sources */,
 				C45B914B295607F400F4EC78 /* Service.swift in Sources */,
 				C471E7D928F9BA8F0021E251 /* TestableShell.swift in Sources */,
@@ -3595,6 +3603,7 @@
 				C471E8D928F9BB8F0021E251 /* HotkeyPreferenceView.swift in Sources */,
 				03EC943E2F47297B00231276 /* ErrorView.swift in Sources */,
 				1D1173AE9AC9C8315E899D06 /* StartupAlertViewModel.swift in Sources */,
+				03BC24A82F51A5F70051292B /* OutputLine.swift in Sources */,
 				88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */,
 				A42F1F6EF455F42769E63FF5 /* StartupAlertWindowController.swift in Sources */,
 				C277F9F96197AD07FA91E3CB /* MarkdownText.swift in Sources */,
@@ -3926,6 +3935,7 @@
 				031E2B6A2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4998F0B2617633900B2526E /* PreferencesWindowController.swift in Sources */,
 				C485707228BF453800539B36 /* SwiftUIHelper.swift in Sources */,
+				03BC24AB2F51A5F70051292B /* OutputLine.swift in Sources */,
 				03C29A792EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				0386B0BC2ED36DF800CA6795 /* LockedTests.swift in Sources */,

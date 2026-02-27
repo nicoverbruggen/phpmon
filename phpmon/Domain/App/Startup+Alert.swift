@@ -16,7 +16,7 @@ extension Startup {
      */
     enum EnvironmentAlertOutcome {
         /** The automatic fix ran and succeeded. Continue to the next check. */
-        case shouldRunFix
+        case shouldContinue
 
         /** No automatic fix was requested, show alert and require retry of all startup checks. */
         case shouldRetryStartup

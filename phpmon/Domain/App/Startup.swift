@@ -49,7 +49,7 @@ class Startup {
                     let outcome = await showAlert(for: check)
 
                     // The fix ran and succeeded — continue to the next check
-                    if outcome == .shouldRunFix {
+                    if outcome == .shouldContinue {
                         continue
                     }
 

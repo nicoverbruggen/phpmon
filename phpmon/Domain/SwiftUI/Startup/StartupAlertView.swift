@@ -56,7 +56,7 @@ struct StartupAlertView: View {
                 state: viewModel.state,
                 hasFix: viewModel.hasFix,
                 onQuit: { viewModel.quit() },
-                onRetry: { viewModel.retry() },
+                onRetry: { viewModel.retryAllChecks() },
                 onFix: { viewModel.runFix() }
             )
         }
@@ -115,7 +115,7 @@ struct StartupAlertView: View {
             OutputLine(text: "==> Downloading https://formulae.brew.sh/api/formula.jws.json", stream: .stdOut),
             OutputLine(text: "Already downloaded: /Users/nico/Library/Caches/Homebrew/downloads/abc123.json", stream: .stdOut),
             OutputLine(text: "Warning: php is keg-only and must be linked with --force", stream: .stdErr),
-            OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut),
+            OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut)
         ]
     ))
 }

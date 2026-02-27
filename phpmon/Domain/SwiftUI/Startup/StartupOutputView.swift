@@ -49,7 +49,7 @@ struct StartupOutputView: View {
             OutputLine(text: "==> Downloading https://formulae.brew.sh/api/formula.jws.json", stream: .stdOut),
             OutputLine(text: "Already downloaded: /Users/nico/Library/Caches/Homebrew/downloads/abc123.json", stream: .stdOut),
             OutputLine(text: "Warning: php is keg-only and must be linked with --force", stream: .stdErr),
-            OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut),
+            OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut)
         ],
         isRunning: true
     )
@@ -61,7 +61,7 @@ struct StartupOutputView: View {
     StartupOutputView(
         lines: [
             OutputLine(text: "==> Linking php... linked 25 files", stream: .stdOut),
-            OutputLine(text: "\nFix did not resolve the issue.", stream: .stdErr),
+            OutputLine(text: "\nFix did not resolve the issue.", stream: .stdErr)
         ],
         isRunning: false
     )

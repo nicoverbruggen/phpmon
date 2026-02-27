@@ -14,10 +14,8 @@ extension Text {
             markdown: string,
             options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
         ) {
-            for run in attributed.runs {
-                if run.inlinePresentationIntent?.contains(.code) == true {
-                    attributed[run.range].backgroundColor = Color(nsColor: .quaternaryLabelColor)
-                }
+            for run in attributed.runs where ((run.inlinePresentationIntent?.contains(.code)) != nil) {
+                attributed[run.range].backgroundColor = Color(nsColor: .quaternaryLabelColor)
             }
             self.init(attributed)
         } else {
