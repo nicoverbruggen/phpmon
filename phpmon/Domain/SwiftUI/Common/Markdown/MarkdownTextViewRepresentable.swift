@@ -13,6 +13,7 @@ import AppKit
 struct MarkdownTextViewRepresentable: NSViewRepresentable {
     let string: String
     let fontSize: CGFloat
+    let textColor: NSColor
 
     // MARK: - Static Properties
 
@@ -44,14 +45,15 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
 
     func updateNSView(_ textView: CodeBlockTextView, context: Context) {
         let coordinator = context.coordinator
-        guard string != coordinator.lastString || fontSize != coordinator.lastFontSize else { return }
+        guard string != coordinator.lastString || fontSize != coordinator.lastFontSize || textColor != coordinator.lastTextColor else { return }
         configure(textView, coordinator: coordinator)
     }
 
     private func configure(_ textView: CodeBlockTextView, coordinator: Coordinator) {
         coordinator.lastString = string
         coordinator.lastFontSize = fontSize
-        let attributed = Self.buildAttributedString(from: string, fontSize: fontSize)
+        coordinator.lastTextColor = textColor
+        let attributed = Self.buildAttributedString(from: string, fontSize: fontSize, textColor: textColor)
         textView.textStorage?.setAttributedString(attributed)
         textView.invalidateIntrinsicContentSize()
     }
@@ -59,11 +61,12 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
     class Coordinator {
         var lastString: String?
         var lastFontSize: CGFloat?
+        var lastTextColor: NSColor?
     }
 
     // MARK: - Attributed String Builder
 
-    static func buildAttributedString(from string: String, fontSize: CGFloat) -> NSAttributedString {
+    static func buildAttributedString(from string: String, fontSize: CGFloat, textColor: NSColor = .labelColor) -> NSAttributedString {
         let result = NSMutableAttributedString()
         let font = NSFont.systemFont(ofSize: fontSize)
 
@@ -73,7 +76,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
 
         let defaultAttributes: [NSAttributedString.Key: Any] = [
             .font: font,
-            .foregroundColor: NSColor.labelColor,
+            .foregroundColor: textColor,
             .paragraphStyle: paragraphStyle
         ]
 
@@ -85,8 +88,8 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
 
         // Collect code span ranges once for bold and italic passes
         let codeRanges = codeSpanRanges(in: result)
-        handleBoldMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, codeRanges: codeRanges)
-        handleItalicMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, codeRanges: codeRanges)
+        handleBoldMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, textColor: textColor, codeRanges: codeRanges)
+        handleItalicMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, textColor: textColor, codeRanges: codeRanges)
 
         return result
     }
@@ -156,6 +159,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         in result: NSMutableAttributedString,
         fontSize: CGFloat,
         paragraphStyle: NSParagraphStyle,
+        textColor: NSColor,
         codeRanges: [NSRange]
     ) {
         let boldFont = NSFont.boldSystemFont(ofSize: fontSize)
@@ -168,7 +172,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
                 string: innerText,
                 attributes: [
                     .font: boldFont,
-                    .foregroundColor: NSColor.labelColor,
+                    .foregroundColor: textColor,
                     .paragraphStyle: paragraphStyle
                 ]
             )
@@ -182,6 +186,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         in result: NSMutableAttributedString,
         fontSize: CGFloat,
         paragraphStyle: NSParagraphStyle,
+        textColor: NSColor,
         codeRanges: [NSRange]
     ) {
         let italicFont = NSFontManager.shared.convert(
@@ -197,7 +202,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
                 string: innerText,
                 attributes: [
                     .font: italicFont,
-                    .foregroundColor: NSColor.labelColor,
+                    .foregroundColor: textColor,
                     .paragraphStyle: paragraphStyle
                 ]
             )

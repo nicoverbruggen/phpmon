@@ -13,24 +13,15 @@ struct StartupAlertHeaderView: View {
     let subtitleText: String
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image(nsImage: NSApp.applicationIconImage)
-                .resizable()
-                .frame(width: 60, height: 60)
+        VStack(alignment: .leading, spacing: 5) {
+            Text(titleText)
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .textSelection(.enabled)
+                .padding(.bottom, 2)
 
-            VStack(alignment: .leading, spacing: 5) {
-                Text(titleText)
-                    .font(.system(size: 15, weight: .bold))
-                    .textSelection(.enabled)
-
-                MarkdownTextView(subtitleText, fontSize: 13)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            Spacer()
+            MarkdownTextView(subtitleText, fontSize: 12)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(15)
-        .padding(.top, 0)
     }
 }
 

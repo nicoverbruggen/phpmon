@@ -101,19 +101,19 @@ class StartupAlertViewModel: ObservableObject {
     /** Marks the current fix as completed, with success. */
     @MainActor private func pass() {
         self.state = .completed
-        self.appendOutput("---\n\("startup.fix.applied".localized)", .stdOut)
+        self.appendOutput("\n\("startup.fix.applied".localized)", .stdOut)
     }
 
     /** Marks the current fix as completed, with failure. */
     @MainActor private func fail() {
         self.state = .failed
-        self.appendOutput("---\n\("startup.fix.not_resolved".localized)", .stdErr)
+        self.appendOutput("\n\("startup.fix.not_resolved".localized)", .stdErr)
     }
 
     /** An error occurred. */
     @MainActor private func errorAndIdle(_ error: Error) {
         self.state = .failed
-        self.appendOutput("---\nError: \(error.localizedDescription)", .stdErr)
+        self.appendOutput("\nError: \(error.localizedDescription)", .stdErr)
     }
 
     // MARK: - Alert Outcomes

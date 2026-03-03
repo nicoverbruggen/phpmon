@@ -11,14 +11,16 @@ import SwiftUI
 struct MarkdownTextView: View {
     let string: String
     let fontSize: CGFloat
+    let textColor: NSColor
 
-    init(_ string: String, fontSize: CGFloat = 12) {
+    init(_ string: String, fontSize: CGFloat = 12, textColor: NSColor = .labelColor) {
         self.string = string
         self.fontSize = fontSize
+        self.textColor = textColor
     }
 
     var body: some View {
-        MarkdownTextViewRepresentable(string: string, fontSize: fontSize)
+        MarkdownTextViewRepresentable(string: string, fontSize: fontSize, textColor: textColor)
     }
 }
 
