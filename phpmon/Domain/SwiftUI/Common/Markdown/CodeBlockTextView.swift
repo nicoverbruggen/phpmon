@@ -9,18 +9,31 @@
 import SwiftUI
 import AppKit
 
-/// Note: Written with the help of an LLM.
-class CodeBlockTextView: NSTextView {
-    private let codePaddingX: CGFloat = 4
-    private let codePaddingY: CGFloat = 0
-    private let codeCornerRadius: CGFloat = 2
+/**
+ A text view that draws rounded backgrounds behind inline code spans.
 
+ Code spans are identified by the `.codeSpan` attributed string key,
+ which is set by `MarkdownTextViewRepresentable` during string building.
+ */
+class CodeBlockTextView: NSTextView {
+
+    // MARK: - Appearance
+
+    // Color
     private lazy var appColor: NSColor = NSColor(named: "AppColor") ?? .systemBlue
 
-    /**
-     When we have selected text in a code block, we need to sanitize the output that will be copied to the pasteboard.
+    // Padding
+    private let codePaddingX: CGFloat = 4
+    private let codePaddingY: CGFloat = 0
 
-     This means stripping thin spaces, no-break spaces and using Markdown's annotation for code blocks.
+    // Corner radius
+    private let codeCornerRadius: CGFloat = 2
+
+    // MARK: - Copy
+
+    /**
+     When copying selected text, we sanitize it so special layout characters
+     are stripped and code spans are wrapped in backticks again.
      */
     override func copy(_ sender: Any?) {
         guard let textStorage, selectedRange().length > 0 else {
@@ -29,17 +42,13 @@ class CodeBlockTextView: NSTextView {
         }
 
         let selected = textStorage.attributedSubstring(from: selectedRange())
-        let codeSpanKey = MarkdownTextViewRepresentable.codeSpanKey
 
-        // Rebuild the string, wrapping code spans in backticks and cleaning up special characters
         let result = NSMutableString()
-        selected.enumerateAttribute(codeSpanKey, in: NSRange(location: 0, length: selected.length)) { value, range, _ in
-            var fragment = (selected.string as NSString).substring(with: range)
-            fragment = fragment
-                .replacingOccurrences(of: "\u{2009}", with: "") // Remove thin spaces (leading padding)
-                .replacingOccurrences(of: "\u{202F}", with: "") // Remove narrow no-break spaces (trailing padding)
-                .replacingOccurrences(of: "\u{2060}", with: "") // Remove word joiners
-                .replacingOccurrences(of: "\u{00A0}", with: " ") // Restore regular spaces
+        selected.enumerateAttribute(.codeSpan, in: NSRange(location: 0, length: selected.length)) { value, range, _ in
+            let fragment = (selected.string as NSString).substring(with: range)
+                .filter { $0 != .thinSpace && $0 != .nbThinSpace && $0 != .wordJoiner }
+                .map { $0 == .nbSpace ? " " : String($0) }
+                .joined()
 
             if value != nil {
                 result.append("`\(fragment)`")
@@ -51,6 +60,8 @@ class CodeBlockTextView: NSTextView {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(result as String, forType: .string)
     }
+
+    // MARK: - Drawing
 
     override func draw(_ dirtyRect: NSRect) {
         drawCodeBackgrounds()
@@ -66,17 +77,18 @@ class CodeBlockTextView: NSTextView {
         return NSSize(width: NSView.noIntrinsicMetric, height: ceil(rect.height))
     }
 
+    /**
+     Draws a rounded background rect behind each code span, using per-line
+     rects so a wrapped span still gets tight individual backgrounds.
+     */
     private func drawCodeBackgrounds() {
         guard let textStorage, let layoutManager, let textContainer else { return }
 
-        let codeSpanKey = MarkdownTextViewRepresentable.codeSpanKey
-
-        textStorage.enumerateAttribute(codeSpanKey, in: NSRange(location: 0, length: textStorage.length)) { value, range, _ in
+        textStorage.enumerateAttribute(.codeSpan, in: NSRange(location: 0, length: textStorage.length)) { value, range, _ in
             guard value != nil else { return }
 
             let glyphRange = layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
 
-            // Enumerate per-line rects so wrapped code spans get individual backgrounds
             layoutManager.enumerateEnclosingRects(
                 forGlyphRange: glyphRange,
                 withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),

@@ -9,21 +9,16 @@
 import SwiftUI
 import AppKit
 
-/// Note: Written with the help of an LLM.
+/**
+ Bridges a `CodeBlockTextView` into SwiftUI and builds an attributed string
+ from a simplified Markdown subset (inline code, bold and italic).
+ */
 struct MarkdownTextViewRepresentable: NSViewRepresentable {
     let string: String
     let fontSize: CGFloat
     let textColor: NSColor
 
-    // MARK: - Static Properties
-
-    static let codeSpanKey = NSAttributedString.Key("PHPMonitorCodeSpan")
-
-    // swiftlint:disable force_try
-    private static let codeRegex = try! NSRegularExpression(pattern: "`([^`]+)`")
-    private static let boldRegex = try! NSRegularExpression(pattern: "\\*\\*([^*]+)\\*\\*")
-    private static let italicRegex = try! NSRegularExpression(pattern: "(?<!\\*)\\*([^*]+)\\*(?!\\*)")
-    // swiftlint:enable force_try
+    // MARK: - NSViewRepresentable
 
     func makeCoordinator() -> Coordinator {
         Coordinator()
@@ -43,13 +38,19 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         return textView
     }
 
-    func updateNSView(_ textView: CodeBlockTextView, context: Context) {
+    func updateNSView(
+        _ textView: CodeBlockTextView,
+        context: Context
+    ) {
         let coordinator = context.coordinator
         guard string != coordinator.lastString || fontSize != coordinator.lastFontSize || textColor != coordinator.lastTextColor else { return }
         configure(textView, coordinator: coordinator)
     }
 
-    private func configure(_ textView: CodeBlockTextView, coordinator: Coordinator) {
+    private func configure(
+        _ textView: CodeBlockTextView,
+        coordinator: Coordinator
+    ) {
         coordinator.lastString = string
         coordinator.lastFontSize = fontSize
         coordinator.lastTextColor = textColor
@@ -66,7 +67,17 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
 
     // MARK: - Attributed String Builder
 
-    static func buildAttributedString(from string: String, fontSize: CGFloat, textColor: NSColor = .labelColor) -> NSAttributedString {
+    // swiftlint:disable force_try
+    private static let codeRegex = try! NSRegularExpression(pattern: "`([^`]+)`")
+    private static let boldRegex = try! NSRegularExpression(pattern: "\\*\\*([^*]+)\\*\\*")
+    private static let italicRegex = try! NSRegularExpression(pattern: "(?<!\\*)\\*([^*]+)\\*(?!\\*)")
+    // swiftlint:enable force_try
+
+    static func buildAttributedString(
+        from string: String,
+        fontSize: CGFloat,
+        textColor: NSColor = .labelColor
+    ) -> NSAttributedString {
         let result = NSMutableAttributedString()
         let font = NSFont.systemFont(ofSize: fontSize)
 
@@ -80,7 +91,6 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
             .paragraphStyle: paragraphStyle
         ]
 
-        // Plain text first
         result.append(NSAttributedString(string: string, attributes: defaultAttributes))
 
         // Apply markup passes (order matters: code first to avoid matching * inside code spans)
@@ -88,34 +98,57 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
 
         // Collect code span ranges once for bold and italic passes
         let codeRanges = codeSpanRanges(in: result)
-        handleBoldMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, textColor: textColor, codeRanges: codeRanges)
-        handleItalicMarkup(in: result, fontSize: fontSize, paragraphStyle: paragraphStyle, textColor: textColor, codeRanges: codeRanges)
+
+        // Handle bold markup
+        handleStyledMarkup(
+            in: result,
+            regex: boldRegex,
+            font: NSFont.boldSystemFont(ofSize: fontSize),
+            paragraphStyle: paragraphStyle,
+            textColor: textColor,
+            codeRanges: codeRanges
+        )
+
+        // Handle italic markup
+        handleStyledMarkup(
+            in: result,
+            regex: italicRegex,
+            font: NSFontManager.shared.convert(font, toHaveTrait: .italicFontMask),
+            paragraphStyle: paragraphStyle,
+            textColor: textColor,
+            codeRanges: codeRanges
+        )
 
         return result
     }
 
     // MARK: - Markup Handlers
 
-    /// Replaces `` `code` `` with monospaced font and kern-based padding.
+    /**
+     Replaces `` `code` `` with monospaced font and padding spaces.
+
+     The leading thin space is breakable so the code span can shift to the next line
+     as a whole, while the trailing narrow no-break space stays glued to the span.
+     Spaces and hyphens inside the code span are made non-breaking so the layout
+     engine never splits the code span across lines.
+     */
     private static func handleCodeMarkup(
         in result: NSMutableAttributedString,
         fontSize: CGFloat,
         paragraphStyle: NSParagraphStyle
     ) {
         let codeFont = NSFont.monospacedSystemFont(ofSize: fontSize - 1, weight: .regular)
-        let leadingSpace = "\u{2009}" // Thin space (breakable) so the code span can shift to the next line
-        let trailingSpace = "\u{202F}" // Narrow no-break space to stay attached to the code span
 
         let fullRange = NSRange(location: 0, length: result.length)
         let matches = codeRegex.matches(in: result.string, range: fullRange).reversed()
 
         for match in matches {
             let innerRange = match.range(at: 1)
-            // Replace spaces with non-breaking spaces and insert word joiners after hyphens
-            // to prevent line breaks anywhere inside code spans
+
+            // Make the code span non-breaking by replacing spaces and joining hyphens
             let innerText = (result.string as NSString).substring(with: innerRange)
-                .replacingOccurrences(of: " ", with: "\u{00A0}")
-                .replacingOccurrences(of: "-", with: "-\u{2060}")
+                .replacingOccurrences(of: " ", with: String(Character.nbSpace))
+                .replacingOccurrences(of: "-", with: "-\(Character.wordJoiner)")
 
             let spaceAttributes: [NSAttributedString.Key: Any] = [
                 .font: codeFont,
@@ -123,60 +156,56 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
                 .paragraphStyle: paragraphStyle
             ]
 
-            // Build: leading space + code span (with marker) + trailing space
             let replacement = NSMutableAttributedString()
-            replacement.append(NSAttributedString(string: leadingSpace, attributes: spaceAttributes))
+            replacement.append(NSAttributedString(string: String(Character.thinSpace), attributes: spaceAttributes))
             replacement.append(NSAttributedString(
                 string: innerText,
-                attributes: spaceAttributes.merging([Self.codeSpanKey: true]) { _, new in new }
+                attributes: spaceAttributes.merging([.codeSpan: true]) { _, new in new }
             ))
-            replacement.append(NSAttributedString(string: trailingSpace, attributes: spaceAttributes))
+            replacement.append(NSAttributedString(string: String(Character.nbThinSpace), attributes: spaceAttributes))
 
             result.replaceCharacters(in: match.range, with: replacement)
         }
     }
 
-    /// Collects all ranges marked as code spans.
-    private static func codeSpanRanges(in result: NSMutableAttributedString) -> [NSRange] {
+    /**
+     Collects all ranges marked as code spans.
+     */
+    private static func codeSpanRanges(
+        in result: NSMutableAttributedString
+    ) -> [NSRange] {
         var ranges: [NSRange] = []
-        result.enumerateAttribute(codeSpanKey, in: NSRange(location: 0, length: result.length)) { value, range, _ in
+        result.enumerateAttribute(.codeSpan, in: NSRange(location: 0, length: result.length)) { value, range, _ in
             if value != nil { ranges.append(range) }
         }
         return ranges
     }
 
-    /// Returns matches from the regex that don't overlap with any of the provided code span ranges.
-    private static func nonCodeSpanMatches(
+    /**
+     Replaces markup like `**bold**` or `*italic*` with the appropriate font,
+     skipping any matches that overlap with an already-processed code span.
+     */
+    private static func handleStyledMarkup(
         in result: NSMutableAttributedString,
         regex: NSRegularExpression,
+        font: NSFont,
+        paragraphStyle: NSParagraphStyle,
+        textColor: NSColor,
         codeRanges: [NSRange]
-    ) -> [NSTextCheckingResult] {
+    ) {
         let fullRange = NSRange(location: 0, length: result.length)
-        return regex.matches(in: result.string, range: fullRange).filter { match in
-            !codeRanges.contains { codeRange in
-                NSIntersectionRange(match.range, codeRange).length > 0
-            }
+        let matches = regex.matches(in: result.string, range: fullRange).filter { match in
+            !codeRanges.contains { NSIntersectionRange(match.range, $0).length > 0 }
         }
-    }
 
-    /// Replaces `**bold**` with bold font.
-    private static func handleBoldMarkup(
-        in result: NSMutableAttributedString,
-        fontSize: CGFloat,
-        paragraphStyle: NSParagraphStyle,
-        textColor: NSColor,
-        codeRanges: [NSRange]
-    ) {
-        let boldFont = NSFont.boldSystemFont(ofSize: fontSize)
-
-        for match in nonCodeSpanMatches(in: result, regex: boldRegex, codeRanges: codeRanges).reversed() {
+        for match in matches.reversed() {
             let innerRange = match.range(at: 1)
             let innerText = (result.string as NSString).substring(with: innerRange)
 
             let replacement = NSAttributedString(
                 string: innerText,
                 attributes: [
-                    .font: boldFont,
+                    .font: font,
                     .foregroundColor: textColor,
                     .paragraphStyle: paragraphStyle
                 ]
@@ -185,34 +214,18 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
             result.replaceCharacters(in: match.range, with: replacement)
         }
     }
+}
 
-    /// Replaces `*italic*` with italic font.
-    private static func handleItalicMarkup(
-        in result: NSMutableAttributedString,
-        fontSize: CGFloat,
-        paragraphStyle: NSParagraphStyle,
-        textColor: NSColor,
-        codeRanges: [NSRange]
-    ) {
-        let italicFont = NSFontManager.shared.convert(
-            NSFont.systemFont(ofSize: fontSize),
-            toHaveTrait: .italicFontMask
-        )
+// MARK: - Shared Constants
 
-        for match in nonCodeSpanMatches(in: result, regex: italicRegex, codeRanges: codeRanges).reversed() {
-            let innerRange = match.range(at: 1)
-            let innerText = (result.string as NSString).substring(with: innerRange)
+extension NSAttributedString.Key {
+    /// Marks a range as being part of an inline code span, used by `CodeBlockTextView` to draw backgrounds.
+    static let codeSpan = NSAttributedString.Key("PHPMonitorCodeSpan")
+}
 
-            let replacement = NSAttributedString(
-                string: innerText,
-                attributes: [
-                    .font: italicFont,
-                    .foregroundColor: textColor,
-                    .paragraphStyle: paragraphStyle
-                ]
-            )
-
-            result.replaceCharacters(in: match.range, with: replacement)
-        }
-    }
+extension Character {
+    static let thinSpace: Character = "\u{2009}"
+    static let nbThinSpace: Character = "\u{202F}"
+    static let nbSpace: Character = "\u{00A0}"
+    static let wordJoiner: Character = "\u{2060}"
 }
