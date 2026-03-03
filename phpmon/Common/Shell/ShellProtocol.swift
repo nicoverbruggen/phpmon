@@ -8,11 +8,17 @@
 
 import Foundation
 
-protocol ShellProtocol {
+protocol ShellProtocol: AnyObject {
     /**
      The PATH for the current shell.
      */
     var PATH: String { get }
+
+    /**
+     Exports are additional environment variables set by the user via the custom configuration.
+     These are populated when the configuration file is being loaded.
+     */
+    var exports: [String: String] { get set }
 
     /**
      Run a command synchronously. Use with caution!

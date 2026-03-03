@@ -91,9 +91,8 @@ extension Preferences {
             Log.info("Configuring the additional exports...")
             Log.info("Custom exports: \(exports.description)")
 
-            if let shell = App.shared.container.shell as? TrackedShell {
-                shell.setCustomExports(exports)
-            }
+            // Assign the new exports values
+            container.shell.exports = exports
         }
     }
 }
