@@ -30,16 +30,6 @@ protocol ShellProtocol: AnyObject {
 
      @return The shell output. If the command times out, returns empty output.
      */
-    /**
-     Run a command synchronously. Use with caution!
-
-     Common usage:
-     ```
-     let output = Shell.sync("php -v")
-     ```
-
-     @return The shell output. If the command times out, returns empty output.
-     */
     @discardableResult
     func sync(_ command: String) -> ShellOutput
 
