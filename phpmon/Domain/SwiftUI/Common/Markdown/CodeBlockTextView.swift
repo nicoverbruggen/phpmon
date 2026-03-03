@@ -12,10 +12,45 @@ import AppKit
 /// Note: Written with the help of an LLM.
 class CodeBlockTextView: NSTextView {
     private let codePaddingX: CGFloat = 4
-    private let codePaddingY: CGFloat = 1
-    private let codeCornerRadius: CGFloat = 4
+    private let codePaddingY: CGFloat = 0
+    private let codeCornerRadius: CGFloat = 2
 
     private lazy var appColor: NSColor = NSColor(named: "AppColor") ?? .systemBlue
+
+    /**
+     When we have selected text in a code block, we need to sanitize the output that will be copied to the pasteboard.
+
+     This means stripping thin spaces, no-break spaces and using Markdown's annotation for code blocks.
+     */
+    override func copy(_ sender: Any?) {
+        guard let textStorage, selectedRange().length > 0 else {
+            super.copy(sender)
+            return
+        }
+
+        let selected = textStorage.attributedSubstring(from: selectedRange())
+        let codeSpanKey = MarkdownTextViewRepresentable.codeSpanKey
+
+        // Rebuild the string, wrapping code spans in backticks and cleaning up special characters
+        let result = NSMutableString()
+        selected.enumerateAttribute(codeSpanKey, in: NSRange(location: 0, length: selected.length)) { value, range, _ in
+            var fragment = (selected.string as NSString).substring(with: range)
+            fragment = fragment
+                .replacingOccurrences(of: "\u{2009}", with: "") // Remove thin spaces (leading padding)
+                .replacingOccurrences(of: "\u{202F}", with: "") // Remove narrow no-break spaces (trailing padding)
+                .replacingOccurrences(of: "\u{2060}", with: "") // Remove word joiners
+                .replacingOccurrences(of: "\u{00A0}", with: " ") // Restore regular spaces
+
+            if value != nil {
+                result.append("`\(fragment)`")
+            } else {
+                result.append(fragment)
+            }
+        }
+
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(result as String, forType: .string)
+    }
 
     override func draw(_ dirtyRect: NSRect) {
         drawCodeBackgrounds()
@@ -39,25 +74,21 @@ class CodeBlockTextView: NSTextView {
         textStorage.enumerateAttribute(codeSpanKey, in: NSRange(location: 0, length: textStorage.length)) { value, range, _ in
             guard value != nil else { return }
 
-            // Get the glyph range and bounding rect for this code span
             let glyphRange = layoutManager.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
-            var textRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
 
-            // Trim line spacing from the rect height so the background fits the text tightly
-            let font = textStorage.attribute(.font, at: range.location, effectiveRange: nil) as? NSFont
-            let lineHeight = font?.ascender ?? 0 + abs(font?.descender ?? 0) + (font?.leading ?? 0)
-            if lineHeight > 0 && textRect.height > lineHeight {
-                textRect.size.height = lineHeight + 5 // added 5px for optimal size
+            // Enumerate per-line rects so wrapped code spans get individual backgrounds
+            layoutManager.enumerateEnclosingRects(
+                forGlyphRange: glyphRange,
+                withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0),
+                in: textContainer
+            ) { lineRect, _ in
+                let rect = lineRect.offsetBy(dx: self.textContainerInset.width, dy: self.textContainerInset.height)
+                let paddedRect = rect.insetBy(dx: -self.codePaddingX, dy: -self.codePaddingY)
+                let path = NSBezierPath(roundedRect: paddedRect, xRadius: self.codeCornerRadius, yRadius: self.codeCornerRadius)
+
+                self.appColor.withAlphaComponent(0.15).setFill()
+                path.fill()
             }
-
-            // Offset by text container inset
-            let rect = textRect.offsetBy(dx: textContainerInset.width, dy: textContainerInset.height)
-            let paddedRect = rect.insetBy(dx: -codePaddingX, dy: -codePaddingY)
-            let path = NSBezierPath(roundedRect: paddedRect, xRadius: codeCornerRadius, yRadius: codeCornerRadius)
-
-            // Fill
-            appColor.withAlphaComponent(0.15).setFill()
-            path.fill()
         }
     }
 }

@@ -71,7 +71,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         let font = NSFont.systemFont(ofSize: fontSize)
 
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 3
+        paragraphStyle.lineSpacing = 2
         paragraphStyle.paragraphSpacing = -4
 
         let defaultAttributes: [NSAttributedString.Key: Any] = [
@@ -103,14 +103,19 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         paragraphStyle: NSParagraphStyle
     ) {
         let codeFont = NSFont.monospacedSystemFont(ofSize: fontSize - 1, weight: .regular)
-        let thinSpace = "\u{2009}" // Thin space for visual padding around code spans
+        let leadingSpace = "\u{2009}" // Thin space (breakable) so the code span can shift to the next line
+        let trailingSpace = "\u{202F}" // Narrow no-break space to stay attached to the code span
 
         let fullRange = NSRange(location: 0, length: result.length)
         let matches = codeRegex.matches(in: result.string, range: fullRange).reversed()
 
         for match in matches {
             let innerRange = match.range(at: 1)
+            // Replace spaces with non-breaking spaces and insert word joiners after hyphens
+            // to prevent line breaks anywhere inside code spans
             let innerText = (result.string as NSString).substring(with: innerRange)
+                .replacingOccurrences(of: " ", with: "\u{00A0}")
+                .replacingOccurrences(of: "-", with: "-\u{2060}")
 
             let spaceAttributes: [NSAttributedString.Key: Any] = [
                 .font: codeFont,
@@ -118,14 +123,14 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
                 .paragraphStyle: paragraphStyle
             ]
 
-            // Build: thin space + code span (with marker) + thin space
+            // Build: leading space + code span (with marker) + trailing space
             let replacement = NSMutableAttributedString()
-            replacement.append(NSAttributedString(string: thinSpace, attributes: spaceAttributes))
+            replacement.append(NSAttributedString(string: leadingSpace, attributes: spaceAttributes))
             replacement.append(NSAttributedString(
                 string: innerText,
                 attributes: spaceAttributes.merging([Self.codeSpanKey: true]) { _, new in new }
             ))
-            replacement.append(NSAttributedString(string: thinSpace, attributes: spaceAttributes))
+            replacement.append(NSAttributedString(string: trailingSpace, attributes: spaceAttributes))
 
             result.replaceCharacters(in: match.range, with: replacement)
         }

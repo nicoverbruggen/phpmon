@@ -23,7 +23,7 @@ struct StartupAlertView: View {
                         titleText: viewModel.check.titleText,
                         subtitleText: viewModel.check.subtitleText
                     )
-                    .padding(.top, 5)
+                    .padding(.top, 4)
                     .padding(.bottom, 8)
 
                     // Fix command description: only shown in idle state when a fix is available
@@ -66,7 +66,7 @@ struct StartupAlertView: View {
                 onFix: { viewModel.runFix() }
             )
         }
-        .frame(width: 550)
+        .frame(width: 520)
     }
 }
 
