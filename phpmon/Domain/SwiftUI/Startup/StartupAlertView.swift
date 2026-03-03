@@ -20,34 +20,30 @@ struct StartupAlertView: View {
 
             // Fix command description: only shown in idle state when a fix is available
             if viewModel.state == .idle && viewModel.hasFix {
-                Divider()
-
                 StartupFixCommandView(
                     command: viewModel.check.fixDescription ?? ""
                 )
-                .padding(15)
+                .padding(.horizontal, 10).padding(.leading, 72)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             // Terminal output: shown during and after fix execution
             if !viewModel.outputLines.isEmpty
                 && (viewModel.state == .running || viewModel.state == .completed || viewModel.state == .failed) {
-                Divider()
-
                 StartupOutputView(
                     lines: viewModel.outputLines,
                     isRunning: viewModel.state == .running
                 )
-                .padding(15)
+                .padding(15).padding(.leading, 72)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             // Description text: shown in idle state
             if !viewModel.check.descriptionText.isEmpty && viewModel.state == .idle {
-                Divider()
-
                 MarkdownTextView(viewModel.check.descriptionText, fontSize: 12)
-                    .padding(15)
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 20)
+                    .padding(.leading, 64)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
 
@@ -61,7 +57,7 @@ struct StartupAlertView: View {
                 onFix: { viewModel.runFix() }
             )
         }
-        .frame(width: 500)
+        .frame(width: 550)
     }
 }
 
