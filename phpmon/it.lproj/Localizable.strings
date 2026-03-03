@@ -621,6 +621,9 @@ SUGGERIMENTI COMUNI PER LA RISOLUZIONE DEI PROBLEMI
 "startup.alert.fix_manually" = "L'ho risolto";
 "startup.alert.fix_automatically" = "Correggi automaticamente";
 "startup.alert.retry" = "Riprova";
+"startup.fix.applying" = "Applicazione in corso. Attendere prego...";
+"startup.fix.applied" = "Correzione applicata con successo! Continuando...";
+"startup.fix.not_resolved" = "La correzione non ha risolto il problema.";
 "command_history.title" = "Cronologia comandi";
 "command_history.completed_in" = "Completato in %@";
 "command_history.running_for" = "In esecuzione da %@";

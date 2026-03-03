@@ -613,6 +613,9 @@
 "startup.alert.fix_manually" = "Ich habe es behoben";
 "startup.alert.fix_automatically" = "Automatisch beheben";
 "startup.alert.retry" = "Erneut versuchen";
+"startup.fix.applying" = "Wird angewendet. Bitte warten...";
+"startup.fix.applied" = "Korrektur erfolgreich angewendet! Fortfahren...";
+"startup.fix.not_resolved" = "Die Korrektur hat das Problem nicht behoben.";
 "command_history.title" = "Befehlsverlauf";
 "command_history.completed_in" = "Abgeschlossen in %@";
 "command_history.running_for" = "Läuft seit %@";

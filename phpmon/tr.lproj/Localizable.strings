@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "Düzelttim";
 "startup.alert.fix_automatically" = "Otomatik Düzelt";
 "startup.alert.retry" = "Tekrar Dene";
+"startup.fix.applying" = "Uygulanıyor. Lütfen bekleyin...";
+"startup.fix.applied" = "Düzeltme başarıyla uygulandı! Devam ediliyor...";
+"startup.fix.not_resolved" = "Düzeltme sorunu çözmedi.";
 "command_history.title" = "Komut Geçmişi";
 "command_history.completed_in" = "%@ içinde tamamlandı";
 "command_history.running_for" = "%@ süredir çalışıyor";

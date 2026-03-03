@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "मैंने ठीक कर दिया";
 "startup.alert.fix_automatically" = "स्वचालित रूप से ठीक करें";
 "startup.alert.retry" = "पुनः प्रयास करें";
+"startup.fix.applying" = "लागू किया जा रहा है। कृपया प्रतीक्षा करें...";
+"startup.fix.applied" = "सुधार सफलतापूर्वक लागू हो गया! जारी रखा जा रहा है...";
+"startup.fix.not_resolved" = "सुधार से समस्या का समाधान नहीं हुआ।";
 "command_history.title" = "कमांड इतिहास";
 "command_history.completed_in" = "%@ में पूरा हुआ";
 "command_history.running_for" = "%@ से चल रहा है";

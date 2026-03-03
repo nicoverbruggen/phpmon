@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "J'ai corrigé";
 "startup.alert.fix_automatically" = "Corriger automatiquement";
 "startup.alert.retry" = "Réessayer";
+"startup.fix.applying" = "Application en cours. Veuillez patienter...";
+"startup.fix.applied" = "Correctif appliqué avec succès ! Poursuite...";
+"startup.fix.not_resolved" = "Le correctif n'a pas résolu le problème.";
 "command_history.title" = "Historique des commandes";
 "command_history.completed_in" = "Terminé en %@";
 "command_history.running_for" = "En cours depuis %@";

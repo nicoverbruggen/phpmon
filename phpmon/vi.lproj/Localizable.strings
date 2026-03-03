@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "Tôi đã sửa";
 "startup.alert.fix_automatically" = "Tự động sửa";
 "startup.alert.retry" = "Thử lại";
+"startup.fix.applying" = "Đang áp dụng. Vui lòng chờ...";
+"startup.fix.applied" = "Đã áp dụng bản sửa lỗi thành công! Đang tiếp tục...";
+"startup.fix.not_resolved" = "Bản sửa lỗi không giải quyết được vấn đề.";
 "command_history.title" = "Lịch sử lệnh";
 "command_history.completed_in" = "Hoàn thành trong %@";
 "command_history.running_for" = "Đang chạy %@";

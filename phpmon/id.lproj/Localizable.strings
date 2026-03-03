@@ -621,6 +621,9 @@ TIPS PEMECAHAN MASALAH UMUM
 "startup.alert.fix_manually" = "Sudah Saya Perbaiki";
 "startup.alert.fix_automatically" = "Perbaiki Otomatis";
 "startup.alert.retry" = "Coba Lagi";
+"startup.fix.applying" = "Sedang menerapkan. Harap tunggu...";
+"startup.fix.applied" = "Perbaikan berhasil diterapkan! Melanjutkan...";
+"startup.fix.not_resolved" = "Perbaikan tidak menyelesaikan masalah.";
 "command_history.title" = "Riwayat perintah";
 "command_history.completed_in" = "Selesai dalam %@";
 "command_history.running_for" = "Berjalan selama %@";

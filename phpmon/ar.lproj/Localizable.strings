@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "لقد أصلحته";
 "startup.alert.fix_automatically" = "إصلاح تلقائي";
 "startup.alert.retry" = "إعادة المحاولة";
+"startup.fix.applying" = "جارٍ التطبيق. يرجى الانتظار...";
+"startup.fix.applied" = "تم تطبيق الإصلاح بنجاح! جارٍ المتابعة...";
+"startup.fix.not_resolved" = "لم يحل الإصلاح المشكلة.";
 "command_history.title" = "سجل الأوامر";
 "command_history.completed_in" = "اكتمل خلال %@";
 "command_history.running_for" = "قيد التشغيل لمدة %@";

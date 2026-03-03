@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "修正済み";
 "startup.alert.fix_automatically" = "自動的に修正";
 "startup.alert.retry" = "再試行";
+"startup.fix.applying" = "適用中です。しばらくお待ちください...";
+"startup.fix.applied" = "修正が正常に適用されました！続行中...";
+"startup.fix.not_resolved" = "修正では問題が解決しませんでした。";
 "command_history.title" = "コマンド履歴";
 "command_history.completed_in" = "%@で完了";
 "command_history.running_for" = "%@実行中";

@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "我已修复";
 "startup.alert.fix_automatically" = "自动修复";
 "startup.alert.retry" = "重试";
+"startup.fix.applying" = "正在应用，请稍候...";
+"startup.fix.applied" = "修复已成功应用！继续中...";
+"startup.fix.not_resolved" = "修复未能解决问题。";
 "command_history.title" = "命令历史";
 "command_history.completed_in" = "在%@内完成";
 "command_history.running_for" = "已运行%@";

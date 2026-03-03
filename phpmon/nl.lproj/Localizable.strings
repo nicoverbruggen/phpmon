@@ -611,6 +611,9 @@
 "startup.alert.fix_manually" = "Ik heb het opgelost";
 "startup.alert.fix_automatically" = "Automatisch herstellen";
 "startup.alert.retry" = "Opnieuw proberen";
+"startup.fix.applying" = "Bezig met toepassen. Even geduld...";
+"startup.fix.applied" = "Fix toegepast! Even geduld...";
+"startup.fix.not_resolved" = "De fix is niet geslaagd.";
 "command_history.title" = "Opdrachtgeschiedenis";
 "command_history.completed_in" = "Voltooid in %@";
 "command_history.running_for" = "Bezig sinds %@";
