@@ -92,19 +92,28 @@ class StartupAlertViewModel: ObservableObject {
 
     // MARK: - Fix Outcomes
 
+    /** Appends a line of text to the output lines. */
+    private func appendOutput(_ text: String, _ stream: ShellStream) {
+        let line = OutputLine(text: text, stream: stream)
+        outputLines.append(line)
+    }
+
+    /** Marks the current fix as completed, with success. */
     @MainActor private func pass() {
         self.state = .completed
-        self.outputLines.append(OutputLine(text: "---\nFix applied successfully! Continuing...", stream: .stdOut))
+        self.appendOutput("---\n\("startup.fix.applied".localized)", .stdOut)
     }
 
+    /** Marks the current fix as completed, with failure. */
     @MainActor private func fail() {
         self.state = .failed
-        self.outputLines.append(OutputLine(text: "---\nFix did not resolve the issue.", stream: .stdErr))
+        self.appendOutput("---\n\("startup.fix.not_resolved".localized)", .stdErr)
     }
 
+    /** An error occurred. */
     @MainActor private func errorAndIdle(_ error: Error) {
         self.state = .failed
-        self.outputLines.append(OutputLine(text: "---\nError: \(error.localizedDescription)", stream: .stdErr))
+        self.appendOutput("---\nError: \(error.localizedDescription)", .stdErr)
     }
 
     // MARK: - Alert Outcomes

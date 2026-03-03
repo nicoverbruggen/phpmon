@@ -50,7 +50,7 @@ struct StartupAlertButtonRow: View {
                 HStack(spacing: 10) {
                     ProgressView()
                         .controlSize(.small)
-                    Text("Applying. Please wait...")
+                    Text("startup.fix.applying".localized)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -59,7 +59,7 @@ struct StartupAlertButtonRow: View {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Fix applied successfully! Continuing...")
+                    Text("startup.fix.applied".localized)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -68,7 +68,7 @@ struct StartupAlertButtonRow: View {
                 HStack(spacing: 6) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.red)
-                    Text("Fix did not resolve the issue.")
+                    Text("startup.fix.not_resolved".localized)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

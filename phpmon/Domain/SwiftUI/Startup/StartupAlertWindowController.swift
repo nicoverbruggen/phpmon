@@ -25,7 +25,7 @@ class StartupAlertWindowController: PMWindowController {
 
         let window = NSWindow()
         window.title = ""
-        window.styleMask = [.titled, .closable]
+        window.styleMask = [.titled, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = windowController
         window.contentView = NSHostingView(rootView: StartupAlertView(viewModel: viewModel))
