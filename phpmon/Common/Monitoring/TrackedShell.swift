@@ -59,6 +59,30 @@ final class TrackedShell: ShellProtocol {
         return try await shell.attach(command, didReceiveOutput: didReceiveOutput, withTimeout: timeout)
     }
 
+    // MARK: - Custom exports
+    // (probably should be part of the protocol?)
+
+    var customExports: [String: String] {
+        if let shell = self.shell as? RealShell {
+            return shell.exports
+        } else if let shell = self.shell as? TestableShell {
+            return shell.exports
+        } else {
+            assertionFailure("This shell does not support retrieving custom exports.")
+            return [:]
+        }
+    }
+
+    func setCustomExports(_ variables: [String: String]) {
+        if let shell = self.shell as? RealShell {
+            shell.exports = variables
+        } else if let shell = self.shell as? TestableShell {
+            shell.exports = variables
+        } else {
+            assertionFailure("Custom exports were set in `config.json`, but not applied because the shell does not support it.")
+        }
+    }
+
     func reloadEnvPath() {
         shell.reloadEnvPath()
     }

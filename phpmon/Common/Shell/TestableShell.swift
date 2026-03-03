@@ -21,6 +21,9 @@ public class TestableShell: ShellProtocol {
     var expectations: [String: BatchFakeShellOutput] = [:]
     var filesystem: TestableFileSystem?
 
+    // Custom exports; unused because we have preset shell output, but relevant for certain checks in-app
+    var exports: [String: String] = [:]
+
     @discardableResult
     func sync(_ command: String) -> ShellOutput {
         // This assertion will only fire during test builds

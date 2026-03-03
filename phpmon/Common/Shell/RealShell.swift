@@ -142,16 +142,6 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         Log.info(log)
     }
 
-    // MARK: - Public API
-
-    /**
-     Set custom environment variables.
-     These will be exported when a command is executed.
-     */
-    public func setCustomEnvironmentVariables(_ variables: [String: String]) {
-        self.exports = variables
-    }
-
     // MARK: - Shellable Protocol
 
     @discardableResult

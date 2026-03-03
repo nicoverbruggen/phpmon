@@ -23,7 +23,11 @@ struct CustomPrefs: Decodable {
     }
 
     public func hasEnvironmentVariables() -> Bool {
-        return self.environmentVariables != nil && !self.environmentVariables!.keys.isEmpty
+        guard let variables = self.environmentVariables else {
+            return false
+        }
+
+        return !variables.isEmpty
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -43,11 +47,9 @@ extension Preferences {
         await moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
-        let url = URL(fileURLWithPath: "\(container.paths.homePath)/.config/phpmon/config.json")
-        if container.filesystem.fileExists(url.path) {
-
+        if container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
-            loadCustomPreferencesFile(url)
+            loadCustomPreferencesFile()
         } else {
             Log.info("There was no /.config/phpmon/config.json file to be loaded.")
         }
@@ -62,8 +64,8 @@ extension Preferences {
         }
     }
 
-    func loadCustomPreferencesFile(_ url: URL) {
-        guard let data = try? String(contentsOf: url, encoding: .utf8).data(using: .utf8) else {
+    func loadCustomPreferencesFile() {
+        guard let data = try? container.filesystem.getStringFromFile("~/.config/phpmon/config.json").data(using: .utf8) else {
             Log.warn("The ~/.config/phpmon/config.json file could not be read as UTF-8.")
             return
         }
@@ -84,9 +86,13 @@ extension Preferences {
         }
 
         if customPreferences.hasEnvironmentVariables() {
+            let exports = customPreferences.environmentVariables ?? [:]
+
             Log.info("Configuring the additional exports...")
-            if let shell = App.shared.container.shell as? RealShell {
-                shell.exports = customPreferences.environmentVariables ?? [:]
+            Log.info("Custom exports: \(exports.description)")
+
+            if let shell = App.shared.container.shell as? TrackedShell {
+                shell.setCustomExports(exports)
             }
         }
     }

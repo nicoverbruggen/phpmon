@@ -104,6 +104,16 @@ struct RealShellTest {
         #expect(duration < .milliseconds(3000)) // Should complete in ~700ms if parallel
     }
 
+    @Test func exports_are_passed_as_environment_variables() {
+        let systemShell = container.shell as! RealShell
+        systemShell.exports = ["COMPOSER_HOME": "/path/to/directory"]
+
+        #expect(systemShell.sync("printenv COMPOSER_HOME").out
+            .trimmingCharacters(in: .whitespacesAndNewlines) == "/path/to/directory")
+        #expect(systemShell.sync("echo $COMPOSER_HOME").out
+            .trimmingCharacters(in: .whitespacesAndNewlines) == "/path/to/directory")
+    }
+
     /**
      This test verifies that concurrent writes to `output.out` and `output.err`
      from multiple readability handlers don't cause data races or crashes,

@@ -97,6 +97,13 @@ class Actions {
     }
 
     public func openGlobalComposerFolder() {
+        // Check if we have a custom COMPOSER_HOME set
+        if let shell = App.shared.container.shell as? TrackedShell,
+            let folder = shell.customExports["COMPOSER_HOME"] {
+            let file = URL(string: "file://\(folder)/composer.json".replacingTildeWithHomeDirectory)!
+            return NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+        }
+
         let file = URL(string: "file://~/.composer/composer.json".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
