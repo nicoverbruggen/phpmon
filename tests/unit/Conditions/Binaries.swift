@@ -16,4 +16,11 @@ class Binaries {
 
         return false
     }
+
+    static func hasLinkedPhp() -> Bool {
+        return Binaries.exist(paths: [
+            "/opt/homebrew/bin/php",
+            "/usr/local/bin/php"
+        ])
+    }
 }

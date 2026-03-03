@@ -10,10 +10,7 @@ import Testing
 import Foundation
 
 struct CommandTest {
-    @Test(.enabled(if: Binaries.exist(paths: [
-        "/opt/homebrew/bin/php",
-        "/usr/local/bin/php"
-    ]), "Requires PHP binary"))
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func determinePhpVersion() {
         let container = Container.real(minimal: true)
 

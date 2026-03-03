@@ -17,7 +17,8 @@ struct RealShellTest {
         container = Container.real(minimal: true, commandTracking: false)
     }
 
-    @Test func system_shell_is_default() async {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func system_shell_is_default() async {
         #expect(container.shell is RealShell)
 
         let output = await container.shell.pipe("php -v")
@@ -25,7 +26,8 @@ struct RealShellTest {
         #expect(output.out.contains("Copyright (c) The PHP Group"))
     }
 
-    @Test func system_shell_can_be_used_synchronously() {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func system_shell_can_be_used_synchronously() {
         #expect(container.shell is RealShell)
 
         let output = container.shell.sync("php -v")
@@ -40,7 +42,8 @@ struct RealShellTest {
         #expect(systemShell.PATH.contains(":/usr/bin"))
     }
 
-    @Test func system_shell_can_buffer_output() async {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func system_shell_can_buffer_output() async {
         var bits: [String] = []
 
         let (_, shellOutput) = try! await container.shell.attach(
@@ -54,7 +57,8 @@ struct RealShellTest {
         #expect("Hello world\nGoodbye world" == shellOutput.out)
     }
 
-    @Test func system_shell_can_timeout_and_throw_error() async {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func system_shell_can_timeout_and_throw_error() async {
         await #expect(throws: ShellError.timedOut) {
             try await container.shell.attach(
                 "php -r \"sleep(30);\"",
@@ -64,7 +68,8 @@ struct RealShellTest {
         }
     }
 
-    @Test func pipe_can_timeout_and_return_empty_output() async {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func pipe_can_timeout_and_return_empty_output() async {
         let start = ContinuousClock.now
 
         let output = await container.shell.pipe("php -r \"sleep(30);\"", timeout: 0.5)
@@ -79,7 +84,8 @@ struct RealShellTest {
         #expect(duration < .seconds(2))
     }
 
-    @Test func pipe_without_timeout_completes_normally() async {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func pipe_without_timeout_completes_normally() async {
         let output = await container.shell.pipe("php -v")
 
         #expect(output.out.contains("Copyright (c) The PHP Group"))
@@ -112,7 +118,8 @@ struct RealShellTest {
      `attach()` method, since the readability handlers actually run
      on separate threads.
      */
-    @Test func attach_handles_concurrent_stdout_stderr_writes_safely() async throws {
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func attach_handles_concurrent_stdout_stderr_writes_safely() async throws {
         // Create a PHP script that will output lots of text to STDOUT and STDERR.
         let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
