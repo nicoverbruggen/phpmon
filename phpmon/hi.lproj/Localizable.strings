@@ -191,6 +191,7 @@
 "site_link.close" = "बंद";
 "site_link.switch_to_php" = "PHP पर स्विच करें %@";
 "site_link.isolate_php" = "PHP अलग करें %@";
+"domain_list.copy_url" = "URL कॉपी करें";
 "domain_list.confirm_unproxy" = "क्या आप वाकई प्रॉक्सी '%@' को हटाना चाहते हैं?";
 "domain_list.confirm_unproxy_desc" = "आप हमेशा फिर से प्रॉक्सी बना सकते हैं, बस + बटन पर क्लिक करके।";
 "domain_list.columns.secure" = "टीएलएस";

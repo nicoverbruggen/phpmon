@@ -64,6 +64,7 @@ extension DomainListVC {
 
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.actions".localized))
 
+        addCopy(to: menu)
         addToggleFavorite(to: menu, favorited: site.favorited)
         addToggleSecure(to: menu, secured: site.secured)
         addUnlink(to: menu, with: site)
@@ -174,6 +175,15 @@ extension DomainListVC {
         menu.addItem(NSMenuItem.separator())
     }
 
+    private func addCopy(to menu: NSMenu) {
+        menu.addItem(NSMenuItem(
+            title: "domain_list.copy_url".localized,
+            action: #selector(copyDomain),
+            keyEquivalent: "",
+            systemImage: "document.on.document"
+        ))
+    }
+
     private func addToggleSecure(to menu: NSMenu, secured: Bool) {
         menu.addItem(NSMenuItem(
             title: secured
@@ -224,6 +234,7 @@ extension DomainListVC {
         let menu = NSMenu()
         addOpenProxyInBrowser(to: menu)
         addSeparator(to: menu)
+        addCopy(to: menu)
         addToggleFavorite(to: menu, favorited: proxy.favorited)
         addToggleSecure(to: menu, secured: proxy.secured)
         addRemoveProxy(to: menu)

@@ -191,6 +191,7 @@
 "site_link.close" = "閉じる";
 "site_link.switch_to_php" = "PHP %@へ切り替える";
 "site_link.isolate_php" = "PHP %@ を隔離";
+"domain_list.copy_url" = "URLをコピー";
 "domain_list.confirm_unproxy" = "プロキシ '%@' を解除してもよろしいですか？";
 "domain_list.confirm_unproxy_desc" = "再度+ボタンをクリックしてプロキシを再作成できます。";
 "domain_list.columns.secure" = "TLS";

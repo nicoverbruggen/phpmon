@@ -191,6 +191,7 @@
 "site_link.close" = "إغلاق";
 "site_link.switch_to_php" = "التبديل إلى PHP %@";
 "site_link.isolate_php" = "عزل PHP %@";
+"domain_list.copy_url" = "نسخ الرابط";
 "domain_list.confirm_unproxy" = "هل أنت متأكد من رغبتك في إزالة الوكيل '%@'?";
 "domain_list.confirm_unproxy_desc" = "يمكنك دائمًا إعادة إنشاء الوكيل مرة أخرى بالنقر على زر +.";
 "domain_list.columns.secure" = "TLS";

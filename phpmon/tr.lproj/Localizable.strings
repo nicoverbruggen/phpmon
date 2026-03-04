@@ -191,6 +191,7 @@
 "site_link.close" = "Kapat";
 "site_link.switch_to_php" = "PHP %@'ye geçin";
 "site_link.isolate_php" = "PHP %@'yi izole et";
+"domain_list.copy_url" = "URL'yi Kopyala";
 "domain_list.confirm_unproxy" = "Proxy '%@'ı kaldırmak istediğinizden emin misiniz?";
 "domain_list.confirm_unproxy_desc" = "Her zaman + düğmesine tıklayarak yeniden proxy oluşturabilirsiniz.";
 "domain_list.columns.secure" = "TLS";

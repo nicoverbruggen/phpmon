@@ -191,6 +191,7 @@
 "site_link.close" = "Tutup";
 "site_link.switch_to_php" = "Beralih ke PHP %@";
 "site_link.isolate_php" = "Isolasi PHP %@";
+"domain_list.copy_url" = "Salin URL";
 "domain_list.confirm_unproxy" = "Apakah Anda yakin ingin menghapus proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "Anda dapat selalu membuat ulang proxy lagi dengan mengklik tombol +.";
 "domain_list.columns.secure" = "TLS";

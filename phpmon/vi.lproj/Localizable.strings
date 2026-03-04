@@ -191,6 +191,7 @@
 "site_link.close" = "Đóng";
 "site_link.switch_to_php" = "Chuyển sang PHP %@";
 "site_link.isolate_php" = "Cách ly PHP %@";
+"domain_list.copy_url" = "Sao chép URL";
 "domain_list.confirm_unproxy" = "Bạn có chắc chắn muốn xóa proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "Bạn luôn có thể tạo lại proxy bằng cách nhấp vào nút +.";
 "domain_list.columns.secure" = "TLS";

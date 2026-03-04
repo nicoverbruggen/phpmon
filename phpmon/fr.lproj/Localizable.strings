@@ -191,6 +191,7 @@
 "site_link.close" = "Fermer";
 "site_link.switch_to_php" = "Basculer vers PHP %@";
 "site_link.isolate_php" = "Isoler PHP %@";
+"domain_list.copy_url" = "Copier l'URL";
 "domain_list.confirm_unproxy" = "Êtes-vous sûr de vouloir supprimer le proxy '%@' ?";
 "domain_list.confirm_unproxy_desc" = "Vous pouvez toujours recréer le proxy en cliquant à nouveau sur le bouton +.";
 "domain_list.columns.secure" = "TLS";

@@ -191,6 +191,7 @@
 "site_link.close" = "关闭";
 "site_link.switch_to_php" = "切换到 PHP %@";
 "site_link.isolate_php" = "隔离 PHP %@";
+"domain_list.copy_url" = "复制 URL";
 "domain_list.confirm_unproxy" = "您确定要移除代理 `%@` 吗？";
 "domain_list.confirm_unproxy_desc" = "您可以随时点击 + 按钮重新创建代理";
 "domain_list.columns.secure" = "TLS";

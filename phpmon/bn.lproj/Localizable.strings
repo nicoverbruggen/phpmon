@@ -191,6 +191,7 @@
 "site_link.close" = "বন্ধ";
 "site_link.switch_to_php" = "PHP %@‑এ স্যুইচ করুন";
 "site_link.isolate_php" = "PHP আলাদা করুন %@";
+"domain_list.copy_url" = "URL কপি করুন";
 "domain_list.confirm_unproxy" = "আপনি কি নিশ্চিত যে আপনি প্রোক্সি '%@' সরাতে চান?";
 "domain_list.confirm_unproxy_desc" = "আপনি সর্বদা + বোতামে ক্লিক করে আবার প্রোক্সি পুনরায় তৈরি করতে পারেন।";
 "domain_list.columns.secure" = "TLS";
