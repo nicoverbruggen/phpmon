@@ -181,6 +181,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
         return ranges
     }
 
+    // swiftlint:disable function_parameter_count
     /**
      Replaces markup like `**bold**` or `*italic*` with the appropriate font,
      skipping any matches that overlap with an already-processed code span.
@@ -214,6 +215,7 @@ struct MarkdownTextViewRepresentable: NSViewRepresentable {
             result.replaceCharacters(in: match.range, with: replacement)
         }
     }
+    // swiftlint:enable function_parameter_count
 }
 
 // MARK: - Shared Constants
