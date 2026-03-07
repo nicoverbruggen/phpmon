@@ -1,5 +1,5 @@
 //
-//  PreferencesVC+WindowsRestore.swift
+//  PreferenceVC+WindowsRestore.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 23/02/2026.
@@ -8,7 +8,7 @@
 
 import Cocoa
 
-extension GenericPreferenceVC {
+extension PreferenceVC {
     struct WindowSnapshot {
         let name: String
         let frame: NSRect?
@@ -47,7 +47,7 @@ extension GenericPreferenceVC {
                     name: windowName,
                     frame: WindowManager.window(for: PhpExtensionManagerWC.self)?.frame
                 )
-            case "CommandHistory", "ActiveCommands":
+            case "CommandHistory":
                 return WindowSnapshot(
                     name: windowName,
                     frame: WindowManager.window(for: CommandHistoryWC.self)?.frame
@@ -79,7 +79,7 @@ extension GenericPreferenceVC {
             case "PhpExtensionManager":
                 PhpExtensionManagerWindowController.show()
                 applyFrame(snapshot.frame, for: PhpExtensionManagerWC.self)
-            case "CommandHistory", "ActiveCommands":
+            case "CommandHistory":
                 CommandHistoryWindowController.show()
                 applyFrame(snapshot.frame, for: CommandHistoryWC.self)
             default:

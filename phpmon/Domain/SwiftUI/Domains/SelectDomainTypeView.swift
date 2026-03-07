@@ -35,7 +35,7 @@ struct SelectDomainTypeView: View {
                 )
                 SimpleButton(
                     title: "selection.create_proxy".localized,
-                    imageName: "IconParked",
+                    imageName: "IconProxy",
                     action: { onCreateProxy() }
                 )
             }

@@ -23,15 +23,12 @@ struct CommandHistoryView: View {
         VStack(alignment: .leading, spacing: 6) {
             ScrollViewReader { proxy in
                 List {
-                    ForEach(commandTracker.commands.indices, id: \.self) { index in
-                        let command = commandTracker.commands[index]
-                        let isEvenRow = index.isMultiple(of: 2)
+                    ForEach(Array(commandTracker.commands.enumerated()), id: \.element.id) { index, command in
                         CommandHistoryRow(
                             command: command,
-                            isEvenRow: isEvenRow,
+                            isEvenRow: index.isMultiple(of: 2),
                             visibleCommandIds: $visibleCommandIds
                         )
-                        .id(command.id)
                     }
                 }
                 .listStyle(.plain)

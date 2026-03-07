@@ -60,7 +60,7 @@ class StartupAlertViewModel: ObservableObject {
             do {
                 // Run the command to fix the
                 try await fixCommand(App.shared.container) { [weak self] text, stream in
-                    DispatchQueue.main.async {
+                    Task { @MainActor in
                         self?.outputLines.append(OutputLine(text: text, stream: stream))
                     }
                 }

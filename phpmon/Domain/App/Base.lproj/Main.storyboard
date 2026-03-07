@@ -351,7 +351,7 @@
         <!--Preferences-->
         <scene sceneID="iyi-IS-7Ps">
             <objects>
-                <viewController title="Preferences" identifier="preferencesTemplateVC" storyboardIdentifier="preferencesTemplateVC" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="GenericPreferenceVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Preferences" identifier="preferencesTemplateVC" storyboardIdentifier="preferencesTemplateVC" showSeguePresentationStyle="single" id="AW2-rV-rbS" customClass="PreferenceVC" customModule="PHP_Monitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="Pf1-A5-3Xz">
                         <rect key="frame" x="0.0" y="0.0" width="550" height="498"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -133,15 +133,21 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
             onConfirm: { name, secure in
                 guard let window = hostingController.view.window,
                       let parent = window.sheetParent else { return }
-                Task {
-                    self.contentVC.setUIBusy()
-                    try? await ValetInteractor.shared.link(path: folder, domain: name)
-                    self.contentVC.setUINotBusy()
-
-                    await self.contentVC.addedNewSite(name: name, secureAfterLinking: secure)
-                    self.searchToolbarItem.searchField.stringValue = ""
-                }
                 parent.endSheet(window, returnCode: .OK)
+                self.contentVC.setUIBusy()
+                Task {
+                    try? await ValetInteractor.shared.link(path: folder, domain: name)
+
+                    await MainActor.run {
+                        self.contentVC.setUINotBusy()
+                        self.searchToolbarItem.searchField.stringValue = ""
+                    }
+
+                    await self.contentVC.addedNewSite(
+                        name: name,
+                        secureAfterLinking: secure
+                    )
+                }
             },
             domainExists: { name in
                 Valet.shared.sites.contains(where: { $0.name == name })

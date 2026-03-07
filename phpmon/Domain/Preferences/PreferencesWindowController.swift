@@ -79,7 +79,7 @@ class PreferencesWindowController: PMWindowController {
     // MARK: - Tabs
 
     struct PrefTabView {
-        let viewController: GenericPreferenceVC
+        let viewController: PreferenceVC
         let label: String
         let icon: String
     }

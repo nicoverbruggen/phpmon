@@ -19,7 +19,7 @@ extension PreferencesWindowController {
             return
         }
 
-        guard let vc = tabVC.tabViewItems[tabVC.selectedTabViewItemIndex].viewController as? GenericPreferenceVC else {
+        guard let vc = tabVC.tabViewItems[tabVC.selectedTabViewItemIndex].viewController as? PreferenceVC else {
             return
         }
 

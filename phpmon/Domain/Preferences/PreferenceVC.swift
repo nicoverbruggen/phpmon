@@ -1,5 +1,5 @@
 //
-//  PreferencesVC.swift
+//  PreferenceVC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
@@ -9,7 +9,7 @@
 import Cocoa
 import Carbon
 
-class GenericPreferenceVC: NSViewController {
+class PreferenceVC: NSViewController {
 
     // MARK: - Content
 
@@ -29,7 +29,7 @@ class GenericPreferenceVC: NSViewController {
     }
 
     @discardableResult
-    func addView(when condition: Bool, _ view: NSView) -> GenericPreferenceVC {
+    func addView(when condition: Bool, _ view: NSView) -> PreferenceVC {
         if condition {
             self.views.append(view)
         }
@@ -152,29 +152,6 @@ class GenericPreferenceVC: NSViewController {
              self
         )
      }
-
-    private func reopenWindows(afterLanguageChange windowNames: [String]) {
-        let uniqueNames = Set(windowNames)
-
-        for windowName in uniqueNames {
-            switch windowName {
-            case "DomainList":
-                DomainListVC.show()
-            case "Onboarding":
-                OnboardingWindowController.show()
-            case "ConfigManager":
-                PhpConfigManagerWindowController.show()
-            case "Warnings":
-                PhpDoctorWindowController.show()
-            case "PhpVersionManager":
-                PhpVersionManagerWindowController.show()
-            case "PhpExtensionManager":
-                PhpExtensionManagerWindowController.show()
-            default:
-                continue
-            }
-        }
-    }
 
     func getIntegrationsPV() -> NSView {
         return CheckboxPreferenceView.make(

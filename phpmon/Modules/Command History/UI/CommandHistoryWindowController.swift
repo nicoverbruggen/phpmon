@@ -36,6 +36,13 @@ class CommandHistoryWindowController: PMWindowController {
         WindowManager.setController(windowController)
     }
 
+    override func windowWillClose(_ notification: Notification) {
+        super.windowWillClose(notification)
+
+        // In the case of command history, we dismiss it
+        WindowManager.unset(CommandHistoryWC.self)
+    }
+
     public static func show(delegate: NSWindowDelegate? = nil) {
         if !WindowManager.hasController(for: CommandHistoryWC.self) {
             Self.create(delegate: delegate)

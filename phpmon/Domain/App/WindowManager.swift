@@ -56,6 +56,10 @@ final class WindowCoordinator {
         return controller
     }
 
+    func unset<T: NSWindowController>(_ type: T.Type) {
+        controllers[ObjectIdentifier(T.self)] = nil
+    }
+
     func close<T: NSWindowController>(_ type: T.Type) {
         controllers[ObjectIdentifier(T.self)]?.close()
         controllers[ObjectIdentifier(T.self)] = nil

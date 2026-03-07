@@ -41,6 +41,8 @@ extension Startup {
                 .withPrimary(text: check.buttonText, action: { _ in
                     exit(1)
                 }).show(urgency: .bringToFront)
+
+            // We can never return here, since quitting the app is the only option
         }
 
         // Create and show the enhanced startup alert window
