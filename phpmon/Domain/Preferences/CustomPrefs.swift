@@ -70,12 +70,14 @@ extension Preferences {
             return
         }
 
-        guard let customPreferences = try? JSONDecoder().decode(CustomPrefs.self, from: data) else {
+        guard let parsedPreferences = try? JSONDecoder().decode(CustomPrefs.self, from: data) else {
             Log.warn("The ~/.config/phpmon/config.json file seems to be malformed.")
             return
         }
 
         Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
+
+        customPreferences = parsedPreferences
 
         if customPreferences.hasPresets() {
             Log.info("There are \(customPreferences.presets!.count) custom presets.")
