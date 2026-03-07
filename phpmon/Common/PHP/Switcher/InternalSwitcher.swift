@@ -53,7 +53,7 @@ class InternalSwitcher: PhpSwitcher {
             for formula in versions {
                 if Valet.installed {
                     Log.info("Ensuring that the Valet configuration is valid...")
-                    _ = await self.ensureValetConfigurationIsValidForPhpVersion(formula)
+                    await self.ensureValetConfigurationIsValidForPhpVersion(formula)
                 }
 
                 Log.info("Will start PHP \(version)... (primary: \(version == formula))")
@@ -112,7 +112,7 @@ class InternalSwitcher: PhpSwitcher {
 
             if Valet.enabled(feature: .isolatedSites) && primary {
                 let socketVersion = version.replacing(".", with: "")
-                await container.shell.quiet("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
+                await container.shell.pipe("ln -sF ~/.config/valet/valet\(socketVersion).sock ~/.config/valet/valet.sock")
                 Log.info("Symlinked new socket version (valet\(socketVersion).sock → valet.sock).")
             }
         }

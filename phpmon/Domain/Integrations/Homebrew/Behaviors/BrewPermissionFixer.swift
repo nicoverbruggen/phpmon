@@ -39,18 +39,8 @@ class BrewPermissionFixer {
             return
         }
 
-        let appleScript = NSAppleScript(
-            source: "do shell script \"\(buildBrokenFormulaeScript())\" with administrator privileges"
-        )
-
-        let eventResult: NSAppleEventDescriptor? = appleScript?
-            .executeAndReturnError(nil)
-
-        if eventResult == nil {
-            throw HomebrewPermissionError(
-                kind: .applescriptNilError
-            )
-        }
+        let script = buildBrokenFormulaeScript()
+        try AppleScript.runSimpleShellAsAdmin(script)
 
         Log.info("Ownership was taken of the folder(s) at: " + broken
             .map({ $0.path })

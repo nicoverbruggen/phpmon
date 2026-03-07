@@ -21,13 +21,19 @@ class ZshRunCommand {
     /**
      Adds a given line to .zshrc, which may be needed to adjust the PATH.
      */
+    @discardableResult
     private func add(_ text: String) async -> Bool {
+        // Escape single quotes to prevent shell injection
+        let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
+
+        // Actually add the line to .zshrc
         let outcome = await container.shell.pipe("""
             touch ~/.zshrc && \
-            grep -qxF '\(text)' ~/.zshrc \
-            || echo '\n\n\(text)\n' >> ~/.zshrc
+            grep -qxF '\(escaped)' ~/.zshrc \
+            || echo '\n\n\(escaped)\n' >> ~/.zshrc
         """)
 
+        // Validate the command executed correctly
         if outcome.hasError {
             return false
         }
@@ -39,13 +45,13 @@ class ZshRunCommand {
      Adds Homebrew binaries to the PATH.
      */
     public func addHomebrewPath() async {
-        _ = await add("export PATH=$HOME/bin:/opt/homebrew/bin:$PATH")
+        await add("export PATH=$HOME/bin:/opt/homebrew/bin:$PATH")
     }
 
     /**
      Adds PHP Monitor binaries to the PATH.
      */
     public func addPhpMonitorPath() async {
-        _ = await add("export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH")
+        await add("export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH")
     }
 }

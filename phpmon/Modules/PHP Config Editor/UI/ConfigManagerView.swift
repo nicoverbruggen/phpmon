@@ -68,7 +68,7 @@ struct ConfigManagerView: View {
 
                 VStack(alignment: .trailing) {
                     Button("Close", action: {
-                        App.shared.phpConfigManagerWindowController?.close()
+                        WindowManager.close(PhpConfigManagerWC.self)
                     })
                 }
                 .padding(.vertical, 10)

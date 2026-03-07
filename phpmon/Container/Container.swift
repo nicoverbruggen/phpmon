@@ -16,6 +16,7 @@ class Container: @unchecked Sendable {
     private(set) var paths: Paths!
     private(set) var shell: ShellProtocol!
     private(set) var command: CommandProtocol!
+    private(set) var commandTracker: CommandTracker!
     private(set) var webApi: WebApiProtocol!
 
     // Secondary (uses primary instances above)
@@ -54,7 +55,10 @@ class Container: @unchecked Sendable {
     /// - Parameter coreOnly: Only binds `shell`, `filesystem`, `command`, `paths` and `webApi`.
     ///   Use this to prevent slowing down tests for a minimal container.
     ///
-    public func bind(coreOnly: Bool = false) {
+    /// - Parameter commandTracking: When enabled, connects decorated RealShell and RealCommand.
+    ///   Use this if you want to disable tracking (shell) command statuses, since it's on by default.
+    ///
+    public func bind(coreOnly: Bool = false, commandTracking: Bool = true) {
         if self.bound {
             fatalError("You cannot call `bind` on a Container more than once.")
         }
@@ -67,8 +71,20 @@ class Container: @unchecked Sendable {
         // any of the other classes can be initialized!
         self.filesystem = RealFileSystem(container: self)
         self.paths = Paths(container: self)
-        self.shell = RealShell(binPath: paths.binPath)
-        self.command = RealCommand()
+        self.commandTracker = CommandTracker()
+
+        let baseShellHandler = RealShell(binPath: paths.binPath)
+        let baseCommandHandler = RealCommand()
+
+        // Depending on whether we need command tracking wired up, we will use different real handlers
+        if commandTracking {
+            self.shell = TrackedShell(shell: baseShellHandler, commandTracker: commandTracker)
+            self.command = TrackedCommand(command: baseCommandHandler, commandTracker: commandTracker)
+        } else {
+            self.shell = baseShellHandler
+            self.command = baseCommandHandler
+        }
+
         self.webApi = RealWebApi(container: self)
 
         if coreOnly {
@@ -95,11 +111,24 @@ class Container: @unchecked Sendable {
         fileSystemFiles: [String: FakeFile] = [:],
         commands: [String: String] = [:],
         webApiGetResponses: [URL: FakeWebApiResponse] = [:],
-        webApiPostResponses: [URL: FakeWebApiResponse] = [:]
+        webApiPostResponses: [URL: FakeWebApiResponse] = [:],
+        commandTracking: Bool = true,
     ) {
-        self.shell = TestableShell(expectations: shellExpectations)
-        self.filesystem = TestableFileSystem(files: fileSystemFiles)
-        self.command = TestableCommand(commands: commands)
+        self.commandTracker = CommandTracker()
+
+        let filesystem = TestableFileSystem(files: fileSystemFiles)
+
+        // Depending on whether we want to fire command tracking, load different handlers
+        if commandTracking {
+            self.shell = TrackableTestableShell(expectations: shellExpectations, filesystem: filesystem, commandTracker)
+            self.command = TrackableTestableCommand(commands: commands, commandTracker)
+        } else {
+            self.shell = TestableShell(expectations: shellExpectations, filesystem: filesystem)
+            self.command = TestableCommand(commands: commands)
+        }
+
+        self.filesystem = filesystem
+
         self.webApi = TestableWebApi(
             getResponses: webApiGetResponses,
             postResponses: webApiPostResponses

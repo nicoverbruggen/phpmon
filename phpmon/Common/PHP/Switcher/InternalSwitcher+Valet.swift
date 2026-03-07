@@ -11,6 +11,7 @@ import Foundation
 extension InternalSwitcher {
     typealias FixApplied = Bool
 
+    @discardableResult
     public func ensureValetConfigurationIsValidForPhpVersion(_ version: String) async -> FixApplied {
         // Early exit if Valet is not installed
         if !Valet.installed {
@@ -71,7 +72,8 @@ extension InternalSwitcher {
             }
 
             do {
-                var contents = try container.filesystem.getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
+                var contents = try container.filesystem
+                    .getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
 
                 for (original, replacement) in file.replacements {
                     contents = contents.replacing(original, with: replacement)

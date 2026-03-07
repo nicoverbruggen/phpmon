@@ -14,14 +14,6 @@ struct CustomPrefs: Decodable {
     let services: [String]?
     let environmentVariables: [String: String]?
 
-    var exportAsString: String {
-        return self.environmentVariables!
-            .map { (key, value) in
-                return "export \(key)=\(value)"
-            }
-            .joined(separator: "&&")
-    }
-
     public func hasPresets() -> Bool {
         return self.presets != nil && !self.presets!.isEmpty
     }
@@ -31,7 +23,11 @@ struct CustomPrefs: Decodable {
     }
 
     public func hasEnvironmentVariables() -> Bool {
-        return self.environmentVariables != nil && !self.environmentVariables!.keys.isEmpty
+        guard let variables = self.environmentVariables else {
+            return false
+        }
+
+        return !variables.isEmpty
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -45,55 +41,58 @@ struct CustomPrefs: Decodable {
 extension Preferences {
     func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
-        await container.shell.quiet("mkdir -p ~/.config/phpmon")
+        await container.shell.pipe("mkdir -p ~/.config/phpmon")
 
         // Move the legacy file
         await moveOutdatedConfigurationFile()
 
         // Attempt to load the file if it exists
-        let url = URL(fileURLWithPath: "\(container.paths.homePath)/.config/phpmon/config.json")
-        if container.filesystem.fileExists(url.path) {
-
+        if container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
-            loadCustomPreferencesFile(url)
+            loadCustomPreferencesFile()
         } else {
             Log.info("There was no /.config/phpmon/config.json file to be loaded.")
         }
     }
 
     func moveOutdatedConfigurationFile() async {
-        if container.filesystem.fileExists("~/.phpmon.conf.json") && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
+        if container.filesystem.fileExists("~/.phpmon.conf.json")
+            && !container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("An outdated configuration file was found. Moving it...")
-            await container.shell.quiet("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
+            await container.shell.pipe("cp ~/.phpmon.conf.json ~/.config/phpmon/config.json")
             Log.info("The configuration file was copied successfully!")
         }
     }
 
-    func loadCustomPreferencesFile(_ url: URL) {
-        do {
-            customPreferences = try JSONDecoder().decode(
-                CustomPrefs.self,
-                from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
-            )
+    func loadCustomPreferencesFile() {
+        guard let data = try? container.filesystem.getStringFromFile("~/.config/phpmon/config.json").data(using: .utf8) else {
+            Log.warn("The ~/.config/phpmon/config.json file could not be read as UTF-8.")
+            return
+        }
 
-            Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
+        guard let customPreferences = try? JSONDecoder().decode(CustomPrefs.self, from: data) else {
+            Log.warn("The ~/.config/phpmon/config.json file seems to be malformed.")
+            return
+        }
 
-            if customPreferences.hasPresets() {
-                Log.info("There are \(customPreferences.presets!.count) custom presets.")
-            }
+        Log.info("The ~/.config/phpmon/config.json file was successfully parsed.")
 
-            if customPreferences.hasServices() {
-                Log.info("There are custom services: \(customPreferences.services!)")
-            }
+        if customPreferences.hasPresets() {
+            Log.info("There are \(customPreferences.presets!.count) custom presets.")
+        }
 
-            if customPreferences.hasEnvironmentVariables() {
-                Log.info("Configuring the additional exports...")
-                if let shell = App.shared.container.shell as? RealShell {
-                    shell.exports = customPreferences.exportAsString
-                }
-            }
-        } catch {
-            Log.warn("The ~/.config/phpmon/config.json file seems to be missing or malformed.")
+        if customPreferences.hasServices() {
+            Log.info("There are custom services: \(customPreferences.services!)")
+        }
+
+        if customPreferences.hasEnvironmentVariables() {
+            let exports = customPreferences.environmentVariables ?? [:]
+
+            Log.info("Configuring the additional exports...")
+            Log.info("Custom exports: \(exports.description)")
+
+            // Assign the new exports values
+            container.shell.exports = exports
         }
     }
 }

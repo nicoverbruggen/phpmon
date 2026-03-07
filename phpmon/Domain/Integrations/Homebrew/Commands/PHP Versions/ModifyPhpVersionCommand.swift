@@ -82,7 +82,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         }
 
         // Re-check the installed versions
-        _ = await container.phpEnvs.detectPhpVersions()
+        await container.phpEnvs.detectPhpVersions()
 
         // After performing operations, attempt to run repairs if needed
         try await self.repairBrokenPackages(onProgress)
@@ -186,7 +186,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         await BrewDiagnostics.shared.checkForOutdatedPhpInstallationSymlinks()
 
         // Check which version of PHP are now installed
-        _ = await container.phpEnvs.detectPhpVersions()
+        await container.phpEnvs.detectPhpVersions()
 
         // Keep track of the currently installed version
         await MainMenu.shared.refreshActiveInstallation()

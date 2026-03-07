@@ -137,7 +137,9 @@ class PhpEnvironments {
             // Update the synchronized value
             _currentInstall.value = newValue
             // Let the PHP extension manager, if it exists, know the version changed
-            App.shared.phpExtensionManagerWindowController?.view.didUpdatePhpVersion()
+            WindowManager
+                .controller(of: PhpExtensionManagerWC.self)?
+                .view.didUpdatePhpVersion()
         }
     }
 
@@ -218,7 +220,7 @@ class PhpEnvironments {
     }
 
     public func reloadPhpVersions() async {
-        _ = await self.detectPhpVersions()
+        await self.detectPhpVersions()
     }
 
     /**
@@ -228,6 +230,7 @@ class PhpEnvironments {
 
      Returns a `Set<String>` of installations that are considered valid.
      */
+    @discardableResult
     public func detectPhpVersions() async -> Set<String> {
         let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
 

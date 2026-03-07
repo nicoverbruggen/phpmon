@@ -123,7 +123,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
                 icon: "globe",
                 button: "domain_list.domains_empty.button".localized,
                 action: {
-                    App.shared.domainListWindowController?
+                    WindowManager
+                        .controller(of: DomainListWC.self)?
                         .pressedAddLink(nil)
                 }
             )

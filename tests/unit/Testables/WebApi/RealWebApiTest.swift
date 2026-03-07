@@ -20,7 +20,9 @@ struct RealWebApiTest {
         return container.webApi as! RealWebApi
     }
 
-    @Test func requestSucceeds() async {
+    @Test(.enabled(if: TestURL.isReachable(url: "https://api.phpmon.test/up"),
+                   "Requires api.phpmon.test to be reachable"))
+    func requestSucceeds() async {
         let response = try! await WebApi.get(
             url("https://api.phpmon.test/up")
         )
@@ -29,7 +31,9 @@ struct RealWebApiTest {
         #expect(response.plainText!.contains("Response rendered in"))
     }
 
-    @Test func requestTimesOut() async {
+    @Test(.enabled(if: TestURL.isReachable(url: "https://api.phpmon.test/up"),
+                   "Requires api.phpmon.test to be reachable"))
+    func requestTimesOut() async {
         await #expect(throws: WebApiError.timedOut) {
             try await WebApi.get(
                 url("https://api.phpmon.test/up"),

@@ -64,7 +64,7 @@
 "mi_valet" = "Laravel Valet";
 "mi_domain_list" = "View Domains List...";
 
-"mi_preferences" = "Preferences...";
+"mi_preferences" = "Settings...";
 "mi_donate" = "Donate...";
 "mi_check_for_updates" = "Check for Updates...";
 "mi_lite_mode" = "About Standalone Mode...";
@@ -84,6 +84,7 @@
 "mi_set_up_presets" = "Learn more about presets...";
 
 "mi_view_onboarding" = "Open Welcome Tour...";
+"mi_view_command_history" = "Open Command History...";
 
 "mi_xdebug_available_modes" = "Available Modes";
 "mi_xdebug_actions" = "Actions";
@@ -209,7 +210,7 @@ You may be asked for your password during the uninstallation process if file per
 
 "phpman.steps.fetching" = "Fetching some package metadata...";
 "phpman.steps.downloading" = "Downloading package data...";
-"phpman.steps.installing" = "Installing some package data...";
+"phpman.steps.installing_package" = "Installing some package data...";
 "phpman.steps.pouring" = "Pouring... This can take a while...";
 "phpman.steps.summary" = "Please wait a moment...";
 
@@ -231,6 +232,7 @@ You may be asked for your password during the uninstallation process if file per
 "generic.cancel" = "Cancel";
 "generic.retry" = "Retry";
 "generic.notice" = "Notice";
+"generic.search" = "Search";
 
 // PRESET LOADING
 
@@ -272,13 +274,14 @@ You may be asked for your password during the uninstallation process if file per
 "site_link.close" = "Close";
 "site_link.switch_to_php" = "Switch to PHP %@";
 "site_link.isolate_php" = "Isolate PHP %@";
+"domain_list.copy_url" = "Copy Domain URL";
 
 "domain_list.confirm_unproxy" = "Are you sure you want to remove the proxy '%@'?";
 "domain_list.confirm_unproxy_desc" = "You can always recreate proxy the again by clicking on the + button.";
 
 "domain_list.columns.secure" = "TLS";
 "domain_list.columns.domain" = "Domain";
-"domain_list.columns.active" = "Active";
+"domain_list.columns.php" = "PHP";
 "domain_list.columns.kind" = "Kind";
 "domain_list.columns.project_type" = "Project Type";
 
@@ -295,7 +298,7 @@ You may be asked for your password during the uninstallation process if file per
 
 // ADD PROXY TO DOMAINS LIST
 
-"domain_list.add.set_up_proxy" = "Set up a Proxy";
+"domain_list.add.set_up_proxy" = "Configure a Proxy";
 "domain_list.add.proxy_subject" = "Proxy subject (must include protocol and port)";
 "domain_list.add.domain_name" = "Domain name";
 "domain_list.add.create_proxy" = "Create Proxy";
@@ -368,11 +371,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "domain_list.alert.invalid_folder_name" = "Invalid folder name";
 "domain_list.alert.invalid_folder_name_desc" = "This folder could not be resolved to a valid URL. This is usually because there’s a space in the folder name. Please rename the folder, reload the list of sites, and try again.";
 
-"domain_list.columns.tls" = "TLS";
-"domain_list.columns.domain" = "Domain";
-"domain_list.columns.php" = "PHP";
-"domain_list.columns.type" = "Type";
-"domain_list.columns.kind" = "Kind";
+
 
 // DRIVERS
 
@@ -390,10 +389,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "editors.alert.try_again" = "Try Again";
 "editors.alert.cancel" = "Cancel";
 
-// PREFERENCES
+// SETTINGS (previously PREFERENCES)
 
 "prefs.title" = "PHP Monitor";
-"prefs.subtitle" = "Preferences";
+"prefs.subtitle" = "Settings";
 "prefs.close" = "Close";
 
 "prefs.tabs.general" = "General";
@@ -402,7 +401,6 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.tabs.notifications" = "Notifications";
 
 "prefs.global_shortcut" = "Global Shortcut:";
-"prefs.dynamic_icon" = "Dynamic Icon:";
 "prefs.dynamic_icon" = "Icon Type:";
 "prefs.info_density" = "Info Density:";
 "prefs.services" = "Services:";
@@ -437,7 +435,7 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.auto_composer_update_desc" = "When checked, will automatically ask Composer to run `composer global update` whenever you switch between different PHP versions. You will be able to see what changes are being made, or should this fail.";
 
 "prefs.open_protocol_title" = "Allow third-party integrations";
-"prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them.";
+"prefs.open_protocol_desc" = "When checked, this will allow the interaction with third party utilities to work (e.g. Alfred, Raycast). If you disable this, PHP Monitor will still receive the commands, but will not act upon them, which is more secure.";
 
 "prefs.automatic_update_check_title" = "Automatically check for updates";
 "prefs.automatic_update_check_desc" = "When checked, PHP Monitor will automatically check daily if there is a newer version available, and notify you if that is the case.";
@@ -500,6 +498,10 @@ This has no effect on other terminals, only for the particular terminal session 
 
 "prefs.display_misc_desc" = "If disabled, you will not be able to access the First Aid & Services menu.";
 "prefs.display_misc" = "First Aid & Services Menu";
+
+"prefs.hide_menu_icons" = "Menu:";
+"prefs.hide_menu_icons_desc" = "PHP Monitor will hide menu icons when this option is selected, which is how most macOS menus looked prior to macOS Tahoe. If you are still on an older version of macOS or prefer menus without icons, you may want to toggle this option.";
+"prefs.hide_menu_icons_title" = "Hide menu icons";
 
 // NOTIFICATIONS
 
@@ -641,7 +643,7 @@ You can do this by running `composer global update` in your terminal. After that
 // Composer issues
 "alert.global_composer_platform_issues.title" = "Composer detected issues in your platform";
 "alert.global_composer_platform_issues.subtitle" = "The version of PHP you switched to is too old for the global Composer dependencies you have installed. These dependencies will need to be updated.";
-"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Preferences to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
+"alert.global_composer_platform_issues.desc" = "The easiest way to prevent this issue from occurring in the future is to switch to the oldest PHP version you have installed and to run `composer global update` again. \n\nAlternatively, you can choose the 'Automatically update global dependencies' option in Settings to avoid this issue as well.\n\nIf you keep seeing this message even after attempting to update those global dependencies, you may wish to look at your global composer configuration file, located in `~/.composer/composer.json`.";
 "alert.global_composer_platform_issues.buttons.update" = "Update Global Dependencies";
 "alert.global_composer_platform_issues.buttons.quit" = "Quit PHP Monitor";
 
@@ -662,9 +664,9 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.homebrew_missing.quit" = "Quit";
 
 // PHP binary not found
-"startup.errors.php_binary.title" = "PHP is not correctly installed";
-"startup.errors.php_binary.subtitle" = "You must install PHP via Homebrew. The app will not work correctly until you resolve this issue.";
-"startup.errors.php_binary.desc" = "Usually running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
+"startup.errors.php_binary.title" = "PHP is not correctly linked";
+"startup.errors.php_binary.subtitle" = "A valid PHP installation was found, but it is not linked. The app will not work correctly until you resolve this issue.";
+"startup.errors.php_binary.desc" = "Usually, running `brew link php` in your Terminal will resolve this issue.\n\nTo diagnose what is wrong, you can try running `which php` in your Terminal, it should return `%@`.";
 
 // Invalid brew info php output
 "startup.errors.php_brew_info_invalid.title" = "Homebrew returned invalid output for `brew info php --json` which requires valid JSON as output.";
@@ -710,23 +712,25 @@ If you are seeing this message but are confused why this folder has gone missing
 
 // Valet version too new or old
 "startup.errors.valet_version_not_supported.title" = "This version of Valet is not supported";
-"startup.errors.valet_version_not_supported.subtitle" = "You are running a version of Valet that is currently not supported. PHP Monitor currently works with Valet v2, v3 and v4. In order to avoid causing issues on your system, PHP Monitor cannot start.";
-"startup.errors.valet_version_not_supported.desc" = "You must install a version of Valet that is compatible with PHP Monitor, or you may need to upgrade to a newer version of PHP Monitor which may include compatibility for this version of Valet (consult the latest release notes for more info).";
+"startup.errors.valet_version_not_supported.subtitle" = "You are running a version of Valet that is currently not supported. In order to avoid causing issues on your system, PHP Monitor cannot start.";
+"startup.errors.valet_version_not_supported.desc" = "Run `valet --version` to find out what version is currently installed. PHP Monitor will start if a compatible version of Valet is installed.
+
+**Note:** If this message is unexpected, you may also need to upgrade to a newer version of PHP Monitor. A newer version of PHP Monitor may include compatibility for newer versions of Valet.";
 
 // Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
-"startup.errors.sudoers_brew.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
+"startup.errors.sudoers_brew.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 "startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
 // Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
-"startup.errors.sudoers_valet.subtitle" = "You must run `sudo valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue. If you did this before, please run `sudo valet trust` again.";
+"startup.errors.sudoers_valet.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
 "startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 // Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
 "startup.errors.global_composer_platform_issues.subtitle" = "Please follow these recommended steps to avoid seeing this issue in the future:\n\n1. Run `composer global update`.\n2. Restart PHP Monitor. (It should work again.)\n3. Switch to the oldest PHP version you have installed.\n4. Run `composer global update` again.";
-"startup.errors.global_composer_platform_issues.desc" = "You can go to Preferences and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
+"startup.errors.global_composer_platform_issues.desc" = "You can go to Settings and check the 'Automatically update global dependencies' option. This will update your global Composer dependencies whenever you change PHP versions, so this may not be ideal if you may not have constant access to the internet.\n\nTo find out exactly what's going wrong, try running `valet --version`. Valet is currently not functional with the installed dependencies. Usually this is caused by a version mismatch: i.e. installed dependencies for a newer version of PHP than the version that is currently active.";
 
 // Cannot retrieve services
 "startup.errors.services_json_error.title" = "Cannot determine services status";
@@ -834,7 +838,7 @@ COMMON TROUBLESHOOTING TIPS
 
 "warnings.title" = "PHP Doctor";
 "warnings.description" = "**PHP Doctor** will suggest improvements to your active system configuration.";
-"warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Preferences, but it is recommended that you deal with all actionable items.";
+"warnings.disclaimer" = "You may choose to hide all recommendations from the PHP Monitor menu in Settings, but it is recommended that you deal with all actionable items.";
 "warnings.refresh.button" = "Scan Again";
 "warnings.refresh.button.description" = "Press this button if you've manually fixed an issue. This will cause PHP Monitor to re-evaluate your environment. (Automatic fixes do not require you to press this button.)";
 
@@ -890,7 +894,7 @@ Please note that some features (greyed out below) are currently unavailable beca
 // LANGUAGE CHOICE
 
 "prefs.language" = "Language:";
-"prefs.language_options_desc" = "Choose a different language to use with PHP Monitor. To fully apply this change, you must restart the app.";
+"prefs.language_options_desc" = "Choose a different language to use with PHP Monitor.";
 
 "alert.language_changed.title" = "You must restart PHP Monitor!";
 "alert.language_changed.subtitle" = "You just changed the display language of PHP Monitor. The menu will immediately use the correct language, but you may need to restart the app for all text throughout the app to reflect your new language choice.";
@@ -942,6 +946,8 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "cert_alert.renew" = "Re-secure Domain(s)";
 "cert_alert.cancel" = "Not Now";
 
+// CRASH REPORTING
+
 "crash_reporter.title" = "PHP Monitor crashed earlier, do you want to send a crash report?";
 "crash_reporter.subtitle" = "It is possible to send the crash report to the developer of the app, so this issue can be fixed. This is highly recommended. Would you like to do that?";
 "crash_reporter.description" = "Without sending this crash report, the developer may not be aware of this particular issue. No logs or personal data is sent with the crash report, only the unsymbolicated crash report. No further action is necessary on your part.
@@ -949,3 +955,27 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 ➡️ If the crash keeps happening at a specific point in time, you may want to check GitHub's issue tracker to see if a fix is not in the works. If the app keeps crashing prior to initialization, you may need to update PHP Monitor manually.";
 "crash_reporter.send_report" = "Send Report";
 "crash_reporter.do_not_send" = "Don't Send";
+
+// THIRD-PARTY INTEGRATIONS
+
+"alert.enable_integrations.title" = "An external application is trying to communicate with PHP Monitor. Do you want third-party applications to be able to communicate with PHP Monitor?";
+"alert.enable_integrations.subtitle" = "This notice appears because PHP Monitor just received an external command, and this feature is disabled by default. If you triggered this intentionally, using a third-party app like Alfred or Raycast, it is normally safe to allow this.\n\nYou can change this setting later in Settings, you will be asked this question only once.";
+"alert.enable_integrations.desc" = "If you did not trigger this via Alfred or Raycast, there may be another application trying to control PHP Monitor.\n\nIn such a case, I recommend keeping this integration turned off, unless you are fine with another third party app controlling PHP Monitor for you, which could present a potential security risk.";
+"alert.enable_integrations.ok" = "Allow Integrations";
+"alert.enable_integrations.cancel" = "Don't Allow";
+
+// AUTOMATIC FIXES AT STARTUP
+
+"startup.alert.quit" = "Quit";
+"startup.alert.fix_manually" = "I Fixed It";
+"startup.alert.fix_automatically" = "Fix Automatically";
+"startup.alert.retry" = "Retry";
+"startup.fix.applying" = "Applying. Please wait...";
+"startup.fix.applied" = "Fix applied successfully! Continuing...";
+"startup.fix.not_resolved" = "Fix did not resolve the issue.";
+
+// COMMAND HISTORY
+
+"command_history.title" = "Command History";
+"command_history.completed_in" = "Completed in %@";
+"command_history.running_for" = "Running for %@";

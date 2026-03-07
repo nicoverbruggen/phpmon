@@ -39,12 +39,21 @@ class Startup {
                     let start = Measurement()
                     if await check.succeeds() {
                         Log.info("[PASS] \(check.name) (\(start.milliseconds) ms)")
-                        continue
+                        continue // continue to the next check!
                     }
 
                     // If we get here, something's gone wrong and the check has failed...
                     Log.info("[FAIL] \(check.name) (\(start.milliseconds) ms)")
-                    await showAlert(for: check)
+
+                    // We will present the user with an option (potentially)
+                    let outcome = await showAlert(for: check)
+
+                    // The fix ran and succeeded — continue to the next check
+                    if outcome == .shouldContinue {
+                        continue
+                    }
+
+                    // No fix requested or fix failed — requires full restart
                     return false
                 }
             } else {
@@ -57,34 +66,6 @@ class Startup {
 
         Log.separator(as: .info)
         return true
-    }
-
-    /**
-     Displays an alert for a particular check. There are two types of alerts:
-     - ones that require an app restart, which prompt the user to exit the app
-     - ones that allow the app to continue, which allow the user to retry
-     */
-    @MainActor private func showAlert(for check: EnvironmentCheck) {
-        if check.requiresAppRestart {
-            NVAlert()
-                .withInformation(
-                    title: check.titleText,
-                    subtitle: check.subtitleText,
-                    description: check.descriptionText
-                )
-                .withPrimary(text: check.buttonText, action: { _ in
-                    exit(1)
-                }).show(urgency: .bringToFront)
-        }
-
-        NVAlert()
-            .withInformation(
-                title: check.titleText,
-                subtitle: check.subtitleText,
-                description: check.descriptionText
-            )
-            .withPrimary(text: "generic.ok".localized)
-            .show(urgency: .bringToFront)
     }
 
     // MARK: - Check (List)
@@ -118,6 +99,15 @@ class Startup {
                     return await !container.shell
                         .pipe("ls \(container.paths.optPath) | grep php").out.contains("php")
                 },
+                fix: { container, didReceiveOutput in
+                    let brew = container.paths.brew
+                    try await container.shell.attach(
+                        "\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
+                },
+                fixDescription: "brew tap shivammathur/php && brew install shivammathur/php/php",
                 name: "`ls \(App.shared.container.paths.optPath) | grep php` returned php result",
                 titleText: "startup.errors.php_opt.title".localized,
                 subtitleText: "startup.errors.php_opt.subtitle".localized(
@@ -132,6 +122,15 @@ class Startup {
                 command: { container in
                     return !container.filesystem.fileExists(container.paths.php)
                 },
+                fix: { container, didReceiveOutput in
+                    let brew = container.paths.brew
+                    try await container.shell.attach(
+                        "\(brew) link php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
+                },
+                fixDescription: "brew link php",
                 name: "`\(App.shared.container.paths.php)` exists",
                 titleText: "startup.errors.php_binary.title".localized,
                 subtitleText: "startup.errors.php_binary.subtitle".localized,
@@ -142,9 +141,21 @@ class Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: { container in
+                    if container.phpEnvs.currentInstall == nil {
+                        container.phpEnvs.currentInstall = ActivePhpInstallation.load(container)
+                    }
                     return await container.shell.pipe("\(container.paths.binPath)/php -v").err
-                        .contains("Library not loaded")
+                        .contains("Library not loaded") && container.phpEnvs.currentInstall != nil
                 },
+                fix: { container, didReceiveOutput in
+                    let brew = container.paths.brew
+                    try await container.shell.attach(
+                        "\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
+                },
+                fixDescription: "brew reinstall php && brew link php",
                 name: "no `dyld` issue (`Library not loaded`) detected",
                 titleText: "startup.errors.dyld_library.title".localized,
                 subtitleText: "startup.errors.dyld_library.subtitle".localized(
@@ -176,6 +187,15 @@ class Startup {
                     await container.phpEnvs.determinePhpAlias()
                     return PhpEnvironments.brewPhpAlias == nil
                 },
+                fix: { container, didReceiveOutput in
+                    let brew = container.paths.brew
+                    try await container.shell.attach(
+                        "\(brew) update",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
+                },
+                fixDescription: "brew update",
                 name: "`brew` alias is not nil and valid",
                 titleText: "startup.errors.could_not_determine_alias.title".localized,
                 subtitleText: "startup.errors.could_not_determine_alias.subtitle".localized,
@@ -209,6 +229,12 @@ class Startup {
                         .pipe("cat /private/etc/sudoers.d/brew")
                         .out.contains(container.paths.brew)
                 },
+                fix: { container, didReceiveOutput in
+                    let valet = container.paths.binPath.appending("/valet")
+                    let result = try AppleScript.runShellAsAdmin("\(valet) trust")
+                    didReceiveOutput(result, .stdOut)
+                },
+                fixDescription: "valet trust",
                 name: "`/private/etc/sudoers.d/brew` contains brew",
                 titleText: "startup.errors.sudoers_brew.title".localized,
                 subtitleText: "startup.errors.sudoers_brew.subtitle".localized,
@@ -231,6 +257,15 @@ class Startup {
                 command: { container in
                     return !container.filesystem.directoryExists("~/.config/valet")
                 },
+                fix: { container, didReceiveOutput in
+                    let valet = container.paths.binPath.appending("/valet")
+                    try await container.shell.attach(
+                        "\(valet) install",
+                        didReceiveOutput: didReceiveOutput,
+                        withTimeout: 120
+                    )
+                },
+                fixDescription: "valet install",
                 name: "`.config/valet` not empty (Valet installed)",
                 titleText: "startup.errors.valet_not_installed.title".localized,
                 subtitleText: "startup.errors.valet_not_installed.subtitle".localized,

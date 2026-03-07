@@ -138,6 +138,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
+    @objc func showCommandHistory() {
+        Task { @MainActor in
+            CommandHistoryWindowController.show()
+        }
+    }
+
     @objc func showIncompatiblePhpVersionsAlert() {
         Task { @MainActor in
             NVAlert().withInformation(

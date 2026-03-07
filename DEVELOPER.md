@@ -53,7 +53,31 @@ If you'd like to create a production build, choose "Any Mac" as the target and s
 
 ## ✅ Testing
 
-In order to properly test everything, you will want to use the _PHP Monitor DEV_ target. There are unit and UI tests both.
+In order to properly test everything, you will want to use the _PHP Monitor EAP_ target. There are unit and UI tests both for this target.
+
+### Unit tests
+
+If you would like to run the unit tests outside of Xcode, you can run:
+
+```sh
+xcodebuild test \
+    -project "PHP Monitor.xcodeproj" \
+    -scheme "Unit Tests" \
+    -destination "platform=macOS" \
+    -parallel-testing-enabled NO
+```
+
+### UI tests
+
+```sh
+xcodebuild test \
+    -project "PHP Monitor.xcodeproj" \
+    -scheme "PHP Monitor" \
+    -destination "platform=macOS" \
+    -only-testing "UI Tests"
+```
+    
+### Failures in UI tests
 
 You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve? You can retry the tests in question and they should eventually pass.
 
@@ -76,6 +100,22 @@ You may sporadically see failures in UI tests due to the following error: `Inval
 You can enable marketing mode by setting the `PHPMON_MARKETING_MODE` environment variable. It preloads a list of (fake) domains in the domain window list for screenshot & marketing purposes.
 
     launchctl setenv PHPMON_MARKETING_MODE true
+    
+## 👀 Previews (`#Preview`)
+
+Xcode may have issues rendering various previews, like:
+
+```swift
+#Preview {
+    HeaderView(text: "Hello world").frame(width: 330.0)
+}
+```
+
+I've noticed this is an issue on recent versions of Xcode (26.x) on macOS Tahoe (26.x). This likely has something to do with the new preview execution system that doesn't play nice with the particular way PHP Monitor has been set up (which is somewhat of a legacy project).
+
+So, in order to ensure these previews render correctly, go to **Editor > Canvas > Use Legacy Previews Execution**. 
+
+This may help resolve any timeouts, but you must first build the project or you will get an error about caches.
 
 ## 🐛 Symbolication of crashes
 

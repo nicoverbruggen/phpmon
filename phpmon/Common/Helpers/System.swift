@@ -11,6 +11,7 @@ import Foundation
 /**
  Run a simple blocking Shell command on the user's own system.
  */
+@discardableResult
 public func system(_ command: String) -> String {
     let task = Process()
     task.launchPath = "/bin/sh"

@@ -28,7 +28,7 @@ final class UpdateCheckTest: UITestCase {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is enabled
-        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = true
+        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = .bool(true)
 
         // Ensure an update is available
         configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
@@ -64,7 +64,7 @@ final class UpdateCheckTest: UITestCase {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
-        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
+        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = .bool(false)
 
         // Ensure an update is available
         configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
@@ -98,7 +98,7 @@ final class UpdateCheckTest: UITestCase {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
-        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
+        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = .bool(false)
 
         // Ensure an update is available
         configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(
@@ -135,7 +135,7 @@ final class UpdateCheckTest: UITestCase {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
-        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = false
+        configuration.preferenceOverrides[.automaticBackgroundUpdateCheck] = .bool(false)
 
         // Ensure an update is available
         configuration.apiGetResponses[url("\(Constants.Urls.UpdateCheckEndpoint.absoluteString)")] = FakeWebApiResponse(

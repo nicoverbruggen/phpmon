@@ -27,11 +27,11 @@ final class StartupTest: UITestCase {
 
         // Dialog 1: "PHP is not correctly installed"
         assertAllExist([
-            app.dialogs["generic.notice".localized],
             app.staticTexts["startup.errors.php_binary.title".localized],
-            app.buttons["generic.ok".localized]
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized]
         ])
-        click(app.buttons["generic.ok".localized])
+        click(app.buttons["startup.alert.fix_manually".localized])
 
         // Dialog 2: PHP Monitor failed to start
         assertAllExist([
@@ -47,6 +47,86 @@ final class StartupTest: UITestCase {
 
         // At this point, we can terminate the test
         app.terminate()
+    }
+
+    final func test_launch_halts_and_automatic_fix_cannot_be_applied() throws {
+        var configuration = TestableConfigurations.working
+        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = .delayed(0.5, "Brew was unable to link PHP.", .stdErr)
+        configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
+
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
+
+        // Dialog 1: "PHP is not correctly installed"
+        assertAllExist([
+            app.staticTexts["startup.errors.php_binary.title".localized],
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized],
+            app.buttons["startup.alert.quit".localized]
+        ])
+
+        click(app.buttons["startup.alert.fix_automatically".localized])
+
+        assertAllExist([
+            app.staticTexts["Fix did not resolve the issue."],
+            app.buttons["startup.alert.retry".localized]
+        ], 3.0)
+
+        click(app.buttons["startup.alert.retry".localized])
+
+        // Dialog 2: PHP Monitor failed to start
+        assertAllExist([
+            app.dialogs["generic.notice".localized],
+            app.staticTexts["alert.cannot_start.title".localized],
+            app.buttons["alert.cannot_start.retry".localized],
+            app.buttons["alert.cannot_start.close".localized]
+        ])
+
+        click(app.buttons["alert.cannot_start.retry".localized])
+
+        // Dialog 1: "PHP is not correctly installed"
+        assertAllExist([
+            app.staticTexts["startup.errors.php_binary.title".localized],
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized],
+            app.buttons["startup.alert.quit".localized]
+        ])
+
+        // We can quit the app this way
+        click(app.buttons["startup.alert.quit".localized])
+    }
+
+    final func test_launch_halts_and_automic_fix_can_be_applied() throws {
+        var configuration = TestableConfigurations.working
+
+        configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
+        configuration.shellOutput["/opt/homebrew/bin/brew link php"] = BatchFakeShellOutput(
+            items: [.delayed(0.5, "Linked PHP.", .stdOut)],
+            transactions: [
+                // When we run this command, we will link PHP in our testable filesystem
+                .symlink("/opt/homebrew/bin/php", to: "/opt/homebrew/Cellar/php/8.4.5/bin/php"),
+                // and we will also ensure that our output of this command is changed
+                .shell("/opt/homebrew/bin/brew link php", .delayed(0.5, "PHP already linked.", .stdErr))
+            ]
+        )
+
+        let app = launch(
+            waitForInitialization: false, // we expect an error during initialization
+            with: configuration
+        )
+
+        // Dialog 1: "PHP is not correctly installed"
+        assertAllExist([
+            app.staticTexts["startup.errors.php_binary.title".localized],
+            app.buttons["startup.alert.fix_manually".localized],
+            app.buttons["startup.alert.fix_automatically".localized]
+        ])
+        click(app.buttons["startup.alert.fix_automatically".localized])
+
+        // We wait for the app to complete launch
+        waitForMenu(app)
     }
 
     final func test_get_warning_about_missing_fpm_symlink() throws {
@@ -72,6 +152,6 @@ final class StartupTest: UITestCase {
         )
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
-        click(app.buttons["generic.ok".localized])
+        click(app.buttons["startup.alert.fix_manually".localized])
     }
 }

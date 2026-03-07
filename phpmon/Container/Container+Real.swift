@@ -7,9 +7,9 @@
 //
 
 extension Container {
-    public static func real(minimal: Bool = false) -> Container {
+    public static func real(minimal: Bool = false, commandTracking: Bool = true) -> Container {
         let container = Container()
-        container.bind(coreOnly: minimal)
+        container.bind(coreOnly: minimal, commandTracking: commandTracking)
         return container
     }
 }

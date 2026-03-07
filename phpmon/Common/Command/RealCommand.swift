@@ -8,6 +8,8 @@
 import Cocoa
 
 public class RealCommand: CommandProtocol {
+    init() {}
+
     public func execute(
         path: String,
         arguments: [String],

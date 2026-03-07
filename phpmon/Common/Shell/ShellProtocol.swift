@@ -8,38 +8,55 @@
 
 import Foundation
 
-protocol ShellProtocol {
+protocol ShellProtocol: AnyObject {
     /**
      The PATH for the current shell.
      */
     var PATH: String { get }
 
     /**
-     Run a command synchronously. Use with caution.
+     Exports are additional environment variables set by the user via the custom configuration.
+     These are populated when the configuration file is being loaded.
+     */
+    var exports: [String: String] { get set }
+
+    /**
+     Run a command synchronously. Use with caution!
 
      Common usage:
      ```
      let output = Shell.sync("php -v")
      ```
+
+     @return The shell output. If the command times out, returns empty output.
      */
+    @discardableResult
     func sync(_ command: String) -> ShellOutput
 
     /**
      Run a command asynchronously.
-     Returns the most relevant output (prefers error output if it exists).
 
      Common usage:
      ```
     let output = await Shell.pipe("php -v")
      ```
+
+     @return The shell output. If the command times out, returns empty output.
      */
+    @discardableResult
     func pipe(_ command: String) async -> ShellOutput
 
     /**
-     Run a command asynchronously, without returning the output of the command.
+     Run a command asynchronously with a timeout.
      Returns the most relevant output (prefers error output if it exists).
+
+     - Parameter command: The command to execute.
+     - Parameter timeout: Timeout in seconds. If the command exceeds this, it is terminated.
+
+     @return The shell output. If the command times out, returns empty output.
      */
-    func quiet(_ command: String) async
+    @discardableResult
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput
 
     /**
      Runs a command asynchronously, and fires closure with `stdout` or `stderr` data as it comes in.
@@ -49,8 +66,10 @@ protocol ShellProtocol {
      (Whether it is complete or not.)
 
      Unlike `sync`, `pipe` and `quiet`, you can capture both `stdout` and `stderr` with this mechanism.
-     The end result is still the most relevant output (where error output is preferred if it exists).
+
+     @return A tuple, containing the `Process` and `ShellOutput` objects.
      */
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,

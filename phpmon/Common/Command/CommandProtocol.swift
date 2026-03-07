@@ -9,7 +9,6 @@
 import Foundation
 
 protocol CommandProtocol {
-
     /**
      Immediately executes a command.
 
@@ -37,5 +36,21 @@ protocol CommandProtocol {
         arguments: [String],
         trimNewlines: Bool
     ) -> String
+
+}
+
+extension CommandProtocol {
+    func execute(
+        path: String,
+        arguments: [String],
+        trimNewlines: Bool
+    ) -> String {
+        execute(
+            path: path,
+            arguments: arguments,
+            trimNewlines: trimNewlines,
+            withStandardError: false
+        )
+    }
 
 }

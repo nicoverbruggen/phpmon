@@ -13,7 +13,7 @@ public struct TestableConfiguration: Codable {
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
-    var preferenceOverrides: [PreferenceName: Bool]
+    var preferenceOverrides: [PreferenceName: PreferenceOverride]
     var apiGetResponses: [URL: FakeWebApiResponse]
     var apiPostResponses: [URL: FakeWebApiResponse]
 
@@ -22,7 +22,7 @@ public struct TestableConfiguration: Codable {
         filesystem: [String: FakeFile],
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
-        preferenceOverrides: [PreferenceName: Bool],
+        preferenceOverrides: [PreferenceName: PreferenceOverride],
         phpVersions: [VersionNumber],
         apiGetResponses: [URL: FakeWebApiResponse],
         apiPostResponses: [URL: FakeWebApiResponse]
@@ -138,8 +138,13 @@ public struct TestableConfiguration: Codable {
 
         Log.info("Applying temporary preference overrides...")
         var cachedPrefs = container.preferences.cachedPreferences
-        preferenceOverrides.forEach { (key: PreferenceName, value: Any?) in
-            cachedPrefs[key] = value
+        preferenceOverrides.forEach { (key: PreferenceName, value: PreferenceOverride) in
+            switch value {
+            case .bool(let boolValue):
+                cachedPrefs[key] = boolValue
+            case .string(let stringValue):
+                cachedPrefs[key] = stringValue
+            }
         }
         container.preferences.cachedPreferences = cachedPrefs
 
@@ -192,4 +197,9 @@ public struct TestableConfiguration: Codable {
             from: try! String(contentsOf: url, encoding: .utf8).data(using: .utf8)!
         )
     }
+}
+
+enum PreferenceOverride: Codable {
+    case bool(Bool)
+    case string(String)
 }

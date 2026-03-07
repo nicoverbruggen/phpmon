@@ -153,18 +153,20 @@ extension PhpVersionManagerView {
             return
         }
 
-        Alert.confirm(
-            onWindow: App.shared.phpVersionManagerWindowController!.window!,
-            messageText: "phpman.warnings.removal.title".localized(formula.displayName),
-            informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
-            buttonTitle: "phpman.warnings.removal.button".localized,
-            buttonIsDestructive: true,
-            secondButtonTitle: "generic.cancel".localized,
-            style: .warning,
-            onFirstButtonPressed: {
-                Task { await self.uninstall(formula) }
-            }
-        )
+        WindowManager.withWindow(for: PhpVersionManagerWC.self) { window in
+            Alert.confirm(
+                onWindow: window,
+                messageText: "phpman.warnings.removal.title".localized(formula.displayName),
+                informativeText: "phpman.warnings.removal.desc".localized(formula.displayName),
+                buttonTitle: "phpman.warnings.removal.button".localized,
+                buttonIsDestructive: true,
+                secondButtonTitle: "generic.cancel".localized,
+                style: .warning,
+                onFirstButtonPressed: {
+                    Task { await self.uninstall(formula) }
+                }
+            )
+        }
     }
 
     /**
@@ -176,15 +178,17 @@ extension PhpVersionManagerView {
         button: String,
         style: NSAlert.Style = .critical
     ) {
-        Alert.confirm(
-            onWindow: App.shared.phpVersionManagerWindowController!.window!,
-            messageText: title,
-            informativeText: description,
-            buttonTitle: button,
-            secondButtonTitle: "",
-            style: style,
-            onFirstButtonPressed: {}
-        )
+        WindowManager.withWindow(for: PhpVersionManagerWC.self) { window in
+            Alert.confirm(
+                onWindow: window,
+                messageText: title,
+                informativeText: description,
+                buttonTitle: button,
+                secondButtonTitle: "",
+                style: style,
+                onFirstButtonPressed: {}
+            )
+        }
     }
 
 }

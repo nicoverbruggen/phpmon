@@ -48,7 +48,7 @@ struct VersionPopoverView: View {
                         LazyVGrid(columns: self.rows, alignment: .leading, spacing: 5, content: {
                             ForEach(validPhpVersions, id: \.self) { version in
                                 Button("site_link.isolate_php".localized(version.short), action: {
-                                    App.shared.domainListWindowController?.contentVC
+                                    WindowManager.controller(of: DomainListWC.self)?.contentVC
                                         .isolateSite(site: site, version: version.short)
                                     parent?.close()
                                 }).padding(EdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0))

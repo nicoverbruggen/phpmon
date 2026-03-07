@@ -29,18 +29,17 @@ class PhpDoctorWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: PhpDoctorView())
         window.setContentSize(window.contentView!.fittingSize)
 
-        App.shared.phpDoctorWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.phpDoctorWindowController == nil {
+        if !WindowManager.hasController(for: PhpDoctorWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.phpDoctorWindowController?.showWindow(self)
-        App.shared.phpDoctorWindowController?.window?.setCenterPosition(offsetY: 70)
-
-        NSApp.activate(ignoringOtherApps: true)
-        App.shared.phpDoctorWindowController?.window?.orderFrontRegardless()
+        WindowManager.show(PhpDoctorWC.self)
+        WindowManager.withWindow(for: PhpDoctorWC.self) { window in
+            window.setCenterPosition(offsetY: 70)
+        }
     }
 }

@@ -127,13 +127,13 @@ class PhpHelper {
 
         if !container.filesystem.fileExists(destination) {
             Log.info("Creating new symlink: \(destination)")
-            await container.shell.quiet("ln -s \(source) \(destination)")
+            await container.shell.pipe("ln -s \(source) \(destination)")
             return
         }
 
         if !App.shared.container.filesystem.isSymlink(destination) {
             Log.info("Overwriting existing file with new symlink: \(destination)")
-            await container.shell.quiet("ln -fs \(source) \(destination)")
+            await container.shell.pipe("ln -fs \(source) \(destination)")
             return
         }
 

@@ -124,7 +124,7 @@ struct OnboardingView: View {
                         .lineLimit(3)
                         .frame(height: 35)
                     Button("onboarding.tour.close".localized) {
-                        App.shared.onboardingWindowController?.close()
+                        WindowManager.close(OnboardingWC.self)
                     }
                     .padding(.bottom, 15)
                     .padding(.top, 10)

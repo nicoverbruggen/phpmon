@@ -78,8 +78,8 @@ class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
             tld: Valet.shared.config.tld,
             expires: site.getListableCertificateExpiryDate(),
             callback: {
-                App.shared.domainListWindowController?
-                    .contentVC.checkForCertificateRenewal()
+                WindowManager.controller(of: DomainListWC.self)?.contentVC
+                    .checkForCertificateRenewal()
             }
         )
 

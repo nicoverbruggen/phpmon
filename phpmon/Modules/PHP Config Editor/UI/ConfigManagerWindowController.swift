@@ -29,18 +29,16 @@ class PhpConfigManagerWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: ConfigManagerView())
         window.setContentSize(NSSize(width: 600, height: 480))
 
-        App.shared.phpConfigManagerWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.phpConfigManagerWindowController == nil {
+        if !WindowManager.hasController(for: PhpConfigManagerWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.phpConfigManagerWindowController?.showWindow(self)
-        App.shared.phpConfigManagerWindowController?.positionWindowInTopRightCorner()
-
-        NSApp.activate(ignoringOtherApps: true)
-        App.shared.phpConfigManagerWindowController?.window?.orderFrontRegardless()
+        WindowManager.show(PhpConfigManagerWC.self)
+        WindowManager.controller(of: PhpConfigManagerWC.self)?
+            .positionWindowInTopRightCorner()
     }
 }

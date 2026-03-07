@@ -70,7 +70,11 @@ If you have a very slow internet connection, the updater may report that the dow
 
 If you would like to integrate with your launcher of choice, you can also download an [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor) that works with PHP Monitor.
 
-The app must be running in the background for these to work, and the _Allow third-party integrations_ checkbox must be enabled in Preferences (it is by default).
+Keep in mind that third-party integrations are turned off by default, but you will be prompted to approve third-party integrations the very first time a third-party app attempts to connect with PHP Monitor. 
+
+You will only be prompted once to allow or disallow this, but you can always change your mind about this later, in Settings, by (un)checking the box next to "Allow third-party integrations".
+
+(For more information about how this works and the potential security considerations, please consult the FAQ below.)
 
 ## 🔑 Is the app signed & notarized?
 
@@ -527,7 +531,9 @@ You can put as many apps as you'd like in the `scan_apps` array, and PHP Monitor
 <details>
 <summary><strong>How can the app integrate with third party tools, like Alfred or Raycast?</strong></summary>
 
-PHP Monitor supports third party app integrations by default, and this feature is enabled in Preferences unless you disable it.
+PHP Monitor supports third party app integrations, but this feature requires your approval the first time you invoke a command via a third-party app. 
+
+By default, this functionality is disabled and you will be prompted to turn it on, but this happens only once. You can change your mind later in the Settings window.
 
 You can grab the official [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor).
 
@@ -546,6 +552,10 @@ Using app callbacks, macOS and PHP Monitor allow for the following to be called:
 * phpmon://locate/valet
 * phpmon://phpinfo
 * phpmon://switch/php/{version}
+
+Once enabled, any application can invoke this URL scheme, so please keep in mind that enabling this functionality could lead to third-party applications invoking certain PHP Monitor without your express approval. 
+
+Also keep in mind that certain functionality may not be available if Valet is not currently installed (i.e. Standalone Mode is engaged, which severely limits the useful functionality of the app).
 
 </details>
 
@@ -632,7 +642,7 @@ Thank you very much for your contributions, kind words and support.
 
 ### Loading info about PHP in the background
 
-This app runs `php-config --version` in the background periodically, usually whenever your Homebrew configuration is modified. A filesystem watcher is used to determine if anything changes in your Homebrew's `bin` directory. 
+This app runs `php-config --version` in the background, usually whenever your Homebrew configuration is modified. A filesystem watcher is used to determine if anything changes in your Homebrew's `bin` directory. 
 
 PHP Monitor also checks your `.ini` files for extensions and loads more information about your limits (memory limit, POST limit, upload limit). See also the section on *Config change detection* below.
 

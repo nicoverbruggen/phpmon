@@ -1,5 +1,5 @@
 //
-//  PreferencesVC.swift
+//  PreferenceVC.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 30/03/2021.
@@ -9,7 +9,7 @@
 import Cocoa
 import Carbon
 
-class GenericPreferenceVC: NSViewController {
+class PreferenceVC: NSViewController {
 
     // MARK: - Content
 
@@ -28,24 +28,13 @@ class GenericPreferenceVC: NSViewController {
         Log.perf("deinit: \(String(describing: self)).\(#function)")
     }
 
-    func addView(when condition: Bool, _ view: NSView) -> GenericPreferenceVC {
+    @discardableResult
+    func addView(when condition: Bool, _ view: NSView) -> PreferenceVC {
         if condition {
             self.views.append(view)
         }
 
         return self
-    }
-
-    func getDynamicIconPV() -> NSView {
-        return CheckboxPreferenceView.make(
-            sectionText: "prefs.dynamic_icon".localized,
-            descriptionText: "prefs.dynamic_icon_desc".localized,
-            checkboxText: "prefs.dynamic_icon_title".localized,
-            preference: .shouldDisplayDynamicIcon,
-            action: {
-                MainMenu.shared.refreshIcon()
-            }
-        )
     }
 
     func getLanguageOptionsPV() -> NSView {
@@ -65,17 +54,46 @@ class GenericPreferenceVC: NSViewController {
             options: options,
             preference: .languageOverride,
             action: {
+                // Track which windows we will need to reopen
+                let windowsToReopen = self.captureOpenWindowsForLanguageSwitch()
+
+                // Rebuild the menu
                 MainMenu.shared.refreshIcon()
                 MainMenu.shared.rebuild()
 
-                if let window = App.shared.preferencesWindowController?.window {
-                    let alert = NSAlert()
-                    alert.messageText = "alert.language_changed.title".localized
-                    alert.informativeText = "alert.language_changed.subtitle".localized
-                    alert.alertStyle = .warning
-                    alert.addButton(withTitle: "generic.ok".localized)
-                    alert.beginSheetModal(for: window)
-                }
+                // Close all windows
+                App.shared.invalidateCachedWindows()
+
+                // Re-open the preferences window controller
+                WindowManager.close(PreferencesWC.self)
+                PreferencesWindowController.show()
+
+                // Finally, open all other windows again
+                self.reopenWindows(afterLanguageChange: windowsToReopen)
+            }
+        )
+    }
+
+    func getDynamicIconPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.dynamic_icon".localized,
+            descriptionText: "prefs.dynamic_icon_desc".localized,
+            checkboxText: "prefs.dynamic_icon_title".localized,
+            preference: .shouldDisplayDynamicIcon,
+            action: {
+                MainMenu.shared.refreshIcon()
+            }
+        )
+    }
+
+    func getMenuIconsPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.hide_menu_icons".localized,
+            descriptionText: "prefs.hide_menu_icons_desc".localized,
+            checkboxText: "prefs.hide_menu_icons_title".localized,
+            preference: .hideIconsInMenu,
+            action: {
+                MainMenu.shared.rebuild()
             }
         )
     }
@@ -265,4 +283,5 @@ class GenericPreferenceVC: NSViewController {
             listeningForHotkeyView = nil
         }
     }
+
 }

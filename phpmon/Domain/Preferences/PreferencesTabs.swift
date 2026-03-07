@@ -9,13 +9,13 @@
 import Foundation
 import Cocoa
 
-class GeneralPreferencesVC: GenericPreferenceVC {
+class GeneralPreferencesVC: PreferenceVC {
 
     // MARK: - Lifecycle
 
-    public static func fromStoryboard() -> GenericPreferenceVC {
+    public static func fromStoryboard() -> PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
         return vc
             .addView(when: true, vc.getLanguageOptionsPV())
@@ -29,25 +29,26 @@ class GeneralPreferencesVC: GenericPreferenceVC {
     }
 }
 
-class AppearancePreferencesVC: GenericPreferenceVC {
+class AppearancePreferencesVC: PreferenceVC {
 
-    public static func fromStoryboard() -> GenericPreferenceVC {
+    public static func fromStoryboard() -> PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
-        _ = vc.addView(when: true, vc.getDynamicIconPV())
+        vc.addView(when: true, vc.getDynamicIconPV())
             .addView(when: true, vc.getIconOptionsPV())
             .addView(when: true, vc.getIconDensityPV())
+            .addView(when: true, vc.getMenuIconsPV())
 
         return vc
     }
 }
 
-class MenuStructurePreferencesVC: GenericPreferenceVC {
+class MenuStructurePreferencesVC: PreferenceVC {
 
-    public static func fromStoryboard() -> GenericPreferenceVC {
+    public static func fromStoryboard() -> PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
         return vc
             .addView(when: true, vc.displayFeature("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true))
@@ -63,11 +64,11 @@ class MenuStructurePreferencesVC: GenericPreferenceVC {
     }
 }
 
-class NotificationPreferencesVC: GenericPreferenceVC {
+class NotificationPreferencesVC: PreferenceVC {
 
-    public static func fromStoryboard() -> GenericPreferenceVC {
+    public static func fromStoryboard() -> PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "preferencesTemplateVC") as! GenericPreferenceVC
+            .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
         return vc.addView(when: true, vc.getNotifyAboutVersionChangePV())
             .addView(when: true, vc.getNotifyAboutPresetsPV())

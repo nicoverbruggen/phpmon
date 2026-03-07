@@ -178,6 +178,31 @@ class TestableFileSystem: FileSystemProtocol {
         }
     }
 
+    // MARK: - Transaction Helpers
+
+    func createSymlink(_ path: String, destination: String) {
+        let path = path.replacingTildeWithHomeDirectory
+        let destination = destination.replacingTildeWithHomeDirectory
+
+        accessQueue.sync {
+            self.createIntermediateDirectories(path)
+            self.files[path] = .fake(.symlink, destination)
+        }
+    }
+
+    func writeFile(_ path: String, content: String, overwrite: Bool) throws {
+        let path = path.replacingTildeWithHomeDirectory
+
+        try accessQueue.sync {
+            if !overwrite, files[path] != nil {
+                throw TestableFileSystemError.alreadyExists
+            }
+
+            self.createIntermediateDirectories(path)
+            self.files[path] = .fake(.text, content)
+        }
+    }
+
     // MARK: - Checks
 
     func isExecutableFile(_ path: String) -> Bool {

@@ -73,7 +73,7 @@ class ValetUpgrader {
     }
 
     @MainActor private static func notifyAboutCompletion() {
-        return NVAlert().withInformation(
+        NVAlert().withInformation(
             title: "valet_upgraded.title".localized,
             subtitle: "valet_upgraded.subtitle".localized,
             description: "valet_upgraded.description".localized,
@@ -85,7 +85,7 @@ class ValetUpgrader {
     }
 
     @MainActor private static func notifyAboutUpgrade(latest: String, constraint: String, passing: Bool) {
-        let alert = NVAlert().withInformation(
+        return NVAlert().withInformation(
             title: "valet_upgrade_available.title".localized,
             subtitle: "valet_upgrade_available.subtitle".localized(latest),
             description: passing
@@ -97,13 +97,9 @@ class ValetUpgrader {
             ValetUpgrader.upgradeValet()
         })
         .withSecondary(text: "valet_upgrade_available.cancel".localized)
-
-        if !passing {
-            _ = alert.withTertiary(text: "valet_upgrade_available.open_composer".localized, action: { _ in
-                MainMenu.shared.openGlobalComposerFolder()
-            })
-        }
-
-        alert.show(urgency: .bringToFront)
+        .withTertiary(if: !passing, text: "valet_upgrade_available.open_composer".localized, action: { _ in
+            MainMenu.shared.openGlobalComposerFolder()
+        })
+        .show(urgency: .bringToFront)
     }
 }

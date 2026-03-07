@@ -36,19 +36,16 @@ class PhpVersionManagerWindowController: PMWindowController {
         window.contentView = NSHostingView(rootView: windowController.view)
         window.setContentSize(NSSize(width: 600, height: 800))
 
-        App.shared.phpVersionManagerWindowController = windowController
+        WindowManager.setController(windowController)
     }
 
     public static func show(delegate: NSWindowDelegate? = nil) {
-        if App.shared.phpVersionManagerWindowController == nil {
+        if !WindowManager.hasController(for: PhpVersionManagerWC.self) {
             Self.create(delegate: delegate)
         }
 
-        App.shared.phpVersionManagerWindowController?.showWindow(self)
-        App.shared.phpVersionManagerWindowController?.positionWindowInTopRightCorner()
-
-        NSApp.activate(ignoringOtherApps: true)
-
-        App.shared.phpVersionManagerWindowController?.window?.orderFrontRegardless()
+        WindowManager.show(PhpVersionManagerWC.self)
+        WindowManager.controller(of: PhpVersionManagerWC.self)?
+            .positionWindowInTopRightCorner()
     }
 }

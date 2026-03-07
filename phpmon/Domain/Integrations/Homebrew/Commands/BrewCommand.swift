@@ -33,9 +33,9 @@ extension BrewCommand {
         }
         if text.contains("==> Installing") {
             if let subject = extractContext(from: text) {
-                return (0.60, "phpman.steps.installing".localized + "\n(\(subject))")
+                return (0.60, "phpman.steps.installing_package".localized + "\n(\(subject))")
             }
-            return (0.60, "phpman.steps.installing".localized)
+            return (0.60, "phpman.steps.installing_package".localized)
         }
         if text.contains("==> Downloading") {
             if let subject = extractContext(from: text) {

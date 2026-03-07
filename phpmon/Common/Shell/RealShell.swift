@@ -13,9 +13,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String) {
         self.binPath = binPath
         self._PATH = RealShell.getPath()
-        self._exports = ""
+        self._exports = [:]
     }
-
     private(set) var binPath: String
 
     /**
@@ -38,8 +37,9 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     /**
      Exports are additional environment variables set by the user via the custom configuration.
      These are populated when the configuration file is being loaded.
+     These are now set via via Process.environment to avoid security issues, like shell injection.
      */
-    internal var exports: String {
+    internal var exports: [String: String] {
         get { shellQueue.sync { _exports } }
         set { shellQueue.sync { _exports = newValue } }
     }
@@ -49,7 +49,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     /** Thread-safe access to PATH and exports is ensured via this queue. */
     private let shellQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_queue")
     private var _PATH: String
-    private var _exports: String
+    private var _exports: [String: String]
 
     // MARK: - Methods
 
@@ -75,21 +75,22 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      This process still needs to be started, or one can attach output handlers.
      */
     private func getShellProcess(for command: String) -> Process {
-        var completeCommand = ""
-
-        // Basic export (PATH)
-        completeCommand += "export PATH=\(binPath):$PATH && "
-
-        // Put additional exports (as defined by the user) in between
-        if !self.exports.isEmpty {
-            completeCommand += "\(self.exports) && "
-        }
-
-        completeCommand += command
+        let completeCommand = "export PATH=\(binPath):$PATH && " + command
 
         let task = Process()
         task.launchPath = self.launchPath
         task.arguments = ["--noprofile", "-norc", "--login", "-c", completeCommand]
+
+        // Set user-defined environment variables safely via Process API
+        // instead of interpolating them into the shell command string.
+        let currentExports = self.exports
+        if !currentExports.isEmpty {
+            var env = ProcessInfo.processInfo.environment
+            for (key, value) in currentExports {
+                env[key] = value
+            }
+            task.environment = env
+        }
 
         return task
     }
@@ -111,20 +112,39 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         return result
     }
 
-    // MARK: - Public API
-
     /**
-     Set custom environment variables.
-     These will be exported when a command is executed.
+    Verbose logging for when executing a shell command.
      */
-    public func setCustomEnvironmentVariables(_ variables: [String: String]) {
-        self.exports = variables.map { (key, value) in
-            return "export \(key)=\(value)"
-        }.joined(separator: "&&")
+    private func log(process: Process, stdOut: String, stdErr: String) {
+        var args = process.arguments ?? []
+        let last = "\"" + (args.popLast() ?? "") + "\""
+        var log = """
+
+            <~~~~~~~~~~~~~~~~~~~~~~~
+            $ \(([self.launchPath] + args + [last]).joined(separator: " "))
+
+            [OUT]:
+            \(stdOut)
+            """
+
+        if !stdErr.isEmpty {
+            log.append("""
+                [ERR]:
+                \(stdErr)
+                """)
+        }
+
+        log.append("""
+            ~~~~~~~~~~~~~~~~~~~~~~~~>
+
+            """)
+
+        Log.info(log)
     }
 
     // MARK: - Shellable Protocol
 
+    @discardableResult
     func sync(_ command: String) -> ShellOutput {
         let process = getShellProcess(for: command)
 
@@ -155,6 +175,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         return .out(stdOut, stdErr)
     }
 
+    @discardableResult
     func pipe(_ command: String) async -> ShellOutput {
         let process = getShellProcess(for: command)
 
@@ -190,37 +211,73 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         }
     }
 
-    private func log(process: Process, stdOut: String, stdErr: String) {
-        var args = process.arguments ?? []
-        let last = "\"" + (args.popLast() ?? "") + "\""
-        var log = """
+    @discardableResult
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        let process = getShellProcess(for: command)
 
-            <~~~~~~~~~~~~~~~~~~~~~~~
-            $ \(([self.launchPath] + args + [last]).joined(separator: " "))
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
 
-            [OUT]:
-            \(stdOut)
-            """
-
-        if !stdErr.isEmpty {
-            log.append("""
-                [ERR]:
-                \(stdErr)
-                """)
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            Log.info("[SLOW SHELL] \(command)")
+            await delay(seconds: 3.0)
         }
 
-        log.append("""
-            ~~~~~~~~~~~~~~~~~~~~~~~~>
+        process.standardOutput = outputPipe
+        process.standardError = errorPipe
 
-            """)
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.pipe_timeout_queue")
 
-        Log.info(log)
+        return await withCheckedContinuation { continuation in
+            var resumed = false
+
+            let timeoutWorkItem = DispatchWorkItem {
+                guard process.isRunning else { return }
+
+                Log.warn("Command timed out after \(timeout)s: \(command)")
+                process.terminationHandler = nil
+                process.terminate()
+
+                serialQueue.async {
+                    if !resumed {
+                        resumed = true
+                        continuation.resume(returning: .out("", ""))
+                    }
+                }
+            }
+
+            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutWorkItem)
+
+            process.terminationHandler = { [weak self] _ in
+                timeoutWorkItem.cancel()
+
+                serialQueue.async {
+                    if resumed { return }
+
+                    if process.terminationReason == .uncaughtSignal {
+                        Log.err("The command `\(command)` likely crashed. Returning empty output.")
+                        resumed = true
+                        continuation.resume(returning: .out("", ""))
+                        return
+                    }
+
+                    let stdOut = RealShell.getStringOutput(from: outputPipe)
+                    let stdErr = RealShell.getStringOutput(from: errorPipe)
+
+                    if Log.shared.verbosity == .cli {
+                        self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
+                    }
+
+                    resumed = true
+                    continuation.resume(returning: .out(stdOut, stdErr))
+                }
+            }
+
+            process.launch()
+        }
     }
 
-    func quiet(_ command: String) async {
-        _ = await self.pipe(command)
-    }
-
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
@@ -235,7 +292,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
         let output = ShellOutput.empty()
 
         // Only access `resumed`, `output` from serialQueue to ensure thread safety
-        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_output")
+        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
             // Guard against resuming the continuation twice (race between timeout and termination)
@@ -282,17 +339,18 @@ class RealShell: ShellProtocol, @unchecked Sendable {
             process.terminationHandler = { process in
                 serialQueue.async {
                     timeoutTaskTermination.cancel()
-                }
 
-                // Clean up readability handlers
-                outputPipe.fileHandleForReading.readabilityHandler = nil
-                errorPipe.fileHandleForReading.readabilityHandler = nil
+                    // Check if already resumed (timeout fired first)
+                    if resumed { return }
 
-                // Read any remaining data
-                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                    // Clean up readability handlers
+                    outputPipe.fileHandleForReading.readabilityHandler = nil
+                    errorPipe.fileHandleForReading.readabilityHandler = nil
 
-                serialQueue.async {
+                    // Read any remaining data
+                    let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                    let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+
                     if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
                         output.out += string
                         didReceiveOutput(string, .stdOut)
@@ -303,10 +361,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
                         didReceiveOutput(string, .stdErr)
                     }
 
-                    if !resumed {
-                        resumed = true
-                        continuation.resume(returning: (process, output))
-                    }
+                    resumed = true
+                    continuation.resume(returning: (process, output))
                 }
             }
 

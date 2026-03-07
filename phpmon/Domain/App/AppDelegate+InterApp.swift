@@ -8,22 +8,53 @@
 
 import Cocoa
 import Foundation
+import NVAlert
 
 extension AppDelegate {
 
     /**
      This is an entry point for future development for integrating with the PHP Monitor
      application URL. You can use the `phpmon://` protocol to communicate with the app.
-     
+
      At this time you can trigger the site list using Alfred (or some other application)
-     by opening the following URL: `phpmon://list`.
-     
-     Please note that PHP Monitor needs to be running in the background for this to work.
+     by opening the following URL: `phpmon://list`. Various other commands are also made
+     available via the `InterApp` class, which is where all commands and their different
+     interactions are declared.
+
+     Please note that PHP Monitor needs to be running in the background for this to work,
+     or the app will launch and the command will be deferred until the app is ready.
      */
     @MainActor func application(_ application: NSApplication, open urls: [URL]) {
+        guard Startup.hasFinishedBooting else {
+            return deferURLs(urls)
+        }
+
+        handleURLs(urls)
+    }
+
+    @MainActor func deferURLs(_ urls: [URL]) {
+        Log.info("App has not finished booting, deferring phpmon:// command...")
+        App.shared.deferredURL = urls.first
+    }
+
+    @MainActor func handleURLs(_ urls: [URL]) {
         if !Preferences.isEnabled(.allowProtocolForIntegrations) {
-            Log.info("Acting on commands via phpmon:// has been disabled.")
-            return
+
+            // First, we'll check if we already prompted for integrations.
+            // If we have, we will not respond to the commands at all.
+            if UserDefaults.standard.bool(
+                forKey: PersistentAppState.didPromptForIntegrations.rawValue
+            ) {
+                Log.info("Acting on commands via phpmon:// has been disabled.")
+                return
+            }
+
+            // However, if that isn't the case, we will prompt the user about integrations,
+            // which will give the user a chance to approve the command regardless.
+            Log.info("Acting on commands via phpmon:// has been disabled. Prompting user...")
+            if !promptToEnableIntegrations() {
+                return
+            }
         }
 
         guard let url = urls.first else { return }
@@ -34,11 +65,34 @@ extension AppDelegate {
         )
     }
 
+    @MainActor private func promptToEnableIntegrations() -> Bool {
+        UserDefaults.standard.set(true, forKey: PersistentAppState.didPromptForIntegrations.rawValue)
+        UserDefaults.standard.synchronize()
+
+        if !NVAlert()
+            .withInformation(
+                title: "alert.enable_integrations.title".localized,
+                subtitle: "alert.enable_integrations.subtitle".localized,
+                description: "alert.enable_integrations.desc".localized
+            )
+            .withPrimary(text: "alert.enable_integrations.ok".localized)
+            .withSecondary(text: "alert.enable_integrations.cancel".localized)
+            .didSelectPrimary(urgency: .bringToFront) {
+            return false
+        }
+
+        Preferences.update(.allowProtocolForIntegrations, value: true, notify: true)
+        return true
+    }
+
     private func interpretCommand(_ command: String, commands: [InterApp.Action]) {
         commands.forEach { action in
             if command.starts(with: action.command) {
-                let lastElement = String(command.split(separator: "/").last!)
-                action.action(lastElement)
+                guard let lastElement = command.split(separator: "/").last else {
+                    Log.warn("Ignoring malformed phpmon:// command: '\(command)'")
+                    return
+                }
+                action.action(String(lastElement))
             }
         }
     }

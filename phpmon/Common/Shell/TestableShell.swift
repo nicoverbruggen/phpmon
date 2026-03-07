@@ -13,12 +13,18 @@ public class TestableShell: ShellProtocol {
         return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
     }
 
-    init(expectations: [String: BatchFakeShellOutput]) {
+    init(expectations: [String: BatchFakeShellOutput], filesystem: TestableFileSystem? = nil) {
         self.expectations = expectations
+        self.filesystem = filesystem
     }
 
     var expectations: [String: BatchFakeShellOutput] = [:]
+    var filesystem: TestableFileSystem?
 
+    // Custom exports; unused because we have preset shell output, but relevant for certain checks in-app
+    var exports: [String: String] = [:]
+
+    @discardableResult
     func sync(_ command: String) -> ShellOutput {
         // This assertion will only fire during test builds
         assert(expectations.keys.contains(command), "No response declared for command: \(command)")
@@ -27,18 +33,23 @@ public class TestableShell: ShellProtocol {
             return .err("No Expected Output")
         }
 
-        return expectation.syncOutput()
-    }
-
-    func quiet(_ command: String) async {
-        _ = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
-    }
-
-    func pipe(_ command: String) async -> ShellOutput {
-        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: 60)
+        let output = expectation.syncOutput()
+        applyTransactions(for: expectation)
         return output
     }
 
+    @discardableResult
+    func pipe(_ command: String) async -> ShellOutput {
+        await pipe(command, timeout: 60)
+    }
+
+    @discardableResult
+    func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
+        let (_, output) = try! await self.attach(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
+        return output
+    }
+
+    @discardableResult
     func attach(
         _ command: String,
         didReceiveOutput: @escaping (String, ShellStream) -> Void,
@@ -62,12 +73,28 @@ public class TestableShell: ShellProtocol {
             didReceiveOutput(output, type)
         }, ignoreDelay: isRunningTests)
 
+        applyTransactions(for: expectation)
         return (Process(), output)
     }
 
     func reloadEnvPath() {
         // does nothing
     }
+
+    private func applyTransactions(for expectation: BatchFakeShellOutput) {
+        if !expectation.transactions.isEmpty {
+            assert(filesystem != nil, "Transactions require a filesystem")
+        }
+
+        guard let filesystem else {
+            return
+        }
+
+        expectation.transactions.forEach { transaction in
+            transaction.apply(to: filesystem, shell: self)
+        }
+    }
+
 }
 
 struct FakeShellOutput: Codable {
@@ -86,6 +113,7 @@ struct FakeShellOutput: Codable {
 
 struct BatchFakeShellOutput: Codable {
     var items: [FakeShellOutput]
+    var transactions: [FakeShellTransaction] = []
 
     static func with(_ items: [FakeShellOutput]) -> BatchFakeShellOutput {
         return BatchFakeShellOutput(items: items)
@@ -116,6 +144,8 @@ struct BatchFakeShellOutput: Codable {
             if !ignoreDelay {
                 await delay(seconds: item.delay)
             }
+
+            didReceiveOutput(item.output, item.stream)
 
             if item.stream == .stdErr {
                 output.err += item.output
@@ -157,5 +187,87 @@ struct BatchFakeShellOutput: Codable {
         didReceiveOutput: @escaping (String, ShellStream) -> Void = { _, _ in }
     ) async -> ShellOutput {
         return await self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
+    }
+}
+
+/**
+ Prepares a particular transaction that modifies testable state after running a shell command.
+ Currently, it possible to modify the state of `TestableShell` and `TestableFileSystem`.
+ */
+struct FakeShellTransaction: Codable {
+    /// Creates a symlink for a given path to a given destination in `TestableFileSystem`.
+    static func symlink(_ path: String, to destination: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createSymlink, path: path, destination: destination)
+    }
+
+    /// Writes some content to a file to a path, overwriting existing entries in `TestableFileSystem`.
+    static func write(_ content: String, to path: String, overwrite: Bool = true) -> FakeShellTransaction {
+        FakeShellTransaction(type: .writeFile, path: path, content: content, overwrite: overwrite)
+    }
+
+    /// Removes a file from `TestableFileSystem`.
+    static func remove(_ path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .remove, path: path)
+    }
+
+    /// Moves a file in `TestableFileSystem`.
+    static func move(_ from: String, to: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .move, from: from, to: to)
+    }
+
+    /// Creates a directory in `TestableFileSystem`.
+    static func mkdir(_ path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .createDirectory, path: path)
+    }
+
+    /// Updates shell output for a particular command in `TestableShell`.
+    /// Use this if you expect running a particular command twice to have a different outcome the second time, for example.
+    static func shell(_ command: String, _ output: BatchFakeShellOutput) -> FakeShellTransaction {
+        FakeShellTransaction(type: .setShellOutput, command: command, output: output)
+    }
+
+    enum TransactionType: String, Codable {
+        case createSymlink
+        case writeFile
+        case remove
+        case move
+        case createDirectory
+        case setShellOutput
+    }
+
+    private var type: TransactionType
+    private var path: String?
+    private var destination: String?
+    private var content: String?
+    private var overwrite: Bool?
+    private var from: String?
+    private var to: String?
+    private var command: String?
+    private var output: BatchFakeShellOutput?
+
+    /**
+     Applies a given transaction that will modify the testable filesystem or testable shell as part of a transaction.
+     */
+    func apply(to filesystem: TestableFileSystem, shell: TestableShell) {
+        switch type {
+        case .createSymlink:
+            assert(path != nil && destination != nil, "createSymlink requires path and destination")
+            filesystem.createSymlink(path!, destination: destination!)
+        case .writeFile:
+            assert(path != nil && content != nil && overwrite != nil, "writeFile requires path, content, overwrite")
+            try? filesystem.writeFile(path!, content: content!, overwrite: overwrite!)
+        case .remove:
+            assert(path != nil, "remove requires path")
+            try? filesystem.remove(path!)
+        case .move:
+            assert(from != nil && to != nil, "move requires from and to")
+            try? filesystem.move(from: from!, to: to!)
+        case .createDirectory:
+            assert(path != nil, "createDirectory requires path")
+            try? filesystem.createDirectory(path!, withIntermediateDirectories: true)
+        case .setShellOutput:
+            assert(command != nil && output != nil, "setShellOutput requires command and output")
+            shell.expectations[command!] = output!
+        }
     }
 }

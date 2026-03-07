@@ -66,4 +66,28 @@ struct TestableShellTest {
 
         #expect(container.shell.PATH == "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin")
     }
+
+    @Test func fake_shell_loads_environment_variables() {
+        let container = Container.fake(files: [
+            "~/.config/phpmon/config.json": .fake(.text, """
+                {
+                    "services": ["mailhog"],
+                    "export": {
+                        "AUTOMATIC_WORKTREE_SYNC_ROOT": "/home/demo/code",
+                        "COMPOSER_HOME": "/home/demo/other_composer_folder"
+                    }
+                }
+                """)
+        ])
+
+        // Load the custom preferences file (since we have no startup)
+        container.preferences.loadCustomPreferencesFile()
+
+        // Ensure that the environment variables load
+        if let testable = container.shell as? TestableShell {
+            #expect(!testable.exports.keys.isEmpty)
+            #expect(testable.exports["AUTOMATIC_WORKTREE_SYNC_ROOT"] == "/home/demo/code")
+            #expect(testable.exports["COMPOSER_HOME"] == "/home/demo/other_composer_folder")
+        }
+    }
 }

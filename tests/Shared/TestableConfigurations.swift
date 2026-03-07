@@ -198,7 +198,7 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M"
             ],
             preferenceOverrides: [
-                .automaticBackgroundUpdateCheck: false
+                .automaticBackgroundUpdateCheck: .bool(false)
             ],
             phpVersions: [
                 VersionNumber(major: 8, minor: 4, patch: 5),

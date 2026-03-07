@@ -81,16 +81,7 @@ class Actions {
             + " && "
             + cellarCommands.joined(separator: " && ")
 
-        let source = "do shell script \"\(script)\" with administrator privileges"
-
-        Log.perf(source)
-        let appleScript = NSAppleScript(source: source)
-
-        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(nil)
-
-        if eventResult == nil {
-            throw HomebrewPermissionError(kind: .applescriptNilError)
-        }
+        try AppleScript.runSimpleShellAsAdmin(script)
     }
 
     // MARK: - Finding Config Files
@@ -106,6 +97,12 @@ class Actions {
     }
 
     public func openGlobalComposerFolder() {
+        // Check if we have a custom COMPOSER_HOME set
+        if let folder = App.shared.container.shell.exports["COMPOSER_HOME"] {
+            let file = URL(string: "file://\(folder)/composer.json".replacingTildeWithHomeDirectory)!
+            return NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
+        }
+
         let file = URL(string: "file://~/.composer/composer.json".replacingTildeWithHomeDirectory)!
         NSWorkspace.shared.activateFileViewerSelecting([file] as [URL])
     }
@@ -123,10 +120,15 @@ class Actions {
     // MARK: - Other Actions
 
     public func createTempPhpInfoFile() async -> URL {
+        // Clean state for temporary phpinfo files
+        try? container.filesystem.remove("/tmp/phpmon_phpinfo.php")
+        try? container.filesystem.remove("/tmp/phpmon_phpinfo.html")
+
+        // Generate a source file that we will execute immediately
         try! container.filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
 
         // Tell php-cgi to run the PHP and output as an .html file
-        await container.shell.quiet("\(paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
+        await container.shell.pipe("\(paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")
 
         return URL(string: "file:///private/tmp/phpmon_phpinfo.html")!
     }

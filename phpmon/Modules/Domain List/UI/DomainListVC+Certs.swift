@@ -30,7 +30,7 @@ extension DomainListVC {
         }.joined(separator: "\n- ")
 
         // Ensure the window is accessible
-        guard let window = App.shared.domainListWindowController?.window else {
+        guard let window = WindowManager.window(for: DomainListWC.self) else {
             return
         }
 

@@ -87,7 +87,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await self.container.shell.quiet("brew tap shivammathur/php")
+                    await self.container.shell.pipe("brew tap shivammathur/php")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
@@ -103,7 +103,7 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-extensions",
                 fix: {
-                    await self.container.shell.quiet("brew tap shivammathur/extensions")
+                    await self.container.shell.pipe("brew tap shivammathur/extensions")
                     await BrewDiagnostics.shared.loadInstalledTaps()
                     await self.checkEnvironment()
                 }
@@ -142,7 +142,8 @@ extension WarningManager {
                 fix: {
                     await DomainListVC.show()
 
-                    if let vc = await App.shared.domainListWindowController?
+                    if let vc = await WindowManager
+                        .controller(of: DomainListWC.self)?
                         .window?.contentViewController as? DomainListVC {
                         await vc.checkForCertificateRenewal {
                             await self.checkEnvironment()
