@@ -79,7 +79,7 @@ protocol ShellProtocol: AnyObject {
     /**
      Reloads the PATH.
      */
-    func reloadEnvPath()
+    func reloadEnvPath() async
 }
 
 enum ShellStream: Codable {

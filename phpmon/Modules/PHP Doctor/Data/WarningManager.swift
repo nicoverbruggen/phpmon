@@ -64,7 +64,7 @@ class WarningManager: ObservableObject {
      Checks the user's environment and checks if any special warnings apply.
      */
     func checkEnvironment() async {
-        container.shell.reloadEnvPath()
+        await container.shell.reloadEnvPath()
 
         await BrewDiagnostics.shared.loadInstalledTaps()
 
