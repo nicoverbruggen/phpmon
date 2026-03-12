@@ -75,11 +75,16 @@ class PhpEnvironments {
         // Check if that version actually corresponds to an older version
         let phpConfigExecutablePath = "\(container.paths.optPath)/php/bin/php-config"
         if container.filesystem.fileExists(phpConfigExecutablePath) {
-            let longVersionString = container.command.execute(
-                path: phpConfigExecutablePath,
-                arguments: ["--version"],
-                trimNewlines: false
-            ).trimmingCharacters(in: .whitespacesAndNewlines)
+            let longVersionString = await withCheckedContinuation { continuation in
+                DispatchQueue.global(qos: .userInitiated).async { [container] in
+                    let result = container.command.execute(
+                        path: phpConfigExecutablePath,
+                        arguments: ["--version"],
+                        trimNewlines: false
+                    ).trimmingCharacters(in: .whitespacesAndNewlines)
+                    continuation.resume(returning: result)
+                }
+            }
 
             if let version = try? VersionNumber.parse(longVersionString) {
                 PhpEnvironments.brewPhpAlias = version.short
