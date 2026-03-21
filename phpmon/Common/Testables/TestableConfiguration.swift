@@ -151,8 +151,6 @@ public struct TestableConfiguration: Codable {
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")
             ValetScanner.useFake()
-            Log.info("Applying fake services manager...")
-            ServicesManager.useFake(container)
             Log.info("Applying fake Valet domain interactor...")
             ValetInteractor.useFake()
         }
