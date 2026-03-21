@@ -77,7 +77,7 @@ public class TestableShell: ShellProtocol {
         return (Process(), output)
     }
 
-    func reloadEnvPath() {
+    func reloadEnvPath() async {
         // does nothing
     }
 

@@ -66,7 +66,7 @@ final class TrackedShell: ShellProtocol {
         set { shell.exports = newValue }
     }
 
-    func reloadEnvPath() {
-        shell.reloadEnvPath()
+    func reloadEnvPath() async {
+        await shell.reloadEnvPath()
     }
 }
