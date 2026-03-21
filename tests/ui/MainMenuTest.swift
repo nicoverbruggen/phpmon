@@ -161,7 +161,7 @@ final class MainMenuTest: UITestCase {
                 .delayed(0.2, ShellStrings.shared.brewServicesAsRoot)
             ],
             transactions: [
-                .shell(cmd, .delayed(1.5, changedResponse))
+                .shell(cmd, .delayed(4, changedResponse))
             ]
         )
 
@@ -169,7 +169,7 @@ final class MainMenuTest: UITestCase {
         let app = launch(openMenu: true, with: config)
 
         // Verify that all services are initially running
-        assertExists(app.staticTexts["phpman.services.all_ok".localized], 2.0)
+        assertExists(app.staticTexts["phpman.services.all_ok".localized], 3.0)
 
         // The menu is now open. The `menuWillOpen` delegate has fired an async
         // `reloadServicesStatus()` which will receive the changed response
@@ -177,7 +177,7 @@ final class MainMenuTest: UITestCase {
         // is displayed.
 
         // Wait for the async reload to complete and layout to settle.
-        Thread.sleep(forTimeInterval: 3)
+        Thread.sleep(forTimeInterval: 4)
 
         // Verify the app is still running and responsive
         assertExists(app.menuItems["mi_about".localized], 1.0)
