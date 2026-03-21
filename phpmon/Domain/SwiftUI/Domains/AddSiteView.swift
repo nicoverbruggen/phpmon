@@ -16,6 +16,8 @@ private struct PathControl: NSViewRepresentable {
         let control = NSPathControl()
         control.isEditable = false
         control.url = url
+        control.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        control.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return control
     }
 
@@ -86,7 +88,8 @@ struct AddSiteView: View {
                     .font(.system(size: 16, weight: .bold, design: .default))
 
                 PathControl(url: URL(fileURLWithPath: path))
-                    .frame(height: 22)
+                    .frame(maxWidth: .infinity, maxHeight: 22)
+                    .clipped()
 
                 TextField("domain_list.add.domain_name_placeholder".localized, text: Binding(
                     get: { domainName },
