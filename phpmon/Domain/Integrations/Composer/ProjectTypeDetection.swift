@@ -47,10 +47,10 @@ struct ProjectTypeDetection {
      when setting up a Drupal or a WordPress project. For performance
      reasons, we only check that here!
      */
-    public static func detectFallbackDependency(_ basePath: String) -> String? {
+    public static func detectFallbackDependency(_ basePath: String, filesystem: FileSystemProtocol) -> String? {
         for entry in Self.FileMapping {
             let found = entry.value
-                .map { path in return App.shared.container.filesystem.anyExists(basePath + path) }
+                .map { path in return filesystem.anyExists(basePath + path) }
                 .contains(true)
 
             if found {
