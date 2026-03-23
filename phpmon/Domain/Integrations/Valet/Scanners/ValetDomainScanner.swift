@@ -99,9 +99,15 @@ class ValetDomainScanner: DomainScanner {
     // MARK: - Proxies
 
     func resolveProxies(directoryPath: String) -> [ValetProxy] {
-        return try! FileManager
+        guard let entries = try? FileManager
             .default
             .contentsOfDirectory(atPath: directoryPath)
+        else {
+            Log.err("Could not read Nginx directory at \(directoryPath).")
+            return []
+        }
+
+        return entries
             .filter {
                 return !$0.starts(with: ".")
             }
