@@ -47,6 +47,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      When the application initializes, create all singletons.
      */
     override init() {
+        // Log information about the app
+        if !isRunningSwiftUIPreview {
+            Log.separator(as: .always)
+            Log.always("PHP MONITOR by Nico Verbruggen")
+            Log.always("Version \(App.version)")
+            Log.separator(as: .always)
+        }
+
+        // Initialize the crash reporter
+        CrashReporter.initialize()
+
         // Prepare the container with the defaults
         self.state = App.shared
         self.state.container.bind()
@@ -83,15 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
 
-        if !isRunningSwiftUIPreview {
-            Log.separator(as: .info)
-            Log.info("PHP MONITOR by Nico Verbruggen")
-            Log.info("Version \(App.version)")
-            Log.separator(as: .info)
-
-            // Initialize the crash reporter
-            CrashReporter.initialize()
-        }
+        Log.info("Using \(App.displayName) \(App.version) on macOS \(App.macVersion).")
 
         // Set up final singletons
         self.valet = Valet.shared
