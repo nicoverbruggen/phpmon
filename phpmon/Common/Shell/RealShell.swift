@@ -53,23 +53,6 @@ class RealShell: ShellProtocol, @unchecked Sendable {
 
     // MARK: - Methods
 
-    /** Retrieves the user's PATH by opening an interactive shell and echoing $PATH. */
-    private static func getPath() -> String {
-        let task = Process()
-        task.launchPath = "/bin/zsh"
-
-        // We need an interactive shell so the user's PATH is loaded in correctly
-        task.arguments = ["--login", "-ilc", "echo $PATH"]
-
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.launch()
-        task.waitUntilExit()
-
-        let path = getStringOutput(from: pipe)
-        return path.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     /**
      Create a process that will run the required shell with the appropriate arguments.
      This process still needs to be started, or one can attach output handlers.
@@ -99,7 +82,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      Reads the entire output of a `Pipe` and returns it as a UTF‑8 string.
      Closes the pipe's file handler when done.
      */
-    private static func getStringOutput(from pipe: Pipe) -> String {
+    internal static func getStringOutput(from pipe: Pipe) -> String {
         // 1. Read all data (safely).
         let rawData = (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
 

@@ -42,6 +42,20 @@ struct RealShellTest {
         #expect(systemShell.PATH.contains(":/usr/bin"))
     }
 
+    @Test func system_shell_path_timeout_has_fallback() {
+        // Simulate a broken/slow shell by passing a command that sleeps forever
+        let start = ContinuousClock.now
+        let path = RealShell.getPath(timeout: 1.0, shellCommand: "sleep 3600")
+        let duration = start.duration(to: .now)
+
+        // Should return the path_helper fallback (non-empty, contains system paths)
+        #expect(!path.isEmpty)
+        #expect(path.contains("/usr/bin"))
+
+        // Should have timed out in roughly 0.5 seconds (allow some margin)
+        #expect(duration < .seconds(1.5))
+    }
+
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
         var bits: [String] = []
@@ -91,6 +105,8 @@ struct RealShellTest {
         #expect(output.out.contains("Copyright (c) The PHP Group"))
     }
 
+    // Note: This is a time-sensitive test.
+    // If it fails due to parallelism, run it again separately, it should pass.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
         let start = ContinuousClock.now
 
