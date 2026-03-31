@@ -114,10 +114,7 @@ class ValetDomainScanner: DomainScanner {
             .compactMap {
                 return NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\($0)")
             }
-            .filter {
-                return $0.proxy != nil
-            }
-            .map {
+            .compactMap {
                 return ValetProxy(container, $0)
             }
     }
