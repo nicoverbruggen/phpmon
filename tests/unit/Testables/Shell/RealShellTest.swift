@@ -105,19 +105,18 @@ struct RealShellTest {
         #expect(output.out.contains("Copyright (c) The PHP Group"))
     }
 
-    // Note: This is a time-sensitive test.
-    // If it fails due to parallelism, run it again separately, it should pass.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
         let start = ContinuousClock.now
 
         await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .milliseconds(3000)) // Should complete in ~700ms if parallel
+        #expect(duration < .seconds(3))
     }
 
     @Test func exports_are_passed_as_environment_variables() {
