@@ -100,7 +100,7 @@ class AppUpdater {
             text: "updater.alerts.buttons.release_notes".localized,
             action: { _ in
                 NSWorkspace.shared.open({
-                    if App.identifier.contains(".eap") {
+                    if App.isEarlyAccessBuild {
                         return Constants.Urls.EarlyAccessChangelog
                     } else {
                         let urlSegments = self.caskFile.url.split(separator: "/")
@@ -189,7 +189,7 @@ class AppUpdater {
         // Cleanup the upgrade.success file
         if App.shared.container.filesystem.fileExists("~/.config/phpmon/updater/upgrade.success") {
             Task { @MainActor in
-                if App.identifier.contains(".phpmon.eap") {
+                if App.isEarlyAccessBuild {
                     LocalNotification.send(
                         title: "notification.phpmon_updated.title".localized,
                         subtitle: "notification.phpmon_updated_dev.desc".localized(App.shortVersion, App.bundleVersion),

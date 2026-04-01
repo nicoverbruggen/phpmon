@@ -44,6 +44,11 @@ class App {
         Bundle.main.infoDictionary?["CFBundleIdentifier"] as! String
     }
 
+    /** Whether the app is running as an Early Access Program build. */
+    static var isEarlyAccessBuild: Bool {
+        identifier.contains(".phpmon.eap")
+    }
+
     /** The system architecture. Paths differ based on this value. */
     static var architecture: String {
         if fakeArchitecture != nil { return fakeArchitecture! }
