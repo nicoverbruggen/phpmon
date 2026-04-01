@@ -217,10 +217,8 @@ class PhpEnvironments {
 
     /**
      The switcher that is currently in use.
-     This was originally added so the Internal and Valet switcher could be swapped out,
-     but currently this is no longer needed.
      */
-    public static var switcher: PhpSwitcher {
+    public static var switcher: InternalSwitcher {
         return InternalSwitcher(App.shared.container)
     }
 

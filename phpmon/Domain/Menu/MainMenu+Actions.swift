@@ -289,7 +289,6 @@ extension MainMenu {
 
         container.phpEnvs.isBusy = true
         container.phpEnvs.delegate = self
-        container.phpEnvs.delegate?.switcherDidStartSwitching(to: version)
 
         refreshIcon()
         rebuild()
@@ -303,7 +302,6 @@ extension MainMenu {
     @objc func switchToPhpVersion(_ version: String) {
         container.phpEnvs.isBusy = true
         container.phpEnvs.delegate = self
-        container.phpEnvs.delegate?.switcherDidStartSwitching(to: version)
 
         Task(priority: .userInitiated) { [unowned self] in
             refreshIcon()
@@ -329,7 +327,6 @@ extension MainMenu {
         Task { @MainActor [self] in
             container.phpEnvs.isBusy = true
             container.phpEnvs.delegate = self
-            container.phpEnvs.delegate?.switcherDidStartSwitching(to: version)
         }
 
         refreshIcon()

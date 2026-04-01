@@ -12,10 +12,6 @@ class FakeServicesManager: ServicesManager {
     var fixedFormulae: [String] = []
     var fixedStatus: Service.Status = .active
 
-    override init(_ container: Container) {
-        super.init(container)
-    }
-
     init(
         _ container: Container,
         formulae: [String] = ["php", "nginx", "dnsmasq"],

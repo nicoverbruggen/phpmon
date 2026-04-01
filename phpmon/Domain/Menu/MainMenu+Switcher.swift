@@ -13,8 +13,6 @@ extension MainMenu {
 
     // MARK: - PhpSwitcherDelegate
 
-    nonisolated func switcherDidStartSwitching(to version: String) {}
-
     nonisolated func switcherDidCompleteSwitch(to version: String) {
         // Mark as no longer busy
         Task { @MainActor in
