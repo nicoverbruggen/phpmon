@@ -58,12 +58,12 @@ struct RealShellTest {
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
-        var bits: [String] = []
+        let bits = Locked<[String]>([])
 
         let (_, shellOutput) = try! await container.shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(500); echo 'Goodbye world';\"",
             didReceiveOutput: { incoming, _ in
-                bits.append(incoming)
+                bits.withLock { $0.append(incoming) }
             },
             withTimeout: 2.0
         )
@@ -149,13 +149,13 @@ struct RealShellTest {
         let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
         // Keep track of the total chunk count
-        var receivedChunks = 0
+        let receivedChunks = Locked<Int>(0)
 
         // We will now test the attach method
         let (_, shellOutput) = try await container.shell.attach(
             phpScript,
             didReceiveOutput: { _, _ in
-                receivedChunks += 1
+                receivedChunks.withLock { $0 += 1 }
             },
             withTimeout: 5.0
         )

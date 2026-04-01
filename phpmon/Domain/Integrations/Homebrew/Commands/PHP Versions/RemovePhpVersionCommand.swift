@@ -58,14 +58,14 @@ class RemovePhpVersionCommand: BrewCommand {
             return
         }
 
-        var loggedMessages: [String] = []
+        let loggedMessages = Locked<[String]>([])
 
         let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
                     Log.perf(text)
-                    loggedMessages.append(text)
+                    loggedMessages.withLock { $0.append(text) }
                 }
             },
             withTimeout: .minutes(5)
@@ -84,7 +84,7 @@ class RemovePhpVersionCommand: BrewCommand {
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.value)
         }
     }
 }

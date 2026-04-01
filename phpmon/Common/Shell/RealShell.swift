@@ -12,8 +12,8 @@ import Foundation
 class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String) {
         self.binPath = binPath
-        self._PATH = RealShell.getPath()
-        self._exports = [:]
+        self._PATH = Locked<String>(RealShell.getPath())
+        self._exports = Locked<[String: String]>([:])
     }
     private(set) var binPath: String
 
@@ -30,8 +30,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
      */
     internal var PATH: String {
-        get { shellQueue.sync { _PATH } }
-        set { shellQueue.sync { _PATH = newValue } }
+        get { _PATH.value }
+        set { _PATH.value = newValue }
     }
 
     /**
@@ -40,16 +40,14 @@ class RealShell: ShellProtocol, @unchecked Sendable {
      These are now set via via Process.environment to avoid security issues, like shell injection.
      */
     internal var exports: [String: String] {
-        get { shellQueue.sync { _exports } }
-        set { shellQueue.sync { _exports = newValue } }
+        get { _exports.value }
+        set { _exports.value = newValue }
     }
 
     // MARK: - Thread-safe access; internal values
 
-    /** Thread-safe access to PATH and exports is ensured via this queue. */
-    private let shellQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.shell_queue")
-    private var _PATH: String
-    private var _exports: [String: String]
+    private let _PATH: Locked<String>
+    private let _exports: Locked<[String: String]>
 
     // MARK: - Methods
 

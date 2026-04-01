@@ -51,14 +51,14 @@ class RemovePhpExtensionCommand: BrewCommand {
             \(container.paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
-        var loggedMessages: [String] = []
+        let loggedMessages = Locked<[String]>([])
 
         let (process, _) = try! await shell.attach(
             command,
             didReceiveOutput: { text, _ in
                 if !text.isEmpty {
                     Log.perf(text)
-                    loggedMessages.append(text)
+                    loggedMessages.withLock { $0.append(text) }
                 }
             },
             withTimeout: .minutes(5)
@@ -79,7 +79,7 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
-            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages)
+            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages.value)
         }
     }
 

@@ -135,7 +135,7 @@ struct BatchFakeShellOutput: Codable {
      Outputs the fake shell output as expected.
      */
     public func output(
-        didReceiveOutput: @escaping (String, ShellStream) -> Void,
+        didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void,
         ignoreDelay: Bool = false
     ) async -> ShellOutput {
         let output = ShellOutput.empty()
@@ -184,7 +184,7 @@ struct BatchFakeShellOutput: Codable {
      For testing purposes (and speed) we may omit the delay, regardless of its timespan.
      */
     public func outputInstantaneously(
-        didReceiveOutput: @escaping (String, ShellStream) -> Void = { _, _ in }
+        didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void = { _, _ in }
     ) async -> ShellOutput {
         return await self.output(didReceiveOutput: didReceiveOutput, ignoreDelay: true)
     }

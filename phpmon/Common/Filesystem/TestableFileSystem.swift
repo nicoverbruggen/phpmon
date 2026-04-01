@@ -70,9 +70,10 @@ class TestableFileSystem: FileSystemProtocol {
     func writeAtomicallyToFile(_ path: String, content: String) throws {
         let path = path.replacingTildeWithHomeDirectory
 
-        self.createIntermediateDirectories(path)
-
-        self.files[path] = .fake(.text, content)
+        accessQueue.sync {
+            self.createIntermediateDirectories(path)
+            self.files[path] = .fake(.text, content)
+        }
     }
 
     func getStringFromFile(_ path: String) throws -> String {

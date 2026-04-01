@@ -14,7 +14,7 @@ import Foundation
  */
 struct EnvironmentCheck {
     let command: (_ container: Container) async -> Bool
-    let fixCommand: ((_ container: Container, _ didReceiveOutput: @escaping (String, ShellStream) -> Void) async throws -> Void)?
+    let fixCommand: ((_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)?
     let fixDescription: String?
     let name: String
     let titleText: String
@@ -25,7 +25,7 @@ struct EnvironmentCheck {
 
     init(
         command: @escaping (_ container: Container) async -> Bool,
-        fix: ((_ container: Container, _ didReceiveOutput: @escaping (String, ShellStream) -> Void) async throws -> Void)? = nil,
+        fix: ((_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)? = nil,
         fixDescription: String? = nil,
         name: String,
         titleText: String,
