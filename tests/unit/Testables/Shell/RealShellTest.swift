@@ -177,4 +177,62 @@ struct RealShellTest {
             #expect(stderrLines.contains("stderr-\(i)"))
         }
     }
+
+    /**
+     Regression test for a timeout race in `RealShell.attach(...)`.
+
+     It starts a shell command that:
+     - writes its PID to a temp file,
+     - ignores SIGTERM,
+     - continuously emits stdout and stderr.
+
+     We then call `attach` with a very short timeout and verify two things:
+     1) `attach` throws `ShellError.timedOut`
+     2) no additional `didReceiveOutput` callbacks are delivered after timeout
+        (callback count remains stable after a short delay)
+
+     Why this test checks a symptom instead of an app crash:
+     - The real-world issue is a race condition, and races are timing-dependent.
+     - The app crash (e.g. SIGTRAP in Swift runtime/concurrency) is a possible
+       consequence, but not deterministic enough for a stable unit test.
+     - Late callbacks after timeout are the deterministic, observable signal of
+       that race window, so this test asserts the underlying unsafe behavior
+       directly.
+
+     The deferred cleanup force-kills the spawned process using the recorded PID,
+     because that process intentionally ignores SIGTERM.
+     */
+    @Test func attach_stops_emitting_output_after_timeout() async {
+        let pidFile = "/tmp/phpmon-attach-timeout-\(UUID().uuidString).pid"
+        let command = "/bin/sh -c 'echo $$ > \(pidFile); trap \"\" TERM; while true; do echo stdout-line; echo stderr-line 1>&2; done'"
+        let callbackCount = Locked<Int>(0)
+
+        defer {
+            if let pid = try? String(contentsOfFile: pidFile, encoding: .utf8)
+                    .trimmingCharacters(in: .whitespacesAndNewlines),
+                !pid.isEmpty {
+                _ = container.shell.sync("kill -9 \(pid) 2>/dev/null || true")
+            }
+            try? FileManager.default.removeItem(atPath: pidFile)
+        }
+
+        await #expect(throws: ShellError.timedOut) {
+            try await container.shell.attach(
+                command,
+                didReceiveOutput: { _, _ in
+                    callbackCount.withLock { $0 += 1 }
+                },
+                withTimeout: .seconds(0.05)
+            )
+        }
+
+        let callbackCountAtTimeout = callbackCount.value
+
+        await delay(seconds: 0.25)
+
+        let callbackCountAfterDelay = callbackCount.value
+
+        // If these two match, we know no additional callbacks fired after the delay
+        #expect(callbackCountAfterDelay == callbackCountAtTimeout)
+    }
 }

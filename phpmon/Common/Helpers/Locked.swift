@@ -54,4 +54,11 @@ final class Locked<T>: @unchecked Sendable {
             _value = newValue
         }
     }
+
+    @discardableResult
+    func withLock<R>(_ body: (inout T) -> R) -> R {
+        lock.lock()
+        defer { lock.unlock() }
+        return body(&_value)
+    }
 }

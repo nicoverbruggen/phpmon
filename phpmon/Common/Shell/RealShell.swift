@@ -263,7 +263,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     @discardableResult
     func attach(
         _ command: String,
-        didReceiveOutput: @escaping (String, ShellStream) -> Void,
+        didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
         let process = getShellProcess(for: command)
@@ -274,27 +274,57 @@ class RealShell: ShellProtocol, @unchecked Sendable {
 
         let output = ShellOutput.empty()
 
-        // Only access `resumed`, `output` from serialQueue to ensure thread safety
+        // Only access mutable state from this queue.
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
-            // Guard against resuming the continuation twice (race between timeout and termination)
-            var resumed = false
+            // Guard against all races: timeout, termination and late readability callbacks.
+            var finished = false
 
-            // Use GCD; we're already using a serial queue so legacy concurrency approach is okay
-            let timeoutTaskTermination = DispatchWorkItem {
-                guard process.isRunning else { return }
+            let finishSuccess: () -> Void = {
+                if finished { return }
+                finished = true
+
+                outputPipe.fileHandleForReading.readabilityHandler = nil
+                errorPipe.fileHandleForReading.readabilityHandler = nil
+
+                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
+
+                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
+                    output.out += string
+                    didReceiveOutput(string, .stdOut)
+                }
+
+                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
+                    output.err += string
+                    didReceiveOutput(string, .stdErr)
+                }
+
+                continuation.resume(returning: (process, output))
+            }
+
+            let finishTimeout: () -> Void = {
+                if finished { return }
+                finished = true
+
+                outputPipe.fileHandleForReading.readabilityHandler = nil
+                errorPipe.fileHandleForReading.readabilityHandler = nil
 
                 process.terminationHandler = nil
-                process.terminate()
+                if process.isRunning {
+                    process.terminate()
+                }
 
-                if !resumed {
-                    resumed = true
-                    continuation.resume(throwing: ShellError.timedOut)
+                continuation.resume(throwing: ShellError.timedOut)
+            }
+
+            let timeoutTaskTermination = DispatchWorkItem {
+                serialQueue.async {
+                    finishTimeout()
                 }
             }
 
-            // Let's make sure that once our timeout occurs, our process is terminated
             serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutTaskTermination)
 
             // Set up background reading for stdout
@@ -302,6 +332,7 @@ class RealShell: ShellProtocol, @unchecked Sendable {
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
                     serialQueue.async {
+                        if finished { return }
                         output.out += string
                         didReceiveOutput(string, .stdOut)
                     }
@@ -313,39 +344,17 @@ class RealShell: ShellProtocol, @unchecked Sendable {
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
                     serialQueue.async {
+                        if finished { return }
                         output.err += string
                         didReceiveOutput(string, .stdErr)
                     }
                 }
             }
 
-            process.terminationHandler = { process in
+            process.terminationHandler = { _ in
                 serialQueue.async {
                     timeoutTaskTermination.cancel()
-
-                    // Check if already resumed (timeout fired first)
-                    if resumed { return }
-
-                    // Clean up readability handlers
-                    outputPipe.fileHandleForReading.readabilityHandler = nil
-                    errorPipe.fileHandleForReading.readabilityHandler = nil
-
-                    // Read any remaining data
-                    let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                    let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
-
-                    if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                        output.out += string
-                        didReceiveOutput(string, .stdOut)
-                    }
-
-                    if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                        output.err += string
-                        didReceiveOutput(string, .stdErr)
-                    }
-
-                    resumed = true
-                    continuation.resume(returning: (process, output))
+                    finishSuccess()
                 }
             }
 
