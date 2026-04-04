@@ -178,10 +178,11 @@ class PhpEnvironments {
     var homebrewBrewPhpAlias: String? {
         if homebrewPackage == nil {
             // For UI testing and as a fallback, determine this version by using (fake) php-config
-            let version = App.shared.container.command.execute(path: "/opt/homebrew/bin/php-config",
+            let version = App.shared.container.command.execute(path: container.paths.phpConfig,
                                    arguments: ["--version"],
                                    trimNewlines: true)
-            return try! VersionNumber.parse(version).short
+            // This should always work because of how our testing flow works
+            return try? VersionNumber.parse(version).short
         }
 
         return homebrewPackage.version
@@ -217,10 +218,8 @@ class PhpEnvironments {
 
     /**
      The switcher that is currently in use.
-     This was originally added so the Internal and Valet switcher could be swapped out,
-     but currently this is no longer needed.
      */
-    public static var switcher: PhpSwitcher {
+    public static var switcher: InternalSwitcher {
         return InternalSwitcher(App.shared.container)
     }
 

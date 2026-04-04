@@ -252,7 +252,7 @@ extension DomainListVC {
             style: .critical,
             onFirstButtonPressed: {
                 self.waitAndExecute {
-                    await proxy.remove()
+                    try? await proxy.remove()
                     await self.reloadDomainsWithoutUI()
                 }
             }

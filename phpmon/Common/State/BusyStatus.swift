@@ -24,6 +24,6 @@ class BusyStatus: ObservableObject {
     }
 
     public static func busy() -> BusyStatus {
-        return BusyStatus(busy: false, title: "", description: "")
+        return BusyStatus(busy: true, title: "", description: "")
     }
 }

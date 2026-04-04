@@ -50,16 +50,6 @@ struct ConfigManagerView: View {
                             if let preference = preference as? BytePhpPreference {
                                 ByteLimitView(preference: preference)
                             }
-                            /*
-                            if let preference = preference as? BoolPhpPreference {
-                                Toggle("", isOn: preference.$value)
-                                    .toggleStyle(.switch)
-                                    .padding(.leading, -10)
-                            }
-                            if let preference = preference as? StringPhpPreference {
-                                TextField("Placeholder", text: preference.$value)
-                            }
-                            */
                         }.frame(maxWidth: .infinity)
                     }
                 }.padding(10)

@@ -49,7 +49,7 @@ final class TrackedShell: ShellProtocol {
     @discardableResult
     func attach(
         _ command: String,
-        didReceiveOutput: @escaping (String, ShellStream) -> Void,
+        didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval
     ) async throws -> (Process, ShellOutput) {
         let trackingId = commandTracker.trackFromAnyThread(command)

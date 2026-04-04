@@ -58,18 +58,29 @@ class RemovePhpVersionCommand: BrewCommand {
             return
         }
 
-        var loggedMessages: [String] = []
+        let loggedMessages = Locked<[String]>([])
 
-        let (process, _) = try! await shell.attach(
-            command,
-            didReceiveOutput: { text, _ in
-                if !text.isEmpty {
-                    Log.perf(text)
-                    loggedMessages.append(text)
-                }
-            },
-            withTimeout: .minutes(5)
-        )
+        let (process, _): (Process, ShellOutput)
+
+        do {
+            (process, _) = try await shell.attach(
+                command,
+                didReceiveOutput: { text, _ in
+                    if !text.isEmpty {
+                        Log.perf(text)
+                        loggedMessages.withLock { $0.append(text) }
+                    }
+                },
+                withTimeout: .minutes(5)
+            )
+        } catch ShellError.timedOut {
+            Log.err("The `brew remove` command timed out after 5 minutes: \(command)")
+            loggedMessages.withLock { $0.append("Terminated after timeout (>5 minutes) as decided by PHP Monitor.") }
+            throw BrewCommandError(error: "The command timed out after 5 minutes.", log: loggedMessages.value)
+        } catch {
+            Log.err("Failed to execute brew command: \(command) - \(error)")
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
+        }
 
         if process.terminationStatus == 0 {
             onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
@@ -84,7 +95,7 @@ class RemovePhpVersionCommand: BrewCommand {
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.value)
         }
     }
 }

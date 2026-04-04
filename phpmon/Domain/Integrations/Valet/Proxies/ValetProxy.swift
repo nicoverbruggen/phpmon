@@ -37,11 +37,12 @@ class ValetProxy: ValetListable {
         self.secured = false
     }
 
-    convenience init(_ container: Container, _ configuration: NginxConfigurationFile) {
+    convenience init?(_ container: Container, _ configuration: NginxConfigurationFile) {
+        guard let proxy = configuration.proxy else { return nil }
         self.init(
             container,
             domain: configuration.domain,
-            target: configuration.proxy!,
+            target: proxy,
             secure: false,
             tld: configuration.tld
         )
@@ -118,7 +119,7 @@ class ValetProxy: ValetListable {
         try await ValetInteractor.shared.toggleSecure(proxy: self)
     }
 
-    func remove() async {
-        try! await ValetInteractor.shared.remove(proxy: self)
+    func remove() async throws {
+        try await ValetInteractor.shared.remove(proxy: self)
     }
 }

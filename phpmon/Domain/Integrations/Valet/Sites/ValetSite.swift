@@ -109,9 +109,12 @@ class ValetSite: ValetListable {
         self.init(container, name: name, tld: tld, absolutePath: absolutePath)
     }
 
-    convenience init(_ container: Container, aliasPath: String, tld: String) {
+    convenience init?(_ container: Container, aliasPath: String, tld: String) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
-        let absolutePath = try! container.filesystem.getDestinationOfSymlink(aliasPath)
+        guard let absolutePath = try? container.filesystem.getDestinationOfSymlink(aliasPath) else {
+            Log.warn("Could not resolve the symlink for: \(aliasPath), failing ValetSite init.")
+            return nil
+        }
         self.init(container, name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
     }
 
@@ -174,7 +177,7 @@ class ValetSite: ValetListable {
         self.determineDriverViaComposer()
 
         if self.driver == nil {
-            self.driver = ProjectTypeDetection.detectFallbackDependency(self.absolutePath)
+            self.driver = ProjectTypeDetection.detectFallbackDependency(self.absolutePath, filesystem: container.filesystem)
         }
     }
 

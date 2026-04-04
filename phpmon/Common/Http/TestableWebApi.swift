@@ -27,7 +27,7 @@ class TestableWebApi: WebApiProtocol {
 
     var defaultHeaders: HttpHeaders {
         return [
-            "User-Agent": "phpmon-nur/2.0",
+            "User-Agent": "phpmon-nur/3.0",
             "X-phpmon-version": "\(App.shortVersion) (\(App.bundleVersion))",
             "X-phpmon-os-version": "\(App.macVersion)",
             "X-phpmon-bundle-id": "\(App.identifier)"

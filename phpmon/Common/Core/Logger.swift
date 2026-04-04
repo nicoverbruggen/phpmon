@@ -16,7 +16,8 @@ class Log {
     var logExists = false
 
     enum Verbosity: Int {
-        case error = 1,
+        case always = 0,
+             error = 1,
              warning = 2,
              info = 3,
              performance = 4,
@@ -76,6 +77,10 @@ class Log {
         if verbosity.isApplicable() {
             Log.shared.log("----------------------------------")
         }
+    }
+
+    static func always(_ text: String) {
+        Log.shared.log(text)
     }
 
     private func log(_ text: String) {

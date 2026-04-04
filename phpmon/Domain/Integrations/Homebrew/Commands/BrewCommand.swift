@@ -83,7 +83,7 @@ extension BrewCommand {
         _ command: String,
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
-        var loggedMessages: [String] = []
+        let loggedMessages = Locked<[String]>([])
         let (process, _): (Process, ShellOutput)
 
         do {
@@ -92,7 +92,7 @@ extension BrewCommand {
                 didReceiveOutput: { text, _ in
                     if !text.isEmpty {
                         Log.perf(text)
-                        loggedMessages.append(text)
+                        loggedMessages.withLock { $0.append(text) }
                     }
 
                     if let (number, text) = self.reportInstallationProgress(text) {
@@ -104,19 +104,20 @@ extension BrewCommand {
         } catch ShellError.timedOut {
             // Possible if the brew command times out
             Log.err("The `brew` command timed out after 15 minutes: \(command)")
-            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages)
+            loggedMessages.withLock { $0.append("Terminated after timeout (>15 minutes) as decided by PHP Monitor.") }
+            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.value)
         } catch {
             // Possible if the async continuation fails
             Log.err("Failed to execute brew command: \(command) - \(error)")
-            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages)
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
         }
 
         // Finally, even if we got the command to execute, let's check the termination status
         if process.terminationStatus == 0 {
-            loggedMessages = []
+            loggedMessages.value = []
             return
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages)
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.value)
         }
     }
 

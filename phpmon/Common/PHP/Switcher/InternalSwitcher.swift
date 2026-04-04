@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InternalSwitcher: PhpSwitcher {
+class InternalSwitcher {
 
     // MARK: - Container
 

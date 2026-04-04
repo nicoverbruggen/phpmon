@@ -32,11 +32,3 @@ class PhpPreference {
         throw PhpConfigurationFile.ReplacementErrors.missingFile
     }
 }
-
-class BoolPhpPreference: PhpPreference {
-    @State var value: Bool = true
-}
-
-class StringPhpPreference: PhpPreference {
-    @State var value: String = ""
-}

@@ -42,14 +42,28 @@ struct RealShellTest {
         #expect(systemShell.PATH.contains(":/usr/bin"))
     }
 
+    @Test func system_shell_path_timeout_has_fallback() {
+        // Simulate a broken/slow shell by passing a command that sleeps forever
+        let start = ContinuousClock.now
+        let path = RealShell.getPath(timeout: 1.0, shellCommand: "sleep 3600")
+        let duration = start.duration(to: .now)
+
+        // Should return the path_helper fallback (non-empty, contains system paths)
+        #expect(!path.isEmpty)
+        #expect(path.contains("/usr/bin"))
+
+        // Should have timed out in roughly 0.5 seconds (allow some margin)
+        #expect(duration < .seconds(1.5))
+    }
+
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
-        var bits: [String] = []
+        let bits = Locked<[String]>([])
 
         let (_, shellOutput) = try! await container.shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(500); echo 'Goodbye world';\"",
             didReceiveOutput: { incoming, _ in
-                bits.append(incoming)
+                bits.withLock { $0.append(incoming) }
             },
             withTimeout: 2.0
         )
@@ -95,13 +109,14 @@ struct RealShellTest {
         let start = ContinuousClock.now
 
         await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
-            group.addTask { await container.shell.pipe("php -r \"usleep(700000);\"") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
+            group.addTask { await container.shell.pipe("sleep 1.5") }
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .milliseconds(3000)) // Should complete in ~700ms if parallel
+        #expect(duration < .seconds(3))
     }
 
     @Test func exports_are_passed_as_environment_variables() {
@@ -134,13 +149,13 @@ struct RealShellTest {
         let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
         // Keep track of the total chunk count
-        var receivedChunks = 0
+        let receivedChunks = Locked<Int>(0)
 
         // We will now test the attach method
         let (_, shellOutput) = try await container.shell.attach(
             phpScript,
             didReceiveOutput: { _, _ in
-                receivedChunks += 1
+                receivedChunks.withLock { $0 += 1 }
             },
             withTimeout: 5.0
         )
@@ -161,5 +176,63 @@ struct RealShellTest {
             #expect(stdoutLines.contains("stdout-\(i)"))
             #expect(stderrLines.contains("stderr-\(i)"))
         }
+    }
+
+    /**
+     Regression test for a timeout race in `RealShell.attach(...)`.
+
+     It starts a shell command that:
+     - writes its PID to a temp file,
+     - ignores SIGTERM,
+     - continuously emits stdout and stderr.
+
+     We then call `attach` with a very short timeout and verify two things:
+     1) `attach` throws `ShellError.timedOut`
+     2) no additional `didReceiveOutput` callbacks are delivered after timeout
+        (callback count remains stable after a short delay)
+
+     Why this test checks a symptom instead of an app crash:
+     - The real-world issue is a race condition, and races are timing-dependent.
+     - The app crash (e.g. SIGTRAP in Swift runtime/concurrency) is a possible
+       consequence, but not deterministic enough for a stable unit test.
+     - Late callbacks after timeout are the deterministic, observable signal of
+       that race window, so this test asserts the underlying unsafe behavior
+       directly.
+
+     The deferred cleanup force-kills the spawned process using the recorded PID,
+     because that process intentionally ignores SIGTERM.
+     */
+    @Test func attach_stops_emitting_output_after_timeout() async {
+        let pidFile = "/tmp/phpmon-attach-timeout-\(UUID().uuidString).pid"
+        let command = "/bin/sh -c 'echo $$ > \(pidFile); trap \"\" TERM; while true; do echo stdout-line; echo stderr-line 1>&2; done'"
+        let callbackCount = Locked<Int>(0)
+
+        defer {
+            if let pid = try? String(contentsOfFile: pidFile, encoding: .utf8)
+                    .trimmingCharacters(in: .whitespacesAndNewlines),
+                !pid.isEmpty {
+                _ = container.shell.sync("kill -9 \(pid) 2>/dev/null || true")
+            }
+            try? FileManager.default.removeItem(atPath: pidFile)
+        }
+
+        await #expect(throws: ShellError.timedOut) {
+            try await container.shell.attach(
+                command,
+                didReceiveOutput: { _, _ in
+                    callbackCount.withLock { $0 += 1 }
+                },
+                withTimeout: .seconds(0.05)
+            )
+        }
+
+        let callbackCountAtTimeout = callbackCount.value
+
+        await delay(seconds: 0.25)
+
+        let callbackCountAfterDelay = callbackCount.value
+
+        // If these two match, we know no additional callbacks fired after the delay
+        #expect(callbackCountAfterDelay == callbackCountAtTimeout)
     }
 }

@@ -132,4 +132,57 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_quit".localized).click()
     }
 
+    /**
+     Verifies that the ServicesView updates correctly when Homebrew service
+     statuses change while the menu is open. On `menuWillOpen`, a background
+     reload fetches fresh service data. If a service's status has changed
+     (e.g. nginx stopped), the ServicesView should re-render to reflect this.
+     */
+    final func test_services_status_change_while_menu_open_does_not_crash() throws {
+        // The sudo brew services command is called twice:
+        //   1. During startup (Startup+Launch)
+        //   2. On menuWillOpen (if >2s since last reload)
+        //
+        // Call 1 returns normal data and swaps the output via transaction,
+        // so call 2 (while menu is open) returns nginx as stopped.
+        let changedResponse = """
+        [
+            {"name":"dnsmasq","service_name":"homebrew.mxcl.dnsmasq","running":true,"loaded":true,"schedulable":false,"pid":122,"exit_code":0,"user":"root","status":"started","file":"/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist","command":"dnsmasq","working_dir":null,"root_dir":null,"log_path":null,"error_log_path":null,"interval":null,"cron":null},
+            {"name":"nginx","service_name":"homebrew.mxcl.nginx","running":false,"loaded":true,"schedulable":false,"pid":null,"exit_code":0,"user":"root","status":"none","file":"/Library/LaunchDaemons/homebrew.mxcl.nginx.plist","command":"nginx","working_dir":null,"root_dir":null,"log_path":null,"error_log_path":null,"interval":null,"cron":null},
+            {"name":"php","service_name":"homebrew.mxcl.php","running":true,"loaded":true,"schedulable":false,"pid":160,"exit_code":0,"user":"root","status":"started","file":"/Library/LaunchDaemons/homebrew.mxcl.php.plist","command":"php-fpm","working_dir":null,"root_dir":null,"log_path":null,"error_log_path":null,"interval":null,"cron":null}
+        ]
+        """
+
+        // Configure our test case so the brew services update as noted above
+        let cmd = "sudo /opt/homebrew/bin/brew services info --all --json"
+        var config = TestableConfigurations.working
+        config.shellOutput[cmd] = BatchFakeShellOutput(
+            items: [
+                .delayed(0.2, ShellStrings.shared.brewServicesAsRoot)
+            ],
+            transactions: [
+                .shell(cmd, .delayed(4, changedResponse))
+            ]
+        )
+
+        // Start the app
+        let app = launch(openMenu: true, with: config)
+
+        // Verify that all services are initially running
+        assertExists(app.staticTexts["phpman.services.all_ok".localized], 3.0)
+
+        // The menu is now open. The `menuWillOpen` delegate has fired an async
+        // `reloadServicesStatus()` which will receive the changed response
+        // where nginx is stopped. The ServicesView re-renders while the menu
+        // is displayed.
+
+        // Wait for the async reload to complete and layout to settle.
+        Thread.sleep(forTimeInterval: 4)
+
+        // Verify the app is still running and responsive
+        assertExists(app.menuItems["mi_about".localized], 1.0)
+
+        // Verify that the services status actually changed (nginx is now stopped)
+        assertExists(app.staticTexts["phpman.services.inactive".localized], 1.0)
+    }
 }

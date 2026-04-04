@@ -51,10 +51,11 @@ class NginxConfigurationFile: CreatedFromFile {
             options: []
         )
 
-        guard let match = regex.firstMatch(in: contents, range: NSRange(location: 0, length: contents.count))
+        guard let match = regex.firstMatch(in: contents, range: NSRange(contents.startIndex..., in: contents)),
+              let range = Range(match.range(withName: "proxy"), in: contents)
             else { return nil }
 
-        return contents[Range(match.range(withName: "proxy"), in: contents)!]
+        return String(contents[range])
     }()
 
     /** Retrieves which isolated version is active for this domain (if applicable). */
@@ -65,12 +66,11 @@ class NginxConfigurationFile: CreatedFromFile {
             options: []
         )
 
-        guard let match = regex.firstMatch(in: contents, range: NSRange(location: 0, length: contents.count))
+        guard let match = regex.firstMatch(in: contents, range: NSRange(contents.startIndex..., in: contents)),
+              let majorRange = Range(match.range(withName: "major"), in: contents),
+              let minorRange = Range(match.range(withName: "minor"), in: contents)
             else { return nil }
 
-        let major: String = contents[Range(match.range(withName: "major"), in: contents)!],
-            minor: String = contents[Range(match.range(withName: "minor"), in: contents)!]
-
-        return "\(major).\(minor)"
+        return "\(String(contents[majorRange])).\(String(contents[minorRange]))"
     }()
 }
