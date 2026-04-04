@@ -104,6 +104,7 @@ extension BrewCommand {
         } catch ShellError.timedOut {
             // Possible if the brew command times out
             Log.err("The `brew` command timed out after 15 minutes: \(command)")
+            loggedMessages.withLock { $0.append("Terminated after timeout (>15 minutes) as decided by PHP Monitor.") }
             throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.value)
         } catch {
             // Possible if the async continuation fails
