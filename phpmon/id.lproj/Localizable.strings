@@ -536,6 +536,9 @@ TIPS PEMECAHAN MASALAH UMUM
 "alert.warnings.tld_issue.title" = "Anda tidak menggunakan `.test` sebagai TLD untuk Valet.";
 "alert.warnings.tld_issue.subtitle" = "Menggunakan TLD non-pengaturan default mungkin tidak berfungsi dengan benar dan tidak didukung secara resmi.";
 "alert.warnings.tld_issue.description" = "PHP Monitor akan tetap berfungsi, tetapi mungkin ada masalah: aplikasi tidak menampilkan dengan benar domain yang telah diamankan. Untuk hasil optimal, buka file konfigurasi Valet Anda (config.json di direktori Valet) dan ubah TLD kembali ke `test`.";
+"alert.warnings.service_missing.title" = "Layanan ini tampaknya belum terpasang.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor tidak dapat mengelola layanan ini karena tampaknya belum terpasang (atau tidak berfungsi dengan benar).";
+"alert.warnings.service_missing.description" = "Ini kadang dapat terjadi pada PHP atau beberapa dependensi lain (seperti nginx atau dnsmasq), atau pada salah satu dependensi pihak ketiga Anda jika ada masalah. Anda selalu dapat mencoba memasang ulang dependensi terkait (mis. `brew reinstall nginx`) untuk mencoba menyelesaikan masalah ini. Jika masalahnya lebih rumit, Anda juga dapat mencoba menjalankan `brew doctor`.";
 "alert.do_not_tell_again" = "Jangan beri tahu saya lagi";
 "warnings.limits_error.title" = "PHP Monitor tidak dapat mengambil batas.";
 "warnings.limits_error.steps" = "Coba jalankan ‘php -v’ di terminal Anda.";

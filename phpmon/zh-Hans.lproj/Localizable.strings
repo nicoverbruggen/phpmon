@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "您没有使用 `.test` 作为 Valet 的顶级域名";
 "alert.warnings.tld_issue.subtitle" = "使用非默认顶级域名可能无法正常工作，并且不受官方支持";
 "alert.warnings.tld_issue.description" = "PHP Monitor 仍将正常运行，但可能会出现一些问题：应用程序可能无法正确显示哪些域名已被安全保护。为获得最佳效果，请转到 Valet 配置文件(Valet 目录中的 config.json)并将 TLD 改回 `test`。";
+"alert.warnings.service_missing.title" = "此服务似乎未安装。";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor 无法管理此服务，因为它似乎未安装（或未正常工作）。";
+"alert.warnings.service_missing.description" = "这有时会发生在 PHP 或其他依赖项（如 nginx 或 dnsmasq）上，或者发生在您的某个第三方依赖项出现问题时。您可以尝试重新安装相关依赖项（例如 `brew reinstall nginx`）来解决此问题。如果问题更复杂，也可以尝试运行 `brew doctor`。";
 "alert.do_not_tell_again" = "不要再告诉我";
 "warnings.limits_error.title" = "PHP Monitor 无法检索限制";
 "warnings.limits_error.steps" = "尝试在终端运行 `php -v`";

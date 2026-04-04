@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "أنت لا تستخدم \".test\" كـ TLD لValet.";
 "alert.warnings.tld_issue.subtitle" = "قد لا يعمل استخدام نطاق المستوى الأعلى غير الافتراضي بشكل صحيح ولا يُدعم رسميًا.";
 "alert.warnings.tld_issue.description" = "سيظل PHP Monitor يعمل، لكن قد تظهر مشكلات: قد لا يعرض التطبيق بشكل صحيح أي النطاقات التي تم تأمينها. للحصول على أفضل النتائج، انتقل إلى ملف إعدادات Valet (config.json في مجلد Valet) وغير TLD مرة أخرى إلى `test`. ";
+"alert.warnings.service_missing.title" = "يبدو أن هذه الخدمة غير مثبتة.";
+"alert.warnings.service_missing.subtitle" = "لا يستطيع PHP Monitor إدارة هذه الخدمة لأنها تبدو غير مثبتة (أو لا تعمل بشكل صحيح).";
+"alert.warnings.service_missing.description" = "قد يحدث هذا أحيانًا مع PHP أو بعض التبعيات الأخرى (مثل nginx أو dnsmasq)، أو مع إحدى تبعيات الطرف الثالث إذا كانت بها مشكلة. يمكنك دائمًا محاولة إعادة تثبيت التبعية المعنية (مثل `brew reinstall nginx`) لمحاولة حل هذه المشكلة. وإذا كانت المشكلة أكثر تعقيدًا، يمكنك أيضًا تجربة `brew doctor`.";
 "alert.do_not_tell_again" = "لا تخبرني مجدداً";
 "warnings.limits_error.title" = "لم يتمكن PHP Monitor من استرداد الحدود.";
 "warnings.limits_error.steps" = "جرب تشغيل ‘php -v’ في الطرفية الخاصة بك.";

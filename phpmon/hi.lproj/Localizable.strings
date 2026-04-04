@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "आप `.test` को Valet के लिए TLD के रूप में उपयोग नहीं कर रहे हैं।";
 "alert.warnings.tld_issue.subtitle" = "एक गैर-डिफ़ॉल्ट TLD का उपयोग सही ढंग से काम नहीं कर सकता है और यह आधिकारिक रूप से समर्थित नहीं है.";
 "alert.warnings.tld_issue.description" = "PHP Monitor कार्यशील रहेगा, लेकिन कुछ समस्याएँ हो सकती हैं: ऐप सही ढंग से यह नहीं दिखा सकता कि कौन से डोमेन सुरक्षित किए गए हैं। सर्वोत्तम परिणामों के लिए, अपने Valet कॉन्फ़िगरेशन फ़ाइल (Valet निर्देशिका में config.json) पर जाएँ और TLD को `test` पर वापस बदलें.";
+"alert.warnings.service_missing.title" = "यह सेवा इंस्टॉल नहीं लगती है।";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor इस सेवा को प्रबंधित नहीं कर सकता, क्योंकि यह इंस्टॉल नहीं लगती (या सही तरीके से काम नहीं कर रही)।";
+"alert.warnings.service_missing.description" = "ऐसा कभी-कभी PHP या अन्य निर्भरताओं (जैसे nginx या dnsmasq) के साथ हो सकता है, या आपकी किसी थर्ड-पार्टी निर्भरता में समस्या होने पर भी हो सकता है। आप समस्या हल करने के लिए संबंधित निर्भरता को फिर से इंस्टॉल करने की कोशिश कर सकते हैं (उदाहरण: `brew reinstall nginx`)। यदि समस्या अधिक जटिल हो, तो `brew doctor` चलाकर भी देखें।";
 "alert.do_not_tell_again" = "मुझे फिर से न बताएं";
 "warnings.limits_error.title" = "PHP Monitor सीमाएँ पुनः प्राप्त नहीं कर सका।";
 "warnings.limits_error.steps" = "अपने टर्मिनल में ‘php -v’ चलाने का प्रयास करें।";

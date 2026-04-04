@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "Vous n'utilisez pas `.test` comme TLD pour Valet.";
 "alert.warnings.tld_issue.subtitle" = "L'utilisation d'un TLD autre que celui par défaut peut ne pas fonctionner correctement et n'est pas officiellement pris en charge.";
 "alert.warnings.tld_issue.description" = "PHP Monitor restera fonctionnel, mais il pourrait y avoir des problèmes : l'application pourrait ne pas montrer correctement quels domaines ont été sécurisés. Pour des résultats optimaux, allez dans votre fichier de configuration Valet (config.json dans le répertoire Valet) et changez le TLD en `test`.";
+"alert.warnings.service_missing.title" = "Ce service ne semble pas être installé.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor ne peut pas gérer ce service, car il ne semble pas être installé (ou ne fonctionne pas correctement).";
+"alert.warnings.service_missing.description" = "Cela peut parfois arriver avec PHP ou certaines autres dépendances (comme nginx ou dnsmasq), ou avec l'une de vos dépendances tierces s'il y a un problème. Vous pouvez toujours essayer de réinstaller la dépendance concernée (par ex. `brew reinstall nginx`) pour tenter de résoudre ce problème. En cas de problème plus complexe, vous pouvez aussi essayer `brew doctor`.";
 "alert.do_not_tell_again" = "Ne m'en Parlez Plus";
 "warnings.limits_error.title" = "PHP Monitor n'a pas pu obtenir les limites.";
 "warnings.limits_error.steps" = "Essayez de lancer 'php -v' dans votre terminal.";

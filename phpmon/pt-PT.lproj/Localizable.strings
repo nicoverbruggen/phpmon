@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "Não está usando `.test` como TLD para o Laravel Valet.";
 "alert.warnings.tld_issue.subtitle" = "O uso de um TLD não padrão pode não funcionar corretamente e não é oficialmente suportado.";
 "alert.warnings.tld_issue.description" = "O PHP Monitor permanecerá funcional, mas pode haver problemas: a aplicação pode não mostrar corretamente quais os domínios que foram protegidos. Para obter os melhores resultados, aceda ao ficheiro de configuração do Laravel Valet (config.json na diretoria do Laravel Valet) e altere o TLD para `test`.";
+"alert.warnings.service_missing.title" = "Este serviço parece não estar instalado.";
+"alert.warnings.service_missing.subtitle" = "O PHP Monitor não consegue gerir este serviço porque parece não estar instalado (ou não está a funcionar corretamente).";
+"alert.warnings.service_missing.description" = "Isto pode por vezes acontecer com o PHP ou com algumas outras dependências (como nginx ou dnsmasq), ou com uma das suas dependências de terceiros se existir algum problema. Pode sempre tentar reinstalar a dependência em questão (por exemplo, `brew reinstall nginx`) para tentar resolver este problema. No caso de um problema mais complexo, também pode tentar usar `brew doctor`.";
 "alert.do_not_tell_again" = "Não me volte a dizer";
 "warnings.limits_error.title" = "O PHP Monitor não conseguiu recuperar os limites.";
 "warnings.limits_error.steps" = "Tente executar ‘php -v’ no seu terminal.";

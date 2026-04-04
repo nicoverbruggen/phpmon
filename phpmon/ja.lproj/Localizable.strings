@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "ValetのTLDに`.test`を使用していません。";
 "alert.warnings.tld_issue.subtitle" = "非デフォルトのTLDを使用すると、正しく動作しない場合があり、公式にはサポートされていません。";
 "alert.warnings.tld_issue.description" = "PHP Monitor は機能し続けますが、問題が発生する可能性があります。アプリは保護されたドメインを正しく表示できない場合があります。最適な結果を得るには、Valet の設定ファイル（Valet ディレクトリ内の config.json）に移動し、TLD を `test` に戻してください。";
+"alert.warnings.service_missing.title" = "このサービスはインストールされていないようです。";
+"alert.warnings.service_missing.subtitle" = "このサービスはインストールされていないように見えるため（または正常に動作していないため）、PHP Monitor では管理できません。";
+"alert.warnings.service_missing.description" = "これは PHP や他の依存関係（nginx や dnsmasq など）で発生することがあり、サードパーティ製の依存関係に問題がある場合にも起こり得ます。問題の依存関係を再インストール（例: `brew reinstall nginx`）すると解決する場合があります。より複雑な問題では、`brew doctor` も試してみてください。";
 "alert.do_not_tell_again" = "もう一度表示しないでください";
 "warnings.limits_error.title" = "PHP Monitorが制限を取得できませんでした。";
 "warnings.limits_error.steps" = "ターミナルで『php -v』を実行してみてください。";

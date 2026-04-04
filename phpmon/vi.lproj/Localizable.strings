@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "Bạn đang không sử dụng `.test` như TLD cho Valet.";
 "alert.warnings.tld_issue.subtitle" = "Sử dụng một TLD không mặc định có thể không hoạt động đúng và không được hỗ trợ chính thức.";
 "alert.warnings.tld_issue.description" = "PHP Monitor sẽ vẫn hoạt động, nhưng có thể gặp vấn đề: ứng dụng có thể không hiển thị chính xác các miền đã được bảo mật. Để đạt được kết quả tối ưu, hãy vào tệp cấu hình của Valet (config.json trong thư mục Valet) và thay đổi TLD trở lại thành `test`.";
+"alert.warnings.service_missing.title" = "Dịch vụ này có vẻ chưa được cài đặt.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor không thể quản lý dịch vụ này vì có vẻ nó chưa được cài đặt (hoặc không hoạt động đúng cách).";
+"alert.warnings.service_missing.description" = "Điều này đôi khi có thể xảy ra với PHP hoặc một số phụ thuộc khác (như nginx hoặc dnsmasq), hoặc với một phụ thuộc bên thứ ba của bạn nếu có vấn đề với nó. Bạn luôn có thể thử cài đặt lại phụ thuộc liên quan (ví dụ: `brew reinstall nginx`) để thử khắc phục sự cố này. Nếu vấn đề phức tạp hơn, bạn cũng có thể thử `brew doctor`.";
 "alert.do_not_tell_again" = "Không thông báo lại cho tôi";
 "warnings.limits_error.title" = "PHP Monitor không thể lấy giới hạn.";
 "warnings.limits_error.steps" = "Thử chạy 'php -v' trong cửa sổ terminal của bạn.";
