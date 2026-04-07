@@ -56,6 +56,10 @@ struct RealShellTest {
         #expect(duration < .seconds(1.5))
     }
 
+    @Test func preferred_shell_path_falls_back_to_zsh_if_inaccessible() {
+        #expect(validated_shell_path("/this/path/does/not/exist") == "/bin/zsh")
+    }
+
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
         let bits = Locked<[String]>([])

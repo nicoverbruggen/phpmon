@@ -70,6 +70,28 @@ public func identity() -> String {
  Retrieves the user's preferred shell.
  */
 public func preferred_shell() -> String {
-    return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+    let preferredShellPath = system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
         .trimmingCharacters(in: .whitespacesAndNewlines)
+
+    return validated_shell_path(preferredShellPath)
+}
+
+internal func validated_shell_path(_ path: String) -> String {
+    if isAccessibleExecutable(path) {
+        return path
+    }
+
+    Log.warn("Using the fallback shell, as the preferred shell at `\(path)` is not accessible.")
+    return "/bin/zsh"
+}
+
+private func isAccessibleExecutable(_ path: String) -> Bool {
+    guard !path.isEmpty else {
+        return false
+    }
+
+    let fileManager = FileManager.default
+
+    return fileManager.isExecutableFile(atPath: path)
+        && fileManager.isReadableFile(atPath: path)
 }
