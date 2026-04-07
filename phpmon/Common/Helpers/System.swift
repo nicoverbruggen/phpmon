@@ -67,13 +67,20 @@ public func identity() -> String {
 }
 
 /**
- Retrieves the user's preferred shell.
+ Retrieves the shell path configured for the current user.
+ This value is returned as-is and may be invalid/inaccessible.
+ */
+public func configured_shell() -> String {
+    return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+}
+
+/**
+ Retrieves the effective shell used for launching processes.
+ Falls back to `/bin/zsh` if the configured shell is inaccessible.
  */
 public func preferred_shell() -> String {
-    let preferredShellPath = system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
-        .trimmingCharacters(in: .whitespacesAndNewlines)
-
-    return validated_shell_path(preferredShellPath)
+    return validated_shell_path(configured_shell())
 }
 
 internal func validated_shell_path(_ path: String) -> String {
@@ -81,7 +88,6 @@ internal func validated_shell_path(_ path: String) -> String {
         return path
     }
 
-    Log.warn("Using the fallback shell, as the preferred shell at `\(path)` is not accessible.")
     return "/bin/zsh"
 }
 

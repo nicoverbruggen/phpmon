@@ -856,6 +856,10 @@ COMMON TROUBLESHOOTING TIPS
 "warnings.arm_compatibility.title" = "You are running PHP Monitor using Rosetta on Apple Silicon, which means your PHP environment is also running via Rosetta.";
 "warnings.arm_compatibility.description" = "You appear to be running an ARM-compatible version of macOS, but you are currently running PHP Monitor using Rosetta. While this will work correctly, it is recommended that you use the native version of Homebrew.";
 
+"warnings.invalid_shell.title" = "Your configured login shell is not accessible.";
+"warnings.invalid_shell.description" = "Your configured shell is `%@`, but it cannot be executed. PHP Monitor is currently using `%@` as a fallback.";
+"warnings.invalid_shell.manual_fix" = "To fix this permanently, configure a valid login shell (for example: `chsh -s %@`).";
+
 "warnings.files_missing.title" = "Your PHP installation is missing important required configuration files.";
 "warnings.files_missing.description" = "The following key configuration files should exist after installing PHP:
 

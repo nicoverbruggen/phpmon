@@ -15,6 +15,7 @@ public class Paths {
     internal let container: Container
     internal var baseDir: Paths.HomebrewDir
     private var userName: String
+    private var configuredShell: String
     private var preferredShell: String
 
     init(container: Container) {
@@ -30,11 +31,13 @@ public class Paths {
         }
 
         userName = identity()
-        preferredShell = preferred_shell()
+        configuredShell = configured_shell()
+        preferredShell = validated_shell_path(configuredShell)
 
         if !isRunningSwiftUIPreview {
             Log.info("The current username is `\(userName)`.")
-            Log.info("The user's shell is `\(preferredShell)`.")
+            Log.info("The user's configured shell is `\(configuredShell)`.")
+            Log.info("The user's effective shell is `\(preferredShell)`.")
         }
 
         self.container = container
@@ -133,6 +136,20 @@ public class Paths {
 
     public var shell: String {
         return preferredShell
+    }
+
+    /**
+     Returns the shell path configured for the user account (which may be invalid).
+     */
+    public var configuredShellPath: String {
+        return configuredShell
+    }
+
+    /**
+     Indicates whether the configured shell is valid and executable.
+     */
+    public var isConfiguredShellValid: Bool {
+        return configuredShell == preferredShell
     }
 
     // MARK: - Enum

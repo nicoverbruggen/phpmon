@@ -60,6 +60,17 @@ struct RealShellTest {
         #expect(validated_shell_path("/this/path/does/not/exist") == "/bin/zsh")
     }
 
+    @Test func configured_shell_matches_dscl_usershell_output() {
+        let dsclValue = system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        #expect(configured_shell() == dsclValue)
+    }
+
+    @Test func preferred_shell_is_validated_configured_shell() {
+        #expect(preferred_shell() == validated_shell_path(configured_shell()))
+    }
+
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
         let bits = Locked<[String]>([])
