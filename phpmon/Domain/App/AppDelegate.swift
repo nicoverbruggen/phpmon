@@ -59,7 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         CrashReporter.initialize()
 
         // Prepare the container with the defaults
+        // (the container exists at this point, but is not yet bound)
         self.state = App.shared
+
+        #if DEBUG
+        // Apply system context overrides (architecture, shell) before binding,
+        // since bind() reads systemContext to determine paths and shell config
+        CLI.applySystemContext()
+        #endif
+
+        // ========================
+        // (!) CONTAINER IS BOUND
+        // ========================
         self.state.container.bind()
 
         #if DEBUG

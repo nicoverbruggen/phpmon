@@ -29,6 +29,21 @@ struct CLI {
     }
 
     /**
+     Applies system context overrides (architecture, shell) from the
+     testable configuration before the container is bound. This is
+     important because this information is required for the container
+     to be able to correctly determine some key information about the
+     system itself. (System context is effectively fixed once set.)
+     */
+    static func applySystemContext() {
+        guard let path = Self.configurationPath() else { return }
+
+        TestableConfiguration
+            .loadFrom(path: path)
+            .beforeBind()
+    }
+
+    /**
      Loads and applies a testable configuration profile if one was
      provided via the `--configuration:` launch argument.
      */
@@ -37,7 +52,7 @@ struct CLI {
 
         TestableConfiguration
             .loadFrom(path: path)
-            .apply()
+            .afterBind()
     }
 
     /**

@@ -131,18 +131,24 @@ public struct TestableConfiguration: Codable {
 
     // MARK: Interactions
 
-    func apply() {
-        Log.separator()
-        Log.info("USING TESTABLE CONFIGURATION...")
-        Log.separator()
-
+    /**
+     Applies system context overrides (architecture, shell) to the container.
+     Must be called before `Container.bind()`.
+     */
+    func beforeBind() {
+        Log.info("Applying TestableConfiguration to container (1/2)...")
         let container = App.shared.container
-
-        Log.info("Applying system context overrides...")
         container.systemContext.architectureOverride = architecture
         container.systemContext.configuredShellOverride = configuredShell
+    }
 
-        Log.info("Applying to container...")
+    /**
+     Applies the full testable configuration to the container.
+     Must be called after `Container.bind()`.
+     */
+    func afterBind() {
+        Log.info("Applying TestableConfiguration to container (2/2)...")
+        let container = App.shared.container
         container.overrideWith(config: self)
 
         Log.info("Applying temporary preference overrides...")

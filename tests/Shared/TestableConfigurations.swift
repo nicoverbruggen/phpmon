@@ -233,6 +233,17 @@ class TestableConfigurations {
         )
     }
 
+    /** A functional, working system setup for Intel (x86_64) Macs. */
+    static var workingIntel: TestableConfiguration {
+        let json = working.toJson()
+            .replacingOccurrences(of: "/opt/homebrew", with: "/usr/local")
+            .replacingOccurrences(of: "\"arm64\"", with: "\"x86_64\"")
+        return try! JSONDecoder().decode(
+            TestableConfiguration.self,
+            from: json.data(using: .utf8)!
+        )
+    }
+
     /** A functional, working system setup (but without Valet). */
     static var workingWithoutValet: TestableConfiguration {
         var configuration = TestableConfigurations.working

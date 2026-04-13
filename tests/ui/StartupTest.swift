@@ -142,6 +142,15 @@ final class StartupTest: UITestCase {
         click(app.buttons["generic.ok".localized])
     }
 
+    final func test_launch_succeeds_with_intel_architecture() throws {
+        let app = launch(
+            waitForInitialization: true,
+            with: TestableConfigurations.workingIntel
+        )
+
+        app.terminate()
+    }
+
     final func test_launch_succeeds_with_invalid_configured_shell() throws {
         var configuration = TestableConfigurations.working
         configuration.configuredShell = "/bin/this_shell_does_not_exist"

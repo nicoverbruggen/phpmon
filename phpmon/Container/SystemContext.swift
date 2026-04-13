@@ -44,6 +44,7 @@ struct SystemContext {
     /** The user's shell information, resolved from the system or overridden for tests. */
     var shell: Shell {
         let configured = configuredShellOverride ?? configured_shell()
+
         return Shell(
             configured: configured,
             resolved: validated_shell_path(configured)
