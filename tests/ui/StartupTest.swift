@@ -142,6 +142,18 @@ final class StartupTest: UITestCase {
         click(app.buttons["generic.ok".localized])
     }
 
+    final func test_launch_succeeds_with_invalid_configured_shell() throws {
+        var configuration = TestableConfigurations.working
+        configuration.configuredShell = "/bin/this_shell_does_not_exist"
+
+        let app = launch(
+            waitForInitialization: true, // app should start successfully using fallback shell
+            with: configuration
+        )
+
+        app.terminate()
+    }
+
     final func test_get_warning_about_unsupported_valet_version() throws {
         var configuration = TestableConfigurations.working
         configuration.shellOutput["valet --version"] = .instant("Laravel Valet 5.0")

@@ -25,7 +25,7 @@ extension RealShell {
 
         // After doing that, use the user's preferred shell to load additional PATH entries.
         // This information is used to inform the user about the helper includes.
-        let userShell = preferred_shell()
+        let userShell = App.shell.resolved
 
         // Construct the command to fetch the PATH. If a shell command is specified, it will also be executed.
         let command: String

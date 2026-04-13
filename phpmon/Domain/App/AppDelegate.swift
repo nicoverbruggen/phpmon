@@ -60,7 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         // Prepare the container with the defaults
         self.state = App.shared
-        self.state.container.bind()
 
         #if DEBUG
         logger.verbosity = .performance
@@ -69,9 +68,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // No matter what, clear PHP Guard if it's a debug build
         Stats.clearCurrentGlobalPhpVersion()
 
-        if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
-            AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
-        }
+        // Some overrides need to be loaded even before the container is bound
+        Self.loadOverrides()
+        #endif
+
+        // ========================
+        // (!) CONTAINER IS BOUND
+        // ========================
+        self.state.container.bind()
+
+        #if DEBUG
+        // This applies container overrides via the configuration profile
+        Self.loadConfigurationProfile()
         #endif
 
         if CommandLine.arguments.contains("--v") {
@@ -100,12 +108,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()
-    }
-
-    static func initializeTestingProfile(_ path: String) {
-        Log.info("The configuration with path `\(path)` is being requested...")
-        // Load the configuration file
-        TestableConfiguration.loadFrom(path: path).apply()
     }
 
     // MARK: - Lifecycle

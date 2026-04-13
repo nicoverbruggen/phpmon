@@ -56,7 +56,7 @@ struct RealShellTest {
         #expect(duration < .seconds(1.5))
     }
 
-    @Test func preferred_shell_path_falls_back_to_zsh_if_inaccessible() {
+    @Test func working_shell_path_falls_back_to_zsh_if_inaccessible() {
         #expect(validated_shell_path("/this/path/does/not/exist") == "/bin/zsh")
     }
 
@@ -67,8 +67,8 @@ struct RealShellTest {
         #expect(configured_shell() == dsclValue)
     }
 
-    @Test func preferred_shell_is_validated_configured_shell() {
-        #expect(preferred_shell() == validated_shell_path(configured_shell()))
+    @Test func working_shell_is_validated_configured_shell() {
+        #expect(App.shell.resolved == validated_shell_path(configured_shell()))
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))

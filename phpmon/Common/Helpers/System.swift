@@ -79,10 +79,6 @@ public func configured_shell() -> String {
  Retrieves the effective shell used for launching processes.
  Falls back to `/bin/zsh` if the configured shell is inaccessible.
  */
-public func preferred_shell() -> String {
-    return validated_shell_path(configured_shell())
-}
-
 internal func validated_shell_path(_ path: String) -> String {
     if isAccessibleExecutable(path) {
         return path
@@ -91,6 +87,10 @@ internal func validated_shell_path(_ path: String) -> String {
     return "/bin/zsh"
 }
 
+/**
+ Checks the path passed in as a parameter and determines
+ if an executable file is present.
+ */
 private func isAccessibleExecutable(_ path: String) -> Bool {
     guard !path.isEmpty else {
         return false

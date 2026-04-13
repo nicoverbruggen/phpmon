@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0309E6672B0D4B2F002AC007 /* BrewExtensionsObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */; };
+		030BC1B42F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */; };
+		030BC1B52F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */; };
+		030BC1B62F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */; };
+		030BC1B72F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */; };
 		030F1FBD2F713443007E0837 /* ValetDomainScannerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F1FBC2F71343F007E0837 /* ValetDomainScannerTest.swift */; };
 		0310B17A2EB8F3FF00A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B1792EB8F3FF00A8B140 /* CrashReporter */; };
 		0310B17C2EB8F40100A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B17B2EB8F40100A8B140 /* CrashReporter */; };
@@ -1126,6 +1130,7 @@
 
 /* Begin PBXFileReference section */
 		0309E6662B0D4B2F002AC007 /* BrewExtensionsObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewExtensionsObservable.swift; sourceTree = "<group>"; };
+		030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Testing.swift"; sourceTree = "<group>"; };
 		030F1FBC2F71343F007E0837 /* ValetDomainScannerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetDomainScannerTest.swift; sourceTree = "<group>"; };
 		031A80DB2F4CF1690016F7DD /* CommandTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTracker.swift; sourceTree = "<group>"; };
 		031D747B2F46225600D4FF48 /* SimpleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
@@ -2402,6 +2407,7 @@
 				C45B9147295607E200F4EC78 /* Services */,
 				C41C1B3C22B0098000E7CF16 /* Main.storyboard */,
 				C41C1B3622B0097F00E7CF16 /* AppDelegate.swift */,
+				030BC1B32F8D06280076F982 /* AppDelegate+Testing.swift */,
 				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
 				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
 				C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */,
@@ -3074,6 +3080,7 @@
 				C4D5576429C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C4E49DEE28F764A00026AC4E /* TestableCommand.swift in Sources */,
 				C41E871A2763D42300161EE0 /* DomainListVC+ContextMenu.swift in Sources */,
+				030BC1B42F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */,
 				037F44222EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */,
 				C40C7F2827721FF600DDDCDC /* Valet+Alerts.swift in Sources */,
 				C463E380284930EE00422731 /* PresetHelper.swift in Sources */,
@@ -3393,6 +3400,7 @@
 				C471E87028F9BB650021E251 /* GlobalKeybindPreference.swift in Sources */,
 				C471E87228F9BB650021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E87428F9BB650021E251 /* SelectPreferenceView.swift in Sources */,
+				030BC1B52F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */,
 				C471E87628F9BB650021E251 /* HotkeyPreferenceView.swift in Sources */,
 				C471E87728F9BB650021E251 /* Keys.swift in Sources */,
 				C471E87828F9BB650021E251 /* TerminalProgressWindowController.swift in Sources */,
@@ -3604,6 +3612,7 @@
 				C4E2E86A28FC3002003B070C /* Utility.swift in Sources */,
 				031E2B6C2B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C471E8BF28F9BB8F0021E251 /* DomainListWindowController.swift in Sources */,
+				030BC1B62F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */,
 				C471E8C028F9BB8F0021E251 /* DomainListVC.swift in Sources */,
 				C4D5576729C77CC5001A44CD /* PhpVersionManagerWindowController.swift in Sources */,
 				C471E8C128F9BB8F0021E251 /* DomainListVC+ContextMenu.swift in Sources */,
@@ -3947,6 +3956,7 @@
 				C417DC75277614690015E6EE /* Helpers.swift in Sources */,
 				C469E6FF294CF7B200A82AB2 /* FakeValetProxy.swift in Sources */,
 				C4B97B7C275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
+				030BC1B72F8D062B0076F982 /* AppDelegate+Testing.swift in Sources */,
 				5489625928313231004F647A /* CreatedFromFile.swift in Sources */,
 				C4513F932B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				54D9E0B327E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
