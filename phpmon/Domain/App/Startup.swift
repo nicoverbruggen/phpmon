@@ -25,7 +25,7 @@ class Startup {
      */
     func checkEnvironment() async -> Bool {
         // Do the important system setup checks
-        Log.info("The user is running PHP Monitor with the architecture: \(App.architecture)")
+        Log.info("The user is running PHP Monitor with the architecture: \(container.systemContext.architecture)")
 
         // Set up a "background" timer on the main thread
         await MainActor.run {
@@ -83,7 +83,7 @@ class Startup {
                 titleText: "alert.homebrew_missing.title".localized,
                 subtitleText: "alert.homebrew_missing.subtitle".localized,
                 descriptionText: "alert.homebrew_missing.info".localized(
-                    App.architecture
+                    App.shared.container.systemContext.architecture
                         .replacing("x86_64", with: "Intel")
                         .replacing("arm64", with: "Apple Silicon"),
                     App.shared.container.paths.brew
@@ -307,7 +307,7 @@ class Startup {
             EnvironmentCheck(
                 command: { container in
                     let nodePath = await container.shell.pipe("which node").out
-                    return App.architecture == "x86_64"
+                    return container.systemContext.architecture == "x86_64"
                     && container.filesystem.fileExists("/usr/local/bin/which")
                     && nodePath.contains("env: node: No such file or directory")
                 },

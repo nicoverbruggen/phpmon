@@ -49,58 +49,10 @@ class App {
         identifier.contains(".phpmon.eap")
     }
 
-    /** The system architecture. Paths differ based on this value. */
-    static var architecture: String {
-        if let fake = overrides.architecture { return fake }
-
-        var systeminfo = utsname()
-        uname(&systeminfo)
-        let machine = withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
-            let data = Data(bufPtr)
-            if let lastIndex = data.lastIndex(where: {$0 != 0}) {
-                return String(data: data[0...lastIndex], encoding: .isoLatin1)!
-            } else {
-                return String(data: data, encoding: .isoLatin1)!
-            }
-        }
-        return machine
-    }
-
-    /** The user's shell information, resolved from the system or overridden for tests. */
-    struct Shell {
-        /** The shell path as configured on the system (may be invalid). */
-        var configured: String
-
-        /** The validated, working shell path (falls back to `/bin/zsh`). */
-        var resolved: String
-
-        /** Whether the configured shell is valid and matches the resolved shell. */
-        var isValid: Bool { configured == resolved }
-    }
-
-    static var shell: Shell {
-        let configured = overrides.configuredShell ?? configured_shell()
-        return Shell(
-            configured: configured,
-            resolved: validated_shell_path(configured)
-        )
-    }
-
     static var macVersion: String {
         let version = ProcessInfo.processInfo.operatingSystemVersion
         return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
-
-    /**
-     Overrides for system-level values that cannot be faked via the
-     dependency container. Applied by `TestableConfiguration.apply()`.
-     */
-    struct Overrides {
-        var architecture: String?
-        var configuredShell: String?
-    }
-
-    static var overrides = Overrides()
 
     // MARK: Variables
 

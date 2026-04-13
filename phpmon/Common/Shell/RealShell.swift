@@ -10,12 +10,21 @@ import Foundation
 @preconcurrency import Dispatch
 
 class RealShell: ShellProtocol, @unchecked Sendable {
-    init(binPath: String) {
+    init(binPath: String, preferredShell: String) {
+        // Set variables that won't be updated
         self.binPath = binPath
-        self._PATH = Locked<String>(RealShell.getPath())
+        self.preferredShell = preferredShell
+
+        // Retrieve the PATH
+        let PATH = RealShell.getPath(shell: preferredShell)
+
+        // Set thread-safe variables
+        self._PATH = Locked<String>(PATH)
         self._exports = Locked<[String: String]>([:])
     }
+
     private(set) var binPath: String
+    private(set) var preferredShell: String
 
     /**
      The launch path of the terminal in question that is used.
@@ -363,7 +372,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
     func reloadEnvPath() async {
         let path = await withCheckedContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
-                continuation.resume(returning: RealShell.getPath())
+                let resolved = App.shared.container.systemContext.shell.resolved
+                continuation.resume(returning: RealShell.getPath(shell: resolved))
             }
         }
 

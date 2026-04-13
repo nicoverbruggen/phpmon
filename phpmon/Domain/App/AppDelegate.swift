@@ -60,6 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         // Prepare the container with the defaults
         self.state = App.shared
+        self.state.container.bind()
 
         #if DEBUG
         logger.verbosity = .performance
@@ -68,37 +69,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // No matter what, clear PHP Guard if it's a debug build
         Stats.clearCurrentGlobalPhpVersion()
 
-        // Some overrides need to be loaded even before the container is bound
-        Self.loadOverrides()
+        // Load testable configuration profile (if provided via launch argument)
+        CLI.loadConfigurationProfile()
         #endif
 
-        // ========================
-        // (!) CONTAINER IS BOUND
-        // ========================
-        self.state.container.bind()
-
-        #if DEBUG
-        // This applies container overrides via the configuration profile
-        Self.loadConfigurationProfile()
-        #endif
-
-        if CommandLine.arguments.contains("--v") {
-            logger.verbosity = .performance
-            Log.info("Extra verbose mode has been activated.")
-        }
-
-        if CommandLine.arguments.contains("--cli") {
-            logger.verbosity = .cli
-            Log.info("Extra CLI mode has been activated via --cli flag.")
-        }
-
-        if CommandLine.arguments.contains("--ch") {
-            Log.info("Displaying command history window (`--ch` flag).")
-            CommandHistoryWC.show()
-        }
+        // Check if any command line arguments need to be acted upon
+        CLI.checkCommandLineArguments()
 
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
-            logger.verbosity = .cli
+            Log.shared.verbosity = .cli
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
 

@@ -45,7 +45,11 @@ struct RealShellTest {
     @Test func system_shell_path_timeout_has_fallback() {
         // Simulate a broken/slow shell by passing a command that sleeps forever
         let start = ContinuousClock.now
-        let path = RealShell.getPath(timeout: 1.0, shellCommand: "sleep 3600")
+        let path = RealShell.getPath(
+            shell: container.systemContext.shell.resolved,
+            timeout: 1.0,
+            executeBeforeShellCommand: "sleep 3600"
+        )
         let duration = start.duration(to: .now)
 
         // Should return the path_helper fallback (non-empty, contains system paths)
@@ -68,7 +72,8 @@ struct RealShellTest {
     }
 
     @Test func working_shell_is_validated_configured_shell() {
-        #expect(App.shell.resolved == validated_shell_path(configured_shell()))
+        let shell = container.systemContext.shell
+        #expect(shell.resolved == validated_shell_path(configured_shell()))
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))

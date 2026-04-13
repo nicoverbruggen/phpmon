@@ -17,20 +17,17 @@ extension RealShell {
      A shell command can also be injected for testing purposes, e.g. to simulate a slow shell.
      */
     internal static func getPath(
+        shell: String,
         timeout: TimeInterval = 10,
-        shellCommand: String? = nil
+        executeBeforeShellCommand: String? = nil
     ) -> String {
         // Read the system PATH. This is fast, reliable, and doesn't touch user profiles.
         let systemPath = RealShell.systemPathFromPathHelper()
 
-        // After doing that, use the user's preferred shell to load additional PATH entries.
-        // This information is used to inform the user about the helper includes.
-        let userShell = App.shell.resolved
-
         // Construct the command to fetch the PATH. If a shell command is specified, it will also be executed.
         let command: String
-        if let shellCommand {
-            command = "\(shellCommand); echo $PATH"
+        if let executeBeforeShellCommand {
+            command = "\(executeBeforeShellCommand); echo $PATH"
         } else {
             command = "echo $PATH"
         }
@@ -38,7 +35,7 @@ extension RealShell {
         // Kick off a regular shell. We need this once to determine the PATH.
         // Other shells invoked by the app generally don't load the user's config.
         let task = Process()
-        task.launchPath = userShell
+        task.launchPath = shell
         task.arguments = ["--login", "-ilc", command]
 
         // We redirect the standard output so we can read output later.
@@ -85,7 +82,7 @@ extension RealShell {
         do {
             try task.run()
         } catch {
-            Log.warn("getPath() failed to run shell at `\(userShell)`: \(error). Falling back to system PATH")
+            Log.warn("getPath() failed to run shell at `\(shell)`: \(error). Falling back to system PATH")
 
             // If the shell process cannot be started, no termination handler will fire,
             // so waiting on the semaphore would deadlock.
