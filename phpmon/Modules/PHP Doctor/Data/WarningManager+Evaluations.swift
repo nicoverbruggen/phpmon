@@ -26,7 +26,8 @@ extension WarningManager {
             ),
             Warning(
                 command: {
-                    return !self.container.shell.PATH.contains("\(self.container.paths.homePath)/.config/phpmon/bin") &&
+                    return self.container.paths.isConfiguredShellValid &&
+                        !self.container.shell.PATH.contains("\(self.container.paths.homePath)/.config/phpmon/bin") &&
                         !self.container.filesystem.isWriteableFile("/usr/local/bin/")
                 },
                 name: "Helpers cannot be symlinked and not in PATH",
@@ -37,12 +38,28 @@ extension WarningManager {
                     "warnings.helper_permissions.symlink"
                 ] },
                 url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
-                fix: self.container.paths.shell == "/bin/zsh" ? {
+                fix: self.container.paths.isConfiguredShellValid && self.container.paths.shell == "/bin/zsh" ? {
                     // Add to PATH
                     await ZshRunCommand(self.container).addPhpMonitorPath()
                     // Finally, perform environment checks again
                     await self.checkEnvironment()
                 } : nil
+            ),
+            Warning(
+                command: {
+                    return !self.container.paths.isConfiguredShellValid
+                },
+                name: "Configured shell path is invalid",
+                title: "warnings.invalid_shell.title",
+                paragraphs: { return [
+                    "warnings.invalid_shell.description".localized(
+                        self.container.paths.configuredShellPath,
+                        self.container.paths.shell
+                    ),
+                    "warnings.invalid_shell.manual_fix".localized(self.container.paths.shell)
+                ] },
+                url: nil,
+                fix: nil
             ),
             Warning(
                 command: {

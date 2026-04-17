@@ -12,8 +12,7 @@ import Foundation
 @Suite("Locked Thread Safety")
 struct LockedTests {
 
-    @Test("Reading and writing from a single thread works correctly")
-    func singleThreadReadWrite() {
+    @Test func single_thread_read_write_works() {
         let locked = Locked<Int>(0)
 
         locked.value = 42
@@ -23,8 +22,7 @@ struct LockedTests {
         #expect(locked.value == 100)
     }
 
-    @Test("Concurrent writes do not cause data races")
-    func concurrentWritesAreThreadSafe() async {
+    @Test func concurrent_writes_are_thread_safe() async {
         let locked = Locked<Int>(0)
         let iterations = 1000
 
@@ -46,8 +44,7 @@ struct LockedTests {
         #expect(locked.value <= iterations, "Value should not exceed iterations")
     }
 
-    @Test("Concurrent reads and writes do not crash")
-    func concurrentReadsAndWritesDoNotCrash() async {
+    @Test func concurrent_reads_and_writes_do_not_crash() async {
         let locked = Locked<[String]>([])
         let iterations = 500
 
@@ -71,8 +68,7 @@ struct LockedTests {
         #expect(locked.value.count <= 1, "Array should have 0 or 1 elements")
     }
 
-    @Test("Dictionary access is thread-safe")
-    func dictionaryAccessIsThreadSafe() async {
+    @Test func dictionary_access_is_thread_safe() async {
         let locked = Locked<[String: Int]>([:])
         let iterations = 100
 
@@ -96,8 +92,7 @@ struct LockedTests {
         #expect(locked.value.keys.count <= 1)
     }
 
-    @Test("Stress test with high concurrency")
-    func stressTestHighConcurrency() async {
+    @Test func stress_test_high_concurrency() async {
         let locked = Locked<Int>(0)
         let taskCount = 10
         let incrementsPerTask = 100

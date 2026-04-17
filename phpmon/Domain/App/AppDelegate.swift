@@ -59,7 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         CrashReporter.initialize()
 
         // Prepare the container with the defaults
+        // (the container exists at this point, but is not yet bound)
         self.state = App.shared
+
+        #if DEBUG
+        // Apply system context overrides (architecture, shell) before binding,
+        // since bind() reads systemContext to determine paths and shell config
+        CLI.applySystemContext()
+        #endif
+
+        // ========================
+        // (!) CONTAINER IS BOUND
+        // ========================
         self.state.container.bind()
 
         #if DEBUG
@@ -69,28 +80,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // No matter what, clear PHP Guard if it's a debug build
         Stats.clearCurrentGlobalPhpVersion()
 
-        if let profile = CommandLine.arguments.first(where: { $0.matches(pattern: "--configuration:*") }) {
-            AppDelegate.initializeTestingProfile(profile.replacing("--configuration:", with: ""))
-        }
+        // Load testable configuration profile (if provided via launch argument)
+        CLI.loadConfigurationProfile()
         #endif
 
-        if CommandLine.arguments.contains("--v") {
-            logger.verbosity = .performance
-            Log.info("Extra verbose mode has been activated.")
-        }
-
-        if CommandLine.arguments.contains("--cli") {
-            logger.verbosity = .cli
-            Log.info("Extra CLI mode has been activated via --cli flag.")
-        }
-
-        if CommandLine.arguments.contains("--ch") {
-            Log.info("Displaying command history window (`--ch` flag).")
-            CommandHistoryWC.show()
-        }
+        // Check if any command line arguments need to be acted upon
+        CLI.checkCommandLineArguments()
 
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
-            logger.verbosity = .cli
+            Log.shared.verbosity = .cli
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")
         }
 
@@ -100,12 +98,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         self.valet = Valet.shared
         self.brew = Brew.shared
         super.init()
-    }
-
-    static func initializeTestingProfile(_ path: String) {
-        Log.info("The configuration with path `\(path)` is being requested...")
-        // Load the configuration file
-        TestableConfiguration.loadFrom(path: path).apply()
     }
 
     // MARK: - Lifecycle

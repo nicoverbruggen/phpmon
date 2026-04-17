@@ -39,7 +39,7 @@ struct TestableWebApiTest {
         return container.webApi as! TestableWebApi
     }
 
-    @Test func requestSucceeds() async {
+    @Test func request_succeeds() async {
         #expect(WebApi.hasGetResponse(for: url("https://api.phpmon.test")) == true)
 
         let response = try! await WebApi.get(
@@ -51,7 +51,7 @@ struct TestableWebApiTest {
         #expect(response.plainText!.contains("success"))
     }
 
-    @Test func requestTimesOut() async {
+    @Test func request_times_out() async {
         await #expect(throws: WebApiError.timedOut) {
             try await WebApi.get(
                 url("https://api.phpmon.test/woop"),
@@ -60,7 +60,7 @@ struct TestableWebApiTest {
         }
     }
 
-    @Test func requestTimesOutInSlowMode() async {
+    @Test func request_times_out_in_slow_mode() async {
         WebApi.setSlowMode(true)
 
         await #expect(throws: WebApiError.timedOut) {
@@ -73,7 +73,7 @@ struct TestableWebApiTest {
         WebApi.setSlowMode(false)
     }
 
-    @Test func invalidUrl() async {
+    @Test func request_cannot_be_made_to_invalid_url() async {
         await #expect(throws: WebApiError.invalidURL) {
             try await WebApi.get(
                 url("https://api.phpmon.test/woop/nice"),

@@ -10,6 +10,28 @@ import Testing
 import Foundation
 
 struct TestableConfigurationTest {
+    @Test func intel_configuration_uses_usr_local_paths() {
+        let config = TestableConfigurations.workingIntel
+        let container = Container()
+
+        container.systemContext.architectureOverride = config.architecture
+        container.bind(coreOnly: true)
+
+        container.overrideFake(
+            shellExpectations: config.shellOutput,
+            fileSystemFiles: config.filesystem,
+            commands: config.commandOutput
+        )
+
+        #expect(container.systemContext.architecture == "x86_64")
+        #expect(container.paths.binPath == "/usr/local/bin")
+        #expect(container.paths.brew == "/usr/local/bin/brew")
+        #expect(container.paths.php == "/usr/local/bin/php")
+        #expect(container.paths.valet == "/usr/local/bin/valet")
+        #expect(container.paths.cellarPath == "/usr/local/Cellar")
+        #expect(container.paths.tapPath == "/usr/local/homebrew/Library/Taps")
+    }
+
     @Test func configuration_can_be_saved_as_json() async {
         let container = Container.real(minimal: true)
 

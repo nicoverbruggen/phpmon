@@ -45,7 +45,11 @@ struct RealShellTest {
     @Test func system_shell_path_timeout_has_fallback() {
         // Simulate a broken/slow shell by passing a command that sleeps forever
         let start = ContinuousClock.now
-        let path = RealShell.getPath(timeout: 1.0, shellCommand: "sleep 3600")
+        let path = RealShell.getPath(
+            shell: container.systemContext.shell.resolved,
+            timeout: 1.0,
+            executeBeforeShellCommand: "sleep 3600"
+        )
         let duration = start.duration(to: .now)
 
         // Should return the path_helper fallback (non-empty, contains system paths)
@@ -54,6 +58,22 @@ struct RealShellTest {
 
         // Should have timed out in roughly 0.5 seconds (allow some margin)
         #expect(duration < .seconds(1.5))
+    }
+
+    @Test func working_shell_path_falls_back_to_zsh_if_inaccessible() {
+        #expect(validated_shell_path("/this/path/does/not/exist") == "/bin/zsh")
+    }
+
+    @Test func configured_shell_matches_dscl_usershell_output() {
+        let dsclValue = system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        #expect(configured_shell() == dsclValue)
+    }
+
+    @Test func working_shell_is_validated_configured_shell() {
+        let shell = container.systemContext.shell
+        #expect(shell.resolved == validated_shell_path(configured_shell()))
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
@@ -82,6 +102,7 @@ struct RealShellTest {
         }
     }
 
+    // If this test fails, run it separately to confirm it's actually broken.
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func pipe_can_timeout_and_return_empty_output() async {
         let start = ContinuousClock.now
@@ -105,6 +126,7 @@ struct RealShellTest {
         #expect(output.out.contains("Copyright (c) The PHP Group"))
     }
 
+    // If this test fails, run it separately to confirm it's actually broken.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
         let start = ContinuousClock.now
 

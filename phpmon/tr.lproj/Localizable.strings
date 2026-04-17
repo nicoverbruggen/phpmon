@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "Valet için `.test`'i TLD olarak kullanmıyorsunuz.";
 "alert.warnings.tld_issue.subtitle" = "Varsayılan olmayan bir üst düzey alan adı (TLD) kullanmak düzgün çalışmayabilir ve resmi olarak desteklenmez.";
 "alert.warnings.tld_issue.description" = "PHP Monitor çalışmaya devam edecek, ancak sorunlar olabilir: uygulama hangi alan adlarının güvence altına alındığını doğru şekilde göstermeyebilir. En iyi sonuç için Valet yapılandırma dosyanıza (Valet dizinindeki config.json) gidip TLD'yi `test` olarak değiştirin.";
+"alert.warnings.service_missing.title" = "Bu hizmet kurulu görünmüyor.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor bu hizmeti yönetemiyor, çünkü kurulu görünmüyor (veya düzgün çalışmıyor).";
+"alert.warnings.service_missing.description" = "Bu durum bazen PHP'de veya diğer bazı bağımlılıklarda (nginx ya da dnsmasq gibi), ya da kendi üçüncü taraf bağımlılıklarınızdan birinde sorun olduğunda ortaya çıkabilir. Sorunu çözmek için ilgili bağımlılığı yeniden kurmayı deneyebilirsiniz (ör. `brew reinstall nginx`). Sorun daha karmaşıksa `brew doctor` komutunu da deneyebilirsiniz.";
 "alert.do_not_tell_again" = "Bana Tekrar Söyleme";
 "warnings.limits_error.title" = "PHP Monitor, sınırları alamadı.";
 "warnings.limits_error.steps" = "Terminalinizde ‘php -v’ komutunu çalıştırmayı deneyin.";
@@ -541,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "Eğer `/usr/local/bin` klasörünü yazılabilir yapmak istemiyorsanız, PHP Monitor'ın yardımcı dizinini `PATH` değişkeninize ekleyerek bu uyarıyı kaldırabilirsiniz. (Bu sorunu nasıl çözeceğinizi öğrenmek için \"Daha Fazla Bilgi\"ye tıklayın.)";
 "warnings.arm_compatibility.title" = "Apple Silicon üzerinde Rosetta kullanarak PHP Monitor çalıştırıyorsunuz, bu da PHP ortamınızın da Rosetta üzerinden çalıştığı anlamına geliyor.";
 "warnings.arm_compatibility.description" = "ARM uyumlu bir macOS sürümü çalıştırıyor gibi görünüyorsunuz, ancak şu anda PHP Monitor'ı Rosetta ile çalıştırıyorsunuz. Bu doğru şekilde çalışacak olsa da Homebrew'un yerel sürümünü kullanmanız önerilir.";
+"warnings.invalid_shell.title" = "Yapılandırılmış giriş kabuğunuza erişilemiyor.";
+"warnings.invalid_shell.description" = "Yapılandırılmış kabuğunuz `%@`, ancak çalıştırılamıyor. PHP Monitor şu anda yedek olarak `%@` kullanıyor.";
+"warnings.invalid_shell.manual_fix" = "Bunu kalıcı olarak düzeltmek için geçerli bir giriş kabuğu yapılandırın (örneğin: `chsh -s %@`).";
 "warnings.files_missing.title" = "PHP kurulumunuzda önemli yapılandırma dosyaları eksik.";
 "warnings.files_missing.description" = "PHP'i kurduktan sonra aşağıdaki ana yapılandırma dosyalarının mevcut olması gerekir:\n\n• %@\n\nBu tür dosyalar eksik olduğunda, ilgili PHP sürümüne geçmelisiniz: bu sorun çözebilir. Sorun çözülmezse, uygun PHP sürümlerini Homebrew üzerinden yeniden yüklemeniz önerilir; bu, eksik yapılandırma dosyalarını geri getirecektir. Eksik yapılandırma dosyaları, Valet'i Düzelt'i çalıştırdıktan sonra bile (Valet kullanıyorsanız) '502 Bad Gateway' hatalarına neden olabilir.";
 "warnings.xdebug_conf_missing.title" = "Xdebug yapılandırması eksik";

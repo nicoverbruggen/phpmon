@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "أنت لا تستخدم \".test\" كـ TLD لValet.";
 "alert.warnings.tld_issue.subtitle" = "قد لا يعمل استخدام نطاق المستوى الأعلى غير الافتراضي بشكل صحيح ولا يُدعم رسميًا.";
 "alert.warnings.tld_issue.description" = "سيظل PHP Monitor يعمل، لكن قد تظهر مشكلات: قد لا يعرض التطبيق بشكل صحيح أي النطاقات التي تم تأمينها. للحصول على أفضل النتائج، انتقل إلى ملف إعدادات Valet (config.json في مجلد Valet) وغير TLD مرة أخرى إلى `test`. ";
+"alert.warnings.service_missing.title" = "يبدو أن هذه الخدمة غير مثبتة.";
+"alert.warnings.service_missing.subtitle" = "لا يستطيع PHP Monitor إدارة هذه الخدمة لأنها تبدو غير مثبتة (أو لا تعمل بشكل صحيح).";
+"alert.warnings.service_missing.description" = "قد يحدث هذا أحيانًا مع PHP أو بعض التبعيات الأخرى (مثل nginx أو dnsmasq)، أو مع إحدى تبعيات الطرف الثالث إذا كانت بها مشكلة. يمكنك دائمًا محاولة إعادة تثبيت التبعية المعنية (مثل `brew reinstall nginx`) لمحاولة حل هذه المشكلة. وإذا كانت المشكلة أكثر تعقيدًا، يمكنك أيضًا تجربة `brew doctor`.";
 "alert.do_not_tell_again" = "لا تخبرني مجدداً";
 "warnings.limits_error.title" = "لم يتمكن PHP Monitor من استرداد الحدود.";
 "warnings.limits_error.steps" = "جرب تشغيل ‘php -v’ في الطرفية الخاصة بك.";
@@ -541,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "إذا لم ترغب في جعل ‎/usr/local/bin‎ قابل للكتابة، يمكنك إضافة دليل المساعد الخاص بـ PHP Monitor إلى متغير ‎PATH‎ لجعل هذا التحذير يختفي. (انقر على “تعرف أكثر” لمعرفة كيفية إصلاح هذه المشكلة.)";
 "warnings.arm_compatibility.title" = "أنت تقوم بتشغيل PHP Monitor باستخدام Rosetta على معالج Apple Silicon، مما يعني أن بيئة PHP الخاصة بك تعمل أيضًا عبر Rosetta.";
 "warnings.arm_compatibility.description" = "يبدو أنك تعمل على نسخة macOS متوافقة مع ARM، لكنك تستخدم PHP Monitor عبر Rosetta. بينما سيعمل ذلك بشكل صحيح، يُنصح باستخدام النسخة الأصلية من Homebrew.";
+"warnings.invalid_shell.title" = "تعذر الوصول إلى صدفة تسجيل الدخول التي قمت بإعدادها.";
+"warnings.invalid_shell.description" = "الصدفة التي قمت بإعدادها هي `%@`، ولكن لا يمكن تنفيذها. يستخدم PHP Monitor حاليًا `%@` كبديل.";
+"warnings.invalid_shell.manual_fix" = "لإصلاح هذا بشكل دائم، اضبط صدفة تسجيل دخول صالحة (على سبيل المثال: `chsh -s %@`).";
 "warnings.files_missing.title" = "يُفْقِد تثبيت PHP لديك ملفات التكوين المطلوبة المهمة.";
 "warnings.files_missing.description" = "يجب أن توجد الملفات الإعداد الرئيسية التالية بعد تثبيت PHP:\n\n• %@\n\nعندما تكون ملفات مثل هذه مفقودة، يجب عليك التبديل إلى إصدار PHP المرتبط بتلك الملفات: قد يحل ذلك المشكلة. إذا لم يصلح هذا الأمر، يُنصح بإعادة تثبيت الإصدار(الإصدارات) المناسب من PHP عبر Homebrew مرة أخرى، مما سيستعيد الملفات الإعداد المفقودة. يمكن أن تكون ملفات الإعداد المفقودة سببًا في ظهور أخطاء '502 Bad Gateway' حتى بعد تشغيل Fix My Valet (إذا كنت تستخدم Valet).";
 "warnings.xdebug_conf_missing.title" = "تكوين Xdebug غير مكتمل";

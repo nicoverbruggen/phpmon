@@ -49,34 +49,10 @@ class App {
         identifier.contains(".phpmon.eap")
     }
 
-    /** The system architecture. Paths differ based on this value. */
-    static var architecture: String {
-        if fakeArchitecture != nil { return fakeArchitecture! }
-
-        var systeminfo = utsname()
-        uname(&systeminfo)
-        let machine = withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
-            let data = Data(bufPtr)
-            if let lastIndex = data.lastIndex(where: {$0 != 0}) {
-                return String(data: data[0...lastIndex], encoding: .isoLatin1)!
-            } else {
-                return String(data: data, encoding: .isoLatin1)!
-            }
-        }
-        return machine
-    }
-
     static var macVersion: String {
         let version = ProcessInfo.processInfo.operatingSystemVersion
         return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
-
-    /**
-     A fake architecture.
-     When set, the real machine's system architecture is not used,
-     but this fixed value is used instead.
-     */
-    static var fakeArchitecture: String?
 
     // MARK: Variables
 

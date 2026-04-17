@@ -15,11 +15,10 @@ public class Paths {
     internal let container: Container
     internal var baseDir: Paths.HomebrewDir
     private var userName: String
-    private var preferredShell: String
 
     init(container: Container) {
         // Assume the default directory is correct
-        baseDir = App.architecture != "x86_64" ? .opt : .usr
+        baseDir = container.systemContext.architecture != "x86_64" ? .opt : .usr
 
         // Ensure that if a different location is used, it takes precendence
         if baseDir == .usr
@@ -30,11 +29,14 @@ public class Paths {
         }
 
         userName = identity()
-        preferredShell = preferred_shell()
 
         if !isRunningSwiftUIPreview {
             Log.info("The current username is `\(userName)`.")
-            Log.info("The user's shell is `\(preferredShell)`.")
+            if container.systemContext.shell.configured == container.systemContext.shell.resolved {
+                Log.info("The user's shell is `\(container.systemContext.shell.configured)`. Using `\(container.systemContext.shell.resolved)`.")
+            } else {
+                Log.info("Using `\(container.systemContext.shell.resolved)` as the shell, since `\(container.systemContext.shell.configured)` isn't accessible.")
+            }
         }
 
         self.container = container
@@ -132,7 +134,21 @@ public class Paths {
     }
 
     public var shell: String {
-        return preferredShell
+        return container.systemContext.shell.resolved
+    }
+
+    /**
+     Returns the shell path configured for the user account (which may be invalid).
+     */
+    public var configuredShellPath: String {
+        return container.systemContext.shell.configured
+    }
+
+    /**
+     Indicates whether the configured shell is valid and executable.
+     */
+    public var isConfiguredShellValid: Bool {
+        return container.systemContext.shell.isValid
     }
 
     // MARK: - Enum

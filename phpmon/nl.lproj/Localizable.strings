@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "U gebruikt geen `.test` als TLD voor Valet.";
 "alert.warnings.tld_issue.subtitle" = "Het gebruik van een niet-standaard TLD werkt mogelijk niet correct en wordt niet officieel ondersteund.";
 "alert.warnings.tld_issue.description" = "PHP Monitor blijft werken, maar er kunnen problemen zijn: de app kan mogelijk niet correct weergeven welke domeinen zijn beveiligd. Voor optimale resultaten gaat u naar uw Valet-configuratiebestand (config.json in de Valet-directory) en wijzigt u de TLD terug naar `test`.";
+"alert.warnings.service_missing.title" = "Deze service lijkt niet geïnstalleerd te zijn.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor kan deze service niet beheren, omdat die niet geïnstalleerd lijkt te zijn (of niet goed werkt).";
+"alert.warnings.service_missing.description" = "Dit kan soms gebeuren met PHP of met andere afhankelijkheden (zoals nginx of dnsmasq), of met een van uw eigen afhankelijkheden van derden als daar een probleem mee is. U kunt altijd proberen de betreffende afhankelijkheid opnieuw te installeren (bijv. `brew reinstall nginx`) om dit probleem op te lossen. Bij een complexer probleem kunt u ook `brew doctor` proberen.";
 "alert.do_not_tell_again" = "Niet meer tonen";
 "warnings.limits_error.title" = "PHP Monitor kon de limieten niet ophalen.";
 "warnings.limits_error.steps" = "Run ‘php -v’ in jouw terminal om te testen.";
@@ -541,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "Als u `/usr/local/bin` niet beschrijfbaar wilt maken, kunt u de helperdirectory van PHP Monitor toevoegen aan uw `PATH`-variabele om deze waarschuwing te laten verdwijnen. (Klik op ”Meer informatie” om te zien hoe u dit probleem kunt oplossen.)";
 "warnings.arm_compatibility.title" = "U gebruikt PHP Monitor via Rosetta op Apple Silicon, wat betekent dat uw PHP-omgeving ook via Rosetta wordt uitgevoerd.";
 "warnings.arm_compatibility.description" = "U gebruikt blijkbaar een ARM-compatibele versie van macOS, maar u gebruikt momenteel PHP Monitor via Rosetta. Hoewel dit correct werkt, wordt aanbevolen om de native versie van Homebrew te gebruiken.";
+"warnings.invalid_shell.title" = "Uw geconfigureerde login-shell is niet toegankelijk.";
+"warnings.invalid_shell.description" = "Uw geconfigureerde shell is `%@`, maar kan niet worden uitgevoerd. PHP Monitor gebruikt momenteel `%@` als terugvaloptie.";
+"warnings.invalid_shell.manual_fix" = "Om dit permanent op te lossen, configureert u een geldige login-shell (bijvoorbeeld: `chsh -s %@`).";
 "warnings.files_missing.title" = "Uw PHP-installatie mist belangrijke vereiste configuratiebestanden.";
 "warnings.files_missing.description" = "De volgende belangrijke configuratiebestanden zouden moeten bestaan na het installeren van PHP:\n\n• %@\n\nWanneer dergelijke bestanden ontbreken, moet u overschakelen naar de PHP-versie die is gekoppeld aan die bestanden: dat kan het probleem oplossen. Als dit het probleem niet oplost, wordt aanbevolen om de juiste PHP-versie(s) opnieuw te installeren via Homebrew, waardoor de ontbrekende configuratiebestanden worden hersteld. Ontbrekende configuratiebestanden kunnen de reden zijn waarom u '502 Bad Gateway'-fouten krijgt, zelfs na het uitvoeren van Fix My Valet (als u Valet gebruikt).";
 "warnings.xdebug_conf_missing.title" = "Xdebug-configuratie is onvolledig";

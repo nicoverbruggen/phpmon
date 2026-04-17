@@ -10,6 +10,7 @@ import Foundation
 
 public struct TestableConfiguration: Codable {
     var architecture: String
+    var configuredShell: String?
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
@@ -19,6 +20,7 @@ public struct TestableConfiguration: Codable {
 
     init(
         architecture: String,
+        configuredShell: String? = nil,
         filesystem: [String: FakeFile],
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
@@ -28,6 +30,7 @@ public struct TestableConfiguration: Codable {
         apiPostResponses: [URL: FakeWebApiResponse]
     ) {
         self.architecture = architecture
+        self.configuredShell = configuredShell
         self.filesystem = filesystem
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
@@ -42,6 +45,7 @@ public struct TestableConfiguration: Codable {
 
     private enum CodingKeys: String, CodingKey {
         case architecture,
+             configuredShell,
              filesystem,
              shellOutput,
              commandOutput,
@@ -127,12 +131,23 @@ public struct TestableConfiguration: Codable {
 
     // MARK: Interactions
 
-    func apply() {
-        Log.separator()
-        Log.info("USING TESTABLE CONFIGURATION...")
-        Log.separator()
-        Log.info("Applying to container...")
+    /**
+     Applies system context overrides (architecture, shell) to the container.
+     Must be called before `Container.bind()`.
+     */
+    func beforeBind() {
+        Log.info("Applying TestableConfiguration to container (1/2)...")
+        let container = App.shared.container
+        container.systemContext.architectureOverride = architecture
+        container.systemContext.configuredShellOverride = configuredShell
+    }
 
+    /**
+     Applies the full testable configuration to the container.
+     Must be called after `Container.bind()`.
+     */
+    func afterBind() {
+        Log.info("Applying TestableConfiguration to container (2/2)...")
         let container = App.shared.container
         container.overrideWith(config: self)
 

@@ -526,6 +526,9 @@
 "alert.warnings.tld_issue.title" = "Sie verwenden nicht `.test` als TLD für Valet.";
 "alert.warnings.tld_issue.subtitle" = "Die Verwendung einer nicht standardmäßigen TLD funktioniert möglicherweise nicht korrekt und wird offiziell nicht unterstützt.";
 "alert.warnings.tld_issue.description" = "PHP Monitor bleibt funktionsfähig, aber es kann zu Problemen kommen: Die App zeigt möglicherweise nicht korrekt an, welche Domains gesichert wurden. Um optimale Ergebnisse zu erzielen, gehen Sie zu Ihrer Valet-Konfigurationsdatei (config.json im Valet-Verzeichnis) und ändern Sie die TLD zurück in \"test\".";
+"alert.warnings.service_missing.title" = "Dieser Dienst scheint nicht installiert zu sein.";
+"alert.warnings.service_missing.subtitle" = "PHP Monitor kann diesen Dienst nicht verwalten, da er offenbar nicht installiert ist (oder nicht richtig funktioniert).";
+"alert.warnings.service_missing.description" = "Das kann manchmal bei PHP oder einigen anderen Abhängigkeiten (wie nginx oder dnsmasq) passieren, oder bei einer Ihrer eigenen Drittanbieter-Abhängigkeiten, wenn es damit ein Problem gibt. Sie können jederzeit versuchen, die betreffende Abhängigkeit neu zu installieren (z. B. `brew reinstall nginx`), um das Problem zu beheben. Bei einem komplexeren Problem können Sie außerdem `brew doctor` ausführen.";
 "alert.do_not_tell_again" = "Sag's mir nicht noch einmal";
 "warnings.limits_error.title" = "PHP Monitor konnte die Grenzwerte nicht abrufen.";
 "warnings.limits_error.steps" = "Versuchen Sie, 'php -v' in Ihrem Terminal auszuführen.";
@@ -541,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "Wenn Sie `/usr/local/bin` nicht beschreibbar machen wollen, können Sie das Hilfsverzeichnis von PHP Monitor zu Ihrer `PATH`-Variablen hinzufügen, um diese Warnung zu beseitigen. (Klicken Sie auf \"Mehr erfahren\", um herauszufinden, wie Sie dieses Problem beheben können).";
 "warnings.arm_compatibility.title" = "Sie führen PHP Monitor mit Rosetta auf Apple Silicon aus, was bedeutet, dass Ihre PHP-Umgebung ebenfalls über Rosetta läuft.";
 "warnings.arm_compatibility.description" = "Sie scheinen eine ARM-kompatible Version von macOS zu verwenden, aber Sie führen derzeit PHP Monitor mit Rosetta aus. Obwohl dies korrekt funktioniert, wird empfohlen, dass Sie die native Version von Homebrew verwenden.";
+"warnings.invalid_shell.title" = "Ihre konfigurierte Login-Shell ist nicht erreichbar.";
+"warnings.invalid_shell.description" = "Ihre konfigurierte Shell ist `%@`, sie kann jedoch nicht ausgeführt werden. PHP Monitor verwendet derzeit `%@` als Ersatz.";
+"warnings.invalid_shell.manual_fix" = "Um dies dauerhaft zu beheben, konfigurieren Sie eine gültige Login-Shell (zum Beispiel: `chsh -s %@`).";
 "warnings.files_missing.title" = "Ihrer PHP-Installation fehlen wichtige erforderliche Konfigurationsdateien.";
 "warnings.files_missing.description" = "Die folgenden wichtigen Konfigurationsdateien sollten nach der Installation von PHP vorhanden sein:\n\n- %@\n\nWenn diese Dateien fehlen, sollten Sie zu der PHP-Version wechseln, die mit diesen Dateien verknüpft ist: Das kann das Problem beheben. Wenn dies das Problem nicht behebt, wird empfohlen, die entsprechende(n) PHP-Version(en) über Homebrew erneut zu installieren, wodurch die fehlenden Konfigurationsdateien wiederhergestellt werden sollten. Fehlende Konfigurationsdateien können der Grund dafür sein, dass Sie die Fehlermeldung '502 Bad Gateway' erhalten, auch wenn Sie Fix My Valet ausgeführt haben (wenn Sie Valet verwenden).";
 "warnings.xdebug_conf_missing.title" = "Xdebug-Konfiguration ist unvollständig";

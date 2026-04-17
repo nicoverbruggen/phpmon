@@ -233,6 +233,24 @@ class TestableConfigurations {
         )
     }
 
+    /** A functional, working system setup for Intel (x86_64) Macs. */
+    static var workingIntel: TestableConfiguration {
+        let json = working.toJson()
+            // The fixture is serialized as JSON, so paths are escaped as `\/...`.
+            // Rewrite the Homebrew paths in their encoded form to avoid leaving
+            // ARM paths behind when building the Intel-specific fixture.
+            .replacingOccurrences(
+                of: "\\/opt\\/homebrew\\/Library\\/Taps",
+                with: "\\/usr\\/local\\/homebrew\\/Library\\/Taps"
+            )
+            .replacingOccurrences(of: "\\/opt\\/homebrew", with: "\\/usr\\/local")
+            .replacingOccurrences(of: "\"arm64\"", with: "\"x86_64\"")
+        return try! JSONDecoder().decode(
+            TestableConfiguration.self,
+            from: json.data(using: .utf8)!
+        )
+    }
+
     /** A functional, working system setup (but without Valet). */
     static var workingWithoutValet: TestableConfiguration {
         var configuration = TestableConfigurations.working

@@ -9,6 +9,10 @@
 import Foundation
 
 class Container: @unchecked Sendable {
+    // MARK: - System Context
+
+    var systemContext = SystemContext()
+
     // MARK: - Variables
 
     // Primary
@@ -73,7 +77,7 @@ class Container: @unchecked Sendable {
         self.paths = Paths(container: self)
         self.commandTracker = CommandTracker()
 
-        let baseShellHandler = RealShell(binPath: paths.binPath)
+        let baseShellHandler = RealShell(binPath: paths.binPath, preferredShell: systemContext.shell.resolved)
         let baseCommandHandler = RealCommand()
 
         // Depending on whether we need command tracking wired up, we will use different real handlers
