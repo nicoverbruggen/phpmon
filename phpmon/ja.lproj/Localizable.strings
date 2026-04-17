@@ -544,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "もし`/usr/local/bin`を書き込み可能にしたくない場合、PHP Monitorのヘルパーディレクトリを`PATH`変数に追加することでこの警告を消すことができます。（「詳細情報」をクリックして、この問題の修正方法をご覧ください。）";
 "warnings.arm_compatibility.title" = "Apple Silicon 上で Rosetta を使用して PHP Monitor を実行しています。これは、PHP 環境も Rosetta 経由で動作していることを意味します。";
 "warnings.arm_compatibility.description" = "macOS の ARM 対応バージョンを実行しているようですが、現在は Rosetta を使用して PHP Monitor を動かしています。この方法でも正しく動作しますが、Homebrew のネイティブ版をご利用いただくことを推奨します。";
+"warnings.invalid_shell.title" = "設定されているログインシェルにアクセスできません。";
+"warnings.invalid_shell.description" = "設定されているシェルは `%@` ですが、実行できません。PHP Monitor は現在、代わりに `%@` を使用しています。";
+"warnings.invalid_shell.manual_fix" = "これを恒久的に修正するには、有効なログインシェルを設定してください（例: `chsh -s %@`）。";
 "warnings.files_missing.title" = "重要な必須構成ファイルが欠落しています。";
 "warnings.files_missing.description" = "PHP をインストールした後、以下のキー設定ファイルが存在するはずです:\n\n• %@\n\nこのようなファイルが欠落している場合は、それらのファイルに関連付けられた PHP バージョンへ切り替えるべきです。これで問題が解決する可能性があります。もしそれでも解決しない場合は、Homebrew を使って該当する PHP バージョンを再インストールすることを推奨します。そうすれば欠落している設定ファイルが復元されるはずです。欠落した設定ファイルは、Fix My Valet（Valet を使用している場合）を実行した後でも「502 Bad Gateway」エラーの原因となります。";
 "warnings.xdebug_conf_missing.title" = "Xdebug の設定が不完全です";

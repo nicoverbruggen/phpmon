@@ -544,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "如果不想让 `/usr/local/bin` 可写，可以将 PHP Monitor 的辅助目录添加到 `PATH` 变量中，这样警告就会消失。(点击**了解更多**了解如何解决这个问题)";
 "warnings.arm_compatibility.title" = "您在 Apple Silicon 上使用 Rosetta 运行 PHP Monitor，这意味着您的 PHP 环境也是通过 Rosetta 运行的";
 "warnings.arm_compatibility.description" = "您似乎正在运行与 ARM 兼容的 macOS 版本，但您目前正在使用 Rosetta 运行 PHP Monitor。虽然这可以正常工作，但建议您使用本机版本的 Homebrew";
+"warnings.invalid_shell.title" = "您配置的登录 shell 无法访问。";
+"warnings.invalid_shell.description" = "您配置的 shell 是 `%@`，但无法执行。PHP Monitor 当前正在使用 `%@` 作为回退方案。";
+"warnings.invalid_shell.manual_fix" = "要永久修复此问题，请配置一个有效的登录 shell（例如：`chsh -s %@`）。";
 "warnings.files_missing.title" = "您的 PHP 安装缺少所需的重要配置文件";
 "warnings.files_missing.description" = "安装 PHP 后应存在以下关键配置文件：\n\n- %@\n\n当缺少类似文件时，应切换到与这些文件相关的 PHP 版本：这可能会解决问题。如果还不能解决问题，建议再次通过 Homebrew 重新安装相应的 PHP 版本，这样就可以恢复丢失的配置文件。配置文件缺失可能是出现 `502 Bad Gateway` 错误的原因，即使运行了 Fix My Valet(如果使用 Valet)也是如此。";
 "warnings.xdebug_conf_missing.title" = "Xdebug 配置不完整";

@@ -544,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "Se não deseja tornar `/usr/local/bin` gravável, pode adicionar a diretoria auxiliar do PHP Monitor à sua variável `PATH` para fazer com que este aviso desapareça. (Clique em \"Saiba mais\" para descobrir como corrigir esse problema.)";
 "warnings.arm_compatibility.title" = "Está a executar o PHP Monitor usando o Rosetta em Apple Silicon, o que significa que o seu ambiente PHP também está sendo executado via Rosetta.";
 "warnings.arm_compatibility.description" = "Parece estar a executar uma versão do macOS compatível com ARM, mas atualmente está a executar o PHP Monitor usando Rosetta. Embora isso funcione corretamente, é recomendável usar a versão nativa do Homebrew.";
+"warnings.invalid_shell.title" = "A shell de login configurada não está acessível.";
+"warnings.invalid_shell.description" = "A shell configurada é `%@`, mas não pode ser executada. O PHP Monitor está atualmente a usar `%@` como alternativa.";
+"warnings.invalid_shell.manual_fix" = "Para corrigir isto permanentemente, configure uma shell de login válida (por exemplo: `chsh -s %@`).";
 "warnings.files_missing.title" = "A sua instalação do PHP tem ficheiros de configuração importantes em falta.";
 "warnings.files_missing.description" = "Os seguintes ficheiros de configuração chave devem existir após uma instalação do PHP:\n\n• %@\n\nQuando ficheiros como estes estiverem em falta, deve mudar para a versão do PHP associada a esses ficheiros: que pode resolver o problema. Se isso não corrigir o problema, é recomendável reinstalar a(s) versão(ões) apropriada(s) do PHP via Homebrew, o que deve restaurar os ficheiros de configuração que estão em falta. A falta de ficheiros de configuração pode ser a razão pela qual recebe erros '502 Bad Gateway', mesmo depois de executar o 'Corrigir Laravel Valet' (se estiver a usar o Laravel Valet).";
 "warnings.xdebug_conf_missing.title" = "A configuração do Xdebug está incompleta";

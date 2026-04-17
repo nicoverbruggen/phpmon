@@ -544,6 +544,9 @@
 "warnings.helper_permissions.symlink" = "Nếu bạn không muốn làm cho `/usr/local/bin` có thể ghi được, bạn có thể thêm thư mục trợ lý của PHP Monitor vào biến `PATH` để loại bỏ cảnh báo này. (Nhấp vào “Tìm hiểu thêm” để tìm hiểu cách khắc phục vấn đề này.)";
 "warnings.arm_compatibility.title" = "Bạn đang sử dụng PHP Monitor bằng Rosetta trên Apple Silicon, điều này có nghĩa là môi trường PHP của bạn cũng đang chạy qua Rosetta.";
 "warnings.arm_compatibility.description" = "Bạn có vẻ đang chạy một phiên bản tương thích với ARM của macOS, nhưng hiện tại bạn đang chạy PHP Monitor bằng Rosetta. Mặc dù điều này sẽ hoạt động đúng, nhưng khuyến nghị là bạn nên sử dụng phiên bản Homebrew native.";
+"warnings.invalid_shell.title" = "Shell đăng nhập đã cấu hình của bạn không thể truy cập được.";
+"warnings.invalid_shell.description" = "Shell bạn đã cấu hình là `%@`, nhưng không thể thực thi. PHP Monitor hiện đang dùng `%@` làm phương án dự phòng.";
+"warnings.invalid_shell.manual_fix" = "Để khắc phục vĩnh viễn, hãy cấu hình một shell đăng nhập hợp lệ (ví dụ: `chsh -s %@`).";
 "warnings.files_missing.title" = "Cài đặt PHP của bạn thiếu các tệp cấu hình quan trọng yêu cầu.";
 "warnings.files_missing.description" = "Sau khi cài đặt PHP, các tệp cấu hình quan trọng sau đây nên tồn tại:\n\n• %@\n\nKhi thiếu các tệp như thế này, bạn nên chuyển sang phiên bản PHP liên quan đến các tệp đó: điều này có thể giải quyết vấn đề. Nếu điều này không khắc phục được sự cố, khuyến nghị là bạn nên cài đặt lại phiên bản PHP(s) thích hợp thông qua Homebrew một lần nữa, điều này sẽ phục hồi các tệp cấu hình đã thiếu. Thiếu các tệp cấu hình có thể là nguyên nhân khiến bạn nhận được lỗi '502 Bad Gateway', ngay cả sau khi chạy Sửa Lỗi Valet (nếu bạn đang sử dụng Valet).";
 "warnings.xdebug_conf_missing.title" = "Cấu hình Xdebug chưa đầy đủ";

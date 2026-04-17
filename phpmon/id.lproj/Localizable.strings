@@ -554,6 +554,9 @@ TIPS PEMECAHAN MASALAH UMUM
 "warnings.helper_permissions.symlink" = "Jika Anda tidak ingin membuat `/usr/local/bin` dapat ditulis, Anda dapat menambahkan direktori bantuan PHP Monitor ke variabel `PATH` Anda agar peringatan ini hilang. (Klik pada ”Learn More” untuk mengetahui cara memperbaiki masalah ini.)";
 "warnings.arm_compatibility.title" = "Anda menjalankan PHP Monitor menggunakan Rosetta di Apple Silicon, yang berarti lingkungan PHP Anda juga berjalan melalui Rosetta.";
 "warnings.arm_compatibility.description" = "Tampaknya Anda menjalankan versi macOS yang kompatibel dengan ARM, namun saat ini Anda menggunakan PHP Monitor melalui Rosetta. Meskipun akan berfungsi dengan benar, disarankan untuk menggunakan versi asli Homebrew.";
+"warnings.invalid_shell.title" = "Shell login yang Anda konfigurasi tidak dapat diakses.";
+"warnings.invalid_shell.description" = "Shell yang Anda konfigurasi adalah `%@`, tetapi tidak dapat dijalankan. PHP Monitor saat ini menggunakan `%@` sebagai cadangan.";
+"warnings.invalid_shell.manual_fix" = "Untuk memperbaikinya secara permanen, konfigurasikan shell login yang valid (misalnya: `chsh -s %@`).";
 "warnings.files_missing.title" = "Instalasi PHP Anda tidak memiliki file konfigurasi penting yang diperlukan.";
 "warnings.files_missing.description" = "Berikut file konfigurasi kunci harus ada setelah menginstal PHP:\n\n• %@\n\nJika file seperti ini hilang, Anda sebaiknya beralih ke versi PHP yang terkait dengan file tersebut: itu mungkin menyelesaikan masalah. Jika ini tidak memperbaiki masalah, disarankan untuk memasang ulang versi PHP yang sesuai melalui Homebrew lagi, yang akan memulihkan file konfigurasi yang hilang. File konfigurasi yang hilang dapat menjadi alasan mengapa Anda mendapatkan kesalahan '502 Bad Gateway', bahkan setelah menjalankan Fix My Valet (jika Anda menggunakan Valet).";
 "warnings.xdebug_conf_missing.title" = "Konfigurasi Xdebug tidak lengkap";
