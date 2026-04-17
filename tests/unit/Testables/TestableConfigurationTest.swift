@@ -29,6 +29,7 @@ struct TestableConfigurationTest {
         #expect(container.paths.php == "/usr/local/bin/php")
         #expect(container.paths.valet == "/usr/local/bin/valet")
         #expect(container.paths.cellarPath == "/usr/local/Cellar")
+        #expect(container.paths.tapPath == "/usr/local/homebrew/Library/Taps")
     }
 
     @Test func configuration_can_be_saved_as_json() async {
