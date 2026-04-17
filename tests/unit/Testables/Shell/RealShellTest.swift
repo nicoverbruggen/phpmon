@@ -102,6 +102,7 @@ struct RealShellTest {
         }
     }
 
+    // If this test fails, run it separately to confirm it's actually broken.
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func pipe_can_timeout_and_return_empty_output() async {
         let start = ContinuousClock.now
@@ -125,6 +126,7 @@ struct RealShellTest {
         #expect(output.out.contains("Copyright (c) The PHP Group"))
     }
 
+    // If this test fails, run it separately to confirm it's actually broken.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
         let start = ContinuousClock.now
 
