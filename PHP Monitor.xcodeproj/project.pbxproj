@@ -250,6 +250,7 @@
 		03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
+		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
 		03EC943C2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943D2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943E2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
@@ -1221,6 +1222,7 @@
 		03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardView.swift; sourceTree = "<group>"; };
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
+		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -2345,6 +2347,7 @@
 			children = (
 				036061DB2F4C7AE100B5998F /* SettingsTest.swift */,
 				C471E7BE28F9B90F0021E251 /* StartupTest.swift */,
+				03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */,
 				C469E702294CFDF700A82AB2 /* DomainsListTest.swift */,
 				C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */,
 				C4181F1028FAF9330042EA28 /* UITestCase.swift */,
@@ -3703,6 +3706,7 @@
 				C471E8D228F9BB8F0021E251 /* Stats.swift in Sources */,
 				C471E8D328F9BB8F0021E251 /* GlobalKeybindPreference.swift in Sources */,
 				03C099462EA15C8E00B76D43 /* Container+Real.swift in Sources */,
+				03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */,
 				C471E8D528F9BB8F0021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E8D728F9BB8F0021E251 /* SelectPreferenceView.swift in Sources */,
 				03C29A7A2EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,

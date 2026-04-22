@@ -26,10 +26,30 @@ extension Startup {
      Perform all checks and execute pass or fail results.
      */
     private func check() async {
+        // Determine if the initial onboarding flow is required
+        // This will trigger when the environment is minimal
+        // (i.e. missing core dependencies)
+        await checkOnboarding()
+
+        // Next up, validate the environment is healthy
+        // This is required for phpmon to function right
         if await self.checkEnvironment() {
             await self.onEnvironmentPass()
         } else {
             await self.onEnvironmentFail()
+        }
+    }
+
+    private func checkOnboarding() async {
+        if await shouldShowOnboardingWizard() {
+            // Show the wizard and we'll await the result of the wizard
+            let outcome = await showOnboardingWizard()
+            Log.info("Outcome of onboarding: \(outcome)")
+
+            // If the user has chosen to quit prematurely, terminate the app
+            if outcome == .quit {
+                exit(0)
+            }
         }
     }
 

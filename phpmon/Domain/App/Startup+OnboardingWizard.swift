@@ -12,6 +12,12 @@ extension Startup {
         case normal
     }
 
+    enum OnboardingWizardOutcome: Equatable {
+        case completed
+        case completedInStandaloneMode
+        case quit
+    }
+
     /**
      Determines whether the onboarding wizard should be shown for a genuinely fresh setup.
 
@@ -27,6 +33,11 @@ extension Startup {
 
     func shouldShowOnboardingWizard() async -> Bool {
         return await Self.shouldShowOnboardingWizard(in: container)
+    }
+
+    @MainActor
+    func showOnboardingWizard() async -> OnboardingWizardOutcome {
+        return await OnboardingWizardWindowController.create().showModal()
     }
 
     static func onboardingDisposition(
