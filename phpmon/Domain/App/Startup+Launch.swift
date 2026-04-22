@@ -70,9 +70,6 @@ extension Startup {
         // Set up the filesystem watcher for the Homebrew binaries
         await HomebrewWatchManager.prepare()
 
-        // Check for other problems
-        container.warningManager.evaluateWarnings()
-
         // Set up the config watchers on launch (updated automatically when switching)
         await ConfigWatchManager.handleWatcher()
 
@@ -132,6 +129,10 @@ extension Startup {
 
         // Enable the main menu item
         MainMenu.shared.statusItem.button?.isEnabled = true
+
+        // PHP Doctor warnings can inspect shell and PATH state, so defer them
+        // until after startup has fully completed and the menu is interactive.
+        container.warningManager.evaluateWarnings()
 
         // Post-launch stats and update check, but only if not running tests
         await performPostLaunchActions()
