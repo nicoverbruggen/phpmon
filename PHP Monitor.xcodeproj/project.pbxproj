@@ -155,6 +155,7 @@
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B72ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0BC2ED36DF800CA6795 /* LockedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B82ED36DF800CA6795 /* LockedTests.swift */; };
+		8A1B2C3D4E5F60718293A4B7 /* StartupOnboardingWizardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4B6 /* StartupOnboardingWizardTest.swift */; };
 		038A2B7E2EDDB24C00173ACF /* App+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A2B7D2EDDB24400173ACF /* App+UUID.swift */; };
 		038A2B7F2EDDB24C00173ACF /* App+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A2B7D2EDDB24400173ACF /* App+UUID.swift */; };
 		038A2B802EDDB24C00173ACF /* App+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A2B7D2EDDB24400173ACF /* App+UUID.swift */; };
@@ -1194,6 +1195,7 @@
 		038131472F4E00D100653177 /* TrackedTestableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedTestableCommand.swift; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F60718293A4B6 /* StartupOnboardingWizardTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupOnboardingWizardTest.swift; sourceTree = "<group>"; };
 		038A2B7D2EDDB24400173ACF /* App+UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UUID.swift"; sourceTree = "<group>"; };
 		0392CDE52EB23B8F009176DA /* CertificateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateValidator.swift; sourceTree = "<group>"; };
 		0392CDEA2EB25371009176DA /* SecurePopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurePopoverView.swift; sourceTree = "<group>"; };
@@ -1643,6 +1645,14 @@
 				0386B0B82ED36DF800CA6795 /* LockedTests.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8A1B2C3D4E5F60718293A4B5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8A1B2C3D4E5F60718293A4B6 /* StartupOnboardingWizardTest.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		039C29112E8AA159007F5FAB /* Http */ = {
@@ -2684,6 +2694,7 @@
 			isa = PBXGroup;
 			children = (
 				03B947DF2F436A4800B6F899 /* Conditions */,
+				8A1B2C3D4E5F60718293A4B5 /* App */,
 				C40C7F1C27720E1400DDDCDC /* Test Files */,
 				C4C1019927C65A4D001FACC2 /* Commands */,
 				036C39062E5C8890008DAEDF /* Integration */,
@@ -4076,6 +4087,7 @@
 				C4AF9F7D275454A900D44ED0 /* ValetVersionExtractorTest.swift in Sources */,
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
+				8A1B2C3D4E5F60718293A4B7 /* StartupOnboardingWizardTest.swift in Sources */,
 				033E9DFD2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,
