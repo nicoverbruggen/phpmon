@@ -238,6 +238,18 @@
 		03DAD3A72EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
 		03DAD3A92EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */; };
+		03E3112C2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
+		03E3112D2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
+		03E3112E2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
+		03E3112F2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
+		03E311312F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
+		03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
+		03E311332F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
+		03E311342F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
+		03E311362F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
+		03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
+		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
+		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03EC943C2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943D2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943E2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
@@ -1205,6 +1217,9 @@
 		03D846242EB6344A006EFE3C /* DomainListVC+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Window.swift"; sourceTree = "<group>"; };
 		03D846312EB64E35006EFE3C /* CrashReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
+		03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardView.swift; sourceTree = "<group>"; };
+		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
+		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -1727,6 +1742,15 @@
 				03ACC6432ECCAAF70070D4CD /* WebApi */,
 			);
 			path = Testables;
+			sourceTree = "<group>";
+		};
+		03E3112A2F98D19100E59EF0 /* OnboardingWizard */ = {
+			isa = PBXGroup;
+			children = (
+				03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */,
+				03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */,
+			);
+			path = OnboardingWizard;
 			sourceTree = "<group>";
 		};
 		3169708AAEC47AE3F4C33F74 /* Startup */ = {
@@ -2428,6 +2452,7 @@
 				033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */,
 				0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */,
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
+				03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C409349C298EE8E900D25014 /* AppUpdater.swift */,
@@ -2626,6 +2651,7 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				03E3112A2F98D19100E59EF0 /* OnboardingWizard */,
 				3169708AAEC47AE3F4C33F74 /* Startup */,
 				C4B609182853AAA700C95265 /* Domains */,
 				C4B609172853AA9E00C95265 /* Menu */,
@@ -3040,6 +3066,7 @@
 				C489E0BB2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */,
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
+				03E311362F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				C490E3BB29BCA375006D2DE6 /* Measurements.swift in Sources */,
 				C4E684092AF26B830023ED25 /* BrewTapFormulae.swift in Sources */,
 				C4B79EC629CA474200A483EE /* FakeCommand.swift in Sources */,
@@ -3095,6 +3122,7 @@
 				C4E2E85C28FC282B003B070C /* TestableConfiguration.swift in Sources */,
 				C4C0E8DF27F88AEB002D32A9 /* FakeDomainScanner.swift in Sources */,
 				033E9DFF2F44D93000685F62 /* Startup+Alert.swift in Sources */,
+				03E311332F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				037F44192EDB27BA002EBF75 /* Debouncer.swift in Sources */,
 				C44B3A4628E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */,
@@ -3105,6 +3133,7 @@
 				C4F2E4372752F0870020E974 /* BrewDiagnostics.swift in Sources */,
 				031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4AD38B228ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
+				03E3112D2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
 				C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */,
 				C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
@@ -3335,6 +3364,7 @@
 				C471E84628F9BB650021E251 /* InterAppHandler.swift in Sources */,
 				032DAC2B2E8BEB5B0018E01C /* RealWebApi.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
+				03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
@@ -3390,6 +3420,7 @@
 				031D74862F46307300D4FF48 /* AddSiteView.swift in Sources */,
 				C48DDD0F29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
 				C4AFC4B029C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
+				03E311312F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				C471E86A28F9BB650021E251 /* PreferenceVC.swift in Sources */,
 				C471E86B28F9BB650021E251 /* PreferenceName.swift in Sources */,
 				C471E86C28F9BB650021E251 /* Preferences.swift in Sources */,
@@ -3513,6 +3544,7 @@
 				032DAC2D2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */,
 				C4513F902B13E2E6001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
 				03BC24B82F51C5230051292B /* MarkdownTextViewRepresentable.swift in Sources */,
+				03E3112C2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
 				03EC943F2F47297B00231276 /* ErrorView.swift in Sources */,
 				FEA10615F601BEC79BBDA45B /* StartupAlertViewModel.swift in Sources */,
 				9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */,
@@ -3577,6 +3609,7 @@
 				C42106692AFA9FF400DF3732 /* PhpVersionManagerView+Actions.swift in Sources */,
 				C43931CD29C4C03F0069165B /* Brew.swift in Sources */,
 				C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */,
+				03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				C4ACE9E429F84EDD00110766 /* PhpGuard.swift in Sources */,
 				C471E8A328F9BB8F0021E251 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4B79EB929CA387F00A483EE /* BrewPhpFormulaeHandler.swift in Sources */,
@@ -3755,6 +3788,7 @@
 				C4463FCF29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
+				03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C4513F8E2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
@@ -3788,6 +3822,7 @@
 				C4513F972B13E338001AD760 /* PhpExtensionManagerView+Actions.swift in Sources */,
 				C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C471E80D28F9BAE80021E251 /* ArrayExtension.swift in Sources */,
+				03E3112F2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
 				035983A32E97FA9100218DC7 /* Container.swift in Sources */,
 				032C7A032EE43B7600758D98 /* Suspendable.swift in Sources */,
 				C471E7CD28F9BA600021E251 /* ShellProtocol.swift in Sources */,
@@ -3824,6 +3859,7 @@
 				035983A12E97FA9100218DC7 /* Container.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */,
+				03E311342F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
@@ -3932,12 +3968,14 @@
 				C4AFC4B429C4F43300BF4E0D /* HomebrewUpgradableTest.swift in Sources */,
 				037F441E2EDB9195002EBF75 /* ConfigWatchManager.swift in Sources */,
 				C4E2E84828FC1D93003B070C /* TestableConfigurationTest.swift in Sources */,
+				03E3112E2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
 				036061D82F4C705B00B5998F /* WindowManager.swift in Sources */,
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4513F962B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
 				C4B97B76275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4AFC4AF29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
 				0381313E2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
+				03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C4415E8E2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */,
