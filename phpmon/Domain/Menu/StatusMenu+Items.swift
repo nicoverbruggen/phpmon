@@ -324,7 +324,7 @@ extension StatusMenu {
         var items: [NSMenuItem] = [
             // FIRST AID
             HeaderView.asMenuItem(text: "mi_first_aid".localized),
-            NSMenuItem(title: "mi_view_onboarding".localized, action: #selector(MainMenu.showWelcomeTour)),
+            NSMenuItem(title: "mi_view_welcome_tour".localized, action: #selector(MainMenu.showWelcomeTour)),
             NSMenuItem(title: "mi_fa_php_doctor".localized, action: #selector(MainMenu.openWarnings)),
             NSMenuItem(title: "mi_view_command_history".localized, action: #selector(MainMenu.showCommandHistory))
         ]

@@ -151,9 +151,9 @@ extension Startup {
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
         if Stats.successfulLaunchCount == 1 {
-            Log.info("Should present the first launch screen!")
+            Log.info("Should present the welcome screen!")
             Task { @MainActor in
-                OnboardingWindowController.show()
+                WelcomeTourWindowController.show()
             }
         } else {
             // Check for updates

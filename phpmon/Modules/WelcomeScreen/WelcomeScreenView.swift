@@ -1,5 +1,5 @@
 //
-//  OnboardingView.swift
+//  WelcomeTourView.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 08/07/2022.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct OnboardingTextItem: View {
+struct WelcomeTourTextItem: View {
     @State var icon: String
     @State var title: String
     @State var description: String
@@ -45,7 +45,7 @@ struct OnboardingTextItem: View {
     }
 }
 
-struct OnboardingView: View {
+struct WelcomeTourView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
             HStack {
@@ -55,7 +55,7 @@ struct OnboardingView: View {
                     .padding(.bottom, 5)
                     .padding(.trailing, 25)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("onboarding.welcome".localized)
+                    Text("welcome_tour.welcome".localized)
                         .font(.title)
                         .bold()
                         .padding(.bottom, 5)
@@ -63,8 +63,8 @@ struct OnboardingView: View {
                         .foregroundColor(Color.appPrimary)
                     Text(
                         Valet.installed
-                         ? "onboarding.explore".localizedForSwiftUI
-                         : "onboarding.explore.lite".localizedForSwiftUI
+                         ? "welcome_tour.explore".localizedForSwiftUI
+                         : "welcome_tour.explore.lite".localizedForSwiftUI
                     )
                     .padding(.bottom)
                     .padding(.trailing)
@@ -76,27 +76,27 @@ struct OnboardingView: View {
 
             VStack {
                 VStack(alignment: .leading, spacing: 10) {
-                    OnboardingTextItem(
+                    WelcomeTourTextItem(
                         icon: "bolt.circle.fill",
-                        title: "onboarding.tour.menu_bar.title",
-                        description: "onboarding.tour.menu_bar"
+                        title: "welcome_tour.tour.menu_bar.title",
+                        description: "welcome_tour.tour.menu_bar"
                     )
-                    OnboardingTextItem(
+                    WelcomeTourTextItem(
                         icon: "checkmark.circle.fill",
-                        title: "onboarding.tour.services.title",
-                        description: "onboarding.tour.services",
+                        title: "welcome_tour.tour.services.title",
+                        description: "welcome_tour.tour.services",
                         unavailable: !Valet.installed
                     )
-                    OnboardingTextItem(
+                    WelcomeTourTextItem(
                         icon: "list.bullet.circle.fill",
-                        title: "onboarding.tour.domains.title",
-                        description: "onboarding.tour.domains",
+                        title: "welcome_tour.tour.domains.title",
+                        description: "welcome_tour.tour.domains",
                         unavailable: !Valet.installed
                     )
-                    OnboardingTextItem(
+                    WelcomeTourTextItem(
                         icon: "pin.circle.fill",
-                        title: "onboarding.tour.isolation.title",
-                        description: "onboarding.tour.isolation",
+                        title: "welcome_tour.tour.isolation.title",
+                        description: "welcome_tour.tour.isolation",
                         unavailable: !Valet.installed
                     )
                 }
@@ -110,12 +110,12 @@ struct OnboardingView: View {
                         .foregroundColor(Color.appSecondary)
                         .padding(.trailing, 10)
                     HStack {
-                        Text("onboarding.tour.faq_hint".localizedForSwiftUI)
+                        Text("welcome_tour.tour.faq_hint".localizedForSwiftUI)
                             .lineLimit(5)
                     }.fixedSize(horizontal: false, vertical: true)
                 }
                 VStack {
-                    Text("onboarding.tour.once".localized)
+                    Text("welcome_tour.tour.once".localized)
                         .fixedSize(horizontal: false, vertical: true)
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -123,8 +123,8 @@ struct OnboardingView: View {
                         .padding(.bottom, 5)
                         .lineLimit(3)
                         .frame(height: 35)
-                    Button("onboarding.tour.close".localized) {
-                        WindowManager.close(OnboardingWC.self)
+                    Button("welcome_tour.tour.close".localized) {
+                        WindowManager.close(WelcomeTourWC.self)
                     }
                     .padding(.bottom, 15)
                     .padding(.top, 10)
@@ -140,5 +140,5 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView()
+    WelcomeTourView()
 }

@@ -134,7 +134,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      */
     @objc func showWelcomeTour() {
         Task { @MainActor in
-            OnboardingWindowController.show()
+            WelcomeTourWindowController.show()
         }
     }
 

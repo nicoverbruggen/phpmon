@@ -702,7 +702,7 @@
 		C471E86428F9BB650021E251 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699F028A2F3150060FEB8 /* Warning.swift */; };
 		C471E86528F9BB650021E251 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
 		C471E86628F9BB650021E251 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
-		C471E86728F9BB650021E251 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
+		C471E86728F9BB650021E251 /* WelcomeScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */; };
 		C471E86828F9BB650021E251 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PreferencesWindowController.swift */; };
 		C471E86928F9BB650021E251 /* PreferencesWindowController+Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */; };
 		C471E86A28F9BB650021E251 /* PreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferenceVC.swift */; };
@@ -723,7 +723,7 @@
 		C471E87F28F9BB650021E251 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
 		C471E88028F9BB650021E251 /* PhpDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDA928A2C49900CEAC97 /* PhpDoctorView.swift */; };
 		C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
-		C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
+		C471E88228F9BB650021E251 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */; };
 		C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
 		C471E88528F9BB650021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E88628F9BB650021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
@@ -783,7 +783,7 @@
 		C471E8C728F9BB8F0021E251 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699F028A2F3150060FEB8 /* Warning.swift */; };
 		C471E8C828F9BB8F0021E251 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
 		C471E8C928F9BB8F0021E251 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
-		C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
+		C471E8CA28F9BB8F0021E251 /* WelcomeScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */; };
 		C471E8CB28F9BB8F0021E251 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4998F092617633900B2526E /* PreferencesWindowController.swift */; };
 		C471E8CC28F9BB8F0021E251 /* PreferencesWindowController+Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */; };
 		C471E8CD28F9BB8F0021E251 /* PreferenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5420395826135DC100FB00FA /* PreferenceVC.swift */; };
@@ -804,7 +804,7 @@
 		C471E8E228F9BB8F0021E251 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4297F7928970D59004C4630 /* WarningView.swift */; };
 		C471E8E328F9BB8F0021E251 /* PhpDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDA928A2C49900CEAC97 /* PhpDoctorView.swift */; };
 		C471E8E428F9BB8F0021E251 /* NoWarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41C708C28AA7F7900E8D498 /* NoWarningsView.swift */; };
-		C471E8E528F9BB8F0021E251 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
+		C471E8E528F9BB8F0021E251 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */; };
 		C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BF2850BD2A007400F1 /* VersionPopoverView.swift */; };
 		C471E8E828F9BB8F0021E251 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C471E8E928F9BB8F0021E251 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
@@ -834,12 +834,12 @@
 		C4821C5C2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
 		C4821C5D2C2DEDE200357A68 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4821C592C2DEDE200357A68 /* AppMenu.swift */; };
 		C485706D28BF450900539B36 /* NSMenuItemExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40508B028ADAB44008FAC1F /* NSMenuItemExtension.swift */; };
-		C485706E28BF451C00539B36 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
+		C485706E28BF451C00539B36 /* WelcomeScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */; };
 		C485706F28BF452300539B36 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
 		C485707028BF452300539B36 /* PhpDoctorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422DDAC28A2DAC600CEAC97 /* PhpDoctorWindowController.swift */; };
 		C485707128BF452E00539B36 /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47699EE28A2F2A30060FEB8 /* WarningManager.swift */; };
 		C485707228BF453800539B36 /* SwiftUIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44264BD2850B86C007400F1 /* SwiftUIHelper.swift */; };
-		C485707328BF454300539B36 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
+		C485707328BF454300539B36 /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */; };
 		C485707428BF454E00539B36 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B6091C2853AB9700C95265 /* ServicesView.swift */; };
 		C485707528BF454F00539B36 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4709CA128524B3400088BB8 /* StatsView.swift */; };
 		C485707628BF455100539B36 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B609192853AAD300C95265 /* SectionHeaderView.swift */; };
@@ -1033,7 +1033,7 @@
 		C4E6840B2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E6840C2AF26B830023ED25 /* BrewTapFormulae.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */; };
 		C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */; };
-		C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */; };
+		C4E9D2C02878B336008FFDAD /* WelcomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */; };
 		C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C482BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
 		C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */; };
@@ -1077,7 +1077,7 @@
 		C4F8C0A422D4F12C002EFE61 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */; };
 		C4FACE80288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */; };
 		C4FACE81288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */; };
-		C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */; };
+		C4FACE83288F1F9700FC478F /* WelcomeScreenWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */; };
 		C4FBFC532616485F00CDB8E1 /* PhpVersionDetectionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */; };
 		C4FC21B128391F8E00D368BB /* MainMenu+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F361602836BFD9003598CC /* MainMenu+Actions.swift */; };
 		C4FC8D3D2A49816300FBBD16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C4FC8D422A49816300FBBD16 /* Localizable.strings */; };
@@ -1451,7 +1451,7 @@
 		C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewTapFormulae.swift; sourceTree = "<group>"; };
 		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
 		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
-		C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenView.swift; sourceTree = "<group>"; };
 		C4EA3C462BA4F947007B0BA7 /* CustomButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyles.swift; sourceTree = "<group>"; };
 		C4EB53E428551F9B006F9937 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C4EB53E628553117006F9937 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -1472,7 +1472,7 @@
 		C4F8C0A322D4F12C002EFE61 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C4FACE7F288F1C0D00FC478F /* PreferencesWindowController+Hotkey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreferencesWindowController+Hotkey.swift"; sourceTree = "<group>"; };
-		C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindowController.swift; sourceTree = "<group>"; };
+		C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenWindowController.swift; sourceTree = "<group>"; };
 		C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhpVersionDetectionTest.swift; sourceTree = "<group>"; };
 		C4FC8D412A49816300FBBD16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C4FC8D432A49816C00FBBD16 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2136,7 +2136,7 @@
 		C44DFA832A6706A200B98ED5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				C4E9D2BE2878B32D008FFDAD /* Onboarding */,
+				C4E9D2BE2878B32D008FFDAD /* WelcomeScreen */,
 				C464ADAA275A7A25003FCD53 /* Domain List */,
 				C44DFA7A2A6703FD00B98ED5 /* PHP Config Editor */,
 				C4297F7828970D4E004C4630 /* PHP Doctor */,
@@ -2614,13 +2614,13 @@
 			path = Command;
 			sourceTree = "<group>";
 		};
-		C4E9D2BE2878B32D008FFDAD /* Onboarding */ = {
+		C4E9D2BE2878B32D008FFDAD /* WelcomeScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C4FACE82288F1F9700FC478F /* OnboardingWindowController.swift */,
-				C4E9D2BF2878B336008FFDAD /* OnboardingView.swift */,
+				C4FACE82288F1F9700FC478F /* WelcomeScreenWindowController.swift */,
+				C4E9D2BF2878B336008FFDAD /* WelcomeScreenView.swift */,
 			);
-			path = Onboarding;
+			path = WelcomeScreen;
 			sourceTree = "<group>";
 		};
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
@@ -3100,7 +3100,7 @@
 				03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
-				C4E9D2C02878B336008FFDAD /* OnboardingView.swift in Sources */,
+				C4E9D2C02878B336008FFDAD /* WelcomeScreenView.swift in Sources */,
 				032DAC2E2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */,
 				C4F2E4372752F0870020E974 /* BrewDiagnostics.swift in Sources */,
 				031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
@@ -3244,7 +3244,7 @@
 				C40D725A2A018ACC0054A067 /* BusyStatus.swift in Sources */,
 				031F24802EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C4D9ADC8277611A0007277F4 /* InternalSwitcher.swift in Sources */,
-				C4FACE83288F1F9700FC478F /* OnboardingWindowController.swift in Sources */,
+				C4FACE83288F1F9700FC478F /* WelcomeScreenWindowController.swift in Sources */,
 				C4415E8D2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C43FDBE929A932B0003D85EC /* PhpConfigChecker.swift in Sources */,
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
@@ -3384,7 +3384,7 @@
 				C471E86528F9BB650021E251 /* WarningManager.swift in Sources */,
 				C471E86628F9BB650021E251 /* PhpDoctorWindowController.swift in Sources */,
 				DE164E569298309E4224C5D6 /* CommandHistoryWindowController.swift in Sources */,
-				C471E86728F9BB650021E251 /* OnboardingWindowController.swift in Sources */,
+				C471E86728F9BB650021E251 /* WelcomeScreenWindowController.swift in Sources */,
 				C471E86828F9BB650021E251 /* PreferencesWindowController.swift in Sources */,
 				C471E86928F9BB650021E251 /* PreferencesWindowController+Hotkey.swift in Sources */,
 				031D74862F46307300D4FF48 /* AddSiteView.swift in Sources */,
@@ -3419,7 +3419,7 @@
 				C471E88028F9BB650021E251 /* PhpDoctorView.swift in Sources */,
 				25250C95E34D20ED4C91C320 /* CommandHistoryView.swift in Sources */,
 				C471E88128F9BB650021E251 /* NoWarningsView.swift in Sources */,
-				C471E88228F9BB650021E251 /* OnboardingView.swift in Sources */,
+				C471E88228F9BB650021E251 /* WelcomeScreenView.swift in Sources */,
 				C471E88328F9BB650021E251 /* VersionPopoverView.swift in Sources */,
 				C4513F952B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
 				C471E88528F9BB650021E251 /* ServicesView.swift in Sources */,
@@ -3641,7 +3641,7 @@
 				030BC1BA2F8D0C900076F982 /* SystemContext.swift in Sources */,
 				BB3AF45BED2C82AE27E86107 /* CommandHistoryWindowController.swift in Sources */,
 				C41ADCEB2970CCC700120423 /* FSNotifier.swift in Sources */,
-				C471E8CA28F9BB8F0021E251 /* OnboardingWindowController.swift in Sources */,
+				C471E8CA28F9BB8F0021E251 /* WelcomeScreenWindowController.swift in Sources */,
 				C456A0C92AA614BD0080144F /* PhpPreference.swift in Sources */,
 				C4EA3C4A2BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C4D4CB3A29C109CF00DB9F93 /* InternalSwitcher+Valet.swift in Sources */,
@@ -3692,7 +3692,7 @@
 				0A1A6208D3DD2495FBD8569B /* CommandHistoryView.swift in Sources */,
 				03BC24B92F51C5230051292B /* MarkdownTextViewRepresentable.swift in Sources */,
 				C471E8E428F9BB8F0021E251 /* NoWarningsView.swift in Sources */,
-				C471E8E528F9BB8F0021E251 /* OnboardingView.swift in Sources */,
+				C471E8E528F9BB8F0021E251 /* WelcomeScreenView.swift in Sources */,
 				C4B79EBF29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C45D654F29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C471E8E628F9BB8F0021E251 /* VersionPopoverView.swift in Sources */,
@@ -3843,7 +3843,7 @@
 				0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */,
 				54D9E0BB27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				03D846332EB64E39006EFE3C /* CrashReporter.swift in Sources */,
-				C485707328BF454300539B36 /* OnboardingView.swift in Sources */,
+				C485707328BF454300539B36 /* WelcomeScreenView.swift in Sources */,
 				C485707728BF455300539B36 /* HeaderView.swift in Sources */,
 				C4F780B125D80B4D000DBC97 /* PhpExtension.swift in Sources */,
 				C4D5CFCB27E0F9CD00035329 /* NginxConfigurationFile.swift in Sources */,
@@ -3920,7 +3920,7 @@
 				C40D72602A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
 				C485707B28BF458900539B36 /* VersionPopoverView.swift in Sources */,
 				C4E2E85D28FC282B003B070C /* TestableConfiguration.swift in Sources */,
-				C485706E28BF451C00539B36 /* OnboardingWindowController.swift in Sources */,
+				C485706E28BF451C00539B36 /* WelcomeScreenWindowController.swift in Sources */,
 				C4BB393A2981AFC700F8E797 /* PhpVersionSource.swift in Sources */,
 				037F44252EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */,
 				C4CB6E66292C362C002E9027 /* Homebrew.swift in Sources */,

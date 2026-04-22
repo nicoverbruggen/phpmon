@@ -44,10 +44,10 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
     }
 
-    final func test_can_view_onboarding_flow() throws {
+    final func test_can_view_welcome_tour() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
-        app.mainMenuItem(withText: "mi_view_onboarding".localized).click()
+        app.mainMenuItem(withText: "mi_view_welcome_tour".localized).click()
     }
 
     final func test_can_open_command_history() throws {
