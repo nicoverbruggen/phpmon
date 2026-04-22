@@ -75,12 +75,20 @@ class Application {
 
     /** Checks if the app is installed and stores its path. */
     func isInstalled() async -> Bool {
-        // Then verify it's actually installed using the shell command
-        let (process, output) = try! await container.shell.attach(
-            "/usr/bin/open -Ra \"\(name)\"",
-            didReceiveOutput: { _, _ in },
-            withTimeout: 2.0
-        )
+        let process: Process
+        let output: ShellOutput
+
+        do {
+            // Verify the app can be resolved by LaunchServices as well
+            (process, output) = try await container.shell.attach(
+                "/usr/bin/open -Ra \"\(name)\"",
+                didReceiveOutput: { _, _ in },
+                withTimeout: 2.0
+            )
+        } catch {
+            Log.warn("Could not determine whether `\(name)` is installed: \(error)")
+            return false
+        }
 
         if container.shell is TestableShell {
             // When testing, check the error output (must not be empty)
