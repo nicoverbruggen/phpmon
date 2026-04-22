@@ -1,5 +1,5 @@
 //
-//  StartupOnboardingWizardTest.swift
+//  OnboardingDispositionTest.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 22/04/2026.
@@ -8,7 +8,7 @@
 
 import Testing
 
-struct StartupOnboardingWizardTest {
+struct OnboardingDispositionTest {
     // A system without Homebrew is treated as a clear first-run onboarding case.
     @Test func missing_homebrew_shows_wizard() async {
         let container = prepareContainer(
@@ -16,7 +16,7 @@ struct StartupOnboardingWizardTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingWizardStartupDisposition(in: container) == .wizard)
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
         #expect(await Startup.shouldShowOnboardingWizard(in: container))
     }
 
@@ -29,7 +29,7 @@ struct StartupOnboardingWizardTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingWizardStartupDisposition(in: container) == .wizard)
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
     }
 
     // If PHP is already present, startup should treat the machine as partially configured.
@@ -41,7 +41,7 @@ struct StartupOnboardingWizardTest {
             hasPhpBinary: true
         )
 
-        #expect(await Startup.onboardingWizardStartupDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .normal)
         #expect(!(await Startup.shouldShowOnboardingWizard(in: container)))
     }
 
@@ -55,7 +55,7 @@ struct StartupOnboardingWizardTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingWizardStartupDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .normal)
     }
 
     // Existing Valet state should bypass onboarding and defer to the regular startup checks.
@@ -68,7 +68,7 @@ struct StartupOnboardingWizardTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingWizardStartupDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .normal)
     }
 
     private func prepareContainer(

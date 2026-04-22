@@ -7,7 +7,7 @@
 //
 
 extension Startup {
-    enum OnboardingWizardStartupDisposition: Equatable {
+    enum OnboardingDisposition: Equatable {
         case wizard
         case normal
     }
@@ -21,17 +21,17 @@ extension Startup {
 
      Any partial setup should fall through to the regular startup checks immediately.
      */
-    func onboardingWizardStartupDisposition() async -> OnboardingWizardStartupDisposition {
-        return await Self.onboardingWizardStartupDisposition(in: container)
+    func onboardingDisposition() async -> OnboardingDisposition {
+        return await Self.onboardingDisposition(in: container)
     }
 
     func shouldShowOnboardingWizard() async -> Bool {
         return await Self.shouldShowOnboardingWizard(in: container)
     }
 
-    static func onboardingWizardStartupDisposition(
+    static func onboardingDisposition(
         in container: Container
-    ) async -> OnboardingWizardStartupDisposition {
+    ) async -> OnboardingDisposition {
         if !hasHomebrewInstalled(in: container) {
             return .wizard
         }
@@ -44,7 +44,7 @@ extension Startup {
     }
 
     static func shouldShowOnboardingWizard(in container: Container) async -> Bool {
-        return await onboardingWizardStartupDisposition(in: container) == .wizard
+        return await onboardingDisposition(in: container) == .wizard
     }
 
     private static func hasHomebrewInstalled(in container: Container) -> Bool {
