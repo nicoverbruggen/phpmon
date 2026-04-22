@@ -27,6 +27,7 @@ class OnboardingWizardWindowController: PMWindowController {
         window.titlebarAppearsTransparent = true
         window.delegate = windowController
         window.contentView = NSHostingView(rootView: OnboardingWizardView(
+            completedSteps: [],
             onContinue: {
                 windowController.complete(with: .completed)
             },

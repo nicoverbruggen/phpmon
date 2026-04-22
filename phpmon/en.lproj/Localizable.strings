@@ -987,11 +987,14 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 // ONBOARDING WIZARD
 
 "onboarding_wizard.title" = "Set Up PHP Monitor";
-"onboarding_wizard.description" = "PHP Monitor can guide you through the initial setup, seeing as your system is currently missing some required software for the app to function.";
-"onboarding_wizard.steps.developer_tools" = "Install Developer Tools";
-"onboarding_wizard.steps.homebrew" = "Install Homebrew and verify PATH";
-"onboarding_wizard.steps.php_composer" = "Install PHP and Composer";
-"onboarding_wizard.steps.valet" = "Install Valet (optional, but recommended)";
+"onboarding_wizard.description" = "Your system is currently missing some important bits that are required for the app to work. PHP Monitor can guide you through the initial setup, and get you up and running with PHP.";
+"onboarding_wizard.steps.developer_tools" = "Install Apple's Developer Tools";
+"onboarding_wizard.steps.homebrew" = "Install Homebrew";
+"onboarding_wizard.steps.php_composer" = "Install PHP & Composer";
+"onboarding_wizard.steps.valet" = "Install Valet";
+"onboarding_wizard.badges.optional" = "Optional";
+"onboarding_wizard.status.ok" = "OK";
+"onboarding_wizard.status.pending" = "Pending";
 "onboarding_wizard.buttons.quit" = "Quit";
 "onboarding_wizard.buttons.continue" = "Continue";
 
