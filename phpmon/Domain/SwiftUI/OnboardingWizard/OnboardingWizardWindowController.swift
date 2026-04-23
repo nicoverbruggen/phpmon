@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import NVAlert
 import SwiftUI
 
 class OnboardingWizardWindowController: PMWindowController {
@@ -15,26 +16,21 @@ class OnboardingWizardWindowController: PMWindowController {
         return "OnboardingWizard"
     }
 
+    private var viewModel: OnboardingWizardViewModel?
     private var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     private var didResolve = false
 
     static func create() -> OnboardingWizardWindowController {
         let windowController = OnboardingWizardWindowController()
+        let viewModel = OnboardingWizardViewModel()
+        windowController.viewModel = viewModel
         let window = NSWindow()
 
         window.title = ""
         window.styleMask = [.titled, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = windowController
-        window.contentView = NSHostingView(rootView: OnboardingWizardView(
-            completedSteps: [],
-            onContinue: {
-                windowController.complete(with: .completed)
-            },
-            onQuit: {
-                windowController.complete(with: .quit)
-            }
-        ))
+        window.contentView = NSHostingView(rootView: OnboardingWizardView(viewModel: viewModel))
         window.setContentSize(window.contentView!.fittingSize)
         window.isReleasedWhenClosed = false
 
@@ -45,11 +41,23 @@ class OnboardingWizardWindowController: PMWindowController {
     @MainActor
     func showModal() async -> Startup.OnboardingWizardOutcome {
         return await withCheckedContinuation { continuation in
+            guard let viewModel = self.viewModel else {
+                continuation.resume(returning: .quit)
+                return
+            }
+
             self.onComplete = { [weak self] outcome in
                 guard let self, !self.didResolve else { return }
                 self.didResolve = true
                 self.close()
                 continuation.resume(returning: outcome)
+            }
+
+            viewModel.onComplete = { [weak self] outcome in
+                self?.complete(with: outcome)
+            }
+            viewModel.onDeveloperToolsRecheckFailed = { [weak self] in
+                self?.presentDeveloperToolsIncompleteAlert()
             }
 
             self.showWindow(nil)
@@ -69,5 +77,25 @@ class OnboardingWizardWindowController: PMWindowController {
 
     private func complete(with outcome: Startup.OnboardingWizardOutcome) {
         onComplete?(outcome)
+    }
+
+    @MainActor private func presentDeveloperToolsIncompleteAlert() {
+        guard let window else {
+            return
+        }
+
+        NVAlert()
+            .withInformation(
+                title: "onboarding_wizard.alert.developer_tools_incomplete.title".localized,
+                subtitle: "onboarding_wizard.alert.developer_tools_incomplete.subtitle".localized,
+                description: "onboarding_wizard.alert.developer_tools_incomplete.description".localized
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .withSecondary(text: "onboarding_wizard.alert.developer_tools_incomplete.copy_command".localized) { alert in
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString("/usr/bin/xcode-select --install", forType: .string)
+                alert.close(with: .alertSecondButtonReturn)
+            }
+            .presentAsSheet(attachedTo: window)
     }
 }

@@ -44,14 +44,32 @@ class ZshRunCommand {
     /**
      Adds Homebrew binaries to the PATH.
      */
-    public func addHomebrewPath() async {
-        await add("export PATH=$HOME/bin:/opt/homebrew/bin:$PATH")
+    @discardableResult
+    public func addHomebrewPath() async -> Bool {
+        await add(Self.homebrewPathLine(in: container))
+    }
+
+    /**
+     Adds Composer's global vendor binaries to the PATH.
+     */
+    @discardableResult
+    public func addComposerPath() async -> Bool {
+        await add(Self.composerPathLine())
     }
 
     /**
      Adds PHP Monitor binaries to the PATH.
      */
-    public func addPhpMonitorPath() async {
+    @discardableResult
+    public func addPhpMonitorPath() async -> Bool {
         await add("export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH")
+    }
+
+    static func homebrewPathLine(in container: Container) -> String {
+        return "export PATH=$HOME/bin:\(container.paths.binPath):$PATH"
+    }
+
+    static func composerPathLine() -> String {
+        return "export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH"
     }
 }

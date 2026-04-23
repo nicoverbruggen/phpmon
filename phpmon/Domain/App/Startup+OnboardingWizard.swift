@@ -58,8 +58,25 @@ extension Startup {
         return await onboardingDisposition(in: container) == .wizard
     }
 
-    private static func hasHomebrewInstalled(in container: Container) -> Bool {
+    static func hasHomebrewInstalled(in container: Container) -> Bool {
         return container.filesystem.fileExists(container.paths.brew)
+    }
+
+    static func hasAppleDeveloperToolsInstalled(in container: Container) async -> Bool {
+        let output = await container.shell.pipe("/usr/bin/xcode-select -p")
+
+        return !output.hasError
+            && !output.out.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    static func hasOnboardingPathConfigured(in container: Container) -> Bool {
+        let pathEntries = pathEntries(in: container.shell.PATH, homePath: container.paths.homePath)
+
+        return pathEntries.contains(normalizedPathEntry(container.paths.binPath, homePath: container.paths.homePath))
+            && pathEntries.contains(normalizedPathEntry(
+                "\(container.paths.homePath)/.composer/vendor/bin",
+                homePath: container.paths.homePath
+            ))
     }
 
     private static func hasAnyOnboardingPrerequisiteInstalled(in container: Container) async -> Bool {
@@ -86,7 +103,7 @@ extension Startup {
         return false
     }
 
-    private static func hasPhpInstalled(in container: Container) async -> Bool {
+    static func hasPhpInstalled(in container: Container) async -> Bool {
         if container.filesystem.fileExists(container.paths.php) {
             return true
         }
@@ -97,7 +114,7 @@ extension Startup {
             .contains("php")
     }
 
-    private static func hasComposerInstalled(in container: Container) -> Bool {
+    static func hasComposerInstalled(in container: Container) -> Bool {
         container.paths.detectBinaryPaths()
         return container.paths.composer != nil
     }
@@ -114,5 +131,30 @@ extension Startup {
         return container.filesystem.fileExists(container.paths.valet)
             || container.filesystem.fileExists("~/.composer/vendor/bin/valet")
             || container.filesystem.directoryExists("~/.config/valet")
+    }
+
+    private static func pathEntries(in path: String, homePath: String) -> Set<String> {
+        return Set(path
+            .split(separator: ":")
+            .map { normalizedPathEntry(String($0), homePath: homePath) }
+        )
+    }
+
+    private static func normalizedPathEntry(_ path: String, homePath: String) -> String {
+        var normalized = path
+
+        if normalized == "~" || normalized == "$HOME" {
+            normalized = homePath
+        } else if normalized.hasPrefix("~/") {
+            normalized = homePath + String(normalized.dropFirst(1))
+        } else if normalized.hasPrefix("$HOME/") {
+            normalized = homePath + String(normalized.dropFirst("$HOME".count))
+        }
+
+        while normalized.count > 1 && normalized.hasSuffix("/") {
+            normalized.removeLast()
+        }
+
+        return normalized
     }
 }

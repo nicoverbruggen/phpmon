@@ -71,6 +71,35 @@ struct OnboardingDispositionTest {
         #expect(await Startup.onboardingDisposition(in: container) == .normal)
     }
 
+    // PATH validation should only pass when Homebrew and Composer appear as exact PATH entries.
+    @Test func path_configuration_requires_exact_path_entries() {
+        let container = prepareContainer(
+            withFiles: [:],
+            hasPhpBinary: false
+        )
+        (container.shell as? TestableShell)?.PATH = [
+            "/usr/local/bin",
+            "/opt/homebrew/bin-old",
+            "/Users/fake/.composer/vendor/bin-backup"
+        ].joined(separator: ":")
+
+        #expect(!Startup.hasOnboardingPathConfigured(in: container))
+    }
+
+    // PATH validation should allow common shell-expanded home entries and harmless trailing slashes.
+    @Test func path_configuration_accepts_normalized_exact_entries() {
+        let container = prepareContainer(
+            withFiles: [:],
+            hasPhpBinary: false
+        )
+        (container.shell as? TestableShell)?.PATH = [
+            "$HOME/.composer/vendor/bin/",
+            "/opt/homebrew/bin/"
+        ].joined(separator: ":")
+
+        #expect(Startup.hasOnboardingPathConfigured(in: container))
+    }
+
     private func prepareContainer(
         withFiles files: [String: FakeFile],
         hasPhpBinary: Bool

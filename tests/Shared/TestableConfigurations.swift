@@ -70,6 +70,8 @@ class TestableConfigurations {
                     : .instant("user"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
+                "/usr/bin/xcode-select -p"
+                    : .instant("/Library/Developer/CommandLineTools"),
                 "sudo /opt/homebrew/bin/brew services info dnsmasq --json"
                     : .delayed(0.2, """
                         [

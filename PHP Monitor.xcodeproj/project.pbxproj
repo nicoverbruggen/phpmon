@@ -242,6 +242,42 @@
 		03E3112D2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
 		03E3112E2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
 		03E3112F2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */; };
+		03E311592F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */; };
+		03E3115A2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */; };
+		03E3115B2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */; };
+		03E3115C2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */; };
+		03E3115D2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */; };
+		03E3115E2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */; };
+		03E3115F2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */; };
+		03E311602F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */; };
+		03E311612F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */; };
+		03E311622F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */; };
+		03E311632F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */; };
+		03E311642F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */; };
+		03E311652F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */; };
+		03E311662F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */; };
+		03E311672F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */; };
+		03E311682F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */; };
+		03E311692F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */; };
+		03E3116A2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */; };
+		03E3116B2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */; };
+		03E3116C2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */; };
+		03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
+		03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
+		03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
+		03E311442F9901A000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
+		03E311482F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
+		03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
+		03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
+		03E3114B2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
+		03E3114C2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
+		03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
+		03E3114E2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
+		03E3114F2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
+		03E311502F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */; };
+		03E311512F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */; };
+		03E311522F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */; };
+		03E311532F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */; };
 		03E311312F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
 		03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
 		03E311332F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */; };
@@ -251,6 +287,7 @@
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
+		03E311432F99012000E59EF0 /* OnboardingWizardViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */; };
 		03EC943C2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943D2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
 		03EC943E2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
@@ -1220,9 +1257,19 @@
 		03D846312EB64E35006EFE3C /* CrashReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		03DAD3A52EB3B08A003417BD /* DomainListVC+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DomainListVC+Certs.swift"; sourceTree = "<group>"; };
 		03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardView.swift; sourceTree = "<group>"; };
+		03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Actions.swift"; sourceTree = "<group>"; };
+		03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Content.swift"; sourceTree = "<group>"; };
+		03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Display.swift"; sourceTree = "<group>"; };
+		03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Sidebar.swift"; sourceTree = "<group>"; };
+		03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Previews.swift"; sourceTree = "<group>"; };
+		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
+		03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardCommands.swift; sourceTree = "<group>"; };
+		03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardViewModel+Presentation.swift"; sourceTree = "<group>"; };
+		03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardViewModel+Steps.swift"; sourceTree = "<group>"; };
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
 		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
+		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -1752,6 +1799,15 @@
 			isa = PBXGroup;
 			children = (
 				03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */,
+				03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */,
+				03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */,
+				03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */,
+				03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */,
+				03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */,
+				03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */,
+				03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */,
+				03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */,
+				03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */,
 				03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */,
 			);
 			path = OnboardingWizard;
@@ -1854,6 +1910,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1B2C3D4E5F60718293A4B6 /* OnboardingDispositionTest.swift */,
+				03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -3081,6 +3138,10 @@
 				C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */,
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				03E311362F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
+				03E311482F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
+				03E3114C2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
+				03E311502F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C490E3BB29BCA375006D2DE6 /* Measurements.swift in Sources */,
 				C4E684092AF26B830023ED25 /* BrewTapFormulae.swift in Sources */,
 				C4B79EC629CA474200A483EE /* FakeCommand.swift in Sources */,
@@ -3148,6 +3209,11 @@
 				031E2B692B1525A7007C29E1 /* BrewPhpExtension.swift in Sources */,
 				C4AD38B228ECD9D300FA8D83 /* TestableFileSystem.swift in Sources */,
 				03E3112D2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
+				03E311592F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */,
+				03E3115D2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */,
+				03E311612F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */,
+				03E311652F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */,
+				03E311692F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */,
 				C4EB53E528551F9B006F9937 /* HeaderView.swift in Sources */,
 				C4EA3C472BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				C40FE737282ABA4F00A302C2 /* AppVersion.swift in Sources */,
@@ -3379,6 +3445,10 @@
 				032DAC2B2E8BEB5B0018E01C /* RealWebApi.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
 				03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
+				03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
+				03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
+				03E311512F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
@@ -3559,6 +3629,11 @@
 				C4513F902B13E2E6001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
 				03BC24B82F51C5230051292B /* MarkdownTextViewRepresentable.swift in Sources */,
 				03E3112C2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
+				03E3115A2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */,
+				03E3115E2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */,
+				03E311622F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */,
+				03E311662F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */,
+				03E3116A2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */,
 				03EC943F2F47297B00231276 /* ErrorView.swift in Sources */,
 				FEA10615F601BEC79BBDA45B /* StartupAlertViewModel.swift in Sources */,
 				9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */,
@@ -3804,6 +3879,10 @@
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
 				03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
+				03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
+				03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
+				03E3114E2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
+				03E311522F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
 				C44E985F29B23EBF0059F773 /* UpdateCheckTest.swift in Sources */,
 				C4513F8E2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
@@ -3838,6 +3917,11 @@
 				C4D3661D291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C471E80D28F9BAE80021E251 /* ArrayExtension.swift in Sources */,
 				03E3112F2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
+				03E3115B2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */,
+				03E3115F2F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */,
+				03E311632F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */,
+				03E311672F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */,
+				03E3116B2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */,
 				035983A32E97FA9100218DC7 /* Container.swift in Sources */,
 				032C7A032EE43B7600758D98 /* Suspendable.swift in Sources */,
 				C471E7CD28F9BA600021E251 /* ShellProtocol.swift in Sources */,
@@ -3873,6 +3957,10 @@
 				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				035983A12E97FA9100218DC7 /* Container.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
+				03E311442F9901A000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
+				03E3114B2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
+				03E3114F2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
+				03E311532F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */,
 				03E311342F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
@@ -3984,6 +4072,11 @@
 				037F441E2EDB9195002EBF75 /* ConfigWatchManager.swift in Sources */,
 				C4E2E84828FC1D93003B070C /* TestableConfigurationTest.swift in Sources */,
 				03E3112E2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
+				03E3115C2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */,
+				03E311602F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */,
+				03E311642F9A100000E59EF0 /* OnboardingWizardView+Display.swift in Sources */,
+				03E311682F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift in Sources */,
+				03E3116C2F9A100000E59EF0 /* OnboardingWizardView+Previews.swift in Sources */,
 				036061D82F4C705B00B5998F /* WindowManager.swift in Sources */,
 				C4D936CB27E3EE4A00BD69FE /* DomainListCellProtocol.swift in Sources */,
 				C4513F962B13E30C001AD760 /* BrewExtensionsObservable.swift in Sources */,
@@ -4092,6 +4185,7 @@
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
 				8A1B2C3D4E5F60718293A4B7 /* OnboardingDispositionTest.swift in Sources */,
+				03E311432F99012000E59EF0 /* OnboardingWizardViewModelTest.swift in Sources */,
 				033E9DFD2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,
 				C4F780C525D80B75000DBC97 /* MenuBarImageGenerator.swift in Sources */,

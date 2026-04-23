@@ -9,9 +9,7 @@
 import Foundation
 
 public class TestableShell: ShellProtocol {
-    var PATH: String {
-        return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
-    }
+    var PATH: String = "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
 
     init(expectations: [String: BatchFakeShellOutput], filesystem: TestableFileSystem? = nil) {
         self.expectations = expectations
@@ -226,6 +224,11 @@ struct FakeShellTransaction: Codable {
         FakeShellTransaction(type: .setShellOutput, command: command, output: output)
     }
 
+    /// Updates the fake shell PATH after running a shell command.
+    static func path(_ path: String) -> FakeShellTransaction {
+        FakeShellTransaction(type: .setPath, path: path)
+    }
+
     enum TransactionType: String, Codable {
         case createSymlink
         case writeFile
@@ -233,6 +236,7 @@ struct FakeShellTransaction: Codable {
         case move
         case createDirectory
         case setShellOutput
+        case setPath
     }
 
     private var type: TransactionType
@@ -268,6 +272,9 @@ struct FakeShellTransaction: Codable {
         case .setShellOutput:
             assert(command != nil && output != nil, "setShellOutput requires command and output")
             shell.expectations[command!] = output!
+        case .setPath:
+            assert(path != nil, "setPath requires path")
+            shell.PATH = path!
         }
     }
 }
