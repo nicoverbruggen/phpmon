@@ -11,7 +11,7 @@ extension OnboardingWizardViewModel {
         outputLines = []
         state = .running
 
-        let output = await container.shell.pipe(OnboardingWizardCommands.developerToolsInstall)
+        let output = await container.shell.pipe(Toolchain.Commands.developerToolsInstall)
         if !output.out.isEmpty {
             appendOutput(output.out, .stdOut)
         }
@@ -43,7 +43,7 @@ extension OnboardingWizardViewModel {
 
         do {
             try await container.shell.attach(
-                OnboardingWizardCommands.homebrewInstall,
+                Toolchain.Commands.homebrewInstall,
                 didReceiveOutput: { [weak self] text, stream in
                     Task { @MainActor in
                         self?.appendOutput(text, stream)
@@ -76,8 +76,8 @@ extension OnboardingWizardViewModel {
         let zshRunCommand = ZshRunCommand(container)
         appendOutput("onboarding_wizard.output.path_updating".localized, .stdOut)
 
-        let composerResult = await zshRunCommand.addComposerPath()
-        let homebrewResult = await zshRunCommand.addHomebrewPath()
+        let composerResult = await zshRunCommand.addComposerBinPath()
+        let homebrewResult = await zshRunCommand.addHomebrewBinPath()
 
         await container.shell.reloadEnvPath()
         await refreshProgress()

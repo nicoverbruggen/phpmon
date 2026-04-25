@@ -40,7 +40,7 @@ extension WarningManager {
                 url: "https://github.com/nicoverbruggen/phpmon/wiki/PHP-Monitor-helper-binaries",
                 fix: self.container.paths.isConfiguredShellValid && self.container.paths.shell == "/bin/zsh" ? {
                     // Add to PATH
-                    await ZshRunCommand(self.container).addPhpMonitorPath()
+                    await ZshRunCommand(self.container).addPhpMonitorBinPath()
                     // Finally, perform environment checks again
                     await self.checkEnvironment()
                 } : nil

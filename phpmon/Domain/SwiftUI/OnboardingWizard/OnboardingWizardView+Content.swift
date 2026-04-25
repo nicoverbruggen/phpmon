@@ -23,22 +23,22 @@ extension OnboardingWizardView {
             }
 
             VStack(alignment: .leading, spacing: 10) {
-                introductionChecklistItem(
+                IntroductionChecklistItemView(
                     number: 1,
                     title: "onboarding_wizard.steps.developer_tools".localized,
                     description: "onboarding_wizard.intro.developer_tools".localized
                 )
-                introductionChecklistItem(
+                IntroductionChecklistItemView(
                     number: 2,
                     title: "onboarding_wizard.steps.homebrew".localized,
                     description: "onboarding_wizard.intro.homebrew".localized
                 )
-                introductionChecklistItem(
+                IntroductionChecklistItemView(
                     number: 3,
                     title: "onboarding_wizard.steps.php_composer".localized,
                     description: "onboarding_wizard.intro.php_composer".localized
                 )
-                introductionChecklistItem(
+                IntroductionChecklistItemView(
                     number: 4,
                     title: "onboarding_wizard.steps.valet".localized,
                     badgeTitle: "onboarding_wizard.badges.optional".localized,
@@ -79,7 +79,7 @@ extension OnboardingWizardView {
             if !isDisplayingCompletedStep,
                let commandTitle = viewModel.commandTitle,
                !viewModel.commandLines.isEmpty {
-                commandBlock(title: commandTitle, lines: viewModel.commandLines)
+                OnboardingCommandBlockView(title: commandTitle, lines: viewModel.commandLines)
                     .padding(.bottom, 14)
             }
 
@@ -89,68 +89,6 @@ extension OnboardingWizardView {
                     isRunning: viewModel.state == .running
                 )
             }
-        }
-    }
-
-    func introductionChecklistItem(
-        number: Int,
-        title: String,
-        badgeTitle: String? = nil,
-        description: String
-    ) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            ZStack {
-                Circle()
-                    .fill(Color.accentColor.opacity(0.14))
-                    .frame(width: 22, height: 22)
-
-                Text("\(number)")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.accentColor)
-            }
-            .padding(.top, 1)
-
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 7) {
-                    Text(title)
-                        .font(.system(size: 12, weight: .semibold))
-
-                    if let badgeTitle {
-                        badge(badgeTitle)
-                    }
-                }
-
-                Text(description)
-                    .font(.system(size: 11))
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-    }
-
-    @ViewBuilder
-    func commandBlock(title: String, lines: [String]) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .foregroundStyle(Color.app)
-                .font(.system(size: 10, weight: .semibold))
-
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(lines, id: \.self) { line in
-                    Text(line)
-                        .font(.system(size: 12, design: .monospaced))
-                        .foregroundStyle(.white)
-                        .textSelection(.enabled)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
-            .padding(10)
-            .background(Color.black.opacity(0.92))
-            .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
-            )
         }
     }
 

@@ -17,7 +17,6 @@ struct OnboardingDispositionTest {
         )
 
         #expect(await Startup.onboardingDisposition(in: container) == .wizard)
-        #expect(await Startup.shouldShowOnboardingWizard(in: container))
     }
 
     // Homebrew on its own still counts as a fresh setup when no other prerequisites exist yet.
@@ -42,7 +41,6 @@ struct OnboardingDispositionTest {
         )
 
         #expect(await Startup.onboardingDisposition(in: container) == .normal)
-        #expect(!(await Startup.shouldShowOnboardingWizard(in: container)))
     }
 
     // Composer alone is enough to classify the environment as partial instead of brand new.
@@ -72,7 +70,7 @@ struct OnboardingDispositionTest {
     }
 
     // PATH validation should only pass when Homebrew and Composer appear as exact PATH entries.
-    @Test func path_configuration_requires_exact_path_entries() {
+    @Test func path_configuration_requires_exact_path_entries() async {
         let container = prepareContainer(
             withFiles: [:],
             hasPhpBinary: false
@@ -83,11 +81,11 @@ struct OnboardingDispositionTest {
             "/Users/fake/.composer/vendor/bin-backup"
         ].joined(separator: ":")
 
-        #expect(!Startup.hasOnboardingPathConfigured(in: container))
+        #expect(!ShellEnvironment(container).hasRequiredOnboardingPaths())
     }
 
     // PATH validation should allow common shell-expanded home entries and harmless trailing slashes.
-    @Test func path_configuration_accepts_normalized_exact_entries() {
+    @Test func path_configuration_accepts_normalized_exact_entries() async {
         let container = prepareContainer(
             withFiles: [:],
             hasPhpBinary: false
@@ -97,7 +95,7 @@ struct OnboardingDispositionTest {
             "/opt/homebrew/bin/"
         ].joined(separator: ":")
 
-        #expect(Startup.hasOnboardingPathConfigured(in: container))
+        #expect(ShellEnvironment(container).hasRequiredOnboardingPaths())
     }
 
     private func prepareContainer(

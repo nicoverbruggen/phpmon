@@ -131,14 +131,14 @@ fileprivate extension TestableConfiguration {
         shellOutput[zshPathCommand(homebrewPathLine())] = BatchFakeShellOutput(
             items: [.instant("")],
             transactions: [
-                .path([
+                .appendPathEntries([
                     "/usr/local/bin",
                     "/usr/bin",
                     "/bin",
                     "/usr/sbin",
                     "/Users/fake/.composer/vendor/bin",
                     "/opt/homebrew/bin"
-                ].joined(separator: ":"))
+                ])
             ]
         )
         shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
@@ -153,11 +153,15 @@ fileprivate extension TestableConfiguration {
 
     mutating func mockDeveloperToolsInstall() {
         shellOutput["/usr/bin/xcode-select -p"] = .instant(
-            "xcode-select: error: Unable to get active developer directory. Use `sudo xcode-select --switch path/to/Xcode.app` to set one (or see `man xcode-select`)\n",
+            """
+            xcode-select: error: Unable to get active developer directory. Use `sudo xcode-select --switch path/to/Xcode.app` to set one (or see `man xcode-select`)
+            """,
             .stdErr
         )
         shellOutput["/usr/bin/xcode-select --install"] = BatchFakeShellOutput(
-            items: [.instant("xcode-select: note: install requested for command line developer tools")],
+            items: [
+                .instant("xcode-select: note: install requested for command line developer tools")
+            ],
             transactions: [
                 .shell(
                     "/usr/bin/xcode-select -p",

@@ -6,17 +6,20 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
-enum OnboardingWizardCommands {
-    static let developerToolsInstall = "/usr/bin/xcode-select --install"
+extension Toolchain {
+    enum Commands {
+        static let developerToolsPathLookup = "/usr/bin/xcode-select -p"
+        static let developerToolsInstall = "/usr/bin/xcode-select --install"
+        static let homebrewInstall = #"NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
+        static let phpComposerInstall = "brew install php composer"
+    }
+}
 
-    static let homebrewInstall = #"NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
-
-    static let phpComposerInstall = "brew install php composer"
-
-    static func pathInstructionLines(in container: Container) -> [String] {
+extension ShellEnvironment {
+    func pathInstructionLines() -> [String] {
         return [
-            ZshRunCommand.composerPathLine(),
-            ZshRunCommand.homebrewPathLine(in: container)
+            composerBinPathExport,
+            homebrewBinPathExport
         ]
     }
 }

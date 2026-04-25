@@ -55,9 +55,9 @@ extension OnboardingWizardViewModel {
     var commandLines: [String] {
         switch action {
         case .recheckPath:
-            return OnboardingWizardCommands.pathInstructionLines(in: container)
+            return ShellEnvironment(container).pathInstructionLines()
         case .installPhpComposer:
-            return [OnboardingWizardCommands.phpComposerInstall]
+            return [Toolchain.Commands.phpComposerInstall]
         default:
             return []
         }

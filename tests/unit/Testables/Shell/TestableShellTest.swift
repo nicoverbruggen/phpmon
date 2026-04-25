@@ -90,4 +90,30 @@ struct TestableShellTest {
             #expect(testable.exports["COMPOSER_HOME"] == "/home/demo/other_composer_folder")
         }
     }
+
+    @Test func fake_shell_transactions_can_append_and_remove_path_entries() async {
+        let container = Container()
+        container.bind(coreOnly: true, commandTracking: false)
+        container.overrideFake(
+            shellExpectations: [
+                "append": BatchFakeShellOutput(
+                    items: [.instant("")],
+                    transactions: [.appendPathEntries(["/custom/bin", "/usr/bin"])]
+                ),
+                "remove": BatchFakeShellOutput(
+                    items: [.instant("")],
+                    transactions: [.removePathEntries(["/usr/local/bin"])]
+                )
+            ],
+            fileSystemFiles: [:],
+            commandTracking: false
+        )
+
+        _ = await container.shell.pipe("append")
+        #expect(container.shell.PATH.contains("/custom/bin"))
+        #expect(container.shell.PATH.countInstances(of: "/usr/bin") == 1)
+
+        _ = await container.shell.pipe("remove")
+        #expect(!container.shell.PATH.contains("/usr/local/bin"))
+    }
 }

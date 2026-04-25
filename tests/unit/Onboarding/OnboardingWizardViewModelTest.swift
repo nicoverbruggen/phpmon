@@ -16,7 +16,7 @@ struct OnboardingWizardViewModelTest {
         let container = prepareContainer(architecture: "arm64")
 
         #expect(
-            ZshRunCommand.homebrewPathLine(in: container)
+            ShellEnvironment(container).homebrewBinPathExport
                 == "export PATH=$HOME/bin:/opt/homebrew/bin:$PATH"
         )
     }
@@ -26,7 +26,7 @@ struct OnboardingWizardViewModelTest {
         let container = prepareContainer(architecture: "x86_64")
 
         #expect(
-            ZshRunCommand.homebrewPathLine(in: container)
+            ShellEnvironment(container).homebrewBinPathExport
                 == "export PATH=$HOME/bin:/usr/local/bin:$PATH"
         )
     }
@@ -34,7 +34,7 @@ struct OnboardingWizardViewModelTest {
     // Composer's global vendor bin path should always be inserted before Homebrew.
     @Test func composer_path_line_matches_documented_vendor_bin_location() {
         #expect(
-            ZshRunCommand.composerPathLine()
+            ShellEnvironment(prepareContainer(architecture: "arm64")).composerBinPathExport
                 == "export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH"
         )
     }

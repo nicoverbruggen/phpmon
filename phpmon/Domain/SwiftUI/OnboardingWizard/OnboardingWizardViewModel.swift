@@ -145,17 +145,21 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     private var shouldAutoFixPath: Bool {
-        return container.paths.isConfiguredShellValid
-            && container.paths.shell.hasSuffix("/zsh")
+        let shellEnvironment = ShellEnvironment(container)
+        return shellEnvironment.isConfiguredShellValid
+            && shellEnvironment.resolvedShell.hasSuffix("/zsh")
     }
 
     func refreshProgress() async {
+        let toolchain = Toolchain(container)
+        let shellEnvironment = ShellEnvironment(container)
+
         progress = StepProgress(
-            developerToolsInstalled: await Startup.hasAppleDeveloperToolsInstalled(in: container),
-            homebrewInstalled: Startup.hasHomebrewInstalled(in: container),
-            pathConfigured: Startup.hasOnboardingPathConfigured(in: container),
-            phpInstalled: await Startup.hasPhpInstalled(in: container),
-            composerInstalled: Startup.hasComposerInstalled(in: container)
+            developerToolsInstalled: await toolchain.status(.commandLineTools).installed,
+            homebrewInstalled: await toolchain.status(.homebrew).installed,
+            pathConfigured: shellEnvironment.hasRequiredOnboardingPaths(),
+            phpInstalled: await toolchain.status(.php).installed,
+            composerInstalled: await toolchain.status(.composer).installed
         )
     }
 
