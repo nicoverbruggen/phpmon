@@ -6,6 +6,8 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 struct ShellEnvironment {
     let container: Container
 
@@ -21,6 +23,14 @@ struct ShellEnvironment {
     static func configuredShell() -> String {
         return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
             .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    static func validatedShellPath(_ path: String) -> String {
+        if isAccessibleExecutable(path) {
+            return path
+        }
+
+        return "/bin/zsh"
     }
 
     var configuredShell: String {
@@ -72,5 +82,16 @@ struct ShellEnvironment {
                 PathEntry.normalize(path, homePath: container.paths.homePath)
             )
         )
+    }
+
+    private static func isAccessibleExecutable(_ path: String) -> Bool {
+        guard !path.isEmpty else {
+            return false
+        }
+
+        let fileManager = FileManager.default
+
+        return fileManager.isExecutableFile(atPath: path)
+            && fileManager.isReadableFile(atPath: path)
     }
 }

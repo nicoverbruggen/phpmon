@@ -61,7 +61,7 @@ struct RealShellTest {
     }
 
     @Test func working_shell_path_falls_back_to_zsh_if_inaccessible() {
-        #expect(validated_shell_path("/this/path/does/not/exist") == "/bin/zsh")
+        #expect(ShellEnvironment.validatedShellPath("/this/path/does/not/exist") == "/bin/zsh")
     }
 
     @Test func configured_shell_matches_dscl_usershell_output() {
@@ -73,7 +73,7 @@ struct RealShellTest {
 
     @Test func working_shell_is_validated_configured_shell() {
         let shell = container.systemContext.shell
-        #expect(shell.resolved == validated_shell_path(ShellEnvironment.configuredShell()))
+        #expect(shell.resolved == ShellEnvironment.validatedShellPath(ShellEnvironment.configuredShell()))
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))

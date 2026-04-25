@@ -19,7 +19,7 @@ struct SystemContext {
 
         shell = Shell(
             configured: configuredShell,
-            resolved: validated_shell_path(configuredShell)
+            resolved: ShellEnvironment.validatedShellPath(configuredShell)
         )
 
         // Do the important system setup checks

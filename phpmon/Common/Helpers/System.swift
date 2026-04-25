@@ -65,30 +65,3 @@ public func identity() -> String {
 
     return output.trimmingCharacters(in: .whitespacesAndNewlines)
 }
-
-/**
- Retrieves the effective shell used for launching processes.
- Falls back to `/bin/zsh` if the configured shell is inaccessible.
- */
-internal func validated_shell_path(_ path: String) -> String {
-    if isAccessibleExecutable(path) {
-        return path
-    }
-
-    return "/bin/zsh"
-}
-
-/**
- Checks the path passed in as a parameter and determines
- if an executable file is present.
- */
-private func isAccessibleExecutable(_ path: String) -> Bool {
-    guard !path.isEmpty else {
-        return false
-    }
-
-    let fileManager = FileManager.default
-
-    return fileManager.isExecutableFile(atPath: path)
-        && fileManager.isReadableFile(atPath: path)
-}
