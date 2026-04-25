@@ -68,12 +68,12 @@ struct RealShellTest {
         let dsclValue = system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        #expect(configured_shell() == dsclValue)
+        #expect(ShellEnvironment.configuredShell() == dsclValue)
     }
 
     @Test func working_shell_is_validated_configured_shell() {
         let shell = container.systemContext.shell
-        #expect(shell.resolved == validated_shell_path(configured_shell()))
+        #expect(shell.resolved == validated_shell_path(ShellEnvironment.configuredShell()))
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))

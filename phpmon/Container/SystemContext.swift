@@ -13,13 +13,18 @@ struct SystemContext {
         architectureOverride: String? = nil,
         configuredShellOverride: String? = nil
     ) {
-        architecture = architectureOverride ?? Self.resolveArchitecture()
+        architecture = architectureOverride ?? SystemContext.resolveArchitecture()
 
-        let configuredShell = configuredShellOverride ?? configured_shell()
+        let configuredShell = configuredShellOverride ?? ShellEnvironment.configuredShell()
+
         shell = Shell(
             configured: configuredShell,
             resolved: validated_shell_path(configuredShell)
         )
+
+        // Do the important system setup checks
+        Log.always("PHP Monitor is running with the architecture: \(architecture)")
+        Log.always("Using the following resolved shell: \(shell.resolved)")
     }
 
     // MARK: - Architecture

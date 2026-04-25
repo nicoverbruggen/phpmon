@@ -24,9 +24,6 @@ class Startup {
      If this method returns true, then all checks succeeded and the app can continue.
      */
     func checkEnvironment() async -> Bool {
-        // Do the important system setup checks
-        Log.info("The user is running PHP Monitor with the architecture: \(container.systemContext.architecture)")
-
         // Set up a "background" timer on the main thread
         await MainActor.run {
             startStartupTimer()

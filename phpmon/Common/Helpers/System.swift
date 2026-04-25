@@ -67,15 +67,6 @@ public func identity() -> String {
 }
 
 /**
- Retrieves the shell path configured for the current user.
- This value is returned as-is and may be invalid/inaccessible.
- */
-public func configured_shell() -> String {
-    return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
-        .trimmingCharacters(in: .whitespacesAndNewlines)
-}
-
-/**
  Retrieves the effective shell used for launching processes.
  Falls back to `/bin/zsh` if the configured shell is inaccessible.
  */

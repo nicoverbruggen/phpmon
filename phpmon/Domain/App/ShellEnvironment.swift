@@ -18,6 +18,11 @@ struct ShellEnvironment {
         self.container = container
     }
 
+    static func configuredShell() -> String {
+        return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     var configuredShell: String {
         return container.paths.configuredShellPath
     }
