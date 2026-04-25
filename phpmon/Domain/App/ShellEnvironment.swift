@@ -56,7 +56,7 @@ struct ShellEnvironment {
     private func pathEntries() -> Set<String> {
         return Set(container.shell.PATH
             .split(separator: ":")
-            .map { normalizePathEntry(String($0), homePath: container.paths.homePath) }
+            .map { PathEntry.normalize(String($0), homePath: container.paths.homePath) }
         )
     }
 
@@ -64,26 +64,8 @@ struct ShellEnvironment {
         return PathEntryStatus(
             path: path,
             configured: pathEntries().contains(
-                normalizePathEntry(path, homePath: container.paths.homePath)
+                PathEntry.normalize(path, homePath: container.paths.homePath)
             )
         )
-    }
-
-    private static func normalizePathEntry(_ path: String, homePath: String) -> String {
-        var normalized = path
-
-        if normalized == "~" || normalized == "$HOME" {
-            normalized = homePath
-        } else if normalized.hasPrefix("~/") {
-            normalized = homePath + String(normalized.dropFirst(1))
-        } else if normalized.hasPrefix("$HOME/") {
-            normalized = homePath + String(normalized.dropFirst("$HOME".count))
-        }
-
-        while normalized.count > 1 && normalized.hasSuffix("/") {
-            normalized.removeLast()
-        }
-
-        return normalized
     }
 }

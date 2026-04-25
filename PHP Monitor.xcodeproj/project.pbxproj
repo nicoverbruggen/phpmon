@@ -314,6 +314,10 @@
 		F0A1B2C3D4E5F60100000022 /* ShellEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */; };
 		F0A1B2C3D4E5F60100000023 /* ShellEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */; };
 		F0A1B2C3D4E5F60100000024 /* ShellEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */; };
+		F0A1B2C3D4E5F60100000081 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
+		F0A1B2C3D4E5F60100000082 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
+		F0A1B2C3D4E5F60100000083 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
+		F0A1B2C3D4E5F60100000084 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
 		03E311432F99012000E59EF0 /* OnboardingWizardViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */; };
 		03EC943C2F47297B00231276 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC943B2F47297100231276 /* ErrorView.swift */; };
@@ -1305,6 +1309,7 @@
 		F0A1B2C3D4E5F60100000005 /* OnboardingBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingBadgeView.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100000006 /* OnboardingSidebarStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSidebarStepView.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100000007 /* OnboardingSidebarTimelineMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSidebarTimelineMarkerView.swift; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100000008 /* PathEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathEntry.swift; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
@@ -2564,6 +2569,7 @@
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
 				F0A1B2C3D4E5F60100000001 /* Toolchain.swift */,
 				F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */,
+				F0A1B2C3D4E5F60100000008 /* PathEntry.swift */,
 				03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
@@ -3182,6 +3188,7 @@
 				03E311362F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				F0A1B2C3D4E5F60100000011 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000021 /* ShellEnvironment.swift in Sources */,
+				F0A1B2C3D4E5F60100000081 /* PathEntry.swift in Sources */,
 				F0A1B2C3D4E5F60100000031 /* IntroductionChecklistItemView.swift in Sources */,
 				F0A1B2C3D4E5F60100000041 /* OnboardingCommandBlockView.swift in Sources */,
 				F0A1B2C3D4E5F60100000051 /* OnboardingBadgeView.swift in Sources */,
@@ -3496,6 +3503,7 @@
 				03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				F0A1B2C3D4E5F60100000013 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000023 /* ShellEnvironment.swift in Sources */,
+				F0A1B2C3D4E5F60100000083 /* PathEntry.swift in Sources */,
 				F0A1B2C3D4E5F60100000033 /* IntroductionChecklistItemView.swift in Sources */,
 				F0A1B2C3D4E5F60100000043 /* OnboardingCommandBlockView.swift in Sources */,
 				F0A1B2C3D4E5F60100000053 /* OnboardingBadgeView.swift in Sources */,
@@ -3757,6 +3765,7 @@
 				03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				F0A1B2C3D4E5F60100000014 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000024 /* ShellEnvironment.swift in Sources */,
+				F0A1B2C3D4E5F60100000084 /* PathEntry.swift in Sources */,
 				F0A1B2C3D4E5F60100000034 /* IntroductionChecklistItemView.swift in Sources */,
 				F0A1B2C3D4E5F60100000044 /* OnboardingCommandBlockView.swift in Sources */,
 				F0A1B2C3D4E5F60100000054 /* OnboardingBadgeView.swift in Sources */,
@@ -4149,6 +4158,7 @@
 				03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				F0A1B2C3D4E5F60100000012 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000022 /* ShellEnvironment.swift in Sources */,
+				F0A1B2C3D4E5F60100000082 /* PathEntry.swift in Sources */,
 				F0A1B2C3D4E5F60100000032 /* IntroductionChecklistItemView.swift in Sources */,
 				F0A1B2C3D4E5F60100000042 /* OnboardingCommandBlockView.swift in Sources */,
 				F0A1B2C3D4E5F60100000052 /* OnboardingBadgeView.swift in Sources */,
