@@ -51,9 +51,14 @@ struct Toolchain {
         case .valet:
             let primaryPath = container.paths.valet
             let composerPath = "\(container.paths.homePath)/.composer/vendor/bin/valet"
+            let configPath = "~/.config/valet"
 
             if container.filesystem.fileExists(primaryPath) {
                 return Status(path: primaryPath, installed: true)
+            }
+
+            if container.filesystem.directoryExists(configPath) {
+                return Status(path: configPath, installed: true)
             }
 
             return Status(

@@ -224,8 +224,10 @@ struct OnboardingWizardViewModelTest {
         configuredShell: String = "/bin/zsh"
     ) -> Container {
         let container = Container()
-        container.systemContext.architectureOverride = architecture
-        container.systemContext.configuredShellOverride = configuredShell
+        container.withFakeSystemContext(
+            architecture: architecture,
+            configuredShell: configuredShell
+        )
         container.bind(coreOnly: true, commandTracking: false)
         return container
     }
@@ -237,7 +239,7 @@ struct OnboardingWizardViewModelTest {
         includeDeveloperTools: Bool = true
     ) -> Container {
         let container = Container()
-        container.systemContext.architectureOverride = architecture
+        container.withFakeSystemContext(architecture: architecture)
         container.bind(coreOnly: true, commandTracking: false)
         let developerToolsShell: [String: BatchFakeShellOutput] = includeDeveloperTools
             ? ["/usr/bin/xcode-select -p": .instant("/Library/Developer/CommandLineTools")]

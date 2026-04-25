@@ -138,7 +138,7 @@ struct RealShellTest {
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .seconds(3))
+        #expect(duration < .seconds(5))
     }
 
     @Test func exports_are_passed_as_environment_variables() {

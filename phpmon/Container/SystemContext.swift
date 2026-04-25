@@ -9,15 +9,28 @@
 import Foundation
 
 struct SystemContext {
+    init(
+        architectureOverride: String? = nil,
+        configuredShellOverride: String? = nil
+    ) {
+        architecture = architectureOverride ?? Self.resolveArchitecture()
+
+        let configuredShell = configuredShellOverride ?? configured_shell()
+        shell = Shell(
+            configured: configuredShell,
+            resolved: validated_shell_path(configuredShell)
+        )
+    }
+
     // MARK: - Architecture
 
     /** The system architecture. Paths differ based on this value. */
-    var architecture: String {
-        if let override = architectureOverride { return override }
+    let architecture: String
 
+    private static func resolveArchitecture() -> String {
         var systeminfo = utsname()
         uname(&systeminfo)
-        let machine = withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
+        return withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
             let data = Data(bufPtr)
             if let lastIndex = data.lastIndex(where: {$0 != 0}) {
                 return String(data: data[0...lastIndex], encoding: .isoLatin1)!
@@ -25,7 +38,6 @@ struct SystemContext {
                 return String(data: data, encoding: .isoLatin1)!
             }
         }
-        return machine
     }
 
     // MARK: - Shell
@@ -42,17 +54,5 @@ struct SystemContext {
     }
 
     /** The user's shell information, resolved from the system or overridden for tests. */
-    var shell: Shell {
-        let configured = configuredShellOverride ?? configured_shell()
-
-        return Shell(
-            configured: configured,
-            resolved: validated_shell_path(configured)
-        )
-    }
-
-    // MARK: - Overrides (for testing)
-
-    var architectureOverride: String?
-    var configuredShellOverride: String?
+    let shell: Shell
 }

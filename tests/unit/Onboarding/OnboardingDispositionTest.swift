@@ -103,7 +103,7 @@ struct OnboardingDispositionTest {
         hasPhpBinary: Bool
     ) -> Container {
         let container = Container()
-        container.systemContext.architectureOverride = "arm64"
+        container.withFakeSystemContext(architecture: "arm64")
         container.bind(coreOnly: true, commandTracking: false)
 
         container.overrideFake(

@@ -138,8 +138,10 @@ public struct TestableConfiguration: Codable {
     func beforeBind() {
         Log.info("Applying TestableConfiguration to container (1/2)...")
         let container = App.shared.container
-        container.systemContext.architectureOverride = architecture
-        container.systemContext.configuredShellOverride = configuredShell
+        container.withFakeSystemContext(
+            architecture: architecture,
+            configuredShell: configuredShell
+        )
     }
 
     /**

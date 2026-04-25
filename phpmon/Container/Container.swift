@@ -45,6 +45,20 @@ class Container: @unchecked Sendable {
     ///
     init() {}
 
+    public func withFakeSystemContext(
+        architecture: String? = nil,
+        configuredShell: String? = nil
+    ) {
+        if bound {
+            fatalError("System context must be overridden before `bind()` is called.")
+        }
+
+        self.systemContext = SystemContext(
+            architectureOverride: architecture,
+            configuredShellOverride: configuredShell
+        )
+    }
+
     ///
     /// Creates new instances of all elements belonging to the `Container`, while referencing
     /// the `Container` itself and passing the reference on to each component that needs it.

@@ -14,7 +14,7 @@ struct TestableConfigurationTest {
         let config = TestableConfigurations.workingIntel
         let container = Container()
 
-        container.systemContext.architectureOverride = config.architecture
+        container.withFakeSystemContext(architecture: config.architecture)
         container.bind(coreOnly: true)
 
         container.overrideFake(
