@@ -1813,6 +1813,36 @@
 			path = Container;
 			sourceTree = "<group>";
 		};
+		03CD4E7B2F9E0A29009A100D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */,
+				03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */,
+				03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */,
+				03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		03CD4E7C2F9E0A2D009A100D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */,
+				03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */,
+				03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */,
+				03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */,
+				03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */,
+				03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */,
+				F0A1B2C3D4E5F60100000003 /* IntroductionChecklistItemView.swift */,
+				F0A1B2C3D4E5F60100000004 /* OnboardingCommandBlockView.swift */,
+				F0A1B2C3D4E5F60100000005 /* OnboardingBadgeView.swift */,
+				F0A1B2C3D4E5F60100000006 /* OnboardingSidebarStepView.swift */,
+				F0A1B2C3D4E5F60100000007 /* OnboardingSidebarTimelineMarkerView.swift */,
+				03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		03D0F9772F4DE7E800613D1E /* Monitoring */ = {
 			isa = PBXGroup;
 			children = (
@@ -1838,22 +1868,8 @@
 		03E3112A2F98D19100E59EF0 /* OnboardingWizard */ = {
 			isa = PBXGroup;
 			children = (
-				03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */,
-				03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */,
-				03E311552F9A100000E59EF0 /* OnboardingWizardView+Content.swift */,
-				03E311562F9A100000E59EF0 /* OnboardingWizardView+Display.swift */,
-				03E311572F9A100000E59EF0 /* OnboardingWizardView+Sidebar.swift */,
-				F0A1B2C3D4E5F60100000003 /* IntroductionChecklistItemView.swift */,
-				F0A1B2C3D4E5F60100000004 /* OnboardingCommandBlockView.swift */,
-				F0A1B2C3D4E5F60100000005 /* OnboardingBadgeView.swift */,
-				F0A1B2C3D4E5F60100000006 /* OnboardingSidebarStepView.swift */,
-				F0A1B2C3D4E5F60100000007 /* OnboardingSidebarTimelineMarkerView.swift */,
-				03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */,
-				03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */,
-				03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */,
-				03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */,
-				03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */,
-				03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */,
+				03CD4E7C2F9E0A2D009A100D /* UI */,
+				03CD4E7B2F9E0A29009A100D /* Data */,
 			);
 			path = OnboardingWizard;
 			sourceTree = "<group>";
@@ -2274,6 +2290,7 @@
 		C44DFA832A6706A200B98ED5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				03E3112A2F98D19100E59EF0 /* OnboardingWizard */,
 				C4E9D2BE2878B32D008FFDAD /* WelcomeScreen */,
 				C464ADAA275A7A25003FCD53 /* Domain List */,
 				C44DFA7A2A6703FD00B98ED5 /* PHP Config Editor */,
@@ -2567,10 +2584,10 @@
 				033E9DFB2F44D92A00685F62 /* Startup+Alert.swift */,
 				0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */,
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
+				03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */,
 				F0A1B2C3D4E5F60100000001 /* Toolchain.swift */,
 				F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */,
 				F0A1B2C3D4E5F60100000008 /* PathEntry.swift */,
-				03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */,
 				C495F5AE28A42E080087F70A /* EnvironmentCheck.swift */,
 				C40FE736282ABA4F00A302C2 /* AppVersion.swift */,
 				C409349C298EE8E900D25014 /* AppUpdater.swift */,
@@ -2769,7 +2786,6 @@
 		C4EE55B027708BB2001DF387 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				03E3112A2F98D19100E59EF0 /* OnboardingWizard */,
 				3169708AAEC47AE3F4C33F74 /* Startup */,
 				C4B609182853AAA700C95265 /* Domains */,
 				C4B609172853AA9E00C95265 /* Menu */,

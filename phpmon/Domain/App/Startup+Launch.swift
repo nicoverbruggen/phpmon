@@ -41,7 +41,10 @@ extension Startup {
     }
 
     private func checkOnboarding() async {
-        if await onboardingDisposition() == .wizard {
+        let disposition = await onboardingDisposition()
+        Log.info("Determined onboarding flow: \(disposition)")
+
+        if disposition == .wizard {
             // Show the wizard and we'll await the result of the wizard
             let outcome = await showOnboardingWizard()
             Log.info("Outcome of onboarding: \(outcome)")
