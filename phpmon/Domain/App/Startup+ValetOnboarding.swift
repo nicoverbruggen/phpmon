@@ -20,16 +20,16 @@ extension Startup {
             Valet.shared.validateVersion()
         }
 
+        await MainActor.run {
+            AppDelegate.instance.configureMenuItems(standalone: false)
+            MainMenu.shared.rebuildImmediately()
+        }
+
         await Valet.shared.startPreloadingSites()
         await BrewDiagnostics.shared.checkForValetMisconfiguration()
         await Valet.shared.notifyAboutBrokenPhpFpm()
         Valet.shared.notifyAboutUnsupportedTLD()
         await ServicesManager.shared.reloadServicesStatus()
-
-        await MainActor.run {
-            AppDelegate.instance.configureMenuItems(standalone: false)
-            MainMenu.shared.rebuildImmediately()
-        }
 
         await MainActor.run {
             container.warningManager.evaluateWarnings()
