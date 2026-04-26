@@ -131,8 +131,9 @@ extension OnboardingWizardView {
             return viewModel.progress.phpInstalled
                 && viewModel.progress.composerInstalled
         case 4:
-            return viewModel.progress.valetInstalled
-                && viewModel.progress.valetTrusted
+            return viewModel.skippedValetSetup
+                || (viewModel.progress.valetInstalled
+                    && viewModel.progress.valetTrusted)
         default:
             return false
         }

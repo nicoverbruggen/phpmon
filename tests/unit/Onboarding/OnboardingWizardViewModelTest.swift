@@ -257,6 +257,25 @@ struct OnboardingWizardViewModelTest {
                         .write("", to: "/opt/homebrew/bin/valet")
                     ]
                 ),
+                "/opt/homebrew/bin/brew install dnsmasq nginx": .instant("Installed dnsmasq and nginx.\n"),
+                "valet install": BatchFakeShellOutput(
+                    items: [.instant("Configured Valet.\n")],
+                    transactions: [
+                        .mkdir("~/.config/valet"),
+                        .write(
+                            """
+                            {
+                              "paths": [
+                                "/Users/fake/.config/valet/Sites"
+                              ],
+                              "tld": "test",
+                              "loopback": "127.0.0.1"
+                            }
+                            """,
+                            to: "~/.config/valet/config.json"
+                        )
+                    ]
+                ),
                 "/opt/homebrew/bin/valet trust": BatchFakeShellOutput(
                     items: [.instant("Configured Valet sudoers.\n")],
                     transactions: [
@@ -273,24 +292,6 @@ struct OnboardingWizardViewModelTest {
                             Cmnd_Alias VALET = /opt/homebrew/bin/valet *
                             %admin ALL=(root) NOPASSWD:SETENV: VALET
                             """)
-                        )
-                    ]
-                ),
-                "/opt/homebrew/bin/valet install": BatchFakeShellOutput(
-                    items: [.instant("Configured Valet.\n")],
-                    transactions: [
-                        .mkdir("~/.config/valet"),
-                        .write(
-                            """
-                            {
-                              "paths": [
-                                "/Users/fake/.config/valet/Sites"
-                              ],
-                              "tld": "test",
-                              "loopback": "127.0.0.1"
-                            }
-                            """,
-                            to: "~/.config/valet/config.json"
                         )
                     ]
                 ),
@@ -324,6 +325,34 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(4))
         #expect(viewModel.action == .continueToStartup)
+    }
+
+    // Skipping Valet should finish onboarding in Standalone Mode, while still marking the
+    // optional Valet step as intentionally completed for the wizard UI.
+    @Test func skipping_valet_completes_onboarding_in_standalone_mode() {
+        let viewModel = OnboardingWizardViewModel(
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true
+            ),
+            hasLoaded: true
+        )
+        var outcome: Startup.OnboardingWizardOutcome?
+        viewModel.onComplete = {
+            outcome = $0
+        }
+
+        viewModel.skipValetSetup()
+
+        #expect(viewModel.action == .continueToStartup)
+        #expect(viewModel.completedSteps == Set([1, 2, 3, 4]))
+
+        _ = viewModel.performPrimaryAction()
+
+        #expect(outcome == .completedInStandaloneMode)
     }
 
     // The Homebrew step should copy the manual install command and wait for the user to

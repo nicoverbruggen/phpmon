@@ -160,19 +160,27 @@ extension OnboardingWizardViewModel {
         state = .running
 
         container.paths.detectBinaryPaths()
+        let brew = container.paths.brew
         let composer = container.paths.composer ?? "composer"
-        let valet = container.paths.valet
 
         do {
-            try await container.shell.attach(
-                Toolchain.Commands.valetInstall(using: composer),
-                didReceiveOutput: { [weak self] text, stream in
-                    Task { @MainActor in
-                        self?.appendOutput(text, stream)
-                    }
-                },
-                withTimeout: 600
-            )
+            for command in Toolchain.Commands.valetInstall(
+                using: brew,
+                composer: composer,
+                valet: "valet"
+            ) {
+                try await container.shell.attach(
+                    command,
+                    didReceiveOutput: { [weak self] text, stream in
+                        Task { @MainActor in
+                            self?.appendOutput(text, stream)
+                        }
+                    },
+                    withTimeout: 600
+                )
+            }
+
+            let valet = container.paths.valet
 
             if shouldSimulatePrivilegedCommands {
                 let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: valet))
@@ -188,16 +196,6 @@ extension OnboardingWizardViewModel {
                     appendOutput(output, .stdOut)
                 }
             }
-
-            try await container.shell.attach(
-                Toolchain.Commands.valetConfigure(using: valet),
-                didReceiveOutput: { [weak self] text, stream in
-                    Task { @MainActor in
-                        self?.appendOutput(text, stream)
-                    }
-                },
-                withTimeout: 600
-            )
         } catch {
             state = .failed
             appendOutput("\nError: \(error.localizedDescription)", .stdErr)

@@ -47,6 +47,7 @@ class OnboardingWizardViewModel: ObservableObject {
     @Published var outputLines: [OutputLine]
     @Published private(set) var progress: StepProgress
     @Published private(set) var hasLoaded: Bool
+    @Published private(set) var skippedValetSetup: Bool
 
     var hasTriggeredDeveloperToolsInstall = false
     var hasTriggeredHomebrewInstall = false
@@ -56,13 +57,15 @@ class OnboardingWizardViewModel: ObservableObject {
         progress: StepProgress = StepProgress(),
         state: State = .idle,
         outputLines: [OutputLine] = [],
-        hasLoaded: Bool = false
+        hasLoaded: Bool = false,
+        skippedValetSetup: Bool = false
     ) {
         self.container = container
         self.progress = progress
         self.state = state
         self.outputLines = outputLines
         self.hasLoaded = hasLoaded
+        self.skippedValetSetup = skippedValetSetup
     }
 
     var completedSteps: Set<Int> {
@@ -80,7 +83,7 @@ class OnboardingWizardViewModel: ObservableObject {
             steps.insert(3)
         }
 
-        if progress.valetInstalled && progress.valetTrusted {
+        if progress.valetInstalled && progress.valetTrusted || skippedValetSetup {
             steps.insert(4)
         }
 
@@ -124,13 +127,23 @@ class OnboardingWizardViewModel: ObservableObject {
         case .installValet:
             return Task { await installValet() }
         case .continueToStartup:
-            onComplete?(.completed)
+            onComplete?(skippedValetSetup ? .completedInStandaloneMode : .completed)
             return nil
         }
     }
 
     func skip() {
         onComplete?(.skipped)
+    }
+
+    func skipValetSetup() {
+        skippedValetSetup = true
+        outputLines = []
+        state = .idle
+
+        if container === App.shared.container {
+            Valet.shared.installed = false
+        }
     }
 
     func clearOutput() {
@@ -152,6 +165,10 @@ class OnboardingWizardViewModel: ObservableObject {
 
         if !progress.phpInstalled || !progress.composerInstalled {
             return .installPhpComposer
+        }
+
+        if skippedValetSetup {
+            return .continueToStartup
         }
 
         if !progress.valetInstalled || !progress.valetTrusted {

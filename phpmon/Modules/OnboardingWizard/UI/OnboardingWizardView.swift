@@ -16,6 +16,7 @@ struct OnboardingWizardView: View {
     @ObservedObject var viewModel: OnboardingWizardViewModel
     @State var hasStartedWizard = false
     @State var isShowingSkipConfirmation = false
+    @State var isShowingSkipValetConfirmation = false
     @State var displayedStepNumber: Int?
     @FocusState var focusedButton: FocusedButton?
 
@@ -27,11 +28,13 @@ struct OnboardingWizardView: View {
         viewModel: OnboardingWizardViewModel,
         hasStartedWizard: Bool = false,
         isShowingSkipConfirmation: Bool = false,
+        isShowingSkipValetConfirmation: Bool = false,
         displayedStepNumber: Int? = nil
     ) {
         self.viewModel = viewModel
         self._hasStartedWizard = State(initialValue: hasStartedWizard)
         self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
+        self._isShowingSkipValetConfirmation = State(initialValue: isShowingSkipValetConfirmation)
         self._displayedStepNumber = State(initialValue: displayedStepNumber)
     }
 
@@ -49,6 +52,17 @@ struct OnboardingWizardView: View {
             }
         } message: {
             Text("onboarding_wizard.skip_confirmation.message".localized)
+        }
+        .alert(
+            "onboarding_wizard.skip_valet_confirmation.title".localized,
+            isPresented: $isShowingSkipValetConfirmation
+        ) {
+            Button("onboarding_wizard.skip_valet_confirmation.cancel".localized, role: .cancel) { }
+            Button("onboarding_wizard.skip_valet_confirmation.confirm".localized) {
+                viewModel.skipValetSetup()
+            }
+        } message: {
+            Text("onboarding_wizard.skip_valet_confirmation.message".localized)
         }
         .task {
             focusedButton = .primary

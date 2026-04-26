@@ -11,6 +11,10 @@ import SwiftUI
 extension OnboardingWizardView {
     var bottomBar: some View {
         HStack {
+            if showsSkipValetButton {
+                skipValetButton
+            }
+
             Spacer()
 
             primaryActionButton
@@ -26,6 +30,18 @@ extension OnboardingWizardView {
                 .foregroundStyle(.secondary)
         }
         .buttonStyle(.borderless)
+    }
+
+    var skipValetButton: some View {
+        Button {
+            isShowingSkipValetConfirmation = true
+        } label: {
+            Text("onboarding_wizard.buttons.skip_valet".localized)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.borderless)
+        .disabled(viewModel.state == .running)
     }
 
     var primaryActionButton: some View {
@@ -51,5 +67,11 @@ extension OnboardingWizardView {
     func advanceDisplayedStep() {
         viewModel.clearOutput()
         displayedStepNumber = nil
+    }
+
+    var showsSkipValetButton: Bool {
+        !isShowingIntroduction
+            && !isDisplayingCompletedStep
+            && viewModel.action == .installValet
     }
 }

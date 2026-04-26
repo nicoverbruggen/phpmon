@@ -50,6 +50,36 @@ final class OnboardingTest: UITestCase {
         app.terminate()
     }
 
+    // Users can skip the optional Valet step, confirm Standalone Mode, and still finish
+    // onboarding successfully without being forced through Valet installation.
+    final func test_launch_can_skip_valet_and_continue_in_standalone_mode() throws {
+        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        startWizard(app)
+        installHomebrew(app)
+        assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.skip_valet".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.skip_valet".localized])
+        let skipValetConfirmationButton = app.sheets.buttons[
+            "onboarding_wizard.skip_valet_confirmation.confirm".localized
+        ]
+        assertExists(skipValetConfirmationButton, 3.0)
+        click(skipValetConfirmationButton)
+
+        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        waitForMenu(app)
+
+        app.terminate()
+    }
+
     private func launchOnboardingWizard(with scenario: OnboardingScenario) -> XCPMApplication {
         var configuration = TestableConfigurations.working
         configuration.prepareFreshCoreOnboardingSystem()
@@ -188,6 +218,25 @@ fileprivate extension TestableConfiguration {
                 .write("", to: "/opt/homebrew/bin/valet")
             ]
         )
+        shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
+        shellOutput["valet install"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet.\n")],
+            transactions: [
+                .mkdir("~/.config/valet"),
+                .write(
+                    """
+                    {
+                      "paths": [
+                        "/Users/fake/.config/valet/Sites"
+                      ],
+                      "tld": "test",
+                      "loopback": "127.0.0.1"
+                    }
+                    """,
+                    to: "~/.config/valet/config.json"
+                )
+            ]
+        )
         shellOutput["/opt/homebrew/bin/valet trust"] = BatchFakeShellOutput(
             items: [.instant("Configured Valet sudoers.\n")],
             transactions: [
@@ -204,24 +253,6 @@ fileprivate extension TestableConfiguration {
                     Cmnd_Alias VALET = /opt/homebrew/bin/valet *
                     %admin ALL=(root) NOPASSWD:SETENV: VALET
                     """)
-                )
-            ]
-        )
-        shellOutput["/opt/homebrew/bin/valet install"] = BatchFakeShellOutput(
-            items: [.instant("Configured Valet.\n")],
-            transactions: [
-                .mkdir("~/.config/valet"),
-                .write(
-                    """
-                    {
-                      "paths": [
-                        "/Users/fake/.config/valet/Sites"
-                      ],
-                      "tld": "test",
-                      "loopback": "127.0.0.1"
-                    }
-                    """,
-                    to: "~/.config/valet/config.json"
                 )
             ]
         )

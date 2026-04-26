@@ -1019,12 +1019,17 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.fix_path" = "Fix PATH Automatically";
 "onboarding_wizard.buttons.install_php_composer" = "Install PHP & Composer";
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
+"onboarding_wizard.buttons.skip_valet" = "Skip Valet";
 "onboarding_wizard.buttons.skip" = "Skip Setup";
 "onboarding_wizard.buttons.continue" = "Continue";
 "onboarding_wizard.skip_confirmation.title" = "Skip setup?";
 "onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
 "onboarding_wizard.skip_confirmation.cancel" = "Keep Setting Up";
 "onboarding_wizard.skip_confirmation.confirm" = "Skip Setup";
+"onboarding_wizard.skip_valet_confirmation.title" = "Skip Valet?";
+"onboarding_wizard.skip_valet_confirmation.message" = "Skipping Valet installation will make PHP Monitor run in Standalone Mode. This is not recommended, but you can always install Valet later. Are you sure you want to continue without Valet?";
+"onboarding_wizard.skip_valet_confirmation.cancel" = "Install Valet";
+"onboarding_wizard.skip_valet_confirmation.confirm" = "Use Standalone Mode";
 "onboarding_wizard.detail.developer_tools.title" = "Step 1: Install Command Line Tools";
 "onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask the macOS to install these. You will need to complete the installation yourself, then return here and click Continue to validate the installation has succeeded.";
 "onboarding_wizard.detail.developer_tools.waiting" = "Finish the developer tools installation in macOS, then come back here, and click on Continue.";
@@ -1042,7 +1047,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
 "onboarding_wizard.detail.php_composer.description" = "PHP Monitor needs both PHP and Composer before it can continue startup. PHP Monitor can install these required Homebrew packages for you automatically.";
 "onboarding_wizard.detail.valet.title" = "Step 4: Install Valet";
-"onboarding_wizard.detail.valet.description" = "PHP Monitor can install Laravel Valet with Composer, configure its sudoers permissions, and run the initial Valet setup for you automatically.";
+"onboarding_wizard.detail.valet.description" = "PHP Monitor can install Laravel Valet with Composer, install dnsmasq and nginx, run the initial Valet setup, and then configure its sudoers permissions for you automatically. If you prefer, you can skip this step and use Standalone Mode for now.";
 "onboarding_wizard.detail.ready.title" = "Step 5: Finish Setup";
 "onboarding_wizard.detail.ready.description" = "The full onboarding setup is complete. Continue and PHP Monitor will rerun its regular startup checks to confirm everything is ready.";
 "onboarding_wizard.command.homebrew.title" = "RUN THIS IN TERMINAL";

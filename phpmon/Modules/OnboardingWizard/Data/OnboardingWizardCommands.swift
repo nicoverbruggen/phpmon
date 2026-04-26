@@ -20,16 +20,16 @@ extension Toolchain {
             ]
         }
 
-        static func valetInstall(using composer: String) -> String {
-            return "\(composer) global require laravel/valet"
+        static func valetInstall(using brew: String, composer: String, valet: String) -> [String] {
+            return [
+                "\(composer) global require laravel/valet",
+                "\(brew) install dnsmasq nginx",
+                "\(valet) install"
+            ]
         }
 
         static func valetTrust(using valet: String) -> String {
             return "\(valet) trust"
-        }
-
-        static func valetConfigure(using valet: String) -> String {
-            return "\(valet) install"
         }
     }
 }
