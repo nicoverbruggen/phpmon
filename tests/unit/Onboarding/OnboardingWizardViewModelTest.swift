@@ -312,7 +312,7 @@ struct OnboardingWizardViewModelTest {
                         )
                     ]
                 ),
-                "/Users/fake/.composer/vendor/bin/valet trust": BatchFakeShellOutput(
+                "/opt/homebrew/bin/valet trust": BatchFakeShellOutput(
                     items: [.instant("Configured Valet sudoers.\n")],
                     transactions: [
                         .shell(

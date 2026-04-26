@@ -141,13 +141,13 @@ extension OnboardingWizardViewModel {
         var sudoersInstalled = false
         defer {
             if sudoersInstalled {
-                Self.removeValetInstallSudoers()
+                Self.removeValetSudoers()
             }
         }
 
         if !isSimulatingShellEnvironment {
             do {
-                try Self.installValetInstallSudoers(forScriptAt: composerValetScript)
+                try Self.installValetSudoers(forScriptAt: composerValetScript)
                 sudoersInstalled = true
             } catch {
                 failStep(error)
@@ -164,16 +164,7 @@ extension OnboardingWizardViewModel {
                 try await attachStreaming(command)
             }
 
-            let trustCommand = Toolchain.Commands.valetTrust(using: homebrewValet)
-            if isSimulatingShellEnvironment {
-                let output = await container.shell.pipe(trustCommand)
-                appendIfPresent(output)
-            } else {
-                let output = try AppleScript.runShellAsAdmin(trustCommand)
-                if !output.isEmpty {
-                    appendOutput(output, .stdOut)
-                }
-            }
+            try await attachStreaming(Toolchain.Commands.valetTrust(using: homebrewValet))
         } catch {
             failStep(error)
             return
@@ -217,16 +208,16 @@ extension OnboardingWizardViewModel {
         appendOutput("\nError: \(error.localizedDescription)", .stdErr)
     }
 
-    // MARK: - Temporary sudoers entry for `valet install`
+    // MARK: - Temporary sudoers entry for `valet install` and `valet trust`
 
-    private static let valetInstallSudoersPath = "/etc/sudoers.d/phpmon-valet-install"
-    private static let valetInstallSudoersTemp = "/tmp/phpmon-valet-install.sudoers"
+    private static let valetSudoersPath = "/etc/sudoers.d/phpmon-valet-onboarding"
+    private static let valetSudoersTemp = "/tmp/phpmon-valet-onboarding.sudoers"
 
-    fileprivate static func installValetInstallSudoers(forScriptAt valetPath: String) throws {
-        let entry = "Cmnd_Alias VALET_INSTALL = \(valetPath) install"
-        let perm = "%admin ALL=(root) NOPASSWD:SETENV: VALET_INSTALL"
-        let temp = valetInstallSudoersTemp
-        let dest = valetInstallSudoersPath
+    fileprivate static func installValetSudoers(forScriptAt valetPath: String) throws {
+        let entry = "Cmnd_Alias VALET_PHPMON = \(valetPath) install, \(valetPath) trust"
+        let perm = "%admin ALL=(root) NOPASSWD:SETENV: VALET_PHPMON"
+        let temp = valetSudoersTemp
+        let dest = valetSudoersPath
         let script = [
             "rm -f \(temp)",
             "echo '\(entry)' > \(temp)",
@@ -239,8 +230,8 @@ extension OnboardingWizardViewModel {
         try AppleScript.runSimpleShellAsAdmin(script)
     }
 
-    fileprivate static func removeValetInstallSudoers() {
-        let script = "rm -f \(valetInstallSudoersPath) \(valetInstallSudoersTemp)"
+    fileprivate static func removeValetSudoers() {
+        let script = "rm -f \(valetSudoersPath) \(valetSudoersTemp)"
         try? AppleScript.runSimpleShellAsAdmin(script)
     }
 }
