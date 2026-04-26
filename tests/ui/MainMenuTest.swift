@@ -228,14 +228,15 @@ fileprivate extension TestableConfiguration {
         shellOutput["/usr/local/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
             items: [.instant("Installed Valet.\n")],
             transactions: [
-                .write("", to: "/opt/homebrew/bin/valet")
+                .write("", to: "/Users/fake/.composer/vendor/bin/valet")
             ]
         )
         shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
-        shellOutput["/opt/homebrew/bin/valet install"] = BatchFakeShellOutput(
+        shellOutput["/Users/fake/.composer/vendor/bin/valet install"] = BatchFakeShellOutput(
             items: [.instant("Configured Valet.\n")],
             transactions: [
                 .mkdir("~/.config/valet"),
+                .write("", to: "/opt/homebrew/bin/valet"),
                 .write(
                     """
                     {
@@ -250,7 +251,7 @@ fileprivate extension TestableConfiguration {
                 )
             ]
         )
-        shellOutput["/opt/homebrew/bin/valet trust"] = BatchFakeShellOutput(
+        shellOutput["/Users/fake/.composer/vendor/bin/valet trust"] = BatchFakeShellOutput(
             items: [.instant("Configured Valet sudoers.\n")],
             transactions: [
                 .shell(

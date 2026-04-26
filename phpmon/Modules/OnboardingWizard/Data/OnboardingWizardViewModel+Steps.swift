@@ -101,6 +101,8 @@ extension OnboardingWizardViewModel {
             appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
         } else if phpMonitorResult && composerResult && homebrewResult {
             state = .waitingForManualCompletion
+
+            // TODO: Not sure whether this is actually good advice (does it matter?)
             appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut)
         } else {
             state = .failed
@@ -162,14 +164,13 @@ extension OnboardingWizardViewModel {
         container.paths.detectBinaryPaths()
         let brew = container.paths.brew
         let composer = container.paths.composer ?? "composer"
+        let composerValet = "\(container.paths.homePath)/.composer/vendor/bin/valet"
 
         do {
-            let valet = container.paths.valet
-
             for command in Toolchain.Commands.valetInstall(
                 using: brew,
                 composer: composer,
-                valet: valet
+                valet: composerValet
             ) {
                 try await container.shell.attach(
                     command,
@@ -183,7 +184,7 @@ extension OnboardingWizardViewModel {
             }
 
             if shouldSimulatePrivilegedCommands {
-                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: valet))
+                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: composerValet))
                 if !output.out.isEmpty {
                     appendOutput(output.out, .stdOut)
                 }
@@ -191,7 +192,7 @@ extension OnboardingWizardViewModel {
                     appendOutput(output.err, .stdErr)
                 }
             } else {
-                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: valet))
+                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: composerValet))
                 if !output.isEmpty {
                     appendOutput(output, .stdOut)
                 }

@@ -289,14 +289,15 @@ struct OnboardingWizardViewModelTest {
                 "/opt/homebrew/bin/composer global require laravel/valet": BatchFakeShellOutput(
                     items: [.instant("Installed Valet.\n")],
                     transactions: [
-                        .write("", to: "/opt/homebrew/bin/valet")
+                        .write("", to: "/Users/fake/.composer/vendor/bin/valet")
                     ]
                 ),
                 "/opt/homebrew/bin/brew install dnsmasq nginx": .instant("Installed dnsmasq and nginx.\n"),
-                "/opt/homebrew/bin/valet install": BatchFakeShellOutput(
+                "/Users/fake/.composer/vendor/bin/valet install": BatchFakeShellOutput(
                     items: [.instant("Configured Valet.\n")],
                     transactions: [
                         .mkdir("~/.config/valet"),
+                        .write("", to: "/opt/homebrew/bin/valet"),
                         .write(
                             """
                             {
@@ -311,7 +312,7 @@ struct OnboardingWizardViewModelTest {
                         )
                     ]
                 ),
-                "/opt/homebrew/bin/valet trust": BatchFakeShellOutput(
+                "/Users/fake/.composer/vendor/bin/valet trust": BatchFakeShellOutput(
                     items: [.instant("Configured Valet sudoers.\n")],
                     transactions: [
                         .shell(
