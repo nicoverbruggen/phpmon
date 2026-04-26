@@ -10,7 +10,7 @@ extension Toolchain {
     enum Commands {
         static let developerToolsPathLookup = "/usr/bin/xcode-select -p"
         static let developerToolsInstall = "/usr/bin/xcode-select --install"
-        static let homebrewInstall = #"NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
+        static let homebrewInstall = #"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
         static let phpComposerInstall = "brew install php composer"
     }
 }

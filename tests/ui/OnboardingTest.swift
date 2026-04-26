@@ -193,7 +193,7 @@ fileprivate extension TestableConfiguration {
     }
 
     private func homebrewInstallCommand() -> String {
-        return #"NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
+        return #"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
     }
 
     private func composerPathLine() -> String {

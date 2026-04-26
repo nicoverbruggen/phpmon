@@ -137,6 +137,12 @@ extension Startup {
         // Avoid showing the "startup timeout" alert
         Startup.invalidateTimeoutTimer()
 
+        // On the very first successful boot, ask for notification permissions only
+        // after onboarding and environment validation have both completed.
+        if Stats.successfulLaunchCount == 0 {
+            NotificationPermission.request()
+        }
+
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
 

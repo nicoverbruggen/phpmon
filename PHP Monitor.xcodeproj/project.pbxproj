@@ -296,6 +296,10 @@
 		03F381612F7BE55B00DF76C6 /* RealShell+PATH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */; };
 		03F381622F7BE55B00DF76C6 /* RealShell+PATH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */; };
 		03F381632F7BE55B00DF76C6 /* RealShell+PATH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */; };
+		03FA10022FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
+		03FA10032FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
+		03FA10042FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
+		03FA10052FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
@@ -1304,6 +1308,7 @@
 		03E311582F9A100000E59EF0 /* OnboardingWizardView+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Previews.swift"; sourceTree = "<group>"; };
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
+		03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
@@ -2572,6 +2577,7 @@
 				030BC1B32F8D06280076F982 /* CLI.swift */,
 				C4B97B74275CF08C003F3378 /* AppDelegate+MenuOutlets.swift */,
 				C436039F275E67610028EFC6 /* AppDelegate+Notifications.swift */,
+				03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */,
 				C415D3E72770F692005EF286 /* AppDelegate+InterApp.swift */,
 				03D846312EB64E35006EFE3C /* CrashReporter.swift */,
 				C4811D2322D70A4700B5F6B3 /* App.swift */,
@@ -3237,6 +3243,7 @@
 				5420395926135DC100FB00FA /* PreferenceVC.swift in Sources */,
 				C4C8900328F0E28800CE5E97 /* FileSystemProtocol.swift in Sources */,
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				03FA10022FB0A10000E59EF0 /* NotificationPermission.swift in Sources */,
 				C45B9149295607F400F4EC78 /* Service.swift in Sources */,
 				5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
@@ -3504,6 +3511,7 @@
 				C4D36603291132B7006BD146 /* ValetScanners.swift in Sources */,
 				03C099442EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C471E84128F9BB650021E251 /* AppDelegate+Notifications.swift in Sources */,
+				03FA10032FB0A10000E59EF0 /* NotificationPermission.swift in Sources */,
 				C471E84228F9BB650021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E84328F9BB650021E251 /* App.swift in Sources */,
 				C4E2E85E28FC282B003B070C /* TestableConfiguration.swift in Sources */,
@@ -3791,6 +3799,7 @@
 				C471E8A328F9BB8F0021E251 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C4B79EB929CA387F00A483EE /* BrewPhpFormulaeHandler.swift in Sources */,
 				C471E8A428F9BB8F0021E251 /* AppDelegate+Notifications.swift in Sources */,
+				03FA10042FB0A10000E59EF0 /* NotificationPermission.swift in Sources */,
 				C489E0BE2A220A4200323F5E /* FakeBrewFormulaeHandler.swift in Sources */,
 				C471E8A528F9BB8F0021E251 /* AppDelegate+InterApp.swift in Sources */,
 				C471E8A628F9BB8F0021E251 /* App.swift in Sources */,
@@ -4152,6 +4161,7 @@
 				037F44252EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */,
 				C4CB6E66292C362C002E9027 /* Homebrew.swift in Sources */,
 				C43603A1275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
+				03FA10052FB0A10000E59EF0 /* NotificationPermission.swift in Sources */,
 				C4C3643A28AE4FCE00C0770E /* StatusMenu+Items.swift in Sources */,
 				C42759682627662800093CAE /* NSMenuExtension.swift in Sources */,
 				038131432F4E00C300653177 /* TrackedTestableShell.swift in Sources */,
