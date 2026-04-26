@@ -244,6 +244,26 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.commandLines.isEmpty)
     }
 
+    // The standalone-mode Valet flow should skip the earlier onboarding steps and land directly on Valet.
+    @Test func valet_only_flow_jumps_straight_to_valet_install() {
+        let viewModel = OnboardingWizardViewModel(
+            flow: .installValetOnly,
+            progress: .init(
+                developerToolsInstalled: false,
+                homebrewInstalled: false,
+                pathConfigured: false,
+                phpInstalled: false,
+                composerInstalled: false,
+                valetInstalled: false,
+                valetTrusted: false
+            ),
+            hasLoaded: true
+        )
+
+        #expect(viewModel.action == .installValet)
+        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+    }
+
     // Installing Valet should run the Composer package install, trust command and Valet setup,
     // then mark the fourth step complete.
     @Test func installing_valet_refreshes_progress() async {
@@ -258,7 +278,7 @@ struct OnboardingWizardViewModelTest {
                     ]
                 ),
                 "/opt/homebrew/bin/brew install dnsmasq nginx": .instant("Installed dnsmasq and nginx.\n"),
-                "valet install": BatchFakeShellOutput(
+                "/opt/homebrew/bin/valet install": BatchFakeShellOutput(
                     items: [.instant("Configured Valet.\n")],
                     transactions: [
                         .mkdir("~/.config/valet"),

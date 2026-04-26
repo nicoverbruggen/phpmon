@@ -10,6 +10,11 @@ import Foundation
 
 @MainActor
 class OnboardingWizardViewModel: ObservableObject {
+    enum Flow: Equatable {
+        case fullSetup
+        case installValetOnly
+    }
+
     enum State: Equatable {
         case idle
         case running
@@ -40,6 +45,7 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     let container: Container
+    let flow: Flow
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
 
@@ -54,6 +60,7 @@ class OnboardingWizardViewModel: ObservableObject {
 
     init(
         container: Container = App.shared.container,
+        flow: Flow = .fullSetup,
         progress: StepProgress = StepProgress(),
         state: State = .idle,
         outputLines: [OutputLine] = [],
@@ -61,6 +68,7 @@ class OnboardingWizardViewModel: ObservableObject {
         skippedValetSetup: Bool = false
     ) {
         self.container = container
+        self.flow = flow
         self.progress = progress
         self.state = state
         self.outputLines = outputLines
@@ -69,6 +77,16 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     var completedSteps: Set<Int> {
+        if flow == .installValetOnly {
+            var steps = Set([1, 2, 3])
+
+            if progress.valetInstalled && progress.valetTrusted || skippedValetSetup {
+                steps.insert(4)
+            }
+
+            return steps
+        }
+
         var steps = Set<Int>()
 
         if progress.developerToolsInstalled {
@@ -151,6 +169,18 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     var action: Action {
+        if flow == .installValetOnly {
+            if skippedValetSetup {
+                return .continueToStartup
+            }
+
+            if !progress.valetInstalled || !progress.valetTrusted {
+                return .installValet
+            }
+
+            return .continueToStartup
+        }
+
         if !progress.developerToolsInstalled {
             return hasTriggeredDeveloperToolsInstall ? .recheckDeveloperTools : .installDeveloperTools
         }

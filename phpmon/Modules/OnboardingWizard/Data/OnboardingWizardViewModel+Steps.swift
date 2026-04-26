@@ -164,10 +164,12 @@ extension OnboardingWizardViewModel {
         let composer = container.paths.composer ?? "composer"
 
         do {
+            let valet = container.paths.valet
+
             for command in Toolchain.Commands.valetInstall(
                 using: brew,
                 composer: composer,
-                valet: "valet"
+                valet: valet
             ) {
                 try await container.shell.attach(
                     command,
@@ -179,8 +181,6 @@ extension OnboardingWizardViewModel {
                     withTimeout: 600
                 )
             }
-
-            let valet = container.paths.valet
 
             if shouldSimulatePrivilegedCommands {
                 let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: valet))

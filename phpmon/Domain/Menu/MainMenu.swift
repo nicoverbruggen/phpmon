@@ -50,14 +50,19 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      */
     func rebuild() {
         Task { @MainActor [self] in
-            let menu = StatusMenu()
-            menu.addMenuItems()
-            menu.items.forEach({ (item) in
-                item.target = self
-            })
-            statusItem.menu = menu
-            statusItem.menu?.delegate = self
+            rebuildImmediately()
         }
+    }
+
+    @MainActor
+    func rebuildImmediately() {
+        let menu = StatusMenu()
+        menu.addMenuItems()
+        menu.items.forEach({ (item) in
+            item.target = self
+        })
+        statusItem.menu = menu
+        statusItem.menu?.delegate = self
     }
 
     /**
@@ -218,13 +223,30 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @objc func openLiteModeInfo() {
         Task { @MainActor in
-            NVAlert().withInformation(
+            let shouldInstallValet = NVAlert().withInformation(
                 title: "lite_mode_explanation.title".localized,
                 subtitle: "lite_mode_explanation.subtitle".localized,
                 description: "lite_mode_explanation.description".localized
             )
-            .withPrimary(text: "generic.ok".localized)
-            .show(urgency: .bringToFront)
+            .withPrimary(text: "lite_mode_explanation.install_valet".localized)
+            .withSecondary(text: "lite_mode_explanation.not_now".localized)
+            .didSelectPrimary(urgency: .bringToFront)
+
+            guard shouldInstallValet else {
+                return
+            }
+
+            dismissMenu(animated: false)
+
+            let startup = Startup(container)
+            let outcome = await startup.showOnboardingWizard(
+                exitsApplicationOnClose: false,
+                flow: .installValetOnly
+            )
+
+            if outcome == .completed {
+                await startup.refreshAfterInstallingValetViaOnboarding()
+            }
         }
     }
 

@@ -219,7 +219,7 @@ fileprivate extension TestableConfiguration {
             ]
         )
         shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
-        shellOutput["valet install"] = BatchFakeShellOutput(
+        shellOutput["/opt/homebrew/bin/valet install"] = BatchFakeShellOutput(
             items: [.instant("Configured Valet.\n")],
             transactions: [
                 .mkdir("~/.config/valet"),

@@ -250,6 +250,10 @@
 		03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
+		F0A1B2C3D4E5F60100001011 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001012 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001013 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
 		03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
@@ -1296,6 +1300,7 @@
 		03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardView.swift; sourceTree = "<group>"; };
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+ValetOnboarding.swift"; sourceTree = "<group>"; };
 		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
 		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
 		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
@@ -2593,6 +2598,7 @@
 				0379C49E2ED71CFC0035D7EA /* Startup+Launch.swift */,
 				03BFF5262E312C39007F96FA /* Startup+Timers.swift */,
 				03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */,
+				F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */,
 				F0A1B2C3D4E5F60100000001 /* Toolchain.swift */,
 				F0A1B2C3D4E5F60100000002 /* ShellEnvironment.swift */,
 				F0A1B2C3D4E5F60100000008 /* PathEntry.swift */,
@@ -3211,6 +3217,7 @@
 				C41ADCE82970CCC700120423 /* FSNotifier.swift in Sources */,
 				C47699EF28A2F2A30060FEB8 /* WarningManager.swift in Sources */,
 				03E311362F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				F0A1B2C3D4E5F60100001011 /* Startup+ValetOnboarding.swift in Sources */,
 				F0A1B2C3D4E5F60100000011 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000021 /* ShellEnvironment.swift in Sources */,
 				F0A1B2C3D4E5F60100000081 /* PathEntry.swift in Sources */,
@@ -3528,6 +3535,7 @@
 				032DAC2B2E8BEB5B0018E01C /* RealWebApi.swift in Sources */,
 				C471E84728F9BB650021E251 /* Startup.swift in Sources */,
 				03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				F0A1B2C3D4E5F60100001013 /* Startup+ValetOnboarding.swift in Sources */,
 				F0A1B2C3D4E5F60100000013 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000023 /* ShellEnvironment.swift in Sources */,
 				F0A1B2C3D4E5F60100000083 /* PathEntry.swift in Sources */,
@@ -3790,6 +3798,7 @@
 				C43931CD29C4C03F0069165B /* Brew.swift in Sources */,
 				C451AFF92969E40F0078E617 /* HelpButton.swift in Sources */,
 				03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */,
 				F0A1B2C3D4E5F60100000014 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000024 /* ShellEnvironment.swift in Sources */,
 				F0A1B2C3D4E5F60100000084 /* PathEntry.swift in Sources */,
@@ -4185,6 +4194,7 @@
 				C4AFC4AF29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
 				0381313E2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
+				F0A1B2C3D4E5F60100001012 /* Startup+ValetOnboarding.swift in Sources */,
 				F0A1B2C3D4E5F60100000012 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000022 /* ShellEnvironment.swift in Sources */,
 				F0A1B2C3D4E5F60100000082 /* PathEntry.swift in Sources */,

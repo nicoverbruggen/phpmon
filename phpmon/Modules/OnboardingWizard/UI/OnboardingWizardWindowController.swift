@@ -19,10 +19,17 @@ class OnboardingWizardWindowController: PMWindowController {
     private var viewModel: OnboardingWizardViewModel?
     private var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     private var didResolve = false
+    private var exitsApplicationOnClose = true
+    private var flow: OnboardingWizardViewModel.Flow = .fullSetup
 
-    static func create() -> OnboardingWizardWindowController {
+    static func create(
+        exitsApplicationOnClose: Bool = true,
+        flow: OnboardingWizardViewModel.Flow = .fullSetup
+    ) -> OnboardingWizardWindowController {
         let windowController = OnboardingWizardWindowController()
-        let viewModel = OnboardingWizardViewModel()
+        windowController.exitsApplicationOnClose = exitsApplicationOnClose
+        windowController.flow = flow
+        let viewModel = OnboardingWizardViewModel(flow: flow)
         windowController.viewModel = viewModel
         let window = NSWindow()
 
@@ -30,7 +37,10 @@ class OnboardingWizardWindowController: PMWindowController {
         window.styleMask = [.titled, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = windowController
-        window.contentView = NSHostingView(rootView: OnboardingWizardView(viewModel: viewModel))
+        window.contentView = NSHostingView(rootView: OnboardingWizardView(
+            viewModel: viewModel,
+            hasStartedWizard: flow == .installValetOnly
+        ))
         window.setContentSize(window.contentView!.fittingSize)
         window.isReleasedWhenClosed = false
 
@@ -71,7 +81,11 @@ class OnboardingWizardWindowController: PMWindowController {
         super.windowWillClose(notification)
 
         if !didResolve {
-            exit(1)
+            if exitsApplicationOnClose {
+                exit(1)
+            } else {
+                complete(with: .skipped)
+            }
         }
     }
 

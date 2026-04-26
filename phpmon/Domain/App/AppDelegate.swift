@@ -140,8 +140,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      are disabled or hidden when needed.
      */
     public func configureMenuItems(standalone: Bool) {
-        if standalone {
-            menuItemSites.isHidden = true
-        }
+        menuItemSites.isHidden = standalone
     }
 }

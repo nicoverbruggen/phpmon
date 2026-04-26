@@ -132,6 +132,40 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_quit".localized).click()
     }
 
+    final func test_standalone_mode_can_launch_valet_install_wizard() throws {
+        var configuration = TestableConfigurations.workingWithoutValet
+        configuration.mockStandaloneValetWizardInstall()
+
+        let app = launch(openMenu: true, with: configuration)
+
+        app.mainMenuItem(withText: "mi_lite_mode".localized).click()
+
+        assertAllExist([
+            app.staticTexts["lite_mode_explanation.title".localized],
+            app.buttons["lite_mode_explanation.install_valet".localized],
+            app.buttons["lite_mode_explanation.not_now".localized]
+        ], 3.0)
+
+        click(app.buttons["lite_mode_explanation.install_valet".localized])
+
+        assertAllExist([
+            app.staticTexts["onboarding_wizard.title".localized],
+            app.buttons["onboarding_wizard.buttons.install_valet".localized]
+        ], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+
+        waitForMenu(app)
+        app.statusItems.firstMatch.click()
+
+        assertNotExists(app.menuItems["mi_lite_mode".localized], 1.0)
+        assertExists(app.menuItems["mi_driver".localized("Valet 4.9.0")], 3.0)
+
+        app.terminate()
+    }
+
     /**
      Verifies that the ServicesView updates correctly when Homebrew service
      statuses change while the menu is open. On `menuWillOpen`, a background
@@ -184,5 +218,56 @@ final class MainMenuTest: UITestCase {
 
         // Verify that the services status actually changed (nginx is now stopped)
         assertExists(app.staticTexts["phpman.services.inactive".localized], 1.0)
+    }
+}
+
+fileprivate extension TestableConfiguration {
+    mutating func mockStandaloneValetWizardInstall() {
+        shellOutput["cat /private/etc/sudoers.d/brew"] = .instant("")
+        shellOutput["cat /private/etc/sudoers.d/valet"] = .instant("")
+        shellOutput["/usr/local/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
+            items: [.instant("Installed Valet.\n")],
+            transactions: [
+                .write("", to: "/opt/homebrew/bin/valet")
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
+        shellOutput["/opt/homebrew/bin/valet install"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet.\n")],
+            transactions: [
+                .mkdir("~/.config/valet"),
+                .write(
+                    """
+                    {
+                      "paths": [
+                        "/Users/fake/.config/valet/Sites"
+                      ],
+                      "tld": "test",
+                      "loopback": "127.0.0.1"
+                    }
+                    """,
+                    to: "~/.config/valet/config.json"
+                )
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/valet trust"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet sudoers.\n")],
+            transactions: [
+                .shell(
+                    "cat /private/etc/sudoers.d/brew",
+                    .instant("""
+                    Cmnd_Alias BREW = /opt/homebrew/bin/brew *
+                    %admin ALL=(root) NOPASSWD:SETENV: BREW
+                    """)
+                ),
+                .shell(
+                    "cat /private/etc/sudoers.d/valet",
+                    .instant("""
+                    Cmnd_Alias VALET = /opt/homebrew/bin/valet *
+                    %admin ALL=(root) NOPASSWD:SETENV: VALET
+                    """)
+                )
+            ]
+        )
     }
 }
