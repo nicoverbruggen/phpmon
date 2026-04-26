@@ -164,13 +164,33 @@ extension OnboardingWizardViewModel {
         container.paths.detectBinaryPaths()
         let brew = container.paths.brew
         let composer = container.paths.composer ?? "composer"
-        let composerValet = "\(container.paths.homePath)/.composer/vendor/bin/valet"
+        let composerValetShim = "\(container.paths.homePath)/.composer/vendor/bin/valet"
+        let composerValetScript = "\(container.paths.homePath)/.composer/vendor/laravel/valet/valet"
+        let homebrewValet = container.paths.valet
+
+        var sudoersInstalled = false
+        defer {
+            if sudoersInstalled {
+                Self.removeValetInstallSudoers()
+            }
+        }
+
+        if !shouldSimulatePrivilegedCommands {
+            do {
+                try Self.installValetInstallSudoers(forScriptAt: composerValetScript)
+                sudoersInstalled = true
+            } catch {
+                state = .failed
+                appendOutput("\nError: \(error.localizedDescription)", .stdErr)
+                return
+            }
+        }
 
         do {
             for command in Toolchain.Commands.valetInstall(
                 using: brew,
                 composer: composer,
-                valet: composerValet
+                valet: composerValetShim
             ) {
                 try await container.shell.attach(
                     command,
@@ -184,7 +204,7 @@ extension OnboardingWizardViewModel {
             }
 
             if shouldSimulatePrivilegedCommands {
-                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: composerValet))
+                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: homebrewValet))
                 if !output.out.isEmpty {
                     appendOutput(output.out, .stdOut)
                 }
@@ -192,7 +212,7 @@ extension OnboardingWizardViewModel {
                     appendOutput(output.err, .stdErr)
                 }
             } else {
-                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: composerValet))
+                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: homebrewValet))
                 if !output.isEmpty {
                     appendOutput(output, .stdOut)
                 }
@@ -212,5 +232,32 @@ extension OnboardingWizardViewModel {
             state = .failed
             appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
         }
+    }
+
+    // MARK: - Temporary sudoers entry for `valet install`
+
+    private static let valetInstallSudoersPath = "/etc/sudoers.d/phpmon-valet-install"
+    private static let valetInstallSudoersTemp = "/tmp/phpmon-valet-install.sudoers"
+
+    fileprivate static func installValetInstallSudoers(forScriptAt valetPath: String) throws {
+        let entry = "Cmnd_Alias VALET_INSTALL = \(valetPath) install"
+        let perm = "%admin ALL=(root) NOPASSWD:SETENV: VALET_INSTALL"
+        let temp = valetInstallSudoersTemp
+        let dest = valetInstallSudoersPath
+        let script = [
+            "rm -f \(temp)",
+            "echo '\(entry)' > \(temp)",
+            "echo '\(perm)' >> \(temp)",
+            "/usr/sbin/visudo -cf \(temp)",
+            "chmod 0440 \(temp)",
+            "chown root:wheel \(temp)",
+            "mv \(temp) \(dest)"
+        ].joined(separator: " && ")
+        try AppleScript.runSimpleShellAsAdmin(script)
+    }
+
+    fileprivate static func removeValetInstallSudoers() {
+        let script = "rm -f \(valetInstallSudoersPath) \(valetInstallSudoersTemp)"
+        try? AppleScript.runSimpleShellAsAdmin(script)
     }
 }
