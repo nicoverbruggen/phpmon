@@ -44,8 +44,11 @@ extension OnboardingWizardView {
             )
             sidebarStep(
                 number: 4,
-                title: "onboarding_wizard.steps.valet".localized,
-                badgeTitle: "onboarding_wizard.badges.optional".localized
+                title: "onboarding_wizard.steps.valet".localized
+            )
+            sidebarStep(
+                number: 5,
+                title: "onboarding_wizard.steps.ready".localized
             )
 
             Spacer()

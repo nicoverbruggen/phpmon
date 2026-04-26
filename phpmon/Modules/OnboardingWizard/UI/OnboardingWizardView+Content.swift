@@ -41,7 +41,6 @@ extension OnboardingWizardView {
                 IntroductionChecklistItemView(
                     number: 4,
                     title: "onboarding_wizard.steps.valet".localized,
-                    badgeTitle: "onboarding_wizard.badges.optional".localized,
                     description: "onboarding_wizard.intro.valet".localized
                 )
             }

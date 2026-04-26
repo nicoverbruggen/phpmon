@@ -23,6 +23,8 @@ class OnboardingWizardViewModel: ObservableObject {
         var pathConfigured: Bool = false
         var phpInstalled: Bool = false
         var composerInstalled: Bool = false
+        var valetInstalled: Bool = false
+        var valetTrusted: Bool = false
     }
 
     enum Action: Equatable {
@@ -33,6 +35,7 @@ class OnboardingWizardViewModel: ObservableObject {
         case fixPathAutomatically
         case recheckPath
         case installPhpComposer
+        case installValet
         case continueToStartup
     }
 
@@ -77,6 +80,10 @@ class OnboardingWizardViewModel: ObservableObject {
             steps.insert(3)
         }
 
+        if progress.valetInstalled && progress.valetTrusted {
+            steps.insert(4)
+        }
+
         return steps
     }
 
@@ -114,6 +121,8 @@ class OnboardingWizardViewModel: ObservableObject {
             return Task { await recheckPath() }
         case .installPhpComposer:
             return Task { await installPhpComposer() }
+        case .installValet:
+            return Task { await installValet() }
         case .continueToStartup:
             onComplete?(.completed)
             return nil
@@ -145,6 +154,10 @@ class OnboardingWizardViewModel: ObservableObject {
             return .installPhpComposer
         }
 
+        if !progress.valetInstalled || !progress.valetTrusted {
+            return .installValet
+        }
+
         return .continueToStartup
     }
 
@@ -157,17 +170,50 @@ class OnboardingWizardViewModel: ObservableObject {
     func refreshProgress() async {
         let toolchain = Toolchain(container)
         let shellEnvironment = ShellEnvironment(container)
+        let valetInstalled = hasValetBinary() && hasValetConfiguration()
+        let valetTrusted = await hasValetTrustConfiguration()
 
         progress = StepProgress(
             developerToolsInstalled: await toolchain.status(.commandLineTools).installed,
             homebrewInstalled: await toolchain.status(.homebrew).installed,
             pathConfigured: shellEnvironment.hasRequiredOnboardingPaths(),
             phpInstalled: await toolchain.status(.php).installed,
-            composerInstalled: await toolchain.status(.composer).installed
+            composerInstalled: await toolchain.status(.composer).installed,
+            valetInstalled: valetInstalled,
+            valetTrusted: valetTrusted
         )
+
+        if container === App.shared.container {
+            Valet.shared.installed = valetInstalled
+
+            if App.hasLoadedTestableConfiguration && valetInstalled {
+                ValetScanner.useFake()
+                ValetInteractor.useFake()
+            }
+        }
     }
 
     func appendOutput(_ text: String, _ stream: ShellStream) {
         outputLines.append(OutputLine(text: text, stream: stream))
+    }
+
+    private func hasValetBinary() -> Bool {
+        return container.filesystem.fileExists(container.paths.valet)
+            || container.filesystem.fileExists("~/.composer/vendor/bin/valet")
+    }
+
+    private func hasValetConfiguration() -> Bool {
+        return container.filesystem.directoryExists("~/.config/valet")
+    }
+
+    private func hasValetTrustConfiguration() async -> Bool {
+        let brewTrusted = await container.shell
+            .pipe("cat /private/etc/sudoers.d/brew")
+            .out.contains(container.paths.brew)
+        let valetTrusted = await container.shell
+            .pipe("cat /private/etc/sudoers.d/valet")
+            .out.contains(container.paths.valet)
+
+        return brewTrusted && valetTrusted
     }
 }

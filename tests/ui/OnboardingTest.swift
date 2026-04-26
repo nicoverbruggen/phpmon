@@ -91,6 +91,9 @@ final class OnboardingTest: UITestCase {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.continue".localized])
@@ -138,7 +141,12 @@ fileprivate extension TestableConfiguration {
         filesystem["/opt/homebrew/bin/php"] = nil
         filesystem["/usr/local/bin/composer"] = nil
         filesystem["/opt/homebrew/bin/composer"] = nil
+        filesystem["/opt/homebrew/bin/valet"] = nil
+        filesystem["~/.config/valet"] = nil
+        filesystem["~/.config/valet/config.json"] = nil
         shellOutput["ls /opt/homebrew/opt | grep php"] = .instant("")
+        shellOutput["cat /private/etc/sudoers.d/brew"] = .instant("")
+        shellOutput["cat /private/etc/sudoers.d/valet"] = .instant("")
     }
 
     mutating func mockRequiredOnboardingInstallCommands() {
@@ -172,6 +180,50 @@ fileprivate extension TestableConfiguration {
                 .write("", to: "/opt/homebrew/bin/php"),
                 .write("", to: "/opt/homebrew/bin/composer"),
                 .shell("ls /opt/homebrew/opt | grep php", .instant("php\n"))
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
+            items: [.instant("Installed Valet.\n")],
+            transactions: [
+                .write("", to: "/opt/homebrew/bin/valet")
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/valet trust"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet sudoers.\n")],
+            transactions: [
+                .shell(
+                    "cat /private/etc/sudoers.d/brew",
+                    .instant("""
+                    Cmnd_Alias BREW = /opt/homebrew/bin/brew *
+                    %admin ALL=(root) NOPASSWD:SETENV: BREW
+                    """)
+                ),
+                .shell(
+                    "cat /private/etc/sudoers.d/valet",
+                    .instant("""
+                    Cmnd_Alias VALET = /opt/homebrew/bin/valet *
+                    %admin ALL=(root) NOPASSWD:SETENV: VALET
+                    """)
+                )
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/valet install"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet.\n")],
+            transactions: [
+                .mkdir("~/.config/valet"),
+                .write(
+                    """
+                    {
+                      "tld": "test",
+                      "paths": [
+                        "/Users/fake/.config/valet/Sites",
+                        "/Users/fake/Sites"
+                      ],
+                      "loopback": "127.0.0.1"
+                    }
+                    """,
+                    to: "~/.config/valet/config.json"
+                )
             ]
         )
     }

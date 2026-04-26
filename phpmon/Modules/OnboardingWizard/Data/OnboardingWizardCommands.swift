@@ -19,6 +19,18 @@ extension Toolchain {
                 "\(brew) install php composer"
             ]
         }
+
+        static func valetInstall(using composer: String) -> String {
+            return "\(composer) global require laravel/valet"
+        }
+
+        static func valetTrust(using valet: String) -> String {
+            return "\(valet) trust"
+        }
+
+        static func valetConfigure(using valet: String) -> String {
+            return "\(valet) install"
+        }
     }
 }
 

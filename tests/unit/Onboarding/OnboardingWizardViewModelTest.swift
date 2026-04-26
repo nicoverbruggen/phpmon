@@ -169,13 +169,15 @@ struct OnboardingWizardViewModelTest {
                 homebrewInstalled: true,
                 pathConfigured: true,
                 phpInstalled: true,
-                composerInstalled: true
+                composerInstalled: true,
+                valetInstalled: true,
+                valetTrusted: true
             ),
             hasLoaded: true
         )
 
         #expect(viewModel.action == .continueToStartup)
-        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+        #expect(viewModel.completedSteps == Set([1, 2, 3, 4]))
     }
 
     // Installing the required packages should mark the third step complete once both binaries exist.
@@ -184,6 +186,7 @@ struct OnboardingWizardViewModelTest {
     @Test func installing_php_and_composer_refreshes_progress() async {
         let container = prepareFakeContainer(
             architecture: "arm64",
+            pathConfigured: true,
             shell: [
                 "/opt/homebrew/bin/brew tap shivammathur/php": .instant("Tapped shivammathur/php.\n"),
                 "/opt/homebrew/bin/brew tap shivammathur/extensions": .instant("Tapped shivammathur/extensions.\n"),
@@ -217,7 +220,111 @@ struct OnboardingWizardViewModelTest {
 
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(3))
-        #expect(viewModel.action != .installPhpComposer)
+        #expect(viewModel.action == .installValet)
+    }
+
+    // Once PHP and Composer are ready, the wizard should continue into the Valet setup step.
+    @Test func valet_install_is_next_after_php_and_composer_setup() {
+        let viewModel = OnboardingWizardViewModel(
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true,
+                valetInstalled: false,
+                valetTrusted: false
+            ),
+            hasLoaded: true
+        )
+
+        #expect(viewModel.action == .installValet)
+        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+        #expect(viewModel.commandTitle == nil)
+        #expect(viewModel.commandLines.isEmpty)
+    }
+
+    // Installing Valet should run the Composer package install, trust command and Valet setup,
+    // then mark the fourth step complete.
+    @Test func installing_valet_refreshes_progress() async {
+        let container = prepareFakeContainer(
+            architecture: "arm64",
+            pathConfigured: true,
+            shell: [
+                "/opt/homebrew/bin/composer global require laravel/valet": BatchFakeShellOutput(
+                    items: [.instant("Installed Valet.\n")],
+                    transactions: [
+                        .write("", to: "/opt/homebrew/bin/valet")
+                    ]
+                ),
+                "/opt/homebrew/bin/valet trust": BatchFakeShellOutput(
+                    items: [.instant("Configured Valet sudoers.\n")],
+                    transactions: [
+                        .shell(
+                            "cat /private/etc/sudoers.d/brew",
+                            .instant("""
+                            Cmnd_Alias BREW = /opt/homebrew/bin/brew *
+                            %admin ALL=(root) NOPASSWD:SETENV: BREW
+                            """)
+                        ),
+                        .shell(
+                            "cat /private/etc/sudoers.d/valet",
+                            .instant("""
+                            Cmnd_Alias VALET = /opt/homebrew/bin/valet *
+                            %admin ALL=(root) NOPASSWD:SETENV: VALET
+                            """)
+                        )
+                    ]
+                ),
+                "/opt/homebrew/bin/valet install": BatchFakeShellOutput(
+                    items: [.instant("Configured Valet.\n")],
+                    transactions: [
+                        .mkdir("~/.config/valet"),
+                        .write(
+                            """
+                            {
+                              "tld": "test",
+                              "paths": [
+                                "/Users/fake/.config/valet/Sites",
+                                "/Users/fake/Sites"
+                              ],
+                              "loopback": "127.0.0.1"
+                            }
+                            """,
+                            to: "~/.config/valet/config.json"
+                        )
+                    ]
+                ),
+                "cat /private/etc/sudoers.d/brew": .instant(""),
+                "cat /private/etc/sudoers.d/valet": .instant("")
+            ],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary),
+                "/opt/homebrew/bin/composer": .fake(.binary),
+                "/opt/homebrew/bin/php": .fake(.binary)
+            ]
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true,
+                valetInstalled: false,
+                valetTrusted: false
+            ),
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .idle)
+        #expect(viewModel.completedSteps.contains(4))
+        #expect(viewModel.action == .continueToStartup)
     }
 
     // The Homebrew step should copy the manual install command and wait for the user to
@@ -409,6 +516,7 @@ struct OnboardingWizardViewModelTest {
     private func prepareFakeContainer(
         architecture: String,
         configuredShell: String = "/bin/zsh",
+        pathConfigured: Bool = false,
         shell: [String: BatchFakeShellOutput],
         files: [String: FakeFile],
         includeDeveloperTools: Bool = true
@@ -419,15 +527,34 @@ struct OnboardingWizardViewModelTest {
             configuredShell: configuredShell
         )
         container.bind(coreOnly: true, commandTracking: false)
+        let valetShell: [String: BatchFakeShellOutput] = [
+            "cat /private/etc/sudoers.d/brew": .instant(""),
+            "cat /private/etc/sudoers.d/valet": .instant("")
+        ]
         let developerToolsShell: [String: BatchFakeShellOutput] = includeDeveloperTools
             ? ["/usr/bin/xcode-select -p": .instant("/Library/Developer/CommandLineTools")]
             : [:]
 
         container.overrideFake(
-            shellExpectations: developerToolsShell.merging(shell) { (_, new) in new },
+            shellExpectations: valetShell
+                .merging(developerToolsShell) { (_, new) in new }
+                .merging(shell) { (_, new) in new },
             fileSystemFiles: files,
             commandTracking: false
         )
+
+        if pathConfigured, let shell = container.shell as? TestableShell {
+            shell.PATH = [
+                "/usr/local/bin",
+                "/usr/bin",
+                "/bin",
+                "/usr/sbin",
+                "\(container.paths.homePath)/.config/phpmon/bin",
+                "\(container.paths.homePath)/.composer/vendor/bin",
+                container.paths.binPath
+            ].joined(separator: ":")
+        }
+
         return container
     }
 }

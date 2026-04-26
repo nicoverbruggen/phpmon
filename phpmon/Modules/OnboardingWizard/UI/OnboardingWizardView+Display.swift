@@ -53,8 +53,10 @@ extension OnboardingWizardView {
             return 2
         case .installPhpComposer:
             return 3
-        case .continueToStartup:
+        case .installValet:
             return 4
+        case .continueToStartup:
+            return 5
         }
     }
 
@@ -128,6 +130,9 @@ extension OnboardingWizardView {
         case 3:
             return viewModel.progress.phpInstalled
                 && viewModel.progress.composerInstalled
+        case 4:
+            return viewModel.progress.valetInstalled
+                && viewModel.progress.valetTrusted
         default:
             return false
         }

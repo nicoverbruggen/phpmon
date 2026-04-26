@@ -13,6 +13,10 @@ extension OnboardingWizardViewModel {
         App.hasLoadedTestableConfiguration || container.shell is TestableShell
     }
 
+    private var shouldSimulatePrivilegedCommands: Bool {
+        App.hasLoadedTestableConfiguration || container.shell is TestableShell
+    }
+
     func requestDeveloperToolsInstall() async {
         outputLines = []
         state = .running
@@ -143,6 +147,66 @@ extension OnboardingWizardViewModel {
         await refreshProgress()
 
         if progress.phpInstalled && progress.composerInstalled {
+            state = .idle
+            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
+        } else {
+            state = .failed
+            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
+        }
+    }
+
+    func installValet() async {
+        outputLines = []
+        state = .running
+
+        container.paths.detectBinaryPaths()
+        let composer = container.paths.composer ?? "composer"
+        let valet = container.paths.valet
+
+        do {
+            try await container.shell.attach(
+                Toolchain.Commands.valetInstall(using: composer),
+                didReceiveOutput: { [weak self] text, stream in
+                    Task { @MainActor in
+                        self?.appendOutput(text, stream)
+                    }
+                },
+                withTimeout: 600
+            )
+
+            if shouldSimulatePrivilegedCommands {
+                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: valet))
+                if !output.out.isEmpty {
+                    appendOutput(output.out, .stdOut)
+                }
+                if !output.err.isEmpty {
+                    appendOutput(output.err, .stdErr)
+                }
+            } else {
+                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: valet))
+                if !output.isEmpty {
+                    appendOutput(output, .stdOut)
+                }
+            }
+
+            try await container.shell.attach(
+                Toolchain.Commands.valetConfigure(using: valet),
+                didReceiveOutput: { [weak self] text, stream in
+                    Task { @MainActor in
+                        self?.appendOutput(text, stream)
+                    }
+                },
+                withTimeout: 600
+            )
+        } catch {
+            state = .failed
+            appendOutput("\nError: \(error.localizedDescription)", .stdErr)
+            return
+        }
+
+        await refreshProgress()
+
+        if progress.valetInstalled && progress.valetTrusted {
             state = .idle
             appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
         } else {

@@ -11,7 +11,7 @@ extension OnboardingWizardViewModel {
         switch action {
         case .recheckDeveloperTools, .installHomebrew, .recheckHomebrew, .recheckPath:
             return true
-        case .installDeveloperTools, .fixPathAutomatically, .installPhpComposer, .continueToStartup:
+        case .installDeveloperTools, .fixPathAutomatically, .installPhpComposer, .installValet, .continueToStartup:
             return false
         }
     }
@@ -54,6 +54,8 @@ extension OnboardingWizardViewModel {
             return "onboarding_wizard.detail.path.title".localized
         case .installPhpComposer:
             return "onboarding_wizard.detail.php_composer.title".localized
+        case .installValet:
+            return "onboarding_wizard.detail.valet.title".localized
         case .continueToStartup:
             return "onboarding_wizard.detail.ready.title".localized
         }
@@ -75,6 +77,8 @@ extension OnboardingWizardViewModel {
             return "onboarding_wizard.detail.path.description.manual".localized(container.paths.configuredShellPath)
         case .installPhpComposer:
             return "onboarding_wizard.detail.php_composer.description".localized
+        case .installValet:
+            return "onboarding_wizard.detail.valet.description".localized
         case .continueToStartup:
             return "onboarding_wizard.detail.ready.description".localized
         }
@@ -116,6 +120,8 @@ extension OnboardingWizardViewModel {
             return "onboarding_wizard.buttons.fix_path".localized
         case .installPhpComposer:
             return "onboarding_wizard.buttons.install_php_composer".localized
+        case .installValet:
+            return "onboarding_wizard.buttons.install_valet".localized
         case .continueToStartup:
             return "onboarding_wizard.buttons.continue".localized
         }

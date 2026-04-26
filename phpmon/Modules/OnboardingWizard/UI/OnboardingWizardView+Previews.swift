@@ -55,7 +55,7 @@ import SwiftUI
     )
 }
 
-#Preview("Step 4: Ready") {
+#Preview("Step 4: Valet") {
     OnboardingWizardView.preview(
         hasStartedWizard: true,
         progress: .init(
@@ -64,6 +64,21 @@ import SwiftUI
             pathConfigured: true,
             phpInstalled: true,
             composerInstalled: true
+        )
+    )
+}
+
+#Preview("Step 5: Ready") {
+    OnboardingWizardView.preview(
+        hasStartedWizard: true,
+        progress: .init(
+            developerToolsInstalled: true,
+            homebrewInstalled: true,
+            pathConfigured: true,
+            phpInstalled: true,
+            composerInstalled: true,
+            valetInstalled: true,
+            valetTrusted: true
         )
     )
 }
