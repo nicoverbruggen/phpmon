@@ -39,6 +39,19 @@ struct OnboardingWizardViewModelTest {
         )
     }
 
+    // The onboarding PATH guidance should include PHP Monitor helpers before the other required bins.
+    @Test func onboarding_path_instructions_include_php_monitor_helpers() {
+        let lines = ShellEnvironment(prepareContainer(architecture: "arm64")).pathInstructionLines()
+
+        #expect(
+            lines == [
+                "export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH",
+                "export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH",
+                "export PATH=$HOME/bin:/opt/homebrew/bin:$PATH"
+            ]
+        )
+    }
+
     // Missing developer tools should make the first button launch Apple's installer.
     @Test func missing_developer_tools_uses_installer_action() {
         let viewModel = OnboardingWizardViewModel(
@@ -172,6 +185,8 @@ struct OnboardingWizardViewModelTest {
         let container = prepareFakeContainer(
             architecture: "arm64",
             shell: [
+                "/opt/homebrew/bin/brew tap shivammathur/php": .instant("Tapped shivammathur/php.\n"),
+                "/opt/homebrew/bin/brew tap shivammathur/extensions": .instant("Tapped shivammathur/extensions.\n"),
                 "/opt/homebrew/bin/brew install php composer": BatchFakeShellOutput(
                     items: [.instant("Installing php and composer...\n")],
                     transactions: [

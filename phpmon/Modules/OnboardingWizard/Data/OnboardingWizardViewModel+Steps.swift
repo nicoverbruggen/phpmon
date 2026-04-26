@@ -85,16 +85,17 @@ extension OnboardingWizardViewModel {
         let zshRunCommand = ZshRunCommand(container)
         appendOutput("onboarding_wizard.output.path_updating".localized, .stdOut)
 
+        let phpMonitorResult = await zshRunCommand.addPhpMonitorBinPath()
         let composerResult = await zshRunCommand.addComposerBinPath()
         let homebrewResult = await zshRunCommand.addHomebrewBinPath()
 
         await container.shell.reloadEnvPath()
         await refreshProgress()
 
-        if composerResult && homebrewResult && progress.pathConfigured {
+        if phpMonitorResult && composerResult && homebrewResult && progress.pathConfigured {
             state = .idle
             appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
-        } else if composerResult && homebrewResult {
+        } else if phpMonitorResult && composerResult && homebrewResult {
             state = .waitingForManualCompletion
             appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut)
         } else {
@@ -122,15 +123,17 @@ extension OnboardingWizardViewModel {
         state = .running
 
         do {
-            try await container.shell.attach(
-                "\(container.paths.brew) install php composer",
-                didReceiveOutput: { [weak self] text, stream in
-                    Task { @MainActor in
-                        self?.appendOutput(text, stream)
-                    }
-                },
-                withTimeout: 600
-            )
+            for command in Toolchain.Commands.phpComposerInstall(using: container.paths.brew) {
+                try await container.shell.attach(
+                    command,
+                    didReceiveOutput: { [weak self] text, stream in
+                        Task { @MainActor in
+                            self?.appendOutput(text, stream)
+                        }
+                    },
+                    withTimeout: 600
+                )
+            }
         } catch {
             state = .failed
             appendOutput("\nError: \(error.localizedDescription)", .stdErr)

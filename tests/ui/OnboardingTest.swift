@@ -148,6 +148,7 @@ fileprivate extension TestableConfiguration {
                 .write("", to: "/opt/homebrew/bin/brew")
             ]
         )
+        shellOutput[zshPathCommand(phpMonitorPathLine())] = .instant("")
         shellOutput[zshPathCommand(composerPathLine())] = .instant("")
         shellOutput[zshPathCommand(homebrewPathLine())] = BatchFakeShellOutput(
             items: [.instant("")],
@@ -157,11 +158,14 @@ fileprivate extension TestableConfiguration {
                     "/usr/bin",
                     "/bin",
                     "/usr/sbin",
+                    "/Users/fake/.config/phpmon/bin",
                     "/Users/fake/.composer/vendor/bin",
                     "/opt/homebrew/bin"
                 ])
             ]
         )
+        shellOutput["/opt/homebrew/bin/brew tap shivammathur/php"] = .instant("Tapped shivammathur/php.\n")
+        shellOutput["/opt/homebrew/bin/brew tap shivammathur/extensions"] = .instant("Tapped shivammathur/extensions.\n")
         shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
             items: [.instant("Installed PHP and Composer.\n")],
             transactions: [
@@ -198,6 +202,10 @@ fileprivate extension TestableConfiguration {
 
     private func composerPathLine() -> String {
         return "export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH"
+    }
+
+    private func phpMonitorPathLine() -> String {
+        return "export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH"
     }
 
     private func homebrewPathLine() -> String {

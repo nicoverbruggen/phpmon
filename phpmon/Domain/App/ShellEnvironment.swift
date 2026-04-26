@@ -48,7 +48,8 @@ struct ShellEnvironment {
     func onboardingPathStatus() -> [PathEntryStatus] {
         return [
             pathEntryStatus(for: container.paths.binPath),
-            pathEntryStatus(for: "\(container.paths.homePath)/.composer/vendor/bin")
+            pathEntryStatus(for: "\(container.paths.homePath)/.composer/vendor/bin"),
+            pathEntryStatus(for: "\(container.paths.homePath)/.config/phpmon/bin")
         ]
     }
 
