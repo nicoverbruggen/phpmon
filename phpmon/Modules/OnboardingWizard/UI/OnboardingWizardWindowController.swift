@@ -42,7 +42,7 @@ class OnboardingWizardWindowController: PMWindowController {
     func showModal() async -> Startup.OnboardingWizardOutcome {
         return await withCheckedContinuation { continuation in
             guard let viewModel = self.viewModel else {
-                continuation.resume(returning: .quit)
+                continuation.resume(returning: .skipped)
                 return
             }
 

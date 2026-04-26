@@ -129,8 +129,8 @@ class OnboardingWizardViewModel: ObservableObject {
         }
     }
 
-    func quit() {
-        onComplete?(.quit)
+    func skip() {
+        onComplete?(.skipped)
     }
 
     func clearOutput() {

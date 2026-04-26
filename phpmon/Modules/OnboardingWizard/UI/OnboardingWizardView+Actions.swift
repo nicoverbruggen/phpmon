@@ -18,10 +18,14 @@ extension OnboardingWizardView {
     }
 
     var quitButton: some View {
-        Button("onboarding_wizard.buttons.quit".localized) {
-            isShowingQuitConfirmation = true
+        Button {
+            isShowingSkipConfirmation = true
+        } label: {
+            Text("onboarding_wizard.buttons.skip".localized)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(.secondary)
         }
-        .keyboardShortcut(.cancelAction)
+        .buttonStyle(.borderless)
     }
 
     var primaryActionButton: some View {

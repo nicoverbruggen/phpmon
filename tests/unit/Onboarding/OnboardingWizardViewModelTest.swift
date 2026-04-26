@@ -283,11 +283,10 @@ struct OnboardingWizardViewModelTest {
                         .write(
                             """
                             {
-                              "tld": "test",
                               "paths": [
-                                "/Users/fake/.config/valet/Sites",
-                                "/Users/fake/Sites"
+                                "/Users/fake/.config/valet/Sites"
                               ],
+                              "tld": "test",
                               "loopback": "127.0.0.1"
                             }
                             """,

@@ -11,7 +11,7 @@ import SwiftUI
 struct OnboardingWizardView: View {
     @ObservedObject var viewModel: OnboardingWizardViewModel
     @State var hasStartedWizard = false
-    @State var isShowingQuitConfirmation = false
+    @State var isShowingSkipConfirmation = false
     @State var displayedStepNumber: Int?
 
     let windowWidth: CGFloat = 720
@@ -21,12 +21,12 @@ struct OnboardingWizardView: View {
     init(
         viewModel: OnboardingWizardViewModel,
         hasStartedWizard: Bool = false,
-        isShowingQuitConfirmation: Bool = false,
+        isShowingSkipConfirmation: Bool = false,
         displayedStepNumber: Int? = nil
     ) {
         self.viewModel = viewModel
         self._hasStartedWizard = State(initialValue: hasStartedWizard)
-        self._isShowingQuitConfirmation = State(initialValue: isShowingQuitConfirmation)
+        self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
         self._displayedStepNumber = State(initialValue: displayedStepNumber)
     }
 
@@ -35,15 +35,15 @@ struct OnboardingWizardView: View {
         .frame(width: windowWidth, height: windowHeight)
         .background(Color(nsColor: .windowBackgroundColor))
         .alert(
-            "onboarding_wizard.quit_confirmation.title".localized,
-            isPresented: $isShowingQuitConfirmation
+            "onboarding_wizard.skip_confirmation.title".localized,
+            isPresented: $isShowingSkipConfirmation
         ) {
-            Button("onboarding_wizard.quit_confirmation.cancel".localized, role: .cancel) { }
-            Button("onboarding_wizard.quit_confirmation.confirm".localized, role: .destructive) {
-                viewModel.quit()
+            Button("onboarding_wizard.skip_confirmation.cancel".localized, role: .cancel) { }
+            Button("onboarding_wizard.skip_confirmation.confirm".localized) {
+                viewModel.skip()
             }
         } message: {
-            Text("onboarding_wizard.quit_confirmation.message".localized)
+            Text("onboarding_wizard.skip_confirmation.message".localized)
         }
         .task {
             await viewModel.loadIfNeeded()

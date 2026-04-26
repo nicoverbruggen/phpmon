@@ -48,11 +48,6 @@ extension Startup {
             // Show the wizard and we'll await the result of the wizard
             let outcome = await showOnboardingWizard()
             Log.info("Outcome of onboarding: \(outcome)")
-
-            // If the user has chosen to quit prematurely, terminate the app
-            if outcome == .quit {
-                exit(0)
-            }
         }
     }
 

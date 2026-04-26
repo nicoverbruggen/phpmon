@@ -66,7 +66,7 @@ final class OnboardingTest: UITestCase {
         assertAllExist([
             app.staticTexts["onboarding_wizard.title".localized],
             app.buttons["onboarding_wizard.buttons.start_setup".localized],
-            app.buttons["onboarding_wizard.buttons.quit".localized]
+            app.buttons["onboarding_wizard.buttons.skip".localized]
         ], 3.0)
         assertNotExists(app.dialogs["generic.notice".localized], 1.0)
     }
@@ -214,11 +214,10 @@ fileprivate extension TestableConfiguration {
                 .write(
                     """
                     {
-                      "tld": "test",
                       "paths": [
-                        "/Users/fake/.config/valet/Sites",
-                        "/Users/fake/Sites"
+                        "/Users/fake/.config/valet/Sites"
                       ],
+                      "tld": "test",
                       "loopback": "127.0.0.1"
                     }
                     """,

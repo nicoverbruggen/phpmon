@@ -19,7 +19,7 @@ extension Startup {
     enum OnboardingWizardOutcome: Equatable {
         case completed
         case completedInStandaloneMode
-        case quit
+        case skipped
     }
 
     /**

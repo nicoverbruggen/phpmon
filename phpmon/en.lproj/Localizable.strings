@@ -1019,12 +1019,12 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.fix_path" = "Fix PATH Automatically";
 "onboarding_wizard.buttons.install_php_composer" = "Install PHP & Composer";
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
-"onboarding_wizard.buttons.quit" = "Quit";
+"onboarding_wizard.buttons.skip" = "Skip Setup";
 "onboarding_wizard.buttons.continue" = "Continue";
-"onboarding_wizard.quit_confirmation.title" = "Quit setup?";
-"onboarding_wizard.quit_confirmation.message" = "PHP Monitor still needs these setup steps before it can run correctly. Are you sure you want to quit?";
-"onboarding_wizard.quit_confirmation.cancel" = "Keep Setting Up";
-"onboarding_wizard.quit_confirmation.confirm" = "Quit PHP Monitor";
+"onboarding_wizard.skip_confirmation.title" = "Skip setup?";
+"onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
+"onboarding_wizard.skip_confirmation.cancel" = "Keep Setting Up";
+"onboarding_wizard.skip_confirmation.confirm" = "Skip Setup";
 "onboarding_wizard.detail.developer_tools.title" = "Step 1: Install Command Line Tools";
 "onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask the macOS to install these. You will need to complete the installation yourself, then return here and click Continue to validate the installation has succeeded.";
 "onboarding_wizard.detail.developer_tools.waiting" = "Finish the developer tools installation in macOS, then come back here, and click on Continue.";
