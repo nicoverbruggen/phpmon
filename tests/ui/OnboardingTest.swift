@@ -23,7 +23,6 @@ final class OnboardingTest: UITestCase {
 
         assertWizardOpenedInsteadOfStartupAlert(app)
         startWizard(app)
-        continuePastCompletedDeveloperToolsStep(app)
         completeRequiredInstallFlow(app)
     }
 
@@ -35,8 +34,20 @@ final class OnboardingTest: UITestCase {
         assertWizardOpenedInsteadOfStartupAlert(app)
         startWizard(app)
         installDeveloperTools(app)
-        continuePastCompletedDeveloperToolsStep(app)
         completeRequiredInstallFlow(app)
+    }
+
+    // If the user's shell is not zsh, the wizard should show the manual PATH instructions
+    // after Homebrew is installed instead of offering the automatic PATH fixer.
+    final func test_launch_shows_manual_path_instructions_for_non_zsh_shells() throws {
+        let app = launchOnboardingWizard(with: .manualPathFixRequired)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        startWizard(app)
+        installHomebrew(app)
+        assertManualPathInstructions(app)
+
+        app.terminate()
     }
 
     private func launchOnboardingWizard(with scenario: OnboardingScenario) -> XCPMApplication {
@@ -64,12 +75,6 @@ final class OnboardingTest: UITestCase {
         click(app.buttons["onboarding_wizard.buttons.start_setup".localized])
     }
 
-    private func continuePastCompletedDeveloperToolsStep(_ app: XCPMApplication) {
-        assertExists(app.staticTexts["onboarding_wizard.detail.developer_tools.title".localized], 3.0)
-        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
-    }
-
     private func installDeveloperTools(_ app: XCPMApplication) {
         assertExists(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized])
@@ -79,9 +84,7 @@ final class OnboardingTest: UITestCase {
     }
 
     private func completeRequiredInstallFlow(_ app: XCPMApplication) {
-        assertExists(app.buttons["onboarding_wizard.buttons.install_homebrew".localized], 3.0)
-
-        click(app.buttons["onboarding_wizard.buttons.install_homebrew".localized])
+        installHomebrew(app)
         assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
@@ -95,11 +98,23 @@ final class OnboardingTest: UITestCase {
 
         app.terminate()
     }
+
+    private func installHomebrew(_ app: XCPMApplication) {
+        assertExists(app.buttons["onboarding_wizard.buttons.install_homebrew".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.install_homebrew".localized])
+    }
+
+    private func assertManualPathInstructions(_ app: XCPMApplication) {
+        assertExists(app.staticTexts["onboarding_wizard.command.path.title".localized], 3.0)
+        assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
+        assertNotExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 1.0)
+    }
 }
 
 fileprivate enum OnboardingScenario {
     case developerToolsAlreadyInstalled
     case developerToolsMissing
+    case manualPathFixRequired
 
     func apply(to configuration: inout TestableConfiguration) {
         switch self {
@@ -107,6 +122,8 @@ fileprivate enum OnboardingScenario {
             break
         case .developerToolsMissing:
             configuration.mockDeveloperToolsInstall()
+        case .manualPathFixRequired:
+            configuration.configuredShell = "/bin/bash"
         }
     }
 }

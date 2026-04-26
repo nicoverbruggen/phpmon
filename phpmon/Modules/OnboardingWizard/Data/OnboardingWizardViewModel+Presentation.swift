@@ -42,25 +42,19 @@ extension OnboardingWizardViewModel {
     }
 
     var commandTitle: String? {
-        switch action {
-        case .recheckPath:
-            return "onboarding_wizard.command.path.title".localized
-        case .installPhpComposer:
-            return "onboarding_wizard.command.php_composer.title".localized
-        default:
+        guard action == .recheckPath else {
             return nil
         }
+
+        return "onboarding_wizard.command.path.title".localized
     }
 
     var commandLines: [String] {
-        switch action {
-        case .recheckPath:
-            return ShellEnvironment(container).pathInstructionLines()
-        case .installPhpComposer:
-            return [Toolchain.Commands.phpComposerInstall]
-        default:
+        guard action == .recheckPath else {
             return []
         }
+
+        return ShellEnvironment(container).pathInstructionLines()
     }
 
     var primaryButtonTitle: String {

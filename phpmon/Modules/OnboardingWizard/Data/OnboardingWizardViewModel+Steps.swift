@@ -7,6 +7,13 @@
 //
 
 extension OnboardingWizardViewModel {
+    private func runPrivilegedCommand(_ command: String) async throws -> String {
+        let runner = privilegedCommandRunner
+        return try await Task.detached(priority: .userInitiated) {
+            try runner.run(command)
+        }.value
+    }
+
     func requestDeveloperToolsInstall() async {
         outputLines = []
         state = .running
@@ -42,15 +49,10 @@ extension OnboardingWizardViewModel {
         state = .running
 
         do {
-            try await container.shell.attach(
-                Toolchain.Commands.homebrewInstall,
-                didReceiveOutput: { [weak self] text, stream in
-                    Task { @MainActor in
-                        self?.appendOutput(text, stream)
-                    }
-                },
-                withTimeout: 900
-            )
+            let output = try await runPrivilegedCommand(Toolchain.Commands.homebrewInstall)
+            if !output.isEmpty {
+                appendOutput(output, .stdOut)
+            }
         } catch {
             state = .failed
             appendOutput("\nError: \(error.localizedDescription)", .stdErr)

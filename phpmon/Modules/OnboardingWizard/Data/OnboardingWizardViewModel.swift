@@ -36,6 +36,7 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     let container: Container
+    let privilegedCommandRunner: PrivilegedCommandRunner
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
 
@@ -48,12 +49,15 @@ class OnboardingWizardViewModel: ObservableObject {
 
     init(
         container: Container = App.shared.container,
+        privilegedCommandRunner: PrivilegedCommandRunner? = nil,
         progress: StepProgress = StepProgress(),
         state: State = .idle,
         outputLines: [OutputLine] = [],
         hasLoaded: Bool = false
     ) {
         self.container = container
+        self.privilegedCommandRunner = privilegedCommandRunner
+            ?? PrivilegedCommandRunner(container: container)
         self.progress = progress
         self.state = state
         self.outputLines = outputLines

@@ -126,6 +126,25 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.completedSteps == Set([1, 2]))
     }
 
+    // The PHP/Composer install step should present a single action button without showing
+    // the underlying brew command to run manually.
+    @Test func php_and_composer_step_does_not_show_command_block() {
+        let viewModel = OnboardingWizardViewModel(
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: false,
+                composerInstalled: false
+            ),
+            hasLoaded: true
+        )
+
+        #expect(viewModel.action == .installPhpComposer)
+        #expect(viewModel.commandTitle == nil)
+        #expect(viewModel.commandLines.isEmpty)
+    }
+
     // Once the required packages are installed, the wizard can hand control back to startup.
     @Test func fully_prepared_core_setup_enables_continue() {
         let viewModel = OnboardingWizardViewModel(
@@ -181,6 +200,101 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(3))
         #expect(viewModel.action != .installPhpComposer)
+    }
+
+    // Homebrew installation should use the privileged runner and refresh onboarding progress.
+    @Test func installing_homebrew_uses_privileged_runner() async throws {
+        let container = prepareFakeContainer(
+            architecture: "arm64",
+            shell: [
+                "ls /opt/homebrew/opt | grep php": .instant("")
+            ],
+            files: [:]
+        )
+
+        let receivedCommand = Locked<String?>(nil)
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            privilegedCommandRunner: PrivilegedCommandRunner { command in
+                receivedCommand.value = command
+                try container.filesystem.writeAtomicallyToFile(container.paths.brew, content: "")
+                return "Installing Homebrew...\n"
+            },
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: false,
+                pathConfigured: false
+            ),
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(receivedCommand.value == Toolchain.Commands.homebrewInstall)
+        #expect(viewModel.state == .idle)
+        #expect(viewModel.progress.homebrewInstalled)
+        #expect(viewModel.action == .fixPathAutomatically)
+        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installing Homebrew...") }))
+    }
+
+    // When onboarding runs against a testable shell, the default privileged command runner
+    // should use that shell directly instead of depending on global test-state flags.
+    @Test func installing_homebrew_uses_testable_shell_for_default_privileged_runner() async {
+        let container = prepareFakeContainer(
+            architecture: "arm64",
+            shell: [
+                Toolchain.Commands.homebrewInstall: BatchFakeShellOutput(
+                    items: [.instant("Installing Homebrew...\n")],
+                    transactions: [
+                        .write("", to: "/opt/homebrew/bin/brew")
+                    ]
+                ),
+                "ls /opt/homebrew/opt | grep php": .instant("")
+            ],
+            files: [:]
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: false,
+                pathConfigured: false
+            ),
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .idle)
+        #expect(viewModel.progress.homebrewInstalled)
+        #expect(viewModel.action == .fixPathAutomatically)
+        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installing Homebrew...") }))
+    }
+
+    // Once developer tools are detected after a manual install, the UI should move straight into
+    // the Homebrew step instead of requiring an extra click to dismiss a completed-step screen.
+    @Test func completed_developer_tools_state_does_not_block_homebrew_step() {
+        let viewModel = OnboardingWizardViewModel(
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: false,
+                pathConfigured: false
+            ),
+            hasLoaded: true
+        )
+
+        let view = OnboardingWizardView(
+            viewModel: viewModel,
+            hasStartedWizard: true,
+            displayedStepNumber: 1
+        )
+
+        #expect(!view.isDisplayingCompletedStep)
+        #expect(view.activeStepNumber == 2)
+        #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.install_homebrew".localized)
     }
 
     // Starting the Command Line Tools installer should pause for manual completion instead of

@@ -720,12 +720,12 @@ If you are seeing this message but are confused why this folder has gone missing
 // Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
-"startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
+"startup.errors.sudoers_brew.desc" = "If you ran `valet trust` but keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
 // Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
-"startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
+"startup.errors.sudoers_valet.desc" = "If you ran `valet trust` but keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 // Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
@@ -1013,7 +1013,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.install_developer_tools" = "Install Developer Tools";
 "onboarding_wizard.buttons.start_setup" = "Start Setup";
 "onboarding_wizard.buttons.check_again" = "Check Again";
-"onboarding_wizard.buttons.install_homebrew" = "Install Homebrew Automatically";
+"onboarding_wizard.buttons.install_homebrew" = "Install Homebrew";
 "onboarding_wizard.buttons.fix_path" = "Fix PATH Automatically";
 "onboarding_wizard.buttons.install_php_composer" = "Install PHP & Composer";
 "onboarding_wizard.buttons.quit" = "Quit";
@@ -1036,11 +1036,10 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.detail.path.description.zsh" = "Homebrew is installed, but your zsh PATH still needs to include Composer's global bin directory and Homebrew's bin directory. PHP Monitor can update your ~/.zshrc automatically.";
 "onboarding_wizard.detail.path.description.manual" = "Homebrew is installed, but your configured shell (%@) is not zsh. Add the lines below to your shell profile, open a new terminal session, then click Check Again.";
 "onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
-"onboarding_wizard.detail.php_composer.description" = "PHP Monitor needs both PHP and Composer before it can continue startup. PHP Monitor can install these required Homebrew packages for you using the command below.";
+"onboarding_wizard.detail.php_composer.description" = "PHP Monitor needs both PHP and Composer before it can continue startup. PHP Monitor can install these required Homebrew packages for you automatically.";
 "onboarding_wizard.detail.ready.title" = "Core Setup Complete";
 "onboarding_wizard.detail.ready.description" = "The required prerequisites are ready. Continue and PHP Monitor will rerun its regular startup checks to catch the next missing pieces.";
 "onboarding_wizard.command.path.title" = "MANUAL PATH INSTRUCTIONS";
-"onboarding_wizard.command.php_composer.title" = "REQUIRED PACKAGES COMMAND";
 "onboarding_wizard.output.developer_tools_requested" = "The developer tools installer was requested. Finish that installation in macOS, then click Continue.";
 "onboarding_wizard.output.step_completed" = "Step completed. Continuing...";
 "onboarding_wizard.output.step_not_resolved" = "This step could not be completed yet.";

@@ -177,6 +177,7 @@ public struct TestableConfiguration: Codable {
 
         // Set variable to tell app we're testin'
         App.hasLoadedTestableConfiguration = true
+
     }
 
     // MARK: Persist and load

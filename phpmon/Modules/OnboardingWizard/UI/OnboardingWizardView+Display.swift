@@ -65,6 +65,7 @@ extension OnboardingWizardView {
 
         return isStepCompleted(displayedStepNumber)
             && displayedStepNumber == 1
+            && viewModel.action == .recheckDeveloperTools
             && displayedStepNumber < actionableStepNumber
             && viewModel.state != .running
     }
