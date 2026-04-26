@@ -300,7 +300,7 @@ fileprivate extension TestableConfiguration {
         return """
             touch ~/.zshrc && \
             grep -qxF '\(escaped)' ~/.zshrc \
-            || echo '\n\n\(escaped)\n' >> ~/.zshrc
+            || printf '%s\\n' '\(escaped)' >> ~/.zshrc
         """
     }
 }

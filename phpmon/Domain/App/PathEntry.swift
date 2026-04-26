@@ -7,6 +7,17 @@
 //
 
 struct PathEntry {
+    /**
+     Normalizes a PATH entry so equivalent shell spellings compare the same.
+
+     Supported normalization rules:
+     - `~` and `$HOME` both become the resolved home directory
+     - `~/...` and `$HOME/...` become absolute paths under the home directory
+     - trailing slashes are removed for non-root paths
+
+     This keeps onboarding checks and `.zshrc` writes idempotent even when a user
+     already configured the same path using a different home-directory shorthand.
+     */
     static func normalize(_ path: String, homePath: String) -> String {
         var normalized = path
 

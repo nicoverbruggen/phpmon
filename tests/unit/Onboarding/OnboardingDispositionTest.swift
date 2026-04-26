@@ -91,6 +91,7 @@ struct OnboardingDispositionTest {
             hasPhpBinary: false
         )
         (container.shell as? TestableShell)?.PATH = [
+            "$HOME/.config/phpmon/bin/",
             "$HOME/.composer/vendor/bin/",
             "/opt/homebrew/bin/"
         ].joined(separator: ":")

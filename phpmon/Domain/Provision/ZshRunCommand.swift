@@ -6,6 +6,8 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 class ZshRunCommand {
 
     // MARK: - Container
@@ -23,6 +25,10 @@ class ZshRunCommand {
      */
     @discardableResult
     private func add(_ text: String) async -> Bool {
+        if zshrcAlreadyContainsLine(for: text) {
+            return true
+        }
+
         // Escape single quotes to prevent shell injection
         let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
 
@@ -30,7 +36,7 @@ class ZshRunCommand {
         let outcome = await container.shell.pipe("""
             touch ~/.zshrc && \
             grep -qxF '\(escaped)' ~/.zshrc \
-            || echo '\n\n\(escaped)\n' >> ~/.zshrc
+            || printf '%s\\n' '\(escaped)' >> ~/.zshrc
         """)
 
         // Validate the command executed correctly
@@ -39,6 +45,43 @@ class ZshRunCommand {
         }
 
         return true
+    }
+
+    private func zshrcAlreadyContainsLine(for text: String) -> Bool {
+        guard container.filesystem.fileExists("~/.zshrc"),
+              let contents = try? container.filesystem.getStringFromFile("~/.zshrc") else {
+            return false
+        }
+
+        let path = text
+            .replacingOccurrences(of: "export PATH=$HOME/bin:", with: "")
+            .replacingOccurrences(of: ":$PATH", with: "")
+
+        return pathEntries(in: contents).contains(
+            PathEntry.normalize(path, homePath: container.paths.homePath)
+        )
+    }
+
+    /**
+     Extracts path-like tokens from `.zshrc` so we can detect equivalent entries even when
+     they are written differently from the exact export line we generate.
+
+     This intentionally recognizes paths that start with `/`, `~/`, or `$HOME/`, then relies
+     on `PathEntry.normalize(...)` to collapse those spellings into a single comparable form.
+     */
+    private func pathEntries(in contents: String) -> Set<String> {
+        let regex = try? NSRegularExpression(pattern: #"(?:(?:\$HOME|~|/)[^:\s"'()]+)"#)
+        let range = NSRange(contents.startIndex..<contents.endIndex, in: contents)
+
+        let entries = regex?.matches(in: contents, range: range).compactMap { match -> String? in
+            guard let range = Range(match.range, in: contents) else {
+                return nil
+            }
+
+            return PathEntry.normalize(String(contents[range]), homePath: container.paths.homePath)
+        } ?? []
+
+        return Set(entries)
     }
 
     /**

@@ -12,18 +12,28 @@ struct StartupOutputView: View {
     let lines: [OutputLine]
     let isRunning: Bool
 
+    private var displayLines: [OutputLine] {
+        return lines.filter { !$0.text.isEmpty }
+    }
+
+    private let bottomAnchorId = "startup-output-bottom-anchor"
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             ScrollViewReader { proxy in
-                ScrollView {
+                ScrollView(.vertical, showsIndicators: true) {
                     LazyVStack(alignment: .leading, spacing: 1) {
-                        ForEach(lines) { line in
+                        ForEach(displayLines) { line in
                             Text(line.text)
                                 .font(.system(size: 11, design: .monospaced))
-                                .foregroundStyle(line.stream == .stdErr ? Color.red : .white)
+                                .foregroundStyle(.white)
                                 .textSelection(.enabled)
                                 .id(line.id)
                         }
+
+                        Color.clear
+                            .frame(height: 1)
+                            .id(bottomAnchorId)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(8)
@@ -32,12 +42,20 @@ struct StartupOutputView: View {
                 .background(Color.black)
                 .foregroundStyle(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 6))
-                .onChange(of: lines.count) { _ in
-                    if let last = lines.last {
-                        proxy.scrollTo(last.id, anchor: .bottom)
-                    }
-                }
+                .onAppear { scrollToBottom(using: proxy) }
+                .onChange(of: displayLines.count) { _ in scrollToBottom(using: proxy) }
+                .onChange(of: isRunning) { _ in scrollToBottom(using: proxy) }
             }
+        }
+    }
+
+    private func scrollToBottom(using proxy: ScrollViewProxy) {
+        guard !displayLines.isEmpty else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            proxy.scrollTo(bottomAnchorId, anchor: .bottom)
         }
     }
 }
