@@ -260,10 +260,6 @@
 		03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
 		03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
 		03E3114B2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */; };
-		03E311542F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */; };
-		03E311552F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */; };
-		03E311562F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */; };
-		03E311572F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */; };
 		03E3114C2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
 		03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
 		03E3114E2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */; };
@@ -1299,7 +1295,6 @@
 		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
 		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
 		03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardCommands.swift; sourceTree = "<group>"; };
-		03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandRunner.swift; sourceTree = "<group>"; };
 		03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardViewModel+Presentation.swift"; sourceTree = "<group>"; };
 		03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardViewModel+Steps.swift"; sourceTree = "<group>"; };
 		03E311542F9A100000E59EF0 /* OnboardingWizardView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingWizardView+Actions.swift"; sourceTree = "<group>"; };
@@ -1825,7 +1820,6 @@
 				03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */,
 				03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */,
 				03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */,
-				03E311542F9A000000E59EF0 /* PrivilegedCommandRunner.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -3218,7 +3212,6 @@
 				F0A1B2C3D4E5F60100000071 /* OnboardingSidebarTimelineMarkerView.swift in Sources */,
 				03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E311482F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
-				03E311542F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114C2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311502F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C490E3BB29BCA375006D2DE6 /* Measurements.swift in Sources */,
@@ -3534,7 +3527,6 @@
 				F0A1B2C3D4E5F60100000073 /* OnboardingSidebarTimelineMarkerView.swift in Sources */,
 				03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
-				03E311552F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311512F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
@@ -3977,7 +3969,6 @@
 				03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
 				03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
-				03E311562F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114E2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311522F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C43BCD4729FBEF40001547BC /* ModifyPhpVersionCommand.swift in Sources */,
@@ -4056,7 +4047,6 @@
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				03E311442F9901A000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E3114B2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
-				03E311572F9A000100E59EF0 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114F2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311532F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
 				C471E79528F9B2420021E251 /* RealFileSystem.swift in Sources */,

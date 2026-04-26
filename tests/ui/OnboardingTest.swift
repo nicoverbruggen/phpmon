@@ -100,8 +100,12 @@ final class OnboardingTest: UITestCase {
     }
 
     private func installHomebrew(_ app: XCPMApplication) {
-        assertExists(app.buttons["onboarding_wizard.buttons.install_homebrew".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.install_homebrew".localized])
+        assertExists(app.staticTexts["onboarding_wizard.command.homebrew.title".localized], 3.0)
+        assertExists(app.buttons["onboarding_wizard.buttons.copy_command".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.copy_command".localized])
+
+        assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
     }
 
     private func assertManualPathInstructions(_ app: XCPMApplication) {

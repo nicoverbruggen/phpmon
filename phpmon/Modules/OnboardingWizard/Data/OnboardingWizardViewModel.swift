@@ -29,6 +29,7 @@ class OnboardingWizardViewModel: ObservableObject {
         case installDeveloperTools
         case recheckDeveloperTools
         case installHomebrew
+        case recheckHomebrew
         case fixPathAutomatically
         case recheckPath
         case installPhpComposer
@@ -36,7 +37,6 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     let container: Container
-    let privilegedCommandRunner: PrivilegedCommandRunner
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
 
@@ -46,18 +46,16 @@ class OnboardingWizardViewModel: ObservableObject {
     @Published private(set) var hasLoaded: Bool
 
     var hasTriggeredDeveloperToolsInstall = false
+    var hasTriggeredHomebrewInstall = false
 
     init(
         container: Container = App.shared.container,
-        privilegedCommandRunner: PrivilegedCommandRunner? = nil,
         progress: StepProgress = StepProgress(),
         state: State = .idle,
         outputLines: [OutputLine] = [],
         hasLoaded: Bool = false
     ) {
         self.container = container
-        self.privilegedCommandRunner = privilegedCommandRunner
-            ?? PrivilegedCommandRunner(container: container)
         self.progress = progress
         self.state = state
         self.outputLines = outputLines
@@ -107,7 +105,9 @@ class OnboardingWizardViewModel: ObservableObject {
         case .recheckDeveloperTools:
             return Task { await recheckDeveloperTools() }
         case .installHomebrew:
-            return Task { await installHomebrew() }
+            return Task { await requestHomebrewInstall() }
+        case .recheckHomebrew:
+            return Task { await recheckHomebrew() }
         case .fixPathAutomatically:
             return Task { await fixPathAutomatically() }
         case .recheckPath:
@@ -134,7 +134,7 @@ class OnboardingWizardViewModel: ObservableObject {
         }
 
         if !progress.homebrewInstalled {
-            return .installHomebrew
+            return hasTriggeredHomebrewInstall ? .recheckHomebrew : .installHomebrew
         }
 
         if !progress.pathConfigured {

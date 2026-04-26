@@ -6,12 +6,11 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+import AppKit
+
 extension OnboardingWizardViewModel {
-    private func runPrivilegedCommand(_ command: String) async throws -> String {
-        let runner = privilegedCommandRunner
-        return try await Task.detached(priority: .userInitiated) {
-            try runner.run(command)
-        }.value
+    private var shouldSimulateManualHomebrewInstall: Bool {
+        App.hasLoadedTestableConfiguration || container.shell is TestableShell
     }
 
     func requestDeveloperToolsInstall() async {
@@ -36,37 +35,45 @@ extension OnboardingWizardViewModel {
         await refreshProgress()
 
         if progress.developerToolsInstalled {
+            outputLines = []
             state = .idle
-            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
         } else {
             state = .waitingForManualCompletion
+            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
             onDeveloperToolsRecheckFailed?()
         }
     }
 
-    func installHomebrew() async {
+    func requestHomebrewInstall() async {
         outputLines = []
-        state = .running
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(Toolchain.Commands.homebrewInstall, forType: .string)
 
-        do {
-            let output = try await runPrivilegedCommand(Toolchain.Commands.homebrewInstall)
-            if !output.isEmpty {
-                appendOutput(output, .stdOut)
+        if shouldSimulateManualHomebrewInstall {
+            let output = container.shell.sync(Toolchain.Commands.homebrewInstall)
+            if !output.out.isEmpty {
+                appendOutput(output.out, .stdOut)
             }
-        } catch {
-            state = .failed
-            appendOutput("\nError: \(error.localizedDescription)", .stdErr)
-            return
+            if !output.err.isEmpty {
+                appendOutput(output.err, .stdErr)
+            }
         }
 
+        hasTriggeredHomebrewInstall = true
+        state = .waitingForManualCompletion
+        appendOutput("onboarding_wizard.output.homebrew_command_copied".localized, .stdOut)
+    }
+
+    func recheckHomebrew() async {
+        state = .running
         await container.shell.reloadEnvPath()
         await refreshProgress()
 
         if progress.homebrewInstalled {
+            outputLines = []
             state = .idle
-            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
         } else {
-            state = .failed
+            state = .waitingForManualCompletion
             appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
         }
     }
@@ -100,7 +107,14 @@ extension OnboardingWizardViewModel {
         state = .running
         await container.shell.reloadEnvPath()
         await refreshProgress()
-        state = progress.pathConfigured ? .idle : .waitingForManualCompletion
+
+        if progress.pathConfigured {
+            outputLines = []
+            state = .idle
+        } else {
+            state = .waitingForManualCompletion
+            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
+        }
     }
 
     func installPhpComposer() async {

@@ -7,11 +7,48 @@
 //
 
 extension OnboardingWizardViewModel {
+    var usesStatusBanner: Bool {
+        switch action {
+        case .recheckDeveloperTools, .installHomebrew, .recheckHomebrew, .recheckPath:
+            return true
+        case .installDeveloperTools, .fixPathAutomatically, .installPhpComposer, .continueToStartup:
+            return false
+        }
+    }
+
+    var latestOutputText: String? {
+        return outputLines
+            .map(\.text)
+            .reversed()
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .first(where: { !$0.isEmpty })
+    }
+
+    var showsStatusBanner: Bool {
+        usesStatusBanner && latestOutputText != nil
+    }
+
+    var statusBannerText: String? {
+        guard usesStatusBanner else {
+            return nil
+        }
+
+        return latestOutputText
+    }
+
+    var statusBannerIsFailure: Bool {
+        return outputLines.last?.stream == .stdErr
+    }
+
+    var showsTerminalOutput: Bool {
+        return showsOutput && !usesStatusBanner
+    }
+
     var detailTitle: String {
         switch action {
         case .installDeveloperTools, .recheckDeveloperTools:
             return "onboarding_wizard.detail.developer_tools.title".localized
-        case .installHomebrew:
+        case .installHomebrew, .recheckHomebrew:
             return "onboarding_wizard.detail.homebrew.title".localized
         case .fixPathAutomatically, .recheckPath:
             return "onboarding_wizard.detail.path.title".localized
@@ -30,6 +67,8 @@ extension OnboardingWizardViewModel {
             return "onboarding_wizard.detail.developer_tools.waiting".localized
         case .installHomebrew:
             return "onboarding_wizard.detail.homebrew.description".localized
+        case .recheckHomebrew:
+            return "onboarding_wizard.detail.homebrew.waiting".localized
         case .fixPathAutomatically:
             return "onboarding_wizard.detail.path.description.zsh".localized
         case .recheckPath:
@@ -42,19 +81,25 @@ extension OnboardingWizardViewModel {
     }
 
     var commandTitle: String? {
-        guard action == .recheckPath else {
+        switch action {
+        case .installHomebrew, .recheckHomebrew:
+            return "onboarding_wizard.command.homebrew.title".localized
+        case .recheckPath:
+            return "onboarding_wizard.command.path.title".localized
+        default:
             return nil
         }
-
-        return "onboarding_wizard.command.path.title".localized
     }
 
     var commandLines: [String] {
-        guard action == .recheckPath else {
+        switch action {
+        case .installHomebrew, .recheckHomebrew:
+            return [Toolchain.Commands.homebrewInstall]
+        case .recheckPath:
+            return ShellEnvironment(container).pathInstructionLines()
+        default:
             return []
         }
-
-        return ShellEnvironment(container).pathInstructionLines()
     }
 
     var primaryButtonTitle: String {
@@ -63,10 +108,10 @@ extension OnboardingWizardViewModel {
             return "onboarding_wizard.buttons.install_developer_tools".localized
         case .recheckDeveloperTools:
             return "onboarding_wizard.buttons.continue".localized
-        case .recheckPath:
-            return "onboarding_wizard.buttons.check_again".localized
         case .installHomebrew:
-            return "onboarding_wizard.buttons.install_homebrew".localized
+            return "onboarding_wizard.buttons.copy_command".localized
+        case .recheckHomebrew, .recheckPath:
+            return "onboarding_wizard.buttons.check_again".localized
         case .fixPathAutomatically:
             return "onboarding_wizard.buttons.fix_path".localized
         case .installPhpComposer:

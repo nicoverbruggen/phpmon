@@ -75,6 +75,9 @@ struct OnboardingWizardViewModelTest {
 
         #expect(viewModel.action == .installHomebrew)
         #expect(viewModel.completedSteps == Set([1]))
+        #expect(viewModel.commandTitle == "onboarding_wizard.command.homebrew.title".localized)
+        #expect(viewModel.commandLines == [Toolchain.Commands.homebrewInstall])
+        #expect(!viewModel.showsTerminalOutput)
     }
 
     // zsh users should get an automatic PATH fix once Homebrew is installed.
@@ -202,24 +205,25 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.action != .installPhpComposer)
     }
 
-    // Homebrew installation should use the privileged runner and refresh onboarding progress.
-    @Test func installing_homebrew_uses_privileged_runner() async throws {
+    // The Homebrew step should copy the manual install command and wait for the user to
+    // complete the installer in Terminal before the wizard checks again.
+    @Test func requesting_homebrew_install_copies_command_and_waits_for_recheck() async {
         let container = prepareFakeContainer(
             architecture: "arm64",
             shell: [
+                Toolchain.Commands.homebrewInstall: BatchFakeShellOutput(
+                    items: [.instant("Installed Homebrew.\n")],
+                    transactions: [
+                        .write("", to: "/opt/homebrew/bin/brew")
+                    ]
+                ),
                 "ls /opt/homebrew/opt | grep php": .instant("")
             ],
             files: [:]
         )
 
-        let receivedCommand = Locked<String?>(nil)
         let viewModel = OnboardingWizardViewModel(
             container: container,
-            privilegedCommandRunner: PrivilegedCommandRunner { command in
-                receivedCommand.value = command
-                try container.filesystem.writeAtomicallyToFile(container.paths.brew, content: "")
-                return "Installing Homebrew...\n"
-            },
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: false,
@@ -231,16 +235,21 @@ struct OnboardingWizardViewModelTest {
         let task = viewModel.performPrimaryAction()
         await task?.value
 
-        #expect(receivedCommand.value == Toolchain.Commands.homebrewInstall)
-        #expect(viewModel.state == .idle)
-        #expect(viewModel.progress.homebrewInstalled)
-        #expect(viewModel.action == .fixPathAutomatically)
-        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installing Homebrew...") }))
+        #expect(viewModel.state == .waitingForManualCompletion)
+        #expect(viewModel.action == .recheckHomebrew)
+        #expect(!viewModel.progress.homebrewInstalled)
+        #expect(viewModel.showsStatusBanner)
+        #expect(!viewModel.showsTerminalOutput)
+        #expect(viewModel.statusBannerText == "onboarding_wizard.output.homebrew_command_copied".localized)
+        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installed Homebrew.") }))
+        #expect(viewModel.outputLines.contains(where: {
+            $0.text.contains("onboarding_wizard.output.homebrew_command_copied".localized)
+        }))
     }
 
-    // When onboarding runs against a testable shell, the default privileged command runner
-    // should use that shell directly instead of depending on global test-state flags.
-    @Test func installing_homebrew_uses_testable_shell_for_default_privileged_runner() async {
+    // After the user has run the copied Homebrew command, checking again should refresh the
+    // toolchain state and advance the wizard into the PATH step.
+    @Test func rechecking_homebrew_refreshes_progress_after_manual_install() async {
         let container = prepareFakeContainer(
             architecture: "arm64",
             shell: [
@@ -265,13 +274,49 @@ struct OnboardingWizardViewModelTest {
             hasLoaded: true
         )
 
-        let task = viewModel.performPrimaryAction()
+        var task = viewModel.performPrimaryAction()
+        await task?.value
+
+        task = viewModel.performPrimaryAction()
         await task?.value
 
         #expect(viewModel.state == .idle)
         #expect(viewModel.progress.homebrewInstalled)
         #expect(viewModel.action == .fixPathAutomatically)
-        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installing Homebrew...") }))
+        #expect(viewModel.outputLines.isEmpty)
+    }
+
+    // Manual PATH rechecks should use a plain status message instead of the terminal output panel.
+    @Test func failed_manual_path_recheck_uses_status_banner() async {
+        let container = prepareFakeContainer(
+            architecture: "arm64",
+            configuredShell: "/bin/bash",
+            shell: [
+                "ls /opt/homebrew/opt | grep php": .instant("")
+            ],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary)
+            ]
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: false
+            ),
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.action == .recheckPath)
+        #expect(viewModel.state == .waitingForManualCompletion)
+        #expect(viewModel.showsStatusBanner)
+        #expect(!viewModel.showsTerminalOutput)
+        #expect(viewModel.statusBannerText == "onboarding_wizard.output.step_not_resolved".localized)
     }
 
     // Once developer tools are detected after a manual install, the UI should move straight into
@@ -294,7 +339,7 @@ struct OnboardingWizardViewModelTest {
 
         #expect(!view.isDisplayingCompletedStep)
         #expect(view.activeStepNumber == 2)
-        #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.install_homebrew".localized)
+        #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.copy_command".localized)
     }
 
     // Starting the Command Line Tools installer should pause for manual completion instead of
@@ -348,12 +393,16 @@ struct OnboardingWizardViewModelTest {
 
     private func prepareFakeContainer(
         architecture: String,
+        configuredShell: String = "/bin/zsh",
         shell: [String: BatchFakeShellOutput],
         files: [String: FakeFile],
         includeDeveloperTools: Bool = true
     ) -> Container {
         let container = Container()
-        container.withFakeSystemContext(architecture: architecture)
+        container.withFakeSystemContext(
+            architecture: architecture,
+            configuredShell: configuredShell
+        )
         container.bind(coreOnly: true, commandTracking: false)
         let developerToolsShell: [String: BatchFakeShellOutput] = includeDeveloperTools
             ? ["/usr/bin/xcode-select -p": .instant("/Library/Developer/CommandLineTools")]

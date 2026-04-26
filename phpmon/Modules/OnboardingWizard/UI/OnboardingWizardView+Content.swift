@@ -60,7 +60,7 @@ extension OnboardingWizardView {
             VStack(alignment: .leading, spacing: 8) {
                 Text(displayedDetailTitle)
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(detailTitleColor)
+                    .foregroundStyle(Color.primary)
 
                 Text(displayedDetailDescription)
                     .font(.system(size: 13))
@@ -83,7 +83,32 @@ extension OnboardingWizardView {
                     .padding(.bottom, 14)
             }
 
-            if viewModel.showsOutput {
+            if viewModel.showsStatusBanner,
+               let statusText = viewModel.statusBannerText {
+                Text(statusText)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(viewModel.statusBannerIsFailure ? Color.red.opacity(0.9) : Color.primary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(
+                                viewModel.statusBannerIsFailure
+                                    ? Color.red.opacity(0.08)
+                                    : Color(nsColor: .controlBackgroundColor)
+                            )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(
+                                viewModel.statusBannerIsFailure
+                                    ? Color.red.opacity(0.18)
+                                    : Color.black.opacity(0.06),
+                                lineWidth: 1
+                            )
+                    )
+            } else if viewModel.showsTerminalOutput {
                 StartupOutputView(
                     lines: viewModel.outputLines,
                     isRunning: viewModel.state == .running

@@ -49,7 +49,7 @@ extension OnboardingWizardView {
         switch viewModel.action {
         case .installDeveloperTools, .recheckDeveloperTools:
             return 1
-        case .installHomebrew, .fixPathAutomatically, .recheckPath:
+        case .installHomebrew, .recheckHomebrew, .fixPathAutomatically, .recheckPath:
             return 2
         case .installPhpComposer:
             return 3
@@ -96,10 +96,6 @@ extension OnboardingWizardView {
         }
 
         return "onboarding_wizard.progress.step".localized(activeStepNumber)
-    }
-
-    var detailTitleColor: Color {
-        viewModel.state == .failed ? Color.red.opacity(0.9) : Color.primary
     }
 
     var timelineLineColor: Color {
