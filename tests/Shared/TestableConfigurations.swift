@@ -256,6 +256,15 @@ class TestableConfigurations {
     /** A functional, working system setup (but without Valet). */
     static var workingWithoutValet: TestableConfiguration {
         var configuration = TestableConfigurations.working
+        configuration.shellPath = [
+            "/usr/local/bin",
+            "/usr/bin",
+            "/bin",
+            "/usr/sbin",
+            "/Users/fake/.config/phpmon/bin",
+            "/Users/fake/.composer/vendor/bin",
+            "/opt/homebrew/bin"
+        ].joined(separator: ":")
         configuration.filesystem["/opt/homebrew/bin/valet"] = nil
         configuration.filesystem["~/.config/valet/config.json"] = nil
         return configuration

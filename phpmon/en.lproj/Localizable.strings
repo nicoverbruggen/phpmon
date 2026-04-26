@@ -1018,7 +1018,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.check_again" = "Check Again";
 "onboarding_wizard.buttons.copy_command" = "Copy Command";
 "onboarding_wizard.buttons.install_homebrew" = "Install Homebrew";
-"onboarding_wizard.buttons.fix_path" = "Fix PATH Automatically";
+"onboarding_wizard.buttons.fix_path" = "Set up PATH Automatically";
 "onboarding_wizard.buttons.install_php_composer" = "Install PHP & Composer";
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
 "onboarding_wizard.buttons.skip_valet" = "Skip Valet";

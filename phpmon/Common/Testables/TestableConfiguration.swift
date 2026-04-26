@@ -11,6 +11,7 @@ import Foundation
 public struct TestableConfiguration: Codable {
     var architecture: String
     var configuredShell: String?
+    var shellPath: String?
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
@@ -21,6 +22,7 @@ public struct TestableConfiguration: Codable {
     init(
         architecture: String,
         configuredShell: String? = nil,
+        shellPath: String? = nil,
         filesystem: [String: FakeFile],
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
@@ -31,6 +33,7 @@ public struct TestableConfiguration: Codable {
     ) {
         self.architecture = architecture
         self.configuredShell = configuredShell
+        self.shellPath = shellPath
         self.filesystem = filesystem
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
@@ -46,6 +49,7 @@ public struct TestableConfiguration: Codable {
     private enum CodingKeys: String, CodingKey {
         case architecture,
              configuredShell,
+             shellPath,
              filesystem,
              shellOutput,
              commandOutput,
@@ -152,6 +156,10 @@ public struct TestableConfiguration: Codable {
         Log.info("Applying TestableConfiguration to container (2/2)...")
         let container = App.shared.container
         container.overrideWith(config: self)
+
+        if let shellPath, let shell = container.shell as? TestableShell {
+            shell.PATH = shellPath
+        }
 
         Log.info("Applying temporary preference overrides...")
         var cachedPrefs = container.preferences.cachedPreferences
