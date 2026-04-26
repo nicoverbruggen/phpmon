@@ -32,6 +32,7 @@ extension OnboardingWizardView {
         Button(primaryButtonTitle) {
             performPrimaryAction()
         }
+        .focused($focusedButton, equals: .primary)
         .disabled(primaryButtonDisabled)
         .keyboardShortcut(.defaultAction)
     }

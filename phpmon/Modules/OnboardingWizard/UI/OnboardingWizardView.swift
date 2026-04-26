@@ -9,10 +9,15 @@
 import SwiftUI
 
 struct OnboardingWizardView: View {
+    enum FocusedButton {
+        case primary
+    }
+
     @ObservedObject var viewModel: OnboardingWizardViewModel
     @State var hasStartedWizard = false
     @State var isShowingSkipConfirmation = false
     @State var displayedStepNumber: Int?
+    @FocusState var focusedButton: FocusedButton?
 
     let windowWidth: CGFloat = 720
     let windowHeight: CGFloat = 500
@@ -46,7 +51,20 @@ struct OnboardingWizardView: View {
             Text("onboarding_wizard.skip_confirmation.message".localized)
         }
         .task {
+            focusedButton = .primary
             await viewModel.loadIfNeeded()
+            focusedButton = .primary
+        }
+        .onChange(of: primaryButtonDisabled) { isDisabled in
+            if !isDisabled {
+                focusedButton = .primary
+            }
+        }
+        .onChange(of: viewModel.state) { _ in
+            focusedButton = .primary
+        }
+        .onChange(of: hasStartedWizard) { _ in
+            focusedButton = .primary
         }
     }
 
