@@ -13,6 +13,24 @@ class OnboardingWizardViewModel: ObservableObject {
     enum Flow: Equatable {
         case fullSetup
         case installValetOnly
+
+        var minimumProgress: StepProgress {
+            switch self {
+            case .fullSetup:
+                return StepProgress()
+            case .installValetOnly:
+                return .coreSetupComplete
+            }
+        }
+
+        var startsImmediately: Bool {
+            switch self {
+            case .fullSetup:
+                return false
+            case .installValetOnly:
+                return true
+            }
+        }
     }
 
     enum State: Equatable {
@@ -30,6 +48,38 @@ class OnboardingWizardViewModel: ObservableObject {
         var composerInstalled: Bool = false
         var valetInstalled: Bool = false
         var valetTrusted: Bool = false
+
+        static let coreSetupComplete = StepProgress(
+            developerToolsInstalled: true,
+            homebrewInstalled: true,
+            pathConfigured: true,
+            phpInstalled: true,
+            composerInstalled: true
+        )
+
+        var coreToolingInstalled: Bool {
+            developerToolsInstalled
+                && homebrewInstalled
+                && pathConfigured
+                && phpInstalled
+                && composerInstalled
+        }
+
+        var valetSetupInstalled: Bool {
+            valetInstalled && valetTrusted
+        }
+
+        func merged(with minimumProgress: StepProgress) -> StepProgress {
+            return StepProgress(
+                developerToolsInstalled: developerToolsInstalled || minimumProgress.developerToolsInstalled,
+                homebrewInstalled: homebrewInstalled || minimumProgress.homebrewInstalled,
+                pathConfigured: pathConfigured || minimumProgress.pathConfigured,
+                phpInstalled: phpInstalled || minimumProgress.phpInstalled,
+                composerInstalled: composerInstalled || minimumProgress.composerInstalled,
+                valetInstalled: valetInstalled || minimumProgress.valetInstalled,
+                valetTrusted: valetTrusted || minimumProgress.valetTrusted
+            )
+        }
     }
 
     enum Action: Equatable {
@@ -45,7 +95,7 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     let container: Container
-    let flow: Flow
+    private let minimumProgress: StepProgress
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
 
@@ -67,9 +117,11 @@ class OnboardingWizardViewModel: ObservableObject {
         hasLoaded: Bool = false,
         skippedValetSetup: Bool = false
     ) {
+        let minimumProgress = flow.minimumProgress
+
         self.container = container
-        self.flow = flow
-        self.progress = progress
+        self.minimumProgress = minimumProgress
+        self.progress = progress.merged(with: minimumProgress)
         self.state = state
         self.outputLines = outputLines
         self.hasLoaded = hasLoaded
@@ -77,16 +129,6 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     var completedSteps: Set<Int> {
-        if flow == .installValetOnly {
-            var steps = Set([1, 2, 3])
-
-            if progress.valetInstalled && progress.valetTrusted || skippedValetSetup {
-                steps.insert(4)
-            }
-
-            return steps
-        }
-
         var steps = Set<Int>()
 
         if progress.developerToolsInstalled {
@@ -101,7 +143,7 @@ class OnboardingWizardViewModel: ObservableObject {
             steps.insert(3)
         }
 
-        if progress.valetInstalled && progress.valetTrusted || skippedValetSetup {
+        if progress.valetSetupInstalled || skippedValetSetup {
             steps.insert(4)
         }
 
@@ -169,18 +211,6 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     var action: Action {
-        if flow == .installValetOnly {
-            if skippedValetSetup {
-                return .continueToStartup
-            }
-
-            if !progress.valetInstalled || !progress.valetTrusted {
-                return .installValet
-            }
-
-            return .continueToStartup
-        }
-
         if !progress.developerToolsInstalled {
             return hasTriggeredDeveloperToolsInstall ? .recheckDeveloperTools : .installDeveloperTools
         }
@@ -201,7 +231,7 @@ class OnboardingWizardViewModel: ObservableObject {
             return .continueToStartup
         }
 
-        if !progress.valetInstalled || !progress.valetTrusted {
+        if !progress.valetSetupInstalled {
             return .installValet
         }
 
@@ -228,7 +258,7 @@ class OnboardingWizardViewModel: ObservableObject {
             composerInstalled: await toolchain.status(.composer).installed,
             valetInstalled: valetInstalled,
             valetTrusted: valetTrusted
-        )
+        ).merged(with: minimumProgress)
 
         if container === App.shared.container {
             Valet.shared.installed = valetInstalled

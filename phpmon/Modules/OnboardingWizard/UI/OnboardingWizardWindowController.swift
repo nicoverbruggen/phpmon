@@ -20,7 +20,6 @@ class OnboardingWizardWindowController: PMWindowController {
     private var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     private var didResolve = false
     private var exitsApplicationOnClose = true
-    private var flow: OnboardingWizardViewModel.Flow = .fullSetup
 
     static func create(
         exitsApplicationOnClose: Bool = true,
@@ -28,7 +27,6 @@ class OnboardingWizardWindowController: PMWindowController {
     ) -> OnboardingWizardWindowController {
         let windowController = OnboardingWizardWindowController()
         windowController.exitsApplicationOnClose = exitsApplicationOnClose
-        windowController.flow = flow
         let viewModel = OnboardingWizardViewModel(flow: flow)
         windowController.viewModel = viewModel
         let window = NSWindow()
@@ -39,7 +37,7 @@ class OnboardingWizardWindowController: PMWindowController {
         window.delegate = windowController
         window.contentView = NSHostingView(rootView: OnboardingWizardView(
             viewModel: viewModel,
-            hasStartedWizard: flow == .installValetOnly
+            hasStartedWizard: flow.startsImmediately
         ))
         window.setContentSize(window.contentView!.fittingSize)
         window.isReleasedWhenClosed = false

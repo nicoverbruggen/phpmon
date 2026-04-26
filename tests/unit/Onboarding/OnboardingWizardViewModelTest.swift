@@ -261,6 +261,7 @@ struct OnboardingWizardViewModelTest {
         )
 
         #expect(viewModel.action == .installValet)
+        #expect(viewModel.progress.coreToolingInstalled)
         #expect(viewModel.completedSteps == Set([1, 2, 3]))
     }
 
