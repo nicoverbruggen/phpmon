@@ -1033,7 +1033,9 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.skip_valet_confirmation.cancel" = "Install Valet";
 "onboarding_wizard.skip_valet_confirmation.confirm" = "Use Standalone Mode";
 "onboarding_wizard.detail.developer_tools.title" = "Step 1: Install Command Line Tools";
-"onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask the macOS to install these, and a new window will open. You will need to complete the installation there yourself, then return here and click Continue to validate the installation has succeeded.";
+"onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask the macOS to install these, and a new window will open. 
+
+You will need to complete the installation there yourself, then return here and click Continue to validate the installation has succeeded.";
 "onboarding_wizard.detail.developer_tools.waiting" = "Finish the developer tools installation in macOS, then come back here, and click on Continue.";
 "onboarding_wizard.detail.developer_tools.completed" = "Command Line Tools are already installed, so installing Homebrew is next. Click on the Continue button to move to the next step.";
 "onboarding_wizard.alert.developer_tools_incomplete.title" = "Command Line Tools are not installed yet";
@@ -1041,10 +1043,14 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.alert.developer_tools_incomplete.description" = "Finish the installer that macOS opened, then click Continue again. If the installer did not appear, you can run this command in Terminal:\n\n/usr/bin/xcode-select --install";
 "onboarding_wizard.alert.developer_tools_incomplete.copy_command" = "Copy Command";
 "onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
-"onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and the optional Valet dependencies. Copy the command below, run it in Terminal, complete the installer there, then return here.";
+"onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
+
+Copy the command below, run it in Terminal, complete the installer there, then return here.";
 "onboarding_wizard.detail.homebrew.waiting" = "Run the Homebrew installation command in Terminal, complete the installer there, then come back here and click Check Again.";
 "onboarding_wizard.detail.path.title" = "Step 2: Configure Your PATH";
-"onboarding_wizard.detail.path.description.zsh" = "Homebrew is installed, but your `zsh` PATH still needs to include Composer's global `bin` directory and Homebrew's `bin` directory. PHP Monitor can update your `~/.zshrc` automatically.";
+"onboarding_wizard.detail.path.description.zsh" = "Homebrew is installed, but your PATH still needs to include Composer's global bin directory and Homebrew's bin directory to give you access to these tools via the command line. 
+
+PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH. (Some useful helpers for easy PHP version switching provided by PHP Monitor will also be added.)";
 "onboarding_wizard.detail.path.description.manual" = "Homebrew is installed, but your configured shell (%@) is not zsh. Add the lines below to your shell profile, open a new terminal session, then click Check Again.";
 "onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
 "onboarding_wizard.detail.php_composer.description" = "PHP Monitor needs both PHP and Composer before it can continue startup. PHP Monitor will install these for you automatically.";

@@ -19,14 +19,6 @@ import SwiftUI
     )
 }
 
-#Preview("Step 1: Already Complete") {
-    OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
-        displayedStepNumber: 1,
-        progress: .init(developerToolsInstalled: true)
-    )
-}
-
 #Preview("Step 2: Homebrew") {
     OnboardingWizardView.preview(
         hasDismissedIntroduction: true,

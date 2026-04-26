@@ -9,11 +9,7 @@
 import AppKit
 
 extension OnboardingWizardViewModel {
-    private var shouldSimulateManualHomebrewInstall: Bool {
-        App.hasLoadedTestableConfiguration || container.shell is TestableShell
-    }
-
-    private var shouldSimulatePrivilegedCommands: Bool {
+    private var isSimulatingShellEnvironment: Bool {
         App.hasLoadedTestableConfiguration || container.shell is TestableShell
     }
 
@@ -22,12 +18,7 @@ extension OnboardingWizardViewModel {
         state = .running
 
         let output = await container.shell.pipe(Toolchain.Commands.developerToolsInstall)
-        if !output.out.isEmpty {
-            appendOutput(output.out, .stdOut)
-        }
-        if !output.err.isEmpty {
-            appendOutput(output.err, .stdErr)
-        }
+        appendIfPresent(output)
 
         hasTriggeredDeveloperToolsInstall = true
         state = .waitingForManualCompletion
@@ -53,14 +44,9 @@ extension OnboardingWizardViewModel {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(Toolchain.Commands.homebrewInstall, forType: .string)
 
-        if shouldSimulateManualHomebrewInstall {
+        if isSimulatingShellEnvironment {
             let output = container.shell.sync(Toolchain.Commands.homebrewInstall)
-            if !output.out.isEmpty {
-                appendOutput(output.out, .stdOut)
-            }
-            if !output.err.isEmpty {
-                appendOutput(output.err, .stdErr)
-            }
+            appendIfPresent(output)
         }
 
         hasTriggeredHomebrewInstall = true
@@ -96,17 +82,17 @@ extension OnboardingWizardViewModel {
         await container.shell.reloadEnvPath()
         await refreshProgress()
 
-        if phpMonitorResult && composerResult && homebrewResult && progress.pathConfigured {
-            state = .idle
-            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
-        } else if phpMonitorResult && composerResult && homebrewResult {
+        let allFilesUpdated = phpMonitorResult && composerResult && homebrewResult
+
+        if allFilesUpdated && progress.pathConfigured {
+            finalize(success: true)
+        } else if allFilesUpdated {
             state = .waitingForManualCompletion
 
             // TODO: Not sure whether this is actually good advice (does it matter?)
             appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut)
         } else {
-            state = .failed
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
+            finalize(success: false)
         }
     }
 
@@ -130,31 +116,15 @@ extension OnboardingWizardViewModel {
 
         do {
             for command in Toolchain.Commands.phpComposerInstall(using: container.paths.brew) {
-                try await container.shell.attach(
-                    command,
-                    didReceiveOutput: { [weak self] text, stream in
-                        Task { @MainActor in
-                            self?.appendOutput(text, stream)
-                        }
-                    },
-                    withTimeout: 600
-                )
+                try await attachStreaming(command)
             }
         } catch {
-            state = .failed
-            appendOutput("\nError: \(error.localizedDescription)", .stdErr)
+            failStep(error)
             return
         }
 
         await refreshProgress()
-
-        if progress.phpInstalled && progress.composerInstalled {
-            state = .idle
-            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
-        } else {
-            state = .failed
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
-        }
+        finalize(success: progress.phpInstalled && progress.composerInstalled)
     }
 
     func installValet() async {
@@ -175,13 +145,12 @@ extension OnboardingWizardViewModel {
             }
         }
 
-        if !shouldSimulatePrivilegedCommands {
+        if !isSimulatingShellEnvironment {
             do {
                 try Self.installValetInstallSudoers(forScriptAt: composerValetScript)
                 sudoersInstalled = true
             } catch {
-                state = .failed
-                appendOutput("\nError: \(error.localizedDescription)", .stdErr)
+                failStep(error)
                 return
             }
         }
@@ -192,46 +161,60 @@ extension OnboardingWizardViewModel {
                 composer: composer,
                 valet: composerValetShim
             ) {
-                try await container.shell.attach(
-                    command,
-                    didReceiveOutput: { [weak self] text, stream in
-                        Task { @MainActor in
-                            self?.appendOutput(text, stream)
-                        }
-                    },
-                    withTimeout: 600
-                )
+                try await attachStreaming(command)
             }
 
-            if shouldSimulatePrivilegedCommands {
-                let output = await container.shell.pipe(Toolchain.Commands.valetTrust(using: homebrewValet))
-                if !output.out.isEmpty {
-                    appendOutput(output.out, .stdOut)
-                }
-                if !output.err.isEmpty {
-                    appendOutput(output.err, .stdErr)
-                }
+            let trustCommand = Toolchain.Commands.valetTrust(using: homebrewValet)
+            if isSimulatingShellEnvironment {
+                let output = await container.shell.pipe(trustCommand)
+                appendIfPresent(output)
             } else {
-                let output = try AppleScript.runShellAsAdmin(Toolchain.Commands.valetTrust(using: homebrewValet))
+                let output = try AppleScript.runShellAsAdmin(trustCommand)
                 if !output.isEmpty {
                     appendOutput(output, .stdOut)
                 }
             }
         } catch {
-            state = .failed
-            appendOutput("\nError: \(error.localizedDescription)", .stdErr)
+            failStep(error)
             return
         }
 
         await refreshProgress()
+        finalize(success: progress.valetInstalled && progress.valetTrusted)
+    }
 
-        if progress.valetInstalled && progress.valetTrusted {
+    // MARK: - Shared helpers
+
+    private func appendIfPresent(_ output: ShellOutput) {
+        if !output.out.isEmpty { appendOutput(output.out, .stdOut) }
+        if !output.err.isEmpty { appendOutput(output.err, .stdErr) }
+    }
+
+    private func attachStreaming(_ command: String, timeout: TimeInterval = 600) async throws {
+        try await container.shell.attach(
+            command,
+            didReceiveOutput: { [weak self] text, stream in
+                Task { @MainActor in
+                    self?.appendOutput(text, stream)
+                }
+            },
+            withTimeout: timeout
+        )
+    }
+
+    private func finalize(success: Bool) {
+        if success {
             state = .idle
             appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
         } else {
             state = .failed
             appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
         }
+    }
+
+    private func failStep(_ error: Error) {
+        state = .failed
+        appendOutput("\nError: \(error.localizedDescription)", .stdErr)
     }
 
     // MARK: - Temporary sudoers entry for `valet install`
