@@ -242,6 +242,11 @@ class Startup {
                     return await !container.shell
                         .pipe("cat /private/etc/sudoers.d/valet").out.contains(container.paths.valet)
                 },
+                fix: { container, didReceiveOutput in
+                    let valet = container.paths.binPath.appending("/valet")
+                    let result = try AppleScript.runShellAsAdmin("\(valet) trust")
+                    didReceiveOutput(result, .stdOut)
+                },
                 name: "`/private/etc/sudoers.d/valet` contains valet",
                 titleText: "startup.errors.sudoers_valet.title".localized,
                 subtitleText: "startup.errors.sudoers_valet.subtitle".localized,
