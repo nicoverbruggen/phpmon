@@ -14,14 +14,14 @@ import SwiftUI
 
 #Preview("Step 1: Command Line Tools") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init()
     )
 }
 
 #Preview("Step 1: Already Complete") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         displayedStepNumber: 1,
         progress: .init(developerToolsInstalled: true)
     )
@@ -29,14 +29,14 @@ import SwiftUI
 
 #Preview("Step 2: Homebrew") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(developerToolsInstalled: true)
     )
 }
 
 #Preview("Step 2: PATH") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true
@@ -46,7 +46,7 @@ import SwiftUI
 
 #Preview("Step 3: PHP & Composer") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -57,7 +57,7 @@ import SwiftUI
 
 #Preview("Step 4: Valet") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -70,7 +70,7 @@ import SwiftUI
 
 #Preview("Step 5: Ready") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -85,7 +85,7 @@ import SwiftUI
 
 #Preview("Running") {
     OnboardingWizardView.preview(
-        hasStartedWizard: true,
+        hasDismissedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true
@@ -99,7 +99,8 @@ import SwiftUI
 
 private extension OnboardingWizardView {
     static func preview(
-        hasStartedWizard: Bool = false,
+        entryMode: OnboardingEntryMode = .introduction,
+        hasDismissedIntroduction: Bool = false,
         displayedStepNumber: Int? = nil,
         progress: OnboardingWizardViewModel.StepProgress,
         state: OnboardingWizardViewModel.State = .idle,
@@ -112,7 +113,8 @@ private extension OnboardingWizardView {
                 outputLines: outputLines,
                 hasLoaded: true
             ),
-            hasStartedWizard: hasStartedWizard,
+            entryMode: entryMode,
+            hasDismissedIntroduction: hasDismissedIntroduction,
             displayedStepNumber: displayedStepNumber
         )
     }

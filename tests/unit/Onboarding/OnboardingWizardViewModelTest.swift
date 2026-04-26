@@ -247,13 +247,13 @@ struct OnboardingWizardViewModelTest {
     // The standalone-mode Valet flow should skip the earlier onboarding steps and land directly on Valet.
     @Test func valet_only_flow_jumps_straight_to_valet_install() {
         let viewModel = OnboardingWizardViewModel(
-            flow: .installValetOnly,
+            flow: ValetInstallOnboardingFlow(),
             progress: .init(
-                developerToolsInstalled: false,
-                homebrewInstalled: false,
-                pathConfigured: false,
-                phpInstalled: false,
-                composerInstalled: false,
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true,
                 valetInstalled: false,
                 valetTrusted: false
             ),
@@ -262,6 +262,20 @@ struct OnboardingWizardViewModelTest {
 
         #expect(viewModel.action == .installValet)
         #expect(viewModel.progress.coreToolingInstalled)
+        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+    }
+
+    // The Valet-only flow should mark earlier steps complete in presentation without mutating
+    // the underlying factual progress state.
+    @Test func valet_only_flow_uses_display_progress_without_mutating_actual_progress() {
+        let viewModel = OnboardingWizardViewModel(
+            flow: ValetInstallOnboardingFlow(),
+            progress: .init(),
+            hasLoaded: true
+        )
+
+        #expect(!viewModel.progress.coreToolingInstalled)
+        #expect(viewModel.displayProgress.coreToolingInstalled)
         #expect(viewModel.completedSteps == Set([1, 2, 3]))
     }
 
@@ -504,13 +518,45 @@ struct OnboardingWizardViewModelTest {
 
         let view = OnboardingWizardView(
             viewModel: viewModel,
-            hasStartedWizard: true,
+            hasDismissedIntroduction: true,
             displayedStepNumber: 1
         )
 
         #expect(!view.isDisplayingCompletedStep)
         #expect(view.activeStepNumber == 2)
         #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.copy_command".localized)
+    }
+
+    // The standard onboarding flow should still begin on the introduction screen.
+    @Test func full_setup_flow_starts_on_introduction() {
+        let view = OnboardingWizardView(
+            viewModel: OnboardingWizardViewModel(hasLoaded: true)
+        )
+
+        #expect(view.isShowingIntroduction)
+    }
+
+    // The Valet-only flow should skip the introduction and open directly on the Valet step.
+    @Test func valet_only_flow_skips_introduction_in_the_view() {
+        let viewModel = OnboardingWizardViewModel(
+            flow: ValetInstallOnboardingFlow(),
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true
+            ),
+            hasLoaded: true
+        )
+        let view = OnboardingWizardView(
+            viewModel: viewModel,
+            entryMode: .firstRequiredStep
+        )
+
+        #expect(!view.isShowingIntroduction)
+        #expect(view.activeStepNumber == 4)
+        #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.install_valet".localized)
     }
 
     // Starting the Command Line Tools installer should pause for manual completion instead of

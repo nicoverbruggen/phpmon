@@ -241,7 +241,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             let startup = Startup(container)
             let outcome = await startup.showOnboardingWizard(
                 exitsApplicationOnClose: false,
-                flow: .installValetOnly
+                flow: ValetInstallOnboardingFlow()
             )
 
             if outcome == .completed {

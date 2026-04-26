@@ -55,7 +55,7 @@ extension OnboardingWizardView {
 
     func performPrimaryAction() {
         if isShowingIntroduction {
-            hasStartedWizard = true
+            hasDismissedIntroduction = true
             displayedStepNumber = 1
         } else if isDisplayingCompletedStep {
             advanceDisplayedStep()

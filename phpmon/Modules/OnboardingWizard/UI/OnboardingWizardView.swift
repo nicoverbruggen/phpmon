@@ -14,7 +14,8 @@ struct OnboardingWizardView: View {
     }
 
     @ObservedObject var viewModel: OnboardingWizardViewModel
-    @State var hasStartedWizard = false
+    let entryMode: OnboardingEntryMode
+    @State var hasDismissedIntroduction = false
     @State var isShowingSkipConfirmation = false
     @State var isShowingSkipValetConfirmation = false
     @State var displayedStepNumber: Int?
@@ -26,13 +27,15 @@ struct OnboardingWizardView: View {
 
     init(
         viewModel: OnboardingWizardViewModel,
-        hasStartedWizard: Bool = false,
+        entryMode: OnboardingEntryMode = .introduction,
+        hasDismissedIntroduction: Bool = false,
         isShowingSkipConfirmation: Bool = false,
         isShowingSkipValetConfirmation: Bool = false,
         displayedStepNumber: Int? = nil
     ) {
         self.viewModel = viewModel
-        self._hasStartedWizard = State(initialValue: hasStartedWizard)
+        self.entryMode = entryMode
+        self._hasDismissedIntroduction = State(initialValue: hasDismissedIntroduction)
         self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
         self._isShowingSkipValetConfirmation = State(initialValue: isShowingSkipValetConfirmation)
         self._displayedStepNumber = State(initialValue: displayedStepNumber)
@@ -77,13 +80,14 @@ struct OnboardingWizardView: View {
         .onChange(of: viewModel.state) { _ in
             focusedButton = .primary
         }
-        .onChange(of: hasStartedWizard) { _ in
+        .onChange(of: hasDismissedIntroduction) { _ in
             focusedButton = .primary
         }
     }
 
     var isShowingIntroduction: Bool {
-        return !hasStartedWizard
+        return entryMode == .introduction
+            && !hasDismissedIntroduction
             && viewModel.state == .idle
             && !viewModel.showsOutput
     }

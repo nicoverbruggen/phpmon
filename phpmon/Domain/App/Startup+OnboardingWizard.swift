@@ -38,7 +38,7 @@ extension Startup {
     @MainActor
     func showOnboardingWizard(
         exitsApplicationOnClose: Bool = true,
-        flow: OnboardingWizardViewModel.Flow = .fullSetup
+        flow: any OnboardingFlowDefinition = FullSetupOnboardingFlow()
     ) async -> OnboardingWizardOutcome {
         return await OnboardingWizardWindowController
             .create(

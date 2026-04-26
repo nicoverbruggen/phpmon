@@ -120,20 +120,22 @@ extension OnboardingWizardView {
     }
 
     func isStepCompleted(_ number: Int) -> Bool {
+        let progress = viewModel.displayProgress
+
         switch number {
         case 1:
-            return viewModel.progress.developerToolsInstalled
+            return progress.developerToolsInstalled
         case 2:
-            return viewModel.progress.developerToolsInstalled
-                && viewModel.progress.homebrewInstalled
-                && viewModel.progress.pathConfigured
+            return progress.developerToolsInstalled
+                && progress.homebrewInstalled
+                && progress.pathConfigured
         case 3:
-            return viewModel.progress.phpInstalled
-                && viewModel.progress.composerInstalled
+            return progress.phpInstalled
+                && progress.composerInstalled
         case 4:
             return viewModel.skippedValetSetup
-                || (viewModel.progress.valetInstalled
-                    && viewModel.progress.valetTrusted)
+                || (progress.valetInstalled
+                    && progress.valetTrusted)
         default:
             return false
         }
