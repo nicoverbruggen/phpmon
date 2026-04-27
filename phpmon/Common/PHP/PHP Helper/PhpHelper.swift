@@ -33,10 +33,13 @@ class PhpHelper {
             return []
         }
 
+        let shell = HelperShell.detect(for: container)
+
         let helperFiles = Constants.DetectedPhpVersions
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
             .map { version in
                 makeHelperFile(
+                    shell,
                     container,
                     version: version,
                     installed: installedVersions.contains(version)
@@ -71,31 +74,8 @@ class PhpHelper {
         return "\(helperDirectory(for: container))/pm\(dotless)"
     }
 
-    private static func usesFishShell(_ container: Container) -> Bool {
-        return container.paths.shell.contains("/fish")
-    }
-
-    private static func installedScript(
-        _ container: Container,
-        path: String,
-        version: String,
-        dotless: String
-    ) -> String {
-        return usesFishShell(container)
-            ? Fish.installedScript(container, path, version, dotless)
-            : Zsh.installedScript(path, version, dotless)
-    }
-
-    private static func unavailableScript(
-        _ container: Container,
-        version: String
-    ) -> String {
-        return usesFishShell(container)
-            ? Fish.unavailableScript(container, version)
-            : Zsh.unavailableScript(version)
-    }
-
     private static func makeHelperFile(
+        _ shell: HelperShell,
         _ container: Container,
         version: String,
         installed: Bool
@@ -108,9 +88,9 @@ class PhpHelper {
             let path = URL(fileURLWithPath: "\(container.paths.optPath)/php@\(version)/bin")
                 .resolvingSymlinksInPath().path
 
-            content = installedScript(container, path: path, version: version, dotless: dotless)
+            content = shell.installedScript(container, path: path, version: version, dotless: dotless)
         } else {
-            content = unavailableScript(container, version: version)
+            content = shell.unavailableScript(container, version: version)
         }
 
         return HelperFile(

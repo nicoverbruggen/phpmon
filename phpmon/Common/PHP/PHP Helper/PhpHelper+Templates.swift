@@ -8,19 +8,55 @@
 
 extension PhpHelper {
 
-    // TODO: refactor to a struct/enum and add support for bash?
-    // Ideally, I'd want different "drivers" for each shell type, which then writes the helpers
-    // this removes the need to check if "fish" is the shell and such things
-    //
-    // Pseudocode:
-    // ```
-    // let generator = HelperFileGenerator(shell: detected)
-    // generator.generate(container, args)
-    // ```
-    // I think version, dotless args can be a tuple: (version, dotlessVersion) perhaps?
-    //
-    //
-    // or alternatively, we modify the PATH a different way (would that even be possible?)
+    enum HelperShell {
+        case zsh
+        case bash
+        case fish
+
+        static func detect(for container: Container) -> HelperShell {
+            let shell = container.paths.shell
+
+            if shell.contains("/fish") {
+                return .fish
+            }
+
+            if shell.contains("/bash") {
+                return .bash
+            }
+
+            return .zsh
+        }
+
+        func installedScript(
+            _ container: Container,
+            path: String,
+            version: String,
+            dotless: String
+        ) -> String {
+            switch self {
+            case .zsh:
+                return Zsh.installedScript(path, version, dotless)
+            case .bash:
+                return Bash.installedScript(path, version, dotless)
+            case .fish:
+                return Fish.installedScript(container, path, version, dotless)
+            }
+        }
+
+        func unavailableScript(
+            _ container: Container,
+            version: String
+        ) -> String {
+            switch self {
+            case .zsh:
+                return Zsh.unavailableScript(version)
+            case .bash:
+                return Bash.unavailableScript(version)
+            case .fish:
+                return Fish.unavailableScript(container, version)
+            }
+        }
+    }
 
     // MARK: - General strings
 
@@ -53,6 +89,41 @@ extension PhpHelper {
 
             return """
                 #!/bin/zsh
+                # \(keyPhrase)
+                # This helper reflects that PHP \(version) is currently not installed.
+                echo "\(message)"
+                return 1 2>/dev/null || exit 1
+                """
+        }
+    }
+
+    // MARK: - Bash scripts
+
+    struct Bash {
+        static func installedScript(
+            _ path: String,
+            _ version: String,
+            _ dotless: String
+        ) -> String {
+            return """
+                #!/bin/bash
+                # \(keyPhrase)
+                # It reflects the location of PHP \(version)'s binaries on your system.
+                # Usage: . pm\(dotless)
+                if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+                    echo "PHP Monitor has enabled this terminal to use PHP \(version)."
+                else
+                    echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!"
+                fi
+                export PATH=\(path):$PATH
+                """
+        }
+
+        static func unavailableScript(_ version: String) -> String {
+            let message = unavailableMessage(for: version)
+
+            return """
+                #!/bin/bash
                 # \(keyPhrase)
                 # This helper reflects that PHP \(version) is currently not installed.
                 echo "\(message)"

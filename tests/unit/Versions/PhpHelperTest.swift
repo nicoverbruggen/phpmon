@@ -27,6 +27,25 @@ struct PhpHelperTest {
         #expect(container.filesystem.isExecutableFile(helperPath))
     }
 
+    @Test func bash_shell_generates_bash_helper() async throws {
+        let container = Container()
+        container.withFakeSystemContext(configuredShell: "/bin/bash")
+        container.bind(coreOnly: true, commandTracking: false)
+        container.overrideFake(fileSystemFiles: [
+            "/usr/local/bin/": .fake(.directory, readOnly: true),
+            "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary)
+        ], commandTracking: false)
+
+        _ = await PhpHelper.regenerate(container, installedVersions: ["8.4"])
+
+        let helperPath = "/Users/fake/.config/phpmon/bin/pm84"
+        let contents = try container.filesystem.getStringFromFile(helperPath)
+
+        #expect(contents.contains("#!/bin/bash"))
+        #expect(contents.contains("${BASH_SOURCE[0]}"))
+        #expect(contents.contains("export PATH=/opt/homebrew/Cellar/php@8.4"))
+    }
+
     @Test func missing_helper_shows_not_installed_notice() async throws {
         let container = Container.fake(files: [
             "/usr/local/bin/": .fake(.directory, readOnly: true)
