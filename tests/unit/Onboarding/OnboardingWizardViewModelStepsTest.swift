@@ -9,6 +9,7 @@
 import Testing
 
 @MainActor
+// swiftlint:disable type_body_length file_length
 struct OnboardingWizardViewModelStepsTest {
     // Installing the required packages should mark the third step complete once both binaries exist.
     // The shared shell PATH refresh behavior is covered separately, so this test only verifies
@@ -429,3 +430,4 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(didShowIncompleteAlert)
     }
 }
+// swiftlint:enable type_body_length file_length

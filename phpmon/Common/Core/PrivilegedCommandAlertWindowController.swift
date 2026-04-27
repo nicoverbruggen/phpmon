@@ -35,6 +35,7 @@ private struct PrivilegedCommandApprovalView: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 18) {
                 VStack(alignment: .leading, spacing: 8) {
+                    // swiftlint:disable line_length
                     HStack {
                         Image(systemName: "lock.shield.fill")
                             .font(.system(size: 22, weight: .semibold))
@@ -47,6 +48,7 @@ private struct PrivilegedCommandApprovalView: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+                    // swiftlint:enable line_length
                 }
                 .padding(5)
                 .frame(maxWidth: .infinity, alignment: .leading)
