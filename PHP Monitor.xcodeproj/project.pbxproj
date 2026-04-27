@@ -93,10 +93,14 @@
 		035983A12E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
 		035983A22E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
 		035983A32E97FA9100218DC7 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0329A9A02E92A2A800A62A12 /* Container.swift */; };
-		036011492F9F777A0062762C /* PhpHelperTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011482F9F77780062762C /* PhpHelperTemplates.swift */; };
-		0360114A2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011482F9F77780062762C /* PhpHelperTemplates.swift */; };
-		0360114B2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011482F9F77780062762C /* PhpHelperTemplates.swift */; };
-		0360114C2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011482F9F77780062762C /* PhpHelperTemplates.swift */; };
+		0360114E2F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */; };
+		0360114F2F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */; };
+		036011502F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */; };
+		036011512F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */; };
+		036011532F9F798A0062762C /* PhpHelper+Templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011522F9F79850062762C /* PhpHelper+Templates.swift */; };
+		036011542F9F798A0062762C /* PhpHelper+Templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011522F9F79850062762C /* PhpHelper+Templates.swift */; };
+		036011552F9F798A0062762C /* PhpHelper+Templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011522F9F79850062762C /* PhpHelper+Templates.swift */; };
+		036011562F9F798A0062762C /* PhpHelper+Templates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036011522F9F79850062762C /* PhpHelper+Templates.swift */; };
 		036061D72F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061D82F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
 		036061D92F4C705B00B5998F /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036061D62F4C705800B5998F /* WindowManager.swift */; };
@@ -1277,7 +1281,8 @@
 		034515472EC4FB9800472561 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515482EC4FBB500472561 /* bn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		034515492EC4FBBD00472561 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
-		036011482F9F77780062762C /* PhpHelperTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelperTemplates.swift; sourceTree = "<group>"; };
+		0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpHelper+Symlinks.swift"; sourceTree = "<group>"; };
+		036011522F9F79850062762C /* PhpHelper+Templates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhpHelper+Templates.swift"; sourceTree = "<group>"; };
 		036061D62F4C705800B5998F /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		036061DB2F4C7AE100B5998F /* SettingsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTest.swift; sourceTree = "<group>"; };
 		036061DD2F4C886800B5998F /* PreferenceVC+WindowRestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreferenceVC+WindowRestore.swift"; sourceTree = "<group>"; };
@@ -1719,7 +1724,8 @@
 			isa = PBXGroup;
 			children = (
 				C4D936C827E3EB6100BD69FE /* PhpHelper.swift */,
-				036011482F9F77780062762C /* PhpHelperTemplates.swift */,
+				036011522F9F79850062762C /* PhpHelper+Templates.swift */,
+				0360114D2F9F78E20062762C /* PhpHelper+Symlinks.swift */,
 			);
 			path = "PHP Helper";
 			sourceTree = "<group>";
@@ -3476,13 +3482,13 @@
 				C4B6091D2853AB9700C95265 /* ServicesView.swift in Sources */,
 				C40508B128ADAB44008FAC1F /* NSMenuItemExtension.swift in Sources */,
 				C4B97B7B275CF20A003F3378 /* App+GlobalHotkey.swift in Sources */,
+				036011502F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */,
 				C45D654C29F52F74004C28F9 /* BrewPermissionFixer.swift in Sources */,
 				C4D3660B29113F20006BD146 /* System.swift in Sources */,
 				C4D36601291132B7006BD146 /* ValetScanners.swift in Sources */,
 				03ACC6472ECCBA130070D4CD /* CaskFile+API.swift in Sources */,
 				031D74872F46307300D4FF48 /* AddSiteView.swift in Sources */,
 				0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */,
-				036011492F9F777A0062762C /* PhpHelperTemplates.swift in Sources */,
 				C4EED88927A48778006D7272 /* InterAppHandler.swift in Sources */,
 				038131482F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				C40C7F1E2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
@@ -3526,6 +3532,7 @@
 				C46FA23F246C358E00944F05 /* StringExtension.swift in Sources */,
 				031D748C2F46307A00D4FF48 /* AddProxyView.swift in Sources */,
 				C42337A3281F19F000459A48 /* Xdebug.swift in Sources */,
+				036011542F9F798A0062762C /* PhpHelper+Templates.swift in Sources */,
 				C4B97B75275CF08C003F3378 /* AppDelegate+MenuOutlets.swift in Sources */,
 				C464ADAC275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				C4CB6E65292C362C002E9027 /* Homebrew.swift in Sources */,
@@ -3610,6 +3617,7 @@
 				03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
 				03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311512F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
+				036011512F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */,
 				C471E84828F9BB650021E251 /* EnvironmentCheck.swift in Sources */,
 				C471E84A28F9BB650021E251 /* AppVersion.swift in Sources */,
 				C471E84B28F9BB650021E251 /* ServicesManager.swift in Sources */,
@@ -3635,7 +3643,6 @@
 				C471E85B28F9BB650021E251 /* DomainListKindCell.swift in Sources */,
 				032C7A052EE43B7600758D98 /* Suspendable.swift in Sources */,
 				C4611E5E2AEAD2FB0010BE24 /* ConfigManagerView.swift in Sources */,
-				0360114B2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */,
 				031F24822EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C4BF56AD2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C471E85C28F9BB650021E251 /* DomainListWindowController.swift in Sources */,
@@ -3819,6 +3826,7 @@
 				C471E81328F9BAE80021E251 /* XibLoadable.swift in Sources */,
 				C4D3661C291173EA006BD146 /* DictionaryExtension.swift in Sources */,
 				C4B79ECD29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
+				036011532F9F798A0062762C /* PhpHelper+Templates.swift in Sources */,
 				033E9DFE2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C471E7F128F9BAC70021E251 /* VersionNumber.swift in Sources */,
 				C471E7DC28F9BA8F0021E251 /* ShellProtocol.swift in Sources */,
@@ -3961,10 +3969,10 @@
 				03EC943E2F47297B00231276 /* ErrorView.swift in Sources */,
 				1D1173AE9AC9C8315E899D06 /* StartupAlertViewModel.swift in Sources */,
 				03BC24A82F51A5F70051292B /* OutputLine.swift in Sources */,
+				0360114E2F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */,
 				88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */,
 				A42F1F6EF455F42769E63FF5 /* StartupAlertWindowController.swift in Sources */,
 				B54FBBEFE5E1782AFF7C434E /* StartupAlertHeaderView.swift in Sources */,
-				0360114C2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */,
 				F4B7E3F9B46C5AD8B8B3FEBA /* StartupFixCommandView.swift in Sources */,
 				FB95EF9B99E4ED160E751E44 /* StartupOutputView.swift in Sources */,
 				F6E9803FDF532887CF899ED9 /* StartupAlertButtonRow.swift in Sources */,
@@ -3979,6 +3987,7 @@
 				C4B79ECE29CA475900A483EE /* RemovePhpVersionCommand.swift in Sources */,
 				C471E8E028F9BB8F0021E251 /* Preset.swift in Sources */,
 				C471E8E128F9BB8F0021E251 /* PresetHelper.swift in Sources */,
+				036011562F9F798A0062762C /* PhpHelper+Templates.swift in Sources */,
 				038131492F4E00D500653177 /* TrackedTestableCommand.swift in Sources */,
 				031D747D2F46225600D4FF48 /* SimpleButton.swift in Sources */,
 				03BC24AD2F51B33B0051292B /* MarkdownTextView.swift in Sources */,
@@ -4230,7 +4239,6 @@
 				C450C8C728C919EC002A2B4B /* PreferenceName.swift in Sources */,
 				031F24832EA1071A00CFB8D9 /* Container+Fake.swift in Sources */,
 				C40D725B2A018ACC0054A067 /* BusyStatus.swift in Sources */,
-				0360114A2F9F777A0062762C /* PhpHelperTemplates.swift in Sources */,
 				032DAC292E8BEB5B0018E01C /* RealWebApi.swift in Sources */,
 				C48D6C75279CD3E400F26D7E /* PhpVersionNumberTest.swift in Sources */,
 				C40D72602A018AE30054A067 /* BrewFormula+UI.swift in Sources */,
@@ -4249,6 +4257,7 @@
 				C4AFC4B429C4F43300BF4E0D /* HomebrewUpgradableTest.swift in Sources */,
 				037F441E2EDB9195002EBF75 /* ConfigWatchManager.swift in Sources */,
 				C4E2E84828FC1D93003B070C /* TestableConfigurationTest.swift in Sources */,
+				036011552F9F798A0062762C /* PhpHelper+Templates.swift in Sources */,
 				03E3112E2F98D1A500E59EF0 /* OnboardingWizardView.swift in Sources */,
 				03E3115C2F9A100000E59EF0 /* OnboardingWizardView+Actions.swift in Sources */,
 				03E311602F9A100000E59EF0 /* OnboardingWizardView+Content.swift in Sources */,
@@ -4376,6 +4385,7 @@
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
 				8A1B2C3D4E5F60718293A4B7 /* OnboardingDispositionTest.swift in Sources */,
+				0360114F2F9F78E80062762C /* PhpHelper+Symlinks.swift in Sources */,
 				8A1B2C3D4E5F60718293A4BC /* OnboardingWizardShellEnvironmentTest.swift in Sources */,
 				8A1B2C3D4E5F60718293A4BD /* OnboardingWizardTestSupport.swift in Sources */,
 				8A1B2C3D4E5F60718293A4BE /* OnboardingWizardViewDisplayTest.swift in Sources */,

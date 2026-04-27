@@ -63,20 +63,16 @@ class PhpHelper {
         return writtenFiles
     }
 
-    private static func helperDirectory(for container: Container) -> String {
+    static func helperDirectory(for container: Container) -> String {
         return "\(container.paths.homePath)/\(helperDirectorySuffix)"
     }
 
-    private static func helperDestination(for container: Container, dotless: String) -> String {
+    static func helperDestination(for container: Container, dotless: String) -> String {
         return "\(helperDirectory(for: container))/pm\(dotless)"
     }
 
     private static func usesFishShell(_ container: Container) -> Bool {
         return container.paths.shell.contains("/fish")
-    }
-
-    private static func unavailableMessage(for version: String) -> String {
-        return "Error: PHP \(version) is not installed. (You can install it via PHP Monitor to update this helper file.)"
     }
 
     private static func installedScript(
@@ -86,8 +82,8 @@ class PhpHelper {
         dotless: String
     ) -> String {
         return usesFishShell(container)
-            ? fishInstalledScript(container, path, version, dotless)
-            : zshInstalledScript(path, version, dotless)
+            ? Fish.installedScript(container, path, version, dotless)
+            : Zsh.installedScript(path, version, dotless)
     }
 
     private static func unavailableScript(
@@ -95,65 +91,8 @@ class PhpHelper {
         version: String
     ) -> String {
         return usesFishShell(container)
-            ? fishUnavailableScript(container, version)
-            : zshUnavailableScript(version)
-    }
-
-    private static func zshInstalledScript(
-        _ path: String,
-        _ version: String,
-        _ dotless: String
-    ) -> String {
-        return """
-            #!/bin/zsh
-            # \(keyPhrase)
-            # It reflects the location of PHP \(version)'s binaries on your system.
-            # Usage: . pm\(dotless)
-            [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
-                && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
-                || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
-            export PATH=\(path):$PATH
-            """
-    }
-
-    private static func zshUnavailableScript(_ version: String) -> String {
-        let message = unavailableMessage(for: version)
-
-        return """
-            #!/bin/zsh
-            # \(keyPhrase)
-            # This helper reflects that PHP \(version) is currently not installed.
-            echo "\(message)"
-            return 1 2>/dev/null || exit 1
-            """
-    }
-
-    private static func fishInstalledScript(
-        _ container: Container,
-        _ path: String,
-        _ version: String,
-        _ dotless: String
-    ) -> String {
-        return """
-            #!\(container.paths.binPath)/fish
-            # \(keyPhrase)
-            # It reflects the location of PHP \(version)'s binaries on your system.
-            # Usage: . pm\(dotless)
-            echo "PHP Monitor has enabled this terminal to use PHP \(version)."; \\
-            set -x PATH \(path) $PATH
-            """
-    }
-
-    private static func fishUnavailableScript(_ container: Container, _ version: String) -> String {
-        let message = unavailableMessage(for: version)
-
-        return """
-            #!\(container.paths.binPath)/fish
-            # \(keyPhrase)
-            # This helper reflects that PHP \(version) is currently not installed.
-            echo "\(message)"
-            return 1
-            """
+            ? Fish.unavailableScript(container, version)
+            : Zsh.unavailableScript(version)
     }
 
     private static func makeHelperFile(
@@ -219,52 +158,5 @@ class PhpHelper {
             Log.err("Could not create the PHP Monitor helper directory at \(helperDirectory).")
             return false
         }
-    }
-
-    private static func shouldCreateSymlinks(
-        _ container: Container,
-        helperDirectory: String
-    ) -> Bool {
-        if container.shell.PATH.contains(helperDirectory) {
-            return false
-        }
-
-        if !container.filesystem.isWriteableFile("\(symlinkDirectory)/") {
-            Log.err("PHP Monitor does not have permission to symlink helpers in `\(symlinkDirectory)`.")
-            return false
-        }
-
-        return true
-    }
-
-    private static func createSymlinks(
-        _ container: Container,
-        files: [HelperFile]
-    ) async {
-        for file in files {
-            await createSymlink(container, dotless: file.dotless)
-        }
-    }
-
-    private static func createSymlink(
-        _ container: Container,
-        dotless: String
-    ) async {
-        let source = helperDestination(for: container, dotless: dotless)
-        let destination = "\(symlinkDirectory)/pm\(dotless)"
-
-        if !container.filesystem.fileExists(destination) {
-            Log.info("Creating new symlink: \(destination)")
-            await container.shell.pipe("ln -s \(source) \(destination)")
-            return
-        }
-
-        if !container.filesystem.isSymlink(destination) {
-            Log.info("Overwriting existing file with new symlink: \(destination)")
-            await container.shell.pipe("ln -fs \(source) \(destination)")
-            return
-        }
-
-        Log.info("Symlink in \(destination) already exists, OK.")
     }
 }
