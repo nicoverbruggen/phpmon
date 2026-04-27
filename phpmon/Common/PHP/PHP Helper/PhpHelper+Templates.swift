@@ -9,6 +9,18 @@
 extension PhpHelper {
 
     // TODO: refactor to a struct/enum and add support for bash?
+    // Ideally, I'd want different "drivers" for each shell type, which then writes the helpers
+    // this removes the need to check if "fish" is the shell and such things
+    //
+    // Pseudocode:
+    // ```
+    // let generator = HelperFileGenerator(shell: detected)
+    // generator.generate(container, args)
+    // ```
+    // I think version, dotless args can be a tuple: (version, dotlessVersion) perhaps?
+    //
+    //
+    // or alternatively, we modify the PATH a different way (would that even be possible?)
 
     // MARK: - General strings
 
