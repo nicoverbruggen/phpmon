@@ -134,7 +134,6 @@ extension OnboardingWizardViewModel {
         let composer = container.paths.composer ?? "composer"
         let composerValetShim = "\(container.paths.homePath)/.composer/vendor/bin/valet"
         let composerValetScript = "\(container.paths.homePath)/.composer/vendor/laravel/valet/valet"
-        let homebrewValet = container.paths.valet
 
         var sudoersInstalled = false
         var installError: Error?
@@ -156,7 +155,7 @@ extension OnboardingWizardViewModel {
                 try await attachStreaming(command)
             }
 
-            try await attachStreaming(Toolchain.Commands.valetTrust(using: homebrewValet))
+            try await attachStreaming(Toolchain.Commands.valetTrust(using: composerValetShim))
         } catch {
             installError = error
         }

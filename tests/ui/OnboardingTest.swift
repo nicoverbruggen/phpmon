@@ -314,7 +314,7 @@ fileprivate extension TestableConfiguration {
                 )
             ]
         )
-        shellOutput["/opt/homebrew/bin/valet trust"] = BatchFakeShellOutput(
+        shellOutput["/Users/fake/.composer/vendor/bin/valet trust"] = BatchFakeShellOutput(
             items: [.instant("Configured Valet sudoers.\n")],
             transactions: [
                 .shell(
