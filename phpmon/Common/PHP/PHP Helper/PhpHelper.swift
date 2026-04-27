@@ -30,15 +30,21 @@ class PhpHelper {
             return []
         }
 
+        // Determine what shell the user is using (supported: zsh, bash, fish)
         let shell = HelperShell.detect(for: container)
+
+        // Prepare the helper files for the detected shell
         let helperFiles = PhpHelper.makeHelperFiles(shell, container, installedVersions: installedVersions)
 
+        // Writes the helper files (but only if the files are changed!)
         let writtenFiles = PhpHelper.writeHelperFiles(container, files: helperFiles)
 
+        // If the helper directory is in the PATH, the symlinks won't be created
         if shouldCreateSymlinks(container, helperDirectory: helperDirectoryPath) {
             await createSymlinks(container, files: helperFiles)
         }
 
+        // Return the list of updated helper files
         return writtenFiles
     }
 }
