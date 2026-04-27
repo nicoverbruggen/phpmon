@@ -14,6 +14,13 @@ extension PhpHelper {
         case bash
         case fish
 
+        struct ShellTemplate {
+            let shebang: (Container) -> String
+            let activationMessage: (String, String) -> String
+            let pathMutation: (String) -> String
+            let failureReturn: String
+        }
+
         static func detect(for container: Container) -> HelperShell {
             let shell = container.paths.shell
 
@@ -34,12 +41,14 @@ extension PhpHelper {
             version: String,
             dotless: String
         ) -> String {
+            let template = shellTemplate
+
             return PhpHelper.makeInstalledScript(
-                shebang: shebang(for: container),
+                shebang: template.shebang(container),
                 version: version,
                 dotless: dotless,
-                activationMessage: activationMessage(version: version, dotless: dotless),
-                pathMutation: pathMutation(path: path)
+                activationMessage: template.activationMessage(version, dotless),
+                pathMutation: template.pathMutation(path)
             )
         }
 
@@ -47,61 +56,55 @@ extension PhpHelper {
             _ container: Container,
             version: String
         ) -> String {
+            let template = shellTemplate
+
             return PhpHelper.makeUnavailableScript(
-                shebang: shebang(for: container),
+                shebang: template.shebang(container),
                 version: version,
                 unavailableMessage: PhpHelper.unavailableMessage(for: version),
-                failureReturn: failureReturn
+                failureReturn: template.failureReturn
             )
         }
 
-        private func shebang(for container: Container) -> String {
+        private var shellTemplate: ShellTemplate {
             switch self {
             case .zsh:
-                return "#!/bin/zsh"
+                return ShellTemplate(
+                    shebang: { _ in "#!/bin/zsh" },
+                    activationMessage: { version, dotless in
+                        """
+                            [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
+                                && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
+                                || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
+                            """
+                    },
+                    pathMutation: { path in "export PATH=\(path):$PATH" },
+                    failureReturn: "return 1 2>/dev/null || exit 1"
+                )
             case .bash:
-                return "#!/bin/bash"
+                return ShellTemplate(
+                    shebang: { _ in "#!/bin/bash" },
+                    activationMessage: { version, dotless in
+                        """
+                            if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+                                echo "PHP Monitor has enabled this terminal to use PHP \(version)."
+                            else
+                                echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!"
+                            fi
+                            """
+                    },
+                    pathMutation: { path in "export PATH=\(path):$PATH" },
+                    failureReturn: "return 1 2>/dev/null || exit 1"
+                )
             case .fish:
-                return "#!\(container.paths.binPath)/fish"
-            }
-        }
-
-        private func activationMessage(version: String, dotless: String) -> String {
-            switch self {
-            case .zsh:
-                return """
-                    [[ $ZSH_EVAL_CONTEXT =~ :file$ ]] \\
-                        && echo "PHP Monitor has enabled this terminal to use PHP \(version)." \\
-                        || echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!";
-                    """
-            case .bash:
-                return """
-                    if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
-                        echo "PHP Monitor has enabled this terminal to use PHP \(version)."
-                    else
-                        echo "You must run '. pm\(dotless)' (or 'source pm\(dotless)') instead!"
-                    fi
-                    """
-            case .fish:
-                return "echo \"PHP Monitor has enabled this terminal to use PHP \(version).\"; \\\""
-            }
-        }
-
-        private func pathMutation(path: String) -> String {
-            switch self {
-            case .zsh, .bash:
-                return "export PATH=\(path):$PATH"
-            case .fish:
-                return "set -x PATH \(path) $PATH"
-            }
-        }
-
-        private var failureReturn: String {
-            switch self {
-            case .zsh, .bash:
-                return "return 1 2>/dev/null || exit 1"
-            case .fish:
-                return "return 1"
+                return ShellTemplate(
+                    shebang: { container in "#!\(container.paths.binPath)/fish" },
+                    activationMessage: { version, _ in
+                        "echo \"PHP Monitor has enabled this terminal to use PHP \(version).\"; \\\""
+                    },
+                    pathMutation: { path in "set -x PATH \(path) $PATH" },
+                    failureReturn: "return 1"
+                )
             }
         }
     }
