@@ -1226,10 +1226,10 @@
 		F0B1C2D3E4F5010000000012 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
 		F0B1C2D3E4F5010000000014 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
 		F0B1C2D3E4F5010000000015 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
-		F0B1C2D3E4F5010000000021 /* PrivilegedCommandApprovalWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */; };
-		F0B1C2D3E4F5010000000022 /* PrivilegedCommandApprovalWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */; };
-		F0B1C2D3E4F5010000000024 /* PrivilegedCommandApprovalWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */; };
-		F0B1C2D3E4F5010000000025 /* PrivilegedCommandApprovalWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */; };
+		F0B1C2D3E4F5010000000021 /* PrivilegedCommandAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */; };
+		F0B1C2D3E4F5010000000022 /* PrivilegedCommandAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */; };
+		F0B1C2D3E4F5010000000024 /* PrivilegedCommandAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */; };
+		F0B1C2D3E4F5010000000025 /* PrivilegedCommandAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */; };
 		F0B1C2D3E4F5010000000031 /* PrivilegedCommandRunnerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000003 /* PrivilegedCommandRunnerTest.swift */; };
 		F4B7E3F9B46C5AD8B8B3FEBA /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
 		F644E222C9D096B94E363E60 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
@@ -1658,7 +1658,7 @@
 		F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullSetupOnboardingFlow.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInstallOnboardingFlow.swift; sourceTree = "<group>"; };
 		F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandRunner.swift; sourceTree = "<group>"; };
-		F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandApprovalWindowController.swift; sourceTree = "<group>"; };
+		F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandAlertWindowController.swift; sourceTree = "<group>"; };
 		F0B1C2D3E4F5010000000003 /* PrivilegedCommandRunnerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandRunnerTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2137,7 +2137,7 @@
 			children = (
 				033E9DF62F44AD5200685F62 /* AppleScript.swift */,
 				F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */,
-				F0B1C2D3E4F5010000000002 /* PrivilegedCommandApprovalWindowController.swift */,
+				F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */,
 				C415D3B62770F294005EF286 /* Actions.swift */,
 				C4EE188322D3386B00E126E5 /* Constants.swift */,
 				C4EC1E72279DFCF40010F296 /* Events.swift */,
@@ -3473,7 +3473,7 @@
 				033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */,
 				C47699F128A2F3150060FEB8 /* Warning.swift in Sources */,
 				033E9DF92F44AD5400685F62 /* AppleScript.swift in Sources */,
-				F0B1C2D3E4F5010000000021 /* PrivilegedCommandApprovalWindowController.swift in Sources */,
+				F0B1C2D3E4F5010000000021 /* PrivilegedCommandAlertWindowController.swift in Sources */,
 				F0B1C2D3E4F5010000000011 /* PrivilegedCommandRunner.swift in Sources */,
 				54D9E0B227E4F51E003B9AD9 /* HotKeysController.swift in Sources */,
 				0329A9A52E92A69000A62A12 /* WarningManager+Evaluations.swift in Sources */,
@@ -3622,7 +3622,7 @@
 				C471E83F28F9BB650021E251 /* AppDelegate.swift in Sources */,
 				C471E84028F9BB650021E251 /* AppDelegate+MenuOutlets.swift in Sources */,
 				033E9DF72F44AD5400685F62 /* AppleScript.swift in Sources */,
-				F0B1C2D3E4F5010000000022 /* PrivilegedCommandApprovalWindowController.swift in Sources */,
+				F0B1C2D3E4F5010000000022 /* PrivilegedCommandAlertWindowController.swift in Sources */,
 				F0B1C2D3E4F5010000000012 /* PrivilegedCommandRunner.swift in Sources */,
 				C4D36603291132B7006BD146 /* ValetScanners.swift in Sources */,
 				03C099442EA15C8E00B76D43 /* Container+Real.swift in Sources */,
@@ -4112,7 +4112,7 @@
 				F0A1B2C3D4E5F60100002034 /* ValetInstallOnboardingFlow.swift in Sources */,
 				03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
-				F0B1C2D3E4F5010000000024 /* PrivilegedCommandApprovalWindowController.swift in Sources */,
+				F0B1C2D3E4F5010000000024 /* PrivilegedCommandAlertWindowController.swift in Sources */,
 				F0B1C2D3E4F5010000000014 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114E2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
 				03E311522F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift in Sources */,
@@ -4191,7 +4191,7 @@
 				035983A12E97FA9100218DC7 /* Container.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,
 				03E311442F9901A000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
-				F0B1C2D3E4F5010000000025 /* PrivilegedCommandApprovalWindowController.swift in Sources */,
+				F0B1C2D3E4F5010000000025 /* PrivilegedCommandAlertWindowController.swift in Sources */,
 				F0B1C2D3E4F5010000000015 /* PrivilegedCommandRunner.swift in Sources */,
 				03E3114B2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
 				03E3114F2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,

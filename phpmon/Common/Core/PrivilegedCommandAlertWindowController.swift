@@ -1,5 +1,5 @@
 //
-//  PrivilegedCommandApprovalWindowController.swift
+//  PrivilegedCommandAlertWindowController.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 27/04/2026.
@@ -12,7 +12,7 @@ import SwiftUI
 final class PrivilegedCommandApprovalPresenter: PrivilegedCommandApprovalPresenting {
     @MainActor
     func requestApproval(for reason: PrivilegedCommandReason) async -> Bool {
-        let controller = PrivilegedCommandApprovalWindowController.create(reason: reason)
+        let controller = PrivilegedCommandAlertWindowController.create(reason: reason)
         return await controller.showModal(attachedTo: NSApp.keyWindow ?? NSApp.mainWindow)
     }
 }
@@ -32,7 +32,7 @@ private struct PrivilegedCommandApprovalView: View {
     @ObservedObject var viewModel: PrivilegedCommandApprovalViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 5) {
             Text("privileged_command.modal.title".localized)
                 .font(.title2.weight(.semibold))
                 .accessibilityIdentifier("PrivilegedCommandApprovalTitle")
@@ -63,8 +63,24 @@ private struct PrivilegedCommandApprovalView: View {
     }
 }
 
+#Preview("Temporary sudoers install") {
+    PrivilegedCommandApprovalView(
+        viewModel: PrivilegedCommandApprovalViewModel(
+            reason: .onboardingValetTemporarySudoersInstall
+        )
+    )
+}
+
+#Preview("Temporary sudoers cleanup") {
+    PrivilegedCommandApprovalView(
+        viewModel: PrivilegedCommandApprovalViewModel(
+            reason: .onboardingValetTemporarySudoersCleanup
+        )
+    )
+}
+
 @MainActor
-final class PrivilegedCommandApprovalWindowController: NSWindowController, NSWindowDelegate {
+final class PrivilegedCommandAlertWindowController: NSWindowController, NSWindowDelegate {
     private let viewModel: PrivilegedCommandApprovalViewModel
     private var continuation: CheckedContinuation<Bool, Never>?
     private var didResolve = false
@@ -79,9 +95,9 @@ final class PrivilegedCommandApprovalWindowController: NSWindowController, NSWin
         fatalError("init(coder:) has not been implemented")
     }
 
-    static func create(reason: PrivilegedCommandReason) -> PrivilegedCommandApprovalWindowController {
+    static func create(reason: PrivilegedCommandReason) -> PrivilegedCommandAlertWindowController {
         let viewModel = PrivilegedCommandApprovalViewModel(reason: reason)
-        let controller = PrivilegedCommandApprovalWindowController(viewModel: viewModel)
+        let controller = PrivilegedCommandAlertWindowController(viewModel: viewModel)
         let window = NSWindow()
 
         window.title = ""
