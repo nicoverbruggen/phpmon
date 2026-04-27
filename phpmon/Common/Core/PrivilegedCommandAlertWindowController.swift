@@ -32,34 +32,50 @@ private struct PrivilegedCommandApprovalView: View {
     @ObservedObject var viewModel: PrivilegedCommandApprovalViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text("privileged_command.modal.title".localized)
-                .font(.title2.weight(.semibold))
-                .accessibilityIdentifier("PrivilegedCommandApprovalTitle")
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 18) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "lock.shield.fill")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundStyle(.orange)
+                        Text("Administrative Access Required")
+                            .font(.headline)
+                    }
 
-            Text("privileged_command.modal.description".localized(viewModel.reason.localizedDescription))
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityIdentifier("PrivilegedCommandApprovalMessage")
+                    Text("This is a UI test convenience only. Normally, macOS will present a dialog that asks for your password. Clicking on 'Approve' will mimic correct password entry.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(5)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(10)
 
-            Spacer(minLength: 0)
+            Divider()
 
             HStack(spacing: 12) {
                 Spacer()
 
-                Button("privileged_command.modal.deny".localized) {
+                Button("Deny".localized) {
                     viewModel.onDeny?()
                 }
+                .buttonStyle(.bordered)
                 .accessibilityIdentifier("PrivilegedCommandDenyButton")
 
-                Button("privileged_command.modal.approve".localized) {
+                Button("Approve".localized) {
                     viewModel.onApprove?()
                 }
+                .buttonStyle(.borderedProminent)
                 .keyboardShortcut(.defaultAction)
                 .accessibilityIdentifier("PrivilegedCommandApproveButton")
             }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
         }
-        .padding(24)
-        .frame(width: 460, height: 210)
+        .frame(width: 500)
+        .background(Color(NSColor.windowBackgroundColor))
     }
 }
 

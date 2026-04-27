@@ -988,6 +988,12 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "startup.fix.applied" = "Fix applied successfully! Continuing...";
 "startup.fix.not_resolved" = "Fix did not resolve the issue.";
 
+// COMMAND HISTORY
+
+"command_history.title" = "Command History";
+"command_history.completed_in" = "Completed in %@";
+"command_history.running_for" = "Running for %@";
+
 // ONBOARDING WIZARD
 
 "onboarding_wizard.title" = "Set Up PHP Monitor";
@@ -1048,12 +1054,6 @@ You will need to complete the installation there yourself, then return here and 
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary sudoers entry it created for Valet onboarding.";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Valet may already be installed correctly, but the temporary admin override should be removed manually.\n\nRun this command in Terminal:\n\n%@";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command" = "Copy Command";
-"privileged_command.modal.title" = "Administrative Access Required";
-"privileged_command.modal.description" = "PHP Monitor wants to run a privileged command.\n\nRequest: %@";
-"privileged_command.modal.approve" = "Approve";
-"privileged_command.modal.deny" = "Deny";
-"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions";
-"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions";
 "onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
 "onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
 
@@ -1082,8 +1082,7 @@ PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH.
 "onboarding_wizard.output.path_reopen_shell" = "Your PATH entries were added, but the new shell environment still needs to be reloaded. Open a new terminal session, then click Check Again.";
 "onboarding_wizard.output.valet_admin_access_denied" = "Administrative access was denied, so Valet setup could not continue. Click Install Valet to try again.";
 
-// COMMAND HISTORY
+// PRIVILEGED COMMANDS
 
-"command_history.title" = "Command History";
-"command_history.completed_in" = "Completed in %@";
-"command_history.running_for" = "Running for %@";
+"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions";
+"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions";
