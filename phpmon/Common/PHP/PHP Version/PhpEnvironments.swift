@@ -238,7 +238,9 @@ class PhpEnvironments {
     public func detectPhpVersions() async -> Set<String> {
         let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
 
-        let versions = await extractPhpVersions(from: files.components(separatedBy: "\n"))
+        var installedVersions = await extractPhpVersions(
+            from: files.components(separatedBy: "\n")
+        )
 
         let supportedByValet: Set<String> = {
             guard let version = Valet.shared.version else {
@@ -248,27 +250,27 @@ class PhpEnvironments {
             return Constants.ValetSupportedPhpVersionMatrix[version.major] ?? []
         }()
 
-        var supportedVersions = Valet.installed ? versions.intersection(supportedByValet) : versions
-
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
         // We should also detect that as a version that is installed
         if let phpAlias = homebrewPackage.version {
             // Avoid inserting a duplicate
-            if !supportedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
+            if !installedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
                 let phpAliasInstall = PhpInstallation(container, phpAlias)
                 // Before inserting, ensure that the actual output matches the alias
                 // if that isn't the case, our formula remains out-of-date
                 if !phpAliasInstall.isMissingBinary {
-                    supportedVersions.insert(phpAlias)
+                    installedVersions.insert(phpAlias)
                 }
             }
         }
 
+        let supportedVersions = Valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
+
         availablePhpVersions = Array(supportedVersions)
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
-        incompatiblePhpVersions = Array(versions.subtracting(supportedByValet))
+        incompatiblePhpVersions = Array(installedVersions.subtracting(supportedByValet))
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
         Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
@@ -282,6 +284,8 @@ class PhpEnvironments {
 
         cachedPhpInstallations = mappedVersions
 
+        await PhpHelper.regenerate(container, installedVersions: installedVersions)
+
         return supportedVersions
     }
 
@@ -289,13 +293,11 @@ class PhpEnvironments {
      Extracts valid PHP versions from an array of strings.
      This array of strings is usually retrieved from `grep`.
      
-     If `generateHelpers` is set to true, after detecting
-     all versions, helper scripts are generated as well.
+     This method only parses and returns detected versions.
      */
     public func extractPhpVersions(
         from versions: [String],
-        checkBinaries: Bool = true,
-        generateHelpers: Bool = true
+        checkBinaries: Bool = true
     ) async -> Set<String> {
         let supported = Constants.DetectedPhpVersions
         var output: Set<String> = []
@@ -311,12 +313,6 @@ class PhpEnvironments {
                 && supported.contains(version)
                 && (checkBinaries ? container.filesystem.fileExists("\(container.paths.optPath)/php@\(version)/bin/php") : true) {
                 output.insert(version)
-            }
-        }
-
-        if generateHelpers {
-            for item in output {
-                await PhpHelper.generate(container, for: item)
             }
         }
 

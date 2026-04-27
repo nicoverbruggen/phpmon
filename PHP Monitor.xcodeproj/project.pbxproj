@@ -72,6 +72,7 @@
 		032DAC2E2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
 		032DAC2F2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
 		032DAC302E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
+		03305E172F9F69CE0066E34F /* PhpHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03305E162F9F69CE0066E34F /* PhpHelperTest.swift */; };
 		033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D459A2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
@@ -250,23 +251,7 @@
 		03E311372F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
-		F0A1B2C3D4E5F60100001011 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
-		F0A1B2C3D4E5F60100001012 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
-		F0A1B2C3D4E5F60100001013 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
-		F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
-		F0A1B2C3D4E5F60100002011 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002012 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002013 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002014 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002021 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002022 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002023 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002024 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002031 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002032 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002033 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002034 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
 		03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
@@ -363,8 +348,8 @@
 		7E19EE251E743286BC95EBA3 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
 		88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
 		8A1B2C3D4E5F60718293A4B7 /* OnboardingDispositionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4B6 /* OnboardingDispositionTest.swift */; };
-		8B7C6D5E4F3A291817161515 /* ZshRunCommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C6D5E4F3A291817161514 /* ZshRunCommandTest.swift */; };
 		8A8AB3D1A6DAE99C91DFBEFF /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
+		8B7C6D5E4F3A291817161515 /* ZshRunCommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C6D5E4F3A291817161514 /* ZshRunCommandTest.swift */; };
 		9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
 		959BE2F3A5743862AC8D1E7D /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
 		95BB6DF72FB35A5A8F4E24E7 /* StartupAlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */; };
@@ -1197,6 +1182,22 @@
 		F0A1B2C3D4E5F60100000082 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
 		F0A1B2C3D4E5F60100000083 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
 		F0A1B2C3D4E5F60100000084 /* PathEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100000008 /* PathEntry.swift */; };
+		F0A1B2C3D4E5F60100001011 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001012 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001013 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
+		F0A1B2C3D4E5F60100002011 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
+		F0A1B2C3D4E5F60100002012 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
+		F0A1B2C3D4E5F60100002013 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
+		F0A1B2C3D4E5F60100002014 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
+		F0A1B2C3D4E5F60100002021 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002022 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002023 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002024 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002031 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002032 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002033 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002034 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
 		F4B7E3F9B46C5AD8B8B3FEBA /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
 		F644E222C9D096B94E363E60 /* StartupFixCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */; };
 		F6E9803FDF532887CF899ED9 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
@@ -1255,6 +1256,7 @@
 		032C7A012EE43B7400758D98 /* Suspendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
 		032DAC272E8BEB590018E01C /* RealWebApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealWebApi.swift; sourceTree = "<group>"; };
 		032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebApiProtocol.swift; sourceTree = "<group>"; };
+		03305E162F9F69CE0066E34F /* PhpHelperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelperTest.swift; sourceTree = "<group>"; };
 		0336CAAF2B0D0CDA009A1034 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
@@ -1312,11 +1314,7 @@
 		03E3112B2F98D1A200E59EF0 /* OnboardingWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardView.swift; sourceTree = "<group>"; };
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+ValetOnboarding.swift"; sourceTree = "<group>"; };
 		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowDefinition.swift; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullSetupOnboardingFlow.swift; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInstallOnboardingFlow.swift; sourceTree = "<group>"; };
 		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
 		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
 		03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardCommands.swift; sourceTree = "<group>"; };
@@ -1613,6 +1611,10 @@
 		F0A1B2C3D4E5F60100000006 /* OnboardingSidebarStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSidebarStepView.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100000007 /* OnboardingSidebarTimelineMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSidebarTimelineMarkerView.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100000008 /* PathEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathEntry.swift; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+ValetOnboarding.swift"; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowDefinition.swift; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullSetupOnboardingFlow.swift; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInstallOnboardingFlow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1695,6 +1697,7 @@
 		036575C62EA12E2200BA41BF /* Versions */ = {
 			isa = PBXGroup;
 			children = (
+				03305E162F9F69CE0066E34F /* PhpHelperTest.swift */,
 				C4FBFC512616485F00CDB8E1 /* PhpVersionDetectionTest.swift */,
 				C48D6C73279CD3E400F26D7E /* PhpVersionNumberTest.swift */,
 				C4B56360276AB0A500F12CCB /* VersionExtractorTest.swift */,
@@ -4377,6 +4380,7 @@
 				C464ADAD275A7A3F003FCD53 /* DomainListWindowController.swift in Sources */,
 				03BC24BE2F51C55E0051292B /* CodeBlockTextView.swift in Sources */,
 				C40C7F1F2772136000DDDCDC /* PhpEnvironments.swift in Sources */,
+				03305E172F9F69CE0066E34F /* PhpHelperTest.swift in Sources */,
 				C464ADB0275A7A6A003FCD53 /* DomainListVC.swift in Sources */,
 				C43A8A1A25D9CD1000591B77 /* Utility.swift in Sources */,
 				03D0F9762F4DE6FE00613D1E /* TestableShell.swift in Sources */,

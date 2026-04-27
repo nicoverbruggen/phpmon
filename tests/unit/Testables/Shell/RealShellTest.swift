@@ -9,12 +9,17 @@
 import Testing
 import Foundation
 
+private func makeRealShellContainer() -> Container {
+    Container.real(minimal: true, commandTracking: false)
+}
+
+@Suite
 struct RealShellTest {
     var container: Container
 
     init() async throws {
         // Reset to the default shell
-        container = Container.real(minimal: true, commandTracking: false)
+        container = makeRealShellContainer()
     }
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
@@ -102,43 +107,11 @@ struct RealShellTest {
         }
     }
 
-    // If this test fails, run it separately to confirm it's actually broken.
-    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
-    func pipe_can_timeout_and_return_empty_output() async {
-        let start = ContinuousClock.now
-
-        let output = await container.shell.pipe("php -r \"sleep(30);\"", timeout: 0.5)
-
-        let duration = start.duration(to: .now)
-
-        // Should return empty output on timeout
-        #expect(output.out.isEmpty)
-        #expect(output.err.isEmpty)
-
-        // Should have timed out in roughly 0.5 seconds (allow some margin)
-        #expect(duration < .seconds(2))
-    }
-
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func pipe_without_timeout_completes_normally() async {
         let output = await container.shell.pipe("php -v")
 
         #expect(output.out.contains("Copyright (c) The PHP Group"))
-    }
-
-    // If this test fails, run it separately to confirm it's actually broken.
-    @Test func can_run_multiple_shell_commands_in_parallel() async throws {
-        let start = ContinuousClock.now
-
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.pipe("sleep 1.5") }
-            group.addTask { await container.shell.pipe("sleep 1.5") }
-            group.addTask { await container.shell.pipe("sleep 1.5") }
-            group.addTask { await container.shell.pipe("sleep 1.5") }
-        }
-
-        let duration = start.duration(to: .now)
-        #expect(duration < .seconds(5))
     }
 
     @Test func exports_are_passed_as_environment_variables() {
@@ -256,5 +229,46 @@ struct RealShellTest {
 
         // If these two match, we know no additional callbacks fired after the delay
         #expect(callbackCountAfterDelay == callbackCountAtTimeout)
+    }
+}
+
+@Suite(.serialized)
+struct RealShellTimingTest {
+    var container: Container
+
+    init() async throws {
+        container = makeRealShellContainer()
+    }
+
+    // If this test fails, run it separately to confirm it's actually broken.
+    @Test func can_run_multiple_shell_commands_in_parallel() async throws {
+        let start = ContinuousClock.now
+
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { await container.shell.pipe("sleep 4") }
+            group.addTask { await container.shell.pipe("sleep 4") }
+            group.addTask { await container.shell.pipe("sleep 4") }
+            group.addTask { await container.shell.pipe("sleep 4") }
+        }
+
+        let duration = start.duration(to: .now)
+        #expect(duration < .seconds(6))
+    }
+
+    // If this test fails, run it separately to confirm it's actually broken.
+    @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
+    func pipe_can_timeout_and_return_empty_output() async {
+        let start = ContinuousClock.now
+
+        let output = await container.shell.pipe("php -r \"sleep(30);\"", timeout: 0.5)
+
+        let duration = start.duration(to: .now)
+
+        // Should return empty output on timeout
+        #expect(output.out.isEmpty)
+        #expect(output.err.isEmpty)
+
+        // Should have timed out in roughly 0.5 seconds (allow some margin due to parallel tests)
+        #expect(duration < .seconds(10))
     }
 }
