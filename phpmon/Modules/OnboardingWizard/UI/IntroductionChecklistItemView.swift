@@ -13,17 +13,28 @@ struct IntroductionChecklistItemView: View {
     let title: String
     var badgeTitle: String?
     let description: String
+    var isCompleted: Bool = false
 
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             ZStack {
-                Circle()
-                    .fill(Color.accentColor.opacity(0.14))
-                    .frame(width: 22, height: 22)
+                if isCompleted {
+                    Circle()
+                        .fill(Color.green.opacity(0.14))
+                        .frame(width: 22, height: 22)
 
-                Text("\(number)")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.accentColor)
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundStyle(Color.green)
+                } else {
+                    Circle()
+                        .fill(Color.accentColor.opacity(0.14))
+                        .frame(width: 22, height: 22)
+
+                    Text("\(number)")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Color.accentColor)
+                }
             }
             .padding(.top, 1)
 
@@ -31,6 +42,10 @@ struct IntroductionChecklistItemView: View {
                 HStack(spacing: 7) {
                     Text(title)
                         .font(.system(size: 12, weight: .semibold))
+
+                    if isCompleted {
+                        OnboardingBadgeView(title: "onboarding_wizard.badges.completed".localized)
+                    }
 
                     if let badgeTitle {
                         OnboardingBadgeView(title: badgeTitle)

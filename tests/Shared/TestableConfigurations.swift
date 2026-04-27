@@ -202,6 +202,7 @@ class TestableConfigurations {
             preferenceOverrides: [
                 .automaticBackgroundUpdateCheck: .bool(false)
             ],
+            internalStatsOverrides: [:],
             phpVersions: [
                 VersionNumber(major: 8, minor: 4, patch: 5),
                 VersionNumber(major: 8, minor: 3, patch: 5),

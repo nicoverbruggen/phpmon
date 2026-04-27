@@ -16,6 +16,7 @@ public struct TestableConfiguration: Codable {
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
     var preferenceOverrides: [PreferenceName: PreferenceOverride]
+    var internalStatsOverrides: [String: Int]
     var apiGetResponses: [URL: FakeWebApiResponse]
     var apiPostResponses: [URL: FakeWebApiResponse]
 
@@ -27,6 +28,7 @@ public struct TestableConfiguration: Codable {
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
         preferenceOverrides: [PreferenceName: PreferenceOverride],
+        internalStatsOverrides: [String: Int] = [:],
         phpVersions: [VersionNumber],
         apiGetResponses: [URL: FakeWebApiResponse],
         apiPostResponses: [URL: FakeWebApiResponse]
@@ -38,6 +40,7 @@ public struct TestableConfiguration: Codable {
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
         self.preferenceOverrides = preferenceOverrides
+        self.internalStatsOverrides = internalStatsOverrides
         self.apiGetResponses = apiGetResponses
         self.apiPostResponses = apiPostResponses
 
@@ -54,6 +57,7 @@ public struct TestableConfiguration: Codable {
              shellOutput,
              commandOutput,
              preferenceOverrides,
+             internalStatsOverrides,
              apiGetResponses,
              apiPostResponses
     }
@@ -172,6 +176,10 @@ public struct TestableConfiguration: Codable {
             }
         }
         container.preferences.cachedPreferences = cachedPrefs
+
+        internalStatsOverrides.forEach { key, value in
+            UserDefaults.standard.set(value, forKey: key)
+        }
 
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")

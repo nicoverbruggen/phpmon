@@ -206,8 +206,7 @@ extension OnboardingWizardViewModel {
 
     private func finalize(success: Bool) {
         if success {
-            state = .idle
-            appendOutput("\n\("onboarding_wizard.output.step_completed".localized)", .stdOut)
+            completeCurrentStep()
         } else {
             state = .failed
             appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)

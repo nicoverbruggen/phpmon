@@ -93,7 +93,6 @@ private extension OnboardingWizardView {
     static func preview(
         entryMode: OnboardingEntryMode = .introduction,
         hasDismissedIntroduction: Bool = false,
-        displayedStepNumber: Int? = nil,
         progress: OnboardingWizardViewModel.StepProgress,
         state: OnboardingWizardViewModel.State = .idle,
         outputLines: [OutputLine] = []
@@ -106,8 +105,7 @@ private extension OnboardingWizardView {
                 hasLoaded: true
             ),
             entryMode: entryMode,
-            hasDismissedIntroduction: hasDismissedIntroduction,
-            displayedStepNumber: displayedStepNumber
+            hasDismissedIntroduction: hasDismissedIntroduction
         )
     }
 }

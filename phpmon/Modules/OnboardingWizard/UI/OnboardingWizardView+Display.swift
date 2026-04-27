@@ -14,10 +14,6 @@ extension OnboardingWizardView {
             return "onboarding_wizard.buttons.start_setup".localized
         }
 
-        if isDisplayingCompletedStep {
-            return "onboarding_wizard.buttons.continue".localized
-        }
-
         return viewModel.primaryButtonTitle
     }
 
@@ -26,20 +22,12 @@ extension OnboardingWizardView {
             return !viewModel.hasLoaded
         }
 
-        if isDisplayingCompletedStep {
-            return !viewModel.hasLoaded || viewModel.state == .running
-        }
-
         return viewModel.primaryButtonDisabled
     }
 
     var activeStepNumber: Int? {
         if isShowingIntroduction {
             return nil
-        }
-
-        if isDisplayingCompletedStep, let displayedStepNumber {
-            return displayedStepNumber
         }
 
         return actionableStepNumber
@@ -60,32 +48,12 @@ extension OnboardingWizardView {
         }
     }
 
-    var isDisplayingCompletedStep: Bool {
-        guard let displayedStepNumber else {
-            return false
-        }
-
-        return isStepCompleted(displayedStepNumber)
-            && displayedStepNumber == 1
-            && viewModel.action == .recheckDeveloperTools
-            && displayedStepNumber < actionableStepNumber
-            && viewModel.state != .running
-    }
-
     var displayedDetailTitle: String {
-        guard isDisplayingCompletedStep else {
-            return viewModel.detailTitle
-        }
-
-        return "onboarding_wizard.detail.developer_tools.title".localized
+        return viewModel.detailTitle
     }
 
     var displayedDetailDescription: String {
-        guard isDisplayingCompletedStep else {
-            return viewModel.detailDescription
-        }
-
-        return "onboarding_wizard.detail.developer_tools.completed".localized
+        return viewModel.detailDescription
     }
 
     var currentProgressText: String {

@@ -69,7 +69,19 @@ struct Toolchain {
     }
 
     func onboardingDisposition() async -> Startup.OnboardingDisposition {
-        if !(await status(.homebrew)).installed {
+        let developerToolsInstalled = await status(.commandLineTools).installed
+        let homebrewInstalled = await status(.homebrew).installed
+        let phpInstalled = await status(.php).installed
+        let composerInstalled = await status(.composer).installed
+
+        if developerToolsInstalled
+            && homebrewInstalled
+            && Stats.successfulLaunchCount == 0
+            && (!phpInstalled || !composerInstalled) {
+            return .wizard
+        }
+
+        if !homebrewInstalled {
             return .wizard
         }
 

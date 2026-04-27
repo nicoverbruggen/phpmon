@@ -1012,6 +1012,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.steps.valet" = "Install Valet";
 "onboarding_wizard.steps.ready" = "Finish Setup";
 "onboarding_wizard.badges.optional" = "Optional";
+"onboarding_wizard.badges.completed" = "Completed";
 "onboarding_wizard.sidebar.core" = "Core";
 "onboarding_wizard.sidebar.optional" = "Optional";
 "onboarding_wizard.progress.introduction" = "Introduction";
@@ -1031,6 +1032,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
 "onboarding_wizard.buttons.skip_valet" = "Skip Valet";
 "onboarding_wizard.buttons.skip" = "Skip Setup";
+"onboarding_wizard.buttons.learn_more" = "Learn more";
 "onboarding_wizard.buttons.continue" = "Continue";
 "onboarding_wizard.skip_confirmation.title" = "Skip setup?";
 "onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
@@ -1072,11 +1074,11 @@ PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH.
 (If you prefer, you can also skip this step and use Standalone Mode for now. You can always install Valet later.)";
 "onboarding_wizard.detail.ready.title" = "Step 5: Finish Setup";
 "onboarding_wizard.detail.ready.description" = "The full onboarding setup is complete. Continue and PHP Monitor will rerun its regular startup checks to confirm everything is ready.";
+"onboarding_wizard.command.developer_tools.title" = "IF NEEDED, RUN THIS IN TERMINAL";
 "onboarding_wizard.command.homebrew.title" = "RUN THIS IN TERMINAL";
 "onboarding_wizard.command.path.title" = "ADD THIS TO .zshrc";
 "onboarding_wizard.output.developer_tools_requested" = "The developer tools installer was requested. Finish that installation in macOS, then click Continue.";
 "onboarding_wizard.output.homebrew_command_copied" = "The Homebrew install command was copied. Run it in Terminal, complete the installation, then click Check Again.";
-"onboarding_wizard.output.step_completed" = "Step completed. Continuing...";
 "onboarding_wizard.output.step_not_resolved" = "This step could not be completed yet.";
 "onboarding_wizard.output.path_updating" = "Updating your ~/.zshrc PATH entries...";
 "onboarding_wizard.output.path_reopen_shell" = "Your PATH entries were added, but the new shell environment still needs to be reloaded. Open a new terminal session, then click Check Again.";

@@ -6,6 +6,8 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 extension OnboardingWizardViewModel {
     var usesStatusBanner: Bool {
         switch action {
@@ -41,7 +43,18 @@ extension OnboardingWizardViewModel {
     }
 
     var showsTerminalOutput: Bool {
-        return showsOutput && !usesStatusBanner
+        return shouldShowTerminalOutput && showsOutput && !usesStatusBanner
+    }
+
+    var learnMoreLink: URL? {
+        switch action {
+        case .installDeveloperTools, .recheckDeveloperTools:
+            return Constants.Urls.AppleCommandLineTools
+        case .installHomebrew, .recheckHomebrew:
+            return Constants.Urls.HomebrewWebsite
+        default:
+            return nil
+        }
     }
 
     var detailTitle: String {
@@ -86,6 +99,8 @@ extension OnboardingWizardViewModel {
 
     var commandTitle: String? {
         switch action {
+        case .installDeveloperTools, .recheckDeveloperTools:
+            return "onboarding_wizard.command.developer_tools.title".localized
         case .installHomebrew, .recheckHomebrew:
             return "onboarding_wizard.command.homebrew.title".localized
         case .recheckPath:
@@ -97,6 +112,8 @@ extension OnboardingWizardViewModel {
 
     var commandLines: [String] {
         switch action {
+        case .installDeveloperTools, .recheckDeveloperTools:
+            return [Toolchain.Commands.developerToolsInstall]
         case .installHomebrew, .recheckHomebrew:
             return [Toolchain.Commands.homebrewInstall]
         case .recheckPath:

@@ -142,6 +142,10 @@ struct Constants {
         // phpmon.app URLs (these are aliased to redirect correctly)
         static let DonationPage = url("https://phpmon.app/sponsor")
 
+        static let AppleCommandLineTools = url("https://developer.apple.com/documentation/xcode/installing-the-command-line-tools/#Install-the-Command-Line-Tools-package-in-Terminal")
+
+        static let HomebrewWebsite = url("https://brew.sh/")
+
         static let FrequentlyAskedQuestions = url("https://phpmon.app/faq")
 
         static let WikiPhpUnavailable = url("https://phpmon.app/php-unavailable")

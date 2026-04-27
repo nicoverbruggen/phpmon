@@ -24,11 +24,9 @@ struct OnboardingWizardViewDisplayTest {
 
         let view = OnboardingWizardView(
             viewModel: viewModel,
-            hasDismissedIntroduction: true,
-            displayedStepNumber: 1
+            hasDismissedIntroduction: true
         )
 
-        #expect(!view.isDisplayingCompletedStep)
         #expect(view.activeStepNumber == 2)
         #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.copy_command".localized)
     }

@@ -26,22 +26,26 @@ extension OnboardingWizardView {
                 IntroductionChecklistItemView(
                     number: 1,
                     title: "onboarding_wizard.steps.developer_tools".localized,
-                    description: "onboarding_wizard.intro.developer_tools".localized
+                    description: "onboarding_wizard.intro.developer_tools".localized,
+                    isCompleted: isStepCompleted(1)
                 )
                 IntroductionChecklistItemView(
                     number: 2,
                     title: "onboarding_wizard.steps.homebrew".localized,
-                    description: "onboarding_wizard.intro.homebrew".localized
+                    description: "onboarding_wizard.intro.homebrew".localized,
+                    isCompleted: isStepCompleted(2)
                 )
                 IntroductionChecklistItemView(
                     number: 3,
                     title: "onboarding_wizard.steps.php_composer".localized,
-                    description: "onboarding_wizard.intro.php_composer".localized
+                    description: "onboarding_wizard.intro.php_composer".localized,
+                    isCompleted: isStepCompleted(3)
                 )
                 IntroductionChecklistItemView(
                     number: 4,
                     title: "onboarding_wizard.steps.valet".localized,
-                    description: "onboarding_wizard.intro.valet".localized
+                    description: "onboarding_wizard.intro.valet".localized,
+                    isCompleted: isStepCompleted(4)
                 )
             }
             .padding(16)
@@ -75,11 +79,19 @@ extension OnboardingWizardView {
                     .padding(.bottom, 16)
             }
 
-            if !isDisplayingCompletedStep,
-               let commandTitle = viewModel.commandTitle,
+            if let commandTitle = viewModel.commandTitle,
                !viewModel.commandLines.isEmpty {
                 OnboardingCommandBlockView(title: commandTitle, lines: viewModel.commandLines)
                     .padding(.bottom, 14)
+            }
+
+            if let learnMoreLink = viewModel.learnMoreLink {
+                Button("onboarding_wizard.buttons.learn_more".localized) {
+                    NSWorkspace.shared.open(learnMoreLink)
+                }
+                .buttonStyle(.link)
+                .controlSize(.small)
+                .padding(.bottom, 14)
             }
 
             if viewModel.showsStatusBanner,

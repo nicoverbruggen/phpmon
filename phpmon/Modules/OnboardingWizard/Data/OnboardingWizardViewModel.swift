@@ -133,6 +133,15 @@ class OnboardingWizardViewModel: ObservableObject {
         return !outputLines.isEmpty
     }
 
+    var shouldShowTerminalOutput: Bool {
+        switch action {
+        case .installPhpComposer, .installValet:
+            return state == .running
+        default:
+            return false
+        }
+    }
+
     func loadIfNeeded() async {
         guard !hasLoaded else { return }
 
@@ -183,6 +192,11 @@ class OnboardingWizardViewModel: ObservableObject {
 
     func clearOutput() {
         outputLines = []
+    }
+
+    func completeCurrentStep() {
+        outputLines = []
+        state = .idle
     }
 
     var action: Action {

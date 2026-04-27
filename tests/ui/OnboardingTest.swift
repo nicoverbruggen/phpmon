@@ -16,16 +16,6 @@ final class OnboardingTest: UITestCase {
 
     override func tearDownWithError() throws {}
 
-    // If Command Line Tools already exist, the wizard should acknowledge step 1 and continue through
-    // the mocked Homebrew, PATH, and PHP/Composer setup before regular startup enables the menu.
-    final func test_launch_runs_onboarding_wizard_flow_when_developer_tools_are_already_installed() throws {
-        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
-
-        assertWizardOpenedInsteadOfStartupAlert(app)
-        startWizard(app)
-        completeRequiredInstallFlow(app)
-    }
-
     // If Command Line Tools are missing, the wizard should request their installation first and only
     // continue through the rest of setup once the mocked system command reports them as installed.
     final func test_launch_runs_onboarding_wizard_flow_that_installs_developer_tools() throws {
@@ -35,6 +25,30 @@ final class OnboardingTest: UITestCase {
         startWizard(app)
         installDeveloperTools(app)
         completeRequiredInstallFlow(app)
+    }
+
+    // If Command Line Tools already exist, the wizard should acknowledge step 1 and continue through
+    // the mocked Homebrew, PATH, and PHP/Composer setup before regular startup enables the menu.
+    final func test_launch_runs_onboarding_wizard_flow_when_developer_tools_are_already_installed() throws {
+        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        assertIntroductionMarksCompletedSteps(app, count: 1)
+        startWizard(app)
+        completeRequiredInstallFlow(app)
+    }
+
+    // If core setup is already partially present on a first launch, the wizard should still open,
+    // show the introduction, mark the completed steps, and continue at PHP/Composer.
+    final func test_launch_runs_wizard_for_first_launch_partial_setup_when_php_and_composer_are_missing() throws {
+        let app = launchOnboardingWizard(with: .firstLaunchPartialSetup)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        assertIntroductionMarksCompletedSteps(app, count: 2)
+        startWizard(app)
+
+        assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
+        completeValetAndFinish(app)
     }
 
     // If the user's shell is not zsh, the wizard should show the manual PATH instructions
@@ -169,6 +183,8 @@ final class OnboardingTest: UITestCase {
     }
 
     private func installDeveloperTools(_ app: XCPMApplication) {
+        assertExists(app.staticTexts["onboarding_wizard.command.developer_tools.title".localized], 3.0)
+        assertExists(app.buttons["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized])
 
@@ -184,6 +200,12 @@ final class OnboardingTest: UITestCase {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        completeValetAndFinish(app)
+
+        app.terminate()
+    }
+
+    private func completeValetAndFinish(_ app: XCPMApplication) {
         assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
@@ -193,12 +215,11 @@ final class OnboardingTest: UITestCase {
 
         click(app.buttons["onboarding_wizard.buttons.continue".localized])
         waitForMenu(app)
-
-        app.terminate()
     }
 
     private func installHomebrew(_ app: XCPMApplication) {
         assertExists(app.staticTexts["onboarding_wizard.command.homebrew.title".localized], 3.0)
+        assertExists(app.buttons["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.copy_command".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.copy_command".localized])
 
@@ -210,6 +231,13 @@ final class OnboardingTest: UITestCase {
         assertExists(app.staticTexts["onboarding_wizard.command.path.title".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
         assertNotExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 1.0)
+    }
+
+    private func assertIntroductionMarksCompletedSteps(_ app: XCPMApplication, count: Int) {
+        XCTAssertEqual(
+            app.staticTexts.matching(identifier: "onboarding_wizard.badges.completed".localized).count,
+            count
+        )
     }
 
     private func approvePrivilegedCommand(_ app: XCPMApplication) {
@@ -226,6 +254,7 @@ final class OnboardingTest: UITestCase {
 fileprivate enum OnboardingScenario {
     case developerToolsAlreadyInstalled
     case developerToolsMissing
+    case firstLaunchPartialSetup
     case manualPathFixRequired
 
     func apply(to configuration: inout TestableConfiguration) {
@@ -234,6 +263,8 @@ fileprivate enum OnboardingScenario {
             break
         case .developerToolsMissing:
             configuration.mockDeveloperToolsInstall()
+        case .firstLaunchPartialSetup:
+            configuration.mockFirstLaunchPartialSetup()
         case .manualPathFixRequired:
             configuration.configuredShell = "/bin/bash"
         }
@@ -242,6 +273,7 @@ fileprivate enum OnboardingScenario {
 
 fileprivate extension TestableConfiguration {
     mutating func prepareFreshCoreOnboardingSystem() {
+        internalStatsOverrides[InternalStats.launchCount.rawValue] = 0
         filesystem["/opt/homebrew/bin/brew"] = nil
         filesystem["/opt/homebrew/bin/php"] = nil
         filesystem["/usr/local/bin/composer"] = nil
@@ -353,6 +385,21 @@ fileprivate extension TestableConfiguration {
                 )
             ]
         )
+    }
+
+    mutating func mockFirstLaunchPartialSetup() {
+        filesystem["/opt/homebrew/bin/brew"] = .fake(.binary)
+        filesystem["/opt/homebrew/opt/nginx"] = .fake(.directory)
+        internalStatsOverrides[InternalStats.launchCount.rawValue] = 0
+        shellPath = [
+            "/usr/local/bin",
+            "/usr/bin",
+            "/bin",
+            "/usr/sbin",
+            "/Users/fake/.config/phpmon/bin",
+            "/Users/fake/.composer/vendor/bin",
+            "/opt/homebrew/bin"
+        ].joined(separator: ":")
     }
 
     private func homebrewInstallCommand() -> String {

@@ -18,7 +18,6 @@ struct OnboardingWizardView: View {
     @State var hasDismissedIntroduction = false
     @State var isShowingSkipConfirmation = false
     @State var isShowingSkipValetConfirmation = false
-    @State var displayedStepNumber: Int?
     @FocusState var focusedButton: FocusedButton?
 
     let windowWidth: CGFloat = 720
@@ -30,15 +29,13 @@ struct OnboardingWizardView: View {
         entryMode: OnboardingEntryMode = .introduction,
         hasDismissedIntroduction: Bool = false,
         isShowingSkipConfirmation: Bool = false,
-        isShowingSkipValetConfirmation: Bool = false,
-        displayedStepNumber: Int? = nil
+        isShowingSkipValetConfirmation: Bool = false
     ) {
         self.viewModel = viewModel
         self.entryMode = entryMode
         self._hasDismissedIntroduction = State(initialValue: hasDismissedIntroduction)
         self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
         self._isShowingSkipValetConfirmation = State(initialValue: isShowingSkipValetConfirmation)
-        self._displayedStepNumber = State(initialValue: displayedStepNumber)
     }
 
     var body: some View {
