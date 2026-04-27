@@ -10,19 +10,6 @@ import Testing
 
 @MainActor
 struct PrivilegedCommandRunnerTest {
-    @Test func real_runner_delegates_to_the_admin_script_executor() async throws {
-        let executor = StubAdminScriptExecutor(result: "OK")
-        let runner = RealPrivilegedCommandRunner(executor: executor)
-
-        let result = try await runner.runSimpleShellAsAdmin(
-            "sudo whoami",
-            reason: .onboardingValetTemporarySudoersInstall
-        )
-
-        #expect(result == "OK")
-        #expect(executor.receivedScripts == ["sudo whoami"])
-    }
-
     @Test func ui_test_runner_returns_success_when_approved() async throws {
         let runner = UITestPrivilegedCommandRunner(
             presenter: StubPrivilegedCommandApprovalPresenter(approved: true),
@@ -48,20 +35,6 @@ struct PrivilegedCommandRunnerTest {
                 reason: .onboardingValetTemporarySudoersInstall
             )
         }
-    }
-}
-
-private final class StubAdminScriptExecutor: AdminScriptExecuting {
-    private(set) var receivedScripts: [String] = []
-    private let result: String
-
-    init(result: String) {
-        self.result = result
-    }
-
-    func runSimpleShellAsAdmin(_ script: String) throws -> String {
-        receivedScripts.append(script)
-        return result
     }
 }
 

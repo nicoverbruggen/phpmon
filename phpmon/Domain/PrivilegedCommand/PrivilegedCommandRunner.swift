@@ -15,35 +15,17 @@ protocol PrivilegedCommandRunner: AnyObject {
     func runSimpleShellAsAdmin(_ script: String, reason: PrivilegedCommandReason) async throws -> String
 }
 
-protocol AdminScriptExecuting {
-    func runSimpleShellAsAdmin(_ script: String) throws -> String
-}
-
 protocol PrivilegedCommandApprovalPresenting {
     @MainActor
     func requestApproval(for reason: PrivilegedCommandReason) async -> Bool
 }
 
-// MARK: - AppleScriptExecuting Implementations
-
-struct AppleScriptAdminScriptExecutor: AdminScriptExecuting {
-    func runSimpleShellAsAdmin(_ script: String) throws -> String {
-        try AppleScript.runSimpleShellAsAdmin(script)
-    }
-}
-
 // MARK: - PrivilegedCommandRunner Implementations
 
 final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
-    private let executor: AdminScriptExecuting
-
-    init(executor: AdminScriptExecuting = AppleScriptAdminScriptExecutor()) {
-        self.executor = executor
-    }
-
     @MainActor
     func runSimpleShellAsAdmin(_ script: String, reason _: PrivilegedCommandReason) async throws -> String {
-        return try executor.runSimpleShellAsAdmin(script)
+        return try AppleScript.runSimpleShellAsAdmin(script)
     }
 }
 
