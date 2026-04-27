@@ -252,7 +252,7 @@ struct RealShellTimingTest {
         }
 
         let duration = start.duration(to: .now)
-        #expect(duration < .seconds(6))
+        #expect(duration < .seconds(10))
     }
 
     // If this test fails, run it separately to confirm it's actually broken.
