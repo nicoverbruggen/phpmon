@@ -137,23 +137,17 @@ extension OnboardingWizardViewModel {
         let homebrewValet = container.paths.valet
 
         var sudoersInstalled = false
-        defer {
-            if sudoersInstalled && !Self.removeValetSudoers() {
-                onValetSudoersRemovalFailed?()
-            }
-        }
-
-        if !isSimulatingShellEnvironment {
-            do {
-                try Self.installValetSudoers(forScriptAt: composerValetScript)
-                sudoersInstalled = true
-            } catch {
-                failStep(error)
-                return
-            }
-        }
+        var installError: Error?
 
         do {
+            let installScript = Self.makeValetSudoersInstallScript(forScriptAt: composerValetScript)
+
+            _ = try await container.privilegedCommandRunner.runSimpleShellAsAdmin(
+                installScript,
+                reason: .onboardingValetTemporarySudoersInstall
+            )
+            sudoersInstalled = true
+
             for command in Toolchain.Commands.valetInstall(
                 using: brew,
                 composer: composer,
@@ -164,7 +158,27 @@ extension OnboardingWizardViewModel {
 
             try await attachStreaming(Toolchain.Commands.valetTrust(using: homebrewValet))
         } catch {
-            failStep(error)
+            installError = error
+        }
+
+        if sudoersInstalled {
+            do {
+                _ = try await container.privilegedCommandRunner.runSimpleShellAsAdmin(
+                    Self.valetSudoersCleanupCommand,
+                    reason: .onboardingValetTemporarySudoersCleanup
+                )
+            } catch {
+                Log.warn("Failed to remove temporary Valet sudoers entry after onboarding: \(error)")
+                onValetSudoersRemovalFailed?()
+            }
+        }
+
+        if let installError {
+            if Self.isUserDeniedAdminPrivilegeError(installError) {
+                failValetInstallDueToDeniedAdminAccess()
+            } else {
+                failStep(installError)
+            }
             return
         }
 
@@ -206,18 +220,23 @@ extension OnboardingWizardViewModel {
         appendOutput("\nError: \(error.localizedDescription)", .stdErr)
     }
 
+    private func failValetInstallDueToDeniedAdminAccess() {
+        state = .failed
+        appendOutput("\n\("onboarding_wizard.output.valet_admin_access_denied".localized)", .stdErr)
+    }
+
     // MARK: - Temporary sudoers entry for `valet install` and `valet trust`
 
     private static let valetSudoersPath = "/etc/sudoers.d/phpmon-valet-onboarding"
     private static let valetSudoersTemp = "/tmp/phpmon-valet-onboarding.sudoers"
     static let valetSudoersCleanupCommand = "sudo rm -f \(valetSudoersPath) \(valetSudoersTemp)"
 
-    fileprivate static func installValetSudoers(forScriptAt valetPath: String) throws {
+    fileprivate static func makeValetSudoersInstallScript(forScriptAt valetPath: String) -> String {
         let entry = "Cmnd_Alias VALET_PHPMON = \(valetPath) install, \(valetPath) trust"
         let perm = "%admin ALL=(root) NOPASSWD:SETENV: VALET_PHPMON"
         let temp = valetSudoersTemp
         let dest = valetSudoersPath
-        let script = [
+        return [
             "rm -f \(temp)",
             "echo '\(entry)' > \(temp)",
             "echo '\(perm)' >> \(temp)",
@@ -226,16 +245,9 @@ extension OnboardingWizardViewModel {
             "chown root:wheel \(temp)",
             "mv \(temp) \(dest)"
         ].joined(separator: " && ")
-        try AppleScript.runSimpleShellAsAdmin(script)
     }
 
-    fileprivate static func removeValetSudoers() -> Bool {
-        do {
-            try AppleScript.runSimpleShellAsAdmin("rm -f \(valetSudoersPath) \(valetSudoersTemp)")
-            return true
-        } catch {
-            Log.warn("Failed to remove temporary Valet sudoers entry after onboarding: \(error)")
-            return false
-        }
+    fileprivate static func isUserDeniedAdminPrivilegeError(_ error: Error) -> Bool {
+        return (error as? AdminPrivilegeError)?.kind == .userDenied
     }
 }

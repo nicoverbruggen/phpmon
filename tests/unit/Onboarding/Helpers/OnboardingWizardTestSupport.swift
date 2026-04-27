@@ -8,6 +8,37 @@
 
 import Foundation
 
+final class OnboardingTestPrivilegedCommandRunner: PrivilegedCommandRunner {
+    enum Response {
+        case approve(String)
+        case deny
+        case fail(Error)
+    }
+
+    private(set) var requests: [(String, PrivilegedCommandReason)] = []
+    private var responses: [Response]
+
+    init(responses: [Response] = [.approve(""), .approve("")]) {
+        self.responses = responses
+    }
+
+    @MainActor
+    func runSimpleShellAsAdmin(_ script: String, reason: PrivilegedCommandReason) async throws -> String {
+        requests.append((script, reason))
+
+        let response = responses.isEmpty ? .approve("") : responses.removeFirst()
+
+        switch response {
+        case .approve(let output):
+            return output
+        case .deny:
+            throw AdminPrivilegeError(kind: .userDenied)
+        case .fail(let error):
+            throw error
+        }
+    }
+}
+
 func makeOnboardingContainer(
     architecture: String,
     configuredShell: String = "/bin/zsh"
@@ -27,7 +58,8 @@ func makeOnboardingFakeContainer(
     pathConfigured: Bool = false,
     shell: [String: BatchFakeShellOutput],
     files: [String: FakeFile],
-    includeDeveloperTools: Bool = true
+    includeDeveloperTools: Bool = true,
+    privilegedCommandRunner: PrivilegedCommandRunner? = nil
 ) -> Container {
     let container = Container()
     container.withFakeSystemContext(
@@ -48,6 +80,7 @@ func makeOnboardingFakeContainer(
             .merging(developerToolsShell) { (_, new) in new }
             .merging(shell) { (_, new) in new },
         fileSystemFiles: files,
+        privilegedCommandRunner: privilegedCommandRunner ?? OnboardingTestPrivilegedCommandRunner(),
         commandTracking: false
     )
 

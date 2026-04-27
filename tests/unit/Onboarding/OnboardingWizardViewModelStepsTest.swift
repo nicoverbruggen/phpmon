@@ -56,6 +56,7 @@ struct OnboardingWizardViewModelStepsTest {
     // Installing Valet should run the Composer package install, trust command and Valet setup,
     // then mark the fourth step complete.
     @Test func installing_valet_refreshes_progress() async {
+        let privilegedCommandRunner = OnboardingTestPrivilegedCommandRunner()
         let container = makeOnboardingFakeContainer(
             architecture: "arm64",
             pathConfigured: true,
@@ -112,7 +113,8 @@ struct OnboardingWizardViewModelStepsTest {
                 "/opt/homebrew/bin/brew": .fake(.binary),
                 "/opt/homebrew/bin/composer": .fake(.binary),
                 "/opt/homebrew/bin/php": .fake(.binary)
-            ]
+            ],
+            privilegedCommandRunner: privilegedCommandRunner
         )
 
         let viewModel = OnboardingWizardViewModel(
@@ -135,6 +137,146 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(4))
         #expect(viewModel.action == .continueToStartup)
+        #expect(privilegedCommandRunner.requests.count == 2)
+        #expect(privilegedCommandRunner.requests[0].1 == .onboardingValetTemporarySudoersInstall)
+        #expect(privilegedCommandRunner.requests[1].1 == .onboardingValetTemporarySudoersCleanup)
+    }
+
+    // If the user denies the temporary admin request, Valet setup should fail in a retryable way
+    // and keep the primary action on the same step.
+    @Test func denying_valet_admin_access_fails_the_step_but_keeps_it_retryable() async {
+        let privilegedCommandRunner = OnboardingTestPrivilegedCommandRunner(
+            responses: [.deny]
+        )
+        let container = makeOnboardingFakeContainer(
+            architecture: "arm64",
+            pathConfigured: true,
+            shell: [:],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary),
+                "/opt/homebrew/bin/composer": .fake(.binary),
+                "/opt/homebrew/bin/php": .fake(.binary)
+            ],
+            privilegedCommandRunner: privilegedCommandRunner
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true,
+                valetInstalled: false,
+                valetTrusted: false
+            ),
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .failed)
+        #expect(viewModel.action == .installValet)
+        #expect(viewModel.outputLines.contains(where: {
+            $0.text.contains("onboarding_wizard.output.valet_admin_access_denied".localized)
+        }))
+        #expect(privilegedCommandRunner.requests.count == 1)
+        #expect(privilegedCommandRunner.requests[0].1 == .onboardingValetTemporarySudoersInstall)
+    }
+
+    // If cleanup is denied after Valet finishes installing, the wizard should stay complete and
+    // surface the cleanup warning instead of rolling the step back.
+    @Test func denying_valet_cleanup_keeps_the_step_complete_and_surfaces_warning() async {
+        let privilegedCommandRunner = OnboardingTestPrivilegedCommandRunner(
+            responses: [.approve(""), .deny]
+        )
+        let container = makeOnboardingFakeContainer(
+            architecture: "arm64",
+            pathConfigured: true,
+            shell: [
+                "/opt/homebrew/bin/composer global require laravel/valet": BatchFakeShellOutput(
+                    items: [.instant("Installed Valet.\n")],
+                    transactions: [
+                        .write("", to: "/Users/fake/.composer/vendor/bin/valet")
+                    ]
+                ),
+                "/opt/homebrew/bin/brew install dnsmasq nginx": .instant("Installed dnsmasq and nginx.\n"),
+                "/Users/fake/.composer/vendor/bin/valet install": BatchFakeShellOutput(
+                    items: [.instant("Configured Valet.\n")],
+                    transactions: [
+                        .mkdir("~/.config/valet"),
+                        .write("", to: "/opt/homebrew/bin/valet"),
+                        .write(
+                            """
+                            {
+                              "paths": [
+                                "/Users/fake/.config/valet/Sites"
+                              ],
+                              "tld": "test",
+                              "loopback": "127.0.0.1"
+                            }
+                            """,
+                            to: "~/.config/valet/config.json"
+                        )
+                    ]
+                ),
+                "/opt/homebrew/bin/valet trust": BatchFakeShellOutput(
+                    items: [.instant("Configured Valet sudoers.\n")],
+                    transactions: [
+                        .shell(
+                            "cat /private/etc/sudoers.d/brew",
+                            .instant("""
+                            Cmnd_Alias BREW = /opt/homebrew/bin/brew *
+                            %admin ALL=(root) NOPASSWD:SETENV: BREW
+                            """)
+                        ),
+                        .shell(
+                            "cat /private/etc/sudoers.d/valet",
+                            .instant("""
+                            Cmnd_Alias VALET = /opt/homebrew/bin/valet *
+                            %admin ALL=(root) NOPASSWD:SETENV: VALET
+                            """)
+                        )
+                    ]
+                ),
+                "cat /private/etc/sudoers.d/brew": .instant(""),
+                "cat /private/etc/sudoers.d/valet": .instant("")
+            ],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary),
+                "/opt/homebrew/bin/composer": .fake(.binary),
+                "/opt/homebrew/bin/php": .fake(.binary)
+            ],
+            privilegedCommandRunner: privilegedCommandRunner
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: true,
+                composerInstalled: true,
+                valetInstalled: false,
+                valetTrusted: false
+            ),
+            hasLoaded: true
+        )
+        var didShowCleanupAlert = false
+        viewModel.onValetSudoersRemovalFailed = {
+            didShowCleanupAlert = true
+        }
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .idle)
+        #expect(viewModel.completedSteps.contains(4))
+        #expect(viewModel.action == .continueToStartup)
+        #expect(didShowCleanupAlert)
     }
 
     // The Homebrew step should copy the manual install command and wait for the user to

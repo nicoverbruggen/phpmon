@@ -778,6 +778,8 @@ Valet might break if you link these PHP versions so PHP Monitor won't let you sw
 
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Administrative access was denied.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor could not continue because the privileged command request was denied.";
 
 "alert.key_service_not_running.title" = "Due to issues with the Homebrew services required, Valet is currently not working correctly";
 "alert.key_service_not_running.subtitle" = "For Valet to work properly, at least three key services need to be running correctly.
@@ -1046,6 +1048,12 @@ You will need to complete the installation there yourself, then return here and 
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary sudoers entry it created for Valet onboarding.";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Valet may already be installed correctly, but the temporary admin override should be removed manually.\n\nRun this command in Terminal:\n\n%@";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command" = "Copy Command";
+"privileged_command.modal.title" = "Administrative Access Required";
+"privileged_command.modal.description" = "PHP Monitor wants to run a privileged command.\n\nRequest: %@";
+"privileged_command.modal.approve" = "Approve";
+"privileged_command.modal.deny" = "Deny";
+"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions";
+"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions";
 "onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
 "onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
 
@@ -1072,6 +1080,7 @@ PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH.
 "onboarding_wizard.output.step_not_resolved" = "This step could not be completed yet.";
 "onboarding_wizard.output.path_updating" = "Updating your ~/.zshrc PATH entries...";
 "onboarding_wizard.output.path_reopen_shell" = "Your PATH entries were added, but the new shell environment still needs to be reloaded. Open a new terminal session, then click Check Again.";
+"onboarding_wizard.output.valet_admin_access_denied" = "Administrative access was denied, so Valet setup could not continue. Click Install Valet to try again.";
 
 // COMMAND HISTORY
 

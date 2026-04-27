@@ -80,6 +80,69 @@ final class OnboardingTest: UITestCase {
         app.terminate()
     }
 
+    // Valet onboarding now pauses twice for privileged actions in UI tests:
+    // once to install temporary permissions and once to remove them afterwards.
+    final func test_launch_requires_approving_privileged_valet_actions() throws {
+        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        startWizard(app)
+        completeRequiredInstallFlow(app)
+    }
+
+    // Denying the temporary admin request should fail the Valet step without advancing past it.
+    final func test_launch_can_deny_privileged_valet_install_and_retry() throws {
+        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        startWizard(app)
+        installHomebrew(app)
+        assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        denyPrivilegedCommand(app)
+
+        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
+        assertNotExists(app.buttons["onboarding_wizard.buttons.continue".localized], 1.0)
+
+        app.terminate()
+    }
+
+    // If cleanup is denied after Valet succeeds, the wizard should keep the install complete
+    // and show the cleanup warning before allowing the user to continue.
+    final func test_launch_surfaces_cleanup_warning_when_privileged_cleanup_is_denied() throws {
+        let app = launchOnboardingWizard(with: .developerToolsAlreadyInstalled)
+
+        assertWizardOpenedInsteadOfStartupAlert(app)
+        startWizard(app)
+        installHomebrew(app)
+        assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        approvePrivilegedCommand(app)
+        denyPrivilegedCommand(app)
+
+        assertExists(app.staticTexts["onboarding_wizard.alert.valet_sudoers_cleanup_failed.title".localized], 3.0)
+        assertExists(app.buttons["generic.ok".localized], 3.0)
+        click(app.buttons["generic.ok".localized])
+
+        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
+
+        app.terminate()
+    }
+
     private func launchOnboardingWizard(with scenario: OnboardingScenario) -> XCPMApplication {
         var configuration = TestableConfigurations.working
         configuration.prepareFreshCoreOnboardingSystem()
@@ -124,6 +187,8 @@ final class OnboardingTest: UITestCase {
         assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        approvePrivilegedCommand(app)
+        approvePrivilegedCommand(app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.continue".localized])
@@ -145,6 +210,16 @@ final class OnboardingTest: UITestCase {
         assertExists(app.staticTexts["onboarding_wizard.command.path.title".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
         assertNotExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 1.0)
+    }
+
+    private func approvePrivilegedCommand(_ app: XCPMApplication) {
+        assertExists(app.buttons["PrivilegedCommandApproveButton"], 3.0)
+        click(app.buttons["PrivilegedCommandApproveButton"])
+    }
+
+    private func denyPrivilegedCommand(_ app: XCPMApplication) {
+        assertExists(app.buttons["PrivilegedCommandDenyButton"], 3.0)
+        click(app.buttons["PrivilegedCommandDenyButton"])
     }
 }
 

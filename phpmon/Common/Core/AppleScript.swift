@@ -62,6 +62,11 @@ class AppleScript {
 
         if let error = error {
             Log.err("AppleScript error: \(error)")
+
+            if let errorNumber = error[NSAppleScript.errorNumber] as? Int, errorNumber == -128 {
+                throw AdminPrivilegeError(kind: .userDenied)
+            }
+
             throw AdminPrivilegeError(kind: .applescriptNilError)
         }
 
