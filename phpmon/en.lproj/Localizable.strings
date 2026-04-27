@@ -1042,6 +1042,10 @@ You will need to complete the installation there yourself, then return here and 
 "onboarding_wizard.alert.developer_tools_incomplete.subtitle" = "PHP Monitor checked again, but macOS still reports that Command Line Tools are missing.";
 "onboarding_wizard.alert.developer_tools_incomplete.description" = "Finish the installer that macOS opened, then click Continue again. If the installer did not appear, you can run this command in Terminal:\n\n/usr/bin/xcode-select --install";
 "onboarding_wizard.alert.developer_tools_incomplete.copy_command" = "Copy Command";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.title" = "Temporary Valet permissions may still be installed";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary sudoers entry it created for Valet onboarding.";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Valet may already be installed correctly, but the temporary admin override should be removed manually.\n\nRun this command in Terminal:\n\n%@";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command" = "Copy Command";
 "onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
 "onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
 

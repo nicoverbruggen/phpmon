@@ -348,6 +348,10 @@
 		7E19EE251E743286BC95EBA3 /* StartupAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */; };
 		88DD3A08057A23955913FB70 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
 		8A1B2C3D4E5F60718293A4B7 /* OnboardingDispositionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4B6 /* OnboardingDispositionTest.swift */; };
+		8A1B2C3D4E5F60718293A4BC /* OnboardingWizardShellEnvironmentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4B8 /* OnboardingWizardShellEnvironmentTest.swift */; };
+		8A1B2C3D4E5F60718293A4BD /* OnboardingWizardTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4B9 /* OnboardingWizardTestSupport.swift */; };
+		8A1B2C3D4E5F60718293A4BE /* OnboardingWizardViewDisplayTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4BA /* OnboardingWizardViewDisplayTest.swift */; };
+		8A1B2C3D4E5F60718293A4BF /* OnboardingWizardViewModelStepsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F60718293A4BB /* OnboardingWizardViewModelStepsTest.swift */; };
 		8A8AB3D1A6DAE99C91DFBEFF /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
 		8B7C6D5E4F3A291817161515 /* ZshRunCommandTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7C6D5E4F3A291817161514 /* ZshRunCommandTest.swift */; };
 		9297DB3F2A8903D70E1D6426 /* StartupAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349EE572012BA8A554E276E4 /* StartupAlertView.swift */; };
@@ -1353,6 +1357,10 @@
 		68063C53EE0F48E91ADFE92F /* StartupFixCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupFixCommandView.swift; sourceTree = "<group>"; };
 		7EF8DC9BC21B1EFB1F6CBBA5 /* StartupAlertHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertHeaderView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F60718293A4B6 /* OnboardingDispositionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDispositionTest.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F60718293A4B8 /* OnboardingWizardShellEnvironmentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardShellEnvironmentTest.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F60718293A4B9 /* OnboardingWizardTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardTestSupport.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F60718293A4BA /* OnboardingWizardViewDisplayTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewDisplayTest.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F60718293A4BB /* OnboardingWizardViewModelStepsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelStepsTest.swift; sourceTree = "<group>"; };
 		8B7C6D5E4F3A291817161514 /* ZshRunCommandTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZshRunCommandTest.swift; sourceTree = "<group>"; };
 		B900AAECE035041E9BE09DCF /* StartupAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertViewModel.swift; sourceTree = "<group>"; };
 		C40175B72903108900763A68 /* ValetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInteractor.swift; sourceTree = "<group>"; };
@@ -1694,6 +1702,14 @@
 			path = "PHP Versions";
 			sourceTree = "<group>";
 		};
+		036011462F9F711A0062762C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8A1B2C3D4E5F60718293A4B9 /* OnboardingWizardTestSupport.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		036575C62EA12E2200BA41BF /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2003,7 +2019,11 @@
 		8A1B2C3D4E5F60718293A4B5 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				036011462F9F711A0062762C /* Helpers */,
 				8A1B2C3D4E5F60718293A4B6 /* OnboardingDispositionTest.swift */,
+				8A1B2C3D4E5F60718293A4B8 /* OnboardingWizardShellEnvironmentTest.swift */,
+				8A1B2C3D4E5F60718293A4BA /* OnboardingWizardViewDisplayTest.swift */,
+				8A1B2C3D4E5F60718293A4BB /* OnboardingWizardViewModelStepsTest.swift */,
 				03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */,
 			);
 			path = Onboarding;
@@ -4338,6 +4358,10 @@
 				C4B56362276AB0A500F12CCB /* VersionExtractorTest.swift in Sources */,
 				039C291D2E8AA39A007F5FAB /* TestableWebApiTest.swift in Sources */,
 				8A1B2C3D4E5F60718293A4B7 /* OnboardingDispositionTest.swift in Sources */,
+				8A1B2C3D4E5F60718293A4BC /* OnboardingWizardShellEnvironmentTest.swift in Sources */,
+				8A1B2C3D4E5F60718293A4BD /* OnboardingWizardTestSupport.swift in Sources */,
+				8A1B2C3D4E5F60718293A4BE /* OnboardingWizardViewDisplayTest.swift in Sources */,
+				8A1B2C3D4E5F60718293A4BF /* OnboardingWizardViewModelStepsTest.swift in Sources */,
 				03E311432F99012000E59EF0 /* OnboardingWizardViewModelTest.swift in Sources */,
 				033E9DFD2F44D93000685F62 /* Startup+Alert.swift in Sources */,
 				C4B585452770FE3900DA4FBE /* RealCommand.swift in Sources */,

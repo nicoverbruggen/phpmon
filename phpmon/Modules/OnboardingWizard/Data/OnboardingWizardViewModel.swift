@@ -68,6 +68,7 @@ class OnboardingWizardViewModel: ObservableObject {
     private let flow: any OnboardingFlowDefinition
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
+    var onValetSudoersRemovalFailed: (() -> Void)?
 
     @Published var state: State
     @Published var outputLines: [OutputLine]

@@ -67,6 +67,9 @@ class OnboardingWizardWindowController: PMWindowController {
             viewModel.onDeveloperToolsRecheckFailed = { [weak self] in
                 self?.presentDeveloperToolsIncompleteAlert()
             }
+            viewModel.onValetSudoersRemovalFailed = { [weak self] in
+                self?.presentValetSudoersRemovalFailedAlert()
+            }
 
             self.showWindow(nil)
             self.window?.setCenterPosition(offsetY: 70)
@@ -106,6 +109,31 @@ class OnboardingWizardWindowController: PMWindowController {
             .withSecondary(text: "onboarding_wizard.alert.developer_tools_incomplete.copy_command".localized) { alert in
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString("/usr/bin/xcode-select --install", forType: .string)
+                alert.close(with: .alertSecondButtonReturn)
+            }
+            .presentAsSheet(attachedTo: window)
+    }
+
+    @MainActor private func presentValetSudoersRemovalFailedAlert() {
+        guard let window else {
+            return
+        }
+
+        NVAlert()
+            .withInformation(
+                title: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.title".localized,
+                subtitle: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle".localized,
+                description: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.description".localized(
+                    OnboardingWizardViewModel.valetSudoersCleanupCommand
+                )
+            )
+            .withPrimary(text: "generic.ok".localized)
+            .withSecondary(text: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command".localized) { alert in
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(
+                    OnboardingWizardViewModel.valetSudoersCleanupCommand,
+                    forType: .string
+                )
                 alert.close(with: .alertSecondButtonReturn)
             }
             .presentAsSheet(attachedTo: window)

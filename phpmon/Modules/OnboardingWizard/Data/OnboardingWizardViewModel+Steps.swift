@@ -88,8 +88,6 @@ extension OnboardingWizardViewModel {
             finalize(success: true)
         } else if allFilesUpdated {
             state = .waitingForManualCompletion
-
-            // TODO: Not sure whether this is actually good advice (does it matter?)
             appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut)
         } else {
             finalize(success: false)
@@ -140,8 +138,8 @@ extension OnboardingWizardViewModel {
 
         var sudoersInstalled = false
         defer {
-            if sudoersInstalled {
-                Self.removeValetSudoers()
+            if sudoersInstalled && !Self.removeValetSudoers() {
+                onValetSudoersRemovalFailed?()
             }
         }
 
@@ -212,6 +210,7 @@ extension OnboardingWizardViewModel {
 
     private static let valetSudoersPath = "/etc/sudoers.d/phpmon-valet-onboarding"
     private static let valetSudoersTemp = "/tmp/phpmon-valet-onboarding.sudoers"
+    static let valetSudoersCleanupCommand = "sudo rm -f \(valetSudoersPath) \(valetSudoersTemp)"
 
     fileprivate static func installValetSudoers(forScriptAt valetPath: String) throws {
         let entry = "Cmnd_Alias VALET_PHPMON = \(valetPath) install, \(valetPath) trust"
@@ -230,8 +229,13 @@ extension OnboardingWizardViewModel {
         try AppleScript.runSimpleShellAsAdmin(script)
     }
 
-    fileprivate static func removeValetSudoers() {
-        let script = "rm -f \(valetSudoersPath) \(valetSudoersTemp)"
-        try? AppleScript.runSimpleShellAsAdmin(script)
+    fileprivate static func removeValetSudoers() -> Bool {
+        do {
+            try AppleScript.runSimpleShellAsAdmin("rm -f \(valetSudoersPath) \(valetSudoersTemp)")
+            return true
+        } catch {
+            Log.warn("Failed to remove temporary Valet sudoers entry after onboarding: \(error)")
+            return false
+        }
     }
 }
