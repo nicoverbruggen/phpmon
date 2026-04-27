@@ -325,6 +325,14 @@
 		03FA10032FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
 		03FA10042FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
 		03FA10052FB0A10000E59EF0 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */; };
+		03FA847C2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */; };
+		03FA847D2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */; };
+		03FA847E2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */; };
+		03FA847F2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */; };
+		03FA84812F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */; };
+		03FA84822F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */; };
+		03FA84832F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */; };
+		03FA84842F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */; };
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
@@ -1367,6 +1375,8 @@
 		03EC943B2F47297100231276 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		03F3815F2F7BE55700DF76C6 /* RealShell+PATH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealShell+PATH.swift"; sourceTree = "<group>"; };
 		03FA10012FB0A10000E59EF0 /* NotificationPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
+		03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandApprovalView.swift; sourceTree = "<group>"; };
+		03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandReason.swift; sourceTree = "<group>"; };
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
@@ -1973,6 +1983,17 @@
 			path = OnboardingWizard;
 			sourceTree = "<group>";
 		};
+		03FA847A2F9F912B0070A589 /* PrivilegedCommand */ = {
+			isa = PBXGroup;
+			children = (
+				03FA84802F9F92B80070A589 /* PrivilegedCommandReason.swift */,
+				F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */,
+				F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */,
+				03FA847B2F9F91DD0070A589 /* PrivilegedCommandApprovalView.swift */,
+			);
+			path = PrivilegedCommand;
+			sourceTree = "<group>";
+		};
 		3169708AAEC47AE3F4C33F74 /* Startup */ = {
 			isa = PBXGroup;
 			children = (
@@ -2135,9 +2156,6 @@
 		C40C7F2127721F7300DDDCDC /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				033E9DF62F44AD5200685F62 /* AppleScript.swift */,
-				F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */,
-				F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */,
 				C415D3B62770F294005EF286 /* Actions.swift */,
 				C4EE188322D3386B00E126E5 /* Constants.swift */,
 				C4EC1E72279DFCF40010F296 /* Events.swift */,
@@ -2145,6 +2163,7 @@
 				C40C7F2F27722E8D00DDDCDC /* Logger.swift */,
 				C417DC73277614690015E6EE /* Helpers.swift */,
 				C4CB6E64292C362C002E9027 /* Homebrew.swift */,
+				033E9DF62F44AD5200685F62 /* AppleScript.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2218,6 +2237,7 @@
 		C41E181722CB61EB0072CF09 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				03FA847A2F9F912B0070A589 /* PrivilegedCommand */,
 				03BFF1D12E3CF4F2004C56A9 /* Provision */,
 				C4AF9F6B275445D300D44ED0 /* Integrations */,
 				C4B13B1D25C4915000548C3A /* App */,
@@ -3352,6 +3372,7 @@
 				C43603A0275E67610028EFC6 /* AppDelegate+Notifications.swift in Sources */,
 				03FA10022FB0A10000E59EF0 /* NotificationPermission.swift in Sources */,
 				C45B9149295607F400F4EC78 /* Service.swift in Sources */,
+				03FA847D2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */,
 				5489625828312FAD004F647A /* CreatedFromFile.swift in Sources */,
 				C4068CA727B07A1300544CD5 /* SelectPreferenceView.swift in Sources */,
 				C48DDD0D29C75C9E00D032D9 /* BlockingOverlayView.swift in Sources */,
@@ -3553,6 +3574,7 @@
 				C4BF56AB2949381100379603 /* FakeValetInteractor.swift in Sources */,
 				C4B5635E276AB09000F12CCB /* VersionExtractor.swift in Sources */,
 				C451AFF62969E40F0078E617 /* HelpButton.swift in Sources */,
+				03FA84822F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */,
 				C46DC7A42C7B55DC00F19D17 /* Favorites.swift in Sources */,
 				54D9E0B627E4F51E003B9AD9 /* HotKey.swift in Sources */,
 				C4AFC4AE29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
@@ -3737,6 +3759,7 @@
 				C471E87828F9BB650021E251 /* TerminalProgressWindowController.swift in Sources */,
 				C471E87928F9BB650021E251 /* ProgressVC.swift in Sources */,
 				C471E87D28F9BB650021E251 /* Preset.swift in Sources */,
+				03FA84832F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */,
 				C471E87E28F9BB650021E251 /* PresetHelper.swift in Sources */,
 				C471E87F28F9BB650021E251 /* WarningView.swift in Sources */,
 				C471E88028F9BB650021E251 /* PhpDoctorView.swift in Sources */,
@@ -3767,6 +3790,7 @@
 				C471E7FE28F9BACE0021E251 /* HomebrewDecodable.swift in Sources */,
 				C4415E8F2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				C471E7D828F9BA8F0021E251 /* FileSystemProtocol.swift in Sources */,
+				03FA847F2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */,
 				03BFF52F2E313244007F96FA /* StatusMenu+Driver.swift in Sources */,
 				037F44242EDB92EC002EBF75 /* HomebrewWatchManager.swift in Sources */,
 				C46DC7A62C7B5BC900F19D17 /* Favorites.swift in Sources */,
@@ -3939,6 +3963,7 @@
 				C4513F912B13E2FB001AD760 /* PhpExtensionManagerView.swift in Sources */,
 				C471E8A728F9BB8F0021E251 /* App+ActivationPolicy.swift in Sources */,
 				C45B914C295607F400F4EC78 /* Service.swift in Sources */,
+				03FA847C2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */,
 				03DAD3A82EB3B08F003417BD /* DomainListVC+Certs.swift in Sources */,
 				0381313F2F4DF3BA00653177 /* CommandHistoryRow.swift in Sources */,
 				C471E8A828F9BB8F0021E251 /* App+GlobalHotkey.swift in Sources */,
@@ -4073,6 +4098,7 @@
 				039E1D7B2E5F0F300072D13D /* ValetUpgrader.swift in Sources */,
 				C471E7EE28F9BAC30021E251 /* Constants.swift in Sources */,
 				C40934A0298EE8E900D25014 /* AppUpdater.swift in Sources */,
+				03FA84842F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */,
 				C4611E5A2AEAD2E20010BE24 /* ConfigManagerWindowController.swift in Sources */,
 				C471E80E28F9BAE80021E251 /* DateExtension.swift in Sources */,
 				036C390F2E5C8D42008DAEDF /* PackagistError.swift in Sources */,
@@ -4201,6 +4227,7 @@
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
+				03FA847E2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */,
 				039C291A2E8AA314007F5FAB /* TestableWebApi.swift in Sources */,
 				031A80DD2F4CF1690016F7DD /* CommandTracker.swift in Sources */,
 				038A2B802EDDB24C00173ACF /* App+UUID.swift in Sources */,
@@ -4324,6 +4351,7 @@
 				F0A1B2C3D4E5F60100000012 /* Toolchain.swift in Sources */,
 				F0A1B2C3D4E5F60100000022 /* ShellEnvironment.swift in Sources */,
 				F0A1B2C3D4E5F60100000082 /* PathEntry.swift in Sources */,
+				03FA84812F9F92BC0070A589 /* PrivilegedCommandReason.swift in Sources */,
 				F0A1B2C3D4E5F60100000032 /* IntroductionChecklistItemView.swift in Sources */,
 				F0A1B2C3D4E5F60100000042 /* OnboardingCommandBlockView.swift in Sources */,
 				F0A1B2C3D4E5F60100000052 /* OnboardingBadgeView.swift in Sources */,

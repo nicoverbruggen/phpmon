@@ -8,34 +8,31 @@
 
 import Foundation
 
+// MARK: - Protocols
+
 protocol PrivilegedCommandRunner: AnyObject {
     @MainActor
     func runSimpleShellAsAdmin(_ script: String, reason: PrivilegedCommandReason) async throws -> String
-}
-
-enum PrivilegedCommandReason {
-    case onboardingValetTemporarySudoersInstall
-    case onboardingValetTemporarySudoersCleanup
-
-    var localizedDescription: String {
-        switch self {
-        case .onboardingValetTemporarySudoersInstall:
-            return "privileged_command.reason.onboarding_valet_temporary_sudoers_install".localized
-        case .onboardingValetTemporarySudoersCleanup:
-            return "privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup".localized
-        }
-    }
 }
 
 protocol AdminScriptExecuting {
     func runSimpleShellAsAdmin(_ script: String) throws -> String
 }
 
+protocol PrivilegedCommandApprovalPresenting {
+    @MainActor
+    func requestApproval(for reason: PrivilegedCommandReason) async -> Bool
+}
+
+// MARK: - AppleScriptExecuting Implementations
+
 struct AppleScriptAdminScriptExecutor: AdminScriptExecuting {
     func runSimpleShellAsAdmin(_ script: String) throws -> String {
         try AppleScript.runSimpleShellAsAdmin(script)
     }
 }
+
+// MARK: - PrivilegedCommandRunner Implementations
 
 final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     private let executor: AdminScriptExecuting
@@ -48,11 +45,6 @@ final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     func runSimpleShellAsAdmin(_ script: String, reason _: PrivilegedCommandReason) async throws -> String {
         return try executor.runSimpleShellAsAdmin(script)
     }
-}
-
-protocol PrivilegedCommandApprovalPresenting {
-    @MainActor
-    func requestApproval(for reason: PrivilegedCommandReason) async -> Bool
 }
 
 final class UITestPrivilegedCommandRunner: PrivilegedCommandRunner {
