@@ -997,7 +997,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 // ONBOARDING WIZARD
 
 "onboarding_wizard.title" = "Set Up PHP Monitor";
-"onboarding_wizard.description" = "Your system is currently missing some important bits that are required for the app to work. PHP Monitor can guide you through the initial setup, and get you up and running with PHP.";
+"onboarding_wizard.description" = "Your system is currently missing some required components that are needed for the app to work. PHP Monitor can guide you through the initial setup, which will install these.";
 "onboarding_wizard.intro.footer" = "PHP Monitor will walk through each step one at a time. You can review what will happen before any command is executed.";
 "onboarding_wizard.intro.developer_tools" = "Checks whether Apple's Command Line Tools are installed and opens the system installer if they are missing.";
 "onboarding_wizard.intro.homebrew" = "Installs Homebrew if needed, then ensures Homebrew and Composer are available in your PATH.";
@@ -1032,7 +1032,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
 "onboarding_wizard.buttons.skip_valet" = "Skip Valet";
 "onboarding_wizard.buttons.skip" = "Skip Setup";
-"onboarding_wizard.buttons.learn_more" = "Learn more...";
+"onboarding_wizard.buttons.learn_more" = "Learn More";
 "onboarding_wizard.buttons.continue" = "Continue";
 "onboarding_wizard.skip_confirmation.title" = "Skip setup?";
 "onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
@@ -1043,18 +1043,18 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.skip_valet_confirmation.cancel" = "Install Valet";
 "onboarding_wizard.skip_valet_confirmation.confirm" = "Use Standalone Mode";
 "onboarding_wizard.detail.developer_tools.title" = "Step 1: Install Command Line Tools";
-"onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask the macOS to install these, and a new window will open. 
+"onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask macOS to install these tools, and a new window will open.
 
-You will need to complete the installation there yourself, then return here and click Continue to validate the installation has succeeded.";
-"onboarding_wizard.detail.developer_tools.waiting" = "Finish the developer tools installation in macOS, then come back here, and click on Continue.";
+Complete the installation there, then return here and click Continue so PHP Monitor can verify that it succeeded.";
+"onboarding_wizard.detail.developer_tools.waiting" = "Finish installing the Command Line Tools in the window that has appeared, then return here and click Continue.";
 "onboarding_wizard.detail.developer_tools.completed" = "Command Line Tools are already installed, so installing Homebrew is next. Click on the Continue button to move to the next step.";
 "onboarding_wizard.alert.developer_tools_incomplete.title" = "Command Line Tools are not installed yet";
 "onboarding_wizard.alert.developer_tools_incomplete.subtitle" = "PHP Monitor checked again, but macOS still reports that Command Line Tools are missing.";
 "onboarding_wizard.alert.developer_tools_incomplete.description" = "Finish the installer that macOS opened, then click Continue again. If the installer did not appear, you can run this command in Terminal:\n\n/usr/bin/xcode-select --install";
 "onboarding_wizard.alert.developer_tools_incomplete.copy_command" = "Copy Command";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.title" = "Temporary Valet permissions may still be installed";
-"onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary `sudoers` entry it created for Valet onboarding. Just to be safe, it should probably be removed.";
-"onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Run this command via Terminal to remove the file(s):\n\n%@";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary `sudoers` entry that was created for Valet to be automatically installed. Just to be safe, it should probably be removed.";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Run this command in Terminal to remove the file(s):\n\n%@";
 "onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command" = "Copy Command";
 "onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
 "onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
@@ -1067,13 +1067,13 @@ Copy the command below, run it in Terminal, complete the installer there, then r
 PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH. (Some useful helpers for easy PHP version switching provided by PHP Monitor will also be added.)";
 "onboarding_wizard.detail.path.description.manual" = "Homebrew is installed, but your configured shell (%@) is not zsh. Add the lines below to your shell profile, open a new terminal session, then click Check Again.";
 "onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
-"onboarding_wizard.detail.php_composer.description" = "PHP and Composer both need to be installed before PHP Monitor can work correctly. To make things easy for you, PHP Monitor will install both of these for you automatically.";
+"onboarding_wizard.detail.php_composer.description" = "Both PHP and Composer need to be installed before PHP Monitor can work correctly. To make things easy for you, PHP Monitor will install both of these for you automatically.";
 "onboarding_wizard.detail.valet.title" = "Step 4: Install Valet";
 "onboarding_wizard.detail.valet.description" = "PHP Monitor can install Laravel Valet and set it up for you automatically. You will be prompted for your administrator password twice during this process. 
 
 (If you prefer, you can also skip this step and use Standalone Mode for now. You can always install Valet later.)";
 "onboarding_wizard.detail.ready.title" = "Step 5: Finish Setup";
-"onboarding_wizard.detail.ready.description" = "Good news! Your system is now properly configured. When you press Continue, PHP Monitor will rerun its regular startup checks to confirm everything is configured correctly, and after that, the icon should appear in the menu bar.";
+"onboarding_wizard.detail.ready.description" = "Good news! Your system is now properly configured. Click Continue and PHP Monitor will rerun its startup checks. If everything looks good, the icon will appear in the menu bar.";
 "onboarding_wizard.command.homebrew.title" = "RUN THIS IN TERMINAL";
 "onboarding_wizard.command.path.title" = "ADD THIS TO .zshrc";
 "onboarding_wizard.output.developer_tools_requested" = "The developer tools installer was requested. Finish that installation in macOS, then click Continue.";
@@ -1085,5 +1085,5 @@ PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH.
 
 // PRIVILEGED COMMANDS
 
-"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions";
-"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions";
+"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions"; // not user facing
+"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions"; // not user facing
