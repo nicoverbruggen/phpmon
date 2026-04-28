@@ -118,7 +118,7 @@ struct OnboardingWizardView: View {
 
             bottomBar
         }
-        .padding(.top, 28)
+        .padding(.top, 20)
         .padding(.horizontal, 28)
         .padding(.bottom, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

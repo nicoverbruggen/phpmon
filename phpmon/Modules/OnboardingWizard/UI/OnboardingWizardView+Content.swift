@@ -12,7 +12,7 @@ extension OnboardingWizardView {
     var introductionContent: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("onboarding_wizard.title".localized)
+                Text("onboarding_wizard.steps.introduction".localized)
                     .font(.system(size: 20, weight: .semibold))
 
                 Text("onboarding_wizard.description".localized)

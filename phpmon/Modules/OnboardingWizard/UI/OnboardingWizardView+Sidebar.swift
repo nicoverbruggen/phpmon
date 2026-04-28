@@ -14,6 +14,7 @@ extension OnboardingWizardView {
             sidebarHeader
                 .padding(.horizontal, 14)
                 .padding(.bottom, 16)
+                .padding(.top, -5) // slight adjustment
 
             introductionSidebarStep
             sidebarStep(
