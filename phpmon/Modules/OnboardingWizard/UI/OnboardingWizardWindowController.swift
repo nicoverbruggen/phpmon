@@ -20,6 +20,7 @@ class OnboardingWizardWindowController: PMWindowController {
     private var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     private var didResolve = false
     private var exitsApplicationOnClose = true
+    private var hiddenMenuItems: [NSMenuItem] = []
 
     static func create(
         exitsApplicationOnClose: Bool = true,
@@ -71,11 +72,25 @@ class OnboardingWizardWindowController: PMWindowController {
                 self?.presentValetSudoersRemovalFailedAlert()
             }
 
+            self.hideMenuItems()
             self.showWindow(nil)
             self.window?.setCenterPosition(offsetY: 70)
             NSApp.activate(ignoringOtherApps: true)
             self.window?.orderFrontRegardless()
         }
+    }
+
+    private func hideMenuItems() {
+        guard let mainMenu = NSApp.mainMenu, hiddenMenuItems.isEmpty else { return }
+        // Index 0 is the application menu ("PHP Monitor" → About/Quit) — leave it
+        // available so the user can still quit while the wizard is up.
+        hiddenMenuItems = Array(mainMenu.items.dropFirst())
+        hiddenMenuItems.forEach { $0.isHidden = true }
+    }
+
+    private func restoreMenuItems() {
+        hiddenMenuItems.forEach { $0.isHidden = false }
+        hiddenMenuItems = []
     }
 
     override func windowWillClose(_ notification: Notification) {
@@ -91,6 +106,7 @@ class OnboardingWizardWindowController: PMWindowController {
     }
 
     private func complete(with outcome: Startup.OnboardingWizardOutcome) {
+        restoreMenuItems()
         onComplete?(outcome)
     }
 

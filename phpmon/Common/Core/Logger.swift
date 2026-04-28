@@ -84,6 +84,10 @@ class Log {
     }
 
     private func log(_ text: String) {
+        if isRunningSwiftUIPreview {
+            return
+        }
+
         print(text)
 
         if logExists && Verbosity.cli.isApplicable() {
