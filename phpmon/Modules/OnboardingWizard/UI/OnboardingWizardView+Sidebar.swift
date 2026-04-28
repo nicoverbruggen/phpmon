@@ -11,23 +11,9 @@ import SwiftUI
 extension OnboardingWizardView {
     var sidebar: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 10) {
-                Image(nsImage: NSApp.applicationIconImage)
-                    .resizable()
-                    .frame(width: 34, height: 34)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("onboarding_wizard.title".localized)
-                        .font(.system(size: 13, weight: .semibold))
-                        .lineLimit(1)
-
-                    Text(currentProgressText)
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 18)
+            sidebarHeader
+                .padding(.horizontal, 14)
+                .padding(.bottom, 16)
 
             introductionSidebarStep
             sidebarStep(
@@ -64,6 +50,33 @@ extension OnboardingWizardView {
         .frame(width: 260)
         .frame(maxHeight: .infinity)
         .background(Color(nsColor: .controlBackgroundColor))
+    }
+
+    var sidebarHeader: some View {
+        VStack(alignment: .leading) {
+            HStack(spacing: 12) {
+                Image(nsImage: NSApp.applicationIconImage)
+                    .resizable()
+                    .interpolation(.high)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 44, height: 44)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("onboarding_wizard.title".localized)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
+
+                    Text(currentProgressText)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
+            .padding(.vertical, 6)
+
+            Divider()
+        }
     }
 
     var introductionSidebarStep: some View {
