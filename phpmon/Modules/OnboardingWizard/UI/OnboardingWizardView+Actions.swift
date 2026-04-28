@@ -11,6 +11,14 @@ import SwiftUI
 extension OnboardingWizardView {
     var bottomBar: some View {
         HStack {
+            if let learnMoreLink = viewModel.learnMoreLink {
+                Button("onboarding_wizard.buttons.learn_more".localized) {
+                    NSWorkspace.shared.open(learnMoreLink)
+                }
+                .buttonStyle(.link)
+                .controlSize(.small)
+            }
+
             if showsSkipValetButton {
                 skipValetButton
             }

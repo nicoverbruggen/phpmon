@@ -48,6 +48,7 @@ final class OnboardingTest: UITestCase {
         startWizard(app)
 
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
         completeValetAndFinish(app)
     }
 
@@ -183,8 +184,9 @@ final class OnboardingTest: UITestCase {
     }
 
     private func installDeveloperTools(_ app: XCPMApplication) {
-        assertExists(app.staticTexts["onboarding_wizard.command.developer_tools.title".localized], 3.0)
-        assertExists(app.buttons["onboarding_wizard.buttons.learn_more".localized], 3.0)
+        // TODO: the test fails here. The button clearly exists. I am confused.
+        assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
+
         assertExists(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized])
 
@@ -219,7 +221,7 @@ final class OnboardingTest: UITestCase {
 
     private func installHomebrew(_ app: XCPMApplication) {
         assertExists(app.staticTexts["onboarding_wizard.command.homebrew.title".localized], 3.0)
-        assertExists(app.buttons["onboarding_wizard.buttons.learn_more".localized], 3.0)
+        assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.copy_command".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.copy_command".localized])
 

@@ -85,15 +85,6 @@ extension OnboardingWizardView {
                     .padding(.bottom, 14)
             }
 
-            if let learnMoreLink = viewModel.learnMoreLink {
-                Button("onboarding_wizard.buttons.learn_more".localized) {
-                    NSWorkspace.shared.open(learnMoreLink)
-                }
-                .buttonStyle(.link)
-                .controlSize(.small)
-                .padding(.bottom, 14)
-            }
-
             if viewModel.showsStatusBanner,
                let statusText = viewModel.statusBannerText {
                 Text(statusText)

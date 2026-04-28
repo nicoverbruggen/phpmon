@@ -1032,7 +1032,7 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "onboarding_wizard.buttons.install_valet" = "Install Valet";
 "onboarding_wizard.buttons.skip_valet" = "Skip Valet";
 "onboarding_wizard.buttons.skip" = "Skip Setup";
-"onboarding_wizard.buttons.learn_more" = "Learn more";
+"onboarding_wizard.buttons.learn_more" = "Learn more...";
 "onboarding_wizard.buttons.continue" = "Continue";
 "onboarding_wizard.skip_confirmation.title" = "Skip setup?";
 "onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
@@ -1067,14 +1067,13 @@ Copy the command below, run it in Terminal, complete the installer there, then r
 PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH. (Some useful helpers for easy PHP version switching provided by PHP Monitor will also be added.)";
 "onboarding_wizard.detail.path.description.manual" = "Homebrew is installed, but your configured shell (%@) is not zsh. Add the lines below to your shell profile, open a new terminal session, then click Check Again.";
 "onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
-"onboarding_wizard.detail.php_composer.description" = "PHP Monitor needs both PHP and Composer before it can continue startup. PHP Monitor will install these for you automatically.";
+"onboarding_wizard.detail.php_composer.description" = "PHP and Composer both need to be installed before PHP Monitor can work correctly. To make things easy for you, PHP Monitor will install both of these for you automatically.";
 "onboarding_wizard.detail.valet.title" = "Step 4: Install Valet";
 "onboarding_wizard.detail.valet.description" = "PHP Monitor can install Laravel Valet and set it up for you automatically. You will be prompted for your administrator password twice during this process. 
 
 (If you prefer, you can also skip this step and use Standalone Mode for now. You can always install Valet later.)";
 "onboarding_wizard.detail.ready.title" = "Step 5: Finish Setup";
-"onboarding_wizard.detail.ready.description" = "The full onboarding setup is complete. Continue and PHP Monitor will rerun its regular startup checks to confirm everything is ready.";
-"onboarding_wizard.command.developer_tools.title" = "IF NEEDED, RUN THIS IN TERMINAL";
+"onboarding_wizard.detail.ready.description" = "Good news! Your system is now properly configured. When you press Continue, PHP Monitor will rerun its regular startup checks to confirm everything is configured correctly, and after that, the icon should appear in the menu bar.";
 "onboarding_wizard.command.homebrew.title" = "RUN THIS IN TERMINAL";
 "onboarding_wizard.command.path.title" = "ADD THIS TO .zshrc";
 "onboarding_wizard.output.developer_tools_requested" = "The developer tools installer was requested. Finish that installation in macOS, then click Continue.";
