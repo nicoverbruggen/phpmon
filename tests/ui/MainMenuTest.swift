@@ -154,6 +154,8 @@ final class MainMenuTest: UITestCase {
         ], 3.0)
 
         click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        approvePrivilegedCommand(in: app)
+        approvePrivilegedCommand(in: app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.continue".localized])
 

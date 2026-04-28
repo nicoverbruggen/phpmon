@@ -91,8 +91,8 @@ final class OnboardingTestFlow {
 
     func installValet() {
         beginValetInstall()
-        approvePrivilegedCommand(app)
-        approvePrivilegedCommand(app)
+        testCase.approvePrivilegedCommand(in: app)
+        testCase.approvePrivilegedCommand(in: app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
     }
 
@@ -142,11 +142,11 @@ final class OnboardingTestFlow {
     }
 
     func approvePrivilegedCommand() {
-        approvePrivilegedCommand(app)
+        testCase.approvePrivilegedCommand(in: app)
     }
 
     func denyPrivilegedCommand() {
-        denyPrivilegedCommand(app)
+        testCase.denyPrivilegedCommand(in: app)
     }
 
     func terminate() {
@@ -163,16 +163,6 @@ final class OnboardingTestFlow {
 
     private func click(_ element: XCUIElement) {
         testCase.click(element)
-    }
-
-    private func approvePrivilegedCommand(_ app: XCPMApplication) {
-        assertExists(app.buttons["PrivilegedCommandApproveButton"], 3.0)
-        click(app.buttons["PrivilegedCommandApproveButton"])
-    }
-
-    private func denyPrivilegedCommand(_ app: XCPMApplication) {
-        assertExists(app.buttons["PrivilegedCommandDenyButton"], 3.0)
-        click(app.buttons["PrivilegedCommandDenyButton"])
     }
 }
 

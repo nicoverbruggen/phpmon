@@ -47,14 +47,17 @@ struct ShellEnvironment {
 
     func onboardingPathStatus() -> [PathEntryStatus] {
         return [
-            pathEntryStatus(for: container.paths.binPath),
-            pathEntryStatus(for: "\(container.paths.homePath)/.composer/vendor/bin"),
-            pathEntryStatus(for: "\(container.paths.homePath)/.config/phpmon/bin")
+            requiredHomebrewPathStatus(),
+            requiredComposerPathStatus(),
+            helperPathStatus()
         ]
     }
 
     func hasRequiredOnboardingPaths() -> Bool {
-        return onboardingPathStatus().allSatisfy(\.configured)
+        return [
+            requiredHomebrewPathStatus(),
+            requiredComposerPathStatus()
+        ].allSatisfy(\.configured)
     }
 
     var homebrewBinPathExport: String {
@@ -74,6 +77,18 @@ struct ShellEnvironment {
             .split(separator: ":")
             .map { PathEntry.normalize(String($0), homePath: container.paths.homePath) }
         )
+    }
+
+    private func requiredHomebrewPathStatus() -> PathEntryStatus {
+        return pathEntryStatus(for: container.paths.binPath)
+    }
+
+    private func requiredComposerPathStatus() -> PathEntryStatus {
+        return pathEntryStatus(for: "\(container.paths.homePath)/.composer/vendor/bin")
+    }
+
+    private func helperPathStatus() -> PathEntryStatus {
+        return pathEntryStatus(for: "\(container.paths.homePath)/.config/phpmon/bin")
     }
 
     private func pathEntryStatus(for path: String) -> PathEntryStatus {

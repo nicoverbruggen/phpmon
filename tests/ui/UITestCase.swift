@@ -73,6 +73,20 @@ class UITestCase: XCTestCase {
     public func click(_ element: XCUIElement) {
         element.click()
     }
+
+    /** Approves a privileged command prompt presented in UI tests. */
+    public func approvePrivilegedCommand(in app: XCPMApplication) {
+        let button = app.buttons["PrivilegedCommandApproveButton"]
+        assertExists(button, 3.0)
+        click(button)
+    }
+
+    /** Denies a privileged command prompt presented in UI tests. */
+    public func denyPrivilegedCommand(in app: XCPMApplication) {
+        let button = app.buttons["PrivilegedCommandDenyButton"]
+        assertExists(button, 3.0)
+        click(button)
+    }
 }
 
 extension XCPMApplication {

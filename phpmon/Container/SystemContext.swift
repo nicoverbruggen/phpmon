@@ -23,8 +23,10 @@ struct SystemContext {
         )
 
         // Do the important system setup checks
-        Log.always("PHP Monitor is running with the architecture: \(architecture)")
-        Log.always("Using the following resolved shell: \(shell.resolved)")
+        if !isRunningTests {
+            Log.always("PHP Monitor is running with the architecture: \(architecture)")
+            Log.always("Using the following resolved shell: \(shell.resolved)")
+        }
     }
 
     // MARK: - Architecture

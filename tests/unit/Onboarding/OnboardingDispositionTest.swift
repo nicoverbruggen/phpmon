@@ -31,8 +31,8 @@ struct OnboardingDispositionTest {
         #expect(await Startup.onboardingDisposition(in: container) == .wizard)
     }
 
-    // If PHP is already present, startup should treat the machine as partially configured.
-    @Test func php_presence_skips_wizard_for_partial_setup() async {
+    // If PHP is already present but the first launch has not completed yet, onboarding should still open.
+    @Test func php_presence_still_shows_wizard_on_first_launch_partial_setup() async {
         let container = prepareContainer(
             withFiles: [
                 "/opt/homebrew/bin/brew": .fake(.binary)
@@ -40,11 +40,11 @@ struct OnboardingDispositionTest {
             hasPhpBinary: true
         )
 
-        #expect(await Startup.onboardingDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
     }
 
-    // Composer alone is enough to classify the environment as partial instead of brand new.
-    @Test func composer_presence_skips_wizard_for_partial_setup() async {
+    // Composer alone does not suppress onboarding on the first launch when core setup is incomplete.
+    @Test func composer_presence_still_shows_wizard_on_first_launch_partial_setup() async {
         let container = prepareContainer(
             withFiles: [
                 "/opt/homebrew/bin/brew": .fake(.binary),
@@ -53,11 +53,11 @@ struct OnboardingDispositionTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
     }
 
-    // Existing Valet state should bypass onboarding and defer to the regular startup checks.
-    @Test func valet_presence_skips_wizard_for_partial_setup() async {
+    // Auxiliary tooling like Valet still counts as an incomplete first-launch setup.
+    @Test func valet_presence_still_shows_wizard_on_first_launch_partial_setup() async {
         let container = prepareContainer(
             withFiles: [
                 "/opt/homebrew/bin/brew": .fake(.binary),
@@ -66,7 +66,20 @@ struct OnboardingDispositionTest {
             hasPhpBinary: false
         )
 
-        #expect(await Startup.onboardingDisposition(in: container) == .normal)
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
+    }
+
+    // Existing Homebrew services alone should still open the wizard until PHP and Composer are installed.
+    @Test func nginx_presence_still_shows_wizard_on_first_launch_partial_setup() async {
+        let container = prepareContainer(
+            withFiles: [
+                "/opt/homebrew/bin/brew": .fake(.binary),
+                "/opt/homebrew/opt/nginx": .fake(.directory)
+            ],
+            hasPhpBinary: false
+        )
+
+        #expect(await Startup.onboardingDisposition(in: container) == .wizard)
     }
 
     // PATH validation should only pass when Homebrew and Composer appear as exact PATH entries.
@@ -84,14 +97,13 @@ struct OnboardingDispositionTest {
         #expect(!ShellEnvironment(container).hasRequiredOnboardingPaths())
     }
 
-    // PATH validation should allow common shell-expanded home entries and harmless trailing slashes.
-    @Test func path_configuration_accepts_normalized_exact_entries() async {
+    // PATH validation should allow Homebrew and Composer entries even when the phpmon helper bin is absent.
+    @Test func path_configuration_accepts_required_entries_without_phpmon_helper_bin() async {
         let container = prepareContainer(
             withFiles: [:],
             hasPhpBinary: false
         )
         (container.shell as? TestableShell)?.PATH = [
-            "$HOME/.config/phpmon/bin/",
             "$HOME/.composer/vendor/bin/",
             "/opt/homebrew/bin/"
         ].joined(separator: ":")
@@ -109,6 +121,7 @@ struct OnboardingDispositionTest {
 
         container.overrideFake(
             shellExpectations: [
+                "/usr/bin/xcode-select -p": .instant("/Library/Developer/CommandLineTools"),
                 "ls \(container.paths.optPath) | grep php": .instant(hasPhpBinary ? "php\n" : "")
             ],
             fileSystemFiles: files,

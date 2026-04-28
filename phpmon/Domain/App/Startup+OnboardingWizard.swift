@@ -25,11 +25,13 @@ extension Startup {
     /**
      Determines whether the onboarding wizard should be shown for a genuinely fresh setup.
 
-     The wizard is only intended for "new machine" scenarios:
+     The wizard is intended for "new machine" scenarios where the core setup is still incomplete:
      - Homebrew is missing entirely, or
-     - Homebrew exists and none of the onboarding prerequisites are present yet.
+     - The first successful launch has not happened yet and one or more core prerequisites
+       (Command Line Tools, PHP, Composer) are still missing.
 
-     Any partial setup should fall through to the regular startup checks immediately.
+     After the app has already completed a successful launch, partial setups should fall through
+     to the regular startup checks immediately.
      */
     func onboardingDisposition() async -> OnboardingDisposition {
         return await Self.onboardingDisposition(in: container)

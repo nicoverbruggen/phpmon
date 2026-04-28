@@ -74,33 +74,19 @@ struct Toolchain {
         let phpInstalled = await status(.php).installed
         let composerInstalled = await status(.composer).installed
 
-        if developerToolsInstalled
-            && homebrewInstalled
-            && Stats.successfulLaunchCount == 0
-            && (!phpInstalled || !composerInstalled) {
-            return .wizard
-        }
-
         if !homebrewInstalled {
             return .wizard
         }
 
-        if await hasAnyOnboardingToolInstalled() {
+        if Stats.successfulLaunchCount > 0 {
+            return .normal
+        }
+
+        if developerToolsInstalled && phpInstalled && composerInstalled {
             return .normal
         }
 
         return .wizard
-    }
-
-    private func hasAnyOnboardingToolInstalled() async -> Bool {
-        for tool in [Tool.php, .composer, .nginx, .dnsmasq, .valet] {
-            // swiftlint:disable:next for_where
-            if await status(tool).installed {
-                return true
-            }
-        }
-
-        return false
     }
 
     private func commandLineToolsStatus() async -> Status {
