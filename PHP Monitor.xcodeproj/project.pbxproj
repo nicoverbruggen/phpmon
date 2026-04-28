@@ -276,6 +276,7 @@
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
+		04A6F7C13068D3B1007A1C01 /* OnboardingTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */; };
 		03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
@@ -1362,6 +1363,7 @@
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
 		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
+		04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTestHelpers.swift; sourceTree = "<group>"; };
 		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
 		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
 		03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardCommands.swift; sourceTree = "<group>"; };
@@ -2594,6 +2596,7 @@
 				036061DB2F4C7AE100B5998F /* SettingsTest.swift */,
 				C471E7BE28F9B90F0021E251 /* StartupTest.swift */,
 				03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */,
+				04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */,
 				C469E702294CFDF700A82AB2 /* DomainsListTest.swift */,
 				C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */,
 				C4181F1028FAF9330042EA28 /* UITestCase.swift */,
@@ -4036,6 +4039,7 @@
 				C471E8D328F9BB8F0021E251 /* GlobalKeybindPreference.swift in Sources */,
 				03C099462EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */,
+				04A6F7C13068D3B1007A1C01 /* OnboardingTestHelpers.swift in Sources */,
 				C471E8D528F9BB8F0021E251 /* CheckboxPreferenceView.swift in Sources */,
 				C471E8D728F9BB8F0021E251 /* SelectPreferenceView.swift in Sources */,
 				03C29A7A2EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
