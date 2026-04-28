@@ -62,15 +62,10 @@ extension OnboardingWizardView {
     }
 
     func performPrimaryAction() {
-        if isShowingIntroduction {
-            hasDismissedIntroduction = true
-        } else {
-            viewModel.performPrimaryAction()
-        }
+        viewModel.performPrimaryAction()
     }
 
     var showsSkipValetButton: Bool {
-        !isShowingIntroduction
-            && viewModel.action == .installValet
+        viewModel.currentStep == .valet
     }
 }

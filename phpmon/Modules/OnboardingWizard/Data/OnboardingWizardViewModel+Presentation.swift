@@ -13,7 +13,8 @@ extension OnboardingWizardViewModel {
         switch action {
         case .recheckDeveloperTools, .installHomebrew, .recheckHomebrew, .recheckPath:
             return true
-        case .installDeveloperTools, .fixPathAutomatically, .installPhpComposer, .installValet, .continueToStartup:
+        case .startSetup, .installDeveloperTools, .fixPathAutomatically, .installPhpComposer,
+            .installValet, .continueToStartup:
             return false
         }
     }
@@ -48,6 +49,8 @@ extension OnboardingWizardViewModel {
 
     var learnMoreLink: URL? {
         switch action {
+        case .startSetup:
+            return nil
         case .installDeveloperTools, .recheckDeveloperTools:
             return Constants.Urls.AppleCommandLineTools
         case .installHomebrew, .recheckHomebrew:
@@ -59,6 +62,8 @@ extension OnboardingWizardViewModel {
 
     var detailTitle: String {
         switch action {
+        case .startSetup:
+            return "onboarding_wizard.steps.introduction".localized
         case .installDeveloperTools, .recheckDeveloperTools:
             return "onboarding_wizard.detail.developer_tools.title".localized
         case .installHomebrew, .recheckHomebrew:
@@ -76,6 +81,8 @@ extension OnboardingWizardViewModel {
 
     var detailDescription: String {
         switch action {
+        case .startSetup:
+            return "onboarding_wizard.description".localized
         case .installDeveloperTools:
             return "onboarding_wizard.detail.developer_tools.description".localized
         case .recheckDeveloperTools:
@@ -99,6 +106,8 @@ extension OnboardingWizardViewModel {
 
     var commandTitle: String? {
         switch action {
+        case .startSetup:
+            return nil
         case .installHomebrew, .recheckHomebrew:
             return "onboarding_wizard.command.homebrew.title".localized
         case .recheckPath:
@@ -110,6 +119,8 @@ extension OnboardingWizardViewModel {
 
     var commandLines: [String] {
         switch action {
+        case .startSetup:
+            return []
         case .installHomebrew, .recheckHomebrew:
             return [Toolchain.Commands.homebrewInstall]
         case .recheckPath:
@@ -121,6 +132,8 @@ extension OnboardingWizardViewModel {
 
     var primaryButtonTitle: String {
         switch action {
+        case .startSetup:
+            return "onboarding_wizard.buttons.start_setup".localized
         case .installDeveloperTools:
             return "onboarding_wizard.buttons.install_developer_tools".localized
         case .recheckDeveloperTools:

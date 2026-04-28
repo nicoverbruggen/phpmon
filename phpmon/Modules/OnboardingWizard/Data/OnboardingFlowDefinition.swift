@@ -6,12 +6,7 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
-enum OnboardingEntryMode {
-    case introduction
-    case firstRequiredStep
-}
-
 protocol OnboardingFlowDefinition {
-    var entryMode: OnboardingEntryMode { get }
+    var entryStep: OnboardingWizardViewModel.Step { get }
     var displayBaseline: OnboardingWizardViewModel.StepProgress { get }
 }

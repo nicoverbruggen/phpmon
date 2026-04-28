@@ -7,7 +7,7 @@
 //
 
 struct ValetInstallOnboardingFlow: OnboardingFlowDefinition {
-    let entryMode: OnboardingEntryMode = .firstRequiredStep
+    let entryStep: OnboardingWizardViewModel.Step = .valet
     let displayBaseline = OnboardingWizardViewModel.StepProgress(
         developerToolsInstalled: true,
         homebrewInstalled: true,

@@ -18,23 +18,23 @@ extension OnboardingWizardView {
 
             introductionSidebarStep
             sidebarStep(
-                number: 1,
+                step: .developerTools,
                 title: "onboarding_wizard.steps.developer_tools".localized
             )
             sidebarStep(
-                number: 2,
+                step: .homebrew,
                 title: "onboarding_wizard.steps.homebrew".localized
             )
             sidebarStep(
-                number: 3,
+                step: .phpComposer,
                 title: "onboarding_wizard.steps.php_composer".localized
             )
             sidebarStep(
-                number: 4,
+                step: .valet,
                 title: "onboarding_wizard.steps.valet".localized
             )
             sidebarStep(
-                number: 5,
+                step: .ready,
                 title: "onboarding_wizard.steps.ready".localized
             )
 
@@ -81,10 +81,8 @@ extension OnboardingWizardView {
     }
 
     var introductionSidebarStep: some View {
-        let status: StepStatus = isShowingIntroduction ? .active : .completed
-
         return OnboardingSidebarStepView(
-            status: status,
+            status: stepStatus(for: .introduction),
             title: "onboarding_wizard.steps.introduction".localized,
             isFirst: true,
             isLast: false
@@ -92,18 +90,18 @@ extension OnboardingWizardView {
     }
 
     func sidebarStep(
-        number: Int,
+        step: OnboardingWizardViewModel.Step,
         title: String,
         badgeTitle: String? = nil
     ) -> some View {
-        let status = stepStatus(for: number)
+        let status = stepStatus(for: step)
 
         return OnboardingSidebarStepView(
             status: status,
             title: title,
             badgeTitle: badgeTitle,
             isFirst: false,
-            isLast: number == totalWizardSteps
+            isLast: step == .ready
         )
     }
 }

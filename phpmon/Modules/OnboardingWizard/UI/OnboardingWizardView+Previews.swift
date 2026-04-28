@@ -14,21 +14,21 @@ import SwiftUI
 
 #Preview("Step 1: Command Line Tools") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init()
     )
 }
 
 #Preview("Step 2: Homebrew") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(developerToolsInstalled: true)
     )
 }
 
 #Preview("Step 2: PATH") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true
@@ -38,7 +38,7 @@ import SwiftUI
 
 #Preview("Step 3: PHP & Composer") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -49,7 +49,7 @@ import SwiftUI
 
 #Preview("Step 4: Valet") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -62,7 +62,7 @@ import SwiftUI
 
 #Preview("Step 5: Ready") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true,
@@ -77,7 +77,7 @@ import SwiftUI
 
 #Preview("Running") {
     OnboardingWizardView.preview(
-        hasDismissedIntroduction: true,
+        hasCompletedIntroduction: true,
         progress: .init(
             developerToolsInstalled: true,
             homebrewInstalled: true
@@ -91,21 +91,23 @@ import SwiftUI
 
 private extension OnboardingWizardView {
     static func preview(
-        entryMode: OnboardingEntryMode = .introduction,
-        hasDismissedIntroduction: Bool = false,
+        flow: any OnboardingFlowDefinition = FullSetupOnboardingFlow(),
+        hasCompletedIntroduction: Bool? = nil,
         progress: OnboardingWizardViewModel.StepProgress,
         state: OnboardingWizardViewModel.State = .idle,
         outputLines: [OutputLine] = []
     ) -> OnboardingWizardView {
         return OnboardingWizardView(
             viewModel: OnboardingWizardViewModel(
+                flow: flow,
                 progress: progress,
                 state: state,
                 outputLines: outputLines,
+                hasCompletedIntroduction: hasCompletedIntroduction,
                 hasLoaded: true
             ),
-            entryMode: entryMode,
-            hasDismissedIntroduction: hasDismissedIntroduction
+            isShowingSkipConfirmation: false,
+            isShowingSkipValetConfirmation: false
         )
     }
 }

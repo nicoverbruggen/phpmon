@@ -10,6 +10,15 @@ import Testing
 
 @MainActor
 struct OnboardingWizardViewModelTest {
+    // Full setup should model the introduction as the first step until the user starts setup.
+    @Test func full_setup_begins_on_the_introduction_step() {
+        let viewModel = OnboardingWizardViewModel(hasLoaded: true)
+
+        #expect(viewModel.currentStep == .introduction)
+        #expect(viewModel.action == .startSetup)
+        #expect(viewModel.completedSteps.isEmpty)
+    }
+
     // Missing developer tools should make the first button launch Apple's installer.
     @Test func missing_developer_tools_uses_installer_action() {
         let viewModel = OnboardingWizardViewModel(
@@ -18,11 +27,13 @@ struct OnboardingWizardViewModelTest {
                 homebrewInstalled: false,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
+        #expect(viewModel.currentStep == .developerTools)
         #expect(viewModel.action == .installDeveloperTools)
-        #expect(viewModel.completedSteps.isEmpty)
+        #expect(viewModel.completedSteps == Set([.introduction]))
     }
 
     // The wizard should not allow actions until the initial environment refresh has completed.
@@ -41,11 +52,12 @@ struct OnboardingWizardViewModelTest {
                 homebrewInstalled: false,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
         #expect(viewModel.action == .installHomebrew)
-        #expect(viewModel.completedSteps == Set([1]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools]))
         #expect(viewModel.commandTitle == "onboarding_wizard.command.homebrew.title".localized)
         #expect(viewModel.commandLines == [Toolchain.Commands.homebrewInstall])
         #expect(!viewModel.showsTerminalOutput)
@@ -61,6 +73,7 @@ struct OnboardingWizardViewModelTest {
                 homebrewInstalled: true,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -77,6 +90,7 @@ struct OnboardingWizardViewModelTest {
                 homebrewInstalled: true,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -93,11 +107,12 @@ struct OnboardingWizardViewModelTest {
                 phpInstalled: false,
                 composerInstalled: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
         #expect(viewModel.action == .installPhpComposer)
-        #expect(viewModel.completedSteps == Set([1, 2]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew]))
     }
 
     // The PHP/Composer install step should present a single action button without showing
@@ -111,6 +126,7 @@ struct OnboardingWizardViewModelTest {
                 phpInstalled: false,
                 composerInstalled: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -131,11 +147,12 @@ struct OnboardingWizardViewModelTest {
                 valetInstalled: true,
                 valetTrusted: true
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
         #expect(viewModel.action == .continueToStartup)
-        #expect(viewModel.completedSteps == Set([1, 2, 3, 4]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew, .phpComposer, .valet]))
     }
 
     // Once PHP and Composer are ready, the wizard should continue into the Valet setup step.
@@ -150,11 +167,12 @@ struct OnboardingWizardViewModelTest {
                 valetInstalled: false,
                 valetTrusted: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
         #expect(viewModel.action == .installValet)
-        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew, .phpComposer]))
         #expect(viewModel.commandTitle == nil)
         #expect(viewModel.commandLines.isEmpty)
     }
@@ -177,7 +195,7 @@ struct OnboardingWizardViewModelTest {
 
         #expect(viewModel.action == .installValet)
         #expect(viewModel.progress.coreToolingInstalled)
-        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew, .phpComposer]))
     }
 
     // The Valet-only flow should mark earlier steps complete in presentation without mutating
@@ -191,7 +209,7 @@ struct OnboardingWizardViewModelTest {
 
         #expect(!viewModel.progress.coreToolingInstalled)
         #expect(viewModel.displayProgress.coreToolingInstalled)
-        #expect(viewModel.completedSteps == Set([1, 2, 3]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew, .phpComposer]))
     }
 
     // Skipping Valet should finish onboarding in Standalone Mode, while still marking the
@@ -205,6 +223,7 @@ struct OnboardingWizardViewModelTest {
                 phpInstalled: true,
                 composerInstalled: true
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
         var outcome: Startup.OnboardingWizardOutcome?
@@ -215,7 +234,7 @@ struct OnboardingWizardViewModelTest {
         viewModel.skipValetSetup()
 
         #expect(viewModel.action == .continueToStartup)
-        #expect(viewModel.completedSteps == Set([1, 2, 3, 4]))
+        #expect(viewModel.completedSteps == Set([.introduction, .developerTools, .homebrew, .phpComposer, .valet]))
 
         _ = viewModel.performPrimaryAction()
 

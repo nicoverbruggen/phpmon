@@ -14,8 +14,6 @@ struct OnboardingWizardView: View {
     }
 
     @ObservedObject var viewModel: OnboardingWizardViewModel
-    let entryMode: OnboardingEntryMode
-    @State var hasDismissedIntroduction = false
     @State var isShowingSkipConfirmation = false
     @State var isShowingSkipValetConfirmation = false
     @FocusState var focusedButton: FocusedButton?
@@ -26,14 +24,10 @@ struct OnboardingWizardView: View {
 
     init(
         viewModel: OnboardingWizardViewModel,
-        entryMode: OnboardingEntryMode = .introduction,
-        hasDismissedIntroduction: Bool = false,
         isShowingSkipConfirmation: Bool = false,
         isShowingSkipValetConfirmation: Bool = false
     ) {
         self.viewModel = viewModel
-        self.entryMode = entryMode
-        self._hasDismissedIntroduction = State(initialValue: hasDismissedIntroduction)
         self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
         self._isShowingSkipValetConfirmation = State(initialValue: isShowingSkipValetConfirmation)
     }
@@ -77,16 +71,13 @@ struct OnboardingWizardView: View {
         .onChange(of: viewModel.state) { _ in
             focusedButton = .primary
         }
-        .onChange(of: hasDismissedIntroduction) { _ in
+        .onChange(of: viewModel.currentStep) { _ in
             focusedButton = .primary
         }
     }
 
     var isShowingIntroduction: Bool {
-        return entryMode == .introduction
-            && !hasDismissedIntroduction
-            && viewModel.state == .idle
-            && !viewModel.showsOutput
+        return viewModel.currentStep == .introduction
     }
 
     var wizardLayout: some View {

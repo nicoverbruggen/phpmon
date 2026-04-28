@@ -10,6 +10,15 @@ import Foundation
 
 @MainActor
 class OnboardingWizardViewModel: ObservableObject {
+    enum Step: Hashable {
+        case introduction
+        case developerTools
+        case homebrew
+        case phpComposer
+        case valet
+        case ready
+    }
+
     enum State: Equatable {
         case idle
         case running
@@ -52,6 +61,7 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     enum Action: Equatable {
+        case startSetup
         case installDeveloperTools
         case recheckDeveloperTools
         case installHomebrew
@@ -64,7 +74,6 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     let container: Container
-    let entryMode: OnboardingEntryMode
     private let flow: any OnboardingFlowDefinition
     var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
     var onDeveloperToolsRecheckFailed: (() -> Void)?
@@ -73,6 +82,7 @@ class OnboardingWizardViewModel: ObservableObject {
     @Published var state: State
     @Published var outputLines: [OutputLine]
     @Published private(set) var progress: StepProgress
+    @Published private(set) var hasCompletedIntroduction: Bool
     @Published private(set) var hasLoaded: Bool
     @Published private(set) var skippedValetSetup: Bool
 
@@ -85,15 +95,16 @@ class OnboardingWizardViewModel: ObservableObject {
         progress: StepProgress = StepProgress(),
         state: State = .idle,
         outputLines: [OutputLine] = [],
+        hasCompletedIntroduction: Bool? = nil,
         hasLoaded: Bool = false,
         skippedValetSetup: Bool = false
     ) {
         self.container = container
         self.flow = flow
-        self.entryMode = flow.entryMode
         self.progress = progress
         self.state = state
         self.outputLines = outputLines
+        self.hasCompletedIntroduction = hasCompletedIntroduction ?? (flow.entryStep != .introduction)
         self.hasLoaded = hasLoaded
         self.skippedValetSetup = skippedValetSetup
     }
@@ -102,24 +113,28 @@ class OnboardingWizardViewModel: ObservableObject {
         progress.overlayingForDisplay(with: flow.displayBaseline)
     }
 
-    var completedSteps: Set<Int> {
+    var completedSteps: Set<Step> {
         let progress = displayProgress
-        var steps = Set<Int>()
+        var steps = Set<Step>()
+
+        if hasCompletedIntroduction {
+            steps.insert(.introduction)
+        }
 
         if progress.developerToolsInstalled {
-            steps.insert(1)
+            steps.insert(.developerTools)
         }
 
         if progress.homebrewInstalled && progress.pathConfigured {
-            steps.insert(2)
+            steps.insert(.homebrew)
         }
 
         if progress.phpInstalled && progress.composerInstalled {
-            steps.insert(3)
+            steps.insert(.phpComposer)
         }
 
         if progress.valetSetupInstalled || skippedValetSetup {
-            steps.insert(4)
+            steps.insert(.valet)
         }
 
         return steps
@@ -137,9 +152,38 @@ class OnboardingWizardViewModel: ObservableObject {
         switch action {
         case .installPhpComposer, .installValet:
             return state == .running
-        default:
+        case .startSetup, .installDeveloperTools, .recheckDeveloperTools, .installHomebrew,
+            .recheckHomebrew, .fixPathAutomatically, .recheckPath, .continueToStartup:
             return false
         }
+    }
+
+    var currentStep: Step {
+        if !hasCompletedIntroduction {
+            return .introduction
+        }
+
+        if !progress.developerToolsInstalled {
+            return .developerTools
+        }
+
+        if !progress.homebrewInstalled || !progress.pathConfigured {
+            return .homebrew
+        }
+
+        if !progress.phpInstalled || !progress.composerInstalled {
+            return .phpComposer
+        }
+
+        if skippedValetSetup {
+            return .ready
+        }
+
+        if !progress.valetSetupInstalled {
+            return .valet
+        }
+
+        return .ready
     }
 
     func loadIfNeeded() async {
@@ -153,7 +197,14 @@ class OnboardingWizardViewModel: ObservableObject {
     func performPrimaryAction() -> Task<Void, Never>? {
         guard hasLoaded else { return nil }
 
+        return makeTaskForCurrentAction()
+    }
+
+    private func makeTaskForCurrentAction() -> Task<Void, Never>? {
         switch action {
+        case .startSetup:
+            completeIntroduction()
+            return nil
         case .installDeveloperTools:
             return Task { await requestDeveloperToolsInstall() }
         case .recheckDeveloperTools:
@@ -180,6 +231,10 @@ class OnboardingWizardViewModel: ObservableObject {
         onComplete?(.skipped)
     }
 
+    func completeIntroduction() {
+        hasCompletedIntroduction = true
+    }
+
     func skipValetSetup() {
         skippedValetSetup = true
         outputLines = []
@@ -200,31 +255,24 @@ class OnboardingWizardViewModel: ObservableObject {
     }
 
     var action: Action {
-        if !progress.developerToolsInstalled {
+        switch currentStep {
+        case .introduction:
+            return .startSetup
+        case .developerTools:
             return hasTriggeredDeveloperToolsInstall ? .recheckDeveloperTools : .installDeveloperTools
-        }
+        case .homebrew:
+            if !progress.homebrewInstalled {
+                return hasTriggeredHomebrewInstall ? .recheckHomebrew : .installHomebrew
+            }
 
-        if !progress.homebrewInstalled {
-            return hasTriggeredHomebrewInstall ? .recheckHomebrew : .installHomebrew
-        }
-
-        if !progress.pathConfigured {
             return shouldAutoFixPath ? .fixPathAutomatically : .recheckPath
-        }
-
-        if !progress.phpInstalled || !progress.composerInstalled {
+        case .phpComposer:
             return .installPhpComposer
-        }
-
-        if skippedValetSetup {
+        case .valet:
+            return .installValet
+        case .ready:
             return .continueToStartup
         }
-
-        if !progress.valetSetupInstalled {
-            return .installValet
-        }
-
-        return .continueToStartup
     }
 
     private var shouldAutoFixPath: Bool {

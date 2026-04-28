@@ -19,13 +19,11 @@ struct OnboardingWizardViewDisplayTest {
                 homebrewInstalled: false,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
-        let view = OnboardingWizardView(
-            viewModel: viewModel,
-            hasDismissedIntroduction: true
-        )
+        let view = OnboardingWizardView(viewModel: viewModel)
 
         #expect(view.activeStepNumber == 2)
         #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.copy_command".localized)
@@ -38,6 +36,8 @@ struct OnboardingWizardViewDisplayTest {
         )
 
         #expect(view.isShowingIntroduction)
+        #expect(view.viewModel.currentStep == .introduction)
+        #expect(view.viewModel.learnMoreLink == nil)
     }
 
     // The Valet-only flow should skip the introduction and open directly on the Valet step.
@@ -53,13 +53,22 @@ struct OnboardingWizardViewDisplayTest {
             ),
             hasLoaded: true
         )
-        let view = OnboardingWizardView(
-            viewModel: viewModel,
-            entryMode: .firstRequiredStep
-        )
+        let view = OnboardingWizardView(viewModel: viewModel)
 
         #expect(!view.isShowingIntroduction)
         #expect(view.activeStepNumber == 4)
         #expect(view.primaryButtonTitle == "onboarding_wizard.buttons.install_valet".localized)
+    }
+
+    // Once the introduction has been dismissed, step-specific links should appear again.
+    @Test func learn_more_link_reappears_after_introduction() {
+        let view = OnboardingWizardView(
+            viewModel: OnboardingWizardViewModel(
+                hasCompletedIntroduction: true,
+                hasLoaded: true
+            )
+        )
+
+        #expect(view.viewModel.learnMoreLink == Constants.Urls.AppleCommandLineTools)
     }
 }

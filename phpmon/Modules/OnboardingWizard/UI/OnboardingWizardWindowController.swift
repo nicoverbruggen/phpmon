@@ -36,10 +36,7 @@ class OnboardingWizardWindowController: PMWindowController {
         window.styleMask = [.titled, .miniaturizable]
         window.titlebarAppearsTransparent = true
         window.delegate = windowController
-        window.contentView = NSHostingView(rootView: OnboardingWizardView(
-            viewModel: viewModel,
-            entryMode: flow.entryMode
-        ))
+        window.contentView = NSHostingView(rootView: OnboardingWizardView(viewModel: viewModel))
         window.setContentSize(window.contentView!.fittingSize)
         window.isReleasedWhenClosed = false
 

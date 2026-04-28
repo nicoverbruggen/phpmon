@@ -43,6 +43,7 @@ struct OnboardingWizardViewModelStepsTest {
                 phpInstalled: false,
                 composerInstalled: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -50,7 +51,7 @@ struct OnboardingWizardViewModelStepsTest {
         await task?.value
 
         #expect(viewModel.state == .idle)
-        #expect(viewModel.completedSteps.contains(3))
+        #expect(viewModel.completedSteps.contains(.phpComposer))
         #expect(viewModel.action == .installValet)
     }
 
@@ -129,6 +130,7 @@ struct OnboardingWizardViewModelStepsTest {
                 valetInstalled: false,
                 valetTrusted: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -136,7 +138,7 @@ struct OnboardingWizardViewModelStepsTest {
         await task?.value
 
         #expect(viewModel.state == .idle)
-        #expect(viewModel.completedSteps.contains(4))
+        #expect(viewModel.completedSteps.contains(.valet))
         #expect(viewModel.action == .continueToStartup)
         #expect(privilegedCommandRunner.requests.count == 2)
         #expect(privilegedCommandRunner.requests[0].1 == .onboardingValetTemporarySudoersInstall)
@@ -172,6 +174,7 @@ struct OnboardingWizardViewModelStepsTest {
                 valetInstalled: false,
                 valetTrusted: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -264,6 +267,7 @@ struct OnboardingWizardViewModelStepsTest {
                 valetInstalled: false,
                 valetTrusted: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
         var didShowCleanupAlert = false
@@ -275,7 +279,7 @@ struct OnboardingWizardViewModelStepsTest {
         await task?.value
 
         #expect(viewModel.state == .idle)
-        #expect(viewModel.completedSteps.contains(4))
+        #expect(viewModel.completedSteps.contains(.valet))
         #expect(viewModel.action == .continueToStartup)
         #expect(didShowCleanupAlert)
     }
@@ -304,6 +308,7 @@ struct OnboardingWizardViewModelStepsTest {
                 homebrewInstalled: false,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -346,6 +351,7 @@ struct OnboardingWizardViewModelStepsTest {
                 homebrewInstalled: false,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -381,6 +387,7 @@ struct OnboardingWizardViewModelStepsTest {
                 homebrewInstalled: true,
                 pathConfigured: false
             ),
+            hasCompletedIntroduction: true,
             hasLoaded: true
         )
 
@@ -410,7 +417,11 @@ struct OnboardingWizardViewModelStepsTest {
             files: [:],
             includeDeveloperTools: false
         )
-        let viewModel = OnboardingWizardViewModel(container: container, hasLoaded: true)
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            hasCompletedIntroduction: true,
+            hasLoaded: true
+        )
         var didShowIncompleteAlert = false
         viewModel.onDeveloperToolsRecheckFailed = {
             didShowIncompleteAlert = true

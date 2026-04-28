@@ -7,6 +7,6 @@
 //
 
 struct FullSetupOnboardingFlow: OnboardingFlowDefinition {
-    let entryMode: OnboardingEntryMode = .introduction
+    let entryStep: OnboardingWizardViewModel.Step = .introduction
     let displayBaseline = OnboardingWizardViewModel.StepProgress()
 }

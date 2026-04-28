@@ -27,25 +27,25 @@ extension OnboardingWizardView {
                     number: 1,
                     title: "onboarding_wizard.steps.developer_tools".localized,
                     description: "onboarding_wizard.intro.developer_tools".localized,
-                    isCompleted: isStepCompleted(1)
+                    isCompleted: isStepCompleted(.developerTools)
                 )
                 IntroductionChecklistItemView(
                     number: 2,
                     title: "onboarding_wizard.steps.homebrew".localized,
                     description: "onboarding_wizard.intro.homebrew".localized,
-                    isCompleted: isStepCompleted(2)
+                    isCompleted: isStepCompleted(.homebrew)
                 )
                 IntroductionChecklistItemView(
                     number: 3,
                     title: "onboarding_wizard.steps.php_composer".localized,
                     description: "onboarding_wizard.intro.php_composer".localized,
-                    isCompleted: isStepCompleted(3)
+                    isCompleted: isStepCompleted(.phpComposer)
                 )
                 IntroductionChecklistItemView(
                     number: 4,
                     title: "onboarding_wizard.steps.valet".localized,
                     description: "onboarding_wizard.intro.valet".localized,
-                    isCompleted: isStepCompleted(4)
+                    isCompleted: isStepCompleted(.valet)
                 )
             }
             .padding(16)

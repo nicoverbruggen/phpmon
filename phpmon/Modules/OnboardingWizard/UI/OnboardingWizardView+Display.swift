@@ -10,40 +10,26 @@ import SwiftUI
 
 extension OnboardingWizardView {
     var primaryButtonTitle: String {
-        if isShowingIntroduction {
-            return "onboarding_wizard.buttons.start_setup".localized
-        }
-
         return viewModel.primaryButtonTitle
     }
 
     var primaryButtonDisabled: Bool {
-        if isShowingIntroduction {
-            return !viewModel.hasLoaded
-        }
-
         return viewModel.primaryButtonDisabled
     }
 
     var activeStepNumber: Int? {
-        if isShowingIntroduction {
+        switch viewModel.currentStep {
+        case .introduction:
             return nil
-        }
-
-        return actionableStepNumber
-    }
-
-    var actionableStepNumber: Int {
-        switch viewModel.action {
-        case .installDeveloperTools, .recheckDeveloperTools:
+        case .developerTools:
             return 1
-        case .installHomebrew, .recheckHomebrew, .fixPathAutomatically, .recheckPath:
+        case .homebrew:
             return 2
-        case .installPhpComposer:
+        case .phpComposer:
             return 3
-        case .installValet:
+        case .valet:
             return 4
-        case .continueToStartup:
+        case .ready:
             return 5
         }
     }
@@ -57,7 +43,7 @@ extension OnboardingWizardView {
     }
 
     var currentProgressText: String {
-        if isShowingIntroduction {
+        if viewModel.currentStep == .introduction {
             return "onboarding_wizard.progress.introduction".localized
         }
 
@@ -72,8 +58,8 @@ extension OnboardingWizardView {
         Color.secondary.opacity(0.16)
     }
 
-    func stepStatus(for number: Int) -> StepStatus {
-        if activeStepNumber == number {
+    func stepStatus(for step: OnboardingWizardViewModel.Step) -> StepStatus {
+        if viewModel.currentStep == step {
             switch viewModel.state {
             case .running:
                 return .running
@@ -84,27 +70,29 @@ extension OnboardingWizardView {
             }
         }
 
-        return isStepCompleted(number) ? .completed : .pending
+        return isStepCompleted(step) ? .completed : .pending
     }
 
-    func isStepCompleted(_ number: Int) -> Bool {
+    func isStepCompleted(_ step: OnboardingWizardViewModel.Step) -> Bool {
         let progress = viewModel.displayProgress
 
-        switch number {
-        case 1:
+        switch step {
+        case .introduction:
+            return viewModel.hasCompletedIntroduction
+        case .developerTools:
             return progress.developerToolsInstalled
-        case 2:
+        case .homebrew:
             return progress.developerToolsInstalled
                 && progress.homebrewInstalled
                 && progress.pathConfigured
-        case 3:
+        case .phpComposer:
             return progress.phpInstalled
                 && progress.composerInstalled
-        case 4:
+        case .valet:
             return viewModel.skippedValetSetup
                 || (progress.valetInstalled
                     && progress.valetTrusted)
-        default:
+        case .ready:
             return false
         }
     }
