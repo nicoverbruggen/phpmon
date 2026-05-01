@@ -3,7 +3,9 @@
  
 <p align="center"><img src="./docs/logo.svg" alt="PHP Monitor Logo" width="500px" /></p>
 
-**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac and displays the active PHP version in your status bar. It's tightly integrated with [Laravel Valet](https://github.com/laravel/valet), so <u>you need to have it set up if you want to use all of the functionality of the app</u> (consult the FAQ below with info about how to set up your environment).
+**PHP Monitor** (or *phpmon*) is a lightweight macOS utility app that runs on your Mac, helps set up and maintain your local PHP development environment, and displays the active PHP version in your status bar.
+
+If your Mac is not quite ready yet, PHP Monitor can guide you through that setup on first launch. It's also tightly integrated with [Laravel Valet](https://github.com/laravel/valet), which can be automatically installed for you by the app.
 
 <img src="./docs/marketing@2x.jpg" width="1033px" alt="phpmon screenshot (menu bar app)"/>
 
@@ -23,29 +25,22 @@ You can also add new domains as links, isolate sites, manage various services, a
 
 PHP Monitor is a universal application that runs natively on Apple Silicon **and** Intel-based Macs.
 
-* Your user account can administer your computer (required for some functionality, e.g. certificate generation)
+* A user account that can administer your computer (required for setup + for some functionality, e.g. certificate generation)
 * macOS 13.5 or later
-* Homebrew is installed in the default location (`/usr/local/homebrew` or `/opt/homebrew`)
-* Homebrew `php` formula is installed
-* Optional but recommended: Laravel Valet
+
+If your machine is still missing Homebrew, PHP, Composer, or even Apple's Command Line Tools, PHP Monitor's onboarding wizard can guide you through the initial setup on first launch.
 
 For more information, please see [SECURITY.md](./SECURITY.md) to find out which version of the app is currently supported.
 
 ## 🚀 How to install
 
-Again, if you want to have access to *all features* of PHP Monitor, I recommend installing **[Laravel Valet](https://laravel.com/docs/master/valet)** first:
-
-```sh
-composer global require laravel/valet
-valet install
-valet trust
-```
-
-Currently, PHP Monitor is compatible with Laravel Valet v2 up to v4. Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
+On first launch, PHP Monitor can **guide you** through installing Apple's Command Line Tools, Homebrew, configuring your PATH, installing PHP and Composer, and optionally setting up [Laravel Valet](https://laravel.com/docs/master/valet) as well.
 
 #### Manual installation (recommended, first time only)
 
-Once that's done, you can [download the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest), unzip it and place it in `/Applications`.
+You can [download the latest release](https://github.com/nicoverbruggen/phpmon/releases/latest), unzip it and place it in `/Applications`.
+
+When you launch PHP Monitor for the first time on a fresh machine, the onboarding flow will guide you through whatever is still missing. Some steps still happen in Terminal or via a macOS installer window, but PHP Monitor will tell you exactly what to do.
 
 #### Installation via Homebrew
 
@@ -66,6 +61,12 @@ If you have a very slow internet connection, the updater may report that the dow
 
 (You may also use Homebrew to update PHP Monitor, but this will require you to approve the app every time an update is installed. If you use the built-in updater, this won't be necessary.)
 
+## ✅ Supported versions of Valet
+
+Currently, PHP Monitor is compatible with **Laravel Valet v2 up to v4**.
+
+Each of these versions of Valet support slightly different PHP versions, which is why legacy versions remain supported. Please note that some features are not available in older versions of Valet, like site isolation.
+
 ## ⚡️ Launchers (Alfred, Raycast)
 
 If you would like to integrate with your launcher of choice, you can also download an [Alfred workflow](https://github.com/nicoverbruggen/phpmon/raw/main/integrations/phpmon.alfredworkflow) or [Raycast extension](https://www.raycast.com/nicoverbruggen/php-monitor) that works with PHP Monitor.
@@ -78,7 +79,9 @@ You will only be prompted once to allow or disallow this, but you can always cha
 
 ## 🔑 Is the app signed & notarized?
 
-Yes, the app is signed and notarized, meaning all you have to do is approve its first launch (or whenever it updates).
+**Yes**, the app is signed and notarized, meaning all you have to do is approve its first launch.
+
+If you also use the onboarding flow to set up your environment, macOS may additionally prompt you to complete an installer or approve administrator access for certain setup steps.
 
 ## 👨‍💻 Why build this?
 
@@ -96,7 +99,7 @@ Herd may not be for everyone, which is why other solutions to run PHP locally ex
 
 ## 🤬 The app won't start?!
 
-PHP Monitor performs some integrity checks to ensure a good experience when using the app. You'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios.
+PHP Monitor performs some integrity checks to ensure a good experience when using the app. On a fresh machine, it will first try to help you with onboarding if key dependencies are missing. After that, you'll get a message telling you that PHP Monitor won't work correctly in a variety of scenarios.
 
 **Follow instructions as specified in the alert in order to resolve any issues.**
 
@@ -155,42 +158,45 @@ Super convenient!
 The services manager is disabled, and all other obvious Laravel Valet integrations (configuration finder, domains list, Fix My Valet) are also disabled.
 
 (Most other features remain available.)
+
+If you decide later that you do want the full Valet integration after all, PHP Monitor can guide you through installing Valet then too. If the rest of your system is already set up, the wizard will usually skip straight to the Valet step.
 </details>
 
 <details>
 <summary><strong>I want to set up PHP Monitor from scratch! I don't have Homebrew installed either, where do I begin?</strong></summary>
 
-If you want to set up your computer for the very first time with PHP Monitor, here's how I do it.
+**If you want to set up your computer for the very first time with PHP Monitor, the easiest way to do this now is to let PHP Monitor guide you.**
 
-**I have also created [a video tutorial](https://www.youtube.com/watch?v=fO3hVhkvm3w) which may be easier to follow. If you just want the terminal commands, keep reading.**
+On first launch, PHP Monitor can guide you through the following:
 
-Install [Homebrew](https://brew.sh) first. Follow the instructions there first!
+* Installing Apple's Command Line Tools & Homebrew
+* Setting up your `PATH` so Homebrew, Composer and PHP Monitor's own helpers are available
+* Installing the `php` and `composer` formulae
+* Optionally installing Laravel Valet and configuring it
 
-Then, you'll need to set up your PATH. 
+Depending on your setup, a few of these steps still happen outside of PHP Monitor itself. 
 
-    nano .zshrc
+For example, macOS may open Apple's installer window for the developer tools, and the Homebrew installation command still needs to be run in Terminal. PHP Monitor will tell you exactly what to do and when to come back.
 
-Make sure the following line is not in the comments:
+**If you don't need Laravel Valet, you can stop at that step. PHP Monitor will work like this in Standalone Mode.**
 
-    # on an Intel Mac
-    export PATH=$HOME/bin:/usr/local/bin:$PATH
+If your Mac is already mostly prepared and you're only missing Valet, PHP Monitor will usually skip straight to the Valet step the next time you run setup.
 
-If you're on an Apple Silicon-based Mac, you'll need to add: 
+If you prefer to do everything manually in Terminal, you still can. Here's the rough order:
 
-    # on an M1 Mac
-    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
+1. Install [Homebrew](https://brew.sh) first. Installing this will also prompt you to install Apple's Command Line Tools if you haven't installed those yet.
+2. Set up your `PATH`.
+3. Install the `php` and `composer` formulae.
+4. If you want Valet too, install it with Composer and finish the Valet setup.
 
-and add the following to your `.zshrc` file, but add this BEFORE the homebrew PATH additions:
+If you're using `zsh`, PHP Monitor currently expects the following PATH entries:
 
+    export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH
     export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
+    export PATH=$HOME/bin:/usr/local/bin:$PATH # on an Intel Mac
+    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH # on an Apple Silicon Mac
 
-If you're adding `composer` and Homebrew binaries, ensure that Homebrew binaries are preferred by adding these to the path last. On my system, that looks like this:
-
-    export PATH=$HOME/bin:/usr/local/bin:$PATH
-    export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH
-    export PATH=$HOME/bin:/opt/homebrew/bin:$PATH
-
-If you are *not* on Apple Silicon, you should remove the third line.
+If you are *not* on Apple Silicon, you should remove the last line. If you *are* on Apple Silicon, you should remove the Intel line instead.
 
 Install the `php` and `composer` formulae:
 
@@ -200,9 +206,7 @@ Make sure PHP is linked correctly:
 
     which php
 
-should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
-
-**If you don't need Laravel Valet, you can stop here. PHP Monitor will work like this in Standalone Mode.**
+This should return: `/usr/local/bin/php` (or `/opt/homebrew/bin/php` if you are on Apple Silicon)
 
 If you'd like to have Valet as well, continue and install Valet with Composer, like this.
 
