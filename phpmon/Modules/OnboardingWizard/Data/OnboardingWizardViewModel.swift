@@ -10,112 +10,56 @@ import Foundation
 
 @MainActor
 class OnboardingWizardViewModel: ObservableObject {
-    enum Step: Hashable {
-        case introduction
-        case developerTools
-        case homebrew
-        case phpComposer
-        case valet
-        case ready
-    }
-
-    enum State: Equatable {
-        case idle
-        case running
-        case waitingForManualCompletion
-        case failed
-    }
-
-    struct StepProgress: Equatable {
-        var developerToolsInstalled: Bool = false
-        var homebrewInstalled: Bool = false
-        var pathConfigured: Bool = false
-        var phpInstalled: Bool = false
-        var composerInstalled: Bool = false
-        var valetInstalled: Bool = false
-        var valetTrusted: Bool = false
-
-        var coreToolingInstalled: Bool {
-            developerToolsInstalled
-                && homebrewInstalled
-                && pathConfigured
-                && phpInstalled
-                && composerInstalled
-        }
-
-        var valetSetupInstalled: Bool {
-            valetInstalled && valetTrusted
-        }
-
-        func overlayingForDisplay(with baseline: StepProgress) -> StepProgress {
-            return StepProgress(
-                developerToolsInstalled: developerToolsInstalled || baseline.developerToolsInstalled,
-                homebrewInstalled: homebrewInstalled || baseline.homebrewInstalled,
-                pathConfigured: pathConfigured || baseline.pathConfigured,
-                phpInstalled: phpInstalled || baseline.phpInstalled,
-                composerInstalled: composerInstalled || baseline.composerInstalled,
-                valetInstalled: valetInstalled || baseline.valetInstalled,
-                valetTrusted: valetTrusted || baseline.valetTrusted
-            )
-        }
-    }
-
-    enum Action: Equatable {
-        case startSetup
-        case installDeveloperTools
-        case recheckDeveloperTools
-        case installHomebrew
-        case recheckHomebrew
-        case fixPathAutomatically
-        case recheckPath
-        case installPhpComposer
-        case installValet
-        case continueToStartup
-    }
-
     let container: Container
     private let flow: any OnboardingFlowDefinition
-    var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
-    var onDeveloperToolsRecheckFailed: (() -> Void)?
-    var onValetSudoersRemovalFailed: (() -> Void)?
+    private let probe: OnboardingEnvironmentProbe
+    private let stepRunner: OnboardingStepRunner
+    private var alertObservers: [UUID: AsyncStream<OnboardingAlertState>.Continuation] = [:]
 
-    @Published var state: State
+    var onComplete: ((Startup.OnboardingWizardOutcome) -> Void)?
+
+    @Published var state: OnboardingRunState
     @Published var outputLines: [OutputLine]
-    @Published private(set) var progress: StepProgress
+    @Published var alertState: OnboardingAlertState?
+    @Published private(set) var progress: OnboardingProgress
     @Published private(set) var hasCompletedIntroduction: Bool
     @Published private(set) var hasLoaded: Bool
     @Published private(set) var skippedValetSetup: Bool
 
-    var hasTriggeredDeveloperToolsInstall = false
-    var hasTriggeredHomebrewInstall = false
-
     init(
         container: Container = App.shared.container,
         flow: any OnboardingFlowDefinition = FullSetupOnboardingFlow(),
-        progress: StepProgress = StepProgress(),
-        state: State = .idle,
+        progress: OnboardingProgress = OnboardingProgress(),
+        state: OnboardingRunState = .idle,
         outputLines: [OutputLine] = [],
+        alertState: OnboardingAlertState? = nil,
         hasCompletedIntroduction: Bool? = nil,
         hasLoaded: Bool = false,
         skippedValetSetup: Bool = false
     ) {
         self.container = container
         self.flow = flow
+        self.probe = OnboardingEnvironmentProbe(container: container)
+        self.stepRunner = OnboardingStepRunner(
+            container: container,
+            probe: OnboardingEnvironmentProbe(container: container)
+        )
         self.progress = progress
         self.state = state
         self.outputLines = outputLines
+        self.alertState = alertState
         self.hasCompletedIntroduction = hasCompletedIntroduction ?? (flow.entryStep != .introduction)
         self.hasLoaded = hasLoaded
         self.skippedValetSetup = skippedValetSetup
     }
 
-    var displayProgress: StepProgress {
+    var displayProgress: OnboardingProgress {
         progress.overlayingForDisplay(with: flow.displayBaseline)
     }
 
-    var completedSteps: Set<Step> {
+    var completedSteps: Set<OnboardingStep> {
+        var steps = Set<OnboardingStep>()
         let progress = displayProgress
-        var steps = Set<Step>()
 
         if hasCompletedIntroduction {
             steps.insert(.introduction)
@@ -140,25 +84,7 @@ class OnboardingWizardViewModel: ObservableObject {
         return steps
     }
 
-    var primaryButtonDisabled: Bool {
-        return !hasLoaded || state == .running
-    }
-
-    var showsOutput: Bool {
-        return !outputLines.isEmpty
-    }
-
-    var shouldShowTerminalOutput: Bool {
-        switch action {
-        case .installPhpComposer, .installValet:
-            return state == .running
-        case .startSetup, .installDeveloperTools, .recheckDeveloperTools, .installHomebrew,
-            .recheckHomebrew, .fixPathAutomatically, .recheckPath, .continueToStartup:
-            return false
-        }
-    }
-
-    var currentStep: Step {
+    var currentStep: OnboardingStep {
         if !hasCompletedIntroduction {
             return .introduction
         }
@@ -186,86 +112,26 @@ class OnboardingWizardViewModel: ObservableObject {
         return .ready
     }
 
-    func loadIfNeeded() async {
-        guard !hasLoaded else { return }
-
-        await refreshProgress()
-        hasLoaded = true
-    }
-
-    @discardableResult
-    func performPrimaryAction() -> Task<Void, Never>? {
-        guard hasLoaded else { return nil }
-
-        return makeTaskForCurrentAction()
-    }
-
-    private func makeTaskForCurrentAction() -> Task<Void, Never>? {
-        switch action {
-        case .startSetup:
-            completeIntroduction()
-            return nil
-        case .installDeveloperTools:
-            return Task { await requestDeveloperToolsInstall() }
-        case .recheckDeveloperTools:
-            return Task { await recheckDeveloperTools() }
-        case .installHomebrew:
-            return Task { await requestHomebrewInstall() }
-        case .recheckHomebrew:
-            return Task { await recheckHomebrew() }
-        case .fixPathAutomatically:
-            return Task { await fixPathAutomatically() }
-        case .recheckPath:
-            return Task { await recheckPath() }
-        case .installPhpComposer:
-            return Task { await installPhpComposer() }
-        case .installValet:
-            return Task { await installValet() }
-        case .continueToStartup:
-            onComplete?(skippedValetSetup ? .completedInStandaloneMode : .completed)
-            return nil
-        }
-    }
-
-    func skip() {
-        onComplete?(.skipped)
-    }
-
-    func completeIntroduction() {
-        hasCompletedIntroduction = true
-    }
-
-    func skipValetSetup() {
-        skippedValetSetup = true
-        outputLines = []
-        state = .idle
-
-        if container === App.shared.container {
-            Valet.shared.installed = false
-        }
-    }
-
-    func clearOutput() {
-        outputLines = []
-    }
-
-    func completeCurrentStep() {
-        outputLines = []
-        state = .idle
-    }
-
-    var action: Action {
+    var action: OnboardingAction {
         switch currentStep {
         case .introduction:
             return .startSetup
         case .developerTools:
-            return hasTriggeredDeveloperToolsInstall ? .recheckDeveloperTools : .installDeveloperTools
+            return state == .waitingForManualCompletion
+                ? .recheckDeveloperTools
+                : .installDeveloperTools
         case .homebrew:
             if !progress.homebrewInstalled {
-                return hasTriggeredHomebrewInstall ? .recheckHomebrew : .installHomebrew
+                return state == .waitingForManualCompletion
+                    ? .recheckHomebrew
+                    : .installHomebrew
             }
 
-            return shouldAutoFixPath ? .fixPathAutomatically : .recheckPath
+            if shouldAutoFixPath && state != .waitingForManualCompletion {
+                return .fixPathAutomatically
+            }
+
+            return .recheckPath
         case .phpComposer:
             return .installPhpComposer
         case .valet:
@@ -281,53 +147,134 @@ class OnboardingWizardViewModel: ObservableObject {
             && shellEnvironment.resolvedShell.hasSuffix("/zsh")
     }
 
-    func refreshProgress() async {
-        let toolchain = Toolchain(container)
-        let shellEnvironment = ShellEnvironment(container)
-        let valetInstalled = hasValetBinary() && hasValetConfiguration()
-        let valetTrusted = await hasValetTrustConfiguration()
+    func loadIfNeeded() async {
+        guard !hasLoaded else {
+            return
+        }
 
-        progress = StepProgress(
-            developerToolsInstalled: await toolchain.status(.commandLineTools).installed,
-            homebrewInstalled: await toolchain.status(.homebrew).installed,
-            pathConfigured: shellEnvironment.hasRequiredOnboardingPaths(),
-            phpInstalled: await toolchain.status(.php).installed,
-            composerInstalled: await toolchain.status(.composer).installed,
-            valetInstalled: valetInstalled,
-            valetTrusted: valetTrusted
-        )
+        applyProgress(await probe.detectProgress())
+        hasLoaded = true
+    }
+
+    @discardableResult
+    func performPrimaryAction() -> Task<Void, Never>? {
+        guard hasLoaded else {
+            return nil
+        }
+
+        switch action {
+        case .startSetup:
+            hasCompletedIntroduction = true
+            return nil
+        case .continueToStartup:
+            onComplete?(skippedValetSetup ? .completedInStandaloneMode : .completed)
+            return nil
+        default:
+            let currentAction = action
+            outputLines = []
+            state = .running
+
+            return Task { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                let result = await self.stepRunner.run(currentAction)
+                await MainActor.run {
+                    self.state = result.state
+                    self.outputLines = result.outputLines
+
+                    if let progress = result.progress {
+                        self.applyProgress(progress)
+                    }
+
+                    if let alertState = result.alertState {
+                        self.presentAlert(alertState)
+                    }
+                }
+            }
+        }
+    }
+
+    func skip() {
+        onComplete?(.skipped)
+    }
+
+    func requestSkipConfirmation() {
+        presentAlert(.skipConfirmation)
+    }
+
+    func requestSkipValetConfirmation() {
+        presentAlert(.skipValetConfirmation)
+    }
+
+    func dismissAlert() {
+        alertState = nil
+    }
+
+    func observeAlerts() -> AsyncStream<OnboardingAlertState> {
+        let observerID = UUID()
+
+        return AsyncStream { continuation in
+            alertObservers[observerID] = continuation
+
+            if let alertState {
+                continuation.yield(alertState)
+            }
+
+            continuation.onTermination = { [weak self] _ in
+                Task { @MainActor in
+                    self?.alertObservers.removeValue(forKey: observerID)
+                }
+            }
+        }
+    }
+
+    func confirmSkipCurrentAlert() {
+        guard let alertState else {
+            return
+        }
+
+        switch alertState {
+        case .skipConfirmation:
+            dismissAlert()
+            skip()
+        case .skipValetConfirmation:
+            dismissAlert()
+            skipValetSetup()
+        case .developerToolsIncomplete, .valetSudoersCleanupFailed(_):
+            dismissAlert()
+        }
+    }
+
+    func skipValetSetup() {
+        skippedValetSetup = true
+        outputLines = []
+        state = .idle
 
         if container === App.shared.container {
-            Valet.shared.installed = valetInstalled
+            Valet.shared.installed = false
+        }
+    }
 
-            if App.hasLoadedTestableConfiguration && valetInstalled {
+    private func applyProgress(_ progress: OnboardingProgress) {
+        self.progress = progress
+
+        if container === App.shared.container {
+            Valet.shared.installed = progress.valetInstalled
+
+            if App.hasLoadedTestableConfiguration && progress.valetInstalled {
                 ValetScanner.useFake()
                 ValetInteractor.useFake()
             }
         }
     }
 
-    func appendOutput(_ text: String, _ stream: ShellStream) {
-        outputLines.append(OutputLine(text: text, stream: stream))
-    }
+    private func presentAlert(_ alertState: OnboardingAlertState) {
+        self.alertState = alertState
 
-    private func hasValetBinary() -> Bool {
-        return container.filesystem.fileExists(container.paths.valet)
-            || container.filesystem.fileExists("~/.composer/vendor/bin/valet")
-    }
-
-    private func hasValetConfiguration() -> Bool {
-        return container.filesystem.directoryExists("~/.config/valet")
-    }
-
-    private func hasValetTrustConfiguration() async -> Bool {
-        let brewTrusted = await container.shell
-            .pipe(Toolchain.Commands.checkSudoersBrew)
-            .out.contains(container.paths.brew)
-        let valetTrusted = await container.shell
-            .pipe(Toolchain.Commands.checkSudoersValet)
-            .out.contains(container.paths.valet)
-
-        return brewTrusted && valetTrusted
+        for observer in alertObservers.values {
+            observer.yield(alertState)
+        }
     }
 }

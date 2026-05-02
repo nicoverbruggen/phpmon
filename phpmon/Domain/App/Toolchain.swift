@@ -90,7 +90,7 @@ struct Toolchain {
     }
 
     private func commandLineToolsStatus() async -> Status {
-        let output = await container.shell.pipe(Commands.commandLineToolsStatus)
+        let output = await container.shell.pipe(CommandCatalog.Toolchain.commandLineToolsStatus)
         let path = output.out.trimmingCharacters(in: .whitespacesAndNewlines)
 
         return Status(

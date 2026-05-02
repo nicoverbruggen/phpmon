@@ -12,10 +12,10 @@ extension OnboardingWizardView {
     var introductionContent: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("onboarding_wizard.steps.introduction".localized)
+                Text(viewState.detailTitle)
                     .font(.system(size: 20, weight: .semibold))
 
-                Text("onboarding_wizard.description".localized)
+                Text(viewState.detailDescription)
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
                     .lineSpacing(2)
@@ -23,35 +23,20 @@ extension OnboardingWizardView {
             }
 
             VStack(alignment: .leading, spacing: 10) {
-                IntroductionChecklistItemView(
-                    number: 1,
-                    title: "onboarding_wizard.steps.developer_tools".localized,
-                    description: "onboarding_wizard.intro.developer_tools".localized,
-                    isCompleted: isStepCompleted(.developerTools)
-                )
-                IntroductionChecklistItemView(
-                    number: 2,
-                    title: "onboarding_wizard.steps.homebrew".localized,
-                    description: "onboarding_wizard.intro.homebrew".localized,
-                    isCompleted: isStepCompleted(.homebrew)
-                )
-                IntroductionChecklistItemView(
-                    number: 3,
-                    title: "onboarding_wizard.steps.php_composer".localized,
-                    description: "onboarding_wizard.intro.php_composer".localized,
-                    isCompleted: isStepCompleted(.phpComposer)
-                )
-                IntroductionChecklistItemView(
-                    number: 4,
-                    title: "onboarding_wizard.steps.valet".localized,
-                    description: "onboarding_wizard.intro.valet".localized,
-                    isCompleted: isStepCompleted(.valet)
-                )
+                ForEach(viewState.introductionItems) { item in
+                    IntroductionChecklistItemView(
+                        number: item.number,
+                        title: item.title,
+                        badgeTitle: item.badgeTitle,
+                        description: item.description,
+                        isCompleted: item.isCompleted
+                    )
+                }
             }
             .padding(16)
             .background(cardBackground)
 
-            Text("onboarding_wizard.intro.footer".localized)
+            Text(viewState.introductionFooterText)
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -61,11 +46,11 @@ extension OnboardingWizardView {
     var stepContent: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(displayedDetailTitle)
+                Text(viewState.detailTitle)
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(Color.primary)
 
-                Text(displayedDetailDescription)
+                Text(viewState.detailDescription)
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
                     .lineSpacing(2)
@@ -73,30 +58,28 @@ extension OnboardingWizardView {
             }
             .padding(.bottom, 18)
 
-            if viewModel.state == .running {
+            if viewState.isRunning {
                 ProgressView()
                     .progressViewStyle(.linear)
                     .padding(.bottom, 16)
             }
 
-            if let commandTitle = viewModel.commandTitle,
-               !viewModel.commandLines.isEmpty {
-                OnboardingCommandBlockView(title: commandTitle, lines: viewModel.commandLines)
+            if let commandBlock = viewState.commandBlock {
+                OnboardingCommandBlockView(title: commandBlock.title, lines: commandBlock.lines)
                     .padding(.bottom, 14)
             }
 
-            if viewModel.showsStatusBanner,
-               let statusText = viewModel.statusBannerText {
-                Text(statusText)
+            if let statusBanner = viewState.statusBanner {
+                Text(statusBanner.text)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(viewModel.statusBannerIsFailure ? Color.red.opacity(0.9) : Color.primary)
+                    .foregroundStyle(statusBanner.isFailure ? Color.red.opacity(0.9) : Color.primary)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 10)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(
-                                viewModel.statusBannerIsFailure
+                                statusBanner.isFailure
                                     ? Color.red.opacity(0.08)
                                     : Color(nsColor: .controlBackgroundColor)
                             )
@@ -104,16 +87,16 @@ extension OnboardingWizardView {
                     .overlay(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .stroke(
-                                viewModel.statusBannerIsFailure
+                                statusBanner.isFailure
                                     ? Color.red.opacity(0.18)
                                     : Color.black.opacity(0.06),
                                 lineWidth: 1
                             )
                     )
-            } else if viewModel.showsTerminalOutput {
+            } else if viewState.showsTerminalOutput {
                 StartupOutputView(
-                    lines: viewModel.outputLines,
-                    isRunning: viewModel.state == .running
+                    lines: viewState.outputLines,
+                    isRunning: viewState.isRunning
                 )
             }
         }

@@ -11,7 +11,7 @@ import SwiftUI
 extension OnboardingWizardView {
     var bottomBar: some View {
         HStack {
-            if let learnMoreLink = viewModel.learnMoreLink {
+            if let learnMoreLink = viewState.learnMoreLink {
                 Button("onboarding_wizard.buttons.learn_more".localized) {
                     NSWorkspace.shared.open(learnMoreLink)
                 }
@@ -19,7 +19,7 @@ extension OnboardingWizardView {
                 .controlSize(.small)
             }
 
-            if showsSkipValetButton {
+            if viewState.showsSkipValetButton {
                 skipValetButton
             }
 
@@ -31,7 +31,7 @@ extension OnboardingWizardView {
 
     var quitButton: some View {
         Button {
-            isShowingSkipConfirmation = true
+            viewModel.requestSkipConfirmation()
         } label: {
             Text("onboarding_wizard.buttons.skip".localized)
                 .font(.system(size: 12, weight: .medium))
@@ -42,14 +42,14 @@ extension OnboardingWizardView {
 
     var skipValetButton: some View {
         Button {
-            isShowingSkipValetConfirmation = true
+            viewModel.requestSkipValetConfirmation()
         } label: {
             Text("onboarding_wizard.buttons.skip_valet".localized)
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(.secondary)
         }
         .buttonStyle(.borderless)
-        .disabled(viewModel.state == .running)
+        .disabled(viewState.isRunning)
     }
 
     var primaryActionButton: some View {
@@ -63,9 +63,5 @@ extension OnboardingWizardView {
 
     func performPrimaryAction() {
         viewModel.performPrimaryAction()
-    }
-
-    var showsSkipValetButton: Bool {
-        viewModel.currentStep == .valet
     }
 }

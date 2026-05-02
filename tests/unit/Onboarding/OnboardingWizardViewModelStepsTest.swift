@@ -270,10 +270,6 @@ struct OnboardingWizardViewModelStepsTest {
             hasCompletedIntroduction: true,
             hasLoaded: true
         )
-        var didShowCleanupAlert = false
-        viewModel.onValetSudoersRemovalFailed = {
-            didShowCleanupAlert = true
-        }
 
         let task = viewModel.performPrimaryAction()
         await task?.value
@@ -281,7 +277,12 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(.valet))
         #expect(viewModel.action == .continueToStartup)
-        #expect(didShowCleanupAlert)
+        #expect(
+            viewModel.alertState
+                == .valetSudoersCleanupFailed(
+                    command: CommandCatalog.Onboarding.valetSudoersCleanupCommand
+                )
+        )
     }
 
     // The Homebrew step should copy the manual install command and wait for the user to
@@ -290,7 +291,7 @@ struct OnboardingWizardViewModelStepsTest {
         let container = makeOnboardingFakeContainer(
             architecture: "arm64",
             shell: [
-                Toolchain.Commands.homebrewInstall: BatchFakeShellOutput(
+                CommandCatalog.Onboarding.homebrewInstall: BatchFakeShellOutput(
                     items: [.instant("Installed Homebrew.\n")],
                     transactions: [
                         .write("", to: "/opt/homebrew/bin/brew")
@@ -333,7 +334,7 @@ struct OnboardingWizardViewModelStepsTest {
         let container = makeOnboardingFakeContainer(
             architecture: "arm64",
             shell: [
-                Toolchain.Commands.homebrewInstall: BatchFakeShellOutput(
+                CommandCatalog.Onboarding.homebrewInstall: BatchFakeShellOutput(
                     items: [.instant("Installing Homebrew...\n")],
                     transactions: [
                         .write("", to: "/opt/homebrew/bin/brew")
@@ -422,10 +423,6 @@ struct OnboardingWizardViewModelStepsTest {
             hasCompletedIntroduction: true,
             hasLoaded: true
         )
-        var didShowIncompleteAlert = false
-        viewModel.onDeveloperToolsRecheckFailed = {
-            didShowIncompleteAlert = true
-        }
 
         var task = viewModel.performPrimaryAction()
         await task?.value
@@ -438,7 +435,7 @@ struct OnboardingWizardViewModelStepsTest {
         await task?.value
 
         #expect(viewModel.state == .waitingForManualCompletion)
-        #expect(didShowIncompleteAlert)
+        #expect(viewModel.alertState == .developerToolsIncomplete)
     }
 }
 // swiftlint:enable type_body_length file_length

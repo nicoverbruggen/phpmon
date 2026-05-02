@@ -14,13 +14,10 @@ struct OnboardingWizardView: View {
     }
 
     @ObservedObject var viewModel: OnboardingWizardViewModel
-    @State var isShowingSkipConfirmation = false
-    @State var isShowingSkipValetConfirmation = false
     @FocusState var focusedButton: FocusedButton?
 
     let windowWidth: CGFloat = 720
     let windowHeight: CGFloat = 500
-    let totalWizardSteps = 5
 
     init(
         viewModel: OnboardingWizardViewModel,
@@ -28,32 +25,28 @@ struct OnboardingWizardView: View {
         isShowingSkipValetConfirmation: Bool = false
     ) {
         self.viewModel = viewModel
-        self._isShowingSkipConfirmation = State(initialValue: isShowingSkipConfirmation)
-        self._isShowingSkipValetConfirmation = State(initialValue: isShowingSkipValetConfirmation)
     }
 
     var body: some View {
         wizardLayout
-        .frame(width: windowWidth, height: windowHeight)
-        .background(Color(nsColor: .windowBackgroundColor))
         .alert(
             "onboarding_wizard.skip_confirmation.title".localized,
-            isPresented: $isShowingSkipConfirmation
+            isPresented: skipConfirmationBinding
         ) {
             Button("onboarding_wizard.skip_confirmation.cancel".localized, role: .cancel) { }
             Button("onboarding_wizard.skip_confirmation.confirm".localized) {
-                viewModel.skip()
+                viewModel.confirmSkipCurrentAlert()
             }
         } message: {
             Text("onboarding_wizard.skip_confirmation.message".localized)
         }
         .alert(
             "onboarding_wizard.skip_valet_confirmation.title".localized,
-            isPresented: $isShowingSkipValetConfirmation
+            isPresented: skipValetConfirmationBinding
         ) {
             Button("onboarding_wizard.skip_valet_confirmation.cancel".localized, role: .cancel) { }
             Button("onboarding_wizard.skip_valet_confirmation.confirm".localized) {
-                viewModel.skipValetSetup()
+                viewModel.confirmSkipCurrentAlert()
             }
         } message: {
             Text("onboarding_wizard.skip_valet_confirmation.message".localized)
@@ -63,7 +56,7 @@ struct OnboardingWizardView: View {
             await viewModel.loadIfNeeded()
             updateDefaultFocus()
         }
-        .onChange(of: primaryButtonDisabled) { isDisabled in
+        .onChange(of: viewModel.viewState.primaryButtonDisabled) { isDisabled in
             if !isDisabled {
                 updateDefaultFocus()
             }
@@ -76,8 +69,42 @@ struct OnboardingWizardView: View {
         }
     }
 
-    var isShowingIntroduction: Bool {
-        return viewModel.currentStep == .introduction
+    var viewState: OnboardingViewState {
+        return viewModel.viewState
+    }
+
+    var skipConfirmationBinding: Binding<Bool> {
+        Binding(
+            get: {
+                if case .skipConfirmation? = viewModel.alertState {
+                    return true
+                }
+
+                return false
+            },
+            set: { isPresented in
+                if !isPresented, case .skipConfirmation? = viewModel.alertState {
+                    viewModel.dismissAlert()
+                }
+            }
+        )
+    }
+
+    var skipValetConfirmationBinding: Binding<Bool> {
+        Binding(
+            get: {
+                if case .skipValetConfirmation? = viewModel.alertState {
+                    return true
+                }
+
+                return false
+            },
+            set: { isPresented in
+                if !isPresented, case .skipValetConfirmation? = viewModel.alertState {
+                    viewModel.dismissAlert()
+                }
+            }
+        )
     }
 
     var wizardLayout: some View {
@@ -90,11 +117,13 @@ struct OnboardingWizardView: View {
 
             wizardMain
         }
+        .frame(width: windowWidth, height: windowHeight)
+        .background(Color(nsColor: .windowBackgroundColor))
     }
 
     var wizardMain: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if isShowingIntroduction {
+            if viewState.isShowingIntroduction {
                 introductionContent
             } else {
                 stepContent

@@ -16,27 +16,15 @@ extension OnboardingWizardView {
                 .padding(.bottom, 16)
                 .padding(.top, -5) // slight adjustment
 
-            introductionSidebarStep
-            sidebarStep(
-                step: .developerTools,
-                title: "onboarding_wizard.steps.developer_tools".localized
-            )
-            sidebarStep(
-                step: .homebrew,
-                title: "onboarding_wizard.steps.homebrew".localized
-            )
-            sidebarStep(
-                step: .phpComposer,
-                title: "onboarding_wizard.steps.php_composer".localized
-            )
-            sidebarStep(
-                step: .valet,
-                title: "onboarding_wizard.steps.valet".localized
-            )
-            sidebarStep(
-                step: .ready,
-                title: "onboarding_wizard.steps.ready".localized
-            )
+            ForEach(viewState.sidebarItems) { item in
+                OnboardingSidebarStepView(
+                    status: item.status,
+                    title: item.title,
+                    badgeTitle: item.badgeTitle,
+                    isFirst: item.isFirst,
+                    isLast: item.isLast
+                )
+            }
 
             Spacer()
 
@@ -68,7 +56,7 @@ extension OnboardingWizardView {
                         .foregroundStyle(.primary)
                         .lineLimit(1)
 
-                    Text(currentProgressText)
+                    Text(viewState.currentProgressText)
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
@@ -78,30 +66,5 @@ extension OnboardingWizardView {
 
             Divider()
         }
-    }
-
-    var introductionSidebarStep: some View {
-        return OnboardingSidebarStepView(
-            status: stepStatus(for: .introduction),
-            title: "onboarding_wizard.steps.introduction".localized,
-            isFirst: true,
-            isLast: false
-        )
-    }
-
-    func sidebarStep(
-        step: OnboardingWizardViewModel.Step,
-        title: String,
-        badgeTitle: String? = nil
-    ) -> some View {
-        let status = stepStatus(for: step)
-
-        return OnboardingSidebarStepView(
-            status: status,
-            title: title,
-            badgeTitle: badgeTitle,
-            isFirst: false,
-            isLast: step == .ready
-        )
     }
 }

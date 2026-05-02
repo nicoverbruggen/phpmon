@@ -21,6 +21,7 @@ class OnboardingWizardWindowController: PMWindowController {
     private var didResolve = false
     private var exitsApplicationOnClose = true
     private var hiddenMenuItems: [NSMenuItem] = []
+    private var alertObservationTask: Task<Void, Never>?
 
     static func create(
         exitsApplicationOnClose: Bool = true,
@@ -62,11 +63,31 @@ class OnboardingWizardWindowController: PMWindowController {
             viewModel.onComplete = { [weak self] outcome in
                 self?.complete(with: outcome)
             }
-            viewModel.onDeveloperToolsRecheckFailed = { [weak self] in
-                self?.presentDeveloperToolsIncompleteAlert()
-            }
-            viewModel.onValetSudoersRemovalFailed = { [weak self] in
-                self?.presentValetSudoersRemovalFailedAlert()
+            let alertStream = viewModel.observeAlerts()
+
+            self.alertObservationTask = Task { [weak self] in
+                for await alertState in alertStream {
+                    guard !Task.isCancelled else {
+                        break
+                    }
+
+                    await MainActor.run {
+                        guard let self else {
+                            return
+                        }
+
+                        switch alertState {
+                        case .developerToolsIncomplete:
+                            self.viewModel?.dismissAlert()
+                            self.presentDeveloperToolsIncompleteAlert()
+                        case .valetSudoersCleanupFailed(let command):
+                            self.viewModel?.dismissAlert()
+                            self.presentValetSudoersRemovalFailedAlert(command: command)
+                        case .skipConfirmation, .skipValetConfirmation:
+                            break
+                        }
+                    }
+                }
             }
 
             self.hideMenuItems()
@@ -103,6 +124,8 @@ class OnboardingWizardWindowController: PMWindowController {
     }
 
     private func complete(with outcome: Startup.OnboardingWizardOutcome) {
+        alertObservationTask?.cancel()
+        alertObservationTask = nil
         restoreMenuItems()
         onComplete?(outcome)
     }
@@ -127,7 +150,7 @@ class OnboardingWizardWindowController: PMWindowController {
             .presentAsSheet(attachedTo: window)
     }
 
-    @MainActor private func presentValetSudoersRemovalFailedAlert() {
+    @MainActor private func presentValetSudoersRemovalFailedAlert(command: String) {
         guard let window else {
             return
         }
@@ -137,14 +160,14 @@ class OnboardingWizardWindowController: PMWindowController {
                 title: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.title".localized,
                 subtitle: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle".localized,
                 description: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.description".localized(
-                    OnboardingWizardViewModel.valetSudoersCleanupCommand
+                    command
                 )
             )
             .withPrimary(text: "generic.ok".localized)
             .withSecondary(text: "onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command".localized) { alert in
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(
-                    OnboardingWizardViewModel.valetSudoersCleanupCommand,
+                    command,
                     forType: .string
                 )
                 alert.close(with: .alertSecondButtonReturn)

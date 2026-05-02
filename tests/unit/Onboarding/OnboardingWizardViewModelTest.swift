@@ -59,7 +59,7 @@ struct OnboardingWizardViewModelTest {
         #expect(viewModel.action == .installHomebrew)
         #expect(viewModel.completedSteps == Set([.introduction, .developerTools]))
         #expect(viewModel.commandTitle == "onboarding_wizard.command.homebrew.title".localized)
-        #expect(viewModel.commandLines == [Toolchain.Commands.homebrewInstall])
+        #expect(viewModel.commandLines == [CommandCatalog.Onboarding.homebrewInstall])
         #expect(!viewModel.showsTerminalOutput)
     }
 

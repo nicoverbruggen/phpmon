@@ -7,139 +7,281 @@
 //
 
 import AppKit
+import Foundation
 
-extension OnboardingWizardViewModel {
+struct OnboardingEnvironmentProbe {
+    let container: Container
+
+    func detectProgress() async -> OnboardingProgress {
+        container.paths.detectBinaryPaths()
+
+        let toolchain = Toolchain(container)
+        let shellEnvironment = ShellEnvironment(container)
+        let valetInstalled = hasValetBinary() && hasValetConfiguration()
+        let valetTrusted = await hasValetTrustConfiguration()
+
+        return OnboardingProgress(
+            developerToolsInstalled: await toolchain.status(.commandLineTools).installed,
+            homebrewInstalled: await toolchain.status(.homebrew).installed,
+            pathConfigured: shellEnvironment.hasRequiredOnboardingPaths(),
+            phpInstalled: await toolchain.status(.php).installed,
+            composerInstalled: await toolchain.status(.composer).installed,
+            valetInstalled: valetInstalled,
+            valetTrusted: valetTrusted
+        )
+    }
+
+    private func hasValetBinary() -> Bool {
+        return container.filesystem.fileExists(container.paths.valet)
+            || container.filesystem.fileExists("~/.composer/vendor/bin/valet")
+    }
+
+    private func hasValetConfiguration() -> Bool {
+        return container.filesystem.directoryExists("~/.config/valet")
+    }
+
+    private func hasValetTrustConfiguration() async -> Bool {
+        let brewTrusted = await container.shell
+            .pipe(CommandCatalog.Onboarding.checkSudoersBrew)
+            .out.contains(container.paths.brew)
+        let valetTrusted = await container.shell
+            .pipe(CommandCatalog.Onboarding.checkSudoersValet)
+            .out.contains(container.paths.valet)
+
+        return brewTrusted && valetTrusted
+    }
+}
+
+struct OnboardingStepRunner {
+    struct Result {
+        let state: OnboardingRunState
+        let outputLines: [OutputLine]
+        let progress: OnboardingProgress?
+        let alertState: OnboardingAlertState?
+    }
+
+    let container: Container
+    let probe: OnboardingEnvironmentProbe
+
     private var isSimulatingShellEnvironment: Bool {
         App.hasLoadedTestableConfiguration || container.shell is TestableShell
     }
 
-    func requestDeveloperToolsInstall() async {
-        outputLines = []
-        state = .running
-
-        let output = await container.shell.pipe(Toolchain.Commands.commandLineToolsInstall)
-        appendIfPresent(output)
-
-        hasTriggeredDeveloperToolsInstall = true
-        state = .waitingForManualCompletion
-        appendOutput("onboarding_wizard.output.developer_tools_requested".localized, .stdOut)
+    func run(_ action: OnboardingAction) async -> Result {
+        switch action {
+        case .installDeveloperTools:
+            return await requestDeveloperToolsInstall()
+        case .recheckDeveloperTools:
+            return await recheckDeveloperTools()
+        case .installHomebrew:
+            return await requestHomebrewInstall()
+        case .recheckHomebrew:
+            return await recheckHomebrew()
+        case .fixPathAutomatically:
+            return await fixPathAutomatically()
+        case .recheckPath:
+            return await recheckPath()
+        case .installPhpComposer:
+            return await installPhpComposer()
+        case .installValet:
+            return await installValet()
+        case .startSetup, .continueToStartup:
+            return Result(state: .idle, outputLines: [], progress: nil, alertState: nil)
+        }
     }
 
-    func recheckDeveloperTools() async {
-        state = .running
-        await refreshProgress()
+    private func requestDeveloperToolsInstall() async -> Result {
+        var outputLines: [OutputLine] = []
+        let output = await container.shell.pipe(CommandCatalog.Onboarding.commandLineToolsInstall)
+        appendIfPresent(output, to: &outputLines)
+        appendOutput("onboarding_wizard.output.developer_tools_requested".localized, .stdOut, to: &outputLines)
+
+        return Result(
+            state: .waitingForManualCompletion,
+            outputLines: outputLines,
+            progress: nil,
+            alertState: nil
+        )
+    }
+
+    private func recheckDeveloperTools() async -> Result {
+        let progress = await probe.detectProgress()
 
         if progress.developerToolsInstalled {
-            outputLines = []
-            state = .idle
-        } else {
-            state = .waitingForManualCompletion
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
-            onDeveloperToolsRecheckFailed?()
+            return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
+
+        return Result(
+            state: .waitingForManualCompletion,
+            outputLines: [OutputLine(
+                text: "\n\("onboarding_wizard.output.step_not_resolved".localized)",
+                stream: .stdErr
+            )],
+            progress: progress,
+            alertState: .developerToolsIncomplete
+        )
     }
 
-    func requestHomebrewInstall() async {
-        outputLines = []
+    private func requestHomebrewInstall() async -> Result {
+        var outputLines: [OutputLine] = []
+
         NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(Toolchain.Commands.homebrewInstall, forType: .string)
+        NSPasteboard.general.setString(CommandCatalog.Onboarding.homebrewInstall, forType: .string)
 
         if isSimulatingShellEnvironment {
-            let output = container.shell.sync(Toolchain.Commands.homebrewInstall)
-            appendIfPresent(output)
+            let output = container.shell.sync(CommandCatalog.Onboarding.homebrewInstall)
+            appendIfPresent(output, to: &outputLines)
         }
 
-        hasTriggeredHomebrewInstall = true
-        state = .waitingForManualCompletion
-        appendOutput("onboarding_wizard.output.homebrew_command_copied".localized, .stdOut)
+        appendOutput("onboarding_wizard.output.homebrew_command_copied".localized, .stdOut, to: &outputLines)
+
+        return Result(
+            state: .waitingForManualCompletion,
+            outputLines: outputLines,
+            progress: nil,
+            alertState: nil
+        )
     }
 
-    func recheckHomebrew() async {
-        state = .running
+    private func recheckHomebrew() async -> Result {
         await container.shell.reloadEnvPath()
-        await refreshProgress()
+        let progress = await probe.detectProgress()
 
         if progress.homebrewInstalled {
-            outputLines = []
-            state = .idle
-        } else {
-            state = .waitingForManualCompletion
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
+            return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
+
+        return Result(
+            state: .waitingForManualCompletion,
+            outputLines: [OutputLine(
+                text: "\n\("onboarding_wizard.output.step_not_resolved".localized)",
+                stream: .stdErr
+            )],
+            progress: progress,
+            alertState: nil
+        )
     }
 
-    func fixPathAutomatically() async {
-        outputLines = []
-        state = .running
-
+    private func fixPathAutomatically() async -> Result {
         let zshRunCommand = ZshRunCommand(container)
-        appendOutput("onboarding_wizard.output.path_updating".localized, .stdOut)
+        var outputLines: [OutputLine] = [
+            OutputLine(
+                text: "onboarding_wizard.output.path_updating".localized,
+                stream: .stdOut
+            )
+        ]
 
         let phpMonitorResult = await zshRunCommand.addPhpMonitorBinPath()
         let composerResult = await zshRunCommand.addComposerBinPath()
         let homebrewResult = await zshRunCommand.addHomebrewBinPath()
 
         await container.shell.reloadEnvPath()
-        await refreshProgress()
+        let progress = await probe.detectProgress()
 
         let allFilesUpdated = phpMonitorResult && composerResult && homebrewResult
 
         if allFilesUpdated && progress.pathConfigured {
-            finalize(success: true)
-        } else if allFilesUpdated {
-            state = .waitingForManualCompletion
-            appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut)
-        } else {
-            finalize(success: false)
+            return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
+
+        if allFilesUpdated {
+            appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut, to: &outputLines)
+
+            return Result(
+                state: .waitingForManualCompletion,
+                outputLines: outputLines,
+                progress: progress,
+                alertState: nil
+            )
+        }
+
+        appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr, to: &outputLines)
+
+        return Result(
+            state: .failed,
+            outputLines: outputLines,
+            progress: progress,
+            alertState: nil
+        )
     }
 
-    func recheckPath() async {
-        state = .running
+    private func recheckPath() async -> Result {
         await container.shell.reloadEnvPath()
-        await refreshProgress()
+        let progress = await probe.detectProgress()
 
         if progress.pathConfigured {
-            outputLines = []
-            state = .idle
-        } else {
-            state = .waitingForManualCompletion
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
+            return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
+
+        return Result(
+            state: .waitingForManualCompletion,
+            outputLines: [OutputLine(
+                text: "\n\("onboarding_wizard.output.step_not_resolved".localized)",
+                stream: .stdErr
+            )],
+            progress: progress,
+            alertState: nil
+        )
     }
 
-    func installPhpComposer() async {
-        outputLines = []
-        state = .running
+    private func installPhpComposer() async -> Result {
+        let collector = Locked<[OutputLine]>([])
 
         do {
-            for command in Toolchain.Commands.phpComposerInstall(using: container.paths.brew) {
-                try await attachStreaming(command)
+            for command in CommandCatalog.Onboarding.phpComposerInstall(using: container.paths.brew) {
+                try await attachStreaming(command, collector: collector)
             }
         } catch {
-            failStep(error)
-            return
+            collector.withLock {
+                $0.append(OutputLine(text: "\nError: \(error.localizedDescription)", stream: .stdErr))
+            }
+
+            return Result(
+                state: .failed,
+                outputLines: collector.value,
+                progress: nil,
+                alertState: nil
+            )
         }
 
-        await refreshProgress()
-        finalize(success: progress.phpInstalled && progress.composerInstalled)
+        let progress = await probe.detectProgress()
+
+        if progress.phpInstalled && progress.composerInstalled {
+            return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
+        }
+
+        collector.withLock {
+            $0.append(OutputLine(
+                text: "\n\("onboarding_wizard.output.step_not_resolved".localized)",
+                stream: .stdErr
+            ))
+        }
+
+        return Result(
+            state: .failed,
+            outputLines: collector.value,
+            progress: progress,
+            alertState: nil
+        )
     }
 
-    func installValet() async {
-        outputLines = []
-        state = .running
-
+    private func installValet() async -> Result {
         container.paths.detectBinaryPaths()
+
         let brew = container.paths.brew
         let composer = container.paths.composer ?? "composer"
         let composerValetShim = "\(container.paths.homePath)/.composer/vendor/bin/valet"
         let composerValetScript = "\(container.paths.homePath)/.composer/vendor/laravel/valet/valet"
 
+        let collector = Locked<[OutputLine]>([])
         var sudoersInstalled = false
         var installError: Error?
+        var alertState: OnboardingAlertState?
 
         do {
-            let installScript = Self.makeValetSudoersInstallScript(forScriptAt: composerValetScript)
+            let installScript = CommandCatalog.Onboarding.makeValetSudoersInstallScript(
+                forScriptAt: composerValetScript
+            )
 
             _ = try await container.privilegedCommandRunner.runSimpleShellAsAdmin(
                 installScript,
@@ -147,15 +289,18 @@ extension OnboardingWizardViewModel {
             )
             sudoersInstalled = true
 
-            for command in Toolchain.Commands.valetInstall(
+            for command in CommandCatalog.Onboarding.valetInstall(
                 using: brew,
                 composer: composer,
                 valet: composerValetShim
             ) {
-                try await attachStreaming(command)
+                try await attachStreaming(command, collector: collector)
             }
 
-            try await attachStreaming(Toolchain.Commands.valetTrust(using: composerValetShim))
+            try await attachStreaming(
+                CommandCatalog.Onboarding.valetTrust(using: composerValetShim),
+                collector: collector
+            )
         } catch {
             installError = error
         }
@@ -163,89 +308,103 @@ extension OnboardingWizardViewModel {
         if sudoersInstalled {
             do {
                 _ = try await container.privilegedCommandRunner.runSimpleShellAsAdmin(
-                    Self.valetSudoersCleanupCommand,
+                    CommandCatalog.Onboarding.valetSudoersCleanupCommand,
                     reason: .onboardingValetTemporarySudoersCleanup
                 )
             } catch {
                 Log.warn("Failed to remove temporary Valet sudoers entry after onboarding: \(error)")
-                onValetSudoersRemovalFailed?()
+                alertState = .valetSudoersCleanupFailed(
+                    command: CommandCatalog.Onboarding.valetSudoersCleanupCommand
+                )
             }
         }
 
         if let installError {
-            if Self.isUserDeniedAdminPrivilegeError(installError) {
-                failValetInstallDueToDeniedAdminAccess()
+            if isUserDeniedAdminPrivilegeError(installError) {
+                collector.withLock {
+                    $0.append(OutputLine(
+                        text: "\n\("onboarding_wizard.output.valet_admin_access_denied".localized)",
+                        stream: .stdErr
+                    ))
+                }
             } else {
-                failStep(installError)
+                collector.withLock {
+                    $0.append(OutputLine(
+                        text: "\nError: \(installError.localizedDescription)",
+                        stream: .stdErr
+                    ))
+                }
             }
-            return
+
+            return Result(
+                state: .failed,
+                outputLines: collector.value,
+                progress: nil,
+                alertState: alertState
+            )
         }
 
-        await refreshProgress()
-        finalize(success: progress.valetInstalled && progress.valetTrusted)
+        let progress = await probe.detectProgress()
+
+        if progress.valetInstalled && progress.valetTrusted {
+            return Result(
+                state: .idle,
+                outputLines: [],
+                progress: progress,
+                alertState: alertState
+            )
+        }
+
+        collector.withLock {
+            $0.append(OutputLine(
+                text: "\n\("onboarding_wizard.output.step_not_resolved".localized)",
+                stream: .stdErr
+            ))
+        }
+
+        return Result(
+            state: .failed,
+            outputLines: collector.value,
+            progress: progress,
+            alertState: alertState
+        )
     }
 
-    // MARK: - Shared helpers
+    private func appendIfPresent(_ output: ShellOutput, to outputLines: inout [OutputLine]) {
+        if !output.out.isEmpty {
+            appendOutput(output.out, .stdOut, to: &outputLines)
+        }
 
-    private func appendIfPresent(_ output: ShellOutput) {
-        if !output.out.isEmpty { appendOutput(output.out, .stdOut) }
-        if !output.err.isEmpty { appendOutput(output.err, .stdErr) }
+        if !output.err.isEmpty {
+            appendOutput(output.err, .stdErr, to: &outputLines)
+        }
     }
 
-    private func attachStreaming(_ command: String, timeout: TimeInterval = 600) async throws {
+    private func appendOutput(
+        _ text: String,
+        _ stream: ShellStream,
+        to outputLines: inout [OutputLine]
+    ) {
+        outputLines.append(OutputLine(text: text, stream: stream))
+    }
+
+    private func attachStreaming(
+        _ command: String,
+        collector: Locked<[OutputLine]>,
+        timeout: TimeInterval = 600
+    ) async throws {
         try await container.shell.attach(
             command,
-            didReceiveOutput: { [weak self] text, stream in
-                Task { @MainActor in
-                    self?.appendOutput(text, stream)
+            didReceiveOutput: { text, stream in
+                collector.withLock {
+                    $0.append(OutputLine(text: text, stream: stream))
                 }
             },
             withTimeout: timeout
         )
     }
 
-    private func finalize(success: Bool) {
-        if success {
-            completeCurrentStep()
-        } else {
-            state = .failed
-            appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr)
-        }
-    }
-
-    private func failStep(_ error: Error) {
-        state = .failed
-        appendOutput("\nError: \(error.localizedDescription)", .stdErr)
-    }
-
-    private func failValetInstallDueToDeniedAdminAccess() {
-        state = .failed
-        appendOutput("\n\("onboarding_wizard.output.valet_admin_access_denied".localized)", .stdErr)
-    }
-
-    // MARK: - Temporary sudoers entry for `valet install` and `valet trust`
-
-    private static let valetSudoersPath = "/etc/sudoers.d/phpmon-valet-onboarding"
-    private static let valetSudoersTemp = "/tmp/phpmon-valet-onboarding.sudoers"
-    static let valetSudoersCleanupCommand = "sudo rm -f \(valetSudoersPath) \(valetSudoersTemp)"
-
-    fileprivate static func makeValetSudoersInstallScript(forScriptAt valetPath: String) -> String {
-        let entry = "Cmnd_Alias VALET_PHPMON = \(valetPath) install, \(valetPath) trust"
-        let perm = "%admin ALL=(root) NOPASSWD:SETENV: VALET_PHPMON"
-        let temp = valetSudoersTemp
-        let dest = valetSudoersPath
-        return [
-            "rm -f \(temp)",
-            "echo '\(entry)' > \(temp)",
-            "echo '\(perm)' >> \(temp)",
-            "/usr/sbin/visudo -cf \(temp)",
-            "chmod 0440 \(temp)",
-            "chown root:wheel \(temp)",
-            "mv \(temp) \(dest)"
-        ].joined(separator: " && ")
-    }
-
-    fileprivate static func isUserDeniedAdminPrivilegeError(_ error: Error) -> Bool {
+    private func isUserDeniedAdminPrivilegeError(_ error: Error) -> Bool {
         return (error as? AdminPrivilegeError)?.kind == .userDenied
     }
 }

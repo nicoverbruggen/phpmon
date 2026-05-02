@@ -93,8 +93,8 @@ private extension OnboardingWizardView {
     static func preview(
         flow: any OnboardingFlowDefinition = FullSetupOnboardingFlow(),
         hasCompletedIntroduction: Bool? = nil,
-        progress: OnboardingWizardViewModel.StepProgress,
-        state: OnboardingWizardViewModel.State = .idle,
+        progress: OnboardingProgress,
+        state: OnboardingRunState = .idle,
         outputLines: [OutputLine] = []
     ) -> OnboardingWizardView {
         return OnboardingWizardView(
