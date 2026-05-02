@@ -12,7 +12,9 @@ extension Toolchain {
         static let developerToolsInstall = "/usr/bin/xcode-select --install"
         static let homebrewInstall = #"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
 
-        static func phpComposerInstall(using brew: String) -> [String] {
+        static func phpComposerInstall(
+            using brew: String
+        ) -> [String] {
             return [
                 "\(brew) tap shivammathur/php",
                 "\(brew) tap shivammathur/extensions",
@@ -20,7 +22,11 @@ extension Toolchain {
             ]
         }
 
-        static func valetInstall(using brew: String, composer: String, valet: String) -> [String] {
+        static func valetInstall(
+            using brew: String,
+            composer: String,
+            valet: String
+        ) -> [String] {
             return [
                 "\(composer) global require laravel/valet",
                 "\(brew) install dnsmasq nginx",
@@ -28,7 +34,9 @@ extension Toolchain {
             ]
         }
 
-        static func valetTrust(using valet: String) -> String {
+        static func valetTrust(
+            using valet: String
+        ) -> String {
             return "\(valet) trust"
         }
     }

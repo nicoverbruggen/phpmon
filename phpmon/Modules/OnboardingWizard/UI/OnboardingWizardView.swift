@@ -59,20 +59,20 @@ struct OnboardingWizardView: View {
             Text("onboarding_wizard.skip_valet_confirmation.message".localized)
         }
         .task {
-            focusedButton = .primary
+            updateDefaultFocus()
             await viewModel.loadIfNeeded()
-            focusedButton = .primary
+            updateDefaultFocus()
         }
         .onChange(of: primaryButtonDisabled) { isDisabled in
             if !isDisabled {
-                focusedButton = .primary
+                updateDefaultFocus()
             }
         }
         .onChange(of: viewModel.state) { _ in
-            focusedButton = .primary
+            updateDefaultFocus()
         }
         .onChange(of: viewModel.currentStep) { _ in
-            focusedButton = .primary
+            updateDefaultFocus()
         }
     }
 
@@ -113,5 +113,15 @@ struct OnboardingWizardView: View {
         .padding(.horizontal, 28)
         .padding(.bottom, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    /**
+     The default focus should always be updated to the primary action
+     when the view's contents are being updated. This usually happens
+     when a task has completed or we are moving to the next step in
+     the onboarding flow's wizard.
+     */
+    func updateDefaultFocus() {
+        focusedButton = .primary
     }
 }

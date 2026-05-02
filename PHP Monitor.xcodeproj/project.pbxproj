@@ -276,7 +276,6 @@
 		03E311382F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */; };
 		03E3113B2F98E4E200E59EF0 /* OnboardingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */; };
-		04A6F7C13068D3B1007A1C01 /* OnboardingTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */; };
 		03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
 		03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */; };
@@ -337,6 +336,7 @@
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
+		04A6F7C13068D3B1007A1C01 /* OnboardingTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */; };
 		0A1A6208D3DD2495FBD8569B /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
 		1224231FF18A15CB876EEF50 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
 		148796E43977CCBC22AAB5CC /* StartupAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51912F2DA8FD7D8A1578644 /* StartupAlertWindowController.swift */; };
@@ -1219,18 +1219,10 @@
 		F0A1B2C3D4E5F60100001012 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
 		F0A1B2C3D4E5F60100001013 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
 		F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */; };
-		F0A1B2C3D4E5F60100002011 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002012 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002013 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002014 /* OnboardingFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */; };
-		F0A1B2C3D4E5F60100002021 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002022 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002023 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002024 /* FullSetupOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002031 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002032 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002033 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
-		F0A1B2C3D4E5F60100002034 /* ValetInstallOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002011 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002012 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002013 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */; };
+		F0A1B2C3D4E5F60100002014 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */; };
 		F0B1C2D3E4F5010000000011 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
 		F0B1C2D3E4F5010000000012 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
 		F0B1C2D3E4F5010000000014 /* PrivilegedCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */; };
@@ -1363,7 +1355,6 @@
 		03E311302F98D1A800E59EF0 /* OnboardingWizardWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardWindowController.swift; sourceTree = "<group>"; };
 		03E311352F98D1CA00E59EF0 /* Startup+OnboardingWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+OnboardingWizard.swift"; sourceTree = "<group>"; };
 		03E3113A2F98E4DF00E59EF0 /* OnboardingTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTest.swift; sourceTree = "<group>"; };
-		04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTestHelpers.swift; sourceTree = "<group>"; };
 		03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModel.swift; sourceTree = "<group>"; };
 		03E311422F99011B00E59EF0 /* OnboardingWizardViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardViewModelTest.swift; sourceTree = "<group>"; };
 		03E311452F9A000000E59EF0 /* OnboardingWizardCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWizardCommands.swift; sourceTree = "<group>"; };
@@ -1382,6 +1373,7 @@
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
+		04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTestHelpers.swift; sourceTree = "<group>"; };
 		2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertButtonRow.swift; sourceTree = "<group>"; };
 		31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryView.swift; sourceTree = "<group>"; };
 		349EE572012BA8A554E276E4 /* StartupAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertView.swift; sourceTree = "<group>"; };
@@ -1666,9 +1658,7 @@
 		F0A1B2C3D4E5F60100000007 /* OnboardingSidebarTimelineMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSidebarTimelineMarkerView.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100000008 /* PathEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathEntry.swift; sourceTree = "<group>"; };
 		F0A1B2C3D4E5F60100001001 /* Startup+ValetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Startup+ValetOnboarding.swift"; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowDefinition.swift; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullSetupOnboardingFlow.swift; sourceTree = "<group>"; };
-		F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValetInstallOnboardingFlow.swift; sourceTree = "<group>"; };
+		F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		F0B1C2D3E4F5010000000001 /* PrivilegedCommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandRunner.swift; sourceTree = "<group>"; };
 		F0B1C2D3E4F5010000000002 /* PrivilegedCommandAlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandAlertWindowController.swift; sourceTree = "<group>"; };
 		F0B1C2D3E4F5010000000003 /* PrivilegedCommandRunnerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegedCommandRunnerTest.swift; sourceTree = "<group>"; };
@@ -1924,9 +1914,7 @@
 		03CD4E7B2F9E0A29009A100D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				F0A1B2C3D4E5F60100002001 /* OnboardingFlowDefinition.swift */,
-				F0A1B2C3D4E5F60100002002 /* FullSetupOnboardingFlow.swift */,
-				F0A1B2C3D4E5F60100002003 /* ValetInstallOnboardingFlow.swift */,
+				F0A1B2C3D4E5F60100002001 /* OnboardingFlow.swift */,
 				03E3113C2F9900FC00E59EF0 /* OnboardingWizardViewModel.swift */,
 				03E311462F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift */,
 				03E311472F9A000000E59EF0 /* OnboardingWizardViewModel+Steps.swift */,
@@ -3343,9 +3331,7 @@
 				F0A1B2C3D4E5F60100000051 /* OnboardingBadgeView.swift in Sources */,
 				F0A1B2C3D4E5F60100000061 /* OnboardingSidebarStepView.swift in Sources */,
 				F0A1B2C3D4E5F60100000071 /* OnboardingSidebarTimelineMarkerView.swift in Sources */,
-				F0A1B2C3D4E5F60100002011 /* OnboardingFlowDefinition.swift in Sources */,
-				F0A1B2C3D4E5F60100002021 /* FullSetupOnboardingFlow.swift in Sources */,
-				F0A1B2C3D4E5F60100002031 /* ValetInstallOnboardingFlow.swift in Sources */,
+				F0A1B2C3D4E5F60100002011 /* OnboardingFlow.swift in Sources */,
 				03E3113D2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E311482F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
 				03E3114C2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
@@ -3675,9 +3661,7 @@
 				F0A1B2C3D4E5F60100000053 /* OnboardingBadgeView.swift in Sources */,
 				F0A1B2C3D4E5F60100000063 /* OnboardingSidebarStepView.swift in Sources */,
 				F0A1B2C3D4E5F60100000073 /* OnboardingSidebarTimelineMarkerView.swift in Sources */,
-				F0A1B2C3D4E5F60100002013 /* OnboardingFlowDefinition.swift in Sources */,
-				F0A1B2C3D4E5F60100002023 /* FullSetupOnboardingFlow.swift in Sources */,
-				F0A1B2C3D4E5F60100002033 /* ValetInstallOnboardingFlow.swift in Sources */,
+				F0A1B2C3D4E5F60100002013 /* OnboardingFlow.swift in Sources */,
 				03E3113F2F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E311492F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
 				03E3114D2F9A000000E59EF0 /* OnboardingWizardViewModel+Presentation.swift in Sources */,
@@ -4137,9 +4121,7 @@
 				C471E82C28F9BB340021E251 /* ValetListable.swift in Sources */,
 				C471E82828F9BB310021E251 /* BrewDiagnostics.swift in Sources */,
 				03E311322F98D1AD00E59EF0 /* OnboardingWizardWindowController.swift in Sources */,
-				F0A1B2C3D4E5F60100002014 /* OnboardingFlowDefinition.swift in Sources */,
-				F0A1B2C3D4E5F60100002024 /* FullSetupOnboardingFlow.swift in Sources */,
-				F0A1B2C3D4E5F60100002034 /* ValetInstallOnboardingFlow.swift in Sources */,
+				F0A1B2C3D4E5F60100002014 /* OnboardingFlow.swift in Sources */,
 				03E311402F99010000E59EF0 /* OnboardingWizardViewModel.swift in Sources */,
 				03E3114A2F9A000000E59EF0 /* OnboardingWizardCommands.swift in Sources */,
 				F0B1C2D3E4F5010000000024 /* PrivilegedCommandAlertWindowController.swift in Sources */,
@@ -4361,9 +4343,7 @@
 				F0A1B2C3D4E5F60100000052 /* OnboardingBadgeView.swift in Sources */,
 				F0A1B2C3D4E5F60100000062 /* OnboardingSidebarStepView.swift in Sources */,
 				F0A1B2C3D4E5F60100000072 /* OnboardingSidebarTimelineMarkerView.swift in Sources */,
-				F0A1B2C3D4E5F60100002012 /* OnboardingFlowDefinition.swift in Sources */,
-				F0A1B2C3D4E5F60100002022 /* FullSetupOnboardingFlow.swift in Sources */,
-				F0A1B2C3D4E5F60100002032 /* ValetInstallOnboardingFlow.swift in Sources */,
+				F0A1B2C3D4E5F60100002012 /* OnboardingFlow.swift in Sources */,
 				C4F780CD25D80B75000DBC97 /* Alert.swift in Sources */,
 				C4415E8E2B0287E90035F520 /* BrewFormulaeObservable.swift in Sources */,
 				0360115D2F9F839B0062762C /* PhpHelper+Generator.swift in Sources */,
