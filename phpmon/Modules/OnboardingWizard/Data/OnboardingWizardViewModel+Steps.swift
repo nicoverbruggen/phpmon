@@ -17,7 +17,7 @@ extension OnboardingWizardViewModel {
         outputLines = []
         state = .running
 
-        let output = await container.shell.pipe(Toolchain.Commands.developerToolsInstall)
+        let output = await container.shell.pipe(Toolchain.Commands.commandLineToolsInstall)
         appendIfPresent(output)
 
         hasTriggeredDeveloperToolsInstall = true

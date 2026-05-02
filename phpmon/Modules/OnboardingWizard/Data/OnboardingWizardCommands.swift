@@ -8,10 +8,14 @@
 
 extension Toolchain {
     enum Commands {
-        static let developerToolsPathLookup = "/usr/bin/xcode-select -p"
-        static let developerToolsInstall = "/usr/bin/xcode-select --install"
+        // 1. Installing Command Line Tools
+        static let commandLineToolsStatus = "/usr/bin/xcode-select -p"
+        static let commandLineToolsInstall = "/usr/bin/xcode-select --install"
+
+        // 2. Installing Homebrew
         static let homebrewInstall = #"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
 
+        // 3. PHP & Composer Installation
         static func phpComposerInstall(
             using brew: String
         ) -> [String] {
@@ -22,6 +26,7 @@ extension Toolchain {
             ]
         }
 
+        // 4. Valet Installation
         static func valetInstall(
             using brew: String,
             composer: String,
@@ -34,11 +39,15 @@ extension Toolchain {
             ]
         }
 
+        // 5. Valet Trust
         static func valetTrust(
             using valet: String
         ) -> String {
             return "\(valet) trust"
         }
+
+        static let checkSudoersValet = "cat /private/etc/sudoers.d/valet"
+        static let checkSudoersBrew = "cat /private/etc/sudoers.d/brew"
     }
 }
 

@@ -322,10 +322,10 @@ class OnboardingWizardViewModel: ObservableObject {
 
     private func hasValetTrustConfiguration() async -> Bool {
         let brewTrusted = await container.shell
-            .pipe("cat /private/etc/sudoers.d/brew")
+            .pipe(Toolchain.Commands.checkSudoersBrew)
             .out.contains(container.paths.brew)
         let valetTrusted = await container.shell
-            .pipe("cat /private/etc/sudoers.d/valet")
+            .pipe(Toolchain.Commands.checkSudoersValet)
             .out.contains(container.paths.valet)
 
         return brewTrusted && valetTrusted
