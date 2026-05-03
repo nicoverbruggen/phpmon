@@ -25,6 +25,7 @@ final class OnboardingTestFlow {
         var configuration = TestableConfigurations.working
         configuration.prepareFreshCoreOnboardingSystem()
         configuration.mockRequiredOnboardingInstallCommands()
+        configuration.allowsDelayedShellCommands = true
         scenario.apply(to: &configuration)
 
         self.app = testCase.launch(
@@ -81,7 +82,8 @@ final class OnboardingTestFlow {
     func installPhp() {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
-        assertValetInstallIsAvailable()
+        assertTerminalOutputContains("==> Fetching php and composer formulae...")
+        assertValetInstallIsAvailable(timeout: 5.0)
     }
 
     func beginValetInstall() {
@@ -92,8 +94,11 @@ final class OnboardingTestFlow {
     func installValet() {
         beginValetInstall()
         testCase.approvePrivilegedCommand(in: app)
+        assertTerminalOutputContains("Updating global composer dependencies...")
+        assertTerminalOutputContains("Fetching dnsmasq and nginx formulae")
+        assertTerminalOutputContains("Updating Valet configuration...")
         testCase.approvePrivilegedCommand(in: app)
-        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
+        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 4.0)
     }
 
     func skipValet() {
@@ -120,8 +125,8 @@ final class OnboardingTestFlow {
         assertNotExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 1.0)
     }
 
-    func assertValetInstallIsAvailable() {
-        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], 3.0)
+    func assertValetInstallIsAvailable(timeout: TimeInterval = 3.0) {
+        assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], timeout)
     }
 
     func assertContinueButtonIsAvailable() {
@@ -163,6 +168,17 @@ final class OnboardingTestFlow {
 
     private func click(_ element: XCUIElement) {
         testCase.click(element)
+    }
+
+    private func assertTerminalOutputContains(_ text: String, timeout: TimeInterval = 5.0) {
+        let terminalOutput = app.textViews["OnboardingTerminalOutputText"]
+        assertExists(terminalOutput, timeout)
+
+        let predicate = NSPredicate(format: "value CONTAINS %@", text)
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: terminalOutput)
+        let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+
+        XCTAssertEqual(result, .completed)
     }
 }
 
@@ -228,7 +244,15 @@ private extension TestableConfiguration {
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/php"] = .instant("Tapped shivammathur/php.\n")
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/extensions"] = .instant("Tapped shivammathur/extensions.\n")
         shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
-            items: [.instant("Installed PHP and Composer.\n")],
+            items: [
+                .delayed(0.2, "==> Fetching php and composer formulae...\n"),
+                .delayed(0.2, "==> Downloading php manifest...\n"),
+                .delayed(0.2, "==> Downloading composer manifest...\n"),
+                .delayed(0.2, "==> Pouring php bottle...\n"),
+                .delayed(0.2, "==> Pouring composer bottle...\n"),
+                .delayed(0.2, "==> Caveats\n"),
+                .delayed(2.0, "Installed PHP and Composer.\n")
+            ],
             transactions: [
                 .write("", to: "/opt/homebrew/bin/php"),
                 .write("", to: "/opt/homebrew/bin/composer"),
@@ -236,14 +260,28 @@ private extension TestableConfiguration {
             ]
         )
         shellOutput["/opt/homebrew/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
-            items: [.instant("Installed Valet.\n")],
+            items: [
+                .delayed(0.2, "Updating global composer dependencies...\n"),
+                .delayed(0.2, "Composer is installing laravel/valet...\n"),
+                .delayed(2.0, "Installed Valet.\n")
+            ],
             transactions: [
                 .write("", to: "/Users/fake/.composer/vendor/bin/valet")
             ]
         )
-        shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
+        shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = BatchFakeShellOutput(items: [
+            .delayed(0.2, "==> Fetching dnsmasq and nginx formulae...\n"),
+            .delayed(0.2, "==> Downloading dnsmasq manifest...\n"),
+            .delayed(0.2, "==> Downloading nginx manifest...\n"),
+            .delayed(0.2, "==> Pouring dnsmasq bottle...\n"),
+            .delayed(0.2, "==> Pouring nginx bottle...\n"),
+            .delayed(2.0, "==> Done.\n")
+        ])
         shellOutput["/Users/fake/.composer/vendor/bin/valet install"] = BatchFakeShellOutput(
-            items: [.instant("Configured Valet.\n")],
+            items: [
+                .delayed(0.5, "Updating Valet configuration...\n"),
+                .delayed(2.0, "Configured Valet.\n")
+            ],
             transactions: [
                 .mkdir("~/.config/valet"),
                 .write("", to: "/opt/homebrew/bin/valet"),

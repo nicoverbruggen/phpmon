@@ -38,6 +38,7 @@ private struct StartupOutputTextView: NSViewRepresentable {
         scrollView.backgroundColor = .black
 
         let textView = NSTextView()
+        textView.setAccessibilityIdentifier("OnboardingTerminalOutputText")
         // Console-style output is append-heavy, so an NSTextView is a better fit than
         // rebuilding a SwiftUI view tree as more shell output arrives.
         textView.isEditable = false

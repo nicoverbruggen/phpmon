@@ -77,14 +77,14 @@ class UITestCase: XCTestCase {
     /** Approves a privileged command prompt presented in UI tests. */
     public func approvePrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandApproveButton"]
-        assertExists(button, 3.0)
+        assertExists(button, 10.0)
         click(button)
     }
 
     /** Denies a privileged command prompt presented in UI tests. */
     public func denyPrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandDenyButton"]
-        assertExists(button, 3.0)
+        assertExists(button, 10.0)
         click(button)
     }
 }
