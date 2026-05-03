@@ -105,9 +105,7 @@ private extension OnboardingWizardView {
                 outputLines: outputLines,
                 hasCompletedIntroduction: hasCompletedIntroduction,
                 hasLoaded: true
-            ),
-            isShowingSkipConfirmation: false,
-            isShowingSkipValetConfirmation: false
+            )
         )
     }
 }

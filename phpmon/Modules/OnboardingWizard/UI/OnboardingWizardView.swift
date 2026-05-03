@@ -19,11 +19,7 @@ struct OnboardingWizardView: View {
     let windowWidth: CGFloat = 720
     let windowHeight: CGFloat = 500
 
-    init(
-        viewModel: OnboardingWizardViewModel,
-        isShowingSkipConfirmation: Bool = false,
-        isShowingSkipValetConfirmation: Bool = false
-    ) {
+    init(viewModel: OnboardingWizardViewModel) {
         self.viewModel = viewModel
     }
 
