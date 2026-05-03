@@ -18,7 +18,7 @@ extension RealShell {
      */
     internal static func getPath(
         shell: String,
-        timeout: TimeInterval = 10,
+        timeout: TimeInterval = 3,
         executeBeforeShellCommand: String? = nil
     ) -> String {
         // Read the system PATH. This is fast, reliable, and doesn't touch user profiles.
