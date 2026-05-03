@@ -86,7 +86,19 @@ class PreferenceVC: NSViewController {
         )
     }
 
-    func getMenuIconsPV() -> NSView {
+    func getHideDatabaseServicesPV() -> NSView {
+        return CheckboxPreferenceView.make(
+            sectionText: "prefs.hide_database_services".localized,
+            descriptionText: "prefs.hide_database_services_desc".localized,
+            checkboxText: "prefs.hide_database_services_title".localized,
+            preference: .hideDatabaseServicesInMenu,
+            action: {
+                MainMenu.shared.rebuild()
+            }
+        )
+    }
+
+    func getHideMenuIconsPV() -> NSView {
         return CheckboxPreferenceView.make(
             sectionText: "prefs.hide_menu_icons".localized,
             descriptionText: "prefs.hide_menu_icons_desc".localized,

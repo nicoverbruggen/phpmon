@@ -59,6 +59,9 @@ extension Startup {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
 
+        // Load database services if enabled
+        await container.preferences.detectDatabaseServices()
+
         // Determine what the `php` formula is aliased to (again)
         await container.phpEnvs.determinePhpAlias()
 

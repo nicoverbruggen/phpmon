@@ -505,6 +505,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.hide_menu_icons_desc" = "PHP Monitor will hide menu icons when this option is selected, which is how most macOS menus looked prior to macOS Tahoe. If you are still on an older version of macOS or prefer menus without icons, you may want to toggle this option.";
 "prefs.hide_menu_icons_title" = "Hide menu icons";
 
+"prefs.hide_database_services" = "Databases:";
+"prefs.hide_database_services_desc" = "PHP Monitor will automatically detect certain database services. If you don't want to see these in the menu, you can hide them here.";
+"prefs.hide_database_services_title" = "Hide database services";
+
 // NOTIFICATIONS
 
 "notification.version_changed_title" = "PHP %@ now active";
