@@ -179,7 +179,11 @@ class OnboardingWizardViewModel: ObservableObject {
                     return
                 }
 
-                let result = await self.stepRunner.run(currentAction)
+                let result = await self.stepRunner.run(currentAction) { [weak self] line in
+                    Task { @MainActor in
+                        self?.outputLines.append(line)
+                    }
+                }
                 await MainActor.run {
                     self.state = result.state
                     self.outputLines = result.outputLines

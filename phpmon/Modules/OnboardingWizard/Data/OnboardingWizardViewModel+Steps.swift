@@ -67,7 +67,10 @@ struct OnboardingStepRunner {
         App.hasLoadedTestableConfiguration || container.shell is TestableShell
     }
 
-    func run(_ action: OnboardingAction) async -> Result {
+    func run(
+        _ action: OnboardingAction,
+        didReceiveOutput: (@Sendable (OutputLine) -> Void)? = nil
+    ) async -> Result {
         switch action {
         case .installDeveloperTools:
             return await requestDeveloperToolsInstall()
@@ -82,9 +85,9 @@ struct OnboardingStepRunner {
         case .recheckPath:
             return await recheckPath()
         case .installPhpComposer:
-            return await installPhpComposer()
+            return await installPhpComposer(didReceiveOutput: didReceiveOutput)
         case .installValet:
-            return await installValet()
+            return await installValet(didReceiveOutput: didReceiveOutput)
         case .startSetup, .continueToStartup:
             return Result(state: .idle, outputLines: [], progress: nil, alertState: nil)
         }
@@ -224,12 +227,18 @@ struct OnboardingStepRunner {
         )
     }
 
-    private func installPhpComposer() async -> Result {
+    private func installPhpComposer(
+        didReceiveOutput: (@Sendable (OutputLine) -> Void)?
+    ) async -> Result {
         let collector = Locked<[OutputLine]>([])
 
         do {
             for command in CommandCatalog.Onboarding.phpComposerInstall(using: container.paths.brew) {
-                try await attachStreaming(command, collector: collector)
+                try await attachStreaming(
+                    command,
+                    collector: collector,
+                    didReceiveOutput: didReceiveOutput
+                )
             }
         } catch {
             collector.withLock {
@@ -265,7 +274,9 @@ struct OnboardingStepRunner {
         )
     }
 
-    private func installValet() async -> Result {
+    private func installValet(
+        didReceiveOutput: (@Sendable (OutputLine) -> Void)?
+    ) async -> Result {
         container.paths.detectBinaryPaths()
 
         let brew = container.paths.brew
@@ -294,12 +305,17 @@ struct OnboardingStepRunner {
                 composer: composer,
                 valet: composerValetShim
             ) {
-                try await attachStreaming(command, collector: collector)
+                try await attachStreaming(
+                    command,
+                    collector: collector,
+                    didReceiveOutput: didReceiveOutput
+                )
             }
 
             try await attachStreaming(
                 CommandCatalog.Onboarding.valetTrust(using: composerValetShim),
-                collector: collector
+                collector: collector,
+                didReceiveOutput: didReceiveOutput
             )
         } catch {
             installError = error
@@ -391,14 +407,19 @@ struct OnboardingStepRunner {
     private func attachStreaming(
         _ command: String,
         collector: Locked<[OutputLine]>,
+        didReceiveOutput: (@Sendable (OutputLine) -> Void)? = nil,
         timeout: TimeInterval = 600
     ) async throws {
         try await container.shell.attach(
             command,
             didReceiveOutput: { text, stream in
+                let line = OutputLine(text: text, stream: stream)
+
                 collector.withLock {
-                    $0.append(OutputLine(text: text, stream: stream))
+                    $0.append(line)
                 }
+
+                didReceiveOutput?(line)
             },
             withTimeout: timeout
         )
