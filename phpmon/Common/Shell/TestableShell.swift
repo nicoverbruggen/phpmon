@@ -16,6 +16,7 @@ public class TestableShell: ShellProtocol {
         self.filesystem = filesystem
     }
 
+    var allowsDelayedCommands: Bool = false
     var expectations: [String: BatchFakeShellOutput] = [:]
     var filesystem: TestableFileSystem?
 
@@ -67,9 +68,14 @@ public class TestableShell: ShellProtocol {
             return (Process(), .err("No Expected Output"))
         }
 
+        var ignoresDelay = isRunningTests
+        if allowsDelayedCommands {
+            ignoresDelay = false
+        }
+
         let output = await expectation.output(didReceiveOutput: { output, type in
             didReceiveOutput(output, type)
-        }, ignoreDelay: isRunningTests)
+        }, ignoreDelay: ignoresDelay)
 
         applyTransactions(for: expectation)
         return (Process(), output)
