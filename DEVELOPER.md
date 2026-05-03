@@ -35,6 +35,18 @@ These values are cached by the OS. You can clear this cache by running:
 defaults delete com.nicoverbruggen.phpmon && killall cfprefsd
 ```
 
+## 🔧 Homebrew
+
+To test with an upcoming version of Homebrew:
+
+    brew developer on
+    brew update
+    
+To return to the stable version:
+
+    brew developer off
+    brew update
+
 ## 🔧 Build instructions
 
 <img src="./docs/build.png" width="404px" alt="build button in Xcode"/>
