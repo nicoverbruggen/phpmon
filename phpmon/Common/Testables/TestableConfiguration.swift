@@ -15,6 +15,7 @@ public struct TestableConfiguration: Codable {
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
+    var allowsDelayedShellCommands: Bool
     var preferenceOverrides: [PreferenceName: PreferenceOverride]
     var internalStatsOverrides: [String: Int]
     var apiGetResponses: [URL: FakeWebApiResponse]
@@ -27,6 +28,7 @@ public struct TestableConfiguration: Codable {
         filesystem: [String: FakeFile],
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
+        allowsDelayedShellCommands: Bool = false,
         preferenceOverrides: [PreferenceName: PreferenceOverride],
         internalStatsOverrides: [String: Int] = [:],
         phpVersions: [VersionNumber],
@@ -39,6 +41,7 @@ public struct TestableConfiguration: Codable {
         self.filesystem = filesystem
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
+        self.allowsDelayedShellCommands = allowsDelayedShellCommands
         self.preferenceOverrides = preferenceOverrides
         self.internalStatsOverrides = internalStatsOverrides
         self.apiGetResponses = apiGetResponses
@@ -56,6 +59,7 @@ public struct TestableConfiguration: Codable {
              filesystem,
              shellOutput,
              commandOutput,
+             allowsDelayedShellCommands,
              preferenceOverrides,
              internalStatsOverrides,
              apiGetResponses,
@@ -163,6 +167,10 @@ public struct TestableConfiguration: Codable {
 
         if let shellPath, let shell = container.shell as? TestableShell {
             shell.PATH = shellPath
+        }
+
+        if let shell = container.shell as? TestableShell {
+            shell.allowsDelayedCommands = allowsDelayedShellCommands
         }
 
         Log.info("Applying temporary preference overrides...")
