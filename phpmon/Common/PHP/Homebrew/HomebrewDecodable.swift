@@ -43,9 +43,6 @@ struct HomebrewPackage: Decodable {
 
 struct HomebrewInstalled: Decodable {
     let version: String
-    let built_as_bottle: Bool
-    let installed_as_dependency: Bool
-    let installed_on_request: Bool
 }
 
 struct OutdatedFormulae: Decodable {
