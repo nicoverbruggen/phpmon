@@ -95,11 +95,12 @@ struct Constants {
      The Homebrew services that should be automatically
      detected and show up in the list of managed services.
      */
-    static let DetectedHomebrewServices: Set = [
-        "mailhog",
-        "mysql@",
-        "postgresql@",
-        "redis"
+    static let DetectedHomebrewServices: Set<DetectableService> = [
+        DetectableService(binary: "$(brew --prefix)/bin/mailhog", service: "mailhog"),
+        DetectableService(binary: "$(brew --prefix)/bin/postgres", service: "postgresql"),
+        DetectableService(binary: "$(brew --prefix)/bin/mysql", service: "mysql"),
+        DetectableService(binary: "$(brew --prefix)/bin/mariadb", service: "mariadb"),
+        DetectableService(binary: "$(brew --prefix)/bin/redis-server", service: "redis")
     ]
 
     /**

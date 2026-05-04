@@ -179,6 +179,10 @@
 		038131492F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
 		0381314A2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
 		0381314B2F4E00D500653177 /* TrackedTestableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038131472F4E00D100653177 /* TrackedTestableCommand.swift */; };
+		038214612FA8A2EB0010E3B4 /* DetectableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038214602FA8A2DC0010E3B4 /* DetectableService.swift */; };
+		038214622FA8A2EB0010E3B4 /* DetectableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038214602FA8A2DC0010E3B4 /* DetectableService.swift */; };
+		038214632FA8A2EB0010E3B4 /* DetectableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038214602FA8A2DC0010E3B4 /* DetectableService.swift */; };
+		038214642FA8A2EB0010E3B4 /* DetectableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038214602FA8A2DC0010E3B4 /* DetectableService.swift */; };
 		0386B0B42ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B52ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
 		0386B0B62ED36C3D00CA6795 /* Locked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386B0B32ED36C3D00CA6795 /* Locked.swift */; };
@@ -1331,6 +1335,7 @@
 		0381313C2F4DF3B400653177 /* CommandHistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryRow.swift; sourceTree = "<group>"; };
 		038131422F4E00C000653177 /* TrackedTestableShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedTestableShell.swift; sourceTree = "<group>"; };
 		038131472F4E00D100653177 /* TrackedTestableCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedTestableCommand.swift; sourceTree = "<group>"; };
+		038214602FA8A2DC0010E3B4 /* DetectableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectableService.swift; sourceTree = "<group>"; };
 		0386B0B32ED36C3D00CA6795 /* Locked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locked.swift; sourceTree = "<group>"; };
 		0386B0B82ED36DF800CA6795 /* LockedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockedTests.swift; sourceTree = "<group>"; };
 		038A2B7D2EDDB24400173ACF /* App+UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+UUID.swift"; sourceTree = "<group>"; };
@@ -2682,6 +2687,7 @@
 				03ACC6462ECCBA100070D4CD /* CaskFile+API.swift */,
 				C4E684082AF26B830023ED25 /* BrewTapFormulae.swift */,
 				031E2B682B1525A7007C29E1 /* BrewPhpExtension.swift */,
+				038214602FA8A2DC0010E3B4 /* DetectableService.swift */,
 			);
 			path = Homebrew;
 			sourceTree = "<group>";
@@ -3405,6 +3411,7 @@
 				03C099452EA15C8E00B76D43 /* Container+Real.swift in Sources */,
 				C4463FCC29804BCB007B93D5 /* RCFile.swift in Sources */,
 				C44264BE2850B86C007400F1 /* SwiftUIHelper.swift in Sources */,
+				038214632FA8A2EB0010E3B4 /* DetectableService.swift in Sources */,
 				C4E9D2C02878B336008FFDAD /* WelcomeScreenView.swift in Sources */,
 				032DAC2E2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */,
 				C4F2E4372752F0870020E974 /* BrewDiagnostics.swift in Sources */,
@@ -3741,6 +3748,7 @@
 				C4E2E84C28FC1E70003B070C /* DataExtension.swift in Sources */,
 				C471E86E28F9BB650021E251 /* MenuBarIcons.swift in Sources */,
 				C471E86F28F9BB650021E251 /* Stats.swift in Sources */,
+				038214622FA8A2EB0010E3B4 /* DetectableService.swift in Sources */,
 				C4CE7F9829683B43000102CF /* PhpVersionNumberCollection.swift in Sources */,
 				C4EA3C492BA4F947007B0BA7 /* CustomButtonStyles.swift in Sources */,
 				03B675E92EBA30D800EE04A9 /* NSImageExtension.swift in Sources */,
@@ -3909,6 +3917,7 @@
 				036C39022E5C883B008DAEDF /* Packagist.swift in Sources */,
 				0379C4A72ED720220035D7EA /* App+DetectApps.swift in Sources */,
 				C471E89428F9BB8F0021E251 /* LocalNotification.swift in Sources */,
+				038214612FA8A2EB0010E3B4 /* DetectableService.swift in Sources */,
 				C40934A5298EEB2C00D25014 /* CaskFile.swift in Sources */,
 				033E9DF82F44AD5400685F62 /* AppleScript.swift in Sources */,
 				C471E89528F9BB8F0021E251 /* MenuBarImageGenerator.swift in Sources */,
@@ -4222,6 +4231,7 @@
 				54FCFD2B276C8AA4004CE748 /* CheckboxPreferenceView.swift in Sources */,
 				C415D3B82770F294005EF286 /* Actions.swift in Sources */,
 				54B48B60275F66AE006D90C5 /* Application.swift in Sources */,
+				038214642FA8A2EB0010E3B4 /* DetectableService.swift in Sources */,
 				03FA847E2F9F91E00070A589 /* PrivilegedCommandApprovalView.swift in Sources */,
 				039C291A2E8AA314007F5FAB /* TestableWebApi.swift in Sources */,
 				031A80DD2F4CF1690016F7DD /* CommandTracker.swift in Sources */,
