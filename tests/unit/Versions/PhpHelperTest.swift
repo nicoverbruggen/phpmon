@@ -13,7 +13,8 @@ struct PhpHelperTest {
     @Test func installed_helper_contains_php_path() async throws {
         let container = Container.fake(files: [
             "/usr/local/bin/": .fake(.directory, readOnly: true),
-            "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary)
+            "/opt/homebrew/opt/php@8.4": .fake(.symlink, "/opt/homebrew/Cellar/php@8.4/8.4.0"),
+            "/opt/homebrew/Cellar/php@8.4/8.4.0/bin/php": .fake(.binary)
         ])
 
         let writtenFiles = await PhpHelper.regenerate(container, installedVersions: ["8.4"])
@@ -33,7 +34,8 @@ struct PhpHelperTest {
         container.bind(coreOnly: true, commandTracking: false)
         container.overrideFake(fileSystemFiles: [
             "/usr/local/bin/": .fake(.directory, readOnly: true),
-            "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary)
+            "/opt/homebrew/opt/php@8.4": .fake(.symlink, "/opt/homebrew/Cellar/php@8.4/8.4.0"),
+            "/opt/homebrew/Cellar/php@8.4/8.4.0/bin/php": .fake(.binary)
         ], commandTracking: false)
 
         _ = await PhpHelper.regenerate(container, installedVersions: ["8.4"])
