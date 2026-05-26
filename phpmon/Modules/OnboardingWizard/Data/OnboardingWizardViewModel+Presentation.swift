@@ -86,16 +86,6 @@ struct OnboardingViewState {
     let focusTarget: FocusTarget?
 }
 
-private struct OnboardingActionDescriptor {
-    let detailTitle: String
-    let detailDescription: String
-    let primaryButtonTitle: String
-    let learnMoreLink: URL?
-    let commandBlock: OnboardingViewState.CommandBlock?
-    let usesStatusBanner: Bool
-    let showsTerminalOutputWhenRunning: Bool
-}
-
 extension OnboardingWizardViewModel {
     var primaryButtonDisabled: Bool {
         return viewState.primaryButtonDisabled
@@ -177,116 +167,28 @@ extension OnboardingWizardViewModel {
     private func descriptor(for action: OnboardingAction) -> OnboardingActionDescriptor {
         switch action {
         case .startSetup:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.steps.introduction".localized,
-                detailDescription: "onboarding_wizard.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.start_setup".localized,
-                learnMoreLink: nil,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .startSetup()
         case .installDeveloperTools:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.developer_tools.title".localized,
-                detailDescription: "onboarding_wizard.detail.developer_tools.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.install_developer_tools".localized,
-                learnMoreLink: Constants.Urls.AppleCommandLineTools,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .installDeveloperTools()
         case .recheckDeveloperTools:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.developer_tools.title".localized,
-                detailDescription: "onboarding_wizard.detail.developer_tools.waiting".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.continue".localized,
-                learnMoreLink: Constants.Urls.AppleCommandLineTools,
-                commandBlock: nil,
-                usesStatusBanner: true,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .recheckDeveloperTools()
         case .installHomebrew:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.homebrew.title".localized,
-                detailDescription: "onboarding_wizard.detail.homebrew.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.copy_command".localized,
-                learnMoreLink: Constants.Urls.HomebrewWebsite,
-                commandBlock: OnboardingViewState.CommandBlock(
-                    title: "onboarding_wizard.command.homebrew.title".localized,
-                    lines: [CommandCatalog.Onboarding.homebrewInstall]
-                ),
-                usesStatusBanner: true,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .installHomebrew()
         case .recheckHomebrew:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.homebrew.title".localized,
-                detailDescription: "onboarding_wizard.detail.homebrew.waiting".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.check_again".localized,
-                learnMoreLink: Constants.Urls.HomebrewWebsite,
-                commandBlock: OnboardingViewState.CommandBlock(
-                    title: "onboarding_wizard.command.homebrew.title".localized,
-                    lines: [CommandCatalog.Onboarding.homebrewInstall]
-                ),
-                usesStatusBanner: true,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .recheckHomebrew()
         case .fixPathAutomatically:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.path.title".localized,
-                detailDescription: "onboarding_wizard.detail.path.description.zsh".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.fix_path".localized,
-                learnMoreLink: nil,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .fixPathAutomatically()
         case .recheckPath:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.path.title".localized,
-                detailDescription: "onboarding_wizard.detail.path.description.manual".localized(
-                    container.paths.configuredShellPath
-                ),
-                primaryButtonTitle: "onboarding_wizard.buttons.check_again".localized,
-                learnMoreLink: nil,
-                commandBlock: OnboardingViewState.CommandBlock(
-                    title: "onboarding_wizard.command.path.title".localized,
-                    lines: ShellEnvironment(container).pathInstructionLines()
-                ),
-                usesStatusBanner: true,
-                showsTerminalOutputWhenRunning: false
+            return .recheckPath(
+                configuredShellPath: container.paths.configuredShellPath,
+                instructionLines: ShellEnvironment(container).pathInstructionLines()
             )
         case .installPhpComposer:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.php_composer.title".localized,
-                detailDescription: "onboarding_wizard.detail.php_composer.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.install_php_composer".localized,
-                learnMoreLink: nil,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: true
-            )
+            return .installPhpComposer()
         case .installValet:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.valet.title".localized,
-                detailDescription: "onboarding_wizard.detail.valet.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.install_valet".localized,
-                learnMoreLink: nil,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: true
-            )
+            return .installValet()
         case .continueToStartup:
-            return OnboardingActionDescriptor(
-                detailTitle: "onboarding_wizard.detail.ready.title".localized,
-                detailDescription: "onboarding_wizard.detail.ready.description".localized,
-                primaryButtonTitle: "onboarding_wizard.buttons.continue".localized,
-                learnMoreLink: nil,
-                commandBlock: nil,
-                usesStatusBanner: false,
-                showsTerminalOutputWhenRunning: false
-            )
+            return .continueToStartup()
         }
     }
 
@@ -313,37 +215,37 @@ extension OnboardingWizardViewModel {
     }
 
     private func makeIntroductionItems() -> [OnboardingViewState.IntroductionItem] {
-        let items: [(OnboardingStep, String, String)] = [
-            (
-                .developerTools,
-                "onboarding_wizard.steps.developer_tools".localized,
-                "onboarding_wizard.intro.developer_tools".localized
+        let items: [IntroductionItemDescriptor] = [
+            IntroductionItemDescriptor(
+                step: .developerTools,
+                title: "onboarding_wizard.steps.developer_tools".localized,
+                description: "onboarding_wizard.intro.developer_tools".localized
             ),
-            (
-                .homebrew,
-                "onboarding_wizard.steps.homebrew".localized,
-                "onboarding_wizard.intro.homebrew".localized
+            IntroductionItemDescriptor(
+                step: .homebrew,
+                title: "onboarding_wizard.steps.homebrew".localized,
+                description: "onboarding_wizard.intro.homebrew".localized
             ),
-            (
-                .phpComposer,
-                "onboarding_wizard.steps.php_composer".localized,
-                "onboarding_wizard.intro.php_composer".localized
+            IntroductionItemDescriptor(
+                step: .phpComposer,
+                title: "onboarding_wizard.steps.php_composer".localized,
+                description: "onboarding_wizard.intro.php_composer".localized
             ),
-            (
-                .valet,
-                "onboarding_wizard.steps.valet".localized,
-                "onboarding_wizard.intro.valet".localized
+            IntroductionItemDescriptor(
+                step: .valet,
+                title: "onboarding_wizard.steps.valet".localized,
+                description: "onboarding_wizard.intro.valet".localized
             )
         ]
 
         return items.enumerated().map { index, item in
             OnboardingViewState.IntroductionItem(
-                step: item.0,
+                step: item.step,
                 number: index + 1,
-                title: item.1,
+                title: item.title,
                 badgeTitle: nil,
-                description: item.2,
-                isCompleted: isStepCompleted(item.0)
+                description: item.description,
+                isCompleted: isStepCompleted(item.step)
             )
         }
     }
