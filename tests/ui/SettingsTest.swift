@@ -66,9 +66,6 @@ final class SettingsTest: UITestCase {
         assertExists(searchField, 2.0)
         XCTAssertEqual(searchField.placeholderValue, "generic.search".localized(for: "ja"))
 
-        // Switch back to English
-        let resetPopup = settingsWindowJa.popUpButtons.element(boundBy: 0)
-        resetPopup.click()
-        resetPopup.menuItems["English"].click()
+        // No cleanup is needed: each testable launch explicitly starts in English.
     }
 }
