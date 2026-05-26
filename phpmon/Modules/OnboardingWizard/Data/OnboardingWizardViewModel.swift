@@ -246,7 +246,7 @@ class OnboardingWizardViewModel: ObservableObject {
         case .skipValetConfirmation:
             dismissAlert()
             skipValetSetup()
-        case .developerToolsIncomplete, .valetSudoersCleanupFailed(_):
+        case .developerToolsIncomplete, .valetSudoersCleanupFailed:
             dismissAlert()
         }
     }
