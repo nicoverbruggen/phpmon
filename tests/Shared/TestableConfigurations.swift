@@ -14,6 +14,7 @@ class TestableConfigurations {
     static var working: TestableConfiguration {
         return TestableConfiguration(
             architecture: "arm64",
+            configuredShell: "/bin/zsh",
             filesystem: [
                 "/usr/local/bin/"
                     : .fake(.directory, readOnly: true),
