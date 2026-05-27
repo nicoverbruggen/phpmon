@@ -80,43 +80,12 @@ class HomebrewFormula: Equatable, Hashable, CustomStringConvertible {
         return matches
             .filter { $0.name.hasPrefix(servicePrefix) }
             .max { lhs, rhs in
-                guard let lhsVersion = serviceVersion(for: lhs) else {
-                    return true
-                }
+                let lhsVersion = String(lhs.name.dropFirst(servicePrefix.count))
+                let rhsVersion = String(rhs.name.dropFirst(servicePrefix.count))
 
-                guard let rhsVersion = serviceVersion(for: rhs) else {
-                    return false
-                }
-
-                return isOlder(lhsVersion, than: rhsVersion)
+                return lhsVersion.versionCompare(rhsVersion) == .orderedAscending
             }
             ?? matches.first
-    }
-
-    private func serviceVersion(for service: HomebrewService) -> [Int]? {
-        guard let servicePrefix, service.name.hasPrefix(servicePrefix) else {
-            return nil
-        }
-
-        let version = service.name.dropFirst(servicePrefix.count)
-        let components = version.split(separator: ".").compactMap { Int($0) }
-
-        return components.isEmpty ? nil : components
-    }
-
-    private func isOlder(_ lhs: [Int], than rhs: [Int]) -> Bool {
-        let componentCount = max(lhs.count, rhs.count)
-
-        for index in 0..<componentCount {
-            let lhsComponent = lhs.indices.contains(index) ? lhs[index] : 0
-            let rhsComponent = rhs.indices.contains(index) ? rhs[index] : 0
-
-            if lhsComponent != rhsComponent {
-                return lhsComponent < rhsComponent
-            }
-        }
-
-        return false
     }
 
     static func == (lhs: HomebrewFormula, rhs: HomebrewFormula) -> Bool {

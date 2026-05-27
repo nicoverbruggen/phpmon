@@ -38,8 +38,7 @@ class AppearancePreferencesVC: PreferenceVC {
         vc.addView(when: true, vc.getDynamicIconPV())
             .addView(when: true, vc.getIconOptionsPV())
             .addView(when: true, vc.getIconDensityPV())
-            // TODO: Enable when functionality is ready
-            // .addView(when: true, vc.getHideDatabaseServicesPV())
+            .addView(when: true, vc.getHideAutoDetectedServicesPV())
             .addView(when: true, vc.getHideMenuIconsPV())
 
         return vc
