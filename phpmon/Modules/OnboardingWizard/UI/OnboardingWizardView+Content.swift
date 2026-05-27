@@ -109,27 +109,27 @@ private extension OnboardingViewState.StatusBanner {
     var foregroundColor: Color {
         switch severity {
         case .info:
-            return .primary
+            return .statusColorBlue
         case .warning:
-            return .orange.opacity(0.95)
+            return .statusColorOrange.opacity(0.95)
         }
     }
 
     var backgroundColor: Color {
         switch severity {
         case .info:
-            return Color(nsColor: .controlBackgroundColor)
+            return .statusColorBlue.opacity(0.10)
         case .warning:
-            return .orange.opacity(0.10)
+            return .statusColorOrange.opacity(0.10)
         }
     }
 
     var borderColor: Color {
         switch severity {
         case .info:
-            return Color.black.opacity(0.06)
+            return .statusColorBlue.opacity(0.24)
         case .warning:
-            return .orange.opacity(0.24)
+            return .statusColorOrange.opacity(0.24)
         }
     }
 }
