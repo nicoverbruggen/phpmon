@@ -108,6 +108,21 @@ final class OnboardingTest: UITestCase {
         flow.terminate()
     }
 
+    // If an automatic terminal-backed step fails, the captured terminal output should remain
+    // visible so the user can see what went wrong.
+    final func test_launch_keeps_terminal_output_visible_after_install_step_fails() throws {
+        let flow = onboardingFlow(with: .phpComposerInstallFailsWithTerminalOutput)
+
+        flow.assertDidOpenWizard()
+        flow.startWizard()
+        flow.installHomebrew()
+        flow.configurePathAutomatically()
+        flow.beginPhpInstall()
+        flow.assertPhpInstallIsReadyForRetry()
+        flow.assertTerminalOutputContains("Simulated PHP install failure")
+        flow.terminate()
+    }
+
     // Valet onboarding now pauses twice for privileged actions in UI tests:
     // once to install temporary permissions and once to remove them afterwards.
     final func test_launch_requires_approving_privileged_valet_actions() throws {

@@ -133,6 +133,17 @@ final class OnboardingTestFlow {
         assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], timeout)
     }
 
+    func assertPhpInstallIsReadyForRetry() {
+        let installButton = app.buttons["onboarding_wizard.buttons.install_php_composer".localized]
+        assertExists(installButton, 3.0)
+
+        let predicate = NSPredicate(format: "isEnabled == true")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: installButton)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 5.0)
+
+        XCTAssertEqual(result, .completed)
+    }
+
     func assertContinueButtonIsAvailable() {
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
     }
@@ -185,7 +196,7 @@ final class OnboardingTestFlow {
         testCase.click(element)
     }
 
-    private func assertTerminalOutputContains(_ text: String, timeout: TimeInterval = 5.0) {
+    func assertTerminalOutputContains(_ text: String, timeout: TimeInterval = 5.0) {
         let terminalOutput = app.textViews["OnboardingTerminalOutputText"]
         assertExists(terminalOutput, timeout)
 
@@ -202,6 +213,7 @@ enum OnboardingScenario {
     case developerToolsMissing
     case firstLaunchPartialSetup
     case manualPathFixRequired
+    case phpComposerInstallFailsWithTerminalOutput
 
     func apply(to configuration: inout TestableConfiguration) {
         switch self {
@@ -213,6 +225,8 @@ enum OnboardingScenario {
             configuration.mockFirstLaunchPartialSetup()
         case .manualPathFixRequired:
             configuration.configuredShell = "/bin/bash"
+        case .phpComposerInstallFailsWithTerminalOutput:
+            configuration.mockPhpComposerInstallFailure()
         }
     }
 }
@@ -353,6 +367,13 @@ private extension TestableConfiguration {
                 )
             ]
         )
+    }
+
+    mutating func mockPhpComposerInstallFailure() {
+        shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(items: [
+            .delayed(0.2, "==> Fetching php and composer formulae...\n"),
+            .delayed(0.2, "Error: Simulated PHP install failure\n", .stdErr)
+        ])
     }
 
     mutating func mockFirstLaunchPartialSetup() {
