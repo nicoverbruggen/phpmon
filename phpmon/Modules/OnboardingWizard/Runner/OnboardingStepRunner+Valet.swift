@@ -16,6 +16,9 @@ extension OnboardingStepRunner {
 
         let brew = container.paths.brew
         let composer = container.paths.composer ?? "composer"
+
+        // Composer's shim and script are both used to run the initial install
+        // Once this install concludes, a symlink in Homebrew's bin directory becomes what PHP Monitor calls
         let composerValetShim = "\(container.paths.homePath)/.composer/vendor/bin/valet"
         let composerValetScript = "\(container.paths.homePath)/.composer/vendor/laravel/valet/valet"
 
