@@ -14,10 +14,11 @@ class FakeServicesManager: ServicesManager {
 
     init(
         _ container: Container,
+        registry: ServicesRegistry,
         formulae: [String] = ["php", "nginx", "dnsmasq"],
         status: Service.Status = .active
     ) {
-        super.init(container)
+        super.init(container, registry: registry)
 
         Log.warn("A fake services manager is being used, so Homebrew formula resolver is set to act in fake mode.")
         Log.warn("If you do not want this behaviour, do not make use of a `FakeServicesManager`!")

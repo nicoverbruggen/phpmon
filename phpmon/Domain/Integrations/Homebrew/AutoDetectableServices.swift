@@ -41,9 +41,21 @@ actor AutoDetectableServices {
         DetectableService(binary: "$(brew --prefix)/bin/redis-server", service: "redis")
     ]
 
-    let foundServices: Set<DetectableService> = []
+    private(set) var foundServices: Set<DetectableService> = []
 
     func discoverServices() async {
-        // TODO: Use DetectableHomebrewServices
+        foundServices = Set(Self.DetectableHomebrewServices.filter { service in
+            container.filesystem.isExecutableFile(
+                service.binary.replacing("$(brew --prefix)", with: brewPrefix)
+            )
+        })
+    }
+
+    private var brewPrefix: String {
+        if !container.paths.binPath.hasSuffix("/bin") {
+            return container.paths.binPath
+        }
+
+        return String(container.paths.binPath.dropLast("/bin".count))
     }
 }

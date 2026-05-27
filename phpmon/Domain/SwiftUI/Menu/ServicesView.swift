@@ -176,6 +176,7 @@ struct ServiceView: View {
 #Preview("Active 1") {
     ServicesView(manager: FakeServicesManager(
         App.shared.container,
+        registry: ServicesRegistry(App.shared.container),
         formulae: ["php", "nginx", "dnsmasq"],
         status: .active
     ), perRow: 4)
@@ -185,6 +186,7 @@ struct ServiceView: View {
 #Preview("Active 2") {
     ServicesView(manager: FakeServicesManager(
         App.shared.container,
+        registry: ServicesRegistry(App.shared.container),
         formulae: [
             "php", "nginx", "dnsmasq", "thing1",
             "thing2", "thing3", "thing4", "thing5"

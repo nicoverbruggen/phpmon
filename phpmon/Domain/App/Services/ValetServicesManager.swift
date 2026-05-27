@@ -13,9 +13,9 @@ import NVAlert
 class ValetServicesManager: ServicesManager {
     private let data: ValetServicesDataManager
 
-    override init(_ container: Container) {
-        self.data = ValetServicesDataManager(container)
-        super.init(container)
+    override init(_ container: Container, registry: ServicesRegistry) {
+        self.data = ValetServicesDataManager(container, registry: registry)
+        super.init(container, registry: registry)
     }
 
     override func reloadServicesStatus() async {
