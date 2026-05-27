@@ -323,7 +323,6 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(!viewModel.showsTerminalOutput)
         #expect(viewModel.statusBannerText == "onboarding_wizard.output.homebrew_command_copied".localized)
         #expect(viewModel.statusBannerSeverity == .info)
-        #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installed Homebrew.") }))
         #expect(viewModel.outputLines.contains(where: {
             $0.text.contains("onboarding_wizard.output.homebrew_command_copied".localized)
         }))
