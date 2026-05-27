@@ -231,7 +231,7 @@ extension MainMenu {
 
     @objc func openActiveConfigFolder() {
         guard let install = container.phpEnvs.phpInstall else {
-            // TODO: Can't open the config if no PHP version is active
+            // Can't open the config if no PHP version is active
             return
         }
 

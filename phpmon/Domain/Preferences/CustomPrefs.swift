@@ -105,5 +105,6 @@ extension Preferences {
         // TODO: check `mysql`, `mariadb` and `postgresql`
 
         // Append these to `customPreferences.services` but don't add duplicates
+        // (or check them some other way since `customPreferences` may not load!)
     }
 }
