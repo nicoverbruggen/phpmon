@@ -168,6 +168,44 @@ final class MainMenuTest: UITestCase {
         app.terminate()
     }
 
+    final func test_latest_versioned_auto_detected_service_is_displayed() throws {
+        let userServicesResponse = """
+        [
+            {
+                "name": "postgresql@14",
+                "service_name": "homebrew.mxcl.postgresql@14",
+                "running": true,
+                "loaded": true,
+                "pid": 140,
+                "user": "user",
+                "status": "started"
+            },
+            {
+                "name": "postgresql@16",
+                "service_name": "homebrew.mxcl.postgresql@16",
+                "running": true,
+                "loaded": true,
+                "pid": 160,
+                "user": "user",
+                "status": "started"
+            }
+        ]
+        """
+
+        var config = TestableConfigurations.working
+        config.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant("""
+        postgresql@14
+        postgresql@16
+        """)
+        config.shellOutput["/opt/homebrew/bin/brew services info --all --json"] = .instant(userServicesResponse)
+
+        let app = launch(openMenu: true, with: config)
+
+        assertExists(app.staticTexts["POSTGRESQL@16"], 3.0)
+        assertNotExists(app.staticTexts["POSTGRESQL@14"], 1.0)
+        assertNotExists(app.staticTexts["POSTGRESQL"], 1.0)
+    }
+
     /**
      Verifies that the ServicesView updates correctly when Homebrew service
      statuses change while the menu is open. On `menuWillOpen`, a background

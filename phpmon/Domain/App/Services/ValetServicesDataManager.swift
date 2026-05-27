@@ -75,9 +75,7 @@ actor ValetServicesDataManager {
      - Returns: Array of HomebrewService objects, or empty array if fetching fails
      */
     private func fetchHomebrewServices(elevated: Bool, formulae: [HomebrewFormula]) async -> [HomebrewService] {
-        let serviceNames = formulae
-            .filter { $0.elevated == elevated }
-            .map { $0.name }
+        let formulae = formulae.filter { $0.elevated == elevated }
 
         let command = elevated
             ? "sudo \(self.container.paths.brew) services info --all --json"
@@ -91,9 +89,12 @@ actor ValetServicesDataManager {
         }
 
         do {
-            return try JSONDecoder()
+            let services = try JSONDecoder()
                 .decode([HomebrewService].self, from: jsonData)
-                .filter { serviceNames.contains($0.name) }
+
+            return formulae.compactMap { formula in
+                formula.latestService(from: services)
+            }
         } catch {
             Log.err("Failed to decode \(elevated ? "root" : "user") services JSON: \(error)")
             return []
@@ -101,6 +102,10 @@ actor ValetServicesDataManager {
     }
 
     func getHomebrewService(named: String) -> HomebrewService? {
-        return homebrewServices.first { $0.name == named }
+        guard let formula = registry.formulae.first(where: { $0.name == named }) else {
+            return homebrewServices.first { $0.name == named }
+        }
+
+        return formula.latestService(from: homebrewServices)
     }
 }

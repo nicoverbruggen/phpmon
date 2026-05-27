@@ -7,8 +7,23 @@
 //
 
 struct DetectableService: Hashable {
-    let binary: String
     let service: String
+
+    init(service: String) {
+        self.service = service
+    }
+
+    var servicePrefix: String {
+        return "\(service)@"
+    }
+
+    func matchesInstalledFormula(_ formula: String) -> Bool {
+        if formula == service {
+            return true
+        }
+
+        return formula.hasPrefix(servicePrefix)
+    }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(service)
@@ -34,28 +49,28 @@ actor AutoDetectableServices {
      detected and show up in the list of managed services.
      */
     static let DetectableHomebrewServices: Set<DetectableService> = [
-        DetectableService(binary: "$(brew --prefix)/bin/mailhog", service: "mailhog"),
-        DetectableService(binary: "$(brew --prefix)/bin/postgres", service: "postgresql"),
-        DetectableService(binary: "$(brew --prefix)/bin/mysql", service: "mysql"),
-        DetectableService(binary: "$(brew --prefix)/bin/mariadb", service: "mariadb"),
-        DetectableService(binary: "$(brew --prefix)/bin/redis-server", service: "redis")
+        DetectableService(service: "mailhog"),
+        DetectableService(service: "postgresql"),
+        DetectableService(service: "mysql"),
+        DetectableService(service: "mariadb"),
+        DetectableService(service: "redis")
     ]
 
     private(set) var foundServices: Set<DetectableService> = []
 
     func discoverServices() async {
+        let formulae = await installedFormulae()
+
         foundServices = Set(Self.DetectableHomebrewServices.filter { service in
-            container.filesystem.isExecutableFile(
-                service.binary.replacing("$(brew --prefix)", with: brewPrefix)
-            )
+            formulae.contains(where: service.matchesInstalledFormula)
         })
     }
 
-    private var brewPrefix: String {
-        if !container.paths.binPath.hasSuffix("/bin") {
-            return container.paths.binPath
-        }
-
-        return String(container.paths.binPath.dropLast("/bin".count))
+    private func installedFormulae() async -> [String] {
+        return await container.shell
+            .pipe("\(container.paths.brew) list --formula")
+            .out
+            .split(separator: "\n")
+            .map { String($0) }
     }
 }

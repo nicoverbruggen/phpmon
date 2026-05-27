@@ -42,7 +42,7 @@ final class ServicesRegistry {
 
         if !Preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
             detectedServices
-                .map { HomebrewFormula($0.service, elevated: false) }
+                .map { HomebrewFormula($0.service, elevated: false, servicePrefix: $0.servicePrefix) }
                 .forEach(appendIfMissing)
         }
 

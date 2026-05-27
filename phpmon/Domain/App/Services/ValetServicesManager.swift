@@ -29,7 +29,7 @@ class ValetServicesManager: ServicesManager {
             self.services = self.formulae.map { formula in
                 Service(
                     formula: formula,
-                    service: homebrewServices.first { $0.name == formula.name }
+                    service: formula.latestService(from: homebrewServices)
                 )
             }
 
@@ -53,7 +53,7 @@ class ValetServicesManager: ServicesManager {
         // Run the command
         await brew(
             container,
-            "services \(action) \(wrapper.formula.name)",
+            "services \(action) \(wrapper.serviceName ?? wrapper.formula.name)",
             sudo: wrapper.formula.elevated
         )
 
