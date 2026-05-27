@@ -93,6 +93,7 @@ class PreferenceVC: NSViewController {
             checkboxText: "prefs.hide_auto_detected_services_title".localized,
             preference: .hideAutoDetectedServicesInMenu,
             action: {
+                // TODO: the height of the services view may need to be recalculated!
                 MainMenu.shared.rebuild()
             }
         )
