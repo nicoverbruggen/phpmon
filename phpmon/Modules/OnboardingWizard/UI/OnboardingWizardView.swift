@@ -86,6 +86,9 @@ struct OnboardingWizardView: View {
         )
     }
 
+    /**
+     This binding is required to display the "skip Valet" alert properly.
+     */
     var skipValetConfirmationBinding: Binding<Bool> {
         Binding(
             get: {

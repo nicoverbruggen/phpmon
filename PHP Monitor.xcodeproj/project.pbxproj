@@ -1811,11 +1811,11 @@
 			isa = PBXGroup;
 			children = (
 				0360638A2FC5E8EF000F779C /* OnboardingStepRunner.swift */,
-				036063A42FC5EA68000F779C /* OnboardingStepRunner+Valet.swift */,
-				0360639F2FC5EA5F000F779C /* OnboardingStepRunner+PHP.swift */,
-				0360639A2FC5EA51000F779C /* OnboardingStepRunner+Environment.swift */,
-				036063952FC5EA47000F779C /* OnboardingStepRunner+Homebrew.swift */,
 				036063902FC5EA3E000F779C /* OnboardingStepRunner+DevTools.swift */,
+				036063952FC5EA47000F779C /* OnboardingStepRunner+Homebrew.swift */,
+				0360639A2FC5EA51000F779C /* OnboardingStepRunner+Environment.swift */,
+				0360639F2FC5EA5F000F779C /* OnboardingStepRunner+PHP.swift */,
+				036063A42FC5EA68000F779C /* OnboardingStepRunner+Valet.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";

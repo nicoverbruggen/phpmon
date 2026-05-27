@@ -13,3 +13,25 @@ struct OutputLine: Identifiable {
     let text: String
     let stream: ShellStream
 }
+
+/**
+ Convenience helpers for OutputLine.
+ */
+extension OutputLine {
+    static func make(
+        _ text: [String],
+        as stream: ShellStream = .stdOut
+    ) -> [OutputLine] {
+        return text.map {
+            OutputLine(text: $0, stream: stream)
+        }
+    }
+
+    static func outLines( _ text: [String]) -> [OutputLine] {
+        Self.make(text, as: .stdErr)
+    }
+
+    static func errLines( _ text: [String]) -> [OutputLine] {
+        Self.make(text, as: .stdErr)
+    }
+}

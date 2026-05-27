@@ -90,18 +90,14 @@ class UITestCase: XCTestCase {
 }
 
 extension XCPMApplication {
-    /**
-     Opens a given menu item found in the menu bar's status item.
-     */
+    /** Opens a given menu item found in the menu bar's status item. */
     public func mainMenuItem(withText text: String) -> XCUIElement {
         self.statusItems.firstMatch.menuItems[text].firstMatch
     }
 }
 
 extension XCUIElement {
-    /**
-     Clears all the text from a given element.
-     */
+    /** Clears all the text from a given element. */
     func clearText() {
         guard let stringValue = self.value as? String else {
             return
@@ -111,6 +107,7 @@ extension XCUIElement {
         for _ in stringValue {
             deleteString += XCUIKeyboardKey.delete.rawValue
         }
+
         typeText(deleteString)
     }
 }

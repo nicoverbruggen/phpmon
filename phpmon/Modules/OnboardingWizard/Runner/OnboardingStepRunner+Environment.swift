@@ -9,14 +9,17 @@
 import Foundation
 
 extension OnboardingStepRunner {
-    func fixPathAutomatically() async -> Result {
+    /**
+     Fixing the PATH means making it ready for PHP Monitor.
+
+     - Adding PHP Monitor's `bin` directory to the PATH in `.zshrc`.
+     - Adding Composer's `bin` directory to the PATH in `.zshrc`.
+     - Adding Homebrew's `bin` directory to the PATH in `.zshrc`.
+     */
+
+    func fixPathAutomatically() async -> Result { // TODO: Perhaps rename this to "updatePathAutomatically"?
         let zshRunCommand = ZshRunCommand(container)
-        var outputLines: [OutputLine] = [
-            OutputLine(
-                text: "onboarding_wizard.output.path_updating".localized,
-                stream: .stdOut
-            )
-        ]
+        var outputLines = OutputLine.outLines(["onboarding_wizard.output.path_updating".localized])
 
         let phpMonitorResult = await zshRunCommand.addPhpMonitorBinPath()
         let composerResult = await zshRunCommand.addComposerBinPath()
@@ -24,14 +27,21 @@ extension OnboardingStepRunner {
 
         await container.shell.reloadEnvPath()
         let progress = await probe.detectProgress()
-
         let allFilesUpdated = phpMonitorResult && composerResult && homebrewResult
 
+        // ----------------------------------------------------------------------------
+        // A. Ideally, all files have been updated and the PATH is marked as configured
+        // ----------------------------------------------------------------------------
         if allFilesUpdated && progress.pathConfigured {
             return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
 
+        // ----------------------------------------------------------------------------
+        // B. Files were updated but the shell needs to be reloaded
+        //    (requires manual intervention from the user)
+        // ----------------------------------------------------------------------------
         if allFilesUpdated {
+            // TODO: Verify that conditions under which this scenario is valid? Might need to remove this!
             appendOutput("onboarding_wizard.output.path_reopen_shell".localized, .stdOut, to: &outputLines)
 
             return Result(
@@ -42,6 +52,10 @@ extension OnboardingStepRunner {
             )
         }
 
+        // ----------------------------------------------------------------------------
+        // C. Fall through case: step has not been resolved
+        //    (requires manual intervention from the user)
+        // ----------------------------------------------------------------------------
         appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr, to: &outputLines)
 
         return Result(
@@ -52,6 +66,10 @@ extension OnboardingStepRunner {
         )
     }
 
+    /**
+     Forces the user's PATH to be re-checked.
+     Normally only applicable when not using `.zshrc` (which is updated automatically).
+     */
     func recheckPath() async -> Result {
         await container.shell.reloadEnvPath()
         let progress = await probe.detectProgress()

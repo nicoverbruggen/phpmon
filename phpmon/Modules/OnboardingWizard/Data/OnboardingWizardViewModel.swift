@@ -11,6 +11,7 @@ import Foundation
 @MainActor
 class OnboardingWizardViewModel: ObservableObject {
     let container: Container
+
     private let flow: any OnboardingFlowDefinition
     private let probe: OnboardingEnvironmentProbe
     private let stepRunner: OnboardingStepRunner
