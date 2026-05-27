@@ -153,7 +153,7 @@ extension OnboardingWizardViewModel {
             commandBlock: descriptor.commandBlock,
             statusBanner: statusBanner,
             showsTerminalOutput: descriptor.showsTerminalOutputWhenRunning
-                && state == .running
+                && (state == .running || state == .failed)
                 && !outputLines.isEmpty
                 && statusBanner == nil,
             outputLines: outputLines,
