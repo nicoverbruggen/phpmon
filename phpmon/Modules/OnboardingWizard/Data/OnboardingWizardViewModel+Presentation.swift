@@ -61,9 +61,14 @@ struct OnboardingViewState {
         let lines: [String]
     }
 
+    enum StatusBannerSeverity: Equatable {
+        case info
+        case warning
+    }
+
     struct StatusBanner: Equatable {
         let text: String
-        let isFailure: Bool
+        let severity: StatusBannerSeverity
     }
 
     let isShowingIntroduction: Bool
@@ -115,8 +120,8 @@ extension OnboardingWizardViewModel {
         return viewState.statusBanner?.text
     }
 
-    var statusBannerIsFailure: Bool {
-        return viewState.statusBanner?.isFailure ?? false
+    var statusBannerSeverity: OnboardingViewState.StatusBannerSeverity? {
+        return viewState.statusBanner?.severity
     }
 
     var showsTerminalOutput: Bool {
@@ -126,16 +131,14 @@ extension OnboardingWizardViewModel {
     var viewState: OnboardingViewState {
         let descriptor = descriptor(for: action)
         let activeStepNumber = activeStepNumber(for: currentStep)
-        let latestOutputText = outputLines
-            .map(\.text)
+        let latestOutputLine = outputLines
             .reversed()
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .first(where: { !$0.isEmpty })
+            .first(where: { !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
 
-        let statusBanner = descriptor.usesStatusBanner && latestOutputText != nil
+        let statusBanner = descriptor.usesStatusBanner && latestOutputLine != nil
             ? OnboardingViewState.StatusBanner(
-                text: latestOutputText ?? "",
-                isFailure: outputLines.last?.stream == .stdErr
+                text: latestOutputLine?.text.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
+                severity: statusBannerSeverity(for: latestOutputLine)
             )
             : nil
 
@@ -189,6 +192,18 @@ extension OnboardingWizardViewModel {
             return .installValet()
         case .continueToStartup:
             return .continueToStartup()
+        }
+    }
+
+    private func statusBannerSeverity(for outputLine: OutputLine?) -> OnboardingViewState.StatusBannerSeverity {
+        let outputText = outputLine?.text.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        switch (state, outputText) {
+        case (.failed, _),
+            (_, "onboarding_wizard.output.step_not_resolved".localized):
+            return .warning
+        default:
+            return .info
         }
     }
 

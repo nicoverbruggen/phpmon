@@ -129,6 +129,11 @@ final class OnboardingTestFlow {
         assertNotExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 1.0)
     }
 
+    func recheckManualPath() {
+        assertManualPathInstructions()
+        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
+    }
+
     func assertValetInstallIsAvailable(timeout: TimeInterval = 3.0) {
         assertExists(app.buttons["onboarding_wizard.buttons.install_valet".localized], timeout)
     }
@@ -166,6 +171,13 @@ final class OnboardingTestFlow {
     func assertCleanupWarningIsVisible() {
         assertExists(app.staticTexts["onboarding_wizard.alert.valet_sudoers_cleanup_failed.title".localized], 3.0)
         assertExists(app.buttons["generic.ok".localized], 3.0)
+    }
+
+    func assertWarningStatusBanner(text: String) {
+        let statusBanner = app.staticTexts["OnboardingStatusBanner"]
+        assertExists(statusBanner, 3.0)
+        XCTAssertEqual(statusBanner.label, text)
+        XCTAssertEqual(statusBanner.value as? String, "warning")
     }
 
     func dismissCleanupWarning() {

@@ -72,27 +72,20 @@ extension OnboardingWizardView {
             if let statusBanner = viewState.statusBanner {
                 Text(statusBanner.text)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(statusBanner.isFailure ? Color.red.opacity(0.9) : Color.primary)
+                    .foregroundStyle(statusBanner.foregroundColor)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 10)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(
-                                statusBanner.isFailure
-                                    ? Color.red.opacity(0.08)
-                                    : Color(nsColor: .controlBackgroundColor)
-                            )
+                            .fill(statusBanner.backgroundColor)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(
-                                statusBanner.isFailure
-                                    ? Color.red.opacity(0.18)
-                                    : Color.black.opacity(0.06),
-                                lineWidth: 1
-                            )
+                            .stroke(statusBanner.borderColor, lineWidth: 1)
                     )
+                    .accessibilityIdentifier("OnboardingStatusBanner")
+                    .accessibilityValue(statusBanner.severity.accessibilityValue)
             } else if viewState.showsTerminalOutput {
                 StartupOutputView(
                     lines: viewState.outputLines,
@@ -109,5 +102,45 @@ extension OnboardingWizardView {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .stroke(Color.black.opacity(0.06), lineWidth: 1)
             )
+    }
+}
+
+private extension OnboardingViewState.StatusBanner {
+    var foregroundColor: Color {
+        switch severity {
+        case .info:
+            return .primary
+        case .warning:
+            return .orange.opacity(0.95)
+        }
+    }
+
+    var backgroundColor: Color {
+        switch severity {
+        case .info:
+            return Color(nsColor: .controlBackgroundColor)
+        case .warning:
+            return .orange.opacity(0.10)
+        }
+    }
+
+    var borderColor: Color {
+        switch severity {
+        case .info:
+            return Color.black.opacity(0.06)
+        case .warning:
+            return .orange.opacity(0.24)
+        }
+    }
+}
+
+private extension OnboardingViewState.StatusBannerSeverity {
+    var accessibilityValue: String {
+        switch self {
+        case .info:
+            return "info"
+        case .warning:
+            return "warning"
+        }
     }
 }

@@ -76,6 +76,27 @@ final class OnboardingTest: UITestCase {
         flow.terminate()
     }
 
+    // If manual PATH setup is still unresolved, the wizard should show the inline warning
+    // status banner so the user can see the retry did not resolve the step.
+    final func test_launch_shows_warning_status_banner_when_manual_path_recheck_fails() throws {
+        let flow = onboardingFlow(with: .manualPathFixRequired)
+
+        flow.assertDidOpenWizard()
+        flow.startWizard()
+        flow.installHomebrew()
+        flow.recheckManualPath()
+        flow.assertWarningStatusBanner(
+            text: "onboarding_wizard.output.step_not_resolved".localized
+        )
+
+        let attachment = XCTAttachment(screenshot: flow.app.screenshot())
+        attachment.name = "Manual PATH warning status banner"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+
+        flow.terminate()
+    }
+
     // MARK: - Valet flow variants
 
     // Users can skip the optional Valet step, confirm Standalone Mode, and still finish

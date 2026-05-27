@@ -322,6 +322,7 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.showsStatusBanner)
         #expect(!viewModel.showsTerminalOutput)
         #expect(viewModel.statusBannerText == "onboarding_wizard.output.homebrew_command_copied".localized)
+        #expect(viewModel.statusBannerSeverity == .info)
         #expect(viewModel.outputLines.contains(where: { $0.text.contains("Installed Homebrew.") }))
         #expect(viewModel.outputLines.contains(where: {
             $0.text.contains("onboarding_wizard.output.homebrew_command_copied".localized)
@@ -400,6 +401,7 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.showsStatusBanner)
         #expect(!viewModel.showsTerminalOutput)
         #expect(viewModel.statusBannerText == "onboarding_wizard.output.step_not_resolved".localized)
+        #expect(viewModel.statusBannerSeverity == .warning)
     }
 
     // Starting the Command Line Tools installer should pause for manual completion instead of
