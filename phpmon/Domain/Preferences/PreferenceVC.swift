@@ -86,12 +86,12 @@ class PreferenceVC: NSViewController {
         )
     }
 
-    func getHideDatabaseServicesPV() -> NSView {
+    func getHideAutoDetectedServicesPV() -> NSView {
         return CheckboxPreferenceView.make(
-            sectionText: "prefs.hide_database_services".localized,
-            descriptionText: "prefs.hide_database_services_desc".localized,
-            checkboxText: "prefs.hide_database_services_title".localized,
-            preference: .hideDatabaseServicesInMenu,
+            sectionText: "prefs.hide_auto_detected_services".localized,
+            descriptionText: "prefs.hide_auto_detected_services_desc".localized,
+            checkboxText: "prefs.hide_auto_detected_services_title".localized,
+            preference: .hideAutoDetectedServicesInMenu,
             action: {
                 MainMenu.shared.rebuild()
             }

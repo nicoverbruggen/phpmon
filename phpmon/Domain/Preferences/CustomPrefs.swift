@@ -97,14 +97,4 @@ extension Preferences {
             container.shell.exports = exports
         }
     }
-
-    func detectDatabaseServices() async {
-        // Check if the preference is enabled in Settings
-
-        // Detect if any database services are installed
-        // TODO: check `mysql`, `mariadb` and `postgresql`
-
-        // Append these to `customPreferences.services` but don't add duplicates
-        // (or check them some other way since `customPreferences` may not load!)
-    }
 }

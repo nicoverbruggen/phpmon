@@ -33,10 +33,14 @@ actor ValetServicesDataManager {
         // We will always include these (required for Valet)
         var formulae = [f.php, f.nginx, f.dnsmasq]
 
-        // TODO: Add support for some database services out-of-the-box
+        // Add support for some database services out-of-the-box
+        if !Preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
+            // TODO: Load based on AutoDetectableServices.foundServices?
+        }
 
         // We may also load additional formulae based on Preferences
         if let customServices = Preferences.custom.services, !customServices.isEmpty {
+            // TODO: ensure that services aren't duplicated
             formulae.append(contentsOf: customServices.map { item in
                 return HomebrewFormula(item, elevated: false)
             })

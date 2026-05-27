@@ -98,7 +98,7 @@ class Preferences {
             .shouldDisplayDynamicIcon: true,
             .iconTypeToDisplay: MenuBarIcon.iconPhp.rawValue,
             .fullPhpVersionDynamicIcon: false,
-            .hideDatabaseServicesInMenu: false,
+            .hideAutoDetectedServicesInMenu: false,
             .hideIconsInMenu: false,
 
             /// Preferences: Notifications
