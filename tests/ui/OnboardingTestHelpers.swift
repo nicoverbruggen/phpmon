@@ -6,6 +6,8 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+// swiftlint:disable file_length
+
 import XCTest
 
 extension OnboardingTest {
@@ -429,3 +431,5 @@ private extension TestableConfiguration {
         """
     }
 }
+
+// swiftlint:enable file_length
