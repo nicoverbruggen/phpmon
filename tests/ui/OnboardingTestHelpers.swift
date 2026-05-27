@@ -79,9 +79,13 @@ final class OnboardingTestFlow {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
     }
 
-    func installPhp() {
+    func beginPhpInstall() {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
         click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+    }
+
+    func installPhp() {
+        beginPhpInstall()
         assertTerminalOutputContains("==> Fetching php and composer formulae...")
         assertValetInstallIsAvailable(timeout: 5.0)
     }
@@ -135,6 +139,17 @@ final class OnboardingTestFlow {
 
     func assertContinueButtonIsUnavailable() {
         assertNotExists(app.buttons["onboarding_wizard.buttons.continue".localized], 1.0)
+    }
+
+    func assertSkipSetupIsDisabled() {
+        let skipSetupButton = app.buttons["onboarding_wizard.buttons.skip".localized]
+        assertExists(skipSetupButton, 3.0)
+
+        let predicate = NSPredicate(format: "isEnabled == false")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: skipSetupButton)
+        let result = XCTWaiter().wait(for: [expectation], timeout: 3.0)
+
+        XCTAssertEqual(result, .completed)
     }
 
     func assertCleanupWarningIsVisible() {

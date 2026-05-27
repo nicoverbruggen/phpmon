@@ -38,6 +38,7 @@ extension OnboardingWizardView {
                 .foregroundStyle(.secondary)
         }
         .buttonStyle(.borderless)
+        .disabled(viewState.isRunning)
     }
 
     var skipValetButton: some View {

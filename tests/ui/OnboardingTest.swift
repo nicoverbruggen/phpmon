@@ -93,6 +93,21 @@ final class OnboardingTest: UITestCase {
         flow.terminate()
     }
 
+    // Setup cannot be skipped while a command is actively running, so partially completed
+    // installs are not abandoned in an unknown state.
+    final func test_launch_disables_skip_setup_while_install_step_is_running() throws {
+        let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
+
+        flow.assertDidOpenWizard()
+        flow.startWizard()
+        flow.installHomebrew()
+        flow.configurePathAutomatically()
+        flow.beginPhpInstall()
+        flow.assertSkipSetupIsDisabled()
+        flow.assertValetInstallIsAvailable(timeout: 5.0)
+        flow.terminate()
+    }
+
     // Valet onboarding now pauses twice for privileged actions in UI tests:
     // once to install temporary permissions and once to remove them afterwards.
     final func test_launch_requires_approving_privileged_valet_actions() throws {
