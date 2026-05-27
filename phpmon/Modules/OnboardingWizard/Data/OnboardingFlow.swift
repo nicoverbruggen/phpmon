@@ -90,6 +90,11 @@ struct FullSetupOnboardingFlow: OnboardingFlowDefinition {
 
 struct ValetInstallOnboardingFlow: OnboardingFlowDefinition {
     let entryStep: OnboardingStep = .valet
+
+    // This flow is launched from Standalone Mode after the app has already passed
+    // startup's core checks. The baseline only keeps earlier setup steps visually
+    // complete; the wizard still routes from detected progress if a requirement
+    // like PHP or Composer is suddenly missing, so the user can resolve it.
     let displayBaseline = OnboardingProgress(
         developerToolsInstalled: true,
         homebrewInstalled: true,
