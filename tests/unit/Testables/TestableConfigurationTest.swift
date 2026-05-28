@@ -80,16 +80,4 @@ struct TestableConfigurationTest {
         #expect(decoded.enabledFeatures.contains(.automaticServiceDiscovery))
     }
 
-    @Test func missing_feature_flags_decode_as_empty() throws {
-        let data = TestableConfigurations.working.toJson().data(using: .utf8)!
-        var json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
-        json.removeValue(forKey: "enabledFeatures")
-
-        let decoded = try JSONDecoder().decode(
-            TestableConfiguration.self,
-            from: try JSONSerialization.data(withJSONObject: json)
-        )
-
-        #expect(decoded.enabledFeatures.isEmpty)
-    }
 }

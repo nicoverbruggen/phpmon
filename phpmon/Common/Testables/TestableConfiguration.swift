@@ -193,10 +193,7 @@ public struct TestableConfiguration: Codable {
             UserDefaults.standard.set(value, forKey: key)
         }
 
-        // Apply feature flags
-        for feature in enabledFeatures {
-            App.shared.features.insert(feature)
-        }
+        App.shared.features = Set(enabledFeatures)
 
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")
