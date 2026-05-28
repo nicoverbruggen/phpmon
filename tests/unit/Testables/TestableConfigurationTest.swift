@@ -80,4 +80,29 @@ struct TestableConfigurationTest {
         #expect(decoded.enabledFeatures.contains(.automaticServiceDiscovery))
     }
 
+    @Test func brew_list_formula_output_uses_configured_php_versions() {
+        let configuration = TestableConfiguration(
+            architecture: "arm64",
+            filesystem: [:],
+            shellOutput: [:],
+            commandOutput: [:],
+            preferenceOverrides: [:],
+            phpVersions: [
+                VersionNumber(major: 8, minor: 4, patch: 5),
+                VersionNumber(major: 8, minor: 3, patch: 5)
+            ],
+            apiGetResponses: [:],
+            apiPostResponses: [:]
+        )
+
+        let formulae = configuration
+            .shellOutput["/opt/homebrew/bin/brew list --formula"]!
+            .syncOutput(ignoreDelay: true)
+            .out
+            .split(separator: "\n")
+            .map(String.init)
+
+        #expect(formulae == ["php", "php@8.3", "nginx", "dnsmasq"])
+    }
+
 }

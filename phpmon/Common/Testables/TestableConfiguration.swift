@@ -143,6 +143,22 @@ public struct TestableConfiguration: Codable {
                         .joined(separator: "\n")
                 )
         }
+
+        self.reloadInstalledFormulaeOutput()
+    }
+
+    private mutating func reloadInstalledFormulaeOutput() {
+        var phpFormulae: [String] = []
+
+        if primaryPhpVersion != nil {
+            phpFormulae.append("php")
+        }
+
+        phpFormulae.append(contentsOf: secondaryPhpVersions.map { "php@\($0.short)" })
+
+        self.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant(
+            (phpFormulae + ["nginx", "dnsmasq"]).joined(separator: "\n")
+        )
     }
 
     // MARK: Interactions
