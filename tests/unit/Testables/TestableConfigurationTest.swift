@@ -67,4 +67,29 @@ struct TestableConfigurationTest {
         #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json"))
         #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_broken.json"))
     }
+
+    @Test func feature_flags_can_be_saved_to_testable_configuration() throws {
+        var configuration = TestableConfigurations.working
+        configuration.enabledFeatures.append(.automaticServiceDiscovery)
+
+        let decoded = try JSONDecoder().decode(
+            TestableConfiguration.self,
+            from: configuration.toJson().data(using: .utf8)!
+        )
+
+        #expect(decoded.enabledFeatures.contains(.automaticServiceDiscovery))
+    }
+
+    @Test func missing_feature_flags_decode_as_empty() throws {
+        let data = TestableConfigurations.working.toJson().data(using: .utf8)!
+        var json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+        json.removeValue(forKey: "enabledFeatures")
+
+        let decoded = try JSONDecoder().decode(
+            TestableConfiguration.self,
+            from: try JSONSerialization.data(withJSONObject: json)
+        )
+
+        #expect(decoded.enabledFeatures.isEmpty)
+    }
 }

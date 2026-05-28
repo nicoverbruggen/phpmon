@@ -18,6 +18,7 @@ public struct TestableConfiguration: Codable {
     var allowsDelayedShellCommands: Bool
     var preferenceOverrides: [PreferenceName: PreferenceOverride]
     var internalStatsOverrides: [String: Int]
+    var enabledFeatures: [App.FeatureFlag]
     var apiGetResponses: [URL: FakeWebApiResponse]
     var apiPostResponses: [URL: FakeWebApiResponse]
 
@@ -31,6 +32,7 @@ public struct TestableConfiguration: Codable {
         allowsDelayedShellCommands: Bool = false,
         preferenceOverrides: [PreferenceName: PreferenceOverride],
         internalStatsOverrides: [String: Int] = [:],
+        enabledFeatures: [App.FeatureFlag] = [],
         phpVersions: [VersionNumber],
         apiGetResponses: [URL: FakeWebApiResponse],
         apiPostResponses: [URL: FakeWebApiResponse]
@@ -44,6 +46,7 @@ public struct TestableConfiguration: Codable {
         self.allowsDelayedShellCommands = allowsDelayedShellCommands
         self.preferenceOverrides = preferenceOverrides
         self.internalStatsOverrides = internalStatsOverrides
+        self.enabledFeatures = enabledFeatures
         self.apiGetResponses = apiGetResponses
         self.apiPostResponses = apiPostResponses
 
@@ -62,6 +65,7 @@ public struct TestableConfiguration: Codable {
              allowsDelayedShellCommands,
              preferenceOverrides,
              internalStatsOverrides,
+             enabledFeatures,
              apiGetResponses,
              apiPostResponses
     }
@@ -187,6 +191,11 @@ public struct TestableConfiguration: Codable {
 
         internalStatsOverrides.forEach { key, value in
             UserDefaults.standard.set(value, forKey: key)
+        }
+
+        // Apply feature flags
+        for feature in enabledFeatures {
+            App.shared.features.insert(feature)
         }
 
         if Valet.shared.installed {
