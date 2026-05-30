@@ -70,14 +70,14 @@ struct TestableConfigurationTest {
 
     @Test func feature_flags_can_be_saved_to_testable_configuration() throws {
         var configuration = TestableConfigurations.working
-        configuration.enabledFeatures.append(.automaticServiceDiscovery)
+        configuration.enabledFeatures.append(.placeholder)
 
         let decoded = try JSONDecoder().decode(
             TestableConfiguration.self,
             from: configuration.toJson().data(using: .utf8)!
         )
 
-        #expect(decoded.enabledFeatures.contains(.automaticServiceDiscovery))
+        #expect(decoded.enabledFeatures.contains(.placeholder))
     }
 
     @Test func brew_list_formula_output_uses_configured_php_versions() {

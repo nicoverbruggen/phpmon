@@ -40,7 +40,7 @@ final class ServicesRegistry {
             knownFormulaNames.insert(formula.name)
         }
 
-        if App.enabled(feature: .automaticServiceDiscovery) && !Preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
+        if !Preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
             detectedServices
                 .map { HomebrewFormula($0.service, elevated: false, servicePrefix: $0.servicePrefix) }
                 .forEach(appendIfMissing)

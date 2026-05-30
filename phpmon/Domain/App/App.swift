@@ -61,7 +61,10 @@ class App {
 
     /** Currently flagged features that aren't automatically available. */
     enum FeatureFlag: String, Codable {
-        case automaticServiceDiscovery
+        /// Placeholder so the enum always has at least one case (an empty enum
+        /// cannot synthesize `Codable`/`Hashable`). There are no active feature
+        /// flags right now; replace this when a real flag is introduced.
+        case placeholder
     }
 
     /** Check if a feature is enabled. */

@@ -193,7 +193,6 @@ final class MainMenuTest: UITestCase {
         """
 
         var config = TestableConfigurations.working
-        config.enabledFeatures = [.automaticServiceDiscovery]
 
         config.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant("""
             postgresql@14
