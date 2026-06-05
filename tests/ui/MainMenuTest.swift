@@ -193,6 +193,7 @@ final class MainMenuTest: UITestCase {
         """
 
         var config = TestableConfigurations.working
+        config.preferenceOverrides[.hideAutoDetectedServicesInMenu] = .bool(false)
 
         config.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant("""
             postgresql@14
