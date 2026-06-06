@@ -92,17 +92,6 @@ struct Constants {
     }
 
     /**
-     The Homebrew services that should be automatically
-     detected and show up in the list of managed services.
-     */
-    static let DetectedHomebrewServices: Set = [
-        "mailhog",
-        "mysql@",
-        "postgresql@",
-        "redis"
-    ]
-
-    /**
      * The PHP versions supported by this application.
      * Any other PHP versions are considered invalid.
      */
@@ -139,18 +128,18 @@ struct Constants {
     ]
 
     struct Urls {
-        // phpmon.app URLs (these are aliased to redirect correctly)
+        // Useful Links
         static let DonationPage = url("https://phpmon.app/sponsor")
-
         static let FrequentlyAskedQuestions = url("https://phpmon.app/faq")
-
-        static let WikiPhpUnavailable = url("https://phpmon.app/php-unavailable")
-
-        static let WikiPhpUpgrade = url("https://phpmon.app/php-upgrade")
-
         static let DonationPayment = url("https://phpmon.app/sponsor/now")
 
-        static let EarlyAccessChangelog = url("https://phpmon.app/early-access/release-notes")
+        // Wiki
+        static let WikiPhpUnavailable = url("https://phpmon.app/php-unavailable")
+        static let WikiPhpUpgrade = url("https://phpmon.app/php-upgrade")
+
+        // Dependencies
+        static let AppleCommandLineTools = url("https://phpmon.app/install-apple-devtools")
+        static let HomebrewWebsite = url("https://phpmon.app/install-homebrew")
 
         // API endpoints
         #if DEBUG
@@ -161,7 +150,10 @@ struct Constants {
         static let CrashReportingEndpoint = url("https://api.phpmon.app/api/v1/report-crash")
         #endif
 
-        // GitHub URLs (do not alias these)
+        // Early Access Changelog
+        static let EarlyAccessChangelog = url("https://phpmon.app/early-access/release-notes")
+
+        // GitHub Releases (do not alias these)
         static let GitHubReleases = url("https://github.com/nicoverbruggen/phpmon/releases")
     }
 }

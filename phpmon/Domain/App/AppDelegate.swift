@@ -103,9 +103,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     // MARK: - Lifecycle
 
     /**
-     When the application has finished launching, we'll want to set up
-     the user notification center permissions, and kickoff the menu
-     startup procedure.
+     When the application has finished launching, kick off the menu startup procedure.
+
+     Notification permissions are only requested after the app has already completed one
+     successful boot in the past. This avoids showing the macOS notification prompt during
+     first-run onboarding or failed startup attempts.
      */
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Prevent previews from kicking off a costly boot
@@ -113,8 +115,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             return
         }
 
-        // Make sure notifications will work
+        // Set up the notification center delegate immediately.
         setupNotifications()
+
+        // Returning users can be asked for notification permissions during launch.
+        if Stats.successfulLaunchCount > 0 {
+            NotificationPermission.request()
+        }
 
         // Start with the regular busy icon
         MainMenu.shared.setStatusBar(image: NSImage.statusBarIcon)
@@ -133,8 +140,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
      are disabled or hidden when needed.
      */
     public func configureMenuItems(standalone: Bool) {
-        if standalone {
-            menuItemSites.isHidden = true
-        }
+        menuItemSites.isHidden = standalone
     }
 }

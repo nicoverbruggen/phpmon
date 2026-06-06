@@ -83,7 +83,7 @@
 "mi_no_presets" = "No presets available.";
 "mi_set_up_presets" = "Learn more about presets...";
 
-"mi_view_onboarding" = "Open Welcome Tour...";
+"mi_view_welcome_tour" = "Open Welcome Tour...";
 "mi_view_command_history" = "Open Command History...";
 
 "mi_xdebug_available_modes" = "Available Modes";
@@ -224,7 +224,9 @@ You may be asked for your password during the uninstallation process if file per
 
 "lite_mode_explanation.title" = "You are currently running PHP Monitor in Standalone Mode.";
 "lite_mode_explanation.subtitle" = "PHP Monitor has additional features that are available for use if you happen to be a user of Laravel Valet. Right now, PHP Monitor could not detect an active installation of Valet on your system, so those features are unavailable.";
-"lite_mode_explanation.description" = "For more information, I'd recommend checking out the README (accessible on GitHub) which will explain what steps you need to take to install Valet and make PHP Monitor run correctly with it installed. You will need to restart PHP Monitor after installing Laravel Valet before it will leave Standalone Mode.";
+"lite_mode_explanation.description" = "You can install Valet now with the setup wizard, which will normally skip straight to the Valet step if your system is already prepared. If you are not ready yet, you can stay in Standalone Mode and install Valet later.";
+"lite_mode_explanation.install_valet" = "Install Valet...";
+"lite_mode_explanation.not_now" = "Not Now";
 
 // GENERIC
 
@@ -503,6 +505,10 @@ This has no effect on other terminals, only for the particular terminal session 
 "prefs.hide_menu_icons_desc" = "PHP Monitor will hide menu icons when this option is selected, which is how most macOS menus looked prior to macOS Tahoe. If you are still on an older version of macOS or prefer menus without icons, you may want to toggle this option.";
 "prefs.hide_menu_icons_title" = "Hide menu icons";
 
+"prefs.hide_auto_detected_services" = "Services:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor will automatically detect and display certain database services installed via Homebrew. If you don't want to see these in the menu, you can hide them here.";
+"prefs.hide_auto_detected_services_title" = "Hide Homebrew services";
+
 // NOTIFICATIONS
 
 "notification.version_changed_title" = "PHP %@ now active";
@@ -722,12 +728,12 @@ If you are seeing this message but are confused why this folder has gone missing
 // Brew & sudoers
 "startup.errors.sudoers_brew.title" = "Brew has not been added to sudoers.d";
 "startup.errors.sudoers_brew.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
-"startup.errors.sudoers_brew.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
+"startup.errors.sudoers_brew.desc" = "If you ran `valet trust` but keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/brew`";
 
 // Valet & sudoers
 "startup.errors.sudoers_valet.title" = "Valet has not been added to sudoers.d";
 "startup.errors.sudoers_valet.subtitle" = "You must run `valet trust` to ensure Valet can start and stop services without having to use sudo every time. The app will not work correctly until you resolve this issue.";
-"startup.errors.sudoers_valet.desc" = "If you keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
+"startup.errors.sudoers_valet.desc" = "If you ran `valet trust` but keep seeing this error, it is possible that there is a permission issue where PHP Monitor cannot validate the file, which can usually be resolved by running: `sudo chmod +r /private/etc/sudoers.d/valet`";
 
 // Platform issue detected
 "startup.errors.global_composer_platform_issues.title" = "PHP Monitor and Valet cannot work correctly: Composer is reporting an issue with your platform";
@@ -778,6 +784,8 @@ Valet might break if you link these PHP versions so PHP Monitor won't let you sw
 
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Restore Homebrew Permissions has been cancelled.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "The outcome of the script that is executed to adjust the permissions returned nil, which usually means that you did not grant administrative permissions to PHP Monitor.\n\nIf you clicked on Cancel during the authentication prompt, this is normal. If you did actually authenticate and you are still seeing this message, something probably went wrong.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Administrative access was denied.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor could not continue because the privileged command request was denied.";
 
 "alert.key_service_not_running.title" = "Due to issues with the Homebrew services required, Valet is currently not working correctly";
 "alert.key_service_not_running.subtitle" = "For Valet to work properly, at least three key services need to be running correctly.
@@ -883,25 +891,25 @@ When files like these are missing, you should switch to the PHP version associat
 
 "warnings.none" = "There are no recommendations available for you right now. You're all good!";
 
-// ONBOARDING
+// WELCOME TOUR
 
-"onboarding.title" = "Welcome Tour";
-"onboarding.welcome" = "Welcome to PHP Monitor!";
-"onboarding.explore" = "You now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
-"onboarding.explore.lite" = "You now have access to PHP Monitor's most important features.
+"welcome_tour.title" = "Welcome Tour";
+"welcome_tour.welcome" = "Welcome to PHP Monitor!";
+"welcome_tour.explore" = "You now have access to PHP Monitor's entire suite of functionality. You can learn more about some of the features that PHP Monitor has to offer on this screen.";
+"welcome_tour.explore.lite" = "You now have access to PHP Monitor's most important features.
 Please note that some features (greyed out below) are currently unavailable because Laravel Valet is not active.";
-"onboarding.tour.menu_bar.title" = "Power In Your Menu Bar";
-"onboarding.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, installing different PHP versions, and more.";
-"onboarding.tour.faq_hint" = "**Questions?** I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
-"onboarding.tour.services.title" = "Manage Homebrew Services";
-"onboarding.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
-"onboarding.tour.domains.title" = "Manage Domains";
-"onboarding.tour.domains" = "By opening the Domains window via the menu bar item, you can view which domains are linked and parked, as well as active nginx proxies.";
-"onboarding.tour.isolation.title" = "Isolate Domains";
-"onboarding.tour.isolation" = "If you have Valet 3 or newer installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
-"onboarding.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
-"onboarding.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
-"onboarding.tour.close" = "Close Tour";
+"welcome_tour.tour.menu_bar.title" = "Power In Your Menu Bar";
+"welcome_tour.tour.menu_bar" = "PHP Monitor lives in your menu bar. From this menu, you can access most of PHP Monitor's key functionality, including switching the globally linked PHP version, locating config files, installing different PHP versions, and more.";
+"welcome_tour.tour.faq_hint" = "**Questions?** I recommend that you check out the [README](https://github.com/nicoverbruggen/phpmon/blob/main/README.md) on GitHub: it contains a comprehensive FAQ with various tips and common questions and answers.";
+"welcome_tour.tour.services.title" = "Manage Homebrew Services";
+"welcome_tour.tour.services" = "Once you click on the menu bar item, you can see at a glance based on the checkmarks or crosses if all of the Homebrew services are up and running. You can also click on a service to quickly toggle it.";
+"welcome_tour.tour.domains.title" = "Manage Domains";
+"welcome_tour.tour.domains" = "By opening the Domains window via the menu bar item, you can view which domains are linked and parked, as well as active nginx proxies.";
+"welcome_tour.tour.isolation.title" = "Isolate Domains";
+"welcome_tour.tour.isolation" = "If you have Valet 3 or newer installed, you can even use domain isolation by right-clicking on a given domain in the Domains window. This allows you to pick a specific version of PHP to use for that domain, and that domain only.";
+"welcome_tour.tour.feature_unavailable" = "This feature is currently unavailable and requires Laravel Valet to be installed.";
+"welcome_tour.tour.once" = "You will only see the Welcome Tour once. You can re-open the Welcome Tour later via the menu bar icon (available in the menu, under First Aid & Services).";
+"welcome_tour.tour.close" = "Close Tour";
 
 // LANGUAGE CHOICE
 
@@ -991,3 +999,97 @@ PHP Monitor will tell Valet to unsecure and re-secure all expired domains for yo
 "command_history.title" = "Command History";
 "command_history.completed_in" = "Completed in %@";
 "command_history.running_for" = "Running for %@";
+
+// ONBOARDING WIZARD
+
+"onboarding_wizard.title" = "Set Up PHP Monitor";
+"onboarding_wizard.description" = "Your system is currently missing some required components that are needed for the app to work. PHP Monitor can guide you through the initial setup, which will install these.";
+"onboarding_wizard.intro.footer" = "PHP Monitor will walk through each step one at a time. You can review what will happen before any command is executed.";
+"onboarding_wizard.intro.developer_tools" = "Checks whether Apple's Command Line Tools are installed and opens the system installer if they are missing.";
+"onboarding_wizard.intro.homebrew" = "Installs Homebrew if needed, then ensures Homebrew and Composer are available in your PATH.";
+"onboarding_wizard.intro.prepare_homebrew" = "Installs Homebrew if needed, then ensures Homebrew and Composer are available in your PATH.";
+"onboarding_wizard.intro.php_composer" = "Installs PHP and Composer through Homebrew so PHP Monitor can manage your local PHP environment.";
+"onboarding_wizard.intro.valet" = "Installs and configures Laravel Valet so PHP Monitor can detect and manage Valet sites.";
+"onboarding_wizard.steps.introduction" = "Introduction";
+"onboarding_wizard.steps.prepare_homebrew" = "Prepare Homebrew";
+"onboarding_wizard.steps.developer_tools" = "Install Command Line Tools";
+"onboarding_wizard.steps.homebrew" = "Install Homebrew";
+"onboarding_wizard.steps.php_composer" = "Install PHP & Composer";
+"onboarding_wizard.steps.valet" = "Install Valet";
+"onboarding_wizard.steps.ready" = "Finish Setup";
+"onboarding_wizard.badges.optional" = "Optional";
+"onboarding_wizard.badges.completed" = "Completed";
+"onboarding_wizard.sidebar.core" = "Core";
+"onboarding_wizard.sidebar.optional" = "Optional";
+"onboarding_wizard.progress.introduction" = "Introduction";
+"onboarding_wizard.progress.ready" = "Ready to launch";
+"onboarding_wizard.progress.step" = "Step %d of 5";
+"onboarding_wizard.progress.step_working" = "Step %d of 5 - working";
+"onboarding_wizard.progress.step_action_needed" = "Step %d of 5 - action needed";
+"onboarding_wizard.status.ok" = "OK";
+"onboarding_wizard.status.pending" = "Pending";
+"onboarding_wizard.buttons.install_developer_tools" = "Install Developer Tools";
+"onboarding_wizard.buttons.start_setup" = "Start Setup";
+"onboarding_wizard.buttons.check_again" = "Check Again";
+"onboarding_wizard.buttons.copy_command" = "Copy Command";
+"onboarding_wizard.buttons.install_homebrew" = "Install Homebrew";
+"onboarding_wizard.buttons.fix_path" = "Set up PATH Automatically";
+"onboarding_wizard.buttons.install_php_composer" = "Install PHP & Composer";
+"onboarding_wizard.buttons.install_valet" = "Install Valet";
+"onboarding_wizard.buttons.skip_valet" = "Skip Valet";
+"onboarding_wizard.buttons.skip" = "Skip Setup";
+"onboarding_wizard.buttons.learn_more" = "Learn More";
+"onboarding_wizard.buttons.continue" = "Continue";
+"onboarding_wizard.skip_confirmation.title" = "Skip setup?";
+"onboarding_wizard.skip_confirmation.message" = "PHP Monitor may still need some setup steps before it can run correctly. Are you sure you want to skip onboarding and continue to startup checks?";
+"onboarding_wizard.skip_confirmation.cancel" = "Keep Setting Up";
+"onboarding_wizard.skip_confirmation.confirm" = "Skip Setup";
+"onboarding_wizard.skip_valet_confirmation.title" = "Skip Valet?";
+"onboarding_wizard.skip_valet_confirmation.message" = "Skipping Valet installation will make PHP Monitor run in Standalone Mode. This is not recommended, but you can always install Valet later. Are you sure you want to continue without Valet?";
+"onboarding_wizard.skip_valet_confirmation.cancel" = "Install Valet";
+"onboarding_wizard.skip_valet_confirmation.confirm" = "Use Standalone Mode";
+"onboarding_wizard.detail.developer_tools.title" = "Step 1: Install Command Line Tools";
+"onboarding_wizard.detail.developer_tools.description" = "Homebrew requires Apple's Command Line Tools. PHP Monitor will ask macOS to install these tools, and a new window will open.
+
+Complete the installation there, then return here and click Continue so PHP Monitor can verify that it succeeded.";
+"onboarding_wizard.detail.developer_tools.waiting" = "Finish installing the Command Line Tools in the window that has appeared, then return here and click Continue.";
+"onboarding_wizard.detail.developer_tools.completed" = "Command Line Tools are already installed, so installing Homebrew is next. Click on the Continue button to move to the next step.";
+"onboarding_wizard.alert.developer_tools_incomplete.title" = "Command Line Tools are not installed yet";
+"onboarding_wizard.alert.developer_tools_incomplete.subtitle" = "PHP Monitor checked again, but macOS still reports that Command Line Tools are missing.";
+"onboarding_wizard.alert.developer_tools_incomplete.description" = "Finish the installer that macOS opened, then click Continue again. If the installer did not appear, you can run this command in Terminal:\n\n/usr/bin/xcode-select --install";
+"onboarding_wizard.alert.developer_tools_incomplete.copy_command" = "Copy Command";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.title" = "Temporary Valet permissions may still be installed";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.subtitle" = "PHP Monitor could not remove the temporary `sudoers` entry that was created for Valet to be automatically installed. Just to be safe, it should probably be removed.";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.description" = "Run this command in Terminal to remove the file(s):\n\n%@";
+"onboarding_wizard.alert.valet_sudoers_cleanup_failed.copy_command" = "Copy Command";
+"onboarding_wizard.detail.homebrew.title" = "Step 2: Install Homebrew";
+"onboarding_wizard.detail.homebrew.description" = "Homebrew is required to install PHP, Composer and various other prerequisites (like those required for Valet). 
+
+Copy the command below, run it in Terminal, complete the installer there, then return here.";
+"onboarding_wizard.detail.homebrew.waiting" = "Run the Homebrew installation command in Terminal, complete the installer there, then come back here and click Check Again.";
+"onboarding_wizard.detail.path.title" = "Step 2: Configure Your PATH";
+"onboarding_wizard.detail.path.description.zsh" = "Homebrew is installed, but your PATH still needs to include Composer's global bin directory and Homebrew's bin directory to give you access to these tools via the command line. 
+
+PHP Monitor can update your `~/.zshrc` automatically and add these to your PATH. (Some useful helpers for easy PHP version switching provided by PHP Monitor will also be added.)";
+"onboarding_wizard.detail.path.description.manual" = "Homebrew is installed, but your configured shell (%@) is not zsh. Add the lines below to your shell profile, open a new terminal session, then click Check Again.";
+"onboarding_wizard.detail.php_composer.title" = "Step 3: Install PHP & Composer";
+"onboarding_wizard.detail.php_composer.description" = "Both PHP and Composer need to be installed before PHP Monitor can work correctly. To make things easy for you, PHP Monitor will install both of these for you automatically.";
+"onboarding_wizard.detail.valet.title" = "Step 4: Install Valet";
+"onboarding_wizard.detail.valet.description" = "PHP Monitor can install Laravel Valet and set it up for you automatically. You will be prompted for your administrator password twice during this process. 
+
+(If you prefer, you can also skip this step and use Standalone Mode for now. You can always install Valet later.)";
+"onboarding_wizard.detail.ready.title" = "Step 5: Finish Setup";
+"onboarding_wizard.detail.ready.description" = "Good news! Your system is now properly configured. Click Continue and PHP Monitor will rerun its startup checks. If everything looks good, the icon will appear in the menu bar.";
+"onboarding_wizard.command.homebrew.title" = "RUN THIS IN TERMINAL";
+"onboarding_wizard.command.path.title" = "ADD THIS TO .zshrc";
+"onboarding_wizard.output.developer_tools_requested" = "The developer tools installer was requested. Finish that installation in macOS, then click Continue.";
+"onboarding_wizard.output.homebrew_command_copied" = "The Homebrew install command was copied. Run it in Terminal, complete the installation, then click Check Again.";
+"onboarding_wizard.output.step_not_resolved" = "This step has not been completed yet. Please complete it and try again.";
+"onboarding_wizard.output.path_updating" = "Updating your ~/.zshrc PATH entries...";
+"onboarding_wizard.output.path_reopen_shell" = "Your PATH entries were added, but the new shell environment still needs to be reloaded. Open a new terminal session, then click Check Again.";
+"onboarding_wizard.output.valet_admin_access_denied" = "Administrative access was denied, so Valet setup could not continue. Click Install Valet to try again.";
+
+// PRIVILEGED COMMANDS
+
+"privileged_command.reason.onboarding_valet_temporary_sudoers_install" = "Install temporary Valet onboarding permissions"; // not user facing
+"privileged_command.reason.onboarding_valet_temporary_sudoers_cleanup" = "Remove temporary Valet onboarding permissions"; // not user facing

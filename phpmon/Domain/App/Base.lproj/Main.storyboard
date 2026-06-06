@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Search Toolbar Item" minToolsVersion="12.0" minSystemVersion="11.0"/>
@@ -427,7 +427,7 @@
                                 </toolbarItem>
                                 <searchToolbarItem implicitItemIdentifier="7C834FBE-7118-4082-A09F-7CBECEC1356A" label="Search" paletteLabel="Search" visibilityPriority="1001" id="G2g-jS-RVc">
                                     <nil key="toolTip"/>
-                                    <searchField key="view" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="0gE-Yr-MLy">
+                                    <searchField key="view" verticalHuggingPriority="750" textCompletion="NO" id="0gE-Yr-MLy">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="vp9-vH-goQ">
@@ -468,7 +468,7 @@
                             <scrollView borderType="none" horizontalLineScroll="54" horizontalPageScroll="10" verticalLineScroll="54" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-eB-I2i">
                                 <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="6IL-DW-37w">
-                                    <rect key="frame" x="0.0" y="0.0" width="626" height="309"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="609" height="292"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" multipleSelection="NO" autosaveName="phpmon-sitelist-columns" rowHeight="54" headerView="xUg-Mq-OSh" viewBased="YES" id="cp3-34-pQj" customClass="PMTableView" customModule="PHP_Monitor" customModuleProvider="target">
@@ -538,7 +538,7 @@
                                                             <rect key="frame" x="69" y="0.0" width="200" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XJL-Uw-frD">
                                                                     <rect key="frame" x="3" y="26" width="145" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="my-domain-name.test" id="SGC-Gm-Mxd">
                                                                         <font key="font" metaFont="systemSemibold" size="13"/>
@@ -546,7 +546,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="CXK-Q9-CpO">
                                                                     <rect key="frame" x="3" y="12" width="75" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="~/path/to/site" id="fe7-Ha-mR9">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -572,7 +572,7 @@
                                                             <rect key="frame" x="69" y="54" width="200" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aot-FJ-HIk">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aot-FJ-HIk">
                                                                     <rect key="frame" x="33" y="26" width="145" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="my-domain-name.test" id="LHu-UF-QlC">
                                                                         <font key="font" metaFont="systemSemibold" size="13"/>
@@ -580,7 +580,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-l8-oki">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-l8-oki">
                                                                     <rect key="frame" x="33" y="12" width="75" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="~/path/to/site" id="LNw-Ju-0Ot">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -589,7 +589,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Wp-DX-An9">
-                                                                    <rect key="frame" x="5" y="4" width="20" height="47"/>
+                                                                    <rect key="frame" x="5" y="4" width="19" height="46"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Q76-fI-lkW">
                                                                         <imageReference key="image" image="star.circle.fill" catalog="system" symbolScale="large"/>
                                                                     </imageCell>
@@ -723,7 +723,7 @@
                                                             <rect key="frame" x="470" y="0.0" width="97" height="54"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-8B-key">
                                                                     <rect key="frame" x="6" y="26" width="93" height="14"/>
                                                                     <textFieldCell key="cell" alignment="left" title="Laravel" id="0lu-L6-oKr">
                                                                         <font key="font" metaFont="smallSystem"/>
@@ -731,7 +731,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPK-Xc-J4B">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPK-Xc-J4B">
                                                                     <rect key="frame" x="6" y="15" width="93" height="11"/>
                                                                     <textFieldCell key="cell" alignment="left" title="PHP 8.0" id="puf-Jh-ham">
                                                                         <font key="font" metaFont="miniSystem"/>
@@ -798,7 +798,7 @@
                                             <constraint firstAttribute="height" constant="30" id="lfW-dB-Eu3"/>
                                         </constraints>
                                     </progressIndicator>
-                                    <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xoy-5Y-WDT">
+                                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xoy-5Y-WDT">
                                         <rect key="frame" x="15" y="14" width="71" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="PLEASE WAIT" id="tMX-Ky-caT">
                                             <font key="font" metaFont="system" size="10"/>
@@ -846,8 +846,8 @@
         <image name="IconLinked" width="25" height="25"/>
         <image name="Lock" width="30" height="30"/>
         <image name="arrow.clockwise" catalog="system" width="14" height="16"/>
-        <image name="plus" catalog="system" width="14" height="13"/>
-        <image name="star.circle.fill" catalog="system" width="20" height="20"/>
+        <image name="plus" catalog="system" width="15" height="13"/>
+        <image name="star.circle.fill" catalog="system" width="19" height="19"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

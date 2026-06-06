@@ -11,9 +11,10 @@ import Foundation
 // MARK: - Alertable Errors
 // These errors must be resolved by the user.
 
-struct AdminPrivilegeError: Error, AlertableError {
+struct AdminPrivilegeError: Error, AlertableError, Equatable {
     enum Kind: String {
         case applescriptNilError = "homebrew_permissions.applescript_returned_nil"
+        case userDenied = "homebrew_permissions.user_denied"
     }
 
     let kind: Kind

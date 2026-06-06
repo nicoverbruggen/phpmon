@@ -9,15 +9,14 @@
 import Foundation
 
 public class TestableShell: ShellProtocol {
-    var PATH: String {
-        return "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
-    }
+    var PATH: String = "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
 
     init(expectations: [String: BatchFakeShellOutput], filesystem: TestableFileSystem? = nil) {
         self.expectations = expectations
         self.filesystem = filesystem
     }
 
+    var allowsDelayedCommands: Bool = false
     var expectations: [String: BatchFakeShellOutput] = [:]
     var filesystem: TestableFileSystem?
 
@@ -69,9 +68,14 @@ public class TestableShell: ShellProtocol {
             return (Process(), .err("No Expected Output"))
         }
 
+        var ignoresDelay = isRunningTests
+        if allowsDelayedCommands {
+            ignoresDelay = false
+        }
+
         let output = await expectation.output(didReceiveOutput: { output, type in
             didReceiveOutput(output, type)
-        }, ignoreDelay: isRunningTests)
+        }, ignoreDelay: ignoresDelay)
 
         applyTransactions(for: expectation)
         return (Process(), output)
@@ -226,6 +230,16 @@ struct FakeShellTransaction: Codable {
         FakeShellTransaction(type: .setShellOutput, command: command, output: output)
     }
 
+    /// Appends exact PATH entries to the fake shell PATH after running a shell command.
+    static func appendPathEntries(_ entries: [String]) -> FakeShellTransaction {
+        FakeShellTransaction(type: .appendPathEntries, paths: entries)
+    }
+
+    /// Removes exact PATH entries from the fake shell PATH after running a shell command.
+    static func removePathEntries(_ entries: [String]) -> FakeShellTransaction {
+        FakeShellTransaction(type: .removePathEntries, paths: entries)
+    }
+
     enum TransactionType: String, Codable {
         case createSymlink
         case writeFile
@@ -233,10 +247,13 @@ struct FakeShellTransaction: Codable {
         case move
         case createDirectory
         case setShellOutput
+        case appendPathEntries
+        case removePathEntries
     }
 
     private var type: TransactionType
     private var path: String?
+    private var paths: [String]?
     private var destination: String?
     private var content: String?
     private var overwrite: Bool?
@@ -268,6 +285,34 @@ struct FakeShellTransaction: Codable {
         case .setShellOutput:
             assert(command != nil && output != nil, "setShellOutput requires command and output")
             shell.expectations[command!] = output!
+        case .appendPathEntries:
+            assert(paths != nil, "appendPathEntries requires paths")
+            shell.PATH = updatePath(shell.PATH, appending: paths!)
+        case .removePathEntries:
+            assert(paths != nil, "removePathEntries requires paths")
+            shell.PATH = updatePath(shell.PATH, removing: paths!)
         }
+    }
+
+    private func updatePath(_ path: String, appending entries: [String]) -> String {
+        var pathEntries = splitPath(path)
+
+        for entry in entries where !entry.isEmpty && !pathEntries.contains(entry) {
+            pathEntries.append(entry)
+        }
+
+        return pathEntries.joined(separator: ":")
+    }
+
+    private func updatePath(_ path: String, removing entries: [String]) -> String {
+        return splitPath(path)
+            .filter { !entries.contains($0) }
+            .joined(separator: ":")
+    }
+
+    private func splitPath(_ path: String) -> [String] {
+        return path
+            .split(separator: ":")
+            .map(String.init)
     }
 }

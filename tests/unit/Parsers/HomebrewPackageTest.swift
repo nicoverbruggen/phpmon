@@ -45,6 +45,14 @@ struct HomebrewPackageTest {
         #expect(services.first?.service_name == "homebrew.mxcl.dnsmasq")
     }
 
+    @Test func detectable_service_matches_installed_formulae() throws {
+        let mysql = DetectableService(service: "mysql")
+
+        #expect(mysql.matchesInstalledFormula("mysql"))
+        #expect(mysql.matchesInstalledFormula("mysql@8.4"))
+        #expect(!mysql.matchesInstalledFormula("mariadb"))
+    }
+
     // - MARK: LIVE TESTS
 
     /// This test requires that you have a valid Homebrew installation set up,

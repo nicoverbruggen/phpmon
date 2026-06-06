@@ -11,30 +11,42 @@ import Foundation
 public struct TestableConfiguration: Codable {
     var architecture: String
     var configuredShell: String?
+    var shellPath: String?
     var filesystem: [String: FakeFile]
     var shellOutput: [String: BatchFakeShellOutput]
     var commandOutput: [String: String]
+    var allowsDelayedShellCommands: Bool
     var preferenceOverrides: [PreferenceName: PreferenceOverride]
+    var internalStatsOverrides: [String: Int]
+    var enabledFeatures: [App.FeatureFlag]
     var apiGetResponses: [URL: FakeWebApiResponse]
     var apiPostResponses: [URL: FakeWebApiResponse]
 
     init(
         architecture: String,
         configuredShell: String? = nil,
+        shellPath: String? = nil,
         filesystem: [String: FakeFile],
         shellOutput: [String: BatchFakeShellOutput],
         commandOutput: [String: String],
+        allowsDelayedShellCommands: Bool = false,
         preferenceOverrides: [PreferenceName: PreferenceOverride],
+        internalStatsOverrides: [String: Int] = [:],
+        enabledFeatures: [App.FeatureFlag] = [],
         phpVersions: [VersionNumber],
         apiGetResponses: [URL: FakeWebApiResponse],
         apiPostResponses: [URL: FakeWebApiResponse]
     ) {
         self.architecture = architecture
         self.configuredShell = configuredShell
+        self.shellPath = shellPath
         self.filesystem = filesystem
         self.shellOutput = shellOutput
         self.commandOutput = commandOutput
+        self.allowsDelayedShellCommands = allowsDelayedShellCommands
         self.preferenceOverrides = preferenceOverrides
+        self.internalStatsOverrides = internalStatsOverrides
+        self.enabledFeatures = enabledFeatures
         self.apiGetResponses = apiGetResponses
         self.apiPostResponses = apiPostResponses
 
@@ -46,10 +58,14 @@ public struct TestableConfiguration: Codable {
     private enum CodingKeys: String, CodingKey {
         case architecture,
              configuredShell,
+             shellPath,
              filesystem,
              shellOutput,
              commandOutput,
+             allowsDelayedShellCommands,
              preferenceOverrides,
+             internalStatsOverrides,
+             enabledFeatures,
              apiGetResponses,
              apiPostResponses
     }
@@ -127,6 +143,22 @@ public struct TestableConfiguration: Codable {
                         .joined(separator: "\n")
                 )
         }
+
+        self.reloadInstalledFormulaeOutput()
+    }
+
+    private mutating func reloadInstalledFormulaeOutput() {
+        var phpFormulae: [String] = []
+
+        if primaryPhpVersion != nil {
+            phpFormulae.append("php")
+        }
+
+        phpFormulae.append(contentsOf: secondaryPhpVersions.map { "php@\($0.short)" })
+
+        self.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant(
+            (phpFormulae + ["nginx", "dnsmasq"]).joined(separator: "\n")
+        )
     }
 
     // MARK: Interactions
@@ -138,8 +170,10 @@ public struct TestableConfiguration: Codable {
     func beforeBind() {
         Log.info("Applying TestableConfiguration to container (1/2)...")
         let container = App.shared.container
-        container.systemContext.architectureOverride = architecture
-        container.systemContext.configuredShellOverride = configuredShell
+        container.withFakeSystemContext(
+            architecture: architecture,
+            configuredShell: configuredShell
+        )
     }
 
     /**
@@ -150,6 +184,14 @@ public struct TestableConfiguration: Codable {
         Log.info("Applying TestableConfiguration to container (2/2)...")
         let container = App.shared.container
         container.overrideWith(config: self)
+
+        if let shellPath, let shell = container.shell as? TestableShell {
+            shell.PATH = shellPath
+        }
+
+        if let shell = container.shell as? TestableShell {
+            shell.allowsDelayedCommands = allowsDelayedShellCommands
+        }
 
         Log.info("Applying temporary preference overrides...")
         var cachedPrefs = container.preferences.cachedPreferences
@@ -163,6 +205,12 @@ public struct TestableConfiguration: Codable {
         }
         container.preferences.cachedPreferences = cachedPrefs
 
+        internalStatsOverrides.forEach { key, value in
+            UserDefaults.standard.set(value, forKey: key)
+        }
+
+        App.shared.features = Set(enabledFeatures)
+
         if Valet.shared.installed {
             Log.info("Applying fake scanner...")
             ValetScanner.useFake()
@@ -175,6 +223,7 @@ public struct TestableConfiguration: Codable {
 
         // Set variable to tell app we're testin'
         App.hasLoadedTestableConfiguration = true
+
     }
 
     // MARK: Persist and load

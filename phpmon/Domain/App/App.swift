@@ -54,6 +54,24 @@ class App {
         return "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
     }
 
+    // MARK: Feature Flags
+
+    /** Feature flags automatically enabled for PHP Monitor. */
+    var features: Set<FeatureFlag> = []
+
+    /** Currently flagged features that aren't automatically available. */
+    enum FeatureFlag: String, Codable {
+        /// Placeholder so the enum always has at least one case (an empty enum
+        /// cannot synthesize `Codable`/`Hashable`). There are no active feature
+        /// flags right now; replace this when a real flag is introduced.
+        case placeholder
+    }
+
+    /** Check if a feature is enabled. */
+    public static func enabled(feature: FeatureFlag) -> Bool {
+        return self.shared.features.contains(feature)
+    }
+
     // MARK: Variables
 
     /**

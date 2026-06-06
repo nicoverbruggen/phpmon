@@ -11,10 +11,11 @@ import Foundation
 /** Service linked to a Homebrew formula and whether it is currently (in)active or missing. */
 public struct Service: Hashable {
     var formula: HomebrewFormula
+    var serviceName: String?
     var status: Status = .missing
 
     public var name: String {
-        return formula.name
+        return serviceName ?? formula.name
     }
 
     init(formula: HomebrewFormula, service: HomebrewService? = nil) {
@@ -22,6 +23,7 @@ public struct Service: Hashable {
 
         guard let service else { return }
 
+        self.serviceName = service.name
         self.status = service.running ? .active : .inactive
 
         if service.status == "error" {
@@ -37,6 +39,7 @@ public struct Service: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(formula)
+        hasher.combine(serviceName)
         hasher.combine(status)
     }
 

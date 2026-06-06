@@ -10,38 +10,17 @@ import Foundation
 
 actor ValetServicesDataManager {
     private let container: Container
+    private let registry: ServicesRegistry
 
-    init(_ container: Container) {
+    init(_ container: Container, registry: ServicesRegistry) {
         self.container = container
+        self.registry = registry
     }
 
     /**
-     The last known state of all Homebrew services (via the `formulae` property).
+     The last known state of all Homebrew services.
      */
     private(set) var homebrewServices: [HomebrewService] = []
-
-    /**
-     All Homebrew formulae that we need to check the status for.
-
-     This will include the Valet-required services (php, nginx, dnsmasq) but depending
-     on how the user has configured their setup, this may also include other services
-     like databases or such, which may be very helpful.
-     */
-    var formulae: [HomebrewFormula] {
-        let f = HomebrewFormulae(container)
-
-        // We will always include these (required for Valet)
-        var formulae = [f.php, f.nginx, f.dnsmasq]
-
-        // We may also load additional formulae based on Preferences
-        if let customServices = Preferences.custom.services, !customServices.isEmpty {
-            formulae.append(contentsOf: customServices.map { item in
-                return HomebrewFormula(item, elevated: false)
-            })
-        }
-
-        return formulae
-    }
 
     /**
      This method allows us to reload the Homebrew services, but we run this command
@@ -52,6 +31,8 @@ actor ValetServicesDataManager {
      try one more time to reload the services.
      */
     func reloadServicesStatus(isRetry: Bool) async -> [HomebrewService] {
+        let formulae = await registry.reloadFormulae()
+
         if !Valet.installed {
             Log.info("Not reloading services because running in Standalone Mode.")
             return []
@@ -59,11 +40,11 @@ actor ValetServicesDataManager {
 
         return await withTaskGroup(of: [HomebrewService].self) { group in
             group.addTask {
-                await self.fetchHomebrewServices(elevated: true)
+                await self.fetchHomebrewServices(elevated: true, formulae: formulae)
             }
 
             group.addTask {
-                await self.fetchHomebrewServices(elevated: false)
+                await self.fetchHomebrewServices(elevated: false, formulae: formulae)
             }
 
             // Collect all services into a local variable (avoids intermediate state)
@@ -93,10 +74,8 @@ actor ValetServicesDataManager {
      - Parameter elevated: Whether to fetch services running as root (true) or user (false)
      - Returns: Array of HomebrewService objects, or empty array if fetching fails
      */
-    private func fetchHomebrewServices(elevated: Bool) async -> [HomebrewService] {
-        let serviceNames = self.formulae
-            .filter { $0.elevated == elevated }
-            .map { $0.name }
+    private func fetchHomebrewServices(elevated: Bool, formulae: [HomebrewFormula]) async -> [HomebrewService] {
+        let formulae = formulae.filter { $0.elevated == elevated }
 
         let command = elevated
             ? "sudo \(self.container.paths.brew) services info --all --json"
@@ -110,9 +89,12 @@ actor ValetServicesDataManager {
         }
 
         do {
-            return try JSONDecoder()
+            let services = try JSONDecoder()
                 .decode([HomebrewService].self, from: jsonData)
-                .filter { serviceNames.contains($0.name) }
+
+            return formulae.compactMap { formula in
+                formula.latestService(from: services)
+            }
         } catch {
             Log.err("Failed to decode \(elevated ? "root" : "user") services JSON: \(error)")
             return []
@@ -120,6 +102,10 @@ actor ValetServicesDataManager {
     }
 
     func getHomebrewService(named: String) -> HomebrewService? {
-        return homebrewServices.first { $0.name == named }
+        guard let formula = registry.formulae.first(where: { $0.name == named }) else {
+            return homebrewServices.first { $0.name == named }
+        }
+
+        return formula.latestService(from: homebrewServices)
     }
 }

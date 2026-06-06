@@ -12,13 +12,18 @@ import SwiftUI
 class ServicesManager: ObservableObject {
 
     var container: Container
+    let registry: ServicesRegistry
 
-    static var shared: ServicesManager = ValetServicesManager(App.shared.container)
+    static var shared: ServicesManager = {
+        let registry = ServicesRegistry(App.shared.container)
+        return ValetServicesManager(App.shared.container, registry: registry)
+    }()
 
     @Published var services = [Service]()
 
-    init(_ container: Container) {
+    init(_ container: Container, registry: ServicesRegistry) {
         self.container = container
+        self.registry = registry
 
         Log.info("The services manager will determine which Valet services exist on this system.")
         services = formulae.map {
@@ -29,27 +34,14 @@ class ServicesManager: ObservableObject {
     public static func useFake(_ container: Container) {
         ServicesManager.shared = FakeServicesManager.init(
             container,
+            registry: ServicesRegistry(container),
             formulae: ["php", "nginx", "dnsmasq", "mysql"],
             status: .active
         )
     }
 
     var formulae: [HomebrewFormula] {
-        let f = HomebrewFormulae(container)
-
-        var formulae = [
-            f.php,
-            f.nginx,
-            f.dnsmasq
-        ]
-
-        let additionalFormulae = (Preferences.custom.services ?? []).map({ item in
-            return HomebrewFormula(item, elevated: false)
-        })
-
-        formulae.append(contentsOf: additionalFormulae)
-
-        return formulae
+        registry.formulae
     }
 
     /**

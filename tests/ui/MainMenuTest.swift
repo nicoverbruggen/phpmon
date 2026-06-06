@@ -44,10 +44,10 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
     }
 
-    final func test_can_view_onboarding_flow() throws {
+    final func test_can_view_welcome_tour() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
-        app.mainMenuItem(withText: "mi_view_onboarding".localized).click()
+        app.mainMenuItem(withText: "mi_view_welcome_tour".localized).click()
     }
 
     final func test_can_open_command_history() throws {
@@ -132,6 +132,82 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_quit".localized).click()
     }
 
+    final func test_standalone_mode_can_launch_valet_install_wizard() throws {
+        var configuration = TestableConfigurations.workingWithoutValet
+        configuration.mockStandaloneValetWizardInstall()
+
+        let app = launch(openMenu: true, with: configuration)
+
+        app.mainMenuItem(withText: "mi_lite_mode".localized).click()
+
+        assertAllExist([
+            app.staticTexts["lite_mode_explanation.title".localized],
+            app.buttons["lite_mode_explanation.install_valet".localized],
+            app.buttons["lite_mode_explanation.not_now".localized]
+        ], 3.0)
+
+        click(app.buttons["lite_mode_explanation.install_valet".localized])
+
+        assertAllExist([
+            app.staticTexts["onboarding_wizard.title".localized],
+            app.buttons["onboarding_wizard.buttons.install_valet".localized]
+        ], 3.0)
+
+        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        approvePrivilegedCommand(in: app)
+        approvePrivilegedCommand(in: app)
+        assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
+        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+
+        waitForMenu(app)
+        app.statusItems.firstMatch.click()
+
+        assertNotExists(app.menuItems["mi_lite_mode".localized], 1.0)
+        assertExists(app.menuItems["mi_driver".localized("Valet 4.9.0")], 3.0)
+
+        app.terminate()
+    }
+
+    final func test_latest_versioned_auto_detected_service_is_displayed() throws {
+        let userServicesResponse = """
+        [
+            {
+                "name": "postgresql@14",
+                "service_name": "homebrew.mxcl.postgresql@14",
+                "running": true,
+                "loaded": true,
+                "pid": 140,
+                "user": "user",
+                "status": "started"
+            },
+            {
+                "name": "postgresql@16",
+                "service_name": "homebrew.mxcl.postgresql@16",
+                "running": true,
+                "loaded": true,
+                "pid": 160,
+                "user": "user",
+                "status": "started"
+            }
+        ]
+        """
+
+        var config = TestableConfigurations.working
+        config.preferenceOverrides[.hideAutoDetectedServicesInMenu] = .bool(false)
+
+        config.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant("""
+            postgresql@14
+            postgresql@16
+            """)
+        config.shellOutput["/opt/homebrew/bin/brew services info --all --json"] = .instant(userServicesResponse)
+
+        let app = launch(openMenu: true, with: config)
+
+        assertExists(app.staticTexts["POSTGRESQL@16"], 3.0)
+        assertNotExists(app.staticTexts["POSTGRESQL@14"], 1.0)
+        assertNotExists(app.staticTexts["POSTGRESQL"], 1.0)
+    }
+
     /**
      Verifies that the ServicesView updates correctly when Homebrew service
      statuses change while the menu is open. On `menuWillOpen`, a background
@@ -184,5 +260,57 @@ final class MainMenuTest: UITestCase {
 
         // Verify that the services status actually changed (nginx is now stopped)
         assertExists(app.staticTexts["phpman.services.inactive".localized], 1.0)
+    }
+}
+
+fileprivate extension TestableConfiguration {
+    mutating func mockStandaloneValetWizardInstall() {
+        shellOutput["cat /private/etc/sudoers.d/brew"] = .instant("")
+        shellOutput["cat /private/etc/sudoers.d/valet"] = .instant("")
+        shellOutput["/usr/local/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
+            items: [.instant("Installed Valet.\n")],
+            transactions: [
+                .write("", to: "/Users/fake/.composer/vendor/bin/valet")
+            ]
+        )
+        shellOutput["/opt/homebrew/bin/brew install dnsmasq nginx"] = .instant("Installed dnsmasq and nginx.\n")
+        shellOutput["/Users/fake/.composer/vendor/bin/valet install"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet.\n")],
+            transactions: [
+                .mkdir("~/.config/valet"),
+                .write("", to: "/opt/homebrew/bin/valet"),
+                .write(
+                    """
+                    {
+                      "paths": [
+                        "/Users/fake/.config/valet/Sites"
+                      ],
+                      "tld": "test",
+                      "loopback": "127.0.0.1"
+                    }
+                    """,
+                    to: "~/.config/valet/config.json"
+                )
+            ]
+        )
+        shellOutput["/Users/fake/.composer/vendor/bin/valet trust"] = BatchFakeShellOutput(
+            items: [.instant("Configured Valet sudoers.\n")],
+            transactions: [
+                .shell(
+                    "cat /private/etc/sudoers.d/brew",
+                    .instant("""
+                    Cmnd_Alias BREW = /opt/homebrew/bin/brew *
+                    %admin ALL=(root) NOPASSWD:SETENV: BREW
+                    """)
+                ),
+                .shell(
+                    "cat /private/etc/sudoers.d/valet",
+                    .instant("""
+                    Cmnd_Alias VALET = /opt/homebrew/bin/valet *
+                    %admin ALL=(root) NOPASSWD:SETENV: VALET
+                    """)
+                )
+            ]
+        )
     }
 }

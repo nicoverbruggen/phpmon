@@ -14,7 +14,7 @@ struct TestableConfigurationTest {
         let config = TestableConfigurations.workingIntel
         let container = Container()
 
-        container.systemContext.architectureOverride = config.architecture
+        container.withFakeSystemContext(architecture: config.architecture)
         container.bind(coreOnly: true)
 
         container.overrideFake(
@@ -67,4 +67,42 @@ struct TestableConfigurationTest {
         #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_working_no_valet.json"))
         #expect(container.filesystem.fileExists(NSHomeDirectory() + "/.phpmon_fconf_broken.json"))
     }
+
+    @Test func feature_flags_can_be_saved_to_testable_configuration() throws {
+        var configuration = TestableConfigurations.working
+        configuration.enabledFeatures.append(.placeholder)
+
+        let decoded = try JSONDecoder().decode(
+            TestableConfiguration.self,
+            from: configuration.toJson().data(using: .utf8)!
+        )
+
+        #expect(decoded.enabledFeatures.contains(.placeholder))
+    }
+
+    @Test func brew_list_formula_output_uses_configured_php_versions() {
+        let configuration = TestableConfiguration(
+            architecture: "arm64",
+            filesystem: [:],
+            shellOutput: [:],
+            commandOutput: [:],
+            preferenceOverrides: [:],
+            phpVersions: [
+                VersionNumber(major: 8, minor: 4, patch: 5),
+                VersionNumber(major: 8, minor: 3, patch: 5)
+            ],
+            apiGetResponses: [:],
+            apiPostResponses: [:]
+        )
+
+        let formulae = configuration
+            .shellOutput["/opt/homebrew/bin/brew list --formula"]!
+            .syncOutput(ignoreDelay: true)
+            .out
+            .split(separator: "\n")
+            .map(String.init)
+
+        #expect(formulae == ["php", "php@8.3", "nginx", "dnsmasq"])
+    }
+
 }

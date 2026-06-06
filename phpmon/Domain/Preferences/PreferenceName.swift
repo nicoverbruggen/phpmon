@@ -29,6 +29,7 @@ enum PreferenceName: String, Codable {
     case shouldDisplayDynamicIcon = "use_dynamic_icon"
     case iconTypeToDisplay = "icon_type_to_display"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
+    case hideAutoDetectedServicesInMenu = "hide_auto_detected_services_in_menu"
     case hideIconsInMenu = "hide_icons_in_menu"
 
     // WARNINGS
@@ -69,6 +70,7 @@ enum PreferenceName: String, Codable {
             // Appearance
             .shouldDisplayDynamicIcon,
             .fullPhpVersionDynamicIcon,
+            .hideAutoDetectedServicesInMenu,
             .hideIconsInMenu,
 
             // Notifications

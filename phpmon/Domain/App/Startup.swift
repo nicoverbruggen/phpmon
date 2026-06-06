@@ -24,9 +24,6 @@ class Startup {
      If this method returns true, then all checks succeeded and the app can continue.
      */
     func checkEnvironment() async -> Bool {
-        // Do the important system setup checks
-        Log.info("The user is running PHP Monitor with the architecture: \(container.systemContext.architecture)")
-
         // Set up a "background" timer on the main thread
         await MainActor.run {
             startStartupTimer()
@@ -244,6 +241,11 @@ class Startup {
                 command: { container in
                     return await !container.shell
                         .pipe("cat /private/etc/sudoers.d/valet").out.contains(container.paths.valet)
+                },
+                fix: { container, didReceiveOutput in
+                    let valet = container.paths.binPath.appending("/valet")
+                    let result = try AppleScript.runShellAsAdmin("\(valet) trust")
+                    didReceiveOutput(result, .stdOut)
                 },
                 name: "`/private/etc/sudoers.d/valet` contains valet",
                 titleText: "startup.errors.sudoers_valet.title".localized,

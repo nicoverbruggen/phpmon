@@ -46,14 +46,46 @@ struct HomebrewFormulae {
 class HomebrewFormula: Equatable, Hashable, CustomStringConvertible {
     let name: String
     let elevated: Bool
+    let servicePrefix: String?
 
     var description: String {
         return name
     }
 
-    init(_ name: String, elevated: Bool = true) {
+    init(_ name: String, elevated: Bool = true, servicePrefix: String? = nil) {
         self.name = name
         self.elevated = elevated
+        self.servicePrefix = servicePrefix
+    }
+
+    func matches(_ service: HomebrewService) -> Bool {
+        if service.name == name {
+            return true
+        }
+
+        guard let servicePrefix else {
+            return false
+        }
+
+        return service.name.hasPrefix(servicePrefix)
+    }
+
+    func latestService(from services: [HomebrewService]) -> HomebrewService? {
+        let matches = services.filter(matches)
+
+        guard let servicePrefix else {
+            return matches.first
+        }
+
+        return matches
+            .filter { $0.name.hasPrefix(servicePrefix) }
+            .max { lhs, rhs in
+                let lhsVersion = String(lhs.name.dropFirst(servicePrefix.count))
+                let rhsVersion = String(rhs.name.dropFirst(servicePrefix.count))
+
+                return lhsVersion.versionCompare(rhsVersion) == .orderedAscending
+            }
+            ?? matches.first
     }
 
     static func == (lhs: HomebrewFormula, rhs: HomebrewFormula) -> Bool {

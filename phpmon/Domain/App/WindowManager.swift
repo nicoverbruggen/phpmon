@@ -10,7 +10,7 @@ import Cocoa
 
 typealias PreferencesWC = PreferencesWindowController
 typealias DomainListWC = DomainListWindowController
-typealias OnboardingWC = OnboardingWindowController
+typealias WelcomeTourWC = WelcomeTourWindowController
 typealias PhpConfigManagerWC = PhpConfigManagerWindowController
 typealias PhpDoctorWC = PhpDoctorWindowController
 typealias PhpVersionManagerWC = PhpVersionManagerWindowController

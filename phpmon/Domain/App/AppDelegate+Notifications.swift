@@ -14,21 +14,11 @@ extension AppDelegate {
     // MARK: - Notifications
 
     /**
-     Sets up notifications. That does mean we need to ask for permission first.
-     If we cannot get permission, we should log this.
+     Sets up notifications by ensuring the app delegate receives notification callbacks.
      */
     public func setupNotifications() {
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self
-        notificationCenter.requestAuthorization(options: [.alert], completionHandler: { granted, error in
-            if !granted {
-                Log.warn("PHP Monitor does not have permission to show notifications.")
-            }
-            if let error = error {
-                Log.err("PHP Monitor encounted an error determining notification permissions:")
-                Log.err(error)
-            }
-        })
     }
 
     /**

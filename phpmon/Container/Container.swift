@@ -22,6 +22,7 @@ class Container: @unchecked Sendable {
     private(set) var command: CommandProtocol!
     private(set) var commandTracker: CommandTracker!
     private(set) var webApi: WebApiProtocol!
+    private(set) var privilegedCommandRunner: PrivilegedCommandRunner!
 
     // Secondary (uses primary instances above)
     private(set) var preferences: Preferences!
@@ -44,6 +45,20 @@ class Container: @unchecked Sendable {
     /// given the other initializers available via the extensions.
     ///
     init() {}
+
+    public func withFakeSystemContext(
+        architecture: String? = nil,
+        configuredShell: String? = nil
+    ) {
+        if bound {
+            fatalError("System context must be overridden before `bind()` is called.")
+        }
+
+        self.systemContext = SystemContext(
+            architectureOverride: architecture,
+            configuredShellOverride: configuredShell
+        )
+    }
 
     ///
     /// Creates new instances of all elements belonging to the `Container`, while referencing
@@ -90,6 +105,7 @@ class Container: @unchecked Sendable {
         }
 
         self.webApi = RealWebApi(container: self)
+        self.privilegedCommandRunner = RealPrivilegedCommandRunner()
 
         if coreOnly {
             return
@@ -116,6 +132,7 @@ class Container: @unchecked Sendable {
         commands: [String: String] = [:],
         webApiGetResponses: [URL: FakeWebApiResponse] = [:],
         webApiPostResponses: [URL: FakeWebApiResponse] = [:],
+        privilegedCommandRunner: PrivilegedCommandRunner? = nil,
         commandTracking: Bool = true,
     ) {
         self.commandTracker = CommandTracker()
@@ -138,6 +155,10 @@ class Container: @unchecked Sendable {
             postResponses: webApiPostResponses
         )
 
+        if let privilegedCommandRunner {
+            self.privilegedCommandRunner = privilegedCommandRunner
+        }
+
         // We will also re-initialize PhpEnvironments due to altered dependencies
         self.phpEnvs = PhpEnvironments(container: self)
     }
@@ -153,7 +174,8 @@ class Container: @unchecked Sendable {
             fileSystemFiles: config.filesystem,
             commands: config.commandOutput,
             webApiGetResponses: config.apiGetResponses,
-            webApiPostResponses: config.apiPostResponses
+            webApiPostResponses: config.apiPostResponses,
+            privilegedCommandRunner: UITestPrivilegedCommandRunner()
         )
     }
 }

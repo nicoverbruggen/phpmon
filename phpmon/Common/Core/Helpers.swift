@@ -11,6 +11,11 @@
 import Foundation
 
 /**
+ Alias for `true`. Sometimes used in scenarios where "always" is clearer than a simple boolean.
+ */
+public let always = true
+
+/**
  Runs a `brew` command. Can run as superuser.
  */
 func brew(

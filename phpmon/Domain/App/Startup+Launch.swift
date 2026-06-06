@@ -26,10 +26,28 @@ extension Startup {
      Perform all checks and execute pass or fail results.
      */
     private func check() async {
+        // Determine if the initial onboarding flow is required
+        // This will trigger when the environment is minimal
+        // (i.e. missing core dependencies)
+        await checkOnboarding()
+
+        // Next up, validate the environment is healthy
+        // This is required for phpmon to function right
         if await self.checkEnvironment() {
             await self.onEnvironmentPass()
         } else {
             await self.onEnvironmentFail()
+        }
+    }
+
+    private func checkOnboarding() async {
+        let disposition = await onboardingDisposition()
+        Log.info("Determined onboarding flow: \(disposition)")
+
+        if disposition == .wizard {
+            // Show the wizard and we'll await the result of the wizard
+            let outcome = await showOnboardingWizard()
+            Log.info("Outcome of onboarding: \(outcome)")
         }
     }
 
@@ -40,6 +58,9 @@ extension Startup {
     private func onEnvironmentPass() async {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
+
+        // Automatically discover services
+        await AutoDetectableServices.shared.discoverServices()
 
         // Determine what the `php` formula is aliased to (again)
         await container.phpEnvs.determinePhpAlias()
@@ -69,9 +90,6 @@ extension Startup {
 
         // Set up the filesystem watcher for the Homebrew binaries
         await HomebrewWatchManager.prepare()
-
-        // Check for other problems
-        container.warningManager.evaluateWarnings()
 
         // Set up the config watchers on launch (updated automatically when switching)
         await ConfigWatchManager.handleWatcher()
@@ -117,6 +135,12 @@ extension Startup {
         // Avoid showing the "startup timeout" alert
         Startup.invalidateTimeoutTimer()
 
+        // On the very first successful boot, ask for notification permissions only
+        // after onboarding and environment validation have both completed.
+        if Stats.successfulLaunchCount == 0 {
+            NotificationPermission.request()
+        }
+
         // Check if we upgraded from a previous version
         AppUpdater.checkIfUpdateWasPerformed()
 
@@ -132,6 +156,10 @@ extension Startup {
 
         // Enable the main menu item
         MainMenu.shared.statusItem.button?.isEnabled = true
+
+        // PHP Doctor warnings can inspect shell and PATH state, so defer them
+        // until after startup has fully completed and the menu is interactive.
+        container.warningManager.evaluateWarnings()
 
         // Post-launch stats and update check, but only if not running tests
         await performPostLaunchActions()
@@ -150,9 +178,9 @@ extension Startup {
         Stats.evaluateSponsorMessageShouldBeDisplayed()
 
         if Stats.successfulLaunchCount == 1 {
-            Log.info("Should present the first launch screen!")
+            Log.info("Should present the welcome screen!")
             Task { @MainActor in
-                OnboardingWindowController.show()
+                WelcomeTourWindowController.show()
             }
         } else {
             // Check for updates

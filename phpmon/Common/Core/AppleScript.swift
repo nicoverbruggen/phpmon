@@ -18,7 +18,7 @@ class AppleScript {
     public static func runSimpleShellAsAdmin(
         _ script: String
     ) throws -> String {
-        let source = "do shell script \"\(script)\" with administrator privileges"
+        let source = "do shell script \"\(escape(script))\" with administrator privileges"
         return try runAppleScript(script: source)
     }
 
@@ -37,11 +37,17 @@ class AppleScript {
     ) throws -> String {
         let script = """
             export USER=\(user) && \
-            export PATH=/usr/bin:/bin:/usr/sbin:/sbin:\(append) \
-            && \(script)
+            export PATH=/usr/bin:/bin:/usr/sbin:/sbin:\(append) && \
+            \(script)
         """
-        let source = "do shell script \"\(script)\" with administrator privileges"
+        let source = "do shell script \"\(escape(script))\" with administrator privileges"
         return try runAppleScript(script: source)
+    }
+
+    private static func escape(_ value: String) -> String {
+        return value
+            .replacing("\\", with: "\\\\")
+            .replacing("\"", with: "\\\"")
     }
 
     /**
@@ -56,6 +62,11 @@ class AppleScript {
 
         if let error = error {
             Log.err("AppleScript error: \(error)")
+
+            if let errorNumber = error[NSAppleScript.errorNumber] as? Int, errorNumber == -128 {
+                throw AdminPrivilegeError(kind: .userDenied)
+            }
+
             throw AdminPrivilegeError(kind: .applescriptNilError)
         }
 

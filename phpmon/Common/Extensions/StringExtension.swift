@@ -30,6 +30,7 @@ struct Localization {
         }
 
         let foundBundle = Bundle(identifier: "com.nicoverbruggen.phpmon")
+            ?? Bundle(identifier: "com.nicoverbruggen.phpmon.unit-tests")
             ?? Bundle(identifier: "com.nicoverbruggen.phpmon.ui-tests")
 
         if foundBundle == nil {

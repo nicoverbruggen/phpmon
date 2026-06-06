@@ -18,14 +18,14 @@ class GeneralPreferencesVC: PreferenceVC {
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
         return vc
-            .addView(when: true, vc.getLanguageOptionsPV())
-            .addView(when: true, vc.getShowPhpDoctorSuggestionsPV())
-            .addView(when: true, vc.getAutoRestartServicesPV())
-            .addView(when: true, vc.getAutomaticComposerUpdatePV())
-            .addView(when: true, vc.getShortcutPV())
-            .addView(when: true, vc.getIntegrationsPV())
-            .addView(when: true, vc.getAutomaticUpdateCheckPV())
-            .addView(when: true, CheckboxPreferenceView.makeLoginItemView())
+            .addView(when: always, vc.getLanguageOptionsPV())
+            .addView(when: always, vc.getShowPhpDoctorSuggestionsPV())
+            .addView(when: always, vc.getAutoRestartServicesPV())
+            .addView(when: always, vc.getAutomaticComposerUpdatePV())
+            .addView(when: always, vc.getShortcutPV())
+            .addView(when: always, vc.getIntegrationsPV())
+            .addView(when: always, vc.getAutomaticUpdateCheckPV())
+            .addView(when: always, CheckboxPreferenceView.makeLoginItemView())
     }
 }
 
@@ -35,10 +35,11 @@ class AppearancePreferencesVC: PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
-        vc.addView(when: true, vc.getDynamicIconPV())
-            .addView(when: true, vc.getIconOptionsPV())
-            .addView(when: true, vc.getIconDensityPV())
-            .addView(when: true, vc.getMenuIconsPV())
+        vc.addView(when: always, vc.getDynamicIconPV())
+            .addView(when: always, vc.getIconOptionsPV())
+            .addView(when: always, vc.getIconDensityPV())
+            .addView(when: always, vc.getHideAutoDetectedServicesPV())
+            .addView(when: always, vc.getHideMenuIconsPV())
 
         return vc
     }
@@ -51,16 +52,16 @@ class MenuStructurePreferencesVC: PreferenceVC {
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
         return vc
-            .addView(when: true, vc.displayFeature("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true))
+            .addView(when: always, vc.displayFeature("prefs.display_global_version_switcher", .displayGlobalVersionSwitcher, true))
             .addView(when: Valet.installed, vc.displayFeature("prefs.display_services_manager", .displayServicesManager))
             .addView(when: Valet.installed, vc.displayFeature("prefs.display_valet_integration", .displayValetIntegration))
-            .addView(when: true, vc.displayFeature("prefs.display_php_config_finder", .displayPhpConfigFinder))
-            .addView(when: true, vc.displayFeature("prefs.display_composer_toolkit", .displayComposerToolkit))
-            .addView(when: true, vc.displayFeature("prefs.display_limits_widget", .displayLimitsWidget))
-            .addView(when: true, vc.displayFeature("prefs.display_extensions", .displayExtensions))
-            .addView(when: true, vc.displayFeature("prefs.display_presets", .displayPresets))
-            .addView(when: true, vc.displayFeature("prefs.display_misc", .displayMisc))
-            .addView(when: true, vc.displayFeature("prefs.display_driver", .displayDriver))
+            .addView(when: always, vc.displayFeature("prefs.display_php_config_finder", .displayPhpConfigFinder))
+            .addView(when: always, vc.displayFeature("prefs.display_composer_toolkit", .displayComposerToolkit))
+            .addView(when: always, vc.displayFeature("prefs.display_limits_widget", .displayLimitsWidget))
+            .addView(when: always, vc.displayFeature("prefs.display_extensions", .displayExtensions))
+            .addView(when: always, vc.displayFeature("prefs.display_presets", .displayPresets))
+            .addView(when: always, vc.displayFeature("prefs.display_misc", .displayMisc))
+            .addView(when: always, vc.displayFeature("prefs.display_driver", .displayDriver))
     }
 }
 
@@ -70,11 +71,11 @@ class NotificationPreferencesVC: PreferenceVC {
         let vc = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "preferencesTemplateVC") as! PreferenceVC
 
-        return vc.addView(when: true, vc.getNotifyAboutVersionChangePV())
-            .addView(when: true, vc.getNotifyAboutPresetsPV())
+        return vc.addView(when: always, vc.getNotifyAboutVersionChangePV())
+            .addView(when: always, vc.getNotifyAboutPresetsPV())
             .addView(when: Valet.installed, vc.getNotifyAboutSecureTogglePV())
-            .addView(when: true, vc.getNotifyAboutGlobalComposerStatusPV())
-            .addView(when: true, vc.getNotifyAboutServicesPV())
+            .addView(when: always, vc.getNotifyAboutGlobalComposerStatusPV())
+            .addView(when: always, vc.getNotifyAboutServicesPV())
             .addView(when: Valet.installed, vc.getNotifyAboutPhpFpmChangePV())
             .addView(when: Valet.installed, vc.getWarnAboutNonStandardTldPV())
     }

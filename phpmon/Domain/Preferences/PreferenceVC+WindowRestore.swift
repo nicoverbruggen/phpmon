@@ -22,10 +22,10 @@ extension PreferenceVC {
                     name: windowName,
                     frame: WindowManager.window(for: DomainListWC.self)?.frame
                 )
-            case "Onboarding":
+            case "WelcomeTour":
                 return WindowSnapshot(
                     name: windowName,
-                    frame: WindowManager.window(for: OnboardingWC.self)?.frame
+                    frame: WindowManager.window(for: WelcomeTourWC.self)?.frame
                 )
             case "ConfigManager":
                 return WindowSnapshot(
@@ -64,9 +64,9 @@ extension PreferenceVC {
             case "DomainList":
                 DomainListVC.show()
                 applyFrame(snapshot.frame, for: DomainListWC.self)
-            case "Onboarding":
-                OnboardingWindowController.show()
-                applyFrame(snapshot.frame, for: OnboardingWC.self)
+            case "WelcomeTour":
+                WelcomeTourWindowController.show()
+                applyFrame(snapshot.frame, for: WelcomeTourWC.self)
             case "ConfigManager":
                 PhpConfigManagerWindowController.show()
                 applyFrame(snapshot.frame, for: PhpConfigManagerWC.self)

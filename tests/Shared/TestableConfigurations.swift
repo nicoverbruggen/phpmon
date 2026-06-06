@@ -14,6 +14,7 @@ class TestableConfigurations {
     static var working: TestableConfiguration {
         return TestableConfiguration(
             architecture: "arm64",
+            configuredShell: "/bin/zsh",
             filesystem: [
                 "/usr/local/bin/"
                     : .fake(.directory, readOnly: true),
@@ -70,6 +71,8 @@ class TestableConfigurations {
                     : .instant("user"),
                 "which node"
                     : .instant("/opt/homebrew/bin/node"),
+                "/usr/bin/xcode-select -p"
+                    : .instant("/Library/Developer/CommandLineTools"),
                 "sudo /opt/homebrew/bin/brew services info dnsmasq --json"
                     : .delayed(0.2, """
                         [
@@ -198,8 +201,10 @@ class TestableConfigurations {
                 "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "512M"
             ],
             preferenceOverrides: [
-                .automaticBackgroundUpdateCheck: .bool(false)
+                .automaticBackgroundUpdateCheck: .bool(false),
+                .languageOverride: .string("en")
             ],
+            internalStatsOverrides: [:],
             phpVersions: [
                 VersionNumber(major: 8, minor: 4, patch: 5),
                 VersionNumber(major: 8, minor: 3, patch: 5),
@@ -254,6 +259,15 @@ class TestableConfigurations {
     /** A functional, working system setup (but without Valet). */
     static var workingWithoutValet: TestableConfiguration {
         var configuration = TestableConfigurations.working
+        configuration.shellPath = [
+            "/usr/local/bin",
+            "/usr/bin",
+            "/bin",
+            "/usr/sbin",
+            "/Users/fake/.config/phpmon/bin",
+            "/Users/fake/.composer/vendor/bin",
+            "/opt/homebrew/bin"
+        ].joined(separator: ":")
         configuration.filesystem["/opt/homebrew/bin/valet"] = nil
         configuration.filesystem["~/.config/valet/config.json"] = nil
         return configuration
