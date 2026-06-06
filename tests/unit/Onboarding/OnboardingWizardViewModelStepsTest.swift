@@ -368,6 +368,55 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.outputLines.isEmpty)
     }
 
+    // If the .zshrc update command fails, auto-fix should fall back to the manual PATH
+    // instructions instead of leaving the wizard on the automatic retry action.
+    @Test func failed_automatic_path_fix_falls_back_to_manual_path_instructions() async {
+        let container = makeOnboardingFakeContainer(
+            architecture: "arm64",
+            shell: [
+                ZshRunCommand.append(
+                    for: "export PATH=$HOME/bin:~/.config/phpmon/bin:$PATH"
+                ): .instant(
+                    "touch: ~/.zshrc: Permission denied\n",
+                    .stdErr
+                ),
+                ZshRunCommand.append(
+                    for: "export PATH=$HOME/bin:~/.composer/vendor/bin:$PATH"
+                ): .instant(""),
+                ZshRunCommand.append(
+                    for: "export PATH=$HOME/bin:/opt/homebrew/bin:$PATH"
+                ): .instant(""),
+                "ls /opt/homebrew/opt | grep php": .instant("")
+            ],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary)
+            ]
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: false
+            ),
+            hasCompletedIntroduction: true,
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .waitingForManualCompletion)
+        #expect(viewModel.action == .recheckPath)
+        #expect(!viewModel.progress.pathConfigured)
+        #expect(viewModel.commandLines == ShellEnvironment(container).pathInstructionLines())
+        #expect(viewModel.showsStatusBanner)
+        #expect(!viewModel.showsTerminalOutput)
+        #expect(viewModel.statusBannerText == "onboarding_wizard.output.step_not_resolved".localized)
+        #expect(viewModel.statusBannerSeverity == .warning)
+    }
+
     // Manual PATH rechecks should use a plain status message instead of the terminal output panel.
     @Test func failed_manual_path_recheck_uses_status_banner() async {
         let container = makeOnboardingFakeContainer(

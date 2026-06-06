@@ -30,9 +30,9 @@ extension OnboardingStepRunner {
         let allFilesUpdated = phpMonitorResult && composerResult && homebrewResult
 
         // ----------------------------------------------------------------------------
-        // A. Ideally, all files have been updated and the PATH is marked as configured
+        // A. Ideally, the PATH is now marked as configured
         // ----------------------------------------------------------------------------
-        if allFilesUpdated && progress.pathConfigured {
+        if progress.pathConfigured {
             return Result(state: .idle, outputLines: [], progress: progress, alertState: nil)
         }
 
@@ -53,13 +53,12 @@ extension OnboardingStepRunner {
         }
 
         // ----------------------------------------------------------------------------
-        // C. Fall through case: step has not been resolved
-        //    (requires manual intervention from the user)
+        // C. Automatic updates failed, so the user needs the manual PATH instructions
         // ----------------------------------------------------------------------------
         appendOutput("\n\("onboarding_wizard.output.step_not_resolved".localized)", .stdErr, to: &outputLines)
 
         return Result(
-            state: .failed,
+            state: .waitingForManualCompletion,
             outputLines: outputLines,
             progress: progress,
             alertState: nil

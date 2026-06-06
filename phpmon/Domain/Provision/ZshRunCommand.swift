@@ -29,15 +29,8 @@ class ZshRunCommand {
             return true
         }
 
-        // Escape single quotes to prevent shell injection
-        let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
-
         // Actually add the line to .zshrc
-        let outcome = await container.shell.pipe("""
-            touch ~/.zshrc && \
-            grep -qxF '\(escaped)' ~/.zshrc \
-            || printf '%s\\n' '\(escaped)' >> ~/.zshrc
-        """)
+        let outcome = await container.shell.pipe(Self.append(for: text))
 
         // Validate the command executed correctly
         if outcome.hasError {
@@ -45,6 +38,17 @@ class ZshRunCommand {
         }
 
         return true
+    }
+
+    static func append(for text: String) -> String {
+        // Escape single quotes to prevent shell injection
+        let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
+
+        return """
+            touch ~/.zshrc && \
+            grep -qxF '\(escaped)' ~/.zshrc \
+            || printf '%s\\n' '\(escaped)' >> ~/.zshrc
+        """
     }
 
     private func zshrcAlreadyContainsLine(for text: String) -> Bool {

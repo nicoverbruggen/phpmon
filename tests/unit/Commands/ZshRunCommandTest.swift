@@ -71,7 +71,7 @@ struct ZshRunCommandTest {
         )
 
         let exportLine = ShellEnvironment(container).phpMonitorBinPathExport
-        let expectedCommand = appendCommand(for: exportLine)
+        let expectedCommand = ZshRunCommand.append(for: exportLine)
         let expectedContents = [
             "export PATH=\"$HOME/bin:$HOME/.config/phpmon/bin-backup:$PATH\"",
             "export PATH=\"$HOME/bin:$HOME/.composer/vendor/bin-old:$PATH\"",
@@ -101,13 +101,4 @@ struct ZshRunCommandTest {
         return container
     }
 
-    private func appendCommand(for text: String) -> String {
-        let escaped = text.replacingOccurrences(of: "'", with: "'\\''")
-
-        return """
-            touch ~/.zshrc && \
-            grep -qxF '\(escaped)' ~/.zshrc \
-            || printf '%s\\n' '\(escaped)' >> ~/.zshrc
-        """
-    }
 }
