@@ -87,4 +87,24 @@ struct PhpHelperTest {
         #expect(firstWrite.count == Constants.DetectedPhpVersions.count)
         #expect(secondWrite.isEmpty)
     }
+
+    @Test func unmarked_existing_helper_is_not_overwritten() async throws {
+        let helperPath = "/Users/fake/.config/phpmon/bin/pm84"
+        let customContents = """
+        #!/bin/zsh
+        echo "custom helper"
+        """
+        let container = Container.fake(files: [
+            "/usr/local/bin/": .fake(.directory, readOnly: true),
+            "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary),
+            helperPath: .fake(.text, customContents)
+        ])
+
+        let writtenFiles = await PhpHelper.regenerate(container, installedVersions: ["8.4"])
+        let contents = try container.filesystem.getStringFromFile(helperPath)
+
+        #expect(contents == customContents)
+        #expect(!writtenFiles.contains(helperPath))
+        #expect(!container.filesystem.isExecutableFile(helperPath))
+    }
 }
