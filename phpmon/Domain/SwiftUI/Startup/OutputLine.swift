@@ -28,7 +28,7 @@ extension OutputLine {
     }
 
     static func outLines( _ text: [String]) -> [OutputLine] {
-        Self.make(text, as: .stdErr)
+        Self.make(text, as: .stdOut)
     }
 
     static func errLines( _ text: [String]) -> [OutputLine] {
