@@ -63,6 +63,12 @@ class AppUpdater {
 
         // We will now persist the version number so we can reference it later
         latestVersionOnline = onlineVersion
+
+        #if DEBUG
+        Log.info("IMPORTANT: You are using api.phpmon.test, make sure the manifest is up-to-date.")
+        Log.info("Make sure to run `php artisan manifest:retrieve` on the server.")
+        #endif
+
         Log.info("The latest version read from the endpoint is: v\(onlineVersion.computerReadable).")
 
         Task { // Present this concurrently w/ returning the .success value
