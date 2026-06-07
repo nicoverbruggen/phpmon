@@ -5537,8 +5537,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nicoverbruggen/NVAppUpdater";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				branch = develop;
+				kind = branch;
 			};
 		};
 		03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */ = {
@@ -5554,7 +5554,7 @@
 			repositoryURL = "https://github.com/nicoverbruggen/NVAlert";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
+				minimumVersion = 2.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
