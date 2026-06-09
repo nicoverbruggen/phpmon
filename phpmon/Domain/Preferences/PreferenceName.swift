@@ -31,7 +31,6 @@ enum PreferenceName: String, Codable {
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case hideAutoDetectedServicesInMenu = "hide_auto_detected_services_in_menu"
 
-
     // WARNINGS
     case warnAboutNonStandardTLD = "warn_about_non_standard_tld"
 

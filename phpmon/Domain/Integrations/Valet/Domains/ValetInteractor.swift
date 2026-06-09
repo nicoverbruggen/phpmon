@@ -87,17 +87,17 @@ class ValetInteractor {
         let originalSecureStatus = proxy.secured
 
         // Build the list of commands we will need to run
-        let commands: [String] = [
+        let valet = container.paths.valet
+        let commands: [ConditionalCommand] = [
             // Unproxy the given domain
-            "\(container.paths.valet) unproxy \(proxy.domain)",
-            // Re-create the proxy (with the inverse secured status)
-            originalSecureStatus
-                ? "\(container.paths.valet) proxy \(proxy.domain) \(proxy.target)"
-                : "\(container.paths.valet) proxy \(proxy.domain) \(proxy.target) --secure"
+            .command("\(valet) unproxy \(proxy.domain)"),
+            // Re-create the proxy with the inverse secured status
+            .command("\(valet) proxy \(proxy.domain) \(proxy.target)", when: originalSecureStatus),
+            .command("\(valet) proxy \(proxy.domain) \(proxy.target) --secure", when: !originalSecureStatus)
         ]
 
         // Run the commands
-        for command in commands {
+        for command in commands.included {
             await container.shell.pipe(command)
         }
 
@@ -105,7 +105,7 @@ class ValetInteractor {
         proxy.determineSecured()
         if proxy.secured == originalSecureStatus {
             throw ValetInteractionError(
-                command: commands.joined(separator: " && ")
+                command: commands.chained
             )
         }
 
