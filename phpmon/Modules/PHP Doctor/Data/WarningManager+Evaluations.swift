@@ -95,61 +95,32 @@ extension WarningManager {
             // HOMEBREW
             Warning(
                 command: {
-                    !self.brewDiagnostics.installedTaps.contains(Constants.Taps.php)
+                    !self.brewDiagnostics.missingRequiredPhpTaps().isEmpty
                 },
-                name: "`shivammathur/php` tap is missing",
-                title: "warnings.php_tap_missing.title",
+                name: "Required Homebrew taps are missing",
+                title: "warnings.required_taps_missing.title",
                 paragraphs: { return [
-                    "warnings.php_tap_missing.description"
+                    "warnings.required_taps_missing.description"
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await self.fixRequiredTap(Constants.Taps.php, alwaysTap: true)
+                    await self.fixMissingRequiredTaps()
                     await self.checkEnvironment()
                 }
             ),
             Warning(
                 command: {
-                    !self.brewDiagnostics.installedTaps.contains(Constants.Taps.extensions)
+                    let untrusted = await self.brewDiagnostics.untrustedRequiredPhpTaps()
+                    return !untrusted.isEmpty
                 },
-                name: "`shivammathur/extensions` tap is missing",
-                title: "warnings.extensions_tap_missing.title",
+                name: "Required Homebrew taps are not trusted",
+                title: "warnings.required_taps_untrusted.title",
                 paragraphs: { return [
-                    "warnings.extensions_tap_missing.description"
-                ] },
-                url: "https://github.com/shivammathur/homebrew-extensions",
-                fix: {
-                    await self.fixRequiredTap(Constants.Taps.extensions, alwaysTap: true)
-                    await self.checkEnvironment()
-                }
-            ),
-            Warning(
-                command: {
-                    await self.brewDiagnostics.tapRequiresTrust(Constants.Taps.php)
-                },
-                name: "`shivammathur/php` tap is not trusted",
-                title: "warnings.php_tap_untrusted.title",
-                paragraphs: { return [
-                    "warnings.php_tap_untrusted.description"
+                    "warnings.required_taps_untrusted.description"
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await self.fixRequiredTap(Constants.Taps.php, alwaysTap: false)
-                    await self.checkEnvironment()
-                }
-            ),
-            Warning(
-                command: {
-                    await self.brewDiagnostics.tapRequiresTrust(Constants.Taps.extensions)
-                },
-                name: "`shivammathur/extensions` tap is not trusted",
-                title: "warnings.extensions_tap_untrusted.title",
-                paragraphs: { return [
-                    "warnings.extensions_tap_untrusted.description"
-                ] },
-                url: "https://github.com/shivammathur/homebrew-extensions",
-                fix: {
-                    await self.fixRequiredTap(Constants.Taps.extensions, alwaysTap: false)
+                    await self.fixUntrustedRequiredTaps()
                     await self.checkEnvironment()
                 }
             ),
@@ -200,13 +171,37 @@ extension WarningManager {
     }
     // swiftlint:enable function_body_length
 
-    private func fixRequiredTap(_ tap: String, alwaysTap: Bool) async {
+    /// Taps whichever required PHP taps aren't installed yet, in a single fix.
+    private func fixMissingRequiredTaps() async {
         let brew = container.paths.brew
-        let supportsTrust = await brewDiagnostics.supportsTapTrust()
+        let installed = brewDiagnostics.installedTaps
 
         let commands: [ConditionalCommand] = [
-            .command("\(brew) tap \(tap)", when: alwaysTap),
-            .command("\(brew) trust --tap \(tap)", when: supportsTrust)
+            .command("\(brew) tap \(Constants.Taps.php)",
+                     when: !installed.contains(Constants.Taps.php)),
+            .command("\(brew) tap \(Constants.Taps.extensions)",
+                     when: !installed.contains(Constants.Taps.extensions))
+        ]
+
+        for command in commands.included {
+            await container.shell.pipe(command)
+        }
+
+        await brewDiagnostics.loadInstalledTaps()
+        await brewDiagnostics.loadTrustedTaps()
+    }
+
+    /// Trusts whichever required PHP taps aren't trusted yet, in a single fix.
+    private func fixUntrustedRequiredTaps() async {
+        let brew = container.paths.brew
+        let supportsTrust = await brewDiagnostics.supportsTapTrust()
+        let trusted = brewDiagnostics.trustedTaps
+
+        let commands: [ConditionalCommand] = [
+            .command("\(brew) trust --tap \(Constants.Taps.php)",
+                     when: supportsTrust && !trusted.contains(Constants.Taps.php)),
+            .command("\(brew) trust --tap \(Constants.Taps.extensions)",
+                     when: supportsTrust && !trusted.contains(Constants.Taps.extensions))
         ]
 
         for command in commands.included {

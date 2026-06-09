@@ -54,23 +54,22 @@ struct WarningManagerTrustTest {
         let manager = WarningManager(container: container)
         await manager.checkEnvironment()
 
+        // The single combined warning fires because `shivammathur/php` is untrusted,
+        // even though `shivammathur/extensions` is already trusted.
         let warning = manager.warnings.first {
-            $0.name == "`shivammathur/php` tap is not trusted"
+            $0.name == "Required Homebrew taps are not trusted"
         }
-
         #expect(warning != nil)
-        let extensionsTapWarningExists = manager.warnings.contains {
-            $0.name == "`shivammathur/extensions` tap is not trusted"
-        }
-        #expect(!extensionsTapWarningExists)
 
         await warning?.fix?()
 
-        let phpTapWarningStillExists = manager.warnings.contains {
-            $0.name == "`shivammathur/php` tap is not trusted"
+        let warningStillExists = manager.warnings.contains {
+            $0.name == "Required Homebrew taps are not trusted"
         }
 
+        // The fix trusts only the untrusted tap (`shivammathur/php`); the already-trusted
+        // `shivammathur/extensions` is skipped, so its trust command is never run.
         #expect(container.filesystem.fileExists("/tmp/phpmon-doctor-trusted-php"))
-        #expect(!phpTapWarningStillExists)
+        #expect(!warningStillExists)
     }
 }
