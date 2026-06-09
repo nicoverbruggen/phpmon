@@ -125,13 +125,9 @@ extension BrewCommand {
         shell: ShellProtocol,
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
-        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php") {
-            let command = "brew tap shivammathur/php"
-            try await run(shell: shell, command, onProgress)
-        }
+        let diagnostics = BrewDiagnostics.shared
 
-        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/extensions") {
-            let command = "brew tap shivammathur/extensions"
+        for command in await diagnostics.requiredPhpTapCommands(using: "brew") {
             try await run(shell: shell, command, onProgress)
         }
     }

@@ -73,11 +73,40 @@ struct PhpVersionManagerView: View {
             )
         }
 
+        await self.warnAboutTapReadiness()
+
         // Finally, load PHP information
         await container.phpEnvs.reloadPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
         self.status.busy = false
+    }
+
+    private func warnAboutTapReadiness() async {
+        let diagnostics = BrewDiagnostics.shared
+        await diagnostics.loadInstalledTaps()
+        await diagnostics.loadTrustedTaps()
+
+        let missingTaps = diagnostics.missingRequiredPhpTaps()
+        if !missingTaps.isEmpty {
+            self.presentErrorAlert(
+                title: "phpman.warnings.required_taps_missing.title".localized,
+                description: "phpman.warnings.required_taps_missing.desc".localized(missingTaps.joined(separator: ", ")),
+                button: "generic.ok".localized,
+                style: .warning
+            )
+            return
+        }
+
+        let untrustedTaps = await diagnostics.untrustedRequiredPhpTaps()
+        if !untrustedTaps.isEmpty {
+            self.presentErrorAlert(
+                title: "phpman.warnings.required_taps_untrusted.title".localized,
+                description: "phpman.warnings.required_taps_untrusted.desc".localized(untrustedTaps.joined(separator: ", ")),
+                button: "generic.ok".localized,
+                style: .warning
+            )
+        }
     }
 
     private func reload() async {

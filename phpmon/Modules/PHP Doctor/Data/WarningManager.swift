@@ -12,12 +12,14 @@ import Cocoa
 class WarningManager: ObservableObject {
 
     var container: Container
+    let brewDiagnostics: BrewDiagnostics
 
     init(
         container: Container,
         fake: Bool = false
     ) {
         self.container = container
+        self.brewDiagnostics = BrewDiagnostics(container)
 
         self.evaluations = allAvailableWarnings()
 
@@ -66,7 +68,8 @@ class WarningManager: ObservableObject {
     func checkEnvironment() async {
         await container.shell.reloadEnvPath()
 
-        await BrewDiagnostics.shared.loadInstalledTaps()
+        await brewDiagnostics.loadInstalledTaps()
+        await brewDiagnostics.loadTrustedTaps()
 
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.temporaryWarnings = self.evaluations

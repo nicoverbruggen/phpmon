@@ -95,7 +95,7 @@ extension WarningManager {
             // HOMEBREW
             Warning(
                 command: {
-                    !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php")
+                    !self.brewDiagnostics.installedTaps.contains("shivammathur/php")
                 },
                 name: "`shivammathur/php` tap is missing",
                 title: "warnings.php_tap_missing.title",
@@ -104,14 +104,13 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-php",
                 fix: {
-                    await self.container.shell.pipe("brew tap shivammathur/php")
-                    await BrewDiagnostics.shared.loadInstalledTaps()
+                    await self.fixRequiredTap("shivammathur/php", alwaysTap: true)
                     await self.checkEnvironment()
                 }
             ),
             Warning(
                 command: {
-                    !BrewDiagnostics.shared.installedTaps.contains("shivammathur/extensions")
+                    !self.brewDiagnostics.installedTaps.contains("shivammathur/extensions")
                 },
                 name: "`shivammathur/extensions` tap is missing",
                 title: "warnings.extensions_tap_missing.title",
@@ -120,8 +119,37 @@ extension WarningManager {
                 ] },
                 url: "https://github.com/shivammathur/homebrew-extensions",
                 fix: {
-                    await self.container.shell.pipe("brew tap shivammathur/extensions")
-                    await BrewDiagnostics.shared.loadInstalledTaps()
+                    await self.fixRequiredTap("shivammathur/extensions", alwaysTap: true)
+                    await self.checkEnvironment()
+                }
+            ),
+            Warning(
+                command: {
+                    await self.brewDiagnostics.tapRequiresTrust("shivammathur/php")
+                },
+                name: "`shivammathur/php` tap is not trusted",
+                title: "warnings.php_tap_untrusted.title",
+                paragraphs: { return [
+                    "warnings.php_tap_untrusted.description"
+                ] },
+                url: "https://github.com/shivammathur/homebrew-php",
+                fix: {
+                    await self.fixRequiredTap("shivammathur/php", alwaysTap: false)
+                    await self.checkEnvironment()
+                }
+            ),
+            Warning(
+                command: {
+                    await self.brewDiagnostics.tapRequiresTrust("shivammathur/extensions")
+                },
+                name: "`shivammathur/extensions` tap is not trusted",
+                title: "warnings.extensions_tap_untrusted.title",
+                paragraphs: { return [
+                    "warnings.extensions_tap_untrusted.description"
+                ] },
+                url: "https://github.com/shivammathur/homebrew-extensions",
+                fix: {
+                    await self.fixRequiredTap("shivammathur/extensions", alwaysTap: false)
                     await self.checkEnvironment()
                 }
             ),
@@ -171,4 +199,18 @@ extension WarningManager {
         ]
     }
     // swiftlint:enable function_body_length
+
+    private func fixRequiredTap(_ tap: String, alwaysTap: Bool) async {
+        for command in await brewDiagnostics.tapCommands(
+            tap,
+            using: container.paths.brew,
+            installedTaps: brewDiagnostics.installedTaps,
+            alwaysTap: alwaysTap
+        ) {
+            await container.shell.pipe(command)
+        }
+
+        await brewDiagnostics.loadInstalledTaps()
+        await brewDiagnostics.loadTrustedTaps()
+    }
 }

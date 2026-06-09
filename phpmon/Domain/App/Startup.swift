@@ -98,8 +98,13 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
+                    let tapCommands = await BrewDiagnostics(container).tapCommands(
+                        "shivammathur/php",
+                        using: brew,
+                        alwaysTap: true
+                    )
                     try await container.shell.attach(
-                        "\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php",
+                        (tapCommands + ["\(brew) install shivammathur/php/php"]).joined(separator: " && "),
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )
@@ -146,8 +151,14 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
+                    let tapCommands = await BrewDiagnostics(container).tapCommands(
+                        "shivammathur/php",
+                        using: brew,
+                        alwaysTap: true
+                    )
                     try await container.shell.attach(
-                        "\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php",
+                        (tapCommands + ["\(brew) reinstall shivammathur/php/php", "\(brew) link php"])
+                            .joined(separator: " && "),
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )
