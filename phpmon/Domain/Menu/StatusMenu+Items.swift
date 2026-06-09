@@ -114,12 +114,10 @@ extension StatusMenu {
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_preferences".localized,
                        action: #selector(MainMenu.openPrefs),
-                       keyEquivalent: ",",
-                       systemImage: "gear"
+                       keyEquivalent: ","
             ),
             NSMenuItem(title: "mi_check_for_updates".localized,
-                       action: #selector(MainMenu.checkForUpdates),
-                       systemImage: "arrow.clockwise.circle"
+                       action: #selector(MainMenu.checkForUpdates)
             )
         ])
     }
@@ -141,12 +139,10 @@ extension StatusMenu {
             HeaderView.asMenuItem(text: "mi_valet".localized),
             NSMenuItem(title: "mi_valet_config".localized,
                        action: #selector(MainMenu.openValetConfigFolder),
-                       keyEquivalent: "v",
-                       systemImage: "folder.badge.gearshape"),
+                       keyEquivalent: "v"),
             NSMenuItem(title: "mi_domain_list".localized,
                        action: #selector(MainMenu.openDomainList),
-                       keyEquivalent: "l",
-                       systemImage: "globe"),
+                       keyEquivalent: "l"),
             NSMenuItem.separator()
         ])
     }
@@ -158,24 +154,19 @@ extension StatusMenu {
             HeaderView.asMenuItem(text: "mi_configuration".localized),
             NSMenuItem(title: "mi_php_version_manager".localized,
                        action: #selector(MainMenu.openPhpVersionManager),
-                       keyEquivalent: "m",
-                       systemImage: "cpu.fill"),
+                       keyEquivalent: "m"),
             NSMenuItem(title: "mi_php_ext_manager".localized,
                        action: #selector(MainMenu.openPhpExtensionManager),
-                       keyEquivalent: "e",
-                       systemImage: "puzzlepiece.extension"),
+                       keyEquivalent: "e"),
             NSMenuItem(title: "mi_php_config".localized,
                        action: #selector(MainMenu.openActiveConfigFolder),
-                       keyEquivalent: "c",
-                       systemImage: "folder.badge.gearshape"),
+                       keyEquivalent: "c"),
             NSMenuItem(title: "mi_phpmon_config".localized,
                        action: #selector(MainMenu.openPhpMonitorConfigurationFile),
-                       keyEquivalent: "y",
-                       systemImage: "folder.badge.person.crop"),
+                       keyEquivalent: "y"),
             NSMenuItem(title: "mi_phpinfo".localized,
                        action: #selector(MainMenu.openPhpInfo),
-                       keyEquivalent: "i",
-                       systemImage: "info.circle.fill")
+                       keyEquivalent: "i")
         ])
     }
 
@@ -187,8 +178,7 @@ extension StatusMenu {
             NSMenuItem(
                 title: "mi_global_composer".localized,
                 action: #selector(MainMenu.openGlobalComposerFolder),
-                keyEquivalent: "g",
-                systemImage: "plus.rectangle.on.folder"
+                keyEquivalent: "g"
             ),
             NSMenuItem(
                 title: "mi_update_global_composer".localized,
@@ -196,8 +186,7 @@ extension StatusMenu {
                 ? nil
                 : #selector(MainMenu.updateGlobalComposerDependencies),
                 keyEquivalent: "g",
-                keyModifier: [.shift],
-                systemImage: "arrow.down.to.line.square"
+                keyModifier: [.shift]
             )
         ])
     }
@@ -257,7 +246,7 @@ extension StatusMenu {
     }
 
     @MainActor private func addEmptyPresetHelp() {
-        addItem(NSMenuItem(title: "mi_presets_title".localized, systemImage: "puzzlepiece.fill", submenu: [
+        addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem(title: "mi_no_presets".localized),
             NSMenuItem.separator(),
             NSMenuItem(title: "mi_set_up_presets".localized,
@@ -266,7 +255,7 @@ extension StatusMenu {
     }
 
     @MainActor private func addLoadedPresets() {
-        addItem(NSMenuItem(title: "mi_presets_title".localized, systemImage: "puzzlepiece.fill", submenu: [
+        addItem(NSMenuItem(title: "mi_presets_title".localized, submenu: [
             NSMenuItem.separator(),
             HeaderView.asMenuItem(text: "mi_apply_presets_title".localized)
         ] + PresetMenuItem.getAll() + [
@@ -319,7 +308,7 @@ extension StatusMenu {
     // MARK: - First Aid & Services
 
     @MainActor func addFirstAidAndServicesMenuItems() {
-        let services = NSMenuItem(title: "mi_other".localized, systemImage: "cross.case")
+        let services = NSMenuItem(title: "mi_other".localized)
 
         var items: [NSMenuItem] = [
             // FIRST AID

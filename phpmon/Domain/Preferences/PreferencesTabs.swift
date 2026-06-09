@@ -39,7 +39,6 @@ class AppearancePreferencesVC: PreferenceVC {
             .addView(when: always, vc.getIconOptionsPV())
             .addView(when: always, vc.getIconDensityPV())
             .addView(when: always, vc.getHideAutoDetectedServicesPV())
-            .addView(when: always, vc.getHideMenuIconsPV())
 
         return vc
     }

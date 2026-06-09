@@ -103,18 +103,6 @@ class PreferenceVC: NSViewController {
         )
     }
 
-    func getHideMenuIconsPV() -> NSView {
-        return CheckboxPreferenceView.make(
-            sectionText: "prefs.hide_menu_icons".localized,
-            descriptionText: "prefs.hide_menu_icons_desc".localized,
-            checkboxText: "prefs.hide_menu_icons_title".localized,
-            preference: .hideIconsInMenu,
-            action: {
-                MainMenu.shared.rebuild()
-            }
-        )
-    }
-
     func getIconOptionsPV() -> NSView {
         return SelectPreferenceView.make(
             sectionText: "",
