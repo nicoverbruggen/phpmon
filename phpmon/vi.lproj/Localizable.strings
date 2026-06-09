@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "Do có một bản phát hành mới của PHP gần đây, có khả năng công thức Homebrew đã thay đổi kể từ khi phiên bản PHP Monitor này được tạo ra. \n\nTôi khuyên bạn nên cập nhật PHP Monitor trước khi sử dụng trình quản lý phiên bản để cài đặt, gỡ bỏ hoặc nâng cấp các phiên bản PHP. Tùy thuộc vào thời gian Homebrew cập nhật công thức của họ, điều này có thể mất vài ngày, vì vậy hãy lưu ý.";
 "phpman.warnings.unsupported.title" = "Phiên bản Homebrew của bạn có thể gây ra vấn đề";
 "phpman.warnings.unsupported.desc" = "Không có chức năng nào bị vô hiệu hóa, nhưng một số lệnh có thể không hoạt động như mong đợi. Bạn đang chạy Homebrew %@.\n\nHiện tại, chỉ có Homebrew 4 và 5 được hỗ trợ cho PHP Version Manager. Nếu bạn đang chạy phiên bản Homebrew mới hơn, bạn có thể muốn kiểm tra xem có phiên bản mới của PHP Monitor sẵn có không.";
+"phpman.warnings.required_taps_missing.title" = "Thiếu một hoặc nhiều tap Homebrew bắt buộc";
+"phpman.warnings.required_taps_missing.desc" = "PHP Monitor có thể không cài đặt hoặc cập nhật được các phiên bản PHP cho đến khi các tap này được cài đặt: %@.\n\nMở PHP Doctor để áp dụng bản sửa lỗi tự động, hoặc chạy các lệnh `brew tap` tương ứng trong terminal của bạn.";
+"phpman.warnings.required_taps_untrusted.title" = "Một hoặc nhiều tap Homebrew bắt buộc không được tin cậy";
+"phpman.warnings.required_taps_untrusted.desc" = "Homebrew có thể từ chối cài đặt hoặc cập nhật các phiên bản PHP cho đến khi các tap này được tin cậy: %@.\n\nMở PHP Doctor để áp dụng bản sửa lỗi tự động, hoặc chạy các lệnh `brew trust --tap` tương ứng trong terminal của bạn.";
 "phpman.warnings.removal.title" = "Bạn có chắc chắn muốn gỡ cài đặt %@ không?";
 "phpman.warnings.removal.desc" = "Vui lòng lưu ý rằng các tệp cấu hình sẽ không bị xóa, vì vậy việc cài đặt lại sau này nếu cần sẽ dễ dàng hơn.\n\nBạn có thể được yêu cầu nhập mật khẩu của mình trong quá trình gỡ cài đặt nếu quyền truy cập vào tệp không cho phép việc gỡ bỏ đơn giản.";
 "phpman.warnings.removal.button" = "Gỡ cài đặt";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "Bạn hiện đang chạy PHP Monitor trong Chế độ độc lập.";
 "lite_mode_explanation.subtitle" = "PHP Monitor có các tính năng bổ sung chỉ có sẵn nếu bạn là người dùng của Laravel Valet. Hiện tại, PHP Monitor không phát hiện được bất kỳ phiên bản Valet hoạt động trên hệ thống của bạn, do đó các tính năng đó không khả dụng.";
 "lite_mode_explanation.description" = "Để biết thêm thông tin, tôi khuyên bạn nên kiểm tra tệp README (có thể truy cập trên GitHub) sẽ giải thích những bước cần thiết để cài đặt Valet và khiến PHP Monitor chạy đúng với nó đã được cài đặt. Bạn cần khởi động lại PHP Monitor sau khi cài đặt Laravel Valet trước khi nó rời khỏi Chế độ độc lập.";
+"lite_mode_explanation.install_valet" = "Cài đặt Valet...";
+"lite_mode_explanation.not_now" = "Không phải bây giờ";
 "generic.ok" = "OK";
 "generic.cancel" = "Hủy";
 "generic.retry" = "Thử lại";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "Menu:";
 "prefs.hide_menu_icons_desc" = "PHP Monitor sẽ ẩn các biểu tượng menu khi tùy chọn này được chọn, giống như giao diện của hầu hết các menu macOS trước macOS Tahoe. Nếu bạn vẫn đang sử dụng phiên bản macOS cũ hơn hoặc thích menu không có biểu tượng, bạn có thể muốn bật tùy chọn này.";
 "prefs.hide_menu_icons_title" = "Ẩn biểu tượng menu";
+"prefs.hide_auto_detected_services" = "Dịch vụ:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor sẽ tự động phát hiện và hiển thị một số dịch vụ cơ sở dữ liệu được cài đặt qua Homebrew. Nếu bạn không muốn thấy chúng trong menu, bạn có thể ẩn chúng tại đây.";
+"prefs.hide_auto_detected_services_title" = "Ẩn các dịch vụ Homebrew";
 "notification.version_changed_title" = "PHP %@ hiện đã được kích hoạt";
 "notification.version_changed_desc" = "PHP Monitor đã chuyển sang PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM đã được khởi động lại tự động";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "Không, Cám ơn";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Khôi phục Quyền Homebrew đã bị hủy.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "Kết quả của kịch bản được thực thi để điều chỉnh quyền truy cập đã trả về nil, điều này thường có nghĩa là bạn không cấp quyền quản trị cho PHP Monitor.\n\nNếu bạn nhấn vào Hủy trong lời nhắc xác thực, điều này hoàn toàn bình thường. Nếu bạn thực sự xác thực và vẫn thấy thông báo này, có thể đã xảy ra sự cố gì đó.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Quyền truy cập quản trị đã bị từ chối.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor không thể tiếp tục vì yêu cầu lệnh đặc quyền đã bị từ chối.";
 "alert.key_service_not_running.title" = "Do sự cố với các dịch vụ Homebrew, Valet hiện không hoạt động đúng.";
 "alert.key_service_not_running.subtitle" = "Để Valet hoạt động đúng, ít nhất ba dịch vụ chính phải hoạt động đúng.\n\nPHP Monitor báo cáo rằng điều này không phải là trường hợp. Bạn có thể thử khắc phục điều này bằng cách nhấn nút với 'X' ở menu dưới dịch vụ bị ảnh hưởng để (khởi) động lại dịch vụ hiện đang không hoạt động.";
 "alert.key_service_not_running.desc" = "Nếu nhấn vào nút bên dưới dịch vụ không hoạt động (tức là biểu tượng spinner xuất hiện nhưng vẫn là 'X' sau một thời gian), bạn có thể cần chạy Sửa Lỗi Valet. Bạn có thể làm điều này qua menu Cứu Hộ > Sửa Lỗi Valet.\n\nNgoài ra, bạn có thể sử dụng `valet stop` và `valet start` trong terminal, có thể giải quyết vấn đề này (như một phương án thay thế cho Sửa Lỗi Valet).\n\nĐể khắc phục lỗi, bạn có thể kiểm tra trình theo dõi vấn đề GitHub, nơi người khác có thể gặp phải các vấn đề tương tự. Là nhà phát triển, tôi cố gắng đảm bảo mọi câu hỏi đều được trả lời :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "Sau khi cài đặt PHP, các tệp cấu hình quan trọng sau đây nên tồn tại:\n\n• %@\n\nKhi thiếu các tệp như thế này, bạn nên chuyển sang phiên bản PHP liên quan đến các tệp đó: điều này có thể giải quyết vấn đề. Nếu điều này không khắc phục được sự cố, khuyến nghị là bạn nên cài đặt lại phiên bản PHP(s) thích hợp thông qua Homebrew một lần nữa, điều này sẽ phục hồi các tệp cấu hình đã thiếu. Thiếu các tệp cấu hình có thể là nguyên nhân khiến bạn nhận được lỗi '502 Bad Gateway', ngay cả sau khi chạy Sửa Lỗi Valet (nếu bạn đang sử dụng Valet).";
 "warnings.xdebug_conf_missing.title" = "Cấu hình Xdebug chưa đầy đủ";
 "warnings.xdebug_conf_missing.description" = "Bạn đã cài đặt Xdebug, nhưng không có chế độ nào được chỉ định. Bạn muốn PHP Monitor cập nhật cấu hình của bạn? Bạn cũng có thể sửa lỗi này thủ công.";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap bị thiếu";
-"warnings.php_tap_missing.description" = "Tap Homebrew này là cần thiết để cài đặt các phiên bản PHP cũ hơn thông qua Trình quản lý Phiên bản PHP của ứng dụng này.";
-"warnings.extensions_tap_missing.title" = "tap `shivammathur/extensions` bị thiếu";
-"warnings.extensions_tap_missing.description" = "Tap này của Homebrew là bắt buộc để cài đặt tiện ích mở rộng thông qua Trình quản lý Tiện ích PHP của ứng dụng này.";
+"warnings.required_taps_missing.title" = "Thiếu các tap Homebrew bắt buộc";
+"warnings.required_taps_missing.description" = "Một hoặc nhiều tap Homebrew cần thiết để cài đặt các phiên bản và tiện ích mở rộng PHP qua ứng dụng này chưa được cài đặt. PHP Monitor có thể thêm các tap còn thiếu cho bạn.";
+"warnings.required_taps_untrusted.title" = "Các tap Homebrew bắt buộc không được tin cậy";
+"warnings.required_taps_untrusted.description" = "Một hoặc nhiều tap Homebrew bắt buộc phải được tin cậy trước khi Homebrew cài đặt các công thức từ đó mà không cần xác nhận thêm. PHP Monitor có thể tin cậy chúng cho bạn.";
 "warnings.certificates_expired.title" = "Một hoặc nhiều chứng chỉ đang được sử dụng để phục vụ một miền đã hết hạn.";
 "warnings.certificates_expired.description" = "Chứng chỉ đã hết hạn sẽ ngừng hoạt động đúng của lưu lượng HTTPS. Bạn có thể để PHP Monitor tự động cố gắng khắc phục điều này bằng cách mở danh sách Domains.";
 "warnings.none" = "Hiện tại không có khuyến nghị nào cho bạn. Mọi thứ của bạn đều ổn!";

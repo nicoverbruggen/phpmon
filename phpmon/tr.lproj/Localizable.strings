@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "Son bir PHP sürümü nedeniyle, Homebrew formülleri bu PHP Monitor sürümünün oluşturulmasından beri değişmiş olabilir.\n\nPHP Monitor'ı güncelleyip ardından sürüm yöneticisini kullanarak PHP sürümlerini yüklemeden, kaldırmadan veya yükseltmeden önce güncellemenizi öneririm. Homebrew'un formüllerini ne kadar sürede güncellediğine bağlı olarak bu birkaç gün sürebilir; bunu aklınızda bulundurun.";
 "phpman.warnings.unsupported.title" = "Homebrew sürümünüz sorunlara yol açabilir";
 "phpman.warnings.unsupported.desc" = "Herhangi bir işlevsellik devre dışı bırakılmamış olsa da bazı komutlar beklenen şekilde çalışmayabilir. Şu anda Homebrew %@'yi çalıştırıyorsunuz.\n\nŞu an PHP Version Manager için yalnızca Homebrew 4 ve 5 desteklenmektedir. Daha yeni bir Homebrew sürümü kullanıyorsanız, PHP Monitor'ın daha yeni bir sürümünün mevcut olup olmadığını kontrol etmek isteyebilirsiniz.";
+"phpman.warnings.required_taps_missing.title" = "Gerekli bir veya daha fazla Homebrew tap'i eksik";
+"phpman.warnings.required_taps_missing.desc" = "Bu tap'ler yüklenene kadar PHP Monitor PHP sürümlerini yükleyemeyebilir veya güncelleyemeyebilir: %@.\n\nOtomatik düzeltmeyi uygulamak için PHP Doctor'ı açın veya ilgili `brew tap` komutlarını terminalinizde çalıştırın.";
+"phpman.warnings.required_taps_untrusted.title" = "Gerekli bir veya daha fazla Homebrew tap'ine güvenilmiyor";
+"phpman.warnings.required_taps_untrusted.desc" = "Bu tap'lere güvenilene kadar Homebrew PHP sürümlerini yüklemeyi veya güncellemeyi reddedebilir: %@.\n\nOtomatik düzeltmeyi uygulamak için PHP Doctor'ı açın veya ilgili `brew trust --tap` komutlarını terminalinizde çalıştırın.";
 "phpman.warnings.removal.title" = "Kaldırmak istediğinizden emin misiniz, %@?";
 "phpman.warnings.removal.desc" = "Lütfen yapılandırma dosyalarının kaldırılmayacağını unutmayın, bu yüzden gerekirse daha sonra yeniden kurmak kolay olacaktır.\n\nKaldırma işlemi sırasında dosya izinleri basit bir kaldırmaya izin vermiyorsa şifreniz sorulabilir.";
 "phpman.warnings.removal.button" = "Kaldır";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "Şu anda PHP Monitor'ı Bağımsız Modda çalıştırıyorsunuz.";
 "lite_mode_explanation.subtitle" = "PHP Monitor, Laravel Valet kullanıcıları için kullanabileceğiniz ek özelliklere sahiptir. Şu anda PHP Monitor, sisteminizde aktif bir Valet kurulumunu tespit edemediği için bu özellikler mevcut değil.";
 "lite_mode_explanation.description" = "Daha fazla bilgi için, GitHub üzerinden erişilebilen README’yi incelemenizi öneririm; bu dosya Valet’i kurmak ve PHP Monitor’ın düzgün çalışması için gerekli adımları açıklayacaktır. Laravel Valet’i kurduktan sonra PHP Monitor’ı yeniden başlatmanız gerekecek, aksi takdirde Standalone Moddan çıkmayacaktır.";
+"lite_mode_explanation.install_valet" = "Valet'i Yükle...";
+"lite_mode_explanation.not_now" = "Şimdi değil";
 "generic.ok" = "Tamam";
 "generic.cancel" = "İptal";
 "generic.retry" = "Tekrar dene";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "Menü:";
 "prefs.hide_menu_icons_desc" = "Bu seçenek etkinleştirildiğinde PHP Monitor menü simgelerini gizler; bu, macOS Tahoe öncesinde çoğu macOS menüsünün göründüğü şekildedir. Hâlâ macOS'un eski bir sürümündeyseniz veya simgesiz menüleri tercih ediyorsanız, bu seçeneği değiştirmek isteyebilirsiniz.";
 "prefs.hide_menu_icons_title" = "Menü simgelerini gizle";
+"prefs.hide_auto_detected_services" = "Hizmetler:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor, Homebrew aracılığıyla yüklenen bazı veritabanı hizmetlerini otomatik olarak algılar ve gösterir. Bunları menüde görmek istemiyorsanız buradan gizleyebilirsiniz.";
+"prefs.hide_auto_detected_services_title" = "Homebrew hizmetlerini gizle";
 "notification.version_changed_title" = "PHP %@ artık aktif";
 "notification.version_changed_desc" = "PHP Monitor, PHP %@ sürümüne geçti.";
 "notification.php_fpm_restarted" = "PHP-FPM otomatik olarak yeniden başlatıldı";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "Hayır, teşekkürler";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Homebrew İzinlerini Geri Yükleme iptal edildi.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "İzinleri ayarlamak için çalıştırılan betiğin sonucu nil döndürdü, bu genellikle PHP Monitor'a yönetici izinleri vermediğiniz anlamına gelir.\n\nDoğrulama isteminde İptal'e tıkladıysanız bu normaldir. Gerçekten doğrulama yaptıysanız ve hâlâ bu mesajı görüyorsanız muhtemelen bir şeyler yanlış gitti.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Yönetici erişimi reddedildi.";
+"alert.errors.homebrew_permissions.user_denied.description" = "Ayrıcalıklı komut isteği reddedildiği için PHP Monitor devam edemedi.";
 "alert.key_service_not_running.title" = "Gerekli Homebrew servislerindeki sorunlar nedeniyle, Valet şu anda düzgün çalışmıyor";
 "alert.key_service_not_running.subtitle" = "Valet'in düzgün çalışması için en az üç ana hizmetin doğru şekilde çalışıyor olması gerekir.\n\nPHP Monitor, durumun bu olmadığını bildiriyor. Etkilenen hizmetin altındaki menüde 'X' bulunan butona basarak mevcut durumda aktif olmayan hizmeti yeniden başlatmayı deneyebilirsiniz.";
 "alert.key_service_not_running.desc" = "Altındaki butona tıkladığınızda servis çalışmazsa (örneğin dönen spinner görünür ama bir süre sonra 'X' olarak kalır), Valet'i Düzelt'i çalıştırmanız gerekebilir. Bunu İlk Yardım > Valet'i Düzelt menüsünden yapabilirsiniz.\n\nAlternatif olarak, terminalde `valet stop` ve `valet start` komutlarını kullanabilir, bu da sorunu çözebilir (Valet'i Düzelt'e alternatif olarak).\n\nDaha fazla hata ayıklama için GitHub issue izleyicisini kontrol edebilirsiniz; diğerleri benzer sorunlarla karşılaşmış olabilir. Geliştirici olarak her sorunun yanıtlanmasını sağlamaya çalışıyorum :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "PHP'i kurduktan sonra aşağıdaki ana yapılandırma dosyalarının mevcut olması gerekir:\n\n• %@\n\nBu tür dosyalar eksik olduğunda, ilgili PHP sürümüne geçmelisiniz: bu sorun çözebilir. Sorun çözülmezse, uygun PHP sürümlerini Homebrew üzerinden yeniden yüklemeniz önerilir; bu, eksik yapılandırma dosyalarını geri getirecektir. Eksik yapılandırma dosyaları, Valet'i Düzelt'i çalıştırdıktan sonra bile (Valet kullanıyorsanız) '502 Bad Gateway' hatalarına neden olabilir.";
 "warnings.xdebug_conf_missing.title" = "Xdebug yapılandırması eksik";
 "warnings.xdebug_conf_missing.description" = "Xdebug yüklü, ancak bir mod belirtilmemiş. PHP Monitor'ın yapılandırmanızı güncellemesini ister misiniz? Bunu ayrıca manuel olarak da düzeltebilirsiniz.";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap eksik";
-"warnings.php_tap_missing.description" = "Bu Homebrew tap, bu uygulamanın PHP Sürüm Yöneticisi aracılığıyla eski PHP sürümlerini yüklemek için gereklidir.";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap eksik";
-"warnings.extensions_tap_missing.description" = "Bu Homebrew tap, bu uygulamanın PHP Uzantı Yöneticisi üzerinden uzantıları kurmak için gereklidir.";
+"warnings.required_taps_missing.title" = "Gerekli Homebrew tap'leri eksik";
+"warnings.required_taps_missing.description" = "Bu uygulama aracılığıyla PHP sürümlerini ve uzantılarını yüklemek için gereken bir veya daha fazla Homebrew tap'i yüklü değil. PHP Monitor eksik tap'leri sizin için ekleyebilir.";
+"warnings.required_taps_untrusted.title" = "Gerekli Homebrew tap'lerine güvenilmiyor";
+"warnings.required_taps_untrusted.description" = "Homebrew ek onay olmadan formüllerini yüklemeden önce gerekli bir veya daha fazla Homebrew tap'ine güvenilmesi gerekir. PHP Monitor bunlara sizin için güvenebilir.";
 "warnings.certificates_expired.title" = "Bir alanı sunmak için kullanılan bir veya daha fazla sertifikanın süresi dolmuştur.";
 "warnings.certificates_expired.description" = "Süresi dolmuş sertifikalar HTTPS trafiğinin düzgün çalışmasını engeller. PHP Monitor, Alan Adları listesini açarak bu sorunu otomatik olarak çözmeyi deneyebilir.";
 "warnings.none" = "Şu anda size uygun öneri yok. Her şey yolunda!";

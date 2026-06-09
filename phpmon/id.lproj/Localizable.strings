@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "Karena rilis baru PHP yang terbaru, kemungkinan besar formula Homebrew telah berubah sejak versi PHP Monitor ini dibuat. Saya sarankan memperbarui PHP Monitor sebelum menggunakan manajer versi untuk menginstal, menghapus atau meningkatkan versi PHP. Tergantung berapa lama waktu yang dibutuhkan Homebrew untuk memperbarui formula mereka, ini dapat memakan beberapa hari, jadi harap diingat.";
 "phpman.warnings.unsupported.title" = "Versi Homebrew Anda mungkin menyebabkan masalah";
 "phpman.warnings.unsupported.desc" = "Tidak ada fungsi yang dinonaktifkan, tetapi beberapa perintah mungkin tidak bekerja seperti yang diharapkan. Anda saat ini menjalankan Homebrew %@.\n\nSaat ini, hanya Homebrew 4 dan 5 yang didukung untuk PHP Version Manager. Jika Anda menggunakan versi Homebrew yang lebih baru, Anda dapat memeriksa apakah ada versi PHP Monitor terbaru tersedia.";
+"phpman.warnings.required_taps_missing.title" = "Satu atau beberapa tap Homebrew yang diperlukan tidak ada";
+"phpman.warnings.required_taps_missing.desc" = "PHP Monitor mungkin tidak dapat memasang atau memperbarui versi PHP hingga tap berikut dipasang: %@.\n\nBuka PHP Doctor untuk menerapkan perbaikan otomatis, atau jalankan perintah `brew tap` yang sesuai di terminal Anda.";
+"phpman.warnings.required_taps_untrusted.title" = "Satu atau beberapa tap Homebrew yang diperlukan tidak tepercaya";
+"phpman.warnings.required_taps_untrusted.desc" = "Homebrew mungkin menolak memasang atau memperbarui versi PHP hingga tap berikut dipercaya: %@.\n\nBuka PHP Doctor untuk menerapkan perbaikan otomatis, atau jalankan perintah `brew trust --tap` yang sesuai di terminal Anda.";
 "phpman.warnings.removal.title" = "Apakah Anda yakin ingin menghapus %@?";
 "phpman.warnings.removal.desc" = "Harap dicatat bahwa file konfigurasi tidak akan dihapus, sehingga mudah untuk menginstal ulang nanti jika diperlukan.\n\nAnda mungkin diminta memasukkan kata sandi selama proses uninstall jika izin file tidak memungkinkan penghapusan sederhana.";
 "phpman.warnings.removal.button" = "Copot";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "Anda saat ini menjalankan PHP Monitor dalam Mode Tunggal.";
 "lite_mode_explanation.subtitle" = "PHP Monitor memiliki fitur tambahan yang tersedia untuk digunakan jika Anda merupakan pengguna Laravel Valet. Saat ini, PHP Monitor tidak dapat mendeteksi instalasi aktif Valet di sistem Anda, sehingga fitur tersebut tidak tersedia.";
 "lite_mode_explanation.description" = "Untuk informasi lebih lanjut, saya sarankan memeriksa README (tersedia di GitHub) yang akan menjelaskan langkah-langkah apa yang perlu Anda lakukan untuk menginstal Valet dan membuat PHP Monitor berjalan dengan benar setelah terpasang. Anda harus me-restart PHP Monitor setelah memasang Laravel Valet sebelum ia keluar dari Mode Tunggal.";
+"lite_mode_explanation.install_valet" = "Pasang Valet...";
+"lite_mode_explanation.not_now" = "Jangan sekarang";
 "generic.ok" = "OK";
 "generic.cancel" = "Batal";
 "generic.retry" = "Ulangi";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "Menu:";
 "prefs.hide_menu_icons_desc" = "PHP Monitor akan menyembunyikan ikon menu ketika opsi ini dipilih, seperti tampilan kebanyakan menu macOS sebelum macOS Tahoe. Jika Anda masih menggunakan versi macOS yang lebih lama atau lebih suka menu tanpa ikon, Anda mungkin ingin mengaktifkan opsi ini.";
 "prefs.hide_menu_icons_title" = "Sembunyikan ikon menu";
+"prefs.hide_auto_detected_services" = "Layanan:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor secara otomatis mendeteksi dan menampilkan layanan basis data tertentu yang dipasang melalui Homebrew. Jika Anda tidak ingin melihatnya di menu, Anda dapat menyembunyikannya di sini.";
+"prefs.hide_auto_detected_services_title" = "Sembunyikan layanan Homebrew";
 "notification.version_changed_title" = "PHP %@ sekarang aktif";
 "notification.version_changed_desc" = "PHP Monitor telah beralih ke PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM otomatis dimulai ulang";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "Tidak, terima kasih";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Pengaturan ulang Izin Homebrew telah dibatalkan.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "Hasil dari skrip yang dijalankan untuk menyesuaikan izin mengembalikan nil, yang biasanya berarti Anda tidak memberikan hak administratif kepada PHP Monitor.\n\nJika Anda mengklik Batal saat prompt otentikasi, ini normal. Jika Anda memang melakukan autentikasi dan masih melihat pesan ini, kemungkinan sesuatu telah gagal.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Akses administratif ditolak.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor tidak dapat melanjutkan karena permintaan perintah berhak istimewa ditolak.";
 "alert.key_service_not_running.title" = "Karena masalah dengan layanan Homebrew yang diperlukan, Valet saat ini tidak berfungsi dengan benar";
 "alert.key_service_not_running.subtitle" = "Untuk Valet berfungsi dengan baik, setidaknya tiga layanan utama harus berjalan dengan benar.\n\nPHP Monitor melaporkan bahwa hal ini tidak terjadi. Anda dapat mencoba memperbaikinya dengan menekan tombol yang memiliki 'X' di menu di bawah layanan yang terpengaruh untuk (re)memulai layanan yang saat ini tidak aktif.";
 "alert.key_service_not_running.desc" = "Jika menekan tombol di bawah tidak membuat layanan berfungsi (misalnya spinner muncul tetapi tetap menjadi 'X' setelah beberapa waktu), Anda mungkin perlu menjalankan Fix My Valet. Anda dapat melakukannya melalui menu First Aid > Fix My Valet.\n\nAlternatifnya, Anda dapat menggunakan `valet stop` dan `valet start` di terminal, yang juga bisa memperbaiki masalah (sebagai alternatif Fix My Valet).\n\nUntuk debugging lebih lanjut, Anda mungkin ingin memeriksa pelacak isu GitHub, tempat orang lain mungkin mengalami masalah serupa. Sebagai pengembang, saya berusaha memastikan setiap pertanyaan mendapatkan jawaban :)";
@@ -561,10 +572,10 @@ TIPS PEMECAHAN MASALAH UMUM
 "warnings.files_missing.description" = "Berikut file konfigurasi kunci harus ada setelah menginstal PHP:\n\n• %@\n\nJika file seperti ini hilang, Anda sebaiknya beralih ke versi PHP yang terkait dengan file tersebut: itu mungkin menyelesaikan masalah. Jika ini tidak memperbaiki masalah, disarankan untuk memasang ulang versi PHP yang sesuai melalui Homebrew lagi, yang akan memulihkan file konfigurasi yang hilang. File konfigurasi yang hilang dapat menjadi alasan mengapa Anda mendapatkan kesalahan '502 Bad Gateway', bahkan setelah menjalankan Fix My Valet (jika Anda menggunakan Valet).";
 "warnings.xdebug_conf_missing.title" = "Konfigurasi Xdebug tidak lengkap";
 "warnings.xdebug_conf_missing.description" = "Anda memiliki Xdebug terinstal, namun tidak ada mode yang ditentukan. Apakah Anda ingin PHP Monitor memperbarui konfigurasi Anda? Anda juga dapat memperbaikinya secara manual.";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap tidak ditemukan";
-"warnings.php_tap_missing.description" = "Tap Homebrew ini diperlukan untuk menginstal versi PHP yang lebih lama melalui Pengelola Versi PHP aplikasi ini.";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap tidak ada";
-"warnings.extensions_tap_missing.description" = "Tap Homebrew ini diperlukan untuk menginstal ekstensi melalui Pengelola Ekstensi PHP aplikasi ini.";
+"warnings.required_taps_missing.title" = "Tap Homebrew yang diperlukan tidak ada";
+"warnings.required_taps_missing.description" = "Satu atau beberapa tap Homebrew yang diperlukan untuk memasang versi dan ekstensi PHP melalui aplikasi ini tidak terpasang. PHP Monitor dapat menambahkan tap yang hilang untuk Anda.";
+"warnings.required_taps_untrusted.title" = "Tap Homebrew yang diperlukan tidak tepercaya";
+"warnings.required_taps_untrusted.description" = "Satu atau beberapa tap Homebrew yang diperlukan harus dipercaya sebelum Homebrew memasang formula darinya tanpa konfirmasi tambahan. PHP Monitor dapat mempercayainya untuk Anda.";
 "warnings.certificates_expired.title" = "Satu atau lebih sertifikat yang digunakan untuk melayani sebuah domain telah kedaluwarsa.";
 "warnings.certificates_expired.description" = "Sertifikat yang kedaluwarsa akan menghentikan lalu lintas HTTPS berfungsi dengan benar. Anda dapat meminta PHP Monitor secara otomatis mencoba menyelesaikannya untuk Anda dengan membuka daftar Domains.";
 "warnings.none" = "Tidak ada rekomendasi yang tersedia untuk Anda saat ini. Semua sudah baik!";

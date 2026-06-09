@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "最近の PHP の新リリースにより、Homebrew のフォーミュラが変更されている可能性があります。これは、このバージョンの PHP Monitor が作成された時点から変わっているかもしれません。PHP Monitor を更新してから、バージョンマネージャを使用して PHP バージョンをインストール・削除・アップグレードすることをおすすめします。Homebrew のフォーミュラが更新されるまでに数日かかる場合がありますので、その点をご留意ください。";
 "phpman.warnings.unsupported.title" = "Homebrew のバージョンが問題を引き起こす可能性があります";
 "phpman.warnings.unsupported.desc" = "機能は無効化されていませんが、一部のコマンドは期待通りに動作しない場合があります。現在、Homebrew %@ を実行しています。\n\n現在、PHP Version Manager では Homebrew 4 と 5 のみがサポートされています。もしより新しいバージョンの Homebrew を使用している場合は、PHP Monitor の最新版が利用可能か確認してください。";
+"phpman.warnings.required_taps_missing.title" = "必要な Homebrew タップが 1 つ以上見つかりません";
+"phpman.warnings.required_taps_missing.desc" = "これらのタップがインストールされるまで、PHP Monitor は PHP バージョンのインストールや更新ができない場合があります：%@。\n\nPHP Doctor を開いて自動修正を適用するか、対応する `brew tap` コマンドをターミナルで実行してください。";
+"phpman.warnings.required_taps_untrusted.title" = "必要な Homebrew タップが 1 つ以上信頼されていません";
+"phpman.warnings.required_taps_untrusted.desc" = "これらのタップが信頼されるまで、Homebrew は PHP バージョンのインストールや更新を拒否する場合があります：%@。\n\nPHP Doctor を開いて自動修正を適用するか、対応する `brew trust --tap` コマンドをターミナルで実行してください。";
 "phpman.warnings.removal.title" = "本当に%@をアンインストールしてもよろしいですか？";
 "phpman.warnings.removal.desc" = "設定ファイルは削除されませんので、必要に応じて後で簡単に再インストールできます。\n\nファイルのパーミッションがシンプルな削除を許可しない場合、アンインストール時にパスワード入力を求められることがあります。";
 "phpman.warnings.removal.button" = "アンインストール";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "現在、PHP Monitor をスタンドアロンモードで実行しています。";
 "lite_mode_explanation.subtitle" = "PHP Monitor は Laravel Valet のユーザーであれば利用可能な追加機能を備えています。現在、PHP Monitor はシステム上のアクティブな Valet インストールを検出できていないため、その機能は利用できません。";
 "lite_mode_explanation.description" = "さらに詳しい情報については、GitHubで閲覧できる README をご確認いただくことをおすすめします。そこに、Valet のインストール手順と、PHP Monitor が正しく動作するように設定する方法が記載されています。Laravel Valet をインストール後、PHP Monitor を再起動しないと Standalone Mode から抜けられません。";
+"lite_mode_explanation.install_valet" = "Valet をインストール...";
+"lite_mode_explanation.not_now" = "後で";
 "generic.ok" = "OK";
 "generic.cancel" = "キャンセル";
 "generic.retry" = "再試行";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "メニュー：";
 "prefs.hide_menu_icons_desc" = "このオプションを選択すると、PHP Monitorはメニューアイコンを非表示にします。これはmacOS Tahoe以前のほとんどのmacOSメニューの外観です。古いバージョンのmacOSを使用している場合やアイコンなしのメニューを好む場合は、このオプションを切り替えることをお勧めします。";
 "prefs.hide_menu_icons_title" = "メニューアイコンを非表示";
+"prefs.hide_auto_detected_services" = "サービス：";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor は、Homebrew 経由でインストールされた特定のデータベースサービスを自動的に検出して表示します。メニューに表示したくない場合は、ここで非表示にできます。";
+"prefs.hide_auto_detected_services_title" = "Homebrew サービスを非表示にする";
 "notification.version_changed_title" = "PHP %@ が有効になりました";
 "notification.version_changed_desc" = "PHP Monitor は PHP %@ に切り替わりました。";
 "notification.php_fpm_restarted" = "PHP‑FPM が自動的に再起動されました";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "いいえ、結構です";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Homebrew 権限の復元がキャンセルされました。";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "実行されたスクリプトの結果が nil を返したため、通常は PHP Monitor に管理者権限を付与していないことを意味します。認証プロンプトでキャンセルをクリックした場合は正常です。本当に認証し、まだこのメッセージが表示される場合は、おそらく何かがうまくいっていません。";
+"alert.errors.homebrew_permissions.user_denied.title" = "管理者アクセスが拒否されました。";
+"alert.errors.homebrew_permissions.user_denied.description" = "特権コマンドの要求が拒否されたため、PHP Monitor は続行できませんでした。";
 "alert.key_service_not_running.title" = "必要なHomebrewサービスに問題があるため、Valetは現在正常に動作していません";
 "alert.key_service_not_running.subtitle" = "Valet が正常に動作するためには、少なくとも3つの主要サービスが正しく稼働している必要があります。PHP Monitor は現在そうではないと報告しています。該当サービスのメニューにある「X」ボタンを押すことで、その非アクティブなサービスを（再）起動し、修復を試みることができます。";
 "alert.key_service_not_running.desc" = "以下のボタンをクリックしてもサービスが機能しない場合（スピナーは表示されるが、数秒後に「X」のままであるなど）、Fix My Valet を実行する必要があります。メニューの First Aid > Fix My Valet から実行できます。\n\nまた、ターミナルで `valet stop` と `valet start` を使用すると問題が解決する場合もあります（Fix My Valet の代替手段として）。\n\nさらにデバッグしたい場合は、GitHub のイシュー追跡を確認してください。ほかのユーザーが同様の問題に直面している可能性があります。開発者として、すべての質問に回答できるよう努めています :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "PHP をインストールした後、以下のキー設定ファイルが存在するはずです:\n\n• %@\n\nこのようなファイルが欠落している場合は、それらのファイルに関連付けられた PHP バージョンへ切り替えるべきです。これで問題が解決する可能性があります。もしそれでも解決しない場合は、Homebrew を使って該当する PHP バージョンを再インストールすることを推奨します。そうすれば欠落している設定ファイルが復元されるはずです。欠落した設定ファイルは、Fix My Valet（Valet を使用している場合）を実行した後でも「502 Bad Gateway」エラーの原因となります。";
 "warnings.xdebug_conf_missing.title" = "Xdebug の設定が不完全です";
 "warnings.xdebug_conf_missing.description" = "Xdebug がインストールされていますが、モードが指定されていません。PHP Monitor に設定を更新させますか？手動で修正することもできます。";
-"warnings.php_tap_missing.title" = "`shivammathur/php` タップが見つかりません";
-"warnings.php_tap_missing.description" = "このHomebrewタップは、このアプリのPHPバージョンマネージャーを通じて古い PHP バージョンをインストールするために必要です。";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` タップが見つかりません";
-"warnings.extensions_tap_missing.description" = "このアプリのPHP Extension Managerを通じて拡張機能をインストールするには、このHomebrewタップが必要です。";
+"warnings.required_taps_missing.title" = "必要な Homebrew タップが見つかりません";
+"warnings.required_taps_missing.description" = "このアプリで PHP バージョンや拡張機能をインストールするために必要な Homebrew タップが 1 つ以上インストールされていません。PHP Monitor が不足しているタップを追加できます。";
+"warnings.required_taps_untrusted.title" = "必要な Homebrew タップが信頼されていません";
+"warnings.required_taps_untrusted.description" = "Homebrew が追加の確認なしにフォーミュラをインストールする前に、必要な Homebrew タップを 1 つ以上信頼する必要があります。PHP Monitor がそれらを信頼できます。";
 "warnings.certificates_expired.title" = "ドメインを提供するために使用されている証明書のうち、1つ以上が期限切れになっています。";
 "warnings.certificates_expired.description" = "有効期限が切れた証明書は HTTPS トラフィックを正しく機能しなくなります。ドメイン一覧を開くことで、PHP Monitor が自動的に解決を試みるよう設定できます。";
 "warnings.none" = "現在、あなたにおすすめするものはありません。すべて順調です！";

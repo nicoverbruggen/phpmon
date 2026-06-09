@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "自该版本 PHP Monitor 创建以来，Homebrew Formula 极有可能已更改。我强烈建议在使用版本管理器安装、删除或升级 PHP 版本之前更新应用程序";
 "phpman.warnings.unsupported.title" = "您的 Homebrew 版本可能会导致问题";
 "phpman.warnings.unsupported.desc" = "没有禁用任何功能，但某些命令可能无法按预期运行。您当前运行的是 Homebrew %@。\n\n目前仅支持 PHP 版本管理器的 Homebrew 4 和 5。如果您使用的是更新版本的 Homebrew，建议检查是否有可用的新版本 PHP Monitor。";
+"phpman.warnings.required_taps_missing.title" = "缺少一个或多个必需的 Homebrew tap";
+"phpman.warnings.required_taps_missing.desc" = "在安装这些 tap 之前，PHP Monitor 可能无法安装或更新 PHP 版本：%@。\n\n打开 PHP Doctor 以应用自动修复，或在终端中运行相应的 `brew tap` 命令。";
+"phpman.warnings.required_taps_untrusted.title" = "一个或多个必需的 Homebrew tap 未被信任";
+"phpman.warnings.required_taps_untrusted.desc" = "在信任这些 tap 之前，Homebrew 可能拒绝安装或更新 PHP 版本：%@。\n\n打开 PHP Doctor 以应用自动修复，或在终端中运行相应的 `brew trust --tap` 命令。";
 "phpman.warnings.removal.title" = "您确定要卸载 %@？";
 "phpman.warnings.removal.desc" = "请注意，配置文件不会被删除，因此如果需要，稍后重新安装应该很容易。\n\n如果文件权限不允许简单删除，卸载过程中可能会要求您提供密码 ";
 "phpman.warnings.removal.button" = "卸载";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "您当前正以独立模式运行 PHP Monitor";
 "lite_mode_explanation.subtitle" = "PHP Monitor 有一些附加功能，如果您恰好是 Laravel Valet 的用户，就可以使用这些功能。目前，PHP Monitor 无法检测到您的系统中正在安装 Valet，因此这些功能不可用。";
 "lite_mode_explanation.description" = "如需了解更多信息，我建议查看 README(可在 GitHub 上获取)，其中将解释安装 Valet 所需的步骤，以及如何使 PHP Monitor 在安装 Valet 后正常运行。安装 Laravel Valet 后，需要重启 PHP Monitor，它才会脱离独立模式";
+"lite_mode_explanation.install_valet" = "安装 Valet...";
+"lite_mode_explanation.not_now" = "暂不";
 "generic.ok" = "确定";
 "generic.cancel" = "取消";
 "generic.retry" = "重试";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "菜单：";
 "prefs.hide_menu_icons_desc" = "选择此选项后，PHP Monitor 将隐藏菜单图标，这是 macOS Tahoe 之前大多数 macOS 菜单的外观。如果您仍在使用较旧版本的 macOS 或更喜欢没有图标的菜单，您可能需要切换此选项。";
 "prefs.hide_menu_icons_title" = "隐藏菜单图标";
+"prefs.hide_auto_detected_services" = "服务：";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor 会自动检测并显示通过 Homebrew 安装的某些数据库服务。如果你不想在菜单中看到它们，可以在此处隐藏。";
+"prefs.hide_auto_detected_services_title" = "隐藏 Homebrew 服务";
 "notification.version_changed_title" = "PHP %@ 已激活";
 "notification.version_changed_desc" = "PHP Monitor 已切换到 PHP %@";
 "notification.php_fpm_restarted" = "PHP-FPM 自动重新启动";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "不，谢谢";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "恢复 Homebrew 权限已被取消。";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "为调整权限而执行的脚本的结果返回为零，这通常意味着您没有授予 PHP Monitor 管理权限。如果您确实进行了身份验证，但仍看到此消息，则可能出了问题。";
+"alert.errors.homebrew_permissions.user_denied.title" = "管理员访问被拒绝。";
+"alert.errors.homebrew_permissions.user_denied.description" = "由于特权命令请求被拒绝，PHP Monitor 无法继续。";
 "alert.key_service_not_running.title" = "由于所需的 Homebrew 服务存在问题，Valet 目前无法正常工作";
 "alert.key_service_not_running.subtitle" = "Valet 要正常工作，至少需要三个关键服务正常运行。\n\nPHP Monitor 报告说情况并非如此。您可以尝试按下受影响服务下方菜单中带有 `X` 的按钮来(重新)启动当前处于非活动状态的服务，从而解决这个问题。";
 "alert.key_service_not_running.desc" = "如果点击服务下方的按钮不起作用(即旋转器出现，但一段时间后仍为 `X`)，您可能需要运行 `Fix My Valet`。您可以通过菜单 `急救与服务` > `修复我的 Valet...` 进行操作。\n\n另外，也可以在终端中使用 `valet stop` 和 `valet start`，这也可以解决问题(作为修复我的 Valet 的替代方法)。\n\n如需进一步调试，您可以查看 GitHub 问题跟踪器，其他用户可能也遇到过类似问题。作为开发人员，我将尽力确保每个问题都能得到解答:)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "安装 PHP 后应存在以下关键配置文件：\n\n- %@\n\n当缺少类似文件时，应切换到与这些文件相关的 PHP 版本：这可能会解决问题。如果还不能解决问题，建议再次通过 Homebrew 重新安装相应的 PHP 版本，这样就可以恢复丢失的配置文件。配置文件缺失可能是出现 `502 Bad Gateway` 错误的原因，即使运行了 Fix My Valet(如果使用 Valet)也是如此。";
 "warnings.xdebug_conf_missing.title" = "Xdebug 配置不完整";
 "warnings.xdebug_conf_missing.description" = "您已安装 Xdebug，但未指定模式。您想让 PHP Monitor 更新您的配置吗？您也可以手动修复此问题。";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap 缺失";
-"warnings.php_tap_missing.description" = "此 Homebrew tap 是通过本应用的 PHP 版本管理器安装旧版 PHP 所必需的。";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap 缺失";
-"warnings.extensions_tap_missing.description" = "此 Homebrew tap 是通过本应用的 PHP 扩展管理器安装扩展所必需的。";
+"warnings.required_taps_missing.title" = "缺少必需的 Homebrew tap";
+"warnings.required_taps_missing.description" = "通过本应用安装 PHP 版本和扩展所需的一个或多个 Homebrew tap 尚未安装。PHP Monitor 可以为你添加缺少的 tap。";
+"warnings.required_taps_untrusted.title" = "必需的 Homebrew tap 未被信任";
+"warnings.required_taps_untrusted.description" = "在 Homebrew 无需额外确认即可从中安装 formula 之前，必须信任一个或多个必需的 Homebrew tap。PHP Monitor 可以为你信任它们。";
 "warnings.certificates_expired.title" = "正在为域名提供服务的一个或多个证书已过期.";
 "warnings.certificates_expired.description" = "过期的证书会导致 HTTPS 流量无法正常工作。您可以让 PHP Monitor 自动尝试为您解决此问题，只需打开域名列表即可。";
 "warnings.none" = "现在没有可用的建议。您可以放心使用！";

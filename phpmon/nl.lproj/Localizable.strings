@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "Vanwege een recente nieuwe release van PHP is het waarschijnlijk dat de Homebrew‑formules sindsdien zijn gewijzigd sinds deze versie van PHP Monitor is gemaakt. \n\nIk raad aan om PHP Monitor bij te werken voordat je de versiebeheerder gebruikt om PHP‑versies te installeren, verwijderen of upgraden. Afhankelijk van hoe lang het duurt voordat Homebrew hun formules bijwerkt, kan dit een paar dagen duren; houd daar rekening mee.";
 "phpman.warnings.unsupported.title" = "Uw versie van Homebrew kan problemen veroorzaken";
 "phpman.warnings.unsupported.desc" = "Geen functionaliteit is uitgeschakeld, maar sommige opdrachten werken mogelijk niet zoals verwacht. U gebruikt momenteel Homebrew %@.\n\nOp dit ogenblik is alleen Homebrew 4 en 5 ondersteund voor de PHP Version Manager. Als u een nieuwere versie van Homebrew gebruikt, kunt u controleren of er een nieuwere versie van PHP Monitor beschikbaar is.";
+"phpman.warnings.required_taps_missing.title" = "Een of meer vereiste Homebrew-taps ontbreken";
+"phpman.warnings.required_taps_missing.desc" = "PHP Monitor kan mogelijk geen PHP-versies installeren of bijwerken totdat deze taps zijn geïnstalleerd: %@.\n\nOpen PHP Doctor om de automatische oplossing toe te passen, of voer de bijbehorende `brew tap`-opdrachten uit in je terminal.";
+"phpman.warnings.required_taps_untrusted.title" = "Een of meer vereiste Homebrew-taps worden niet vertrouwd";
+"phpman.warnings.required_taps_untrusted.desc" = "Homebrew weigert mogelijk PHP-versies te installeren of bij te werken totdat deze taps worden vertrouwd: %@.\n\nOpen PHP Doctor om de automatische oplossing toe te passen, of voer de bijbehorende `brew trust --tap`-opdrachten uit in je terminal.";
 "phpman.warnings.removal.title" = "Weet u zeker dat u %@ wilt verwijderen?";
 "phpman.warnings.removal.desc" = "Hou er rekening mee dat configuratiebestanden niet worden verwijderd, dus het zou eenvoudig moeten zijn om later opnieuw te installeren als dat nodig is.\n\nTijdens het verwijderingsproces kan u worden gevraagd om uw wachtwoord indien de bestandsmachtigingen een eenvoudige verwijdering niet toestaan.";
 "phpman.warnings.removal.button" = "Verwijderen";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "U bent momenteel PHP Monitor in Standalone Mode aan het gebruiken.";
 "lite_mode_explanation.subtitle" = "PHP Monitor heeft verschillende functies die beschikbaar zijn als u ook gebruik maakt van Laravel Valet. Momenteel kon PHP Monitor geen actieve installatie van Valet op jouw computer vinden, dus deze functionaliteit is momenteel niet beschikbaar.";
 "lite_mode_explanation.description" = "Voor meer informatie raad ik aan om de README te bekijken (toegankelijk op GitHub), waarin wordt uitgelegd welke stappen u moet nemen om Valet te installeren en PHP Monitor correct te laten werken met de geïnstalleerde versie van Valet. U moet PHP Monitor opnieuw starten nadat u Laravel Valet heeft geïnstalleerd voordat de Standalone-modus verlaten wordt.";
+"lite_mode_explanation.install_valet" = "Valet installeren...";
+"lite_mode_explanation.not_now" = "Niet nu";
 "generic.ok" = "OK";
 "generic.cancel" = "Annuleren";
 "generic.retry" = "Opnieuw";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "Menu:";
 "prefs.hide_menu_icons_desc" = "PHP Monitor zal menu-iconen verbergen wanneer deze optie is geselecteerd, zoals de meeste macOS-menu's eruitzagen vóór macOS Tahoe. Als u nog een oudere versie van macOS gebruikt of de voorkeur geeft aan menu's zonder iconen, kunt u deze optie inschakelen.";
 "prefs.hide_menu_icons_title" = "Menu-iconen verbergen";
+"prefs.hide_auto_detected_services" = "Diensten:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor detecteert en toont automatisch bepaalde databasediensten die via Homebrew zijn geïnstalleerd. Als je deze niet in het menu wilt zien, kun je ze hier verbergen.";
+"prefs.hide_auto_detected_services_title" = "Homebrew-diensten verbergen";
 "notification.version_changed_title" = "PHP %@ nu actief";
 "notification.version_changed_desc" = "PHP Monitor is overgeschakeld naar PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM automatisch herstart";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "Nee bedankt";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "Het herstellen van Homebrew-machtigingen is geannuleerd.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "De uitkomst van het script dat wordt uitgevoerd om de machtigingen aan te passen, gaf nil terug, wat meestal betekent dat u PHP Monitor geen beheerdersmachtigingen hebt gegeven.\n\nAls u tijdens het authenticatieverzoek op Annuleren hebt geklikt, is dit normaal. Als u daadwerkelijk hebt geauthenticeerd en u nog steeds dit bericht ziet, is er waarschijnlijk iets misgegaan.";
+"alert.errors.homebrew_permissions.user_denied.title" = "Beheerderstoegang is geweigerd.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor kon niet doorgaan omdat het verzoek voor de bevoorrechte opdracht is geweigerd.";
 "alert.key_service_not_running.title" = "Vanwege problemen met de vereiste Homebrew-services werkt Valet momenteel niet correct";
 "alert.key_service_not_running.subtitle" = "Om Valet goed te laten werken, moeten ten minste drie belangrijke services correct worden uitgevoerd.\n\nPHP Monitor meldt dat dit niet het geval is. U kunt proberen dit op te lossen door op de knop met de 'X' te klikken in het menu onder de betreffende service om de momenteel inactieve service (opnieuw) te starten.";
 "alert.key_service_not_running.desc" = "Als het klikken op de knop onder de service niet werkt (dwz de spinner verschijnt maar blijft na enige tijd een 'X'), moet u mogelijk Fix My Valet uitvoeren. U kunt dit doen via het menu First Aid > Fix My Valet.\n\nAls alternatief kunt u `valet stop` en `valet start` in de terminal gebruiken, wat het probleem mogelijk ook oplost (als alternatief voor Fix My Valet).\n\nVoor verdere probleemoplossing kunt u de GitHub issue-tracker raadplegen, waar anderen mogelijk soortgelijke problemen hebben gehad. Als ontwikkelaar probeer ik ervoor te zorgen dat elke vraag wordt beantwoord :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "De volgende belangrijke configuratiebestanden zouden moeten bestaan na het installeren van PHP:\n\n• %@\n\nWanneer dergelijke bestanden ontbreken, moet u overschakelen naar de PHP-versie die is gekoppeld aan die bestanden: dat kan het probleem oplossen. Als dit het probleem niet oplost, wordt aanbevolen om de juiste PHP-versie(s) opnieuw te installeren via Homebrew, waardoor de ontbrekende configuratiebestanden worden hersteld. Ontbrekende configuratiebestanden kunnen de reden zijn waarom u '502 Bad Gateway'-fouten krijgt, zelfs na het uitvoeren van Fix My Valet (als u Valet gebruikt).";
 "warnings.xdebug_conf_missing.title" = "Xdebug-configuratie is onvolledig";
 "warnings.xdebug_conf_missing.description" = "Xdebug is geïnstalleerd, maar er staat geen modus opgegeven. Wilt u dat PHP Monitor uw configuratie bijwerkt? U kunt dit ook handmatig aanpassen.";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap ontbreekt";
-"warnings.php_tap_missing.description" = "Deze Homebrew tap is vereist om oudere PHP‑versies te installeren via de PHP Versiebeheerder van deze app.";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap ontbreekt";
-"warnings.extensions_tap_missing.description" = "Deze Homebrew tap is vereist om extensies via de PHP Extension Manager van deze app te installeren.";
+"warnings.required_taps_missing.title" = "Vereiste Homebrew-taps ontbreken";
+"warnings.required_taps_missing.description" = "Een of meer Homebrew-taps die nodig zijn om PHP-versies en extensies via deze app te installeren, zijn niet geïnstalleerd. PHP Monitor kan de ontbrekende taps voor je toevoegen.";
+"warnings.required_taps_untrusted.title" = "Vereiste Homebrew-taps worden niet vertrouwd";
+"warnings.required_taps_untrusted.description" = "Een of meer vereiste Homebrew-taps moeten worden vertrouwd voordat Homebrew formules daaruit installeert zonder extra bevestiging. PHP Monitor kan ze voor je vertrouwen.";
 "warnings.certificates_expired.title" = "Een of meerdere certificaten die gebruikt worden om een domein te bedienen, zijn verlopen.";
 "warnings.certificates_expired.description" = "Verlopen certificaten zullen het HTTPS-verkeer laten stoppen met correct werken. U kunt PHP Monitor automatisch laten proberen dit voor u op te lossen door de Domeinenlijst te openen.";
 "warnings.none" = "Er zijn momenteel geen aanbevelingen beschikbaar. Alles is in orde!";
