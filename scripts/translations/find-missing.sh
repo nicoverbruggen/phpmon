@@ -11,11 +11,11 @@
 # correctly (rather than fragile text parsing).
 #
 # Usage:
-#   scripts/find_missing_tl.sh            # human-readable report
-#   scripts/find_missing_tl.sh --keys     # also print every missing/stale key
+#   scripts/translations/find-missing.sh            # human-readable report
+#   scripts/translations/find-missing.sh --keys     # also print every missing/stale key
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PHPMON_DIR="$SCRIPT_DIR/../phpmon"
+PHPMON_DIR="$SCRIPT_DIR/../../phpmon"
 EN_FILE="$PHPMON_DIR/en.lproj/Localizable.strings"
 
 SHOW_KEYS=0

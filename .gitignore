@@ -3,5 +3,5 @@ PHP Monitor.xcodeproj/xcuserdata
 
 .DS_Store
 
-# Transient translation payload (created per batch, deleted after sync_translations.py)
-scripts/translations.json
+# Transient translation payload (created per batch, deleted after sync.py)
+scripts/translations/payload.json

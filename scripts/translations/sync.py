@@ -14,15 +14,16 @@ Payload format (JSON): { "<key>": { "<locale>": "<translation>", ... }, ... }
 Use "\\n" in payload strings to emit a literal \\n into the .strings file.
 
 Usage:
-  python3 scripts/sync_translations.py [payload.json] [--keep-stale] [--dry-run]
+  python3 scripts/translations/sync.py [payload.json] [--keep-stale] [--dry-run]
 
-Defaults to scripts/translations.json. Run scripts/verify_tl.sh afterwards.
+Defaults to scripts/translations/payload.json. Run scripts/translations/verify.sh
+afterwards.
 """
 import json
 import os
 import sys
 
-ROOT = os.path.join(os.path.dirname(__file__), "..", "phpmon")
+ROOT = os.path.join(os.path.dirname(__file__), "..", "..", "phpmon")
 EN = os.path.join(ROOT, "en.lproj", "Localizable.strings")
 
 
@@ -50,9 +51,16 @@ def find_index(lines, key):
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     flags = {a for a in sys.argv[1:] if a.startswith("--")}
-    payload_path = args[0] if args else os.path.join(os.path.dirname(__file__), "translations.json")
+    payload_path = args[0] if args else os.path.join(os.path.dirname(__file__), "payload.json")
     keep_stale = "--keep-stale" in flags
     dry_run = "--dry-run" in flags
+
+    if not os.path.exists(payload_path):
+        sys.exit(
+            "Payload not found: %s\n"
+            "Create it as a JSON map of key -> { locale -> translation } and re-run.\n"
+            "See scripts/README.md." % payload_path
+        )
 
     with open(payload_path, encoding="utf-8") as f:
         payload = json.load(f)
