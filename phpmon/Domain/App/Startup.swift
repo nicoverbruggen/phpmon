@@ -100,11 +100,11 @@ class Startup {
                     let brew = container.paths.brew
                     let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
                     let commands: [ConditionalCommand] = [
-                        .command("\(brew) tap shivammathur/php"),
-                        .command("\(brew) trust --tap shivammathur/php", when: supportsTrust),
-                        .command("\(brew) tap shivammathur/extensions"),
-                        .command("\(brew) trust --tap shivammathur/extensions", when: supportsTrust),
-                        .command("\(brew) install shivammathur/php/php")
+                        .command("\(brew) tap \(Constants.Taps.php)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.php)", when: supportsTrust),
+                        .command("\(brew) tap \(Constants.Taps.extensions)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.extensions)", when: supportsTrust),
+                        .command("\(brew) install \(Constants.Taps.php)/php")
                     ]
                     try await container.shell.attach(
                         commands.chained,
@@ -156,11 +156,11 @@ class Startup {
                     let brew = container.paths.brew
                     let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
                     let commands: [ConditionalCommand] = [
-                        .command("\(brew) tap shivammathur/php"),
-                        .command("\(brew) trust --tap shivammathur/php", when: supportsTrust),
-                        .command("\(brew) tap shivammathur/extensions"),
-                        .command("\(brew) trust --tap shivammathur/extensions", when: supportsTrust),
-                        .command("\(brew) reinstall shivammathur/php/php"),
+                        .command("\(brew) tap \(Constants.Taps.php)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.php)", when: supportsTrust),
+                        .command("\(brew) tap \(Constants.Taps.extensions)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.extensions)", when: supportsTrust),
+                        .command("\(brew) reinstall \(Constants.Taps.php)/php"),
                         .command("\(brew) link php")
                     ]
                     try await container.shell.attach(

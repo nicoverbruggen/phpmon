@@ -52,6 +52,15 @@ struct Constants {
     ]
 
     /**
+     The app uses these external taps to ensure that various
+     PHP versions and extensions can be installed.
+     */
+    struct Taps {
+        static let php: String = "shivammathur/php"
+        static let extensions: String = "shivammathur/extensions"
+    }
+
+    /**
      PHP Monitor supplies a hardcoded list of PHP packages in its own
      PHP Version Manager.
 

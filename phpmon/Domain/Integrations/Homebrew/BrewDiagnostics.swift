@@ -43,8 +43,8 @@ class BrewDiagnostics {
     private var cachedSupportsTapTrust: Bool?
 
     public static let requiredPhpTaps = [
-        "shivammathur/php",
-        "shivammathur/extensions"
+        Constants.Taps.php,
+        Constants.Taps.extensions
     ]
 
     // MARK: - Methods
@@ -144,37 +144,6 @@ class BrewDiagnostics {
         return Self.requiredPhpTaps.filter { tap in
             !installedTaps.contains(tap)
         }
-    }
-
-    /**
-     Builds the `tap` (and, where supported, `trust`) commands for a single tap.
-
-     The `tap` command is included unless the tap is already installed (or `alwaysTap` is set),
-     and the `trust` command is included only when this Homebrew supports trust and the tap
-     isn't trusted yet. Use `.included` / `.chained` on the result to materialize it.
-     */
-    public func tapCommands(
-        _ tap: String,
-        using brew: String,
-        alwaysTap: Bool = false
-    ) async -> [ConditionalCommand] {
-        let supportsTrust = await supportsTapTrust()
-        await loadTrustedTaps()
-
-        return [
-            .command("\(brew) tap \(tap)", when: alwaysTap || !installedTaps.contains(tap)),
-            .command("\(brew) trust --tap \(tap)", when: supportsTrust && !trustedTaps.contains(tap))
-        ]
-    }
-
-    public func requiredPhpTapCommands(using brew: String, alwaysTap: Bool = false) async -> [ConditionalCommand] {
-        var commands: [ConditionalCommand] = []
-
-        for tap in Self.requiredPhpTaps {
-            commands += await tapCommands(tap, using: brew, alwaysTap: alwaysTap)
-        }
-
-        return commands
     }
 
     /**

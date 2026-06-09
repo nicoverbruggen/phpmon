@@ -125,9 +125,16 @@ extension BrewCommand {
         shell: ShellProtocol,
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
-        let diagnostics = BrewDiagnostics.shared
+        let supportsTrust = await BrewDiagnostics.shared.supportsTapTrust()
 
-        for command in await diagnostics.requiredPhpTapCommands(using: "brew").included {
+        let commands: [ConditionalCommand] = [
+            .command("brew tap \(Constants.Taps.php)"),
+            .command("brew trust --tap \(Constants.Taps.php)", when: supportsTrust),
+            .command("brew tap \(Constants.Taps.extensions)"),
+            .command("brew trust --tap \(Constants.Taps.extensions)", when: supportsTrust)
+        ]
+
+        for command in commands.included {
             try await run(shell: shell, command, onProgress)
         }
     }
