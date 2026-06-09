@@ -20,15 +20,14 @@ extension OnboardingStepRunner {
         let collector = Locked<[OutputLine]>([])
 
         do {
+            let brew = container.paths.brew
             let diagnostics = BrewDiagnostics(container)
-            let commands = await diagnostics.appendingTrustCommands(
-                to: CommandCatalog.Onboarding.phpComposerInstall(using: container.paths.brew),
-                using: container.paths.brew
-            )
+            let commands = await diagnostics.requiredPhpTapCommands(using: brew, alwaysTap: true)
+                + [.command(CommandCatalog.Onboarding.phpComposerInstall(using: brew))]
 
             // Attempt to install PHP and Composer via Homebrew. We will stream the output,
             // so the user can see what's going on, since this can take a bit of time!
-            for command in commands {
+            for command in commands.included {
                 try await attachStreaming(command, collector: collector, didReceiveOutput: didReceiveOutput)
             }
         } catch {

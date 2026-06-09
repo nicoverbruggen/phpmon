@@ -98,13 +98,16 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
-                    let tapCommands = await BrewDiagnostics(container).tapCommands(
-                        "shivammathur/php",
-                        using: brew,
-                        alwaysTap: true
-                    )
+                    let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
+                    let commands: [ConditionalCommand] = [
+                        .command("\(brew) tap shivammathur/php"),
+                        .command("\(brew) trust --tap shivammathur/php", when: supportsTrust),
+                        .command("\(brew) tap shivammathur/extensions"),
+                        .command("\(brew) trust --tap shivammathur/extensions", when: supportsTrust),
+                        .command("\(brew) install shivammathur/php/php")
+                    ]
                     try await container.shell.attach(
-                        (tapCommands + ["\(brew) install shivammathur/php/php"]).joined(separator: " && "),
+                        commands.chained,
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )
@@ -151,14 +154,17 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
-                    let tapCommands = await BrewDiagnostics(container).tapCommands(
-                        "shivammathur/php",
-                        using: brew,
-                        alwaysTap: true
-                    )
+                    let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
+                    let commands: [ConditionalCommand] = [
+                        .command("\(brew) tap shivammathur/php"),
+                        .command("\(brew) trust --tap shivammathur/php", when: supportsTrust),
+                        .command("\(brew) tap shivammathur/extensions"),
+                        .command("\(brew) trust --tap shivammathur/extensions", when: supportsTrust),
+                        .command("\(brew) reinstall shivammathur/php/php"),
+                        .command("\(brew) link php")
+                    ]
                     try await container.shell.attach(
-                        (tapCommands + ["\(brew) reinstall shivammathur/php/php", "\(brew) link php"])
-                            .joined(separator: " && "),
+                        commands.chained,
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )

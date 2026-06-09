@@ -127,7 +127,7 @@ extension BrewCommand {
     ) async throws {
         let diagnostics = BrewDiagnostics.shared
 
-        for command in await diagnostics.requiredPhpTapCommands(using: "brew") {
+        for command in await diagnostics.requiredPhpTapCommands(using: "brew").included {
             try await run(shell: shell, command, onProgress)
         }
     }

@@ -204,9 +204,8 @@ extension WarningManager {
         for command in await brewDiagnostics.tapCommands(
             tap,
             using: container.paths.brew,
-            installedTaps: brewDiagnostics.installedTaps,
             alwaysTap: alwaysTap
-        ) {
+        ).included {
             await container.shell.pipe(command)
         }
 

@@ -376,6 +376,10 @@
 		03FE39E72E81682800B7B5AC /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E52E81682800B7B5AC /* AppIcon.icon */; };
 		03FE39E82E81682800B7B5AC /* AppIconEAP.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E62E81682800B7B5AC /* AppIconEAP.icon */; };
 		03FE39EA2E81694500B7B5AC /* AppIconUD.icon in Resources */ = {isa = PBXBuildFile; fileRef = 03FE39E92E81694500B7B5AC /* AppIconUD.icon */; };
+		03FE7C4C2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */; };
+		03FE7C4D2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */; };
+		03FE7C4E2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */; };
+		03FE7C4F2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */; };
 		04A6F7C13068D3B1007A1C01 /* OnboardingTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */; };
 		0A1A6208D3DD2495FBD8569B /* CommandHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */; };
 		1224231FF18A15CB876EEF50 /* StartupAlertButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */; };
@@ -1423,6 +1427,7 @@
 		03FE39E52E81682800B7B5AC /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		03FE39E62E81682800B7B5AC /* AppIconEAP.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconEAP.icon; sourceTree = "<group>"; };
 		03FE39E92E81694500B7B5AC /* AppIconUD.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIconUD.icon; sourceTree = "<group>"; };
+		03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalCommand.swift; sourceTree = "<group>"; };
 		04A6F7C03068D3A9007A1C01 /* OnboardingTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTestHelpers.swift; sourceTree = "<group>"; };
 		2DBEBCF2527961D5D13F68A8 /* StartupAlertButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupAlertButtonRow.swift; sourceTree = "<group>"; };
 		31503E15DADA980998F0F5A2 /* CommandHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandHistoryView.swift; sourceTree = "<group>"; };
@@ -2219,6 +2224,7 @@
 				C417DC73277614690015E6EE /* Helpers.swift */,
 				C4CB6E64292C362C002E9027 /* Homebrew.swift */,
 				033E9DF62F44AD5200685F62 /* AppleScript.swift */,
+				03FE7C4B2FD86C9A00F77EE9 /* ConditionalCommand.swift */,
 				03243CA02FA69DC0005E28D7 /* CommandCatalog.swift */,
 			);
 			path = Core;
@@ -3646,6 +3652,7 @@
 				C4AFC4AE29C4F32F00BF4E0D /* BrewPhpFormula.swift in Sources */,
 				C47331A2247093B7009A0597 /* StatusMenu.swift in Sources */,
 				036063932FC5EA45000F779C /* OnboardingStepRunner+DevTools.swift in Sources */,
+				03FE7C4F2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */,
 				C44067F927E2585E0045BD4E /* DomainListTypeCell.swift in Sources */,
 				54D9E0BA27E4F51E003B9AD9 /* ModifierFlagsExtension.swift in Sources */,
 				C4821C5A2C2DEDE200357A68 /* AppMenu.swift in Sources */,
@@ -3824,6 +3831,7 @@
 				C471E87428F9BB650021E251 /* SelectPreferenceView.swift in Sources */,
 				030BC1B52F8D062B0076F982 /* CLI.swift in Sources */,
 				C471E87628F9BB650021E251 /* HotkeyPreferenceView.swift in Sources */,
+				03FE7C4E2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */,
 				C471E87728F9BB650021E251 /* Keys.swift in Sources */,
 				C471E87828F9BB650021E251 /* TerminalProgressWindowController.swift in Sources */,
 				C471E87928F9BB650021E251 /* ProgressVC.swift in Sources */,
@@ -4014,6 +4022,7 @@
 				03E311392F98D1D100E59EF0 /* Startup+OnboardingWizard.swift in Sources */,
 				F0A1B2C3D4E5F60100001014 /* Startup+ValetOnboarding.swift in Sources */,
 				F0A1B2C3D4E5F60100000014 /* Toolchain.swift in Sources */,
+				03FE7C4D2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */,
 				0360116F2F9F839B0062762C /* PhpHelper+Generator.swift in Sources */,
 				036011702F9F839B0062762C /* PhpHelper+Paths.swift in Sources */,
 				036011712F9F839B0062762C /* PhpHelper+Templates.swift in Sources */,
@@ -4298,6 +4307,7 @@
 				C4205A7F27F4D21800191A39 /* ValetProxy.swift in Sources */,
 				C42F26742805B4B400938AC7 /* ValetListable.swift in Sources */,
 				C46EBC4528DB95F0007ACC74 /* ShellProtocol.swift in Sources */,
+				03FE7C4C2FD86CA000F77EE9 /* ConditionalCommand.swift in Sources */,
 				C44B3A4728E5C70100718CB1 /* TimeIntervalExtension.swift in Sources */,
 				035983A12E97FA9100218DC7 /* Container.swift in Sources */,
 				C4F780C425D80B75000DBC97 /* MainMenu.swift in Sources */,

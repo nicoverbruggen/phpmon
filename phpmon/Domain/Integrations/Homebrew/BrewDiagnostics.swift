@@ -146,53 +146,32 @@ class BrewDiagnostics {
         }
     }
 
-    public func appendingTrustCommands(to commands: [String], using brew: String) async -> [String] {
-        guard await supportsTapTrust() else {
-            return commands
-        }
+    /**
+     Builds the `tap` (and, where supported, `trust`) commands for a single tap.
 
-        await loadTrustedTaps()
-
-        return commands.flatMap { command in
-            guard let tap = Self.requiredPhpTaps.first(where: { command == "\(brew) tap \($0)" }),
-                  !trustedTaps.contains(tap) else {
-                return [command]
-            }
-
-            return [command, "\(brew) trust --tap \(tap)"]
-        }
-    }
-
+     The `tap` command is included unless the tap is already installed (or `alwaysTap` is set),
+     and the `trust` command is included only when this Homebrew supports trust and the tap
+     isn't trusted yet. Use `.included` / `.chained` on the result to materialize it.
+     */
     public func tapCommands(
         _ tap: String,
         using brew: String,
-        installedTaps: [String] = [],
         alwaysTap: Bool = false
-    ) async -> [String] {
-        let supportsTapTrust = await supportsTapTrust()
+    ) async -> [ConditionalCommand] {
+        let supportsTrust = await supportsTapTrust()
         await loadTrustedTaps()
 
-        var commands = alwaysTap || !installedTaps.contains(tap) ? ["\(brew) tap \(tap)"] : []
-
-        if supportsTapTrust && !trustedTaps.contains(tap) {
-            commands.append("\(brew) trust --tap \(tap)")
-        }
-
-        return commands
+        return [
+            .command("\(brew) tap \(tap)", when: alwaysTap || !installedTaps.contains(tap)),
+            .command("\(brew) trust --tap \(tap)", when: supportsTrust && !trustedTaps.contains(tap))
+        ]
     }
 
-    public func requiredPhpTapCommands(using brew: String, alwaysTap: Bool = false) async -> [String] {
-        var commands: [String] = []
+    public func requiredPhpTapCommands(using brew: String, alwaysTap: Bool = false) async -> [ConditionalCommand] {
+        var commands: [ConditionalCommand] = []
 
         for tap in Self.requiredPhpTaps {
-            commands.append(
-                contentsOf: await tapCommands(
-                    tap,
-                    using: brew,
-                    installedTaps: installedTaps,
-                    alwaysTap: alwaysTap
-                )
-            )
+            commands += await tapCommands(tap, using: brew, alwaysTap: alwaysTap)
         }
 
         return commands
