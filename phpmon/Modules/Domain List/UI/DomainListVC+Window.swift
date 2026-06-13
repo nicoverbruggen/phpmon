@@ -9,6 +9,11 @@
 import Cocoa
 
 extension DomainListVC {
+    enum CertificateRenewalPromptBehavior {
+        case automatic
+        case suppressed
+    }
+
     // MARK: - Display
 
     public static func create(delegate: NSWindowDelegate?) {
@@ -30,9 +35,19 @@ extension DomainListVC {
         WindowManager.setController(windowController)
     }
 
-    public static func show(delegate: NSWindowDelegate? = nil) {
+    public static func show(
+        delegate: NSWindowDelegate? = nil,
+        certificateRenewalPrompt: CertificateRenewalPromptBehavior = .automatic
+    ) {
         if !WindowManager.hasController(for: DomainListWC.self) {
             Self.create(delegate: delegate)
+        }
+
+        if case .suppressed = certificateRenewalPrompt {
+            WindowManager
+                .controller(of: DomainListWC.self)?
+                .contentVC
+                .shouldSkipAutomaticCertificateRenewalPrompt = true
         }
 
         WindowManager.show(DomainListWC.self)

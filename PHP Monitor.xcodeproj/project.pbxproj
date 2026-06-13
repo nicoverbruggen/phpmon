@@ -78,6 +78,7 @@
 		032DAC302E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
 		03305E172F9F69CE0066E34F /* PhpHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03305E162F9F69CE0066E34F /* PhpHelperTest.swift */; };
 		033464192FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033464172FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift */; };
+		0334641B2FDD52AB00F5FDA0 /* PhpDoctorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334641A2FDD52A700F5FDA0 /* PhpDoctorTest.swift */; };
 		033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D459A2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
@@ -1339,6 +1340,7 @@
 		032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebApiProtocol.swift; sourceTree = "<group>"; };
 		03305E162F9F69CE0066E34F /* PhpHelperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelperTest.swift; sourceTree = "<group>"; };
 		033464172FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManagerTrustTest.swift; sourceTree = "<group>"; };
+		0334641A2FDD52A700F5FDA0 /* PhpDoctorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpDoctorTest.swift; sourceTree = "<group>"; };
 		0336CAAF2B0D0CDA009A1034 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
@@ -2682,6 +2684,7 @@
 				C44E985E29B23EBF0059F773 /* UpdateCheckTest.swift */,
 				C4181F1028FAF9330042EA28 /* UITestCase.swift */,
 				C4CB250429B28BB800CA4492 /* MainMenuTest.swift */,
+				0334641A2FDD52A700F5FDA0 /* PhpDoctorTest.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -4154,6 +4157,7 @@
 				03C29A7A2EC88E3100FBA25E /* ValetServicesDataManager.swift in Sources */,
 				C471E8D928F9BB8F0021E251 /* HotkeyPreferenceView.swift in Sources */,
 				036063992FC5EA4E000F779C /* OnboardingStepRunner+Homebrew.swift in Sources */,
+				0334641B2FDD52AB00F5FDA0 /* PhpDoctorTest.swift in Sources */,
 				03EC943E2F47297B00231276 /* ErrorView.swift in Sources */,
 				1D1173AE9AC9C8315E899D06 /* StartupAlertViewModel.swift in Sources */,
 				03BC24A82F51A5F70051292B /* OutputLine.swift in Sources */,

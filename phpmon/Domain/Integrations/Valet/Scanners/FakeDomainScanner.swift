@@ -6,6 +6,8 @@
 //  Copyright © 2025 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 class FakeDomainScanner: DomainScanner {
 
     var sites: [ValetSite] = [
@@ -35,6 +37,12 @@ class FakeDomainScanner: DomainScanner {
     var proxies: [ValetProxy] = [
         FakeValetProxy(withDomain: "mailgun", target: "http://127.0.0.1:9999", secure: true, tld: "test")
     ]
+
+    init() {
+        if ProcessInfo.processInfo.environment["PHPMON_FAKE_EXPIRED_CERTIFICATES"] != nil {
+            sites.first?.certificateExpiryDate = Date(timeIntervalSince1970: 0)
+        }
+    }
 
     // MARK: - Sites
 

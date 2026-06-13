@@ -66,11 +66,17 @@ class FakeValetInteractor: ValetInteractor {
     override func toggleSecure(proxy: ValetProxy) async throws {
         await delay(seconds: delayTime)
         proxy.secured = !proxy.secured
+        proxy.certificateExpiryDate = proxy.secured
+            ? Date(timeIntervalSinceNow: 60 * 60 * 24 * 365)
+            : nil
     }
 
     override func toggleSecure(site: ValetSite) async throws {
         await delay(seconds: delayTime)
         site.secured = !site.secured
+        site.certificateExpiryDate = site.secured
+            ? Date(timeIntervalSinceNow: 60 * 60 * 24 * 365)
+            : nil
     }
 
     override func isolate(site: ValetSite, version: String) async throws {

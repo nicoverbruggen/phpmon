@@ -160,7 +160,7 @@ extension WarningManager {
                 paragraphs: { return ["warnings.certificates_expired.description"] },
                 url: nil,
                 fix: {
-                    await DomainListVC.show()
+                    await DomainListVC.show(certificateRenewalPrompt: .suppressed)
 
                     if let vc = await WindowManager
                         .controller(of: DomainListWC.self)?
