@@ -117,6 +117,18 @@ class TestableConfigurations {
                     nicoverbruggen/cask
                     shivammathur/php
                     """),
+                "/opt/homebrew/bin/brew help trust"
+                    : .instant("""
+                    Usage: brew trust [options] [target ...]
+
+                    Trust non-official tap formulae, casks or commands.
+                    """),
+                "/opt/homebrew/bin/brew trust --tap"
+                    : .instant("""
+                    All official taps and commands are trusted.
+                    Trusted taps:
+                      shivammathur/php
+                    """),
                 "chmod +x /Users/nicoverbruggen/.config/phpmon/bin/pm82"
                     : .instant(""),
                 "mkdir -p ~/.config/phpmon"

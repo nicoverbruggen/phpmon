@@ -286,6 +286,7 @@ private extension TestableConfiguration {
         )
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/php"] = .instant("Tapped shivammathur/php.\n")
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/extensions"] = .instant("Tapped shivammathur/extensions.\n")
+        shellOutput["/opt/homebrew/bin/brew help trust"] = .instant("Error: Unknown command: trust\n", .stdErr)
         shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
             items: [
                 .delayed(0.2, "==> Fetching php and composer formulae...\n"),

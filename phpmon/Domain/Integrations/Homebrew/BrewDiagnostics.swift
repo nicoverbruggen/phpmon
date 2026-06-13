@@ -34,6 +34,19 @@ class BrewDiagnostics {
      */
     public var installedTaps: [String] = []
 
+    /**
+     Determines the Homebrew taps the user has explicitly trusted.
+     */
+    public var trustedTaps: [String] = []
+
+    private var hasLoadedTrustedTaps = false
+    private var cachedSupportsTapTrust: Bool?
+
+    public static let requiredPhpTaps = [
+        Constants.Taps.php,
+        Constants.Taps.extensions
+    ]
+
     // MARK: - Methods
 
     /**
@@ -47,6 +60,90 @@ class BrewDiagnostics {
             .map { string in
                 return String(string)
             }
+    }
+
+    /**
+     Determines whether this Homebrew installation supports `brew trust`.
+     */
+    public func supportsTapTrust() async -> Bool {
+        if let cachedSupportsTapTrust {
+            return cachedSupportsTapTrust
+        }
+
+        let output = await container.shell.pipe("\(container.paths.brew) help trust")
+        let response = "\(output.out)\n\(output.err)"
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+
+        let supportsTapTrust = response.contains("usage: brew trust")
+            || response.contains("trust non-official tap")
+            || response.contains("--tap")
+
+        cachedSupportsTapTrust = supportsTapTrust
+
+        if supportsTapTrust {
+            Log.info("[BREW] This Homebrew installation supports `brew trust`.")
+        } else {
+            Log.info("[BREW] This Homebrew installation does not support `brew trust`; tap trust checks are skipped.")
+        }
+
+        return supportsTapTrust
+    }
+
+    /**
+     Load which taps are explicitly trusted.
+     */
+    public func loadTrustedTaps() async {
+        guard await supportsTapTrust() else {
+            trustedTaps = []
+            hasLoadedTrustedTaps = true
+            return
+        }
+
+        trustedTaps = await container.shell
+            .pipe("\(container.paths.brew) trust --tap")
+            .out
+            .split(separator: "\n")
+            .map { line in
+                line.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+            .filter { line in
+                line.contains("/")
+            }
+
+        hasLoadedTrustedTaps = true
+    }
+
+    public func tapRequiresTrust(_ tap: String) async -> Bool {
+        guard await supportsTapTrust() else {
+            return false
+        }
+
+        if !hasLoadedTrustedTaps {
+            await loadTrustedTaps()
+        }
+
+        return installedTaps.contains(tap) && !trustedTaps.contains(tap)
+    }
+
+    public func untrustedRequiredPhpTaps() async -> [String] {
+        guard await supportsTapTrust() else {
+            return []
+        }
+
+        if !hasLoadedTrustedTaps {
+            await loadTrustedTaps()
+        }
+
+        return Self.requiredPhpTaps.filter { tap in
+            installedTaps.contains(tap) && !trustedTaps.contains(tap)
+        }
+    }
+
+    public func missingRequiredPhpTaps() -> [String] {
+        return Self.requiredPhpTaps.filter { tap in
+            !installedTaps.contains(tap)
+        }
     }
 
     /**
@@ -147,14 +244,14 @@ class BrewDiagnostics {
     }
 
     public func verifyThirdPartyTaps() async {
-        let requiredTaps = [
-            "shivammathur/php",
-            "shivammathur/extensions"
-        ]
+        await loadInstalledTaps()
+        await loadTrustedTaps()
 
         // Check the status of the installed taps
-        for tap in requiredTaps {
-            if installedTaps.contains(tap) {
+        for tap in Self.requiredPhpTaps {
+            if await tapRequiresTrust(tap) {
+                Log.warn("`\(tap)` is installed, but not trusted. It will be noted in warnings.")
+            } else if installedTaps.contains(tap) {
                 Log.info("As expected, `\(tap)` is installed!")
             } else {
                 Log.warn("`\(tap)` does not appear to be installed, will be noted in warnings.")

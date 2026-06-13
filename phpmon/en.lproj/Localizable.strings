@@ -180,6 +180,12 @@ I recommend updating PHP Monitor before using the version manager to install, re
 
 Currently, only Homebrew 4 and 5 are supported for PHP Version Manager. If you are running a newer version of Homebrew, you may wish to check if a newer version of PHP Monitor is available.";
 
+"phpman.warnings.required_taps_missing.title" = "One or more required Homebrew taps are missing";
+"phpman.warnings.required_taps_missing.desc" = "PHP Monitor may not be able to install or update PHP versions until these taps are installed: %@.\n\nOpen PHP Doctor to apply the automatic fix, or run the matching `brew tap` commands in your terminal.";
+
+"phpman.warnings.required_taps_untrusted.title" = "One or more required Homebrew taps are not trusted";
+"phpman.warnings.required_taps_untrusted.desc" = "Homebrew may refuse to install or update PHP versions until these taps are trusted: %@.\n\nOpen PHP Doctor to apply the automatic fix, or run the matching `brew trust --tap` commands in your terminal.";
+
 "phpman.warnings.removal.title" = "Are you sure you want to uninstall %@?";
 "phpman.warnings.removal.desc" = "Please note that configuration files will not be removed, so it should be easy to reinstall later if needed.
 
@@ -880,11 +886,11 @@ When files like these are missing, you should switch to the PHP version associat
 "warnings.xdebug_conf_missing.title" = "Xdebug configuration is incomplete";
 "warnings.xdebug_conf_missing.description" = "You have Xdebug installed, but no mode is specified. Would you like for PHP Monitor to update your configuration? You can also fix this manually.";
 
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap is missing";
-"warnings.php_tap_missing.description" = "This Homebrew tap is required to install older PHP versions via this app's PHP Version Manager.";
+"warnings.required_taps_missing.title" = "Required Homebrew taps are missing";
+"warnings.required_taps_missing.description" = "One or more Homebrew taps required to install PHP versions and extensions via this app are not installed. PHP Monitor can add the missing taps for you.";
 
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` tap is missing";
-"warnings.extensions_tap_missing.description" = "This Homebrew tap is required to install extensions via this app's PHP Extension Manager.";
+"warnings.required_taps_untrusted.title" = "Required Homebrew taps are not trusted";
+"warnings.required_taps_untrusted.description" = "One or more required Homebrew taps must be trusted before Homebrew will install formulae from them without extra confirmation. PHP Monitor can trust them for you.";
 
 "warnings.certificates_expired.title" = "One or more certificates that are being used to serve a domain have expired.";
 "warnings.certificates_expired.description" = "Expired certificates will stop HTTPS traffic from working correctly. You can have PHP Monitor automatically attempt to resolve this for you by opening the Domains list.";

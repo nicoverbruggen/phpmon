@@ -16,7 +16,8 @@ let delegate = SelfUpdater(
         "com.nicoverbruggen.phpmon.dev",
         "com.nicoverbruggen.phpmon"
     ],
-    selfUpdaterPath: "~/.config/phpmon/updater"
+    selfUpdaterPath: "~/.config/phpmon/updater",
+    progressWindowDisplayMode: .whenUpdatingTakesLongerThan(5.0)
 )
 
 NSApplication.shared.delegate = delegate

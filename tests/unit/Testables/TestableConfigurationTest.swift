@@ -80,6 +80,21 @@ struct TestableConfigurationTest {
         #expect(decoded.enabledFeatures.contains(.placeholder))
     }
 
+    @Test func default_configuration_supports_brew_trust() {
+        let configuration = TestableConfigurations.working
+
+        let helpOutput = configuration
+            .shellOutput["/opt/homebrew/bin/brew help trust"]!
+            .syncOutput(ignoreDelay: true)
+
+        let trustedTapOutput = configuration
+            .shellOutput["/opt/homebrew/bin/brew trust --tap"]!
+            .syncOutput(ignoreDelay: true)
+
+        #expect(helpOutput.out.contains("Usage: brew trust"))
+        #expect(trustedTapOutput.out.contains("shivammathur/php"))
+    }
+
     @Test func brew_list_formula_output_uses_configured_php_versions() {
         let configuration = TestableConfiguration(
             architecture: "arm64",

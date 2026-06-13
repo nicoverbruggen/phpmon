@@ -22,7 +22,7 @@ extension StatusMenu {
             var items = [
                 NSMenuItem.separator(),
                 NSMenuItem(title: "mi_driver".localized("Valet \(version.text)"),
-                           action: nil, customImage: "ValetDriverIcon")
+                           action: nil)
             ]
 
             if let latest = Valet.shared.latestVersion {

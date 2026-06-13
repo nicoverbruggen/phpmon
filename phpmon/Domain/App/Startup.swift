@@ -98,8 +98,16 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
+                    let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
+                    let commands: [ConditionalCommand] = [
+                        .command("\(brew) tap \(Constants.Taps.php)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.php)", when: supportsTrust),
+                        .command("\(brew) tap \(Constants.Taps.extensions)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.extensions)", when: supportsTrust),
+                        .command("\(brew) install \(Constants.Taps.php)/php")
+                    ]
                     try await container.shell.attach(
-                        "\(brew) tap shivammathur/php && \(brew) install shivammathur/php/php",
+                        commands.chained,
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )
@@ -146,8 +154,17 @@ class Startup {
                 },
                 fix: { container, didReceiveOutput in
                     let brew = container.paths.brew
+                    let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
+                    let commands: [ConditionalCommand] = [
+                        .command("\(brew) tap \(Constants.Taps.php)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.php)", when: supportsTrust),
+                        .command("\(brew) tap \(Constants.Taps.extensions)"),
+                        .command("\(brew) trust --tap \(Constants.Taps.extensions)", when: supportsTrust),
+                        .command("\(brew) reinstall \(Constants.Taps.php)/php"),
+                        .command("\(brew) link php")
+                    ]
                     try await container.shell.attach(
-                        "\(brew) tap shivammathur/php && \(brew) reinstall shivammathur/php/php && \(brew) link php",
+                        commands.chained,
                         didReceiveOutput: didReceiveOutput,
                         withTimeout: 120
                     )

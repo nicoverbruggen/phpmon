@@ -4,7 +4,7 @@
 # Returns exit code 0 if all files are valid, 1 if any fail.
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PHPMON_DIR="$SCRIPT_DIR/../phpmon"
+PHPMON_DIR="$SCRIPT_DIR/../../phpmon"
 
 FAILED=0
 CHECKED=0

@@ -20,12 +20,10 @@ enum CommandCatalog {
         static let valetSudoersTemp = "/tmp/phpmon-valet-onboarding.sudoers"
         static let valetSudoersCleanupCommand = "sudo rm -f \(valetSudoersPath) \(valetSudoersTemp)"
 
-        static func phpComposerInstall(using brew: String) -> [String] {
-            return [
-                "\(brew) tap shivammathur/php",
-                "\(brew) tap shivammathur/extensions",
-                "\(brew) install php composer"
-            ]
+        static func phpComposerInstall(using brew: String) -> String {
+            // The required taps (and their trust commands) are added by the caller,
+            // so this only covers the install step.
+            return "\(brew) install php composer"
         }
 
         static func valetInstall(

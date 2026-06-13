@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "En raison d'une récente nouvelle version de PHP, il est probable que les formules Homebrew aient changé depuis la création de cette version de PHP Monitor.\n\nJe recommande de mettre à jour PHP Monitor avant d'utiliser le gestionnaire de version pour installer, supprimer ou mettre à niveau des versions PHP. En fonction du temps que Homebrew met à mettre à jour ses formules, cela peut prendre quelques jours, alors gardez cela en tête.";
 "phpman.warnings.unsupported.title" = "Votre version de Homebrew peut causer des problèmes";
 "phpman.warnings.unsupported.desc" = "Aucune fonctionnalité n'est désactivée, mais certaines commandes peuvent ne pas fonctionner comme prévu. Vous utilisez actuellement Homebrew %@.\n\nActuellement, seules les versions 4 et 5 de Homebrew sont prises en charge pour PHP Version Manager. Si vous utilisez une version plus récente de Homebrew, vous pouvez vérifier si une version plus récente de PHP Monitor est disponible.";
+"phpman.warnings.required_taps_missing.title" = "Un ou plusieurs taps Homebrew requis sont manquants";
+"phpman.warnings.required_taps_missing.desc" = "PHP Monitor pourrait ne pas pouvoir installer ou mettre à jour des versions de PHP tant que ces taps ne sont pas installés : %@.\n\nOuvrez PHP Doctor pour appliquer la correction automatique, ou exécutez les commandes `brew tap` correspondantes dans votre terminal.";
+"phpman.warnings.required_taps_untrusted.title" = "Un ou plusieurs taps Homebrew requis ne sont pas approuvés";
+"phpman.warnings.required_taps_untrusted.desc" = "Homebrew pourrait refuser d'installer ou de mettre à jour des versions de PHP tant que ces taps ne sont pas approuvés : %@.\n\nOuvrez PHP Doctor pour appliquer la correction automatique, ou exécutez les commandes `brew trust --tap` correspondantes dans votre terminal.";
 "phpman.warnings.removal.title" = "Êtes-vous sûr de vouloir désinstaller %@ ?";
 "phpman.warnings.removal.desc" = "Veuillez noter que les fichiers de configuration ne seront pas supprimés, il sera donc facile de réinstaller ultérieurement si nécessaire.\n\nIl se peut que vous deviez saisir votre mot de passe pendant le processus de désinstallation si les autorisations des fichiers ne permettent pas une suppression simple.";
 "phpman.warnings.removal.button" = "Désinstaller";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "Vous utilisez actuellement PHP Monitor en mode Standalone.";
 "lite_mode_explanation.subtitle" = "PHP Monitor dispose de fonctionnalités supplémentaires qui sont disponibles si vous utilisez Laravel Valet. Actuellement, PHP Monitor n'a pas détecté d'installation active de Valet sur votre système, ces fonctionnalités ne sont donc pas disponibles.";
 "lite_mode_explanation.description" = "Pour plus d'informations, je vous recommande de consulter le README (accessible sur GitHub) qui expliquera les étapes à suivre pour installer Valet et faire fonctionner correctement PHP Monitor avec cette installation. Vous devrez redémarrer PHP Monitor après avoir installé Laravel Valet avant de quitter le mode Standalone.";
+"lite_mode_explanation.install_valet" = "Installer Valet...";
+"lite_mode_explanation.not_now" = "Pas maintenant";
 "generic.ok" = "OK";
 "generic.cancel" = "Annuler";
 "generic.retry" = "Réessayer";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "Menu :";
 "prefs.hide_menu_icons_desc" = "PHP Monitor masquera les icônes du menu lorsque cette option est sélectionnée, comme la plupart des menus macOS avant macOS Tahoe. Si vous utilisez encore une version antérieure de macOS ou si vous préférez les menus sans icônes, vous pouvez activer cette option.";
 "prefs.hide_menu_icons_title" = "Masquer les icônes du menu";
+"prefs.hide_auto_detected_services" = "Services :";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor détecte et affiche automatiquement certains services de base de données installés via Homebrew. Si vous ne souhaitez pas les voir dans le menu, vous pouvez les masquer ici.";
+"prefs.hide_auto_detected_services_title" = "Masquer les services Homebrew";
 "notification.version_changed_title" = "PHP %@ maintenant actif";
 "notification.version_changed_desc" = "PHP Monitor est passé à PHP %@.";
 "notification.php_fpm_restarted" = "PHP-FPM a redémarré automatiquement";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "Non Merci";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "La restauration des permissions Homebrew a été annulée.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "Le résultat du script exécuté pour ajuster les permissions est `nil`, ce qui signifie habituellement que vous n'avez pas accordé les permissions administratives à PHP Monitor.\n\nSi vous avez cliqué sur Annuler lors de l'invite d'authentification, c'est normal. Si vous vous êtes authentifié et que vous voyez toujours ce message, quelque chose a probablement échoué.";
+"alert.errors.homebrew_permissions.user_denied.title" = "L'accès administrateur a été refusé.";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor n'a pas pu continuer car la demande de commande privilégiée a été refusée.";
 "alert.key_service_not_running.title" = "En raison de problèmes avec les services Homebrew nécessaires, Valet ne fonctionne pas correctement pour le moment";
 "alert.key_service_not_running.subtitle" = "Pour que Valet fonctionne correctement, il faut qu'au moins trois services clés fonctionnent correctement.\n\nPHP Monitor signale que ce n'est pas le cas. Vous pouvez essayer de résoudre ce problème en appuyant sur le bouton avec le 'X' dans le menu sous le service concerné pour (re)démarrer le service qui est actuellement inactif.";
 "alert.key_service_not_running.desc" = "Si le fait de cliquer sur le bouton situé sous le service ne fonctionne pas (c.-à-d. que la roulette apparaît mais affiche toujours un \"X\" au bout d'un certain temps), il se peut que vous deviez lancer Fix My Valet. Vous pouvez le faire via le menu First Aid > Fix My Valet.\n\nVous pouvez également utiliser `valet stop` et `valet start` dans le terminal, ce qui peut également résoudre le problème (comme alternative à Fix My Valet).\n\nPour un débogage plus approfondi, vous pouvez consulter le GitHub issue tracker, où d'autres personnes peuvent avoir eu des problèmes similaires. En tant que développeur, j'essaie de m'assurer que toutes les questions reçoivent une réponse :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "Les fichiers de configuration clés suivants doivent exister à la suite de l'installation de PHP :\n\n• %@\n\nLorsque des fichiers de ce type sont manquants, vous devriez passer à la version de PHP associée à ces fichiers : cela peut résoudre le problème. Si cela ne résout pas le problème, il est recommandé de réinstaller la (les) version(s) PHP appropriée(s) via Homebrew, ce qui devrait restaurer les fichiers de configuration manquants. Les fichiers de configuration manquants peuvent être la raison pour laquelle vous obtenez des erreurs '502 Bad Gateway', même après avoir exécuté Fix My Valet (si vous utilisez Valet).";
 "warnings.xdebug_conf_missing.title" = "La configuration Xdebug est incomplète";
 "warnings.xdebug_conf_missing.description" = "Vous avez Xdebug installé, mais aucun mode n'est spécifié. Souhaitez-vous que PHP Monitor mette à jour votre configuration ? Vous pouvez également le corriger manuellement.";
-"warnings.php_tap_missing.title" = "`shivammathur/php` tap est manquant";
-"warnings.php_tap_missing.description" = "Ce tap Homebrew est requis pour installer les anciennes versions de PHP via le gestionnaire de version PHP de cette application.";
-"warnings.extensions_tap_missing.title" = "Le tap `shivammathur/extensions` est manquant";
-"warnings.extensions_tap_missing.description" = "Ce tap Homebrew est requis pour installer des extensions via le gestionnaire d'extensions PHP de cette application.";
+"warnings.required_taps_missing.title" = "Des taps Homebrew requis sont manquants";
+"warnings.required_taps_missing.description" = "Un ou plusieurs taps Homebrew nécessaires à l'installation de versions et d'extensions de PHP via cette application ne sont pas installés. PHP Monitor peut ajouter les taps manquants pour vous.";
+"warnings.required_taps_untrusted.title" = "Des taps Homebrew requis ne sont pas approuvés";
+"warnings.required_taps_untrusted.description" = "Un ou plusieurs taps Homebrew requis doivent être approuvés avant que Homebrew n'installe leurs formules sans confirmation supplémentaire. PHP Monitor peut les approuver pour vous.";
 "warnings.certificates_expired.title" = "Un ou plusieurs certificats utilisés pour servir un domaine ont expiré.";
 "warnings.certificates_expired.description" = "Les certificats expirés empêcheront le trafic HTTPS de fonctionner correctement. Vous pouvez demander à PHP Monitor d’essayer automatiquement de résoudre ce problème en ouvrant la liste des domaines.";
 "warnings.none" = "Il n'y a pas de recommandations disponibles pour vous en ce moment. Tout est parfait !";

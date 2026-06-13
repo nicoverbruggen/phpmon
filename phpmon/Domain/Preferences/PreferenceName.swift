@@ -30,7 +30,6 @@ enum PreferenceName: String, Codable {
     case iconTypeToDisplay = "icon_type_to_display"
     case fullPhpVersionDynamicIcon = "full_php_in_menu_bar"
     case hideAutoDetectedServicesInMenu = "hide_auto_detected_services_in_menu"
-    case hideIconsInMenu = "hide_icons_in_menu"
 
     // WARNINGS
     case warnAboutNonStandardTLD = "warn_about_non_standard_tld"
@@ -71,7 +70,6 @@ enum PreferenceName: String, Codable {
             .shouldDisplayDynamicIcon,
             .fullPhpVersionDynamicIcon,
             .hideAutoDetectedServicesInMenu,
-            .hideIconsInMenu,
 
             // Notifications
             .warnAboutNonStandardTLD,
@@ -111,6 +109,7 @@ enum PreferenceType {
  */
 enum RetiredPreferenceName: String {
     case shouldDisplayPhpHintInIcon = "add_php_to_icon"
+    case hideIconsInMenu = "hide_icons_in_menu"
 }
 
 /**

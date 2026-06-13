@@ -19,14 +19,13 @@ extension NSMenuItem {
     ) {
         self.init(title: title, action: action, keyEquivalent: keyEquivalent)
         self.keyEquivalentModifierMask = keyModifier
+        self.setImageVisibility()
 
-        if !Preferences.isEnabled(.hideIconsInMenu) {
-            if systemImage != nil {
-                self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
-            }
-            if customImage != nil {
-                self.image = NSImage(named: customImage!)
-            }
+        if systemImage != nil {
+            self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
+        }
+        if customImage != nil {
+            self.image = NSImage(named: customImage!)
         }
     }
 
@@ -55,17 +54,28 @@ extension NSMenuItem {
         self.init(title: title, action: nil, keyEquivalent: keyEquivalent)
         self.keyEquivalentModifierMask = keyModifier
         self.toolTip = toolTip
+        self.setImageVisibility()
 
-        if !Preferences.isEnabled(.hideIconsInMenu) {
-            if systemImage != nil {
-                self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
-            }
-            if customImage != nil {
-                self.image = NSImage(named: customImage!)
-            }
+        if systemImage != nil {
+            self.image = NSImage(systemSymbolName: systemImage!, accessibilityDescription: "")
+        }
+
+        if customImage != nil {
+            self.image = NSImage(named: customImage!)
         }
 
         self.submenu = NSMenu(items: submenu, target: target)
+    }
+
+    /**
+     TODO: Clean this up once I switch to Xcode 27.
+     */
+    fileprivate func setImageVisibility() {
+        #if compiler(>=6.4)
+        if #available(macOS 27.0, *) {
+            self.preferredImageVisibility = .visible
+        }
+        #endif
     }
 }
 

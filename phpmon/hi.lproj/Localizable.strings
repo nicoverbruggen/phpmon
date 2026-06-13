@@ -130,6 +130,10 @@
 "phpman.warnings.outdated.desc" = "हाल ही में PHP का नया रिलीज़ आने के कारण, यह संभव है कि Homebrew फ़ॉर्मूला इस संस्करण के PHP Monitor बनने के बाद से बदल गए हों।\n\nमैं सुझाव देता हूँ कि आप PHP Monitor को अपडेट करें इससे पहले कि आप वर्ज़न मैनेजर का उपयोग करके PHP संस्करण इंस्टॉल, हटाएँ या अपग्रेड करें। Homebrew द्वारा अपने फ़ॉर्मूला अपडेट करने में कितना समय लगेगा इस पर निर्भर करते हुए इसमें कुछ दिन लग सकते हैं, इसलिए इसे ध्यान में रखें.";
 "phpman.warnings.unsupported.title" = "आपका होमब्रू संस्करण समस्याएँ उत्पन्न कर सकता है";
 "phpman.warnings.unsupported.desc" = "कोई कार्यक्षमता अक्षम नहीं है, लेकिन कुछ कमांड अपेक्षित रूप से काम नहीं कर सकते हैं। आप वर्तमान में Homebrew %@ चला रहे हैं।\n\nवर्तमान में केवल Homebrew 4 और 5 PHP Version Manager के लिए समर्थित हैं। यदि आप Homebrew का नया संस्करण चला रहे हैं, तो आप यह जाँच करना चाहेंगे कि क्या PHP Monitor का नया संस्करण उपलब्ध है.";
+"phpman.warnings.required_taps_missing.title" = "एक या अधिक आवश्यक Homebrew टैप मौजूद नहीं हैं";
+"phpman.warnings.required_taps_missing.desc" = "जब तक ये टैप इंस्टॉल नहीं हो जाते, PHP Monitor शायद PHP संस्करण इंस्टॉल या अपडेट न कर पाए: %@.\n\nस्वचालित सुधार लागू करने के लिए PHP Doctor खोलें, या अपने टर्मिनल में संबंधित `brew tap` कमांड चलाएँ।";
+"phpman.warnings.required_taps_untrusted.title" = "एक या अधिक आवश्यक Homebrew टैप पर भरोसा नहीं किया गया है";
+"phpman.warnings.required_taps_untrusted.desc" = "जब तक इन टैप पर भरोसा नहीं किया जाता, Homebrew PHP संस्करण इंस्टॉल या अपडेट करने से इनकार कर सकता है: %@.\n\nस्वचालित सुधार लागू करने के लिए PHP Doctor खोलें, या अपने टर्मिनल में संबंधित `brew trust --tap` कमांड चलाएँ।";
 "phpman.warnings.removal.title" = "क्या आप सुनिश्चित हैं कि आप %@ को अनइंस्टॉल करना चाहते हैं?";
 "phpman.warnings.removal.desc" = "कृपया ध्यान दें कि कॉन्फ़िगरेशन फ़ाइलें हटाई नहीं जाएंगी, इसलिए यदि आवश्यक हो तो बाद में पुनः इंस्टॉल करना आसान होगा।\n\nआपको अनइंस्टॉलेशन प्रक्रिया के दौरान आपका पासवर्ड पूछा जा सकता है यदि फ़ाइल अनुमतियाँ सरल हटाने की अनुमति नहीं देती हैं।";
 "phpman.warnings.removal.button" = "अनइंस्टॉल";
@@ -160,6 +164,8 @@
 "lite_mode_explanation.title" = "आप वर्तमान में PHP Monitor को स्टैंडअलोन मोड में चला रहे हैं।";
 "lite_mode_explanation.subtitle" = "PHP Monitor में अतिरिक्त सुविधाएँ हैं जो तब उपलब्ध होती हैं जब आप Laravel Valet के उपयोगकर्ता हों। वर्तमान में, PHP Monitor आपके सिस्टम पर सक्रिय Valet स्थापना का पता नहीं लगा सका, इसलिए ये सुविधाएँ अनुपलब्ध हैं.";
 "lite_mode_explanation.description" = "अधिक जानकारी के लिए, मैं आपको README (GitHub पर उपलब्ध) देखने की सलाह देता हूं, जो बताता है कि Valet को कैसे इंस्टॉल करें और PHP Monitor को सही ढंग से चलाने के लिए क्या कदम उठाने हैं। Laravel Valet स्थापित करने के बाद PHP Monitor को पुनः प्रारंभ करना आवश्यक होगा ताकि वह Standalone Mode छोड़ सके।";
+"lite_mode_explanation.install_valet" = "Valet इंस्टॉल करें...";
+"lite_mode_explanation.not_now" = "अभी नहीं";
 "generic.ok" = "ठीक है";
 "generic.cancel" = "रद्द करें";
 "generic.retry" = "पुनः प्रयास करें";
@@ -341,6 +347,9 @@
 "prefs.hide_menu_icons" = "मेनू:";
 "prefs.hide_menu_icons_desc" = "इस विकल्प को चुनने पर PHP Monitor मेनू आइकन छिपा देगा, जैसा कि macOS Tahoe से पहले अधिकांश macOS मेनू दिखते थे। यदि आप अभी भी macOS के पुराने संस्करण पर हैं या आइकन के बिना मेनू पसंद करते हैं, तो आप इस विकल्प को टॉगल कर सकते हैं।";
 "prefs.hide_menu_icons_title" = "मेनू आइकन छिपाएँ";
+"prefs.hide_auto_detected_services" = "सेवाएँ:";
+"prefs.hide_auto_detected_services_desc" = "PHP Monitor स्वचालित रूप से Homebrew के माध्यम से इंस्टॉल की गई कुछ डेटाबेस सेवाओं का पता लगाकर उन्हें दिखाता है। यदि आप इन्हें मेन्यू में नहीं देखना चाहते, तो आप उन्हें यहाँ छिपा सकते हैं।";
+"prefs.hide_auto_detected_services_title" = "Homebrew सेवाएँ छिपाएँ";
 "notification.version_changed_title" = "PHP %@ अब सक्रिय है";
 "notification.version_changed_desc" = "PHP Monitor ने PHP %@ पर स्विच किया है।";
 "notification.php_fpm_restarted" = "PHP‑FPM स्वचालित रूप से पुनः आरम्भ हुआ";
@@ -504,6 +513,8 @@
 "startup.sponsor_encouragement.skip" = "नहीं, धन्यवाद";
 "alert.errors.homebrew_permissions.applescript_returned_nil.title" = "हॉमब्रू अनुमतियों को बहाल करने का कार्य रद्द कर दिया गया है.";
 "alert.errors.homebrew_permissions.applescript_returned_nil.description" = "स्क्रिप्ट का परिणाम, जिसे अनुमतियाँ समायोजित करने के लिए निष्पादित किया गया था, nil लौटाया है, जिसका आम तौर पर मतलब है कि आपने PHP Monitor को प्रशासनिक अनुमतियाँ नहीं दीं। यदि आप प्रमाणीकरण प्रॉम्प्ट के दौरान रद्द पर क्लिक कर चुके हैं, तो यह सामान्य है। अगर आपने वास्तव में प्रमाणीकृत किया और अभी भी यह संदेश देख रहे हैं, तो संभवतः कुछ गलत हो गया है.";
+"alert.errors.homebrew_permissions.user_denied.title" = "व्यवस्थापकीय पहुँच अस्वीकृत कर दी गई।";
+"alert.errors.homebrew_permissions.user_denied.description" = "PHP Monitor जारी नहीं रह सका क्योंकि विशेषाधिकार प्राप्त कमांड का अनुरोध अस्वीकार कर दिया गया।";
 "alert.key_service_not_running.title" = "आवश्यक Homebrew सेवाओं में समस्याओं के कारण, Valet वर्तमान में सही ढंग से काम नहीं कर रहा है";
 "alert.key_service_not_running.subtitle" = "Valet के सही ढंग से काम करने के लिए, कम से कम तीन मुख्य सेवाओं का सही तरीके से चलना आवश्यक है। PHP Monitor रिपोर्ट कर रहा है कि ऐसा नहीं हो रहा है। आप नीचे प्रभावित सेवा के मेनू में 'X' वाले बटन को दबाकर वर्तमान में निष्क्रिय सेवा को पुनः प्रारंभ करके इसे ठीक करने का प्रयास कर सकते हैं।";
 "alert.key_service_not_running.desc" = "यदि नीचे दिए गए बटन पर क्लिक करने के बाद सेवा काम नहीं करती (यानी स्पिनर दिखाई देता है लेकिन कुछ समय बाद भी 'X' बना रहता है), तो आपको Fix My Valet चलाने की आवश्यकता हो सकती है। आप इसे मेनू First Aid > Fix My Valet के माध्यम से कर सकते हैं।\n\nवैकल्पिक रूप से, आप टर्मिनल में `valet stop` और `valet start` का उपयोग कर सकते हैं, जो समस्या को भी हल कर सकता है (Fix My Valet के विकल्प के रूप में)।\n\nअधिक डिबगिंग के लिए, आप GitHub इश्यू ट्रैकर की जांच करना चाहेंगे, जहां अन्य लोगों ने समान समस्याओं का सामना किया हो सकता है। डेवलपर के रूप में मैं यह सुनिश्चित करने का प्रयास करता हूं कि हर प्रश्न का उत्तर दिया जाए :)";
@@ -551,10 +562,10 @@
 "warnings.files_missing.description" = "निम्नलिखित कुंजी कॉन्फ़िगरेशन फ़ाइलें PHP स्थापित करने के बाद मौजूद होनी चाहिए:\n\n• %@\n\nजब ऐसी फ़ाइलें गायब हों, तो आपको उन फ़ाइलों से संबंधित PHP संस्करण पर स्विच करना चाहिए: इससे समस्या हल हो सकती है। यदि यह समाधान नहीं करता है, तो Homebrew के माध्यम से उपयुक्त PHP संस्करण(ओं) को फिर से स्थापित करने की अनुशंसा की जाती है, जिससे गायब कॉन्फ़िगरेशन फ़ाइलें पुनर्स्थापित होंगी। गायब कॉन्फ़िगरेशन फ़ाइलें '502 Bad Gateway' त्रुटियों का कारण हो सकती हैं, भले ही आपने Fix My Valet चलाया हो (यदि आप Valet उपयोग कर रहे हैं)।";
 "warnings.xdebug_conf_missing.title" = "Xdebug कॉन्फ़िगरेशन अधूरा है";
 "warnings.xdebug_conf_missing.description" = "आपके पास Xdebug स्थापित है, लेकिन कोई मोड निर्दिष्ट नहीं किया गया है। क्या आप चाहते हैं कि PHP Monitor आपकी कॉन्फ़िगरेशन को अपडेट करे? आप इसे मैन्युअल रूप से भी ठीक कर सकते हैं।";
-"warnings.php_tap_missing.title" = "`shivammathur/php` टैप अनुपस्थित है";
-"warnings.php_tap_missing.description" = "इस Homebrew टैप की आवश्यकता है ताकि इस ऐप के PHP Version Manager के माध्यम से पुराने PHP संस्करण इंस्टॉल किए जा सकें।";
-"warnings.extensions_tap_missing.title" = "`shivammathur/extensions` टैप गायब है";
-"warnings.extensions_tap_missing.description" = "इस Homebrew tap को इस ऐप के PHP Extension Manager के माध्यम से एक्सटेंशन स्थापित करने के लिए आवश्यक है.";
+"warnings.required_taps_missing.title" = "आवश्यक Homebrew टैप मौजूद नहीं हैं";
+"warnings.required_taps_missing.description" = "इस ऐप के माध्यम से PHP संस्करण और एक्सटेंशन इंस्टॉल करने के लिए आवश्यक एक या अधिक Homebrew टैप इंस्टॉल नहीं हैं। PHP Monitor आपके लिए छूटे हुए टैप जोड़ सकता है।";
+"warnings.required_taps_untrusted.title" = "आवश्यक Homebrew टैप पर भरोसा नहीं किया गया है";
+"warnings.required_taps_untrusted.description" = "Homebrew द्वारा बिना अतिरिक्त पुष्टि के उनके फ़ॉर्मूले इंस्टॉल करने से पहले एक या अधिक आवश्यक Homebrew टैप पर भरोसा करना आवश्यक है। PHP Monitor आपके लिए उन पर भरोसा कर सकता है।";
 "warnings.certificates_expired.title" = "एक या अधिक प्रमाणपत्र जो किसी डोमेन की सेवा के लिए उपयोग किए जा रहे हैं, समाप्त हो चुके हैं।";
 "warnings.certificates_expired.description" = "समाप्त प्रमाणपत्र HTTPS ट्रैफ़िक के सही ढंग से काम करने को रोक देंगे। आप PHP Monitor को Domains सूची खोलकर इसे स्वतः हल करने का प्रयास करने दे सकते हैं.";
 "warnings.none" = "वर्तमान में आपके लिए कोई सिफ़ारिश उपलब्ध नहीं है। आप सब ठीक हैं!";

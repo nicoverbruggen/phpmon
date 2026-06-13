@@ -40,10 +40,10 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     /// String that was last searched for. Empty by default.
     var lastSearchedFor = ""
 
-    /// Set to true if we already checked for expired certificates.
-    /// This prevents notifications about expired certificates from
-    /// popping up when we re-open the Domains window.
-    var didCheckForCertRenewal: Bool = false
+    /// Whether to skip the automatic expired-certificate prompt when this window opens.
+    /// This is enabled after the first automatic prompt attempt, so it won't pop up again
+    /// when re-opening the Domains window.
+    var shouldSkipAutomaticCertificateRenewalPrompt: Bool = false
 
     // MARK: - Helper Variables
 
@@ -104,10 +104,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     override func viewDidAppear() {
         super.viewDidAppear()
 
-        if !didCheckForCertRenewal {
-            checkForCertificateRenewal()
-            didCheckForCertRenewal = true
+        guard !shouldSkipAutomaticCertificateRenewalPrompt else {
+            return
         }
+
+        shouldSkipAutomaticCertificateRenewalPrompt = true
+        checkForCertificateRenewal()
     }
 
     private func reloadDomainListables() {

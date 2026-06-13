@@ -125,13 +125,16 @@ extension BrewCommand {
         shell: ShellProtocol,
         _ onProgress: @escaping (BrewCommandProgress) -> Void
     ) async throws {
-        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/php") {
-            let command = "brew tap shivammathur/php"
-            try await run(shell: shell, command, onProgress)
-        }
+        let supportsTrust = await BrewDiagnostics.shared.supportsTapTrust()
 
-        if !BrewDiagnostics.shared.installedTaps.contains("shivammathur/extensions") {
-            let command = "brew tap shivammathur/extensions"
+        let commands: [ConditionalCommand] = [
+            .command("brew tap \(Constants.Taps.php)"),
+            .command("brew trust --tap \(Constants.Taps.php)", when: supportsTrust),
+            .command("brew tap \(Constants.Taps.extensions)"),
+            .command("brew trust --tap \(Constants.Taps.extensions)", when: supportsTrust)
+        ]
+
+        for command in commands.included {
             try await run(shell: shell, command, onProgress)
         }
     }

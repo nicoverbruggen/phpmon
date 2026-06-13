@@ -19,6 +19,7 @@ struct OnboardingWizardViewModelStepsTest {
             architecture: "arm64",
             pathConfigured: true,
             shell: [
+                "/opt/homebrew/bin/brew help trust": .instant("Error: Unknown command: trust\n", .stdErr),
                 "/opt/homebrew/bin/brew tap shivammathur/php": .instant("Tapped shivammathur/php.\n"),
                 "/opt/homebrew/bin/brew tap shivammathur/extensions": .instant("Tapped shivammathur/extensions.\n"),
                 "/opt/homebrew/bin/brew install php composer": BatchFakeShellOutput(
@@ -53,6 +54,61 @@ struct OnboardingWizardViewModelStepsTest {
         #expect(viewModel.state == .idle)
         #expect(viewModel.completedSteps.contains(.phpComposer))
         #expect(viewModel.action == .installValet)
+    }
+
+    @Test func installing_php_and_composer_trusts_taps_when_supported() async {
+        let container = makeOnboardingFakeContainer(
+            architecture: "arm64",
+            pathConfigured: true,
+            shell: [
+                "/opt/homebrew/bin/brew help trust": .instant("Usage: brew trust [options] [target ...]\n"),
+                "/opt/homebrew/bin/brew trust --tap": .instant("""
+                All official taps and commands are trusted.
+                No trusted taps, formulae, casks or commands.
+                """),
+                "/opt/homebrew/bin/brew tap shivammathur/php": .instant("Tapped shivammathur/php.\n"),
+                "/opt/homebrew/bin/brew trust --tap shivammathur/php": BatchFakeShellOutput(
+                    items: [.instant("Trusted tap: shivammathur/php\n")],
+                    transactions: [.write("", to: "/tmp/phpmon-trusted-php")]
+                ),
+                "/opt/homebrew/bin/brew tap shivammathur/extensions": .instant("Tapped shivammathur/extensions.\n"),
+                "/opt/homebrew/bin/brew trust --tap shivammathur/extensions": BatchFakeShellOutput(
+                    items: [.instant("Trusted tap: shivammathur/extensions\n")],
+                    transactions: [.write("", to: "/tmp/phpmon-trusted-extensions")]
+                ),
+                "/opt/homebrew/bin/brew install php composer": BatchFakeShellOutput(
+                    items: [.instant("Installing php and composer...\n")],
+                    transactions: [
+                        .write("", to: "/opt/homebrew/bin/php"),
+                        .write("", to: "/opt/homebrew/bin/composer")
+                    ]
+                )
+            ],
+            files: [
+                "/opt/homebrew/bin/brew": .fake(.binary)
+            ]
+        )
+
+        let viewModel = OnboardingWizardViewModel(
+            container: container,
+            progress: .init(
+                developerToolsInstalled: true,
+                homebrewInstalled: true,
+                pathConfigured: true,
+                phpInstalled: false,
+                composerInstalled: false
+            ),
+            hasCompletedIntroduction: true,
+            hasLoaded: true
+        )
+
+        let task = viewModel.performPrimaryAction()
+        await task?.value
+
+        #expect(viewModel.state == .idle)
+        #expect(viewModel.completedSteps.contains(.phpComposer))
+        #expect(container.filesystem.fileExists("/tmp/phpmon-trusted-php"))
+        #expect(container.filesystem.fileExists("/tmp/phpmon-trusted-extensions"))
     }
 
     // Installing Valet should run the Composer package install, trust command and Valet setup,

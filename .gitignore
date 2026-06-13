@@ -2,3 +2,6 @@ PHP Monitor.xcodeproj/project.xcworkspace
 PHP Monitor.xcodeproj/xcuserdata
 
 .DS_Store
+
+# Transient translation payload (created per batch, deleted after sync.py)
+scripts/translations/payload.json

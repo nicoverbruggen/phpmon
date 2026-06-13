@@ -20,9 +20,20 @@ extension OnboardingStepRunner {
         let collector = Locked<[OutputLine]>([])
 
         do {
+            let brew = container.paths.brew
+            let supportsTrust = await BrewDiagnostics(container).supportsTapTrust()
+
+            let commands: [ConditionalCommand] = [
+                .command("\(brew) tap \(Constants.Taps.php)"),
+                .command("\(brew) trust --tap \(Constants.Taps.php)", when: supportsTrust),
+                .command("\(brew) tap \(Constants.Taps.extensions)"),
+                .command("\(brew) trust --tap \(Constants.Taps.extensions)", when: supportsTrust),
+                .command(CommandCatalog.Onboarding.phpComposerInstall(using: brew))
+            ]
+
             // Attempt to install PHP and Composer via Homebrew. We will stream the output,
             // so the user can see what's going on, since this can take a bit of time!
-            for command in CommandCatalog.Onboarding.phpComposerInstall(using: container.paths.brew) {
+            for command in commands.included {
                 try await attachStreaming(command, collector: collector, didReceiveOutput: didReceiveOutput)
             }
         } catch {

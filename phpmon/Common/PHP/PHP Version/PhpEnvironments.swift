@@ -30,8 +30,8 @@ class PhpEnvironments {
         var formulaToLoad = "php"
 
         // Depending on whether the `shivammathur/php` tap is installed, this command will vary
-        if BrewDiagnostics.shared.installedTaps.contains("shivammathur/php") {
-            formulaToLoad = "shivammathur/php/php"
+        if BrewDiagnostics.shared.installedTaps.contains(Constants.Taps.php) {
+            formulaToLoad = "\(Constants.Taps.php)/php"
         }
 
         // Let's check the alias by using `brew info`
