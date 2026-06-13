@@ -129,7 +129,7 @@
 "phpman.warnings.outdated.title" = "قد يكون هذا الإصدار من PHP Monitor قديمًا ويحتاج إلى تحديث لدعم أحدث إصدار من PHP";
 "phpman.warnings.outdated.desc" = "نظرًا لإصدار جديد حديث للـ PHP، فمن المحتمل أن تكون صيغ Homebrew قد تغيرت منذ إنشاء هذا الإصدار من PHP Monitor. أوصي بتحديث PHP Monitor قبل استخدام مدير الإصدارات لتثبيت، إزالة أو ترقية إصدارات PHP. اعتمادًا على المدة التي تستغرقها Homebrew لتحديث صيغها، قد يستغرق الأمر بضعة أيام، لذا ضع ذلك في اعتبارك.";
 "phpman.warnings.unsupported.title" = "قد يسبب إصدارك من Homebrew مشاكل";
-"phpman.warnings.unsupported.desc" = "لم يتم تعطيل أي وظيفة، لكن قد لا تعمل بعض الأوامر كما هو متوقع. أنت حالياً تشغل Homebrew %@.\n\nحاليًا، يُدعم فقط Homebrew 4 و5 لإدارة إصدار PHP. إذا كنت تستخدم نسخة أحدث من Homebrew، فقد ترغب في التحقق مما إذا كان هناك إصدار أحدث من PHP Monitor متاح.";
+"phpman.warnings.unsupported.desc" = "لم يتم تعطيل أي وظيفة، لكن قد لا تعمل بعض الأوامر كما هو متوقع. أنت حالياً تشغل Homebrew %@.\n\nحاليًا، يُدعم Homebrew حتى الإصدار 6 لإدارة إصدار PHP. إذا كنت تستخدم نسخة أحدث من Homebrew، فقد ترغب في التحقق مما إذا كان هناك إصدار أحدث من PHP Monitor متاح.";
 "phpman.warnings.required_taps_missing.title" = "تنقص واحدة أو أكثر من حزم Homebrew (taps) المطلوبة";
 "phpman.warnings.required_taps_missing.desc" = "قد لا يتمكن PHP Monitor من تثبيت أو تحديث إصدارات PHP حتى يتم تثبيت هذه الحزم: %@.\n\nافتح PHP Doctor لتطبيق الإصلاح التلقائي، أو نفّذ أوامر `brew tap` المقابلة في الطرفية.";
 "phpman.warnings.required_taps_untrusted.title" = "واحدة أو أكثر من حزم Homebrew (taps) المطلوبة غير موثوقة";

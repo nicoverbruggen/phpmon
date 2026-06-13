@@ -129,7 +129,7 @@
 "phpman.warnings.outdated.title" = "このバージョンのPHP Monitorは古くなっている可能性が高く、最新のPHPをサポートするために更新が必要です。";
 "phpman.warnings.outdated.desc" = "最近の PHP の新リリースにより、Homebrew のフォーミュラが変更されている可能性があります。これは、このバージョンの PHP Monitor が作成された時点から変わっているかもしれません。PHP Monitor を更新してから、バージョンマネージャを使用して PHP バージョンをインストール・削除・アップグレードすることをおすすめします。Homebrew のフォーミュラが更新されるまでに数日かかる場合がありますので、その点をご留意ください。";
 "phpman.warnings.unsupported.title" = "Homebrew のバージョンが問題を引き起こす可能性があります";
-"phpman.warnings.unsupported.desc" = "機能は無効化されていませんが、一部のコマンドは期待通りに動作しない場合があります。現在、Homebrew %@ を実行しています。\n\n現在、PHP Version Manager では Homebrew 4 と 5 のみがサポートされています。もしより新しいバージョンの Homebrew を使用している場合は、PHP Monitor の最新版が利用可能か確認してください。";
+"phpman.warnings.unsupported.desc" = "機能は無効化されていませんが、一部のコマンドは期待通りに動作しない場合があります。現在、Homebrew %@ を実行しています。\n\n現在、PHP Version Manager では Homebrew 6 までサポートされています。もしより新しいバージョンの Homebrew を使用している場合は、PHP Monitor の最新版が利用可能か確認してください。";
 "phpman.warnings.required_taps_missing.title" = "必要な Homebrew タップが 1 つ以上見つかりません";
 "phpman.warnings.required_taps_missing.desc" = "これらのタップがインストールされるまで、PHP Monitor は PHP バージョンのインストールや更新ができない場合があります：%@。\n\nPHP Doctor を開いて自動修正を適用するか、対応する `brew tap` コマンドをターミナルで実行してください。";
 "phpman.warnings.required_taps_untrusted.title" = "必要な Homebrew タップが 1 つ以上信頼されていません";
