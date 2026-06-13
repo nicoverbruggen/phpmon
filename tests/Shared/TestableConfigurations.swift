@@ -54,7 +54,7 @@ class TestableConfigurations {
             shellOutput: [
                 "/opt/homebrew/bin/brew --version"
                     : .instant("""
-                    Homebrew 4.6.11
+                    Homebrew 6.0.1
                     """),
                 "/opt/homebrew/bin/php -v"
                     : .instant("""
