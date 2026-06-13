@@ -77,6 +77,7 @@
 		032DAC2F2E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
 		032DAC302E8BEB6B0018E01C /* WebApiProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */; };
 		03305E172F9F69CE0066E34F /* PhpHelperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03305E162F9F69CE0066E34F /* PhpHelperTest.swift */; };
+		033464192FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033464172FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift */; };
 		033D45982B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D45992B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
 		033D459A2B0D4EC600070080 /* InstallPhpExtensionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */; };
@@ -1337,6 +1338,7 @@
 		032DAC272E8BEB590018E01C /* RealWebApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealWebApi.swift; sourceTree = "<group>"; };
 		032DAC2C2E8BEB690018E01C /* WebApiProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebApiProtocol.swift; sourceTree = "<group>"; };
 		03305E162F9F69CE0066E34F /* PhpHelperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhpHelperTest.swift; sourceTree = "<group>"; };
+		033464172FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManagerTrustTest.swift; sourceTree = "<group>"; };
 		0336CAAF2B0D0CDA009A1034 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		033D45972B0D4EC600070080 /* InstallPhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPhpExtensionCommand.swift; sourceTree = "<group>"; };
 		033D459D2B0D513900070080 /* RemovePhpExtensionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePhpExtensionCommand.swift; sourceTree = "<group>"; };
@@ -1787,6 +1789,14 @@
 				C4551656297AED18009B8466 /* ValetRcTest.swift */,
 			);
 			path = Valet;
+			sourceTree = "<group>";
+		};
+		033464182FDD4F7400F5FDA0 /* Warnings */ = {
+			isa = PBXGroup;
+			children = (
+				033464172FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift */,
+			);
+			path = Warnings;
 			sourceTree = "<group>";
 		};
 		033D459C2B0D506B00070080 /* PHP Versions */ = {
@@ -3032,6 +3042,7 @@
 				03D53E902E8AE089001B1671 /* Testables */,
 				036575C62EA12E2200BA41BF /* Versions */,
 				0386B0BD2ED36E2500CA6795 /* Helpers */,
+				033464182FDD4F7400F5FDA0 /* Warnings */,
 				037F44142EDB0A9F002EBF75 /* Watchers */,
 			);
 			path = unit;
@@ -4551,6 +4562,7 @@
 				C4B79EBD29CA38DB00A483EE /* BrewCommand.swift in Sources */,
 				C485707828BF456300539B36 /* Warning.swift in Sources */,
 				033D459F2B0D513900070080 /* RemovePhpExtensionCommand.swift in Sources */,
+				033464192FDD4F7400F5FDA0 /* WarningManagerTrustTest.swift in Sources */,
 				C4513F8F2B13E2E5001AD760 /* PhpExtensionManagerWindowController.swift in Sources */,
 				037F44182EDB27BA002EBF75 /* Debouncer.swift in Sources */,
 				C415938027A1B54F00D2E1B7 /* ProjectTypeDetection.swift in Sources */,
