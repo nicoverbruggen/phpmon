@@ -110,6 +110,10 @@ extension WarningManager {
             ),
             Warning(
                 command: {
+                    guard self.brewDiagnostics.missingRequiredPhpTaps().isEmpty else {
+                        return false
+                    }
+
                     let untrusted = await self.brewDiagnostics.untrustedRequiredPhpTaps()
                     return !untrusted.isEmpty
                 },
@@ -194,14 +198,13 @@ extension WarningManager {
     /// Trusts whichever required PHP taps aren't trusted yet, in a single fix.
     private func fixUntrustedRequiredTaps() async {
         let brew = container.paths.brew
-        let supportsTrust = await brewDiagnostics.supportsTapTrust()
-        let trusted = brewDiagnostics.trustedTaps
+        let untrusted = await brewDiagnostics.untrustedRequiredPhpTaps()
 
         let commands: [ConditionalCommand] = [
             .command("\(brew) trust --tap \(Constants.Taps.php)",
-                     when: supportsTrust && !trusted.contains(Constants.Taps.php)),
+                     when: untrusted.contains(Constants.Taps.php)),
             .command("\(brew) trust --tap \(Constants.Taps.extensions)",
-                     when: supportsTrust && !trusted.contains(Constants.Taps.extensions))
+                     when: untrusted.contains(Constants.Taps.extensions))
         ]
 
         for command in commands.included {
