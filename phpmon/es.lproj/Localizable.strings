@@ -129,7 +129,7 @@
 "phpman.warnings.outdated.title" = "Esta versión de PHP Monitor está desactualizada";
 "phpman.warnings.outdated.desc" = "Es muy probable que las fórmulas de Homebrew hayan cambiado desde que se creó esta versión de PHP Monitor. Te recomiendo encarecidamente actualizar la aplicación antes de usar el gestor de versiones para instalar, eliminar o actualizar versiones de PHP.";
 "phpman.warnings.unsupported.title" = "Tu versión de Homebrew puede causar problemas";
-"phpman.warnings.unsupported.desc" = "No se deshabilita ninguna funcionalidad, pero algunos comandos pueden no funcionar como se espera. Actualmente está ejecutando Homebrew %@.\n\nActualmente, solo Homebrew 4 y 5 son compatibles con PHP Version Manager. Si está ejecutando una versión más reciente de Homebrew, es posible que desee comprobar si hay disponible una versión más nueva de PHP Monitor.";
+"phpman.warnings.unsupported.desc" = "No se deshabilita ninguna funcionalidad, pero algunos comandos pueden no funcionar como se espera. Actualmente está ejecutando Homebrew %@.\n\nActualmente, Homebrew hasta la versión 6 es compatible con PHP Version Manager. Si está ejecutando una versión más reciente de Homebrew, es posible que desee comprobar si hay disponible una versión más nueva de PHP Monitor.";
 "phpman.warnings.required_taps_missing.title" = "Faltan uno o más taps de Homebrew requeridos";
 "phpman.warnings.required_taps_missing.desc" = "Es posible que PHP Monitor no pueda instalar ni actualizar versiones de PHP hasta que se instalen estos taps: %@.\n\nAbre PHP Doctor para aplicar la corrección automática, o ejecuta los comandos `brew tap` correspondientes en tu terminal.";
 "phpman.warnings.required_taps_untrusted.title" = "Uno o más taps de Homebrew requeridos no son de confianza";

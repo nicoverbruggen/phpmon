@@ -129,7 +129,7 @@
 "phpman.warnings.outdated.title" = "此版本的 PHP Monitor 已过期";
 "phpman.warnings.outdated.desc" = "自该版本 PHP Monitor 创建以来，Homebrew Formula 极有可能已更改。我强烈建议在使用版本管理器安装、删除或升级 PHP 版本之前更新应用程序";
 "phpman.warnings.unsupported.title" = "您的 Homebrew 版本可能会导致问题";
-"phpman.warnings.unsupported.desc" = "没有禁用任何功能，但某些命令可能无法按预期运行。您当前运行的是 Homebrew %@。\n\n目前仅支持 PHP 版本管理器的 Homebrew 4 和 5。如果您使用的是更新版本的 Homebrew，建议检查是否有可用的新版本 PHP Monitor。";
+"phpman.warnings.unsupported.desc" = "没有禁用任何功能，但某些命令可能无法按预期运行。您当前运行的是 Homebrew %@。\n\n目前仅支持 PHP 版本管理器的 Homebrew 6 及以下版本。如果您使用的是更新版本的 Homebrew，建议检查是否有可用的新版本 PHP Monitor。";
 "phpman.warnings.required_taps_missing.title" = "缺少一个或多个必需的 Homebrew tap";
 "phpman.warnings.required_taps_missing.desc" = "在安装这些 tap 之前，PHP Monitor 可能无法安装或更新 PHP 版本：%@。\n\n打开 PHP Doctor 以应用自动修复，或在终端中运行相应的 `brew tap` 命令。";
 "phpman.warnings.required_taps_untrusted.title" = "一个或多个必需的 Homebrew tap 未被信任";
