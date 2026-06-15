@@ -14,7 +14,7 @@ import Foundation
 class Application {
 
     enum AppType {
-        case editor, ide, browser, git_gui, terminal, user_supplied
+        case editor, ide, browser, git_gui, terminal, devtool, user_supplied
     }
 
     // MARK: - Container
@@ -108,23 +108,13 @@ class Application {
         var detected: [Application] = []
 
         let detectable = [
-            // Browsers (for future Open In > Browser context menu)
-            /*
-            Application(container, "Safari", .browser),
-            Application(container, "Google Chrome", .browser),
-            Application(container, "Microsoft Edge", .browser),
-            Application(container, "Firefox", .browser),
-            Application(container, "Brave", .browser),
-            Application(container, "Arc", .browser),
-            Application(container, "Zen", .browser),
-            */
-
             // Editors
             Application(container, "PhpStorm", .ide),
             Application(container, "WebStorm", .ide),
             Application(container, "Visual Studio Code", .editor),
             Application(container, "VSCodium", .editor),
             Application(container, "Sublime Text", .editor),
+            Application(container, "Zed", .editor),
 
             // Git
             Application(container, "Sublime Merge", .git_gui),
@@ -133,7 +123,10 @@ class Application {
 
             // Terminals
             Application(container, "iTerm", .terminal),
-            Application(container, "Ghostty", .terminal)
+            Application(container, "Ghostty", .terminal),
+
+            // Developer Tools
+            Application(container, "Ray", .devtool)
         ]
 
         for app in detectable where await app.isInstalled() {
