@@ -53,6 +53,8 @@ public struct TestableConfiguration: Codable {
         phpVersions.enumerated().forEach { (index, version) in
             self.addPhpVersion(version, primary: index == 0)
         }
+
+        self.addPresetApplicationDetection()
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -145,6 +147,18 @@ public struct TestableConfiguration: Codable {
         }
 
         self.reloadInstalledFormulaeOutput()
+    }
+
+    // MARK: Add preset application detection
+
+    /// Registers shell output reporting every preset application (see `Application.presets`)
+    /// as *not installed*, so tests run against a predictable set of detectable apps.
+    /// Generated dynamically to stay in sync with the apps PHP Monitor detects.
+    private mutating func addPresetApplicationDetection() {
+        for preset in Application.presets {
+            self.shellOutput[Application.determineInstalled(for: preset.name)] =
+                .instant("Unable to find application named '\(preset.name)'", .stdErr)
+        }
     }
 
     private mutating func reloadInstalledFormulaeOutput() {

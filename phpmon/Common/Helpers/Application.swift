@@ -81,7 +81,7 @@ class Application {
         do {
             // Verify the app can be resolved by LaunchServices as well
             (process, output) = try await container.shell.attach(
-                "/usr/bin/open -Ra \"\(name)\"",
+                Application.determineInstalled(for: name),
                 didReceiveOutput: { _, _ in },
                 withTimeout: 2.0
             )
@@ -99,6 +99,35 @@ class Application {
         }
     }
 
+    /// The applications PHP Monitor attempts to detect by default, as `(name, type)` pairs.
+    /// This is the single source of truth for both detection and testable shell output.
+    static let presets: [(name: String, type: AppType)] = [
+        // Editors
+        ("PhpStorm", .ide),
+        ("WebStorm", .ide),
+        ("Visual Studio Code", .editor),
+        ("VSCodium", .editor),
+        ("Sublime Text", .editor),
+        ("Zed", .editor),
+
+        // Git
+        ("Sublime Merge", .git_gui),
+        ("Tower", .git_gui),
+        ("SourceTree", .git_gui),
+
+        // Terminals
+        ("iTerm", .terminal),
+        ("Ghostty", .terminal),
+
+        // Developer Tools
+        ("Ray", .devtool)
+    ]
+
+    /// The shell command used to verify (via LaunchServices) whether an app of a given name is installed.
+    static func determineInstalled(for name: String) -> String {
+        return "/usr/bin/open -Ra \"\(name)\""
+    }
+
     /**
      Detect which apps are available to open a specific directory.
      */
@@ -107,27 +136,7 @@ class Application {
     ) async -> [Application] {
         var detected: [Application] = []
 
-        let detectable = [
-            // Editors
-            Application(container, "PhpStorm", .ide),
-            Application(container, "WebStorm", .ide),
-            Application(container, "Visual Studio Code", .editor),
-            Application(container, "VSCodium", .editor),
-            Application(container, "Sublime Text", .editor),
-            Application(container, "Zed", .editor),
-
-            // Git
-            Application(container, "Sublime Merge", .git_gui),
-            Application(container, "Tower", .git_gui),
-            Application(container, "SourceTree", .git_gui),
-
-            // Terminals
-            Application(container, "iTerm", .terminal),
-            Application(container, "Ghostty", .terminal),
-
-            // Developer Tools
-            Application(container, "Ray", .devtool)
-        ]
+        let detectable = presets.map { Application(container, $0.name, $0.type) }
 
         for app in detectable where await app.isInstalled() {
             detected.append(app)
