@@ -3229,7 +3229,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 2650;
+				LastUpgradeCheck = 2660;
 				ORGANIZATIONNAME = "Nico Verbruggen";
 				TargetAttributes = {
 					C406A5EF298AD2CE00B5B85A = {
@@ -4725,7 +4725,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4738,7 +4738,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4759,7 +4759,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4772,7 +4772,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -4916,7 +4916,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2006;
+				CURRENT_PROJECT_VERSION = 2010;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_APP_SANDBOX = NO;
@@ -4935,7 +4935,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.2;
+				MARKETING_VERSION = 26.05.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4960,7 +4960,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2006;
+				CURRENT_PROJECT_VERSION = 2010;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_APP_SANDBOX = NO;
@@ -4979,7 +4979,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.2;
+				MARKETING_VERSION = 26.05.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5142,7 +5142,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2006;
+				CURRENT_PROJECT_VERSION = 2010;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_APP_SANDBOX = NO;
@@ -5161,7 +5161,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.2;
+				MARKETING_VERSION = 26.05.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -5188,7 +5188,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -5201,7 +5201,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5335,7 +5335,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2006;
+				CURRENT_PROJECT_VERSION = 2010;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_APP_SANDBOX = NO;
@@ -5354,7 +5354,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.2;
+				MARKETING_VERSION = 26.05.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -5381,7 +5381,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 55;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -5394,7 +5394,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nicoverbruggen.phpmon-updater";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -5576,7 +5576,7 @@
 			repositoryURL = "https://github.com/nicoverbruggen/NVAppUpdater";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 3.1.0;
 			};
 		};
 		03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */ = {
