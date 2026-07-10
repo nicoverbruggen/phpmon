@@ -209,15 +209,25 @@ nonisolated final class Preferences: Sendable {
     }
 
     static func update(_ preference: PreferenceName, value: Any?, notify: Bool = false) {
-        if value == nil {
-            UserDefaults.standard.removeObject(forKey: preference.rawValue)
+        if App.shared.container.filesystem is TestableFileSystem {
+            // With a testable (fake) container active, preference changes stay
+            // in-memory: a UI test's interactions (e.g. switching the language
+            // to Japanese) must never pollute the real, persisted preferences —
+            // they are shared with any other copy of the app on this machine.
+            var cached = App.shared.container.preferences.cachedPreferences
+            cached[preference] = value
+            App.shared.container.preferences.cachedPreferences = cached
         } else {
-            UserDefaults.standard.setValue(value, forKey: preference.rawValue)
-        }
-        UserDefaults.standard.synchronize()
+            if value == nil {
+                UserDefaults.standard.removeObject(forKey: preference.rawValue)
+            } else {
+                UserDefaults.standard.setValue(value, forKey: preference.rawValue)
+            }
+            UserDefaults.standard.synchronize()
 
-        // Update the preferences cache in memory!
-        App.shared.container.preferences.cachedPreferences = Preferences.cache()
+            // Update the preferences cache in memory!
+            App.shared.container.preferences.cachedPreferences = Preferences.cache()
+        }
 
         if notify {
             NotificationCenter.default.post(name: Events.PreferencesUpdated, object: nil)

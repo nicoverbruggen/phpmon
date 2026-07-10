@@ -66,6 +66,8 @@ final class SettingsTest: UITestCase {
         assertExists(searchField, 2.0)
         XCTAssertEqual(searchField.placeholderValue, "generic.search".localized(for: "ja"))
 
-        // No cleanup is needed: each testable launch explicitly starts in English.
+        // No cleanup is needed: with a testable configuration active, the app
+        // keeps preference changes in-memory (`Preferences.update`), so the
+        // Japanese override is never persisted to the real defaults.
     }
 }
