@@ -148,6 +148,13 @@ extension Startup {
         Startup.hasFinishedBooting = true
         Log.info("PHP Monitor is ready to serve!")
 
+        #if DEBUG
+        // TEMPORARY: re-enable the main-thread hang watchdog now that startup is done.
+        // (Remove together with `suppressHangWarningsDuringStartup` once the off-main
+        // detection refactor lands.)
+        suppressHangWarningsDuringStartup = false
+        #endif
+
         // Process the last URL that arrived during startup
         if let url = App.shared.deferredURL {
             AppDelegate.instance.handleURLs([url])

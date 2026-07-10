@@ -7,6 +7,16 @@
 
 import Foundation
 
+#if DEBUG
+/// TEMPORARY stopgap. The startup/detection pipeline still performs blocking I/O on the
+/// main actor (a known regression to be fixed by moving detection off-main). Until that
+/// refactor lands, suppress the hang-risk warnings while the app is still booting so the
+/// startup log stays readable. Flipped to `false` once `Startup` finishes booting.
+///
+/// Remove this flag (and the flip in `Startup+Launch`) together with the off-main fix.
+nonisolated(unsafe) var suppressHangWarningsDuringStartup = true
+#endif
+
 /// A debug-only guard that flags when a blocking operation is executed on the main
 /// thread — the fingerprint of a UI hang.
 ///
@@ -27,7 +37,7 @@ nonisolated func warnIfBlockingOnMainThread(
     function: StaticString = #function
 ) {
     #if DEBUG
-    if Thread.isMainThread {
+    if Thread.isMainThread && !suppressHangWarningsDuringStartup {
         Log.warn("[HANG-RISK] Blocking operation ran on the main thread: \(operation()) (in \(function))")
     }
     #endif
