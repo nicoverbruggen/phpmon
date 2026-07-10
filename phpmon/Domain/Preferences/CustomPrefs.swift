@@ -10,7 +10,9 @@ import Foundation
 
 // `nonisolated`: decoded on the concurrent pool (the config file read is blocking
 // I/O) and stored behind `Preferences`' lock-guarded state.
-nonisolated struct CustomPrefs: Decodable {
+// `Sendable`: an immutable value type (all stored properties are `let` value types),
+// required so it can live inside `Preferences`' `OSAllocatedUnfairLock`.
+nonisolated struct CustomPrefs: Decodable, Sendable {
     let scanApps: [String]?
     let presets: [Preset]?
     let services: [String]?

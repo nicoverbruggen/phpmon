@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 class RemovePhpExtensionCommand: BrewCommand {
 
@@ -45,7 +46,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             \(container.paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
-        let loggedMessages = Locked<[String]>([])
+        let loggedMessages = OSAllocatedUnfairLock<[String]>(initialState: [])
 
         let (process, _): (Process, ShellOutput)
 
@@ -63,10 +64,10 @@ class RemovePhpExtensionCommand: BrewCommand {
         } catch ShellError.timedOut {
             Log.err("The `brew remove` command timed out after 5 minutes: \(command)")
             loggedMessages.withLock { $0.append("Terminated after timeout (>5 minutes) as decided by PHP Monitor.") }
-            throw BrewCommandError(error: "The command timed out after 5 minutes.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command timed out after 5 minutes.", log: loggedMessages.withLock { $0 })
         } catch {
             Log.err("Failed to execute brew command: \(command) - \(error)")
-            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.withLock { $0 })
         }
 
         if process.terminationStatus == 0 {
@@ -82,7 +83,7 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
-            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages.value)
+            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages.withLock { $0 })
         }
     }
 

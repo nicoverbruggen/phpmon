@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import os
 
 private func makeRealShellContainer() -> Container {
     Container.real(minimal: true, commandTracking: false)
@@ -83,7 +84,7 @@ struct RealShellTest {
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
-        let bits = Locked<[String]>([])
+        let bits = OSAllocatedUnfairLock<[String]>(initialState: [])
 
         let (_, shellOutput) = try! await container.shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(500); echo 'Goodbye world';\"",
@@ -144,7 +145,7 @@ struct RealShellTest {
         let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
         // Keep track of the total chunk count
-        let receivedChunks = Locked<Int>(0)
+        let receivedChunks = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         // We will now test the attach method
         let (_, shellOutput) = try await container.shell.attach(
@@ -200,7 +201,7 @@ struct RealShellTest {
     @Test func attach_stops_emitting_output_after_timeout() async {
         let pidFile = "/tmp/phpmon-attach-timeout-\(UUID().uuidString).pid"
         let command = "/bin/sh -c 'echo $$ > \(pidFile); trap \"\" TERM; while true; do echo stdout-line; echo stderr-line 1>&2; done'"
-        let callbackCount = Locked<Int>(0)
+        let callbackCount = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         defer {
             if let pid = try? String(contentsOfFile: pidFile, encoding: .utf8)
@@ -221,11 +222,11 @@ struct RealShellTest {
             )
         }
 
-        let callbackCountAtTimeout = callbackCount.value
+        let callbackCountAtTimeout = callbackCount.withLock { $0 }
 
         await delay(seconds: 0.25)
 
-        let callbackCountAfterDelay = callbackCount.value
+        let callbackCountAfterDelay = callbackCount.withLock { $0 }
 
         // If these two match, we know no additional callbacks fired after the delay
         #expect(callbackCountAfterDelay == callbackCountAtTimeout)
@@ -253,7 +254,7 @@ struct RealShellTest {
         let command = "i=1; while [ $i -le 200 ]; do echo line-$i; i=$((i+1)); done"
 
         for iteration in 1...50 {
-            let chunks = Locked<[String]>([])
+            let chunks = OSAllocatedUnfairLock<[String]>(initialState: [])
 
             let (_, shellOutput) = try await container.shell.attach(
                 command,
@@ -267,7 +268,7 @@ struct RealShellTest {
             #expect(shellOutput.out == expected, "Output was truncated on iteration \(iteration)")
 
             // Every chunk must be delivered exactly once, in order.
-            #expect(chunks.value.joined() == shellOutput.out)
+            #expect(chunks.withLock { $0 }.joined() == shellOutput.out)
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 protocol BrewCommand {
     nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws
@@ -88,11 +89,11 @@ extension BrewCommand {
         _ command: String,
         _ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void
     ) async throws {
-        // `Locked` (a lock-guarded, @unchecked Sendable box) is the right tool here:
+        // `OSAllocatedUnfairLock` (a Sendable lock box) is the right tool here:
         // `didReceiveOutput` is a *synchronous* @Sendable callback invoked off the main
         // actor, so an `actor` collector (whose `append` would be `async`) cannot be
         // awaited from inside it. The lock keeps the accumulation data-race free.
-        let loggedMessages = Locked<[String]>([])
+        let loggedMessages = OSAllocatedUnfairLock<[String]>(initialState: [])
 
         // Snapshot the title on the main actor so the off-main callback captures an
         // immutable `String` instead of calling the main-actor `getCommandTitle()`.
@@ -119,19 +120,19 @@ extension BrewCommand {
             // Possible if the brew command times out
             Log.err("The `brew` command timed out after 15 minutes: \(command)")
             loggedMessages.withLock { $0.append("Terminated after timeout (>15 minutes) as decided by PHP Monitor.") }
-            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.withLock { $0 })
         } catch {
             // Possible if the async continuation fails
             Log.err("Failed to execute brew command: \(command) - \(error)")
-            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.withLock { $0 })
         }
 
         // Finally, even if we got the command to execute, let's check the termination status
         if process.terminationStatus == 0 {
-            loggedMessages.value = []
+            loggedMessages.withLock { $0 = [] }
             return
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.withLock { $0 })
         }
     }
 

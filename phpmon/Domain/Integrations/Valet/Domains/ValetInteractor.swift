@@ -76,7 +76,8 @@ class ValetInteractor {
         await container.shell.pipe(command)
 
         // Check if the secured status has actually changed
-        site.determineSecured()
+        // (certificate read runs off the main actor)
+        await site.refreshSecuredStatus()
         if site.secured == originalSecureStatus {
             throw ValetInteractionError(command: command)
         }
@@ -102,7 +103,8 @@ class ValetInteractor {
         }
 
         // Check if the secured status has actually changed
-        proxy.determineSecured()
+        // (certificate read runs off the main actor)
+        await proxy.refreshSecuredStatus()
         if proxy.secured == originalSecureStatus {
             throw ValetInteractionError(
                 command: commands.chained
@@ -119,9 +121,8 @@ class ValetInteractor {
         // Run the command
         await container.shell.pipe(command)
 
-        // Check if the secured status has actually changed
-        site.determineIsolated()
-        site.determineComposerPhpVersion()
+        // Re-run the determinations (file reads happen off the main actor)
+        await site.determine()
 
         // If the version is not isolated, this failed
         if site.isolatedPhpVersion == nil {
@@ -135,9 +136,8 @@ class ValetInteractor {
         // Run the command
         await container.shell.pipe(command)
 
-        // Check if the secured status has actually changed
-        site.determineIsolated()
-        site.determineComposerPhpVersion()
+        // Re-run the determinations (file reads happen off the main actor)
+        await site.determine()
 
         // If the version is somehow still isolated, this failed
         if site.isolatedPhpVersion != nil {

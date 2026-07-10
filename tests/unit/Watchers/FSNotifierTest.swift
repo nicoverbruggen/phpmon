@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import os
 
 struct FSNotifierTest {
 
@@ -18,7 +19,7 @@ struct FSNotifierTest {
         FileManager.default.createFile(atPath: testFile.path, contents: nil)
 
         // Our variable to keep track of
-        let eventFired = Locked<Int>(0)
+        let eventFired = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         // Our debouncer
         let debouncer = Debouncer()
@@ -26,7 +27,7 @@ struct FSNotifierTest {
         // Set up the notifier
         let notifier = FSNotifier(for: testFile, eventMaskRawValue: DispatchSource.FileSystemEvent.write.rawValue, onChange: {
             Task { await debouncer.debounce(for: 1.0) {
-                eventFired.value += 1
+                eventFired.withLock { $0 += 1 }
             }}
         })
 
@@ -42,14 +43,14 @@ struct FSNotifierTest {
 
         // Wait for the event to fire, verify it fired ONCE after 1 second debounce
         await delay(seconds: 1.2)
-        #expect(eventFired.value == 1)
+        #expect(eventFired.withLock { $0 } == 1)
 
         // Try to write again (after debounce timing)
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
 
         // Verify after another second, our second write is actually noted
         await delay(seconds: 1.2)
-        #expect(eventFired.value == 2)
+        #expect(eventFired.withLock { $0 } == 2)
     }
 
     @Test func notifier_suspends_and_resumes_correctly() async throws {
@@ -59,11 +60,11 @@ struct FSNotifierTest {
         FileManager.default.createFile(atPath: testFile.path, contents: nil)
 
         // Our variable to keep track of
-        let eventFired = Locked<Int>(0)
+        let eventFired = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         // Create notifier
         let notifier = FSNotifier(for: testFile, eventMaskRawValue: DispatchSource.FileSystemEvent.write.rawValue, onChange: {
-            Task { eventFired.value += 1 }
+            Task { eventFired.withLock { $0 += 1 } }
         })
 
         // Cleanup for later
@@ -75,12 +76,12 @@ struct FSNotifierTest {
         // Modify the file, twice
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         await delay(seconds: 0.2)
-        #expect(eventFired.value == 1)
+        #expect(eventFired.withLock { $0 } == 1)
 
         // Try to write again (after debounce timing)
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         await delay(seconds: 0.2)
-        #expect(eventFired.value == 2)
+        #expect(eventFired.withLock { $0 } == 2)
 
         // Now, we will suspend
         await notifier.suspend()
@@ -88,7 +89,7 @@ struct FSNotifierTest {
         // Despite writing to the file, our event did not fire
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         await delay(seconds: 0.2)
-        #expect(eventFired.value == 2)
+        #expect(eventFired.withLock { $0 } == 2)
 
         // Now, we will resume
         await notifier.resume()
@@ -96,6 +97,6 @@ struct FSNotifierTest {
         // Our event should have fired again
         try "hello".write(to: testFile, atomically: false, encoding: .utf8)
         await delay(seconds: 0.2)
-        #expect(eventFired.value == 3)
+        #expect(eventFired.withLock { $0 } == 3)
     }
 }

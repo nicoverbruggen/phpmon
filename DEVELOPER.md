@@ -119,10 +119,12 @@ back onto the main thread; startup must stay free of `[HANG-RISK]` warnings.
 Genuinely-shared mutable state must be synchronized — **do not** paper over data races with a
 bare `@unchecked Sendable`.
 
-* `Locked<T>` (an `NSLock` box) is the current primitive for lock-guarded state (used by
-  `Preferences`, `PhpEnvironments`, `BrewDiagnostics`, `RealShell`, …).
-* Test doubles (`TestableShell`) use `OSAllocatedUnfairLock`. When the deployment target
-  eventually reaches macOS 15 these can migrate to the standard-library `Mutex`.
+* `OSAllocatedUnfairLock<T>` is the primitive for lock-guarded state (used by `Preferences`,
+  `PhpEnvironments`, `BrewDiagnostics`, `RealShell`, `Log`, the test doubles, …). Keep the
+  mutable state *inside* the lock (`withLock { ... }`); it is non-reentrant, so never nest
+  accesses to the same instance. Use `uncheckedState`/`withLockUnchecked` only for genuinely
+  non-`Sendable` state with a documented invariant. When the deployment target eventually
+  reaches macOS 15 these can migrate to the standard-library `Mutex`.
 * Watchers (`ConfigWatchManager`, `HomebrewWatchManager`, `FSNotifier`, `Debouncer`) are
   `actor`s. When a caller needs to run main-actor work "while suspended", the closure stays in
   the caller's isolation — only `suspend()`/`resume()` hop onto the watcher actor.

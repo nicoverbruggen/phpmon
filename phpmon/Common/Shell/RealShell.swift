@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import os
 @preconcurrency import Dispatch
 
 // Nonisolated so blocking subprocess I/O stays off the main actor. Its mutable state
-// (`_PATH`, `_exports`) is `Locked`-guarded, hence `@unchecked Sendable`.
+// (`_PATH`, `_exports`) is guarded by `OSAllocatedUnfairLock`, hence `@unchecked Sendable`.
 nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String, preferredShell: String) {
         // Set variables that won't be updated
@@ -21,8 +22,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         // spawns an interactive shell that can take seconds, and this initializer
         // runs on the main actor during `Container.bind()`. `AppDelegate.init`
         // warms the value up on the concurrent pool right after binding.
-        self._PATH = Locked<String?>(nil)
-        self._exports = Locked<[String: String]>([:])
+        self._PATH = OSAllocatedUnfairLock<String?>(initialState: nil)
+        self._exports = OSAllocatedUnfairLock<[String: String]>(initialState: [:])
     }
 
     private(set) var binPath: String
@@ -44,15 +45,15 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
      These are now set via via Process.environment to avoid security issues, like shell injection.
      */
     internal var exports: [String: String] {
-        get { _exports.value }
-        set { _exports.value = newValue }
+        get { _exports.withLock { $0 } }
+        set { _exports.withLock { $0 = newValue } }
     }
 
     // MARK: - Thread-safe access; internal values
 
     // `internal` (not private) because the `PATH` accessor lives in `RealShell+PATH.swift`.
-    let _PATH: Locked<String?>
-    private let _exports: Locked<[String: String]>
+    let _PATH: OSAllocatedUnfairLock<String?>
+    private let _exports: OSAllocatedUnfairLock<[String: String]>
 
     // MARK: - Methods
 
@@ -218,8 +219,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
 
         return await withCheckedContinuation { continuation in
             // Once-only "resume" guard, mutated from `@Sendable` serial-queue closures;
-            // `Locked` keeps it data-race free while preserving "resume exactly once".
-            let resumed = Locked<Bool>(false)
+            // `OSAllocatedUnfairLock` keeps it data-race free while preserving "resume exactly once".
+            let resumed = OSAllocatedUnfairLock<Bool>(initialState: false)
 
             let timeoutWorkItem = DispatchWorkItem {
                 guard process.isRunning else { return }
@@ -229,8 +230,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 process.terminate()
 
                 serialQueue.async {
-                    if !resumed.value {
-                        resumed.value = true
+                    if !resumed.withLock({ $0 }) {
+                        resumed.withLock { $0 = true }
                         continuation.resume(returning: .out("", ""))
                     }
                 }
@@ -245,11 +246,11 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 // `let` rather than the mutable optional `self` binding.
                 let shell = self
                 serialQueue.async {
-                    if resumed.value { return }
+                    if resumed.withLock({ $0 }) { return }
 
                     if process.terminationReason == .uncaughtSignal {
                         Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                        resumed.value = true
+                        resumed.withLock { $0 = true }
                         continuation.resume(returning: .out("", ""))
                         return
                     }
@@ -261,7 +262,7 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                         shell?.log(process: process, stdOut: stdOut, stdErr: stdErr)
                     }
 
-                    resumed.value = true
+                    resumed.withLock { $0 = true }
                     continuation.resume(returning: .out(stdOut, stdErr))
                 }
             }
@@ -282,22 +283,22 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         process.standardOutput = outputPipe
         process.standardError = errorPipe
 
-        // Accumulate into `Locked` buffers (safe across the `@Sendable` serial-queue
+        // Accumulate into lock-guarded buffers (safe across the `@Sendable` serial-queue
         // closures); the immutable `ShellOutput` is built once at `continuation.resume`.
-        let outBuffer = Locked<String>("")
-        let errBuffer = Locked<String>("")
+        let outBuffer = OSAllocatedUnfairLock<String>(initialState: "")
+        let errBuffer = OSAllocatedUnfairLock<String>(initialState: "")
 
         // All mutable state AND all pipe reads are confined to this queue.
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
-            // `Locked` guard: safe mutation from the `@Sendable` timeout/termination closures.
-            let finished = Locked<Bool>(false)
+            // `OSAllocatedUnfairLock` guard: safe mutation from the `@Sendable` timeout/termination closures.
+            let finished = OSAllocatedUnfairLock<Bool>(initialState: false)
 
             // Runs on `serialQueue`: the drain sees all data the handlers didn't consume.
             let finishSuccess: @Sendable () -> Void = {
-                if finished.value { return }
-                finished.value = true
+                if finished.withLock({ $0 }) { return }
+                finished.withLock { $0 = true }
 
                 outputPipe.fileHandleForReading.readabilityHandler = nil
                 errorPipe.fileHandleForReading.readabilityHandler = nil
@@ -315,13 +316,13 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                     didReceiveOutput(string, .stdErr)
                 }
 
-                let output = ShellOutput(out: outBuffer.value, err: errBuffer.value)
+                let output = ShellOutput(out: outBuffer.withLock { $0 }, err: errBuffer.withLock { $0 })
                 continuation.resume(returning: (process, output))
             }
 
             let finishTimeout: @Sendable () -> Void = {
-                if finished.value { return }
-                finished.value = true
+                if finished.withLock({ $0 }) { return }
+                finished.withLock { $0 = true }
 
                 outputPipe.fileHandleForReading.readabilityHandler = nil
                 errorPipe.fileHandleForReading.readabilityHandler = nil
@@ -348,11 +349,11 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
             // otherwise be dropped by the guard, yet the `finishSuccess` drain can
             // never re-read consumed data. `availableData` won't block: the handler
             // only fires when the pipe is readable, and the drain runs behind this queue.
-            let makeReadabilityHandler: @Sendable (Locked<String>, ShellStream)
+            let makeReadabilityHandler: @Sendable (OSAllocatedUnfairLock<String>, ShellStream)
                 -> (@Sendable (FileHandle) -> Void) = { buffer, stream in
                 return { fileHandle in
                     serialQueue.sync {
-                        if finished.value { return }
+                        if finished.withLock({ $0 }) { return }
                         let data = fileHandle.availableData
                         if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
                             buffer.withLock { $0 += string }

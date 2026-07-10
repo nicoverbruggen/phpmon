@@ -8,6 +8,7 @@
 
 import Foundation
 import NVAlert
+import os
 
 class BrewDiagnostics {
 
@@ -32,27 +33,27 @@ class BrewDiagnostics {
     /**
      Determines the Homebrew taps the user has installed.
 
-     Backed by a `Locked` box: this is reassigned from `loadInstalledTaps()` (which runs
-     off the main thread) and read from several async contexts, so access must be
-     synchronized to avoid a data race on the array buffer.
+     Backed by an `OSAllocatedUnfairLock` box: this is reassigned from `loadInstalledTaps()`
+     (which runs off the main thread) and read from several async contexts, so access must
+     be synchronized to avoid a data race on the array buffer.
      */
-    private let _installedTaps = Locked<[String]>([])
+    private let _installedTaps = OSAllocatedUnfairLock<[String]>(initialState: [])
     // `nonisolated`: reassigned off-main by `loadInstalledTaps()` and read from async
-    // contexts; the `Locked` box keeps this data-race free across isolation domains.
+    // contexts; the lock box keeps this data-race free across isolation domains.
     public nonisolated var installedTaps: [String] {
-        get { _installedTaps.value }
-        set { _installedTaps.value = newValue }
+        get { _installedTaps.withLock { $0 } }
+        set { _installedTaps.withLock { $0 = newValue } }
     }
 
     /**
      Determines the Homebrew taps the user has explicitly trusted.
 
-     Backed by a `Locked` box for the same reason as `installedTaps`.
+     Backed by an `OSAllocatedUnfairLock` box for the same reason as `installedTaps`.
      */
-    private let _trustedTaps = Locked<[String]>([])
+    private let _trustedTaps = OSAllocatedUnfairLock<[String]>(initialState: [])
     public nonisolated var trustedTaps: [String] {
-        get { _trustedTaps.value }
-        set { _trustedTaps.value = newValue }
+        get { _trustedTaps.withLock { $0 } }
+        set { _trustedTaps.withLock { $0 = newValue } }
     }
 
     private var hasLoadedTrustedTaps = false

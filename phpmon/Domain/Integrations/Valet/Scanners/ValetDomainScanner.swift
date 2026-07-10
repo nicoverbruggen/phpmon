@@ -117,23 +117,40 @@ class ValetDomainScanner: DomainScanner {
     // MARK: - Proxies
 
     func resolveProxies(directoryPath: String) async -> [ValetProxy] {
-        // The directory listing is blocking I/O, so it runs on the concurrent pool.
-        let entries: [String]? = await offMain {
-            try? FileManager
+        // The directory listing and the per-file reads are blocking I/O, so they
+        // run on the concurrent pool; the main actor only parses the contents.
+        let files: [(path: String, contents: String)]? = await offMain { [container] in
+            guard let entries = try? FileManager
                 .default
-                .contentsOfDirectory(atPath: directoryPath)
+                .contentsOfDirectory(atPath: directoryPath) else {
+                return nil
+            }
+
+            return entries
+                .filter { !$0.starts(with: ".") }
+                .compactMap { entry in
+                    let path = "\(directoryPath)/\(entry)"
+
+                    guard let contents = try? container.filesystem.getStringFromFile(path) else {
+                        Log.warn("Could not read the nginx configuration file at: `\(path)`")
+                        return nil
+                    }
+
+                    return (path: path, contents: contents)
+                }
         }
 
-        guard let entries else {
+        guard let files else {
             Log.err("Could not read Nginx directory at \(directoryPath).")
             return []
         }
 
         var proxies: [ValetProxy] = []
 
-        for entry in entries where !entry.starts(with: ".") {
-            guard let configuration = NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\(entry)"),
-                  let proxy = ValetProxy(container, configuration, makeDeterminations: false) else {
+        for file in files {
+            let configuration = NginxConfigurationFile(path: file.path, contents: file.contents)
+
+            guard let proxy = ValetProxy(container, configuration, makeDeterminations: false) else {
                 continue
             }
 

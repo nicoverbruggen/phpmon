@@ -18,10 +18,12 @@ import Foundation
 /// that mistake loud and immediate during development instead of a mysterious stall in
 /// the field.
 ///
-/// It intentionally *logs* rather than traps: a blocking call may briefly land on the
-/// main thread while a caller is being reworked, and crashing on every occurrence would
-/// make that work impossible. Now that the detection pipeline runs off-main, this can
-/// eventually be promoted to `assertionFailure` to keep it that way.
+/// Now that the entire detection/scanning pipeline runs off-main, this guard **traps**
+/// (`assertionFailure`) in debug builds: blocking the main thread is a hard failure, not
+/// a log line. The warning is still logged first so the offending operation is visible
+/// in the console before the assertion fires. Unit tests are exempt — they deliberately
+/// exercise the blocking leaf APIs (e.g. `RealShell.sync`) from main-actor-isolated
+/// test functions, which is fine in a test runner.
 @inline(__always)
 nonisolated func warnIfBlockingOnMainThread(
     _ operation: @autoclosure () -> String,
@@ -29,7 +31,12 @@ nonisolated func warnIfBlockingOnMainThread(
 ) {
     #if DEBUG
     if Thread.isMainThread {
-        Log.warn("[HANG-RISK] Blocking operation ran on the main thread: \(operation()) (in \(function))")
+        let message = "[HANG-RISK] Blocking operation ran on the main thread: \(operation()) (in \(function))"
+        Log.warn(message)
+
+        if !isRunningTests {
+            assertionFailure(message)
+        }
     }
     #endif
 }

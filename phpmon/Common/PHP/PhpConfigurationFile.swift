@@ -24,7 +24,7 @@ class PhpConfigurationFile: CreatedFromFile {
 
     // These are only ever read/written on the main actor (the type is main-actor
     // isolated under the default flip), so plain stored properties are sufficient
-    // and the previous `Locked` indirection is no longer needed.
+    // and no lock indirection is needed.
 
     /// The extensions found in this .ini file.
     var extensions: [PhpExtension]

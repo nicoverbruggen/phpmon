@@ -8,22 +8,22 @@
 
 final class ServicesRegistry {
     private let container: Container
-    private let _formulae: Locked<[HomebrewFormula]>
+
+    // Only ever touched from the main actor (this type is main-actor isolated under
+    // the default flip, and all readers hop to the main actor first), so a plain
+    // stored property suffices — no lock needed.
+    private(set) var formulae: [HomebrewFormula]
 
     init(_ container: Container) {
         self.container = container
-        self._formulae = Locked(Self.baseFormulae(for: container))
-    }
-
-    var formulae: [HomebrewFormula] {
-        _formulae.value
+        self.formulae = Self.baseFormulae(for: container)
     }
 
     @discardableResult
     func reloadFormulae() async -> [HomebrewFormula] {
         let detectedServices = await AutoDetectableServices.shared.foundServices
         let formulae = resolveFormulae(detectedServices: detectedServices)
-        _formulae.value = formulae
+        self.formulae = formulae
         return formulae
     }
 

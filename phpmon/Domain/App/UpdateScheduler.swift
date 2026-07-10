@@ -7,14 +7,18 @@
 //
 
 import Foundation
+import os
 
 actor UpdateScheduler {
     static let shared = UpdateScheduler()
 
     // `Timer` is not Sendable and must be scheduled *and* invalidated on the run loop
     // that installed it, so all Timer calls happen on the main actor. Guarding the
-    // reference with `Locked` lets this actor hold on to it across those isolations.
-    private let currentTimer = Locked<Timer?>(nil)
+    // reference with `OSAllocatedUnfairLock` lets this actor hold on to it across
+    // those isolations. The unchecked lock variants are required because `Timer` is
+    // not Sendable; this stays safe because the timer is only ever created, read and
+    // invalidated on the main actor (see `scheduleTimer`).
+    private let currentTimer = OSAllocatedUnfairLock<Timer?>(uncheckedState: nil)
 
     private init() {}
 
@@ -119,7 +123,7 @@ actor UpdateScheduler {
         // and invalidated from the same thread, so both happen inside this main actor task.
         Task { @MainActor in
             // Invalidate any existing timer
-            self.currentTimer.value?.invalidate()
+            self.currentTimer.withLockUnchecked { $0 }?.invalidate()
 
             let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
                 Task {
@@ -128,10 +132,10 @@ actor UpdateScheduler {
                 }
             }
 
-            // Store the timer reference. `currentTimer` is a Sendable `Locked` box (a
+            // Store the timer reference. `currentTimer` is a Sendable lock box (a
             // nonisolated `let`), so the actor can hold on to the reference even though
             // the timer itself only ever lives on the main run loop.
-            self.currentTimer.value = timer
+            self.currentTimer.withLockUnchecked { $0 = timer }
         }
 
         Log.info("Next update check scheduled in \(interval)s.")

@@ -115,8 +115,23 @@ class ValetProxy: ValetListable {
     }
 
     /**
-     Blocking variant of the certificate check, for one-off refreshes (e.g. after
-     securing/unsecuring a proxy). Batch scans go through `determine()`.
+     Re-checks only the TLS certificate (off the main actor). Used after
+     securing or unsecuring a single proxy; full scans go through `determine()`.
+     */
+    func refreshSecuredStatus() async {
+        let (container, path) = (self.container, self.certificatePath)
+
+        let certificate = await offMain {
+            CertificateValidator(container).validateCertificate(at: path)
+        }
+
+        apply(certificate: certificate)
+    }
+
+    /**
+     Blocking variant of the certificate check. Only acceptable against fake
+     containers (the `makeDeterminations` initializer path), where the read
+     resolves instantly; production refreshes use `refreshSecuredStatus()`.
      */
     func determineSecured() {
         apply(certificate: CertificateValidator(container).validateCertificate(at: certificatePath))

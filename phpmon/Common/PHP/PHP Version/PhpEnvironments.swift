@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 class PhpEnvironments {
     var container: Container
@@ -118,33 +119,33 @@ class PhpEnvironments {
     // MARK: - Thread-Safe PHP Version Storage
 
     /** All versions of PHP that are currently supported. */
-    private let _availablePhpVersions = Locked<[String]>([])
+    private let _availablePhpVersions = OSAllocatedUnfairLock<[String]>(initialState: [])
     var availablePhpVersions: [String] {
-        get { _availablePhpVersions.value }
-        set { _availablePhpVersions.value = newValue }
+        get { _availablePhpVersions.withLock { $0 } }
+        set { _availablePhpVersions.withLock { $0 = newValue } }
     }
 
     /** All versions of PHP that are currently installed but not compatible. */
-    private let _incompatiblePhpVersions = Locked<[String]>([])
+    private let _incompatiblePhpVersions = OSAllocatedUnfairLock<[String]>(initialState: [])
     var incompatiblePhpVersions: [String] {
-        get { _incompatiblePhpVersions.value }
-        set { _incompatiblePhpVersions.value = newValue }
+        get { _incompatiblePhpVersions.withLock { $0 } }
+        set { _incompatiblePhpVersions.withLock { $0 = newValue } }
     }
 
     /** Cached information about the PHP installations. */
-    private let _cachedPhpInstallations = Locked<[String: PhpInstallation]>([:])
+    private let _cachedPhpInstallations = OSAllocatedUnfairLock<[String: PhpInstallation]>(initialState: [:])
     var cachedPhpInstallations: [String: PhpInstallation] {
-        get { _cachedPhpInstallations.value }
-        set { _cachedPhpInstallations.value = newValue }
+        get { _cachedPhpInstallations.withLock { $0 } }
+        set { _cachedPhpInstallations.withLock { $0 = newValue } }
     }
 
     /** Information about the currently linked PHP installation. */
-    private let _currentInstall = Locked<ActivePhpInstallation?>(nil)
+    private let _currentInstall = OSAllocatedUnfairLock<ActivePhpInstallation?>(initialState: nil)
     var currentInstall: ActivePhpInstallation? {
-        get { _currentInstall.value }
+        get { _currentInstall.withLock { $0 } }
         set {
             // Update the synchronized value
-            _currentInstall.value = newValue
+            _currentInstall.withLock { $0 = newValue }
             // Let the PHP extension manager, if it exists, know the version changed
             WindowManager
                 .controller(of: PhpExtensionManagerWC.self)?
@@ -152,8 +153,8 @@ class PhpEnvironments {
         }
     }
 
-    // `nonisolated` + `Locked`: `brewPhpAlias` is read/written from many contexts
-    // that are not the main actor (Homebrew command processing, switchers, tests),
+    // `nonisolated` + `OSAllocatedUnfairLock`: `brewPhpAlias` is read/written from many
+    // contexts that are not the main actor (Homebrew command processing, switchers, tests),
     // so it stays a thread-safe, non-isolated cache rather than main-actor state.
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
@@ -164,19 +165,19 @@ class PhpEnvironments {
 
      In order for our check to be correct, we query Homebrew locally.
      */
-    private nonisolated static let _brewPhpAlias = Locked<String?>(nil)
+    private nonisolated static let _brewPhpAlias = OSAllocatedUnfairLock<String?>(initialState: nil)
     nonisolated static var brewPhpAlias: String? {
-        get { _brewPhpAlias.value }
-        set { _brewPhpAlias.value = newValue }
+        get { _brewPhpAlias.withLock { $0 } }
+        set { _brewPhpAlias.withLock { $0 = newValue } }
     }
 
     /**
      Information we were able to discern from the Homebrew info command.
      */
-    private let _homebrewPackage = Locked<HomebrewPackage?>(nil)
+    private let _homebrewPackage = OSAllocatedUnfairLock<HomebrewPackage?>(initialState: nil)
     var homebrewPackage: HomebrewPackage! {
-        get { _homebrewPackage.value }
-        set { _homebrewPackage.value = newValue }
+        get { _homebrewPackage.withLock { $0 } }
+        set { _homebrewPackage.withLock { $0 = newValue } }
     }
 
     /**

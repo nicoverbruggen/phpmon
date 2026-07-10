@@ -11,7 +11,7 @@ import os
 
 // `nonisolated` + `@unchecked Sendable`: a test double whose mutable expectation/config state
 // is fully protected by an `OSAllocatedUnfairLock` (Apple's `Sendable` lock, available on the
-// app's macOS 13.5 deployment target — no reliance on the custom `Locked` helper). The state
+// app's macOS 13.5 deployment target). The state
 // is therefore genuinely data-race-free; `@unchecked` is required only because this class is
 // non-final (the `TrackableTestableShell` subclass exists so tests can `as? TestableShell`),
 // and Swift cannot auto-synthesize `Sendable` for a non-final class. When the deployment

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 struct OnboardingStepRunner {
     struct Result {
@@ -65,7 +66,7 @@ struct OnboardingStepRunner {
 
     func attachStreaming(
         _ command: String,
-        collector: Locked<[OutputLine]>,
+        collector: OSAllocatedUnfairLock<[OutputLine]>,
         didReceiveOutput: (@Sendable (OutputLine) -> Void)? = nil,
         timeout: TimeInterval = 600
     ) async throws {

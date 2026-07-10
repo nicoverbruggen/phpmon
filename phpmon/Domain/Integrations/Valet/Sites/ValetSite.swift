@@ -96,11 +96,11 @@ class ValetSite: ValetListable {
         self.secured = false
 
         if makeDeterminations {
-            self.favorited = container.favorites.contains(domain: favoriteSignature)
-            determineSecured()
-            determineIsolated()
-            determineComposerPhpVersion()
-            determineDriver()
+            // The snapshot is created synchronously (blocking reads on the calling
+            // thread): only acceptable against fake containers (FakeValetSite,
+            // previews), where the reads resolve instantly. Real scans construct
+            // with `makeDeterminations: false` and call the async `determine()`.
+            apply(FileSnapshot(container, name: name, tld: tld, absolutePath: absolutePath))
         }
     }
 
@@ -121,10 +121,13 @@ class ValetSite: ValetListable {
     }
 
     /**
-     Determine whether a site is isolated.
+     Determine whether a site is isolated, based on the (pre-read) contents of
+     the site's Nginx configuration file.
      */
-    public func determineIsolated() {
-        if let version = ValetSite.isolatedVersion(container, "~/.config/valet/Nginx/\(self.name).\(self.tld)") {
+    func determineIsolated(nginxConfigContents: String?) {
+        if let contents = nginxConfigContents,
+           let version = NginxConfigurationFile(path: "\(self.name).\(self.tld)", contents: contents)
+               .isolatedVersion {
             if !container.phpEnvs.cachedPhpInstallations.keys.contains(version) {
                 Log.err("The PHP version \(version) is isolated for the site \(self.name) "
                         + "but that PHP version is unavailable.")
@@ -146,9 +149,16 @@ class ValetSite: ValetListable {
      The method then also checks if the determined constraint (if found) is compatible
      with the currently linked version of PHP (see `composerPhpMatchesSystem`).
      */
-    public func determineComposerPhpVersion() {
-        self.determineComposerInformation()
-        self.determineValetPhpFileInfo()
+    func determineComposerPhpVersion(
+        composerJsonContents: String?,
+        valetRCContents: String?,
+        valetPhpRCContents: String?
+    ) {
+        self.determineComposerInformation(contents: composerJsonContents)
+        self.determineValetPhpFileInfo(
+            valetRCContents: valetRCContents,
+            valetPhpRCContents: valetPhpRCContents
+        )
         self.evaluateCompatibility()
     }
 
@@ -194,21 +204,18 @@ class ValetSite: ValetListable {
      If no composer.json file is found or is invalid, some features may be unavailable, like
      for example project type inference based on dependencies.
      */
-    private func determineComposerInformation() {
-        let path = "\(absolutePath)/composer.json"
-
-        guard container.filesystem.fileExists(path) else {
+    private func determineComposerInformation(contents: String?) {
+        guard let fileContents = contents else {
             return
         }
 
-        guard let fileContents = try? String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8),
-              let jsonData = fileContents.data(using: .utf8) else {
-            Log.err("Could not read the Composer JSON file at: \(path)")
+        guard let jsonData = fileContents.data(using: .utf8) else {
+            Log.err("Could not read the Composer JSON file for: \(absolutePath)")
             return
         }
 
         guard let decoded = try? JSONDecoder().decode(ComposerJson.self, from: jsonData) else {
-            Log.err("Could not parse the Composer JSON file at: \(path)")
+            Log.err("Could not parse the Composer JSON file for: \(absolutePath)")
             return
         }
 
@@ -217,39 +224,33 @@ class ValetSite: ValetListable {
     }
 
     /**
-     Checks the contents of the .valetphprc file and determine the version.
-     The first file found takes precendence over all others.
+     Checks the (pre-read) contents of the .valetrc or .valetphprc file and
+     determines the version. The first file found takes precedence.
      */
-    private func determineValetPhpFileInfo() {
-        let files = [
-            (".valetrc", PhpVersionSource.valetrc),
-            (".valetphprc", PhpVersionSource.valetphprc)
-        ]
+    private func determineValetPhpFileInfo(
+        valetRCContents: String?,
+        valetPhpRCContents: String?
+    ) {
+        if let contents = valetRCContents {
+            return handleValetFile(contents: contents, .valetrc)
+        }
 
-        for (suffix, source) in files {
-            do {
-                let path = "\(absolutePath)/\(suffix)"
-                if container.filesystem.fileExists(path) {
-                    return try self.handleValetFile(path, source)
-                }
-            } catch {
-                Log.err("Something went wrong parsing the '\(suffix)' file")
-            }
+        if let contents = valetPhpRCContents {
+            return handleValetFile(contents: contents, .valetphprc)
         }
     }
 
     /**
-     Parse a Valet file (either .valetphprc or .valetrc).
+     Parse the contents of a Valet file (either .valetphprc or .valetrc).
      */
-    private func handleValetFile(_ path: String, _ source: PhpVersionSource) throws {
+    private func handleValetFile(contents: String, _ source: PhpVersionSource) {
         var versionString = ""
 
         switch source {
         case .valetphprc:
-            versionString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            versionString = contents
         case .valetrc:
-            guard let valetRc = RCFile.fromPath(path) else { return }
-            guard let phpField = valetRc.fields["PHP"] else { return }
+            guard let phpField = RCFile(contents: contents).fields["PHP"] else { return }
             versionString = phpField
         default:
             return
@@ -283,21 +284,6 @@ class ValetSite: ValetListable {
                 .matching(constraint: normalizedPhpVersion)
                 .isEmpty
         }.contains(true)
-    }
-
-    // MARK: - File Parsing
-
-    public static func isolatedVersion(
-        _ container: Container,
-        _ filePath: String
-    ) -> String? {
-        if container.filesystem.fileExists(filePath) {
-            return NginxConfigurationFile
-                .from(container, filePath: filePath)?
-                .isolatedVersion ?? nil
-        }
-
-        return nil
     }
 
     // MARK: ValetListable

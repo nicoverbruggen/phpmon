@@ -7,29 +7,34 @@
 //
 
 import Foundation
+import os
 
 // `nonisolated` + `Sendable`: preferences are a leaf read reached from multiple
 // isolation domains — e.g. the `UpdateScheduler` actor synchronously calls
 // `Preferences.isEnabled(...)` without hopping to the main actor. The mutable state
-// is guarded by `Locked` (kept intentionally), and `container` is immutable, so the
-// type is safe to access from any isolation domain.
+// is guarded by `OSAllocatedUnfairLock` (kept intentionally), and `container` is
+// immutable, so the type is safe to access from any isolation domain.
 nonisolated final class Preferences: Sendable {
     let container: Container
 
     // MARK: - Preferences
 
     var customPreferences: CustomPrefs {
-        get { _customPreferences.value }
-        set { _customPreferences.value = newValue }
+        get { _customPreferences.withLock { $0 } }
+        set { _customPreferences.withLock { $0 = newValue } }
     }
 
+    // The unchecked lock variants are required because `Any?` cannot be `Sendable`.
+    // This is still data-race safe: the dictionary only ever holds plist value types
+    // (`Bool`/`String`, written exclusively by `Preferences.cache()`), and no reference
+    // ever escapes the lock — accessors copy the whole dictionary in and out.
     var cachedPreferences: [PreferenceName: Any?] {
-        get { _cachedPreferences.value }
-        set { _cachedPreferences.value = newValue }
+        get { _cachedPreferences.withLockUnchecked { $0 } }
+        set { _cachedPreferences.withLockUnchecked { $0 = newValue } }
     }
 
-    private let _customPreferences: Locked<CustomPrefs>
-    private let _cachedPreferences: Locked<[PreferenceName: Any?]>
+    private let _customPreferences: OSAllocatedUnfairLock<CustomPrefs>
+    private let _cachedPreferences: OSAllocatedUnfairLock<[PreferenceName: Any?]>
 
     // MARK: - Initialization
 
@@ -37,8 +42,8 @@ nonisolated final class Preferences: Sendable {
         self.container = container
         Preferences.handleFirstTimeLaunch()
 
-        _cachedPreferences = Locked(Self.cache())
-        _customPreferences = Locked(CustomPrefs(
+        _cachedPreferences = OSAllocatedUnfairLock(uncheckedState: Self.cache())
+        _customPreferences = OSAllocatedUnfairLock(initialState: CustomPrefs(
             scanApps: [],
             presets: [],
             services: [],

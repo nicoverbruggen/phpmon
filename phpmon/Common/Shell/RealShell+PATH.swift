@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 @preconcurrency import Dispatch
 
 extension RealShell {
@@ -32,7 +33,7 @@ extension RealShell {
                 return resolved
             }
         }
-        set { _PATH.value = newValue }
+        set { _PATH.withLock { $0 = newValue } }
     }
 
     /**
@@ -75,9 +76,9 @@ extension RealShell {
         //   (No global/shared queue state is needed.)
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.getPathQueue")
         let semaphore = DispatchSemaphore(value: 0)
-        // `Locked` box: written from the `@Sendable` terminationHandler and read after
-        // `semaphore.wait()`, so it must not be a plain captured `var`.
-        let result = Locked<String?>(nil)
+        // `OSAllocatedUnfairLock` box: written from the `@Sendable` terminationHandler and
+        // read after `semaphore.wait()`, so it must not be a plain captured `var`.
+        let result = OSAllocatedUnfairLock<String?>(initialState: nil)
 
         // Timeout path:
         // If the shell hangs while reading profile files, terminate it and unblock
@@ -101,7 +102,8 @@ extension RealShell {
 
         task.terminationHandler = { _ in
             timeoutWorkItem.cancel()
-            result.value = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
+            let output = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
+            result.withLock { $0 = output }
             semaphore.signal()
         }
 
@@ -127,7 +129,7 @@ extension RealShell {
 
         // If the interactive shell succeeded and returned something non-empty, use it.
         // Otherwise fall back to the system PATH from path_helper.
-        if let path = result.value, !path.isEmpty {
+        if let path = result.withLock({ $0 }), !path.isEmpty {
             return path
         }
 
