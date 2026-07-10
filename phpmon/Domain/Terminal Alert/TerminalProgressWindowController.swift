@@ -8,53 +8,61 @@
 
 import Foundation
 import AppKit
+import SwiftUI
 
 class TerminalProgressWindowController: NSWindowController, NSWindowDelegate {
 
-    static func display(title: String, description: String) -> TerminalProgressWindowController {
-        let storyboard = NSStoryboard(name: "ProgressWindow", bundle: nil)
+    /// The state rendered by the hosted `ProgressPanelView`.
+    let model = ProgressPanelModel()
 
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "progressWindow"
-        ) as! TerminalProgressWindowController
+    static func display(title: String, description: String) -> TerminalProgressWindowController {
+        let windowController = TerminalProgressWindowController()
+
+        // The panel configuration matches the old `ProgressWindow.storyboard`:
+        // a utility panel with a transparent, title-less titlebar.
+        let panel = NSPanel(
+            contentRect: NSRect(x: 0, y: 0, width: 591, height: 270),
+            styleMask: [.titled, .closable, .utilityWindow],
+            backing: .buffered,
+            defer: false
+        )
+        panel.titlebarAppearsTransparent = true
+        panel.titleVisibility = .hidden
+        panel.animationBehavior = .none
+        panel.isReleasedWhenClosed = false
+        panel.delegate = windowController
+
+        windowController.model.title = title
+        windowController.model.descriptionText = description
+        panel.contentView = NSHostingView(rootView: ProgressPanelView(model: windowController.model))
+
+        windowController.window = panel
 
         windowController.showWindow(windowController)
         windowController.window?.makeKeyAndOrderFront(nil)
         windowController.positionWindowInTopRightCorner()
-
-        windowController.progressView?.labelTitle.stringValue = title
-        windowController.progressView?.labelDescription.stringValue = description
 
         NSApp.activate(ignoringOtherApps: true)
 
         return windowController
     }
 
-    var progressView: ProgressViewController? {
-        return self.contentViewController as? ProgressViewController
-    }
-
     public func addToConsole(_ string: String) {
         Task { @MainActor in
-            guard let textView = self.progressView?.textView else {
-                return
-            }
-
-            textView.string += string
-            textView.scrollToEndOfDocument(nil)
+            self.model.consoleText += string
         }
     }
 
     public func setType(info: Bool = true) {
-        guard let imageView = self.progressView?.imageViewType else {
-            return
-        }
-
-        imageView.image = NSImage(named: info ? "NSInfo" : "NSCaution")
+        model.isInfo = info
     }
 
-    func windowWillClose(_ notification: Notification) {
-        self.contentViewController = nil
+    public func setTitle(_ title: String) {
+        model.title = title
+    }
+
+    public func setDescription(_ description: String) {
+        model.descriptionText = description
     }
 
     deinit {

@@ -23,6 +23,36 @@ final class SettingsCaptureTest: UITestCase {
         )
     }
 
+    final func test_capture_progress_panel() throws {
+        var configuration = TestableConfigurations.working
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+        // Keep the panel open long enough to capture it, with some console output.
+        configuration.shellOutput["/usr/local/bin/composer global update"] = .delayed(
+            8.0,
+            "Updating dependencies...\nNothing to install, update or remove\n"
+        )
+
+        let app = launch(openMenu: true, with: configuration)
+
+        app.mainMenuItem(withText: "mi_update_global_composer".localized(for: "en")).click()
+
+        let title = app.staticTexts["alert.composer_progress.title".localized(for: "en")]
+        assertExists(title, 5.0)
+
+        // Give the console a moment to render the command line
+        Thread.sleep(forTimeInterval: 1.5)
+
+        let panel = app.windows
+            .containing(.staticText, identifier: "alert.composer_progress.title".localized(for: "en"))
+            .firstMatch
+        assertExists(panel, 2.0)
+
+        let attachment = XCTAttachment(screenshot: panel.screenshot())
+        attachment.name = "progress-panel"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
     final func test_capture_settings_tabs() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")

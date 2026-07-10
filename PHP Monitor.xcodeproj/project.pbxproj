@@ -85,7 +85,6 @@
 				AppIcon.icon,
 				AppIconEAP.icon,
 				Credits.html,
-				"Domain/Terminal Alert/ProgressWindow.storyboard",
 				IAP/InternetAccessPolicy.plist,
 				IAP/InternetAccessPolicy.strings,
 				Info.plist,
