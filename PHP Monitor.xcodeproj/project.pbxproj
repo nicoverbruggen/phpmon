@@ -7,54 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0310B17A2EB8F3FF00A8B140 = {
-			isa = PBXBuildFile;
-			productRef = 0310B1792EB8F3FF00A8B140 /* CrashReporter */;
-		};
-		0310B17C2EB8F40100A8B140 = {
-			isa = PBXBuildFile;
-			productRef = 0310B17B2EB8F40100A8B140 /* CrashReporter */;
-		};
-		0310B17E2EB8F40400A8B140 = {
-			isa = PBXBuildFile;
-			productRef = 0310B17D2EB8F40400A8B140 /* CrashReporter */;
-		};
-		0317C17E2ED87CAB005479D2 = {
-			isa = PBXBuildFile;
-			productRef = 0317C17D2ED87CAB005479D2 /* NVAppUpdater */;
-		};
-		0317C1812ED87CE1005479D2 = {
-			isa = PBXBuildFile;
-			productRef = 0317C1802ED87CE1005479D2 /* NVAppUpdater */;
-		};
-		0317C1832ED87CEA005479D2 = {
-			isa = PBXBuildFile;
-			productRef = 0317C1822ED87CEA005479D2 /* NVAppUpdater */;
-		};
-		03D8462B2EB6418F006EFE3C = {
-			isa = PBXBuildFile;
-			productRef = 03D8462A2EB6418F006EFE3C /* CrashReporter */;
-		};
-		C47014FF2C46D57C0069AAE7 = {
-			isa = PBXBuildFile;
-			productRef = C47014FE2C46D57C0069AAE7 /* NVAlert */;
-		};
-		C47015072C46D8180069AAE7 = {
-			isa = PBXBuildFile;
-			productRef = C47015062C46D8180069AAE7 /* NVAlert */;
-		};
-		C470150B2C46D81E0069AAE7 = {
-			isa = PBXBuildFile;
-			productRef = C470150A2C46D81E0069AAE7 /* NVAlert */;
-		};
-		C470150D2C46D83E0069AAE7 = {
-			isa = PBXBuildFile;
-			productRef = C470150C2C46D83E0069AAE7 /* NVAlert */;
-		};
-		C4E91D142C0A7AAA00D69A31 = {
-			isa = PBXBuildFile;
-			fileRef = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */;
-		};
+		0310B17A2EB8F3FF00A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B1792EB8F3FF00A8B140 /* CrashReporter */; };
+		0310B17C2EB8F40100A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B17B2EB8F40100A8B140 /* CrashReporter */; };
+		0310B17E2EB8F40400A8B140 /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 0310B17D2EB8F40400A8B140 /* CrashReporter */; };
+		0317C17E2ED87CAB005479D2 /* NVAppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 0317C17D2ED87CAB005479D2 /* NVAppUpdater */; };
+		0317C1812ED87CE1005479D2 /* NVAppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 0317C1802ED87CE1005479D2 /* NVAppUpdater */; };
+		0317C1832ED87CEA005479D2 /* NVAppUpdater in Frameworks */ = {isa = PBXBuildFile; productRef = 0317C1822ED87CEA005479D2 /* NVAppUpdater */; };
+		03D8462B2EB6418F006EFE3C /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 03D8462A2EB6418F006EFE3C /* CrashReporter */; };
+		C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C47014FE2C46D57C0069AAE7 /* NVAlert */; };
+		C47015072C46D8180069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C47015062C46D8180069AAE7 /* NVAlert */; };
+		C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150A2C46D81E0069AAE7 /* NVAlert */; };
+		C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */ = {isa = PBXBuildFile; productRef = C470150C2C46D83E0069AAE7 /* NVAlert */; };
+		C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */ = {isa = PBXBuildFile; fileRef = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,184 +26,111 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
+			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
 			remoteInfo = "PHP Monitor";
 		};
 		C471E7C228F9B90F0021E251 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
+			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
 			remoteInfo = "PHP Monitor";
 		};
 		C4E91D122C0A7A9B00D69A31 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */;
+			remoteGlobalIDString = C406A5EF298AD2CE00B5B85A;
 			remoteInfo = "PHP Monitor Self-Updater";
 		};
 		C4F7807E25D7F84B000DBC97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C41C1B2B22B0097F00E7CF16 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
+			remoteGlobalIDString = C41C1B3222B0097F00E7CF16;
 			remoteInfo = "PHP Monitor";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = "PHP Monitor.xctestplan";
-			sourceTree = "<group>";
-		};
-		54D9E0C027E4F5E9003B9AD9 /* LICENSE */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = LICENSE;
-			sourceTree = "<group>";
-		};
-		C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */ = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.application;
-			includeInIndex = 0;
-			path = "PHP Monitor Self-Updater.app";
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = net.daringfireball.markdown;
-			path = DEVELOPER.md;
-			sourceTree = "<group>";
-		};
-		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.application;
-			includeInIndex = 0;
-			path = "PHP Monitor.app";
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = "Feature Tests.xctest";
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = "UI Tests.xctest";
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4E713562570150F00007428 /* SECURITY.md */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = net.daringfireball.markdown;
-			path = SECURITY.md;
-			sourceTree = "<group>";
-		};
-		C4E713572570151400007428 /* docs */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = folder;
-			path = docs;
-			sourceTree = "<group>";
-		};
-		C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.yaml;
-			path = .swiftlint.yml;
-			sourceTree = "<group>";
-		};
-		C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */ = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = "Unit Tests.xctest";
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4F8C0A522D4FA41002EFE61 /* README.md */ = {
-			isa = PBXFileReference;
-			fileEncoding = 4;
-			lastKnownFileType = net.daringfireball.markdown;
-			path = README.md;
-			sourceTree = "<group>";
-		};
+		031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
+		54D9E0C027E4F5E9003B9AD9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor Self-Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
+		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Feature Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4E713562570150F00007428 /* SECURITY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SECURITY.md; sourceTree = "<group>"; };
+		C4E713572570151400007428 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
+		C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4F8C0A522D4FA41002EFE61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F50000000000000000000008 /* Exceptions for "PHP Monitor" */ = {
+		F50000000000000000000008 /* Exceptions for "phpmon" folder in "PHP Monitor" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				phpmon.entitlements,
 				Vendor/HotKey/LICENSE,
 			);
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
 		};
-		F50000000000000000000009 /* Exceptions for "Unit Tests" */ = {
+		F50000000000000000000009 /* Exceptions for "phpmon" folder in "Unit Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
-				phpmon.entitlements,
-				Vendor/HotKey/LICENSE,
 				AppIcon.icon,
 				AppIconEAP.icon,
 				Credits.html,
-				Domain/App/Base.lproj/Main.storyboard,
 				IAP/InternetAccessPolicy.plist,
 				IAP/InternetAccessPolicy.strings,
+				Info.plist,
+				Vendor/HotKey/LICENSE,
 			);
 			target = C4F7807825D7F84B000DBC97 /* Unit Tests */;
 		};
-		F5000000000000000000000A /* Exceptions for "Feature Tests" */ = {
+		F5000000000000000000000A /* Exceptions for "phpmon" folder in "Feature Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
-				phpmon.entitlements,
-				Vendor/HotKey/LICENSE,
 				AppIcon.icon,
 				AppIconEAP.icon,
 				Credits.html,
-				Domain/App/Base.lproj/Main.storyboard,
-				IAP/InternetAccessPolicy.plist,
-				IAP/InternetAccessPolicy.strings,
 				Domain/Preferences/Views/CheckboxPreferenceView.xib,
 				Domain/Preferences/Views/HotkeyPreferenceView.xib,
 				Domain/Preferences/Views/SelectPreferenceView.xib,
 				"Domain/Terminal Alert/ProgressWindow.storyboard",
+				IAP/InternetAccessPolicy.plist,
+				IAP/InternetAccessPolicy.strings,
+				Info.plist,
+				Vendor/HotKey/LICENSE,
 			);
 			target = C471E7AC28F9B4940021E251 /* Feature Tests */;
 		};
-		F5000000000000000000000B /* Exceptions for "UI Tests" */ = {
+		F5000000000000000000000B /* Exceptions for "phpmon" folder in "UI Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
-				phpmon.entitlements,
-				Vendor/HotKey/LICENSE,
 				AppIcon.icon,
 				AppIconEAP.icon,
 				Credits.html,
-				Domain/App/Base.lproj/Main.storyboard,
-				IAP/InternetAccessPolicy.plist,
-				IAP/InternetAccessPolicy.strings,
 				Domain/Preferences/Views/CheckboxPreferenceView.xib,
 				Domain/Preferences/Views/HotkeyPreferenceView.xib,
 				Domain/Preferences/Views/SelectPreferenceView.xib,
 				"Domain/Terminal Alert/ProgressWindow.storyboard",
+				IAP/InternetAccessPolicy.plist,
+				IAP/InternetAccessPolicy.strings,
+				Info.plist,
+				Vendor/HotKey/LICENSE,
 			);
 			target = C471E7BB28F9B90F0021E251 /* UI Tests */;
 		};
-		F5000000000000000000000C /* Exceptions for "Feature Tests" */ = {
+		F5000000000000000000000C /* Exceptions for "Shared" folder in "Feature Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				TestBundle.swift,
 			);
 			target = C471E7AC28F9B4940021E251 /* Feature Tests */;
 		};
-		F5000000000000000000000D /* Exceptions for "UI Tests" */ = {
+		F5000000000000000000000D /* Exceptions for "Shared" folder in "UI Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				TestBundle.swift,
@@ -252,10 +143,10 @@
 		F50000000000000000000001 /* phpmon */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				F50000000000000000000008 /* Exceptions for "PHP Monitor" */ /* Exceptions for "PHP Monitor" */,
-				F50000000000000000000009 /* Exceptions for "Unit Tests" */ /* Exceptions for "Unit Tests" */,
-				F5000000000000000000000A /* Exceptions for "Feature Tests" */ /* Exceptions for "Feature Tests" */,
-				F5000000000000000000000B /* Exceptions for "UI Tests" */ /* Exceptions for "UI Tests" */,
+				F50000000000000000000008 /* Exceptions for "phpmon" folder in "PHP Monitor" target */,
+				F50000000000000000000009 /* Exceptions for "phpmon" folder in "Unit Tests" target */,
+				F5000000000000000000000A /* Exceptions for "phpmon" folder in "Feature Tests" target */,
+				F5000000000000000000000B /* Exceptions for "phpmon" folder in "UI Tests" target */,
 			);
 			path = phpmon;
 			sourceTree = "<group>";
@@ -273,8 +164,8 @@
 		F50000000000000000000004 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				F5000000000000000000000C /* Exceptions for "Feature Tests" */ /* Exceptions for "Feature Tests" */,
-				F5000000000000000000000D /* Exceptions for "UI Tests" */ /* Exceptions for "UI Tests" */,
+				F5000000000000000000000C /* Exceptions for "Shared" folder in "Feature Tests" target */,
+				F5000000000000000000000D /* Exceptions for "Shared" folder in "UI Tests" target */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -301,7 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0317C1832ED87CEA005479D2,
+				0317C1832ED87CEA005479D2 /* NVAppUpdater in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,10 +200,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C47014FF2C46D57C0069AAE7,
-				0317C17E2ED87CAB005479D2,
-				0317C1812ED87CE1005479D2,
-				03D8462B2EB6418F006EFE3C,
+				C47014FF2C46D57C0069AAE7 /* NVAlert in Frameworks */,
+				0317C17E2ED87CAB005479D2 /* NVAppUpdater in Frameworks */,
+				0317C1812ED87CE1005479D2 /* NVAppUpdater in Frameworks */,
+				03D8462B2EB6418F006EFE3C /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,8 +211,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C470150B2C46D81E0069AAE7,
-				0310B17C2EB8F40100A8B140,
+				C470150B2C46D81E0069AAE7 /* NVAlert in Frameworks */,
+				0310B17C2EB8F40100A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,8 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C470150D2C46D83E0069AAE7,
-				0310B17E2EB8F40400A8B140,
+				C470150D2C46D83E0069AAE7 /* NVAlert in Frameworks */,
+				0310B17E2EB8F40400A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,8 +229,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C47015072C46D8180069AAE7,
-				0310B17A2EB8F3FF00A8B140,
+				C47015072C46D8180069AAE7 /* NVAlert in Frameworks */,
+				0310B17A2EB8F3FF00A8B140 /* CrashReporter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,29 +240,29 @@
 		C41C1B2A22B0097F00E7CF16 = {
 			isa = PBXGroup;
 			children = (
-				C4F8C0A522D4FA41002EFE61 /* README.md */ /* README.md */,
-				C4E713562570150F00007428 /* SECURITY.md */ /* SECURITY.md */,
-				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ /* DEVELOPER.md */,
-				54D9E0C027E4F5E9003B9AD9 /* LICENSE */ /* LICENSE */,
-				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */ /* .swiftlint.yml */,
-				C4E713572570151400007428 /* docs */ /* docs */,
-				F50000000000000000000001 /* phpmon */ /* phpmon */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
-				F50000000000000000000003 /* phpmon-updater */ /* phpmon-updater */,
-				C471E79628F9B4260021E251 /* tests */ /* tests */,
-				C41C1B3422B0097F00E7CF16 /* Products */ /* Products */,
-				C4D309E72770EF2F00958BCF /* Frameworks */ /* Frameworks */,
+				C4F8C0A522D4FA41002EFE61 /* README.md */,
+				C4E713562570150F00007428 /* SECURITY.md */,
+				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
+				54D9E0C027E4F5E9003B9AD9 /* LICENSE */,
+				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
+				C4E713572570151400007428 /* docs */,
+				F50000000000000000000001 /* phpmon */,
+				F50000000000000000000002 /* phpmon-shared */,
+				F50000000000000000000003 /* phpmon-updater */,
+				C471E79628F9B4260021E251 /* tests */,
+				C41C1B3422B0097F00E7CF16 /* Products */,
+				C4D309E72770EF2F00958BCF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		C41C1B3422B0097F00E7CF16 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ /* PHP Monitor.app */,
-				C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */ /* Unit Tests.xctest */,
-				C471E7AD28F9B4940021E251 /* Feature Tests.xctest */ /* Feature Tests.xctest */,
-				C471E7BC28F9B90F0021E251 /* UI Tests.xctest */ /* UI Tests.xctest */,
-				C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */ /* PHP Monitor Self-Updater.app */,
+				C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */,
+				C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */,
+				C471E7AD28F9B4940021E251 /* Feature Tests.xctest */,
+				C471E7BC28F9B90F0021E251 /* UI Tests.xctest */,
+				C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -379,11 +270,11 @@
 		C471E79628F9B4260021E251 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */ /* PHP Monitor.xctestplan */,
-				F50000000000000000000004 /* Shared */ /* Shared */,
-				F50000000000000000000005 /* unit */ /* unit */,
-				F50000000000000000000006 /* feature */ /* feature */,
-				F50000000000000000000007 /* ui */ /* ui */,
+				031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */,
+				F50000000000000000000004 /* Shared */,
+				F50000000000000000000005 /* unit */,
+				F50000000000000000000006 /* feature */,
+				F50000000000000000000007 /* ui */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -400,23 +291,23 @@
 /* Begin PBXNativeTarget section */
 		C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C406A5FC298AD2CF00B5B85A;
+			buildConfigurationList = C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Self-Updater" */;
 			buildPhases = (
-				C406A5EC298AD2CE00B5B85A /* Sources */ /* Sources */,
-				C406A5ED298AD2CE00B5B85A /* Frameworks */ /* Frameworks */,
-				C406A5EE298AD2CE00B5B85A /* Resources */ /* Resources */,
+				C406A5EC298AD2CE00B5B85A /* Sources */,
+				C406A5ED298AD2CE00B5B85A /* Frameworks */,
+				C406A5EE298AD2CE00B5B85A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				F50000000000000000000003 /* phpmon-updater */ /* phpmon-updater */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
+				F50000000000000000000002 /* phpmon-shared */,
+				F50000000000000000000003 /* phpmon-updater */,
 			);
 			name = "PHP Monitor Self-Updater";
 			packageProductDependencies = (
-				0317C1822ED87CEA005479D2 /* NVAppUpdater */ /* NVAppUpdater */,
+				0317C1822ED87CEA005479D2 /* NVAppUpdater */,
 			);
 			productName = "PHP Monitor Updater";
 			productReference = C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */;
@@ -424,28 +315,28 @@
 		};
 		C41C1B3222B0097F00E7CF16 /* PHP Monitor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C41C1B4322B0098000E7CF16;
+			buildConfigurationList = C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */;
 			buildPhases = (
-				C41C1B2F22B0097F00E7CF16 /* Sources */ /* Sources */,
-				C41C1B3022B0097F00E7CF16 /* Frameworks */ /* Frameworks */,
-				C41C1B3122B0097F00E7CF16 /* Resources */ /* Resources */,
-				C4F5FBCB28216985001065C5 /* Run `swiftlint` */ /* Run `swiftlint` */,
+				C41C1B2F22B0097F00E7CF16 /* Sources */,
+				C41C1B3022B0097F00E7CF16 /* Frameworks */,
+				C41C1B3122B0097F00E7CF16 /* Resources */,
+				C4F5FBCB28216985001065C5 /* Run `swiftlint` */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */ /* PBXTargetDependency */,
+				C4E91D132C0A7A9B00D69A31 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				F50000000000000000000001 /* phpmon */ /* phpmon */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
+				F50000000000000000000001 /* phpmon */,
+				F50000000000000000000002 /* phpmon-shared */,
 			);
 			name = "PHP Monitor";
 			packageProductDependencies = (
-				C47014FE2C46D57C0069AAE7 /* NVAlert */ /* NVAlert */,
-				03D8462A2EB6418F006EFE3C /* CrashReporter */ /* CrashReporter */,
-				0317C17D2ED87CAB005479D2 /* NVAppUpdater */ /* NVAppUpdater */,
-				0317C1802ED87CE1005479D2 /* NVAppUpdater */ /* NVAppUpdater */,
+				C47014FE2C46D57C0069AAE7 /* NVAlert */,
+				03D8462A2EB6418F006EFE3C /* CrashReporter */,
+				0317C17D2ED87CAB005479D2 /* NVAppUpdater */,
+				0317C1802ED87CE1005479D2 /* NVAppUpdater */,
 			);
 			productName = phpmon;
 			productReference = C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */;
@@ -453,27 +344,27 @@
 		};
 		C471E7AC28F9B4940021E251 /* Feature Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C471E7B328F9B4940021E251;
+			buildConfigurationList = C471E7B328F9B4940021E251 /* Build configuration list for PBXNativeTarget "Feature Tests" */;
 			buildPhases = (
-				C471E7A928F9B4940021E251 /* Sources */ /* Sources */,
-				C471E7AA28F9B4940021E251 /* Frameworks */ /* Frameworks */,
-				C471E7AB28F9B4940021E251 /* Resources */ /* Resources */,
+				C471E7A928F9B4940021E251 /* Sources */,
+				C471E7AA28F9B4940021E251 /* Frameworks */,
+				C471E7AB28F9B4940021E251 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C471E7B228F9B4940021E251 /* PBXTargetDependency */ /* PBXTargetDependency */,
+				C471E7B228F9B4940021E251 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				F50000000000000000000001 /* phpmon */ /* phpmon */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
-				F50000000000000000000004 /* Shared */ /* Shared */,
-				F50000000000000000000006 /* feature */ /* feature */,
+				F50000000000000000000001 /* phpmon */,
+				F50000000000000000000002 /* phpmon-shared */,
+				F50000000000000000000004 /* Shared */,
+				F50000000000000000000006 /* feature */,
 			);
 			name = "Feature Tests";
 			packageProductDependencies = (
-				C470150A2C46D81E0069AAE7 /* NVAlert */ /* NVAlert */,
-				0310B17B2EB8F40100A8B140 /* CrashReporter */ /* CrashReporter */,
+				C470150A2C46D81E0069AAE7 /* NVAlert */,
+				0310B17B2EB8F40100A8B140 /* CrashReporter */,
 			);
 			productName = "Feature Tests";
 			productReference = C471E7AD28F9B4940021E251 /* Feature Tests.xctest */;
@@ -481,27 +372,27 @@
 		};
 		C471E7BB28F9B90F0021E251 /* UI Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C471E7C428F9B90F0021E251;
+			buildConfigurationList = C471E7C428F9B90F0021E251 /* Build configuration list for PBXNativeTarget "UI Tests" */;
 			buildPhases = (
-				C471E7B828F9B90F0021E251 /* Sources */ /* Sources */,
-				C471E7B928F9B90F0021E251 /* Frameworks */ /* Frameworks */,
-				C471E7BA28F9B90F0021E251 /* Resources */ /* Resources */,
+				C471E7B828F9B90F0021E251 /* Sources */,
+				C471E7B928F9B90F0021E251 /* Frameworks */,
+				C471E7BA28F9B90F0021E251 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C471E7C328F9B90F0021E251 /* PBXTargetDependency */ /* PBXTargetDependency */,
+				C471E7C328F9B90F0021E251 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				F50000000000000000000001 /* phpmon */ /* phpmon */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
-				F50000000000000000000004 /* Shared */ /* Shared */,
-				F50000000000000000000007 /* ui */ /* ui */,
+				F50000000000000000000001 /* phpmon */,
+				F50000000000000000000002 /* phpmon-shared */,
+				F50000000000000000000004 /* Shared */,
+				F50000000000000000000007 /* ui */,
 			);
 			name = "UI Tests";
 			packageProductDependencies = (
-				C470150C2C46D83E0069AAE7 /* NVAlert */ /* NVAlert */,
-				0310B17D2EB8F40400A8B140 /* CrashReporter */ /* CrashReporter */,
+				C470150C2C46D83E0069AAE7 /* NVAlert */,
+				0310B17D2EB8F40400A8B140 /* CrashReporter */,
 			);
 			productName = "UI Tests";
 			productReference = C471E7BC28F9B90F0021E251 /* UI Tests.xctest */;
@@ -509,27 +400,27 @@
 		};
 		C4F7807825D7F84B000DBC97 /* Unit Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C4F7808025D7F84B000DBC97;
+			buildConfigurationList = C4F7808025D7F84B000DBC97 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
 			buildPhases = (
-				C4F7807525D7F84B000DBC97 /* Sources */ /* Sources */,
-				C4F7807625D7F84B000DBC97 /* Frameworks */ /* Frameworks */,
-				C4F7807725D7F84B000DBC97 /* Resources */ /* Resources */,
+				C4F7807525D7F84B000DBC97 /* Sources */,
+				C4F7807625D7F84B000DBC97 /* Frameworks */,
+				C4F7807725D7F84B000DBC97 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */ /* PBXTargetDependency */,
+				C4F7807F25D7F84B000DBC97 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				F50000000000000000000001 /* phpmon */ /* phpmon */,
-				F50000000000000000000002 /* phpmon-shared */ /* phpmon-shared */,
-				F50000000000000000000004 /* Shared */ /* Shared */,
-				F50000000000000000000005 /* unit */ /* unit */,
+				F50000000000000000000001 /* phpmon */,
+				F50000000000000000000002 /* phpmon-shared */,
+				F50000000000000000000004 /* Shared */,
+				F50000000000000000000005 /* unit */,
 			);
 			name = "Unit Tests";
 			packageProductDependencies = (
-				C47015062C46D8180069AAE7 /* NVAlert */ /* NVAlert */,
-				0310B1792EB8F3FF00A8B140 /* CrashReporter */ /* CrashReporter */,
+				C47015062C46D8180069AAE7 /* NVAlert */,
+				0310B1792EB8F3FF00A8B140 /* CrashReporter */,
 			);
 			productName = "phpmon-tests";
 			productReference = C4F7807925D7F84B000DBC97 /* Unit Tests.xctest */;
@@ -557,14 +448,14 @@
 					};
 					C471E7BB28F9B90F0021E251 = {
 						CreatedOnToolsVersion = 14.0.1;
-						TestTargetID = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
+						TestTargetID = C41C1B3222B0097F00E7CF16;
 					};
 					C4F7807825D7F84B000DBC97 = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = C41C1B2E22B0097F00E7CF16;
+			buildConfigurationList = C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -587,19 +478,20 @@
 			);
 			mainGroup = C41C1B2A22B0097F00E7CF16;
 			packageReferences = (
-				C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */ /* XCRemoteSwiftPackageReference "NVAlert" */,
-				03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */ /* XCRemoteSwiftPackageReference "plcrashreporter" */,
-				0317C17F2ED87CE1005479D2 /* XCRemoteSwiftPackageReference "NVAppUpdater" */ /* XCRemoteSwiftPackageReference "NVAppUpdater" */,
+				C47014FD2C46D57C0069AAE7 /* XCRemoteSwiftPackageReference "NVAlert" */,
+				03D846292EB6418F006EFE3C /* XCRemoteSwiftPackageReference "plcrashreporter" */,
+				0317C17F2ED87CE1005479D2 /* XCRemoteSwiftPackageReference "NVAppUpdater" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = C41C1B3422B0097F00E7CF16 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C41C1B3222B0097F00E7CF16 /* PHP Monitor */ /* PHP Monitor */,
-				C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */ /* PHP Monitor Self-Updater */,
-				C4F7807825D7F84B000DBC97 /* Unit Tests */ /* Unit Tests */,
-				C471E7AC28F9B4940021E251 /* Feature Tests */ /* Feature Tests */,
-				C471E7BB28F9B90F0021E251 /* UI Tests */ /* UI Tests */,
+				C41C1B3222B0097F00E7CF16 /* PHP Monitor */,
+				C406A5EF298AD2CE00B5B85A /* PHP Monitor Self-Updater */,
+				C4F7807825D7F84B000DBC97 /* Unit Tests */,
+				C471E7AC28F9B4940021E251 /* Feature Tests */,
+				C471E7BB28F9B90F0021E251 /* UI Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -616,7 +508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4E91D142C0A7AAA00D69A31,
+				C4E91D142C0A7AAA00D69A31 /* PHP Monitor Self-Updater.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,7 +822,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2010;
+				CURRENT_PROJECT_VERSION = 2020;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_APP_SANDBOX = NO;
@@ -949,7 +841,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.3;
+				MARKETING_VERSION = 26.05.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -974,7 +866,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2010;
+				CURRENT_PROJECT_VERSION = 2020;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_APP_SANDBOX = NO;
@@ -993,7 +885,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.3;
+				MARKETING_VERSION = 26.05.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1156,7 +1048,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2010;
+				CURRENT_PROJECT_VERSION = 2020;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = YES;
 				ENABLE_APP_SANDBOX = NO;
@@ -1175,7 +1067,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.3;
+				MARKETING_VERSION = 26.05.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -1349,7 +1241,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2010;
+				CURRENT_PROJECT_VERSION = 2020;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG = NO;
 				ENABLE_APP_SANDBOX = NO;
@@ -1368,7 +1260,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 26.05.3;
+				MARKETING_VERSION = 26.05.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nicoverbruggen.phpmon.eap;
 				PRODUCT_MODULE_NAME = PHP_Monitor;
 				PRODUCT_NAME = "$(TARGET_NAME) EAP";
@@ -1516,68 +1408,68 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C406A5FC298AD2CF00B5B85A = {
+		C406A5FC298AD2CF00B5B85A /* Build configuration list for PBXNativeTarget "PHP Monitor Self-Updater" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C406A5FD298AD2CF00B5B85A /* Debug */ /* Debug */,
-				C4E9D8F129CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C406A5FF298AD2CF00B5B85A /* Release */ /* Release */,
-				C4E9D8F729CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C406A5FD298AD2CF00B5B85A /* Debug */,
+				C4E9D8F129CB9A6400BD28D4 /* Debug.EA */,
+				C406A5FF298AD2CF00B5B85A /* Release */,
+				C4E9D8F729CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C41C1B2E22B0097F00E7CF16 = {
+		C41C1B2E22B0097F00E7CF16 /* Build configuration list for PBXProject "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C41C1B4122B0098000E7CF16 /* Debug */ /* Debug */,
-				C4E9D8EF29CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C41C1B4222B0098000E7CF16 /* Release */ /* Release */,
-				C4E9D8F529CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C41C1B4122B0098000E7CF16 /* Debug */,
+				C4E9D8EF29CB9A6400BD28D4 /* Debug.EA */,
+				C41C1B4222B0098000E7CF16 /* Release */,
+				C4E9D8F529CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C41C1B4322B0098000E7CF16 = {
+		C41C1B4322B0098000E7CF16 /* Build configuration list for PBXNativeTarget "PHP Monitor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C41C1B4422B0098000E7CF16 /* Debug */ /* Debug */,
-				C4E9D8F029CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C41C1B4522B0098000E7CF16 /* Release */ /* Release */,
-				C4E9D8F629CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C41C1B4422B0098000E7CF16 /* Debug */,
+				C4E9D8F029CB9A6400BD28D4 /* Debug.EA */,
+				C41C1B4522B0098000E7CF16 /* Release */,
+				C4E9D8F629CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C471E7B328F9B4940021E251 = {
+		C471E7B328F9B4940021E251 /* Build configuration list for PBXNativeTarget "Feature Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C471E7B428F9B4940021E251 /* Debug */ /* Debug */,
-				C4E9D8F329CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C471E7B628F9B4940021E251 /* Release */ /* Release */,
-				C4E9D8F929CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C471E7B428F9B4940021E251 /* Debug */,
+				C4E9D8F329CB9A6400BD28D4 /* Debug.EA */,
+				C471E7B628F9B4940021E251 /* Release */,
+				C4E9D8F929CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C471E7C428F9B90F0021E251 = {
+		C471E7C428F9B90F0021E251 /* Build configuration list for PBXNativeTarget "UI Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C471E7C528F9B90F0021E251 /* Debug */ /* Debug */,
-				C4E9D8F429CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C471E7C728F9B90F0021E251 /* Release */ /* Release */,
-				C4E9D8FA29CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C471E7C528F9B90F0021E251 /* Debug */,
+				C4E9D8F429CB9A6400BD28D4 /* Debug.EA */,
+				C471E7C728F9B90F0021E251 /* Release */,
+				C4E9D8FA29CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C4F7808025D7F84B000DBC97 = {
+		C4F7808025D7F84B000DBC97 /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C4F7808125D7F84B000DBC97 /* Debug */ /* Debug */,
-				C4E9D8F229CB9A6400BD28D4 /* Debug.EA */ /* Debug.EA */,
-				C4F7808225D7F84B000DBC97 /* Release */ /* Release */,
-				C4E9D8F829CB9A7200BD28D4 /* Release.EA */ /* Release.EA */,
+				C4F7808125D7F84B000DBC97 /* Debug */,
+				C4E9D8F229CB9A6400BD28D4 /* Debug.EA */,
+				C4F7808225D7F84B000DBC97 /* Release */,
+				C4E9D8F829CB9A7200BD28D4 /* Release.EA */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
