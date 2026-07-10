@@ -1,5 +1,5 @@
 //
-//  PreferenceVC+WindowsRestore.swift
+//  PreferencesWindowController+WindowRestore.swift
 //  PHP Monitor
 //
 //  Created by Nico Verbruggen on 23/02/2026.
@@ -8,13 +8,13 @@
 
 import Cocoa
 
-extension PreferenceVC {
+extension PreferencesWindowController {
     struct WindowSnapshot {
         let name: String
         let frame: NSRect?
     }
 
-    func captureOpenWindowsForLanguageSwitch() -> [WindowSnapshot] {
+    static func captureOpenWindowsForLanguageSwitch() -> [WindowSnapshot] {
         App.shared.openWindows.compactMap { windowName in
             switch windowName {
             case "DomainList":
@@ -58,7 +58,7 @@ extension PreferenceVC {
         }
     }
 
-    func reopenWindows(afterLanguageChange snapshots: [WindowSnapshot]) {
+    static func reopenWindows(afterLanguageChange snapshots: [WindowSnapshot]) {
         for snapshot in snapshots {
             switch snapshot.name {
             case "DomainList":
@@ -88,7 +88,7 @@ extension PreferenceVC {
         }
     }
 
-    private func applyFrame<T: NSWindowController>(_ frame: NSRect?, for type: T.Type) {
+    private static func applyFrame<T: NSWindowController>(_ frame: NSRect?, for type: T.Type) {
         guard let frame else { return }
         WindowManager.window(for: type)?.setFrame(frame, display: true)
     }

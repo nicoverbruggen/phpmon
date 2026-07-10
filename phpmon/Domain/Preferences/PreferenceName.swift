@@ -13,7 +13,7 @@
  - Declare a new enum value with a string representation.
  - Update the mapping below to specify if it's a boolean, string or other.
  - Go to `Preferences` and update `handleFirstTimeLaunch` to set a default.
- - Add the preference to `GeneralPreferencesVC` in the correct class.
+ - Add a row to the appropriate tab in `SettingsTabViews.swift`.
  */
 enum PreferenceName: String, Codable {
     // GENERAL
