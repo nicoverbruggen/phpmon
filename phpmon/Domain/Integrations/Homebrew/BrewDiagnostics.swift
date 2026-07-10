@@ -31,13 +31,27 @@ class BrewDiagnostics {
 
     /**
      Determines the Homebrew taps the user has installed.
+
+     Backed by a `Locked` box: this is reassigned from `loadInstalledTaps()` (which runs
+     off the main thread) and read from several async contexts, so access must be
+     synchronized to avoid a data race on the array buffer.
      */
-    public var installedTaps: [String] = []
+    private let _installedTaps = Locked<[String]>([])
+    public var installedTaps: [String] {
+        get { _installedTaps.value }
+        set { _installedTaps.value = newValue }
+    }
 
     /**
      Determines the Homebrew taps the user has explicitly trusted.
+
+     Backed by a `Locked` box for the same reason as `installedTaps`.
      */
-    public var trustedTaps: [String] = []
+    private let _trustedTaps = Locked<[String]>([])
+    public var trustedTaps: [String] {
+        get { _trustedTaps.value }
+        set { _trustedTaps.value = newValue }
+    }
 
     private var hasLoadedTrustedTaps = false
     private var cachedSupportsTapTrust: Bool?

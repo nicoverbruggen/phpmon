@@ -133,8 +133,19 @@ class Valet {
      If the JSON is invalid when the app launches, an alert will be presented, however.
      */
     public func loadConfiguration() {
+        if let parsed = parseConfiguration() {
+            config = parsed
+        }
+    }
+
+    /**
+     Reads and decodes the Valet `config.json` file. This performs blocking file I/O but
+     does **not** mutate any shared state, so it is safe to call off the main thread. The
+     caller is responsible for assigning the result to `config` on the main actor.
+     */
+    private func parseConfiguration() -> Valet.Configuration? {
         do {
-            config = try JSONDecoder().decode(
+            return try JSONDecoder().decode(
                 Valet.Configuration.self,
                 from: container.filesystem
                     .getStringFromFile("~/.config/valet/config.json")
@@ -142,6 +153,7 @@ class Valet {
             )
         } catch {
             Log.err(error)
+            return nil
         }
     }
 
@@ -158,13 +170,31 @@ class Valet {
      (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() async {
-        loadConfiguration()
+        // Parse the configuration off the main thread (blocking file I/O), then publish
+        // it and claim the busy flag atomically on the main actor. The UI reads
+        // `config`, `sites` and `proxies` on the main thread, so every mutation of that
+        // shared state must happen on the main actor too — otherwise we get the data
+        // race that crashed 26.05.3.
+        let parsed = parseConfiguration()
 
-        if isBusy {
+        let shouldProceed = await MainActor.run { () -> Bool in
+            if let parsed {
+                config = parsed
+            }
+            // Atomic check-and-set: prevents two reloads from running concurrently
+            // (the previous `if isBusy { return }` was a non-atomic check-then-set).
+            if isBusy {
+                return false
+            }
+            isBusy = true
+            return true
+        }
+
+        guard shouldProceed else {
             return
         }
 
-        resolvePaths()
+        await resolvePaths()
     }
 
     /**
@@ -286,34 +316,46 @@ class Valet {
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
-    private func resolvePaths() {
-        isBusy = true
-
-        sites = ValetScanner.active
+    private func resolvePaths() async {
+        // The blocking directory scan runs off the main thread and writes only to local
+        // variables — no shared state is touched here.
+        let scannedSites = ValetScanner.active
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        proxies = ValetScanner.active
+        let scannedProxies = ValetScanner.active
             .resolveProxies(
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
-        if let defaultPath = Valet.shared.config.defaultSite,
-           let defaultSite = ValetScanner.active.resolveSite(path: defaultPath) {
-            // Only insert the default site if it isn't already included in the list
-            if !sites.contains(where: { site in
-                site.absolutePath == defaultSite.absolutePath
-                && site.name == defaultSite.name
-            }) {
-                sites.insert(defaultSite, at: 0)
-            }
+        let resolvedSites = sitesIncludingDefault(from: scannedSites)
+
+        // Publish the results and release the busy flag on the main actor, so that all
+        // mutations of `sites`/`proxies`/`isBusy` happen on the same thread the UI reads
+        // them from. This is the actual fix for the 26.05.3 crashes.
+        await MainActor.run {
+            self.sites = resolvedSites
+            self.proxies = scannedProxies
+            self.isBusy = false
+            Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
+        }
+    }
+
+    /// Returns the scanned sites with the configured default site included at the front,
+    /// unless it is already present in the list.
+    private func sitesIncludingDefault(from sites: [ValetSite]) -> [ValetSite] {
+        guard let defaultPath = config.defaultSite,
+              let defaultSite = ValetScanner.active.resolveSite(path: defaultPath),
+              !sites.contains(where: {
+                  $0.absolutePath == defaultSite.absolutePath && $0.name == defaultSite.name
+              })
+        else {
+            return sites
         }
 
-        Log.info("\(sites.count) sites & \(proxies.count) proxies have been scanned.")
-
-        isBusy = false
+        return [defaultSite] + sites
     }
 
     struct Configuration: Decodable {
