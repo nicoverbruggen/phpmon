@@ -148,6 +148,9 @@ class PhpEnvironments {
         }
     }
 
+    // `nonisolated` + `Locked`: `brewPhpAlias` is read/written from many contexts
+    // that are not the main actor (Homebrew command processing, switchers, tests),
+    // so it stays a thread-safe, non-isolated cache rather than main-actor state.
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
 
@@ -157,9 +160,6 @@ class PhpEnvironments {
 
      In order for our check to be correct, we query Homebrew locally.
      */
-    // `nonisolated` + `Locked`: `brewPhpAlias` is read/written from many contexts
-    // that are not the main actor (Homebrew command processing, switchers, tests),
-    // so it stays a thread-safe, non-isolated cache rather than main-actor state.
     private nonisolated static let _brewPhpAlias = Locked<String?>(nil)
     nonisolated static var brewPhpAlias: String? {
         get { _brewPhpAlias.value }

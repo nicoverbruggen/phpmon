@@ -254,7 +254,9 @@ struct RealShellTimingTest {
             Double(duration.components.seconds) + Double(duration.components.attoseconds) * 1e-18
         }
 
-        func attempt() async -> (ok: Bool, single: Double, parallel: Double) {
+        struct Sample { let ok: Bool; let single: Double; let parallel: Double }
+
+        func attempt() async -> Sample {
             // Baseline: how long does a single command take on this host, right now?
             let singleStart = ContinuousClock.now
             await container.shell.pipe("sleep 1")
@@ -272,7 +274,7 @@ struct RealShellTimingTest {
 
             // Allow 2.5× headroom for scheduling overhead while still catching genuine
             // serialization (which would be ~4×).
-            return (parallel < single * 2.5, single, parallel)
+            return Sample(ok: parallel < single * 2.5, single: single, parallel: parallel)
         }
 
         // Retry generously: under heavy parallel-suite load the cooperative pool can be

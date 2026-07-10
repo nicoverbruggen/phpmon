@@ -63,6 +63,57 @@ Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you 
 
 If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
 
+## 🔀 Concurrency (Swift 6)
+
+PHP Monitor is built in **Swift 6 language mode** with **main-actor-by-default** isolation. The
+following are set at the project level (so every target inherits them):
+
+```
+SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor
+SWIFT_STRICT_CONCURRENCY      = complete
+SWIFT_APPROACHABLE_CONCURRENCY = YES
+```
+
+`SWIFT_VERSION` is `6.0` for the app, `phpmon-shared`, the Self-Updater and the **Unit Tests**
+target. The **UI Tests target is intentionally kept at `5.0`** — see the note under UI tests
+below. Please do not flip it without reading that note.
+
+### What "main-actor-by-default" means when writing code
+
+Every type, function and closure is **`@MainActor` unless you say otherwise**. That is the right
+default for UI and app-model code and it is why most of the app "just works" on the main thread.
+You only reach for `nonisolated` in specific, deliberate cases:
+
+* **Leaf services that must run off the main actor** — the shell, filesystem and command
+  layers (`RealShell`, `RealFileSystem`, `RealCommand`, `Paths`, and their protocols) are
+  `nonisolated` so blocking I/O never hops onto the main actor. Their blocking calls are guarded
+  by `warnIfBlockingOnMainThread(...)` in debug builds.
+* **Pure value types & helpers** — value types with no main-actor state (e.g. `SystemContext`,
+  `DetectableService`, `BrewCommandProgress`), and pure functions/extensions (`url(...)`,
+  `TimeInterval` math, `String.localized`, `Date.fromString`, etc.). Mark these `nonisolated`
+  (and `Sendable` where they cross isolation) so they can be used from any context.
+* **Off-main orchestration** — e.g. the `BrewCommand` family runs `nonisolated` and only
+  `await`s onto `@MainActor` for UI updates (`MainMenu`, `WindowManager`), so long `brew`
+  operations never block the main actor.
+
+### Thread-safe shared state
+
+Genuinely-shared mutable state must be synchronized — **do not** paper over data races with a
+bare `@unchecked Sendable`.
+
+* `Locked<T>` (an `NSLock` box) is the current primitive for lock-guarded state (used by
+  `Preferences`, `PhpEnvironments`, `BrewDiagnostics`, `RealShell`, …).
+* Test doubles (`TestableShell`) use `OSAllocatedUnfairLock`. When the deployment target
+  eventually reaches macOS 15 these can migrate to the standard-library `Mutex`.
+* Watchers (`ConfigWatchManager`, `HomebrewWatchManager`, `FSNotifier`, `Debouncer`) are
+  `actor`s. When a caller needs to run main-actor work "while suspended", the closure stays in
+  the caller's isolation — only `suspend()`/`resume()` hop onto the watcher actor.
+* Anything that isn't main-thread isolated should have a test that exercises its concurrent
+  behaviour (see `RealShellTimingTest`, `FSNotifierTest`, `ValetReloadConcurrencyTest`,
+  `BrewDiagnosticsConcurrencyTest`).
+
+The project builds with **zero** concurrency warnings; please keep it that way when contributing.
+
 ## ✅ Testing
 
 In order to properly test everything, you will want to use the _PHP Monitor EAP_ target. There are unit and UI tests both for this target.
@@ -89,6 +140,14 @@ xcodebuild test \
     -only-testing "UI Tests"
 ```
     
+The **UI Tests target deliberately stays in Swift 5 language mode** while the rest of the
+project is on Swift 6. XCUITest is not reconcilable with Swift 6 strict concurrency here:
+`XCUIApplication`/`XCUIElement` are `@MainActor`, but `XCTestCase`'s lifecycle overrides
+(`setUpWithError`, `tearDownWithError`, `init`) are `nonisolated` in the SDK, and app source
+files compiled into this target were written for main-actor-by-default. The Swift 5 UI test
+target still fully exercises the Swift 6 app, so there is no functional downside. (Swift
+Testing — the modern alternative — does not support UI tests, so XCTest is required here.)
+
 ### Failures in UI tests
 
 You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve? You can retry the tests in question and they should eventually pass.

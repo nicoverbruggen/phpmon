@@ -10,23 +10,23 @@ import Foundation
 import Cocoa
 import NVAlert
 
+// Immutable value type returned across isolation boundaries (callers await
+// `checkForUpdates` from actors / the menu), so it is nonisolated + Sendable.
 /**
  The potential different outcomes of a check for updates.
  */
-// Immutable value type returned across isolation boundaries (callers await
-// `checkForUpdates` from actors / the menu), so it is nonisolated + Sendable.
 nonisolated enum UpdateCheckResult: Sendable {
     case success
     case networkError
     case parseError
 }
 
+// Drives NVAlert update prompts and the self-updater launch, so it stays on the main
+// actor. The network fetch it awaits (`CaskFile.fromUrl`) runs off-main on its own.
 /**
  Instead of using `UpdateCheck` which is a more simplified update checking process
  included in `NVAppUpdater`, we have a slightly more complex setup here.
  */
-// Drives NVAlert update prompts and the self-updater launch, so it stays on the main
-// actor. The network fetch it awaits (`CaskFile.fromUrl`) runs off-main on its own.
 @MainActor
 class AppUpdater {
     var caskFile: CaskFile!

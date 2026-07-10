@@ -9,9 +9,8 @@
 import Foundation
 @preconcurrency import Dispatch
 
-// Nonisolated so it stays off the main actor once the app moves to main-actor-by-default:
-// this runs subprocesses to completion and must never block the UI thread. Its mutable
-// state (`_PATH`, `_exports`) is `Locked`-guarded, hence `@unchecked Sendable`.
+// Nonisolated so blocking subprocess I/O stays off the main actor. Its mutable state
+// (`_PATH`, `_exports`) is `Locked`-guarded, hence `@unchecked Sendable`.
 nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String, preferredShell: String) {
         // Set variables that won't be updated
@@ -224,10 +223,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.pipe_timeout_queue")
 
         return await withCheckedContinuation { continuation in
-            // The once-only "resume" guard is mutated from `@Sendable` serial-queue
-            // closures; a plain captured `var` would be a data-race warning. `Locked`
-            // makes the mutation compiler-safe. (All access still happens on the serial
-            // queue, so the invariant "resume exactly once" is preserved.)
+            // Once-only "resume" guard, mutated from `@Sendable` serial-queue closures;
+            // `Locked` keeps it data-race free while preserving "resume exactly once".
             let resumed = Locked<Bool>(false)
 
             let timeoutWorkItem = DispatchWorkItem {
@@ -291,11 +288,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         process.standardOutput = outputPipe
         process.standardError = errorPipe
 
-        // Accumulate output in thread-safe buffers instead of a mutable `ShellOutput`.
-        // `ShellOutput` is now an immutable `Sendable` value; we build the final one
-        // once, at `continuation.resume`. `Locked` keeps these captures compiler-safe
-        // across the `@Sendable` serial-queue closures. (All access still happens on
-        // the serial queue below, so ordering is preserved.)
+        // Accumulate into `Locked` buffers (safe across the `@Sendable` serial-queue
+        // closures); the immutable `ShellOutput` is built once at `continuation.resume`.
         let outBuffer = Locked<String>("")
         let errBuffer = Locked<String>("")
 
@@ -303,8 +297,7 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
-            // Guard against all races: timeout, termination and late readability callbacks.
-            // `Locked` so mutation from the `@Sendable` serial-queue closures is safe.
+            // `Locked` guard: safe mutation from the `@Sendable` timeout/termination closures.
             let finished = Locked<Bool>(false)
 
             let finishSuccess: @Sendable () -> Void = {
@@ -390,10 +383,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     }
 
     func reloadEnvPath() async {
-        // Read the main-actor-isolated resolved shell on the main actor, then hand the
-        // plain `String` off to a background queue for the (blocking) PATH lookup. This
-        // keeps `App.shared` off the `@Sendable` background closure while preserving the
-        // original behavior of resolving the PATH off the main thread.
+        // Snapshot the main-actor resolved shell on main, then do the blocking PATH
+        // lookup off-main with a plain `String` (no `App.shared` in the background closure).
         let resolved = await MainActor.run {
             App.shared.container.systemContext.shell.resolved
         }

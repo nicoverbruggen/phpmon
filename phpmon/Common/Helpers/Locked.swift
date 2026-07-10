@@ -33,11 +33,12 @@ import Foundation
  `MainActor` is generally preferred, but this approach may be necessary in
  situations where adopting structured concurrency would otherwise be
  too challenging or a huge refactor.
+
+ `nonisolated`: this is the app's thread-safe primitive. Its `NSLock`-guarded `value`
+ and `withLock` must be usable from any isolation domain (off-main services, actors,
+ the main actor). Without `nonisolated` these members would inherit the main actor
+ under main-actor-by-default and defeat the whole purpose of the type.
  */
-// `nonisolated`: this is the app's thread-safe primitive. Its `NSLock`-guarded `value`
-// and `withLock` must be usable from any isolation domain (off-main services, actors,
-// the main actor). Without `nonisolated` these members would inherit the main actor
-// under main-actor-by-default and defeat the whole purpose of the type.
 nonisolated final class Locked<T>: @unchecked Sendable {
     private var _value: T
     private let lock = NSLock()

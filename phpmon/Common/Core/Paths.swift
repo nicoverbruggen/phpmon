@@ -7,14 +7,14 @@
 
 import Foundation
 
-/**
- The `Paths` class is used to locate various binaries on the system.
- The path to the Homebrew directory and the user's name are fetched only once, at boot.
- */
 // `nonisolated` + `Sendable`: `Paths` is a leaf that is read from off-main
 // contexts (shell/command building, actors) while composing binary paths, so it
 // must not be main-actor isolated. All stored properties are immutable (`let`)
 // or thread-safe (`Locked`), which makes the type genuinely `Sendable`.
+/**
+ The `Paths` class is used to locate various binaries on the system.
+ The path to the Homebrew directory and the user's name are fetched only once, at boot.
+ */
 public nonisolated final class Paths: Sendable {
     internal let container: Container
     internal let baseDir: Paths.HomebrewDir
