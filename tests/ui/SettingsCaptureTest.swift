@@ -23,6 +23,42 @@ final class SettingsCaptureTest: UITestCase {
         )
     }
 
+    final func test_capture_domain_list() throws {
+        var configuration = TestableConfigurations.working
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+
+        let app = launch(openMenu: true, with: configuration)
+
+        app.menuItems["mi_domain_list".localized(for: "en")].click()
+
+        let window = app.windows.element(boundBy: 0)
+        assertExists(window, 2.0)
+        XCTAssertEqual(window.title, "domain_list.title".localized(for: "en"))
+
+        // Wait for the (fake) sites to render
+        let hasRows = NSPredicate(format: "count > 0")
+        let expectation = XCTNSPredicateExpectation(predicate: hasRows, object: window.tables.tableRows)
+        _ = XCTWaiter().wait(for: [expectation], timeout: 10)
+        Thread.sleep(forTimeInterval: 1.0)
+
+        let list = XCTAttachment(screenshot: window.screenshot())
+        list.name = "domain-list"
+        list.lifetime = .keepAlways
+        add(list)
+
+        // The no-results state, via a search that matches nothing
+        let searchField = window.searchFields.element(boundBy: 0)
+        assertExists(searchField, 2.0)
+        searchField.click()
+        searchField.typeText("zzzzzz")
+        Thread.sleep(forTimeInterval: 1.0)
+
+        let noResults = XCTAttachment(screenshot: window.screenshot())
+        noResults.name = "domain-list-empty"
+        noResults.lifetime = .keepAlways
+        add(noResults)
+    }
+
     final func test_capture_progress_panel() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")

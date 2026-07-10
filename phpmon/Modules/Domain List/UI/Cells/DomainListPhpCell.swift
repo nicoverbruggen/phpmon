@@ -10,18 +10,63 @@ import Cocoa
 import AppKit
 import SwiftUI
 
-class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
+final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
     var container: Container {
         return App.shared.container
     }
 
     var site: ValetSite?
 
-    @IBOutlet weak var buttonPhpVersion: NSButton!
-    @IBOutlet weak var imageViewPhpVersionOK: NSImageView!
+    private(set) var buttonPhpVersion: NSButton!
+    private(set) var imageViewPhpVersionOK: NSImageView!
 
     static func getCellIdentifier(for domain: ValetListable) -> String {
         return "domainListPhpCell"
+    }
+
+    static func makeCell(identifier: String) -> DomainListPhpCell {
+        let cell = DomainListPhpCell()
+        cell.identifier = NSUserInterfaceItemIdentifier(identifier)
+        cell.setupSubviews()
+        return cell
+    }
+
+    private func setupSubviews() {
+        self.wantsLayer = true
+
+        let button = NSButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setButtonType(.momentaryPushIn)
+        button.bezelStyle = .inline
+        button.title = "PHP X.X"
+        button.alignment = .center
+        button.font = NSFont.boldSystemFont(ofSize: NSFont.smallSystemFontSize)
+        button.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        button.target = self
+        button.action = #selector(pressedPhpVersion(_:))
+        self.addSubview(button)
+        self.buttonPhpVersion = button
+
+        let imageView = NSImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = NSImage(named: "Checkmark")
+        imageView.contentTintColor = NSColor(named: "IconColorGreen")
+        imageView.imageScaling = .scaleProportionallyDown
+        imageView.imageAlignment = .alignLeft
+        imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
+        imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .vertical)
+        self.addSubview(imageView)
+        self.imageViewPhpVersionOK = imageView
+
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 70),
+            imageView.widthAnchor.constraint(equalToConstant: 18),
+            imageView.heightAnchor.constraint(equalToConstant: 18),
+            imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            button.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 12),
+            button.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8)
+        ])
     }
 
     func populateCell(with site: ValetSite) {
@@ -56,7 +101,7 @@ class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         return
     }
 
-    @IBAction func pressedPhpVersion(_ sender: Any) {
+    @objc func pressedPhpVersion(_ sender: Any) {
         guard let site = self.site else { return }
 
         var validPhpSuggestions: [VersionNumber] {

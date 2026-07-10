@@ -16,13 +16,13 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         return App.shared.container
     }
 
-    // MARK: - Outlets
+    // MARK: - Views (built in code, transcribed from the old storyboard)
 
-    @IBOutlet weak var tableView: PMTableView!
-    @IBOutlet weak var noResultsView: NSView!
-    @IBOutlet weak var progressIndicator: NSProgressIndicator!
-    @IBOutlet weak var progressIndicatorContainer: NSVisualEffectView!
-    @IBOutlet weak var labelProgressIndicator: NSTextField!
+    let tableView = PMTableView()
+    let noResultsView = NSView()
+    let progressIndicator = NSProgressIndicator()
+    let progressIndicatorContainer = NSVisualEffectView()
+    let labelProgressIndicator = NSTextField(labelWithString: "")
 
     // MARK: - Variables
 
@@ -74,7 +74,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     // MARK: - Lifecycle
 
+    override func loadView() {
+        self.view = makeRootView()
+    }
+
     override func viewDidLoad() {
+        tableView.target = self
         tableView.doubleAction = #selector(self.doubleClicked(sender:))
 
         addNoResultsView()
@@ -133,8 +138,18 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             .frame(width: 400, height: 300)
         ).view
 
+        // Pin the hosted view to the container with constraints: the container
+        // is built in code and has no bounds yet at this point (the storyboard
+        // used to provide a pre-sized frame here).
+        child.translatesAutoresizingMaskIntoConstraints = false
         self.noResultsView.addSubview(child)
-        child.frame = self.noResultsView.bounds
+
+        NSLayoutConstraint.activate([
+            child.leadingAnchor.constraint(equalTo: noResultsView.leadingAnchor),
+            child.trailingAnchor.constraint(equalTo: noResultsView.trailingAnchor),
+            child.topAnchor.constraint(equalTo: noResultsView.topAnchor),
+            child.bottomAnchor.constraint(equalTo: noResultsView.bottomAnchor)
+        ])
     }
 
     // MARK: - Async Operations
@@ -276,10 +291,14 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         let columnName = tableColumn!.identifier.rawValue
         guard let cellType = mapping[columnName] else { return nil }
-        let identifier = NSUserInterfaceItemIdentifier(rawValue: cellType.getCellIdentifier(for: domains[row]))
+        let identifier = cellType.getCellIdentifier(for: domains[row])
 
-        guard let userCell = tableView.makeView(withIdentifier: identifier, owner: self)
-            as? DomainListCellProtocol else { return nil }
+        // Reuse a previously created cell when possible; otherwise the cell
+        // type constructs one in code (the old storyboard prototypes are gone).
+        let userCell = tableView.makeView(
+            withIdentifier: NSUserInterfaceItemIdentifier(rawValue: identifier),
+            owner: self
+        ) as? DomainListCellProtocol ?? cellType.makeCell(identifier: identifier)
 
         if let site = domains[row] as? ValetSite {
             userCell.populateCell(with: site)
@@ -289,7 +308,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
             userCell.populateCell(with: proxy)
         }
 
-        return userCell as? NSView
+        return userCell
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {

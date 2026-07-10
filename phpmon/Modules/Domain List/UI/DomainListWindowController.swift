@@ -17,17 +17,81 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
         return "DomainList"
     }
 
-    // MARK: - Outlets
+    // MARK: - Toolbar
 
-    @IBOutlet weak var searchToolbarItem: NSSearchToolbarItem!
+    private enum ToolbarIdentifiers {
+        static let addLink = NSToolbarItem.Identifier("domainListAddLink")
+        static let reload = NSToolbarItem.Identifier("domainListReload")
+        static let search = NSToolbarItem.Identifier("domainListSearch")
+    }
 
-    // MARK: - Window Lifecycle
+    let searchToolbarItem = NSSearchToolbarItem(itemIdentifier: ToolbarIdentifiers.search)
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
-        self.searchToolbarItem.searchField.placeholderString = "generic.search".localized
-        self.searchToolbarItem.searchField.delegate = self
-        self.searchToolbarItem.searchField.becomeFirstResponder()
+    /**
+     Builds the window's toolbar (add link + reload + search), matching the
+     configuration of the old storyboard's toolbar.
+     */
+    func configureToolbar() {
+        let toolbar = NSToolbar(identifier: "domainListToolbar")
+        toolbar.delegate = self
+        toolbar.displayMode = .iconOnly
+        toolbar.allowsUserCustomization = false
+        toolbar.autosavesConfiguration = false
+        toolbar.showsBaselineSeparator = false
+
+        searchToolbarItem.label = "Search"
+        searchToolbarItem.visibilityPriority = NSToolbarItem.VisibilityPriority(rawValue: 1001)
+        searchToolbarItem.searchField.placeholderString = "generic.search".localized
+        searchToolbarItem.searchField.delegate = self
+
+        window?.toolbar = toolbar
+    }
+
+    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        return [ToolbarIdentifiers.addLink, ToolbarIdentifiers.reload, ToolbarIdentifiers.search]
+    }
+
+    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
+        return toolbarDefaultItemIdentifiers(toolbar)
+    }
+
+    func toolbar(
+        _ toolbar: NSToolbar,
+        itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier,
+        willBeInsertedIntoToolbar flag: Bool
+    ) -> NSToolbarItem? {
+        switch itemIdentifier {
+        case ToolbarIdentifiers.addLink:
+            return makeToolbarButton(
+                itemIdentifier, label: "Add Link", symbol: "plus", action: #selector(pressedAddLink(_:))
+            )
+        case ToolbarIdentifiers.reload:
+            return makeToolbarButton(
+                itemIdentifier, label: "Reload", symbol: "arrow.clockwise", action: #selector(pressedReload(_:))
+            )
+        case ToolbarIdentifiers.search:
+            return searchToolbarItem
+        default:
+            return nil
+        }
+    }
+
+    private func makeToolbarButton(
+        _ identifier: NSToolbarItem.Identifier,
+        label: String,
+        symbol: String,
+        action: Selector
+    ) -> NSToolbarItem {
+        let item = NSToolbarItem(itemIdentifier: identifier)
+        item.label = label
+        item.paletteLabel = label
+        item.isBordered = true
+        // The old storyboard used symbolScale="medium" for these icons.
+        item.image = NSImage(systemSymbolName: symbol, accessibilityDescription: label)?
+            .withSymbolConfiguration(NSImage.SymbolConfiguration(scale: .medium))
+        item.target = self
+        item.action = action
+        return item
     }
 
     // MARK: - Search functionality
@@ -55,11 +119,11 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
 
     // MARK: - Reload functionality
 
-    @IBAction func pressedReload(_ sender: Any?) {
+    @objc func pressedReload(_ sender: Any?) {
         Task { await contentVC.reloadDomains() }
     }
 
-    @IBAction func pressedAddLink(_ sender: Any?) {
+    @objc func pressedAddLink(_ sender: Any?) {
         showSelectionWindow()
     }
 
