@@ -240,19 +240,56 @@ struct RealShellTimingTest {
         container = makeRealShellContainer()
     }
 
-    // If this test fails, run it separately to confirm it's actually broken.
+    /// Verifies that `RealShell` runs concurrent commands in parallel rather than
+    /// serializing them (e.g. behind a shared lock or queue).
+    ///
+    /// A *fixed* wall-clock budget is fragile: Swift Testing runs suites in parallel, so a
+    /// loaded host can inflate the measured time even though the commands really did run
+    /// concurrently. Instead we measure a single-command baseline in the *same* run and
+    /// assert that four concurrent commands finish well under the ~4× that a serialized
+    /// execution would take. This scales with host load. We also retry a few times to ride
+    /// out a transient scheduling spike from other suites running at the same moment.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
-        let start = ContinuousClock.now
-
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
+        func seconds(_ duration: Duration) -> Double {
+            Double(duration.components.seconds) + Double(duration.components.attoseconds) * 1e-18
         }
 
-        let duration = start.duration(to: .now)
-        #expect(duration < .seconds(10))
+        func attempt() async -> (ok: Bool, single: Double, parallel: Double) {
+            // Baseline: how long does a single command take on this host, right now?
+            let singleStart = ContinuousClock.now
+            await container.shell.pipe("sleep 1")
+            let single = seconds(singleStart.duration(to: .now))
+
+            // Four commands launched concurrently. With real parallelism this is ~1×
+            // `single`; if the commands were serialized it would be ~4×.
+            let parallelStart = ContinuousClock.now
+            await withTaskGroup(of: Void.self) { group in
+                for _ in 0..<4 {
+                    group.addTask { await self.container.shell.pipe("sleep 1") }
+                }
+            }
+            let parallel = seconds(parallelStart.duration(to: .now))
+
+            // Allow 2.5× headroom for scheduling overhead while still catching genuine
+            // serialization (which would be ~4×).
+            return (parallel < single * 2.5, single, parallel)
+        }
+
+        // Retry generously: under heavy parallel-suite load the cooperative pool can be
+        // saturated for a while, so keep sampling until a window opens where parallelism
+        // can actually manifest. In the common (unloaded) case the first attempt passes.
+        var result = await attempt()
+        for _ in 0..<7 where !result.ok {
+            result = await attempt()
+        }
+
+        #expect(
+            result.ok,
+            """
+            Four concurrent commands took \(result.parallel)s versus \(result.single)s for a \
+            single command — they appear to be serialized rather than running in parallel.
+            """
+        )
     }
 
     // If this test fails, run it separately to confirm it's actually broken.
