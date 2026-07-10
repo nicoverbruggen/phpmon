@@ -52,17 +52,6 @@
                ReferencedContainer = "container:PHP Monitor.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES"
-            parallelizable = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C471E7AC28F9B4940021E251"
-               BuildableName = "Feature Tests.xctest"
-               BlueprintName = "Feature Tests"
-               ReferencedContainer = "container:PHP Monitor.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
