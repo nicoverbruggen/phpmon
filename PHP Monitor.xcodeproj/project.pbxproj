@@ -565,7 +565,6 @@
 				};
 			};
 			buildConfigurationList = C41C1B2E22B0097F00E7CF16;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
