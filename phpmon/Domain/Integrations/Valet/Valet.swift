@@ -330,17 +330,7 @@ class Valet {
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
-        var resolvedSites = scannedSites
-        if let defaultPath = Valet.shared.config.defaultSite,
-           let defaultSite = ValetScanner.active.resolveSite(path: defaultPath) {
-            // Only insert the default site if it isn't already included in the list
-            if !resolvedSites.contains(where: { site in
-                site.absolutePath == defaultSite.absolutePath
-                && site.name == defaultSite.name
-            }) {
-                resolvedSites.insert(defaultSite, at: 0)
-            }
-        }
+        let resolvedSites = sitesIncludingDefault(from: scannedSites)
 
         // Publish the results and release the busy flag on the main actor, so that all
         // mutations of `sites`/`proxies`/`isBusy` happen on the same thread the UI reads
@@ -351,6 +341,21 @@ class Valet {
             self.isBusy = false
             Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
         }
+    }
+
+    /// Returns the scanned sites with the configured default site included at the front,
+    /// unless it is already present in the list.
+    private func sitesIncludingDefault(from sites: [ValetSite]) -> [ValetSite] {
+        guard let defaultPath = config.defaultSite,
+              let defaultSite = ValetScanner.active.resolveSite(path: defaultPath),
+              !sites.contains(where: {
+                  $0.absolutePath == defaultSite.absolutePath && $0.name == defaultSite.name
+              })
+        else {
+            return sites
+        }
+
+        return [defaultSite] + sites
     }
 
     struct Configuration: Decodable {
