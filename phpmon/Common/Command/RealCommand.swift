@@ -7,7 +7,9 @@
 
 import Cocoa
 
-public class RealCommand: CommandProtocol {
+// Nonisolated + Sendable: stateless, runs subprocesses to completion, must stay off the
+// main actor once the app moves to main-actor-by-default.
+public nonisolated final class RealCommand: CommandProtocol, Sendable {
     init() {}
 
     public func execute(

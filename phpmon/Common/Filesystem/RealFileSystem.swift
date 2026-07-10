@@ -29,11 +29,13 @@ extension String {
     }
 }
 
-class RealFileSystem: FileSystemProtocol {
+// Nonisolated + Sendable: performs synchronous, blocking file I/O that must stay off the
+// main actor once the app moves to main-actor-by-default.
+nonisolated final class RealFileSystem: FileSystemProtocol, Sendable {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     init(container: Container) {
         self.container = container

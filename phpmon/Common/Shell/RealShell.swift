@@ -9,7 +9,10 @@
 import Foundation
 @preconcurrency import Dispatch
 
-class RealShell: ShellProtocol, @unchecked Sendable {
+// Nonisolated so it stays off the main actor once the app moves to main-actor-by-default:
+// this runs subprocesses to completion and must never block the UI thread. Its mutable
+// state (`_PATH`, `_exports`) is `Locked`-guarded, hence `@unchecked Sendable`.
+nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String, preferredShell: String) {
         // Set variables that won't be updated
         self.binPath = binPath
