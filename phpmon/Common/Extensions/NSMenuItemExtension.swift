@@ -88,25 +88,6 @@ extension NSMenuItem {
 // subclasses must be nonisolated too or their (main-actor-by-default) init overrides would
 // mismatch the parent. The inherited main-actor `NSMenuItem` API is still only ever touched
 // from the main actor (menu building), which is allowed on a nonisolated instance.
-@IBDesignable class LocalizedMenuItem: NSMenuItem {
-    @IBInspectable var localizationKey: String? {
-        didSet {
-            self.title = localizationKey?.localized ?? self.title
-        }
-    }
-
-    // `NSMenuItem`'s initializers are nonisolated in the AppKit SDK; match that so these
-    // (otherwise main-actor-by-default) overrides don't mismatch the superclass. The stored
-    // `localizationKey` is optional (defaults to nil), so no main-actor state is touched here.
-    nonisolated override init(title string: String, action selector: Selector?, keyEquivalent charCode: String) {
-        super.init(title: string, action: selector, keyEquivalent: charCode)
-    }
-
-    nonisolated required init(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-}
-
 nonisolated class PhpMenuItem: NSMenuItem {
     var version: String = ""
 }

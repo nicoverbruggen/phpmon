@@ -10,14 +10,13 @@ import Foundation
 import AppKit
 
 /**
- Any outlets connected to the app's main menu (not the menu that shows when the icon in
- the menu bar is clicked, but the regular app's main menu) are configured here.
- 
- Default interactions like copy/paste, select all, close window etc. are wired up by
- default in the storyboard and do not need to be manually added.
- 
- Extra functionality (like the menu item to reload the list of sites) does, however.
- 
+ The actions for the app's main menu (not the menu that shows when the icon in
+ the menu bar is clicked, but the regular app's main menu) live here. The menu
+ itself is built in code — see `AppMenu.build`.
+
+ Default interactions like copy/paste, select all, close window etc. go through
+ the responder chain and need no custom handling.
+
  - Note: This menu is only displayed when the app is NOT running in accessory mode.
  For more information about this, please see the ActivationPolicy-related extension.
  */
@@ -25,14 +24,14 @@ extension AppDelegate {
 
     // MARK: - Menu Interactions
 
-    @IBAction func addSiteLinkPressed(_ sender: Any) {
+    @objc func addSiteLinkPressed(_ sender: Any) {
         DomainListVC.show()
 
         guard let windowController = WindowManager.controller(of: DomainListWC.self) else { return }
         windowController.pressedAddLink(nil)
     }
 
-    @IBAction func reloadDomainListPressed(_ sender: Any) {
+    @objc func reloadDomainListPressed(_ sender: Any) {
         Task { // Reload domains
             let vc = WindowManager
                 .controller(of: DomainListWC.self)?
@@ -48,7 +47,7 @@ extension AppDelegate {
         }
     }
 
-    @IBAction func focusSearchField(_ sender: Any) {
+    @objc func focusSearchField(_ sender: Any) {
         DomainListVC.show()
 
         guard let windowController = WindowManager.controller(of: DomainListWC.self) else { return }
