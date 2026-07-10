@@ -16,6 +16,8 @@ public class RealCommand: CommandProtocol {
         trimNewlines: Bool,
         withStandardError: Bool
     ) -> String {
+        warnIfBlockingOnMainThread("command.execute: \(path)")
+
         let task = Process()
         var output = ""
 

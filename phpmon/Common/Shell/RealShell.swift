@@ -136,6 +136,8 @@ class RealShell: ShellProtocol, @unchecked Sendable {
 
     @discardableResult
     func sync(_ command: String) -> ShellOutput {
+        warnIfBlockingOnMainThread("shell.sync: \(command)")
+
         let process = getShellProcess(for: command)
 
         let outputPipe = Pipe()
