@@ -9,7 +9,7 @@ import Cocoa
 import NVAlert
 
 @MainActor
-class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
+class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
     var container: Container {
         return App.shared.container
     }
@@ -24,9 +24,24 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         super.init()
         statusItem.isVisible = !isRunningSwiftUIPreview
         statusItem.button?.isEnabled = false
-    }
 
-    weak var menuDelegate: NSMenuDelegate?
+        // The status menu's open/close side effects are driven by the menu
+        // *tracking* notifications rather than NSMenuDelegate: AppKit's
+        // accessibility machinery "simulates opening" menus for inspection
+        // (`_openForInspection`) and invokes delegate methods in a context
+        // where Swift's main-actor executor checks crash (observed whenever an
+        // accessibility client — including XCUITest — walked the status menu).
+        // Tracking notifications fire only for genuine tracking sessions, on
+        // the main thread.
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(menuDidBeginTracking(_:)),
+            name: NSMenu.didBeginTrackingNotification, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(menuDidEndTracking(_:)),
+            name: NSMenu.didEndTrackingNotification, object: nil
+        )
+    }
 
     /**
      The status bar item with variable length.
@@ -62,7 +77,6 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
             item.target = self
         })
         statusItem.menu = menu
-        statusItem.menu?.delegate = self
     }
 
     /**
@@ -294,9 +308,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { await AppUpdater().checkForUpdates(userInitiated: true) }
     }
 
-    // MARK: - Menu Delegate
+    // MARK: - Menu Tracking
 
-    func menuWillOpen(_ menu: NSMenu) {
+    @objc private func menuDidBeginTracking(_ notification: Notification) {
+        guard (notification.object as? NSMenu) === statusItem.menu else { return }
+
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
 
@@ -311,7 +327,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
-    func menuDidClose(_ menu: NSMenu) {
+    @objc private func menuDidEndTracking(_ notification: Notification) {
+        guard (notification.object as? NSMenu) === statusItem.menu else { return }
+
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false
     }

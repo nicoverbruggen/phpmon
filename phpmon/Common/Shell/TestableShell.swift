@@ -110,7 +110,17 @@ public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
         }, ignoreDelay: ignoresDelay)
 
         applyTransactions(for: expectation)
-        return (Process(), output)
+
+        // The returned process must have actually run: consumers inspect its
+        // `terminationStatus` (e.g. `ComposerWindow`), and NSTask raises when
+        // that is read from a process that was never launched. Running
+        // `/usr/bin/true` yields a real, instant, successful exit.
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/true")
+        try? process.run()
+        process.waitUntilExit()
+
+        return (process, output)
     }
 
     func reloadEnvPath() async {

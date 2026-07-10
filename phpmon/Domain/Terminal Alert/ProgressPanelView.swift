@@ -86,6 +86,7 @@ struct TerminalConsoleView: NSViewRepresentable {
         scrollView.drawsBackground = false
 
         let textView = NSTextView()
+        textView.setAccessibilityIdentifier("ProgressPanelConsole")
         textView.isRichText = false
         textView.font = NSFont(name: "Menlo-Regular", size: 10)
         textView.textColor = .white
