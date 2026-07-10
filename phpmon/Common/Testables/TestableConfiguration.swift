@@ -219,9 +219,10 @@ public struct TestableConfiguration: Codable {
         }
         container.preferences.cachedPreferences = cachedPrefs
 
-        internalStatsOverrides.forEach { key, value in
-            UserDefaults.standard.set(value, forKey: key)
-        }
+        // Stats overrides are kept in-memory (never persisted): with a fake
+        // container active, `Stats` reads and writes its in-memory store, so
+        // test runs cannot pollute the real defaults on this machine.
+        Stats.applyTestOverrides(internalStatsOverrides)
 
         App.shared.features = Set(enabledFeatures)
 
