@@ -11,7 +11,10 @@ import Foundation
 // MARK: - Alertable Errors
 // These errors must be resolved by the user.
 
-struct AdminPrivilegeError: Error, AlertableError, Equatable {
+// Errors are thrown and compared across isolation boundaries, so they stay nonisolated
+// (otherwise main-actor-by-default would isolate their `Equatable`/`Error` conformances,
+// which breaks throwing/`Sendable` use — e.g. `#expect(throws:)` in tests).
+nonisolated struct AdminPrivilegeError: Error, AlertableError, Equatable {
     enum Kind: String {
         case applescriptNilError = "homebrew_permissions.applescript_returned_nil"
         case userDenied = "homebrew_permissions.user_denied"
@@ -27,4 +30,4 @@ struct AdminPrivilegeError: Error, AlertableError, Equatable {
 // MARK: - Errors that do not have an associated alert message
 // The errors must be resolved by the developer.
 
-struct VersionParseError: Error {}
+nonisolated struct VersionParseError: Error {}
