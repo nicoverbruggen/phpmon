@@ -89,16 +89,22 @@ extension WarningManager {
             url: "https://xdebug.org/docs/install#mode",
             fix: {
                 if let php = self.container.phpEnvs.currentInstall {
-                    if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }),
-                       let original = try? self.container.filesystem.getStringFromFile(xdebug.file) {
-                        // Append xdebug.mode = off to the file
-                        try? self.container.filesystem.writeAtomicallyToFile(
-                            xdebug.file,
-                            content: original + "\nxdebug.mode = off"
-                        )
+                    if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }) {
+                        // Append xdebug.mode = off to the file (blocking I/O, so off-main)
+                        let file = xdebug.file
+                        await offMain { [container = self.container] in
+                            guard let original = try? container.filesystem.getStringFromFile(file) else {
+                                return
+                            }
+
+                            try? container.filesystem.writeAtomicallyToFile(
+                                file,
+                                content: original + "\nxdebug.mode = off"
+                            )
+                        }
 
                         // Reload extension configuration by updating PHP installation info (reload)
-                        self.container.phpEnvs.currentInstall = ActivePhpInstallation(self.container)
+                        self.container.phpEnvs.currentInstall = await ActivePhpInstallation.load(self.container)
 
                         // Finally, reload warnings
                         await self.checkEnvironment()

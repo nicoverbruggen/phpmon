@@ -203,15 +203,20 @@ class BrewDiagnostics {
      To ensure this does not cause issues, PHP Monitor will automatically remove all incorrect PHP symlinks.
      */
     public func checkForOutdatedPhpInstallationSymlinks() async {
-        // Set up a regular expression
-        let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
+        // Pure filesystem work against nonisolated leaves — run it on the
+        // concurrent pool so the directory scan never blocks the main actor.
+        await offMain { [container, filesystem] in
+            // Set up a regular expression
+            let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
 
-        // Check for incorrect versions
-        if let contents = try? filesystem.getShallowContentsOfDirectory("\(container.paths.optPath)")
-            .filter({
-                let range = NSRange($0.startIndex..., in: $0)
-                return regex.firstMatch(in: $0, options: [], range: range) != nil
-            }) {
+            // Check for incorrect versions
+            guard let contents = try? filesystem.getShallowContentsOfDirectory("\(container.paths.optPath)")
+                .filter({
+                    let range = NSRange($0.startIndex..., in: $0)
+                    return regex.firstMatch(in: $0, options: [], range: range) != nil
+                }) else {
+                return
+            }
 
             for symlink in contents {
                 let version = symlink.replacing("php@", with: "")

@@ -57,7 +57,9 @@ final class HotKey {
     nonisolated(unsafe) fileprivate var carbonHotKey: EventHotKeyRef?
 
     /// The id this hot key was registered under (0 until it is first registered).
-    fileprivate var carbonID: UInt32 = 0
+    /// `nonisolated(unsafe)` for the same reason as `carbonHotKey`: it must be
+    /// readable from `deinit`. Only ever mutated on the main actor.
+    nonisolated(unsafe) fileprivate var carbonID: UInt32 = 0
 
     init(keyCombo: KeyCombo, keyDownHandler: (() -> Void)? = nil) {
         self.keyCombo = keyCombo
@@ -67,11 +69,13 @@ final class HotKey {
 
     deinit {
         // `deinit` is nonisolated; `UnregisterEventHotKey` is a plain C call and is
-        // safe here. The center only holds a weak reference, so its bookkeeping entry
-        // falls away on its own.
+        // safe here. The center's bookkeeping is guarded by a lock (not the main
+        // actor) precisely so the entry can also be removed from here — a weak
+        // reference alone would nil out, but leave a stale entry behind.
         if let carbonHotKey {
             UnregisterEventHotKey(carbonHotKey)
         }
+        GlobalHotKeyCenter.shared.removeRegistration(id: carbonID)
     }
 }
 
@@ -80,20 +84,32 @@ final class HotKey {
 /// Owns the one shared Carbon event handler and the registry of active hot keys.
 /// Unannotated, so it inherits the module's default isolation (see `HotKey`).
 final class GlobalHotKeyCenter {
-    static let shared = GlobalHotKeyCenter()
+    // `nonisolated`: `HotKey.deinit` (nonisolated) must be able to reach the
+    // center to remove its bookkeeping entry; the class is implicitly Sendable
+    // (@MainActor) and the initializer has no isolated state to touch.
+    nonisolated static let shared = GlobalHotKeyCenter()
 
-    private init() {}
+    private nonisolated init() {}
 
     private struct Registration {
-        let carbonHotKey: EventHotKeyRef
         weak var hotKey: HotKey?
     }
 
-    private var registrations: [UInt32: Registration] = [:]
+    /// Bookkeeping for the registered hot keys, keyed by Carbon id. Guarded by
+    /// `lock` rather than the main actor, so `HotKey.deinit` (which is
+    /// nonisolated) can deterministically remove its own entry.
+    private nonisolated(unsafe) var registrations: [UInt32: Registration] = [:]
+    private nonisolated let lock = NSLock()
+
     private var nextID: UInt32 = 0
     private var eventHandler: EventHandlerRef?
 
     func register(_ hotKey: HotKey) {
+        // Never register a hot key that is already registered: the second Carbon
+        // registration would silently leak the first one. (Same guard as the
+        // vendored library this replaces.)
+        guard hotKey.carbonHotKey == nil else { return }
+
         installEventHandlerIfNeeded()
 
         // Assign a stable id the first time this hot key is registered.
@@ -119,7 +135,9 @@ final class GlobalHotKeyCenter {
         }
 
         hotKey.carbonHotKey = carbonRef
-        registrations[hotKey.carbonID] = Registration(carbonHotKey: carbonRef, hotKey: hotKey)
+        lock.withLock {
+            registrations[hotKey.carbonID] = Registration(hotKey: hotKey)
+        }
     }
 
     func unregister(_ hotKey: HotKey) {
@@ -127,14 +145,27 @@ final class GlobalHotKeyCenter {
             UnregisterEventHotKey(carbonRef)
         }
         hotKey.carbonHotKey = nil
-        registrations.removeValue(forKey: hotKey.carbonID)
+        removeRegistration(id: hotKey.carbonID)
+    }
+
+    /// Removes the bookkeeping entry for the given id. Nonisolated (with the
+    /// dictionary guarded by `lock`) so `HotKey.deinit` can call it too.
+    nonisolated fileprivate func removeRegistration(id: UInt32) {
+        lock.withLock {
+            _ = registrations.removeValue(forKey: id)
+        }
     }
 
     /// Called (on the main thread) by the Carbon event handler when one of our hot
-    /// keys fires. Ignores hot keys that were released or are currently paused.
-    fileprivate func handle(id: UInt32) {
-        guard let hotKey = registrations[id]?.hotKey, !hotKey.isPaused else { return }
-        hotKey.keyDownHandler?()
+    /// keys fires. Returns whether a handler actually ran, so the callback can let
+    /// events for released or paused hot keys propagate instead of claiming them.
+    fileprivate func handle(id: UInt32) -> Bool {
+        let hotKey = lock.withLock { registrations[id]?.hotKey }
+        guard let hotKey, !hotKey.isPaused, let handler = hotKey.keyDownHandler else {
+            return false
+        }
+        handler()
+        return true
     }
 
     private func installEventHandlerIfNeeded() {
@@ -189,11 +220,13 @@ private nonisolated func globalHotKeyEventHandler(
         return OSStatus(eventNotHandledErr)
     }
 
-    MainActor.assumeIsolated {
+    // Only claim the event when a handler actually ran; a paused or already
+    // deallocated hot key should not swallow the event.
+    let handled = MainActor.assumeIsolated {
         GlobalHotKeyCenter.shared.handle(id: hotKeyID.id)
     }
 
-    return noErr
+    return handled ? noErr : OSStatus(eventNotHandledErr)
 }
 
 // MARK: - Modifier flag conversion

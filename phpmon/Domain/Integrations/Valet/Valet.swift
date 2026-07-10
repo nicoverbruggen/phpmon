@@ -132,18 +132,21 @@ class Valet {
      Since version 5.2, it is no longer possible for an invalid file to crash the app.
      If the JSON is invalid when the app launches, an alert will be presented, however.
      */
-    public func loadConfiguration() {
-        if let parsed = parseConfiguration() {
+    public func loadConfiguration() async {
+        let container = self.container
+
+        if let parsed = await offMain({ Self.parseConfiguration(container) }) {
             config = parsed
         }
     }
 
     /**
-     Reads and decodes the Valet `config.json` file. This performs blocking file I/O but
-     does **not** mutate any shared state, so it is safe to call off the main thread. The
-     caller is responsible for assigning the result to `config` on the main actor.
+     Reads and decodes the Valet `config.json` file. This performs blocking file I/O,
+     so callers must invoke it via `offMain` to keep the main actor free. It does
+     **not** mutate any shared state; the caller is responsible for assigning the
+     result to `config` on the main actor.
      */
-    private func parseConfiguration() -> Valet.Configuration? {
+    private nonisolated static func parseConfiguration(_ container: Container) -> Valet.Configuration? {
         do {
             return try JSONDecoder().decode(
                 Valet.Configuration.self,
@@ -170,12 +173,13 @@ class Valet {
      (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() async {
-        // Parse the configuration off the main thread (blocking file I/O), then publish
-        // it and claim the busy flag atomically on the main actor. The UI reads
-        // `config`, `sites` and `proxies` on the main thread, so every mutation of that
-        // shared state must happen on the main actor too — otherwise we get the data
-        // race that crashed 26.05.3.
-        let parsed = parseConfiguration()
+        // Parse the configuration off the main thread (blocking file I/O, hopped to
+        // the concurrent pool via `offMain`), then publish it and claim the busy flag
+        // atomically on the main actor. The UI reads `config`, `sites` and `proxies`
+        // on the main thread, so every mutation of that shared state must happen on
+        // the main actor too — otherwise we get the data race that crashed 26.05.3.
+        let container = self.container
+        let parsed = await offMain { Self.parseConfiguration(container) }
 
         let shouldProceed = await MainActor.run { () -> Bool in
             if let parsed {
@@ -309,28 +313,28 @@ class Valet {
     /**
      Returns a count of how many sites are linked and parked.
      */
-    private func countPaths() -> Int {
-        return ValetScanner.active.resolveSiteCount(paths: config.paths)
+    private func countPaths() async -> Int {
+        return await ValetScanner.active.resolveSiteCount(paths: config.paths)
     }
 
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
     private func resolvePaths() async {
-        // The blocking directory scan runs off the main thread and writes only to local
-        // variables — no shared state is touched here.
-        let scannedSites = ValetScanner.active
+        // The scanner performs its blocking directory/certificate I/O on the concurrent
+        // pool and only builds the site/proxy models here on the main actor.
+        let scannedSites = await ValetScanner.active
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        let scannedProxies = ValetScanner.active
+        let scannedProxies = await ValetScanner.active
             .resolveProxies(
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
-        let resolvedSites = sitesIncludingDefault(from: scannedSites)
+        let resolvedSites = await sitesIncludingDefault(from: scannedSites)
 
         // Publish the results and release the busy flag on the main actor, so that all
         // mutations of `sites`/`proxies`/`isBusy` happen on the same thread the UI reads
@@ -345,9 +349,9 @@ class Valet {
 
     /// Returns the scanned sites with the configured default site included at the front,
     /// unless it is already present in the list.
-    private func sitesIncludingDefault(from sites: [ValetSite]) -> [ValetSite] {
+    private func sitesIncludingDefault(from sites: [ValetSite]) async -> [ValetSite] {
         guard let defaultPath = config.defaultSite,
-              let defaultSite = ValetScanner.active.resolveSite(path: defaultPath),
+              let defaultSite = await ValetScanner.active.resolveSite(path: defaultPath),
               !sites.contains(where: {
                   $0.absolutePath == defaultSite.absolutePath && $0.name == defaultSite.name
               })
@@ -358,7 +362,9 @@ class Valet {
         return [defaultSite] + sites
     }
 
-    struct Configuration: Decodable {
+    // `nonisolated` + `Sendable`: decoded on the concurrent pool (the config file
+    // read is blocking I/O) and handed back to the main actor. All-immutable storage.
+    nonisolated struct Configuration: Decodable, Sendable {
         /// Top level domain suffix. Usually "test" but can be set to something else.
         /// - Important: Does not include the actual dot. ("test", not ".test"!)
         let tld: String

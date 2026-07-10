@@ -101,9 +101,9 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - User Interface
 
     /** Reloads which PHP versions is currently active. */
-    @objc func refreshActiveInstallation() {
+    func refreshActiveInstallation() async {
         if !container.phpEnvs.isBusy {
-            container.phpEnvs.currentInstall = ActivePhpInstallation.load(container)
+            container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
             refreshIcon()
             rebuild()
         } else {
@@ -125,7 +125,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func reloadPhpMonitorMenuInForeground() {
         Log.perf("The menu will be reloaded...")
         Task { [self] in
-            self.refreshActiveInstallation()
+            await self.refreshActiveInstallation()
             self.refreshIcon()
             self.rebuild()
             await ServicesManager.shared.reloadServicesStatus()

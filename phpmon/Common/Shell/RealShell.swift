@@ -17,11 +17,11 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         self.binPath = binPath
         self.preferredShell = preferredShell
 
-        // Retrieve the PATH
-        let PATH = RealShell.getPath(shell: preferredShell)
-
-        // Set thread-safe variables
-        self._PATH = Locked<String>(PATH)
+        // The PATH is resolved lazily on first access (see `PATH`): resolving it
+        // spawns an interactive shell that can take seconds, and this initializer
+        // runs on the main actor during `Container.bind()`. `AppDelegate.init`
+        // warms the value up on the concurrent pool right after binding.
+        self._PATH = Locked<String?>(nil)
         self._exports = Locked<[String: String]>([:])
     }
 
@@ -36,14 +36,7 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
 
     // MARK: - Thread-safe access; public accessor
 
-    /**
-     For some commands, we need to know what's in the user's PATH.
-     The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
-     */
-    internal var PATH: String {
-        get { _PATH.value }
-        set { _PATH.value = newValue }
-    }
+    // Note: the `PATH` accessor (lazy resolution) lives in `RealShell+PATH.swift`.
 
     /**
      Exports are additional environment variables set by the user via the custom configuration.
@@ -57,7 +50,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
 
     // MARK: - Thread-safe access; internal values
 
-    private let _PATH: Locked<String>
+    // `internal` (not private) because the `PATH` accessor lives in `RealShell+PATH.swift`.
+    let _PATH: Locked<String?>
     private let _exports: Locked<[String: String]>
 
     // MARK: - Methods
@@ -293,13 +287,14 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         let outBuffer = Locked<String>("")
         let errBuffer = Locked<String>("")
 
-        // Only access mutable state from this queue.
+        // All mutable state AND all pipe reads are confined to this queue.
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
             // `Locked` guard: safe mutation from the `@Sendable` timeout/termination closures.
             let finished = Locked<Bool>(false)
 
+            // Runs on `serialQueue`: the drain sees all data the handlers didn't consume.
             let finishSuccess: @Sendable () -> Void = {
                 if finished.value { return }
                 finished.value = true
@@ -311,12 +306,12 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
 
                 if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                    outBuffer.value += string
+                    outBuffer.withLock { $0 += string }
                     didReceiveOutput(string, .stdOut)
                 }
 
                 if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                    errBuffer.value += string
+                    errBuffer.withLock { $0 += string }
                     didReceiveOutput(string, .stdErr)
                 }
 
@@ -347,29 +342,28 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
 
             serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutTaskTermination)
 
-            // Set up background reading for stdout
-            outputPipe.fileHandleForReading.readabilityHandler = { fileHandle in
-                let data = fileHandle.availableData
-                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    serialQueue.async {
+            // Background reading for stdout/stderr. Consuming `availableData` inside
+            // the `sync` block makes "check finished → consume → append" one critical
+            // section: a chunk consumed just before termination flips `finished` would
+            // otherwise be dropped by the guard, yet the `finishSuccess` drain can
+            // never re-read consumed data. `availableData` won't block: the handler
+            // only fires when the pipe is readable, and the drain runs behind this queue.
+            let makeReadabilityHandler: @Sendable (Locked<String>, ShellStream)
+                -> (@Sendable (FileHandle) -> Void) = { buffer, stream in
+                return { fileHandle in
+                    serialQueue.sync {
                         if finished.value { return }
-                        outBuffer.value += string
-                        didReceiveOutput(string, .stdOut)
+                        let data = fileHandle.availableData
+                        if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
+                            buffer.withLock { $0 += string }
+                            didReceiveOutput(string, stream)
+                        }
                     }
                 }
             }
 
-            // Set up background reading for stderr
-            errorPipe.fileHandleForReading.readabilityHandler = { fileHandle in
-                let data = fileHandle.availableData
-                if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                    serialQueue.async {
-                        if finished.value { return }
-                        errBuffer.value += string
-                        didReceiveOutput(string, .stdErr)
-                    }
-                }
-            }
+            outputPipe.fileHandleForReading.readabilityHandler = makeReadabilityHandler(outBuffer, .stdOut)
+            errorPipe.fileHandleForReading.readabilityHandler = makeReadabilityHandler(errBuffer, .stdErr)
 
             process.terminationHandler = { _ in
                 serialQueue.async {

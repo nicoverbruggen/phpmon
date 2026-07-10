@@ -45,33 +45,33 @@ struct ValetDomainScannerTest {
         )
     }
 
-    @Test func resolving_broken_symlink_does_not_crash() {
+    @Test func resolving_broken_symlink_does_not_crash() async {
         // This symlink exists but points to a target that doesn't exist in the filesystem.
         // Previously, this would crash due to `try!` in ValetSite.init(aliasPath:).
-        let site = scanner.resolveSite(path: "/Users/user/.config/valet/Sites/broken-link")
+        let site = await scanner.resolveSite(path: "/Users/user/.config/valet/Sites/broken-link")
 
         #expect(site == nil)
     }
 
-    @Test func resolving_valid_symlink_returns_site() {
-        let site = scanner.resolveSite(path: "/Users/user/.config/valet/Sites/valid-link")
+    @Test func resolving_valid_symlink_returns_site() async {
+        let site = await scanner.resolveSite(path: "/Users/user/.config/valet/Sites/valid-link")
 
         #expect(site != nil)
         #expect(site?.name == "valid-link")
         #expect(site?.absolutePath == "/Users/user/Code/valid-project")
     }
 
-    @Test func resolving_parked_directory_returns_site() {
-        let site = scanner.resolveSite(path: "/Users/user/Sites/parked-site")
+    @Test func resolving_parked_directory_returns_site() async {
+        let site = await scanner.resolveSite(path: "/Users/user/Sites/parked-site")
 
         #expect(site != nil)
         #expect(site?.name == "parked-site")
     }
 
-    @Test func resolving_sites_with_broken_symlink_skips_it() {
+    @Test func resolving_sites_with_broken_symlink_skips_it() async {
         // When scanning all paths, a broken symlink should be skipped
         // without crashing, and valid sites should still be returned.
-        let sites = scanner.resolveSitesFrom(paths: [
+        let sites = await scanner.resolveSitesFrom(paths: [
             "/Users/user/.config/valet/Sites",
             "/Users/user/Sites"
         ])

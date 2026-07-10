@@ -27,6 +27,13 @@ actor HomebrewWatchManager: Suspendable {
             return
         }
 
+        // Replacing an existing manager would orphan its FSNotifier (the notifier's
+        // cancel handler keeps it alive until cancelled), so tear it down first.
+        if let existing = App.shared.homebrewWatchManager {
+            App.shared.homebrewWatchManager = nil
+            await existing.disable()
+        }
+
         // Read the (Sendable) filesystem here on the main actor and hand it to the
         // actor, so the actor never has to touch main-actor `App`/`Container` state.
         let manager = HomebrewWatchManager(
@@ -136,6 +143,17 @@ actor HomebrewWatchManager: Suspendable {
             // Finally, refresh the active installation
             await MainMenu.shared.refreshActiveInstallation()
         }
+    }
+
+    /**
+     Permanently disables this manager: cancels any pending debounced work and
+     terminates the underlying `FSNotifier` (which breaks the notifier's deliberate
+     keep-alive cycle so both objects can deinit).
+     */
+    func disable() async {
+        await debouncer.cancel()
+        watcher?.terminate()
+        watcher = nil
     }
 
     // MARK: - Suspendable Protocol

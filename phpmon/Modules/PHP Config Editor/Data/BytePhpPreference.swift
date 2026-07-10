@@ -36,19 +36,43 @@ class BytePhpPreference: PhpPreference {
         didSet { updatedFieldValue() }
     }
 
-    override init(_ container: Container, key: String) {
-        let value = container.command.execute(
-            path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
-            trimNewlines: false
-        )
+    /**
+     Loads the preference for `key`, running the blocking `ini_get` probe on the
+     concurrent pool so the main actor is never blocked. Use this in production;
+     the synchronous initializer below is for fake containers (tests/previews).
+     */
+    static func load(_ container: Container, key: String) async -> BytePhpPreference {
+        let rawValue = await offMain {
+            Self.readRawValue(container, key: key)
+        }
 
-        self.internalValue = value
-        if let (unit, value) = BytePhpPreference.readFrom(internalValue: self.internalValue) {
+        return BytePhpPreference(container, key: key, rawValue: rawValue)
+    }
+
+    init(_ container: Container, key: String, rawValue: String) {
+        self.internalValue = rawValue
+        if let (unit, value) = BytePhpPreference.readFrom(internalValue: rawValue) {
             self.unit = unit
             self.value = value
         }
 
         super.init(container, key: key)
+    }
+
+    /**
+     Synchronous variant that probes `ini_get` on the caller's thread. Only
+     acceptable against fake containers (tests, previews), where the command
+     resolves instantly; production code must use `load`.
+     */
+    convenience override init(_ container: Container, key: String) {
+        self.init(container, key: key, rawValue: Self.readRawValue(container, key: key))
+    }
+
+    private nonisolated static func readRawValue(_ container: Container, key: String) -> String {
+        return container.command.execute(
+            path: container.paths.php, arguments: ["-r", "echo ini_get('\(key)');"],
+            trimNewlines: false
+        )
     }
 
     // MARK: Save Value

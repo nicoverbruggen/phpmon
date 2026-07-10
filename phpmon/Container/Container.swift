@@ -10,8 +10,10 @@ import Foundation
 
 // Nonisolated: the DI container hands out the leaf services (shell, filesystem, command,
 // paths — all nonisolated) and must be reachable from off-main / actor contexts. It is
-// @unchecked Sendable because its slots are bound once at startup and never re-swapped
-// concurrently.
+// @unchecked Sendable because in Release its slots are bound once at startup and never
+// re-swapped. DEBUG configuration profiles and tests do re-swap fakes via `overrideFake`,
+// but always on the main actor during controlled startup or test setup, before any
+// background work holds a reference to the instances being replaced.
 nonisolated class Container: @unchecked Sendable {
     // MARK: - System Context
 
@@ -167,6 +169,12 @@ nonisolated class Container: @unchecked Sendable {
 
         // We will also re-initialize PhpEnvironments due to altered dependencies
         self.phpEnvs = PhpEnvironments(container: self)
+
+        // Populate the current installation eagerly, as tests expect. The blocking
+        // (synchronous) load is acceptable here because this container is backed by
+        // fakes, so the probe's I/O resolves instantly. The real container defers
+        // this to the async load performed during the startup environment checks.
+        self.phpEnvs.currentInstall = ActivePhpInstallation.loadSync(self)
     }
 
     /**

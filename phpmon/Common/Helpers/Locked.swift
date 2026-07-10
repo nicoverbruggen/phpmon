@@ -29,6 +29,17 @@ import Foundation
  Thread A might see a partially-written or inconsistent state, leading to crashes
  or corrupted data. The lock ensures operations happen one at a time.
 
+ ## Caveats
+
+ - `NSLock` is non-reentrant: nested access to the same instance from within
+   `withLock` or the `value` accessors — e.g. reading `value` inside a `withLock`
+   body, or setting `value` from another `withLock` on the same `Locked` — will
+   deadlock.
+ - Compound assignments like `locked.value += x` are a get followed by a set:
+   two separate critical sections, not an atomic read-modify-write. Another
+   thread can interleave between the read and the write, losing updates. Use
+   `withLock { $0 += x }` for read-modify-write operations.
+
  Use with care. Using structured concurrency w/ `actor` or delegating to
  `MainActor` is generally preferred, but this approach may be necessary in
  situations where adopting structured concurrency would otherwise be
@@ -47,6 +58,11 @@ nonisolated final class Locked<T>: @unchecked Sendable {
         self._value = value
     }
 
+    /**
+     Reads or replaces the value, each under its own lock acquisition.
+     Not suitable for read-modify-write (`value += x`): use `withLock` instead.
+     Accessing `value` from within a `withLock` body deadlocks (non-reentrant).
+     */
     var value: T {
         get {
             lock.lock()
@@ -60,6 +76,12 @@ nonisolated final class Locked<T>: @unchecked Sendable {
         }
     }
 
+    /**
+     Runs `body` with exclusive access to the value: the way to perform an
+     atomic read-modify-write. The body must not touch this same `Locked`
+     instance again (via `value` or `withLock`) — the lock is non-reentrant
+     and doing so deadlocks.
+     */
     @discardableResult
     func withLock<R>(_ body: (inout T) -> R) -> R {
         lock.lock()

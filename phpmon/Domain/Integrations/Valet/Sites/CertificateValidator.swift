@@ -11,8 +11,11 @@ import Security
 
 /**
  A utility class for validating SSL certificates, including checking expiration dates.
+
+ `nonisolated` + `Sendable`: certificate reads are blocking file I/O and run on the
+ concurrent pool during site/proxy scans; this type only holds the immutable container.
  */
-class CertificateValidator {
+nonisolated final class CertificateValidator: Sendable {
 
     /// The dependency container for file system access
     private let container: Container

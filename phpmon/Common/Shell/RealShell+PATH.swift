@@ -11,6 +11,31 @@ import Foundation
 
 extension RealShell {
     /**
+     For some commands, we need to know what's in the user's PATH.
+     The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
+
+     The first access resolves the PATH by spawning an interactive shell (blocking,
+     bounded by `getPath`'s timeout); the resolved value is cached. Concurrent first
+     readers serialize on the lock and observe the single resolution. `AppDelegate.init`
+     warms this up on the concurrent pool, so post-startup readers normally hit the cache.
+     */
+    internal var PATH: String {
+        get {
+            _PATH.withLock { path in
+                if let path {
+                    return path
+                }
+
+                warnIfBlockingOnMainThread("shell.getPath")
+                let resolved = RealShell.getPath(shell: preferredShell)
+                path = resolved
+                return resolved
+            }
+        }
+        set { _PATH.value = newValue }
+    }
+
+    /**
      Retrieves the user's PATH by opening an interactive shell and echoing $PATH.
      If opening the user shell times out after X seconds, a fallback is used.
 

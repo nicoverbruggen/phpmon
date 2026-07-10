@@ -9,10 +9,13 @@
 import Foundation
 
 class PhpHelper {
-    static let helperDirectorySuffix = ".config/phpmon/bin"
-    static let symlinkDirectory = "/usr/local/bin"
+    // `nonisolated`: immutable constants read by the nonisolated writer/symlink helpers.
+    nonisolated static let helperDirectorySuffix = ".config/phpmon/bin"
+    nonisolated static let symlinkDirectory = "/usr/local/bin"
 
-    struct HelperFile {
+    // `nonisolated` + `Sendable`: helper files are written to disk on the
+    // concurrent pool (blocking I/O), so these values cross isolation boundaries.
+    nonisolated struct HelperFile: Sendable {
         let version: String
         let dotless: String
         let destination: String
@@ -37,10 +40,11 @@ class PhpHelper {
         let helperFiles = PhpHelper.makeHelperFiles(shell, container, installedVersions: installedVersions)
 
         // Writes the helper files (but only if the files are changed!)
-        let writtenFiles = PhpHelper.writeHelperFiles(container, files: helperFiles)
+        // Blocking file I/O, so this hops to the concurrent pool.
+        let writtenFiles = await offMain { PhpHelper.writeHelperFiles(container, files: helperFiles) }
 
         // If the helper directory is in the PATH, the symlinks won't be created
-        if shouldCreateSymlinks(container, helperDirectory: helperDirectoryPath) {
+        if await offMain({ shouldCreateSymlinks(container, helperDirectory: helperDirectoryPath) }) {
             await createSymlinks(container, files: helperFiles)
         }
 

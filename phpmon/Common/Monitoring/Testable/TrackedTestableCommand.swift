@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TrackableTestableCommand: TestableCommand {
+nonisolated final class TrackableTestableCommand: TestableCommand, @unchecked Sendable {
     private let commandTracker: CommandTracker
 
     init(commands: [String: String], _ commandTracker: CommandTracker) {

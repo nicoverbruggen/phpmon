@@ -7,7 +7,9 @@
 //
 
 extension PhpHelper {
-    static func writeHelperFiles(
+    // `nonisolated`: performs blocking file I/O and is invoked via `offMain`
+    // from `regenerate`, so it must be callable off the main actor.
+    nonisolated static func writeHelperFiles(
         _ container: Container,
         files: [HelperFile]
     ) -> [String] {
@@ -27,7 +29,7 @@ extension PhpHelper {
         return writtenFiles
     }
 
-    private static func writeIfNeeded(
+    private nonisolated static func writeIfNeeded(
         _ container: Container,
         file: HelperFile
     ) throws -> Bool {

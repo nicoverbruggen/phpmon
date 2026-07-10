@@ -45,7 +45,7 @@ extension MainMenu {
         }
 
         asyncExecution {
-            try self.actions.fixHomebrewPermissions()
+            try await self.actions.fixHomebrewPermissions()
         } success: {
             NVAlert()
                 .withInformation(
@@ -294,7 +294,7 @@ extension MainMenu {
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 
-        container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+        container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
         await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
@@ -308,7 +308,7 @@ extension MainMenu {
             rebuild()
             await PhpEnvironments.switcher.performSwitch(to: version)
 
-            container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+            container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
             await ConfigWatchManager.handleWatcher()
             container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
         }
@@ -333,7 +333,7 @@ extension MainMenu {
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 
-        container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+        container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
         await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }

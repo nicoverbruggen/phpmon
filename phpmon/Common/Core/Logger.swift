@@ -7,14 +7,26 @@
 //
 
 import Foundation
+import os
 
-// `@unchecked Sendable`: Log is a logging utility whose mutable state is low-stakes.
-nonisolated final class Log: @unchecked Sendable {
+// `nonisolated` + `Sendable`: Log is called from the main actor and from arbitrary background
+// threads. All mutable state (`verbosity`, `logExists`) lives inside an `OSAllocatedUnfairLock`
+// (Apple's `Sendable` lock, available on the app's macOS 13.5 deployment target), so the class
+// is genuinely data-race-free and can conform to `Sendable` without `@unchecked`. File appends
+// happen inside the same lock-protected region, so concurrent log lines cannot interleave.
+// When the deployment target reaches macOS 15 this lock can become the standard-library `Mutex`.
+nonisolated final class Log: Sendable {
     static let shared = Log()
 
-    var logFilePath = "~/.config/phpmon/last_session.log"
+    let logFilePath = "~/.config/phpmon/last_session.log"
 
-    var logExists = false
+    /// The mutable state of the logger, only ever accessed via the lock below.
+    private struct MutableState {
+        var verbosity: Verbosity = .warning
+        var logExists = false
+    }
+
+    private let state = OSAllocatedUnfairLock(initialState: MutableState())
 
     enum Verbosity: Int {
         case always = 0,
@@ -34,12 +46,15 @@ nonisolated final class Log: @unchecked Sendable {
             system_quiet("mkdir -p ~/.config/phpmon 2> /dev/null")
             system_quiet("rm ~/.config/phpmon/last_session.log 2> /dev/null")
             system_quiet("touch ~/.config/phpmon/last_session.log 2> /dev/null")
-            self.logExists = App.shared.container.filesystem.fileExists(self.logFilePath)
+            let exists = App.shared.container.filesystem.fileExists(self.logFilePath)
+            state.withLock { $0.logExists = exists }
         }
     }
 
-    var verbosity: Verbosity = .warning {
-        didSet {
+    var verbosity: Verbosity {
+        get { state.withLock { $0.verbosity } }
+        set {
+            state.withLock { $0.verbosity = newValue }
             self.prepareLogFile()
         }
     }
@@ -91,7 +106,16 @@ nonisolated final class Log: @unchecked Sendable {
 
         print(text)
 
-        if logExists && Verbosity.cli.isApplicable() {
+        // The check and the append happen inside a single lock-protected region: the
+        // open-seek-write-close sequence is not atomic on its own, so serializing it here
+        // prevents concurrent log lines from interleaving or clobbering one another.
+        // (Reading `verbosity` directly avoids re-entering the non-reentrant lock via
+        // `Verbosity.isApplicable()`.)
+        state.withLock { state in
+            guard state.logExists && state.verbosity.rawValue >= Verbosity.cli.rawValue else {
+                return
+            }
+
             let logFile = URL(string: self.logFilePath.replacingTildeWithHomeDirectory)!
             if let fileHandle = try? FileHandle(forWritingTo: logFile) {
                 fileHandle.seekToEndOfFile()

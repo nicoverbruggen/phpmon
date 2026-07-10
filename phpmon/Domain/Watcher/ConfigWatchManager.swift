@@ -48,8 +48,13 @@ actor ConfigWatchManager: Suspendable {
             // The (Sendable) filesystem is read here on the main actor and handed to the
             // actor, so the actor never has to touch main-actor `App`/`Container` state.
             let manager = ConfigWatchManager(for: url, filesystem: container.filesystem)
-            await manager.setupWatchers()
+
+            // Publish before the first suspension point: a concurrent `handleWatcher`
+            // (startup and PHP switches both call this) must observe this manager
+            // instead of racing past the nil check and creating a second one, whose
+            // orphaned watchers would never be terminated.
             App.shared.configWatchManager = manager
+            await manager.setupWatchers()
             return
         }
 
@@ -92,8 +97,12 @@ actor ConfigWatchManager: Suspendable {
     }
 
     func setupWatchers() {
-        // Guard against double setup
-        assert(watchers.isEmpty, "setupWatchers() called when watchers already exist")
+        // Guard against double setup: a concurrent `handleWatcher` may have already
+        // set up (or updated) the watchers while this call was waiting on the actor.
+        guard watchers.isEmpty else {
+            Log.perf("setupWatchers() skipped; watchers already exist.")
+            return
+        }
 
         // Add a watcher for php.ini
         self.addWatcher(for: self.url.appendingPathComponent("php.ini"), eventMask: .write)

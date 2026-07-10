@@ -40,14 +40,49 @@ class PhpConfigurationFile: CreatedFromFile {
         _ container: Container,
         filePath: String
     ) -> Self? {
-        let path = filePath.replacing("~", with: container.paths.homePath)
-
-        do {
-            let fileContents = try container.filesystem.getStringFromFile(path)
-            return Self.init(container, path: path, contents: fileContents)
-        } catch {
-            Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
+        guard let snapshot = Snapshot.read(container, filePath: filePath) else {
             return nil
+        }
+
+        return Self.init(container, path: snapshot.path, contents: snapshot.contents)
+    }
+
+    /** Builds a configuration file model from a previously read snapshot, without I/O. */
+    static func from(
+        _ container: Container,
+        snapshot: Snapshot
+    ) -> Self {
+        return Self.init(container, path: snapshot.path, contents: snapshot.contents)
+    }
+
+    /**
+     The raw, `Sendable` contents of an .ini file on disk.
+
+     `PhpConfigurationFile` itself is a main-actor model (the UI mutates it), so it
+     cannot be built off-main. The blocking file read is separated out into this
+     snapshot so detection can perform all I/O on the concurrent pool (via `offMain`)
+     and hand the main actor plain strings to build models from.
+     */
+    nonisolated struct Snapshot: Sendable {
+        let path: String
+        let contents: String
+
+        /** Reads a single .ini file (blocking). Returns nil (and logs) when unreadable. */
+        static func read(_ container: Container, filePath: String) -> Snapshot? {
+            let path = filePath.replacing("~", with: container.paths.homePath)
+
+            do {
+                let contents = try container.filesystem.getStringFromFile(path)
+                return Snapshot(path: path, contents: contents)
+            } catch {
+                Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
+                return nil
+            }
+        }
+
+        /** Reads multiple .ini files (blocking), skipping any that are unreadable. */
+        static func read(_ container: Container, filePaths: [String]) -> [Snapshot] {
+            return filePaths.compactMap { read(container, filePath: $0) }
         }
     }
 

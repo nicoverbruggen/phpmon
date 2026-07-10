@@ -25,7 +25,9 @@ protocol PrivilegedCommandApprovalPresenting {
 final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     @MainActor
     func runSimpleShellAsAdmin(_ script: String, reason _: PrivilegedCommandReason) async throws -> String {
-        return try AppleScript.runSimpleShellAsAdmin(script)
+        // The admin prompt and the elevated command block until they complete,
+        // so run them on the concurrent pool rather than the main actor.
+        return try await offMain { try AppleScript.runSimpleShellAsAdmin(script) }
     }
 }
 

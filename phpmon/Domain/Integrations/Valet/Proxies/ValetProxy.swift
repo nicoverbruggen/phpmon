@@ -37,7 +37,7 @@ class ValetProxy: ValetListable {
         self.secured = false
     }
 
-    convenience init?(_ container: Container, _ configuration: NginxConfigurationFile) {
+    convenience init?(_ container: Container, _ configuration: NginxConfigurationFile, makeDeterminations: Bool = true) {
         guard let proxy = configuration.proxy else { return nil }
         self.init(
             container,
@@ -47,8 +47,10 @@ class ValetProxy: ValetListable {
             tld: configuration.tld
         )
 
-        self.favorited = container.favorites.contains(domain: self.domain)
-        self.determineSecured()
+        if makeDeterminations {
+            self.favorited = container.favorites.contains(domain: self.domain)
+            self.determineSecured()
+        }
     }
 
     // MARK: - ValetListable Protocol
@@ -95,19 +97,39 @@ class ValetProxy: ValetListable {
 
     // MARK: - Interactions
 
+    /**
+     Runs the metadata determinations for this proxy, with the blocking
+     certificate read on the concurrent pool (see `ValetSite.determine()`).
+     */
+    func determine() async {
+        self.favorited = container.favorites.contains(domain: self.domain)
+
+        let path = self.certificatePath
+        let validator = CertificateValidator(container)
+        apply(certificate: await offMain { validator.validateCertificate(at: path) })
+    }
+
+    /// The path where this proxy's TLS certificate lives once it has been secured.
+    private var certificatePath: String {
+        return "~/.config/valet/Certificates/\(self.domain).\(self.tld).crt"
+    }
+
+    /**
+     Blocking variant of the certificate check, for one-off refreshes (e.g. after
+     securing/unsecuring a proxy). Batch scans go through `determine()`.
+     */
     func determineSecured() {
-        let certificatePath = "~/.config/valet/Certificates/\(self.domain).\(self.tld).crt"
+        apply(certificate: CertificateValidator(container).validateCertificate(at: certificatePath))
+    }
 
-        let (exists, expiryDate) = CertificateValidator(container)
-            .validateCertificate(at: certificatePath)
-
-        if exists, let expiryDate, expiryDate < Date() {
+    private func apply(certificate: (exists: Bool, expirationDate: Date?)) {
+        if certificate.exists, let expiryDate = certificate.expirationDate, expiryDate < Date() {
             Log.warn("Certificate for \(self.domain).\(self.tld) expired at: \(expiryDate). It should be renewed.")
         }
 
         // Persist the information for the list
-        self.secured = exists
-        self.certificateExpiryDate = expiryDate
+        self.secured = certificate.exists
+        self.certificateExpiryDate = certificate.expirationDate
     }
 
     func toggleFavorite() {

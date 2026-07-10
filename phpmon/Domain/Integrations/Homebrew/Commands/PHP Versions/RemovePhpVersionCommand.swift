@@ -21,7 +21,10 @@ class RemovePhpVersionCommand: BrewCommand {
 
     /// The PHP version linked when this command was created, snapshotted on the main actor
     /// at init time. Storing the `Sendable` `String?` (instead of the non-Sendable
-    /// `PhpGuard`) lets the off-main, `nonisolated` orchestration read it without hopping.
+    /// `PhpGuard`) lets the `nonisolated` orchestration read it without hopping. (Note:
+    /// under `NonisolatedNonsendingByDefault`, that orchestration runs on the *caller's*
+    /// executor — usually the main actor — and stays responsive because the underlying
+    /// shell APIs suspend; only explicitly `offMain`/`@concurrent` work leaves the caller.)
     let previousPhpVersion: String?
 
     // MARK: - Methods

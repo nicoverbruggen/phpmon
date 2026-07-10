@@ -230,6 +230,46 @@ struct RealShellTest {
         // If these two match, we know no additional callbacks fired after the delay
         #expect(callbackCountAfterDelay == callbackCountAtTimeout)
     }
+
+    /**
+     Regression test for an output-drop race in `RealShell.attach(...)`.
+
+     The readability handlers used to consume `availableData` on the FileHandle's
+     own queue and only then hop to the serial queue to append. When a fast-exiting
+     process terminated in that window, the termination path flipped `finished` and
+     drained the pipe first; the already-consumed chunk then hit the `finished`
+     guard and was silently dropped — the drain could never re-read it. Symptom:
+     occasionally truncated `attach` output for short-lived processes.
+
+     This runs a fast-exiting command with known multi-chunk output many times and
+     asserts the full output is always captured, and that every chunk is delivered
+     via `didReceiveOutput` exactly once, in order.
+     */
+    @Test func attach_captures_all_output_of_fast_exiting_commands() async throws {
+        // 200 numbered lines (~2 KB) written as individual `echo` calls, so the
+        // output typically arrives in multiple chunks; the process exits right
+        // after the final write, making termination race the readability handlers.
+        let expected = (1...200).map { "line-\($0)\n" }.joined()
+        let command = "i=1; while [ $i -le 200 ]; do echo line-$i; i=$((i+1)); done"
+
+        for iteration in 1...50 {
+            let chunks = Locked<[String]>([])
+
+            let (_, shellOutput) = try await container.shell.attach(
+                command,
+                didReceiveOutput: { incoming, _ in
+                    chunks.withLock { $0.append(incoming) }
+                },
+                withTimeout: 5.0
+            )
+
+            // The full output must be captured, every time.
+            #expect(shellOutput.out == expected, "Output was truncated on iteration \(iteration)")
+
+            // Every chunk must be delivered exactly once, in order.
+            #expect(chunks.value.joined() == shellOutput.out)
+        }
+    }
 }
 
 @Suite(.serialized)

@@ -57,7 +57,7 @@ class Actions {
         await brew(container, "services stop \(formulae.dnsmasq)", sudo: formulae.dnsmasq.elevated)
     }
 
-    public func fixHomebrewPermissions() throws {
+    public func fixHomebrewPermissions() async throws {
         var servicesCommands = [
             "\(paths.brew) services stop \(formulae.nginx)",
             "\(paths.brew) services stop \(formulae.dnsmasq)"
@@ -81,7 +81,9 @@ class Actions {
             + " && "
             + cellarCommands.joined(separator: " && ")
 
-        try AppleScript.runSimpleShellAsAdmin(script)
+        // The admin prompt and the elevated commands block until they complete,
+        // so this must never run on the main actor.
+        try await offMain { try AppleScript.runSimpleShellAsAdmin(script) }
     }
 
     // MARK: - Finding Config Files

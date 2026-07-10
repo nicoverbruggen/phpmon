@@ -14,11 +14,15 @@ class PhpEnvironments {
     // MARK: - Initializer
 
     /**
-     Loads the currently active PHP installation upon startup. May be empty.
+     Creates the PHP environment bookkeeping. `currentInstall` starts out nil:
+     loading it requires blocking probe I/O, which must not run on the main
+     actor (this initializer runs during `Container.bind()` at launch). The
+     environment check in `Startup` populates it via the async
+     `ActivePhpInstallation.load`; test containers populate it synchronously in
+     `Container.overrideFake` (where fake I/O is instant).
      */
     init(container: Container) {
         self.container = container
-        self.currentInstall = ActivePhpInstallation.load(container)
     }
 
     /**
@@ -180,7 +184,9 @@ class PhpEnvironments {
      */
     var homebrewBrewPhpAlias: String? {
         if homebrewPackage == nil {
-            // For UI testing and as a fallback, determine this version by using (fake) php-config
+            // For UI testing and as a fallback, determine this version by using (fake) php-config.
+            // This blocking call is acceptable here: the nil-package case only occurs with fake
+            // containers (UI testing), where command execution is instant.
             let version = App.shared.container.command.execute(path: container.paths.phpConfig,
                                    arguments: ["--version"],
                                    trimNewlines: true)
@@ -259,7 +265,7 @@ class PhpEnvironments {
         if let phpAlias = homebrewPackage.version {
             // Avoid inserting a duplicate
             if !installedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
-                let phpAliasInstall = PhpInstallation(container, phpAlias)
+                let phpAliasInstall = await PhpInstallation.detect(container, phpAlias)
                 // Before inserting, ensure that the actual output matches the alias
                 // if that isn't the case, our formula remains out-of-date
                 if !phpAliasInstall.isMissingBinary {
@@ -279,10 +285,33 @@ class PhpEnvironments {
         Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
         Log.info("The PHP versions that were unsupported are: \(incompatiblePhpVersions)")
 
+        // Probe all detected versions concurrently on the concurrent pool (each
+        // probe runs several subprocesses), then build the main-actor models
+        // from the returned `Sendable` probe data without further I/O.
+        let versionsToProbe = availablePhpVersions
+        let probes = await withTaskGroup(
+            of: (String, PhpInstallation.Probe).self,
+            returning: [String: PhpInstallation.Probe].self
+        ) { [container] group in
+            for version in versionsToProbe {
+                group.addTask {
+                    await (version, offMain { PhpInstallation.Probe(container, version) })
+                }
+            }
+
+            var results: [String: PhpInstallation.Probe] = [:]
+            for await (version, probe) in group {
+                results[version] = probe
+            }
+            return results
+        }
+
         var mappedVersions: [String: PhpInstallation] = [:]
 
         availablePhpVersions.forEach { version in
-            mappedVersions[version] = PhpInstallation(container, version)
+            if let probe = probes[version] {
+                mappedVersions[version] = PhpInstallation(container, version, probe: probe)
+            }
         }
 
         cachedPhpInstallations = mappedVersions

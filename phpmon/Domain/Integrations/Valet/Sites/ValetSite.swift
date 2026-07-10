@@ -104,18 +104,20 @@ class ValetSite: ValetListable {
         }
     }
 
-    convenience init(_ container: Container, absolutePath: String, tld: String) {
+    convenience init(_ container: Container, absolutePath: String, tld: String, makeDeterminations: Bool = true) {
         let name = URL(fileURLWithPath: absolutePath).lastPathComponent
-        self.init(container, name: name, tld: tld, absolutePath: absolutePath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath,
+                  makeDeterminations: makeDeterminations)
     }
 
-    convenience init?(_ container: Container, aliasPath: String, tld: String) {
+    convenience init?(_ container: Container, aliasPath: String, tld: String, makeDeterminations: Bool = true) {
         let name = URL(fileURLWithPath: aliasPath).lastPathComponent
         guard let absolutePath = try? container.filesystem.getDestinationOfSymlink(aliasPath) else {
             Log.warn("Could not resolve the symlink for: \(aliasPath), failing ValetSite init.")
             return nil
         }
-        self.init(container, name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath)
+        self.init(container, name: name, tld: tld, absolutePath: absolutePath, aliasPath: aliasPath,
+                  makeDeterminations: makeDeterminations)
     }
 
     /**
@@ -132,25 +134,6 @@ class ValetSite: ValetListable {
         } else {
             self.isolatedPhpVersion = nil
         }
-    }
-
-    /**
-     Checks if a certificate file can be found in the `valet/Certificates` directory.
-     Also tracks the expiry date of the certificate if it exists.
-     */
-    public func determineSecured() {
-        let certificatePath = "~/.config/valet/Certificates/\(self.name).\(self.tld).crt"
-
-        let (exists, expiryDate) = CertificateValidator(container)
-            .validateCertificate(at: certificatePath)
-
-        if exists, let expiryDate, expiryDate < Date() {
-            Log.warn("Certificate for \(self.name).\(self.tld) expired at: \(expiryDate). It should be renewed.")
-        }
-
-        // Persist the information for the list
-        self.secured = exists
-        self.certificateExpiryDate = expiryDate
     }
 
     /**

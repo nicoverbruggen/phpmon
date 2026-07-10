@@ -11,9 +11,9 @@ import Foundation
 actor UpdateScheduler {
     static let shared = UpdateScheduler()
 
-    // `Timer` is not Sendable, and the reference is written from the main run loop
-    // (where the timer must be scheduled) but invalidated from this actor. Guarding it
-    // with `Locked` keeps the shared reference data-race-safe across those isolations.
+    // `Timer` is not Sendable and must be scheduled *and* invalidated on the run loop
+    // that installed it, so all Timer calls happen on the main actor. Guarding the
+    // reference with `Locked` lets this actor hold on to it across those isolations.
     private let currentTimer = Locked<Timer?>(nil)
 
     private init() {}
@@ -30,10 +30,9 @@ actor UpdateScheduler {
      Perform an automatic update check and schedule the next one.
      */
     private func performUpdateCheck() async {
-        // `Preferences` is main-actor isolated; hop to read the flag from this actor.
-        let automaticChecksEnabled = await MainActor.run {
-            Preferences.isEnabled(.automaticBackgroundUpdateCheck)
-        }
+        // `Preferences` is nonisolated (lock-guarded leaf state), so the flag
+        // can be read synchronously from this actor.
+        let automaticChecksEnabled = Preferences.isEnabled(.automaticBackgroundUpdateCheck)
 
         guard automaticChecksEnabled else {
             Log.info("Automatic update checks disabled. Skipping check but maintaining schedule.")
@@ -116,11 +115,12 @@ actor UpdateScheduler {
      Schedule a timer to perform an update check after the specified interval.
      */
     private func scheduleTimer(after interval: TimeInterval = Constants.AutomaticUpdateCheckInterval) {
-        // Invalidate any existing timer
-        currentTimer.value?.invalidate()
-
-        // Ensure timer is scheduled on main run loop since actors run on background threads
+        // Timers must be scheduled on the main run loop (actors run on background threads)
+        // and invalidated from the same thread, so both happen inside this main actor task.
         Task { @MainActor in
+            // Invalidate any existing timer
+            self.currentTimer.value?.invalidate()
+
             let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
                 Task {
                     Log.info("Performing scheduled update check after \(interval)s.")
@@ -129,8 +129,8 @@ actor UpdateScheduler {
             }
 
             // Store the timer reference. `currentTimer` is a Sendable `Locked` box (a
-            // nonisolated `let`), so it can be assigned here on the main actor and read
-            // back from the actor when invalidating.
+            // nonisolated `let`), so the actor can hold on to the reference even though
+            // the timer itself only ever lives on the main run loop.
             self.currentTimer.value = timer
         }
 

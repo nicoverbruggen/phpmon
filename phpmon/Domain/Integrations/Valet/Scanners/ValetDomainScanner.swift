@@ -20,39 +20,49 @@ class ValetDomainScanner: DomainScanner {
 
     // MARK: - Sites
 
-    func resolveSiteCount(paths: [String]) -> Int {
-        return paths.map { path in
-            do {
-                let entries = try container.filesystem
-                    .getShallowContentsOfDirectory(path)
+    func resolveSiteCount(paths: [String]) async -> Int {
+        // The directory listing and per-entry checks are blocking filesystem
+        // work, so they run on the concurrent pool.
+        return await offMain { [container] in
+            paths.map { path in
+                do {
+                    let entries = try container.filesystem
+                        .getShallowContentsOfDirectory(path)
 
-                return entries
-                    .map { self.isSite($0, forPath: path) }
-                    .filter { $0 == true}
-                    .count
-            } catch {
-                Log.err("Unexpected error getting contents of \(path): \(error).")
-                return 0
-            }
+                    return entries
+                        .map { Self.isSite(container, $0, forPath: path) }
+                        .filter { $0 == true }
+                        .count
+                } catch {
+                    Log.err("Unexpected error getting contents of \(path): \(error).")
+                    return 0
+                }
 
-        }.reduce(0, +)
+            }.reduce(0, +)
+        }
     }
 
-    func resolveSitesFrom(paths: [String]) -> [ValetSite] {
+    func resolveSitesFrom(paths: [String]) async -> [ValetSite] {
+        // List all candidate site paths off-main first (blocking I/O)...
+        let candidates: [String] = await offMain { [container] in
+            paths.flatMap { path -> [String] in
+                do {
+                    return try container.filesystem
+                        .getShallowContentsOfDirectory(path)
+                        .map { "\(path)/\($0)" }
+                } catch {
+                    Log.err("Unexpected error getting contents of \(path): \(error).")
+                    return []
+                }
+            }
+        }
+
+        // ...then build the main-actor site models from those paths.
         var sites: [ValetSite] = []
 
-        paths.forEach { path in
-            do {
-                let entries = try container.filesystem
-                    .getShallowContentsOfDirectory(path)
-
-                return entries.forEach {
-                    if let site = self.resolveSite(path: "\(path)/\($0)") {
-                        sites.append(site)
-                    }
-                }
-            } catch {
-                Log.err("Unexpected error getting contents of \(path): \(error).")
+        for candidate in candidates {
+            if let site = await self.resolveSite(path: candidate) {
+                sites.append(site)
             }
         }
 
@@ -63,7 +73,7 @@ class ValetDomainScanner: DomainScanner {
      Determines whether the site can be resolved as a symbolic link or as a directory.
      Regular files are ignored, and the site is added to Valet's list of sites.
      */
-    func resolveSite(path: String) -> ValetSite? {
+    func resolveSite(path: String) async -> ValetSite? {
         // Get the TLD from the global Valet object
         let tld = Valet.shared.config.tld
 
@@ -77,20 +87,28 @@ class ValetDomainScanner: DomainScanner {
             return nil
         }
 
-        if container.filesystem.isSymlink(path) {
-            return ValetSite(container, aliasPath: path, tld: tld)
-        } else if container.filesystem.isDirectory(path) {
-            return ValetSite(container, absolutePath: path, tld: tld)
-        }
+        let site: ValetSite? = {
+            if container.filesystem.isSymlink(path) {
+                return ValetSite(container, aliasPath: path, tld: tld, makeDeterminations: false)
+            } else if container.filesystem.isDirectory(path) {
+                return ValetSite(container, absolutePath: path, tld: tld, makeDeterminations: false)
+            }
 
-        return nil
+            return nil
+        }()
+
+        // The determinations run separately so the blocking certificate read
+        // can hop off the main actor.
+        await site?.determine()
+
+        return site
     }
 
     /**
      Determines whether the site can be resolved as a symbolic link or as a directory.
      Regular files are ignored. Returns true if the path can be parsed.
      */
-    private func isSite(_ entry: String, forPath path: String) -> Bool {
+    private nonisolated static func isSite(_ container: Container, _ entry: String, forPath path: String) -> Bool {
         let siteDir = path + "/" + entry
 
         return (container.filesystem.isDirectory(siteDir) || container.filesystem.isSymlink(siteDir))
@@ -98,24 +116,33 @@ class ValetDomainScanner: DomainScanner {
 
     // MARK: - Proxies
 
-    func resolveProxies(directoryPath: String) -> [ValetProxy] {
-        guard let entries = try? FileManager
-            .default
-            .contentsOfDirectory(atPath: directoryPath)
-        else {
+    func resolveProxies(directoryPath: String) async -> [ValetProxy] {
+        // The directory listing is blocking I/O, so it runs on the concurrent pool.
+        let entries: [String]? = await offMain {
+            try? FileManager
+                .default
+                .contentsOfDirectory(atPath: directoryPath)
+        }
+
+        guard let entries else {
             Log.err("Could not read Nginx directory at \(directoryPath).")
             return []
         }
 
-        return entries
-            .filter {
-                return !$0.starts(with: ".")
+        var proxies: [ValetProxy] = []
+
+        for entry in entries where !entry.starts(with: ".") {
+            guard let configuration = NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\(entry)"),
+                  let proxy = ValetProxy(container, configuration, makeDeterminations: false) else {
+                continue
             }
-            .compactMap {
-                return NginxConfigurationFile.from(container, filePath: "\(directoryPath)/\($0)")
-            }
-            .compactMap {
-                return ValetProxy(container, $0)
-            }
+
+            // The determinations run separately so the blocking certificate read
+            // can hop off the main actor.
+            await proxy.determine()
+            proxies.append(proxy)
+        }
+
+        return proxies
     }
 }

@@ -10,11 +10,9 @@ import Foundation
 import SwiftUI
 
 struct ConfigManagerView: View {
-    var preferences: [PhpPreference] = [
-        BytePhpPreference(App.shared.container, key: "memory_limit"),
-        BytePhpPreference(App.shared.container, key: "post_max_size"),
-        BytePhpPreference(App.shared.container, key: "upload_max_filesize")
-    ]
+    // Loaded asynchronously when the view appears: each preference probes
+    // `ini_get` via a subprocess, which must not block the main thread.
+    @State private var preferences: [PhpPreference] = []
 
     var body: some View {
         VStack {
@@ -70,7 +68,17 @@ struct ConfigManagerView: View {
                 )
             }
             .padding(.bottom, 15)
-        }.frame(maxHeight: 485)
+        }
+        .frame(maxHeight: 485)
+        .task {
+            let container = App.shared.container
+
+            preferences = [
+                await BytePhpPreference.load(container, key: "memory_limit"),
+                await BytePhpPreference.load(container, key: "post_max_size"),
+                await BytePhpPreference.load(container, key: "upload_max_filesize")
+            ]
+        }
     }
 }
 

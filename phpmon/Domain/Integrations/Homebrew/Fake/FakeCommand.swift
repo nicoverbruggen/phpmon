@@ -8,9 +8,10 @@
 
 import Foundation
 
-// `nonisolated`: a test double for the now-nonisolated `BrewCommand`; without this its
-// conformance would cross into the main actor and cause a data-race diagnostic.
-nonisolated class FakeCommand: BrewCommand {
+// `nonisolated` + `Sendable`: a test double for the now-nonisolated `BrewCommand`; without
+// this its conformance would cross into the main actor and cause a data-race diagnostic.
+// Its only state (`version`) is an immutable `let`, so the conformance is checked.
+nonisolated final class FakeCommand: BrewCommand, Sendable {
     func getCommandTitle() -> String {
         return "Hello"
     }

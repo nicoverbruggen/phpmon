@@ -69,10 +69,11 @@ struct ByteLimitView: View {
                     .onChange(of: numberText) { newText in
                         timer?.invalidate()
                         // The timer fires on the main run loop, so it's safe to assume main-actor
-                        // isolation to write the (main-actor-isolated) preference.
-                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [preference] _ in
+                        // isolation to write the (main-actor-isolated) preference. The weak capture
+                        // ensures a pending write cannot outlive the editor that owns the preference.
+                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [weak preference] _ in
                             MainActor.assumeIsolated {
-                                preference.value = Int(newText) ?? 256
+                                preference?.value = Int(newText) ?? 256
                             }
                         }
                     }
@@ -94,8 +95,9 @@ struct ByteLimitView: View {
             Text("confman.byte_limit.unlimited".localizedForSwiftUI)
         }.onChange(of: unlimited, perform: { unlimited in
             timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { [preference] _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { [weak preference] _ in
                 MainActor.assumeIsolated {
+                    guard let preference else { return }
                     preference.value = unlimited ? -1 : 512
                     preference.unit = .megabyte
                 }

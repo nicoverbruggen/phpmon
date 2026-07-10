@@ -87,6 +87,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Check if any command line arguments need to be acted upon
         CLI.checkCommandLineArguments()
 
+        // Resolve the user's PATH eagerly, but on the concurrent pool: `RealShell`
+        // resolves it lazily by spawning an interactive shell (up to seconds), which
+        // must never block the main actor. This runs after the (DEBUG) configuration
+        // profile may have swapped in fakes, so tests never spawn a real shell here.
+        // Consumers that race this warm-up serialize on the shell's internal lock.
+        Task { [shell = state.container.shell!] in
+            await offMain { _ = shell.PATH }
+        }
+
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
             Log.shared.verbosity = .cli
             Log.info("Extra CLI mode is on (`~/.config/phpmon/verbose` exists).")

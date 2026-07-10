@@ -46,21 +46,21 @@ class FakeDomainScanner: DomainScanner {
 
     // MARK: - Sites
 
-    func resolveSiteCount(paths: [String]) -> Int {
+    func resolveSiteCount(paths: [String]) async -> Int {
         return sites.count
     }
 
-    func resolveSitesFrom(paths: [String]) -> [ValetSite] {
+    func resolveSitesFrom(paths: [String]) async -> [ValetSite] {
         return sites
     }
 
-    func resolveSite(path: String) -> ValetSite? {
+    func resolveSite(path: String) async -> ValetSite? {
         return nil
     }
 
     // MARK: - Proxies
 
-    func resolveProxies(directoryPath: String) -> [ValetProxy] {
+    func resolveProxies(directoryPath: String) async -> [ValetProxy] {
         return proxies
     }
 }

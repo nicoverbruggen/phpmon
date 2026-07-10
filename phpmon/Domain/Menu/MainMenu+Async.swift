@@ -35,7 +35,7 @@ extension MainMenu {
                              and broadcast to the services view that the list has been updated.
      */
     func asyncExecution(
-        _ execute: @escaping () throws -> Void,
+        _ execute: @escaping () async throws -> Void,
         success: @MainActor @escaping () -> Void = {},
         failure: @MainActor @escaping (Error) -> Void = { _ in },
         behaviours: [AsyncBehaviour] = [
@@ -52,14 +52,14 @@ extension MainMenu {
         Task(priority: .userInitiated) { [unowned self] in
             var error: Error?
 
-            do { try execute() } catch let e {
+            do { try await execute() } catch let e {
                 error = e
                 Log.err(e)
             }
 
             Task { @MainActor [self, error] in
                 if behaviours.contains(.reloadsPhpInstallation) {
-                    container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+                    container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
                 }
 
                 if behaviours.contains(.updatesMenuBarContents) {

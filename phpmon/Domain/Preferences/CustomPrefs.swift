@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct CustomPrefs: Decodable {
+// `nonisolated`: decoded on the concurrent pool (the config file read is blocking
+// I/O) and stored behind `Preferences`' lock-guarded state.
+nonisolated struct CustomPrefs: Decodable {
     let scanApps: [String]?
     let presets: [Preset]?
     let services: [String]?
@@ -38,7 +40,10 @@ struct CustomPrefs: Decodable {
     }
 }
 
-extension Preferences {
+// `nonisolated`: matches `Preferences` itself (a nonisolated leaf whose mutable
+// state is lock-guarded); the file read runs via `offMain` and must not be
+// isolated to the main actor.
+nonisolated extension Preferences {
     func loadCustomPreferences() async {
         // Ensure the configuration directory is created if missing
         await container.shell.pipe("mkdir -p ~/.config/phpmon")
@@ -49,7 +54,8 @@ extension Preferences {
         // Attempt to load the file if it exists
         if container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
-            loadCustomPreferencesFile()
+            // The file read is blocking I/O, so hop to the concurrent pool
+            await offMain { self.loadCustomPreferencesFile() }
         } else {
             Log.info("There was no /.config/phpmon/config.json file to be loaded.")
         }

@@ -42,9 +42,9 @@ struct HomebrewUpgradableTest {
         PhpEnvironments.brewPhpAlias = "8.2"
         let env = container.phpEnvs!
         env.cachedPhpInstallations = [
-            "8.1": PhpInstallation(container, "8.1.16"),
-            "8.2": PhpInstallation(container, "8.2.3"),
-            "7.4": PhpInstallation(container, "7.4.11")
+            "8.1": PhpInstallation(container, "8.1.16", probe: .init(container, "8.1.16")),
+            "8.2": PhpInstallation(container, "8.2.3", probe: .init(container, "8.2.3")),
+            "7.4": PhpInstallation(container, "7.4.11", probe: .init(container, "7.4.11"))
         ]
 
         let data = await BrewPhpFormulaeHandler(container)

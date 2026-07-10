@@ -84,17 +84,35 @@ Every type, function and closure is **`@MainActor` unless you say otherwise**. T
 default for UI and app-model code and it is why most of the app "just works" on the main thread.
 You only reach for `nonisolated` in specific, deliberate cases:
 
-* **Leaf services that must run off the main actor** — the shell, filesystem and command
+* **Leaf services that can be called off the main actor** — the shell, filesystem and command
   layers (`RealShell`, `RealFileSystem`, `RealCommand`, `Paths`, and their protocols) are
-  `nonisolated` so blocking I/O never hops onto the main actor. Their blocking calls are guarded
-  by `warnIfBlockingOnMainThread(...)` in debug builds.
+  `nonisolated` so any isolation can call them. Their blocking calls are guarded by
+  `warnIfBlockingOnMainThread(...)` in debug builds.
 * **Pure value types & helpers** — value types with no main-actor state (e.g. `SystemContext`,
   `DetectableService`, `BrewCommandProgress`), and pure functions/extensions (`url(...)`,
   `TimeInterval` math, `String.localized`, `Date.fromString`, etc.). Mark these `nonisolated`
   (and `Sendable` where they cross isolation) so they can be used from any context.
-* **Off-main orchestration** — e.g. the `BrewCommand` family runs `nonisolated` and only
-  `await`s onto `@MainActor` for UI updates (`MainMenu`, `WindowManager`), so long `brew`
-  operations never block the main actor.
+* **Orchestration** — e.g. the `BrewCommand` family is `nonisolated` and only `await`s onto
+  `@MainActor` for UI updates (`MainMenu`, `WindowManager`). Note the pitfall below: being
+  `nonisolated async` does **not** move work off the main actor by itself.
+
+### Blocking work must go through `offMain` (or `@concurrent`)
+
+Because `SWIFT_APPROACHABLE_CONCURRENCY` enables `NonisolatedNonsendingByDefault`, a plain
+`nonisolated async` function **runs on the caller's executor** — called from the main actor, it
+still runs on the main thread. To actually leave the main actor, use the `offMain` helper (an
+`@concurrent` function, SE-0461):
+
+```swift
+let contents = try await offMain { try container.filesystem.getStringFromFile(path) }
+```
+
+The result must be `Sendable`. When a main-actor model needs data that requires blocking I/O,
+follow the **probe pattern**: gather the raw data in a `nonisolated` `Sendable` snapshot off-main,
+then build the model on the main actor from that data — see `PhpInstallation.Probe`,
+`ActivePhpInstallation.Probe`, `PhpConfigurationFile.Snapshot`, and `ValetSite.determine()`.
+The debug watchdog (`warnIfBlockingOnMainThread`) will call out any blocking call that slips
+back onto the main thread; startup must stay free of `[HANG-RISK]` warnings.
 
 ### Thread-safe shared state
 

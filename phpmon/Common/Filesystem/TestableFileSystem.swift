@@ -17,17 +17,17 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
      You do not need to specify directories (unless symlinks), those will be created automatically.
      */
     init(files: [String: FakeFile]) {
-        self.files = files
+        self.storedFiles = files
 
         // Ensure that each of the ~ characters are replaced with the home directory path
         accessQueue.sync {
             for (key, value) in files {
                 let adjustedKey = key.contains("~") ? key.replacing("~", with: self.homeDirectory) : key
-                self.files[adjustedKey] = value
+                self.storedFiles[adjustedKey] = value
             }
 
             // Ensure that intermediate directories are created
-            for file in self.files {
+            for file in self.storedFiles {
                 self.createIntermediateDirectories(file.key)
             }
         }
@@ -41,7 +41,15 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
      fs.printContents()
      ```
      */
-    private(set) var files: [String: FakeFile]
+    private var storedFiles: [String: FakeFile]
+
+    /**
+     Public snapshot of the fake filesystem, read via the access queue so callers
+     (e.g. test assertions) never observe the dictionary mid-mutation.
+     */
+    var files: [String: FakeFile] {
+        accessQueue.sync { storedFiles }
+    }
 
     /**
      The home directory for the fake filesystem.
@@ -59,13 +67,13 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         try accessQueue.sync {
-            if files[path] != nil {
+            if storedFiles[path] != nil {
                 throw TestableFileSystemError.alreadyExists
             }
 
             self.createIntermediateDirectories(path)
 
-            self.files[path] = .fake(.directory)
+            self.storedFiles[path] = .fake(.directory)
         }
     }
 
@@ -74,7 +82,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
 
         accessQueue.sync {
             self.createIntermediateDirectories(path)
-            self.files[path] = .fake(.text, content)
+            self.storedFiles[path] = .fake(.text, content)
         }
     }
 
@@ -82,7 +90,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return try accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 throw TestableFileSystemError.fileMissing
             }
 
@@ -99,7 +107,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         }
 
         return accessQueue.sync {
-            self.files.keys
+            self.storedFiles.keys
                 .filter { $0.hasPrefix(seek) }
                 .map { $0.replacing(seek, with: "") }
                 .filter { !$0.contains("/") }
@@ -110,7 +118,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return try accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 throw TestableFileSystemError.fileMissing
             }
 
@@ -122,7 +130,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
                 throw TestableFileSystemError.invalidSymlink
             }
 
-            if !files.keys.contains(pathToSymlink) {
+            if !storedFiles.keys.contains(pathToSymlink) {
                 throw TestableFileSystemError.invalidSymlink
             }
 
@@ -137,29 +145,31 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let newPath = newPath.replacingTildeWithHomeDirectory
 
         accessQueue.sync {
-            self.files.keys.forEach { key in
+            self.storedFiles.keys.forEach { key in
                 if key.hasPrefix(path) {
-                    self.files.renameKey(
+                    self.storedFiles.renameKey(
                         fromKey: key,
                         toKey: key.replacing(path, with: newPath)
                     )
                 }
             }
 
-            self.files.renameKey(fromKey: path, toKey: newPath)
+            self.storedFiles.renameKey(fromKey: path, toKey: newPath)
         }
     }
 
     func remove(_ path: String) throws {
+        let path = path.replacingTildeWithHomeDirectory
+
         accessQueue.sync {
             // Remove recursively
-            self.files.keys.forEach { key in
+            self.storedFiles.keys.forEach { key in
                 if key.hasPrefix(path) {
-                    self.files.removeValue(forKey: key)
+                    self.storedFiles.removeValue(forKey: key)
                 }
             }
 
-            self.files.removeValue(forKey: path)
+            self.storedFiles.removeValue(forKey: path)
         }
     }
 
@@ -169,7 +179,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         try accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 throw TestableFileSystemError.fileMissing
             }
 
@@ -185,7 +195,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
 
         accessQueue.sync {
             self.createIntermediateDirectories(path)
-            self.files[path] = .fake(.symlink, destination)
+            self.storedFiles[path] = .fake(.symlink, destination)
         }
     }
 
@@ -193,12 +203,12 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         try accessQueue.sync {
-            if !overwrite, files[path] != nil {
+            if !overwrite, storedFiles[path] != nil {
                 throw TestableFileSystemError.alreadyExists
             }
 
             self.createIntermediateDirectories(path)
-            self.files[path] = .fake(.text, content)
+            self.storedFiles[path] = .fake(.text, content)
         }
     }
 
@@ -208,7 +218,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path.replacingTildeWithHomeDirectory] else {
+            guard let file = storedFiles[path.replacingTildeWithHomeDirectory] else {
                 return false
             }
 
@@ -220,7 +230,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path.replacingTildeWithHomeDirectory] else {
+            guard let file = storedFiles[path.replacingTildeWithHomeDirectory] else {
                 return false
             }
 
@@ -232,7 +242,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            files.keys.contains(path)
+            storedFiles.keys.contains(path)
         }
     }
 
@@ -240,7 +250,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 return false
             }
 
@@ -252,7 +262,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 return false
             }
 
@@ -264,7 +274,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 return false
             }
 
@@ -276,7 +286,7 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
         let path = path.replacingTildeWithHomeDirectory
 
         return accessQueue.sync {
-            guard let file = files[path] else {
+            guard let file = storedFiles[path] else {
                 return false
             }
 
@@ -286,8 +296,8 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
 
     public func printContents() {
         accessQueue.sync {
-            for key in self.files.keys.sorted() {
-                print("\(key) -> \(self.files[key]!.type)")
+            for key in self.storedFiles.keys.sorted() {
+                print("\(key) -> \(self.storedFiles[key]!.type)")
             }
         }
     }
@@ -305,8 +315,8 @@ nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Senda
             preceding = key
         }
 
-        for key in directoriesToCreate where !self.files.keys.contains(key) {
-            self.files[key] = .fake(.directory)
+        for key in directoriesToCreate where !self.storedFiles.keys.contains(key) {
+            self.storedFiles[key] = .fake(.directory)
         }
     }
 }

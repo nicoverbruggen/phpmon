@@ -8,7 +8,9 @@
 
 import Foundation
 
-nonisolated protocol CommandProtocol {
+// `Sendable`: instances are handed out by the (nonisolated) `Container` and used from
+// off-main / actor contexts, just like `ShellProtocol` and `FileSystemProtocol`.
+nonisolated protocol CommandProtocol: Sendable {
     /**
      Immediately executes a command.
 
@@ -39,7 +41,7 @@ nonisolated protocol CommandProtocol {
 
 }
 
-extension CommandProtocol {
+nonisolated extension CommandProtocol {
     func execute(
         path: String,
         arguments: [String],
