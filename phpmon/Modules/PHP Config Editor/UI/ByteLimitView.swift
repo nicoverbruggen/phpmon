@@ -66,10 +66,14 @@ struct ByteLimitView: View {
         if !unlimited {
             HStack {
                 TextField("", text: $numberText)
-                    .onChange(of: numberText) { [weak preference] newText in
+                    .onChange(of: numberText) { newText in
                         timer?.invalidate()
-                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
-                            preference?.value = Int(newText) ?? 256
+                        // The timer fires on the main run loop, so it's safe to assume main-actor
+                        // isolation to write the (main-actor-isolated) preference.
+                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { [preference] _ in
+                            MainActor.assumeIsolated {
+                                preference.value = Int(newText) ?? 256
+                            }
                         }
                     }
                 Picker("Limit Name", selection: $unit) {
@@ -88,11 +92,13 @@ struct ByteLimitView: View {
 
         Toggle(isOn: $unlimited) {
             Text("confman.byte_limit.unlimited".localizedForSwiftUI)
-        }.onChange(of: unlimited, perform: { [weak preference] unlimited in
+        }.onChange(of: unlimited, perform: { unlimited in
             timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
-                preference?.value = unlimited ? -1 : 512
-                preference?.unit = .megabyte
+            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { [preference] _ in
+                MainActor.assumeIsolated {
+                    preference.value = unlimited ? -1 : 512
+                    preference.unit = .megabyte
+                }
             }
         })
     }
