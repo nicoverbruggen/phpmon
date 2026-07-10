@@ -13,8 +13,11 @@ import Foundation
  For more information about semantic versioning, see: https://semver.org/
 
  - Note: If you want to check version constraints for PHP versions, please see `PhpVersionNumberCollection`.
+
+ `nonisolated` + `Sendable`: an immutable value type of pure version math with no main-actor
+ or mutable state. It is parsed and compared from off-main (nonisolated) command orchestration.
  */
-public struct VersionNumber: Equatable, Hashable {
+public nonisolated struct VersionNumber: Equatable, Hashable, Sendable {
     let major: Int
     let minor: Int
     let patch: Int?

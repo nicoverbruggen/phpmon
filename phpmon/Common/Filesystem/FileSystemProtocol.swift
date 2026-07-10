@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FileSystemProtocol {
+nonisolated protocol FileSystemProtocol: Sendable {
 
     // MARK: - Basics
 

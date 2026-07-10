@@ -50,7 +50,9 @@ extension RealShell {
         //   (No global/shared queue state is needed.)
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.getPathQueue")
         let semaphore = DispatchSemaphore(value: 0)
-        var result: String?
+        // `Locked` box: written from the `@Sendable` terminationHandler and read after
+        // `semaphore.wait()`, so it must not be a plain captured `var`.
+        let result = Locked<String?>(nil)
 
         // Timeout path:
         // If the shell hangs while reading profile files, terminate it and unblock
@@ -74,7 +76,7 @@ extension RealShell {
 
         task.terminationHandler = { _ in
             timeoutWorkItem.cancel()
-            result = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
+            result.value = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
             semaphore.signal()
         }
 
@@ -100,7 +102,7 @@ extension RealShell {
 
         // If the interactive shell succeeded and returned something non-empty, use it.
         // Otherwise fall back to the system PATH from path_helper.
-        if let path = result, !path.isEmpty {
+        if let path = result.value, !path.isEmpty {
             return path
         }
 

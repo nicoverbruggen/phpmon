@@ -13,7 +13,9 @@ import NVAlert
 /**
  The potential different outcomes of a check for updates.
  */
-enum UpdateCheckResult {
+// Immutable value type returned across isolation boundaries (callers await
+// `checkForUpdates` from actors / the menu), so it is nonisolated + Sendable.
+nonisolated enum UpdateCheckResult: Sendable {
     case success
     case networkError
     case parseError
@@ -23,6 +25,9 @@ enum UpdateCheckResult {
  Instead of using `UpdateCheck` which is a more simplified update checking process
  included in `NVAppUpdater`, we have a slightly more complex setup here.
  */
+// Drives NVAlert update prompts and the self-updater launch, so it stays on the main
+// actor. The network fetch it awaits (`CaskFile.fromUrl`) runs off-main on its own.
+@MainActor
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
@@ -43,7 +48,7 @@ class AppUpdater {
             // ERROR #1: The endpoint is unreachable or the response is invalid.
             Log.err("Could not get a valid CaskFile from the endpoint.")
             if interactive {
-                await presentCouldNotRetrieveUpdate()
+                presentCouldNotRetrieveUpdate()
             }
             return .networkError
         }
@@ -56,7 +61,7 @@ class AppUpdater {
             // ERROR #2: The CaskFile's version string is invalid.
             Log.err("The version string from the CaskFile could not be read.")
             if interactive {
-                await presentCouldNotRetrieveUpdate()
+                presentCouldNotRetrieveUpdate()
             }
             return .parseError
         }
@@ -73,9 +78,9 @@ class AppUpdater {
 
         Task { // Present this concurrently w/ returning the .success value
             if latestVersionOnline > AppVersion.fromCurrentVersion() {
-                await presentNewerVersionAvailableAlert()
+                presentNewerVersionAvailableAlert()
             } else if interactive {
-                await presentNoNewerVersionAvailableAlert()
+                presentNoNewerVersionAvailableAlert()
             }
         }
 

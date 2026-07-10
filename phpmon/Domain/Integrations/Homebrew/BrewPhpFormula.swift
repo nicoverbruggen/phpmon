@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewPhpFormula: Equatable {
+struct BrewPhpFormula: Equatable, Sendable {
 
     /// The dependency container.
     let container: Container
@@ -64,7 +64,8 @@ struct BrewPhpFormula: Equatable {
         && container.phpEnvs.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
     }
 
-    var unavailableAfterUpgrade: Bool {
+    // `nonisolated`: pure version comparison read by off-main brew command orchestration.
+    nonisolated var unavailableAfterUpgrade: Bool {
         if installedVersion == nil || upgradeVersion == nil {
             return false
         }
@@ -135,7 +136,7 @@ struct BrewPhpFormula: Equatable {
             .isHealthy ?? nil
     }
 
-    static func == (lhs: BrewPhpFormula, rhs: BrewPhpFormula) -> Bool {
+    nonisolated static func == (lhs: BrewPhpFormula, rhs: BrewPhpFormula) -> Bool {
         return lhs.name == rhs.name
             && lhs.displayName == rhs.displayName
             && lhs.installedVersion == rhs.installedVersion

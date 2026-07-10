@@ -57,7 +57,7 @@ enum PreferenceName: String, Codable {
     /**
      What type of data each preference contains.
      */
-    static var mapping: [PreferenceType: [PreferenceName]] = [
+    nonisolated static let mapping: [PreferenceType: [PreferenceName]] = [
         .boolean: [
             // Preferences
             .autoServiceRestartAfterExtensionToggle,
@@ -100,7 +100,7 @@ enum PreferenceName: String, Codable {
     ]
 }
 
-enum PreferenceType {
+nonisolated enum PreferenceType {
     case boolean, string
 }
 
@@ -117,7 +117,7 @@ enum RetiredPreferenceName: String {
  These track internal app state and behavior that persists across launches,
  but are not user preferences or statistics.
  */
-enum PersistentAppState: String {
+nonisolated enum PersistentAppState: String, Sendable {
     case wasLaunchedBefore = "launched_before"
     case lastAutomaticUpdateCheck = "last_automatic_update_check"
     case userFavorites = "user_favorites"

@@ -8,6 +8,9 @@
 
 import Cocoa
 
+// Menu construction is UI work; `NSMenuItem` is already main-actor isolated by
+// AppKit, and this extension is annotated explicitly to make that intent clear.
+@MainActor
 extension NSMenuItem {
     convenience init(
         title: String,
@@ -81,34 +84,50 @@ extension NSMenuItem {
 
 // MARK: - NSMenuItem subclasses
 
+// `nonisolated`: `NSMenuItem`'s initializers are nonisolated in the AppKit SDK, so these
+// subclasses must be nonisolated too or their (main-actor-by-default) init overrides would
+// mismatch the parent. The inherited main-actor `NSMenuItem` API is still only ever touched
+// from the main actor (menu building), which is allowed on a nonisolated instance.
 @IBDesignable class LocalizedMenuItem: NSMenuItem {
     @IBInspectable var localizationKey: String? {
         didSet {
             self.title = localizationKey?.localized ?? self.title
         }
     }
+
+    // `NSMenuItem`'s initializers are nonisolated in the AppKit SDK; match that so these
+    // (otherwise main-actor-by-default) overrides don't mismatch the superclass. The stored
+    // `localizationKey` is optional (defaults to nil), so no main-actor state is touched here.
+    nonisolated override init(title string: String, action selector: Selector?, keyEquivalent charCode: String) {
+        super.init(title: string, action: selector, keyEquivalent: charCode)
+    }
+
+    nonisolated required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 }
 
-class PhpMenuItem: NSMenuItem {
+nonisolated class PhpMenuItem: NSMenuItem {
     var version: String = ""
 }
 
-class XdebugMenuItem: NSMenuItem {
+nonisolated class XdebugMenuItem: NSMenuItem {
     var mode: String = ""
 }
 
-class ExtensionMenuItem: NSMenuItem {
+nonisolated class ExtensionMenuItem: NSMenuItem {
     var phpExtension: PhpExtension?
 }
 
-class ApplicationMenuItem: NSMenuItem {
+nonisolated class ApplicationMenuItem: NSMenuItem {
     var app: Application?
 }
 
-class PresetMenuItem: NSMenuItem {
+nonisolated class PresetMenuItem: NSMenuItem {
     var preset: Preset?
 
-    static func getAll() -> [NSMenuItem] {
+    // Kept on the main actor: it sets `attributedTitle` (a main-actor `NSMenuItem` property).
+    @MainActor static func getAll() -> [NSMenuItem] {
         return Preferences.custom.presets!.map { preset in
             let presetMenuItem = PresetMenuItem(
                 title: preset.getMenuItemText(),

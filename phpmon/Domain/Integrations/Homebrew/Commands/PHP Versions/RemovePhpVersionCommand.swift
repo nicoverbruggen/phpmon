@@ -12,13 +12,17 @@ class RemovePhpVersionCommand: BrewCommand {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     // MARK: - Variables
 
     let formula: String
     let version: String
-    let phpGuard: PhpGuard
+
+    /// The PHP version linked when this command was created, snapshotted on the main actor
+    /// at init time. Storing the `Sendable` `String?` (instead of the non-Sendable
+    /// `PhpGuard`) lets the off-main, `nonisolated` orchestration read it without hopping.
+    let previousPhpVersion: String?
 
     // MARK: - Methods
 
@@ -31,14 +35,14 @@ class RemovePhpVersionCommand: BrewCommand {
             .replacing("php@", with: "")
             .replacing("shivammathur/php/", with: "")
         self.formula = formula
-        self.phpGuard = PhpGuard()
+        self.previousPhpVersion = PhpGuard().currentVersion
     }
 
-    func getCommandTitle() -> String {
+    nonisolated func getCommandTitle() -> String {
         return "phpman.steps.removing".localized("PHP \(version)...")
     }
 
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
@@ -90,7 +94,7 @@ class RemovePhpVersionCommand: BrewCommand {
 
             await MainMenu.shared.refreshActiveInstallation()
 
-            if let version = phpGuard.currentVersion {
+            if let version = previousPhpVersion {
                 await MainMenu.shared.switchToPhpVersionAndWait(version, silently: true)
             }
 

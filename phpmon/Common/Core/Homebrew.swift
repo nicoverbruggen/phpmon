@@ -43,7 +43,7 @@ struct HomebrewFormulae {
     }
 }
 
-class HomebrewFormula: Equatable, Hashable, CustomStringConvertible {
+nonisolated final class HomebrewFormula: Equatable, Hashable, CustomStringConvertible, Sendable {
     let name: String
     let elevated: Bool
     let servicePrefix: String?

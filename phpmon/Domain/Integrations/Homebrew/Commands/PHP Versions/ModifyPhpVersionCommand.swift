@@ -12,18 +12,22 @@ class ModifyPhpVersionCommand: BrewCommand {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     // MARK: - Variables
 
     let title: String
     let installing: [BrewPhpFormula]
     let upgrading: [BrewPhpFormula]
-    let phpGuard: PhpGuard
+
+    /// The PHP version linked when this command was created, snapshotted on the main actor
+    /// at init time. Storing the `Sendable` `String?` (instead of the non-Sendable
+    /// `PhpGuard`) lets the off-main, `nonisolated` orchestration read it without hopping.
+    let previousPhpVersion: String?
 
     // MARK: - Methods
 
-    func getCommandTitle() -> String {
+    nonisolated func getCommandTitle() -> String {
         return title
     }
 
@@ -50,10 +54,10 @@ class ModifyPhpVersionCommand: BrewCommand {
         self.title = title
         self.installing = installing
         self.upgrading = upgrading
-        self.phpGuard = PhpGuard()
+        self.previousPhpVersion = PhpGuard().currentVersion
     }
 
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
@@ -91,9 +95,9 @@ class ModifyPhpVersionCommand: BrewCommand {
         await self.completedOperations(onProgress)
     }
 
-    private func upgradeMainPhpFormula(
+    nonisolated private func upgradeMainPhpFormula(
         _ unavailable: BrewPhpFormula,
-        _ onProgress: @escaping (BrewCommandProgress) -> Void
+        _ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void
     ) async throws {
         // Determine which version was previously available (that will become unavailable)
         guard let short = try? VersionNumber
@@ -114,7 +118,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         try await run(shell: container.shell, command, onProgress)
     }
 
-    private func upgradePackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated private func upgradePackages(_ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         // If no upgrades are needed, early exit
         if self.upgrading.isEmpty {
             return
@@ -131,7 +135,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         try await run(shell: container.shell, command, onProgress)
     }
 
-    private func installPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated private func installPackages(_ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         // If no installations are needed, early exit
         if self.installing.isEmpty {
             return
@@ -148,21 +152,26 @@ class ModifyPhpVersionCommand: BrewCommand {
         try await run(shell: container.shell, command, onProgress)
     }
 
-    private func repairBrokenPackages(_ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated private func repairBrokenPackages(_ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         // Determine which PHP installations are considered unhealthy
-        // Build a list of formulae to reinstall
-        let requiringRepair = container.phpEnvs
-            .cachedPhpInstallations.values
-            .filter({ !$0.isHealthy })
-            .map { installation in
-                let formula = "php@\(installation.versionNumber.short)"
+        // Build a list of formulae to reinstall. `cachedPhpInstallations` and the
+        // `PhpInstallation` values it holds are main-actor-isolated (and non-Sendable), so we
+        // gather the plain `[String]` result on the main actor and hand only that back off-main.
+        let container = self.container
+        let requiringRepair: [String] = await MainActor.run {
+            container.phpEnvs
+                .cachedPhpInstallations.values
+                .filter({ !$0.isHealthy })
+                .map { installation in
+                    let formula = "php@\(installation.versionNumber.short)"
 
-                if installation.versionNumber.short == PhpEnvironments.brewPhpAlias {
-                    return "php"
+                    if installation.versionNumber.short == PhpEnvironments.brewPhpAlias {
+                        return "php"
+                    }
+
+                    return formula
                 }
-
-                return formula
-            }
+        }
 
         // If no repairs are needed, early exit
         if requiringRepair.isEmpty {
@@ -182,7 +191,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         try await run(shell: container.shell, command, onProgress)
     }
 
-    private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
+    nonisolated private func completedOperations(_ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
         onProgress(.create(value: 0.95, title: self.title, description: "phpman.steps.reloading".localized))
 
@@ -196,7 +205,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         await MainMenu.shared.refreshActiveInstallation()
 
          // If a PHP version was active prior to running the operations, attempt to restore it
-         if let version = phpGuard.currentVersion {
+         if let version = previousPhpVersion {
              await MainMenu.shared.switchToPhpVersionAndWait(version, silently: true)
          }
 

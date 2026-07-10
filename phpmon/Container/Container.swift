@@ -8,7 +8,11 @@
 
 import Foundation
 
-class Container: @unchecked Sendable {
+// Nonisolated: the DI container hands out the leaf services (shell, filesystem, command,
+// paths — all nonisolated) and must be reachable from off-main / actor contexts. It is
+// @unchecked Sendable because its slots are bound once at startup and never re-swapped
+// concurrently.
+nonisolated class Container: @unchecked Sendable {
     // MARK: - System Context
 
     var systemContext = SystemContext()
@@ -77,6 +81,7 @@ class Container: @unchecked Sendable {
     /// - Parameter commandTracking: When enabled, connects decorated RealShell and RealCommand.
     ///   Use this if you want to disable tracking (shell) command statuses, since it's on by default.
     ///
+    @MainActor
     public func bind(coreOnly: Bool = false, commandTracking: Bool = true) {
         if self.bound {
             fatalError("You cannot call `bind` on a Container more than once.")
@@ -126,6 +131,7 @@ class Container: @unchecked Sendable {
      Only used for testing purposes, either via `TestableConfiguration` or for
      explicit initialization of a fake Container instance.
      */
+    @MainActor
     public func overrideFake(
         shellExpectations: [String: BatchFakeShellOutput] = [:],
         fileSystemFiles: [String: FakeFile] = [:],
@@ -168,6 +174,7 @@ class Container: @unchecked Sendable {
      This is used for testing scenarios to avoid needing to have a specific system configuration.
      Ideal for feature or UI tests, where a complete "computer configuration" needs to be mimicked.
      */
+    @MainActor
     public func overrideWith(config: TestableConfiguration) {
         self.overrideFake(
             shellExpectations: config.shellOutput,

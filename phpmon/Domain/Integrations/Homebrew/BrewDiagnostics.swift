@@ -37,7 +37,9 @@ class BrewDiagnostics {
      synchronized to avoid a data race on the array buffer.
      */
     private let _installedTaps = Locked<[String]>([])
-    public var installedTaps: [String] {
+    // `nonisolated`: reassigned off-main by `loadInstalledTaps()` and read from async
+    // contexts; the `Locked` box keeps this data-race free across isolation domains.
+    public nonisolated var installedTaps: [String] {
         get { _installedTaps.value }
         set { _installedTaps.value = newValue }
     }
@@ -48,7 +50,7 @@ class BrewDiagnostics {
      Backed by a `Locked` box for the same reason as `installedTaps`.
      */
     private let _trustedTaps = Locked<[String]>([])
-    public var trustedTaps: [String] {
+    public nonisolated var trustedTaps: [String] {
         get { _trustedTaps.value }
         set { _trustedTaps.value = newValue }
     }
@@ -66,7 +68,7 @@ class BrewDiagnostics {
     /**
      Load which taps are installed.
      */
-    public func loadInstalledTaps() async {
+    public nonisolated func loadInstalledTaps() async {
         installedTaps = await container.shell
             .pipe("\(container.paths.brew) tap")
             .out

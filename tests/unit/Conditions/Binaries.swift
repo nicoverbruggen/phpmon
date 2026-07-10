@@ -8,7 +8,9 @@
 
 import Foundation
 
-class Binaries {
+// `nonisolated`: pure filesystem checks used to evaluate `@Test(.enabled(if:))` traits,
+// which are evaluated in a nonisolated context.
+nonisolated class Binaries {
     static func exist(paths: [String]) -> Bool {
         for path in paths where FileManager.default.fileExists(atPath: path) {
             return true

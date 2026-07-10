@@ -27,32 +27,4 @@ protocol Suspendable: Actor {
      Handlers will fire normally for observed events.
      */
     func resume() async
-
-    /**
-     Executes an action while suspended, ensuring resume happens
-     even if the action throws.
-
-     - Parameter action: The async throwing closure to execute while suspended
-     - Returns: The result of the action
-     - Throws: Rethrows any error from the action
-     */
-    func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T
-}
-
-extension Suspendable {
-    /**
-     Default implementation of withSuspended that ensures proper
-     suspend/resume lifecycle even when errors occur.
-     */
-    func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
-        await suspend()
-        do {
-            let result = try await action()
-            await resume()
-            return result
-        } catch {
-            await resume()
-            throw error
-        }
-    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    var replacingTildeWithHomeDirectory: String {
+    nonisolated var replacingTildeWithHomeDirectory: String {
         // Skip replacement if not necessary
         if !self.contains("~") {
             return self

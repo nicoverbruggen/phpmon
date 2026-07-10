@@ -7,7 +7,9 @@
 
 import Foundation
 
-final class TrackedShell: ShellProtocol {
+// `nonisolated` + `Sendable`: a fully immutable decorator (two `let`s, `exports` forwards to
+// the wrapped shell) that must be usable from the off-main command family.
+nonisolated final class TrackedShell: ShellProtocol, Sendable {
     private let shell: ShellProtocol
     private let commandTracker: CommandTracker
 

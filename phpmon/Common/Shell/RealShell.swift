@@ -224,7 +224,11 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.pipe_timeout_queue")
 
         return await withCheckedContinuation { continuation in
-            var resumed = false
+            // The once-only "resume" guard is mutated from `@Sendable` serial-queue
+            // closures; a plain captured `var` would be a data-race warning. `Locked`
+            // makes the mutation compiler-safe. (All access still happens on the serial
+            // queue, so the invariant "resume exactly once" is preserved.)
+            let resumed = Locked<Bool>(false)
 
             let timeoutWorkItem = DispatchWorkItem {
                 guard process.isRunning else { return }
@@ -234,8 +238,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 process.terminate()
 
                 serialQueue.async {
-                    if !resumed {
-                        resumed = true
+                    if !resumed.value {
+                        resumed.value = true
                         continuation.resume(returning: .out("", ""))
                     }
                 }
@@ -246,12 +250,15 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
             process.terminationHandler = { [weak self] _ in
                 timeoutWorkItem.cancel()
 
+                // Immutable, Sendable snapshot so the concurrent queue closure captures a
+                // `let` rather than the mutable optional `self` binding.
+                let shell = self
                 serialQueue.async {
-                    if resumed { return }
+                    if resumed.value { return }
 
                     if process.terminationReason == .uncaughtSignal {
                         Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                        resumed = true
+                        resumed.value = true
                         continuation.resume(returning: .out("", ""))
                         return
                     }
@@ -260,10 +267,10 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                     let stdErr = RealShell.getStringOutput(from: errorPipe)
 
                     if Log.shared.verbosity == .cli {
-                        self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
+                        shell?.log(process: process, stdOut: stdOut, stdErr: stdErr)
                     }
 
-                    resumed = true
+                    resumed.value = true
                     continuation.resume(returning: .out(stdOut, stdErr))
                 }
             }
@@ -284,18 +291,25 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         process.standardOutput = outputPipe
         process.standardError = errorPipe
 
-        let output = ShellOutput.empty()
+        // Accumulate output in thread-safe buffers instead of a mutable `ShellOutput`.
+        // `ShellOutput` is now an immutable `Sendable` value; we build the final one
+        // once, at `continuation.resume`. `Locked` keeps these captures compiler-safe
+        // across the `@Sendable` serial-queue closures. (All access still happens on
+        // the serial queue below, so ordering is preserved.)
+        let outBuffer = Locked<String>("")
+        let errBuffer = Locked<String>("")
 
         // Only access mutable state from this queue.
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
 
         return try await withCheckedThrowingContinuation({ continuation in
             // Guard against all races: timeout, termination and late readability callbacks.
-            var finished = false
+            // `Locked` so mutation from the `@Sendable` serial-queue closures is safe.
+            let finished = Locked<Bool>(false)
 
-            let finishSuccess: () -> Void = {
-                if finished { return }
-                finished = true
+            let finishSuccess: @Sendable () -> Void = {
+                if finished.value { return }
+                finished.value = true
 
                 outputPipe.fileHandleForReading.readabilityHandler = nil
                 errorPipe.fileHandleForReading.readabilityHandler = nil
@@ -304,21 +318,22 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
 
                 if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                    output.out += string
+                    outBuffer.value += string
                     didReceiveOutput(string, .stdOut)
                 }
 
                 if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                    output.err += string
+                    errBuffer.value += string
                     didReceiveOutput(string, .stdErr)
                 }
 
+                let output = ShellOutput(out: outBuffer.value, err: errBuffer.value)
                 continuation.resume(returning: (process, output))
             }
 
-            let finishTimeout: () -> Void = {
-                if finished { return }
-                finished = true
+            let finishTimeout: @Sendable () -> Void = {
+                if finished.value { return }
+                finished.value = true
 
                 outputPipe.fileHandleForReading.readabilityHandler = nil
                 errorPipe.fileHandleForReading.readabilityHandler = nil
@@ -344,8 +359,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
                     serialQueue.async {
-                        if finished { return }
-                        output.out += string
+                        if finished.value { return }
+                        outBuffer.value += string
                         didReceiveOutput(string, .stdOut)
                     }
                 }
@@ -356,8 +371,8 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
                 let data = fileHandle.availableData
                 if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
                     serialQueue.async {
-                        if finished { return }
-                        output.err += string
+                        if finished.value { return }
+                        errBuffer.value += string
                         didReceiveOutput(string, .stdErr)
                     }
                 }
@@ -375,9 +390,16 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     }
 
     func reloadEnvPath() async {
+        // Read the main-actor-isolated resolved shell on the main actor, then hand the
+        // plain `String` off to a background queue for the (blocking) PATH lookup. This
+        // keeps `App.shared` off the `@Sendable` background closure while preserving the
+        // original behavior of resolving the PATH off the main thread.
+        let resolved = await MainActor.run {
+            App.shared.container.systemContext.shell.resolved
+        }
+
         let path = await withCheckedContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
-                let resolved = App.shared.container.systemContext.shell.resolved
                 continuation.resume(returning: RealShell.getPath(shell: resolved))
             }
         }

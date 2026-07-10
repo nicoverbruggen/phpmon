@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-struct Localization {
+nonisolated struct Localization {
     static var preferredLanguage: String? {
         if App.shared.container.preferences == nil {
             return nil
@@ -24,7 +24,7 @@ struct Localization {
         return language
     }
 
-    static var bundle: Bundle = {
+    static let bundle: Bundle = {
         if !isRunningTests {
             return Bundle.main
         }
@@ -47,7 +47,7 @@ struct Localization {
 }
 
 extension String {
-    var localized: String {
+    nonisolated var localized: String {
         var preferredBundle: Bundle = Localization.bundle
 
         if let preferred = Localization.preferredLanguage,
@@ -69,15 +69,15 @@ extension String {
         return string
     }
 
-    var localizedForSwiftUI: LocalizedStringKey {
+    nonisolated var localizedForSwiftUI: LocalizedStringKey {
         return LocalizedStringKey(self.localized)
     }
 
-    func localized(_ args: CVarArg...) -> String {
+    nonisolated func localized(_ args: CVarArg...) -> String {
         String(format: self.localized, arguments: args)
     }
 
-    func localized(for locale: String = "en") -> String {
+    nonisolated func localized(for locale: String = "en") -> String {
         guard let path = Localization.bundle.path(forResource: locale, ofType: "lproj"),
             let bundle = Bundle(path: path)
         else { return self }
@@ -110,7 +110,8 @@ extension String {
         return String((0..<length).map { _ in characters.randomElement()! })
     }
 
-    subscript(r: Range<String.Index>) -> String {
+    // `nonisolated`: pure substring access used by off-main version parsing.
+    nonisolated subscript(r: Range<String.Index>) -> String {
         let start = r.lowerBound
         let end = r.upperBound
         return String(self[start ..< end])
@@ -126,7 +127,7 @@ extension String {
      <6> We user array components to build back our versions from components and compare them.
          This time it will have the same period and number of digit.
      */
-    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+    nonisolated func versionCompare(_ otherVersion: String) -> ComparisonResult {
         let versionDelimiter = "."
 
         var versionComponents = self.components(separatedBy: versionDelimiter) // <1>

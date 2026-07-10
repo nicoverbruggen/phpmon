@@ -24,7 +24,7 @@ struct FSNotifierTest {
         let debouncer = Debouncer()
 
         // Set up the notifier
-        let notifier = FSNotifier(for: testFile, eventMask: .write, onChange: {
+        let notifier = FSNotifier(for: testFile, eventMaskRawValue: DispatchSource.FileSystemEvent.write.rawValue, onChange: {
             Task { await debouncer.debounce(for: 1.0) {
                 eventFired.value += 1
             }}
@@ -62,7 +62,7 @@ struct FSNotifierTest {
         let eventFired = Locked<Int>(0)
 
         // Create notifier
-        let notifier = FSNotifier(for: testFile, eventMask: .write, onChange: {
+        let notifier = FSNotifier(for: testFile, eventMaskRawValue: DispatchSource.FileSystemEvent.write.rawValue, onChange: {
             Task { eventFired.value += 1 }
         })
 

@@ -8,8 +8,9 @@
 
 import Foundation
 
-class Log {
-    static var shared = Log()
+// `@unchecked Sendable`: Log is a logging utility whose mutable state is low-stakes.
+nonisolated final class Log: @unchecked Sendable {
+    static let shared = Log()
 
     var logFilePath = "~/.config/phpmon/last_session.log"
 

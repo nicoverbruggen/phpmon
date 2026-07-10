@@ -8,8 +8,12 @@
 
 import Foundation
 
-class Preferences {
-    var container: Container
+// `nonisolated` + `Sendable`: preferences are read cross-thread — e.g. the
+// `UpdateScheduler` actor synchronously calls `Preferences.isEnabled(...)`. The
+// mutable state is guarded by `Locked` (kept intentionally), and `container` is
+// immutable, so the type is safe to access from any isolation domain.
+nonisolated final class Preferences: Sendable {
+    let container: Container
 
     // MARK: - Preferences
 

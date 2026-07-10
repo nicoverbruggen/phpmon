@@ -8,7 +8,10 @@
 
 import Foundation
 
-final class TrackableTestableShell: TestableShell {
+// `@unchecked Sendable`: adds only an immutable `commandTracker` to the lock-protected
+// `TestableShell`; subclasses do not inherit the conformance, and `Sendable` cannot be
+// synthesized across a non-final superclass, so restate it. Still genuinely race-free.
+nonisolated final class TrackableTestableShell: TestableShell, @unchecked Sendable {
     private let commandTracker: CommandTracker
 
     init(

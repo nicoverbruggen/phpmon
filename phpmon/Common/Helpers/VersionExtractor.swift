@@ -12,8 +12,10 @@ class VersionExtractor {
 
     /**
      This attempts to extract the version number from any given string.
+
+     `nonisolated`: pure regex extraction used by the off-main `VersionNumber.parse`.
      */
-    public static func from(_ string: String) -> String? {
+    nonisolated public static func from(_ string: String) -> String? {
         do {
             let regex = try NSRegularExpression(
                 pattern: #"(?<version>(\d+)(.)(\d+)((.)(\d+))?)"#,

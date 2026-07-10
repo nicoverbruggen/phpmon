@@ -33,7 +33,9 @@ actor ValetServicesDataManager {
     func reloadServicesStatus(isRetry: Bool) async -> [HomebrewService] {
         let formulae = await registry.reloadFormulae()
 
-        if !Valet.installed {
+        // `Valet.installed` is main-actor isolated; hop to read it from this actor.
+        let valetInstalled = await MainActor.run { Valet.installed }
+        if !valetInstalled {
             Log.info("Not reloading services because running in Standalone Mode.")
             return []
         }
@@ -101,11 +103,20 @@ actor ValetServicesDataManager {
         }
     }
 
-    func getHomebrewService(named: String) -> HomebrewService? {
-        guard let formula = registry.formulae.first(where: { $0.name == named }) else {
-            return homebrewServices.first { $0.name == named }
-        }
+    func getHomebrewService(named: String) async -> HomebrewService? {
+        // Snapshot the actor's (Sendable) services and the main-actor `registry`
+        // reference, then resolve the formula on the main actor. `HomebrewFormula`
+        // is main-actor isolated, so it never leaves the main actor here; only the
+        // Sendable `HomebrewService?` result crosses back to this actor.
+        let services = homebrewServices
+        let registry = self.registry
 
-        return formula.latestService(from: homebrewServices)
+        return await MainActor.run {
+            guard let formula = registry.formulae.first(where: { $0.name == named }) else {
+                return services.first { $0.name == named }
+            }
+
+            return formula.latestService(from: services)
+        }
     }
 }

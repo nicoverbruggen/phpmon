@@ -8,7 +8,9 @@
 
 import Foundation
 
-class FakeCommand: BrewCommand {
+// `nonisolated`: a test double for the now-nonisolated `BrewCommand`; without this its
+// conformance would cross into the main actor and cause a data-race diagnostic.
+nonisolated class FakeCommand: BrewCommand {
     func getCommandTitle() -> String {
         return "Hello"
     }
@@ -19,7 +21,7 @@ class FakeCommand: BrewCommand {
         self.version = version
     }
 
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(value: 0.2, title: "Hello", description: "Doing the work"))
         await delay(seconds: 2)
         onProgress(.create(value: 0.5, title: "Hello", description: "Doing some more work"))

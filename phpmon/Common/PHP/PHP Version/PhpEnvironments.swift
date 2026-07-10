@@ -157,8 +157,11 @@ class PhpEnvironments {
 
      In order for our check to be correct, we query Homebrew locally.
      */
-    private static let _brewPhpAlias = Locked<String?>(nil)
-    static var brewPhpAlias: String? {
+    // `nonisolated` + `Locked`: `brewPhpAlias` is read/written from many contexts
+    // that are not the main actor (Homebrew command processing, switchers, tests),
+    // so it stays a thread-safe, non-isolated cache rather than main-actor state.
+    private nonisolated static let _brewPhpAlias = Locked<String?>(nil)
+    nonisolated static var brewPhpAlias: String? {
         get { _brewPhpAlias.value }
         set { _brewPhpAlias.value = newValue }
     }

@@ -272,7 +272,7 @@ class Valet {
                 Log.info("The latest version of Valet is \(latestVersion.text); current is \(currentVersion.text).")
 
                 // Update the menu so this update is visible.
-                await MainMenu.shared.rebuild()
+                MainMenu.shared.rebuild()
             } else {
                 Log.info("You are running the latest version of Valet (\(latestVersion.text)).")
             }

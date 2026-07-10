@@ -73,7 +73,7 @@ class WarningManager: ObservableObject {
 
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
             self.temporaryWarnings = self.evaluations
-            await self.broadcastWarnings()
+            self.broadcastWarnings()
             return
         }
 
@@ -81,8 +81,8 @@ class WarningManager: ObservableObject {
 
         // Only rebuild the menu if the app has finished booting
         // (otherwise the menu may become interactive before all checks are done)
-        if await Startup.hasFinishedBooting {
-            await MainMenu.shared.rebuild()
+        if Startup.hasFinishedBooting {
+            MainMenu.shared.rebuild()
         }
     }
 
@@ -99,6 +99,6 @@ class WarningManager: ObservableObject {
         }
 
         self.temporaryWarnings = warnings
-        await self.broadcastWarnings()
+        self.broadcastWarnings()
     }
 }

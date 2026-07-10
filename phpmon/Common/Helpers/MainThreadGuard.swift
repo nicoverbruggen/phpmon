@@ -22,7 +22,7 @@ import Foundation
 /// every occurrence would make that work impossible. Once the off-main service layer is
 /// complete, this can be promoted to `assertionFailure` to keep it that way.
 @inline(__always)
-func warnIfBlockingOnMainThread(
+nonisolated func warnIfBlockingOnMainThread(
     _ operation: @autoclosure () -> String,
     function: StaticString = #function
 ) {

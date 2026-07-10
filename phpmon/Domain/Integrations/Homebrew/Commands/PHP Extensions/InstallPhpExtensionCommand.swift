@@ -12,17 +12,17 @@ class InstallPhpExtensionCommand: BrewCommand {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     // MARK: - Variables
 
     let installing: [BrewPhpExtension]
 
-    func getExtensionNames() -> String {
+    nonisolated func getExtensionNames() -> String {
         return installing.map { $0.name }.joined(separator: ", ")
     }
 
-    func getCommandTitle() -> String {
+    nonisolated func getCommandTitle() -> String {
         return "phpman.steps.installing".localized(getExtensionNames())
     }
 
@@ -34,7 +34,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         self.installing = extensions
     }
 
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         let progressTitle = "phpman.steps.wait".localized
 
         onProgress(.create(
@@ -53,7 +53,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         await self.completedOperations(onProgress)
     }
 
-    private func installPackages(_ shell: ShellProtocol, _ onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated private func installPackages(_ shell: ShellProtocol, _ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         // If no installations are needed, early exit
         if self.installing.isEmpty {
             return
@@ -70,7 +70,7 @@ class InstallPhpExtensionCommand: BrewCommand {
         try await run(shell: shell, command, onProgress)
     }
 
-    private func completedOperations(_ onProgress: @escaping (BrewCommandProgress) -> Void) async {
+    nonisolated private func completedOperations(_ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async {
         // Reload and restart PHP versions
         onProgress(.create(value: 0.95, title: self.getCommandTitle(), description: "phpman.steps.reloading".localized))
 

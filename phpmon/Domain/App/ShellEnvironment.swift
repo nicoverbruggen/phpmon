@@ -20,12 +20,12 @@ struct ShellEnvironment {
         self.container = container
     }
 
-    static func configuredShell() -> String {
+    nonisolated static func configuredShell() -> String {
         return system("dscl . -read ~/ UserShell | sed 's/UserShell: //'")
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    static func validatedShellPath(_ path: String) -> String {
+    nonisolated static func validatedShellPath(_ path: String) -> String {
         if isAccessibleExecutable(path) {
             return path
         }
@@ -100,7 +100,7 @@ struct ShellEnvironment {
         )
     }
 
-    private static func isAccessibleExecutable(_ path: String) -> Bool {
+    private nonisolated static func isAccessibleExecutable(_ path: String) -> Bool {
         guard !path.isEmpty else {
             return false
         }

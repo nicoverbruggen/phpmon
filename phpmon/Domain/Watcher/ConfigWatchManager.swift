@@ -45,7 +45,9 @@ actor ConfigWatchManager: Suspendable {
 
         // Create watcher if missing
         guard let manager = App.shared.configWatchManager else {
-            let manager = ConfigWatchManager(for: url)
+            // The (Sendable) filesystem is read here on the main actor and handed to the
+            // actor, so the actor never has to touch main-actor `App`/`Container` state.
+            let manager = ConfigWatchManager(for: url, filesystem: container.filesystem)
             await manager.setupWatchers()
             App.shared.configWatchManager = manager
             return
@@ -69,10 +71,14 @@ actor ConfigWatchManager: Suspendable {
     private(set) var url: URL
     nonisolated private let debounceInterval: TimeInterval
 
+    /// The filesystem is a Sendable, nonisolated leaf dependency, captured at
+    /// construction so the actor can perform existence checks off the main actor.
+    nonisolated private let filesystem: FileSystemProtocol
+
     // MARK: Methods
 
-    init(for url: URL, debounceInterval: TimeInterval = 0.75) {
-        if App.shared.container.filesystem is TestableFileSystem {
+    init(for url: URL, filesystem: FileSystemProtocol, debounceInterval: TimeInterval = 0.75) {
+        if filesystem is TestableFileSystem {
             fatalError("""
                 ConfigWatchManager is currently incompatible with a testable filesystem!"
                 You are not allowed to instantiate these while using a testable filesystem.
@@ -80,6 +86,7 @@ actor ConfigWatchManager: Suspendable {
         }
 
         self.url = url
+        self.filesystem = filesystem
         self.debounceInterval = debounceInterval
         self.debouncer = Debouncer()
     }
@@ -147,12 +154,12 @@ actor ConfigWatchManager: Suspendable {
         eventMask: DispatchSource.FileSystemEvent,
         behaviour: Behaviour = .reloadsMenu
     ) {
-        if !App.shared.container.filesystem.anyExists(url.path) {
+        if !filesystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested file does not exist.")
             return
         }
 
-        let watcher = FSNotifier(for: url, eventMask: eventMask) { [weak self] in
+        let watcher = FSNotifier(for: url, eventMaskRawValue: eventMask.rawValue) { [weak self] in
             guard let self = self else { return }
 
             Task {
@@ -188,13 +195,23 @@ actor ConfigWatchManager: Suspendable {
      to prevent the watcher from responding to our own changes.
      */
     public static func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
-        guard let manager = App.shared.configWatchManager else {
+        guard let manager = await App.shared.configWatchManager else {
             // If there's no manager, run the task as-is
             return try await action()
         }
 
-        // Suspend, execute the action, and resume
-        return try await manager.withSuspended(action)
+        // `action` runs here in the caller's isolation domain; only `suspend()`/`resume()`
+        // hop onto the watcher actor. This keeps a (main-actor) `action` closure from being
+        // transferred into the actor, which would be a data-race error.
+        await manager.suspend()
+        do {
+            let result = try await action()
+            await manager.resume()
+            return result
+        } catch {
+            await manager.resume()
+            throw error
+        }
     }
 
     /**

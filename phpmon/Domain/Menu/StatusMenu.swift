@@ -12,6 +12,16 @@ class StatusMenu: NSMenu {
         return App.shared.container
     }
 
+    // `NSMenu`'s initializers are nonisolated in the AppKit SDK; match that so these
+    // (otherwise main-actor-by-default) overrides don't mismatch the superclass.
+    nonisolated override init(title: String) {
+        super.init(title: title)
+    }
+
+    nonisolated required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     // swiftlint:disable cyclomatic_complexity
     @MainActor func addMenuItems() {
         addPhpVersionMenuItems()

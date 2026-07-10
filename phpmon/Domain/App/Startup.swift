@@ -9,6 +9,10 @@ import Foundation
 import AppKit
 import NVAlert
 
+// Startup is the app-launch orchestration: it drives the menu, status item and
+// windows, so it lives on the main actor. The async work it kicks off (shell I/O,
+// Homebrew/Valet queries) hops off-main on the nonisolated/actor services it calls.
+@MainActor
 class Startup {
     var container: Container
 
@@ -24,10 +28,9 @@ class Startup {
      If this method returns true, then all checks succeeded and the app can continue.
      */
     func checkEnvironment() async -> Bool {
-        // Set up a "background" timer on the main thread
-        await MainActor.run {
-            startStartupTimer()
-        }
+        // Set up the startup timeout timer. We are already on the main actor
+        // (Startup is @MainActor), so no explicit hop is required.
+        startStartupTimer()
 
         for group in self.groups {
             if group.condition() {

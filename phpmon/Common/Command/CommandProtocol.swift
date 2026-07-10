@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol CommandProtocol {
+nonisolated protocol CommandProtocol {
     /**
      Immediately executes a command.
 

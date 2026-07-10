@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SystemContext {
+nonisolated struct SystemContext: Sendable {
     init(
         architectureOverride: String? = nil,
         configuredShellOverride: String? = nil
@@ -34,7 +34,7 @@ struct SystemContext {
     /** The system architecture. Paths differ based on this value. */
     let architecture: String
 
-    private static func resolveArchitecture() -> String {
+    private nonisolated static func resolveArchitecture() -> String {
         var systeminfo = utsname()
         uname(&systeminfo)
         return withUnsafeBytes(of: &systeminfo.machine) { bufPtr -> String in
@@ -49,7 +49,7 @@ struct SystemContext {
 
     // MARK: - Shell
 
-    struct Shell {
+    nonisolated struct Shell: Sendable {
         /** The shell path as configured on the system (may be invalid). */
         var configured: String
 

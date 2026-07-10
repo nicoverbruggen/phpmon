@@ -12,7 +12,7 @@ import Foundation
  Run a simple blocking Shell command on the user's own system.
  */
 @discardableResult
-public func system(_ command: String) -> String {
+public nonisolated func system(_ command: String) -> String {
     let task = Process()
     task.launchPath = "/bin/sh"
     task.arguments = ["-c", command]
@@ -30,7 +30,7 @@ public func system(_ command: String) -> String {
 /**
  Same as the `system` command, but does not return the output.
  */
-public func system_quiet(_ command: String) {
+public nonisolated func system_quiet(_ command: String) {
     let task = Process()
     task.launchPath = "/bin/sh"
     task.arguments = ["-c", command]
@@ -47,7 +47,7 @@ public func system_quiet(_ command: String) {
  Retrieves the username for the currently signed in user via `/usr/bin/id`.
  This cannot fail or the application will crash.
  */
-public func identity() -> String {
+public nonisolated func identity() -> String {
     let task = Process()
     task.launchPath = "/usr/bin/id"
     task.arguments = ["-un"]

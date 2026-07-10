@@ -11,24 +11,30 @@ import Foundation
  The `Paths` class is used to locate various binaries on the system.
  The path to the Homebrew directory and the user's name are fetched only once, at boot.
  */
-public class Paths {
+// `nonisolated` + `Sendable`: `Paths` is a leaf that is read from off-main
+// contexts (shell/command building, actors) while composing binary paths, so it
+// must not be main-actor isolated. All stored properties are immutable (`let`)
+// or thread-safe (`Locked`), which makes the type genuinely `Sendable`.
+public nonisolated final class Paths: Sendable {
     internal let container: Container
-    internal var baseDir: Paths.HomebrewDir
-    private var userName: String
+    internal let baseDir: Paths.HomebrewDir
+    private let userName: String
 
     init(container: Container) {
         // Assume the default directory is correct
-        baseDir = container.systemContext.architecture != "x86_64" ? .opt : .usr
+        var resolvedBaseDir: Paths.HomebrewDir =
+            container.systemContext.architecture != "x86_64" ? .opt : .usr
 
         // Ensure that if a different location is used, it takes precendence
-        if baseDir == .usr
+        if resolvedBaseDir == .usr
             && container.filesystem.directoryExists("/usr/local/homebrew")
             && !container.filesystem.directoryExists("/usr/local/Cellar") {
             Log.warn("Using /usr/local/homebrew as base directory!")
-            baseDir = .usr_hb
+            resolvedBaseDir = .usr_hb
         }
 
-        userName = identity()
+        self.baseDir = resolvedBaseDir
+        self.userName = identity()
 
         if !isRunningSwiftUIPreview {
             Log.info("The current username is `\(userName)`.")
@@ -153,7 +159,7 @@ public class Paths {
 
     // MARK: - Enum
 
-    public enum HomebrewDir: String {
+    public nonisolated enum HomebrewDir: String, Sendable {
         case opt = "/opt/homebrew"
         case usr = "/usr/local"
         case usr_hb = "/usr/local/homebrew"

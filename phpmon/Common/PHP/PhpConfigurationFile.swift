@@ -22,26 +22,18 @@ class PhpConfigurationFile: CreatedFromFile {
     /// The file where this configuration file was located.
     let filePath: String
 
+    // These are only ever read/written on the main actor (the type is main-actor
+    // isolated under the default flip), so plain stored properties are sufficient
+    // and the previous `Locked` indirection is no longer needed.
+
     /// The extensions found in this .ini file.
-    private let _extensions: Locked<[PhpExtension]>
-    var extensions: [PhpExtension] {
-        get { _extensions.value }
-        set { _extensions.value = newValue }
-    }
+    var extensions: [PhpExtension]
 
     /// The actual, structured content of the configuration file.
-    private let _content: Locked<Config>
-    var content: Config {
-        get { _content.value }
-        set { _content.value = newValue }
-    }
+    var content: Config
 
     /// The original lines of the file.
-    private let _lines: Locked<[String]>
-    var lines: [String] {
-        get { _lines.value }
-        set { _lines.value = newValue }
-    }
+    var lines: [String]
 
     /** Resolves a PHP configuration file (.ini) */
     static func from(
@@ -65,10 +57,9 @@ class PhpConfigurationFile: CreatedFromFile {
 
         let lines = contents.components(separatedBy: "\n")
 
-        // We only need to explicitly set our locks here
-        self._lines = Locked(lines)
-        self._extensions = Locked(PhpExtension.from(container, lines, filePath: path))
-        self._content = Locked(Self.parseConfig(lines: lines))
+        self.lines = lines
+        self.extensions = PhpExtension.from(container, lines, filePath: path)
+        self.content = Self.parseConfig(lines: lines)
     }
 
     // MARK: API
@@ -90,7 +81,8 @@ class PhpConfigurationFile: CreatedFromFile {
         return nil
     }
 
-    public enum ReplacementErrors: Error {
+    // `nonisolated`: an error type may be thrown/inspected outside the main actor.
+    public nonisolated enum ReplacementErrors: Error, Sendable {
         case missingKey
         case missingFile
     }

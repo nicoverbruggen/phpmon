@@ -46,7 +46,10 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
         self.searchTimer?.invalidate()
 
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { _ in
-            self.contentVC.searchedFor(text: searchField.stringValue)
+            // Scheduled on the main run loop, so this fires on the main actor.
+            MainActor.assumeIsolated {
+                self.contentVC.searchedFor(text: searchField.stringValue)
+            }
         })
     }
 

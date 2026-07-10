@@ -8,7 +8,9 @@
 
 import Foundation
 
-class TestableFileSystem: FileSystemProtocol {
+// Nonisolated + @unchecked Sendable: mirrors RealFileSystem's isolation. Its mutable
+// `files` state is guarded by `accessQueue`, so sharing it across isolation is safe.
+nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Sendable {
 
     /**
      Initialize a fake filesystem with a bunch of files.
@@ -309,11 +311,11 @@ class TestableFileSystem: FileSystemProtocol {
     }
 }
 
-enum FakeFileType: Codable {
+nonisolated enum FakeFileType: Codable {
     case binary, text, directory, symlink
 }
 
-class FakeFile: Codable {
+nonisolated class FakeFile: Codable {
     var type: FakeFileType
     var content: String?
     var readOnly: Bool = false

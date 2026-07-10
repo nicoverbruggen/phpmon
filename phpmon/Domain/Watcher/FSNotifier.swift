@@ -23,19 +23,35 @@ actor FSNotifier {
     /** The queue that is used for the `dispatchSource`. */
     private nonisolated let queue: DispatchQueue
 
-    /** An open file or folder required for observation. */
+    /**
+     An open file or folder required for observation.
+
+     `nonisolated(unsafe)` is required for irreducible C-resource bridging: the file
+     descriptor is opened here and must be closed from the DispatchSource cancel handler
+     (which runs off the actor). Its lifecycle is serialized by the DispatchSource, so
+     access is safe despite being outside the actor's isolation.
+     */
     private nonisolated(unsafe) var fileDescriptor: CInt = -1
 
-    /** A dispatch source that monitors events associated with a file or folder. */
+    /**
+     A dispatch source that monitors events associated with a file or folder.
+
+     `nonisolated(unsafe)` is required because the DispatchSource's own event/cancel
+     handlers reference and tear it down off the actor; its mutation is confined to
+     `init` and the cancel handler, which never run concurrently.
+     */
     private nonisolated(unsafe) var dispatchSource: DispatchSourceFileSystemObject?
 
     // MARK: Methods
 
     init(
         for url: URL,
-        eventMask: DispatchSource.FileSystemEvent,
+        // Passed as a raw value because `DispatchSource.FileSystemEvent` is not `Sendable`
+        // in the SDK and would otherwise be flagged when handed across the watcher actor's
+        // boundary. It is a trivial `UInt`-backed option set, so this reconstruction is safe.
+        eventMaskRawValue: UInt,
         queue: DispatchQueue? = nil,
-        onChange: @escaping () -> Void
+        onChange: @escaping @Sendable () -> Void
     ) {
         self.url = url
         self.queue = queue ?? DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier")
@@ -49,7 +65,7 @@ actor FSNotifier {
 
         dispatchSource = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: fileDescriptor,
-            eventMask: eventMask,
+            eventMask: DispatchSource.FileSystemEvent(rawValue: eventMaskRawValue),
             queue: self.queue
         )
 

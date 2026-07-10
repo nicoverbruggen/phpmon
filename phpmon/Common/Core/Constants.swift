@@ -7,7 +7,7 @@
 
 import Cocoa
 
-struct Constants {
+nonisolated struct Constants {
 
     /**
      The minimum version of Valet that is recommended.
