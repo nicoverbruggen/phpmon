@@ -34,12 +34,12 @@ final class ComposerProgressTest: UITestCase {
 
         // The panel appears with its title and description
         let title = app.staticTexts["alert.composer_progress.title".localized(for: "en")]
-        assertExists(title, 5.0)
-        assertExists(app.staticTexts["alert.composer_progress.info".localized(for: "en")])
+        assertExists(title, 10.0)
+        assertExists(app.staticTexts["alert.composer_progress.info".localized(for: "en")], 5.0)
 
         // The console streams the command itself, then its (delayed) output
         let console = app.textViews["ProgressPanelConsole"]
-        assertExists(console, 2.0)
+        assertExists(console, 5.0)
 
         XCTAssertTrue(
             waitForConsole(console, toContain: "composer global update"),

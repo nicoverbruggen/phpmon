@@ -55,6 +55,21 @@ public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
         self.filesystem = filesystem
     }
 
+    /// The process returned by `attach` must have actually run: consumers
+    /// inspect its `terminationStatus` (e.g. `ComposerWindow`), and NSTask
+    /// raises when that is read from a process that was never launched.
+    /// A single already-exited `/usr/bin/true` (instant, successful exit) is
+    /// shared by every call: spawning one per `attach` blocks the caller —
+    /// often the main actor — for tens of milliseconds each, which is slow
+    /// enough to make the app boot miss UI test timeouts.
+    private static let exitedProcess: Process = {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/true")
+        try? process.run()
+        process.waitUntilExit()
+        return process
+    }()
+
     @discardableResult
     func sync(_ command: String) -> ShellOutput {
         // This assertion will only fire during test builds
@@ -111,16 +126,7 @@ public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
 
         applyTransactions(for: expectation)
 
-        // The returned process must have actually run: consumers inspect its
-        // `terminationStatus` (e.g. `ComposerWindow`), and NSTask raises when
-        // that is read from a process that was never launched. Running
-        // `/usr/bin/true` yields a real, instant, successful exit.
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/true")
-        try? process.run()
-        process.waitUntilExit()
-
-        return (process, output)
+        return (Self.exitedProcess, output)
     }
 
     func reloadEnvPath() async {
