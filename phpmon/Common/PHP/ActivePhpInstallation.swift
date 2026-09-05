@@ -58,8 +58,8 @@ class ActivePhpInstallation {
         /// there is no linked installation and no model should be built.
         let phpConfigExists: Bool
 
-        /// Output of `php-config --version`.
-        let versionOutput: String
+        let version: VersionNumber?
+        let hasErrorState: Bool
 
         /// Raw `ini_get` outputs; nil when the installation is in an error state
         /// (matching the previous behavior of skipping these probes entirely).
@@ -74,21 +74,23 @@ class ActivePhpInstallation {
             self.phpConfigExists = container.filesystem.fileExists(container.paths.phpConfig)
 
             guard phpConfigExists else {
-                self.versionOutput = ""
+                self.version = nil
+                self.hasErrorState = true
                 (self.memoryLimit, self.uploadMaxFilesize, self.postMaxSize) = (nil, nil, nil)
                 self.iniFiles = []
                 return
             }
 
-            self.versionOutput = container.command.execute(
+            let versionOutput = container.command.execute(
                 path: container.paths.phpConfig,
                 arguments: ["--version"],
                 trimNewlines: true
             )
 
-            // When the version output is broken, the installation is in an error
-            // state: don't run any further probes (same early exit as before).
-            guard !Self.indicatesErrorState(versionOutput) else {
+            self.version = try? VersionNumber.parse(versionOutput)
+            self.hasErrorState = version == nil || versionOutput.contains("Warning") || versionOutput.contains("Error")
+
+            guard !hasErrorState else {
                 (self.memoryLimit, self.uploadMaxFilesize, self.postMaxSize) = (nil, nil, nil)
                 self.iniFiles = []
                 return
@@ -104,17 +106,6 @@ class ActivePhpInstallation {
                 .map { String($0) }
 
             self.iniFiles = PhpConfigurationFile.Snapshot.read(container, filePaths: iniFilePaths)
-        }
-
-        /**
-         The installation is considered broken if the version output is nothing,
-         _or_ if the output contains the word "Warning" or "Error". In normal
-         situations this should not be the case.
-         */
-        static func indicatesErrorState(_ versionOutput: String) -> Bool {
-            return versionOutput == ""
-                || versionOutput.contains("Warning")
-                || versionOutput.contains("Error")
         }
 
         private static func iniGet(_ container: Container, key: String) -> String {
@@ -163,8 +154,8 @@ class ActivePhpInstallation {
     init(_ container: Container, probe: Probe) {
         self.container = container
 
-        // Show information about the current version
-        determineVersion(probe)
+        self.version = probe.version
+        self.hasErrorState = probe.hasErrorState
 
         // Initialize the list of ini files that are loaded
         iniFiles = []
@@ -186,16 +177,6 @@ class ActivePhpInstallation {
         probe.iniFiles.forEach { snapshot in
             iniFiles.append(PhpConfigurationFile.from(container, snapshot: snapshot))
         }
-    }
-
-    /**
-     When the app tries to retrieve the version, the installation is considered broken if the output is nothing,
-     _or_ if the output contains the word "Warning" or "Error". In normal situations this should not be the case.
-     */
-    private func determineVersion(_ probe: Probe) {
-        self.hasErrorState = Probe.indicatesErrorState(probe.versionOutput)
-
-        self.version = try? VersionNumber.parse(probe.versionOutput)
     }
 
     /**

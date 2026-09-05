@@ -11,6 +11,26 @@ import Foundation
 @Suite("Active PHP Installation Detection")
 struct ActivePhpInstallationTest {
 
+    @Test(arguments: ["not a version", "PHPMON_COMMAND_UNCAUGHT_SIGNAL", "PHPMON_FILE_HANDLE_READ_FAILURE"])
+    func unparseable_version_output_marks_the_installation_broken(_ output: String) async throws {
+        let container = Container.fake(
+            shell: [
+                "/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
+            ],
+            files: ["/opt/homebrew/bin/php-config": .fake(.binary)],
+            commands: [
+                "/opt/homebrew/bin/php-config --version": output,
+                "/opt/homebrew/bin/php -r echo ini_get('memory_limit');": "128M",
+                "/opt/homebrew/bin/php -r echo ini_get('upload_max_filesize');": "2M",
+                "/opt/homebrew/bin/php -r echo ini_get('post_max_size');": "8M"
+            ]
+        )
+
+        let install = try #require(await ActivePhpInstallation.load(container))
+        #expect(install.hasErrorState)
+        #expect(install.limits.memory_limit == "???")
+    }
+
     @Test func load_returns_nil_when_php_config_is_missing() async {
         // A container without a php-config binary means no linked installation.
         let container = Container.fake()
