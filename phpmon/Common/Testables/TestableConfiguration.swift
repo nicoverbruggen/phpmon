@@ -88,6 +88,8 @@ public struct TestableConfiguration: Codable {
         }
 
         self.filesystem = self.filesystem.merging([
+            "/opt/homebrew/opt/php@\(version.short)"
+                : .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)"),
             "/opt/homebrew/opt/php@\(version.short)/bin/php"
                 : .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.long)/bin/php"),
             "/opt/homebrew/opt/php@\(version.short)/bin/php-config"
@@ -136,14 +138,6 @@ public struct TestableConfiguration: Codable {
                 = .fake(.symlink, "/opt/homebrew/Cellar/php/\(version.short)/bin/php-config")
             self.commandOutput["/opt/homebrew/bin/php-config --version"]
                 = version.long
-        } else {
-            // Output expected to be present for non-linked PHP versions
-            self.shellOutput["ls /opt/homebrew/opt | grep php@"] =
-                BatchFakeShellOutput.instant(
-                    self.secondaryPhpVersions
-                        .map { "php@\($0.short)" }
-                        .joined(separator: "\n")
-                )
         }
 
         self.reloadInstalledFormulaeOutput()

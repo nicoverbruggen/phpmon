@@ -278,7 +278,10 @@ final class PHPDoctorTest: UITestCase {
             "/opt/homebrew/bin"
         ].joined(separator: ":")
         configuration.filesystem["/opt/homebrew/etc/php/8.4/php-fpm.conf"] = .fake(.text)
-        configuration.shellOutput["ls /opt/homebrew/opt | grep php@"] = .instant("")
+        for path in configuration.filesystem.keys where path.hasPrefix("/opt/homebrew/opt/php@")
+            && path != "/opt/homebrew/opt/php@8.4" && !path.hasPrefix("/opt/homebrew/opt/php@8.4/") {
+            configuration.filesystem[path] = nil
+        }
         configuration.shellOutput["/opt/homebrew/bin/brew tap"] = .instant("""
         homebrew/cask
         homebrew/core

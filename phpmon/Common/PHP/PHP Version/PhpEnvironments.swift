@@ -222,11 +222,10 @@ class PhpEnvironments {
      */
     @discardableResult
     public func detectPhpVersions() async -> Set<String> {
-        let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
-
-        var installedVersions = await extractPhpVersions(
-            from: files.components(separatedBy: "\n")
-        )
+        let files = await offMain { [container] in
+            (try? container.filesystem.getShallowContentsOfDirectory(container.paths.optPath)) ?? []
+        }
+        var installedVersions = await extractPhpVersions(from: files)
 
         let supportedByValet: Set<String> = {
             guard let version = Valet.shared.version else {
@@ -300,7 +299,7 @@ class PhpEnvironments {
 
     /**
      Extracts valid PHP versions from an array of strings.
-     This array of strings is usually retrieved from `grep`.
+     The strings are entry names from Homebrew's opt directory.
      
      This method only parses and returns detected versions.
      */

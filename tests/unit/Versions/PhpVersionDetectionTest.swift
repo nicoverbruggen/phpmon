@@ -45,11 +45,11 @@ struct PhpVersionDetectionTest {
     @Test func detect_php_versions_generates_helpers_and_includes_php_alias() async throws {
         let container = Container.fake(
             shell: [
-                "ls /opt/homebrew/opt | grep php@": .instant("php@8.4\n"),
                 "/opt/homebrew/opt/php@8.4/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant(""),
                 "/opt/homebrew/opt/php@8.5/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
             ],
             files: [
+                "/opt/homebrew/opt/php@8.4": .fake(.symlink, "/opt/homebrew/Cellar/php@8.4/8.4.0"),
                 "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary),
                 "/opt/homebrew/opt/php@8.5/bin/php": .fake(.binary),
                 "/opt/homebrew/opt/php@8.5/bin/php-config": .fake(.binary),
@@ -92,11 +92,12 @@ struct PhpVersionDetectionTest {
     @Test func detect_php_versions_tracks_valet_incompatible_versions_separately() async throws {
         let container = Container.fake(
             shell: [
-                "ls /opt/homebrew/opt | grep php@": .instant("php@8.4\nphp@8.5\n"),
                 "/opt/homebrew/opt/php@8.4/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant(""),
                 "/opt/homebrew/opt/php@8.5/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
             ],
             files: [
+                "/opt/homebrew/opt/php@8.5": .fake(.symlink, "/opt/homebrew/Cellar/php/8.5.0"),
+                "/opt/homebrew/opt/php@8.4": .fake(.symlink, "/opt/homebrew/Cellar/php@8.4/8.4.0"),
                 "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary),
                 "/opt/homebrew/opt/php@8.5/bin/php": .fake(.binary),
                 "/usr/local/bin/": .fake(.directory, readOnly: true)
