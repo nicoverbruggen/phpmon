@@ -317,7 +317,7 @@ struct PhpVersionManagerView: View {
     private func formulaIcon(for formula: BrewPhpFormula) -> some View {
         Image(systemName: formula.icon)
             .resizable()
-            .aspectRatio(contentMode: .fit)
+            .scaledToFit()
             .frame(width: 16, height: 16)
             .foregroundColor(formula.iconColor)
             .padding(.horizontal, 5)

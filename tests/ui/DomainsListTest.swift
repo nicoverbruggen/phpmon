@@ -10,14 +10,14 @@ import XCTest
 
 final class DomainsListTest: UITestCase {
 
-    final func test_can_always_open_domains_list() throws {
+    @MainActor final func test_can_always_open_domains_list() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
         assertExists(app.windows["domain_list.title".localized], 2.0)
     }
 
-    final func test_can_filter_domains_list() throws {
+    @MainActor final func test_can_filter_domains_list() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
@@ -43,7 +43,7 @@ final class DomainsListTest: UITestCase {
         XCTAssertEqual(XCTWaiter().wait(for: [filteredTable], timeout: 2), .completed)
     }
 
-    final func test_can_click_add_domain_button() throws {
+    @MainActor final func test_can_click_add_domain_button() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
@@ -59,7 +59,7 @@ final class DomainsListTest: UITestCase {
         assertExists(app.buttons["selection.cancel".localized])
     }
 
-    final func test_can_open_create_link_view() throws {
+    @MainActor final func test_can_open_create_link_view() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
@@ -80,7 +80,7 @@ final class DomainsListTest: UITestCase {
         assertExists(app.buttons["domain_list.add.cancel".localized])
     }
 
-    final func test_can_open_create_proxy_view() throws {
+    @MainActor final func test_can_open_create_proxy_view() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()

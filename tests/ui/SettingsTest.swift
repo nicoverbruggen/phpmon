@@ -14,7 +14,7 @@ final class SettingsTest: UITestCase {
      In this test, we start with the app configured with the English override.
      After opening the domains window, we switch to Japanese.
      */
-    final func test_changing_language_closes_other_windows() throws {
+    @MainActor final func test_changing_language_closes_other_windows() throws {
         var configuration = TestableConfigurations.working
 
         // Our default starting point is to use the system default language

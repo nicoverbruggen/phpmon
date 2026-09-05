@@ -170,6 +170,10 @@ files compiled into this target were written for main-actor-by-default. The Swif
 target still fully exercises the Swift 6 app, so there is no functional downside. (Swift
 Testing — the modern alternative — does not support UI tests, so XCTest is required here.)
 
+Keep `UITestCase` nonisolated so its inherited XCTest initializers keep their original
+isolation. Mark UI test methods and helpers `@MainActor` individually. Isolating the
+test class itself also isolates its inherited initializers and causes override warnings.
+
 ### Failures in UI tests
 
 You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve? You can retry the tests in question and they should eventually pass.

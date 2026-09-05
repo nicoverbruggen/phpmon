@@ -14,7 +14,7 @@ import XCTest
  */
 final class DomainListContextMenuTest: UITestCase {
 
-    final func test_right_click_offers_site_and_proxy_actions() throws {
+    @MainActor final func test_right_click_offers_site_and_proxy_actions() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")
 

@@ -19,7 +19,7 @@ struct WelcomeTourTextItem: View {
             HStack(alignment: .top, spacing: 5) {
                 Image(systemName: icon)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
                     .frame(width: 24, height: 24)
                     .foregroundColor(unavailable ? .gray : Color.appPrimary)
                     .padding(.trailing, 10)

@@ -10,6 +10,7 @@
 
 import XCTest
 
+@MainActor
 extension OnboardingTest {
     func onboardingFlow(with scenario: OnboardingScenario, observeProgress: Bool = false) -> OnboardingTestFlow {
         return OnboardingTestFlow(testCase: self, scenario: scenario, observeProgress: observeProgress)

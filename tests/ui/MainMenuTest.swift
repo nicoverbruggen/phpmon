@@ -9,7 +9,7 @@
 import XCTest
 
 final class MainMenuTest: UITestCase {
-    final func test_can_open_status_menu_item() throws {
+    @MainActor final func test_can_open_status_menu_item() throws {
         let app = launch(openMenu: true)
 
         assertAllExist([
@@ -26,21 +26,21 @@ final class MainMenuTest: UITestCase {
         ])
     }
 
-    final func test_can_open_php_doctor() throws {
+    @MainActor final func test_can_open_php_doctor() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
         assertExists(app.windows.containing(.image, identifier: "stethoscope.circle.fill").firstMatch, 2.0)
     }
 
-    final func test_can_view_welcome_tour() throws {
+    @MainActor final func test_can_view_welcome_tour() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_view_welcome_tour".localized).click()
         assertExists(app.windows.containing(.staticText, identifier: "welcome_tour.welcome".localized).firstMatch, 2.0)
     }
 
-    final func test_can_open_command_history() throws {
+    @MainActor final func test_can_open_command_history() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_view_command_history".localized).click()
@@ -48,13 +48,13 @@ final class MainMenuTest: UITestCase {
         assertExists(app.windows["command_history.title".localized], 2.0)
     }
 
-    final func test_can_open_about() throws {
+    @MainActor final func test_can_open_about() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_about".localized.replacing("PHP Monitor", with: app.title)).click()
         assertExists(app.dialogs.containing(.staticText, identifier: app.title).firstMatch, 2.0)
     }
 
-    final func test_config_editor_disabling_unlimited_updates_fields() throws {
+    @MainActor final func test_config_editor_disabling_unlimited_updates_fields() throws {
         var configuration = TestableConfigurations.working
         configuration.commandOutput["/opt/homebrew/bin/php -r echo ini_get('memory_limit');"] = "-1"
         let app = launch(openMenu: true, with: configuration)
@@ -82,7 +82,7 @@ final class MainMenuTest: UITestCase {
         XCTAssertEqual(window.popUpButtons.firstMatch.value as? String, "MB")
     }
 
-    final func test_can_open_settings() throws {
+    @MainActor final func test_can_open_settings() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()
 
@@ -99,7 +99,7 @@ final class MainMenuTest: UITestCase {
         app.buttons["Notifications"].click()
     }
 
-    final func test_can_open_php_version_manager() throws {
+    @MainActor final func test_can_open_php_version_manager() throws {
         let app = launch(openMenu: true)
 
         app.mainMenuItem(withText: "mi_php_version_manager".localized).click()
@@ -132,13 +132,13 @@ final class MainMenuTest: UITestCase {
         )], 5)
     }
 
-    final func test_can_quit_app() throws {
+    @MainActor final func test_can_quit_app() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_quit".localized.replacing("PHP Monitor", with: app.title)).click()
         XCTAssertTrue(app.wait(for: .notRunning, timeout: 5.0))
     }
 
-    final func test_standalone_mode_can_launch_valet_install_wizard() throws {
+    @MainActor final func test_standalone_mode_can_launch_valet_install_wizard() throws {
         var configuration = TestableConfigurations.workingWithoutValet
         configuration.mockStandaloneValetWizardInstall()
 
@@ -174,7 +174,7 @@ final class MainMenuTest: UITestCase {
         app.terminate()
     }
 
-    final func test_latest_versioned_auto_detected_service_is_displayed() throws {
+    @MainActor final func test_latest_versioned_auto_detected_service_is_displayed() throws {
         let userServicesResponse = """
         [
             {
@@ -225,7 +225,7 @@ final class MainMenuTest: UITestCase {
      reload fetches fresh service data. If a service's status has changed
      (e.g. nginx stopped), the ServicesView should re-render to reflect this.
      */
-    final func test_services_status_change_while_menu_open_does_not_crash() throws {
+    @MainActor final func test_services_status_change_while_menu_open_does_not_crash() throws {
         // The sudo brew services command is called twice:
         //   1. During startup (Startup+Launch)
         //   2. On menuWillOpen (if >2s since last reload)

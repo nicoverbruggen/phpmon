@@ -10,7 +10,7 @@ import XCTest
 
 final class UpdateCheckTest: UITestCase {
 
-    final func test_can_check_for_updates_with_no_new_update() throws {
+    @MainActor final func test_can_check_for_updates_with_no_new_update() throws {
         let app = launch(openMenu: true)
         app.menuItems["mi_check_for_updates".localized].click()
 
@@ -18,7 +18,7 @@ final class UpdateCheckTest: UITestCase {
         assertExists(app.buttons["generic.ok".localized])
     }
 
-    final func test_will_prompt_at_launch_new_version_available() throws {
+    @MainActor final func test_will_prompt_at_launch_new_version_available() throws {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is enabled
@@ -54,7 +54,7 @@ final class UpdateCheckTest: UITestCase {
         assertExists(app.buttons["updater.alerts.buttons.dismiss".localized])
     }
 
-    final func test_does_not_do_automatic_background_check() throws {
+    @MainActor final func test_does_not_do_automatic_background_check() throws {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
@@ -88,7 +88,7 @@ final class UpdateCheckTest: UITestCase {
         assertNotExists(app.staticTexts["updater.alerts.newer_version_available.title".localized("99.0.0 (9999)")], 2)
     }
 
-    final func test_will_require_manual_search_for_update() throws {
+    @MainActor final func test_will_require_manual_search_for_update() throws {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled
@@ -125,7 +125,7 @@ final class UpdateCheckTest: UITestCase {
         assertExists(app.buttons["updater.alerts.buttons.dismiss".localized])
     }
 
-    final func test_could_not_parse_version() throws {
+    @MainActor final func test_could_not_parse_version() throws {
         var configuration = TestableConfigurations.working
 
         // Ensure automatic check is disabled

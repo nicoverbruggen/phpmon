@@ -9,7 +9,7 @@
 import XCTest
 
 final class PHPDoctorTest: UITestCase {
-    final func test_php_doctor_shows_no_warnings_for_quiet_environment() throws {
+    @MainActor final func test_php_doctor_shows_no_warnings_for_quiet_environment() throws {
         let app = launchPhpDoctor(with: phpDoctorConfiguration())
 
         assertExists(app.staticTexts["warnings.none".localized], 3.0)
@@ -23,7 +23,7 @@ final class PHPDoctorTest: UITestCase {
         assertWarningIsNotVisible("warnings.certificates_expired.title", in: app)
     }
 
-    final func test_php_doctor_warns_about_rosetta_without_automatic_fix() throws {
+    @MainActor final func test_php_doctor_warns_about_rosetta_without_automatic_fix() throws {
         var configuration = phpDoctorConfiguration()
         configuration.shellOutput["sysctl -n sysctl.proc_translated"] = .instant("1")
 
@@ -34,7 +34,7 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.buttons["Learn More"], 1.0)
     }
 
-    final func test_php_doctor_warns_about_unavailable_helpers_and_fix_updates_path() throws {
+    @MainActor final func test_php_doctor_warns_about_unavailable_helpers_and_fix_updates_path() throws {
         var configuration = phpDoctorConfiguration()
         configuration.shellPath = [
             "/usr/local/bin",
@@ -59,7 +59,7 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.staticTexts["warnings.none".localized], 5.0)
     }
 
-    final func test_php_doctor_warns_about_invalid_shell_without_automatic_fix() throws {
+    @MainActor final func test_php_doctor_warns_about_invalid_shell_without_automatic_fix() throws {
         var configuration = phpDoctorConfiguration()
         configuration.configuredShell = "/bin/this_shell_does_not_exist"
 
@@ -69,7 +69,7 @@ final class PHPDoctorTest: UITestCase {
         assertNotExists(app.buttons["Fix Automatically"], 1.0)
     }
 
-    final func test_php_doctor_warns_about_xdebug_configuration_and_fix_updates_ini() throws {
+    @MainActor final func test_php_doctor_warns_about_xdebug_configuration_and_fix_updates_ini() throws {
         var configuration = phpDoctorConfiguration()
         configuration.filesystem["/opt/homebrew/etc/php/8.4/conf.d/ext-xdebug.ini"] = .fake(
             .text,
@@ -88,7 +88,7 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.staticTexts["warnings.none".localized], 5.0)
     }
 
-    final func test_php_doctor_warns_about_missing_required_taps_and_fix_taps_them() throws {
+    @MainActor final func test_php_doctor_warns_about_missing_required_taps_and_fix_taps_them() throws {
         var configuration = phpDoctorConfiguration()
         configuration.shellOutput["/opt/homebrew/bin/brew tap"] = .instant("""
         homebrew/cask
@@ -141,7 +141,7 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.staticTexts["warnings.none".localized], 5.0)
     }
 
-    final func test_php_doctor_warns_about_untrusted_required_taps_and_fix_trusts_them() throws {
+    @MainActor final func test_php_doctor_warns_about_untrusted_required_taps_and_fix_trusts_them() throws {
         var configuration = phpDoctorConfiguration()
         configuration.shellOutput["/opt/homebrew/bin/brew trust --tap"] = .instant("""
         All official taps and commands are trusted.
@@ -172,7 +172,7 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.staticTexts["warnings.none".localized], 5.0)
     }
 
-    final func test_php_doctor_warns_about_missing_php_configuration_without_automatic_fix() throws {
+    @MainActor final func test_php_doctor_warns_about_missing_php_configuration_without_automatic_fix() throws {
         var configuration = phpDoctorConfiguration()
         configuration.filesystem["/opt/homebrew/etc/php/8.4/php.ini"] = nil
 
@@ -182,7 +182,7 @@ final class PHPDoctorTest: UITestCase {
         assertNotExists(app.buttons["Fix Automatically"], 1.0)
     }
 
-    final func test_php_doctor_warns_about_expired_certificates_and_fix_renews_them() throws {
+    @MainActor final func test_php_doctor_warns_about_expired_certificates_and_fix_renews_them() throws {
         let app = launchPhpDoctor(
             with: phpDoctorConfiguration(),
             environment: ["PHPMON_FAKE_EXPIRED_CERTIFICATES": "1"]
@@ -197,7 +197,7 @@ final class PHPDoctorTest: UITestCase {
         assertWarningDisappears("warnings.certificates_expired.title", in: app, timeout: 8.0)
     }
 
-    final func test_php_doctor_can_render_all_warning_definitions() throws {
+    @MainActor final func test_php_doctor_can_render_all_warning_definitions() throws {
         let app = launchPhpDoctor(
             with: phpDoctorConfiguration(),
             environment: ["EXTREME_DOCTOR_MODE": "1"]
@@ -213,7 +213,7 @@ final class PHPDoctorTest: UITestCase {
         assertWarningIsVisible("warnings.certificates_expired.title", in: app)
     }
 
-    private func launchPhpDoctor(
+    @MainActor private func launchPhpDoctor(
         with configuration: TestableConfiguration,
         environment: [String: String] = [:]
     ) -> XCPMApplication {
@@ -229,7 +229,7 @@ final class PHPDoctorTest: UITestCase {
         return app
     }
 
-    private func assertWarningIsVisible(
+    @MainActor private func assertWarningIsVisible(
         _ localizationKey: String,
         in app: XCPMApplication,
         timeout: TimeInterval = 3.0
@@ -237,14 +237,14 @@ final class PHPDoctorTest: UITestCase {
         assertExists(app.staticTexts[localizationKey.localized], timeout)
     }
 
-    private func assertWarningIsNotVisible(
+    @MainActor private func assertWarningIsNotVisible(
         _ localizationKey: String,
         in app: XCPMApplication
     ) {
         XCTAssertFalse(app.staticTexts[localizationKey.localized].exists)
     }
 
-    private func assertWarningDisappears(
+    @MainActor private func assertWarningDisappears(
         _ localizationKey: String,
         in app: XCPMApplication,
         timeout: TimeInterval
@@ -259,13 +259,13 @@ final class PHPDoctorTest: UITestCase {
         }
     }
 
-    private func clickAutomaticFix(in app: XCPMApplication) {
+    @MainActor private func clickAutomaticFix(in app: XCPMApplication) {
         let button = app.buttons["Fix Automatically"].firstMatch
         assertExists(button, 3.0)
         button.click()
     }
 
-    private func phpDoctorConfiguration() -> TestableConfiguration {
+    @MainActor private func phpDoctorConfiguration() -> TestableConfiguration {
         var configuration = TestableConfigurations.working
         configuration.shellPath = [
             "/usr/local/bin",

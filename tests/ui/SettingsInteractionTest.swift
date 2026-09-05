@@ -17,7 +17,7 @@ import XCTest
  */
 final class SettingsInteractionTest: UITestCase {
 
-    private func openSettings(_ app: XCPMApplication) -> XCUIElement {
+    @MainActor private func openSettings(_ app: XCPMApplication) -> XCUIElement {
         app.menuItems["mi_preferences".localized(for: "en")].click()
 
         let window = app.windows
@@ -27,7 +27,7 @@ final class SettingsInteractionTest: UITestCase {
         return window
     }
 
-    final func test_checkbox_toggles_persist_across_tab_switches() throws {
+    @MainActor final func test_checkbox_toggles_persist_across_tab_switches() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")
 
@@ -50,7 +50,7 @@ final class SettingsInteractionTest: UITestCase {
         XCTAssertNotEqual(checkbox.value as? Int, initialValue)
     }
 
-    final func test_hotkey_recorder_captures_and_clears_shortcut() throws {
+    @MainActor final func test_hotkey_recorder_captures_and_clears_shortcut() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")
 

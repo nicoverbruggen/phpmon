@@ -14,7 +14,7 @@ final class OnboardingTest: UITestCase {
 
     // If Command Line Tools are missing, the wizard should request their installation first and only
     // continue through the rest of setup once the mocked system command reports them as installed.
-    final func test_launch_runs_onboarding_wizard_flow_that_installs_developer_tools() throws {
+    @MainActor final func test_launch_runs_onboarding_wizard_flow_that_installs_developer_tools() throws {
         let flow = onboardingFlow(with: .developerToolsMissing, observeProgress: true)
 
         flow.assertDidOpenWizard()
@@ -30,7 +30,7 @@ final class OnboardingTest: UITestCase {
 
     // If Command Line Tools already exist, the wizard should acknowledge step 1 and continue through
     // the mocked Homebrew, PATH, and PHP/Composer setup before regular startup enables the menu.
-    final func test_launch_runs_onboarding_wizard_flow_when_developer_tools_are_already_installed() throws {
+    @MainActor final func test_launch_runs_onboarding_wizard_flow_when_developer_tools_are_already_installed() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
 
         flow.assertDidOpenWizard()
@@ -46,7 +46,7 @@ final class OnboardingTest: UITestCase {
 
     // If core setup is already partially present on a first launch, the wizard should still open,
     // show the introduction, mark the completed steps, and continue at PHP/Composer.
-    final func test_launch_runs_wizard_for_first_launch_partial_setup_when_php_and_composer_are_missing() throws {
+    @MainActor final func test_launch_runs_wizard_for_first_launch_partial_setup_when_php_and_composer_are_missing() throws {
         let flow = onboardingFlow(with: .firstLaunchPartialSetup)
 
         flow.assertDidOpenWizard()
@@ -62,7 +62,7 @@ final class OnboardingTest: UITestCase {
 
     // If the user's shell is not zsh, the wizard should show the manual PATH instructions
     // after Homebrew is installed instead of offering the automatic PATH fixer.
-    final func test_launch_shows_manual_path_instructions_for_non_zsh_shells() throws {
+    @MainActor final func test_launch_shows_manual_path_instructions_for_non_zsh_shells() throws {
         let flow = onboardingFlow(with: .manualPathFixRequired)
 
         flow.assertDidOpenWizard()
@@ -74,7 +74,7 @@ final class OnboardingTest: UITestCase {
 
     // If manual PATH setup is still unresolved, the wizard should show the inline warning
     // status banner so the user can see the retry did not resolve the step.
-    final func test_launch_shows_warning_status_banner_when_manual_path_recheck_fails() throws {
+    @MainActor final func test_launch_shows_warning_status_banner_when_manual_path_recheck_fails() throws {
         let flow = onboardingFlow(with: .manualPathFixRequired)
 
         flow.assertDidOpenWizard()
@@ -97,7 +97,7 @@ final class OnboardingTest: UITestCase {
 
     // Users can skip the optional Valet step, confirm Standalone Mode, and still finish
     // onboarding successfully without being forced through Valet installation.
-    final func test_launch_can_skip_valet_and_continue_in_standalone_mode() throws {
+    @MainActor final func test_launch_can_skip_valet_and_continue_in_standalone_mode() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
 
         flow.assertDidOpenWizard()
@@ -112,7 +112,7 @@ final class OnboardingTest: UITestCase {
 
     // Setup cannot be skipped while a command is actively running, so partially completed
     // installs are not abandoned in an unknown state.
-    final func test_launch_disables_skip_setup_while_install_step_is_running() throws {
+    @MainActor final func test_launch_disables_skip_setup_while_install_step_is_running() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled, observeProgress: true)
 
         flow.assertDidOpenWizard()
@@ -127,7 +127,7 @@ final class OnboardingTest: UITestCase {
 
     // If an automatic terminal-backed step fails, the captured terminal output should remain
     // visible so the user can see what went wrong.
-    final func test_launch_keeps_terminal_output_visible_after_install_step_fails() throws {
+    @MainActor final func test_launch_keeps_terminal_output_visible_after_install_step_fails() throws {
         let flow = onboardingFlow(with: .phpComposerInstallFailsWithTerminalOutput)
 
         flow.assertDidOpenWizard()
@@ -142,7 +142,7 @@ final class OnboardingTest: UITestCase {
 
     // Valet onboarding now pauses twice for privileged actions in UI tests:
     // once to install temporary permissions and once to remove them afterwards.
-    final func test_launch_requires_approving_privileged_valet_actions() throws {
+    @MainActor final func test_launch_requires_approving_privileged_valet_actions() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
 
         flow.assertDidOpenWizard()
@@ -156,7 +156,7 @@ final class OnboardingTest: UITestCase {
     }
 
     // Denying the temporary admin request should fail the Valet step without advancing past it.
-    final func test_launch_can_deny_privileged_valet_install_and_retry() throws {
+    @MainActor final func test_launch_can_deny_privileged_valet_install_and_retry() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
 
         flow.assertDidOpenWizard()
@@ -174,7 +174,7 @@ final class OnboardingTest: UITestCase {
 
     // If cleanup is denied after Valet succeeds, the wizard should keep the install complete
     // and show the cleanup warning before allowing the user to continue.
-    final func test_launch_surfaces_cleanup_warning_when_privileged_cleanup_is_denied() throws {
+    @MainActor final func test_launch_surfaces_cleanup_warning_when_privileged_cleanup_is_denied() throws {
         let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
 
         flow.assertDidOpenWizard()

@@ -19,7 +19,7 @@ import XCTest
  */
 final class MainMenuBarTest: UITestCase {
 
-    final func test_main_menu_bar_offers_site_actions() throws {
+    @MainActor final func test_main_menu_bar_offers_site_actions() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")
 

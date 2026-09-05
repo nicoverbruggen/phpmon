@@ -10,7 +10,7 @@ import XCTest
 
 final class StartupTest: UITestCase {
 
-    final func test_launch_halts_due_to_system_configuration_issue() throws {
+    @MainActor final func test_launch_halts_due_to_system_configuration_issue() throws {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
 
@@ -43,7 +43,7 @@ final class StartupTest: UITestCase {
         app.terminate()
     }
 
-    final func test_launch_halts_and_automatic_fix_cannot_be_applied() throws {
+    @MainActor final func test_launch_halts_and_automatic_fix_cannot_be_applied() throws {
         var configuration = TestableConfigurations.working
         configuration.shellOutput["/opt/homebrew/bin/brew link php"] = .delayed(0.5, "Brew was unable to link PHP.", .stdErr)
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
@@ -92,7 +92,7 @@ final class StartupTest: UITestCase {
         app.buttons["startup.alert.quit".localized].click()
     }
 
-    final func test_launch_halts_and_automic_fix_can_be_applied() throws {
+    @MainActor final func test_launch_halts_and_automic_fix_can_be_applied() throws {
         var configuration = TestableConfigurations.working
 
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing
@@ -123,7 +123,7 @@ final class StartupTest: UITestCase {
         waitForMenu(app)
     }
 
-    final func test_get_warning_about_missing_fpm_symlink() throws {
+    @MainActor final func test_get_warning_about_missing_fpm_symlink() throws {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/etc/php/8.4/php-fpm.d/valet-fpm.conf"] = nil
 
@@ -136,7 +136,7 @@ final class StartupTest: UITestCase {
         app.buttons["generic.ok".localized].click()
     }
 
-    final func test_launch_succeeds_with_intel_architecture() throws {
+    @MainActor final func test_launch_succeeds_with_intel_architecture() throws {
         let app = launch(
             waitForInitialization: true,
             with: TestableConfigurations.workingIntel
@@ -145,7 +145,7 @@ final class StartupTest: UITestCase {
         app.terminate()
     }
 
-    final func test_launch_succeeds_with_invalid_configured_shell() throws {
+    @MainActor final func test_launch_succeeds_with_invalid_configured_shell() throws {
         var configuration = TestableConfigurations.working
         configuration.configuredShell = "/bin/this_shell_does_not_exist"
 
@@ -157,7 +157,7 @@ final class StartupTest: UITestCase {
         app.terminate()
     }
 
-    final func test_get_warning_about_unsupported_valet_version() throws {
+    @MainActor final func test_get_warning_about_unsupported_valet_version() throws {
         var configuration = TestableConfigurations.working
         configuration.shellOutput["valet --version"] = .instant("Laravel Valet 5.0")
 

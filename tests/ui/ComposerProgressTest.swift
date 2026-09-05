@@ -14,7 +14,7 @@ import XCTest
  */
 final class ComposerProgressTest: UITestCase {
 
-    final func test_composer_update_shows_progress_panel_and_closes_on_success() throws {
+    @MainActor final func test_composer_update_shows_progress_panel_and_closes_on_success() throws {
         var configuration = TestableConfigurations.working
         configuration.allowsDelayedShellCommands = true
         configuration.preferenceOverrides[.languageOverride] = .string("en")
@@ -56,7 +56,7 @@ final class ComposerProgressTest: UITestCase {
     }
 
     /** Polls the console's accessibility value until it contains the given text. */
-    private func waitForConsole(
+    @MainActor private func waitForConsole(
         _ console: XCUIElement,
         toContain text: String,
         timeout: TimeInterval = 5.0
