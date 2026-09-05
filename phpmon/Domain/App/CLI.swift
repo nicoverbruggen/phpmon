@@ -6,6 +6,8 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
+import Foundation
+
 struct CLI {
     /**
      Check if any verbose logging is enabled.
@@ -36,34 +38,30 @@ struct CLI {
      system itself. (System context is effectively fixed once set.)
      */
     static func applySystemContext() {
-        guard let path = Self.configurationPath() else { return }
-
-        TestableConfiguration
-            .loadFrom(path: path)
-            .beforeBind()
+        configuration()?.beforeBind()
     }
 
     /**
      Loads and applies a testable configuration profile if one was
-     provided via the `--configuration:` launch argument.
+     provided by the UI tests or the `--configuration:` launch argument.
      */
     static func loadConfigurationProfile() {
-        guard let path = Self.configurationPath() else { return }
-
-        TestableConfiguration
-            .loadFrom(path: path)
-            .afterBind()
+        configuration()?.afterBind()
     }
 
-    /**
-     Check if a configuration profile was configured via launch parameter.
-     */
-    private static func configurationPath() -> String? {
+    private static func configuration() -> TestableConfiguration? {
+        #if DEBUG
+        // Pass UI fixtures directly instead of reading the runner's private app container.
+        if let json = ProcessInfo.processInfo.environment["PHPMON_TEST_CONFIGURATION"] {
+            return try! JSONDecoder().decode(TestableConfiguration.self, from: Data(json.utf8))
+        }
+        #endif
+
         if let path = CommandLine.arguments
             .first(where: { $0.matches(pattern: "--configuration:*") })?
             .replacing("--configuration:", with: "") {
             Log.info("The configuration with path `\(path)` is being requested...")
-            return path
+            return TestableConfiguration.loadFrom(path: path)
         }
 
         return nil

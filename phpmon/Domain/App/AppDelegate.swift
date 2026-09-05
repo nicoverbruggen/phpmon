@@ -101,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // No matter what, clear PHP Guard if it's a debug build
         Stats.clearCurrentGlobalPhpVersion()
 
-        // Load testable configuration profile (if provided via launch argument)
+        // Load the testable configuration from the environment or a launch argument.
         CLI.loadConfigurationProfile()
         #endif
 

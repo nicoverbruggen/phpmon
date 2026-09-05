@@ -9,15 +9,15 @@
 import XCTest
 
 class XCPMApplication: XCUIApplication {
-    public func withConfiguration(_ configuration: TestableConfiguration) {
-        let path = persistTestable(configuration)
-        self.launchArguments = ["--configuration:\(path)"]
+    override func launch() {
+        precondition(
+            launchEnvironment["PHPMON_TEST_CONFIGURATION"] != nil,
+            "UI tests must provide a fake configuration before launching PHP Monitor."
+        )
+        super.launch()
     }
 
-    private func persistTestable(_ configuration: TestableConfiguration) -> String {
-        let tempDirectoryURL = NSURL.fileURL(withPath: NSTemporaryDirectory(), isDirectory: true)
-        let targetURL = tempDirectoryURL.appendingPathComponent("\(UUID().uuidString).json")
-        try! configuration.toJson().write(toFile: targetURL.path, atomically: true, encoding: .utf8)
-        return targetURL.path
+    public func withConfiguration(_ configuration: TestableConfiguration) {
+        launchEnvironment["PHPMON_TEST_CONFIGURATION"] = configuration.toJson()
     }
 }

@@ -223,7 +223,7 @@ final class PHPDoctorTest: UITestCase {
     ) -> XCPMApplication {
         let app = XCPMApplication()
         app.withConfiguration(configuration)
-        app.launchEnvironment = environment
+        app.launchEnvironment.merge(environment) { _, new in new }
         app.launch()
 
         waitForMenu(app, openMenu: true)
