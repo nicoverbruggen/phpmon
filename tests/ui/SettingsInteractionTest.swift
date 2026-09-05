@@ -59,6 +59,10 @@ final class SettingsInteractionTest: UITestCase {
         configuration.preferenceOverrides[.languageOverride] = .string("en")
 
         let app = launch(openMenu: true, with: configuration)
+        app.mainMenuItem(withText: "mi_domain_list".localized(for: "en")).click()
+        let domainsWindow = app.windows["domain_list.title".localized(for: "en")]
+        assertExists(domainsWindow, 2.0)
+        app.statusItems.firstMatch.click()
         let window = openSettings(app)
 
         let setButton = window.buttons["prefs.shortcut_set".localized(for: "en")]
@@ -70,6 +74,18 @@ final class SettingsInteractionTest: UITestCase {
         // Start recording: the button switches to its listening state
         setButton.click()
         assertExists(window.buttons["prefs.shortcut_listening".localized(for: "en")], 2.0)
+
+        // Recording in Settings must not consume typing in another window.
+        app.statusItems.firstMatch.click()
+        app.mainMenuItem(withText: "mi_domain_list".localized(for: "en")).click()
+        let searchField = domainsWindow.searchFields.firstMatch
+        searchField.click()
+        searchField.typeText("concord")
+        XCTAssertEqual(searchField.value as? String, "concord")
+
+        app.statusItems.firstMatch.click()
+        _ = openSettings(app)
+        window.buttons["prefs.shortcut_listening".localized(for: "en")].click()
 
         // Press a (deliberately obscure) combination; the recorder captures it
         app.typeKey("u", modifierFlags: [.control, .option, .command])

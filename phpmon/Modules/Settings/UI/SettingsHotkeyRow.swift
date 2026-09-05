@@ -54,12 +54,16 @@ struct SettingsHotkeyRow: View {
     }
 
     private func startListening() {
+        guard let window = WindowManager.window(for: PreferencesWC.self) else { return }
+
         // Match the old behavior: starting a new recording clears the
         // existing shortcut first.
         clearShortcut()
 
         listening = true
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak window] event in
+            // Local monitors receive events for every window in the app.
+            guard let window, event.window === window else { return event }
             handle(event)
             // Swallow the event: it is being recorded, not typed.
             return nil
