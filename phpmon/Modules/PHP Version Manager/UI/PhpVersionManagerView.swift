@@ -76,7 +76,7 @@ struct PhpVersionManagerView: View {
         await self.warnAboutTapReadiness()
 
         // Finally, load PHP information
-        await container.phpEnvs.reloadPhpVersions()
+        await container.phpEnvs.detectPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
         self.status.busy = false

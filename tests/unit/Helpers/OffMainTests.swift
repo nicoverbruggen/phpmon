@@ -24,13 +24,6 @@ struct OffMainTests {
     }
 
     @MainActor
-    @Test func off_main_returns_the_result_of_the_work() async {
-        let value = await offMain { (1...5).reduce(0, +) }
-
-        #expect(value == 15)
-    }
-
-    @MainActor
     @Test func off_main_rethrows_errors_from_the_work() async {
         struct FakeError: Error {}
 

@@ -116,36 +116,20 @@ class PhpEnvironments {
         }
     }
 
-    // MARK: - Thread-Safe PHP Version Storage
+    // MARK: - PHP Version Storage
 
     /** All versions of PHP that are currently supported. */
-    private let _availablePhpVersions = OSAllocatedUnfairLock<[String]>(initialState: [])
-    var availablePhpVersions: [String] {
-        get { _availablePhpVersions.withLock { $0 } }
-        set { _availablePhpVersions.withLock { $0 = newValue } }
-    }
+    var availablePhpVersions: [String] = []
 
     /** All versions of PHP that are currently installed but not compatible. */
-    private let _incompatiblePhpVersions = OSAllocatedUnfairLock<[String]>(initialState: [])
-    var incompatiblePhpVersions: [String] {
-        get { _incompatiblePhpVersions.withLock { $0 } }
-        set { _incompatiblePhpVersions.withLock { $0 = newValue } }
-    }
+    var incompatiblePhpVersions: [String] = []
 
     /** Cached information about the PHP installations. */
-    private let _cachedPhpInstallations = OSAllocatedUnfairLock<[String: PhpInstallation]>(initialState: [:])
-    var cachedPhpInstallations: [String: PhpInstallation] {
-        get { _cachedPhpInstallations.withLock { $0 } }
-        set { _cachedPhpInstallations.withLock { $0 = newValue } }
-    }
+    var cachedPhpInstallations: [String: PhpInstallation] = [:]
 
     /** Information about the currently linked PHP installation. */
-    private let _currentInstall = OSAllocatedUnfairLock<ActivePhpInstallation?>(initialState: nil)
     var currentInstall: ActivePhpInstallation? {
-        get { _currentInstall.withLock { $0 } }
-        set {
-            // Update the synchronized value
-            _currentInstall.withLock { $0 = newValue }
+        didSet {
             // Let the PHP extension manager, if it exists, know the version changed
             WindowManager
                 .controller(of: PhpExtensionManagerWC.self)?
@@ -174,11 +158,7 @@ class PhpEnvironments {
     /**
      Information we were able to discern from the Homebrew info command.
      */
-    private let _homebrewPackage = OSAllocatedUnfairLock<HomebrewPackage?>(initialState: nil)
-    var homebrewPackage: HomebrewPackage! {
-        get { _homebrewPackage.withLock { $0 } }
-        set { _homebrewPackage.withLock { $0 = newValue } }
-    }
+    var homebrewPackage: HomebrewPackage!
 
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
@@ -231,10 +211,6 @@ class PhpEnvironments {
      */
     public static var switcher: InternalSwitcher {
         return InternalSwitcher(App.shared.container)
-    }
-
-    public func reloadPhpVersions() async {
-        await self.detectPhpVersions()
     }
 
     /**

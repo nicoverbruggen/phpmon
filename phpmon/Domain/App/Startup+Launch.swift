@@ -86,7 +86,7 @@ extension Startup {
         await BrewDiagnostics.shared.verifyThirdPartyTaps()
 
         // Actually detect the PHP versions
-        await container.phpEnvs.reloadPhpVersions()
+        await container.phpEnvs.detectPhpVersions()
 
         // Set up the filesystem watcher for the Homebrew binaries
         await HomebrewWatchManager.prepare()

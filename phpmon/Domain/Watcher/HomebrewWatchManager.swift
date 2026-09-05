@@ -138,7 +138,7 @@ actor HomebrewWatchManager: Suspendable {
             Log.info("No changes in `\(self.url.path)` occurred for \(self.debounceInterval) seconds. Reloading now.")
 
             // We reload the PHP versions in the background
-            await App.shared.container.phpEnvs.reloadPhpVersions()
+            await App.shared.container.phpEnvs.detectPhpVersions()
 
             // Finally, refresh the active installation
             await MainMenu.shared.refreshActiveInstallation()
