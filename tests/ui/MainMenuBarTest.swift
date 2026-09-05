@@ -41,7 +41,7 @@ final class MainMenuBarTest: UITestCase {
         // rendered into the menu bar's accessibility hierarchy.)
         let sites = app.menuBars.menuBarItems["Sites"]
         assertExists(sites, 5.0)
-        assertExists(app.menuBars.menuBarItems["PHP Monitor"])
+        assertExists(app.menuBars.menuBarItems[app.title])
         assertExists(app.menuBars.menuBarItems["Edit"])
         assertExists(app.menuBars.menuBarItems["Window"])
 

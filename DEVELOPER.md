@@ -136,7 +136,7 @@ The project builds with **zero** concurrency warnings; please keep it that way w
 
 ## ✅ Testing
 
-In order to properly test everything, you will want to use the _PHP Monitor EAP_ target. There are unit and UI tests both for this target.
+The `PHP Monitor` and `PHP Monitor EAP` schemes share one test plan with unit and UI tests. The EAP scheme tests the app built with `Debug.EA`; the regular scheme uses `Debug`. Both schemes use the same app target.
 
 ### Unit tests
 
@@ -155,11 +155,13 @@ xcodebuild test \
 ```sh
 xcodebuild test \
     -project "PHP Monitor.xcodeproj" \
-    -scheme "PHP Monitor" \
+    -scheme "PHP Monitor EAP" \
     -destination "platform=macOS" \
     -only-testing "UI Tests"
 ```
     
+Use `-scheme "PHP Monitor"` to run the same UI suite against the regular build. To run unit tests against EAP, use `-scheme "PHP Monitor EAP" -only-testing "Unit Tests"`.
+
 The **UI Tests target deliberately stays in Swift 5 language mode** while the rest of the
 project is on Swift 6. XCUITest is not reconcilable with Swift 6 strict concurrency here:
 `XCUIApplication`/`XCUIElement` are `@MainActor`, but `XCTestCase`'s lifecycle overrides

@@ -21,12 +21,12 @@ final class MainMenuTest: UITestCase {
             app.menuItems["\("mi_php_switch".localized) 8.1 (php@8.1)"],
             app.menuItems["\("mi_php_switch".localized) 8.0 (php@8.0)"],
             // We should see the about and quit items
-            app.menuItems["mi_about".localized],
-            app.menuItems["mi_quit".localized]
+            app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)],
+            app.menuItems["mi_quit".localized.replacing("PHP Monitor", with: app.title)]
         ])
 
         // Wait briefly
-        _ = app.menuItems["mi_about".localized].waitForExistence(timeout: 2.0)
+        _ = app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)].waitForExistence(timeout: 2.0)
     }
 
     final func test_can_open_domains_list() throws {
@@ -61,8 +61,8 @@ final class MainMenuTest: UITestCase {
 
     final func test_can_open_about() throws {
         let app = launch(openMenu: true)
-        app.mainMenuItem(withText: "mi_about".localized).click()
-        assertExists(app.dialogs.containing(.staticText, identifier: "PHP Monitor").firstMatch, 2.0)
+        app.mainMenuItem(withText: "mi_about".localized.replacing("PHP Monitor", with: app.title)).click()
+        assertExists(app.dialogs.containing(.staticText, identifier: app.title).firstMatch, 2.0)
     }
 
     final func test_config_editor_disabling_unlimited_updates_fields() throws {
@@ -147,7 +147,7 @@ final class MainMenuTest: UITestCase {
 
     final func test_can_quit_app() throws {
         let app = launch(openMenu: true)
-        app.mainMenuItem(withText: "mi_quit".localized).click()
+        app.mainMenuItem(withText: "mi_quit".localized.replacing("PHP Monitor", with: app.title)).click()
         XCTAssertTrue(app.wait(for: .notRunning, timeout: 5.0))
     }
 
@@ -275,7 +275,7 @@ final class MainMenuTest: UITestCase {
         Thread.sleep(forTimeInterval: 4)
 
         // Verify the app is still running and responsive
-        assertExists(app.menuItems["mi_about".localized], 1.0)
+        assertExists(app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)], 1.0)
 
         // Verify that the services status actually changed (nginx is now stopped)
         assertExists(app.staticTexts["phpman.services.inactive".localized], 1.0)
