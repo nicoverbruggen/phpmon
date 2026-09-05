@@ -26,6 +26,7 @@ class WarningManager: ObservableObject {
         if isRunningSwiftUIPreview || fake {
             /// SwiftUI previews will always list all possible evaluations.
             self.warnings = self.evaluations
+            self.hasCompletedInitialEvaluation = true
         }
     }
 
@@ -37,12 +38,8 @@ class WarningManager: ObservableObject {
     /// These warnings are the ones that are ready to be displayed.
     @Published public var warnings: [Warning] = []
 
-    /// Storage for warnings being evaluated. Only ever touched from the main actor
-    /// (this type is main-actor isolated and every reader/writer lives in this file),
-    /// so a plain stored property suffices — no lock needed.
-    /// When all temporary warnings are set, you may broadcast these changes
-    /// and they will be sent to the @Published variable via the main thread.
-    private var temporaryWarnings: [Warning] = []
+    /// An empty result is meaningful only after the first evaluation has finished.
+    @Published private(set) var hasCompletedInitialEvaluation = false
 
     public func hasWarnings() -> Bool {
         return !warnings.isEmpty
@@ -54,10 +51,7 @@ class WarningManager: ObservableObject {
 
     @MainActor func clearWarnings() {
         self.warnings = []
-    }
-
-    @MainActor func broadcastWarnings() {
-        self.warnings = temporaryWarnings
+        self.hasCompletedInitialEvaluation = true
     }
 
     /**
@@ -70,8 +64,8 @@ class WarningManager: ObservableObject {
         await brewDiagnostics.loadTrustedTaps()
 
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
-            self.temporaryWarnings = self.evaluations
-            self.broadcastWarnings()
+            self.warnings = self.evaluations
+            self.hasCompletedInitialEvaluation = true
             return
         }
 
@@ -96,7 +90,7 @@ class WarningManager: ObservableObject {
             warnings.append(check)
         }
 
-        self.temporaryWarnings = warnings
-        self.broadcastWarnings()
+        self.warnings = warnings
+        self.hasCompletedInitialEvaluation = true
     }
 }

@@ -85,8 +85,10 @@ struct WarningManagerTrustTest {
             ].joined(separator: ":")
         }
 
+        #expect(!manager.hasCompletedInitialEvaluation)
         await manager.checkEnvironment()
 
+        #expect(manager.hasCompletedInitialEvaluation)
         #expect(manager.warnings.isEmpty)
     }
 

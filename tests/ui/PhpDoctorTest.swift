@@ -239,10 +239,9 @@ final class PHPDoctorTest: UITestCase {
 
     private func assertWarningIsNotVisible(
         _ localizationKey: String,
-        in app: XCPMApplication,
-        timeout: TimeInterval = 1.0
+        in app: XCPMApplication
     ) {
-        assertNotExists(app.staticTexts[localizationKey.localized], timeout)
+        XCTAssertFalse(app.staticTexts[localizationKey.localized].exists)
     }
 
     private func assertWarningDisappears(
