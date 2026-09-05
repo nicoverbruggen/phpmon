@@ -10,10 +10,6 @@ import XCTest
 
 final class SettingsTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     /**
      In this test, we start with the app configured with the English override.
      After opening the domains window, we switch to Japanese.

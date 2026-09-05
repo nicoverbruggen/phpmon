@@ -19,10 +19,6 @@ import XCTest
  */
 final class MainMenuBarTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     final func test_main_menu_bar_offers_site_actions() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")

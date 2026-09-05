@@ -10,16 +10,11 @@ import XCTest
 
 final class DomainsListTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
-    override func tearDownWithError() throws {}
-
     final func test_can_always_open_domains_list() throws {
         let app = launch(openMenu: true)
 
         app.menuItems["mi_domain_list".localized].click()
+        assertExists(app.windows["domain_list.title".localized], 2.0)
     }
 
     final func test_can_filter_domains_list() throws {

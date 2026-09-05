@@ -14,10 +14,6 @@ import XCTest
  */
 final class ComposerProgressTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     final func test_composer_update_shows_progress_panel_and_closes_on_success() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")

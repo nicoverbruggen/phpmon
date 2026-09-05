@@ -10,10 +10,6 @@ import XCTest
 
 final class OnboardingTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     // MARK: - Core onboarding flow
 
     // If Command Line Tools are missing, the wizard should request their installation first and only

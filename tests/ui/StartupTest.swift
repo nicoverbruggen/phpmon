@@ -10,12 +10,6 @@ import XCTest
 
 final class StartupTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
-    override func tearDownWithError() throws {}
-
     final func test_launch_halts_due_to_system_configuration_issue() throws {
         var configuration = TestableConfigurations.working
         configuration.filesystem["/opt/homebrew/bin/php"] = nil // PHP binary must be missing

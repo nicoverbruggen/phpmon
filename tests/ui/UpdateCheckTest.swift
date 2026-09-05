@@ -10,12 +10,6 @@ import XCTest
 
 final class UpdateCheckTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
-    override func tearDownWithError() throws {}
-
     final func test_can_check_for_updates_with_no_new_update() throws {
         let app = launch(openMenu: true)
         app.menuItems["mi_check_for_updates".localized].click()

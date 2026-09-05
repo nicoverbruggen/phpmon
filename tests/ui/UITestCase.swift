@@ -9,6 +9,11 @@
 import XCTest
 
 class UITestCase: XCTestCase {
+    nonisolated override func setUpWithError() throws {
+        try super.setUpWithError()
+        continueAfterFailure = false
+    }
+
     /**
      Launches the app and opens the menu.
      Defaults to waiting for the app to finish initialization.

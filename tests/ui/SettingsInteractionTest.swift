@@ -17,10 +17,6 @@ import XCTest
  */
 final class SettingsInteractionTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     private func openSettings(_ app: XCPMApplication) -> XCUIElement {
         app.menuItems["mi_preferences".localized(for: "en")].click()
 

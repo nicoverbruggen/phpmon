@@ -9,10 +9,6 @@
 import XCTest
 
 final class MainMenuTest: UITestCase {
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     final func test_can_open_status_menu_item() throws {
         let app = launch(openMenu: true)
 
@@ -36,18 +32,21 @@ final class MainMenuTest: UITestCase {
     final func test_can_open_domains_list() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_domain_list".localized).click()
+        assertExists(app.windows["domain_list.title".localized], 2.0)
     }
 
     final func test_can_open_php_doctor() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_fa_php_doctor".localized).click()
+        assertExists(app.windows.containing(.image, identifier: "stethoscope.circle.fill").firstMatch, 2.0)
     }
 
     final func test_can_view_welcome_tour() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_other".localized).hover()
         app.mainMenuItem(withText: "mi_view_welcome_tour".localized).click()
+        assertExists(app.windows.containing(.staticText, identifier: "welcome_tour.welcome".localized).firstMatch, 2.0)
     }
 
     final func test_can_open_command_history() throws {
@@ -63,6 +62,7 @@ final class MainMenuTest: UITestCase {
     final func test_can_open_about() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_about".localized).click()
+        assertExists(app.dialogs.containing(.staticText, identifier: "PHP Monitor").firstMatch, 2.0)
     }
 
     final func test_config_editor_disabling_unlimited_updates_fields() throws {
@@ -148,6 +148,7 @@ final class MainMenuTest: UITestCase {
     final func test_can_quit_app() throws {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_quit".localized).click()
+        XCTAssertTrue(app.wait(for: .notRunning, timeout: 5.0))
     }
 
     final func test_standalone_mode_can_launch_valet_install_wizard() throws {

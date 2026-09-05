@@ -9,10 +9,6 @@
 import XCTest
 
 final class PHPDoctorTest: UITestCase {
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     final func test_php_doctor_shows_no_warnings_for_quiet_environment() throws {
         let app = launchPhpDoctor(with: phpDoctorConfiguration())
 
