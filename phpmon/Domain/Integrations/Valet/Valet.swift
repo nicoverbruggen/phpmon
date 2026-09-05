@@ -161,43 +161,17 @@ class Valet {
     }
 
     /**
-     Starts the preload of sites. In order to make sure PHP Monitor can correctly
-     handle all PHP versions including isolation, it needs to know about all sites.
-     */
-    public func startPreloadingSites() async {
-        await self.reloadSites()
-    }
-
-    /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
      (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() async {
-        // Parse the configuration off the main thread (blocking file I/O, hopped to
-        // the concurrent pool via `offMain`), then publish it and claim the busy flag
-        // atomically on the main actor. The UI reads `config`, `sites` and `proxies`
-        // on the main thread, so every mutation of that shared state must happen on
-        // the main actor too — otherwise we get the data race that crashed 26.05.3.
-        let container = self.container
-        let parsed = await offMain { Self.parseConfiguration(container) }
+        // Claim the reload before suspending. A second call must not replace the
+        // configuration while the first scan is building sites from it.
+        guard !isBusy else { return }
+        isBusy = true
+        defer { isBusy = false }
 
-        let shouldProceed = await MainActor.run { () -> Bool in
-            if let parsed {
-                config = parsed
-            }
-            // Atomic check-and-set: prevents two reloads from running concurrently
-            // (the previous `if isBusy { return }` was a non-atomic check-then-set).
-            if isBusy {
-                return false
-            }
-            isBusy = true
-            return true
-        }
-
-        guard shouldProceed else {
-            return
-        }
-
+        await loadConfiguration()
         await resolvePaths()
     }
 
@@ -336,15 +310,9 @@ class Valet {
 
         let resolvedSites = await sitesIncludingDefault(from: scannedSites)
 
-        // Publish the results and release the busy flag on the main actor, so that all
-        // mutations of `sites`/`proxies`/`isBusy` happen on the same thread the UI reads
-        // them from. This is the actual fix for the 26.05.3 crashes.
-        await MainActor.run {
-            self.sites = resolvedSites
-            self.proxies = scannedProxies
-            self.isBusy = false
-            Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
-        }
+        self.sites = resolvedSites
+        self.proxies = scannedProxies
+        Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
     }
 
     /// Returns the scanned sites with the configured default site included at the front,

@@ -73,6 +73,24 @@ struct ValetReloadConcurrencyTest {
         #expect(names.contains("parked-site"))
     }
 
+    @Test func overlapping_reload_does_not_replace_configuration_during_a_scan() async throws {
+        let previousScanner = ValetScanner.active
+        defer { ValetScanner.active = previousScanner }
+
+        ValetScanner.active = ReloadDuringScan {
+            try! Valet.shared.container.filesystem.writeAtomicallyToFile(
+                "~/.config/valet/config.json",
+                content: #"{"tld":"changed","paths":[],"loopback":"127.0.0.1"}"#
+            )
+            await Valet.shared.reloadSites()
+        }
+
+        await Valet.shared.reloadSites()
+
+        #expect(Valet.shared.config.tld == "test")
+        #expect(!Valet.shared.isBusy)
+    }
+
     /// Hammers `reloadSites()` (which reassigns and inserts into `sites` off-main on
     /// the pre-fix code) while readers **iterate the array elements** on the main
     /// actor — touching `name`/`absolutePath` on each element, exactly the access
@@ -132,5 +150,18 @@ struct ValetReloadConcurrencyTest {
 
         let count = await MainActor.run { Valet.getDomainListable().count }
         #expect(count >= 2)
+    }
+}
+
+private struct ReloadDuringScan: DomainScanner {
+    let onScan: () async -> Void
+
+    func resolveSiteCount(paths: [String]) async -> Int { 0 }
+    func resolveSite(path: String) async -> ValetSite? { nil }
+    func resolveProxies(directoryPath: String) async -> [ValetProxy] { [] }
+
+    func resolveSitesFrom(paths: [String]) async -> [ValetSite] {
+        await onScan()
+        return []
     }
 }

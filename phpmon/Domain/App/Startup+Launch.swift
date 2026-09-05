@@ -108,7 +108,7 @@ extension Startup {
 
         if Valet.installed {
             // Preload all sites
-            await Valet.shared.startPreloadingSites()
+            await Valet.shared.reloadSites()
 
             // After preloading sites, check for PHP-FPM pool conflicts
             await BrewDiagnostics.shared.checkForValetMisconfiguration()

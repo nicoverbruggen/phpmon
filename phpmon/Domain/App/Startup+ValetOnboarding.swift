@@ -25,7 +25,7 @@ extension Startup {
             MainMenu.shared.rebuildImmediately()
         }
 
-        await Valet.shared.startPreloadingSites()
+        await Valet.shared.reloadSites()
         await BrewDiagnostics.shared.checkForValetMisconfiguration()
         await Valet.shared.notifyAboutBrokenPhpFpm()
         Valet.shared.notifyAboutUnsupportedTLD()
