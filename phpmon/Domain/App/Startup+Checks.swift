@@ -282,7 +282,6 @@ extension Startup {
             // =================================================================================
             EnvironmentCheck(
                 command: { _ in
-                    await BrewDiagnostics.shared.loadInstalledTaps()
                     return await BrewDiagnostics.shared.cannotLoadService("dnsmasq")
                 },
                 name: "`sudo \(App.shared.container.paths.brew) services info` JSON loaded",

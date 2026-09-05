@@ -59,8 +59,10 @@ extension Startup {
         // Load additional preferences
         await container.preferences.loadCustomPreferences()
 
-        // Automatically discover services
-        await AutoDetectableServices.shared.discoverServices()
+        // These Homebrew queries do not depend on PHP detection or on each other.
+        async let discoveredServices: Void = AutoDetectableServices.shared.discoverServices()
+        async let brewVersion: Void = Brew.shared.determineVersion()
+        async let verifiedTaps: Void = BrewDiagnostics.shared.verifyThirdPartyTaps()
 
         // Determine what the `php` formula is aliased to (again)
         await container.phpEnvs.determinePhpAlias()
@@ -79,14 +81,11 @@ extension Startup {
             Valet.shared.validateVersion()
         }
 
-        // Validate the Homebrew version (determines install/upgrade functionality)
-        await Brew.shared.determineVersion()
-
-        // Verify third party taps (will display as warning)
-        await BrewDiagnostics.shared.verifyThirdPartyTaps()
-
         // Actually detect the PHP versions
         await container.phpEnvs.detectPhpVersions()
+
+        // Menus and service status need the completed discovery results.
+        _ = await (discoveredServices, brewVersion, verifiedTaps)
 
         // Set up the filesystem watcher for the Homebrew binaries
         await HomebrewWatchManager.prepare()
