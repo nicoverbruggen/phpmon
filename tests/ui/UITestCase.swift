@@ -59,7 +59,7 @@ class UITestCase: XCTestCase {
 
     /** Checks if a single element exists. */
     public func assertExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
-        XCTAssertTrue(element.waitForExistence(timeout: timeout))
+        XCTAssertTrue(element.exists || element.waitForExistence(timeout: timeout))
     }
 
     /** Checks if a single element fails to exist. */
@@ -70,27 +70,22 @@ class UITestCase: XCTestCase {
     /** Checks if all elements exist. */
     public func assertAllExist(_ elements: [XCUIElement], _ timeout: TimeInterval = 0.05) {
         for element in elements {
-            XCTAssert(element.waitForExistence(timeout: timeout))
+            XCTAssert(element.exists || element.waitForExistence(timeout: timeout))
         }
-    }
-
-    /** Clicks on a given element. */
-    public func click(_ element: XCUIElement) {
-        element.click()
     }
 
     /** Approves a privileged command prompt presented in UI tests. */
     public func approvePrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandApproveButton"]
         assertExists(button, 10.0)
-        click(button)
+        button.click()
     }
 
     /** Denies a privileged command prompt presented in UI tests. */
     public func denyPrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandDenyButton"]
         assertExists(button, 10.0)
-        click(button)
+        button.click()
     }
 }
 

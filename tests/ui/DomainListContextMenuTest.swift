@@ -39,14 +39,16 @@ final class DomainListContextMenuTest: UITestCase {
 
         // The copy-URL action writes the site's URL to the pasteboard
         app.menuItems["domain_list.copy_url".localized(for: "en")].click()
-        Thread.sleep(forTimeInterval: 0.5)
-        XCTAssertEqual(NSPasteboard.general.string(forType: .string), "http://concord.test")
+        let copiedURL = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in NSPasteboard.general.string(forType: .string) == "http://concord.test" },
+            object: nil
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [copiedURL], timeout: 2), .completed)
 
         // Proxies get their own, smaller set of actions
         let searchField = window.searchFields.element(boundBy: 0)
         searchField.click()
         searchField.typeText("mailgun")
-        Thread.sleep(forTimeInterval: 0.3)
 
         let proxyRow = window.staticTexts["mailgun.test"]
         assertExists(proxyRow, 2.0)

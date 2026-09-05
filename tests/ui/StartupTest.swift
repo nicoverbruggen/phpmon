@@ -25,7 +25,7 @@ final class StartupTest: UITestCase {
             app.buttons["startup.alert.fix_manually".localized],
             app.buttons["startup.alert.fix_automatically".localized]
         ])
-        click(app.buttons["startup.alert.fix_manually".localized])
+        app.buttons["startup.alert.fix_manually".localized].click()
 
         // Dialog 2: PHP Monitor failed to start
         assertAllExist([
@@ -34,7 +34,7 @@ final class StartupTest: UITestCase {
             app.buttons["alert.cannot_start.retry".localized],
             app.buttons["alert.cannot_start.close".localized]
         ])
-        click(app.buttons["alert.cannot_start.retry".localized])
+        app.buttons["alert.cannot_start.retry".localized].click()
 
         // Dialog 1 again
         assertExists(app.staticTexts["startup.errors.php_binary.title".localized])
@@ -61,14 +61,14 @@ final class StartupTest: UITestCase {
             app.buttons["startup.alert.quit".localized]
         ])
 
-        click(app.buttons["startup.alert.fix_automatically".localized])
+        app.buttons["startup.alert.fix_automatically".localized].click()
 
         assertAllExist([
             app.staticTexts["Fix did not resolve the issue."],
             app.buttons["startup.alert.retry".localized]
         ], 3.0)
 
-        click(app.buttons["startup.alert.retry".localized])
+        app.buttons["startup.alert.retry".localized].click()
 
         // Dialog 2: PHP Monitor failed to start
         assertAllExist([
@@ -78,7 +78,7 @@ final class StartupTest: UITestCase {
             app.buttons["alert.cannot_start.close".localized]
         ])
 
-        click(app.buttons["alert.cannot_start.retry".localized])
+        app.buttons["alert.cannot_start.retry".localized].click()
 
         // Dialog 1: "PHP is not correctly installed"
         assertAllExist([
@@ -89,7 +89,7 @@ final class StartupTest: UITestCase {
         ])
 
         // We can quit the app this way
-        click(app.buttons["startup.alert.quit".localized])
+        app.buttons["startup.alert.quit".localized].click()
     }
 
     final func test_launch_halts_and_automic_fix_can_be_applied() throws {
@@ -117,7 +117,7 @@ final class StartupTest: UITestCase {
             app.buttons["startup.alert.fix_manually".localized],
             app.buttons["startup.alert.fix_automatically".localized]
         ])
-        click(app.buttons["startup.alert.fix_automatically".localized])
+        app.buttons["startup.alert.fix_automatically".localized].click()
 
         // We wait for the app to complete launch
         waitForMenu(app)
@@ -133,7 +133,7 @@ final class StartupTest: UITestCase {
         )
 
         assertExists(app.staticTexts["alert.php_fpm_broken.title".localized], 3.0)
-        click(app.buttons["generic.ok".localized])
+        app.buttons["generic.ok".localized].click()
     }
 
     final func test_launch_succeeds_with_intel_architecture() throws {
@@ -167,6 +167,6 @@ final class StartupTest: UITestCase {
         )
 
         assertExists(app.staticTexts["startup.errors.valet_version_not_supported.title".localized], 3.0)
-        click(app.buttons["startup.alert.fix_manually".localized])
+        app.buttons["startup.alert.fix_manually".localized].click()
     }
 }

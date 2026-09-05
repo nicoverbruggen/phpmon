@@ -66,8 +66,10 @@ final class MainMenuBarTest: UITestCase {
         app.typeText("concord")
         let searchField = window.searchFields.element(boundBy: 0)
         XCTAssertEqual(searchField.value as? String, "concord")
-        Thread.sleep(forTimeInterval: 0.3)
-        XCTAssertTrue(window.tables.tableRows.count == 1)
+        let filteredTable = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in window.tables.tableRows.count == 1 }, object: nil
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [filteredTable], timeout: 2), .completed)
 
         // ⌘N (the add-link menu item) opens the domain type selection sheet
         app.typeKey("n", modifierFlags: .command)

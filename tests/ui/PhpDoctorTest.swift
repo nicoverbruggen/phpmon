@@ -193,7 +193,7 @@ final class PHPDoctorTest: UITestCase {
 
         assertExists(app.windows["domain_list.title".localized], 5.0)
         assertExists(app.staticTexts["cert_alert.title".localized], 5.0)
-        click(app.buttons["cert_alert.renew".localized])
+        app.buttons["cert_alert.renew".localized].click()
         assertWarningDisappears("warnings.certificates_expired.title", in: app, timeout: 8.0)
     }
 
@@ -262,7 +262,7 @@ final class PHPDoctorTest: UITestCase {
     private func clickAutomaticFix(in app: XCPMApplication) {
         let button = app.buttons["Fix Automatically"].firstMatch
         assertExists(button, 3.0)
-        click(button)
+        button.click()
     }
 
     private func phpDoctorConfiguration() -> TestableConfiguration {

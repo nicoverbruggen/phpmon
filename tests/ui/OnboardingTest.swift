@@ -15,7 +15,7 @@ final class OnboardingTest: UITestCase {
     // If Command Line Tools are missing, the wizard should request their installation first and only
     // continue through the rest of setup once the mocked system command reports them as installed.
     final func test_launch_runs_onboarding_wizard_flow_that_installs_developer_tools() throws {
-        let flow = onboardingFlow(with: .developerToolsMissing)
+        let flow = onboardingFlow(with: .developerToolsMissing, observeProgress: true)
 
         flow.assertDidOpenWizard()
         flow.startWizard()
@@ -113,7 +113,7 @@ final class OnboardingTest: UITestCase {
     // Setup cannot be skipped while a command is actively running, so partially completed
     // installs are not abandoned in an unknown state.
     final func test_launch_disables_skip_setup_while_install_step_is_running() throws {
-        let flow = onboardingFlow(with: .developerToolsAlreadyInstalled)
+        let flow = onboardingFlow(with: .developerToolsAlreadyInstalled, observeProgress: true)
 
         flow.assertDidOpenWizard()
         flow.startWizard()

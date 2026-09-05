@@ -29,16 +29,18 @@ final class DomainsListTest: UITestCase {
 
         searchField.click()
         searchField.typeText("non-existent thing")
-        Thread.sleep(forTimeInterval: 0.2)
-        XCTAssertTrue(window.tables.tableRows.count == 0) // swiftlint:disable:this empty_count
+        let emptyTable = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in window.tables.tableRows.count == 0 }, object: nil // swiftlint:disable:this empty_count
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [emptyTable], timeout: 2), .completed)
 
         searchField.clearText()
         searchField.click()
         searchField.typeText("concord")
-        Thread.sleep(forTimeInterval: 0.2)
-        XCTAssertTrue(window.tables.tableRows.count == 1)
-
-        sleep(1)
+        let filteredTable = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in window.tables.tableRows.count == 1 }, object: nil
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [filteredTable], timeout: 2), .completed)
     }
 
     final func test_can_click_add_domain_button() throws {
@@ -55,8 +57,6 @@ final class DomainsListTest: UITestCase {
         assertExists(app.buttons["selection.create_link".localized])
         assertExists(app.buttons["selection.create_proxy".localized])
         assertExists(app.buttons["selection.cancel".localized])
-
-        sleep(1)
     }
 
     final func test_can_open_create_link_view() throws {
@@ -70,18 +70,14 @@ final class DomainsListTest: UITestCase {
         window.buttons["Add Link"].click()
         app.buttons["selection.create_link".localized].click()
 
-        // NSOpenPanel opens as a sheet — use Go to Folder to navigate to /tmp and confirm
-        Thread.sleep(forTimeInterval: 0.3)
+        // Wait for NSOpenPanel, then use Go to Folder to choose /tmp.
+        assertExists(app.sheets.firstMatch, 3.0)
         app.typeKey("g", modifierFlags: [.command, .shift])
-        Thread.sleep(forTimeInterval: 0.2)
         app.typeText("/tmp\n")
-        Thread.sleep(forTimeInterval: 0.2)
         app.typeKey(.return, modifierFlags: [])
 
         assertExists(app.staticTexts["domain_list.add.link_folder".localized])
         assertExists(app.buttons["domain_list.add.cancel".localized])
-
-        sleep(1)
     }
 
     final func test_can_open_create_proxy_view() throws {
@@ -99,7 +95,5 @@ final class DomainsListTest: UITestCase {
         assertExists(app.staticTexts["domain_list.add.proxy_subject".localized])
         assertExists(app.staticTexts["domain_list.add.domain_name".localized])
         assertExists(app.buttons["domain_list.add.cancel".localized])
-
-        sleep(1)
     }
 }

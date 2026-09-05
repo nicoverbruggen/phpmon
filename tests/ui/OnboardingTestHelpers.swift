@@ -11,8 +11,8 @@
 import XCTest
 
 extension OnboardingTest {
-    func onboardingFlow(with scenario: OnboardingScenario) -> OnboardingTestFlow {
-        return OnboardingTestFlow(testCase: self, scenario: scenario)
+    func onboardingFlow(with scenario: OnboardingScenario, observeProgress: Bool = false) -> OnboardingTestFlow {
+        return OnboardingTestFlow(testCase: self, scenario: scenario, observeProgress: observeProgress)
     }
 }
 
@@ -20,14 +20,16 @@ final class OnboardingTestFlow {
     let app: XCPMApplication
 
     private let testCase: UITestCase
+    private let observeProgress: Bool
 
-    init(testCase: UITestCase, scenario: OnboardingScenario) {
+    init(testCase: UITestCase, scenario: OnboardingScenario, observeProgress: Bool) {
         self.testCase = testCase
+        self.observeProgress = observeProgress
 
         var configuration = TestableConfigurations.working
         configuration.prepareFreshCoreOnboardingSystem()
         configuration.mockRequiredOnboardingInstallCommands()
-        configuration.allowsDelayedShellCommands = true
+        configuration.allowsDelayedShellCommands = observeProgress
         scenario.apply(to: &configuration)
 
         self.app = testCase.launch(
@@ -53,75 +55,79 @@ final class OnboardingTestFlow {
     }
 
     func startWizard() {
-        click(app.buttons["onboarding_wizard.buttons.start_setup".localized])
+        app.buttons["onboarding_wizard.buttons.start_setup".localized].click()
     }
 
     func installDeveloperTools() {
         assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized])
+        app.buttons["onboarding_wizard.buttons.install_developer_tools".localized].click()
 
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        app.buttons["onboarding_wizard.buttons.continue".localized].click()
     }
 
     func installHomebrew() {
         assertExists(app.staticTexts["onboarding_wizard.command.homebrew.title".localized], 3.0)
         assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.copy_command".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.copy_command".localized])
+        app.buttons["onboarding_wizard.buttons.copy_command".localized].click()
 
         assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
+        app.buttons["onboarding_wizard.buttons.check_again".localized].click()
     }
 
     func configurePathAutomatically() {
         assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
+        app.buttons["onboarding_wizard.buttons.fix_path".localized].click()
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
     }
 
     func beginPhpInstall() {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        app.buttons["onboarding_wizard.buttons.install_php_composer".localized].click()
     }
 
     func installPhp() {
         beginPhpInstall()
-        assertTerminalOutputContains("==> Fetching php and composer formulae...")
+        if observeProgress {
+            assertTerminalOutputContains("==> Fetching php and composer formulae...")
+        }
         assertValetInstallIsAvailable(timeout: 5.0)
     }
 
     func beginValetInstall() {
         assertValetInstallIsAvailable()
-        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        app.buttons["onboarding_wizard.buttons.install_valet".localized].click()
     }
 
     func installValet() {
         beginValetInstall()
         testCase.approvePrivilegedCommand(in: app)
-        assertTerminalOutputContains("Updating global composer dependencies...")
-        assertTerminalOutputContains("Fetching dnsmasq and nginx formulae")
-        assertTerminalOutputContains("Updating Valet configuration...")
+        if observeProgress {
+            assertTerminalOutputContains("Updating global composer dependencies...")
+            assertTerminalOutputContains("Fetching dnsmasq and nginx formulae")
+            assertTerminalOutputContains("Updating Valet configuration...")
+        }
         testCase.approvePrivilegedCommand(in: app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 4.0)
     }
 
     func skipValet() {
         assertExists(app.buttons["onboarding_wizard.buttons.skip_valet".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.skip_valet".localized])
+        app.buttons["onboarding_wizard.buttons.skip_valet".localized].click()
 
         let skipValetConfirmationButton = app.sheets.buttons[
             "onboarding_wizard.skip_valet_confirmation.confirm".localized
         ]
         assertExists(skipValetConfirmationButton, 3.0)
-        click(skipValetConfirmationButton)
+        skipValetConfirmationButton.click()
         assertContinueButtonIsAvailable()
     }
 
     func continueToMenu() {
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        app.buttons["onboarding_wizard.buttons.continue".localized].click()
         testCase.waitForMenu(app)
     }
 
@@ -133,7 +139,7 @@ final class OnboardingTestFlow {
 
     func recheckManualPath() {
         assertManualPathInstructions()
-        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
+        app.buttons["onboarding_wizard.buttons.check_again".localized].click()
     }
 
     func assertValetInstallIsAvailable(timeout: TimeInterval = 3.0) {
@@ -183,7 +189,7 @@ final class OnboardingTestFlow {
     }
 
     func dismissCleanupWarning() {
-        click(app.buttons["generic.ok".localized])
+        app.buttons["generic.ok".localized].click()
     }
 
     func approvePrivilegedCommand() {
@@ -204,10 +210,6 @@ final class OnboardingTestFlow {
 
     private func assertNotExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
         testCase.assertNotExists(element, timeout)
-    }
-
-    private func click(_ element: XCUIElement) {
-        testCase.click(element)
     }
 
     func assertTerminalOutputContains(_ text: String, timeout: TimeInterval = 5.0) {

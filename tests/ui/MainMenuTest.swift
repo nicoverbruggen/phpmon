@@ -24,15 +24,6 @@ final class MainMenuTest: UITestCase {
             app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)],
             app.menuItems["mi_quit".localized.replacing("PHP Monitor", with: app.title)]
         ])
-
-        // Wait briefly
-        _ = app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)].waitForExistence(timeout: 2.0)
-    }
-
-    final func test_can_open_domains_list() throws {
-        let app = launch(openMenu: true)
-        app.mainMenuItem(withText: "mi_domain_list".localized).click()
-        assertExists(app.windows["domain_list.title".localized], 2.0)
     }
 
     final func test_can_open_php_doctor() throws {
@@ -55,8 +46,6 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_view_command_history".localized).click()
 
         assertExists(app.windows["command_history.title".localized], 2.0)
-
-        Thread.sleep(forTimeInterval: 5)
     }
 
     final func test_can_open_about() throws {
@@ -97,19 +86,17 @@ final class MainMenuTest: UITestCase {
         let app = launch(openMenu: true)
         app.mainMenuItem(withText: "mi_preferences".localized).click()
 
-        Thread.sleep(forTimeInterval: 0.5)
-
         assertExists(app.buttons["General"])
-        click(app.buttons["General"])
+        app.buttons["General"].click()
 
         assertExists(app.buttons["Appearance"])
-        click(app.buttons["Appearance"])
+        app.buttons["Appearance"].click()
 
         assertExists(app.buttons["Visibility"])
-        click(app.buttons["Visibility"])
+        app.buttons["Visibility"].click()
 
         assertExists(app.buttons["Notifications"])
-        click(app.buttons["Notifications"])
+        app.buttons["Notifications"].click()
     }
 
     final func test_can_open_php_version_manager() throws {
@@ -165,18 +152,18 @@ final class MainMenuTest: UITestCase {
             app.buttons["lite_mode_explanation.not_now".localized]
         ], 3.0)
 
-        click(app.buttons["lite_mode_explanation.install_valet".localized])
+        app.buttons["lite_mode_explanation.install_valet".localized].click()
 
         assertAllExist([
             app.staticTexts["onboarding_wizard.title".localized],
             app.buttons["onboarding_wizard.buttons.install_valet".localized]
         ], 3.0)
 
-        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        app.buttons["onboarding_wizard.buttons.install_valet".localized].click()
         approvePrivilegedCommand(in: app)
         approvePrivilegedCommand(in: app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        app.buttons["onboarding_wizard.buttons.continue".localized].click()
 
         waitForMenu(app)
         app.statusItems.firstMatch.click()
@@ -256,6 +243,7 @@ final class MainMenuTest: UITestCase {
         // Configure our test case so the brew services update as noted above
         let cmd = "sudo /opt/homebrew/bin/brew services info 'dnsmasq' 'nginx' 'php' --json"
         var config = TestableConfigurations.working
+        config.allowsDelayedShellCommands = true
         config.shellOutput[cmd] = BatchFakeShellOutput(
             items: [
                 .delayed(0.2, ShellStrings.shared.brewServicesAsRoot)
@@ -276,14 +264,11 @@ final class MainMenuTest: UITestCase {
         // where nginx is stopped. The ServicesView re-renders while the menu
         // is displayed.
 
-        // Wait for the async reload to complete and layout to settle.
-        Thread.sleep(forTimeInterval: 4)
-
         // Verify the app is still running and responsive
         assertExists(app.menuItems["mi_about".localized.replacing("PHP Monitor", with: app.title)], 1.0)
 
         // Verify that the services status actually changed (nginx is now stopped)
-        assertExists(app.staticTexts["phpman.services.inactive".localized], 1.0)
+        assertExists(app.staticTexts["phpman.services.inactive".localized], 6.0)
     }
 }
 

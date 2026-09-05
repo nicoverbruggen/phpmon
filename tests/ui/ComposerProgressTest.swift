@@ -16,6 +16,7 @@ final class ComposerProgressTest: UITestCase {
 
     final func test_composer_update_shows_progress_panel_and_closes_on_success() throws {
         var configuration = TestableConfigurations.working
+        configuration.allowsDelayedShellCommands = true
         configuration.preferenceOverrides[.languageOverride] = .string("en")
         // Two chunks: the first streams early (proving live output), the second
         // ends the command a few seconds later (letting the panel auto-close).
@@ -50,15 +51,8 @@ final class ComposerProgressTest: UITestCase {
         // (the final output chunk is not asserted: it only appears for the
         // last second before the panel closes, which races the slow
         // accessibility snapshotting).
-        var panelClosed = false
-        for _ in 0..<40 where !panelClosed {
-            if !title.exists {
-                panelClosed = true
-                break
-            }
-            Thread.sleep(forTimeInterval: 0.25)
-        }
-        XCTAssertTrue(panelClosed, "The panel should close automatically after a successful update.")
+        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: title)
+        XCTAssertEqual(XCTWaiter().wait(for: [closed], timeout: 10), .completed)
     }
 
     /** Polls the console's accessibility value until it contains the given text. */
@@ -67,15 +61,12 @@ final class ComposerProgressTest: UITestCase {
         toContain text: String,
         timeout: TimeInterval = 5.0
     ) -> Bool {
-        let deadline = Date().addingTimeInterval(timeout)
-
-        while Date() < deadline {
-            if let value = console.value as? String, value.contains(text) {
-                return true
-            }
-            Thread.sleep(forTimeInterval: 0.25)
+        if (console.value as? String)?.contains(text) == true {
+            return true
         }
-
-        return false
+        let containsText = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value CONTAINS %@", text), object: console
+        )
+        return XCTWaiter().wait(for: [containsText], timeout: timeout) == .completed
     }
 }

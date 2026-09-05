@@ -79,7 +79,7 @@ public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
             return .err("No Expected Output")
         }
 
-        let output = expectation.syncOutput()
+        let output = expectation.syncOutput(ignoreDelay: !allowsDelayedCommands)
         applyTransactions(for: expectation)
         return output
     }
@@ -115,14 +115,9 @@ public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
             return (Process(), .err("No Expected Output"))
         }
 
-        var ignoresDelay = isRunningTests
-        if allowsDelayedCommands {
-            ignoresDelay = false
-        }
-
         let output = await expectation.output(didReceiveOutput: { output, type in
             didReceiveOutput(output, type)
-        }, ignoreDelay: ignoresDelay)
+        }, ignoreDelay: !allowsDelayedCommands)
 
         applyTransactions(for: expectation)
 
