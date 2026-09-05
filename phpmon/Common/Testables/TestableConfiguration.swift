@@ -140,6 +140,13 @@ public struct TestableConfiguration: Codable {
                 = version.long
         }
 
+        if let services = self.shellOutput["sudo /opt/homebrew/bin/brew services info --all --json"] {
+            let formula = primary ? "php" : "php@\(version.short)"
+            self.shellOutput["/opt/homebrew/bin/brew list --formula --full-name 'dnsmasq' 'nginx' '\(formula)'"] =
+                .instant("dnsmasq\nnginx\n\(formula)")
+            self.shellOutput["sudo /opt/homebrew/bin/brew services info 'dnsmasq' 'nginx' '\(formula)' --json"] = services
+        }
+
         self.reloadInstalledFormulaeOutput()
     }
 

@@ -215,10 +215,15 @@ final class MainMenuTest: UITestCase {
         config.preferenceOverrides[.hideAutoDetectedServicesInMenu] = .bool(false)
 
         config.shellOutput["/opt/homebrew/bin/brew list --formula"] = .instant("""
+            php
+            nginx
+            dnsmasq
             postgresql@14
             postgresql@16
             """)
-        config.shellOutput["/opt/homebrew/bin/brew services info --all --json"] = .instant(userServicesResponse)
+        config.shellOutput["/opt/homebrew/bin/brew list --formula --full-name 'postgresql@14' 'postgresql@16'"] =
+            .instant("postgresql@14\npostgresql@16")
+        config.shellOutput["/opt/homebrew/bin/brew services info 'postgresql@14' 'postgresql@16' --json"] = .instant(userServicesResponse)
 
         let app = launch(openMenu: true, with: config)
 
@@ -249,7 +254,7 @@ final class MainMenuTest: UITestCase {
         """
 
         // Configure our test case so the brew services update as noted above
-        let cmd = "sudo /opt/homebrew/bin/brew services info --all --json"
+        let cmd = "sudo /opt/homebrew/bin/brew services info 'dnsmasq' 'nginx' 'php' --json"
         var config = TestableConfigurations.working
         config.shellOutput[cmd] = BatchFakeShellOutput(
             items: [
