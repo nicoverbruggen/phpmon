@@ -71,13 +71,17 @@ struct ConfigManagerView: View {
         }
         .frame(maxHeight: 485)
         .task {
+            // Keep the models that own this editor's values when the cached window reappears.
+            guard preferences.isEmpty else { return }
             let container = App.shared.container
 
-            preferences = [
+            let loadedPreferences = [
                 await BytePhpPreference.load(container, key: "memory_limit"),
                 await BytePhpPreference.load(container, key: "post_max_size"),
                 await BytePhpPreference.load(container, key: "upload_max_filesize")
             ]
+            guard !Task.isCancelled else { return }
+            preferences = loadedPreferences
         }
     }
 }

@@ -65,14 +65,32 @@ final class MainMenuTest: UITestCase {
         app.mainMenuItem(withText: "mi_about".localized).click()
     }
 
-    final func test_can_open_config_editor() throws {
-        let app = launch(openMenu: true)
+    final func test_config_editor_disabling_unlimited_updates_fields() throws {
+        var configuration = TestableConfigurations.working
+        configuration.commandOutput["/opt/homebrew/bin/php -r echo ini_get('memory_limit');"] = "-1"
+        let app = launch(openMenu: true, with: configuration)
 
         app.buttons["phpConfigButton"].click()
 
-        Thread.sleep(forTimeInterval: 0.5)
+        let window = app.windows.containing(.staticText, identifier: "confman.title".localized).firstMatch
+        let unlimited = window.checkBoxes["confman.byte_limit.unlimited".localized].firstMatch
+        assertExists(unlimited, 2.0)
+        XCTAssertEqual(unlimited.value as? Int, 1)
+        unlimited.click()
 
-        assertExists(app.staticTexts["confman.title".localized], 1)
+        let memoryValue = window.textFields.firstMatch
+        assertExists(memoryValue, 2.0)
+        XCTAssertEqual(memoryValue.value as? String, "512")
+        XCTAssertEqual(window.popUpButtons.firstMatch.value as? String, "MB")
+
+        // Closing with the titlebar shortcut keeps the cached editor and its draft.
+        app.typeKey("w", modifierFlags: .command)
+        app.statusItems.firstMatch.click()
+        app.buttons["phpConfigButton"].click()
+        assertExists(memoryValue, 2.0)
+        XCTAssertEqual(unlimited.value as? Int, 0)
+        XCTAssertEqual(memoryValue.value as? String, "512")
+        XCTAssertEqual(window.popUpButtons.firstMatch.value as? String, "MB")
     }
 
     final func test_can_open_settings() throws {
