@@ -35,6 +35,8 @@ class PhpConfigurationFile: CreatedFromFile {
     /// The original lines of the file.
     var lines: [String]
 
+    private var pendingReplacement: Task<Void, Error>?
+
     /** Resolves a PHP configuration file (.ini) */
     static func from(
         _ container: Container,
@@ -127,6 +129,17 @@ class PhpConfigurationFile: CreatedFromFile {
      The key must exist for this to work.
      */
     public func replace(key: String, value: String) async throws {
+        // Edits share one file. Keep each read-modify-write operation in order across awaits.
+        let previous = pendingReplacement
+        let replacement = Task {
+            _ = try? await previous?.value
+            try await applyReplacement(key: key, value: value)
+        }
+        pendingReplacement = replacement
+        try await replacement.value
+    }
+
+    private func applyReplacement(key: String, value: String) async throws {
         // Ensure that the key exists
         guard let item = getConfig(for: key) else {
             throw ReplacementErrors.missingKey
@@ -146,25 +159,34 @@ class PhpConfigurationFile: CreatedFromFile {
         // Replace the specific line in the local copy
         localLines[item.lineIndex] = components.joined(separator: "=")
 
+        let filesystem = container.filesystem!
+        let filePath = self.filePath
+        let contents = localLines.joined(separator: "\n")
+
         // Ensure the watchers aren't tripped up by config changes
         try await ConfigWatchManager.withSuspended {
-            // Finally, join the string and save the file atomically
-            try localLines.joined(separator: "\n")
-                .write(toFile: self.filePath, atomically: true, encoding: .utf8)
+            try await offMain {
+                try filesystem.writeAtomicallyToFile(filePath, content: contents)
+            }
         }
 
         self.lines = localLines
 
         // Reload the original file (which will update all properties atomically)
-        self.reload()
+        await self.reload()
     }
 
-    public func reload() {
-        guard let newLines = try? String(contentsOfFile: self.filePath)
-            .components(separatedBy: "\n") else {
+    public func reload() async {
+        let filesystem = container.filesystem!
+        let filePath = self.filePath
+        guard let contents = try? await offMain({
+            try filesystem.getStringFromFile(filePath)
+        }) else {
             Log.warn("Could not reload PHP configuration file at: `\(self.filePath)`")
             return
         }
+
+        let newLines = contents.components(separatedBy: "\n")
 
         // Update all properties atomically
         lines = newLines
