@@ -34,6 +34,7 @@ public nonisolated final class RealCommand: CommandProtocol, Sendable {
         }
 
         task.launch()
+        let data = try? pipe.fileHandleForReading.readToEnd()
         task.waitUntilExit()
 
         defer {
@@ -46,8 +47,8 @@ public nonisolated final class RealCommand: CommandProtocol, Sendable {
             return "PHPMON_COMMAND_UNCAUGHT_SIGNAL"
         }
 
-        // Try reading from file handle and close it
-        if let data = try? pipe.fileHandleForReading.readToEnd(),
+        // Decode the captured output.
+        if let data,
             let string = String(data: data, encoding: .utf8) {
             output = string
         } else {

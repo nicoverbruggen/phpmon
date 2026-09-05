@@ -83,11 +83,12 @@ nonisolated class AppleScript {
             throw AdminPrivilegeError(kind: .applescriptNilError)
         }
 
+        let captured = RealShell.getOutput(stdout: outputPipe, stderr: errorPipe)
         task.waitUntilExit()
 
-        let output = RealShell.getStringOutput(from: outputPipe)
+        let output = captured.out
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        let errorOutput = RealShell.getStringOutput(from: errorPipe)
+        let errorOutput = captured.err
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         if task.terminationStatus != 0 {

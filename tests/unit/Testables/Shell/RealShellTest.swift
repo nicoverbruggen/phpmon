@@ -125,6 +125,45 @@ struct RealShellTest {
             .trimmingCharacters(in: .whitespacesAndNewlines) == "/path/to/directory")
     }
 
+    @Test func pipe_drains_large_stdout_and_stderr_before_exit() async {
+        let command = "i=0; while [ $i -lt 32768 ]; do printf 'stdout\\n'; printf 'stderr\\n' >&2; i=$((i+1)); done"
+
+        let output = await container.shell.pipe(command, timeout: 5)
+
+        #expect(output.out == String(repeating: "stdout\n", count: 32768))
+        #expect(output.err == String(repeating: "stderr\n", count: 32768))
+    }
+
+    @Test func sync_drains_both_streams_before_waiting_for_exit() {
+        // The alarm bounds the test if a full pipe prevents the command from exiting.
+        let output = container.shell.sync("/usr/bin/perl -e 'alarm 2; print STDOUT \"x\" x 131072; print STDERR \"y\" x 131072; alarm 0;'")
+
+        #expect(output.out.utf8.count == 131072)
+        #expect(output.err.utf8.count == 131072)
+    }
+
+    @Test func attach_preserves_utf8_split_between_output_chunks() async throws {
+        let chunks = OSAllocatedUnfairLock<String>(initialState: "")
+        let (_, output) = try await container.shell.attach(
+            "printf '\\360\\237'; sleep 0.1; printf '\\220\\230'",
+            didReceiveOutput: { text, _ in chunks.withLock { $0 += text } },
+            withTimeout: 5
+        )
+
+        #expect(output.out == "🐘")
+        #expect(chunks.withLock { $0 } == "🐘")
+    }
+
+    @Test func attach_timeout_still_applies_after_the_shell_exits() async {
+        await #expect(throws: ShellError.timedOut) {
+            try await container.shell.attach(
+                "sleep 1 & exit 0",
+                didReceiveOutput: { _, _ in },
+                withTimeout: 0.1
+            )
+        }
+    }
+
     /**
      This test verifies that concurrent writes to `output.out` and `output.err`
      from multiple readability handlers don't cause data races or crashes,

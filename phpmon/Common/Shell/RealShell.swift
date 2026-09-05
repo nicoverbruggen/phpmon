@@ -10,8 +10,7 @@ import Foundation
 import os
 @preconcurrency import Dispatch
 
-// Nonisolated so blocking subprocess I/O stays off the main actor. Its mutable state
-// (`_PATH`, `_exports`) is guarded by `OSAllocatedUnfairLock`, hence `@unchecked Sendable`.
+// Shell instances cross actors. Mutable configuration is protected by locks.
 nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
     init(binPath: String, preferredShell: String) {
         // Set variables that won't be updated
@@ -87,16 +86,26 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
      Closes the pipe's file handler when done.
      */
     internal static func getStringOutput(from pipe: Pipe) -> String {
-        // 1. Read all data (safely).
         let rawData = (try? pipe.fileHandleForReading.readToEnd()) ?? Data()
-
-        // 2. Convert to string (safely).
         let result = String(data: rawData, encoding: .utf8) ?? ""
-
-        // 3. Close the handle quietly.
         try? pipe.fileHandleForReading.close()
 
         return result
+    }
+
+    /// Drains both streams while the process runs, so neither pipe can fill up.
+    internal static func getOutput(stdout: Pipe, stderr: Pipe) -> ShellOutput {
+        let error = OSAllocatedUnfairLock(initialState: "")
+        let readers = DispatchGroup()
+        readers.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            let text = getStringOutput(from: stderr)
+            error.withLock { $0 = text }
+            readers.leave()
+        }
+        let output = getStringOutput(from: stdout)
+        readers.wait()
+        return .out(output, error.withLock { $0 })
     }
 
     /**
@@ -147,6 +156,7 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         process.standardOutput = outputPipe
         process.standardError = errorPipe
         process.launch()
+        let output = Self.getOutput(stdout: outputPipe, stderr: errorPipe)
         process.waitUntilExit()
 
         if process.terminationReason == .uncaughtSignal {
@@ -154,120 +164,33 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
             return .out("", "")
         }
 
-        let stdOut = RealShell.getStringOutput(from: outputPipe)
-        let stdErr = RealShell.getStringOutput(from: errorPipe)
-
         if Log.shared.verbosity == .cli {
-            log(process: process, stdOut: stdOut, stdErr: stdErr)
+            log(process: process, stdOut: output.out, stdErr: output.err)
         }
 
-        return .out(stdOut, stdErr)
+        return output
     }
 
     @discardableResult
     func pipe(_ command: String) async -> ShellOutput {
-        let process = getShellProcess(for: command)
-
-        let outputPipe = Pipe()
-        let errorPipe = Pipe()
-
-        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
-            Log.info("[SLOW SHELL] \(command)")
-            await delay(seconds: 3.0)
-        }
-
-        process.standardOutput = outputPipe
-        process.standardError = errorPipe
-
-        return await withCheckedContinuation { continuation in
-            process.terminationHandler = { [weak self] _ in
-                if process.terminationReason == .uncaughtSignal {
-                    Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                    return continuation.resume(returning: .out("", ""))
-                }
-
-                let stdOut = RealShell.getStringOutput(from: outputPipe)
-                let stdErr = RealShell.getStringOutput(from: errorPipe)
-
-                if Log.shared.verbosity == .cli {
-                    self?.log(process: process, stdOut: stdOut, stdErr: stdErr)
-                }
-
-                return continuation.resume(returning: .out(stdOut, stdErr))
-            }
-
-            process.launch()
-        }
+        await pipe(command, timeout: .infinity)
     }
 
     @discardableResult
     func pipe(_ command: String, timeout: TimeInterval) async -> ShellOutput {
-        let process = getShellProcess(for: command)
-
-        let outputPipe = Pipe()
-        let errorPipe = Pipe()
-
-        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
-            Log.info("[SLOW SHELL] \(command)")
-            await delay(seconds: 3.0)
-        }
-
-        process.standardOutput = outputPipe
-        process.standardError = errorPipe
-
-        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.pipe_timeout_queue")
-
-        return await withCheckedContinuation { continuation in
-            // Once-only "resume" guard, mutated from `@Sendable` serial-queue closures;
-            // `OSAllocatedUnfairLock` keeps it data-race free while preserving "resume exactly once".
-            let resumed = OSAllocatedUnfairLock<Bool>(initialState: false)
-
-            let timeoutWorkItem = DispatchWorkItem {
-                guard process.isRunning else { return }
-
-                Log.warn("Command timed out after \(timeout)s: \(command)")
-                process.terminationHandler = nil
-                process.terminate()
-
-                serialQueue.async {
-                    if !resumed.withLock({ $0 }) {
-                        resumed.withLock { $0 = true }
-                        continuation.resume(returning: .out("", ""))
-                    }
-                }
+        do {
+            let (process, output) = try await attach(command, didReceiveOutput: { _, _ in }, withTimeout: timeout)
+            guard process.terminationReason != .uncaughtSignal else {
+                Log.err("The command `\(command)` likely crashed. Returning empty output.")
+                return .empty()
             }
-
-            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutWorkItem)
-
-            process.terminationHandler = { [weak self] _ in
-                timeoutWorkItem.cancel()
-
-                // Immutable, Sendable snapshot so the concurrent queue closure captures a
-                // `let` rather than the mutable optional `self` binding.
-                let shell = self
-                serialQueue.async {
-                    if resumed.withLock({ $0 }) { return }
-
-                    if process.terminationReason == .uncaughtSignal {
-                        Log.err("The command `\(command)` likely crashed. Returning empty output.")
-                        resumed.withLock { $0 = true }
-                        continuation.resume(returning: .out("", ""))
-                        return
-                    }
-
-                    let stdOut = RealShell.getStringOutput(from: outputPipe)
-                    let stdErr = RealShell.getStringOutput(from: errorPipe)
-
-                    if Log.shared.verbosity == .cli {
-                        shell?.log(process: process, stdOut: stdOut, stdErr: stdErr)
-                    }
-
-                    resumed.withLock { $0 = true }
-                    continuation.resume(returning: .out(stdOut, stdErr))
-                }
+            if Log.shared.verbosity == .cli {
+                log(process: process, stdOut: output.out, stdErr: output.err)
             }
-
-            process.launch()
+            return output
+        } catch {
+            Log.warn("Command failed: \(command): \(error)")
+            return .empty()
         }
     }
 
@@ -277,104 +200,83 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void,
         withTimeout timeout: TimeInterval = 5.0
     ) async throws -> (Process, ShellOutput) {
+        if ProcessInfo.processInfo.environment["SLOW_SHELL_MODE"] != nil {
+            Log.info("[SLOW SHELL] \(command)")
+            await delay(seconds: 3.0)
+        }
+
         let process = getShellProcess(for: command)
         let outputPipe = Pipe(), errorPipe = Pipe()
-
         process.standardOutput = outputPipe
         process.standardError = errorPipe
 
-        // Accumulate into lock-guarded buffers (safe across the `@Sendable` serial-queue
-        // closures); the immutable `ShellOutput` is built once at `continuation.resume`.
-        let outBuffer = OSAllocatedUnfairLock<String>(initialState: "")
-        let errBuffer = OSAllocatedUnfairLock<String>(initialState: "")
+        let queue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
+        let timer = DispatchSource.makeTimerSource(queue: queue)
+        let state = OSAllocatedUnfairLock(initialState: ShellProcessState())
 
-        // All mutable state AND all pipe reads are confined to this queue.
-        let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.attach_queue")
+        return try await withCheckedThrowingContinuation { continuation in
+            // Exit and EOF are separate events. A child can keep a pipe open after
+            // the shell exits, so the timeout remains active until both streams close.
+            let finish: @Sendable (Error?) -> Void = { error in
+                let output = state.withLock { $0.finish(error: error) }
+                guard let output else { return }
 
-        return try await withCheckedThrowingContinuation({ continuation in
-            // `OSAllocatedUnfairLock` guard: safe mutation from the `@Sendable` timeout/termination closures.
-            let finished = OSAllocatedUnfairLock<Bool>(initialState: false)
-
-            // Runs on `serialQueue`: the drain sees all data the handlers didn't consume.
-            let finishSuccess: @Sendable () -> Void = {
-                if finished.withLock({ $0 }) { return }
-                finished.withLock { $0 = true }
-
+                timer.setEventHandler(handler: nil)
+                timer.cancel()
                 outputPipe.fileHandleForReading.readabilityHandler = nil
                 errorPipe.fileHandleForReading.readabilityHandler = nil
-
-                let remainingOut = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let remainingErr = errorPipe.fileHandleForReading.readDataToEndOfFile()
-
-                if !remainingOut.isEmpty, let string = String(data: remainingOut, encoding: .utf8) {
-                    outBuffer.withLock { $0 += string }
-                    didReceiveOutput(string, .stdOut)
-                }
-
-                if !remainingErr.isEmpty, let string = String(data: remainingErr, encoding: .utf8) {
-                    errBuffer.withLock { $0 += string }
-                    didReceiveOutput(string, .stdErr)
-                }
-
-                let output = ShellOutput(out: outBuffer.withLock { $0 }, err: errBuffer.withLock { $0 })
-                continuation.resume(returning: (process, output))
-            }
-
-            let finishTimeout: @Sendable () -> Void = {
-                if finished.withLock({ $0 }) { return }
-                finished.withLock { $0 = true }
-
-                outputPipe.fileHandleForReading.readabilityHandler = nil
-                errorPipe.fileHandleForReading.readabilityHandler = nil
-
                 process.terminationHandler = nil
-                if process.isRunning {
-                    process.terminate()
-                }
+                try? outputPipe.fileHandleForReading.close()
+                try? errorPipe.fileHandleForReading.close()
 
-                continuation.resume(throwing: ShellError.timedOut)
-            }
-
-            let timeoutTaskTermination = DispatchWorkItem {
-                serialQueue.async {
-                    finishTimeout()
+                if let error {
+                    if process.isRunning { process.terminate() }
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: (process, output))
                 }
             }
 
-            serialQueue.asyncAfter(deadline: .now() + timeout, execute: timeoutTaskTermination)
-
-            // Background reading for stdout/stderr. Consuming `availableData` inside
-            // the `sync` block makes "check finished → consume → append" one critical
-            // section: a chunk consumed just before termination flips `finished` would
-            // otherwise be dropped by the guard, yet the `finishSuccess` drain can
-            // never re-read consumed data. `availableData` won't block: the handler
-            // only fires when the pipe is readable, and the drain runs behind this queue.
-            let makeReadabilityHandler: @Sendable (OSAllocatedUnfairLock<String>, ShellStream)
-                -> (@Sendable (FileHandle) -> Void) = { buffer, stream in
-                return { fileHandle in
-                    serialQueue.sync {
-                        if finished.withLock({ $0 }) { return }
-                        let data = fileHandle.availableData
-                        if !data.isEmpty, let string = String(data: data, encoding: .utf8) {
-                            buffer.withLock { $0 += string }
-                            didReceiveOutput(string, stream)
+            let reader: @Sendable (ShellStream) -> (@Sendable (FileHandle) -> Void) = { stream in
+                return { handle in
+                    // The queue owns pipe reads and callback delivery. Completion
+                    // cannot discard a chunk or deliver a callback after timeout.
+                    queue.sync {
+                        guard !state.withLock({ $0.finished }) else { return }
+                        let data = handle.availableData
+                        let text = state.withLock { state in
+                            stream == .stdOut ? state.out.append(data) : state.err.append(data)
                         }
+                        if data.isEmpty { handle.readabilityHandler = nil }
+                        if !text.isEmpty { didReceiveOutput(text, stream) }
+                        finish(nil)
                     }
                 }
             }
 
-            outputPipe.fileHandleForReading.readabilityHandler = makeReadabilityHandler(outBuffer, .stdOut)
-            errorPipe.fileHandleForReading.readabilityHandler = makeReadabilityHandler(errBuffer, .stdErr)
-
+            outputPipe.fileHandleForReading.readabilityHandler = reader(.stdOut)
+            errorPipe.fileHandleForReading.readabilityHandler = reader(.stdErr)
             process.terminationHandler = { _ in
-                serialQueue.async {
-                    timeoutTaskTermination.cancel()
-                    finishSuccess()
+                queue.async {
+                    state.withLock { $0.exited = true }
+                    finish(nil)
                 }
             }
+            timer.setEventHandler { finish(ShellError.timedOut) }
 
-            process.launch()
-        })
+            queue.async {
+                do {
+                    try process.run()
+                    if timeout.isFinite {
+                        timer.schedule(deadline: .now() + max(0, timeout))
+                    }
+                    timer.resume()
+                } catch {
+                    timer.resume()
+                    finish(error)
+                }
+            }
+        }
     }
 
     func reloadEnvPath() async {
@@ -391,5 +293,54 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         }
 
         self.PATH = path
+    }
+}
+
+private nonisolated struct ShellProcessState: Sendable {
+    var out = ShellOutputBuffer()
+    var err = ShellOutputBuffer()
+    var exited = false
+    var finished = false
+
+    mutating func finish(error: Error?) -> ShellOutput? {
+        guard !finished else { return nil }
+        guard error != nil || (exited && out.closed && err.closed) else { return nil }
+        finished = true
+        return .out(out.contents, err.contents)
+    }
+}
+
+/// Decodes complete UTF-8 characters and retains a partial character for the next read.
+private nonisolated struct ShellOutputBuffer: Sendable {
+    var contents = ""
+    var closed = false
+    private var pending: [UInt8] = []
+
+    mutating func append(_ data: Data) -> String {
+        closed = data.isEmpty
+        pending.append(contentsOf: data)
+        var end = pending.count
+
+        if !closed, let last = pending.indices.last {
+            var start = last
+            while start > 0 && pending[start] & 0xC0 == 0x80 && last - start < 3 {
+                start -= 1
+            }
+            let length: Int
+            switch pending[start] {
+            case 0xC2...0xDF: length = 2
+            case 0xE0...0xEF: length = 3
+            case 0xF0...0xF4: length = 4
+            default: length = 1
+            }
+            if end - start < length { end = start }
+        }
+
+        // Preserve valid output around malformed bytes by using replacement characters.
+        // swiftlint:disable:next optional_data_string_conversion
+        let text = String(decoding: pending.prefix(end), as: UTF8.self)
+        pending.removeFirst(end)
+        contents += text
+        return text
     }
 }
