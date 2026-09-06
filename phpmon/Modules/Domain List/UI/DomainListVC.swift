@@ -326,8 +326,10 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - (Search) Text Field Delegate
 
     func reloadTable() {
-        if let sortDescriptor = sortDescriptor {
+        if let sortDescriptor = sortDescriptor ?? tableView.sortDescriptors.first {
             self.applySortDescriptor(sortDescriptor)
+        } else {
+            domains.sort { $0.getListableFavorited() && !$1.getListableFavorited() }
         }
 
         Task { @MainActor in
