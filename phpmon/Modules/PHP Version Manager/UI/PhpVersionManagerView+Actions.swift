@@ -33,7 +33,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await HomebrewWatchManager.withSuspended {
+            try await withRefreshedHealthOnFailure {
                 try await command.execute(shell: container.shell) { progress in
                     Task { @MainActor in
                         self.status.title = progress.title
@@ -57,7 +57,6 @@ extension PhpVersionManagerView {
             let messages = error.log.suffix(2).joined(separator: "\n")
 
             self.setBusyStatus(false)
-            await self.handler.refreshPhpVersions(loadOutdated: false)
 
             self.presentErrorAlert(
                 title: "phpman.failures.install.title".localized,
@@ -99,7 +98,7 @@ extension PhpVersionManagerView {
 
         do {
             self.setBusyStatus(true)
-            try await HomebrewWatchManager.withSuspended {
+            try await withRefreshedHealthOnFailure {
                 try await command.execute(shell: container.shell) { progress in
                     Task { @MainActor in
                         self.status.title = progress.title
@@ -115,7 +114,6 @@ extension PhpVersionManagerView {
             }
         } catch {
             self.setBusyStatus(false)
-            await self.handler.refreshPhpVersions(loadOutdated: false)
 
             self.presentErrorAlert(
                 title: "phpman.failures.uninstall.title".localized,
@@ -127,16 +125,30 @@ extension PhpVersionManagerView {
         }
     }
 
+    private func withRefreshedHealthOnFailure(_ operation: () async throws -> Void) async rethrows {
+        try await HomebrewWatchManager.withSuspended {
+            do {
+                try await operation()
+            } catch {
+                // A failed command can leave PHP partially changed. Keep the watcher
+                // suspended and the app busy until the models reflect what is on disk.
+                await container.phpEnvs.detectPhpVersions()
+                container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
+                await ConfigWatchManager.handleWatcher()
+                await handler.refreshPhpVersions(loadOutdated: false)
+                throw error
+            }
+        }
+    }
+
     // MARK: GUI
 
     /**
      Mark the PHP Version Manager, as well as the PHP environments as busy.
      */
     public func setBusyStatus(_ busy: Bool) {
-        Task { @MainActor in
-            container.phpEnvs.isBusy = busy
-            self.status.busy = busy
-        }
+        container.phpEnvs.isBusy = busy
+        self.status.busy = busy
     }
 
     /**
