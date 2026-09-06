@@ -53,11 +53,12 @@ public nonisolated struct VersionNumber: Equatable, Hashable, Sendable {
     }
 
     public static func parse(_ text: String) throws -> Self {
-        guard let versionText = VersionExtractor.from(text) else {
+        guard let versionText = VersionExtractor.from(text),
+              let version = Self.make(from: versionText) else {
             throw VersionParseError()
         }
 
-        return Self.make(from: versionText)!
+        return version
     }
 
     public static func make(from versionString: String, type: MatchType = .versionOnly) -> Self? {
@@ -66,25 +67,30 @@ public nonisolated struct VersionNumber: Equatable, Hashable, Sendable {
         let match = regex.matches(
             in: versionString,
             options: [],
-            range: NSRange(location: 0, length: versionString.count)
+            range: NSRange(versionString.startIndex..., in: versionString)
         ).first
 
         guard let match else { return nil }
 
-        let major = Int(versionString[Range(match.range(withName: "major"), in: versionString)!])!
+        guard let majorRange = Range(match.range(withName: "major"), in: versionString),
+              let major = Int(versionString[majorRange]) else { return nil }
         var minor: Int = 0
         var patch: Int?
 
         if let minorRange = Range(match.range(withName: "minor"), in: versionString) {
             let value = versionString[minorRange] as String
-            // Zero is the fallback if a wildcard was used
-            minor = Int(value) ?? 0
+            if value != "*" {
+                guard let parsedMinor = Int(value) else { return nil }
+                minor = parsedMinor
+            }
         }
 
         if let patchRange = Range(match.range(withName: "patch"), in: versionString) {
             let value = versionString[patchRange] as String
-            // nil is the fallback if a wildcard was used
-            patch = Int(value) ?? nil
+            if value != "*" {
+                guard let parsedPatch = Int(value) else { return nil }
+                patch = parsedPatch
+            }
         }
 
         return Self(major: major, minor: minor, patch: patch)

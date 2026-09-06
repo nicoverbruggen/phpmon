@@ -123,13 +123,15 @@ class PhpInstallation {
 
     private func determineVersion(_ probe: Probe) {
         if let longVersionString = probe.versionOutput {
-            if longVersionString.contains("-dev") {
-                isPreRelease = true
+            guard let parsedVersion = try? VersionNumber.parse(longVersionString) else {
+                // Retain the known Homebrew version so the installation remains available for repair.
+                isHealthy = false
+                Log.err("Could not parse php-config output for PHP \(versionNumber.short): \(String(reflecting: longVersionString))")
+                return
             }
 
-            // The parser should always work, or the string has to be very unusual.
-            // If so, the app SHOULD crash, so that the users report what's up.
-            versionNumber = try! VersionNumber.parse(longVersionString)
+            versionNumber = parsedVersion
+            isPreRelease = longVersionString.contains("-dev")
         } else {
             // Keep track that the `php-config` binary is missing; this often means there's a mismatch between
             // the `php` version alias and the actual installed version (e.g. you haven't upgraded `php`)

@@ -25,17 +25,17 @@ class VersionExtractor {
             let match = regex.matches(
                 in: string,
                 options: [],
-                range: NSRange(location: 0, length: string.count)
+                range: NSRange(string.startIndex..., in: string)
             ).first
 
             guard let match = match else {
                 return nil
             }
 
-            let range = Range(
+            guard let range = Range(
                 match.range(withName: "version"),
                 in: string
-            )!
+            ) else { return nil }
 
             return String(string[range])
         } catch {
