@@ -21,6 +21,12 @@ public struct TestableConfiguration: Codable {
     var enabledFeatures: [App.FeatureFlag]
     var apiGetResponses: [URL: FakeWebApiResponse]
     var apiPostResponses: [URL: FakeWebApiResponse]
+    var phpInstallationChange: PhpInstallationChange?
+
+    nonisolated struct PhpInstallationChange: Codable, Sendable {
+        let notificationName: String
+        let commandOutputs: [String: String]
+    }
 
     init(
         architecture: String,
@@ -69,7 +75,8 @@ public struct TestableConfiguration: Codable {
              internalStatsOverrides,
              enabledFeatures,
              apiGetResponses,
-             apiPostResponses
+             apiPostResponses,
+             phpInstallationChange
     }
 
     // MARK: Add PHP versions
@@ -240,7 +247,35 @@ public struct TestableConfiguration: Codable {
         // Set variable to tell app we're testin'
         App.hasLoadedTestableConfiguration = true
 
+        #if DEBUG
+        preparePhpInstallationChange()
+        #endif
     }
+
+    #if DEBUG
+    private func preparePhpInstallationChange() {
+        let container = App.shared.container
+        guard let change = phpInstallationChange,
+              container.filesystem is TestableFileSystem,
+              let command = container.command as? TestableCommand else { return }
+
+        // The UI test triggers this only after opening the menu. Real filesystem
+        // watchers are disabled with fakes, so invoke their refresh sequence here.
+        _ = DistributedNotificationCenter.default().addObserver(
+            forName: Notification.Name(change.notificationName), object: nil, queue: .main
+        ) { _ in
+            Task { @MainActor in
+                command.updateOutputs(change.commandOutputs)
+                await container.phpEnvs.detectPhpVersions()
+                await MainMenu.shared.refreshActiveInstallation()
+                DistributedNotificationCenter.default().postNotificationName(
+                    Notification.Name(change.notificationName + ".completed"),
+                    object: nil, userInfo: nil, deliverImmediately: true
+                )
+            }
+        }
+    }
+    #endif
 
     // MARK: Persist and load
 

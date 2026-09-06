@@ -257,6 +257,25 @@ extension MainMenu {
     }
 
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
+        // A refresh can replace the cache while AppKit still displays the old menu.
+        if container.phpEnvs.cachedPhpInstallations[sender.version]?.isHealthy == false {
+            let openRepairOptions = NVAlert().withInformation(
+                title: "alert.php_switch_unhealthy.title".localized(sender.version),
+                subtitle: "alert.php_switch_unhealthy.subtitle".localized(sender.version),
+                description: "alert.php_switch_unhealthy.description".localized
+            )
+            .withPrimary(text: "alert.php_switch_unhealthy.repair".localized)
+            .withTertiary(text: "generic.cancel".localized, action: { alert in
+                alert.close(with: .alertThirdButtonReturn)
+            })
+            .didSelectPrimary(urgency: .bringToFront)
+
+            if openRepairOptions {
+                openPhpVersionManager()
+            }
+            return
+        }
+
         self.switchToPhpVersion(sender.version)
     }
 

@@ -643,6 +643,11 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.php_switch_unavailable.info" = "Please make sure PHP %@ is installed and you can switch to it in the dropdown. Currently supported versions include PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
 
+"alert.php_switch_unhealthy.title" = "PHP Monitor could not switch to PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Unfortunately, PHP Monitor has detected that there's a problem with your installation of PHP %@.";
+"alert.php_switch_unhealthy.description" = "Would you like to open PHP Version Manager to review and potentially repair this installation?";
+"alert.php_switch_unhealthy.repair" = "View Repair...";
+
 // Service error
 "alert.service_error.title" = "The service '%@' is reporting an error!";
 "alert.service_error.subtitle.error_log" = "This means that the service '%@' isn't running. This may prevent Valet from working correctly. This service has an associated log file that you might want to check, however.";

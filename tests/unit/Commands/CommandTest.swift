@@ -10,6 +10,24 @@ import Testing
 import Foundation
 
 struct CommandTest {
+    @Test func fake_command_outputs_can_change_while_probes_run() async {
+        let command = TestableCommand(commands: ["php --version": "8.4.2"])
+
+        await offMain {
+            DispatchQueue.concurrentPerform(iterations: 32) { index in
+                command.updateOutputs(["probe \(index)": "\(index)"])
+                #expect(command.execute(
+                    path: "probe", arguments: ["\(index)"], trimNewlines: false, withStandardError: false
+                ) == "\(index)")
+                #expect(command.execute(
+                    path: "php", arguments: ["--version"], trimNewlines: false, withStandardError: false
+                ) == "8.4.2")
+            }
+        }
+
+        #expect(command.commands.count == 33)
+    }
+
     @Test func execute_drains_output_before_waiting_for_exit() {
         let output = RealCommand().execute(
             path: "/usr/bin/perl",

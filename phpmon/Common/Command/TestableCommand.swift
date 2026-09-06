@@ -7,18 +7,22 @@
 //
 
 import Foundation
+import os
 
-// `nonisolated` + `@unchecked Sendable`: a test double whose only state (`commands`) is an
-// immutable `let` set at construction, so it is genuinely data-race-free; `@unchecked` is
-// required only because this class is non-final (the `TrackableTestableCommand` subclass
-// exists to wire up command tracking), and Swift cannot auto-synthesize `Sendable` for a
-// non-final class.
+// Output overrides can change during a UI test while probes run off-main. The lock
+// protects those updates and reads. The tracking subclass requires unchecked Sendable.
 nonisolated class TestableCommand: CommandProtocol, @unchecked Sendable {
     init(commands: [String: String]) {
-        self.commands = commands
+        self.state = OSAllocatedUnfairLock(initialState: commands)
     }
 
-    let commands: [String: String]
+    private let state: OSAllocatedUnfairLock<[String: String]>
+
+    var commands: [String: String] { state.withLock { $0 } }
+
+    func updateOutputs(_ outputs: [String: String]) {
+        state.withLock { $0.merge(outputs) { _, new in new } }
+    }
 
     public func execute(
         path: String,
@@ -27,7 +31,8 @@ nonisolated class TestableCommand: CommandProtocol, @unchecked Sendable {
         withStandardError: Bool
     ) -> String {
         let concatenatedCommand = "\(path) \(arguments.joined(separator: " "))"
-        assert(commands.keys.contains(concatenatedCommand), "Command `\(concatenatedCommand)` not found")
-        return self.commands[concatenatedCommand]!
+        let output = state.withLock { $0[concatenatedCommand] }
+        assert(output != nil, "Command `\(concatenatedCommand)` not found")
+        return output!
     }
 }
