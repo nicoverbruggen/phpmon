@@ -8,8 +8,57 @@
 
 import Testing
 import Foundation
+import Combine
 
 struct PhpVersionDetectionTest {
+    @Test func overlapping_detection_keeps_the_latest_versions_and_cache_consistent() async throws {
+        let firstProbe = "/opt/homebrew/opt/php@8.4/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"
+        let container = Container.fake(
+            shell: [
+                firstProbe: .delayed(1, ""),
+                "/opt/homebrew/opt/php@8.5/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
+            ],
+            files: [
+                "/opt/homebrew/opt/php@8.4/bin/php": .fake(.binary),
+                "/usr/local/bin/": .fake(.directory, readOnly: true)
+            ],
+            commands: [
+                "/opt/homebrew/opt/php@8.4/bin/php -v": "PHP 8.4.0",
+                "/opt/homebrew/opt/php@8.5/bin/php -v": "PHP 8.5.0"
+            ]
+        )
+        let previousContainer = App.shared.container
+        App.shared.container = container
+        let previousInstalled = Valet.shared.installed
+        let previousVersion = Valet.shared.version
+        defer {
+            App.shared.container = previousContainer
+            Valet.shared.installed = previousInstalled
+            Valet.shared.version = previousVersion
+        }
+        Valet.shared.installed = false
+        Valet.shared.version = nil
+        container.phpEnvs.homebrewPackage = Self.phpHomebrewPackage()
+        (container.shell as! TestableShell).allowsDelayedCommands = true
+
+        let first = Task { await container.phpEnvs.detectPhpVersions() }
+        for await commands in container.commandTracker.$commands.values
+            where commands.contains(where: { $0.command == firstProbe }) {
+            break
+        }
+
+        // A Homebrew change starts another scan while the first PHP probe is still running.
+        try container.filesystem.remove("/opt/homebrew/opt/php@8.4")
+        try container.filesystem.writeAtomicallyToFile("/opt/homebrew/opt/php@8.5/bin/php", content: "")
+        await container.phpEnvs.detectPhpVersions()
+        _ = await first.value
+
+        #expect(container.phpEnvs.availablePhpVersions == ["8.5"])
+        #expect(container.phpEnvs.cachedPhpInstallations.keys.sorted() == ["8.5"])
+        let helper = try container.filesystem.getStringFromFile("/Users/fake/.config/phpmon/bin/pm85")
+        #expect(helper.contains("PHP Monitor has enabled this terminal to use PHP 8.5."))
+    }
+
     private static func phpHomebrewPackage(version: String = "8.5.0") -> HomebrewPackage {
         return HomebrewPackage(
             full_name: "php",

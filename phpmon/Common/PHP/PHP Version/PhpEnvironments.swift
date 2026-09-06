@@ -127,6 +127,8 @@ class PhpEnvironments {
     /** Cached information about the PHP installations. */
     var cachedPhpInstallations: [String: PhpInstallation] = [:]
 
+    private var pendingDetection: Task<Set<String>, Never>?
+
     /** Information about the currently linked PHP installation. */
     var currentInstall: ActivePhpInstallation? {
         didSet {
@@ -222,6 +224,17 @@ class PhpEnvironments {
      */
     @discardableResult
     public func detectPhpVersions() async -> Set<String> {
+        // Watcher and package-manager scans must publish their models and helpers in order.
+        let previous = pendingDetection
+        let detection = Task {
+            _ = await previous?.value
+            return await performPhpVersionDetection()
+        }
+        pendingDetection = detection
+        return await detection.value
+    }
+
+    private func performPhpVersionDetection() async -> Set<String> {
         let files = await offMain { [container] in
             (try? container.filesystem.getShallowContentsOfDirectory(container.paths.optPath)) ?? []
         }
@@ -252,19 +265,19 @@ class PhpEnvironments {
 
         let supportedVersions = Valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
 
-        availablePhpVersions = Array(supportedVersions)
+        let availableVersions = Array(supportedVersions)
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
-        incompatiblePhpVersions = Array(installedVersions.subtracting(supportedByValet))
+        let incompatibleVersions = Array(installedVersions.subtracting(supportedByValet))
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
-        Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
-        Log.info("The PHP versions that were unsupported are: \(incompatiblePhpVersions)")
+        Log.info("The PHP versions that were detected are: \(availableVersions)")
+        Log.info("The PHP versions that were unsupported are: \(incompatibleVersions)")
 
         // Probe all detected versions concurrently on the concurrent pool (each
         // probe runs several subprocesses), then build the main-actor models
         // from the returned `Sendable` probe data without further I/O.
-        let versionsToProbe = availablePhpVersions
+        let versionsToProbe = availableVersions
         let probes = await withTaskGroup(
             of: (String, PhpInstallation.Probe).self,
             returning: [String: PhpInstallation.Probe].self
@@ -284,12 +297,14 @@ class PhpEnvironments {
 
         var mappedVersions: [String: PhpInstallation] = [:]
 
-        availablePhpVersions.forEach { version in
+        availableVersions.forEach { version in
             if let probe = probes[version] {
                 mappedVersions[version] = PhpInstallation(container, version, probe: probe)
             }
         }
 
+        availablePhpVersions = availableVersions
+        incompatiblePhpVersions = incompatibleVersions
         cachedPhpInstallations = mappedVersions
 
         await PhpHelper.regenerate(container, installedVersions: installedVersions)
