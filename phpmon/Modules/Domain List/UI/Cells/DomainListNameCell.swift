@@ -60,7 +60,7 @@ final class DomainListNameCell: NSTableCellView, DomainListCellProtocol {
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.image = NSImage(systemSymbolName: "star.circle.fill", accessibilityDescription: nil)?
                 .withSymbolConfiguration(NSImage.SymbolConfiguration(scale: .large))
-            imageView.contentTintColor = NSColor(named: "AccentColor")
+            imageView.contentTintColor = NSColor(named: "AppColor")
             imageView.imageScaling = .scaleProportionallyDown
             imageView.imageAlignment = .alignLeft
             imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
