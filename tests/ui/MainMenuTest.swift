@@ -141,6 +141,8 @@ final class MainMenuTest: UITestCase {
     @MainActor final func test_standalone_mode_can_launch_valet_install_wizard() throws {
         var configuration = TestableConfigurations.workingWithoutValet
         configuration.mockStandaloneValetWizardInstall()
+        // Approval sheets need the same asynchronous command boundaries as the real shell.
+        configuration.allowsDelayedShellCommands = true
 
         let app = launch(openMenu: true, with: configuration)
 
