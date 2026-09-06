@@ -62,7 +62,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Vendor/HotKey/LICENSE,
 			);
 			target = C41C1B3222B0097F00E7CF16 /* PHP Monitor */;
 		};
@@ -75,7 +74,6 @@
 				IAP/InternetAccessPolicy.plist,
 				IAP/InternetAccessPolicy.strings,
 				Info.plist,
-				Vendor/HotKey/LICENSE,
 			);
 			target = C4F7807825D7F84B000DBC97 /* Unit Tests */;
 		};
@@ -88,7 +86,6 @@
 				IAP/InternetAccessPolicy.plist,
 				IAP/InternetAccessPolicy.strings,
 				Info.plist,
-				Vendor/HotKey/LICENSE,
 			);
 			target = C471E7BB28F9B90F0021E251 /* UI Tests */;
 		};
