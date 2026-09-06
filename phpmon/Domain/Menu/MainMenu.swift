@@ -58,6 +58,9 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
      */
     var shouldSwitchSilently: Bool = false
 
+    /// The menu being tracked can outlive a rebuild of `statusItem.menu`.
+    private weak var trackingMenu: NSMenu?
+
     // MARK: - UI related
 
     /**
@@ -313,6 +316,8 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
     @objc private func menuDidBeginTracking(_ notification: Notification) {
         guard (notification.object as? NSMenu) === statusItem.menu else { return }
 
+        trackingMenu = notification.object as? NSMenu
+
         // Make sure the shortcut key does not trigger this when the menu is open
         App.shared.shortcutHotkey?.isPaused = true
 
@@ -328,7 +333,9 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
     }
 
     @objc private func menuDidEndTracking(_ notification: Notification) {
-        guard (notification.object as? NSMenu) === statusItem.menu else { return }
+        guard let menu = notification.object as? NSMenu, menu === trackingMenu else { return }
+
+        trackingMenu = nil
 
         // When the menu is closed, allow the shortcut to work again
         App.shared.shortcutHotkey?.isPaused = false
