@@ -7,14 +7,61 @@
 //
 
 import XCTest
+import AppKit
 
 final class DomainsListTest: UITestCase {
 
     @MainActor final func test_can_always_open_domains_list() throws {
-        let app = launch(openMenu: true)
+        let app = launch()
+        let finder = XCUIApplication(bundleIdentifier: "com.apple.finder")
 
-        app.menuItems["mi_domain_list".localized].click()
-        assertExists(app.windows["domain_list.title".localized], 2.0)
+        // Cover first opening, minimized, existing, closed, and another PHP Monitor window being open.
+        for attempt in 0..<5 {
+            finder.activate()
+            let background = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                NSWorkspace.shared.frontmostApplication?.bundleIdentifier == "com.apple.finder"
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter().wait(for: [background], timeout: 3), .completed)
+
+            // Clicking through the foreground app avoids Xcode activating PHP Monitor first.
+            let origin = finder.coordinate(withNormalizedOffset: .zero)
+            let frame = finder.frame
+            let status = app.statusItems.firstMatch.frame
+            origin.withOffset(CGVector(dx: status.midX - frame.minX, dy: status.midY - frame.minY)).click()
+            let item = app.menuItems["mi_domain_list".localized]
+            assertExists(item, 2.0)
+            let itemFrame = item.frame
+            origin.withOffset(CGVector(dx: itemFrame.midX - frame.minX, dy: itemFrame.midY - frame.minY)).click()
+            let window = app.windows["domain_list.title".localized]
+            assertExists(window, 2.0)
+
+            let foreground = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                app.state == .runningForeground
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter().wait(for: [foreground], timeout: 3), .completed,
+                           "Domains must activate PHP Monitor on opening attempt \(attempt)")
+
+            XCTAssertTrue(app.menuBars.menuBarItems["Window"].menuItems["Close"].isEnabled,
+                          "The Domains window must be eligible for keyboard window actions")
+
+            if attempt == 0 {
+                window.buttons[XCUIIdentifierMinimizeWindow].click()
+                assertNotExists(window, 2.0)
+            } else if attempt > 1 {
+                // A visible window without keyboard focus cannot handle Close Window.
+                app.typeKey("w", modifierFlags: .command)
+                assertNotExists(window, 2.0)
+            }
+
+            if attempt == 3 {
+                app.statusItems.firstMatch.click()
+                app.menuItems["mi_preferences".localized].click()
+                let settings = app.windows
+                    .containing(.button, identifier: "prefs.tabs.general".localized)
+                    .firstMatch
+                assertExists(settings, 2.0)
+            }
+        }
     }
 
     @MainActor final func test_can_filter_domains_list() throws {
