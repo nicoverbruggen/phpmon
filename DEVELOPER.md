@@ -74,7 +74,7 @@ SWIFT_STRICT_CONCURRENCY      = complete
 SWIFT_APPROACHABLE_CONCURRENCY = YES
 ```
 
-`SWIFT_VERSION` is `6.0` for the app, `phpmon-shared`, the Self-Updater and the **Unit Tests**
+`SWIFT_VERSION` is `6.0` for the app, the Self-Updater and the **Unit Tests**
 target. The **UI Tests target is intentionally kept at `5.0`** — see the note under UI tests
 below. Please do not flip it without reading that note.
 
