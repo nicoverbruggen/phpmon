@@ -71,7 +71,7 @@ class ValetSite: ValetListable {
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
         return self.isolatedPhpVersion?.versionNumber.short
-            ?? container.phpEnvs.phpInstall?.version.short
+            ?? container.phpEnvs.phpInstall?.version?.short
             ?? "???"
     }
 
@@ -267,7 +267,8 @@ class ValetSite: ValetListable {
             return
         }
 
-        guard let linked = container.phpEnvs.phpInstall else {
+        guard let origin = self.isolatedPhpVersion?.versionNumber.short
+                ?? container.phpEnvs.phpInstall?.version?.long else {
             self.isCompatibleWithPreferredPhpVersion = false
             return
         }
@@ -275,9 +276,6 @@ class ValetSite: ValetListable {
         // Split the composer list (on "|") to evaluate multiple constraints
         // For example, for Laravel 8 projects the value is "^7.3|^8.0"
         self.isCompatibleWithPreferredPhpVersion = self.preferredPhpVersion.split(separator: "|").map { string in
-            let origin = self.isolatedPhpVersion?.versionNumber.short
-                ?? linked.version.long
-
             let normalizedPhpVersion = string.trimmingCharacters(in: .whitespacesAndNewlines)
 
             return !PhpVersionNumberCollection.make(from: [origin])

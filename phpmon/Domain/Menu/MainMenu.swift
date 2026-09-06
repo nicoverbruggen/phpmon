@@ -228,12 +228,12 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
                     // The dynamic icon has been requested
                     let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
 
-                    guard let install = container.phpEnvs.phpInstall else {
+                    guard let version = container.phpEnvs.phpInstall?.version else {
                         setStatusBarImage(version: "???")
                         return
                     }
 
-                    setStatusBarImage(version: long ? install.version.long : install.version.short)
+                    setStatusBarImage(version: long ? version.long : version.short)
                 }
             }
         }

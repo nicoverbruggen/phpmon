@@ -144,7 +144,7 @@ extension PhpVersionManagerView {
      */
     public func confirmUninstall(_ formula: BrewPhpFormula) async {
         // Disallow removal of the currently active version
-        if formula.installedVersion == container.phpEnvs.currentInstall?.version.text {
+        if formula.installedVersion == container.phpEnvs.currentInstall?.version?.text {
             self.presentErrorAlert(
                 title: "phpman.uninstall_prevented.title".localized,
                 description: "phpman.uninstall_prevented.desc".localized,

@@ -115,7 +115,7 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
             return container.phpEnvs.validVersions(for: site.preferredPhpVersion)
                 .filter({ version in
-                version.short != install.version.short
+                version.short != install.version?.short
             })
         }
 

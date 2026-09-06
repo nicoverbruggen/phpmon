@@ -35,13 +35,13 @@ actor ConfigWatchManager: Suspendable {
             return
         }
 
-        guard let install = container.phpEnvs.phpInstall else {
+        guard let version = container.phpEnvs.phpInstall?.version else {
             Log.info("It appears as if no PHP installation is currently active.")
             Log.info("The config watch manager is disabled until a PHP install is active.")
             return
         }
 
-        let url = URL(fileURLWithPath: "\(container.paths.etcPath)/php/\(install.version.short)")
+        let url = URL(fileURLWithPath: "\(container.paths.etcPath)/php/\(version.short)")
 
         // Create watcher if missing
         guard let manager = App.shared.configWatchManager else {

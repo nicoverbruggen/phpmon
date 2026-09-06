@@ -28,6 +28,8 @@ struct ActivePhpInstallationTest {
 
         let install = try #require(await ActivePhpInstallation.load(container))
         #expect(install.hasErrorState)
+        #expect(install.version == nil)
+        #expect(install.formula == nil)
         #expect(install.limits.memory_limit == "???")
     }
 
@@ -61,7 +63,7 @@ struct ActivePhpInstallationTest {
         let install = try #require(await ActivePhpInstallation.load(container))
 
         #expect(install.hasErrorState == false)
-        #expect(install.version.long == "8.4.2")
+        #expect(install.version?.long == "8.4.2")
         #expect(install.limits.memory_limit == "512MB")
         #expect(install.limits.upload_max_filesize == "64MB")
         #expect(install.limits.post_max_size == "∞")

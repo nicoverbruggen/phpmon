@@ -25,7 +25,7 @@ class ActivePhpInstallation {
 
     // MARK: - Variables
 
-    var version: VersionNumber!
+    let version: VersionNumber?
     var limits: Limits!
     var iniFiles: [PhpConfigurationFile] = []
     var hasErrorState: Bool = false
@@ -38,7 +38,8 @@ class ActivePhpInstallation {
         }
     }
 
-    var formula: String {
+    var formula: String? {
+        guard let version else { return nil }
         return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 

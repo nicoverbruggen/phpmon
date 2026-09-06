@@ -240,7 +240,8 @@ extension MainMenu {
             return
         }
 
-        actions.openPhpConfigFolder(version: install.version.short)
+        guard let version = install.version else { return }
+        actions.openPhpConfigFolder(version: version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {

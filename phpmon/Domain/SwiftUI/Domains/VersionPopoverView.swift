@@ -123,7 +123,7 @@ struct VersionPopoverView: View {
         if site.isolatedPhpVersion != nil {
             information += "alert.composer_php_isolated.desc".localized(
                 site.isolatedPhpVersion!.versionNumber.short,
-                container.phpEnvs.phpInstall?.version.short ?? "???"
+                container.phpEnvs.phpInstall?.version?.short ?? "???"
             )
             information += "\n\n"
         }

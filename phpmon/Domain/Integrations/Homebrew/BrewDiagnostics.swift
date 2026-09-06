@@ -246,13 +246,13 @@ class BrewDiagnostics {
     public func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
-        guard let install = container.phpEnvs.phpInstall else {
+        guard let version = container.phpEnvs.phpInstall?.version else {
             Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
 
         // We'll need to know what the primary PHP version is
-        let primary = install.version.short
+        let primary = version.short
 
         // Versions to be handled
         let switcher = InternalSwitcher(container)

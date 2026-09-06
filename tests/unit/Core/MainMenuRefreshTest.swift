@@ -11,6 +11,47 @@ import Testing
 
 @Suite(.serialized)
 struct MainMenuRefreshTest {
+    @Test func broken_active_php_keeps_other_versions_available_in_the_menu() async throws {
+        let container = makeContainer(version: "not a version")
+        let previousContainer = App.shared.container
+        App.shared.container = container
+        defer { App.shared.container = previousContainer }
+        container.phpEnvs.availablePhpVersions = ["8.4", "8.3"]
+
+        #expect(try #require(container.phpEnvs.currentInstall).hasErrorState)
+        let menu = StatusMenu()
+        menu.addPhpVersionMenuItems()
+        menu.addSwitchToPhpMenuItems()
+
+        #expect(menu.items.contains { $0.title == "mi_php_broken_1".localized })
+        let switches = menu.items.compactMap { $0 as? PhpMenuItem }
+        #expect(switches.map(\.version) == ["8.4", "8.3"])
+        #expect(switches.allSatisfy { $0.action != nil })
+        #expect(PhpGuard().currentVersion == nil)
+        #expect(PhpExtensionManagerView.getActivePhpVersion() == nil)
+    }
+
+    @Test(arguments: [true, false])
+    func broken_active_php_displays_an_unknown_version_in_the_status_icon(fullVersion: Bool) async {
+        let container = makeContainer(version: "not a version")
+        let previousContainer = App.shared.container
+        App.shared.container = container
+        container.preferences.cachedPreferences[.shouldDisplayDynamicIcon] = true
+        container.preferences.cachedPreferences[.fullPhpVersionDynamicIcon] = fullVersion
+        let menu = VersionRecordingMenu()
+        menu.statusItem.isVisible = false
+        defer {
+            NSStatusBar.system.removeStatusItem(menu.statusItem)
+            App.shared.container = previousContainer
+        }
+
+        let displayedVersion = await withCheckedContinuation { continuation in
+            menu.onVersion = { continuation.resume(returning: $0) }
+            menu.refreshIcon()
+        }
+        #expect(displayedVersion == "???")
+    }
+
     @Test func an_old_refresh_does_not_replace_a_completed_php_switch() async throws {
         let container = makeContainer(version: "8.4.0")
         let switchedInstall = try #require(makeContainer(version: "8.5.0").phpEnvs.currentInstall)
@@ -39,7 +80,7 @@ struct MainMenuRefreshTest {
         container.phpEnvs.currentInstall = switchedInstall
         await refresh.value
 
-        #expect(container.phpEnvs.currentInstall?.version.short == "8.5")
+        #expect(container.phpEnvs.currentInstall?.version?.short == "8.5")
     }
 
     @Test(arguments: [true, false])
@@ -95,4 +136,12 @@ struct MainMenuRefreshTest {
 private class InstallationRefreshMenu: MainMenu {
     override func refreshIcon() {}
     override func rebuild() {}
+}
+
+private class VersionRecordingMenu: MainMenu {
+    var onVersion: ((String) -> Void)?
+
+    override func setStatusBarImage(version: String) {
+        onVersion?(version)
+    }
 }

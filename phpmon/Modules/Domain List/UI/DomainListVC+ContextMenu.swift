@@ -53,7 +53,7 @@ extension DomainListVC {
         addSeparator(to: menu)
 
         if let extensions = site.isolatedPhpVersion?.extensions ?? container.phpEnvs.phpInstall?.extensions,
-           let version = site.isolatedPhpVersion?.versionNumber.short ?? container.phpEnvs.phpInstall?.version.short {
+           let version = site.isolatedPhpVersion?.versionNumber.short ?? container.phpEnvs.phpInstall?.version?.short {
             menu.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
             addMenuItemsForExtensions(
                 to: menu,

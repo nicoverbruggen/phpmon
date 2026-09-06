@@ -25,11 +25,11 @@ struct HomebrewFormulae {
             return HomebrewFormula("php", elevated: true)
         }
 
-        guard let install = container.phpEnvs.phpInstall else {
+        guard let formula = container.phpEnvs.phpInstall?.formula else {
             return HomebrewFormula("php", elevated: true)
         }
 
-        return HomebrewFormula(install.formula, elevated: true)
+        return HomebrewFormula(formula, elevated: true)
     }
 
     var nginx: HomebrewFormula {

@@ -17,7 +17,7 @@ extension MainMenu {
             return
         }
 
-        let previousVersion = container.phpEnvs.phpInstall?.version.short
+        let previousVersion = container.phpEnvs.phpInstall?.version?.short
 
         if !App.shared.container.phpEnvs.availablePhpVersions.contains(brewAlias) {
             presentAlertForMissingFormula()

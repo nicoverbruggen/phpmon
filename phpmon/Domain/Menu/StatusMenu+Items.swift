@@ -23,13 +23,14 @@ extension StatusMenu {
             return
         }
 
-        if container.phpEnvs.phpInstall!.hasErrorState {
+        guard let install = container.phpEnvs.phpInstall,
+              !install.hasErrorState, let version = install.version else {
             let brokenMenuItems = ["mi_php_broken_1", "mi_php_broken_2", "mi_php_broken_3", "mi_php_broken_4"]
             return addItems(brokenMenuItems.map { NSMenuItem(title: $0.localized) })
         }
 
         addItem(HeaderView.asMenuItem(
-            text: "\("mi_php_version".localized) \(container.phpEnvs.phpInstall!.version.long)",
+            text: "\("mi_php_version".localized) \(version.long)",
             minimumWidth: 280 // this ensures the menu is at least wide enough not to cause clipping
         ))
     }
@@ -84,7 +85,7 @@ extension StatusMenu {
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
             let brew = (shortVersion == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(shortVersion)"
 
-            let isActive = (shortVersion == container.phpEnvs.phpInstall?.version.short)
+            let isActive = (shortVersion == container.phpEnvs.phpInstall?.version?.short)
 
             let menuItem = PhpMenuItem(
                 title: "\("mi_php_switch".localized) \(versionString) (\(brew))",

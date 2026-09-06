@@ -363,7 +363,7 @@ class PhpEnvironments {
             return false
         }
 
-        if install.version.short == version {
+        if install.version?.short == version {
             Log.info("Switching to version \(version) seems to have succeeded. Validation passed.")
             Log.info("Keeping track that this is the new version!")
             Stats.persistCurrentGlobalPhpVersion(version: version)
