@@ -61,6 +61,8 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
     /// The menu being tracked can outlive a rebuild of `statusItem.menu`.
     private weak var trackingMenu: NSMenu?
 
+    private var activeInstallationRefreshID: UUID?
+
     // MARK: - UI related
 
     /**
@@ -120,7 +122,17 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
     /** Reloads which PHP versions is currently active. */
     func refreshActiveInstallation() async {
         if !container.phpEnvs.isBusy {
-            container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
+            let refreshID = UUID()
+            activeInstallationRefreshID = refreshID
+            let previousInstall = container.phpEnvs.currentInstall
+            let install = await ActivePhpInstallation.load(container)
+
+            // Only the latest refresh can publish, and a completed switch takes precedence.
+            guard activeInstallationRefreshID == refreshID,
+                  !container.phpEnvs.isBusy,
+                  container.phpEnvs.currentInstall === previousInstall else { return }
+
+            container.phpEnvs.currentInstall = install
             refreshIcon()
             rebuild()
         } else {
