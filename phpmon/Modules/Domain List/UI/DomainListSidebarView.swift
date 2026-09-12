@@ -18,7 +18,14 @@ struct DomainListSidebarView: View {
     var body: some View {
         List(selection: Binding<DomainListFilter?>(
             get: { model.selection },
-            set: { if let filter = $0 { onSelect(filter) } }
+            set: { selection in
+                guard let filter = selection else { return }
+                // AppKit can change selection while SwiftUI is updating the list.
+                DispatchQueue.main.async {
+                    guard model.selection != filter else { return }
+                    onSelect(filter)
+                }
+            }
         )) {
             row("All domains", filter: .all, symbol: "globe")
             row("Favorites", filter: .favorites, symbol: "star")
