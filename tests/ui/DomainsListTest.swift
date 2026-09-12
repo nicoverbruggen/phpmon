@@ -41,16 +41,20 @@ final class DomainsListTest: UITestCase {
             XCTAssertEqual(XCTWaiter().wait(for: [foreground], timeout: 3), .completed,
                            "Domains must activate PHP Monitor on opening attempt \(attempt)")
 
-            XCTAssertTrue(app.menuBars.menuBarItems["Window"].menuItems["Close"].isEnabled,
-                          "The Domains window must be eligible for keyboard window actions")
-
             if attempt == 0 {
                 window.buttons[XCUIIdentifierMinimizeWindow].click()
                 assertNotExists(window, 2.0)
             } else if attempt > 1 {
-                // A visible window without keyboard focus cannot handle Close Window.
-                app.typeKey("w", modifierFlags: .command)
-                assertNotExists(window, 2.0)
+                // Focus Domains explicitly when another app window, such as Settings, is open.
+                window.click()
+                XCTAssertTrue(app.menuBars.menuBarItems["Window"].menuItems["Close"].isEnabled,
+                              "The Domains window must be eligible for keyboard window actions")
+                window.typeKey("w", modifierFlags: .command)
+                let closed = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "exists == false"), object: window
+                )
+                XCTAssertEqual(XCTWaiter().wait(for: [closed], timeout: 2), .completed,
+                               "Domains must close on opening attempt \(attempt)")
             }
 
             if attempt == 3 {
