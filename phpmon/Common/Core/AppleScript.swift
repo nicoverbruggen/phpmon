@@ -65,6 +65,12 @@ nonisolated class AppleScript {
      administrator-privileges prompt.
      */
     private static func runAppleScript(script: String) throws -> String {
+        guard !isRunningTests,
+              ProcessInfo.processInfo.environment["PHPMON_TEST_CONFIGURATION"] == nil,
+              !CommandLine.arguments.contains(where: { $0.hasPrefix("--configuration:") }) else {
+            Log.err("Real AppleScript execution is disabled for test configurations.")
+            throw AdminPrivilegeError(kind: .applescriptNilError)
+        }
         Log.info("Running via AppleScript: `\(script)`")
 
         let task = Process()

@@ -150,6 +150,8 @@ xcodebuild test \
     -parallel-testing-enabled NO
 ```
 
+Fake containers deny privileged commands by default. Tests that need an approval flow must supply a `PrivilegedCommandRunner`; UI configurations use `UITestPrivilegedCommandRunner`. Real AppleScript execution is disabled in unit tests and when a test configuration is supplied by environment or launch argument. Homebrew ownership repair skips fake filesystems so it cannot inspect or change host permissions.
+
 ### UI tests
 
 ```sh

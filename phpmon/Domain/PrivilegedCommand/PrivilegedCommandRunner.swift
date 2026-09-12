@@ -31,6 +31,13 @@ final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     }
 }
 
+/// Fake containers deny privileged work unless a test explicitly supplies an approval runner.
+final class DisabledPrivilegedCommandRunner: PrivilegedCommandRunner {
+    func runSimpleShellAsAdmin(_ script: String, reason: PrivilegedCommandReason) async throws -> String {
+        throw AdminPrivilegeError(kind: .userDenied)
+    }
+}
+
 final class UITestPrivilegedCommandRunner: PrivilegedCommandRunner {
     private let presenter: PrivilegedCommandApprovalPresenting
     private let approvedOutput: String

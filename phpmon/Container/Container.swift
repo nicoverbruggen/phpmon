@@ -163,9 +163,7 @@ nonisolated class Container: @unchecked Sendable {
             postResponses: webApiPostResponses
         )
 
-        if let privilegedCommandRunner {
-            self.privilegedCommandRunner = privilegedCommandRunner
-        }
+        self.privilegedCommandRunner = privilegedCommandRunner ?? DisabledPrivilegedCommandRunner()
 
         // We will also re-initialize PhpEnvironments due to altered dependencies
         self.phpEnvs = PhpEnvironments(container: self)
