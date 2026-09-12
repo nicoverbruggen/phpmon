@@ -68,9 +68,7 @@ extension DomainListVC {
     }
 
     private func reloadSelectedRow() {
-        tableView.reloadData(forRowIndexes: [tableView.selectedRow], columnIndexes: [0, 1, 2, 3, 4])
-        tableView.deselectRow(tableView.selectedRow)
-        tableView.selectRowIndexes([tableView.selectedRow], byExtendingSelection: true)
+        searchedFor(text: lastSearchedFor)
     }
 
     // MARK: - Interactions with `valet` or terminal
@@ -128,8 +126,8 @@ extension DomainListVC {
                     proxy.toggleFavorite()
                 }
 
-                // Reload the entire table as the sorting may be affected
-                self.reloadTable()
+                // Favorites affect both the sidebar counts and the visible rows.
+                self.searchedFor(text: self.lastSearchedFor)
             }
         }
     }

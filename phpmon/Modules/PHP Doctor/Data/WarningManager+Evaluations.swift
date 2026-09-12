@@ -186,7 +186,7 @@ extension WarningManager {
 
                 if let vc = WindowManager
                     .controller(of: DomainListWC.self)?
-                    .window?.contentViewController as? DomainListVC {
+                    .contentVC {
                     vc.checkForCertificateRenewal {
                         await self.checkEnvironment()
                     }

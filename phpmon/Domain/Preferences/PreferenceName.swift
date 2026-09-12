@@ -123,6 +123,7 @@ nonisolated enum PersistentAppState: String, Sendable {
     case userFavorites = "user_favorites"
     case updateCheckFailureCount = "update_check_failure_count"
     case didPromptForIntegrations = "did_prompt_for_integrations"
+    case domainListSidebarCollapsed = "domain_list_sidebar_collapsed"
 }
 
 /**

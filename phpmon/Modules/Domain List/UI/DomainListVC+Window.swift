@@ -21,15 +21,17 @@ extension DomainListVC {
         windowController.shouldCascadeWindows = false
 
         let window = NSWindow()
-        window.styleMask = [.titled, .closable, .resizable, .miniaturizable]
-        window.titlebarSeparatorStyle = .line
-        window.contentViewController = DomainListVC()
+        window.styleMask = [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView]
+        window.toolbarStyle = .unified
+        window.titlebarSeparatorStyle = .automatic
+        window.contentViewController = DomainListSplitViewController()
+        window.setContentSize(NSSize(width: 1000, height: 460))
         windowController.window = window
 
         window.title = "domain_list.title".localized
         window.subtitle = ""
         window.delegate = delegate ?? windowController
-        window.minSize = NSSize(width: 550, height: 200)
+        window.contentMinSize = NSSize(width: 620, height: 300)
 
         windowController.configureToolbar()
 

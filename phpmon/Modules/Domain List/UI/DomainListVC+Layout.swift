@@ -9,9 +9,7 @@ import Cocoa
 
 extension DomainListVC {
     /**
-     Builds the entire view hierarchy in code, transcribed from the old
-     storyboard scene: the scroll view + table, the "no results" container
-     and the busy overlay.
+     Builds the table, the "no results" container and the busy overlay.
      */
     func makeRootView() -> NSView {
         let view = NSView(frame: NSRect(x: 0, y: 0, width: 626, height: 309))

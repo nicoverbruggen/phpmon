@@ -35,7 +35,7 @@ extension AppDelegate {
         Task { // Reload domains
             let vc = WindowManager
                 .controller(of: DomainListWC.self)?
-                .window?.contentViewController as? DomainListVC
+                .contentVC
 
             if vc != nil {
                 // If the view exists, directly reload the list of sites.

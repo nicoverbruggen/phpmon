@@ -28,6 +28,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     /// List of sites that will be displayed in this view. Originates from the `Valet` object.
     var domains: [ValetListable] = []
+    let sidebarModel = DomainListSidebarModel()
 
     /// Array that contains various apps that might open a particular site directory.
     var applications: [Application] {
@@ -48,21 +49,21 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - Helper Variables
 
     var selectedSite: ValetSite? {
-        if tableView.selectedRow == -1 {
+        if !domains.indices.contains(tableView.selectedRow) {
             return nil
         }
         return domains[tableView.selectedRow] as? ValetSite
     }
 
     var selectedProxy: ValetProxy? {
-        if tableView.selectedRow == -1 {
+        if !domains.indices.contains(tableView.selectedRow) {
             return nil
         }
         return domains[tableView.selectedRow] as? ValetProxy
     }
 
     var selected: ValetListable? {
-        if tableView.selectedRow == -1 {
+        if !domains.indices.contains(tableView.selectedRow) {
             return nil
         }
         return domains[tableView.selectedRow]
@@ -99,7 +100,6 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         if !Valet.shared.sites.isEmpty {
             // Preloaded list
-            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         } else {
             Task { await reloadDomains() }
@@ -115,10 +115,6 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
         shouldSkipAutomaticCertificateRenewalPrompt = true
         checkForCertificateRenewal()
-    }
-
-    private func reloadDomainListables() {
-        domains = Valet.getDomainListable()
     }
 
     @MainActor
@@ -159,6 +155,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
      Also shows a spinner to indicate that we're busy.
      */
     @MainActor public func setUIBusy() {
+        sidebarModel.isBusy = true
         // If it takes more than 0.5s to set the UI to not busy, show a spinner
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             Task { @MainActor in
@@ -184,7 +181,8 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         progressIndicator.stopAnimation(nil)
         tableView.alphaValue = 1.0
         tableView.isEnabled = true
-        updateNoResultsView()
+        sidebarModel.isBusy = false
+        searchedFor(text: lastSearchedFor)
     }
 
     /**
@@ -214,14 +212,12 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
         waitAndExecute {
             await Valet.shared.reloadSites()
         } completion: { [self] in
-            reloadDomainListables()
             searchedFor(text: lastSearchedFor)
         }
     }
 
     func reloadDomainsWithoutUI() async {
         await Valet.shared.reloadSites()
-        reloadDomainListables()
         searchedFor(text: lastSearchedFor)
     }
 
@@ -253,7 +249,7 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     }
 
     private func find(_ name: String, _ shouldSecure: Bool = false) {
-        reloadDomainListables()
+        sidebarModel.selection = .all
         searchedFor(text: "")
         if let site = domains.enumerated().first(where: { $0.element.getListableName() == name }) {
             Task { @MainActor in
@@ -274,10 +270,9 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
 
     func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
         guard let sortDescriptor = tableView.sortDescriptors.first else { return }
-        // Kinda scuffed way of applying sort descriptors here, but it works.
         Log.info("Applying sort descriptor for column: \(sortDescriptor.key ?? "Unknown")")
-        applySortDescriptor(sortDescriptor)
-        searchedFor(text: lastSearchedFor)
+        self.sortDescriptor = sortDescriptor
+        reloadTable()
     }
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -326,46 +321,26 @@ class DomainListVC: NSViewController, NSTableViewDelegate, NSTableViewDataSource
     // MARK: - (Search) Text Field Delegate
 
     func reloadTable() {
+        let selection = selectedIdentity
+        tableView.deselectAll(nil)
         if let sortDescriptor = sortDescriptor ?? tableView.sortDescriptors.first {
             self.applySortDescriptor(sortDescriptor)
         } else {
             domains.sort { $0.getListableFavorited() && !$1.getListableFavorited() }
         }
 
-        Task { @MainActor in
-            self.tableView.reloadData()
-            updateNoResultsView()
-        }
+        tableView.reloadData()
+        restoreSelection(selection)
+        updateNoResultsView()
     }
 
     func updateNoResultsView() {
-        self.noResultsView.isHidden = !domains.isEmpty
+        self.noResultsView.isHidden = !domains.isEmpty || sidebarModel.isBusy
     }
 
     func searchedFor(text: String) {
         lastSearchedFor = text
-
-        let searchString = text.lowercased()
-
-        if searchString.isEmpty {
-            domains = Valet.getDomainListable()
-
-            reloadTable()
-
-            return
-        }
-
-        let splitSearchString: [String] = searchString
-            .split(separator: " ")
-            .map { return String($0) }
-
-        domains = Valet.getDomainListable().filter({ site in
-            return !splitSearchString.map { searchString in
-                return site.getListableName().lowercased().contains(searchString)
-            }.contains(false)
-        })
-
-        reloadTable()
+        updateDomains(from: Valet.getDomainListable())
     }
 
     // MARK: - Deinitialization

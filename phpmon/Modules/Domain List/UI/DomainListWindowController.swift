@@ -28,8 +28,7 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     let searchToolbarItem = NSSearchToolbarItem(itemIdentifier: ToolbarIdentifiers.search)
 
     /**
-     Builds the window's toolbar (add link + reload + search), matching the
-     configuration of the old storyboard's toolbar.
+     Builds the window's toolbar with the sidebar toggle, add link, reload and search.
      */
     func configureToolbar() {
         let toolbar = NSToolbar(identifier: "domainListToolbar")
@@ -48,7 +47,10 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [ToolbarIdentifiers.addLink, ToolbarIdentifiers.reload, ToolbarIdentifiers.search]
+        return [
+            .flexibleSpace, .toggleSidebar, .sidebarTrackingSeparator,
+            ToolbarIdentifiers.addLink, ToolbarIdentifiers.reload, .flexibleSpace, ToolbarIdentifiers.search
+        ]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -97,7 +99,7 @@ class DomainListWindowController: PMWindowController, NSSearchFieldDelegate, NST
     // MARK: - Search functionality
 
     var contentVC: DomainListVC {
-        return self.contentViewController as! DomainListVC
+        return (self.contentViewController as! DomainListSplitViewController).domainListVC
     }
 
     var searchTimer: Timer?
