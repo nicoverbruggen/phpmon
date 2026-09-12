@@ -10,7 +10,7 @@ import Foundation
 
 // Nonisolated + @unchecked Sendable: mirrors RealFileSystem's isolation. Its mutable
 // `files` state is guarded by `accessQueue`, so sharing it across isolation is safe.
-nonisolated final class TestableFileSystem: FileSystemProtocol, @unchecked Sendable {
+nonisolated class TestableFileSystem: FileSystemProtocol, @unchecked Sendable {
 
     /**
      Initialize a fake filesystem with a bunch of files.

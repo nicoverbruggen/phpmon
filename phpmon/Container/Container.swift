@@ -137,6 +137,7 @@ nonisolated class Container: @unchecked Sendable {
     public func overrideFake(
         shellExpectations: [String: BatchFakeShellOutput] = [:],
         fileSystemFiles: [String: FakeFile] = [:],
+        fileSystem: TestableFileSystem? = nil,
         commands: [String: String] = [:],
         webApiGetResponses: [URL: FakeWebApiResponse] = [:],
         webApiPostResponses: [URL: FakeWebApiResponse] = [:],
@@ -145,7 +146,7 @@ nonisolated class Container: @unchecked Sendable {
     ) {
         self.commandTracker = CommandTracker()
 
-        let filesystem = TestableFileSystem(files: fileSystemFiles)
+        let filesystem = fileSystem ?? TestableFileSystem(files: fileSystemFiles)
 
         // Depending on whether we want to fire command tracking, load different handlers
         if commandTracking {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewPhpExtension: Hashable, Comparable, Sendable {
+nonisolated struct BrewPhpExtension: Hashable, Comparable, Sendable {
     nonisolated let name: String
     nonisolated let phpVersion: String
     let isInstalled: Bool
@@ -45,7 +45,7 @@ struct BrewPhpExtension: Hashable, Comparable, Sendable {
         )
     }
 
-    var hasAlternativeInstall: Bool {
+    @MainActor var hasAlternativeInstall: Bool {
         guard let php = App.shared.container.phpEnvs.cachedPhpInstallations[self.phpVersion] else {
             return false
         }

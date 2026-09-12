@@ -32,67 +32,59 @@ extension InternalSwitcher {
     public func disableDefaultPhpFpmPool(_ version: String) async -> FixApplied {
         let pool = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
 
-        if container.filesystem.fileExists(pool) {
-            Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
-            let existing = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf"
-            let new = "\(container.paths.etcPath)/php/\(version)/php-fpm.d/www.conf.disabled-by-phpmon"
-            do {
-                if container.filesystem.fileExists(new) {
-                    Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
-                             + "cleaning up so the newer `www.conf` can be moved again.")
-                    try container.filesystem.remove(new)
+        let filesystem = container.filesystem!
+        return await runBlocking {
+            if filesystem.fileExists(pool) {
+                Log.info("A default `www.conf` file was found in the php-fpm.d directory for PHP \(version).")
+                let existing = pool
+                let new = pool + ".disabled-by-phpmon"
+                do {
+                    if filesystem.fileExists(new) {
+                        Log.info("A moved `www.conf.disabled-by-phpmon` file was found for PHP \(version), "
+                                 + "cleaning up so the newer `www.conf` can be moved again.")
+                        try filesystem.remove(new)
+                    }
+                    try filesystem.move(from: existing, to: new)
+                    Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
+                    return true
+                } catch {
+                    Log.err(error)
+                    return false
                 }
-                try container.filesystem.move(from: existing, to: new)
-                Log.info("Success: A default `www.conf` file was disabled for PHP \(version).")
-                return true
-            } catch {
-                Log.err(error)
-                return false
             }
-        }
 
-        return false
+            return false
+        }
     }
 
     public func ensureConfigurationFilesExist(_ version: String) async -> FixApplied {
         let files = self.getExpectedConfigurationFiles(for: version)
 
-        // For each of the files, attempt to fix anything that is wrong
-        let outcomes = files.map { file in
-            let configFileExists = container.filesystem.fileExists("\(container.paths.etcPath)/php/\(version)/" + file.destination)
+        let filesystem = container.filesystem!
+        let destination = "\(container.paths.etcPath)/php/\(version)"
 
-            if configFileExists {
-                return false
-            }
+        var repaired = false
+        for file in files {
+            let path = destination + file.destination
+            let exists = await runBlocking { filesystem.fileExists(path) }
+            guard !exists, file.applies() else { continue }
 
-            Log.info("Config file `\(file.destination)` does not exist, will attempt to automatically fix!")
-
-            if !file.applies() {
-                return false
-            }
-
+            let source = "~/.composer/vendor/laravel/valet" + file.source
+            let replacements = file.replacements
             do {
-                var contents = try container.filesystem
-                    .getStringFromFile("~/.composer/vendor/laravel/valet" + file.source)
-
-                for (original, replacement) in file.replacements {
-                    contents = contents.replacing(original, with: replacement)
+                try await runBlocking {
+                    var contents = try filesystem.getStringFromFile(source)
+                    for (original, replacement) in replacements {
+                        contents = contents.replacing(original, with: replacement)
+                    }
+                    try filesystem.writeAtomicallyToFile(path, content: contents)
                 }
-
-                try container.filesystem.writeAtomicallyToFile(
-                    "\(container.paths.etcPath)/php/\(version)" + file.destination,
-                    content: contents
-                )
+                repaired = true
             } catch {
                 Log.err("Automatically fixing \(file.destination) did not work.")
-                return false
             }
-
-            return true
         }
-
-        // If any fixes were applied, return true
-        return outcomes.contains(true)
+        return repaired
     }
 
     // MARK: - Internals
@@ -107,7 +99,7 @@ extension InternalSwitcher {
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
                     "valet.sock": "valet\(version.replacing(".", with: "")).sock"
                 ],
-                applies: { Valet.shared.version!.major > 2 }
+                applies: { (Valet.shared.version?.major ?? 0) > 2 }
             ),
             ExpectedConfigurationFile(
                 destination: "/conf.d/error_log.ini",
@@ -116,13 +108,13 @@ extension InternalSwitcher {
                     "VALET_USER": container.paths.whoami,
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory
                 ],
-                applies: { return true }
+                applies: { true }
             ),
             ExpectedConfigurationFile(
                 destination: "/conf.d/php-memory-limits.ini",
                 source: "/cli/stubs/php-memory-limits.ini",
                 replacements: [:],
-                applies: { return true }
+                applies: { true }
             )
         ]
     }
