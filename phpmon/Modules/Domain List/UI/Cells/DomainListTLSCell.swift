@@ -33,13 +33,17 @@ final class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
         let button = NSButton(frame: NSRect(x: 0, y: 0, width: 28, height: 28))
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setButtonType(.momentaryPushIn)
-        button.bezelStyle = .regularSquare
-        button.isBordered = false
-        button.title = " "
+        if #available(macOS 26.0, *) {
+            button.bezelStyle = .glass
+        } else {
+            button.bezelStyle = .regularSquare
+            button.isBordered = false
+        }
+        button.title = ""
         button.alignment = .center
         button.lineBreakMode = .byTruncatingTail
         button.image = NSImage(named: "Lock")
-        button.imagePosition = .imageOverlaps
+        button.imagePosition = .imageOnly
         button.imageScaling = .scaleProportionallyDown
         button.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         button.state = .on
@@ -57,13 +61,24 @@ final class DomainListTLSCell: NSTableCellView, DomainListCellProtocol {
     }
 
     func styleLockButton(secured: Bool, color: NSColor) {
-        buttonLockStatus.image = NSImage(named: secured ? "Lock" : "LockUnlocked")!
+        let image = NSImage(named: secured ? "Lock" : "LockUnlocked")!
             .resized(to: NSSize(width: 20, height: 20))
-        buttonLockStatus.contentTintColor = color
-        buttonLockStatus.wantsLayer = true
-        buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.10).cgColor
-        buttonLockStatus.layer?.cornerRadius = buttonLockStatus.bounds.width / 2
-        buttonLockStatus.layer?.masksToBounds = true
+        if #available(macOS 26.0, *) {
+            // Bordered buttons do not apply contentTintColor to their images.
+            buttonLockStatus.image = NSImage(size: image.size, flipped: false) { rect in
+                image.draw(in: rect)
+                color.setFill()
+                rect.fill(using: .sourceAtop)
+                return true
+            }
+        } else {
+            buttonLockStatus.image = image
+            buttonLockStatus.contentTintColor = color
+            buttonLockStatus.wantsLayer = true
+            buttonLockStatus.layer?.backgroundColor = color.withAlphaComponent(0.10).cgColor
+            buttonLockStatus.layer?.cornerRadius = buttonLockStatus.bounds.width / 2
+            buttonLockStatus.layer?.masksToBounds = true
+        }
     }
 
     func populateCell(with site: ValetSite) {

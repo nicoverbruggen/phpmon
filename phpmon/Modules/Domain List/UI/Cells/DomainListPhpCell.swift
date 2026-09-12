@@ -37,10 +37,18 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         let button = NSButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setButtonType(.momentaryPushIn)
-        button.bezelStyle = .inline
+        if #available(macOS 26.0, *) {
+            button.bezelStyle = .glass
+        } else {
+            button.bezelStyle = .rounded
+        }
+        button.controlSize = .small
         button.title = "PHP X.X"
         button.alignment = .center
-        button.font = NSFont.boldSystemFont(ofSize: NSFont.smallSystemFontSize)
+        button.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: button.controlSize))
+        button.image = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
+            .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold))
+        button.imagePosition = .imageRight
         button.setContentHuggingPriority(.defaultHigh, for: .vertical)
         button.target = self
         button.action = #selector(pressedPhpVersion(_:))
@@ -75,7 +83,8 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         buttonPhpVersion.isHidden = false
         imageViewPhpVersionOK.isHidden = false
 
-        buttonPhpVersion.title = " PHP \(site.servingPhpVersion)"
+        buttonPhpVersion.title = "PHP \(site.servingPhpVersion)"
+        buttonPhpVersion.setAccessibilityLabel(buttonPhpVersion.title)
 
         imageViewPhpVersionOK.toolTip = nil
 
