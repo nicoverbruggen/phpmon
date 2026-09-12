@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor kan niet overschakelen naar PHP %@, omdat het mogelijk niet is geïnstalleerd of beschikbaar is. Het toepassen van deze voorinstelling is geannuleerd.";
 "alert.php_switch_unavailable.info" = "Zorg ervoor dat PHP %@ is geïnstalleerd en dat u kunt overschakelen naar deze versie in de vervolgkeuzelijst. Momenteel ondersteunde versies zijn onder andere PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor kon niet overschakelen naar PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Helaas heeft PHP Monitor een probleem vastgesteld met je installatie van PHP %@.";
+"alert.php_switch_unhealthy.description" = "Wil je PHP Versiebeheerder openen om deze installatie te bekijken en eventueel te herstellen?";
+"alert.php_switch_unhealthy.repair" = "Herstel bekijken...";
 "alert.service_error.title" = "De service '%@' rapporteert een fout!";
 "alert.service_error.subtitle.error_log" = "Dit betekent dat de service '%@' niet actief is. Dit kan ervoor zorgen dat Valet niet correct werkt. Deze service heeft een bijbehorend logbestand dat u mogelijk wilt controleren.";
 "alert.service_error.subtitle.no_error_log" = "Dit betekent dat de service '%@' niet actief is. Dit kan ervoor zorgen dat Valet niet correct werkt. Helaas is er geen bijbehorend logbestand voor deze service.";

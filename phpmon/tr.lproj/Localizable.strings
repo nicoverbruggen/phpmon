@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor, PHP %@'ye geçemiyor; çünkü kurulu olmayabilir veya mevcut olmayabilir. Bu ön ayarı uygulama iptal edildi.";
 "alert.php_switch_unavailable.info" = "Lütfen PHP %@'nin kurulu olduğundan emin olun ve açılır menüde ona geçiş yapabilirsiniz. Şu anda desteklenen sürümler arasında PHP: %@.";
 "alert.php_switch_unavailable.ok" = "Tamam";
+"alert.php_switch_unhealthy.title" = "PHP Monitor, PHP %@ sürümüne geçemedi";
+"alert.php_switch_unhealthy.subtitle" = "Ne yazık ki PHP Monitor, PHP %@ kurulumunuzda bir sorun tespit etti.";
+"alert.php_switch_unhealthy.description" = "Bu kurulumu incelemek ve mümkünse onarmak için PHP Versiyon Yöneticisi’ni açmak ister misiniz?";
+"alert.php_switch_unhealthy.repair" = "Onarımı Görüntüle...";
 "alert.service_error.title" = "Hizmet '%@' bir hata bildiriyor!";
 "alert.service_error.subtitle.error_log" = "'%@' hizmetinin çalışmadığı anlamına gelir. Bu durum Valet'in düzgün çalışmasını engelleyebilir. Bu hizmetin ilgili bir günlük dosyası vardır, kontrol etmek isteyebilirsiniz.";
 "alert.service_error.subtitle.no_error_log" = "Bu, '%@' hizmetinin çalışmadığı anlamına gelir. Bu durum Valet'in düzgün çalışmasını engelleyebilir. Ne yazık ki bu hizmet için ilgili bir günlük dosyası yok.";

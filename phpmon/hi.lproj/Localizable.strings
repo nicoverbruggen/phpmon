@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor PHP %@ पर स्विच नहीं कर सकता, क्योंकि यह स्थापित या उपलब्ध न हो सकता है। इस प्रीसेट को लागू करना रद्द कर दिया गया है.";
 "alert.php_switch_unavailable.info" = "कृपया सुनिश्चित करें कि PHP %@ स्थापित है और आप इसे ड्रॉपडाउन में स्विच कर सकते हैं। वर्तमान में समर्थित संस्करणों में PHP: %@ शामिल हैं।";
 "alert.php_switch_unavailable.ok" = "ठीक है";
+"alert.php_switch_unhealthy.title" = "PHP Monitor, PHP %@ पर स्विच नहीं कर सका";
+"alert.php_switch_unhealthy.subtitle" = "दुर्भाग्य से, PHP Monitor ने आपके PHP %@ इंस्टॉलेशन में एक समस्या का पता लगाया है।";
+"alert.php_switch_unhealthy.description" = "क्या आप इस इंस्टॉलेशन की जाँच करने और संभव होने पर इसकी मरम्मत करने के लिए PHP संस्करण प्रबंधक खोलना चाहेंगे?";
+"alert.php_switch_unhealthy.repair" = "मरम्मत के विकल्प देखें...";
 "alert.service_error.title" = "सेवा '%@' त्रुटि रिपोर्ट कर रही है!";
 "alert.service_error.subtitle.error_log" = "इसका अर्थ है कि सेवा '%@' चल नहीं रही है। इससे Valet के सही ढंग से काम करने में बाधा आ सकती है। इस सेवा का एक संबंधित लॉग फ़ाइल है जिसे आप जाँचना चाह सकते हैं, हालांकि.";
 "alert.service_error.subtitle.no_error_log" = "इसका अर्थ है कि सेवा '%@' चल नहीं रही है। इससे Valet के सही ढंग से काम करने में बाधा आ सकती है। दुर्भाग्यवश, इस सेवा का कोई संबंधित लॉग फ़ाइल उपलब्ध नहीं है।";

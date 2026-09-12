@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor không thể chuyển sang PHP %@, vì nó có thể chưa được cài đặt hoặc không khả dụng. Việc áp dụng thiết lập này đã bị hủy.";
 "alert.php_switch_unavailable.info" = "Vui lòng đảm bảo rằng PHP %@ đã được cài đặt và bạn có thể chuyển đổi sang nó trong menu thả xuống. Các phiên bản được hỗ trợ hiện tại bao gồm PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor không thể chuyển sang PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Rất tiếc, PHP Monitor đã phát hiện sự cố với bản cài đặt PHP %@ của bạn.";
+"alert.php_switch_unhealthy.description" = "Bạn có muốn mở Quản lý Phiên bản PHP để kiểm tra và thử sửa chữa bản cài đặt này không?";
+"alert.php_switch_unhealthy.repair" = "Xem tùy chọn sửa chữa...";
 "alert.service_error.title" = "Dịch vụ '%@' báo cáo một lỗi!";
 "alert.service_error.subtitle.error_log" = "Điều này có nghĩa là dịch vụ '%@' không chạy. Điều này có thể làm cho Valet không hoạt động chính xác. Dịch vụ này có một tệp nhật ký liên quan mà bạn có thể muốn kiểm tra.";
 "alert.service_error.subtitle.no_error_log" = "Điều này có nghĩa là dịch vụ '%@' không chạy. Điều này có thể làm cho Valet không hoạt động chính xác. Thật không may, không có tập tin nhật ký liên quan cho dịch vụ này.";

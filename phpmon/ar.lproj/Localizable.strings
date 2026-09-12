@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "لا يمكن لـ PHP Monitor التبديل إلى PHP %@، فقد لا يكون مثبتًا أو متاحًا. تم إلغاء تطبيق هذا القالب.";
 "alert.php_switch_unavailable.info" = "يرجى التأكد من تثبيت PHP %@ وأنك تستطيع التبديل إليه في القائمة المنسدلة. الإصدارات المدعومة حاليًا تشمل PHP: %@.";
 "alert.php_switch_unavailable.ok" = "موافق";
+"alert.php_switch_unhealthy.title" = "تعذر على PHP Monitor التبديل إلى PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "للأسف، اكتشف PHP Monitor وجود مشكلة في تثبيت PHP %@ لديك.";
+"alert.php_switch_unhealthy.description" = "هل ترغب في فتح مدير إصدار PHP لفحص هذا التثبيت ومحاولة إصلاحه؟";
+"alert.php_switch_unhealthy.repair" = "عرض الإصلاح...";
 "alert.service_error.title" = "الخدمة \"%@\" تُبلغ عن خطأ!";
 "alert.service_error.subtitle.error_log" = "هذا يعني أن الخدمة '%@' لا تعمل. قد يمنع ذلك Valet من العمل بشكل صحيح. تحتوي هذه الخدمة على ملف سجل مرتبط به قد ترغب في فحصه، مع ذلك.";
 "alert.service_error.subtitle.no_error_log" = "هذا يعني أن الخدمة '%@' لا تعمل. قد يمنع ذلك Valet من العمل بشكل صحيح. للأسف، لا يوجد ملف سجل متعلق بهذه الخدمة.";

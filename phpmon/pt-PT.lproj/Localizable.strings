@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "O PHP Monitor não pode mudar para o PHP %@, que pode não estar instalado ou disponível. A aplicação desta predefinição foi cancelada.";
 "alert.php_switch_unavailable.info" = "Certifique-se de que o PHP %@ está instalado e que você possa escolhe-lo no menu suspenso. As versões atualmente suportadas incluem o PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "O PHP Monitor não conseguiu mudar para o PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Infelizmente, o PHP Monitor detetou um problema com a sua instalação do PHP %@.";
+"alert.php_switch_unhealthy.description" = "Pretende abrir o PHP Version Manager para verificar esta instalação e tentar repará-la?";
+"alert.php_switch_unhealthy.repair" = "Ver reparação...";
 "alert.service_error.title" = "O serviço '%@' está a reportar um erro!";
 "alert.service_error.subtitle.error_log" = "Isto significa que o serviço '%@' não está em execução. Isso pode impedir que o Laravel Valet funcione corretamente. Este serviço tem um ficheiro de log associado que você pode querer verificar.";
 "alert.service_error.subtitle.no_error_log" = "Isto significa que o serviço '%@' não está em execução. Isso pode impedir que o Laravel Valet funcione corretamente. Infelizmente, não há nenhum ficheiro de log associado a este serviço.";

@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor tidak dapat beralih ke PHP %@, karena mungkin belum terinstal atau tidak tersedia. Penerapan preset ini dibatalkan.";
 "alert.php_switch_unavailable.info" = "Pastikan PHP %@ terinstal dan Anda dapat beralih ke versi tersebut di menu drop-down. Versi yang didukung saat ini termasuk PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor tidak dapat beralih ke PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Sayangnya, PHP Monitor mendeteksi masalah pada instalasi PHP %@ Anda.";
+"alert.php_switch_unhealthy.description" = "Apakah Anda ingin membuka Manajer Versi PHP untuk memeriksa instalasi ini dan mencoba memperbaikinya?";
+"alert.php_switch_unhealthy.repair" = "Lihat Perbaikan...";
 "alert.service_error.title" = "Layanan '%@' melaporkan kesalahan!";
 "alert.service_error.subtitle.error_log" = "Ini berarti layanan '%@' tidak berjalan. Ini dapat mencegah Valet bekerja dengan benar. Layanan ini memiliki berkas log terkait yang mungkin ingin Anda periksa, namun.";
 "alert.service_error.subtitle.no_error_log" = "Artinya layanan '%@' tidak berjalan. Hal ini dapat mencegah Valet bekerja dengan benar. Sayangnya, tidak ada berkas log yang terkait untuk layanan ini.";

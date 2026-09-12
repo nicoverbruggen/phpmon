@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor PHP %@ তে স্যুইচ করতে পারে না, কারণ এটি ইনস্টল করা নেই বা উপলব্ধ নাও হতে পারে। এই প্রিসেটটি প্রয়োগ বাতিল করা হয়েছে।";
 "alert.php_switch_unavailable.info" = "দয়া করে নিশ্চিত করুন যে PHP %@ ইনস্টল করা আছে এবং আপনি ড্রপডাউনে এটি পরিবর্তন করতে পারেন। বর্তমানে সমর্থিত সংস্করণগুলির মধ্যে রয়েছে PHP: %@.";
 "alert.php_switch_unavailable.ok" = "ঠিক আছে";
+"alert.php_switch_unhealthy.title" = "PHP Monitor PHP %@-এ স্যুইচ করতে পারেনি";
+"alert.php_switch_unhealthy.subtitle" = "দুর্ভাগ্যবশত, PHP Monitor আপনার PHP %@ ইনস্টলেশনে একটি সমস্যা শনাক্ত করেছে।";
+"alert.php_switch_unhealthy.description" = "এই ইনস্টলেশনটি পরীক্ষা করতে এবং সম্ভব হলে মেরামত করতে আপনি কি PHP ভার্সন ম্যানেজার খুলতে চান?";
+"alert.php_switch_unhealthy.repair" = "মেরামতের বিকল্প দেখুন...";
 "alert.service_error.title" = "সার্ভিস '%@' একটি ত্রুটি রিপোর্ট করছে!";
 "alert.service_error.subtitle.error_log" = "এর মানে হল যে '%@' সার্ভিসটি চলছে না। এটি Valet-কে সঠিকভাবে কাজ করতে বাধা দিতে পারে। এই সার্ভিসের সাথে যুক্ত একটি লগ ফাইল আছে যা আপনি পরীক্ষা করতে চাইতে পারেন, তবে।";
 "alert.service_error.subtitle.no_error_log" = "এর অর্থ হল যে সার্ভিস '%@' চলছে না। এটি ভ্যালেটকে সঠিকভাবে কাজ করতে বাধা দিতে পারে। দুর্ভাগ্যবশত, এই সার্ভিসের জন্য কোনো সংশ্লিষ্ট লগ ফাইল নেই।";

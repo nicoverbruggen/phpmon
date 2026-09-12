@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor non può passare a PHP %@, poiché potrebbe non essere installato o disponibile. L'applicazione di questo preset è stata annullata.";
 "alert.php_switch_unavailable.info" = "Assicurati che PHP %@ sia installato e puoi passare ad esso nel menu a discesa. Le versioni attualmente supportate includono PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor non è riuscito a passare a PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Purtroppo, PHP Monitor ha rilevato un problema con la tua installazione di PHP %@.";
+"alert.php_switch_unhealthy.description" = "Vuoi aprire Gestione Versione PHP per controllare questa installazione ed eventualmente ripararla?";
+"alert.php_switch_unhealthy.repair" = "Visualizza riparazione...";
 "alert.service_error.title" = "Il servizio '%@' sta segnalando un errore!";
 "alert.service_error.subtitle.error_log" = "Ciò significa che il servizio '%@' non è in esecuzione. Questo potrebbe impedire a Valet di funzionare correttamente. Il servizio ha un file di registro associato che potresti voler controllare, tuttavia.";
 "alert.service_error.subtitle.no_error_log" = "Questo significa che il servizio '%@' non è in esecuzione. Ciò può impedire a Valet di funzionare correttamente. Purtroppo, non c'è alcun file di log associato a questo servizio.";

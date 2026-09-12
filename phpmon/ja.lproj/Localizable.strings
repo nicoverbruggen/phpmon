@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor は PHP %@ に切り替えできません。該当のバージョンがインストールされていないか利用可能でないためです。このプリセットの適用はキャンセルされました。";
 "alert.php_switch_unavailable.info" = "PHP %@ がインストールされていることを確認し、ドロップダウンで切り替えられるようにしてください。現在サポートされているバージョンは PHP: %@ です。";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor は PHP %@ に切り替えられませんでした";
+"alert.php_switch_unhealthy.subtitle" = "PHP Monitor は、インストールされている PHP %@ に問題を検出しました。";
+"alert.php_switch_unhealthy.description" = "PHP バージョンマネージャーを開いて、このインストールの状態を確認し、修復を試みますか？";
+"alert.php_switch_unhealthy.repair" = "修復を表示...";
 "alert.service_error.title" = "サービス '%@' がエラーを報告しています！";
 "alert.service_error.subtitle.error_log" = "これはサービス '%@' が実行されていないことを意味します。これにより Valet の動作が正しく機能しなくなる可能性があります。このサービスには関連するログファイルがありますので、確認してみるとよいでしょう。";
 "alert.service_error.subtitle.no_error_log" = "これはサービス'%@'が実行されていないことを意味します。これによりValetの動作が正しく行われない可能性があります。残念ながら、このサービスには関連するログファイルはありません。";

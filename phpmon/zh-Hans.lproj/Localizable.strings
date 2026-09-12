@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor 无法切换到 PHP %@，因为它可能未安装或不可用。已取消应用此预设。";
 "alert.php_switch_unavailable.info" = "请确保已安装 PHP %@，并可在下拉菜单中切换到它。目前支持的版本包括 PHP： %@.";
 "alert.php_switch_unavailable.ok" = "确定";
+"alert.php_switch_unhealthy.title" = "PHP Monitor 无法切换到 PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "很遗憾，PHP Monitor 检测到您安装的 PHP %@ 存在问题。";
+"alert.php_switch_unhealthy.description" = "是否打开 PHP 版本管理器以检查此安装并尝试修复？";
+"alert.php_switch_unhealthy.repair" = "查看修复...";
 "alert.service_error.title" = "服务 `%@` 报告错误！";
 "alert.service_error.subtitle.error_log" = "这意味着服务 `%@` 没有运行。这可能导致 Valet 无法正常工作。不过，该服务有一个相关的日志文件，您可能需要检查一下。";
 "alert.service_error.subtitle.no_error_log" = "这意味着服务 `%@` 没有运行。这可能会妨碍 Valet 正常工作。不幸的是，该服务没有相关日志文件。";

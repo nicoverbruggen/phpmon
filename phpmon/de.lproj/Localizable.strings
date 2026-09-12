@@ -430,6 +430,10 @@
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor kann nicht auf PHP %@ umschalten, da es möglicherweise nicht installiert oder verfügbar ist. Das Anwenden dieser Voreinstellung wurde abgebrochen.";
 "alert.php_switch_unavailable.info" = "Bitte vergewissern Sie sich, dass PHP %@ installiert ist und Sie es in der Dropdown-Liste auswählen können. Derzeit unterstützte Versionen sind PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+"alert.php_switch_unhealthy.title" = "PHP Monitor konnte nicht zu PHP %@ wechseln";
+"alert.php_switch_unhealthy.subtitle" = "Leider hat PHP Monitor ein Problem mit Ihrer Installation von PHP %@ festgestellt.";
+"alert.php_switch_unhealthy.description" = "Möchten Sie den PHP-Versionen Manager öffnen, um diese Installation zu überprüfen und gegebenenfalls zu reparieren?";
+"alert.php_switch_unhealthy.repair" = "Reparatur anzeigen...";
 "alert.service_error.title" = "Der Dienst '%@' hat einen Fehler gemeldet!";
 "alert.service_error.subtitle.error_log" = "Dies bedeutet, dass der Dienst '%@' nicht ausgeführt wird. Dies kann dazu führen, dass Valet nicht richtig funktioniert. Dieser Dienst hat eine zugehörige Protokolldatei, die Sie überprüfen sollten.";
 "alert.service_error.subtitle.no_error_log" = "Dies bedeutet, dass der Dienst '%@' nicht ausgeführt wird. Dies kann dazu führen, dass Valet nicht richtig funktioniert. Leider gibt es keine zugehörige Protokolldatei für diesen Dienst.";
