@@ -13,7 +13,7 @@ extension Startup {
 
     // Built in a method body rather than a stored-property initial value: default-value
     // expressions must have a single isolation, and these checks mix main-actor closures
-    // with nonisolated `offMain` hops.
+    // with nonisolated `runBlocking` hops.
     public var groups: [EnvironmentCheckGroup] { Self.makeGroups() }
 
     // A declarative table of checks, like `WarningManager+Evaluations`.
@@ -200,7 +200,7 @@ extension Startup {
                     // Blocks until the password prompt and `valet trust` complete — off-main.
                     // (Arguments are passed explicitly: the nonisolated default-argument
                     // expressions cannot be inlined into this main-actor property initializer.)
-                    let result = try await offMain {
+                    let result = try await runBlocking {
                         try AppleScript.runShellAsAdmin(
                             "\(valet) trust",
                             asUser: container.paths.whoami,
@@ -225,7 +225,7 @@ extension Startup {
                     // Blocks until the password prompt and `valet trust` complete — off-main.
                     // (Arguments are passed explicitly: the nonisolated default-argument
                     // expressions cannot be inlined into this main-actor property initializer.)
-                    let result = try await offMain {
+                    let result = try await runBlocking {
                         try AppleScript.runShellAsAdmin(
                             "\(valet) trust",
                             asUser: container.paths.whoami,

@@ -42,7 +42,7 @@ class BytePhpPreference: PhpPreference {
      the synchronous initializer below is for fake containers (tests/previews).
      */
     static func load(_ container: Container, key: String) async -> BytePhpPreference {
-        let rawValue = await offMain {
+        let rawValue = await runBlocking {
             Self.readRawValue(container, key: key)
         }
 

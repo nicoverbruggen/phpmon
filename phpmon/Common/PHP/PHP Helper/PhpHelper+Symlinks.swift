@@ -8,7 +8,7 @@
 
 extension PhpHelper {
     // `nonisolated`: reading `shell.PATH` may lazily resolve the user's PATH
-    // (blocking), so `regenerate` invokes this via `offMain`.
+    // (blocking), so `regenerate` invokes this via `runBlocking`.
     nonisolated static func shouldCreateSymlinks(
         _ container: Container,
         helperDirectory: String

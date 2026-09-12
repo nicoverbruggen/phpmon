@@ -235,7 +235,7 @@ class PhpEnvironments {
     }
 
     private func performPhpVersionDetection() async -> Set<String> {
-        let files = await offMain { [container] in
+        let files = await runBlocking { [container] in
             (try? container.filesystem.getShallowContentsOfDirectory(container.paths.optPath)) ?? []
         }
         var installedVersions = await extractPhpVersions(from: files)
@@ -284,7 +284,7 @@ class PhpEnvironments {
         ) { [container] group in
             for version in versionsToProbe {
                 group.addTask {
-                    await (version, offMain { PhpInstallation.Probe(container, version) })
+                    await (version, runBlocking { PhpInstallation.Probe(container, version) })
                 }
             }
 

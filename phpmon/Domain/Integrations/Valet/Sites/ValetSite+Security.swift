@@ -63,7 +63,7 @@ extension ValetSite {
     public func determine() async {
         let (container, name, tld, absolutePath) = (self.container, self.name, self.tld, self.absolutePath)
 
-        let snapshot = await offMain {
+        let snapshot = await runBlocking {
             FileSnapshot(container, name: name, tld: tld, absolutePath: absolutePath)
         }
 
@@ -77,7 +77,7 @@ extension ValetSite {
     public func refreshSecuredStatus() async {
         let (container, name, tld) = (self.container, self.name, self.tld)
 
-        let certificate = await offMain {
+        let certificate = await runBlocking {
             CertificateValidator(container)
                 .validateCertificate(at: FileSnapshot.certificatePath(name: name, tld: tld))
         }

@@ -95,7 +95,7 @@ class PhpInstallation {
      probe I/O on the concurrent pool so the main actor is never blocked.
      */
     static func detect(_ container: Container, _ version: String) async -> PhpInstallation {
-        let probe = await offMain { Probe(container, version) }
+        let probe = await runBlocking { Probe(container, version) }
         return PhpInstallation(container, version, probe: probe)
     }
 

@@ -106,7 +106,7 @@ class ValetProxy: ValetListable {
 
         let path = self.certificatePath
         let validator = CertificateValidator(container)
-        apply(certificate: await offMain { validator.validateCertificate(at: path) })
+        apply(certificate: await runBlocking { validator.validateCertificate(at: path) })
     }
 
     /// The path where this proxy's TLS certificate lives once it has been secured.
@@ -121,7 +121,7 @@ class ValetProxy: ValetListable {
     func refreshSecuredStatus() async {
         let (container, path) = (self.container, self.certificatePath)
 
-        let certificate = await offMain {
+        let certificate = await runBlocking {
             CertificateValidator(container).validateCertificate(at: path)
         }
 

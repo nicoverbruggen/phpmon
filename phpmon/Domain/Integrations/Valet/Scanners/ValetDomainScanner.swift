@@ -23,7 +23,7 @@ class ValetDomainScanner: DomainScanner {
     func resolveSiteCount(paths: [String]) async -> Int {
         // The directory listing and per-entry checks are blocking filesystem
         // work, so they run on the concurrent pool.
-        return await offMain { [container] in
+        return await runBlocking { [container] in
             paths.map { path in
                 do {
                     let entries = try container.filesystem
@@ -44,7 +44,7 @@ class ValetDomainScanner: DomainScanner {
 
     func resolveSitesFrom(paths: [String]) async -> [ValetSite] {
         // List all candidate site paths off-main first (blocking I/O)...
-        let candidates: [String] = await offMain { [container] in
+        let candidates: [String] = await runBlocking { [container] in
             paths.flatMap { path -> [String] in
                 do {
                     return try container.filesystem
@@ -119,7 +119,7 @@ class ValetDomainScanner: DomainScanner {
     func resolveProxies(directoryPath: String) async -> [ValetProxy] {
         // The directory listing and the per-file reads are blocking I/O, so they
         // run on the concurrent pool; the main actor only parses the contents.
-        let files: [(path: String, contents: String)]? = await offMain { [container] in
+        let files: [(path: String, contents: String)]? = await runBlocking { [container] in
             guard let entries = try? FileManager
                 .default
                 .contentsOfDirectory(atPath: directoryPath) else {

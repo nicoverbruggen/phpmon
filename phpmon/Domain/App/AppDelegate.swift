@@ -114,7 +114,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // profile may have swapped in fakes, so tests never spawn a real shell here.
         // Consumers that race this warm-up serialize on the shell's internal lock.
         Task { [shell = state.container.shell!] in
-            await offMain { _ = shell.PATH }
+            await runBlocking { _ = shell.PATH }
         }
 
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {

@@ -10,7 +10,7 @@ import Foundation
 
 // `nonisolated`: these calls block until the user has dealt with the password
 // prompt and the elevated command has finished, so they must be callable off
-// the main actor (wrapped in `offMain` at the call sites). This is why the
+// the main actor (wrapped in `runBlocking` at the call sites). This is why the
 // script runs through an `osascript` subprocess rather than `NSAppleScript`,
 // which is documented as main-thread-only.
 nonisolated class AppleScript {

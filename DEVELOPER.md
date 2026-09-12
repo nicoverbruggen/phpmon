@@ -96,15 +96,15 @@ You only reach for `nonisolated` in specific, deliberate cases:
   `@MainActor` for UI updates (`MainMenu`, `WindowManager`). Note the pitfall below: being
   `nonisolated async` does **not** move work off the main actor by itself.
 
-### Blocking work must go through `offMain` (or `@concurrent`)
+### Blocking work must go through `runBlocking` (or `@concurrent`)
 
 Because `SWIFT_APPROACHABLE_CONCURRENCY` enables `NonisolatedNonsendingByDefault`, a plain
 `nonisolated async` function **runs on the caller's executor** — called from the main actor, it
-still runs on the main thread. To actually leave the main actor, use the `offMain` helper (an
+still runs on the main thread. To actually leave the main actor, use the `runBlocking` helper (an
 `@concurrent` function, SE-0461):
 
 ```swift
-let contents = try await offMain { try container.filesystem.getStringFromFile(path) }
+let contents = try await runBlocking { try container.filesystem.getStringFromFile(path) }
 ```
 
 The result must be `Sendable`. When a main-actor model needs data that requires blocking I/O,

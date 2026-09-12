@@ -25,7 +25,7 @@ class ModifyPhpVersionCommand: BrewCommand {
     /// `PhpGuard`) lets the `nonisolated` orchestration read it without hopping. (Note:
     /// under `NonisolatedNonsendingByDefault`, that orchestration runs on the *caller's*
     /// executor — usually the main actor — and stays responsive because the underlying
-    /// shell APIs suspend; only explicitly `offMain`/`@concurrent` work leaves the caller.)
+    /// shell APIs suspend; only explicitly `runBlocking`/`@concurrent` work leaves the caller.)
     let previousPhpVersion: String?
 
     // MARK: - Methods

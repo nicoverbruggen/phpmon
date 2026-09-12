@@ -206,7 +206,7 @@ class BrewDiagnostics {
     public func checkForOutdatedPhpInstallationSymlinks() async {
         // Pure filesystem work against nonisolated leaves — run it on the
         // concurrent pool so the directory scan never blocks the main actor.
-        await offMain { [container, filesystem] in
+        await runBlocking { [container, filesystem] in
             // Set up a regular expression
             let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
 

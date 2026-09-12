@@ -125,7 +125,7 @@ class ActivePhpInstallation {
      on the concurrent pool so the main actor is never blocked.
      */
     public static func load(_ container: Container) async -> ActivePhpInstallation? {
-        let probe = await offMain { Probe(container) }
+        let probe = await runBlocking { Probe(container) }
 
         guard probe.phpConfigExists else {
             return nil

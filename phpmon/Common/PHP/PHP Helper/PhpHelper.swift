@@ -41,10 +41,10 @@ class PhpHelper {
 
         // Writes the helper files (but only if the files are changed!)
         // Blocking file I/O, so this hops to the concurrent pool.
-        let writtenFiles = await offMain { PhpHelper.writeHelperFiles(container, files: helperFiles) }
+        let writtenFiles = await runBlocking { PhpHelper.writeHelperFiles(container, files: helperFiles) }
 
         // If the helper directory is in the PATH, the symlinks won't be created
-        if await offMain({ shouldCreateSymlinks(container, helperDirectory: helperDirectoryPath) }) {
+        if await runBlocking({ shouldCreateSymlinks(container, helperDirectory: helperDirectoryPath) }) {
             await createSymlinks(container, files: helperFiles)
         }
 

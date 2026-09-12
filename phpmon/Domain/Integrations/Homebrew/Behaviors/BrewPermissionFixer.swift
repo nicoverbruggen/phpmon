@@ -44,7 +44,7 @@ class BrewPermissionFixer {
         // The admin prompt plus `brew services stop` and the recursive `chown`
         // block until they complete, so this must never run on the main actor
         // (this method is reached from main-actor SwiftUI actions).
-        try await offMain { try AppleScript.runSimpleShellAsAdmin(script) }
+        try await runBlocking { try AppleScript.runSimpleShellAsAdmin(script) }
 
         Log.info("Ownership was taken of the folder(s) at: " + broken
             .map({ $0.path })

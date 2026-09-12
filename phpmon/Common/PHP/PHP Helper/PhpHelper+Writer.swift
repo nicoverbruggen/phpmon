@@ -7,7 +7,7 @@
 //
 
 extension PhpHelper {
-    // `nonisolated`: performs blocking file I/O and is invoked via `offMain`
+    // `nonisolated`: performs blocking file I/O and is invoked via `runBlocking`
     // from `regenerate`, so it must be callable off the main actor.
     nonisolated static func writeHelperFiles(
         _ container: Container,

@@ -135,14 +135,14 @@ class Valet {
     public func loadConfiguration() async {
         let container = self.container
 
-        if let parsed = await offMain({ Self.parseConfiguration(container) }) {
+        if let parsed = await runBlocking({ Self.parseConfiguration(container) }) {
             config = parsed
         }
     }
 
     /**
      Reads and decodes the Valet `config.json` file. This performs blocking file I/O,
-     so callers must invoke it via `offMain` to keep the main actor free. It does
+     so callers must invoke it via `runBlocking` to keep the main actor free. It does
      **not** mutate any shared state; the caller is responsible for assigning the
      result to `config` on the main actor.
      */

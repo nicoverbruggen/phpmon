@@ -43,7 +43,7 @@ nonisolated struct CustomPrefs: Decodable, Sendable {
 }
 
 // `nonisolated`: matches `Preferences` itself (a nonisolated leaf whose mutable
-// state is lock-guarded); the file read runs via `offMain` and must not be
+// state is lock-guarded); the file read runs via `runBlocking` and must not be
 // isolated to the main actor.
 nonisolated extension Preferences {
     func loadCustomPreferences() async {
@@ -57,7 +57,7 @@ nonisolated extension Preferences {
         if container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
             // The file read is blocking I/O, so hop to the concurrent pool
-            await offMain { self.loadCustomPreferencesFile() }
+            await runBlocking { self.loadCustomPreferencesFile() }
         } else {
             Log.info("There was no /.config/phpmon/config.json file to be loaded.")
         }

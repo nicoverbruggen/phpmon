@@ -92,7 +92,7 @@ extension WarningManager {
                     if let xdebug = php.extensions.first(where: { $0.name == "xdebug" }) {
                         // Append xdebug.mode = off to the file (blocking I/O, so off-main)
                         let file = xdebug.file
-                        await offMain { [container = self.container] in
+                        await runBlocking { [container = self.container] in
                             guard let original = try? container.filesystem.getStringFromFile(file) else {
                                 return
                             }

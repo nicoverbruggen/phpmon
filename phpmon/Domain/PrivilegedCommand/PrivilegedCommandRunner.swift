@@ -27,7 +27,7 @@ final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     func runSimpleShellAsAdmin(_ script: String, reason _: PrivilegedCommandReason) async throws -> String {
         // The admin prompt and the elevated command block until they complete,
         // so run them on the concurrent pool rather than the main actor.
-        return try await offMain { try AppleScript.runSimpleShellAsAdmin(script) }
+        return try await runBlocking { try AppleScript.runSimpleShellAsAdmin(script) }
     }
 }
 

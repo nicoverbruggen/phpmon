@@ -83,7 +83,7 @@ class Actions {
 
         // The admin prompt and the elevated commands block until they complete,
         // so this must never run on the main actor.
-        try await offMain { try AppleScript.runSimpleShellAsAdmin(script) }
+        try await runBlocking { try AppleScript.runSimpleShellAsAdmin(script) }
     }
 
     // MARK: - Finding Config Files

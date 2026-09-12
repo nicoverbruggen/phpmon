@@ -62,7 +62,7 @@ class PhpConfigurationFile: CreatedFromFile {
 
      `PhpConfigurationFile` itself is a main-actor model (the UI mutates it), so it
      cannot be built off-main. The blocking file read is separated out into this
-     snapshot so detection can perform all I/O on the concurrent pool (via `offMain`)
+     snapshot so detection can perform all I/O on the concurrent pool (via `runBlocking`)
      and hand the main actor plain strings to build models from.
      */
     nonisolated struct Snapshot: Sendable {
@@ -165,7 +165,7 @@ class PhpConfigurationFile: CreatedFromFile {
 
         // Ensure the watchers aren't tripped up by config changes
         try await ConfigWatchManager.withSuspended {
-            try await offMain {
+            try await runBlocking {
                 try filesystem.writeAtomicallyToFile(filePath, content: contents)
             }
         }
@@ -179,7 +179,7 @@ class PhpConfigurationFile: CreatedFromFile {
     public func reload() async {
         let filesystem = container.filesystem!
         let filePath = self.filePath
-        guard let contents = try? await offMain({
+        guard let contents = try? await runBlocking({
             try filesystem.getStringFromFile(filePath)
         }) else {
             Log.warn("Could not reload PHP configuration file at: `\(self.filePath)`")

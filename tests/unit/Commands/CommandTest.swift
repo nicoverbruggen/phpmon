@@ -13,7 +13,7 @@ struct CommandTest {
     @Test func fake_command_outputs_can_change_while_probes_run() async {
         let command = TestableCommand(commands: ["php --version": "8.4.2"])
 
-        await offMain {
+        await runBlocking {
             DispatchQueue.concurrentPerform(iterations: 32) { index in
                 command.updateOutputs(["probe \(index)": "\(index)"])
                 #expect(command.execute(

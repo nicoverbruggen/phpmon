@@ -1,5 +1,5 @@
 //
-//  OffMain.swift
+//  RunBlocking.swift
 //  PHP Monitor
 //
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
@@ -16,7 +16,7 @@ import Foundation
 /// `PhpInstallation.Probe`.
 @concurrent
 @discardableResult
-nonisolated func offMain<T: Sendable>(
+nonisolated func runBlocking<T: Sendable>(
     _ work: @Sendable () throws -> T
 ) async rethrows -> T {
     try work()
