@@ -61,7 +61,7 @@ struct BrewPhpFormula: Equatable, Sendable {
     /// Whether this formula alias is different.
     var hasUpgradedFormulaAlias: Bool {
         return self.shortVersion == container.phpEnvs.homebrewBrewPhpAlias
-        && container.phpEnvs.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
+        && container.phpEnvs.homebrewBrewPhpAlias != container.phpEnvs.brewPhpAlias
     }
 
     // `nonisolated`: pure version comparison read by off-main brew command orchestration.
@@ -83,11 +83,11 @@ struct BrewPhpFormula: Equatable, Sendable {
         var resolved = name
             .replacing("shivammathur/php/", with: "")
 
-        if let alias = PhpEnvironments.brewPhpAlias {
+        if let alias = container.phpEnvs.brewPhpAlias {
             resolved = resolved.replacing("php@" + alias, with: "php")
         }
 
-        return "\(App.shared.container.paths.optPath)/\(resolved)/bin"
+        return "\(container.paths.optPath)/\(resolved)/bin"
     }
 
     /// The short version associated with this formula, if installed.
@@ -116,7 +116,7 @@ struct BrewPhpFormula: Equatable, Sendable {
 
         var path = "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
 
-        if let alias = PhpEnvironments.brewPhpAlias {
+        if let alias = container.phpEnvs.brewPhpAlias {
             path = path.replacing("php@" + alias, with: "php")
         }
 

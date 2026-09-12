@@ -36,17 +36,17 @@ extension StatusMenu {
     }
 
     @MainActor func addPhpActionMenuItems() {
-        if App.shared.container.phpEnvs.isBusy {
+        if container.phpEnvs.isBusy {
             addItem(NSMenuItem(title: "mi_busy".localized))
             return
         }
 
-        if App.shared.container.phpEnvs.availablePhpVersions.isEmpty
-            && App.shared.container.phpEnvs.incompatiblePhpVersions.isEmpty {
+        if container.phpEnvs.availablePhpVersions.isEmpty
+            && container.phpEnvs.incompatiblePhpVersions.isEmpty {
             return
         }
 
-        if App.shared.container.phpEnvs.currentInstall == nil {
+        if container.phpEnvs.currentInstall == nil {
             return
         }
 
@@ -56,7 +56,7 @@ extension StatusMenu {
     }
 
     @MainActor func addServicesManagerMenuItem() {
-        if App.shared.container.phpEnvs.isBusy {
+        if container.phpEnvs.isBusy {
             return
         }
 
@@ -68,14 +68,14 @@ extension StatusMenu {
 
     @MainActor func addSwitchToPhpMenuItems() {
         var shortcutKey = 1
-        for index in (0..<App.shared.container.phpEnvs.availablePhpVersions.count) {
+        for index in (0..<container.phpEnvs.availablePhpVersions.count) {
             // Get the short version
-            let shortVersion = App.shared.container.phpEnvs.availablePhpVersions[index]
+            let shortVersion = container.phpEnvs.availablePhpVersions[index]
             var versionString = shortVersion
 
             // Attempt to get the long version from cache (may not be ready)
-            if let longVersion = App.shared.container.phpEnvs.cachedPhpInstallations[shortVersion]?.versionNumber {
-                if Preferences.isEnabled(.fullPhpVersionDynamicIcon) {
+            if let longVersion = container.phpEnvs.cachedPhpInstallations[shortVersion]?.versionNumber {
+                if container.preferences.isEnabled(.fullPhpVersionDynamicIcon) {
                     versionString = longVersion.text
                 }
             } else {
@@ -83,7 +83,7 @@ extension StatusMenu {
             }
 
             let action = #selector(MainMenu.switchToPhpVersion(sender:))
-            let brew = (shortVersion == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(shortVersion)"
+            let brew = (shortVersion == container.phpEnvs.brewPhpAlias) ? "php" : "php@\(shortVersion)"
 
             let isActive = (shortVersion == container.phpEnvs.phpInstall?.version?.short)
 
@@ -99,11 +99,11 @@ extension StatusMenu {
             addItem(menuItem)
         }
 
-        if !App.shared.container.phpEnvs.incompatiblePhpVersions.isEmpty {
+        if !container.phpEnvs.incompatiblePhpVersions.isEmpty {
             addItem(NSMenuItem.separator())
             addItem(NSMenuItem(
                 title: "⚠️ " + "mi_php_unsupported".localized(
-                    "\(App.shared.container.phpEnvs.incompatiblePhpVersions.count)"
+                    "\(container.phpEnvs.incompatiblePhpVersions.count)"
                 ),
                 action: #selector(MainMenu.showIncompatiblePhpVersionsAlert)
             ))
@@ -183,7 +183,7 @@ extension StatusMenu {
             ),
             NSMenuItem(
                 title: "mi_update_global_composer".localized,
-                action: App.shared.container.phpEnvs.isBusy
+                action: container.phpEnvs.isBusy
                 ? nil
                 : #selector(MainMenu.updateGlobalComposerDependencies),
                 keyEquivalent: "g",
@@ -293,14 +293,14 @@ extension StatusMenu {
     // MARK: - PHP Doctor
 
     @MainActor func addPhpDoctorMenuItem() {
-        if !Preferences.isEnabled(.showPhpDoctorSuggestions) ||
-            !App.shared.container.warningManager.hasWarnings() {
+        if !container.preferences.isEnabled(.showPhpDoctorSuggestions) ||
+            !container.warningManager.hasWarnings() {
             return
         }
 
         addItems([
             HeaderView.asMenuItem(text: "mi_php_doctor".localized),
-            NSMenuItem(title: "mi_recommendations_count".localized(App.shared.container.warningManager.warnings.count)),
+            NSMenuItem(title: "mi_recommendations_count".localized(container.warningManager.warnings.count)),
             NSMenuItem(title: "mi_view_recommendations".localized, action: #selector(MainMenu.openWarnings)),
             NSMenuItem.separator()
         ])
@@ -319,12 +319,12 @@ extension StatusMenu {
             NSMenuItem(title: "mi_view_command_history".localized, action: #selector(MainMenu.showCommandHistory))
         ]
 
-        if Valet.installed {
+        if container.valet.installed {
             items.append(contentsOf: [
                 NSMenuItem.separator(),
                 HeaderView.asMenuItem(text: "Laravel Valet"),
                 NSMenuItem(title: "mi_fix_my_valet".localized,
-                           action: PhpEnvironments.brewPhpAlias != nil
+                           action: container.phpEnvs.brewPhpAlias != nil
                            ? #selector( MainMenu.fixMyValet)
                            : nil, // disable when `php` formula is unavailable
                            toolTip: "mi_fix_my_valet_tooltip".localized),

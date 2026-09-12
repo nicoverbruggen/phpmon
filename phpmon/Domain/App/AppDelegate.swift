@@ -124,8 +124,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         Log.info("Using \(App.displayName) \(App.version) on macOS \(App.macVersion).")
 
+        state.container.phpEnvs.onBusyChange = {
+            MainMenu.shared.refreshIcon()
+            MainMenu.shared.rebuild()
+        }
+        state.container.phpEnvs.onInstallationChange = {
+            WindowManager.controller(of: PhpExtensionManagerWC.self)?.view.didUpdatePhpVersion()
+        }
+
         // Set up final singletons
         self.valet = Valet.shared
+        self.valet.checkForMarketingMode()
         self.brew = Brew.shared
         super.init()
     }

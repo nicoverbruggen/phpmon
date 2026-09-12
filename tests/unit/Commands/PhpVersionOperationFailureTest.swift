@@ -8,7 +8,6 @@
 import AppKit
 import Testing
 
-@Suite(.serialized)
 struct PhpVersionOperationFailureTest {
     @Test(arguments: [false, true])
     func failed_operation_refreshes_installed_and_active_php_before_becoming_idle(installationRemoved: Bool) async throws {
@@ -17,25 +16,11 @@ struct PhpVersionOperationFailureTest {
             shell: configuration.shellOutput, files: configuration.filesystem,
             commands: configuration.commandOutput
         )
-        let previousContainer = App.shared.container
-        App.shared.container = container
+
         container.preferences.cachedPreferences[.iconTypeToDisplay] = MenuBarIcon.noIcon.rawValue
-        let previousValetInstalled = Valet.shared.installed
-        let previousValetVersion = Valet.shared.version
-        let previousAlias = PhpEnvironments.brewPhpAlias
-        let previousFormulae = Brew.shared.formulae.phpVersions
-        let previousVisibility = MainMenu.shared.statusItem.isVisible
-        MainMenu.shared.statusItem.isVisible = false
-        defer {
-            App.shared.container = previousContainer
-            Valet.shared.installed = previousValetInstalled
-            Valet.shared.version = previousValetVersion
-            PhpEnvironments.brewPhpAlias = previousAlias
-            Brew.shared.formulae.phpVersions = previousFormulae
-            MainMenu.shared.statusItem.isVisible = previousVisibility
-        }
-        Valet.shared.installed = false
-        Valet.shared.version = nil
+
+        container.valet.installed = false
+        container.valet.version = nil
         container.phpEnvs.homebrewPackage = HomebrewPackage(
             full_name: "php", aliases: [], installed: [],
             versions: HomebrewVersion(stable: "8.4.5", head: nil, bottle: true), linked_keg: nil
@@ -44,8 +29,8 @@ struct PhpVersionOperationFailureTest {
         #expect(try #require(container.phpEnvs.cachedPhpInstallations["8.3"]).isHealthy)
         #expect(try #require(container.phpEnvs.currentInstall).hasErrorState == false)
 
-        let handler = HealthRecordingFormulaeHandler()
-        let view = PhpVersionManagerView(formulae: BrewFormulaeObservable(), handler: handler)
+        let handler = HealthRecordingFormulaeHandler(container)
+        let view = PhpVersionManagerView(formulae: handler.formulae, handler: handler)
         while view.status.busy { await Task.yield() }
         let command = FailingPhpModification(container, removesInstallation: installationRemoved)
         await view.runCommand(command)
@@ -62,10 +47,6 @@ struct PhpVersionOperationFailureTest {
         #expect(handler.lastRefreshHadHealthyInstallation == false)
         #expect(!container.phpEnvs.isBusy)
         #expect(!view.status.busy)
-        // Drain menu updates before restoring the shared container.
-        await withCheckedContinuation { continuation in
-            DispatchQueue.main.async { continuation.resume() }
-        }
     }
 }
 
@@ -98,12 +79,8 @@ private final class HealthRecordingFormulaeHandler: FakeBrewFormulaeHandler {
     var lastRefreshWasBusy = false
     var lastRefreshHadHealthyInstallation = true
 
-    nonisolated override init() {
-        super.init()
-    }
-
     override func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
-        let environments = App.shared.container.phpEnvs!
+        let environments = container.phpEnvs!
         lastRefreshWasBusy = environments.isBusy
         lastRefreshHadHealthyInstallation = environments.cachedPhpInstallations["8.3"]?.isHealthy == true
         return await super.loadPhpVersions(loadOutdated: loadOutdated)

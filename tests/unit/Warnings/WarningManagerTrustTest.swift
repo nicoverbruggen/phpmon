@@ -8,7 +8,6 @@
 
 import Testing
 
-@Suite(.serialized)
 struct WarningManagerTrustTest {
     private func makeWarningManager(
         shellExpectations: [String: BatchFakeShellOutput],
@@ -28,10 +27,7 @@ struct WarningManagerTrustTest {
             commandTracking: false
         )
 
-        PhpConfigChecker.shared = PhpConfigChecker(container)
-        App.shared.container = container
-        Valet.shared.container = container
-        Valet.shared.installed = false
+        container.valet.installed = false
 
         return WarningManager(container: container)
     }

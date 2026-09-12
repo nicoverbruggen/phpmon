@@ -13,6 +13,7 @@ class WarningManager: ObservableObject {
 
     var container: Container
     let brewDiagnostics: BrewDiagnostics
+    let phpConfigChecker: PhpConfigChecker
 
     init(
         container: Container,
@@ -20,6 +21,7 @@ class WarningManager: ObservableObject {
     ) {
         self.container = container
         self.brewDiagnostics = BrewDiagnostics(container)
+        self.phpConfigChecker = PhpConfigChecker(container)
 
         self.evaluations = allAvailableWarnings()
 

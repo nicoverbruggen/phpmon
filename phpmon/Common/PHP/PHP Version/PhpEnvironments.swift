@@ -26,6 +26,9 @@ class PhpEnvironments {
         self.container = container
     }
 
+    var onBusyChange: (() -> Void)?
+    var onInstallationChange: (() -> Void)?
+
     /**
      Loads the valid HomebrewPackage information.
      If invalid, this will prevent PHP Monitor from starting correctly.
@@ -69,8 +72,8 @@ class PhpEnvironments {
      Determine which PHP version the `php` formula is aliased to.
      */
     func determinePhpAlias() async {
-        if let alias = self.homebrewPackage.version {
-            PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
+        if let alias = self.homebrewPackage?.version {
+            brewPhpAlias = alias
             Log.info("[BREW] On your system, the `php` formula means version \(alias).")
         } else {
             Log.info("[BREW] Could not determine what version the `php` formula is. The alias may have been removed.")
@@ -92,13 +95,13 @@ class PhpEnvironments {
             }
 
             if let version = try? VersionNumber.parse(longVersionString) {
-                PhpEnvironments.brewPhpAlias = version.short
-                if version.short != homebrewPackage.version {
+                brewPhpAlias = version.short
+                if version.short != homebrewPackage?.version {
                     Log.info("[BREW] An older or newer version of `php` is actually installed (\(version.short)).")
                 }
             } else {
                 Log.warn("Could not determine the actual version of the php binary; assuming Homebrew is correct.")
-                PhpEnvironments.brewPhpAlias = homebrewPackage.version
+                brewPhpAlias = homebrewPackage?.version
             }
         }
     }
@@ -111,8 +114,7 @@ class PhpEnvironments {
     /** Whether the switcher is busy performing any actions. */
     @MainActor var isBusy: Bool = false {
         didSet {
-            MainMenu.shared.refreshIcon()
-            MainMenu.shared.rebuild()
+            onBusyChange?()
         }
     }
 
@@ -132,16 +134,16 @@ class PhpEnvironments {
     /** Information about the currently linked PHP installation. */
     var currentInstall: ActivePhpInstallation? {
         didSet {
-            // Let the PHP extension manager, if it exists, know the version changed
-            WindowManager
-                .controller(of: PhpExtensionManagerWC.self)?
-                .view.didUpdatePhpVersion()
+            onInstallationChange?()
         }
     }
 
-    // `nonisolated` + `OSAllocatedUnfairLock`: `brewPhpAlias` is read/written from many
-    // contexts that are not the main actor (Homebrew command processing, switchers, tests),
-    // so it stays a thread-safe, non-isolated cache rather than main-actor state.
+    /// The active application's alias. Independent environments keep their own value.
+    nonisolated static var brewPhpAlias: String? {
+        App.shared.container.phpEnvs?.brewPhpAlias
+    }
+
+    // Subprocess callers can read this container's alias off the main actor.
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
 
@@ -151,8 +153,8 @@ class PhpEnvironments {
 
      In order for our check to be correct, we query Homebrew locally.
      */
-    private nonisolated static let _brewPhpAlias = OSAllocatedUnfairLock<String?>(initialState: nil)
-    nonisolated static var brewPhpAlias: String? {
+    private nonisolated let _brewPhpAlias = OSAllocatedUnfairLock<String?>(initialState: nil)
+    nonisolated var brewPhpAlias: String? {
         get { _brewPhpAlias.withLock { $0 } }
         set { _brewPhpAlias.withLock { $0 = newValue } }
     }
@@ -160,7 +162,7 @@ class PhpEnvironments {
     /**
      Information we were able to discern from the Homebrew info command.
      */
-    var homebrewPackage: HomebrewPackage!
+    var homebrewPackage: HomebrewPackage?
 
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
@@ -170,14 +172,14 @@ class PhpEnvironments {
             // For UI testing and as a fallback, determine this version by using (fake) php-config.
             // This blocking call is acceptable here: the nil-package case only occurs with fake
             // containers (UI testing), where command execution is instant.
-            let version = App.shared.container.command.execute(path: container.paths.phpConfig,
+            let version = container.command.execute(path: container.paths.phpConfig,
                                    arguments: ["--version"],
                                    trimNewlines: true)
             // This should always work because of how our testing flow works
             return try? VersionNumber.parse(version).short
         }
 
-        return homebrewPackage.version
+        return homebrewPackage?.version
     }
 
     /**
@@ -241,7 +243,7 @@ class PhpEnvironments {
         var installedVersions = await extractPhpVersions(from: files)
 
         let supportedByValet: Set<String> = {
-            guard let version = Valet.shared.version else {
+            guard let version = container.valet.version else {
                 return Constants.DetectedPhpVersions
             }
 
@@ -251,7 +253,7 @@ class PhpEnvironments {
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
         // We should also detect that as a version that is installed
-        if let phpAlias = homebrewPackage.version {
+        if let phpAlias = homebrewPackage?.version {
             // Avoid inserting a duplicate
             if !installedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
                 let phpAliasInstall = await PhpInstallation.detect(container, phpAlias)
@@ -263,7 +265,7 @@ class PhpEnvironments {
             }
         }
 
-        let supportedVersions = Valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
+        let supportedVersions = container.valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
 
         let availableVersions = Array(supportedVersions)
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })

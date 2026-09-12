@@ -57,7 +57,7 @@ class ModifyPhpVersionCommand: BrewCommand {
         self.title = title
         self.installing = installing
         self.upgrading = upgrading
-        self.previousPhpVersion = PhpGuard().currentVersion
+        self.previousPhpVersion = PhpGuard(container: container).currentVersion
     }
 
     nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
@@ -168,7 +168,7 @@ class ModifyPhpVersionCommand: BrewCommand {
                 .map { installation in
                     let formula = "php@\(installation.versionNumber.short)"
 
-                    if installation.versionNumber.short == PhpEnvironments.brewPhpAlias {
+                    if installation.versionNumber.short == container.phpEnvs.brewPhpAlias {
                         return "php"
                     }
 

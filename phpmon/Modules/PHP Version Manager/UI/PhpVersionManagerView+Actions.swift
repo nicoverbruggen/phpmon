@@ -134,7 +134,7 @@ extension PhpVersionManagerView {
                 // suspended and the app busy until the models reflect what is on disk.
                 await container.phpEnvs.detectPhpVersions()
                 container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
-                await ConfigWatchManager.handleWatcher()
+                await ConfigWatchManager.handleWatcher(container: container)
                 await handler.refreshPhpVersions(loadOutdated: false)
                 throw error
             }

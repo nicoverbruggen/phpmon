@@ -33,7 +33,7 @@ class PhpInstallation {
     var formulaName: String {
         let version = self.versionNumber.short
 
-        if version == PhpEnvironments.brewPhpAlias {
+        if version == container.phpEnvs.brewPhpAlias {
             return "php"
         }
 

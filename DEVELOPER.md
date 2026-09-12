@@ -146,8 +146,7 @@ If you would like to run the unit tests outside of Xcode, you can run:
 xcodebuild test \
     -project "PHP Monitor.xcodeproj" \
     -scheme "Unit Tests" \
-    -destination "platform=macOS" \
-    -parallel-testing-enabled NO
+    -destination "platform=macOS"
 ```
 
 Fake containers deny privileged commands by default. Tests that need an approval flow must supply a `PrivilegedCommandRunner`; UI configurations use `UITestPrivilegedCommandRunner`. Real AppleScript execution is disabled in unit tests and when a test configuration is supplied by environment or launch argument. Homebrew ownership repair skips fake filesystems so it cannot inspect or change host permissions.
@@ -175,6 +174,10 @@ Testing — the modern alternative — does not support UI tests, so XCTest is r
 Keep `UITestCase` nonisolated so its inherited XCTest initializers keep their original
 isolation. Mark UI test methods and helpers `@MainActor` individually. Isolating the
 test class itself also isolates its inherited initializers and causes override warnings.
+
+### Parallel unit tests
+
+Run the unit target with the shared test plan's default parallel execution. A serial run does not verify isolation between suites. Tests must use their own containers and model instances. Do not replace `App.shared.container`, mutate shared Valet or Brew state, or use the global PHP alias as a fixture. A suite's `.serialized` trait only orders that suite's tests; it does not exclude other suites.
 
 ### Failures in UI tests
 

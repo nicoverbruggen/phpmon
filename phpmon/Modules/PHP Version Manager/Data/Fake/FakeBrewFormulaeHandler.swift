@@ -9,10 +9,15 @@
 import Foundation
 
 class FakeBrewFormulaeHandler: HandlesBrewPhpFormulae {
-    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
-        // Using the shared container is allowed since this only runs w/ UI tests
-        let container = App.shared.container
+    let container: Container
+    let formulae: BrewFormulaeObservable
 
+    init(_ container: Container = App.shared.container, formulae: BrewFormulaeObservable = BrewFormulaeObservable()) {
+        self.container = container
+        self.formulae = formulae
+    }
+
+    public func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula] {
         return [
             BrewPhpFormula(
                 container,

@@ -35,17 +35,9 @@ struct PhpVersionDetectionTest {
                 "/opt/homebrew/opt/php@8.5/bin/php -v": "PHP 8.5.1"
             ]
         )
-        let previousContainer = App.shared.container
-        App.shared.container = container
-        let previousInstalled = Valet.shared.installed
-        let previousVersion = Valet.shared.version
-        defer {
-            App.shared.container = previousContainer
-            Valet.shared.installed = previousInstalled
-            Valet.shared.version = previousVersion
-        }
-        Valet.shared.installed = false
-        Valet.shared.version = nil
+
+        container.valet.installed = false
+        container.valet.version = nil
         container.phpEnvs.homebrewPackage = Self.phpHomebrewPackage()
 
         let detected = await container.phpEnvs.detectPhpVersions()
@@ -108,17 +100,9 @@ struct PhpVersionDetectionTest {
                 "/opt/homebrew/opt/php@8.5/bin/php -v": "PHP 8.5.0"
             ]
         )
-        let previousContainer = App.shared.container
-        App.shared.container = container
-        let previousInstalled = Valet.shared.installed
-        let previousVersion = Valet.shared.version
-        defer {
-            App.shared.container = previousContainer
-            Valet.shared.installed = previousInstalled
-            Valet.shared.version = previousVersion
-        }
-        Valet.shared.installed = false
-        Valet.shared.version = nil
+
+        container.valet.installed = false
+        container.valet.version = nil
         container.phpEnvs.homebrewPackage = Self.phpHomebrewPackage()
         (container.shell as! TestableShell).allowsDelayedCommands = true
 
@@ -195,13 +179,8 @@ struct PhpVersionDetectionTest {
 
         container.phpEnvs.homebrewPackage = Self.phpHomebrewPackage()
 
-        defer {
-            Valet.shared.installed = false
-            Valet.shared.version = nil
-        }
-
-        Valet.shared.installed = false
-        Valet.shared.version = nil
+        container.valet.installed = false
+        container.valet.version = nil
 
         let detected = await container.phpEnvs.detectPhpVersions()
 
@@ -240,13 +219,8 @@ struct PhpVersionDetectionTest {
 
         container.phpEnvs.homebrewPackage = Self.phpHomebrewPackage()
 
-        defer {
-            Valet.shared.installed = false
-            Valet.shared.version = nil
-        }
-
-        Valet.shared.installed = true
-        Valet.shared.version = VersionNumber(major: 3, minor: 0, patch: 0)
+        container.valet.installed = true
+        container.valet.version = VersionNumber(major: 3, minor: 0, patch: 0)
 
         let detected = await container.phpEnvs.detectPhpVersions()
 

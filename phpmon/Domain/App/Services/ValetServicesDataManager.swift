@@ -32,8 +32,7 @@ actor ValetServicesDataManager {
     func reloadServicesStatus(isRetry: Bool) async -> [HomebrewService] {
         let formulae = await registry.reloadFormulae()
 
-        // `Valet.installed` is main-actor isolated; hop to read it from this actor.
-        let valetInstalled = await MainActor.run { Valet.installed }
+        let valetInstalled = await MainActor.run { container.valet.installed }
         if !valetInstalled {
             Log.info("Not reloading services because running in Standalone Mode.")
             return []

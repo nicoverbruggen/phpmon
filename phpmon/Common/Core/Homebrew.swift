@@ -33,7 +33,7 @@ struct HomebrewFormulae {
     }
 
     var nginx: HomebrewFormula {
-        return BrewDiagnostics.shared.usesNginxFullFormula
+        return BrewDiagnostics(container).usesNginxFullFormula
         ? HomebrewFormula("nginx-full", elevated: true)
         : HomebrewFormula("nginx", elevated: true)
     }

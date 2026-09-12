@@ -40,13 +40,13 @@ final class ServicesRegistry {
             knownFormulaNames.insert(formula.name)
         }
 
-        if !Preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
+        if !container.preferences.isEnabled(.hideAutoDetectedServicesInMenu) {
             detectedServices
                 .map { HomebrewFormula($0.service, elevated: false, servicePrefix: $0.servicePrefix) }
                 .forEach(appendIfMissing)
         }
 
-        if let customServices = Preferences.custom.services, !customServices.isEmpty {
+        if let customServices = container.preferences.customPreferences.services, !customServices.isEmpty {
             customServices
                 .map { HomebrewFormula($0, elevated: false) }
                 .forEach(appendIfMissing)

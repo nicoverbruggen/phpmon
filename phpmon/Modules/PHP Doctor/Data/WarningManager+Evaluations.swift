@@ -154,14 +154,14 @@ extension WarningManager {
         // PHP
         let missingConfigFilesWarning = Warning(
             command: {
-                PhpConfigChecker.shared.check()
-                return !PhpConfigChecker.shared.missing.isEmpty
+                self.phpConfigChecker.check()
+                return !self.phpConfigChecker.missing.isEmpty
             },
             name: "Your PHP installation is missing configuration files",
             title: "warnings.files_missing.title",
             paragraphs: { return [
                 "warnings.files_missing.description".localized(
-                    PhpConfigChecker.shared.missing.joined(separator: "\n• ")
+                    self.phpConfigChecker.missing.joined(separator: "\n• ")
                 )
             ] },
             url: nil,
@@ -171,8 +171,8 @@ extension WarningManager {
         // VALET
         let expiredCertificatesWarning = Warning(
             command: {
-                if Valet.installed {
-                    return !Valet.getExpiredDomainListable().isEmpty
+                if self.container.valet.installed {
+                    return !self.container.valet.expiredDomains.isEmpty
                 }
 
                 return false

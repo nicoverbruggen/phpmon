@@ -8,17 +8,22 @@
 import Cocoa
 
 class StatusMenu: NSMenu {
-    var container: Container {
-        return App.shared.container
+    nonisolated let container: Container
+
+    nonisolated init(container: Container) {
+        self.container = container
+        super.init(title: "")
     }
 
     // `NSMenu`'s initializers are nonisolated in the AppKit SDK; match that so these
     // (otherwise main-actor-by-default) overrides don't mismatch the superclass.
     nonisolated override init(title: String) {
+        self.container = App.shared.container
         super.init(title: title)
     }
 
     nonisolated required init(coder: NSCoder) {
+        self.container = App.shared.container
         super.init(coder: coder)
     }
 
@@ -27,38 +32,38 @@ class StatusMenu: NSMenu {
         addPhpVersionMenuItems()
         addItem(NSMenuItem.separator())
 
-        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayGlobalVersionSwitcher) {
+        if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayGlobalVersionSwitcher) {
             addPhpActionMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if container.phpEnvs.phpInstall != nil && Valet.installed && Preferences.isEnabled(.displayServicesManager) {
+        if container.phpEnvs.phpInstall != nil && container.valet.installed && container.preferences.isEnabled(.displayServicesManager) {
             addServicesManagerMenuItem()
             addItem(NSMenuItem.separator())
         }
 
-        if Valet.shared.version != nil && Preferences.isEnabled(.displayValetIntegration) {
+        if container.valet.version != nil && container.preferences.isEnabled(.displayValetIntegration) {
             addValetMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayPhpConfigFinder) {
+        if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayPhpConfigFinder) {
             addConfigurationMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayComposerToolkit) {
+        if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayComposerToolkit) {
             addComposerMenuItems()
             addItem(NSMenuItem.separator())
         }
 
-        if !App.shared.container.phpEnvs.isBusy {
-            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayLimitsWidget) {
+        if !container.phpEnvs.isBusy {
+            if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayLimitsWidget) {
                 addStatsMenuItem()
                 addItem(NSMenuItem.separator())
             }
 
-            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayExtensions) {
+            if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayExtensions) {
                 addExtensionsMenuItems()
                 NSMenuItem.separator()
 
@@ -67,11 +72,11 @@ class StatusMenu: NSMenu {
 
             addPhpDoctorMenuItem()
 
-            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayPresets) {
+            if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayPresets) {
                 addPresetsMenuItem()
             }
 
-            if container.phpEnvs.phpInstall != nil && Preferences.isEnabled(.displayMisc) {
+            if container.phpEnvs.phpInstall != nil && container.preferences.isEnabled(.displayMisc) {
                 addFirstAidAndServicesMenuItems()
             }
         }
@@ -80,8 +85,8 @@ class StatusMenu: NSMenu {
 
         addPreferencesMenuItems()
 
-        if Preferences.isEnabled(.displayDriver) {
-            if Valet.installed {
+        if container.preferences.isEnabled(.displayDriver) {
+            if container.valet.installed {
                 // Add the menu item displaying the driver information
                 addValetVersionItem()
             } else {

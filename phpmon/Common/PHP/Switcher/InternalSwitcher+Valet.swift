@@ -99,7 +99,7 @@ extension InternalSwitcher {
                     "VALET_HOME_PATH": "~/.config/valet".replacingTildeWithHomeDirectory,
                     "valet.sock": "valet\(version.replacing(".", with: "")).sock"
                 ],
-                applies: { (Valet.shared.version?.major ?? 0) > 2 }
+                applies: { (self.container.valet.version?.major ?? 0) > 2 }
             ),
             ExpectedConfigurationFile(
                 destination: "/conf.d/error_log.ini",

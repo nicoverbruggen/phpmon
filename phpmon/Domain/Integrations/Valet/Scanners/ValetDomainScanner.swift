@@ -74,8 +74,7 @@ class ValetDomainScanner: DomainScanner {
      Regular files are ignored, and the site is added to Valet's list of sites.
      */
     func resolveSite(path: String) async -> ValetSite? {
-        // Get the TLD from the global Valet object
-        let tld = Valet.shared.config.tld
+        let tld = container.valet.config.tld
 
         if !container.filesystem.anyExists(path) {
             Log.warn("Could not parse the site: \(path), skipping!")

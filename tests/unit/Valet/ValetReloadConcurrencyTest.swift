@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Regression coverage for the 26.05.3 crashes.
 ///
-/// `Valet.resolvePaths()` used to mutate `Valet.shared.sites` / `.proxies` **off the
+/// `Valet.resolvePaths()` used to mutate `valet.sites` / `.proxies` **off the
 /// main thread** while the UI reads the same arrays **on the main thread**, with no
 /// synchronization. Swift arrays are not thread-safe, so this corrupted the array
 /// buffer and crashed: the writer trapped in `sites.insert(...)`, and readers
@@ -23,11 +23,9 @@ import Foundation
 /// elements (which is what dereferences the element pointers that used to crash). They
 /// crash / trip ThreadSanitizer on the pre-fix code and pass cleanly with the fix.
 ///
-/// The suite is `.serialized` because it configures global singletons
-/// (`App.shared.container`, `Valet.shared`, `ValetScanner.active`).
-///
-@Suite(.serialized)
 struct ValetReloadConcurrencyTest {
+    let valet: Valet
+
     init() {
         let container = Container.fake(files: [
             "/Users/user/.config/valet/Sites/valid-link":
@@ -55,18 +53,16 @@ struct ValetReloadConcurrencyTest {
                 """)
         ])
 
-        App.shared.container = container
-        Valet.shared.container = container
-        ValetScanner.active = ValetDomainScanner(container)
+        valet = container.valet
     }
 
     /// Sanity check: after the async refactor, `reloadSites()` still populates the
     /// site list correctly.
     @Test func reload_sites_populates_expected_sites() async {
-        await Valet.shared.reloadSites()
+        await valet.reloadSites()
 
         let names = await MainActor.run {
-            Valet.shared.sites.map { $0.name }.sorted()
+            valet.sites.map { $0.name }.sorted()
         }
 
         #expect(names.contains("valid-link"))
@@ -74,21 +70,18 @@ struct ValetReloadConcurrencyTest {
     }
 
     @Test func overlapping_reload_does_not_replace_configuration_during_a_scan() async throws {
-        let previousScanner = ValetScanner.active
-        defer { ValetScanner.active = previousScanner }
-
-        ValetScanner.active = ReloadDuringScan {
-            try! Valet.shared.container.filesystem.writeAtomicallyToFile(
+        valet.scanner = ReloadDuringScan {
+            try! valet.container.filesystem.writeAtomicallyToFile(
                 "~/.config/valet/config.json",
                 content: #"{"tld":"changed","paths":[],"loopback":"127.0.0.1"}"#
             )
-            await Valet.shared.reloadSites()
+            await valet.reloadSites()
         }
 
-        await Valet.shared.reloadSites()
+        await valet.reloadSites()
 
-        #expect(Valet.shared.config.tld == "test")
-        #expect(!Valet.shared.isBusy)
+        #expect(valet.config.tld == "test")
+        #expect(!valet.isBusy)
     }
 
     /// Hammers `reloadSites()` (which reassigns and inserts into `sites` off-main on
@@ -98,11 +91,11 @@ struct ValetReloadConcurrencyTest {
     /// the site list consistent.
     @Test func concurrent_reloads_and_element_reads_do_not_corrupt_sites() async {
         // Prime the list so readers have elements to walk from the first iteration.
-        await Valet.shared.reloadSites()
+        await valet.reloadSites()
 
         await withTaskGroup(of: Void.self) { group in
             for _ in 0..<40 {
-                group.addTask { await Valet.shared.reloadSites() }
+                group.addTask { await valet.reloadSites() }
             }
             for _ in 0..<400 {
                 group.addTask {
@@ -110,7 +103,7 @@ struct ValetReloadConcurrencyTest {
                         // Walk every element and read its stored properties. On the
                         // pre-fix code this dereferences pointers in a buffer being
                         // mutated off-main -> corruption / trap.
-                        Valet.shared.sites.reduce(into: "") { acc, site in
+                        valet.sites.reduce(into: "") { acc, site in
                             acc += site.name + site.absolutePath
                         }
                     }
@@ -120,35 +113,35 @@ struct ValetReloadConcurrencyTest {
         }
 
         let names = await MainActor.run {
-            Valet.shared.sites.map { $0.name }.sorted()
+            valet.sites.map { $0.name }.sorted()
         }
 
         #expect(names.contains("valid-link"))
         #expect(names.contains("parked-site"))
     }
 
-    /// Exercises the exact production reader — `Valet.getDomainListable()` returns
+    /// Exercises the exact production reader — `valet.getDomainListable()` returns
     /// `sites + proxies`, concatenating and iterating both arrays (this is
     /// `Valet.swift`'s `getDomainListable()`, read by the domain-list UI on the main
     /// thread) — concurrently with reloads.
     @Test func concurrent_reloads_and_domain_listable_reads_are_safe() async {
-        await Valet.shared.reloadSites()
+        await valet.reloadSites()
 
         await withTaskGroup(of: Void.self) { group in
             for _ in 0..<40 {
-                group.addTask { await Valet.shared.reloadSites() }
+                group.addTask { await valet.reloadSites() }
             }
             for _ in 0..<400 {
                 group.addTask {
                     _ = await MainActor.run {
-                        Valet.getDomainListable().map { $0.getListableName() }
+                        valet.getDomainListable().map { $0.getListableName() }
                     }
                 }
             }
             await group.waitForAll()
         }
 
-        let count = await MainActor.run { Valet.getDomainListable().count }
+        let count = await MainActor.run { valet.getDomainListable().count }
         #expect(count >= 2)
     }
 }

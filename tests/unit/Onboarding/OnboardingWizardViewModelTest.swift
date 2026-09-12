@@ -12,7 +12,7 @@ import Testing
 struct OnboardingWizardViewModelTest {
     // Full setup should model the introduction as the first step until the user starts setup.
     @Test func full_setup_begins_on_the_introduction_step() {
-        let viewModel = OnboardingWizardViewModel(hasLoaded: true)
+        let viewModel = OnboardingWizardViewModel(container: Container.fake(), hasLoaded: true)
 
         #expect(viewModel.currentStep == .introduction)
         #expect(viewModel.action == .startSetup)
@@ -22,6 +22,7 @@ struct OnboardingWizardViewModelTest {
     // Missing developer tools should make the first button launch Apple's installer.
     @Test func missing_developer_tools_uses_installer_action() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: false,
                 homebrewInstalled: false,
@@ -38,7 +39,7 @@ struct OnboardingWizardViewModelTest {
 
     // The wizard should not allow actions until the initial environment refresh has completed.
     @Test func primary_action_is_disabled_until_initial_progress_loads() {
-        let viewModel = OnboardingWizardViewModel(hasLoaded: false)
+        let viewModel = OnboardingWizardViewModel(container: Container.fake(), hasLoaded: false)
 
         #expect(viewModel.primaryButtonDisabled)
         #expect(viewModel.performPrimaryAction() == nil)
@@ -47,6 +48,7 @@ struct OnboardingWizardViewModelTest {
     // Once developer tools are present, the wizard should advance to Homebrew setup.
     @Test func homebrew_install_is_next_after_developer_tools() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: false,
@@ -100,6 +102,7 @@ struct OnboardingWizardViewModelTest {
     // Once PATH is ready, the wizard should advance into the required PHP and Composer step.
     @Test func php_and_composer_install_is_next_after_path_setup() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: true,
@@ -119,6 +122,7 @@ struct OnboardingWizardViewModelTest {
     // the underlying brew command to run manually.
     @Test func php_and_composer_step_does_not_show_command_block() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: true,
@@ -138,6 +142,7 @@ struct OnboardingWizardViewModelTest {
     // Once the required packages are installed, the wizard can hand control back to startup.
     @Test func fully_prepared_core_setup_enables_continue() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: true,
@@ -158,6 +163,7 @@ struct OnboardingWizardViewModelTest {
     // Once PHP and Composer are ready, the wizard should continue into the Valet setup step.
     @Test func valet_install_is_next_after_php_and_composer_setup() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: true,
@@ -180,6 +186,7 @@ struct OnboardingWizardViewModelTest {
     // The standalone-mode Valet flow should skip the earlier onboarding steps and land directly on Valet.
     @Test func valet_only_flow_jumps_straight_to_valet_install() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             flow: ValetInstallOnboardingFlow(),
             progress: .init(
                 developerToolsInstalled: true,
@@ -202,6 +209,7 @@ struct OnboardingWizardViewModelTest {
     // the underlying factual progress state.
     @Test func valet_only_flow_uses_display_progress_without_mutating_actual_progress() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             flow: ValetInstallOnboardingFlow(),
             progress: .init(),
             hasLoaded: true
@@ -216,6 +224,7 @@ struct OnboardingWizardViewModelTest {
     // optional Valet step as intentionally completed for the wizard UI.
     @Test func skipping_valet_completes_onboarding_in_standalone_mode() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: true,

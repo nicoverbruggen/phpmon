@@ -12,11 +12,10 @@ import NVAlert
 class PhpGuard {
     var currentVersion: String?
 
-    var container: Container {
-        return App.shared.container
-    }
+    let container: Container
 
-    init() {
+    init(container: Container = App.shared.container) {
+        self.container = container
         guard let version = container.phpEnvs.phpInstall?.version else {
             Log.warn("PHP Guard is unable to determine the current PHP version!")
             return

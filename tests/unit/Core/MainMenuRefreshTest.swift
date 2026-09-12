@@ -9,17 +9,14 @@ import AppKit
 import Combine
 import Testing
 
-@Suite(.serialized)
 struct MainMenuRefreshTest {
     @Test func broken_active_php_keeps_other_versions_available_in_the_menu() async throws {
         let container = makeContainer(version: "not a version")
-        let previousContainer = App.shared.container
-        App.shared.container = container
-        defer { App.shared.container = previousContainer }
+
         container.phpEnvs.availablePhpVersions = ["8.4", "8.3"]
 
         #expect(try #require(container.phpEnvs.currentInstall).hasErrorState)
-        let menu = StatusMenu()
+        let menu = StatusMenu(container: container)
         menu.addPhpVersionMenuItems()
         menu.addSwitchToPhpMenuItems()
 
@@ -27,22 +24,20 @@ struct MainMenuRefreshTest {
         let switches = menu.items.compactMap { $0 as? PhpMenuItem }
         #expect(switches.map(\.version) == ["8.4", "8.3"])
         #expect(switches.allSatisfy { $0.action != nil })
-        #expect(PhpGuard().currentVersion == nil)
-        #expect(PhpExtensionManagerView.getActivePhpVersion() == nil)
+        #expect(PhpGuard(container: container).currentVersion == nil)
+        #expect(PhpExtensionManagerView.getActivePhpVersion(container: container) == nil)
     }
 
     @Test(arguments: [true, false])
     func broken_active_php_displays_an_unknown_version_in_the_status_icon(fullVersion: Bool) async {
         let container = makeContainer(version: "not a version")
-        let previousContainer = App.shared.container
-        App.shared.container = container
+
         container.preferences.cachedPreferences[.shouldDisplayDynamicIcon] = true
         container.preferences.cachedPreferences[.fullPhpVersionDynamicIcon] = fullVersion
-        let menu = VersionRecordingMenu()
+        let menu = VersionRecordingMenu(container: container)
         menu.statusItem.isVisible = false
         defer {
             NSStatusBar.system.removeStatusItem(menu.statusItem)
-            App.shared.container = previousContainer
         }
 
         let displayedVersion = await withCheckedContinuation { continuation in
@@ -55,13 +50,11 @@ struct MainMenuRefreshTest {
     @Test func an_old_refresh_does_not_replace_a_completed_php_switch() async throws {
         let container = makeContainer(version: "8.4.0")
         let switchedInstall = try #require(makeContainer(version: "8.5.0").phpEnvs.currentInstall)
-        let previousContainer = App.shared.container
-        App.shared.container = container
-        let menu = InstallationRefreshMenu()
+
+        let menu = InstallationRefreshMenu(container: container)
         menu.statusItem.isVisible = false
         defer {
             NSStatusBar.system.removeStatusItem(menu.statusItem)
-            App.shared.container = previousContainer
         }
 
         let probe = "/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"
@@ -88,13 +81,11 @@ struct MainMenuRefreshTest {
         let container = makeContainer(version: "8.4.0")
         try container.filesystem.writeAtomicallyToFile("/old.ini", content: "memory_limit = 128M")
         try container.filesystem.writeAtomicallyToFile("/new.ini", content: "memory_limit = 256M")
-        let previousContainer = App.shared.container
-        App.shared.container = container
-        let menu = InstallationRefreshMenu()
+
+        let menu = InstallationRefreshMenu(container: container)
         menu.statusItem.isVisible = false
         defer {
             NSStatusBar.system.removeStatusItem(menu.statusItem)
-            App.shared.container = previousContainer
         }
 
         let probe = "/opt/homebrew/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'"

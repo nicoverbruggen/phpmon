@@ -38,8 +38,8 @@ struct ValetDomainScannerTest {
 
         scanner = ValetDomainScanner(container)
 
-        // Set up the global Valet config so resolveSite can access `Valet.shared.config.tld`
-        Valet.shared.config = try JSONDecoder().decode(
+        // The scanner reads the configuration from its own container.
+        container.valet.config = try JSONDecoder().decode(
             Valet.Configuration.self,
             from: Data("{\"tld\": \"test\", \"paths\": [], \"loopback\": \"127.0.0.1\"}".utf8)
         )

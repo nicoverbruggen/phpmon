@@ -8,11 +8,7 @@
 import Foundation
 import Testing
 
-@Suite(.serialized)
 struct HomebrewServiceQueryTest {
-    init() {
-        App.shared.container = Container.fake()
-    }
 
     private func response(_ names: [String], running: Bool = true) throws -> String {
         let services = names.map {
@@ -139,9 +135,7 @@ struct HomebrewServiceQueryTest {
             "sudo /opt/homebrew/bin/brew services info 'php' --json": .instant(try response(["php"])),
             "sudo /opt/homebrew/bin/brew services info 'nginx' --json": .instant(try response(["nginx"]))
         ])
-        let wasInstalled = Valet.shared.installed
-        Valet.shared.installed = true
-        defer { Valet.shared.installed = wasInstalled }
+        container.valet.installed = true
         let data = ValetServicesDataManager(container, registry: ServicesRegistry(container))
 
         let first = await data.reloadServicesStatus(isRetry: true)

@@ -27,8 +27,7 @@ actor ConfigWatchManager: Suspendable {
      - Important: This manager remains nil when a `TestableFileSystem` is in place.
      */
     @MainActor
-    public static func handleWatcher(forceReload: Bool = false) async {
-        let container = App.shared.container
+    public static func handleWatcher(forceReload: Bool = false, container: Container = App.shared.container) async {
 
         if container.filesystem is TestableFileSystem {
             Log.warn("ConfigWatchManager is disabled when using a testable filesystem.")

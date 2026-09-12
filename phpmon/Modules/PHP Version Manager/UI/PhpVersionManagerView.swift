@@ -14,7 +14,7 @@ struct PhpVersionManagerView: View {
     @ObservedObject var status: BusyStatus
     var handler: HandlesBrewPhpFormulae
     var container: Container {
-        return App.shared.container
+        return handler.container
     }
 
     init(
@@ -338,6 +338,6 @@ struct PhpVersionManagerView: View {
 #Preview {
     PhpVersionManagerView(
         formulae: Brew.shared.formulae,
-        handler: FakeBrewFormulaeHandler()
+        handler: FakeBrewFormulaeHandler(formulae: Brew.shared.formulae)
     ).frame(width: 600, height: 600)
 }

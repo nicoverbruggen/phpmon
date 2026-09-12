@@ -18,14 +18,14 @@ extension StatusMenu {
     }
 
     @MainActor func addValetVersionItem() {
-        if let version = Valet.shared.version {
+        if let version = container.valet.version {
             var items = [
                 NSMenuItem.separator(),
                 NSMenuItem(title: "mi_driver".localized("Valet \(version.text)"),
                            action: nil)
             ]
 
-            if let latest = Valet.shared.latestVersion {
+            if let latest = container.valet.latestVersion {
                 if latest.isNewerThan(version) {
                     items.append(
                         NSMenuItem(title: "mi_valet_upgrade_action".localized(latest.text),

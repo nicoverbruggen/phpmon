@@ -9,6 +9,8 @@
 import Foundation
 
 protocol HandlesBrewPhpFormulae {
+    var container: Container { get }
+    var formulae: BrewFormulaeObservable { get }
     func loadPhpVersions(loadOutdated: Bool) async -> [BrewPhpFormula]
     func refreshPhpVersions(loadOutdated: Bool) async
 }
@@ -16,20 +18,20 @@ protocol HandlesBrewPhpFormulae {
 extension HandlesBrewPhpFormulae {
     public func refreshPhpVersions(loadOutdated: Bool) async {
         let items = await loadPhpVersions(loadOutdated: loadOutdated)
-        Task { @MainActor in
-            await App.shared.container.phpEnvs.determinePhpAlias()
-            Brew.shared.formulae.phpVersions = items
-        }
+        await container.phpEnvs.determinePhpAlias()
+        formulae.phpVersions = items
     }
 }
 
 class BrewPhpFormulaeHandler: HandlesBrewPhpFormulae {
     // MARK: - Container
 
-    var container: Container
+    let container: Container
+    let formulae: BrewFormulaeObservable
 
-    init(_ container: Container) {
+    init(_ container: Container, formulae: BrewFormulaeObservable = BrewFormulaeObservable()) {
         self.container = container
+        self.formulae = formulae
     }
 
     // MARK: - Methods

@@ -185,7 +185,11 @@ nonisolated final class Preferences: Sendable {
      - Important: Requires the preference to have a corresponding boolean value, or a fatal error will be thrown.
      */
     static func isEnabled(_ preference: PreferenceName) -> Bool {
-        if let bool = Preferences.preferences[preference] as? Bool {
+        App.shared.container.preferences.isEnabled(preference)
+    }
+
+    func isEnabled(_ preference: PreferenceName) -> Bool {
+        if let bool = cachedPreferences[preference] as? Bool {
             return bool == true
         } else {
             fatalError("\(preference) is not a valid boolean preference!")

@@ -19,10 +19,12 @@ class Valet {
         case isolatedSites
     }
 
-    static let shared = Valet()
+    static var shared: Valet { App.shared.container.valet }
 
     /// The dependency container.
-    var container: Container
+    let container: Container
+
+    lazy var scanner: DomainScanner = ValetDomainScanner(container)
 
     /// The version of Valet that was detected.
     var version: VersionNumber?
@@ -52,7 +54,6 @@ class Valet {
         self.version = nil
         self.sites = []
         self.proxies = []
-        self.checkForMarketingMode()
     }
 
     /// If marketing mode is enabled, you can tinker around with the site list
@@ -60,7 +61,7 @@ class Valet {
     public func checkForMarketingMode() {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
             Log.info("Using a fake list of sites for Marketing Mode!")
-            ValetScanner.useFake()
+            scanner = FakeDomainScanner()
         }
     }
 
@@ -84,7 +85,11 @@ class Valet {
      Retrieve a list of all domains, including sites & proxies.
      */
     public static func getDomainListable() -> [ValetListable] {
-        return self.shared.sites + self.shared.proxies
+        shared.getDomainListable()
+    }
+
+    func getDomainListable() -> [ValetListable] {
+        sites + proxies
     }
 
     /**
@@ -92,7 +97,11 @@ class Valet {
      that have expired certificates.
      */
     public static func getExpiredDomainListable() -> [ValetListable] {
-        return self.getDomainListable().filter { item in
+        return self.shared.expiredDomains
+    }
+
+    var expiredDomains: [ValetListable] {
+        (sites + proxies).filter { item in
             if let expiry = item.getListableCertificateExpiryDate() {
                 return expiry < Date()
             }
@@ -120,7 +129,7 @@ class Valet {
             .trimmingCharacters(in: .whitespaces)
 
         // Extract the version number
-        Valet.shared.version = try? VersionNumber.parse(VersionExtractor.from(versionString)!)
+        self.version = try? VersionNumber.parse(VersionExtractor.from(versionString)!)
     }
 
     /**
@@ -216,7 +225,7 @@ class Valet {
         }
 
         // 1. Evaluate feature support
-        Valet.shared.evaluateFeatureSupport()
+        self.evaluateFeatureSupport()
 
         // 2. Notify user if the version is too old (but major version is OK)
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
@@ -288,7 +297,7 @@ class Valet {
      Returns a count of how many sites are linked and parked.
      */
     private func countPaths() async -> Int {
-        return await ValetScanner.active.resolveSiteCount(paths: config.paths)
+        return await scanner.resolveSiteCount(paths: config.paths)
     }
 
     /**
@@ -297,13 +306,13 @@ class Valet {
     private func resolvePaths() async {
         // The scanner performs its blocking directory/certificate I/O on the concurrent
         // pool and only builds the site/proxy models here on the main actor.
-        let scannedSites = await ValetScanner.active
+        let scannedSites = await scanner
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        let scannedProxies = await ValetScanner.active
+        let scannedProxies = await scanner
             .resolveProxies(
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
@@ -319,7 +328,7 @@ class Valet {
     /// unless it is already present in the list.
     private func sitesIncludingDefault(from sites: [ValetSite]) async -> [ValetSite] {
         guard let defaultPath = config.defaultSite,
-              let defaultSite = await ValetScanner.active.resolveSite(path: defaultPath),
+              let defaultSite = await scanner.resolveSite(path: defaultPath),
               !sites.contains(where: {
                   $0.absolutePath == defaultSite.absolutePath && $0.name == defaultSite.name
               })

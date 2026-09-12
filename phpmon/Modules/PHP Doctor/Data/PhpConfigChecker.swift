@@ -25,7 +25,7 @@ class PhpConfigChecker {
         let shouldExist: [FileExistenceCheck] = [
             FileExistenceCheck(condition: nil, path: "php.ini"),
             FileExistenceCheck(condition: nil, path: "php-fpm.conf"),
-            FileExistenceCheck(condition: { Valet.installed }, path: "php-fpm.d/valet-fpm.conf")
+            FileExistenceCheck(condition: { self.container.valet.installed }, path: "php-fpm.d/valet-fpm.conf")
         ]
 
         for version in container.phpEnvs.availablePhpVersions {

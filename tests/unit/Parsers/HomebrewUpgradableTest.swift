@@ -39,7 +39,7 @@ struct HomebrewUpgradableTest {
 
     @Test func upgradable_php_versions_can_be_determined() async throws {
         // This config file assumes our PHP alias (`php`) is v8.2
-        PhpEnvironments.brewPhpAlias = "8.2"
+        container.phpEnvs.brewPhpAlias = "8.2"
         let env = container.phpEnvs!
         env.cachedPhpInstallations = [
             "8.1": PhpInstallation(container, "8.1.16", probe: .init(container, "8.1.16")),

@@ -33,6 +33,7 @@ nonisolated class Container: @unchecked Sendable {
     // Secondary (uses primary instances above)
     private(set) var preferences: Preferences!
     private(set) var phpEnvs: PhpEnvironments!
+    private(set) var valet: Valet!
     private(set) var favorites: Favorites!
     private(set) var warningManager: WarningManager!
 
@@ -122,6 +123,7 @@ nonisolated class Container: @unchecked Sendable {
         // For example, preferences leverages the Paths instance, so don't just
         // swap these around for no reason... the order is very intentional.
         self.preferences = Preferences(container: self)
+        self.valet = Valet(container: self)
         self.phpEnvs = PhpEnvironments(container: self)
         self.favorites = Favorites()
         self.warningManager = WarningManager(container: self)
@@ -165,6 +167,11 @@ nonisolated class Container: @unchecked Sendable {
         )
 
         self.privilegedCommandRunner = privilegedCommandRunner ?? DisabledPrivilegedCommandRunner()
+
+        // Minimal containers also need local Valet state when fake PHP environments are loaded.
+        if self.valet == nil {
+            self.valet = Valet(container: self)
+        }
 
         // We will also re-initialize PhpEnvironments due to altered dependencies
         self.phpEnvs = PhpEnvironments(container: self)

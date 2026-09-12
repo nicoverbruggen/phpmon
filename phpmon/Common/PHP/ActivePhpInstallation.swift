@@ -40,7 +40,7 @@ class ActivePhpInstallation {
 
     var formula: String? {
         guard let version else { return nil }
-        return (version.short == PhpEnvironments.brewPhpAlias) ? "php" : "php@\(version.short)"
+        return (version.short == container.phpEnvs.brewPhpAlias) ? "php" : "php@\(version.short)"
     }
 
     // MARK: - Detection

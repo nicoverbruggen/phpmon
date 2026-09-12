@@ -10,9 +10,8 @@ import NVAlert
 
 @MainActor
 class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
-    var container: Container {
-        return App.shared.container
-    }
+    let container: Container
+    private let shortcutHotkey: () -> HotKey?
 
     var actions: Actions {
         return Actions(container)
@@ -20,7 +19,9 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
 
     static let shared = MainMenu()
 
-    override init() {
+    init(container: Container = App.shared.container, shortcutHotkey: @escaping () -> HotKey? = { App.shared.shortcutHotkey }) {
+        self.container = container
+        self.shortcutHotkey = shortcutHotkey
         super.init()
         statusItem.isVisible = !isRunningSwiftUIPreview
         statusItem.button?.isEnabled = false
@@ -76,7 +77,7 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
 
     @MainActor
     func rebuildImmediately() {
-        let menu = StatusMenu()
+        let menu = StatusMenu(container: container)
         menu.addMenuItems()
         menu.items.forEach({ (item) in
             item.target = self
@@ -89,7 +90,7 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: (Preferences.preferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
+            image: (container.preferences.cachedPreferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
                 ? MenuBarImageGenerator.textToImageWithIcon(text: version)
                 : MenuBarImageGenerator.textToImage(text: version)
         )
@@ -221,12 +222,12 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
                 setStatusBar(image: NSImage.statusBarIcon)
             } else {
                 Log.perf("Refreshing icon: no longer busy")
-                if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
+                if container.preferences.cachedPreferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
                     setStatusBar(image: NSImage.statusBarIconStatic)
                 } else {
                     // The dynamic icon has been requested
-                    let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+                    let long = container.preferences.cachedPreferences[.fullPhpVersionDynamicIcon] as! Bool
 
                     guard let version = container.phpEnvs.phpInstall?.version else {
                         setStatusBarImage(version: "???")
@@ -331,10 +332,10 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
         trackingMenu = notification.object as? NSMenu
 
         // Make sure the shortcut key does not trigger this when the menu is open
-        App.shared.shortcutHotkey?.isPaused = true
+        shortcutHotkey()?.isPaused = true
 
         // If Valet is installed, periodically refresh service data upon menu open!
-        if Valet.installed && !lastInitiatedServicesReloadWasRecent() {
+        if container.valet.installed && !lastInitiatedServicesReloadWasRecent() {
             // First, we need to update the timestamp
             lastInitiatedServicesReload = Date()
 
@@ -350,7 +351,7 @@ class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
         trackingMenu = nil
 
         // When the menu is closed, allow the shortcut to work again
-        App.shared.shortcutHotkey?.isPaused = false
+        shortcutHotkey()?.isPaused = false
     }
 
     // MARK: - Debounce for `ServicesManager`
