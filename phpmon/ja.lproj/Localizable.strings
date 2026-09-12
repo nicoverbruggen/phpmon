@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "ドメインリストを再読み込み";
 "mm_find_in_domain_list" = "ドメインリストで検索";
 "domain_list.title" = "ドメイン";
+"domain_list.sidebar.all" = "すべてのドメイン";
+"domain_list.sidebar.favorites" = "お気に入り";
+"domain_list.sidebar.secured" = "セキュリティ";
+"domain_list.sidebar.linked" = "リンク済み";
+"domain_list.sidebar.parked" = "パーク済み";
+"domain_list.sidebar.proxy" = "プロキシ";
+"domain_list.sidebar.global" = "グローバル";
+"domain_list.sidebar.isolated" = "分離";
+"domain_list.sidebar.count" = "ドメイン数：%@";
 "domain_list.domains_empty.title" = "利用可能なドメインはありません。";
 "domain_list.domains_empty.desc" = "この検索クエリに該当するドメインは見つからなかったか、まだドメインをリンクしていません。";
 "domain_list.domains_empty.button" = "ドメインを追加…";

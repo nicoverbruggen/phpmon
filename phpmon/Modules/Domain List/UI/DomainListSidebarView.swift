@@ -27,20 +27,20 @@ struct DomainListSidebarView: View {
                 }
             }
         )) {
-            row("All domains", filter: .all, symbol: "globe")
-            row("Favorites", filter: .favorites, symbol: "star")
-            sidebarSection("Secured", isExpanded: $securedExpanded) {
+            row("domain_list.sidebar.all".localized, filter: .all, symbol: "globe")
+            row("domain_list.sidebar.favorites".localized, filter: .favorites, symbol: "star")
+            sidebarSection("domain_list.sidebar.secured".localized, isExpanded: $securedExpanded) {
                 row("HTTP", filter: .http, symbol: "lock.open")
                 row("HTTPS", filter: .https, symbol: "lock")
             }
-            sidebarSection("Kind", isExpanded: $kindExpanded) {
-                row("Linked", filter: .linked, asset: "IconLinked")
-                row("Parked", filter: .parked, asset: "IconParked")
-                row("Proxy", filter: .proxy, asset: "IconProxy")
+            sidebarSection("domain_list.columns.kind".localized, isExpanded: $kindExpanded) {
+                row("domain_list.sidebar.linked".localized, filter: .linked, asset: "IconLinked")
+                row("domain_list.sidebar.parked".localized, filter: .parked, asset: "IconParked")
+                row("domain_list.sidebar.proxy".localized, filter: .proxy, asset: "IconProxy")
             }
             sidebarSection("PHP", isExpanded: $phpExpanded) {
-                row("Global", filter: .global, symbol: "globe")
-                row("Isolated", filter: .isolated, asset: "Isolated")
+                row("domain_list.sidebar.global".localized, filter: .global, symbol: "globe")
+                row("domain_list.sidebar.isolated".localized, filter: .isolated, asset: "Isolated")
             }
         }
         .listStyle(.sidebar)
@@ -86,7 +86,7 @@ struct DomainListSidebarView: View {
                             lineWidth: 0.5
                         )
                     }
-                    .accessibilityLabel("\(model.counts[filter, default: 0]) domains")
+                    .accessibilityLabel("domain_list.sidebar.count".localized(model.counts[filter, default: 0].formatted()))
             }
         } icon: {
             if let asset {

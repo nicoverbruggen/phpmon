@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "Recargar lista de dominios";
 "mm_find_in_domain_list" = "Buscar en lista de dominios";
 "domain_list.title" = "Dominios";
+"domain_list.sidebar.all" = "Todos los dominios";
+"domain_list.sidebar.favorites" = "Favoritos";
+"domain_list.sidebar.secured" = "Seguridad";
+"domain_list.sidebar.linked" = "Enlazados";
+"domain_list.sidebar.parked" = "Aparcados";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Global";
+"domain_list.sidebar.isolated" = "Aislados";
+"domain_list.sidebar.count" = "Dominios: %@";
 "domain_list.domains_empty.title" = "No hay dominios disponibles.";
 "domain_list.domains_empty.desc" = "No se encontraron dominios para esta búsqueda o aún no has vinculado ningún dominio.";
 "domain_list.domains_empty.button" = "Agregar dominio...";

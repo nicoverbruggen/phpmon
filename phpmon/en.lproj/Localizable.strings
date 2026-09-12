@@ -257,6 +257,15 @@ You may be asked for your password during the uninstallation process if file per
 // SITE LIST
 
 "domain_list.title" = "Domains";
+"domain_list.sidebar.all" = "All Domains";
+"domain_list.sidebar.favorites" = "Favorites";
+"domain_list.sidebar.secured" = "Secured";
+"domain_list.sidebar.linked" = "Linked";
+"domain_list.sidebar.parked" = "Parked";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Global";
+"domain_list.sidebar.isolated" = "Isolated";
+"domain_list.sidebar.count" = "Domains: %@";
 
 "domain_list.domains_empty.title" = "No domains available.";
 "domain_list.domains_empty.desc" = "No domains were found for this search query or you haven't linked any domains yet.";

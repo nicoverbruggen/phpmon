@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "Muat Ulang Daftar Domain";
 "mm_find_in_domain_list" = "Cari di Daftar Domain";
 "domain_list.title" = "Domain";
+"domain_list.sidebar.all" = "Semua domain";
+"domain_list.sidebar.favorites" = "Favorit";
+"domain_list.sidebar.secured" = "Keamanan";
+"domain_list.sidebar.linked" = "Tertaut";
+"domain_list.sidebar.parked" = "Diparkir";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Global";
+"domain_list.sidebar.isolated" = "Terisolasi";
+"domain_list.sidebar.count" = "Domain: %@";
 "domain_list.domains_empty.title" = "Tidak ada domain yang tersedia.";
 "domain_list.domains_empty.desc" = "Tidak ada domain yang ditemukan untuk kueri pencarian ini atau Anda belum menautkan domain apa pun.";
 "domain_list.domains_empty.button" = "Tambahkan domain...";

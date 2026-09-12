@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "Domeinlijst herladen";
 "mm_find_in_domain_list" = "Zoeken in domeinlijst";
 "domain_list.title" = "Domeinen";
+"domain_list.sidebar.all" = "Alle domeinen";
+"domain_list.sidebar.favorites" = "Favorieten";
+"domain_list.sidebar.secured" = "Beveiliging";
+"domain_list.sidebar.linked" = "Gelinkt";
+"domain_list.sidebar.parked" = "Geparkeerd";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Globaal";
+"domain_list.sidebar.isolated" = "Geïsoleerd";
+"domain_list.sidebar.count" = "Domeinen: %@";
 "domain_list.domains_empty.title" = "Geen domeinen beschikbaar.";
 "domain_list.domains_empty.desc" = "Geen domeinen gevonden voor deze zoekopdracht of u heeft nog geen domeinen gekoppeld.";
 "domain_list.domains_empty.button" = "Domein toevoegen...";

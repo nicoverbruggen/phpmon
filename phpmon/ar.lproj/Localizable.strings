@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "إعادة تحميل قائمة النطاقات";
 "mm_find_in_domain_list" = "بحث في قائمة النطاقات";
 "domain_list.title" = "النطاقات";
+"domain_list.sidebar.all" = "كل النطاقات";
+"domain_list.sidebar.favorites" = "المفضلة";
+"domain_list.sidebar.secured" = "مؤمّنة";
+"domain_list.sidebar.linked" = "مرتبطة";
+"domain_list.sidebar.parked" = "مركونة";
+"domain_list.sidebar.proxy" = "وكيل";
+"domain_list.sidebar.global" = "عام";
+"domain_list.sidebar.isolated" = "معزولة";
+"domain_list.sidebar.count" = "عدد النطاقات: %@";
 "domain_list.domains_empty.title" = "لا توجد نطاقات متاحة.";
 "domain_list.domains_empty.desc" = "لم يتم العثور على أي نطاقات لهذا البحث أو أنك لم تقم بربط أي نطاقات حتى الآن.";
 "domain_list.domains_empty.button" = "إضافة نطاق...";

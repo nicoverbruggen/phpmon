@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "डोमेन सूची पुनः लोड करें";
 "mm_find_in_domain_list" = "डोमेन सूची में खोजें";
 "domain_list.title" = "डोमेन्स";
+"domain_list.sidebar.all" = "सभी डोमेन";
+"domain_list.sidebar.favorites" = "पसंदीदा";
+"domain_list.sidebar.secured" = "सुरक्षित";
+"domain_list.sidebar.linked" = "लिंक किए गए";
+"domain_list.sidebar.parked" = "पार्क किए गए";
+"domain_list.sidebar.proxy" = "प्रॉक्सी";
+"domain_list.sidebar.global" = "ग्लोबल";
+"domain_list.sidebar.isolated" = "अलग किए गए";
+"domain_list.sidebar.count" = "डोमेन: %@";
 "domain_list.domains_empty.title" = "कोई डोमेन उपलब्ध नहीं है.";
 "domain_list.domains_empty.desc" = "इस खोज क्वेरी के लिए कोई डोमेन नहीं मिला या आपने अभी तक किसी भी डोमेन को लिंक नहीं किया है।";
 "domain_list.domains_empty.button" = "डोमेन जोड़ें...";

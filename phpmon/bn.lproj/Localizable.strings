@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "ডোমেইন তালিকা পুনরায় লোড করুন";
 "mm_find_in_domain_list" = "ডোমেইন তালিকায় অনুসন্ধান করুন";
 "domain_list.title" = "ডোমেইনসমূহ";
+"domain_list.sidebar.all" = "সব ডোমেইন";
+"domain_list.sidebar.favorites" = "পছন্দের";
+"domain_list.sidebar.secured" = "সুরক্ষিত";
+"domain_list.sidebar.linked" = "লিঙ্ক করা";
+"domain_list.sidebar.parked" = "পার্ক করা";
+"domain_list.sidebar.proxy" = "প্রক্সি";
+"domain_list.sidebar.global" = "গ্লোবাল";
+"domain_list.sidebar.isolated" = "বিচ্ছিন্ন";
+"domain_list.sidebar.count" = "ডোমেইন: %@";
 "domain_list.domains_empty.title" = "কোনো ডোমেইন উপলব্ধ নেই।";
 "domain_list.domains_empty.desc" = "এই অনুসন্ধান প্রশ্নের জন্য কোনো ডোমেইন পাওয়া যায়নি বা আপনি এখনও কোনো ডোমেইন যুক্ত করেননি।";
 "domain_list.domains_empty.button" = "ডোমেইন যোগ করুন...";

@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "重新载入域名列表";
 "mm_find_in_domain_list" = "在域名列表中搜索";
 "domain_list.title" = "域名";
+"domain_list.sidebar.all" = "所有域名";
+"domain_list.sidebar.favorites" = "收藏";
+"domain_list.sidebar.secured" = "安全性";
+"domain_list.sidebar.linked" = "已链接";
+"domain_list.sidebar.parked" = "已停放";
+"domain_list.sidebar.proxy" = "代理";
+"domain_list.sidebar.global" = "全局";
+"domain_list.sidebar.isolated" = "隔离";
+"domain_list.sidebar.count" = "域名数：%@";
 "domain_list.domains_empty.title" = "无可用域名";
 "domain_list.domains_empty.desc" = "此搜索查询未找到任何域名或您尚未链接任何域名";
 "domain_list.domains_empty.button" = "添加域名...";

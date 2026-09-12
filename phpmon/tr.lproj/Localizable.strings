@@ -178,6 +178,15 @@
 "mm_reload_domain_list" = "Alan Adı Listesini Yenile";
 "mm_find_in_domain_list" = "Etki Alanı Listesinde Ara";
 "domain_list.title" = "Alanlar";
+"domain_list.sidebar.all" = "Tüm alan adları";
+"domain_list.sidebar.favorites" = "Favoriler";
+"domain_list.sidebar.secured" = "Güvenlik";
+"domain_list.sidebar.linked" = "Bağlı";
+"domain_list.sidebar.parked" = "Park edilmiş";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Genel";
+"domain_list.sidebar.isolated" = "İzole";
+"domain_list.sidebar.count" = "Alan adı sayısı: %@";
 "domain_list.domains_empty.title" = "Kullanılabilir alan adı yok.";
 "domain_list.domains_empty.desc" = "Bu arama sorgusu için hiç alan adı bulunamadı veya henüz hiçbir alan adı bağlamadınız.";
 "domain_list.domains_empty.button" = "Alan ekle...";
