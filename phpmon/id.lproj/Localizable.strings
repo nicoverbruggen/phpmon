@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "Tidak ada domain yang ditemukan untuk kueri pencarian ini atau Anda belum menautkan domain apa pun.";
 "domain_list.domains_empty.button" = "Tambahkan domain...";
 "domain_list.tooltips.isolated" = "Domain ini terisolasi dan menggunakan PHP %@ alih-alih PHP yang dihubungkan secara global.";
-"domain_list.tooltips.checkmark" = "Domain ini dilayani dengan versi PHP yang kompatibel dengan persyaratan ini (PHP %@). Klik pada versi PHP di samping tanda centang untuk mengetahui lebih banyak informasi tentang bagaimana persyaratan ini ditentukan.";
+"domain_list.tooltips.checkmark" = "Domain ini dilayani dengan versi PHP yang kompatibel dengan persyaratan ini (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "Ups! Isolasi Situs Tidak Diterapkan";
 "domain_list.alerts_isolation_failed.subtitle" = "Terjadi kesalahan saat mencoba mengubah status isolasi untuk situs ini. Jika ini adalah situs default Anda namun belum terhubung, saya sarankan menghubungkan situs secara manual sebelum menyiapkan isolasi.";
 "domain_list.alerts_isolation_failed.desc" = "Untuk mengetahui apa yang salah, Anda dapat mencoba menjalankan perintah di terminal Anda secara manual: %@";

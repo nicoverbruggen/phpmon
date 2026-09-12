@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "لم يتم العثور على أي نطاقات لهذا البحث أو أنك لم تقم بربط أي نطاقات حتى الآن.";
 "domain_list.domains_empty.button" = "إضافة نطاق...";
 "domain_list.tooltips.isolated" = "هذا المجال معزول ويستخدم PHP %@ بدلًا من PHP المرتبط عالميًا.";
-"domain_list.tooltips.checkmark" = "يتم خدمة هذا النطاق باستخدام نسخة من PHP متوافقة مع هذه المتطلبات (PHP %@). انقر على إصدار PHP بجانب علامة التأشير لمعرفة المزيد حول كيفية تحديد هذه المتطلبات.";
+"domain_list.tooltips.checkmark" = "يتم خدمة هذا النطاق باستخدام نسخة من PHP متوافقة مع هذه المتطلبات (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "عفوًا! لم يُطبق عزل الموقع";
 "domain_list.alerts_isolation_failed.subtitle" = "حدث خطأ أثناء محاولة تغيير حالة العزل لهذا الموقع. إذا كان هذا هو موقعك الافتراضي لكنه غير مرتبط، أوصيك بربطه يدويًا قبل إعداد العزل.";
 "domain_list.alerts_isolation_failed.desc" = "للعثور على ما يحدث خطأً، يمكنك تجربة تشغيل الأمر في الطرفية يدويًا: %@";

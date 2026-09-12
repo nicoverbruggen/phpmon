@@ -137,10 +137,12 @@ extension DomainListVC {
         menu.addItem(NSMenuItem.separator())
     }
 
-    private func addIsolate(to menu: NSMenu, with site: ValetSite) {
-        var items: [NSMenuItem] = []
+    func isolationMenu(for site: ValetSite) -> NSMenu {
+        let menu = NSMenu()
+        menu.autoenablesItems = false
+        guard site.container.valet.features.contains(.isolatedSites) else { return menu }
 
-        for version in container.phpEnvs.availablePhpVersions.reversed() {
+        for version in site.container.phpEnvs.availablePhpVersions.reversed() {
             let item = PhpMenuItem(
                 title: "domain_list.always_use_php".localized(version),
                 action: #selector(self.isolateSiteViaMenuItem),
@@ -149,22 +151,33 @@ extension DomainListVC {
             if site.servingPhpVersion == version && site.isolatedPhpVersion != nil {
                 item.state = .on
                 item.action = nil
+                item.isEnabled = false
             }
             item.version = version
-            items.append(item)
+            item.target = self
+            item.representedObject = site
+            menu.addItem(item)
         }
 
         // Add the option to remove site isolation
         if site.isolatedPhpVersion != nil {
-            items.append(NSMenuItem.separator())
-            items.append(NSMenuItem(
+            if !menu.items.isEmpty { menu.addItem(NSMenuItem.separator()) }
+            let item = NSMenuItem(
                 title: "domain_list.remove_isolation".localized,
-                action: #selector(self.removeIsolatedSiteViaMenuItem)
-            ))
+                action: #selector(self.removeIsolatedSiteViaMenuItem(sender:))
+            )
+            item.target = self
+            item.representedObject = site
+            menu.addItem(item)
         }
+        return menu
+    }
 
+    private func addIsolate(to menu: NSMenu, with site: ValetSite) {
         menu.addItem(HeaderView.asMenuItem(text: "domain_list.site_isolation".localized))
-        menu.addItem(NSMenuItem(title: "domain_list.isolate".localized, submenu: items))
+        let item = NSMenuItem(title: "domain_list.isolate".localized, action: nil, keyEquivalent: "")
+        item.submenu = isolationMenu(for: site)
+        menu.addItem(item)
 
         if site.isolatedPhpVersion != nil {
             menu.addItem(NSMenuItem(

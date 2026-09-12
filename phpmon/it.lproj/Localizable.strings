@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "Non sono stati trovati domini per questa ricerca o non hai ancora collegato alcun dominio.";
 "domain_list.domains_empty.button" = "Aggiungi dominio...";
 "domain_list.tooltips.isolated" = "Questo dominio è isolato e utilizza PHP %@ invece del PHP globalmente collegato.";
-"domain_list.tooltips.checkmark" = "Questo dominio è servito con una versione di PHP compatibile con questo requisito (PHP %@). Fai clic sulla versione di PHP accanto a questa spunta per scoprire ulteriori informazioni su come è stato determinato questo requisito.";
+"domain_list.tooltips.checkmark" = "Questo dominio è servito con una versione di PHP compatibile con questo requisito (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "Ops! L'isolamento del sito non è stato applicato";
 "domain_list.alerts_isolation_failed.subtitle" = "Qualcosa è andato storto tentando di cambiare lo stato di isolamento per questo sito. Se si tratta del tuo sito predefinito ma non è collegato, ti consiglio di collegare manualmente il sito prima di impostare l'isolamento.";
 "domain_list.alerts_isolation_failed.desc" = "Per capire cosa non va, puoi provare a eseguire il comando manualmente nel tuo terminale: %@";

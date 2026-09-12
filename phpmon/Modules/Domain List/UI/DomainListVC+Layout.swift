@@ -123,7 +123,7 @@ extension DomainListVC {
                    sortKey: "PHP", headerAlignment: .center),
             Column(identifier: "KIND", title: "Kind", width: 50, minWidth: 50, maxWidth: 120,
                    sortKey: "Kind", headerAlignment: .natural),
-            Column(identifier: "TYPE", title: "Project Type", width: 100, minWidth: 100, maxWidth: 100,
+            Column(identifier: "TYPE", title: "Project Type", width: 160, minWidth: 140, maxWidth: 280,
                    sortKey: "Type", headerAlignment: .center)
         ]
 

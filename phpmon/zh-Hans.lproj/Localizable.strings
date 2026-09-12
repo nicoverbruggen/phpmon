@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "此搜索查询未找到任何域名或您尚未链接任何域名";
 "domain_list.domains_empty.button" = "添加域名...";
 "domain_list.tooltips.isolated" = "此域名已被隔离，并使用 PHP %@ 代替全局链接的 PHP";
-"domain_list.tooltips.checkmark" = "此域名使用的 PHP 版本与此要求(PHP %@)兼容。单击该复选标记旁边的 PHP 版本，了解有关如何确定该要求的更多信息。";
+"domain_list.tooltips.checkmark" = "此域名使用的 PHP 版本与此要求(PHP %@)兼容。";
 "domain_list.alerts_isolation_failed.title" = "糟糕！网站隔离未应用";
 "domain_list.alerts_isolation_failed.subtitle" = "在尝试更改此站点的隔离状态时出了问题。如果这是您的默认站点但没有链接，我建议您在设置隔离之前手动链接该站点。";
 "domain_list.alerts_isolation_failed.desc" = "要找出出错的原因，可以尝试在终端中手动运行命令：%@";

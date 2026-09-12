@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "Bu arama sorgusu için hiç alan adı bulunamadı veya henüz hiçbir alan adı bağlamadınız.";
 "domain_list.domains_empty.button" = "Alan ekle...";
 "domain_list.tooltips.isolated" = "Bu alan adı izole edilmiştir ve küresel bağlanmış PHP yerine PHP %@ kullanılıyor.";
-"domain_list.tooltips.checkmark" = "Bu alan adı, bu gereksinimle uyumlu bir PHP sürümüyle sunuluyor (PHP %@). Bu işaretli kutunun yanındaki PHP sürümüne tıklayarak bu gereksinimin nasıl belirlendiği hakkında daha fazla bilgi edinin.";
+"domain_list.tooltips.checkmark" = "Bu alan adı, bu gereksinimle uyumlu bir PHP sürümüyle sunuluyor (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "Hata! Site İzolasyonu Uygulanmadı";
 "domain_list.alerts_isolation_failed.subtitle" = "Bu sitenin izolasyon durumunu değiştirmeye çalışırken bir hata oluştu. Bu sizin varsayılan siteniz ise ancak bağlantı yoksa, izole etmeyi ayarlamadan önce siteyi manuel olarak bağlamanızı öneririm.";
 "domain_list.alerts_isolation_failed.desc" = "Neyin yanlış gittiğini öğrenmek için komutu terminalinizde manuel olarak çalıştırmayı deneyebilirsiniz: %@";

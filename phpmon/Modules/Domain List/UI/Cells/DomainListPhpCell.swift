@@ -8,17 +8,12 @@
 
 import Cocoa
 import AppKit
-import SwiftUI
 
 final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
-    var container: Container {
-        return App.shared.container
-    }
-
     var site: ValetSite?
 
     private(set) var buttonPhpVersion: NSButton!
-    private(set) var imageViewPhpVersionOK: NSImageView!
+    private(set) var imageViewIsolation: NSImageView!
 
     static func getCellIdentifier(for domain: ValetListable) -> String {
         return "domainListPhpCell"
@@ -46,8 +41,6 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         button.title = "PHP X.X"
         button.alignment = .center
         button.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: button.controlSize))
-        button.image = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
-            .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold))
         button.imagePosition = .imageRight
         button.setContentHuggingPriority(.defaultHigh, for: .vertical)
         button.target = self
@@ -57,14 +50,14 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         let imageView = NSImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = NSImage(named: "Checkmark")
-        imageView.contentTintColor = NSColor(named: "IconColorGreen")
+        imageView.image = NSImage.isolated
+        imageView.contentTintColor = .secondaryLabelColor
         imageView.imageScaling = .scaleProportionallyDown
-        imageView.imageAlignment = .alignLeft
+        imageView.imageAlignment = .alignCenter
         imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
         imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .vertical)
         self.addSubview(imageView)
-        self.imageViewPhpVersionOK = imageView
+        self.imageViewIsolation = imageView
 
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(greaterThanOrEqualToConstant: 70),
@@ -81,79 +74,49 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         self.site = site
 
         buttonPhpVersion.isHidden = false
-        imageViewPhpVersionOK.isHidden = false
+        imageViewIsolation.isHidden = false
 
         buttonPhpVersion.title = "PHP \(site.servingPhpVersion)"
         buttonPhpVersion.setAccessibilityLabel(buttonPhpVersion.title)
+        let canIsolate = site.container.valet.features.contains(.isolatedSites)
+            && (!site.container.phpEnvs.availablePhpVersions.isEmpty || site.isolatedPhpVersion != nil)
+        buttonPhpVersion.isEnabled = canIsolate
+        buttonPhpVersion.image = canIsolate
+            ? NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
+                .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold))
+            : nil
+        buttonPhpVersion.toolTip = (canIsolate ? "domain_list.site_isolation" : "domain_list.isolation_unavailable").localized
 
-        imageViewPhpVersionOK.toolTip = nil
-
-        imageViewPhpVersionOK.contentTintColor = site.isCompatibleWithPreferredPhpVersion
-            ? NSColor(named: "IconColorGreen")
-            : NSColor(named: "IconColorRed")
-
-        if site.isolatedPhpVersion != nil {
-            imageViewPhpVersionOK.isHidden = false
-            imageViewPhpVersionOK.image = NSImage.isolated
-            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
-        } else {
-            imageViewPhpVersionOK.isHidden = (site.preferredPhpVersion == "???"
-                                              || !site.isCompatibleWithPreferredPhpVersion)
-            imageViewPhpVersionOK.image = NSImage.checkmark
-            imageViewPhpVersionOK.toolTip = "domain_list.tooltips.checkmark".localized(site.preferredPhpVersion)
-        }
+        let isIsolated = site.isolatedPhpVersion != nil
+        imageViewIsolation.image = isIsolated
+            ? NSImage.isolated
+            : NSImage(systemSymbolName: "globe", accessibilityDescription: nil)
+        imageViewIsolation.toolTip = isIsolated
+            ? "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
+            : "domain_list.sidebar.global".localized
+        imageViewIsolation.setAccessibilityLabel(imageViewIsolation.toolTip)
     }
 
     func populateCell(with proxy: ValetProxy) {
+        site = nil
         buttonPhpVersion.isHidden = true
-        imageViewPhpVersionOK.isHidden = true
+        imageViewIsolation.isHidden = true
         return
     }
 
     @objc func pressedPhpVersion(_ sender: Any) {
-        guard let site = self.site else { return }
+        guard let site,
+              buttonPhpVersion.isEnabled,
+              !site.container.phpEnvs.isBusy,
+              !site.container.valet.isBusy,
+              let controller = (window?.windowController as? DomainListWC)?.contentVC,
+              !controller.sidebarModel.isBusy else { return }
 
-        var validPhpSuggestions: [VersionNumber] {
-            if site.isolatedPhpVersion != nil {
-                return []
-            }
-
-            guard let install = container.phpEnvs.phpInstall else {
-                return []
-            }
-
-            return container.phpEnvs.validVersions(for: site.preferredPhpVersion)
-                .filter({ version in
-                version.short != install.version?.short
-            })
-        }
-
-        let button = self.buttonPhpVersion!
-        let popover = NSPopover()
-
-        let view = VersionPopoverView(
-            site: site,
-            validPhpVersions: validPhpSuggestions,
-            prefersIsolationSuggestions: Valet.enabled(feature: .isolatedSites),
-            parent: popover
-        )
-
-        let controller = NSHostingController(rootView: view)
-
-        // Force a layout pass to get accurate sizing, this resolves positioning issues
-        controller.view.setFrameSize(NSSize(width: 400, height: 1000))
-        controller.view.layoutSubtreeIfNeeded()
-
-        let fittingSize = controller.view.fittingSize
-        let finalWidth: CGFloat = min(fittingSize.width, 400)
-        let finalHeight: CGFloat = min(fittingSize.height, 700)
-
-        controller.view.frame = NSRect(x: 0, y: 0, width: finalWidth, height: finalHeight)
-
-        popover.contentViewController = controller
-        popover.behavior = .transient
-        popover.animates = true
-        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
+        let menu = controller.isolationMenu(for: site)
+        guard !menu.items.isEmpty else { return }
+        let bottom = buttonPhpVersion.isFlipped
+            ? buttonPhpVersion.bounds.maxY + 4
+            : buttonPhpVersion.bounds.minY - 4
+        menu.popUp(positioning: nil, at: NSPoint(x: 0, y: bottom), in: buttonPhpVersion)
     }
-
 }

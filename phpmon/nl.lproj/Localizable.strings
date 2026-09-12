@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "Geen domeinen gevonden voor deze zoekopdracht of u heeft nog geen domeinen gekoppeld.";
 "domain_list.domains_empty.button" = "Domein toevoegen...";
 "domain_list.tooltips.isolated" = "Dit domein is geïsoleerd en gebruikt PHP %@ in plaats van de globaal gekoppelde PHP.";
-"domain_list.tooltips.checkmark" = "Dit domein wordt geserveerd met een versie van PHP die compatibel is met deze vereiste (PHP %@). Klik op de PHP-versie naast dit vinkje om meer informatie te vinden over hoe deze vereiste is bepaald.";
+"domain_list.tooltips.checkmark" = "Dit domein wordt geserveerd met een versie van PHP die compatibel is met deze vereiste (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "Oeps! Site-isolatie niet toegepast";
 "domain_list.alerts_isolation_failed.subtitle" = "Er is iets misgegaan bij het wijzigen van de isolatiestatus voor deze site. Als dit uw standaardsite is maar niet is gekoppeld, raad ik aan om de site handmatig te koppelen voordat u isolatie instelt.";
 "domain_list.alerts_isolation_failed.desc" = "Om erachter te komen wat er misgaat, kan u proberen dit commando handmatig in uw terminal uit te voeren: %@";

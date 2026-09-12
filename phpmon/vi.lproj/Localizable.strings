@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "Không có tên miền nào được tìm thấy cho truy vấn này hoặc bạn chưa liên kết bất kỳ tên miền nào.";
 "domain_list.domains_empty.button" = "Thêm miền...";
 "domain_list.tooltips.isolated" = "Tên miền này được cô lập và sử dụng PHP %@ thay vì PHP được liên kết toàn cầu.";
-"domain_list.tooltips.checkmark" = "Tên miền này đang được phục vụ với một phiên bản PHP tương thích với yêu cầu này (PHP %@). Bấm vào phiên bản PHP bên cạnh dấu check để tìm hiểu thêm thông tin về cách xác định yêu cầu này.";
+"domain_list.tooltips.checkmark" = "Tên miền này đang được phục vụ với một phiên bản PHP tương thích với yêu cầu này (PHP %@).";
 "domain_list.alerts_isolation_failed.title" = "Rất tiếc! Không áp dụng Cô lập trang web";
 "domain_list.alerts_isolation_failed.subtitle" = "Có điều gì đó đã không đúng khi cố gắng thay đổi trạng thái cô lập cho trang web này. Nếu đây là trang web mặc định của bạn nhưng lại không được liên kết, tôi khuyên bạn nên liên kết trang web thủ công trước khi thiết lập cô lập.";
 "domain_list.alerts_isolation_failed.desc" = "Để tìm hiểu điều gì đã sai, bạn có thể thử chạy lệnh trong terminal của mình thủ công: %@";

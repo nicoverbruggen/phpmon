@@ -191,7 +191,7 @@
 "domain_list.domains_empty.desc" = "この検索クエリに該当するドメインは見つからなかったか、まだドメインをリンクしていません。";
 "domain_list.domains_empty.button" = "ドメインを追加…";
 "domain_list.tooltips.isolated" = "このドメインは隔離されており、グローバルにリンクされた PHP ではなく PHP %@ を使用しています。";
-"domain_list.tooltips.checkmark" = "このドメインは、この要件に対応するPHPバージョン（PHP %@）で提供されています。チェックマークの隣にあるPHPバージョンをクリックすると、どのようにこの要件が決定されたかについて詳細情報が表示されます。";
+"domain_list.tooltips.checkmark" = "このドメインは、この要件に対応するPHPバージョン（PHP %@）で提供されています。";
 "domain_list.alerts_isolation_failed.title" = "おっと！サイト分離が適用されませんでした";
 "domain_list.alerts_isolation_failed.subtitle" = "このサイトの隔離ステータスを変更しようとした際に問題が発生しました。デフォルトサイトであるがリンクされていない場合は、隔離設定前に手動でサイトをリンクすることをおすすめします。";
 "domain_list.alerts_isolation_failed.desc" = "端末で手動でコマンドを実行し、何が失敗したのか調べることができます：%@";

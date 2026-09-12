@@ -185,18 +185,30 @@ extension DomainListVC {
     }
 
     @objc func isolateSiteViaMenuItem(sender: PhpMenuItem) {
-        guard let site = selectedSite else {
+        guard !sidebarModel.isBusy,
+              let site = sender.representedObject as? ValetSite,
+              !site.container.phpEnvs.isBusy, !site.container.valet.isBusy,
+              site.container.valet.features.contains(.isolatedSites),
+              site.container.phpEnvs.availablePhpVersions.contains(sender.version) else {
             return
         }
 
         self.isolateSite(site: site, version: sender.version)
     }
 
-    @objc func removeIsolatedSiteViaMenuItem() {
-        guard let site = selectedSite else {
+    @objc func removeIsolatedSiteViaMenuItem(sender: NSMenuItem) {
+        guard !sidebarModel.isBusy,
+              let site = sender.representedObject as? ValetSite,
+              !site.container.phpEnvs.isBusy, !site.container.valet.isBusy,
+              site.container.valet.features.contains(.isolatedSites),
+              site.isolatedPhpVersion != nil else {
             return
         }
 
+        removeIsolation(for: site)
+    }
+
+    func removeIsolation(for site: ValetSite) {
         waitAndExecute {
             do {
                 // Instruct Valet to remove isolation
