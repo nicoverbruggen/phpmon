@@ -29,15 +29,18 @@ struct RunBlockingTests {
     }
 
     @Test func blocking_work_allows_other_tasks_to_make_progress() async {
-        let (completed, task) = await runBlocking {
+        let (completed, hasSwiftTask, task) = await runBlocking {
+            let hasSwiftTask = withUnsafeCurrentTask { $0 != nil }
             let finished = DispatchGroup()
             finished.enter()
             let task = Task.detached(priority: .userInitiated) { finished.leave() }
             // Bound the wait so a regression fails instead of hanging the suite.
-            return (finished.wait(timeout: .now() + 5) == .success, task)
+            return (finished.wait(timeout: .now() + 5) == .success, hasSwiftTask, task)
         }
 
         await task.value
+        // Spare workers can hide starvation, so also check the execution context.
+        #expect(!hasSwiftTask)
         #expect(completed)
     }
 
