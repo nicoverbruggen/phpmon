@@ -51,8 +51,8 @@ struct PhpVersionManagerView: View {
 
         await delay(seconds: 1)
 
-        // PHP formulae may not be installable with older Homebrew version
-        if version.major != 4 && version.major != 5 && version.major != 6 {
+        // Warn when this Homebrew release is outside the supported versions.
+        if ![4, 5, 6, 7].contains(version.major) {
             Task { @MainActor in
                 self.presentErrorAlert(
                     title: "phpman.warnings.unsupported.title".localized,
