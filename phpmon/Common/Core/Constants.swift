@@ -101,6 +101,11 @@ nonisolated struct Constants {
     }
 
     /**
+     The major versions of Homebrew that are supported.
+     */
+    static let SupportedHomebrewVersions: Set = [4, 5, 6, 7]
+
+    /**
      * The PHP versions supported by this application.
      * Any other PHP versions are considered invalid.
      */

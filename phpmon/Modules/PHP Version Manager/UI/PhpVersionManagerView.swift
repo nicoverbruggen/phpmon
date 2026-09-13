@@ -52,7 +52,7 @@ struct PhpVersionManagerView: View {
         await delay(seconds: 1)
 
         // Warn when this Homebrew release is outside the supported versions.
-        if ![4, 5, 6, 7].contains(version.major) {
+        if !Constants.SupportedHomebrewVersions.contains(version.major) {
             Task { @MainActor in
                 self.presentErrorAlert(
                     title: "phpman.warnings.unsupported.title".localized,
