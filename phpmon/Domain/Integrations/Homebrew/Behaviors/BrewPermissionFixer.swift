@@ -33,6 +33,9 @@ class BrewPermissionFixer {
      of other PHP versions, in which case the permissions need to set correctly.
      */
     public func fixPermissions() async throws {
+        broken = []
+        // Fake installations must never inspect or repair ownership on the host.
+        guard !(container.filesystem is TestableFileSystem) else { return }
         await determineBrokenFormulae()
 
         if broken.isEmpty {
@@ -40,7 +43,11 @@ class BrewPermissionFixer {
         }
 
         let script = buildBrokenFormulaeScript()
-        try AppleScript.runSimpleShellAsAdmin(script)
+
+        // The admin prompt plus `brew services stop` and the recursive `chown`
+        // block until they complete, so this must never run on the main actor
+        // (this method is reached from main-actor SwiftUI actions).
+        try await runBlocking { try AppleScript.runSimpleShellAsAdmin(script) }
 
         Log.info("Ownership was taken of the folder(s) at: " + broken
             .map({ $0.path })
@@ -61,8 +68,10 @@ class BrewPermissionFixer {
                 ? "php"
                 : "php@\(formula)"
 
-            let binFolderOwned = isOwnedByRoot(path: "\(container.paths.optPath)/\(realFormula)/bin")
-            let sbinFolderOwned = isOwnedByRoot(path: "\(container.paths.optPath)/\(realFormula)/sbin")
+            let path = "\(container.paths.optPath)/\(realFormula)"
+            let (binFolderOwned, sbinFolderOwned) = await runBlocking {
+                (Self.isOwnedByRoot(path: path + "/bin"), Self.isOwnedByRoot(path: path + "/sbin"))
+            }
 
             if binFolderOwned || sbinFolderOwned {
                 Log.warn("\(formula) is owned by root")
@@ -105,7 +114,7 @@ class BrewPermissionFixer {
      Checks if the directory at the path is owned by the `root` user,
      by checking the FS owner account name attribute.
      */
-    private func isOwnedByRoot(path: String) -> Bool {
+    nonisolated private static func isOwnedByRoot(path: String) -> Bool {
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: path)
             if let owner = attributes[.ownerAccountName] as? String {

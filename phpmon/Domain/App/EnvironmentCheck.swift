@@ -13,8 +13,10 @@ import Foundation
  Checks that require an app restart will always lead to an alert and app termination shortly after.
  */
 struct EnvironmentCheck {
-    let command: (_ container: Container) async -> Bool
-    let fixCommand: ((_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)?
+    // `@MainActor`: these checks read main-actor domain state (`Valet.shared`, `phpEnvs`,
+    // …) and orchestrate on the main actor, hopping off only for `await container.shell`.
+    let command: @MainActor (_ container: Container) async -> Bool
+    let fixCommand: (@MainActor (_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)?
     let fixDescription: String?
     let name: String
     let titleText: String
@@ -24,8 +26,8 @@ struct EnvironmentCheck {
     let requiresAppRestart: Bool
 
     init(
-        command: @escaping (_ container: Container) async -> Bool,
-        fix: ((_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)? = nil,
+        command: @escaping @MainActor (_ container: Container) async -> Bool,
+        fix: (@MainActor (_ container: Container, _ didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void) async throws -> Void)? = nil,
         fixDescription: String? = nil,
         name: String,
         titleText: String,

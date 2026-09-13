@@ -69,10 +69,7 @@ struct Toolchain {
     }
 
     func onboardingDisposition() async -> Startup.OnboardingDisposition {
-        let developerToolsInstalled = await status(.commandLineTools).installed
         let homebrewInstalled = await status(.homebrew).installed
-        let phpInstalled = await status(.php).installed
-        let composerInstalled = await status(.composer).installed
 
         if !homebrewInstalled {
             return .wizard
@@ -81,6 +78,10 @@ struct Toolchain {
         if Stats.successfulLaunchCount > 0 {
             return .normal
         }
+
+        let developerToolsInstalled = await status(.commandLineTools).installed
+        let phpInstalled = await status(.php).installed
+        let composerInstalled = await status(.composer).installed
 
         if developerToolsInstalled && phpInstalled && composerInstalled {
             return .normal

@@ -68,9 +68,7 @@ extension DomainListVC {
     }
 
     private func reloadSelectedRow() {
-        tableView.reloadData(forRowIndexes: [tableView.selectedRow], columnIndexes: [0, 1, 2, 3, 4])
-        tableView.deselectRow(tableView.selectedRow)
-        tableView.selectRowIndexes([tableView.selectedRow], byExtendingSelection: true)
+        searchedFor(text: lastSearchedFor)
     }
 
     // MARK: - Interactions with `valet` or terminal
@@ -128,8 +126,8 @@ extension DomainListVC {
                     proxy.toggleFavorite()
                 }
 
-                // Reload the entire table as the sorting may be affected
-                self.reloadTable()
+                // Favorites affect both the sidebar counts and the visible rows.
+                self.searchedFor(text: self.lastSearchedFor)
             }
         }
     }
@@ -187,18 +185,30 @@ extension DomainListVC {
     }
 
     @objc func isolateSiteViaMenuItem(sender: PhpMenuItem) {
-        guard let site = selectedSite else {
+        guard !sidebarModel.isBusy,
+              let site = sender.representedObject as? ValetSite,
+              !site.container.phpEnvs.isBusy, !site.container.valet.isBusy,
+              site.container.valet.features.contains(.isolatedSites),
+              site.container.phpEnvs.availablePhpVersions.contains(sender.version) else {
             return
         }
 
         self.isolateSite(site: site, version: sender.version)
     }
 
-    @objc func removeIsolatedSiteViaMenuItem() {
-        guard let site = selectedSite else {
+    @objc func removeIsolatedSiteViaMenuItem(sender: NSMenuItem) {
+        guard !sidebarModel.isBusy,
+              let site = sender.representedObject as? ValetSite,
+              !site.container.phpEnvs.isBusy, !site.container.valet.isBusy,
+              site.container.valet.features.contains(.isolatedSites),
+              site.isolatedVersion != nil else {
             return
         }
 
+        removeIsolation(for: site)
+    }
+
+    func removeIsolation(for site: ValetSite) {
         waitAndExecute {
             do {
                 // Instruct Valet to remove isolation

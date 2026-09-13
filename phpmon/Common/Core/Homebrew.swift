@@ -25,15 +25,15 @@ struct HomebrewFormulae {
             return HomebrewFormula("php", elevated: true)
         }
 
-        guard let install = container.phpEnvs.phpInstall else {
+        guard let formula = container.phpEnvs.phpInstall?.formula else {
             return HomebrewFormula("php", elevated: true)
         }
 
-        return HomebrewFormula(install.formula, elevated: true)
+        return HomebrewFormula(formula, elevated: true)
     }
 
     var nginx: HomebrewFormula {
-        return BrewDiagnostics.shared.usesNginxFullFormula
+        return BrewDiagnostics(container).usesNginxFullFormula
         ? HomebrewFormula("nginx-full", elevated: true)
         : HomebrewFormula("nginx", elevated: true)
     }
@@ -43,7 +43,7 @@ struct HomebrewFormulae {
     }
 }
 
-class HomebrewFormula: Equatable, Hashable, CustomStringConvertible {
+nonisolated final class HomebrewFormula: Equatable, Hashable, CustomStringConvertible, Sendable {
     let name: String
     let elevated: Bool
     let servicePrefix: String?

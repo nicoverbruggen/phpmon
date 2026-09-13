@@ -9,8 +9,9 @@
 import Cocoa
 import AppKit
 
-protocol DomainListCellProtocol {
+protocol DomainListCellProtocol: NSTableCellView {
     static func getCellIdentifier(for domain: ValetListable) -> String
+    static func makeCell(identifier: String) -> Self
     func populateCell(with site: ValetSite)
     func populateCell(with proxy: ValetProxy)
 }

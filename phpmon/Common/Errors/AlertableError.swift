@@ -9,5 +9,8 @@
 import Foundation
 
 public protocol AlertableError {
-    func getErrorMessageKey() -> String
+    // `nonisolated`: alertable errors are thrown/inspected across isolation
+    // boundaries (e.g. off-main error handling), so the requirement must not be
+    // main-actor isolated. Conformers like `AdminPrivilegeError` are `nonisolated`.
+    nonisolated func getErrorMessageKey() -> String
 }

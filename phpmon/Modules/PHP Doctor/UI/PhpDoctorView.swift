@@ -64,7 +64,11 @@ struct PhpDoctorView: View {
 
             List {
                 VStack(alignment: .leading, spacing: 0) {
-                    if !warningManager.hasWarnings() {
+                    if !warningManager.hasCompletedInitialEvaluation {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    } else if !warningManager.hasWarnings() {
                         NoWarningsView()
                     } else {
                         ForEach(warningManager.warnings) { warning in

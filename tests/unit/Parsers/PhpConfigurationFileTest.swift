@@ -79,4 +79,49 @@ class PhpConfigurationFileTest {
         #expect(configurationFile.get(for: "error_reporting") == "E_ALL")
     }
 
+    @Test func fake_configuration_edits_never_touch_a_real_file_at_the_same_path() async throws {
+        let destination = FileManager.default.temporaryDirectory
+            .appendingPathComponent("phpmon-config-isolation-\(UUID().uuidString).ini")
+        let realContents = "memory_limit = 128M\n"
+        try realContents.write(to: destination, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: destination) }
+
+        let fake = Container.fake(files: [
+            destination.path: .fake(.text, "memory_limit = 512M\n")
+        ])
+        let configurationFile = try #require(PhpConfigurationFile.from(fake, filePath: destination.path))
+
+        try await configurationFile.replace(key: "memory_limit", value: "1024M")
+
+        #expect(try String(contentsOf: destination, encoding: .utf8) == realContents)
+        #expect(try fake.filesystem.getStringFromFile(destination.path) == "memory_limit = 1024M\n")
+        #expect(configurationFile.get(for: "memory_limit") == "1024M")
+
+        try fake.filesystem.writeAtomicallyToFile(destination.path, content: "memory_limit = 256M\n")
+        await configurationFile.reload()
+        #expect(configurationFile.get(for: "memory_limit") == "256M")
+    }
+
+    @Test func overlapping_edits_preserve_every_changed_key() async throws {
+        let path = "/private/tmp/phpmon-overlapping-config-\(UUID().uuidString).ini"
+        let contents = (0..<10).map { "setting_\($0) = 0" }.joined(separator: "\n")
+        let fake = Container.fake(files: [path: .fake(.text, contents)])
+        let configurationFile = try #require(PhpConfigurationFile.from(fake, filePath: path))
+
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            for index in 0..<10 {
+                group.addTask {
+                    try await configurationFile.replace(key: "setting_\(index)", value: "1")
+                }
+            }
+            try await group.waitForAll()
+        }
+
+        let saved = try #require(PhpConfigurationFile.from(fake, filePath: path))
+        for index in 0..<10 {
+            #expect(saved.get(for: "setting_\(index)") == "1")
+            #expect(configurationFile.get(for: "setting_\(index)") == "1")
+        }
+    }
+
 }

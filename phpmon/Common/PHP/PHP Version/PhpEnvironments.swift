@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 class PhpEnvironments {
     var container: Container
@@ -14,12 +15,19 @@ class PhpEnvironments {
     // MARK: - Initializer
 
     /**
-     Loads the currently active PHP installation upon startup. May be empty.
+     Creates the PHP environment bookkeeping. `currentInstall` starts out nil:
+     loading it requires blocking probe I/O, which must not run on the main
+     actor (this initializer runs during `Container.bind()` at launch). The
+     environment check in `Startup` populates it via the async
+     `ActivePhpInstallation.load`; test containers populate it synchronously in
+     `Container.overrideFake` (where fake I/O is instant).
      */
     init(container: Container) {
         self.container = container
-        self.currentInstall = ActivePhpInstallation.load(container)
     }
+
+    var onBusyChange: (() -> Void)?
+    var onInstallationChange: (() -> Void)?
 
     /**
      Loads the valid HomebrewPackage information.
@@ -64,8 +72,8 @@ class PhpEnvironments {
      Determine which PHP version the `php` formula is aliased to.
      */
     func determinePhpAlias() async {
-        if let alias = self.homebrewPackage.version {
-            PhpEnvironments.brewPhpAlias = self.homebrewPackage.version
+        if let alias = self.homebrewPackage?.version {
+            brewPhpAlias = alias
             Log.info("[BREW] On your system, the `php` formula means version \(alias).")
         } else {
             Log.info("[BREW] Could not determine what version the `php` formula is. The alias may have been removed.")
@@ -87,13 +95,13 @@ class PhpEnvironments {
             }
 
             if let version = try? VersionNumber.parse(longVersionString) {
-                PhpEnvironments.brewPhpAlias = version.short
-                if version.short != homebrewPackage.version {
+                brewPhpAlias = version.short
+                if version.short != homebrewPackage?.version {
                     Log.info("[BREW] An older or newer version of `php` is actually installed (\(version.short)).")
                 }
             } else {
                 Log.warn("Could not determine the actual version of the php binary; assuming Homebrew is correct.")
-                PhpEnvironments.brewPhpAlias = homebrewPackage.version
+                brewPhpAlias = homebrewPackage?.version
             }
         }
     }
@@ -106,48 +114,36 @@ class PhpEnvironments {
     /** Whether the switcher is busy performing any actions. */
     @MainActor var isBusy: Bool = false {
         didSet {
-            MainMenu.shared.refreshIcon()
-            MainMenu.shared.rebuild()
+            onBusyChange?()
         }
     }
 
-    // MARK: - Thread-Safe PHP Version Storage
+    // MARK: - PHP Version Storage
 
     /** All versions of PHP that are currently supported. */
-    private let _availablePhpVersions = Locked<[String]>([])
-    var availablePhpVersions: [String] {
-        get { _availablePhpVersions.value }
-        set { _availablePhpVersions.value = newValue }
-    }
+    var availablePhpVersions: [String] = []
 
     /** All versions of PHP that are currently installed but not compatible. */
-    private let _incompatiblePhpVersions = Locked<[String]>([])
-    var incompatiblePhpVersions: [String] {
-        get { _incompatiblePhpVersions.value }
-        set { _incompatiblePhpVersions.value = newValue }
-    }
+    var incompatiblePhpVersions: [String] = []
 
     /** Cached information about the PHP installations. */
-    private let _cachedPhpInstallations = Locked<[String: PhpInstallation]>([:])
-    var cachedPhpInstallations: [String: PhpInstallation] {
-        get { _cachedPhpInstallations.value }
-        set { _cachedPhpInstallations.value = newValue }
-    }
+    var cachedPhpInstallations: [String: PhpInstallation] = [:]
+
+    private var pendingDetection: Task<Set<String>, Never>?
 
     /** Information about the currently linked PHP installation. */
-    private let _currentInstall = Locked<ActivePhpInstallation?>(nil)
     var currentInstall: ActivePhpInstallation? {
-        get { _currentInstall.value }
-        set {
-            // Update the synchronized value
-            _currentInstall.value = newValue
-            // Let the PHP extension manager, if it exists, know the version changed
-            WindowManager
-                .controller(of: PhpExtensionManagerWC.self)?
-                .view.didUpdatePhpVersion()
+        didSet {
+            onInstallationChange?()
         }
     }
 
+    /// The active application's alias. Independent environments keep their own value.
+    nonisolated static var brewPhpAlias: String? {
+        App.shared.container.phpEnvs?.brewPhpAlias
+    }
+
+    // Subprocess callers can read this container's alias off the main actor.
     /**
      The version that the `php` formula via Brew is aliased to on the current system.
 
@@ -157,35 +153,33 @@ class PhpEnvironments {
 
      In order for our check to be correct, we query Homebrew locally.
      */
-    private static let _brewPhpAlias = Locked<String?>(nil)
-    static var brewPhpAlias: String? {
-        get { _brewPhpAlias.value }
-        set { _brewPhpAlias.value = newValue }
+    private nonisolated let _brewPhpAlias = OSAllocatedUnfairLock<String?>(initialState: nil)
+    nonisolated var brewPhpAlias: String? {
+        get { _brewPhpAlias.withLock { $0 } }
+        set { _brewPhpAlias.withLock { $0 = newValue } }
     }
 
     /**
      Information we were able to discern from the Homebrew info command.
      */
-    private let _homebrewPackage = Locked<HomebrewPackage?>(nil)
-    var homebrewPackage: HomebrewPackage! {
-        get { _homebrewPackage.value }
-        set { _homebrewPackage.value = newValue }
-    }
+    var homebrewPackage: HomebrewPackage?
 
     /**
      It's possible for the alias to be newer than the actual installed version of PHP.
      */
     var homebrewBrewPhpAlias: String? {
         if homebrewPackage == nil {
-            // For UI testing and as a fallback, determine this version by using (fake) php-config
-            let version = App.shared.container.command.execute(path: container.paths.phpConfig,
+            // For UI testing and as a fallback, determine this version by using (fake) php-config.
+            // This blocking call is acceptable here: the nil-package case only occurs with fake
+            // containers (UI testing), where command execution is instant.
+            let version = container.command.execute(path: container.paths.phpConfig,
                                    arguments: ["--version"],
                                    trimNewlines: true)
             // This should always work because of how our testing flow works
             return try? VersionNumber.parse(version).short
         }
 
-        return homebrewPackage.version
+        return homebrewPackage?.version
     }
 
     /**
@@ -223,10 +217,6 @@ class PhpEnvironments {
         return InternalSwitcher(App.shared.container)
     }
 
-    public func reloadPhpVersions() async {
-        await self.detectPhpVersions()
-    }
-
     /**
      Detects which versions of PHP are installed.
      This step also detects which versions of PHP are incompatible with the current version of Valet.
@@ -236,14 +226,24 @@ class PhpEnvironments {
      */
     @discardableResult
     public func detectPhpVersions() async -> Set<String> {
-        let files = await container.shell.pipe("ls \(container.paths.optPath) | grep php@").out
+        // Watcher and package-manager scans must publish their models and helpers in order.
+        let previous = pendingDetection
+        let detection = Task {
+            _ = await previous?.value
+            return await performPhpVersionDetection()
+        }
+        pendingDetection = detection
+        return await detection.value
+    }
 
-        var installedVersions = await extractPhpVersions(
-            from: files.components(separatedBy: "\n")
-        )
+    private func performPhpVersionDetection() async -> Set<String> {
+        let files = await runBlocking { [container] in
+            (try? container.filesystem.getShallowContentsOfDirectory(container.paths.optPath)) ?? []
+        }
+        var installedVersions = await extractPhpVersions(from: files)
 
         let supportedByValet: Set<String> = {
-            guard let version = Valet.shared.version else {
+            guard let version = container.valet.version else {
                 return Constants.DetectedPhpVersions
             }
 
@@ -253,10 +253,10 @@ class PhpEnvironments {
         // Make sure the aliased version is detected
         // The user may have `php` installed, but not e.g. `php@8.0`
         // We should also detect that as a version that is installed
-        if let phpAlias = homebrewPackage.version {
+        if let phpAlias = homebrewPackage?.version {
             // Avoid inserting a duplicate
             if !installedVersions.contains(phpAlias) && container.filesystem.fileExists("\(container.paths.optPath)/php/bin/php") {
-                let phpAliasInstall = PhpInstallation(container, phpAlias)
+                let phpAliasInstall = await PhpInstallation.detect(container, phpAlias)
                 // Before inserting, ensure that the actual output matches the alias
                 // if that isn't the case, our formula remains out-of-date
                 if !phpAliasInstall.isMissingBinary {
@@ -265,23 +265,48 @@ class PhpEnvironments {
             }
         }
 
-        let supportedVersions = Valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
+        let supportedVersions = container.valet.installed ? installedVersions.intersection(supportedByValet) : installedVersions
 
-        availablePhpVersions = Array(supportedVersions)
+        let availableVersions = Array(supportedVersions)
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
-        incompatiblePhpVersions = Array(installedVersions.subtracting(supportedByValet))
+        let incompatibleVersions = Array(installedVersions.subtracting(supportedByValet))
             .sorted(by: { $0.versionCompare($1) == .orderedDescending })
 
-        Log.info("The PHP versions that were detected are: \(availablePhpVersions)")
-        Log.info("The PHP versions that were unsupported are: \(incompatiblePhpVersions)")
+        Log.info("The PHP versions that were detected are: \(availableVersions)")
+        Log.info("The PHP versions that were unsupported are: \(incompatibleVersions)")
+
+        // Probe all detected versions concurrently on a Dispatch queue (each
+        // probe runs several subprocesses), then build the main-actor models
+        // from the returned `Sendable` probe data without further I/O.
+        let versionsToProbe = availableVersions
+        let probes = await withTaskGroup(
+            of: (String, PhpInstallation.Probe).self,
+            returning: [String: PhpInstallation.Probe].self
+        ) { [container] group in
+            for version in versionsToProbe {
+                group.addTask {
+                    await (version, runBlocking { PhpInstallation.Probe(container, version) })
+                }
+            }
+
+            var results: [String: PhpInstallation.Probe] = [:]
+            for await (version, probe) in group {
+                results[version] = probe
+            }
+            return results
+        }
 
         var mappedVersions: [String: PhpInstallation] = [:]
 
-        availablePhpVersions.forEach { version in
-            mappedVersions[version] = PhpInstallation(container, version)
+        availableVersions.forEach { version in
+            if let probe = probes[version] {
+                mappedVersions[version] = PhpInstallation(container, version, probe: probe)
+            }
         }
 
+        availablePhpVersions = availableVersions
+        incompatiblePhpVersions = incompatibleVersions
         cachedPhpInstallations = mappedVersions
 
         await PhpHelper.regenerate(container, installedVersions: installedVersions)
@@ -291,7 +316,7 @@ class PhpEnvironments {
 
     /**
      Extracts valid PHP versions from an array of strings.
-     This array of strings is usually retrieved from `grep`.
+     The strings are entry names from Homebrew's opt directory.
      
      This method only parses and returns detected versions.
      */
@@ -340,7 +365,7 @@ class PhpEnvironments {
             return false
         }
 
-        if install.version.short == version {
+        if install.version?.short == version {
             Log.info("Switching to version \(version) seems to have succeeded. Validation passed.")
             Log.info("Keeping track that this is the new version!")
             Stats.persistCurrentGlobalPhpVersion(version: version)

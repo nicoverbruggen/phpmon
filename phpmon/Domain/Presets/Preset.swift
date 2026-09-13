@@ -134,7 +134,7 @@ struct Preset: Codable, Equatable {
     // MARK: - Apply Functionality
 
     private func switchToPhpVersionIfValid() async -> Bool {
-        if container.phpEnvs.currentInstall?.version.short == self.version! {
+        if container.phpEnvs.currentInstall?.version?.short == self.version! {
             Log.info("The version we are supposed to switch to is already active.")
             return true
         }
@@ -225,8 +225,8 @@ struct Preset: Codable, Equatable {
             return nil
         }
 
-        if install.version.short != version {
-            return install.version.short
+        if install.version?.short != version {
+            return install.version?.short
         } else {
             return nil
         }

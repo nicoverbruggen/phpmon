@@ -15,6 +15,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         return NSApplication.shared.delegate as! AppDelegate
     }
 
+    // MARK: - Entry Point
+
+    /// `NSApplication.delegate` does not retain its delegate; this keeps it alive.
+    private static var mainDelegate: AppDelegate?
+
+    /**
+     The app starts without a main storyboard: the delegate is created here,
+     the main menu bar is built in code, and control is handed to AppKit.
+     */
+    static func main() {
+        let app = NSApplication.shared
+
+        let delegate = AppDelegate()
+        mainDelegate = delegate
+        app.delegate = delegate
+
+        app.mainMenu = AppMenu.build(actionsTarget: delegate)
+
+        _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+    }
+
     // MARK: - Variables
 
     /**
@@ -80,12 +101,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // No matter what, clear PHP Guard if it's a debug build
         Stats.clearCurrentGlobalPhpVersion()
 
-        // Load testable configuration profile (if provided via launch argument)
+        // Load the testable configuration from the environment or a launch argument.
         CLI.loadConfigurationProfile()
         #endif
 
         // Check if any command line arguments need to be acted upon
         CLI.checkCommandLineArguments()
+
+        // Resolve the user's PATH eagerly, but on a Dispatch queue: `RealShell`
+        // resolves it lazily by spawning an interactive shell (up to seconds), which
+        // must never block the main actor. This runs after the (DEBUG) configuration
+        // profile may have swapped in fakes, so tests never spawn a real shell here.
+        // Consumers that race this warm-up serialize on the shell's internal lock.
+        Task { [shell = state.container.shell!] in
+            await runBlocking { _ = shell.PATH }
+        }
 
         if state.container.filesystem.fileExists("~/.config/phpmon/verbose") {
             Log.shared.verbosity = .cli
@@ -94,8 +124,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         Log.info("Using \(App.displayName) \(App.version) on macOS \(App.macVersion).")
 
+        state.container.phpEnvs.onBusyChange = {
+            MainMenu.shared.refreshIcon()
+            MainMenu.shared.rebuild()
+        }
+        state.container.phpEnvs.onInstallationChange = {
+            WindowManager.controller(of: PhpExtensionManagerWC.self)?.view.didUpdatePhpVersion()
+        }
+
         // Set up final singletons
         self.valet = Valet.shared
+        self.valet.checkForMarketingMode()
         self.brew = Brew.shared
         super.init()
     }
@@ -115,6 +154,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             return
         }
 
+        #if DEBUG
+        // Structural dump of the main menu, used to verify parity during the
+        // storyboard → code migration of the menu bar.
+        if ProcessInfo.processInfo.arguments.contains("--dump-main-menu") {
+            // Written to stderr: unlike stdout, it is unbuffered when piped.
+            func emit(_ line: String) {
+                FileHandle.standardError.write(Data((line + "\n").utf8))
+            }
+
+            func dump(_ menu: NSMenu, indent: String) {
+                for item in menu.items {
+                    if item.isSeparatorItem {
+                        emit("\(indent)---")
+                        continue
+                    }
+                    let action = item.action.map(String.init(describing:)) ?? "nil"
+                    let mask = item.keyEquivalentModifierMask.rawValue
+                    emit("\(indent)\(item.title) | key=\(item.keyEquivalent) | mask=\(mask) "
+                         + "| action=\(action) | tag=\(item.tag) | enabled=\(item.isEnabled) "
+                         + "| hidden=\(item.isHidden)")
+                    if let submenu = item.submenu {
+                        dump(submenu, indent: indent + "  ")
+                    }
+                }
+            }
+
+            if let mainMenu = NSApp.mainMenu {
+                emit("=== MAIN MENU DUMP ===")
+                dump(mainMenu, indent: "")
+                emit("=== END MENU DUMP ===")
+            }
+        }
+        #endif
+
         // Set up the notification center delegate immediately.
         setupNotifications()
 
@@ -133,13 +206,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     // MARK: - Menu Items
 
-    @IBOutlet weak var menuItemSites: NSMenuItem!
-
     /**
      Ensure relevant menu items in the main menu bar (not the pop-up menu)
      are disabled or hidden when needed.
      */
     public func configureMenuItems(standalone: Bool) {
-        menuItemSites.isHidden = standalone
+        AppMenu.sitesMenuItem?.isHidden = standalone
     }
 }

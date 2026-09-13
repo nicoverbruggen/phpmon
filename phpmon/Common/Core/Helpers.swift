@@ -73,6 +73,6 @@ func delay(seconds: Double) async {
 /**
  A simpler way to initialize a fixed, valid URL.
  */
-func url(_ string: String) -> URL {
+nonisolated func url(_ string: String) -> URL {
     return URL(string: string)!
 }

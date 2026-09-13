@@ -10,9 +10,10 @@
 
 import XCTest
 
+@MainActor
 extension OnboardingTest {
-    func onboardingFlow(with scenario: OnboardingScenario) -> OnboardingTestFlow {
-        return OnboardingTestFlow(testCase: self, scenario: scenario)
+    func onboardingFlow(with scenario: OnboardingScenario, observeProgress: Bool = false) -> OnboardingTestFlow {
+        return OnboardingTestFlow(testCase: self, scenario: scenario, observeProgress: observeProgress)
     }
 }
 
@@ -20,14 +21,16 @@ final class OnboardingTestFlow {
     let app: XCPMApplication
 
     private let testCase: UITestCase
+    private let observeProgress: Bool
 
-    init(testCase: UITestCase, scenario: OnboardingScenario) {
+    init(testCase: UITestCase, scenario: OnboardingScenario, observeProgress: Bool) {
         self.testCase = testCase
+        self.observeProgress = observeProgress
 
         var configuration = TestableConfigurations.working
         configuration.prepareFreshCoreOnboardingSystem()
         configuration.mockRequiredOnboardingInstallCommands()
-        configuration.allowsDelayedShellCommands = true
+        configuration.allowsDelayedShellCommands = observeProgress
         scenario.apply(to: &configuration)
 
         self.app = testCase.launch(
@@ -53,75 +56,79 @@ final class OnboardingTestFlow {
     }
 
     func startWizard() {
-        click(app.buttons["onboarding_wizard.buttons.start_setup".localized])
+        app.buttons["onboarding_wizard.buttons.start_setup".localized].click()
     }
 
     func installDeveloperTools() {
         assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.install_developer_tools".localized])
+        app.buttons["onboarding_wizard.buttons.install_developer_tools".localized].click()
 
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        app.buttons["onboarding_wizard.buttons.continue".localized].click()
     }
 
     func installHomebrew() {
         assertExists(app.staticTexts["onboarding_wizard.command.homebrew.title".localized], 3.0)
         assertExists(app.links["onboarding_wizard.buttons.learn_more".localized], 3.0)
         assertExists(app.buttons["onboarding_wizard.buttons.copy_command".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.copy_command".localized])
+        app.buttons["onboarding_wizard.buttons.copy_command".localized].click()
 
         assertExists(app.buttons["onboarding_wizard.buttons.check_again".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
+        app.buttons["onboarding_wizard.buttons.check_again".localized].click()
     }
 
     func configurePathAutomatically() {
         assertExists(app.buttons["onboarding_wizard.buttons.fix_path".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.fix_path".localized])
+        app.buttons["onboarding_wizard.buttons.fix_path".localized].click()
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
     }
 
     func beginPhpInstall() {
         assertExists(app.buttons["onboarding_wizard.buttons.install_php_composer".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.install_php_composer".localized])
+        app.buttons["onboarding_wizard.buttons.install_php_composer".localized].click()
     }
 
     func installPhp() {
         beginPhpInstall()
-        assertTerminalOutputContains("==> Fetching php and composer formulae...")
+        if observeProgress {
+            assertTerminalOutputContains("==> Fetching shivammathur/php/php...")
+        }
         assertValetInstallIsAvailable(timeout: 5.0)
     }
 
     func beginValetInstall() {
         assertValetInstallIsAvailable()
-        click(app.buttons["onboarding_wizard.buttons.install_valet".localized])
+        app.buttons["onboarding_wizard.buttons.install_valet".localized].click()
     }
 
     func installValet() {
         beginValetInstall()
         testCase.approvePrivilegedCommand(in: app)
-        assertTerminalOutputContains("Updating global composer dependencies...")
-        assertTerminalOutputContains("Fetching dnsmasq and nginx formulae")
-        assertTerminalOutputContains("Updating Valet configuration...")
+        if observeProgress {
+            assertTerminalOutputContains("Updating global composer dependencies...")
+            assertTerminalOutputContains("Fetching dnsmasq and nginx formulae")
+            assertTerminalOutputContains("Updating Valet configuration...")
+        }
         testCase.approvePrivilegedCommand(in: app)
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 4.0)
     }
 
     func skipValet() {
         assertExists(app.buttons["onboarding_wizard.buttons.skip_valet".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.skip_valet".localized])
+        app.buttons["onboarding_wizard.buttons.skip_valet".localized].click()
 
         let skipValetConfirmationButton = app.sheets.buttons[
             "onboarding_wizard.skip_valet_confirmation.confirm".localized
         ]
         assertExists(skipValetConfirmationButton, 3.0)
-        click(skipValetConfirmationButton)
+        skipValetConfirmationButton.click()
         assertContinueButtonIsAvailable()
     }
 
     func continueToMenu() {
         assertExists(app.buttons["onboarding_wizard.buttons.continue".localized], 3.0)
-        click(app.buttons["onboarding_wizard.buttons.continue".localized])
+        app.buttons["onboarding_wizard.buttons.continue".localized].click()
         testCase.waitForMenu(app)
     }
 
@@ -133,7 +140,7 @@ final class OnboardingTestFlow {
 
     func recheckManualPath() {
         assertManualPathInstructions()
-        click(app.buttons["onboarding_wizard.buttons.check_again".localized])
+        app.buttons["onboarding_wizard.buttons.check_again".localized].click()
     }
 
     func assertValetInstallIsAvailable(timeout: TimeInterval = 3.0) {
@@ -183,7 +190,7 @@ final class OnboardingTestFlow {
     }
 
     func dismissCleanupWarning() {
-        click(app.buttons["generic.ok".localized])
+        app.buttons["generic.ok".localized].click()
     }
 
     func approvePrivilegedCommand() {
@@ -204,10 +211,6 @@ final class OnboardingTestFlow {
 
     private func assertNotExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
         testCase.assertNotExists(element, timeout)
-    }
-
-    private func click(_ element: XCUIElement) {
-        testCase.click(element)
     }
 
     func assertTerminalOutputContains(_ text: String, timeout: TimeInterval = 5.0) {
@@ -287,22 +290,22 @@ private extension TestableConfiguration {
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/php"] = .instant("Tapped shivammathur/php.\n")
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/extensions"] = .instant("Tapped shivammathur/extensions.\n")
         shellOutput["/opt/homebrew/bin/brew help trust"] = .instant("Error: Unknown command: trust\n", .stdErr)
-        shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
-            items: [
-                .delayed(0.2, "==> Fetching php and composer formulae...\n"),
-                .delayed(0.2, "==> Downloading php manifest...\n"),
-                .delayed(0.2, "==> Downloading composer manifest...\n"),
-                .delayed(0.2, "==> Pouring php bottle...\n"),
-                .delayed(0.2, "==> Pouring composer bottle...\n"),
-                .delayed(0.2, "==> Caveats\n"),
-                .delayed(2.0, "Installed PHP and Composer.\n")
-            ],
-            transactions: [
-                .write("", to: "/opt/homebrew/bin/php"),
-                .write("", to: "/opt/homebrew/bin/composer"),
-                .shell("ls /opt/homebrew/opt | grep php", .instant("php\n"))
-            ]
-        )
+        shellOutput["/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer"] =
+            BatchFakeShellOutput(
+                items: [
+                    .delayed(0.2, "==> Fetching shivammathur/php/php...\n"),
+                    .delayed(0.2, "==> Downloading php manifest...\n"),
+                    .delayed(0.2, "==> Pouring php bottle...\n"),
+                    .delayed(0.2, "==> Downloading composer manifest...\n"),
+                    .delayed(0.2, "==> Pouring composer bottle...\n"),
+                    .delayed(2.0, "Installed PHP and Composer.\n")
+                ],
+                transactions: [
+                    .write("", to: "/opt/homebrew/bin/php"),
+                    .write("", to: "/opt/homebrew/bin/composer"),
+                    .shell("ls /opt/homebrew/opt | grep php", .instant("php\n"))
+                ]
+            )
         shellOutput["/opt/homebrew/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
             items: [
                 .delayed(0.2, "Updating global composer dependencies...\n"),
@@ -385,10 +388,11 @@ private extension TestableConfiguration {
     }
 
     mutating func mockPhpComposerInstallFailure() {
-        shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(items: [
-            .delayed(0.2, "==> Fetching php and composer formulae...\n"),
-            .delayed(0.2, "Error: Simulated PHP install failure\n", .stdErr)
-        ])
+        shellOutput["/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer"] =
+            BatchFakeShellOutput(items: [
+                .delayed(0.2, "==> Fetching shivammathur/php/php...\n"),
+                .delayed(0.2, "Error: Simulated PHP install failure\n", .stdErr)
+            ])
     }
 
     mutating func mockFirstLaunchPartialSetup() {

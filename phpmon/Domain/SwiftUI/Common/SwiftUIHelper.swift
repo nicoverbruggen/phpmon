@@ -9,13 +9,13 @@
 import Foundation
 import SwiftUI
 
-var isRunningTests: Bool {
+nonisolated var isRunningTests: Bool {
     let environment = ProcessInfo.processInfo.environment
     return environment["TEST_MODE"] != nil
         || environment["XCTestConfigurationFilePath"] != nil
 }
 
-var isRunningSwiftUIPreview: Bool {
+nonisolated var isRunningSwiftUIPreview: Bool {
     #if DEBUG
         // If running SwiftUI *and* when debugging
         return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil

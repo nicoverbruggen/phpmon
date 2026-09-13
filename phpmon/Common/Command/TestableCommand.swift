@@ -7,13 +7,22 @@
 //
 
 import Foundation
+import os
 
-class TestableCommand: CommandProtocol {
+// Output overrides can change during a UI test while probes run off-main. The lock
+// protects those updates and reads. The tracking subclass requires unchecked Sendable.
+nonisolated class TestableCommand: CommandProtocol, @unchecked Sendable {
     init(commands: [String: String]) {
-        self.commands = commands
+        self.state = OSAllocatedUnfairLock(initialState: commands)
     }
 
-    var commands: [String: String]
+    private let state: OSAllocatedUnfairLock<[String: String]>
+
+    var commands: [String: String] { state.withLock { $0 } }
+
+    func updateOutputs(_ outputs: [String: String]) {
+        state.withLock { $0.merge(outputs) { _, new in new } }
+    }
 
     public func execute(
         path: String,
@@ -22,7 +31,8 @@ class TestableCommand: CommandProtocol {
         withStandardError: Bool
     ) -> String {
         let concatenatedCommand = "\(path) \(arguments.joined(separator: " "))"
-        assert(commands.keys.contains(concatenatedCommand), "Command `\(concatenatedCommand)` not found")
-        return self.commands[concatenatedCommand]!
+        let output = state.withLock { $0[concatenatedCommand] }
+        assert(output != nil, "Command `\(concatenatedCommand)` not found")
+        return output!
     }
 }

@@ -11,6 +11,10 @@ import CrashReporter
 import NVAlert
 import AppKit
 
+// CrashReporter drives an NVAlert and blocks boot while it uploads, so it belongs
+// on the main actor. The one piece of work that must stay off-main — the URLSession
+// upload completion — is a @Sendable closure that only touches Sendable state.
+@MainActor
 class CrashReporter {
 
     /**
@@ -104,6 +108,11 @@ class CrashReporter {
         request.httpBody = text.data(using: .utf8)
         request.timeoutInterval = timeout
 
+        // We intentionally block the current (main) actor with a semaphore so the crash
+        // report finishes uploading before boot continues — this is deliberate, not an
+        // oversight. The URLSession completion handler runs off-main on URLSession's own
+        // delegate queue; it is a @Sendable closure that only captures the Sendable
+        // `semaphore` and calls the nonisolated `Log`, so it is isolation-clean.
         let semaphore = DispatchSemaphore(value: 0)
 
         let task = URLSession.shared.dataTask(with: request) { _, response, error in

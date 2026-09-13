@@ -10,15 +10,11 @@ import XCTest
 
 final class SettingsTest: UITestCase {
 
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
     /**
      In this test, we start with the app configured with the English override.
      After opening the domains window, we switch to Japanese.
      */
-    final func test_changing_language_closes_other_windows() throws {
+    @MainActor final func test_changing_language_closes_other_windows() throws {
         var configuration = TestableConfigurations.working
 
         // Our default starting point is to use the system default language
@@ -66,6 +62,8 @@ final class SettingsTest: UITestCase {
         assertExists(searchField, 2.0)
         XCTAssertEqual(searchField.placeholderValue, "generic.search".localized(for: "ja"))
 
-        // No cleanup is needed: each testable launch explicitly starts in English.
+        // No cleanup is needed: with a testable configuration active, the app
+        // keeps preference changes in-memory (`Preferences.update`), so the
+        // Japanese override is never persisted to the real defaults.
     }
 }

@@ -25,7 +25,16 @@ protocol PrivilegedCommandApprovalPresenting {
 final class RealPrivilegedCommandRunner: PrivilegedCommandRunner {
     @MainActor
     func runSimpleShellAsAdmin(_ script: String, reason _: PrivilegedCommandReason) async throws -> String {
-        return try AppleScript.runSimpleShellAsAdmin(script)
+        // The admin prompt and the elevated command block until they complete,
+        // so run them on a Dispatch queue rather than the main actor.
+        return try await runBlocking { try AppleScript.runSimpleShellAsAdmin(script) }
+    }
+}
+
+/// Fake containers deny privileged work unless a test explicitly supplies an approval runner.
+final class DisabledPrivilegedCommandRunner: PrivilegedCommandRunner {
+    func runSimpleShellAsAdmin(_ script: String, reason: PrivilegedCommandReason) async throws -> String {
+        throw AdminPrivilegeError(kind: .userDenied)
     }
 }
 

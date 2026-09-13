@@ -7,9 +7,35 @@
 //
 
 import Foundation
+import os
 @preconcurrency import Dispatch
 
 extension RealShell {
+    /**
+     For some commands, we need to know what's in the user's PATH.
+     The entire PATH is retrieved here, so we can set the PATH in our own terminal as necessary.
+
+     The first access resolves the PATH by spawning an interactive shell (blocking,
+     bounded by `getPath`'s timeout); the resolved value is cached. Concurrent first
+     readers serialize on the lock and observe the single resolution. `AppDelegate.init`
+     warms this up on a Dispatch queue, so post-startup readers normally hit the cache.
+     */
+    internal var PATH: String {
+        get {
+            _PATH.withLock { path in
+                if let path {
+                    return path
+                }
+
+                warnIfBlockingOnMainThread("shell.getPath")
+                let resolved = RealShell.getPath(shell: preferredShell)
+                path = resolved
+                return resolved
+            }
+        }
+        set { _PATH.withLock { $0 = newValue } }
+    }
+
     /**
      Retrieves the user's PATH by opening an interactive shell and echoing $PATH.
      If opening the user shell times out after X seconds, a fallback is used.
@@ -50,7 +76,9 @@ extension RealShell {
         //   (No global/shared queue state is needed.)
         let serialQueue = DispatchQueue(label: "com.nicoverbruggen.phpmon.getPathQueue")
         let semaphore = DispatchSemaphore(value: 0)
-        var result: String?
+        // `OSAllocatedUnfairLock` box: written from the `@Sendable` terminationHandler and
+        // read after `semaphore.wait()`, so it must not be a plain captured `var`.
+        let result = OSAllocatedUnfairLock<String?>(initialState: nil)
 
         // Timeout path:
         // If the shell hangs while reading profile files, terminate it and unblock
@@ -74,7 +102,8 @@ extension RealShell {
 
         task.terminationHandler = { _ in
             timeoutWorkItem.cancel()
-            result = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
+            let output = getStringOutput(from: pipe).trimmingCharacters(in: .whitespacesAndNewlines)
+            result.withLock { $0 = output }
             semaphore.signal()
         }
 
@@ -100,7 +129,7 @@ extension RealShell {
 
         // If the interactive shell succeeded and returned something non-empty, use it.
         // Otherwise fall back to the system PATH from path_helper.
-        if let path = result, !path.isEmpty {
+        if let path = result.withLock({ $0 }), !path.isEmpty {
             return path
         }
 

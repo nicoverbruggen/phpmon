@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct BrewPhpExtension: Hashable, Comparable {
-    let name: String
-    let phpVersion: String
+nonisolated struct BrewPhpExtension: Hashable, Comparable, Sendable {
+    nonisolated let name: String
+    nonisolated let phpVersion: String
     let isInstalled: Bool
     let path: String
     let dependencies: [String]
@@ -26,7 +26,8 @@ struct BrewPhpExtension: Hashable, Comparable {
             }
     }
 
-    var formulaName: String {
+    // `nonisolated`: pure string composition read by off-main brew command orchestration.
+    nonisolated var formulaName: String {
         return "\(name)@\(phpVersion)"
     }
 
@@ -44,7 +45,7 @@ struct BrewPhpExtension: Hashable, Comparable {
         )
     }
 
-    var hasAlternativeInstall: Bool {
+    @MainActor var hasAlternativeInstall: Bool {
         guard let php = App.shared.container.phpEnvs.cachedPhpInstallations[self.phpVersion] else {
             return false
         }

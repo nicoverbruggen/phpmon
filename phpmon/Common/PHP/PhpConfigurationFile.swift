@@ -22,40 +22,69 @@ class PhpConfigurationFile: CreatedFromFile {
     /// The file where this configuration file was located.
     let filePath: String
 
+    // These are only ever read/written on the main actor (the type is main-actor
+    // isolated under the default flip), so plain stored properties are sufficient
+    // and no lock indirection is needed.
+
     /// The extensions found in this .ini file.
-    private let _extensions: Locked<[PhpExtension]>
-    var extensions: [PhpExtension] {
-        get { _extensions.value }
-        set { _extensions.value = newValue }
-    }
+    var extensions: [PhpExtension]
 
     /// The actual, structured content of the configuration file.
-    private let _content: Locked<Config>
-    var content: Config {
-        get { _content.value }
-        set { _content.value = newValue }
-    }
+    var content: Config
 
     /// The original lines of the file.
-    private let _lines: Locked<[String]>
-    var lines: [String] {
-        get { _lines.value }
-        set { _lines.value = newValue }
-    }
+    var lines: [String]
+
+    private var pendingReplacement: Task<Void, Error>?
 
     /** Resolves a PHP configuration file (.ini) */
     static func from(
         _ container: Container,
         filePath: String
     ) -> Self? {
-        let path = filePath.replacing("~", with: container.paths.homePath)
-
-        do {
-            let fileContents = try container.filesystem.getStringFromFile(path)
-            return Self.init(container, path: path, contents: fileContents)
-        } catch {
-            Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
+        guard let snapshot = Snapshot.read(container, filePath: filePath) else {
             return nil
+        }
+
+        return Self.init(container, path: snapshot.path, contents: snapshot.contents)
+    }
+
+    /** Builds a configuration file model from a previously read snapshot, without I/O. */
+    static func from(
+        _ container: Container,
+        snapshot: Snapshot
+    ) -> Self {
+        return Self.init(container, path: snapshot.path, contents: snapshot.contents)
+    }
+
+    /**
+     The raw, `Sendable` contents of an .ini file on disk.
+
+     `PhpConfigurationFile` itself is a main-actor model (the UI mutates it), so it
+     cannot be built off-main. The blocking file read is separated out into this
+     snapshot so detection can perform all I/O on a Dispatch queue (via `runBlocking`)
+     and hand the main actor plain strings to build models from.
+     */
+    nonisolated struct Snapshot: Sendable {
+        let path: String
+        let contents: String
+
+        /** Reads a single .ini file (blocking). Returns nil (and logs) when unreadable. */
+        static func read(_ container: Container, filePath: String) -> Snapshot? {
+            let path = filePath.replacing("~", with: container.paths.homePath)
+
+            do {
+                let contents = try container.filesystem.getStringFromFile(path)
+                return Snapshot(path: path, contents: contents)
+            } catch {
+                Log.warn("Could not read the PHP configuration file at: `\(filePath)`")
+                return nil
+            }
+        }
+
+        /** Reads multiple .ini files (blocking), skipping any that are unreadable. */
+        static func read(_ container: Container, filePaths: [String]) -> [Snapshot] {
+            return filePaths.compactMap { read(container, filePath: $0) }
         }
     }
 
@@ -65,10 +94,9 @@ class PhpConfigurationFile: CreatedFromFile {
 
         let lines = contents.components(separatedBy: "\n")
 
-        // We only need to explicitly set our locks here
-        self._lines = Locked(lines)
-        self._extensions = Locked(PhpExtension.from(container, lines, filePath: path))
-        self._content = Locked(Self.parseConfig(lines: lines))
+        self.lines = lines
+        self.extensions = PhpExtension.from(container, lines, filePath: path)
+        self.content = Self.parseConfig(lines: lines)
     }
 
     // MARK: API
@@ -90,7 +118,8 @@ class PhpConfigurationFile: CreatedFromFile {
         return nil
     }
 
-    public enum ReplacementErrors: Error {
+    // `nonisolated`: an error type may be thrown/inspected outside the main actor.
+    public nonisolated enum ReplacementErrors: Error, Sendable {
         case missingKey
         case missingFile
     }
@@ -100,6 +129,17 @@ class PhpConfigurationFile: CreatedFromFile {
      The key must exist for this to work.
      */
     public func replace(key: String, value: String) async throws {
+        // Edits share one file. Keep each read-modify-write operation in order across awaits.
+        let previous = pendingReplacement
+        let replacement = Task {
+            _ = try? await previous?.value
+            try await applyReplacement(key: key, value: value)
+        }
+        pendingReplacement = replacement
+        try await replacement.value
+    }
+
+    private func applyReplacement(key: String, value: String) async throws {
         // Ensure that the key exists
         guard let item = getConfig(for: key) else {
             throw ReplacementErrors.missingKey
@@ -119,25 +159,34 @@ class PhpConfigurationFile: CreatedFromFile {
         // Replace the specific line in the local copy
         localLines[item.lineIndex] = components.joined(separator: "=")
 
+        let filesystem = container.filesystem!
+        let filePath = self.filePath
+        let contents = localLines.joined(separator: "\n")
+
         // Ensure the watchers aren't tripped up by config changes
         try await ConfigWatchManager.withSuspended {
-            // Finally, join the string and save the file atomically
-            try localLines.joined(separator: "\n")
-                .write(toFile: self.filePath, atomically: true, encoding: .utf8)
+            try await runBlocking {
+                try filesystem.writeAtomicallyToFile(filePath, content: contents)
+            }
         }
 
         self.lines = localLines
 
         // Reload the original file (which will update all properties atomically)
-        self.reload()
+        await self.reload()
     }
 
-    public func reload() {
-        guard let newLines = try? String(contentsOfFile: self.filePath)
-            .components(separatedBy: "\n") else {
+    public func reload() async {
+        let filesystem = container.filesystem!
+        let filePath = self.filePath
+        guard let contents = try? await runBlocking({
+            try filesystem.getStringFromFile(filePath)
+        }) else {
             Log.warn("Could not reload PHP configuration file at: `\(self.filePath)`")
             return
         }
+
+        let newLines = contents.components(separatedBy: "\n")
 
         // Update all properties atomically
         lines = newLines

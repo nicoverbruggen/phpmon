@@ -11,6 +11,24 @@ import Foundation
 
 // swiftlint:disable type_body_length file_length
 struct PhpVersionNumberTest {
+    @Test(arguments: [
+        "999999999999999999999999.4.2",
+        "8.999999999999999999999999.2",
+        "8.4.999999999999999999999999",
+        "٨.٤.٢"
+    ])
+    func unrepresentable_version_components_are_rejected(_ output: String) {
+        #expect(VersionNumber.make(from: output) == nil)
+        #expect(throws: VersionParseError.self) {
+            try VersionNumber.parse(output)
+        }
+    }
+
+    @Test func version_output_with_unicode_prefix_is_parsed() throws {
+        let version = try VersionNumber.parse("🐘🐘🐘🐘🐘 PHP 8.4.2")
+        #expect(version == VersionNumber(major: 8, minor: 4, patch: 2))
+    }
+
     @Test func test_can_deconstruct_php_version() throws {
         #expect(
             try! VersionNumber.parse("PHP 8.2.0-dev") ==

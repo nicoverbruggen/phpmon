@@ -13,7 +13,7 @@
  - Declare a new enum value with a string representation.
  - Update the mapping below to specify if it's a boolean, string or other.
  - Go to `Preferences` and update `handleFirstTimeLaunch` to set a default.
- - Add the preference to `GeneralPreferencesVC` in the correct class.
+ - Add a row to the appropriate tab in `SettingsTabViews.swift`.
  */
 enum PreferenceName: String, Codable {
     // GENERAL
@@ -57,7 +57,7 @@ enum PreferenceName: String, Codable {
     /**
      What type of data each preference contains.
      */
-    static var mapping: [PreferenceType: [PreferenceName]] = [
+    nonisolated static let mapping: [PreferenceType: [PreferenceName]] = [
         .boolean: [
             // Preferences
             .autoServiceRestartAfterExtensionToggle,
@@ -100,7 +100,7 @@ enum PreferenceName: String, Codable {
     ]
 }
 
-enum PreferenceType {
+nonisolated enum PreferenceType {
     case boolean, string
 }
 
@@ -117,12 +117,13 @@ enum RetiredPreferenceName: String {
  These track internal app state and behavior that persists across launches,
  but are not user preferences or statistics.
  */
-enum PersistentAppState: String {
+nonisolated enum PersistentAppState: String, Sendable {
     case wasLaunchedBefore = "launched_before"
     case lastAutomaticUpdateCheck = "last_automatic_update_check"
     case userFavorites = "user_favorites"
     case updateCheckFailureCount = "update_check_failure_count"
     case didPromptForIntegrations = "did_prompt_for_integrations"
+    case domainListSidebarCollapsed = "domain_list_sidebar_collapsed"
 }
 
 /**

@@ -12,6 +12,62 @@ import NVAlert
 
 class Stats {
 
+    // MARK: - Backing storage
+
+    /**
+     In-memory stats, used when a testable (fake) container is active: UI test
+     runs must never pollute the real, persisted stats (launch counts, etc.),
+     which are shared with any other copy of the app on this machine. Seeded
+     with a testable configuration's `internalStatsOverrides`.
+     */
+    private static var inMemoryStats: [String: Any] = [:]
+
+    private static var usesInMemoryStats: Bool {
+        return App.shared.container.filesystem is TestableFileSystem
+    }
+
+    /** Seeds the in-memory stats from a testable configuration. */
+    static func applyTestOverrides(_ overrides: [String: Int]) {
+        overrides.forEach { inMemoryStats[$0.key] = $0.value }
+    }
+
+    private static func readInteger(_ key: String) -> Int {
+        if usesInMemoryStats {
+            return inMemoryStats[key] as? Int ?? 0
+        }
+
+        return UserDefaults.standard.integer(forKey: key)
+    }
+
+    private static func readBool(_ key: String) -> Bool {
+        if usesInMemoryStats {
+            return inMemoryStats[key] as? Bool ?? false
+        }
+
+        return UserDefaults.standard.bool(forKey: key)
+    }
+
+    private static func readString(_ key: String) -> String? {
+        if usesInMemoryStats {
+            return inMemoryStats[key] as? String
+        }
+
+        return UserDefaults.standard.string(forKey: key)
+    }
+
+    private static func write(_ value: Any?, forKey key: String) {
+        if usesInMemoryStats {
+            inMemoryStats[key] = value
+            return
+        }
+
+        if let value {
+            UserDefaults.standard.set(value, forKey: key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
+
     /**
      Keep track of how many times the app has been successfully launched.
      
@@ -20,9 +76,7 @@ class Stats {
      else as well.
      */
     public static var successfulLaunchCount: Int {
-        UserDefaults.standard.integer(
-            forKey: InternalStats.launchCount.rawValue
-        )
+        readInteger(InternalStats.launchCount.rawValue)
     }
 
     /**
@@ -34,9 +88,7 @@ class Stats {
      else as well.
      */
     public static var successfulSwitchCount: Int {
-        UserDefaults.standard.integer(
-            forKey: InternalStats.switchCount.rawValue
-        )
+        readInteger(InternalStats.switchCount.rawValue)
     }
 
     /**
@@ -44,13 +96,11 @@ class Stats {
      Annoying the user is the worst, so let's not show the message twice.
      */
     public static var didSeeSponsorEncouragement: Bool {
-        UserDefaults.standard.bool(
-            forKey: InternalStats.didSeeSponsorEncouragement.rawValue
-        )
+        readBool(InternalStats.didSeeSponsorEncouragement.rawValue)
     }
 
     public static var lastGlobalPhpVersion: String {
-        UserDefaults.standard.string(forKey: InternalStats.lastGlobalPhpVersion.rawValue) ?? ""
+        readString(InternalStats.lastGlobalPhpVersion.rawValue) ?? ""
     }
 
     /**
@@ -59,34 +109,25 @@ class Stats {
      up the application.
      */
     public static func incrementSuccessfulLaunchCount() {
-        UserDefaults.standard.set(
-            Stats.successfulLaunchCount + 1,
-            forKey: InternalStats.launchCount.rawValue
-        )
+        write(Stats.successfulLaunchCount + 1, forKey: InternalStats.launchCount.rawValue)
     }
 
     /**
      Increment the successful switch count.
      */
     public static func incrementSuccessfulSwitchCount() {
-        UserDefaults.standard.set(
-            Stats.successfulSwitchCount + 1,
-            forKey: InternalStats.switchCount.rawValue
-        )
+        write(Stats.successfulSwitchCount + 1, forKey: InternalStats.switchCount.rawValue)
     }
 
     /**
      Persist which PHP version was active when you last used the app.
      */
     public static func persistCurrentGlobalPhpVersion(version: String) {
-        UserDefaults.standard.set(
-            version,
-            forKey: InternalStats.lastGlobalPhpVersion.rawValue
-        )
+        write(version, forKey: InternalStats.lastGlobalPhpVersion.rawValue)
     }
 
     public static func clearCurrentGlobalPhpVersion() {
-        UserDefaults.standard.removeObject(forKey: InternalStats.lastGlobalPhpVersion.rawValue)
+        write(nil, forKey: InternalStats.lastGlobalPhpVersion.rawValue)
     }
 
     /**
@@ -142,7 +183,7 @@ class Stats {
                 NSWorkspace.shared.open(Constants.Urls.DonationPayment)
             }
 
-            UserDefaults.standard.set(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
+            write(true, forKey: InternalStats.didSeeSponsorEncouragement.rawValue)
         }
     }
 }

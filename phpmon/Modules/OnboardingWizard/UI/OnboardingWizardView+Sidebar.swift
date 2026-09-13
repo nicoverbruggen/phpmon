@@ -47,7 +47,7 @@ extension OnboardingWizardView {
                 Image(nsImage: NSApp.applicationIconImage)
                     .resizable()
                     .interpolation(.high)
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
                     .frame(width: 44, height: 44)
 
                 VStack(alignment: .leading, spacing: 3) {

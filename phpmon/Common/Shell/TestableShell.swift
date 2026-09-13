@@ -7,21 +7,68 @@
 //
 
 import Foundation
+import os
 
-public class TestableShell: ShellProtocol {
-    var PATH: String = "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
+// `nonisolated` + `@unchecked Sendable`: a test double whose mutable expectation/config state
+// is fully protected by an `OSAllocatedUnfairLock` (Apple's `Sendable` lock, available on the
+// app's macOS 13.5 deployment target). The state
+// is therefore genuinely data-race-free; `@unchecked` is required only because this class is
+// non-final (the `TrackableTestableShell` subclass exists so tests can `as? TestableShell`),
+// and Swift cannot auto-synthesize `Sendable` for a non-final class. When the deployment
+// target reaches macOS 15 this lock can become the standard-library `Mutex`.
+public nonisolated class TestableShell: ShellProtocol, @unchecked Sendable {
+    private struct MutableState {
+        var path = "/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin"
+        var allowsDelayedCommands = false
+        var expectations: [String: BatchFakeShellOutput]
+        var exports: [String: String] = [:]
+    }
+
+    private let state: OSAllocatedUnfairLock<MutableState>
+
+    /// The fake filesystem, set once at construction (hence immutable / `let`).
+    let filesystem: TestableFileSystem?
+
+    var PATH: String {
+        get { state.withLock { $0.path } }
+        set { state.withLock { $0.path = newValue } }
+    }
+
+    var allowsDelayedCommands: Bool {
+        get { state.withLock { $0.allowsDelayedCommands } }
+        set { state.withLock { $0.allowsDelayedCommands = newValue } }
+    }
+
+    var expectations: [String: BatchFakeShellOutput] {
+        get { state.withLock { $0.expectations } }
+        set { state.withLock { $0.expectations = newValue } }
+    }
+
+    // Custom exports; unused because we have preset shell output, but relevant for certain checks in-app
+    var exports: [String: String] {
+        get { state.withLock { $0.exports } }
+        set { state.withLock { $0.exports = newValue } }
+    }
 
     init(expectations: [String: BatchFakeShellOutput], filesystem: TestableFileSystem? = nil) {
-        self.expectations = expectations
+        self.state = OSAllocatedUnfairLock(initialState: MutableState(expectations: expectations))
         self.filesystem = filesystem
     }
 
-    var allowsDelayedCommands: Bool = false
-    var expectations: [String: BatchFakeShellOutput] = [:]
-    var filesystem: TestableFileSystem?
-
-    // Custom exports; unused because we have preset shell output, but relevant for certain checks in-app
-    var exports: [String: String] = [:]
+    /// The process returned by `attach` must have actually run: consumers
+    /// inspect its `terminationStatus` (e.g. `ComposerWindow`), and NSTask
+    /// raises when that is read from a process that was never launched.
+    /// A single already-exited `/usr/bin/true` (instant, successful exit) is
+    /// shared by every call: spawning one per `attach` blocks the caller —
+    /// often the main actor — for tens of milliseconds each, which is slow
+    /// enough to make the app boot miss UI test timeouts.
+    private static let exitedProcess: Process = {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/true")
+        try? process.run()
+        process.waitUntilExit()
+        return process
+    }()
 
     @discardableResult
     func sync(_ command: String) -> ShellOutput {
@@ -32,7 +79,7 @@ public class TestableShell: ShellProtocol {
             return .err("No Expected Output")
         }
 
-        let output = expectation.syncOutput()
+        let output = expectation.syncOutput(ignoreDelay: !allowsDelayedCommands)
         applyTransactions(for: expectation)
         return output
     }
@@ -68,17 +115,13 @@ public class TestableShell: ShellProtocol {
             return (Process(), .err("No Expected Output"))
         }
 
-        var ignoresDelay = isRunningTests
-        if allowsDelayedCommands {
-            ignoresDelay = false
-        }
-
         let output = await expectation.output(didReceiveOutput: { output, type in
             didReceiveOutput(output, type)
-        }, ignoreDelay: ignoresDelay)
+        }, ignoreDelay: !allowsDelayedCommands)
 
         applyTransactions(for: expectation)
-        return (Process(), output)
+
+        return (Self.exitedProcess, output)
     }
 
     func reloadEnvPath() async {
@@ -101,7 +144,7 @@ public class TestableShell: ShellProtocol {
 
 }
 
-struct FakeShellOutput: Codable {
+nonisolated struct FakeShellOutput: Codable, Sendable {
     let delay: TimeInterval
     let output: String
     let stream: ShellStream
@@ -115,7 +158,7 @@ struct FakeShellOutput: Codable {
     }
 }
 
-struct BatchFakeShellOutput: Codable {
+nonisolated struct BatchFakeShellOutput: Codable, Sendable {
     var items: [FakeShellOutput]
     var transactions: [FakeShellTransaction] = []
 
@@ -142,7 +185,8 @@ struct BatchFakeShellOutput: Codable {
         didReceiveOutput: @Sendable @escaping (String, ShellStream) -> Void,
         ignoreDelay: Bool = false
     ) async -> ShellOutput {
-        let output = ShellOutput.empty()
+        var out = ""
+        var err = ""
 
         for item in items {
             if !ignoreDelay {
@@ -152,22 +196,23 @@ struct BatchFakeShellOutput: Codable {
             didReceiveOutput(item.output, item.stream)
 
             if item.stream == .stdErr {
-                output.err += item.output
+                err += item.output
             } else if item.stream == .stdOut {
-                output.out += item.output
+                out += item.output
             }
         }
 
-        return output
+        return ShellOutput(out: out, err: err)
     }
 
     /**
      Outputs the fake shell output as expected, but does this synchronously.
      */
-    public func syncOutput(
+    public nonisolated func syncOutput(
         ignoreDelay: Bool = false
     ) -> ShellOutput {
-        let output = ShellOutput.empty()
+        var out = ""
+        var err = ""
 
         for item in items {
             if !ignoreDelay {
@@ -175,13 +220,13 @@ struct BatchFakeShellOutput: Codable {
             }
 
             if item.stream == .stdErr {
-                output.err += item.output
+                err += item.output
             } else if item.stream == .stdOut {
-                output.out += item.output
+                out += item.output
             }
         }
 
-        return output
+        return ShellOutput(out: out, err: err)
     }
 
     /**
@@ -198,7 +243,7 @@ struct BatchFakeShellOutput: Codable {
  Prepares a particular transaction that modifies testable state after running a shell command.
  Currently, it possible to modify the state of `TestableShell` and `TestableFileSystem`.
  */
-struct FakeShellTransaction: Codable {
+nonisolated struct FakeShellTransaction: Codable, Sendable {
     /// Creates a symlink for a given path to a given destination in `TestableFileSystem`.
     static func symlink(_ path: String, to destination: String) -> FakeShellTransaction {
         FakeShellTransaction(type: .createSymlink, path: path, destination: destination)

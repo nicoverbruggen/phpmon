@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import os
 
 class RemovePhpExtensionCommand: BrewCommand {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     // MARK: - Variables
 
@@ -26,23 +27,16 @@ class RemovePhpExtensionCommand: BrewCommand {
         self.phpExtension = formula
     }
 
-    func getCommandTitle() -> String {
+    nonisolated func getCommandTitle() -> String {
         return "phpman.steps.removing".localized(phpExtension.name)
     }
 
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws {
+    nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws {
         onProgress(.create(
             value: 0.2,
             title: getCommandTitle(),
             description: "phpman.steps.removing".localized("`\(phpExtension.name)`...")
         ))
-
-        // Keep track of the file that contains the information about the extension
-        let existing = container.phpEnvs
-            .cachedPhpInstallations[phpExtension.phpVersion]?
-            .extensions.first(where: { ext in
-            ext.name == phpExtension.name
-        })
 
         let command = """
             export HOMEBREW_NO_INSTALL_UPGRADE=true; \
@@ -52,7 +46,7 @@ class RemovePhpExtensionCommand: BrewCommand {
             \(container.paths.brew) remove \(phpExtension.formulaName) --force --ignore-dependencies
             """
 
-        let loggedMessages = Locked<[String]>([])
+        let loggedMessages = OSAllocatedUnfairLock<[String]>(initialState: [])
 
         let (process, _): (Process, ShellOutput)
 
@@ -70,18 +64,16 @@ class RemovePhpExtensionCommand: BrewCommand {
         } catch ShellError.timedOut {
             Log.err("The `brew remove` command timed out after 5 minutes: \(command)")
             loggedMessages.withLock { $0.append("Terminated after timeout (>5 minutes) as decided by PHP Monitor.") }
-            throw BrewCommandError(error: "The command timed out after 5 minutes.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command timed out after 5 minutes.", log: loggedMessages.withLock { $0 })
         } catch {
             Log.err("Failed to execute brew command: \(command) - \(error)")
-            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.withLock { $0 })
         }
 
         if process.terminationStatus == 0 {
             onProgress(.create(value: 0.95, title: getCommandTitle(), description: "phpman.steps.reloading".localized))
 
-            if let ext = existing {
-                await performExtensionCleanup(for: ext)
-            }
+            await performExtensionCleanup()
 
             await container.phpEnvs.detectPhpVersions()
 
@@ -91,11 +83,20 @@ class RemovePhpExtensionCommand: BrewCommand {
 
             onProgress(.create(value: 1, title: getCommandTitle(), description: "phpman.steps.success".localized))
         } else {
-            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages.value)
+            throw BrewCommandError(error: "phpman.steps.failure".localized, log: loggedMessages.withLock { $0 })
         }
     }
 
-    private func performExtensionCleanup(for ext: PhpExtension) async {
+    // `@MainActor`: operates on `PhpExtension`, which is main-actor UI-model state. The
+    // cache is only refreshed by `detectPhpVersions()` (called after this), so the extension
+    // is still present here. The nonisolated `execute` simply awaits this as a main hop.
+    @MainActor private func performExtensionCleanup() async {
+        guard let ext = container.phpEnvs
+            .cachedPhpInstallations[phpExtension.phpVersion]?
+            .extensions.first(where: { $0.name == phpExtension.name }) else {
+            return
+        }
+
         if ext.file.hasSuffix("20-\(ext.name).ini") {
             // The extension's default configuration file can be removed
             Log.info("The extension was found in a default extension .ini location. Purging that .ini file.")

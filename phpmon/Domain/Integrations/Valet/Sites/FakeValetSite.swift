@@ -39,9 +39,7 @@ class FakeValetSite: ValetSite {
             self.aliasPath = self.absolutePath
         }
 
-        if let isolated = isolated {
-            self.isolatedPhpVersion = PhpInstallation(container, isolated)
-        }
+        self.isolatedVersion = isolated
 
         if container.phpEnvs.currentInstall != nil {
             self.evaluateCompatibility()

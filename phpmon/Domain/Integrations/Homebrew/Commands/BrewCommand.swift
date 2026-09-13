@@ -7,15 +7,19 @@
 //
 
 import Foundation
+import os
 
 protocol BrewCommand {
-    func execute(shell: ShellProtocol, onProgress: @escaping (BrewCommandProgress) -> Void) async throws
+    nonisolated func execute(shell: ShellProtocol, onProgress: @escaping @Sendable (BrewCommandProgress) -> Void) async throws
 
-    func getCommandTitle() -> String
+    nonisolated func getCommandTitle() -> String
 }
 
-extension BrewCommand {
-    internal func reportInstallationProgress(_ text: String) -> (Double, String)? {
+// `nonisolated` free function: a pure text-parsing helper with no mutable or main-actor
+// state. It is invoked from the off-main, @Sendable `didReceiveOutput` callback. Keeping it
+// as a file-scope function (rather than a method) means the callback captures nothing, so
+// there is no non-Sendable `self` capture.
+nonisolated internal func reportInstallationProgress(_ text: String) -> (Double, String)? {
         // Special cases: downloading a manifest is effectively fetching metadata
         if text.contains("==> Downloading") && text.contains("/manifests/") {
             return (0.1, "phpman.steps.fetching".localized)
@@ -49,7 +53,8 @@ extension BrewCommand {
         return nil
     }
 
-    internal func extractContext(from text: String) -> String? {
+    // `nonisolated`: pure regex helper, called transitively from the off-main callback.
+    nonisolated internal func extractContext(from text: String) -> String? {
         var pattern = #""#
         if text.contains("==> Fetching") {
             pattern = #"==> Fetching (\S+)"#
@@ -78,12 +83,22 @@ extension BrewCommand {
         return nil
     }
 
-    internal func run(
+extension BrewCommand {
+    nonisolated internal func run(
         shell: ShellProtocol,
         _ command: String,
-        _ onProgress: @escaping (BrewCommandProgress) -> Void
+        _ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void
     ) async throws {
-        let loggedMessages = Locked<[String]>([])
+        // `OSAllocatedUnfairLock` (a Sendable lock box) is the right tool here:
+        // `didReceiveOutput` is a *synchronous* @Sendable callback invoked off the main
+        // actor, so an `actor` collector (whose `append` would be `async`) cannot be
+        // awaited from inside it. The lock keeps the accumulation data-race free.
+        let loggedMessages = OSAllocatedUnfairLock<[String]>(initialState: [])
+
+        // Snapshot the title on the main actor so the off-main callback captures an
+        // immutable `String` instead of calling the main-actor `getCommandTitle()`.
+        let commandTitle = getCommandTitle()
+
         let (process, _): (Process, ShellOutput)
 
         do {
@@ -95,8 +110,8 @@ extension BrewCommand {
                         loggedMessages.withLock { $0.append(text) }
                     }
 
-                    if let (number, text) = self.reportInstallationProgress(text) {
-                        onProgress(.create(value: number, title: getCommandTitle(), description: text))
+                    if let (number, description) = reportInstallationProgress(text) {
+                        onProgress(.create(value: number, title: commandTitle, description: description))
                     }
                 },
                 withTimeout: .minutes(15)
@@ -105,25 +120,25 @@ extension BrewCommand {
             // Possible if the brew command times out
             Log.err("The `brew` command timed out after 15 minutes: \(command)")
             loggedMessages.withLock { $0.append("Terminated after timeout (>15 minutes) as decided by PHP Monitor.") }
-            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command timed out after 15 minutes.", log: loggedMessages.withLock { $0 })
         } catch {
             // Possible if the async continuation fails
             Log.err("Failed to execute brew command: \(command) - \(error)")
-            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.value)
+            throw BrewCommandError(error: "Failed to execute command: \(error.localizedDescription)", log: loggedMessages.withLock { $0 })
         }
 
         // Finally, even if we got the command to execute, let's check the termination status
         if process.terminationStatus == 0 {
-            loggedMessages.value = []
+            loggedMessages.withLock { $0 = [] }
             return
         } else {
-            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.value)
+            throw BrewCommandError(error: "The command failed to run correctly.", log: loggedMessages.withLock { $0 })
         }
     }
 
-    internal func checkPhpTap(
+    nonisolated internal func checkPhpTap(
         shell: ShellProtocol,
-        _ onProgress: @escaping (BrewCommandProgress) -> Void
+        _ onProgress: @escaping @Sendable (BrewCommandProgress) -> Void
     ) async throws {
         let supportsTrust = await BrewDiagnostics.shared.supportsTapTrust()
 
@@ -140,7 +155,10 @@ extension BrewCommand {
     }
 }
 
-struct BrewCommandProgress {
+// `nonisolated` + `Sendable`: an immutable value type that is constructed inside the
+// off-main `didReceiveOutput` callback and handed to the progress reporter, so it must
+// cross isolation boundaries freely.
+nonisolated struct BrewCommandProgress: Sendable {
     let value: Double
     let title: String
     let description: String
@@ -150,7 +168,9 @@ struct BrewCommandProgress {
     }
 }
 
-struct BrewCommandError: Error {
+// `nonisolated` + `Sendable`: an error value thrown from async command execution and read
+// (`.log`) by callers on the main actor; it must be sendable across those boundaries.
+nonisolated struct BrewCommandError: Error, Sendable {
     let error: String
     let log: [String]
 }

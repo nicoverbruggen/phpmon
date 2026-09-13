@@ -8,11 +8,16 @@
 
 import Foundation
 
-class BrewTapFormulae {
-    public static func from(_ container: Container, tap: String) -> [String: [BrewPhpExtension]] {
+nonisolated class BrewTapFormulae {
+    public static func from(_ container: Container, tap: String) async -> [String: [BrewPhpExtension]] {
+        await runBlocking { read(container, tap: tap) }
+    }
+
+    private static func read(_ container: Container, tap: String) -> [String: [BrewPhpExtension]] {
         let directory = "\(container.paths.tapPath)/\(tap)/Formula"
 
-        let files = try? container.filesystem.getShallowContentsOfDirectory(directory)
+        let filesystem = container.filesystem!
+        let files = try? filesystem.getShallowContentsOfDirectory(directory)
 
         var availableExtensions = [String: [BrewPhpExtension]]()
 

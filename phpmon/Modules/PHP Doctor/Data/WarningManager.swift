@@ -13,6 +13,7 @@ class WarningManager: ObservableObject {
 
     var container: Container
     let brewDiagnostics: BrewDiagnostics
+    let phpConfigChecker: PhpConfigChecker
 
     init(
         container: Container,
@@ -20,12 +21,14 @@ class WarningManager: ObservableObject {
     ) {
         self.container = container
         self.brewDiagnostics = BrewDiagnostics(container)
+        self.phpConfigChecker = PhpConfigChecker(container)
 
         self.evaluations = allAvailableWarnings()
 
         if isRunningSwiftUIPreview || fake {
             /// SwiftUI previews will always list all possible evaluations.
             self.warnings = self.evaluations
+            self.hasCompletedInitialEvaluation = true
         }
     }
 
@@ -37,14 +40,8 @@ class WarningManager: ObservableObject {
     /// These warnings are the ones that are ready to be displayed.
     @Published public var warnings: [Warning] = []
 
-    /// Thread-safe storage for warnings being evaluated.
-    /// When all temporary warnings are set, you may broadcast these changes
-    /// and they will be sent to the @Published variable via the main thread.
-    private var temporaryWarnings: [Warning] {
-        get { _temporaryWarnings.value }
-        set { _temporaryWarnings.value = newValue }
-    }
-    private let _temporaryWarnings = Locked<[Warning]>([])
+    /// An empty result is meaningful only after the first evaluation has finished.
+    @Published private(set) var hasCompletedInitialEvaluation = false
 
     public func hasWarnings() -> Bool {
         return !warnings.isEmpty
@@ -56,10 +53,7 @@ class WarningManager: ObservableObject {
 
     @MainActor func clearWarnings() {
         self.warnings = []
-    }
-
-    @MainActor func broadcastWarnings() {
-        self.warnings = temporaryWarnings
+        self.hasCompletedInitialEvaluation = true
     }
 
     /**
@@ -72,8 +66,8 @@ class WarningManager: ObservableObject {
         await brewDiagnostics.loadTrustedTaps()
 
         if ProcessInfo.processInfo.environment["EXTREME_DOCTOR_MODE"] != nil {
-            self.temporaryWarnings = self.evaluations
-            await self.broadcastWarnings()
+            self.warnings = self.evaluations
+            self.hasCompletedInitialEvaluation = true
             return
         }
 
@@ -81,8 +75,8 @@ class WarningManager: ObservableObject {
 
         // Only rebuild the menu if the app has finished booting
         // (otherwise the menu may become interactive before all checks are done)
-        if await Startup.hasFinishedBooting {
-            await MainMenu.shared.rebuild()
+        if Startup.hasFinishedBooting {
+            MainMenu.shared.rebuild()
         }
     }
 
@@ -98,7 +92,7 @@ class WarningManager: ObservableObject {
             warnings.append(check)
         }
 
-        self.temporaryWarnings = warnings
-        await self.broadcastWarnings()
+        self.warnings = warnings
+        self.hasCompletedInitialEvaluation = true
     }
 }

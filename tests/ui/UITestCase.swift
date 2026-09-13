@@ -8,7 +8,13 @@
 
 import XCTest
 
-class UITestCase: XCTestCase {
+// XCTest constructs test cases through nonisolated initializers.
+nonisolated class UITestCase: XCTestCase {
+    nonisolated override func setUpWithError() throws {
+        try super.setUpWithError()
+        continueAfterFailure = false
+    }
+
     /**
      Launches the app and opens the menu.
      Defaults to waiting for the app to finish initialization.
@@ -17,7 +23,7 @@ class UITestCase: XCTestCase {
      - Parameter openMenu: Attempts to open the status menu when ready; requires passing environment checks.
      - Parameter configuration: The TestableConfiguration to include when launching PHP Monitor.
      */
-    public func launch(
+    @MainActor public func launch(
         waitForInitialization: Bool = true,
         openMenu: Bool = false,
         with configuration: TestableConfiguration? = nil,
@@ -37,7 +43,7 @@ class UITestCase: XCTestCase {
     }
 
     /** Waits for the menu to be enabled and opens it. */
-    public func waitForMenu(_ app: XCPMApplication, openMenu: Bool = false) {
+    @MainActor public func waitForMenu(_ app: XCPMApplication, openMenu: Bool = false) {
         let statusItem = app.statusItems.firstMatch
         let isEnabled = NSPredicate(format: "isEnabled == true")
         let expectation = expectation(for: isEnabled, evaluatedWith: statusItem, handler: nil)
@@ -53,39 +59,34 @@ class UITestCase: XCTestCase {
     }
 
     /** Checks if a single element exists. */
-    public func assertExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
-        XCTAssertTrue(element.waitForExistence(timeout: timeout))
+    @MainActor public func assertExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
+        XCTAssertTrue(element.exists || element.waitForExistence(timeout: timeout))
     }
 
     /** Checks if a single element fails to exist. */
-    public func assertNotExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
+    @MainActor public func assertNotExists(_ element: XCUIElement, _ timeout: TimeInterval = 0.05) {
         XCTAssertFalse(element.waitForExistence(timeout: timeout))
     }
 
     /** Checks if all elements exist. */
-    public func assertAllExist(_ elements: [XCUIElement], _ timeout: TimeInterval = 0.05) {
+    @MainActor public func assertAllExist(_ elements: [XCUIElement], _ timeout: TimeInterval = 0.05) {
         for element in elements {
-            XCTAssert(element.waitForExistence(timeout: timeout))
+            XCTAssert(element.exists || element.waitForExistence(timeout: timeout))
         }
     }
 
-    /** Clicks on a given element. */
-    public func click(_ element: XCUIElement) {
-        element.click()
-    }
-
     /** Approves a privileged command prompt presented in UI tests. */
-    public func approvePrivilegedCommand(in app: XCPMApplication) {
+    @MainActor public func approvePrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandApproveButton"]
         assertExists(button, 10.0)
-        click(button)
+        button.click()
     }
 
     /** Denies a privileged command prompt presented in UI tests. */
-    public func denyPrivilegedCommand(in app: XCPMApplication) {
+    @MainActor public func denyPrivilegedCommand(in app: XCPMApplication) {
         let button = app.buttons["PrivilegedCommandDenyButton"]
         assertExists(button, 10.0)
-        click(button)
+        button.click()
     }
 }
 

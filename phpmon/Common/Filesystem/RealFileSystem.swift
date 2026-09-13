@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-    var replacingTildeWithHomeDirectory: String {
+    nonisolated var replacingTildeWithHomeDirectory: String {
         // Skip replacement if not necessary
         if !self.contains("~") {
             return self
@@ -29,11 +29,13 @@ extension String {
     }
 }
 
-class RealFileSystem: FileSystemProtocol {
+// Nonisolated + Sendable: performs synchronous, blocking file I/O that must stay off the
+// main actor once the app moves to main-actor-by-default.
+nonisolated final class RealFileSystem: FileSystemProtocol, Sendable {
 
     // MARK: - Container
 
-    var container: Container
+    let container: Container
 
     init(container: Container) {
         self.container = container
@@ -49,6 +51,7 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func writeAtomicallyToFile(_ path: String, content: String) throws {
+        warnIfBlockingOnMainThread("filesystem.writeAtomicallyToFile: \(path)")
         try content.write(
             to: URL(fileURLWithPath: path.replacingTildeWithHomeDirectory),
             atomically: true,
@@ -57,6 +60,7 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func getStringFromFile(_ path: String) throws -> String {
+        warnIfBlockingOnMainThread("filesystem.getStringFromFile: \(path)")
         return try String(
             contentsOf: URL(fileURLWithPath: path.replacingTildeWithHomeDirectory),
             encoding: .utf8
@@ -64,6 +68,7 @@ class RealFileSystem: FileSystemProtocol {
     }
 
     func getShallowContentsOfDirectory(_ path: String) throws -> [String] {
+        warnIfBlockingOnMainThread("filesystem.getShallowContentsOfDirectory: \(path)")
         return try FileManager.default.contentsOfDirectory(atPath: path.replacingTildeWithHomeDirectory)
     }
 

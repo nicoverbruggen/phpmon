@@ -1,0 +1,89 @@
+//
+//  DomainListContextMenuTest.swift
+//  PHP Monitor
+//
+//  Copyright © 2026 Nico Verbruggen. All rights reserved.
+//
+
+import XCTest
+
+/**
+ Tests the domain list's right-click context menu: the offered actions for
+ sites vs. proxies, and the copy-URL action's observable effect (the
+ pasteboard, which the test runner can read directly).
+ */
+final class DomainListContextMenuTest: UITestCase {
+
+    @MainActor final func test_missing_isolated_php_can_be_removed_from_domains() throws {
+        var configuration = TestableConfigurations.working
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+        configuration.filesystem = configuration.filesystem.filter { !$0.key.hasPrefix("/opt/homebrew/opt/php@8.3") }
+        let app = launch(openMenu: true, with: configuration)
+        app.menuItems["mi_domain_list".localized(for: "en")].click()
+        let window = app.windows["domain_list.title".localized(for: "en")]
+        assertExists(window, 2)
+
+        window.staticTexts["domain_list.sidebar.isolated".localized(for: "en")].firstMatch.click()
+        let site = window.staticTexts["concord.test"]
+        assertExists(site, 2)
+        site.rightClick()
+        let isolate = app.menuItems["domain_list.isolate".localized(for: "en")]
+        isolate.hover()
+        let remove = app.menuItems["domain_list.remove_isolation".localized(for: "en")]
+        assertExists(remove, 2)
+        XCTAssertTrue(remove.isEnabled)
+        remove.click()
+
+        let removed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: site)
+        XCTAssertEqual(XCTWaiter().wait(for: [removed], timeout: 5), .completed)
+        window.staticTexts["domain_list.sidebar.global".localized(for: "en")].firstMatch.click()
+        assertExists(site, 2)
+    }
+
+    @MainActor final func test_right_click_offers_site_and_proxy_actions() throws {
+        var configuration = TestableConfigurations.working
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+
+        let app = launch(openMenu: true, with: configuration)
+
+        app.menuItems["mi_domain_list".localized(for: "en")].click()
+        let window = app.windows.element(boundBy: 0)
+        assertExists(window, 2.0)
+
+        // Right-clicking a site row selects it and shows the site actions
+        let siteRow = window.staticTexts["concord.test"]
+        assertExists(siteRow, 5.0)
+        siteRow.rightClick()
+
+        assertExists(app.menuItems["domain_list.open_in_finder".localized(for: "en")], 2.0)
+        assertExists(app.menuItems["domain_list.open_in_terminal".localized(for: "en")])
+        assertExists(app.menuItems["domain_list.open_in_browser".localized(for: "en")])
+        assertExists(app.menuItems["domain_list.copy_url".localized(for: "en")])
+        // concord.test is not secured in the fake configuration
+        assertExists(app.menuItems["domain_list.secure".localized(for: "en")])
+        assertExists(app.menuItems["domain_list.favorite".localized(for: "en")])
+
+        // The copy-URL action writes the site's URL to the pasteboard
+        app.menuItems["domain_list.copy_url".localized(for: "en")].click()
+        let copiedURL = XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in NSPasteboard.general.string(forType: .string) == "http://concord.test" },
+            object: nil
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [copiedURL], timeout: 2), .completed)
+
+        // Proxies get their own, smaller set of actions
+        let searchField = window.searchFields.element(boundBy: 0)
+        searchField.click()
+        searchField.typeText("mailgun")
+
+        let proxyRow = window.staticTexts["mailgun.test"]
+        assertExists(proxyRow, 2.0)
+        proxyRow.rightClick()
+
+        assertExists(app.menuItems["domain_list.open_in_browser".localized(for: "en")], 2.0)
+        assertExists(app.menuItems["domain_list.unproxy".localized(for: "en")])
+        assertNotExists(app.menuItems["domain_list.open_in_finder".localized(for: "en")])
+
+        app.typeKey(.escape, modifierFlags: [])
+    }
+}

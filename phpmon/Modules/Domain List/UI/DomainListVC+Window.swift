@@ -17,19 +17,26 @@ extension DomainListVC {
     // MARK: - Display
 
     public static func create(delegate: NSWindowDelegate?) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let windowController = DomainListWindowController()
+        windowController.shouldCascadeWindows = false
 
-        let windowController = storyboard.instantiateController(
-            withIdentifier: "domainListWindow"
-        ) as! DomainListWindowController
-
-        guard let window = windowController.window else { return }
+        let window = NSWindow()
+        window.styleMask = [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView]
+        window.toolbarStyle = .unified
+        window.titlebarSeparatorStyle = .automatic
+        window.contentViewController = DomainListSplitViewController()
+        window.setContentSize(NSSize(width: 1000, height: 460))
+        windowController.window = window
 
         window.title = "domain_list.title".localized
         window.subtitle = ""
         window.delegate = delegate ?? windowController
-        window.styleMask = [.titled, .closable, .resizable, .miniaturizable]
-        window.minSize = NSSize(width: 550, height: 200)
+        window.contentMinSize = NSSize(width: 620, height: 300)
+
+        windowController.configureToolbar()
+
+        // Note: the autosave string stores the window's *content* rect; saving
+        // and restoring are symmetric, so this can safely happen at creation.
         window.setFrameAutosaveName("domainListWindow")
 
         WindowManager.setController(windowController)

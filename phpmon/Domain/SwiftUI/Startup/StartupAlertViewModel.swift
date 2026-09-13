@@ -55,8 +55,8 @@ class StartupAlertViewModel: ObservableObject {
         outputLines = []
         state = .running
 
-        // Dispatch async fix
-        Task {
+        // Keep the view model alive until the repair and follow-up checks finish.
+        Task { [self] in
             do {
                 // Run the command to fix the
                 try await fixCommand(App.shared.container) { [weak self] text, stream in

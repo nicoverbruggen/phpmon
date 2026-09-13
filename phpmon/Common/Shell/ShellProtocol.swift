@@ -8,7 +8,11 @@
 
 import Foundation
 
-protocol ShellProtocol: AnyObject {
+// `Sendable`: shell handles are handed to the off-main, nonisolated `BrewCommand` family
+// and captured in `@Sendable` output callbacks, so `any ShellProtocol` must cross isolation
+// boundaries. All conformers are either truly immutable (`TrackedShell`) or guard their
+// state (`RealShell`/`TestableShell`).
+nonisolated protocol ShellProtocol: AnyObject, Sendable {
     /**
      The PATH for the current shell.
      */
@@ -82,13 +86,20 @@ protocol ShellProtocol: AnyObject {
     func reloadEnvPath() async
 }
 
-enum ShellStream: Codable {
+// `nonisolated` + `Sendable`: this value is passed through `@Sendable` shell
+// callbacks and returned across isolation boundaries (from the nonisolated shell
+// into main-actor callers), so it must not pick up main-actor isolation.
+nonisolated enum ShellStream: Codable, Sendable {
     case stdOut, stdErr, stdIn
 }
 
-class ShellOutput: @unchecked Sendable {
-    var out: String
-    var err: String
+// A `Sendable` value type: it is built off the main actor (inside shell
+// callbacks/continuations) and handed back to main-actor callers, so it crosses
+// isolation boundaries. Immutable `let` storage makes it safely `Sendable` without
+// `@unchecked`. `nonisolated` keeps its members callable from any isolation.
+nonisolated struct ShellOutput: Sendable {
+    let out: String
+    let err: String
 
     var hasError: Bool {
         return err.lengthOfBytes(using: .utf8) > 0
@@ -112,6 +123,8 @@ class ShellOutput: @unchecked Sendable {
     }
 }
 
-enum ShellError: Error {
+// `nonisolated` + `Sendable`: thrown across isolation boundaries (from the
+// nonisolated shell into main-actor callers), so it must stay isolation-free.
+nonisolated enum ShellError: Error, Sendable {
     case timedOut
 }

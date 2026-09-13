@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BrewPhpFormula: Equatable {
+struct BrewPhpFormula: Equatable, Sendable {
 
     /// The dependency container.
     let container: Container
@@ -61,10 +61,11 @@ struct BrewPhpFormula: Equatable {
     /// Whether this formula alias is different.
     var hasUpgradedFormulaAlias: Bool {
         return self.shortVersion == container.phpEnvs.homebrewBrewPhpAlias
-        && container.phpEnvs.homebrewBrewPhpAlias != PhpEnvironments.brewPhpAlias
+        && container.phpEnvs.homebrewBrewPhpAlias != container.phpEnvs.brewPhpAlias
     }
 
-    var unavailableAfterUpgrade: Bool {
+    // `nonisolated`: pure version comparison read by off-main brew command orchestration.
+    nonisolated var unavailableAfterUpgrade: Bool {
         if installedVersion == nil || upgradeVersion == nil {
             return false
         }
@@ -82,11 +83,11 @@ struct BrewPhpFormula: Equatable {
         var resolved = name
             .replacing("shivammathur/php/", with: "")
 
-        if let alias = PhpEnvironments.brewPhpAlias {
+        if let alias = container.phpEnvs.brewPhpAlias {
             resolved = resolved.replacing("php@" + alias, with: "php")
         }
 
-        return "\(App.shared.container.paths.optPath)/\(resolved)/bin"
+        return "\(container.paths.optPath)/\(resolved)/bin"
     }
 
     /// The short version associated with this formula, if installed.
@@ -115,7 +116,7 @@ struct BrewPhpFormula: Equatable {
 
         var path = "\(container.paths.tapPath)/shivammathur/homebrew-php/Formula/php@\(version).rb"
 
-        if let alias = PhpEnvironments.brewPhpAlias {
+        if let alias = container.phpEnvs.brewPhpAlias {
             path = path.replacing("php@" + alias, with: "php")
         }
 
@@ -135,7 +136,7 @@ struct BrewPhpFormula: Equatable {
             .isHealthy ?? nil
     }
 
-    static func == (lhs: BrewPhpFormula, rhs: BrewPhpFormula) -> Bool {
+    nonisolated static func == (lhs: BrewPhpFormula, rhs: BrewPhpFormula) -> Bool {
         return lhs.name == rhs.name
             && lhs.displayName == rhs.displayName
             && lhs.installedVersion == rhs.installedVersion

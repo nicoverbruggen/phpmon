@@ -194,7 +194,11 @@ class TestableConfigurations {
                 .automaticBackgroundUpdateCheck: .bool(false),
                 .languageOverride: .string("en")
             ],
-            internalStatsOverrides: [:],
+            // Stats are kept in-memory during test runs (starting at zero), so
+            // the launch count is seeded explicitly: the app should behave as a
+            // regularly used install (no welcome tour, no notification prompt,
+            // background update checks permitted).
+            internalStatsOverrides: [InternalStats.launchCount.rawValue: 10],
             phpVersions: [
                 VersionNumber(major: 8, minor: 4, patch: 5),
                 VersionNumber(major: 8, minor: 3, patch: 5),

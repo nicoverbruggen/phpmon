@@ -65,14 +65,20 @@ struct ByteLimitView: View {
     var body: some View {
         if !unlimited {
             HStack {
-                TextField("", text: $numberText)
-                    .onChange(of: numberText) { [weak preference] newText in
-                        timer?.invalidate()
-                        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { _ in
-                            preference?.value = Int(newText) ?? 256
-                        }
+                TextField("", text: Binding(
+                    get: { numberText },
+                    set: { newText in
+                        numberText = newText
+                        save(after: 1.5)
                     }
-                Picker("Limit Name", selection: $unit) {
+                ))
+                Picker("Limit Name", selection: Binding(
+                    get: { unit },
+                    set: { newUnit in
+                        unit = newUnit
+                        save(after: 0)
+                    }
+                )) {
                     ForEach(BytePhpPreference.UnitOption.allCases, id: \.self) {
                         Text($0.displayValue)
                     }
@@ -80,21 +86,35 @@ struct ByteLimitView: View {
                 .frame(maxWidth: 100)
                 .labelsHidden()
                 .pickerStyle(.menu)
-                .onChange(of: unit) { newValue in
-                    self.preference.unit = newValue
-                }
             }
         }
 
-        Toggle(isOn: $unlimited) {
-            Text("confman.byte_limit.unlimited".localizedForSwiftUI)
-        }.onChange(of: unlimited, perform: { [weak preference] unlimited in
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false) { _ in
-                preference?.value = unlimited ? -1 : 512
-                preference?.unit = .megabyte
+        Toggle(isOn: Binding(
+            get: { unlimited },
+            set: { newValue in
+                unlimited = newValue
+                numberText = newValue ? "-1" : "512"
+                unit = .megabyte
+                save(after: 0.8)
             }
-        })
+        )) {
+            Text("confman.byte_limit.unlimited".localizedForSwiftUI)
+        }
+    }
+
+    private func save(after delay: TimeInterval) {
+        timer?.invalidate()
+        // Save the displayed value and unit together. A newer edit replaces any pending write.
+        let value = unlimited ? -1 : Int(numberText) ?? 256
+        let unit = self.unit
+        timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak preference] _ in
+            // Scheduled on the main run loop.
+            MainActor.assumeIsolated {
+                guard let preference else { return }
+                if preference.unit != unit { preference.unit = unit }
+                if preference.value != value { preference.value = value }
+            }
+        }
     }
 }
 

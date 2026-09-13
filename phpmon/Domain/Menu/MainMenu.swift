@@ -9,10 +9,9 @@ import Cocoa
 import NVAlert
 
 @MainActor
-class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate {
-    var container: Container {
-        return App.shared.container
-    }
+class MainMenu: NSObject, NSWindowDelegate, PhpSwitcherDelegate {
+    let container: Container
+    private let shortcutHotkey: () -> HotKey?
 
     var actions: Actions {
         return Actions(container)
@@ -20,13 +19,30 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     static let shared = MainMenu()
 
-    override init() {
+    init(container: Container = App.shared.container, shortcutHotkey: @escaping () -> HotKey? = { App.shared.shortcutHotkey }) {
+        self.container = container
+        self.shortcutHotkey = shortcutHotkey
         super.init()
         statusItem.isVisible = !isRunningSwiftUIPreview
         statusItem.button?.isEnabled = false
-    }
 
-    weak var menuDelegate: NSMenuDelegate?
+        // The status menu's open/close side effects are driven by the menu
+        // *tracking* notifications rather than NSMenuDelegate: AppKit's
+        // accessibility machinery "simulates opening" menus for inspection
+        // (`_openForInspection`) and invokes delegate methods in a context
+        // where Swift's main-actor executor checks crash (observed whenever an
+        // accessibility client — including XCUITest — walked the status menu).
+        // Tracking notifications fire only for genuine tracking sessions, on
+        // the main thread.
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(menuDidBeginTracking(_:)),
+            name: NSMenu.didBeginTrackingNotification, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(menuDidEndTracking(_:)),
+            name: NSMenu.didEndTrackingNotification, object: nil
+        )
+    }
 
     /**
      The status bar item with variable length.
@@ -43,6 +59,11 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      */
     var shouldSwitchSilently: Bool = false
 
+    /// The menu being tracked can outlive a rebuild of `statusItem.menu`.
+    private weak var trackingMenu: NSMenu?
+
+    private var activeInstallationRefreshID: UUID?
+
     // MARK: - UI related
 
     /**
@@ -56,13 +77,12 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
 
     @MainActor
     func rebuildImmediately() {
-        let menu = StatusMenu()
+        let menu = StatusMenu(container: container)
         menu.addMenuItems()
         menu.items.forEach({ (item) in
             item.target = self
         })
         statusItem.menu = menu
-        statusItem.menu?.delegate = self
     }
 
     /**
@@ -70,7 +90,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
      */
     func setStatusBarImage(version: String) {
         setStatusBar(
-            image: (Preferences.preferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
+            image: (container.preferences.cachedPreferences[.iconTypeToDisplay] as! String != MenuBarIcon.noIcon.rawValue)
                 ? MenuBarImageGenerator.textToImageWithIcon(text: version)
                 : MenuBarImageGenerator.textToImage(text: version)
         )
@@ -101,9 +121,19 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     // MARK: - User Interface
 
     /** Reloads which PHP versions is currently active. */
-    @objc func refreshActiveInstallation() {
+    func refreshActiveInstallation() async {
         if !container.phpEnvs.isBusy {
-            container.phpEnvs.currentInstall = ActivePhpInstallation.load(container)
+            let refreshID = UUID()
+            activeInstallationRefreshID = refreshID
+            let previousInstall = container.phpEnvs.currentInstall
+            let install = await ActivePhpInstallation.load(container)
+
+            // Only the latest refresh can publish, and a completed switch takes precedence.
+            guard activeInstallationRefreshID == refreshID,
+                  !container.phpEnvs.isBusy,
+                  container.phpEnvs.currentInstall === previousInstall else { return }
+
+            container.phpEnvs.currentInstall = install
             refreshIcon()
             rebuild()
         } else {
@@ -125,7 +155,7 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
     @objc func reloadPhpMonitorMenuInForeground() {
         Log.perf("The menu will be reloaded...")
         Task { [self] in
-            self.refreshActiveInstallation()
+            await self.refreshActiveInstallation()
             self.refreshIcon()
             self.rebuild()
             await ServicesManager.shared.reloadServicesStatus()
@@ -192,19 +222,19 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
                 setStatusBar(image: NSImage.statusBarIcon)
             } else {
                 Log.perf("Refreshing icon: no longer busy")
-                if Preferences.preferences[.shouldDisplayDynamicIcon] as! Bool == false {
+                if container.preferences.cachedPreferences[.shouldDisplayDynamicIcon] as! Bool == false {
                     // Static icon has been requested
                     setStatusBar(image: NSImage.statusBarIconStatic)
                 } else {
                     // The dynamic icon has been requested
-                    let long = Preferences.preferences[.fullPhpVersionDynamicIcon] as! Bool
+                    let long = container.preferences.cachedPreferences[.fullPhpVersionDynamicIcon] as! Bool
 
-                    guard let install = container.phpEnvs.phpInstall else {
+                    guard let version = container.phpEnvs.phpInstall?.version else {
                         setStatusBarImage(version: "???")
                         return
                     }
 
-                    setStatusBarImage(version: long ? install.version.long : install.version.short)
+                    setStatusBarImage(version: long ? version.long : version.short)
                 }
             }
         }
@@ -294,14 +324,18 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         Task { await AppUpdater().checkForUpdates(userInitiated: true) }
     }
 
-    // MARK: - Menu Delegate
+    // MARK: - Menu Tracking
 
-    func menuWillOpen(_ menu: NSMenu) {
+    @objc private func menuDidBeginTracking(_ notification: Notification) {
+        guard (notification.object as? NSMenu) === statusItem.menu else { return }
+
+        trackingMenu = notification.object as? NSMenu
+
         // Make sure the shortcut key does not trigger this when the menu is open
-        App.shared.shortcutHotkey?.isPaused = true
+        shortcutHotkey()?.isPaused = true
 
         // If Valet is installed, periodically refresh service data upon menu open!
-        if Valet.installed && !lastInitiatedServicesReloadWasRecent() {
+        if container.valet.installed && !lastInitiatedServicesReloadWasRecent() {
             // First, we need to update the timestamp
             lastInitiatedServicesReload = Date()
 
@@ -311,9 +345,13 @@ class MainMenu: NSObject, NSWindowDelegate, NSMenuDelegate, PhpSwitcherDelegate 
         }
     }
 
-    func menuDidClose(_ menu: NSMenu) {
+    @objc private func menuDidEndTracking(_ notification: Notification) {
+        guard let menu = notification.object as? NSMenu, menu === trackingMenu else { return }
+
+        trackingMenu = nil
+
         // When the menu is closed, allow the shortcut to work again
-        App.shared.shortcutHotkey?.isPaused = false
+        shortcutHotkey()?.isPaused = false
     }
 
     // MARK: - Debounce for `ServicesManager`

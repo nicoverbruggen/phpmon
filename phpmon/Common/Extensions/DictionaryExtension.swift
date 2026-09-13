@@ -9,7 +9,7 @@
 import Foundation
 
 extension Dictionary {
-    mutating func renameKey(fromKey: Key, toKey: Key) {
+    nonisolated mutating func renameKey(fromKey: Key, toKey: Key) {
         if let entry = removeValue(forKey: fromKey) {
             self[toKey] = entry
         }

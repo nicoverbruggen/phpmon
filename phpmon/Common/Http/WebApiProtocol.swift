@@ -10,14 +10,20 @@ import Foundation
 
 typealias HttpHeaders = [String: String]
 
-enum WebApiError: Error {
+// `nonisolated` + `Sendable`: this error is thrown out of the (potentially
+// main-actor) `WebApiProtocol` methods and caught in actor/off-main callers,
+// so it crosses isolation boundaries.
+nonisolated enum WebApiError: Error, Sendable {
     case invalidURL
     case networkError
     case timedOut
     case other
 }
 
-struct WebApiResponse {
+// `nonisolated` + `Sendable`: returned from the async `WebApiProtocol` methods
+// back to actor callers, so it must be safe to send across isolation boundaries.
+// All stored properties (Int, [String: String], Data?) are already Sendable.
+nonisolated struct WebApiResponse: Sendable {
     let statusCode: Int
     let headers: HttpHeaders
     let data: Data?

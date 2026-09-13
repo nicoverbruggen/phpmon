@@ -7,11 +7,18 @@
 //
 
 import Foundation
+import os
 
 actor UpdateScheduler {
     static let shared = UpdateScheduler()
 
-    private var currentTimer: Timer?
+    // `Timer` is not Sendable and must be scheduled *and* invalidated on the run loop
+    // that installed it, so all Timer calls happen on the main actor. Guarding the
+    // reference with `OSAllocatedUnfairLock` lets this actor hold on to it across
+    // those isolations. The unchecked lock variants are required because `Timer` is
+    // not Sendable; this stays safe because the timer is only ever created, read and
+    // invalidated on the main actor (see `scheduleTimer`).
+    private let currentTimer = OSAllocatedUnfairLock<Timer?>(uncheckedState: nil)
 
     private init() {}
 
@@ -27,7 +34,11 @@ actor UpdateScheduler {
      Perform an automatic update check and schedule the next one.
      */
     private func performUpdateCheck() async {
-        guard Preferences.isEnabled(.automaticBackgroundUpdateCheck) else {
+        // `Preferences` is nonisolated (lock-guarded leaf state), so the flag
+        // can be read synchronously from this actor.
+        let automaticChecksEnabled = Preferences.isEnabled(.automaticBackgroundUpdateCheck)
+
+        guard automaticChecksEnabled else {
             Log.info("Automatic update checks disabled. Skipping check but maintaining schedule.")
             scheduleTimer()
             return
@@ -39,7 +50,7 @@ actor UpdateScheduler {
             return
         }
 
-        let result = await AppUpdater().checkForUpdates(userInitiated: false)
+        let result = await runUpdateCheck()
 
         switch result {
         case .success:
@@ -52,6 +63,16 @@ actor UpdateScheduler {
             // Handle failures with exponential backoff
             handleFailure(result: result)
         }
+    }
+
+    /**
+     Runs the actual update check. `AppUpdater` is main-actor isolated, so both its
+     construction and the check itself must happen on the main actor. The resulting
+     `UpdateCheckResult` is returned to this actor.
+     */
+    @MainActor
+    private func runUpdateCheck() async -> UpdateCheckResult {
+        return await AppUpdater().checkForUpdates(userInitiated: false)
     }
 
     /**
@@ -98,11 +119,12 @@ actor UpdateScheduler {
      Schedule a timer to perform an update check after the specified interval.
      */
     private func scheduleTimer(after interval: TimeInterval = Constants.AutomaticUpdateCheckInterval) {
-        // Invalidate any existing timer
-        currentTimer?.invalidate()
-
-        // Ensure timer is scheduled on main run loop since actors run on background threads
+        // Timers must be scheduled on the main run loop (actors run on background threads)
+        // and invalidated from the same thread, so both happen inside this main actor task.
         Task { @MainActor in
+            // Invalidate any existing timer
+            self.currentTimer.withLockUnchecked { $0 }?.invalidate()
+
             let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
                 Task {
                     Log.info("Performing scheduled update check after \(interval)s.")
@@ -110,17 +132,12 @@ actor UpdateScheduler {
                 }
             }
 
-            // Store timer reference back in actor
-            await self.setCurrentTimer(timer)
+            // Store the timer reference. `currentTimer` is a Sendable lock box (a
+            // nonisolated `let`), so the actor can hold on to the reference even though
+            // the timer itself only ever lives on the main run loop.
+            self.currentTimer.withLockUnchecked { $0 = timer }
         }
 
         Log.info("Next update check scheduled in \(interval)s.")
-    }
-
-    /**
-     Set the current timer reference. Used to store timer from main thread back to actor.
-     */
-    private func setCurrentTimer(_ timer: Timer) {
-        currentTimer = timer
     }
 }

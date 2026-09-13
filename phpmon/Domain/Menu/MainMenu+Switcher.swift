@@ -19,7 +19,7 @@ extension MainMenu {
             container.phpEnvs.isBusy = false
         }
 
-        Task { // Things to do after reloading domain list data
+        Task { @MainActor in // Things to do after reloading domain list data
             if Valet.installed {
                 await self.reloadDomainListData()
             }

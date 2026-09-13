@@ -8,6 +8,7 @@
 
 import Foundation
 import NVAlert
+import os
 
 class BrewDiagnostics {
 
@@ -32,25 +33,27 @@ class BrewDiagnostics {
     /**
      Determines the Homebrew taps the user has installed.
 
-     Backed by a `Locked` box: this is reassigned from `loadInstalledTaps()` (which runs
-     off the main thread) and read from several async contexts, so access must be
-     synchronized to avoid a data race on the array buffer.
+     Backed by an `OSAllocatedUnfairLock` box: this is reassigned from `loadInstalledTaps()`
+     (which runs off the main thread) and read from several async contexts, so access must
+     be synchronized to avoid a data race on the array buffer.
      */
-    private let _installedTaps = Locked<[String]>([])
-    public var installedTaps: [String] {
-        get { _installedTaps.value }
-        set { _installedTaps.value = newValue }
+    private let _installedTaps = OSAllocatedUnfairLock<[String]>(initialState: [])
+    // `nonisolated`: reassigned off-main by `loadInstalledTaps()` and read from async
+    // contexts; the lock box keeps this data-race free across isolation domains.
+    public nonisolated var installedTaps: [String] {
+        get { _installedTaps.withLock { $0 } }
+        set { _installedTaps.withLock { $0 = newValue } }
     }
 
     /**
      Determines the Homebrew taps the user has explicitly trusted.
 
-     Backed by a `Locked` box for the same reason as `installedTaps`.
+     Backed by an `OSAllocatedUnfairLock` box for the same reason as `installedTaps`.
      */
-    private let _trustedTaps = Locked<[String]>([])
-    public var trustedTaps: [String] {
-        get { _trustedTaps.value }
-        set { _trustedTaps.value = newValue }
+    private let _trustedTaps = OSAllocatedUnfairLock<[String]>(initialState: [])
+    public nonisolated var trustedTaps: [String] {
+        get { _trustedTaps.withLock { $0 } }
+        set { _trustedTaps.withLock { $0 = newValue } }
     }
 
     private var hasLoadedTrustedTaps = false
@@ -66,7 +69,7 @@ class BrewDiagnostics {
     /**
      Load which taps are installed.
      */
-    public func loadInstalledTaps() async {
+    public nonisolated func loadInstalledTaps() async {
         installedTaps = await container.shell
             .pipe("\(container.paths.brew) tap")
             .out
@@ -201,15 +204,20 @@ class BrewDiagnostics {
      To ensure this does not cause issues, PHP Monitor will automatically remove all incorrect PHP symlinks.
      */
     public func checkForOutdatedPhpInstallationSymlinks() async {
-        // Set up a regular expression
-        let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
+        // Pure filesystem work against nonisolated leaves — run it on the
+        // Dispatch queue so the directory scan never blocks the main actor.
+        await runBlocking { [container, filesystem] in
+            // Set up a regular expression
+            let regex = try! NSRegularExpression(pattern: "^php@[0-9]+\\.[0-9]+$", options: .caseInsensitive)
 
-        // Check for incorrect versions
-        if let contents = try? filesystem.getShallowContentsOfDirectory("\(container.paths.optPath)")
-            .filter({
-                let range = NSRange($0.startIndex..., in: $0)
-                return regex.firstMatch(in: $0, options: [], range: range) != nil
-            }) {
+            // Check for incorrect versions
+            guard let contents = try? filesystem.getShallowContentsOfDirectory("\(container.paths.optPath)")
+                .filter({
+                    let range = NSRange($0.startIndex..., in: $0)
+                    return regex.firstMatch(in: $0, options: [], range: range) != nil
+                }) else {
+                return
+            }
 
             for symlink in contents {
                 let version = symlink.replacing("php@", with: "")
@@ -238,13 +246,13 @@ class BrewDiagnostics {
     public func checkForValetMisconfiguration() async {
         Log.info("Checking for PHP-FPM issues with Valet...")
 
-        guard let install = container.phpEnvs.phpInstall else {
+        guard let version = container.phpEnvs.phpInstall?.version else {
             Log.info("Will skip check for issues if no PHP version is linked.")
             return
         }
 
         // We'll need to know what the primary PHP version is
-        let primary = install.version.short
+        let primary = version.short
 
         // Versions to be handled
         let switcher = InternalSwitcher(container)

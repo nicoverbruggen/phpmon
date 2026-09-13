@@ -11,7 +11,7 @@ import Foundation
 actor Debouncer {
     private var task: Task<Void, Never>?
 
-    func debounce(for duration: TimeInterval, action: @escaping () async -> Void) {
+    func debounce(for duration: TimeInterval, action: @escaping @Sendable () async -> Void) {
         task?.cancel()
         task = Task {
             try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))

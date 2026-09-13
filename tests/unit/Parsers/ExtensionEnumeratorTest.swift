@@ -30,8 +30,8 @@ struct ExtensionEnumeratorTest {
         #expect(Set(files) == Set(["xdebug@8.1.rb", "xdebug@8.2.rb", "xdebug@8.3.rb", "xdebug@8.4.rb"]))
     }
 
-    @Test func can_parse_formulae_based_on_syntax() throws {
-        let formulae = BrewTapFormulae.from(container, tap: "shivammathur/homebrew-extensions")
+    @Test func can_parse_formulae_based_on_syntax() async throws {
+        let formulae = await BrewTapFormulae.from(container, tap: "shivammathur/homebrew-extensions")
 
         #expect(formulae["8.1"] == [BrewPhpExtension(container, path: "/", name: "xdebug", phpVersion: "8.1")])
         #expect(formulae["8.2"] == [BrewPhpExtension(container, path: "/", name: "xdebug", phpVersion: "8.2")])

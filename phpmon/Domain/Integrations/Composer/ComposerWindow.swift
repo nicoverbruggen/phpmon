@@ -115,8 +115,8 @@ import NVAlert
         // Showing that something failed should be shown immediately
         Task { @MainActor [self] in
             window?.setType(info: false)
-            window?.progressView?.labelTitle.stringValue = "alert.composer_failure.title".localized
-            window?.progressView?.labelDescription.stringValue = "alert.composer_failure.info".localized
+            window?.setTitle("alert.composer_failure.title".localized)
+            window?.setDescription("alert.composer_failure.info".localized)
             window = nil
             removeBusyStatus()
             completion(false)

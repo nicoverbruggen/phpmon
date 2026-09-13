@@ -43,6 +43,24 @@ struct TestableShellTest {
         #expect("Hello world\nGoodbye world" == output.out)
     }
 
+    @Test func fake_shell_skips_delays_unless_enabled() async {
+        let shell = TestableShell(expectations: ["slow": .delayed(5, "done")])
+        let start = ContinuousClock.now
+
+        #expect(await shell.pipe("slow").out == "done")
+        #expect(shell.sync("slow").out == "done")
+        #expect(start.duration(to: .now) < .seconds(1))
+    }
+
+    @Test func fake_shell_honors_explicit_delays() async {
+        let shell = TestableShell(expectations: ["slow": .delayed(0.1, "done")])
+        shell.allowsDelayedCommands = true
+        let start = ContinuousClock.now
+
+        #expect(await shell.pipe("slow").out == "done")
+        #expect(start.duration(to: .now) >= .milliseconds(100))
+    }
+
     @Test func fake_shell_usage() {
         let expectedOutput = """
                 PHP 8.3.0 (cli) (built: Nov 21 2023 14:40:35) (NTS)

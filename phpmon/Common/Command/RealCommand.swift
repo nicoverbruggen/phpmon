@@ -7,7 +7,9 @@
 
 import Cocoa
 
-public class RealCommand: CommandProtocol {
+// Nonisolated + Sendable: stateless, runs subprocesses to completion, must stay off the
+// main actor once the app moves to main-actor-by-default.
+public nonisolated final class RealCommand: CommandProtocol, Sendable {
     init() {}
 
     public func execute(
@@ -16,6 +18,8 @@ public class RealCommand: CommandProtocol {
         trimNewlines: Bool,
         withStandardError: Bool
     ) -> String {
+        warnIfBlockingOnMainThread("command.execute: \(path)")
+
         let task = Process()
         var output = ""
 
@@ -30,6 +34,7 @@ public class RealCommand: CommandProtocol {
         }
 
         task.launch()
+        let data = try? pipe.fileHandleForReading.readToEnd()
         task.waitUntilExit()
 
         defer {
@@ -42,8 +47,8 @@ public class RealCommand: CommandProtocol {
             return "PHPMON_COMMAND_UNCAUGHT_SIGNAL"
         }
 
-        // Try reading from file handle and close it
-        if let data = try? pipe.fileHandleForReading.readToEnd(),
+        // Decode the captured output.
+        if let data,
             let string = String(data: data, encoding: .utf8) {
             output = string
         } else {

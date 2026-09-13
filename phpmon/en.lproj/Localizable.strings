@@ -257,13 +257,22 @@ You may be asked for your password during the uninstallation process if file per
 // SITE LIST
 
 "domain_list.title" = "Domains";
+"domain_list.sidebar.all" = "All Domains";
+"domain_list.sidebar.favorites" = "Favorites";
+"domain_list.sidebar.secured" = "Secured";
+"domain_list.sidebar.linked" = "Linked";
+"domain_list.sidebar.parked" = "Parked";
+"domain_list.sidebar.proxy" = "Proxy";
+"domain_list.sidebar.global" = "Global";
+"domain_list.sidebar.isolated" = "Isolated";
+"domain_list.sidebar.count" = "Domains: %@";
 
 "domain_list.domains_empty.title" = "No domains available.";
 "domain_list.domains_empty.desc" = "No domains were found for this search query or you haven't linked any domains yet.";
 "domain_list.domains_empty.button" = "Add domain...";
 
 "domain_list.tooltips.isolated" = "This domain is isolated and using PHP %@ instead of the globally linked PHP.";
-"domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@). Click on the PHP version next to this checkmark to find out more information about how this requirement was determined.";
+"domain_list.tooltips.checkmark" = "This domain is being served with a version of PHP that is compatible with this requirement (PHP %@).";
 
 "domain_list.alerts_isolation_failed.title" = "Oops! Site Isolation Not Applied";
 "domain_list.alerts_isolation_failed.subtitle" = "Something went wrong trying to change the isolation status for this site. If this is your default site but it is not linked, I recommend manually linking the site prior to setting up isolation.";
@@ -642,6 +651,11 @@ You can do this by running `composer global update` in your terminal. After that
 "alert.php_switch_unavailable.subtitle" = "PHP Monitor can't switch to PHP %@, as it may not be installed or available. Applying this preset has been cancelled.";
 "alert.php_switch_unavailable.info" = "Please make sure PHP %@ is installed and you can switch to it in the dropdown. Currently supported versions include PHP: %@.";
 "alert.php_switch_unavailable.ok" = "OK";
+
+"alert.php_switch_unhealthy.title" = "PHP Monitor could not switch to PHP %@";
+"alert.php_switch_unhealthy.subtitle" = "Unfortunately, PHP Monitor has detected that there's a problem with your installation of PHP %@.";
+"alert.php_switch_unhealthy.description" = "Would you like to open PHP Version Manager to review and potentially repair this installation?";
+"alert.php_switch_unhealthy.repair" = "View Repair...";
 
 // Service error
 "alert.service_error.title" = "The service '%@' is reporting an error!";

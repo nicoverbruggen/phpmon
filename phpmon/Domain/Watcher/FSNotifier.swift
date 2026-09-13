@@ -23,19 +23,37 @@ actor FSNotifier {
     /** The queue that is used for the `dispatchSource`. */
     private nonisolated let queue: DispatchQueue
 
-    /** An open file or folder required for observation. */
+    /**
+     An open file or folder required for observation.
+
+     `nonisolated(unsafe)` is required for irreducible C-resource bridging: the file
+     descriptor is opened here and must be closed from the DispatchSource cancel handler
+     (which runs off the actor). Its lifecycle is serialized by the DispatchSource, so
+     access is safe despite being outside the actor's isolation.
+     */
     private nonisolated(unsafe) var fileDescriptor: CInt = -1
 
-    /** A dispatch source that monitors events associated with a file or folder. */
+    /**
+     A dispatch source that monitors events associated with a file or folder.
+
+     `nonisolated(unsafe)` is required because the DispatchSource's own event/cancel
+     handlers reference and tear it down off the actor. After `init` (when no handler
+     can run yet), every read and write happens on `queue` — the cancel handler runs
+     there, and `terminate()` hops onto it — so access is serialized despite being
+     outside the actor's isolation.
+     */
     private nonisolated(unsafe) var dispatchSource: DispatchSourceFileSystemObject?
 
     // MARK: Methods
 
     init(
         for url: URL,
-        eventMask: DispatchSource.FileSystemEvent,
+        // Passed as a raw value because `DispatchSource.FileSystemEvent` is not `Sendable`
+        // in the SDK and would otherwise be flagged when handed across the watcher actor's
+        // boundary. It is a trivial `UInt`-backed option set, so this reconstruction is safe.
+        eventMaskRawValue: UInt,
         queue: DispatchQueue? = nil,
-        onChange: @escaping () -> Void
+        onChange: @escaping @Sendable () -> Void
     ) {
         self.url = url
         self.queue = queue ?? DispatchQueue(label: "com.nicoverbruggen.phpmon.fs_notifier")
@@ -49,19 +67,18 @@ actor FSNotifier {
 
         dispatchSource = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: fileDescriptor,
-            eventMask: eventMask,
+            eventMask: DispatchSource.FileSystemEvent(rawValue: eventMaskRawValue),
             queue: self.queue
         )
 
         dispatchSource?.setEventHandler(handler: { [weak self] in
             Task { [weak self] in
-                guard let self = self else { return }
-
-                // If our notifier is suspended, don't fire
-                guard await !self.isSuspended else { return }
-
-                // If our notifier is not suspended, fire
-                onChange()
+                // The suspension check and the callback run as one actor-isolated
+                // step: checking `isSuspended` here and calling `onChange()` after
+                // hopping off the actor would leave a window where a `suspend()`
+                // (e.g. `withSuspended` during our own config writes) lands between
+                // the two, letting a self-inflicted event slip through.
+                await self?.fire(onChange)
             }
         })
 
@@ -72,6 +89,13 @@ actor FSNotifier {
         })
 
         dispatchSource?.resume()
+    }
+
+    /** Invokes the change handler, unless the notifier is currently suspended. */
+    private func fire(_ onChange: @Sendable () -> Void) {
+        guard !isSuspended else { return }
+
+        onChange()
     }
 
     /** Suspends responding to filesystem events. This does not stop events from being observed! */
@@ -88,7 +112,13 @@ actor FSNotifier {
 
     /** Terminates the file monitor, which will cause `deinit` to fire. */
     nonisolated func terminate() {
-        dispatchSource?.cancel()
+        // Hop onto the source's queue: the cancel handler sets `dispatchSource`
+        // to nil on that same queue, so reading it anywhere else would race the
+        // teardown (an unsynchronized ARC load during a store). On the queue,
+        // a second `terminate()` simply observes nil and becomes a no-op.
+        queue.async { [self] in
+            dispatchSource?.cancel()
+        }
     }
 
     nonisolated deinit {

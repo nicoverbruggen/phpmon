@@ -11,8 +11,12 @@ class App {
 
     // MARK: Static Vars
 
+    // Nonisolated so that off-main / actor code (the leaf services reached via
+    // `App.shared.container`) can access the container without hopping to the main actor.
     /** The static app instance. Accessible at any time. */
-    static let shared = App()
+    nonisolated static let shared = App()
+
+    nonisolated init() {}
 
     /** Use to determine whether a loaded testable configuration is being used. */
     static var hasLoadedTestableConfiguration: Bool = false
@@ -74,11 +78,13 @@ class App {
 
     // MARK: Variables
 
+    // Nonisolated so the (nonisolated) leaf services can be reached off the main actor.
+    // Set once at startup / swapped only in test setup; Container is @unchecked Sendable.
     /**
      The dependency container.
      This is supposed to be injected, so direct access is discouraged.
      */
-    var container: Container = Container()
+    nonisolated(unsafe) var container: Container = Container()
 
     /** URL that was received before the app finished booting. Will be processed once the startup procedure completes. */
     var deferredURL: URL?

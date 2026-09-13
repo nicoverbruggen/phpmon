@@ -18,7 +18,13 @@ class NginxConfigurationFile: CreatedFromFile {
     /// The TLD of the domain, usually derived from the name of the file.
     var tld: String
 
-    /** Resolves an nginx configuration file (.conf) */
+    /**
+     Resolves an nginx configuration file (.conf) by reading it from disk.
+
+     Production code does not use this (the scanners read file contents off the
+     main actor via the filesystem layer and use `init(path:contents:)`); it
+     remains for tests that parse real fixture files.
+     */
     static func from(
         _ container: Container,
         filePath: String,

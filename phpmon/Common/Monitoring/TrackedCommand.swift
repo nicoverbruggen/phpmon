@@ -7,7 +7,9 @@
 
 import Foundation
 
-final class TrackedCommand: CommandProtocol {
+// `nonisolated` + `Sendable`: a fully immutable decorator (two `let`s) that must be usable
+// from the off-main command family, mirroring `TrackedShell`.
+nonisolated final class TrackedCommand: CommandProtocol, Sendable {
     private let command: CommandProtocol
     private let commandTracker: CommandTracker
 

@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import os
 
 private func makeRealShellContainer() -> Container {
     Container.real(minimal: true, commandTracking: false)
@@ -83,7 +84,7 @@ struct RealShellTest {
 
     @Test(.enabled(if: Binaries.hasLinkedPhp(), "Requires PHP"))
     func system_shell_can_buffer_output() async {
-        let bits = Locked<[String]>([])
+        let bits = OSAllocatedUnfairLock<[String]>(initialState: [])
 
         let (_, shellOutput) = try! await container.shell.attach(
             "php -r \"echo 'Hello world' . PHP_EOL; usleep(500); echo 'Goodbye world';\"",
@@ -124,6 +125,45 @@ struct RealShellTest {
             .trimmingCharacters(in: .whitespacesAndNewlines) == "/path/to/directory")
     }
 
+    @Test func pipe_drains_large_stdout_and_stderr_before_exit() async {
+        let command = "i=0; while [ $i -lt 32768 ]; do printf 'stdout\\n'; printf 'stderr\\n' >&2; i=$((i+1)); done"
+
+        let output = await container.shell.pipe(command, timeout: 5)
+
+        #expect(output.out == String(repeating: "stdout\n", count: 32768))
+        #expect(output.err == String(repeating: "stderr\n", count: 32768))
+    }
+
+    @Test func sync_drains_both_streams_before_waiting_for_exit() {
+        // The alarm bounds the test if a full pipe prevents the command from exiting.
+        let output = container.shell.sync("/usr/bin/perl -e 'alarm 2; print STDOUT \"x\" x 131072; print STDERR \"y\" x 131072; alarm 0;'")
+
+        #expect(output.out.utf8.count == 131072)
+        #expect(output.err.utf8.count == 131072)
+    }
+
+    @Test func attach_preserves_utf8_split_between_output_chunks() async throws {
+        let chunks = OSAllocatedUnfairLock<String>(initialState: "")
+        let (_, output) = try await container.shell.attach(
+            "printf '\\360\\237'; sleep 0.1; printf '\\220\\230'",
+            didReceiveOutput: { text, _ in chunks.withLock { $0 += text } },
+            withTimeout: 5
+        )
+
+        #expect(output.out == "🐘")
+        #expect(chunks.withLock { $0 } == "🐘")
+    }
+
+    @Test func attach_timeout_still_applies_after_the_shell_exits() async {
+        await #expect(throws: ShellError.timedOut) {
+            try await container.shell.attach(
+                "sleep 1 & exit 0",
+                didReceiveOutput: { _, _ in },
+                withTimeout: 0.1
+            )
+        }
+    }
+
     /**
      This test verifies that concurrent writes to `output.out` and `output.err`
      from multiple readability handlers don't cause data races or crashes,
@@ -144,7 +184,7 @@ struct RealShellTest {
         let phpScript = "php -r 'for ($i = 1; $i <= 500; $i++) { fwrite(STDOUT, \"stdout-$i\" . PHP_EOL); fwrite(STDERR, \"stderr-$i\" . PHP_EOL); flush(); }'"
 
         // Keep track of the total chunk count
-        let receivedChunks = Locked<Int>(0)
+        let receivedChunks = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         // We will now test the attach method
         let (_, shellOutput) = try await container.shell.attach(
@@ -200,7 +240,7 @@ struct RealShellTest {
     @Test func attach_stops_emitting_output_after_timeout() async {
         let pidFile = "/tmp/phpmon-attach-timeout-\(UUID().uuidString).pid"
         let command = "/bin/sh -c 'echo $$ > \(pidFile); trap \"\" TERM; while true; do echo stdout-line; echo stderr-line 1>&2; done'"
-        let callbackCount = Locked<Int>(0)
+        let callbackCount = OSAllocatedUnfairLock<Int>(initialState: 0)
 
         defer {
             if let pid = try? String(contentsOfFile: pidFile, encoding: .utf8)
@@ -221,14 +261,54 @@ struct RealShellTest {
             )
         }
 
-        let callbackCountAtTimeout = callbackCount.value
+        let callbackCountAtTimeout = callbackCount.withLock { $0 }
 
         await delay(seconds: 0.25)
 
-        let callbackCountAfterDelay = callbackCount.value
+        let callbackCountAfterDelay = callbackCount.withLock { $0 }
 
         // If these two match, we know no additional callbacks fired after the delay
         #expect(callbackCountAfterDelay == callbackCountAtTimeout)
+    }
+
+    /**
+     Regression test for an output-drop race in `RealShell.attach(...)`.
+
+     The readability handlers used to consume `availableData` on the FileHandle's
+     own queue and only then hop to the serial queue to append. When a fast-exiting
+     process terminated in that window, the termination path flipped `finished` and
+     drained the pipe first; the already-consumed chunk then hit the `finished`
+     guard and was silently dropped — the drain could never re-read it. Symptom:
+     occasionally truncated `attach` output for short-lived processes.
+
+     This runs a fast-exiting command with known multi-chunk output many times and
+     asserts the full output is always captured, and that every chunk is delivered
+     via `didReceiveOutput` exactly once, in order.
+     */
+    @Test func attach_captures_all_output_of_fast_exiting_commands() async throws {
+        // 200 numbered lines (~2 KB) written as individual `echo` calls, so the
+        // output typically arrives in multiple chunks; the process exits right
+        // after the final write, making termination race the readability handlers.
+        let expected = (1...200).map { "line-\($0)\n" }.joined()
+        let command = "i=1; while [ $i -le 200 ]; do echo line-$i; i=$((i+1)); done"
+
+        for iteration in 1...50 {
+            let chunks = OSAllocatedUnfairLock<[String]>(initialState: [])
+
+            let (_, shellOutput) = try await container.shell.attach(
+                command,
+                didReceiveOutput: { incoming, _ in
+                    chunks.withLock { $0.append(incoming) }
+                },
+                withTimeout: 5.0
+            )
+
+            // The full output must be captured, every time.
+            #expect(shellOutput.out == expected, "Output was truncated on iteration \(iteration)")
+
+            // Every chunk must be delivered exactly once, in order.
+            #expect(chunks.withLock { $0 }.joined() == shellOutput.out)
+        }
     }
 }
 
@@ -240,19 +320,58 @@ struct RealShellTimingTest {
         container = makeRealShellContainer()
     }
 
-    // If this test fails, run it separately to confirm it's actually broken.
+    /// Verifies that `RealShell` runs concurrent commands in parallel rather than
+    /// serializing them (e.g. behind a shared lock or queue).
+    ///
+    /// A *fixed* wall-clock budget is fragile: Swift Testing runs suites in parallel, so a
+    /// loaded host can inflate the measured time even though the commands really did run
+    /// concurrently. Instead we measure a single-command baseline in the *same* run and
+    /// assert that four concurrent commands finish well under the ~4× that a serialized
+    /// execution would take. This scales with host load. We also retry a few times to ride
+    /// out a transient scheduling spike from other suites running at the same moment.
     @Test func can_run_multiple_shell_commands_in_parallel() async throws {
-        let start = ContinuousClock.now
-
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
-            group.addTask { await container.shell.pipe("sleep 4") }
+        func seconds(_ duration: Duration) -> Double {
+            Double(duration.components.seconds) + Double(duration.components.attoseconds) * 1e-18
         }
 
-        let duration = start.duration(to: .now)
-        #expect(duration < .seconds(10))
+        struct Sample { let ok: Bool; let single: Double; let parallel: Double }
+
+        func attempt() async -> Sample {
+            // Baseline: how long does a single command take on this host, right now?
+            let singleStart = ContinuousClock.now
+            await container.shell.pipe("sleep 1")
+            let single = seconds(singleStart.duration(to: .now))
+
+            // Four commands launched concurrently. With real parallelism this is ~1×
+            // `single`; if the commands were serialized it would be ~4×.
+            let parallelStart = ContinuousClock.now
+            await withTaskGroup(of: Void.self) { group in
+                for _ in 0..<4 {
+                    group.addTask { await self.container.shell.pipe("sleep 1") }
+                }
+            }
+            let parallel = seconds(parallelStart.duration(to: .now))
+
+            // Allow 2.5× headroom for scheduling overhead while still catching genuine
+            // serialization (which would be ~4×).
+            return Sample(ok: parallel < single * 2.5, single: single, parallel: parallel)
+        }
+
+        // Retry generously: under heavy parallel-suite load the cooperative pool can be
+        // saturated for a while, so keep sampling until a window opens where parallelism
+        // can actually manifest. In the common (unloaded) case the first attempt passes.
+        var result = await attempt()
+        for _ in 0..<7 where !result.ok {
+            result = await attempt()
+        }
+
+        #expect(
+            result.ok,
+            """
+            Four concurrent commands took \(result.parallel)s versus \(result.single)s for a \
+            single command — they appear to be serialized rather than running in parallel.
+            """
+        )
     }
 
     // If this test fails, run it separately to confirm it's actually broken.

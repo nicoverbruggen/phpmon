@@ -22,6 +22,7 @@ The following package dependencies are in use:
 
 * [`NVAppUpdater`](https://github.com/nicoverbruggen/NVAppUpdater)
 * [`NVAlert`](https://github.com/nicoverbruggen/NVAlert)
+- [`PLCrashReporter`](https://github.com/microsoft/plcrashreporter)
 
 You may need an internet connection to download these dependencies, or you can also clone the dependencies and include them manually.
 
@@ -63,9 +64,25 @@ Once you have downloaded this repository, open `PHP Monitor.xcodeproj`, and you 
 
 If you'd like to create a production build, choose "Any Mac" as the target and select Product > Archive.
 
+## 🔀 Concurrency (Swift 6)
+
+PHP Monitor is built in **Swift 6 language mode** with **main-actor-by-default** isolation. The
+following are set at the project level (so every target inherits them):
+
+```
+SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor
+SWIFT_STRICT_CONCURRENCY      = complete
+SWIFT_APPROACHABLE_CONCURRENCY = YES
+```
+
+`SWIFT_VERSION` is `6.0` for the app, the Self-Updater and the **Unit Tests**
+target. The **UI Tests target is intentionally kept at `5.0`**.
+
+The project builds with **zero** concurrency warnings. Please keep it that way when contributing.
+
 ## ✅ Testing
 
-In order to properly test everything, you will want to use the _PHP Monitor EAP_ target. There are unit and UI tests both for this target.
+The `PHP Monitor` and `PHP Monitor EAP` schemes share one test plan with unit and UI tests. The EAP scheme tests the app built with `Debug.EA`; the regular scheme uses `Debug`. Both schemes use the same app target.
 
 ### Unit tests
 
@@ -75,8 +92,7 @@ If you would like to run the unit tests outside of Xcode, you can run:
 xcodebuild test \
     -project "PHP Monitor.xcodeproj" \
     -scheme "Unit Tests" \
-    -destination "platform=macOS" \
-    -parallel-testing-enabled NO
+    -destination "platform=macOS"
 ```
 
 ### UI tests
@@ -84,11 +100,21 @@ xcodebuild test \
 ```sh
 xcodebuild test \
     -project "PHP Monitor.xcodeproj" \
-    -scheme "PHP Monitor" \
+    -scheme "PHP Monitor EAP" \
     -destination "platform=macOS" \
     -only-testing "UI Tests"
 ```
     
+Use `-scheme "PHP Monitor"` to run the same UI suite against the regular build. To run unit tests against EAP, use `-scheme "PHP Monitor EAP" -only-testing "Unit Tests"`.
+
+Keep `UITestCase` nonisolated so its inherited XCTest initializers keep their original
+isolation. Mark UI test methods and helpers `@MainActor` individually. Isolating the
+test class itself also isolates its inherited initializers and causes override warnings.
+
+### Parallel unit tests
+
+Run the unit target with the shared test plan's default parallel execution. A serial run does not verify isolation between suites. Tests must use their own containers and model instances. Do not replace `App.shared.container`, mutate shared Valet or Brew state, or use the global PHP alias as a fixture. A suite's `.serialized` trait only orders that suite's tests; it does not exclude other suites.
+
 ### Failures in UI tests
 
 You may sporadically see failures in UI tests due to the following error: `Invalid parameter not satisfying: point.x != INFINITY && point.y != INFINITY`. This seems to be an issue with Xcode that Apple may need to resolve? You can retry the tests in question and they should eventually pass.

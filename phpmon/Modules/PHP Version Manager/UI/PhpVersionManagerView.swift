@@ -14,7 +14,7 @@ struct PhpVersionManagerView: View {
     @ObservedObject var status: BusyStatus
     var handler: HandlesBrewPhpFormulae
     var container: Container {
-        return App.shared.container
+        return handler.container
     }
 
     init(
@@ -51,8 +51,8 @@ struct PhpVersionManagerView: View {
 
         await delay(seconds: 1)
 
-        // PHP formulae may not be installable with older Homebrew version
-        if version.major != 4 && version.major != 5 && version.major != 6 {
+        // Warn when this Homebrew release is outside the supported versions.
+        if !Constants.SupportedHomebrewVersions.contains(version.major) {
             Task { @MainActor in
                 self.presentErrorAlert(
                     title: "phpman.warnings.unsupported.title".localized,
@@ -76,7 +76,7 @@ struct PhpVersionManagerView: View {
         await self.warnAboutTapReadiness()
 
         // Finally, load PHP information
-        await container.phpEnvs.reloadPhpVersions()
+        await container.phpEnvs.detectPhpVersions()
         await self.handler.refreshPhpVersions(loadOutdated: false)
         await self.handler.refreshPhpVersions(loadOutdated: true)
         self.status.busy = false
@@ -317,7 +317,7 @@ struct PhpVersionManagerView: View {
     private func formulaIcon(for formula: BrewPhpFormula) -> some View {
         Image(systemName: formula.icon)
             .resizable()
-            .aspectRatio(contentMode: .fit)
+            .scaledToFit()
             .frame(width: 16, height: 16)
             .foregroundColor(formula.iconColor)
             .padding(.horizontal, 5)
@@ -338,6 +338,6 @@ struct PhpVersionManagerView: View {
 #Preview {
     PhpVersionManagerView(
         formulae: Brew.shared.formulae,
-        handler: FakeBrewFormulaeHandler()
+        handler: FakeBrewFormulaeHandler(formulae: Brew.shared.formulae)
     ).frame(width: 600, height: 600)
 }

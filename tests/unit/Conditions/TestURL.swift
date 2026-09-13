@@ -8,7 +8,9 @@
 
 import Foundation
 
-class TestURL {
+// `nonisolated`: used to evaluate a `@Test(.enabled(if:))` trait, which runs in a
+// nonisolated context.
+nonisolated class TestURL {
     static func isReachable(url: String) -> Bool {
         let process = Process()
 

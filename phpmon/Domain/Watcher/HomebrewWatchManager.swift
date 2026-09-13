@@ -27,8 +27,18 @@ actor HomebrewWatchManager: Suspendable {
             return
         }
 
+        // Replacing an existing manager would orphan its FSNotifier (the notifier's
+        // cancel handler keeps it alive until cancelled), so tear it down first.
+        if let existing = App.shared.homebrewWatchManager {
+            App.shared.homebrewWatchManager = nil
+            await existing.disable()
+        }
+
+        // Read the (Sendable) filesystem here on the main actor and hand it to the
+        // actor, so the actor never has to touch main-actor `App`/`Container` state.
         let manager = HomebrewWatchManager(
             for: URL(fileURLWithPath: container.paths.binPath),
+            filesystem: container.filesystem,
             debounceInterval: 5.0
         )
 
@@ -61,10 +71,16 @@ actor HomebrewWatchManager: Suspendable {
      */
     nonisolated let debounceInterval: TimeInterval
 
+    /**
+     The filesystem is a Sendable, nonisolated leaf dependency, captured at
+     construction so the actor can perform existence checks off the main actor.
+     */
+    nonisolated private let filesystem: FileSystemProtocol
+
     // MARK: - Lifecycle
 
-    init(for url: URL, debounceInterval: TimeInterval = 5.0) {
-        if App.shared.container.filesystem is TestableFileSystem {
+    init(for url: URL, filesystem: FileSystemProtocol, debounceInterval: TimeInterval = 5.0) {
+        if filesystem is TestableFileSystem {
             fatalError("""
                 HomebrewWatchManager is currently incompatible with a testable filesystem!
                 You are not allowed to instantiate these while using a testable filesystem.
@@ -72,6 +88,7 @@ actor HomebrewWatchManager: Suspendable {
         }
 
         self.url = url
+        self.filesystem = filesystem
         self.debounceInterval = debounceInterval
         self.debouncer = Debouncer()
     }
@@ -91,14 +108,14 @@ actor HomebrewWatchManager: Suspendable {
         assert(watcher == nil, "setupWatcher() called when watcher already exists")
 
         // Ensure that the target directory exists
-        if !App.shared.container.filesystem.anyExists(url.path) {
+        if !filesystem.anyExists(url.path) {
             Log.warn("No watcher was created for \(url.path) because the requested directory does not exist.")
             return
         }
 
         // Create a new FSNotifier which will respond to all events.
         // If files are created, removed, etc. in this `homebrew/bin` folder, the handler will fire.
-        self.watcher = FSNotifier(for: url, eventMask: .all) { [weak self] in
+        self.watcher = FSNotifier(for: url, eventMaskRawValue: DispatchSource.FileSystemEvent.all.rawValue) { [weak self] in
             guard let self = self else { return }
 
             Task {
@@ -121,11 +138,22 @@ actor HomebrewWatchManager: Suspendable {
             Log.info("No changes in `\(self.url.path)` occurred for \(self.debounceInterval) seconds. Reloading now.")
 
             // We reload the PHP versions in the background
-            await App.shared.container.phpEnvs.reloadPhpVersions()
+            await App.shared.container.phpEnvs.detectPhpVersions()
 
             // Finally, refresh the active installation
             await MainMenu.shared.refreshActiveInstallation()
         }
+    }
+
+    /**
+     Permanently disables this manager: cancels any pending debounced work and
+     terminates the underlying `FSNotifier` (which breaks the notifier's deliberate
+     keep-alive cycle so both objects can deinit).
+     */
+    func disable() async {
+        await debouncer.cancel()
+        watcher?.terminate()
+        watcher = nil
     }
 
     // MARK: - Suspendable Protocol
@@ -139,13 +167,23 @@ actor HomebrewWatchManager: Suspendable {
      to prevent the app from doing duplicate work.
      */
     public static func withSuspended<T>(_ action: () async throws -> T) async rethrows -> T {
-        guard let manager = App.shared.homebrewWatchManager else {
+        guard let manager = await App.shared.homebrewWatchManager else {
             // If there's no manager, run the task as-is
             return try await action()
         }
 
-        // Suspend, execute the action, and resume
-        return try await manager.withSuspended(action)
+        // `action` runs here in the caller's isolation domain; only `suspend()`/`resume()`
+        // hop onto the watcher actor. This keeps a (main-actor) `action` closure from being
+        // transferred into the actor, which would be a data-race error.
+        await manager.suspend()
+        do {
+            let result = try await action()
+            await manager.resume()
+            return result
+        } catch {
+            await manager.resume()
+            throw error
+        }
     }
 
     /**

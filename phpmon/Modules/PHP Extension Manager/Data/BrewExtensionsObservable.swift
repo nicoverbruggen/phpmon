@@ -17,19 +17,23 @@ class BrewExtensionsObservable: ObservableObject {
 
     @Published var extensions: [BrewPhpExtension] = []
 
+    private var loadTask: Task<Void, Never>?
+
     init(phpVersion: String) {
         self.phpVersion = phpVersion
         self.loadExtensionData(for: phpVersion)
     }
 
     public func loadExtensionData(for version: String) {
-        let tapFormulae = BrewTapFormulae.from(
-            App.shared.container,
-            tap: "shivammathur/homebrew-extensions"
-        )
-
-        if let filteredTapFormulae = tapFormulae[version] {
-            self.extensions = filteredTapFormulae
+        loadTask?.cancel()
+        extensions = []
+        loadTask = Task {
+            let tapFormulae = await BrewTapFormulae.from(
+                App.shared.container,
+                tap: "shivammathur/homebrew-extensions"
+            )
+            guard !Task.isCancelled else { return }
+            self.extensions = tapFormulae[version] ?? []
         }
     }
 }

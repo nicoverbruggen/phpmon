@@ -12,18 +12,17 @@ import NVAlert
 class PhpGuard {
     var currentVersion: String?
 
-    var container: Container {
-        return App.shared.container
-    }
+    let container: Container
 
-    init() {
-        guard let linked = container.phpEnvs.phpInstall else {
+    init(container: Container = App.shared.container) {
+        self.container = container
+        guard let version = container.phpEnvs.phpInstall?.version else {
             Log.warn("PHP Guard is unable to determine the current PHP version!")
             return
         }
 
-        currentVersion = linked.version.short
-        Log.info("The currently linked version of PHP is: \(linked.version.short).")
+        currentVersion = version.short
+        Log.info("The currently linked version of PHP is: \(version.short).")
     }
 
     public func compareToLastGlobalVersion() async {

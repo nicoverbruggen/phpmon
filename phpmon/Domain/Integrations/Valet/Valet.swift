@@ -19,10 +19,12 @@ class Valet {
         case isolatedSites
     }
 
-    static let shared = Valet()
+    static var shared: Valet { App.shared.container.valet }
 
     /// The dependency container.
-    var container: Container
+    let container: Container
+
+    lazy var scanner: DomainScanner = ValetDomainScanner(container)
 
     /// The version of Valet that was detected.
     var version: VersionNumber?
@@ -52,7 +54,6 @@ class Valet {
         self.version = nil
         self.sites = []
         self.proxies = []
-        self.checkForMarketingMode()
     }
 
     /// If marketing mode is enabled, you can tinker around with the site list
@@ -60,7 +61,7 @@ class Valet {
     public func checkForMarketingMode() {
         if ProcessInfo.processInfo.environment["PHPMON_MARKETING_MODE"] != nil {
             Log.info("Using a fake list of sites for Marketing Mode!")
-            ValetScanner.useFake()
+            scanner = FakeDomainScanner()
         }
     }
 
@@ -84,7 +85,11 @@ class Valet {
      Retrieve a list of all domains, including sites & proxies.
      */
     public static func getDomainListable() -> [ValetListable] {
-        return self.shared.sites + self.shared.proxies
+        shared.getDomainListable()
+    }
+
+    func getDomainListable() -> [ValetListable] {
+        sites + proxies
     }
 
     /**
@@ -92,7 +97,11 @@ class Valet {
      that have expired certificates.
      */
     public static func getExpiredDomainListable() -> [ValetListable] {
-        return self.getDomainListable().filter { item in
+        return self.shared.expiredDomains
+    }
+
+    var expiredDomains: [ValetListable] {
+        (sites + proxies).filter { item in
             if let expiry = item.getListableCertificateExpiryDate() {
                 return expiry < Date()
             }
@@ -120,7 +129,7 @@ class Valet {
             .trimmingCharacters(in: .whitespaces)
 
         // Extract the version number
-        Valet.shared.version = try? VersionNumber.parse(VersionExtractor.from(versionString)!)
+        self.version = try? VersionNumber.parse(VersionExtractor.from(versionString)!)
     }
 
     /**
@@ -132,18 +141,21 @@ class Valet {
      Since version 5.2, it is no longer possible for an invalid file to crash the app.
      If the JSON is invalid when the app launches, an alert will be presented, however.
      */
-    public func loadConfiguration() {
-        if let parsed = parseConfiguration() {
+    public func loadConfiguration() async {
+        let container = self.container
+
+        if let parsed = await runBlocking({ Self.parseConfiguration(container) }) {
             config = parsed
         }
     }
 
     /**
-     Reads and decodes the Valet `config.json` file. This performs blocking file I/O but
-     does **not** mutate any shared state, so it is safe to call off the main thread. The
-     caller is responsible for assigning the result to `config` on the main actor.
+     Reads and decodes the Valet `config.json` file. This performs blocking file I/O,
+     so callers must invoke it via `runBlocking` to keep the main actor free. It does
+     **not** mutate any shared state; the caller is responsible for assigning the
+     result to `config` on the main actor.
      */
-    private func parseConfiguration() -> Valet.Configuration? {
+    private nonisolated static func parseConfiguration(_ container: Container) -> Valet.Configuration? {
         do {
             return try JSONDecoder().decode(
                 Valet.Configuration.self,
@@ -158,42 +170,17 @@ class Valet {
     }
 
     /**
-     Starts the preload of sites. In order to make sure PHP Monitor can correctly
-     handle all PHP versions including isolation, it needs to know about all sites.
-     */
-    public func startPreloadingSites() async {
-        await self.reloadSites()
-    }
-
-    /**
      Reloads the list of sites, assuming that the list isn't being reloaded at the time.
      (We don't want to do duplicate or parallel work!)
      */
     public func reloadSites() async {
-        // Parse the configuration off the main thread (blocking file I/O), then publish
-        // it and claim the busy flag atomically on the main actor. The UI reads
-        // `config`, `sites` and `proxies` on the main thread, so every mutation of that
-        // shared state must happen on the main actor too — otherwise we get the data
-        // race that crashed 26.05.3.
-        let parsed = parseConfiguration()
+        // Claim the reload before suspending. A second call must not replace the
+        // configuration while the first scan is building sites from it.
+        guard !isBusy else { return }
+        isBusy = true
+        defer { isBusy = false }
 
-        let shouldProceed = await MainActor.run { () -> Bool in
-            if let parsed {
-                config = parsed
-            }
-            // Atomic check-and-set: prevents two reloads from running concurrently
-            // (the previous `if isBusy { return }` was a non-atomic check-then-set).
-            if isBusy {
-                return false
-            }
-            isBusy = true
-            return true
-        }
-
-        guard shouldProceed else {
-            return
-        }
-
+        await loadConfiguration()
         await resolvePaths()
     }
 
@@ -238,7 +225,7 @@ class Valet {
         }
 
         // 1. Evaluate feature support
-        Valet.shared.evaluateFeatureSupport()
+        self.evaluateFeatureSupport()
 
         // 2. Notify user if the version is too old (but major version is OK)
         if version.text.versionCompare(Constants.MinimumRecommendedValetVersion) == .orderedAscending {
@@ -272,7 +259,7 @@ class Valet {
                 Log.info("The latest version of Valet is \(latestVersion.text); current is \(currentVersion.text).")
 
                 // Update the menu so this update is visible.
-                await MainMenu.shared.rebuild()
+                MainMenu.shared.rebuild()
             } else {
                 Log.info("You are running the latest version of Valet (\(latestVersion.text)).")
             }
@@ -309,45 +296,39 @@ class Valet {
     /**
      Returns a count of how many sites are linked and parked.
      */
-    private func countPaths() -> Int {
-        return ValetScanner.active.resolveSiteCount(paths: config.paths)
+    private func countPaths() async -> Int {
+        return await scanner.resolveSiteCount(paths: config.paths)
     }
 
     /**
      Resolves all paths and creates linked or parked site instances that can be referenced later.
      */
     private func resolvePaths() async {
-        // The blocking directory scan runs off the main thread and writes only to local
-        // variables — no shared state is touched here.
-        let scannedSites = ValetScanner.active
+        // The scanner performs its blocking directory/certificate I/O on the concurrent
+        // pool and only builds the site/proxy models here on the main actor.
+        let scannedSites = await scanner
             .resolveSitesFrom(paths: config.paths)
             .sorted {
                 $0.absolutePath < $1.absolutePath
             }
 
-        let scannedProxies = ValetScanner.active
+        let scannedProxies = await scanner
             .resolveProxies(
                 directoryPath: "~/.config/valet/Nginx".replacingTildeWithHomeDirectory
             )
 
-        let resolvedSites = sitesIncludingDefault(from: scannedSites)
+        let resolvedSites = await sitesIncludingDefault(from: scannedSites)
 
-        // Publish the results and release the busy flag on the main actor, so that all
-        // mutations of `sites`/`proxies`/`isBusy` happen on the same thread the UI reads
-        // them from. This is the actual fix for the 26.05.3 crashes.
-        await MainActor.run {
-            self.sites = resolvedSites
-            self.proxies = scannedProxies
-            self.isBusy = false
-            Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
-        }
+        self.sites = resolvedSites
+        self.proxies = scannedProxies
+        Log.info("\(self.sites.count) sites & \(self.proxies.count) proxies have been scanned.")
     }
 
     /// Returns the scanned sites with the configured default site included at the front,
     /// unless it is already present in the list.
-    private func sitesIncludingDefault(from sites: [ValetSite]) -> [ValetSite] {
+    private func sitesIncludingDefault(from sites: [ValetSite]) async -> [ValetSite] {
         guard let defaultPath = config.defaultSite,
-              let defaultSite = ValetScanner.active.resolveSite(path: defaultPath),
+              let defaultSite = await scanner.resolveSite(path: defaultPath),
               !sites.contains(where: {
                   $0.absolutePath == defaultSite.absolutePath && $0.name == defaultSite.name
               })
@@ -358,7 +339,9 @@ class Valet {
         return [defaultSite] + sites
     }
 
-    struct Configuration: Decodable {
+    // `nonisolated` + `Sendable`: decoded on a Dispatch queue (the config file
+    // read is blocking I/O) and handed back to the main actor. All-immutable storage.
+    nonisolated struct Configuration: Decodable, Sendable {
         /// Top level domain suffix. Usually "test" but can be set to something else.
         /// - Important: Does not include the actual dot. ("test", not ".test"!)
         let tld: String

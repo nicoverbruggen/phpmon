@@ -8,7 +8,12 @@
 
 import Foundation
 
-class AppleScript {
+// `nonisolated`: these calls block until the user has dealt with the password
+// prompt and the elevated command has finished, so they must be callable off
+// the main actor (wrapped in `runBlocking` at the call sites). This is why the
+// script runs through an `osascript` subprocess rather than `NSAppleScript`,
+// which is documented as main-thread-only.
+nonisolated class AppleScript {
     /**
      Execute a simple shell script with administrative privileges (as root).
 
@@ -51,30 +56,58 @@ class AppleScript {
     }
 
     /**
-     Runs a given AppleScript.
+     Runs a given AppleScript via `/usr/bin/osascript`.
+
+     A subprocess is used instead of `NSAppleScript` because the latter is
+     documented as main-thread-only, and these scripts (admin prompts plus the
+     elevated command itself) can block for a long time — they need to be able
+     to run on a Dispatch queue. The subprocess shows the exact same
+     administrator-privileges prompt.
      */
     private static func runAppleScript(script: String) throws -> String {
+        guard !isRunningTests,
+              ProcessInfo.processInfo.environment["PHPMON_TEST_CONFIGURATION"] == nil,
+              !CommandLine.arguments.contains(where: { $0.hasPrefix("--configuration:") }) else {
+            Log.err("Real AppleScript execution is disabled for test configurations.")
+            throw AdminPrivilegeError(kind: .applescriptNilError)
+        }
         Log.info("Running via AppleScript: `\(script)`")
-        let appleScript = NSAppleScript(source: script)
 
-        var error: NSDictionary?
-        let eventResult: NSAppleEventDescriptor? = appleScript?.executeAndReturnError(&error)
+        let task = Process()
+        task.launchPath = "/usr/bin/osascript"
+        task.arguments = ["-e", script]
 
-        if let error = error {
-            Log.err("AppleScript error: \(error)")
+        let outputPipe = Pipe()
+        let errorPipe = Pipe()
+        task.standardOutput = outputPipe
+        task.standardError = errorPipe
 
-            if let errorNumber = error[NSAppleScript.errorNumber] as? Int, errorNumber == -128 {
+        do {
+            try task.run()
+        } catch {
+            Log.err("osascript could not be launched: \(error)")
+            throw AdminPrivilegeError(kind: .applescriptNilError)
+        }
+
+        let captured = RealShell.getOutput(stdout: outputPipe, stderr: errorPipe)
+        task.waitUntilExit()
+
+        let output = captured.out
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let errorOutput = captured.err
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if task.terminationStatus != 0 {
+            Log.err("AppleScript error: \(errorOutput)")
+
+            // Error -128 means the user dismissed the password prompt.
+            if errorOutput.contains("(-128)") {
                 throw AdminPrivilegeError(kind: .userDenied)
             }
 
             throw AdminPrivilegeError(kind: .applescriptNilError)
         }
 
-        guard let result = eventResult else {
-            Log.err("Unknown AppleScript error")
-            throw AdminPrivilegeError(kind: .applescriptNilError)
-        }
-
-        return result.stringValue ?? ""
+        return output
     }
 }

@@ -25,7 +25,7 @@ class ZshRunCommand {
      */
     @discardableResult
     private func add(_ text: String) async -> Bool {
-        if zshrcAlreadyContainsLine(for: text) {
+        if await zshrcAlreadyContainsLine(for: text) {
             return true
         }
 
@@ -51,9 +51,13 @@ class ZshRunCommand {
         """
     }
 
-    private func zshrcAlreadyContainsLine(for text: String) -> Bool {
-        guard container.filesystem.fileExists("~/.zshrc"),
-              let contents = try? container.filesystem.getStringFromFile("~/.zshrc") else {
+    private func zshrcAlreadyContainsLine(for text: String) async -> Bool {
+        let filesystem = container.filesystem!
+        let existingContents = await runBlocking {
+            guard filesystem.fileExists("~/.zshrc") else { return nil as String? }
+            return try? filesystem.getStringFromFile("~/.zshrc")
+        }
+        guard let contents = existingContents else {
             return false
         }
 

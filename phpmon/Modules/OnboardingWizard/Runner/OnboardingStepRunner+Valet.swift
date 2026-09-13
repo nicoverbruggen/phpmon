@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 extension OnboardingStepRunner {
 
@@ -25,7 +26,7 @@ extension OnboardingStepRunner {
         let composerValetShim = "\(container.paths.homePath)/.composer/vendor/bin/valet"
         let composerValetScript = "\(container.paths.homePath)/.composer/vendor/laravel/valet/valet"
 
-        let collector = Locked<[OutputLine]>([])
+        let collector = OSAllocatedUnfairLock<[OutputLine]>(initialState: [])
         var sudoersInstalled = false
         var installError: Error?
         var alertState: OnboardingAlertState?
@@ -95,7 +96,7 @@ extension OnboardingStepRunner {
 
             return Result(
                 state: .failed,
-                outputLines: collector.value,
+                outputLines: collector.withLock { $0 },
                 progress: nil,
                 alertState: alertState
             )
@@ -121,7 +122,7 @@ extension OnboardingStepRunner {
 
         return Result(
             state: .failed,
-            outputLines: collector.value,
+            outputLines: collector.withLock { $0 },
             progress: progress,
             alertState: alertState
         )

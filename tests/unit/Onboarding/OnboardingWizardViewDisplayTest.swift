@@ -14,6 +14,7 @@ struct OnboardingWizardViewDisplayTest {
     // the Homebrew step instead of requiring an extra click to dismiss a completed-step screen.
     @Test func completed_developer_tools_state_does_not_block_homebrew_step() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             progress: .init(
                 developerToolsInstalled: true,
                 homebrewInstalled: false,
@@ -32,7 +33,7 @@ struct OnboardingWizardViewDisplayTest {
     // The standard onboarding flow should still begin on the introduction screen.
     @Test func full_setup_flow_starts_on_introduction() {
         let view = OnboardingWizardView(
-            viewModel: OnboardingWizardViewModel(hasLoaded: true)
+            viewModel: OnboardingWizardViewModel(container: Container.fake(), hasLoaded: true)
         )
 
         #expect(view.isShowingIntroduction)
@@ -43,6 +44,7 @@ struct OnboardingWizardViewDisplayTest {
     // The Valet-only flow should skip the introduction and open directly on the Valet step.
     @Test func valet_only_flow_skips_introduction_in_the_view() {
         let viewModel = OnboardingWizardViewModel(
+            container: Container.fake(),
             flow: ValetInstallOnboardingFlow(),
             progress: .init(
                 developerToolsInstalled: true,
@@ -64,6 +66,7 @@ struct OnboardingWizardViewDisplayTest {
     @Test func learn_more_link_reappears_after_introduction() {
         let view = OnboardingWizardView(
             viewModel: OnboardingWizardViewModel(
+                container: Container.fake(),
                 hasCompletedIntroduction: true,
                 hasLoaded: true
             )

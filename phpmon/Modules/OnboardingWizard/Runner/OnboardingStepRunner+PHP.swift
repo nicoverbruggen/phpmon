@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os
 
 extension OnboardingStepRunner {
     /**
@@ -15,9 +16,10 @@ extension OnboardingStepRunner {
     func installPhpComposer(
         didReceiveOutput: (@Sendable (OutputLine) -> Void)?
     ) async -> Result {
-        // We're attaching some streaming output. To ensure there's no contention, we use `Locked`.
-        // In the future, perhaps it makes sense to switch to an `actor` instead.
-        let collector = Locked<[OutputLine]>([])
+        // We're attaching some streaming output. To ensure there's no contention, we use
+        // an `OSAllocatedUnfairLock` collector. In the future, perhaps it makes sense to
+        // switch to an `actor` instead.
+        let collector = OSAllocatedUnfairLock<[OutputLine]>(initialState: [])
 
         do {
             let brew = container.paths.brew
@@ -45,7 +47,7 @@ extension OnboardingStepRunner {
             // And we should also quit here; after all, the operation explicitly failed!
             return Result(
                 state: .failed,
-                outputLines: collector.value,
+                outputLines: collector.withLock { $0 },
                 progress: nil,
                 alertState: nil
             )
@@ -75,7 +77,7 @@ extension OnboardingStepRunner {
 
         return Result(
             state: .failed,
-            outputLines: collector.value,
+            outputLines: collector.withLock { $0 },
             progress: progress,
             alertState: nil
         )

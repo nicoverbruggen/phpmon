@@ -6,7 +6,10 @@
 //  Copyright © 2026 Nico Verbruggen. All rights reserved.
 //
 
-struct DetectableService: Hashable {
+// `nonisolated`: a pure value type used in `Set` operations from off-main/async contexts
+// (`discoverServices`). Without it, the synthesized `Hashable`/`Equatable` conformance is
+// main-actor-isolated and can't be used when filtering the set off the main actor.
+nonisolated struct DetectableService: Hashable, Sendable {
     let service: String
 
     init(service: String) {
@@ -42,7 +45,10 @@ actor AutoDetectableServices {
 
     // MARK: - Static Instance
 
-    public static let shared = AutoDetectableServices(App.shared.container)
+    // Isolated to the main actor because the initializer reads `App.shared.container`
+    // (main-actor state). Both call sites (Startup+Launch, ServicesRegistry) are already
+    // on the main actor, so this does not constrain existing usage.
+    @MainActor public static let shared = AutoDetectableServices(App.shared.container)
 
     /**
      The Homebrew services that should be automatically

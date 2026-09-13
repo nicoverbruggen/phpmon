@@ -45,7 +45,7 @@ extension MainMenu {
         }
 
         asyncExecution {
-            try self.actions.fixHomebrewPermissions()
+            try await self.actions.fixHomebrewPermissions()
         } success: {
             NVAlert()
                 .withInformation(
@@ -240,7 +240,8 @@ extension MainMenu {
             return
         }
 
-        actions.openPhpConfigFolder(version: install.version.short)
+        guard let version = install.version else { return }
+        actions.openPhpConfigFolder(version: version.short)
     }
 
     @objc func openPhpMonitorConfigurationFile() {
@@ -256,6 +257,25 @@ extension MainMenu {
     }
 
     @objc func switchToPhpVersion(sender: PhpMenuItem) {
+        // A refresh can replace the cache while AppKit still displays the old menu.
+        if container.phpEnvs.cachedPhpInstallations[sender.version]?.isHealthy == false {
+            let openRepairOptions = NVAlert().withInformation(
+                title: "alert.php_switch_unhealthy.title".localized(sender.version),
+                subtitle: "alert.php_switch_unhealthy.subtitle".localized(sender.version),
+                description: "alert.php_switch_unhealthy.description".localized
+            )
+            .withPrimary(text: "alert.php_switch_unhealthy.repair".localized)
+            .withTertiary(text: "generic.cancel".localized, action: { alert in
+                alert.close(with: .alertThirdButtonReturn)
+            })
+            .didSelectPrimary(urgency: .bringToFront)
+
+            if openRepairOptions {
+                openPhpVersionManager()
+            }
+            return
+        }
+
         self.switchToPhpVersion(sender.version)
     }
 
@@ -294,7 +314,7 @@ extension MainMenu {
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 
-        container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+        container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
         await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }
@@ -308,7 +328,7 @@ extension MainMenu {
             rebuild()
             await PhpEnvironments.switcher.performSwitch(to: version)
 
-            container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+            container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
             await ConfigWatchManager.handleWatcher()
             container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
         }
@@ -333,7 +353,7 @@ extension MainMenu {
         rebuild()
         await PhpEnvironments.switcher.performSwitch(to: version)
 
-        container.phpEnvs.currentInstall = ActivePhpInstallation(container)
+        container.phpEnvs.currentInstall = await ActivePhpInstallation.load(container)
         await ConfigWatchManager.handleWatcher()
         container.phpEnvs.delegate?.switcherDidCompleteSwitch(to: version)
     }

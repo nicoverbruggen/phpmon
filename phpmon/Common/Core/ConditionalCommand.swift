@@ -20,8 +20,12 @@
  ]
  try await shell.attach(commands.chained, ...)
  ```
+
+ `nonisolated` + `Sendable`: an immutable value type describing a shell command. It is
+ constructed and consumed from off-main (nonisolated) command orchestration, so it must
+ not be confined to the main actor.
  */
-struct ConditionalCommand {
+nonisolated struct ConditionalCommand: Sendable {
     let command: String
     let isIncluded: Bool
 
@@ -32,12 +36,12 @@ struct ConditionalCommand {
 
 extension Array where Element == ConditionalCommand {
     /// The command strings that should actually run, in order, with excluded commands dropped.
-    var included: [String] {
+    nonisolated var included: [String] {
         return compactMap { $0.isIncluded ? $0.command : nil }
     }
 
     /// The included commands chained together with `&&` for a single shell invocation.
-    var chained: String {
+    nonisolated var chained: String {
         return included.joined(separator: " && ")
     }
 }

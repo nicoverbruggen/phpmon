@@ -10,19 +10,24 @@ import Foundation
 import Cocoa
 import NVAlert
 
+// Immutable value type returned across isolation boundaries (callers await
+// `checkForUpdates` from actors / the menu), so it is nonisolated + Sendable.
 /**
  The potential different outcomes of a check for updates.
  */
-enum UpdateCheckResult {
+nonisolated enum UpdateCheckResult: Sendable {
     case success
     case networkError
     case parseError
 }
 
+// Drives NVAlert update prompts and the self-updater launch, so it stays on the main
+// actor. The network fetch it awaits (`CaskFile.fromUrl`) runs off-main on its own.
 /**
  Instead of using `UpdateCheck` which is a more simplified update checking process
  included in `NVAppUpdater`, we have a slightly more complex setup here.
  */
+@MainActor
 class AppUpdater {
     var caskFile: CaskFile!
     var latestVersionOnline: AppVersion!
@@ -43,7 +48,7 @@ class AppUpdater {
             // ERROR #1: The endpoint is unreachable or the response is invalid.
             Log.err("Could not get a valid CaskFile from the endpoint.")
             if interactive {
-                await presentCouldNotRetrieveUpdate()
+                presentCouldNotRetrieveUpdate()
             }
             return .networkError
         }
@@ -56,7 +61,7 @@ class AppUpdater {
             // ERROR #2: The CaskFile's version string is invalid.
             Log.err("The version string from the CaskFile could not be read.")
             if interactive {
-                await presentCouldNotRetrieveUpdate()
+                presentCouldNotRetrieveUpdate()
             }
             return .parseError
         }
@@ -73,9 +78,9 @@ class AppUpdater {
 
         Task { // Present this concurrently w/ returning the .success value
             if latestVersionOnline > AppVersion.fromCurrentVersion() {
-                await presentNewerVersionAvailableAlert()
+                presentNewerVersionAvailableAlert()
             } else if interactive {
-                await presentNoNewerVersionAvailableAlert()
+                presentNoNewerVersionAvailableAlert()
             }
         }
 
@@ -97,9 +102,8 @@ class AppUpdater {
         .withPrimary(
             text: "updater.alerts.buttons.install".localized,
             action: { vc in
-                self.cleanupCaskroom()
-                self.prepareForDownload()
                 vc.close(with: .OK)
+                Task { await self.prepareForDownload() }
             }
         )
         .withSecondary(
@@ -152,19 +156,12 @@ class AppUpdater {
 
     // MARK: - Preparing for Self-Updater
 
-    private func prepareForDownload() {
+    private func prepareForDownload() async {
         let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
-
-        system_quiet("mkdir -p ~/.config/phpmon/updater 2> /dev/null")
-
-        let updaterDirectory = "~/.config/phpmon/updater"
-            .replacing("~", with: NSHomeDirectory())
-
-        system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
-
-        try! App.shared.container.filesystem.writeAtomicallyToFile(
-            "\(updaterDirectory)/update.json",
-            content: "{ \"url\": \"\(caskFile.url)\", \"sha256\": \"\(caskFile.sha256)\" }"
+        await prepareUpdateFiles(
+            container: App.shared.container,
+            updater: updater,
+            manifest: "{ \"url\": \"\(caskFile.url)\", \"sha256\": \"\(caskFile.sha256)\" }"
         )
 
         let updaterUrl = NSURL(fileURLWithPath: updater, isDirectory: true) as URL
@@ -175,13 +172,25 @@ class AppUpdater {
         }
     }
 
-    private func cleanupCaskroom() {
-        let path = App.shared.container.paths.caskroomPath
+    func prepareUpdateFiles(container: Container, updater: String, manifest: String) async {
+        let filesystem = container.filesystem!
+        let shell = container.shell!
+        let updaterDirectory = "\(container.paths.homePath)/.config/phpmon/updater"
+        await runBlocking {
+            Self.cleanupCaskroom(container: container)
+            shell.sync("mkdir -p \"\(updaterDirectory)\" 2> /dev/null")
+            shell.sync("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
+            try! filesystem.writeAtomicallyToFile("\(updaterDirectory)/update.json", content: manifest)
+        }
+    }
 
-        if App.shared.container.filesystem.directoryExists(path) {
+    private nonisolated static func cleanupCaskroom(container: Container) {
+        let path = container.paths.caskroomPath
+
+        if container.filesystem.directoryExists(path) {
             Log.info("Removing the Caskroom directory for PHP Monitor...")
             do {
-                try App.shared.container.filesystem.remove(path)
+                try container.filesystem.remove(path)
                 Log.info("Removed the Caskroom directory at `\(path)`.")
             } catch {
                 Log.err("Automatically removing the Caskroom directory at `\(path)` failed.")
