@@ -78,22 +78,27 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
 
         buttonPhpVersion.title = "PHP \(site.servingPhpVersion)"
         buttonPhpVersion.setAccessibilityLabel(buttonPhpVersion.title)
-        let canIsolate = site.container.valet.features.contains(.isolatedSites)
+        let canChangePhpVersion = site.container.valet.features.contains(.isolatedSites)
             && (!site.container.phpEnvs.availablePhpVersions.isEmpty || site.isolatedVersion != nil)
-        buttonPhpVersion.isEnabled = canIsolate
-        buttonPhpVersion.image = canIsolate
-            ? NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
-                .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold))
-            : nil
-        buttonPhpVersion.toolTip = (canIsolate ? "domain_list.site_isolation" : "domain_list.isolation_unavailable").localized
+        buttonPhpVersion.isEnabled = canChangePhpVersion
 
-        let isIsolated = site.isolatedVersion != nil
-        imageViewIsolation.image = isIsolated
-            ? NSImage.isolated
-            : NSImage(systemSymbolName: "globe", accessibilityDescription: nil)
-        imageViewIsolation.toolTip = isIsolated
-            ? "domain_list.tooltips.isolated".localized(site.servingPhpVersion)
-            : "domain_list.sidebar.global".localized
+        if canChangePhpVersion {
+            let configuration = NSImage.SymbolConfiguration(pointSize: 8, weight: .semibold)
+            buttonPhpVersion.image = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
+                .withSymbolConfiguration(configuration)
+            buttonPhpVersion.toolTip = "domain_list.site_isolation".localized
+        } else {
+            buttonPhpVersion.image = nil
+            buttonPhpVersion.toolTip = "domain_list.isolation_unavailable".localized
+        }
+
+        if let isolatedVersion = site.isolatedVersion {
+            imageViewIsolation.image = NSImage.isolated
+            imageViewIsolation.toolTip = "domain_list.tooltips.isolated".localized(isolatedVersion)
+        } else {
+            imageViewIsolation.image = NSImage(systemSymbolName: "globe", accessibilityDescription: nil)
+            imageViewIsolation.toolTip = "domain_list.sidebar.global".localized
+        }
         imageViewIsolation.setAccessibilityLabel(imageViewIsolation.toolTip)
     }
 

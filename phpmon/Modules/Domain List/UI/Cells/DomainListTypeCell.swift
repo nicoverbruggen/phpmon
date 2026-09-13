@@ -30,24 +30,18 @@ final class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
     private func setupSubviews() {
         self.wantsLayer = true
 
-        let driver = NSTextField(labelWithString: "Laravel")
-        driver.translatesAutoresizingMaskIntoConstraints = false
-        driver.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        driver.textColor = .labelColor
-        driver.alignment = .left
-        driver.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
-        driver.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        self.addSubview(driver)
-        self.labelDriver = driver
+        let driver = Self.makeLabel(
+            font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize),
+            textColor: .labelColor
+        )
+        let phpVersion = Self.makeLabel(
+            font: NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .mini)),
+            textColor: .secondaryLabelColor
+        )
 
-        let phpVersion = NSTextField(labelWithString: "PHP 8.0")
-        phpVersion.translatesAutoresizingMaskIntoConstraints = false
-        phpVersion.font = NSFont.systemFont(ofSize: NSFont.systemFontSize(for: .mini))
-        phpVersion.textColor = .secondaryLabelColor
-        phpVersion.alignment = .left
-        phpVersion.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
-        phpVersion.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        self.addSubview(driver)
         self.addSubview(phpVersion)
+        self.labelDriver = driver
         self.labelPhpVersion = phpVersion
 
         let info = NSButton(image: NSImage(systemSymbolName: "info.circle", accessibilityDescription: nil)!,
@@ -76,25 +70,21 @@ final class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
         ])
     }
 
+    private static func makeLabel(font: NSFont, textColor: NSColor) -> NSTextField {
+        let label = NSTextField(labelWithString: "")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = font
+        label.textColor = textColor
+        label.alignment = .left
+        label.setContentHuggingPriority(NSLayoutConstraint.Priority(251), for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        return label
+    }
+
     func populateCell(with site: ValetSite) {
         self.site = site
-        buttonPhpInfo.isHidden = false
-        let details = site.preferredPhpVersionSource == .unknown
-            ? "alert.composer_php_requirement.unable_to_determine".localized
-            : "alert.composer_php_requirement.title".localized("\(site.name).\(site.tld)", site.preferredPhpVersion)
-        let status: (symbol: String, color: NSColor, description: String)
-        if site.preferredPhpVersionSource == .unknown || site.preferredPhpVersion == "???" || site.servingPhpVersion == "???" {
-            status = ("info.circle", .labelColor, "alert.unable_to_determine_is_fine".localized)
-        } else if site.isCompatibleWithPreferredPhpVersion {
-            status = ("checkmark", NSColor(named: "IconColorGreen") ?? .systemGreen, "alert.php_version_ideal".localized)
-        } else {
-            status = ("xmark", NSColor(named: "IconColorRed") ?? .systemRed, "alert.php_version_incorrect".localized)
-        }
-        buttonPhpInfo.image = NSImage(systemSymbolName: status.symbol, accessibilityDescription: nil)?
-            .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
-                .applying(NSImage.SymbolConfiguration(paletteColors: [status.color])))
-        buttonPhpInfo.toolTip = "\(status.description) \(details)"
-        buttonPhpInfo.setAccessibilityLabel(buttonPhpInfo.toolTip)
+        self.stylePhpInfoButton(for: site)
+
         labelDriver.stringValue = site.driver ?? "driver.not_detected".localized
 
         // Determine the Laravel version
@@ -113,6 +103,43 @@ final class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
         labelDriver.stringValue = "Proxy"
         labelPhpVersion.stringValue = "Active"
         return
+    }
+
+    private func stylePhpInfoButton(for site: ValetSite) {
+        let symbol: String
+        let color: NSColor
+        let description: String
+
+        if site.preferredPhpVersionSource == .unknown
+            || site.preferredPhpVersion == "???"
+            || site.servingPhpVersion == "???" {
+            symbol = "info.circle"
+            color = .labelColor
+            description = "alert.unable_to_determine_is_fine".localized
+        } else if site.isCompatibleWithPreferredPhpVersion {
+            symbol = "checkmark"
+            color = NSColor(named: "IconColorGreen") ?? .systemGreen
+            description = "alert.php_version_ideal".localized
+        } else {
+            symbol = "xmark"
+            color = NSColor(named: "IconColorRed") ?? .systemRed
+            description = "alert.php_version_incorrect".localized
+        }
+
+        let configuration = NSImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+            .applying(NSImage.SymbolConfiguration(paletteColors: [color]))
+        buttonPhpInfo.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?
+            .withSymbolConfiguration(configuration)
+        buttonPhpInfo.isHidden = false
+
+        let details: String
+        if site.preferredPhpVersionSource == .unknown {
+            details = "alert.composer_php_requirement.unable_to_determine".localized
+        } else {
+            details = "alert.composer_php_requirement.title".localized("\(site.name).\(site.tld)", site.preferredPhpVersion)
+        }
+        buttonPhpInfo.toolTip = "\(description) \(details)"
+        buttonPhpInfo.setAccessibilityLabel(buttonPhpInfo.toolTip)
     }
 
     @objc func showPhpDetails(_ sender: Any) {
