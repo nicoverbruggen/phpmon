@@ -46,6 +46,7 @@
 /* Begin PBXFileReference section */
 		031F24842EA1132300CFB8D9 /* PHP Monitor.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "PHP Monitor.xctestplan"; sourceTree = "<group>"; };
 		54D9E0C027E4F5E9003B9AD9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		A7B58D902F64C81000E93621 /* AGENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS.md; sourceTree = "<group>"; };
 		C406A5F0298AD2CE00B5B85A /* PHP Monitor Self-Updater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor Self-Updater.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER.md; sourceTree = "<group>"; };
 		C41C1B3322B0097F00E7CF16 /* PHP Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PHP Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +187,7 @@
 				C4F8C0A522D4FA41002EFE61 /* README.md */,
 				C4E713562570150F00007428 /* SECURITY.md */,
 				C4168F4427ADB4A3003B6C39 /* DEVELOPER.md */,
+				A7B58D902F64C81000E93621 /* AGENTS.md */,
 				54D9E0C027E4F5E9003B9AD9 /* LICENSE */,
 				C4F5FBCC28218C93001065C5 /* .swiftlint.yml */,
 				C4E713572570151400007428 /* docs */,

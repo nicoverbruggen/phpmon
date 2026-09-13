@@ -75,64 +75,9 @@ SWIFT_APPROACHABLE_CONCURRENCY = YES
 ```
 
 `SWIFT_VERSION` is `6.0` for the app, the Self-Updater and the **Unit Tests**
-target. The **UI Tests target is intentionally kept at `5.0`** — see the note under UI tests
-below. Please do not flip it without reading that note.
+target. The **UI Tests target is intentionally kept at `5.0`**.
 
-### What "main-actor-by-default" means when writing code
-
-Every type, function and closure is **`@MainActor` unless you say otherwise**. That is the right
-default for UI and app-model code and it is why most of the app "just works" on the main thread.
-You only reach for `nonisolated` in specific, deliberate cases:
-
-* **Leaf services that can be called off the main actor** — the shell, filesystem and command
-  layers (`RealShell`, `RealFileSystem`, `RealCommand`, `Paths`, and their protocols) are
-  `nonisolated` so any isolation can call them. Their blocking calls are guarded by
-  `warnIfBlockingOnMainThread(...)` in debug builds.
-* **Pure value types & helpers** — value types with no main-actor state (e.g. `SystemContext`,
-  `DetectableService`, `BrewCommandProgress`), and pure functions/extensions (`url(...)`,
-  `TimeInterval` math, `String.localized`, `Date.fromString`, etc.). Mark these `nonisolated`
-  (and `Sendable` where they cross isolation) so they can be used from any context.
-* **Orchestration** — e.g. the `BrewCommand` family is `nonisolated` and only `await`s onto
-  `@MainActor` for UI updates (`MainMenu`, `WindowManager`). Note the pitfall below: being
-  `nonisolated async` does **not** move work off the main actor by itself.
-
-### Blocking work must go through `runBlocking` (or `@concurrent`)
-
-Because `SWIFT_APPROACHABLE_CONCURRENCY` enables `NonisolatedNonsendingByDefault`, a plain
-`nonisolated async` function **runs on the caller's executor** — called from the main actor, it
-still runs on the main thread. To actually leave the main actor, use the `runBlocking` helper (an
-`@concurrent` function, SE-0461):
-
-```swift
-let contents = try await runBlocking { try container.filesystem.getStringFromFile(path) }
-```
-
-The result must be `Sendable`. When a main-actor model needs data that requires blocking I/O,
-follow the **probe pattern**: gather the raw data in a `nonisolated` `Sendable` snapshot off-main,
-then build the model on the main actor from that data — see `PhpInstallation.Probe`,
-`ActivePhpInstallation.Probe`, `PhpConfigurationFile.Snapshot`, and `ValetSite.determine()`.
-The debug watchdog (`warnIfBlockingOnMainThread`) will call out any blocking call that slips
-back onto the main thread; startup must stay free of `[HANG-RISK]` warnings.
-
-### Thread-safe shared state
-
-Genuinely-shared mutable state must be synchronized — **do not** paper over data races with a
-bare `@unchecked Sendable`.
-
-* `OSAllocatedUnfairLock<T>` is the primitive for lock-guarded state (used by `Preferences`,
-  `PhpEnvironments`, `BrewDiagnostics`, `RealShell`, `Log`, the test doubles, …). Keep the
-  mutable state *inside* the lock (`withLock { ... }`); it is non-reentrant, so never nest
-  accesses to the same instance. Use `uncheckedState`/`withLockUnchecked` only for genuinely
-  non-`Sendable` state with a documented invariant. When the deployment target eventually
-  reaches macOS 15 these can migrate to the standard-library `Mutex`.
-* Watchers (`ConfigWatchManager`, `HomebrewWatchManager`, `FSNotifier`, `Debouncer`) are
-  `actor`s. When a caller needs to run main-actor work "while suspended", the closure stays in
-  the caller's isolation — only `suspend()`/`resume()` hop onto the watcher actor.
-* Anything that isn't main-thread isolated should have a test that exercises its concurrent
-  behaviour (see `RealShellTimingTest`, `FSNotifierTest`, `ValetReloadConcurrencyTest`,
-  `BrewDiagnosticsConcurrencyTest`).
-
-The project builds with **zero** concurrency warnings; please keep it that way when contributing.
+The project builds with **zero** concurrency warnings. Please keep it that way when contributing.
 
 ## ✅ Testing
 
@@ -149,8 +94,6 @@ xcodebuild test \
     -destination "platform=macOS"
 ```
 
-Fake containers deny privileged commands by default. Tests that need an approval flow must supply a `PrivilegedCommandRunner`; UI configurations use `UITestPrivilegedCommandRunner`. Real AppleScript execution is disabled in unit tests and when a test configuration is supplied by environment or launch argument. Homebrew ownership repair skips fake filesystems so it cannot inspect or change host permissions.
-
 ### UI tests
 
 ```sh
@@ -162,14 +105,6 @@ xcodebuild test \
 ```
     
 Use `-scheme "PHP Monitor"` to run the same UI suite against the regular build. To run unit tests against EAP, use `-scheme "PHP Monitor EAP" -only-testing "Unit Tests"`.
-
-The **UI Tests target deliberately stays in Swift 5 language mode** while the rest of the
-project is on Swift 6. XCUITest is not reconcilable with Swift 6 strict concurrency here:
-`XCUIApplication`/`XCUIElement` are `@MainActor`, but `XCTestCase`'s lifecycle overrides
-(`setUpWithError`, `tearDownWithError`, `init`) are `nonisolated` in the SDK, and app source
-files compiled into this target were written for main-actor-by-default. The Swift 5 UI test
-target still fully exercises the Swift 6 app, so there is no functional downside. (Swift
-Testing — the modern alternative — does not support UI tests, so XCTest is required here.)
 
 Keep `UITestCase` nonisolated so its inherited XCTest initializers keep their original
 isolation. Mark UI test methods and helpers `@MainActor` individually. Isolating the
