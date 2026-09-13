@@ -102,9 +102,8 @@ class AppUpdater {
         .withPrimary(
             text: "updater.alerts.buttons.install".localized,
             action: { vc in
-                self.cleanupCaskroom()
-                self.prepareForDownload()
                 vc.close(with: .OK)
+                Task { await self.prepareForDownload() }
             }
         )
         .withSecondary(
@@ -157,19 +156,12 @@ class AppUpdater {
 
     // MARK: - Preparing for Self-Updater
 
-    private func prepareForDownload() {
+    private func prepareForDownload() async {
         let updater = Bundle.main.resourceURL!.path + "/PHP Monitor Self-Updater.app"
-
-        system_quiet("mkdir -p ~/.config/phpmon/updater 2> /dev/null")
-
-        let updaterDirectory = "~/.config/phpmon/updater"
-            .replacing("~", with: NSHomeDirectory())
-
-        system_quiet("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
-
-        try! App.shared.container.filesystem.writeAtomicallyToFile(
-            "\(updaterDirectory)/update.json",
-            content: "{ \"url\": \"\(caskFile.url)\", \"sha256\": \"\(caskFile.sha256)\" }"
+        await prepareUpdateFiles(
+            container: App.shared.container,
+            updater: updater,
+            manifest: "{ \"url\": \"\(caskFile.url)\", \"sha256\": \"\(caskFile.sha256)\" }"
         )
 
         let updaterUrl = NSURL(fileURLWithPath: updater, isDirectory: true) as URL
@@ -180,13 +172,25 @@ class AppUpdater {
         }
     }
 
-    private func cleanupCaskroom() {
-        let path = App.shared.container.paths.caskroomPath
+    func prepareUpdateFiles(container: Container, updater: String, manifest: String) async {
+        let filesystem = container.filesystem!
+        let shell = container.shell!
+        let updaterDirectory = "\(container.paths.homePath)/.config/phpmon/updater"
+        await runBlocking {
+            Self.cleanupCaskroom(container: container)
+            shell.sync("mkdir -p \"\(updaterDirectory)\" 2> /dev/null")
+            shell.sync("cp -R \"\(updater)\" \"\(updaterDirectory)/PHP Monitor Self-Updater.app\"")
+            try! filesystem.writeAtomicallyToFile("\(updaterDirectory)/update.json", content: manifest)
+        }
+    }
 
-        if App.shared.container.filesystem.directoryExists(path) {
+    private nonisolated static func cleanupCaskroom(container: Container) {
+        let path = container.paths.caskroomPath
+
+        if container.filesystem.directoryExists(path) {
             Log.info("Removing the Caskroom directory for PHP Monitor...")
             do {
-                try App.shared.container.filesystem.remove(path)
+                try container.filesystem.remove(path)
                 Log.info("Removed the Caskroom directory at `\(path)`.")
             } catch {
                 Log.err("Automatically removing the Caskroom directory at `\(path)` failed.")

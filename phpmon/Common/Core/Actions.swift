@@ -122,12 +122,13 @@ class Actions {
     // MARK: - Other Actions
 
     public func createTempPhpInfoFile() async -> URL {
-        // Clean state for temporary phpinfo files
-        try? container.filesystem.remove("/tmp/phpmon_phpinfo.php")
-        try? container.filesystem.remove("/tmp/phpmon_phpinfo.html")
-
-        // Generate a source file that we will execute immediately
-        try! container.filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
+        let filesystem = container.filesystem!
+        await runBlocking {
+            // Clean up the previous output before generating the source file.
+            try? filesystem.remove("/tmp/phpmon_phpinfo.php")
+            try? filesystem.remove("/tmp/phpmon_phpinfo.html")
+            try! filesystem.writeAtomicallyToFile("/tmp/phpmon_phpinfo.php", content: "<?php phpinfo();")
+        }
 
         // Tell php-cgi to run the PHP and output as an .html file
         await container.shell.pipe("\(paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html")

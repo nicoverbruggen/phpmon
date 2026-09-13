@@ -11,6 +11,44 @@ import os
 
 @MainActor
 struct BlockingFileOperationsTest {
+    @Test func phpinfo_preparation_leaves_the_main_thread() async {
+        let filesystem = RecordingFileSystem(files: [
+            "/tmp/phpmon_phpinfo.php": .fake(.text, "old source"),
+            "/tmp/phpmon_phpinfo.html": .fake(.text, "old output")
+        ])
+        let container = prepare(filesystem)
+        let command = "\(container.paths.binPath)/php-cgi -q /tmp/phpmon_phpinfo.php > /tmp/phpmon_phpinfo.html"
+        (container.shell as! TestableShell).expectations = [command: .instant("")]
+
+        let url = await Actions(container).createTempPhpInfoFile()
+
+        #expect(url.path == "/private/tmp/phpmon_phpinfo.html")
+        #expect(filesystem.files["/tmp/phpmon_phpinfo.php"]?.content == "<?php phpinfo();")
+        #expect(filesystem.files["/tmp/phpmon_phpinfo.html"] == nil)
+        #expect(!filesystem.accesses.isEmpty)
+        #expect(filesystem.accesses.allSatisfy { !$0 })
+    }
+
+    @Test func updater_preparation_leaves_the_main_thread() async {
+        let filesystem = RecordingFileSystem(files: [
+            "/opt/homebrew/Caskroom/phpmon": .fake(.directory)
+        ])
+        let container = prepare(filesystem)
+        let directory = "\(container.paths.homePath)/.config/phpmon/updater"
+        let updater = "/Applications/PHP Monitor.app/Contents/Resources/PHP Monitor Self-Updater.app"
+        (container.shell as! TestableShell).expectations = [
+            "mkdir -p \"\(directory)\" 2> /dev/null": .instant(""),
+            "cp -R \"\(updater)\" \"\(directory)/PHP Monitor Self-Updater.app\"": .instant("")
+        ]
+
+        await AppUpdater().prepareUpdateFiles(container: container, updater: updater, manifest: "test manifest")
+
+        #expect(filesystem.files[container.paths.caskroomPath] == nil)
+        #expect(filesystem.files[directory + "/update.json"]?.content == "test manifest")
+        #expect(!filesystem.accesses.isEmpty)
+        #expect(filesystem.accesses.allSatisfy { !$0 })
+    }
+
     @Test func extension_discovery_leaves_the_main_thread() async {
         let filesystem = RecordingFileSystem(files: [
             "/opt/homebrew/Library/Taps/shivammathur/homebrew-extensions/Formula/redis@8.4.rb": .fake(.text, "depends_on \"shivammathur/extensions/igbinary@8.4\"")
@@ -85,5 +123,10 @@ nonisolated private final class RecordingFileSystem: TestableFileSystem, @unchec
     override func writeAtomicallyToFile(_ path: String, content: String) throws {
         recorded.withLock { $0.append(Thread.isMainThread) }
         try super.writeAtomicallyToFile(path, content: content)
+    }
+
+    override func remove(_ path: String) throws {
+        recorded.withLock { $0.append(Thread.isMainThread) }
+        try super.remove(path)
     }
 }
