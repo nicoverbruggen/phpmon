@@ -61,7 +61,7 @@ nonisolated class AppleScript {
      A subprocess is used instead of `NSAppleScript` because the latter is
      documented as main-thread-only, and these scripts (admin prompts plus the
      elevated command itself) can block for a long time — they need to be able
-     to run on the concurrent pool. The subprocess shows the exact same
+     to run on a Dispatch queue. The subprocess shows the exact same
      administrator-privileges prompt.
      */
     private static func runAppleScript(script: String) throws -> String {

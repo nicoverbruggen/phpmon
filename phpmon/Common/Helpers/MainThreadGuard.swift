@@ -14,9 +14,10 @@ import Foundation
 /// `RealFileSystem` read/write/enumerate calls, and the lazy PATH resolution) run
 /// subprocesses or synchronous file I/O to completion. Those must never happen on the
 /// main thread: under main-actor-by-default, any call path that forgets to hop off-main
-/// (via `runBlocking` or an `@concurrent` function) will beachball the UI. This guard makes
+/// (via `runBlocking`) will beachball the UI. This guard makes
 /// that mistake loud and immediate during development instead of a mysterious stall in
 /// the field.
+/// This guard does not detect blocked cooperative workers; use `runBlocking` for I/O.
 ///
 /// Now that the entire detection/scanning pipeline runs off-main, this guard **traps**
 /// (`assertionFailure`) in debug builds: blocking the main thread is a hard failure, not

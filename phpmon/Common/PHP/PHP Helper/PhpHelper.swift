@@ -14,7 +14,7 @@ class PhpHelper {
     nonisolated static let symlinkDirectory = "/usr/local/bin"
 
     // `nonisolated` + `Sendable`: helper files are written to disk on the
-    // concurrent pool (blocking I/O), so these values cross isolation boundaries.
+    // Dispatch queue (blocking I/O), so these values cross isolation boundaries.
     nonisolated struct HelperFile: Sendable {
         let version: String
         let dotless: String
@@ -40,7 +40,7 @@ class PhpHelper {
         let helperFiles = PhpHelper.makeHelperFiles(shell, container, installedVersions: installedVersions)
 
         // Writes the helper files (but only if the files are changed!)
-        // Blocking file I/O, so this hops to the concurrent pool.
+        // Blocking file I/O, so this hops to a Dispatch queue.
         let writtenFiles = await runBlocking { PhpHelper.writeHelperFiles(container, files: helperFiles) }
 
         // If the helper directory is in the PATH, the symlinks won't be created

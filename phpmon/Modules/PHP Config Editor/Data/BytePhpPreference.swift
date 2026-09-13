@@ -38,7 +38,7 @@ class BytePhpPreference: PhpPreference {
 
     /**
      Loads the preference for `key`, running the blocking `ini_get` probe on the
-     concurrent pool so the main actor is never blocked. Use this in production;
+     Dispatch queue so the main actor is never blocked. Use this in production;
      the synchronous initializer below is for fake containers (tests/previews).
      */
     static func load(_ container: Container, key: String) async -> BytePhpPreference {

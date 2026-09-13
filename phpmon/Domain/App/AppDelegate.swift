@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         // Check if any command line arguments need to be acted upon
         CLI.checkCommandLineArguments()
 
-        // Resolve the user's PATH eagerly, but on the concurrent pool: `RealShell`
+        // Resolve the user's PATH eagerly, but on a Dispatch queue: `RealShell`
         // resolves it lazily by spawning an interactive shell (up to seconds), which
         // must never block the main actor. This runs after the (DEBUG) configuration
         // profile may have swapped in fakes, so tests never spawn a real shell here.

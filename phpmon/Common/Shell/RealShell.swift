@@ -20,7 +20,7 @@ nonisolated class RealShell: ShellProtocol, @unchecked Sendable {
         // The PATH is resolved lazily on first access (see `PATH`): resolving it
         // spawns an interactive shell that can take seconds, and this initializer
         // runs on the main actor during `Container.bind()`. `AppDelegate.init`
-        // warms the value up on the concurrent pool right after binding.
+        // warms the value up on a Dispatch queue right after binding.
         self._PATH = OSAllocatedUnfairLock<String?>(initialState: nil)
         self._exports = OSAllocatedUnfairLock<[String: String]>(initialState: [:])
     }

@@ -99,7 +99,7 @@ class ValetProxy: ValetListable {
 
     /**
      Runs the metadata determinations for this proxy, with the blocking
-     certificate read on the concurrent pool (see `ValetSite.determine()`).
+     certificate read on a Dispatch queue (see `ValetSite.determine()`).
      */
     func determine() async {
         self.favorited = container.favorites.contains(domain: self.domain)

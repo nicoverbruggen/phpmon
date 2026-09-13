@@ -92,7 +92,7 @@ class PhpInstallation {
 
     /**
      Detects details about the PHP installation for `version`, running all blocking
-     probe I/O on the concurrent pool so the main actor is never blocked.
+     probe I/O on a Dispatch queue so the main actor is never blocked.
      */
     static func detect(_ container: Container, _ version: String) async -> PhpInstallation {
         let probe = await runBlocking { Probe(container, version) }

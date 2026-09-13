@@ -276,7 +276,7 @@ class PhpEnvironments {
         Log.info("The PHP versions that were detected are: \(availableVersions)")
         Log.info("The PHP versions that were unsupported are: \(incompatibleVersions)")
 
-        // Probe all detected versions concurrently on the concurrent pool (each
+        // Probe all detected versions concurrently on a Dispatch queue (each
         // probe runs several subprocesses), then build the main-actor models
         // from the returned `Sendable` probe data without further I/O.
         let versionsToProbe = availableVersions

@@ -122,7 +122,7 @@ class ActivePhpInstallation {
 
     /**
      Loads the currently linked PHP installation, running all blocking probe I/O
-     on the concurrent pool so the main actor is never blocked.
+     on a Dispatch queue so the main actor is never blocked.
      */
     public static func load(_ container: Container) async -> ActivePhpInstallation? {
         let probe = await runBlocking { Probe(container) }

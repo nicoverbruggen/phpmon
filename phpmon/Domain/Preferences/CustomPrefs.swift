@@ -8,7 +8,7 @@
 
 import Foundation
 
-// `nonisolated`: decoded on the concurrent pool (the config file read is blocking
+// `nonisolated`: decoded on a Dispatch queue (the config file read is blocking
 // I/O) and stored behind `Preferences`' lock-guarded state.
 // `Sendable`: an immutable value type (all stored properties are `let` value types),
 // required so it can live inside `Preferences`' `OSAllocatedUnfairLock`.
@@ -56,7 +56,7 @@ nonisolated extension Preferences {
         // Attempt to load the file if it exists
         if container.filesystem.fileExists("~/.config/phpmon/config.json") {
             Log.info("A custom ~/.config/phpmon/config.json file was found. Attempting to parse...")
-            // The file read is blocking I/O, so hop to the concurrent pool
+            // The file read is blocking I/O, so hop to a Dispatch queue
             await runBlocking { self.loadCustomPreferencesFile() }
         } else {
             Log.info("There was no /.config/phpmon/config.json file to be loaded.")

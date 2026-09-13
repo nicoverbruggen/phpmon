@@ -56,7 +56,7 @@ extension ValetSite {
     /**
      Runs all metadata determinations for this site, with the blocking file
      reads (certificate, Nginx config, composer.json, .valetrc/.valetphprc)
-     on the concurrent pool. Scanners construct sites with
+     on a Dispatch queue. Scanners construct sites with
      `makeDeterminations: false` and call this afterwards, so the main actor
      is never blocked while a batch of sites is resolved.
      */

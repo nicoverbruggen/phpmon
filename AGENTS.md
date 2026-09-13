@@ -41,7 +41,7 @@ Tests should own their containers and model instances. Do not replace global app
 
 The project uses Swift 6 with default main-actor isolation and strict concurrency checking. Some targets use different language settings; consult the [Xcode project](PHP%20Monitor.xcodeproj/project.pbxproj) and [developer guide](DEVELOPER.md) before changing them.
 
-Keep UI and app-model state on the main actor. Make isolation boundaries explicit where services need to run elsewhere. Do not assume that `async` or `nonisolated` moves work to a background thread. Keep blocking operations off the main actor and follow the existing [blocking-work helper](phpmon/Common/Helpers/RunBlocking.swift).
+Keep UI and app-model state on the main actor. Make isolation boundaries explicit where services need to run elsewhere. Do not assume that `async` or `nonisolated` moves work to a background thread. Blocking operations must also stay off Swift's cooperative thread pool; `@concurrent` and `Task.detached` do not provide that guarantee. Use the [blocking-work helper](phpmon/Common/Helpers/RunBlocking.swift), and read its contract for captures, cancellation and task-local state.
 
 Pass data safely between isolation domains. Give mutable state a clear owner and use the existing actor or synchronization patterns when sharing it. An unchecked conformance must have a documented safety invariant; it does not provide synchronization by itself. Preserve cancellation, ordering and lifetime guarantees when changing asynchronous flows.
 

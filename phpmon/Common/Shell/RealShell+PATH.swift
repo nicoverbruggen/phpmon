@@ -18,7 +18,7 @@ extension RealShell {
      The first access resolves the PATH by spawning an interactive shell (blocking,
      bounded by `getPath`'s timeout); the resolved value is cached. Concurrent first
      readers serialize on the lock and observe the single resolution. `AppDelegate.init`
-     warms this up on the concurrent pool, so post-startup readers normally hit the cache.
+     warms this up on a Dispatch queue, so post-startup readers normally hit the cache.
      */
     internal var PATH: String {
         get {

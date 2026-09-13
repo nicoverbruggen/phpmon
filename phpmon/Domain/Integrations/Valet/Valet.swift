@@ -339,7 +339,7 @@ class Valet {
         return [defaultSite] + sites
     }
 
-    // `nonisolated` + `Sendable`: decoded on the concurrent pool (the config file
+    // `nonisolated` + `Sendable`: decoded on a Dispatch queue (the config file
     // read is blocking I/O) and handed back to the main actor. All-immutable storage.
     nonisolated struct Configuration: Decodable, Sendable {
         /// Top level domain suffix. Usually "test" but can be set to something else.

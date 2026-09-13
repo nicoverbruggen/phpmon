@@ -62,7 +62,7 @@ class PhpConfigurationFile: CreatedFromFile {
 
      `PhpConfigurationFile` itself is a main-actor model (the UI mutates it), so it
      cannot be built off-main. The blocking file read is separated out into this
-     snapshot so detection can perform all I/O on the concurrent pool (via `runBlocking`)
+     snapshot so detection can perform all I/O on a Dispatch queue (via `runBlocking`)
      and hand the main actor plain strings to build models from.
      */
     nonisolated struct Snapshot: Sendable {
