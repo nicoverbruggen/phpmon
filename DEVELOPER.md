@@ -22,6 +22,7 @@ The following package dependencies are in use:
 
 * [`NVAppUpdater`](https://github.com/nicoverbruggen/NVAppUpdater)
 * [`NVAlert`](https://github.com/nicoverbruggen/NVAlert)
+- [`PLCrashReporter`](https://github.com/microsoft/plcrashreporter)
 
 You may need an internet connection to download these dependencies, or you can also clone the dependencies and include them manually.
 
