@@ -92,7 +92,7 @@ final class OnboardingTestFlow {
     func installPhp() {
         beginPhpInstall()
         if observeProgress {
-            assertTerminalOutputContains("==> Fetching php and composer formulae...")
+            assertTerminalOutputContains("==> Fetching shivammathur/php/php...")
         }
         assertValetInstallIsAvailable(timeout: 5.0)
     }
@@ -290,22 +290,22 @@ private extension TestableConfiguration {
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/php"] = .instant("Tapped shivammathur/php.\n")
         shellOutput["/opt/homebrew/bin/brew tap shivammathur/extensions"] = .instant("Tapped shivammathur/extensions.\n")
         shellOutput["/opt/homebrew/bin/brew help trust"] = .instant("Error: Unknown command: trust\n", .stdErr)
-        shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(
-            items: [
-                .delayed(0.2, "==> Fetching php and composer formulae...\n"),
-                .delayed(0.2, "==> Downloading php manifest...\n"),
-                .delayed(0.2, "==> Downloading composer manifest...\n"),
-                .delayed(0.2, "==> Pouring php bottle...\n"),
-                .delayed(0.2, "==> Pouring composer bottle...\n"),
-                .delayed(0.2, "==> Caveats\n"),
-                .delayed(2.0, "Installed PHP and Composer.\n")
-            ],
-            transactions: [
-                .write("", to: "/opt/homebrew/bin/php"),
-                .write("", to: "/opt/homebrew/bin/composer"),
-                .shell("ls /opt/homebrew/opt | grep php", .instant("php\n"))
-            ]
-        )
+        shellOutput["/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer"] =
+            BatchFakeShellOutput(
+                items: [
+                    .delayed(0.2, "==> Fetching shivammathur/php/php...\n"),
+                    .delayed(0.2, "==> Downloading php manifest...\n"),
+                    .delayed(0.2, "==> Pouring php bottle...\n"),
+                    .delayed(0.2, "==> Downloading composer manifest...\n"),
+                    .delayed(0.2, "==> Pouring composer bottle...\n"),
+                    .delayed(2.0, "Installed PHP and Composer.\n")
+                ],
+                transactions: [
+                    .write("", to: "/opt/homebrew/bin/php"),
+                    .write("", to: "/opt/homebrew/bin/composer"),
+                    .shell("ls /opt/homebrew/opt | grep php", .instant("php\n"))
+                ]
+            )
         shellOutput["/opt/homebrew/bin/composer global require laravel/valet"] = BatchFakeShellOutput(
             items: [
                 .delayed(0.2, "Updating global composer dependencies...\n"),
@@ -388,10 +388,11 @@ private extension TestableConfiguration {
     }
 
     mutating func mockPhpComposerInstallFailure() {
-        shellOutput["/opt/homebrew/bin/brew install php composer"] = BatchFakeShellOutput(items: [
-            .delayed(0.2, "==> Fetching php and composer formulae...\n"),
-            .delayed(0.2, "Error: Simulated PHP install failure\n", .stdErr)
-        ])
+        shellOutput["/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer"] =
+            BatchFakeShellOutput(items: [
+                .delayed(0.2, "==> Fetching shivammathur/php/php...\n"),
+                .delayed(0.2, "Error: Simulated PHP install failure\n", .stdErr)
+            ])
     }
 
     mutating func mockFirstLaunchPartialSetup() {

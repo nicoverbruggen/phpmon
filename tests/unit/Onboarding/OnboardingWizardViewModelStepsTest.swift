@@ -22,13 +22,14 @@ struct OnboardingWizardViewModelStepsTest {
                 "/opt/homebrew/bin/brew help trust": .instant("Error: Unknown command: trust\n", .stdErr),
                 "/opt/homebrew/bin/brew tap shivammathur/php": .instant("Tapped shivammathur/php.\n"),
                 "/opt/homebrew/bin/brew tap shivammathur/extensions": .instant("Tapped shivammathur/extensions.\n"),
-                "/opt/homebrew/bin/brew install php composer": BatchFakeShellOutput(
-                    items: [.instant("Installing php and composer...\n")],
-                    transactions: [
-                        .write("", to: "/opt/homebrew/bin/php"),
-                        .write("", to: "/opt/homebrew/bin/composer")
-                    ]
-                )
+                "/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer":
+                    BatchFakeShellOutput(
+                        items: [.instant("Installing PHP and Composer...\n")],
+                        transactions: [
+                            .write("", to: "/opt/homebrew/bin/php"),
+                            .write("", to: "/opt/homebrew/bin/composer")
+                        ]
+                    )
             ],
             files: [
                 "/opt/homebrew/bin/brew": .fake(.binary)
@@ -76,13 +77,14 @@ struct OnboardingWizardViewModelStepsTest {
                     items: [.instant("Trusted tap: shivammathur/extensions\n")],
                     transactions: [.write("", to: "/tmp/phpmon-trusted-extensions")]
                 ),
-                "/opt/homebrew/bin/brew install php composer": BatchFakeShellOutput(
-                    items: [.instant("Installing php and composer...\n")],
-                    transactions: [
-                        .write("", to: "/opt/homebrew/bin/php"),
-                        .write("", to: "/opt/homebrew/bin/composer")
-                    ]
-                )
+                "/opt/homebrew/bin/brew install shivammathur/php/php && /opt/homebrew/bin/brew install composer":
+                    BatchFakeShellOutput(
+                        items: [.instant("Installing PHP and Composer...\n")],
+                        transactions: [
+                            .write("", to: "/opt/homebrew/bin/php"),
+                            .write("", to: "/opt/homebrew/bin/composer")
+                        ]
+                    )
             ],
             files: [
                 "/opt/homebrew/bin/brew": .fake(.binary)

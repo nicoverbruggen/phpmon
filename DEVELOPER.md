@@ -47,8 +47,6 @@ To return to the stable version:
     brew developer off
     brew update
 
-`HomebrewCompatibilityTest` runs the same service queries against separate Homebrew 6 and 7 fixtures in `tests/Shared/Test Files/brew/`. These are synthetic examples of `brew services info --json`, based on Homebrew's `FormulaWrapper#to_hash`. They cover root and user services, versioned formulae, stopped and failed services, and migration from `homebrew.mxcl.*` to `sh.brew.*`. They do not require a local Homebrew installation. Keep the older fixtures when adding support for another release.
-
 ## 🔧 Build instructions
 
 <img src="./docs/build.png" width="404px" alt="build button in Xcode"/>

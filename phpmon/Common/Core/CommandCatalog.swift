@@ -21,9 +21,9 @@ enum CommandCatalog {
         static let valetSudoersCleanupCommand = "sudo rm -f \(valetSudoersPath) \(valetSudoersTemp)"
 
         static func phpComposerInstall(using brew: String) -> String {
-            // The required taps (and their trust commands) are added by the caller,
-            // so this only covers the install step.
-            return "\(brew) install php composer"
+            // Finish installing tapped PHP before Composer resolves its dependencies.
+            // Stop if PHP fails so Composer cannot install core PHP instead.
+            return "\(brew) install \(Constants.Taps.php)/php && \(brew) install composer"
         }
 
         static func valetInstall(
