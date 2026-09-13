@@ -14,6 +14,32 @@ import XCTest
  */
 final class DomainListContextMenuTest: UITestCase {
 
+    @MainActor final func test_missing_isolated_php_can_be_removed_from_domains() throws {
+        var configuration = TestableConfigurations.working
+        configuration.preferenceOverrides[.languageOverride] = .string("en")
+        configuration.filesystem = configuration.filesystem.filter { !$0.key.hasPrefix("/opt/homebrew/opt/php@8.3") }
+        let app = launch(openMenu: true, with: configuration)
+        app.menuItems["mi_domain_list".localized(for: "en")].click()
+        let window = app.windows["domain_list.title".localized(for: "en")]
+        assertExists(window, 2)
+
+        window.staticTexts["domain_list.sidebar.isolated".localized(for: "en")].firstMatch.click()
+        let site = window.staticTexts["concord.test"]
+        assertExists(site, 2)
+        site.rightClick()
+        let isolate = app.menuItems["domain_list.isolate".localized(for: "en")]
+        isolate.hover()
+        let remove = app.menuItems["domain_list.remove_isolation".localized(for: "en")]
+        assertExists(remove, 2)
+        XCTAssertTrue(remove.isEnabled)
+        remove.click()
+
+        let removed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: site)
+        XCTAssertEqual(XCTWaiter().wait(for: [removed], timeout: 5), .completed)
+        window.staticTexts["domain_list.sidebar.global".localized(for: "en")].firstMatch.click()
+        assertExists(site, 2)
+    }
+
     @MainActor final func test_right_click_offers_site_and_proxy_actions() throws {
         var configuration = TestableConfigurations.working
         configuration.preferenceOverrides[.languageOverride] = .string("en")

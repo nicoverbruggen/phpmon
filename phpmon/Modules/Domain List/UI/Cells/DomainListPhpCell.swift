@@ -79,7 +79,7 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
         buttonPhpVersion.title = "PHP \(site.servingPhpVersion)"
         buttonPhpVersion.setAccessibilityLabel(buttonPhpVersion.title)
         let canIsolate = site.container.valet.features.contains(.isolatedSites)
-            && (!site.container.phpEnvs.availablePhpVersions.isEmpty || site.isolatedPhpVersion != nil)
+            && (!site.container.phpEnvs.availablePhpVersions.isEmpty || site.isolatedVersion != nil)
         buttonPhpVersion.isEnabled = canIsolate
         buttonPhpVersion.image = canIsolate
             ? NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
@@ -87,7 +87,7 @@ final class DomainListPhpCell: NSTableCellView, DomainListCellProtocol {
             : nil
         buttonPhpVersion.toolTip = (canIsolate ? "domain_list.site_isolation" : "domain_list.isolation_unavailable").localized
 
-        let isIsolated = site.isolatedPhpVersion != nil
+        let isIsolated = site.isolatedVersion != nil
         imageViewIsolation.image = isIsolated
             ? NSImage.isolated
             : NSImage(systemSymbolName: "globe", accessibilityDescription: nil)

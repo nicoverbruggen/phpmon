@@ -18,7 +18,8 @@ struct DomainListPhpControlsTest {
         let site = ValetSite(container, name: "example", tld: "test", absolutePath: "/sites/example",
                              makeDeterminations: false)
         if isolated {
-            site.isolatedPhpVersion = PhpInstallation(container, "8.4", probe: .init(container, "8.4"))
+            container.phpEnvs.cachedPhpInstallations["8.4"] = PhpInstallation(container, "8.4", probe: .init(container, "8.4"))
+            site.isolatedVersion = "8.4"
         }
         return site
     }
@@ -78,18 +79,42 @@ struct DomainListPhpControlsTest {
     @Test func removal_remains_available_when_no_php_versions_are_installed() {
         let site = makeSite(isolated: true)
         site.container.phpEnvs.availablePhpVersions = []
+        site.container.phpEnvs.cachedPhpInstallations = [:]
+        site.determineIsolated(nginxConfigContents: "# ISOLATED_PHP_VERSION=php@8.4")
         let cell = DomainListPhpCell.makeCell(identifier: "php")
         cell.populateCell(with: site)
         let menu = DomainListVC().isolationMenu(for: site)
 
         #expect(cell.buttonPhpVersion.isEnabled)
+        #expect(site.isolatedPhpVersion == nil)
+        #expect(cell.buttonPhpVersion.title == "PHP 8.4")
+        #expect(cell.imageViewIsolation.toolTip == "domain_list.tooltips.isolated".localized("8.4"))
         #expect(menu.items.count == 1)
         #expect(menu.items.first?.action == #selector(DomainListVC.removeIsolatedSiteViaMenuItem(sender:)))
 
-        site.isolatedPhpVersion = nil
+        site.determineIsolated(nginxConfigContents: nil)
         cell.populateCell(with: site)
         #expect(!cell.buttonPhpVersion.isEnabled)
         #expect(DomainListVC().isolationMenu(for: site).items.isEmpty)
+    }
+
+    @Test func unisolation_checks_nginx_even_when_the_php_installation_is_missing() async throws {
+        let path = "~/.config/valet/Nginx/example.test"
+        let container = Container.fake(files: [path: .fake(.text, "# ISOLATED_PHP_VERSION=php@8.3")])
+        let site = ValetSite(container, name: "example", tld: "test", absolutePath: "/sites/example",
+                             makeDeterminations: false)
+        let command = "sudo \(container.paths.valet) unisolate --site 'example'"
+        (container.shell as! TestableShell).expectations = [command: .instant("")]
+        let interactor = ValetInteractor(container)
+
+        await #expect(throws: ValetInteractionError.self) {
+            try await interactor.unisolate(site: site)
+        }
+        #expect(site.isolatedVersion == "8.3")
+
+        try container.filesystem.remove(path)
+        try await interactor.unisolate(site: site)
+        #expect(site.isolatedVersion == nil)
     }
 
     @Test func reused_proxy_cells_hide_php_actions_and_restore_them_for_sites() {
@@ -130,7 +155,7 @@ struct DomainListPhpControlsTest {
         #expect(!phpCell.imageViewIsolation.isHidden)
         #expect(phpCell.imageViewIsolation.contentTintColor == .secondaryLabelColor)
 
-        site.isolatedPhpVersion = nil
+        site.isolatedVersion = nil
         phpCell.populateCell(with: site)
         #expect(!phpCell.imageViewIsolation.isHidden)
         #expect(phpCell.imageViewIsolation.image != nil)

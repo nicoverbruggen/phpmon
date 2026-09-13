@@ -120,7 +120,7 @@ final class DomainListTypeCell: NSTableCellView, DomainListCellProtocol {
         let container = site.container
 
         var validPhpSuggestions: [VersionNumber] {
-            if site.isolatedPhpVersion != nil {
+            if site.isolatedVersion != nil {
                 return []
             }
 

@@ -29,8 +29,13 @@ class ValetSite: ValetListable {
     /// The TLD used to locate this site.
     var tld: String = "test"
 
-    /// The PHP version that is being used to serve this site specifically (if not global).
-    var isolatedPhpVersion: PhpInstallation?
+    /// The version configured in Nginx, even when that PHP installation is unavailable.
+    var isolatedVersion: String?
+
+    var isolatedPhpVersion: PhpInstallation? {
+        guard let isolatedVersion else { return nil }
+        return container.phpEnvs.cachedPhpInstallations[isolatedVersion]
+    }
 
     /// Location of the alias. If set, this is a linked domain.
     var aliasPath: String?
@@ -70,7 +75,7 @@ class ValetSite: ValetListable {
 
     /// Which version of PHP is actually used to serve this site.
     var servingPhpVersion: String {
-        return self.isolatedPhpVersion?.versionNumber.short
+        return isolatedVersion
             ?? container.phpEnvs.phpInstall?.version?.short
             ?? "???"
     }
@@ -125,17 +130,12 @@ class ValetSite: ValetListable {
      the site's Nginx configuration file.
      */
     func determineIsolated(nginxConfigContents: String?) {
-        if let contents = nginxConfigContents,
-           let version = NginxConfigurationFile(path: "\(self.name).\(self.tld)", contents: contents)
-               .isolatedVersion {
-            if !container.phpEnvs.cachedPhpInstallations.keys.contains(version) {
-                Log.err("The PHP version \(version) is isolated for the site \(self.name) "
-                        + "but that PHP version is unavailable.")
-                return
-            }
-            self.isolatedPhpVersion = container.phpEnvs.cachedPhpInstallations[version]
-        } else {
-            self.isolatedPhpVersion = nil
+        isolatedVersion = nginxConfigContents.flatMap {
+            NginxConfigurationFile(path: "\(name).\(tld)", contents: $0).isolatedVersion
+        }
+        if let isolatedVersion, isolatedPhpVersion == nil {
+            Log.err("The PHP version \(isolatedVersion) is isolated for the site \(name) "
+                    + "but that PHP version is unavailable.")
         }
     }
 
@@ -267,7 +267,7 @@ class ValetSite: ValetListable {
             return
         }
 
-        guard let origin = self.isolatedPhpVersion?.versionNumber.short
+        guard let origin = isolatedVersion
                 ?? container.phpEnvs.phpInstall?.version?.long else {
             self.isCompatibleWithPreferredPhpVersion = false
             return

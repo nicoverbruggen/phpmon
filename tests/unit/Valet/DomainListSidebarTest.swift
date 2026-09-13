@@ -9,6 +9,33 @@ import AppKit
 import Testing
 
 struct DomainListSidebarTest {
+    @Test func missing_isolated_php_stays_isolated_until_nginx_configuration_changes() {
+        let container = Container.fake(shell: [
+            "/opt/homebrew/opt/php@8.4/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
+        ])
+        let site = ValetSite(container, name: "example", tld: "test", absolutePath: "/sites/example",
+                             makeDeterminations: false)
+        container.phpEnvs.cachedPhpInstallations["8.4"] = PhpInstallation(container, "8.4", probe: .init(container, "8.4"))
+        let config = "# ISOLATED_PHP_VERSION=php@8.4"
+        site.determineIsolated(nginxConfigContents: config)
+        #expect(site.isolatedPhpVersion != nil)
+
+        container.phpEnvs.cachedPhpInstallations = [:]
+        site.determineIsolated(nginxConfigContents: config)
+        #expect(site.isolatedPhpVersion == nil)
+        #expect(site.servingPhpVersion == "8.4")
+        #expect(DomainListFilter.isolated.matches(site))
+        #expect(!DomainListFilter.global.matches(site))
+
+        site.determineIsolated(nginxConfigContents: "# ISOLATED_PHP_VERSION=php@8.3")
+        #expect(site.servingPhpVersion == "8.3")
+        #expect(DomainListFilter.isolated.matches(site))
+
+        site.determineIsolated(nginxConfigContents: "# No site isolation")
+        #expect(site.isolatedVersion == nil)
+        #expect(DomainListFilter.global.matches(site))
+    }
+
     private func fixtures() -> (sites: [ValetSite], proxy: ValetProxy) {
         let container = Container.fake(shell: [
             "/opt/homebrew/opt/php@8.4/bin/php --ini | grep -E -o '(/[^ ]+\\.ini)'": .instant("")
@@ -23,7 +50,7 @@ struct DomainListSidebarTest {
         sites[2].aliasPath = "/links/gamma-api"
         sites[2].secured = true
         sites[2].favorited = true
-        sites[2].isolatedPhpVersion = PhpInstallation(container, "8.4", probe: .init(container, "8.4"))
+        sites[2].isolatedVersion = "8.4"
 
         let proxy = ValetProxy(container, domain: "proxy-api", target: "http://localhost:3000",
                                secure: false, tld: "test")
@@ -82,7 +109,7 @@ struct DomainListSidebarTest {
 
         sites[0].favorited = false
         sites[0].secured = true
-        sites[2].isolatedPhpVersion = nil
+        sites[2].isolatedVersion = nil
         proxy.secured = true
         controller.updateDomains(from: domains)
 

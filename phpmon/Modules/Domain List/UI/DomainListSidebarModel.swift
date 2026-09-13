@@ -22,8 +22,8 @@ enum DomainListFilter: CaseIterable {
             return (domain as? ValetSite).map { $0.aliasPath == nil } ?? false
         case .proxy: return domain is ValetProxy
         case .global:
-            return (domain as? ValetSite).map { $0.isolatedPhpVersion == nil } ?? false
-        case .isolated: return (domain as? ValetSite)?.isolatedPhpVersion != nil
+            return (domain as? ValetSite).map { $0.isolatedVersion == nil } ?? false
+        case .isolated: return (domain as? ValetSite)?.isolatedVersion != nil
         }
     }
 }

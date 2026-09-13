@@ -120,9 +120,9 @@ struct VersionPopoverView: View {
     func getSourceText() -> String {
         var information = ""
 
-        if site.isolatedPhpVersion != nil {
+        if let isolatedVersion = site.isolatedVersion {
             information += "alert.composer_php_isolated.desc".localized(
-                site.isolatedPhpVersion!.versionNumber.short,
+                isolatedVersion,
                 container.phpEnvs.phpInstall?.version?.short ?? "???"
             )
             information += "\n\n"

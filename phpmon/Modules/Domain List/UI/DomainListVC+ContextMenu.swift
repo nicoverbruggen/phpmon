@@ -52,13 +52,15 @@ extension DomainListVC {
 
         addSeparator(to: menu)
 
-        if let extensions = site.isolatedPhpVersion?.extensions ?? container.phpEnvs.phpInstall?.extensions,
-           let version = site.isolatedPhpVersion?.versionNumber.short ?? container.phpEnvs.phpInstall?.version?.short {
+        let extensions = site.isolatedVersion != nil
+            ? site.isolatedPhpVersion?.extensions
+            : container.phpEnvs.phpInstall?.extensions
+        if let extensions, site.servingPhpVersion != "???" {
             menu.addItem(HeaderView.asMenuItem(text: "mi_detected_extensions".localized))
             addMenuItemsForExtensions(
                 to: menu,
                 for: extensions,
-                version: version
+                version: site.servingPhpVersion
             )
         }
 
@@ -148,7 +150,7 @@ extension DomainListVC {
                 action: #selector(self.isolateSiteViaMenuItem),
                 keyEquivalent: ""
             )
-            if site.servingPhpVersion == version && site.isolatedPhpVersion != nil {
+            if site.isolatedVersion == version {
                 item.state = .on
                 item.action = nil
                 item.isEnabled = false
@@ -160,7 +162,7 @@ extension DomainListVC {
         }
 
         // Add the option to remove site isolation
-        if site.isolatedPhpVersion != nil {
+        if site.isolatedVersion != nil {
             if !menu.items.isEmpty { menu.addItem(NSMenuItem.separator()) }
             let item = NSMenuItem(
                 title: "domain_list.remove_isolation".localized,

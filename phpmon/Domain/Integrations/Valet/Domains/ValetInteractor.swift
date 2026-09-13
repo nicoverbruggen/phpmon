@@ -125,7 +125,7 @@ class ValetInteractor {
         await site.determine()
 
         // If the version is not isolated, this failed
-        if site.isolatedPhpVersion == nil {
+        if site.isolatedVersion != version {
             throw ValetInteractionError(command: command)
         }
     }
@@ -140,7 +140,7 @@ class ValetInteractor {
         await site.determine()
 
         // If the version is somehow still isolated, this failed
-        if site.isolatedPhpVersion != nil {
+        if site.isolatedVersion != nil {
             throw ValetInteractionError(command: command)
         }
     }

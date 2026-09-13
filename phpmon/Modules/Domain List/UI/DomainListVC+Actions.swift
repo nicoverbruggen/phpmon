@@ -201,7 +201,7 @@ extension DomainListVC {
               let site = sender.representedObject as? ValetSite,
               !site.container.phpEnvs.isBusy, !site.container.valet.isBusy,
               site.container.valet.features.contains(.isolatedSites),
-              site.isolatedPhpVersion != nil else {
+              site.isolatedVersion != nil else {
             return
         }
 

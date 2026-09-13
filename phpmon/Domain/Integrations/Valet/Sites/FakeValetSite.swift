@@ -39,14 +39,7 @@ class FakeValetSite: ValetSite {
             self.aliasPath = self.absolutePath
         }
 
-        if let isolated = isolated {
-            // Synchronous probe is fine here: fake sites only exist with fake
-            // containers, where the probe's I/O resolves instantly.
-            self.isolatedPhpVersion = PhpInstallation(
-                container, isolated,
-                probe: .init(container, isolated)
-            )
-        }
+        self.isolatedVersion = isolated
 
         if container.phpEnvs.currentInstall != nil {
             self.evaluateCompatibility()
